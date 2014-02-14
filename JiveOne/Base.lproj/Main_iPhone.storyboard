@@ -382,8 +382,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Dial-Plan Numbers" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mxw-VI-jlW">
-                                                    <rect key="frame" x="15" y="11" width="145" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Company" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mxw-VI-jlW">
+                                                    <rect key="frame" x="15" y="11" width="75" height="21"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -433,7 +433,7 @@
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Account" id="k9B-uW-1kv"/>
                     <connections>
-                        <outlet property="dialPlanNumbersDetail" destination="bci-S0-F16" id="7ip-3V-FXv"/>
+                        <outlet property="companyNameDetail" destination="bci-S0-F16" id="ixo-SB-DEf"/>
                         <outlet property="pbxDetail" destination="RZY-jZ-re7" id="XxT-7j-U8r"/>
                         <outlet property="userNameDetail" destination="YCX-ht-0FQ" id="rkB-Nb-FAv"/>
                     </connections>

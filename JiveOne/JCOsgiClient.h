@@ -20,6 +20,9 @@
 - (void) RetrieveMyEntitity:(void (^)(id JSON))success
                     failure:(void (^)(NSError *err))failure;
 
+- (void) RetrieveMyCompanyWithCompany:(NSString*)company :(void (^)(id JSON))success
+                    failure:(void (^)(NSError *err))failure;
+
 - (void) RetrieveConversations:(void (^)(id JSON))success
                        failure:(void (^)(NSError *err))failure;
 
@@ -31,5 +34,6 @@
 
 - (void) SubscribeToSocketEventsWithAuthToken:(NSString*)token subscriptions:(NSDictionary*)subscriptions success:(void (^)(id JSON))success
                                       failure:(void (^)(NSError* err))failure;
+
 
 @end

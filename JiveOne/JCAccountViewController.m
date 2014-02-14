@@ -12,7 +12,7 @@
 @interface JCAccountViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *userNameDetail;
 @property (weak, nonatomic) IBOutlet UILabel *pbxDetail;
-@property (weak, nonatomic) IBOutlet UILabel *dialPlanNumbersDetail;
+@property (weak, nonatomic) IBOutlet UILabel *companyNameDetail;
 
 @end
 
@@ -23,11 +23,20 @@
         NSLog(@"%@", JSON);
         self.userNameDetail.text = [[JSON objectForKey:@"name"]objectForKey:@"firstLast"];
         //TODO: using company id, query to get PBX?
+        [self retrieveCompany:[JSON objectForKey:@"company"]];
         
         
     } failure:^(NSError *err) {
         NSLog(@"%@", err);
     }];
+}
+-(void) retrieveCompany:(NSString*)companyURL{
+    [[JCOsgiClient sharedClient] RetrieveMyCompanyWithCompany:companyURL:^(id JSON) {
+        self.companyNameDetail.text = [JSON objectForKey:@"name"];
+    } failure:^(NSError *err) {
+        NSLog(@"%@", err);
+    }];
+    
 }
 
 

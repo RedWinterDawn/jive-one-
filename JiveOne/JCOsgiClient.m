@@ -77,6 +77,19 @@
     }];
 }
 
+- (void) RetrieveMyCompanyWithCompany:(NSString*)company :(void (^)(id JSON))success
+                              failure:(void (^)(NSError *err))failure
+{
+    [self setRequestAuthHeader];
+    
+    NSString *url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], company];//TODO: not attaching baseURL to route constant
+    [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        success(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
+
 - (void) RetrieveConversations:(void (^)(id JSON))success
                     failure:(void (^)(NSError *err))failure
 {
