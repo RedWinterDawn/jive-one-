@@ -617,6 +617,7 @@
 		};
 		275F4A8A18AD0FBC00D2F069 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8B150D3FF8864E2786E514D9 /* Pods.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/JiveOne.app/JiveOne";
@@ -640,6 +641,7 @@
 		};
 		275F4A8B18AD0FBC00D2F069 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8B150D3FF8864E2786E514D9 /* Pods.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/JiveOne.app/JiveOne";
