@@ -84,22 +84,30 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    NSArray* entryArray = [(NSDictionary*)entries[indexPath.row] objectForKey:@"entries"];
-    NSArray* entitiesArray = [(NSDictionary*)entries[indexPath.row] objectForKey:@"entities"];
-    NSString* firstEntity = [NSString stringWithFormat:@"%@", entitiesArray[0]] ;
-    //NSDictionary* singleEntry = entryArray[0];
-    //JCEntryModel* entryModel = [[JCEntryModel alloc] initWithDictionary:singleEntry error:nil];
-    //ClientEntities* person = [ClientEntities MR_findByAttribute:@"id" withValue:firstEntity];
-    //NSArray* result = [ClientEntities MR_findByAttribute:@"entityId" withValue:firstEntity];
-    //ClientEntities* person = (ClientEntities*)result[0];
+    NSString *group = [(NSDictionary*)entries[indexPath.row] objectForKey:@"group"];
+    NSString *name = [(NSDictionary*)entries[indexPath.row] objectForKey:@"name"];
     
-    //cell.textLabel.text = [NSString stringWithFormat:@"%@", person.firstLastName];
-    //cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", entryModel.deliveryDate];
-    //NSLog(person.picture);
-    //[cell.imageView setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];
-    
-    cell.textLabel.text = @"testing";
-    cell.detailTextLabel.text = @"testing";
+    if (!group && !name) {
+        NSArray* entryArray = [(NSDictionary*)entries[indexPath.row] objectForKey:@"entries"];
+        NSArray* entitiesArray = [(NSDictionary*)entries[indexPath.row] objectForKey:@"entities"];
+        NSString* firstEntity = [NSString stringWithFormat:@"%@", entitiesArray[0]] ;
+        NSDictionary* singleEntry = entryArray[0];
+        JCEntryModel* entryModel = [[JCEntryModel alloc] initWithDictionary:singleEntry error:nil];
+        //ClientEntities* person = [ClientEntities MR_findByAttribute:@"id" withValue:firstEntity];
+        NSArray* result = [ClientEntities MR_findByAttribute:@"entityId" withValue:firstEntity];
+        ClientEntities * person = (ClientEntities*)result[0];
+        
+        cell.textLabel.text = [NSString stringWithFormat:@"%@", person.firstLastName];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", entryModel.deliveryDate];
+        //NSLog(person.picture);
+        [cell.imageView setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];
+
+    }
+    else
+    {
+        cell.textLabel.text = [NSString stringWithFormat:@"%@", name];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", group];
+    }
     
     return cell;
 }
