@@ -66,8 +66,11 @@
                          failure:(void (^)(NSError *err))failure
 {
     [self setRequestAuthHeader];
+   
+    NSString * url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], kOsgiMyEntityRoute];//TODO: not attaching baseURL to route constant
+    NSLog(@"%@", url);
     
-    [_manager GET:kOsgiMyEntityRoute parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         success(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failure(error);
