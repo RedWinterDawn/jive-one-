@@ -20,7 +20,7 @@
 - (void) RetrieveMyEntitity:(void (^)(id JSON))success
                     failure:(void (^)(NSError *err))failure;
 
-- (void) RetrieveMyCompanyWithCompany:(NSString*)company :(void (^)(id JSON))success
+- (void) RetrieveMyCompany:(NSString*)company :(void (^)(id JSON))success
                     failure:(void (^)(NSError *err))failure;
 
 - (void) RetrieveConversations:(void (^)(id JSON))success

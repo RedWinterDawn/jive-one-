@@ -77,7 +77,7 @@
     }];
 }
 
-- (void) RetrieveMyCompanyWithCompany:(NSString*)company :(void (^)(id JSON))success
+- (void) RetrieveMyCompany:(NSString*)company :(void (^)(id JSON))success
                               failure:(void (^)(NSError *err))failure
 {
     [self setRequestAuthHeader];

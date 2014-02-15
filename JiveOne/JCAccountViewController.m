@@ -31,7 +31,7 @@
     }];
 }
 -(void) retrieveCompany:(NSString*)companyURL{
-    [[JCOsgiClient sharedClient] RetrieveMyCompanyWithCompany:companyURL:^(id JSON) {
+    [[JCOsgiClient sharedClient] RetrieveMyCompany:companyURL:^(id JSON) {
         self.companyNameDetail.text = [JSON objectForKey:@"name"];
     } failure:^(NSError *err) {
         NSLog(@"%@", err);
