@@ -7,7 +7,7 @@
         <!--Start Login View Controller-->
         <scene sceneID="yum-B5-f91">
             <objects>
-                <viewController id="hBc-AN-e9c" customClass="JCStartLoginViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="JCStartLoginViewController" id="hBc-AN-e9c" customClass="JCStartLoginViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MXr-cp-xra"/>
                         <viewControllerLayoutGuide type="bottom" id="Ycj-Wi-V2g"/>
