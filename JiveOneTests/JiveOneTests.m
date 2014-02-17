@@ -8,6 +8,7 @@
 
 #import <XCTest/XCTest.h>
 #import "JCOsgiClient.h"
+#import "TRVSMonitor.h"
 
 @interface JiveOneTests : XCTestCase
 
@@ -35,50 +36,36 @@
 }
 
 - (void)testRetrieveAccountInformation{
-    NSString *companyUrl;
-    NSString *name;
     __block NSDictionary *json;
     
-    dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+    TRVSMonitor *monitor = [TRVSMonitor monitor];
     
     JCOsgiClient *client = [JCOsgiClient sharedClient];
     
-    //    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-    //    JCStartLoginViewController *startVC = [storyboard instantiateViewControllerWithIdentifier:@"JCStartLoginViewController"];
-    //    [startVC loadView];
-    //    [startVC showWebviewForLogin:nil];
-    //    [startVC tokenValidityPassed:nil];
-    
     [client RetrieveMyEntitity:^(id JSON) {
         json = JSON;
-        dispatch_semaphore_signal(sema);
+        [monitor signal];
         
     } failure:^(NSError *err) {
         XCTFail(@"Retrieve My Company method has failed");
     }];
     
-    dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+    [monitor waitWithTimeout:5];
     
-    name = [json objectForKey:@"name"];
-    companyUrl = [json objectForKey:@"company"];
+    NSString *name = [[json objectForKey:@"name"] objectForKey:@"firstLast"];
+    NSString *companyUrl = [json objectForKey:@"company"];
     XCTAssertEqualObjects(name, @"Daniel George", @"Wrong name");
     
-    //    dispatch_semaphore_t sema2 = dispatch_semaphore_create(0);
-    //
-    //
-    //    [client RetrieveMyCompany:companyUrl:^(id JSON) {
-    //
-    //        XCTAssertEqualObjects([JSON objectForKey:@"company"], @"Jive Communications, Inc", @"Company name doesn't match");
-    //
-    //        dispatch_semaphore_signal(sema2);
-    //
-    //
-    //    } failure:^(NSError *err) {
-    //        NSLog(@"%@", err);
-    //    }];
-    //    dispatch_semaphore_wait(sema2, DISPATCH_TIME_FOREVER);
-    //    
+    [client RetrieveMyCompany:companyUrl:^(id JSON) {
+        json = JSON;
+        [monitor signal];
+    } failure:^(NSError *err) {
+        NSLog(@"%@", err);
+    }];
     
+    [monitor waitWithTimeout:5];
+    
+     XCTAssertEqualObjects([json objectForKey:@"name"], @"Jive Communications, Inc.", @"Company name doesn't match");
 }
 
 @end
