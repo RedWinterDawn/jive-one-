@@ -35,5 +35,9 @@
 - (void) SubscribeToSocketEventsWithAuthToken:(NSString*)token subscriptions:(NSDictionary*)subscriptions success:(void (^)(id JSON))success
                                       failure:(void (^)(NSError* err))failure;
 
+- (void)SubmitChatMessageForConversation:(NSString*)conversation message:(NSString*)message withEntity:(NSString*)entity success:(void (^)(id JSON))success
+                                 failure:(void (^)(NSError* err))failure;
+
+
 
 @end

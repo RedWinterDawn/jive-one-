@@ -10,6 +10,7 @@
 #import "ClientEntities.h"
 #import "JCEntryModel.h"
 #import "JCSocketDispatch.h"
+#import "JCOsgiClient.h"
 
 @interface JCChatDetailViewController ()
 
@@ -170,6 +171,18 @@
  */
 
 - (IBAction)sendMessage:(id)sender {
+    
+    //need to refactor this
+    NSDictionary* singleEntry = self.chatEntries[0];
+    NSString* entity = [singleEntry objectForKey:@"entity"];
+    NSString* conversationUrn = [singleEntry objectForKey:@"conversation"];
+    NSString *message = @"this is my message";
+    
+    [[JCOsgiClient sharedClient] SubmitChatMessageForConversation:conversationUrn message:message withEntity:entity success:^(id JSON) {
+        // update UI
+    } failure:^(NSError *err) {
+        // update UI
+    }];
     
 }
 @end

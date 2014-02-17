@@ -109,9 +109,7 @@
 }
 
 - (void)messageDispatcher:(NSDictionary*)message
-{
-    
-    
+{   
     NSDictionary *body = [[message objectForKey:@"data"] objectForKey:@"body"];
     NSString *type = [body objectForKey:@"type"];
     
@@ -119,13 +117,6 @@
         NSString *conversationId = [body objectForKey:@"conversation"];
         [[NSNotificationCenter defaultCenter] postNotificationName:conversationId object:body];
     }
- 
-    
-    
-    
-    
-    
-    
 }
 
 
