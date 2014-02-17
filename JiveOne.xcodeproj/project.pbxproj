@@ -56,6 +56,7 @@
 		42A1D3B90E844E0DA4AB6197 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86ED89B2764949AC9BCC0C7B /* libPods.a */; };
 		DD01933718AECA760065A8CD /* JCTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD01933618AECA760065A8CD /* JCTestViewController.m */; };
 		DD28DA5218AEC4F5003BFC44 /* JCAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD28DA5118AEC4F5003BFC44 /* JCAccountViewController.m */; };
+		F202433D18B2CF4A006DB2EF /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F202433C18B2CF4A006DB2EF /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +127,7 @@
 		DD01933618AECA760065A8CD /* JCTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTestViewController.m; sourceTree = "<group>"; };
 		DD28DA5018AEC4F5003BFC44 /* JCAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAccountViewController.h; sourceTree = "<group>"; };
 		DD28DA5118AEC4F5003BFC44 /* JCAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAccountViewController.m; sourceTree = "<group>"; };
+		F202433C18B2CF4A006DB2EF /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -242,6 +244,7 @@
 				275F4A5018AD0FBC00D2F069 /* Frameworks */,
 				275F4A4F18AD0FBC00D2F069 /* Products */,
 				8B150D3FF8864E2786E514D9 /* Pods.xcconfig */,
+				F202433C18B2CF4A006DB2EF /* README.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -393,6 +396,7 @@
 			files = (
 				2751590018AD10BB00FD8D3F /* avatar.png in Resources */,
 				275158FC18AD10BB00FD8D3F /* main-logo.png in Resources */,
+				F202433D18B2CF4A006DB2EF /* README.md in Resources */,
 				275158FD18AD10BB00FD8D3F /* Default.png in Resources */,
 				275F4A6818AD0FBC00D2F069 /* Main_iPad.storyboard in Resources */,
 				275F4A7018AD0FBC00D2F069 /* Images.xcassets in Resources */,
