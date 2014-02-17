@@ -11,5 +11,6 @@
 @interface JCChatDetailViewController : UITableViewController
 
 @property (strong, nonatomic) NSMutableArray *chatEntries;
+- (IBAction)sendMessage:(id)sender;
 
 @end

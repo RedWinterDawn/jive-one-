@@ -223,7 +223,13 @@
                             <outlet property="delegate" destination="09S-ay-KYD" id="Uzq-x9-as3"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="WJe-TW-2FR"/>
+                    <navigationItem key="navigationItem" id="WJe-TW-2FR">
+                        <barButtonItem key="rightBarButtonItem" title="Send Message" id="uoR-eS-Fy1">
+                            <connections>
+                                <action selector="sendMessage:" destination="09S-ay-KYD" id="eAA-eG-Mkz"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GnR-yF-2Yb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

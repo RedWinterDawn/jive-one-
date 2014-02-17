@@ -9,6 +9,7 @@
 #import "JCChatDetailViewController.h"
 #import "ClientEntities.h"
 #import "JCEntryModel.h"
+#import "JCSocketDispatch.h"
 
 @interface JCChatDetailViewController ()
 
@@ -35,6 +36,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[JCSocketDispatch sharedInstance] requestSession];
+    
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -44,10 +49,39 @@
     [self.tableView reloadData];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if (_chatEntries) {
+        NSDictionary *conversation = _chatEntries[0];
+        NSString *conversationId = [conversation objectForKey:@"conversation"];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incomingChatEntry:) name:conversationId object:nil];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Incoming chat
+- (void)incomingChatEntry:(NSNotification*)notification
+{
+    NSDictionary* chatEntry = (NSDictionary*)notification.object;
+    NSMutableArray* temp = [[NSMutableArray alloc] initWithArray:_chatEntries];
+    [temp addObject:chatEntry];
+    _chatEntries = [[NSMutableArray alloc] initWithArray:temp];
+    
+    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:_chatEntries.count - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+    [self.tableView scrollRectToVisible:self.tableView.tableFooterView.frame animated:YES];
 }
 
 #pragma mark - Table view data source
@@ -69,13 +103,13 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    //NSArray* entitiesArray = [(NSDictionary*)self.chatEntries[indexPath.row] objectForKey:@"entities"];
-    NSString* firstEntity = [(NSDictionary*)self.chatEntries[indexPath.row] objectForKey:@"entity"];
     NSDictionary* singleEntry = self.chatEntries[indexPath.row];
-    JCEntryModel* entryModel = [[JCEntryModel alloc] initWithDictionary:singleEntry error:nil];
+    NSString* firstEntity = [singleEntry objectForKey:@"entity"];
+    NSString* message = [[singleEntry objectForKey:@"message"] objectForKey:@"raw"];
+    
+    //JCEntryModel* entryModel = [[JCEntryModel alloc] initWithDictionary:singleEntry error:nil];
     NSArray* result = [ClientEntities MR_findByAttribute:@"entityId" withValue:firstEntity];
     ClientEntities* person = (ClientEntities*)result[0];
-    NSString *message = [(NSDictionary*) entryModel.message objectForKey:@"raw"];
     
     cell.textLabel.text = [NSString stringWithFormat:@"%@", message ];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", person.firstLastName];
@@ -135,4 +169,7 @@
 
  */
 
+- (IBAction)sendMessage:(id)sender {
+    
+}
 @end
