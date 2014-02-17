@@ -257,7 +257,7 @@
         <scene sceneID="7yR-ZU-bxo">
             <objects>
                 <navigationController definesPresentationContext="YES" id="6Dq-mE-F9w" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Recent" image="avatar.png" id="K12-Hv-Z3c"/>
+                    <tabBarItem key="tabBarItem" title="Recent" id="K12-Hv-Z3c"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="lEx-Jd-cci">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -481,7 +481,6 @@
     </scenes>
     <resources>
         <image name="Default.png" width="320" height="480"/>
-        <image name="avatar.png" width="100" height="100"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
