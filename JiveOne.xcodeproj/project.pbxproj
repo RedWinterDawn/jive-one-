@@ -36,6 +36,7 @@
 		2751593118AD334E00FD8D3F /* JCEntryMetaModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751592D18AD334E00FD8D3F /* JCEntryMetaModel.m */; };
 		2751593418AD3BD500FD8D3F /* JCVoipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751593318AD3BD500FD8D3F /* JCVoipViewController.m */; };
 		2751593518AD3BD500FD8D3F /* JCVoipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751593318AD3BD500FD8D3F /* JCVoipViewController.m */; };
+		275E809618AED884009AD776 /* JCSocketDispatch.m in Sources */ = {isa = PBXBuildFile; fileRef = 275E809518AED884009AD776 /* JCSocketDispatch.m */; };
 		275F4A5218AD0FBC00D2F069 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275F4A5118AD0FBC00D2F069 /* Foundation.framework */; };
 		275F4A5418AD0FBC00D2F069 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275F4A5318AD0FBC00D2F069 /* CoreGraphics.framework */; };
 		275F4A5618AD0FBC00D2F069 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275F4A5518AD0FBC00D2F069 /* UIKit.framework */; };
@@ -95,6 +96,8 @@
 		2751592D18AD334E00FD8D3F /* JCEntryMetaModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCEntryMetaModel.m; sourceTree = "<group>"; };
 		2751593218AD3BD500FD8D3F /* JCVoipViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVoipViewController.h; sourceTree = "<group>"; };
 		2751593318AD3BD500FD8D3F /* JCVoipViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoipViewController.m; sourceTree = "<group>"; };
+		275E809418AED884009AD776 /* JCSocketDispatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSocketDispatch.h; sourceTree = "<group>"; };
+		275E809518AED884009AD776 /* JCSocketDispatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSocketDispatch.m; sourceTree = "<group>"; };
 		275F4A4E18AD0FBC00D2F069 /* JiveOne.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JiveOne.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		275F4A5118AD0FBC00D2F069 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		275F4A5318AD0FBC00D2F069 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -219,6 +222,8 @@
 				2751592B18AD334E00FD8D3F /* JCEntryModel.m */,
 				2751592C18AD334E00FD8D3F /* JCEntryMetaModel.h */,
 				2751592D18AD334E00FD8D3F /* JCEntryMetaModel.m */,
+				275E809418AED884009AD776 /* JCSocketDispatch.h */,
+				275E809518AED884009AD776 /* JCSocketDispatch.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -456,6 +461,7 @@
 				DD01933718AECA760065A8CD /* JCTestViewController.m in Sources */,
 				2751591B18AD301A00FD8D3F /* ClientEntities.m in Sources */,
 				2751593418AD3BD500FD8D3F /* JCVoipViewController.m in Sources */,
+				275E809618AED884009AD776 /* JCSocketDispatch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
