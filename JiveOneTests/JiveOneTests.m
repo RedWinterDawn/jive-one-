@@ -9,6 +9,8 @@
 #import <XCTest/XCTest.h>
 #import "JCOsgiClient.h"
 #import "TRVSMonitor.h"
+#import "JCAuthenticationManager.h"
+#import "JCDirectoryViewController.h"
 
 @interface JiveOneTests : XCTestCase
 
@@ -19,6 +21,8 @@
 - (void)setUp
 {
     [super setUp];
+   
+    
     // Put setup code here. This method is called before the invocation of each test method in the class.
     //Fire login event
     
@@ -35,7 +39,7 @@
     XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
 }
 
-- (void)testRetrieveAccountInformation{
+- (void)testRetrieveAccountInformation {
     __block NSDictionary *json;
     
     TRVSMonitor *monitor = [TRVSMonitor monitor];
@@ -66,6 +70,22 @@
     [monitor waitWithTimeout:5];
     
      XCTAssertEqualObjects([json objectForKey:@"name"], @"Jive Communications, Inc.", @"Company name doesn't match");
+}
+
+- (void)testLogout {
+    
+    //UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+    //JCDirectoryViewController *directoryVC = [storyboard instantiateViewControllerWithIdentifier:@"JCDirectoryViewController"];
+    
+    [[JCAuthenticationManager sharedInstance] logout:nil];
+    
+    KeychainItemWrapper *wrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
+    NSString* tokenFromKeychain = [wrapper objectForKey:(__bridge id)(kSecAttrAccount)];
+    NSString* tokenFromUserDefaults = [[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"];
+    
+    XCTAssertEqual(tokenFromKeychain, @"", @"Token From Keychain Should Have Cleared");
+    XCTAssertNil(tokenFromUserDefaults, @"Token From UserDefaults Should Have Cleared");
+    
 }
 
 @end

@@ -62,7 +62,9 @@
     
     [[JCOsgiClient sharedClient] clearCookies];
     
-    [viewController dismissViewControllerAnimated:YES completion:nil];
+    if (viewController != nil) {        
+        [viewController dismissViewControllerAnimated:YES completion:nil];
+    }
     
     
 }
