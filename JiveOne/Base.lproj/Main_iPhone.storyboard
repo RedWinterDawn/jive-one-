@@ -50,6 +50,24 @@
             </objects>
             <point key="canvasLocation" x="-372" y="180"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="ja5-LW-7Tn">
+            <objects>
+                <viewController storyboardIdentifier="ligin" id="ugb-9C-537" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Jmm-EL-d1b"/>
+                        <viewControllerLayoutGuide type="bottom" id="2iR-kg-6Zj"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="4VZ-gY-zrg">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KOl-nl-zHa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="148" y="-529"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Vex-rW-GRa">
             <objects>
@@ -239,7 +257,7 @@
         <scene sceneID="7yR-ZU-bxo">
             <objects>
                 <navigationController definesPresentationContext="YES" id="6Dq-mE-F9w" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Recent" id="K12-Hv-Z3c"/>
+                    <tabBarItem key="tabBarItem" title="Recent" image="avatar.png" id="K12-Hv-Z3c"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="lEx-Jd-cci">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -331,6 +349,18 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jye-KS-5tf" id="Jsp-U0-cfI">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xWS-qF-SJ9">
+                                                    <rect key="frame" x="254" y="13" width="49" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal" title="Logout">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="logoutButtonPress:" destination="xfW-W8-tPR" eventType="touchUpInside" id="ZAx-Zb-IlA"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="Q2v-p7-NP2" detailTextLabel="YCX-ht-0FQ" style="IBUITableViewCellStyleValue1" id="Pmg-BC-CO1">
@@ -451,6 +481,7 @@
     </scenes>
     <resources>
         <image name="Default.png" width="320" height="480"/>
+        <image name="avatar.png" width="100" height="100"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

@@ -8,6 +8,9 @@
 
 #import "JCAccountViewController.h"
 #import "JCOsgiClient.h"
+#import "JCAuthenticationManager.h"
+#import "KeychainItemWrapper.h"
+
 
 @interface JCAccountViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *userNameDetail;
@@ -82,6 +85,15 @@
 {
     return [super tableView:tableView cellForRowAtIndexPath:indexPath];
 }
+
+- (IBAction)logoutButtonPress:(id)sender {
+    
+    [[JCAuthenticationManager sharedInstance] logout:self];
+   
+}
+
+
+
 
 /*
 // Override to support conditional editing of the table view.
