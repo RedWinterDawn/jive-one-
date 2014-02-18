@@ -121,10 +121,10 @@
             </objects>
             <point key="canvasLocation" x="1067" y="-160"/>
         </scene>
-        <!--View Controller-->
+        <!--Directory Detail View Controller-->
         <scene sceneID="6jS-rb-lB1">
             <objects>
-                <viewController id="ntM-r9-kAH" sceneMemberID="viewController">
+                <viewController id="ntM-r9-kAH" customClass="JCDirectoryDetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Wm6-IF-702"/>
                         <viewControllerLayoutGuide type="bottom" id="ch5-Dx-icQ"/>

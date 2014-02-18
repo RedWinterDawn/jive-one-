@@ -8,8 +8,9 @@
 
 #import "JCDirectoryDetailViewController.h"
 
-@interface JCDirectoryDetailViewController ()
-
+@interface JCDirectoryDetailViewController (){
+    NSArray  *Person;
+}
 @end
 
 @implementation JCDirectoryDetailViewController
