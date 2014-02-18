@@ -191,9 +191,9 @@
 		2751590318AD113C00FD8D3F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				DD28DA5018AEC4F5003BFC44 /* JCAccountViewController.h */,
 				DD01933518AECA760065A8CD /* JCTestViewController.h */,
 				DD01933618AECA760065A8CD /* JCTestViewController.m */,
+				DD28DA5018AEC4F5003BFC44 /* JCAccountViewController.h */,
 				DD28DA5118AEC4F5003BFC44 /* JCAccountViewController.m */,
 				2751590418AD118D00FD8D3F /* JCStartLoginViewController.h */,
 				2751590518AD118D00FD8D3F /* JCStartLoginViewController.m */,
