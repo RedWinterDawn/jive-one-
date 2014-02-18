@@ -63,6 +63,7 @@
             c_ent.id = [entity objectForKey:@"id"];
             c_ent.entityId = [entity objectForKey:@"_id"];
             c_ent.picture = [entity objectForKey:@"picture"];
+            c_ent.email = [entity objectForKey:@"email"];
             
             NSLog(@"id:%@ - _id:%@", [entity objectForKey:@"id"], [entity objectForKey:@"_id"]);
             
