@@ -10,47 +10,84 @@
 #import "JCOsgiClient.h"
 #import "JCAuthenticationManager.h"
 #import "KeychainItemWrapper.h"
-#import "MyEntity.h"
+#import "ClientEntities.h"
+#import "Company.h"
 
 
 @interface JCAccountViewController ()
-@property (weak, nonatomic) IBOutlet UILabel *userNameDetail;
-@property (weak, nonatomic) IBOutlet UILabel *pbxDetail;
-@property (weak, nonatomic) IBOutlet UILabel *companyNameDetail;
+{
+    ClientEntities *me;
+}
 
 @end
 
 @implementation JCAccountViewController
 
--(void)retrieveAccountDetails{
+
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    // Uncomment the following line to preserve selection between presentations.
+    // self.clearsSelectionOnViewWillAppear = NO;
+ 
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    if (!me) {
+        me = [[JCOmniPresence sharedInstance] me];
+        
+        if (!me.entityCompany) {
+            [self retrieveCompany:me.company];
+        }
+    }
+    
+    [self loadViews];
+}
+
+- (void) loadViews
+{
+    self.userNameDetail.text = me.firstLastName;
+    
+    if (me.entityCompany) {
+        self.pbxDetail.text = me.entityCompany.pbxId;
+        self.companyNameDetail.text = me.entityCompany.name;
+    }
+    
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if (!me) {
+        me = [[JCOmniPresence sharedInstance] me];
+    }
+}
+
+- (void)updateAccountInformation
+{
     [[JCOsgiClient sharedClient] RetrieveMyEntitity:^(id JSON) {
         
         NSDictionary *entity = (NSDictionary*)JSON;
         
         NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
-        
-        [MyEntity MR_truncateAllInContext:localContext];
+        me.presence = entity[@"presence"];
+        me.email = entity[@"email"];
+        me.externalId = entity[@"externalId"];
+        me.company = entity[@"company"];
+        me.location = entity[@"location"];
+        me.firstLastName = entity[@"name"][@"firstLast"];
+        me.groups = entity[@"groups"];
+        me.urn = entity[@"urn"];
+        me.id = entity[@"id"];
+        me.picture = entity[@"picture"];
+
         [localContext MR_saveToPersistentStoreAndWait];
         
-        MyEntity *m_ent = [MyEntity MR_createInContext:localContext];
-        m_ent.presence = entity[@"presence"];
-        m_ent.email = entity[@"email"];
-        m_ent.externalId = entity[@"externalId"];
-        m_ent.company = entity[@"company"];
-        m_ent.location = entity[@"location"];
-        m_ent.firstLastName = entity[@"name"][@"firstLast"];
-        m_ent.groups = entity[@"groups"];
-        m_ent.urn = entity[@"urn"];
-        m_ent.id = entity[@"id"];
-        m_ent.picture = entity[@"picture"];
-            
-        [localContext MR_saveToPersistentStoreAndWait];
-        
-        NSLog(@"%@", JSON);
-        self.userNameDetail.text = m_ent.firstLastName;
         //TODO: using company id, query to get PBX?
         [self retrieveCompany:[JSON objectForKey:@"company"]];
         
+        [self loadViews];
         
     } failure:^(NSError *err) {
         NSLog(@"%@", err);
@@ -59,33 +96,26 @@
 
 -(void) retrieveCompany:(NSString*)companyURL{
     [[JCOsgiClient sharedClient] RetrieveMyCompany:companyURL:^(id JSON) {
-        self.companyNameDetail.text = [JSON objectForKey:@"name"];
+        
+        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
+        Company *company = [Company MR_createInContext:localContext];
+        company.lastModified = JSON[@"lastModified"];
+        company.pbxId = JSON[@"pbxId"];
+        company.timezone = JSON[@"timezone"];
+        company.name = JSON[@"name"];
+        company.urn = JSON[@"urn"];
+        company.companyId = JSON[@"id"];
+        
+        me.entityCompany = company;
+        
+        [localContext MR_saveToPersistentStoreAndWait];
+        
+        [self performSelectorOnMainThread:@selector(loadViews) withObject:nil waitUntilDone:nil];
+        
     } failure:^(NSError *err) {
         NSLog(@"%@", err);
     }];
     
-}
-
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    [self retrieveAccountDetails];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning

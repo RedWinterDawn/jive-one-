@@ -10,4 +10,8 @@
 
 @interface JCAccountViewController : UITableViewController
 
+@property (weak, nonatomic) IBOutlet UILabel *userNameDetail;
+@property (weak, nonatomic) IBOutlet UILabel *pbxDetail;
+@property (weak, nonatomic) IBOutlet UILabel *companyNameDetail;
+
 @end
