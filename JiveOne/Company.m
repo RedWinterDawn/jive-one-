@@ -11,11 +11,12 @@
 
 @implementation Company
 
+@dynamic companyId;
+@dynamic createDate;
 @dynamic lastModified;
+@dynamic name;
 @dynamic pbxId;
 @dynamic timezone;
-@dynamic name;
-@dynamic companyId;
 @dynamic urn;
 
 @end

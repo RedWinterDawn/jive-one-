@@ -12,11 +12,12 @@
 
 @interface Company : NSManagedObject
 
-@property (nonatomic, retain) NSString * lastModified;
+@property (nonatomic, retain) NSString * companyId;
+@property (nonatomic, retain) NSNumber * createDate;
+@property (nonatomic, retain) NSNumber * lastModified;
+@property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * pbxId;
 @property (nonatomic, retain) NSString * timezone;
-@property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSString * companyId;
 @property (nonatomic, retain) NSString * urn;
 
 @end

@@ -11,12 +11,12 @@
 
 @implementation ClientMeta
 
+@dynamic activityOrder;
+@dynamic createDate;
 @dynamic entityId;
 @dynamic lastModified;
-@dynamic createDate;
-@dynamic pinnedActivityOrder;
-@dynamic activityOrder;
-@dynamic urn;
 @dynamic metaId;
+@dynamic pinnedActivityOrder;
+@dynamic urn;
 
 @end

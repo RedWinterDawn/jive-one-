@@ -12,12 +12,12 @@
 
 @interface ClientMeta : NSManagedObject
 
+@property (nonatomic, retain) id activityOrder;
+@property (nonatomic, retain) NSNumber * createDate;
 @property (nonatomic, retain) NSString * entityId;
 @property (nonatomic, retain) NSNumber * lastModified;
-@property (nonatomic, retain) NSNumber * createDate;
-@property (nonatomic, retain) id pinnedActivityOrder;
-@property (nonatomic, retain) id activityOrder;
-@property (nonatomic, retain) NSString * urn;
 @property (nonatomic, retain) NSString * metaId;
+@property (nonatomic, retain) id pinnedActivityOrder;
+@property (nonatomic, retain) NSString * urn;
 
 @end

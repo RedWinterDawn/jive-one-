@@ -17,6 +17,7 @@
 @dynamic createDate;
 @dynamic email;
 @dynamic entityId;
+@dynamic externalId;
 @dynamic firstLastName;
 @dynamic firstName;
 @dynamic groups;
@@ -25,13 +26,12 @@
 @dynamic lastModified;
 @dynamic lastName;
 @dynamic location;
+@dynamic me;
 @dynamic picture;
 @dynamic presence;
 @dynamic tags;
 @dynamic urn;
-@dynamic me;
-@dynamic externalId;
-@dynamic entityMeta;
 @dynamic entityCompany;
+@dynamic entityMeta;
 
 @end
