@@ -7,10 +7,10 @@
 //
 
 #import "JCDirectoryDetailViewController.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
-@interface JCDirectoryDetailViewController (){
-    NSArray  *Person;
-}
+
+@interface JCDirectoryDetailViewController ()
 @end
 
 @implementation JCDirectoryDetailViewController
@@ -33,6 +33,7 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -47,22 +48,25 @@
 {
 #warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"DirectoryDetailCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    // Configure the cell...
+    cell.textLabel.text = self.person.firstLastName;
+    cell.detailTextLabel.text = self.person.email;
+    [cell.imageView setImageWithURL:[NSURL URLWithString:self.person.picture]
+                   placeholderImage:[UIImage imageNamed:@"avatar.png"]];
     
     return cell;
 }

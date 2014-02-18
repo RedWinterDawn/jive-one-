@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ClientEntities.h"
+
 
 @interface JCDirectoryDetailViewController : UITableViewController
+
+@property (strong, nonatomic) ClientEntities *person;
 
 @end

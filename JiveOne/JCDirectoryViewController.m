@@ -11,6 +11,7 @@
 #import "ClientMeta.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "JCOsgiClient.h"
+#import "JCDirectoryDetailViewController.h"
 
 
 @interface JCDirectoryViewController ()
@@ -131,7 +132,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"DirectoryCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     ClientEntities* person = clientEntities[indexPath.row];
@@ -187,13 +188,15 @@
 #pragma mark - Navigation
 
 // In a story board-based application, you will often want to do a little preparation before navigation
-//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(UITableViewCell *)sender
-//{
-//    // Get the new view controller using [segue destinationViewController].
-//    // Pass the selected object to the new view controller.
-//    UIViewController *DirectoryDetail = [segue destinationViewController];
-//    UITableViewCell *cell2 = [self tableView:self.tableView cellForRowAtIndexPath:sender.];
-//}
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(UITableViewCell *)sender
+{
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+    JCDirectoryDetailViewController *directoryDetail = [segue destinationViewController];
+    NSUInteger index = [self.tableView indexPathForCell:sender].row;
+    directoryDetail.person = clientEntities[index];
+
+}
 
 
 
@@ -201,3 +204,10 @@
     [self refreshCompanyDirectory];
 }
 @end
+
+
+
+
+
+
+
