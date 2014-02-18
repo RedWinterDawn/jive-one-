@@ -10,12 +10,14 @@
 #import "JCOsgiClient.h"
 #import "JCEntryModel.h"
 #import "ClientEntities.h"
+#import "MyEntity.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "JCChatDetailViewController.h"
 
 @interface JCRecentViewController ()
 {
     NSMutableArray *entries;
+    MyEntity *me;
 }
 
 @end
@@ -26,6 +28,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    me = [MyEntity MR_findFirst];
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -90,7 +93,15 @@
     if (!group && !name) {
         NSArray* entryArray = [(NSDictionary*)entries[indexPath.row] objectForKey:@"entries"];
         NSArray* entitiesArray = [(NSDictionary*)entries[indexPath.row] objectForKey:@"entities"];
-        NSString* firstEntity = [NSString stringWithFormat:@"%@", entitiesArray[0]] ;
+        NSString* firstEntity = nil;
+        
+        for (NSString* entity in entitiesArray) {
+            if (![entity isEqualToString:me.urn]) {
+                firstEntity = entity;
+            }
+        }
+        
+        
         NSDictionary* singleEntry = entryArray[0];
         JCEntryModel* entryModel = [[JCEntryModel alloc] initWithDictionary:singleEntry error:nil];
         //ClientEntities* person = [ClientEntities MR_findByAttribute:@"id" withValue:firstEntity];
@@ -166,6 +177,7 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     [segue.destinationViewController setChatEntries:sender];
+    [segue.destinationViewController setHidesBottomBarWhenPushed:YES];
 }
 
 

@@ -11,21 +11,23 @@
 #import "JCEntryModel.h"
 #import "JCSocketDispatch.h"
 #import "JCOsgiClient.h"
+#import "JCChatMessage.h"
+#import "UIImageView+WebCache.h"
+#import "MyEntity.h"
+
 
 @interface JCChatDetailViewController ()
+{
+    MyEntity *me;
+}
 
 @end
 
 @implementation JCChatDetailViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+#define kSubtitleJobs @"Jobs"
+#define kSubtitleWoz @"Steve Wozniak"
+#define kSubtitleCook @"Mr. Cook"
 
 - (void)setChatEntries:(NSMutableArray *)chatEntries
 {
@@ -39,8 +41,16 @@
     [super viewDidLoad];
     [[JCSocketDispatch sharedInstance] requestSession];
     
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
+    me = [MyEntity MR_findFirst];
+    
+    NSString* fontName = @"Avenir-Book";
+    //NSString* boldFontName = @"Avenir-Black";
+
+    
+    self.dataSource = self;
+    self.delegate = self;
+    
+    [[JSBubbleView appearance] setFont:[UIFont fontWithName:fontName size:14.0f]];
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -59,12 +69,18 @@
         NSString *conversationId = [conversation objectForKey:@"conversation"];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incomingChatEntry:) name:conversationId object:nil];
     }
+    
+    //self.navigationController.tabBarController.tabBar.hidden = YES;
+    self.navigationController.toolbarHidden = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    self.navigationController.tabBarController.tabBar.hidden = NO;
+    self.navigationController.toolbarHidden = YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -87,11 +103,13 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    // Return the number of sections.
-    return 1;
-}
+
+
+//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+//{
+//    // Return the number of sections.
+//    return 1;
+//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -99,25 +117,25 @@
     return self.chatEntries.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    NSDictionary* singleEntry = self.chatEntries[indexPath.row];
-    NSString* firstEntity = [singleEntry objectForKey:@"entity"];
-    NSString* message = [[singleEntry objectForKey:@"message"] objectForKey:@"raw"];
-    
-    //JCEntryModel* entryModel = [[JCEntryModel alloc] initWithDictionary:singleEntry error:nil];
-    NSArray* result = [ClientEntities MR_findByAttribute:@"entityId" withValue:firstEntity];
-    ClientEntities* person = (ClientEntities*)result[0];
-    
-    cell.textLabel.text = [NSString stringWithFormat:@"%@", message ];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", person.firstLastName];
-
-    
-    return cell;
-}
+//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    static NSString *CellIdentifier = @"Cell";
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+//    
+//    NSDictionary* singleEntry = self.chatEntries[indexPath.row];
+//    NSString* firstEntity = [singleEntry objectForKey:@"entity"];
+//    NSString* message = [[singleEntry objectForKey:@"message"] objectForKey:@"raw"];
+//    
+//    //JCEntryModel* entryModel = [[JCEntryModel alloc] initWithDictionary:singleEntry error:nil];
+//    NSArray* result = [ClientEntities MR_findByAttribute:@"entityId" withValue:firstEntity];
+//    ClientEntities* person = (ClientEntities*)result[0];
+//    
+//    cell.textLabel.text = [NSString stringWithFormat:@"%@", message ];
+//    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", person.firstLastName];
+//
+//    
+//    return cell;
+//}
 
 /*
 // Override to support conditional editing of the table view.
@@ -174,7 +192,7 @@
     
     //need to refactor this
     NSDictionary* singleEntry = self.chatEntries[0];
-    NSString* entity = [singleEntry objectForKey:@"entity"];
+    NSString* entity = me.urn;
     NSString* conversationUrn = [singleEntry objectForKey:@"conversation"];
     NSString *message = @"this is my message";
     
@@ -183,6 +201,107 @@
     } failure:^(NSError *err) {
         // update UI
     }];
+}
+
+#pragma mark - Messages view delegate: REQUIRED
+
+- (void)didSendText:(NSString *)text fromSender:(NSString *)sender onDate:(NSDate *)date
+{
+    if ((self.chatEntries.count - 1) % 2) {
+        [JSMessageSoundEffect playMessageSentSound];
+    }
+    else {
+        // for demo purposes only, mimicing received messages
+        [JSMessageSoundEffect playMessageReceivedSound];
+        sender = arc4random_uniform(10) % 2 ? kSubtitleCook : kSubtitleWoz;
+    }
     
+    [self.chatEntries addObject:[[JCChatMessage alloc] initWithText:@"test" sender:@"me" date:[NSDate date]]];
+    [self finishSend];
+    [self scrollToBottomAnimated:YES];
+}
+
+- (UIImageView *)bubbleImageViewWithType:(JSBubbleMessageType)type
+                       forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row % 2) {
+        return [JSBubbleImageViewFactory bubbleImageViewForType:type
+                                                          color:[UIColor js_bubbleLightGrayColor]];
+    }
+    
+    return [JSBubbleImageViewFactory bubbleImageViewForType:type
+                                                      color:[UIColor js_bubbleBlueColor]];
+}
+
+- (BOOL)shouldDisplayTimestampForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return NO;
+}
+
+- (NSDate *)timestampForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [NSDate date];
+}
+
+#pragma mark - Messages view data source: REQUIRED
+
+- (JSBubbleMessageType)messageTypeForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSDictionary* singleEntry = self.chatEntries[indexPath.row];
+    NSString* firstEntity = [singleEntry objectForKey:@"entity"];
+    
+    if ([firstEntity isEqualToString:me.urn]) {
+        return JSBubbleMessageTypeOutgoing;
+    }
+    else {
+        return JSBubbleMessageTypeIncoming;
+    }
+}
+
+- (NSString *)textForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary* singleEntry = self.chatEntries[indexPath.row];
+    NSString* message = [[singleEntry objectForKey:@"message"] objectForKey:@"raw"];
+    return message;
+}
+
+- (JSMessagesViewTimestampPolicy)timestampPolicy
+{
+    return JSMessagesViewTimestampPolicyAll;
+}
+
+- (JSMessagesViewAvatarPolicy)avatarPolicy
+{
+    return JSMessagesViewAvatarPolicyAll;
+}
+
+- (JSMessagesViewSubtitlePolicy)subtitlePolicy
+{
+    return JSMessagesViewSubtitlePolicyAll;
+}
+
+- (UIImageView *)avatarImageViewForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary* singleEntry = self.chatEntries[indexPath.row];
+    NSString* firstEntity = [singleEntry objectForKey:@"entity"];
+    
+    //ClientEntities* person = [ClientEntities MR_findByAttribute:@"id" withValue:firstEntity];
+    NSArray* result = [ClientEntities MR_findByAttribute:@"entityId" withValue:firstEntity];
+    ClientEntities *person = (ClientEntities*)result[0];
+    
+    UIImageView *image = [[UIImageView alloc] init];
+    [image setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];    
+    return image;
+}
+
+- (NSString *)subtitleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return @"";
+}
+
+- (UIImageView *)avatarImageViewForRowAtIndexPath:(NSIndexPath *)indexPath sender:(NSString *)sender
+{
+    //UIImage *image = [self.avatars objectForKey:sender];
+    return nil; // [[UIImageView alloc] initWithImage:image];
 }
 @end

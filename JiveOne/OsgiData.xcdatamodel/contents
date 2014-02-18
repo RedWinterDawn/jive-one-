@@ -18,12 +18,20 @@
         <attribute name="tags" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="urn" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="TestEntity" syncable="YES">
-        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+    <entity name="MyEntity" representedClassName="MyEntity" syncable="YES">
+        <attribute name="company" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="externalId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="firstLastName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="groups" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="location" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="picture" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="presence" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="urn" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="ClientEntities" positionX="0" positionY="0" width="128" height="285"/>
-        <element name="TestEntity" positionX="160" positionY="141" width="128" height="75"/>
+        <element name="ClientEntities" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="MyEntity" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

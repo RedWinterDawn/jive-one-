@@ -10,6 +10,7 @@
 #import "JCOsgiClient.h"
 #import "JCAuthenticationManager.h"
 #import "KeychainItemWrapper.h"
+#import "MyEntity.h"
 
 
 @interface JCAccountViewController ()
@@ -23,8 +24,30 @@
 
 -(void)retrieveAccountDetails{
     [[JCOsgiClient sharedClient] RetrieveMyEntitity:^(id JSON) {
+        
+        NSDictionary *entity = (NSDictionary*)JSON;
+        
+        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
+        
+        [MyEntity MR_truncateAllInContext:localContext];
+        [localContext MR_saveToPersistentStoreAndWait];
+        
+        MyEntity *m_ent = [MyEntity MR_createInContext:localContext];
+        m_ent.presence = entity[@"presence"];
+        m_ent.email = entity[@"email"];
+        m_ent.externalId = entity[@"externalId"];
+        m_ent.company = entity[@"company"];
+        m_ent.location = entity[@"location"];
+        m_ent.firstLastName = entity[@"name"][@"firstLast"];
+        m_ent.groups = entity[@"groups"];
+        m_ent.urn = entity[@"urn"];
+        m_ent.id = entity[@"id"];
+        m_ent.picture = entity[@"picture"];
+            
+        [localContext MR_saveToPersistentStoreAndWait];
+        
         NSLog(@"%@", JSON);
-        self.userNameDetail.text = [[JSON objectForKey:@"name"]objectForKey:@"firstLast"];
+        self.userNameDetail.text = m_ent.firstLastName;
         //TODO: using company id, query to get PBX?
         [self retrieveCompany:[JSON objectForKey:@"company"]];
         

@@ -38,6 +38,9 @@
 		2751593118AD334E00FD8D3F /* JCEntryMetaModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751592D18AD334E00FD8D3F /* JCEntryMetaModel.m */; };
 		2751593418AD3BD500FD8D3F /* JCVoipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751593318AD3BD500FD8D3F /* JCVoipViewController.m */; };
 		2751593518AD3BD500FD8D3F /* JCVoipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751593318AD3BD500FD8D3F /* JCVoipViewController.m */; };
+		275413B318B2C349001DBA68 /* JCChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 275413B218B2C349001DBA68 /* JCChatMessage.m */; };
+		275413B618B2E0AE001DBA68 /* MyEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 275413B518B2E0AE001DBA68 /* MyEntity.m */; };
+		275413B718B2E0AE001DBA68 /* MyEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 275413B518B2E0AE001DBA68 /* MyEntity.m */; };
 		275E809618AED884009AD776 /* JCSocketDispatch.m in Sources */ = {isa = PBXBuildFile; fileRef = 275E809518AED884009AD776 /* JCSocketDispatch.m */; };
 		275F4A5218AD0FBC00D2F069 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275F4A5118AD0FBC00D2F069 /* Foundation.framework */; };
 		275F4A5418AD0FBC00D2F069 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275F4A5318AD0FBC00D2F069 /* CoreGraphics.framework */; };
@@ -101,6 +104,10 @@
 		2751592D18AD334E00FD8D3F /* JCEntryMetaModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCEntryMetaModel.m; sourceTree = "<group>"; };
 		2751593218AD3BD500FD8D3F /* JCVoipViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVoipViewController.h; sourceTree = "<group>"; };
 		2751593318AD3BD500FD8D3F /* JCVoipViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoipViewController.m; sourceTree = "<group>"; };
+		275413B118B2C349001DBA68 /* JCChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCChatMessage.h; sourceTree = "<group>"; };
+		275413B218B2C349001DBA68 /* JCChatMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCChatMessage.m; sourceTree = "<group>"; };
+		275413B418B2E0AE001DBA68 /* MyEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyEntity.h; sourceTree = "<group>"; };
+		275413B518B2E0AE001DBA68 /* MyEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyEntity.m; sourceTree = "<group>"; };
 		275E809418AED884009AD776 /* JCSocketDispatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSocketDispatch.h; sourceTree = "<group>"; };
 		275E809518AED884009AD776 /* JCSocketDispatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSocketDispatch.m; sourceTree = "<group>"; };
 		275F4A4E18AD0FBC00D2F069 /* JiveOne.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JiveOne.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -217,6 +224,8 @@
 			isa = PBXGroup;
 			children = (
 				2751591618AD300B00FD8D3F /* OsgiData.xcdatamodel */,
+				275413B418B2E0AE001DBA68 /* MyEntity.h */,
+				275413B518B2E0AE001DBA68 /* MyEntity.m */,
 				2751591918AD301A00FD8D3F /* ClientEntities.h */,
 				2751591A18AD301A00FD8D3F /* ClientEntities.m */,
 			);
@@ -232,6 +241,8 @@
 				2751592D18AD334E00FD8D3F /* JCEntryMetaModel.m */,
 				275E809418AED884009AD776 /* JCSocketDispatch.h */,
 				275E809518AED884009AD776 /* JCSocketDispatch.m */,
+				275413B118B2C349001DBA68 /* JCChatMessage.h */,
+				275413B218B2C349001DBA68 /* JCChatMessage.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -459,6 +470,7 @@
 				2751592E18AD334E00FD8D3F /* JCEntryModel.m in Sources */,
 				275F4A5E18AD0FBC00D2F069 /* main.m in Sources */,
 				272B61DD18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */,
+				275413B618B2E0AE001DBA68 /* MyEntity.m in Sources */,
 				2751592518AD32E500FD8D3F /* JCRecentViewController.m in Sources */,
 				DD28DA5218AEC4F5003BFC44 /* JCAccountViewController.m in Sources */,
 				275F4A6218AD0FBC00D2F069 /* JCAppDelegate.m in Sources */,
@@ -466,6 +478,7 @@
 				2751591118AD174F00FD8D3F /* KeychainItemWrapper.m in Sources */,
 				2751591318AD174F00FD8D3F /* JCAuthenticationManager.m in Sources */,
 				2751590B18AD16F300FD8D3F /* JCOsgiClient.m in Sources */,
+				275413B318B2C349001DBA68 /* JCChatMessage.m in Sources */,
 				2751593018AD334E00FD8D3F /* JCEntryMetaModel.m in Sources */,
 				2751592718AD32E500FD8D3F /* JCChatDetailViewController.m in Sources */,
 				2751591F18AD303500FD8D3F /* JCDirectoryViewController.m in Sources */,
@@ -494,6 +507,7 @@
 				275F4A8318AD0FBC00D2F069 /* JiveOneTests.m in Sources */,
 				2751591C18AD301A00FD8D3F /* ClientEntities.m in Sources */,
 				2751592018AD303500FD8D3F /* JCDirectoryViewController.m in Sources */,
+				275413B718B2E0AE001DBA68 /* MyEntity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
