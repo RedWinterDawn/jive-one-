@@ -7,7 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ClientEntities.h"
 
 @interface JCOmniPresence : NSObject
+
++(instancetype)sharedInstance;
+
+- (ClientEntities*)me;
 
 @end

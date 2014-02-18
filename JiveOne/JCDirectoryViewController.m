@@ -8,8 +8,10 @@
 
 #import "JCDirectoryViewController.h"
 #import "ClientEntities.h"
+#import "ClientMeta.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "JCOsgiClient.h"
+
 
 @interface JCDirectoryViewController ()
 {
@@ -41,10 +43,12 @@
 {
     [[JCOsgiClient sharedClient] RetrieveClientEntitites:^(id JSON) {
         
+        NSString *me = [JSON objectForKey:@"me"];
         NSArray* entityArray = [JSON objectForKey:@"entries"];
         NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
         
         [ClientEntities MR_truncateAllInContext:localContext];
+        [ClientMeta MR_truncateAllInContext:localContext];
         [localContext MR_saveToPersistentStoreAndWait];
         
         for (NSDictionary* entity in entityArray) {
@@ -62,8 +66,20 @@
             c_ent.urn = [entity objectForKey:@"urn"];
             c_ent.id = [entity objectForKey:@"id"];
             c_ent.entityId = [entity objectForKey:@"_id"];
+            c_ent.me = [NSNumber numberWithBool:[c_ent.entityId isEqualToString:me]];
             c_ent.picture = [entity objectForKey:@"picture"];
             c_ent.email = [entity objectForKey:@"email"];
+            
+            ClientMeta *c_meta = [ClientMeta MR_createInContext:localContext];
+            c_meta.entityId = entity[@"meta"][@"entity"];
+            c_meta.lastModified = entity[@"meta"][@"lastModified"];
+            c_meta.createDate = entity[@"meta"][@"createDate"];
+            c_meta.pinnedActivityOrder = entity[@"meta"][@"pinnedActivityOrder"];
+            c_meta.activityOrder = entity[@"meta"][@"activityOrder"];
+            c_meta.urn = entity[@"meta"][@"urn"];
+            c_meta.metaId = entity[@"meta"][@"id"];
+            
+            c_ent.entityMeta = c_meta;
             
             NSLog(@"id:%@ - _id:%@", [entity objectForKey:@"id"], [entity objectForKey:@"_id"]);
             

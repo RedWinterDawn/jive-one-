@@ -16,4 +16,5 @@
     #import <AFNetworking/AFNetworking.h>
     #import "Constants.h"
     #import "CoreData+MagicalRecord.h"
+    #import "JCOmniPresence.h"
 #endif

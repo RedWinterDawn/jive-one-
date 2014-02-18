@@ -10,14 +10,13 @@
 #import "JCOsgiClient.h"
 #import "JCEntryModel.h"
 #import "ClientEntities.h"
-#import "MyEntity.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "JCChatDetailViewController.h"
 
 @interface JCRecentViewController ()
 {
     NSMutableArray *entries;
-    MyEntity *me;
+    ClientEntities *me;
 }
 
 @end
@@ -28,7 +27,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    me = [MyEntity MR_findFirst];
+    me = [[JCOmniPresence sharedInstance] me];;
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;

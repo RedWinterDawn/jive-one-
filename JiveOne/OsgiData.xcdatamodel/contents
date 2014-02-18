@@ -4,7 +4,8 @@
         <attribute name="company" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createDate" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="entityId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="entityId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="externalId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="firstLastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="firstName" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="groups" optional="YES" attributeType="Transformable" syncable="YES"/>
@@ -13,25 +14,35 @@
         <attribute name="lastModified" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="location" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="me" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="picture" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="presence" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="tags" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="urn" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="entityCompany" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Company" syncable="YES"/>
+        <relationship name="entityMeta" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ClientMeta" syncable="YES"/>
     </entity>
-    <entity name="MyEntity" representedClassName="MyEntity" syncable="YES">
-        <attribute name="company" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="externalId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="firstLastName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="groups" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="location" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="picture" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="presence" optional="YES" attributeType="String" syncable="YES"/>
+    <entity name="ClientMeta" representedClassName="ClientMeta" syncable="YES">
+        <attribute name="activityOrder" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="createDate" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="entityId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="lastModified" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="metaId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pinnedActivityOrder" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="urn" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Company" representedClassName="Company" syncable="YES">
+        <attribute name="companyId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="createDate" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="lastModified" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pbxId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="timezone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="urn" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="ClientEntities" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="MyEntity" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="ClientEntities" positionX="43" positionY="80" width="128" height="313"/>
+        <element name="ClientMeta" positionX="367" positionY="108" width="128" height="148"/>
+        <element name="Company" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

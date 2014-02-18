@@ -13,12 +13,11 @@
 #import "JCOsgiClient.h"
 #import "JCChatMessage.h"
 #import "UIImageView+WebCache.h"
-#import "MyEntity.h"
 
 
 @interface JCChatDetailViewController ()
 {
-    MyEntity *me;
+    ClientEntities *me;
 }
 
 @end
@@ -41,7 +40,7 @@
     [super viewDidLoad];
     [[JCSocketDispatch sharedInstance] requestSession];
     
-    me = [MyEntity MR_findFirst];
+    me = [[JCOmniPresence sharedInstance] me];
     
     NSString* fontName = @"Avenir-Book";
     //NSString* boldFontName = @"Avenir-Black";
