@@ -2,13 +2,14 @@
 //  ClientEntities.h
 //  JiveOne
 //
-//  Created by Eduardo Gueiros on 2/13/14.
+//  Created by Eduardo Gueiros on 2/18/14.
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class ClientMeta, Company;
 
 @interface ClientEntities : NSManagedObject
 
@@ -28,5 +29,9 @@
 @property (nonatomic, retain) NSString * presence;
 @property (nonatomic, retain) id tags;
 @property (nonatomic, retain) NSString * urn;
+@property (nonatomic, retain) NSNumber * me;
+@property (nonatomic, retain) NSString * externalId;
+@property (nonatomic, retain) ClientMeta *entityMeta;
+@property (nonatomic, retain) Company *entityCompany;
 
 @end

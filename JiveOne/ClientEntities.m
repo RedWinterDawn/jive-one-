@@ -2,11 +2,13 @@
 //  ClientEntities.m
 //  JiveOne
 //
-//  Created by Eduardo Gueiros on 2/13/14.
+//  Created by Eduardo Gueiros on 2/18/14.
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
 #import "ClientEntities.h"
+#import "ClientMeta.h"
+#import "Company.h"
 
 
 @implementation ClientEntities
@@ -27,5 +29,9 @@
 @dynamic presence;
 @dynamic tags;
 @dynamic urn;
+@dynamic me;
+@dynamic externalId;
+@dynamic entityMeta;
+@dynamic entityCompany;
 
 @end
