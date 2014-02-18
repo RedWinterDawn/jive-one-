@@ -140,7 +140,7 @@
         <scene sceneID="4Zu-Qh-4wk">
             <objects>
                 <navigationController definesPresentationContext="YES" id="vaI-vc-7Id" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Directory" id="WUb-WZ-m0b"/>
+                    <tabBarItem key="tabBarItem" title="Directory" image="DirectoryTab" id="WUb-WZ-m0b"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="bje-51-esT">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -265,7 +265,7 @@
         <scene sceneID="7yR-ZU-bxo">
             <objects>
                 <navigationController definesPresentationContext="YES" id="6Dq-mE-F9w" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Recent" id="K12-Hv-Z3c"/>
+                    <tabBarItem key="tabBarItem" title="Recent" image="RecentTab" id="K12-Hv-Z3c"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="lEx-Jd-cci">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -331,7 +331,7 @@
                         <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                         <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="WebConnection" id="MOC-nK-aKA"/>
+                    <tabBarItem key="tabBarItem" title="WebConnection" image="WebTab" id="MOC-nK-aKA"/>
                     <connections>
                         <outlet property="txtReceivedData" destination="Liu-Dy-DOa" id="jJ2-FD-mGY"/>
                     </connections>
@@ -475,7 +475,7 @@
                             <outlet property="delegate" destination="xfW-W8-tPR" id="qpG-Oa-9dI"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Account" id="k9B-uW-1kv"/>
+                    <tabBarItem key="tabBarItem" title="Account" image="AccontTab" id="k9B-uW-1kv"/>
                     <connections>
                         <outlet property="companyNameDetail" destination="bci-S0-F16" id="ixo-SB-DEf"/>
                         <outlet property="pbxDetail" destination="RZY-jZ-re7" id="XxT-7j-U8r"/>
@@ -488,7 +488,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="AccontTab" width="40" height="40"/>
         <image name="Default.png" width="320" height="480"/>
+        <image name="DirectoryTab" width="40" height="40"/>
+        <image name="RecentTab" width="40" height="40"/>
+        <image name="WebTab" width="40" height="40"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

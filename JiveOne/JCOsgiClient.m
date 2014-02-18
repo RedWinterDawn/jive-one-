@@ -231,6 +231,8 @@
 }
 - (void)clearCookies {
     
+    
+    
     NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[_manager baseURL]];
     
     for (NSHTTPCookie *cookie in cookies) {
