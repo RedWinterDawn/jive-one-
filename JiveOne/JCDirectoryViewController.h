@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JCDirectoryViewController : UITableViewController
+@interface JCDirectoryViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 - (IBAction)refreshDirectory:(id)sender;
+
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @end
