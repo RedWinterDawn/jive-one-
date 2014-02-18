@@ -16,7 +16,7 @@
 
 @interface JCDirectoryViewController ()
 {
-    NSArray *clientEntities;
+    NSMutableArray *clientEntities;
     NSArray *sections;
 }
 @end
@@ -35,7 +35,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    sections = [NSArray arrayWithObjects:@"#", @"a", @"b", @"c", @"d", @"e", @"f", @"g", @"h", @"i", @"j", @"k", @"l", @"m", @"n", @"o", @"p", @"q", @"r", @"s", @"t", @"u", @"v", @"w", @"x", @"y", @"z", nil];
+    sections = [NSArray arrayWithObjects:@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
+    clientEntities = [[NSMutableArray alloc] init];
+    
+    for (NSString *section in sections) {
+        NSPredicate *pred = [NSPredicate predicateWithFormat:@"(firstLastName BEGINSWITH[c] %@)", section];
+        
+        NSArray *sectionArray = [ClientEntities MR_findAllWithPredicate:pred];
+        [clientEntities addObject:sectionArray];
+    
+    }
+    
+    
     
     [self refreshCompanyDirectory];
 }
@@ -87,7 +98,17 @@
             [localContext MR_saveToPersistentStoreAndWait];
         }
         
-        clientEntities = [ClientEntities MR_findAllSortedBy:@"firstLastName" ascending:YES];
+        [clientEntities removeAllObjects];
+        
+        for (NSString *section in sections) {
+            NSPredicate *pred = [NSPredicate predicateWithFormat:@"(firstLastName BEGINSWITH[c] %@)", section];
+            
+            NSArray *sectionArray = [ClientEntities MR_findAllWithPredicate:pred];
+            [clientEntities addObject:sectionArray];
+            
+        }
+        
+        //clientEntities = [ClientEntities MR_findAllSortedBy:@"firstLastName" ascending:YES];
         [self.tableView reloadData];
         
     } failure:^(NSError *err) {
@@ -95,6 +116,10 @@
     }];
 
 }
+
+//- (void)createContactArraysByFirstName {
+//    if (
+//}
 
 - (void)didReceiveMemoryWarning
 {
@@ -117,7 +142,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString*)title atIndex:(NSInteger)index
 {
-    return index;
+    return index - 1;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -127,7 +152,8 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return clientEntities.count;
+    
+    return [(NSArray*)clientEntities[section] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -135,7 +161,9 @@
     static NSString *CellIdentifier = @"DirectoryCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    ClientEntities* person = clientEntities[indexPath.row];
+    NSArray *section = clientEntities[indexPath.section];
+    
+    ClientEntities* person = section[indexPath.row];
     
     cell.textLabel.text = person.firstLastName;
     cell.detailTextLabel.text = person.email;
