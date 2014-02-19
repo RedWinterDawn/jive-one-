@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		272B61DD18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */; };
 		272B61DE18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */; };
+		27426AC918B5303D00011635 /* JCOsgiClientTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 27426AC818B5303D00011635 /* JCOsgiClientTest.m */; };
 		275158FC18AD10BB00FD8D3F /* main-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 275158F718AD10BA00FD8D3F /* main-logo.png */; };
 		275158FD18AD10BB00FD8D3F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 275158F818AD10BA00FD8D3F /* Default.png */; };
 		275158FE18AD10BB00FD8D3F /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 275158F918AD10BB00FD8D3F /* Default@2x.png */; };
@@ -82,6 +83,7 @@
 /* Begin PBXFileReference section */
 		272B61DB18B2A4DD00EB8ED5 /* TRVSMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRVSMonitor.h; sourceTree = "<group>"; };
 		272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRVSMonitor.m; sourceTree = "<group>"; };
+		27426AC818B5303D00011635 /* JCOsgiClientTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCOsgiClientTest.m; sourceTree = "<group>"; };
 		275158F718AD10BA00FD8D3F /* main-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "main-logo.png"; sourceTree = "<group>"; };
 		275158F818AD10BA00FD8D3F /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		275158F918AD10BB00FD8D3F /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
@@ -338,6 +340,7 @@
 			children = (
 				275F4A8218AD0FBC00D2F069 /* JiveOneTests.m */,
 				275F4A7D18AD0FBC00D2F069 /* Supporting Files */,
+				27426AC818B5303D00011635 /* JCOsgiClientTest.m */,
 			);
 			path = JiveOneTests;
 			sourceTree = "<group>";
@@ -538,6 +541,7 @@
 				275F4A8318AD0FBC00D2F069 /* JiveOneTests.m in Sources */,
 				2751592018AD303500FD8D3F /* JCDirectoryViewController.m in Sources */,
 				2762C46118B417A000885918 /* ClientEntities.m in Sources */,
+				27426AC918B5303D00011635 /* JCOsgiClientTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
