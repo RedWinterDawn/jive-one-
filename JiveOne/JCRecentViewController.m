@@ -100,18 +100,18 @@
             }
         }
         
-        
-        NSDictionary* singleEntry = entryArray[0];
-        JCEntryModel* entryModel = [[JCEntryModel alloc] initWithDictionary:singleEntry error:nil];
-        //ClientEntities* person = [ClientEntities MR_findByAttribute:@"id" withValue:firstEntity];
-        NSArray* result = [ClientEntities MR_findByAttribute:@"entityId" withValue:firstEntity];
-        ClientEntities * person = (ClientEntities*)result[0];
-        
-        cell.textLabel.text = [NSString stringWithFormat:@"%@", person.firstLastName];
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", entryModel.deliveryDate];
-        //NSLog(person.picture);
-        [cell.imageView setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];
-
+        if (entryArray.count != 0) {
+            NSDictionary* singleEntry = entryArray[0];
+            JCEntryModel* entryModel = [[JCEntryModel alloc] initWithDictionary:singleEntry error:nil];
+            //ClientEntities* person = [ClientEntities MR_findByAttribute:@"id" withValue:firstEntity];
+            NSArray* result = [ClientEntities MR_findByAttribute:@"entityId" withValue:firstEntity];
+            ClientEntities * person = (ClientEntities*)result[0];
+            
+            cell.textLabel.text = [NSString stringWithFormat:@"%@", person.firstLastName];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", entryModel.deliveryDate];
+            //NSLog(person.picture);
+            [cell.imageView setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];
+        }
     }
     else
     {

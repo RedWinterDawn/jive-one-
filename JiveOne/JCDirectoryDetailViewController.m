@@ -10,7 +10,10 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 
 
+
 @interface JCDirectoryDetailViewController ()
+#define NUMBER_OF_ROWS_IN_SECTION 3
+#define NUMBER_OF_SECTIONS 1
 @end
 
 @implementation JCDirectoryDetailViewController
@@ -46,16 +49,14 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 1;
+    return NUMBER_OF_SECTIONS;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 1;
+    return NUMBER_OF_ROWS_IN_SECTION;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -89,7 +90,13 @@
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         
         cell.textLabel.text = @"Company";
-        cell.detailTextLabel.text = self.person.company;
+        //convert "companies:jive" to "jive:
+        NSString *stringToDivide = self.person.company;
+        NSArray *stringParts = [stringToDivide componentsSeparatedByString:@":"];
+        if (stringParts[1]) {
+            //Capitilize Company Name
+            cell.detailTextLabel.text = [stringParts[1] capitalizedString];
+        }
         
         return cell;
     }
