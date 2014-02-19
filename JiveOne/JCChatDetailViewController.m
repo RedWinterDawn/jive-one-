@@ -18,6 +18,7 @@
 @interface JCChatDetailViewController ()
 {
     ClientEntities *me;
+    UITextView *messageTextView;
 }
 
 @end
@@ -42,21 +43,64 @@
     
     me = [[JCOmniPresence sharedInstance] me];
     
-    NSString* fontName = @"Avenir-Book";
+    //NSString* fontName = @"Avenir-Book";
     //NSString* boldFontName = @"Avenir-Black";
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 
     
-    self.dataSource = self;
-    self.delegate = self;
+    //self.dataSource = self;
+    //self.delegate = self;
     
-    [[JSBubbleView appearance] setFont:[UIFont fontWithName:fontName size:14.0f]];
+    //[[JSBubbleView appearance] setFont:[UIFont fontWithName:fontName size:14.0f]];
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    messageTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 200, 35)];
+
+    
+    UIBarButtonItem *messageBarItemTextView = [[UIBarButtonItem alloc] initWithCustomView:messageTextView];
+    UIBarButtonItem *sendBarItemButton = [[UIBarButtonItem alloc] initWithTitle:@"Send" style:UIBarButtonItemStyleBordered target:self action:@selector(sendMessage:)];
+    UIBarButtonItem *fileBarItemButton = [[UIBarButtonItem alloc] initWithTitle:@"File" style:UIBarButtonItemStyleBordered target:self action:@selector(sendFile:)];
+    
+    [self setToolbarItems:[NSArray arrayWithObjects:fileBarItemButton, messageBarItemTextView, sendBarItemButton, nil]];
+    
+    [self scrollToBottom];
+    
+    
     [self.tableView reloadData];
+}
+
+- (void) keyboardWillShow: (NSNotification *)notification
+{
+    UIViewAnimationCurve animationCurve = [[[notification userInfo] valueForKey: UIKeyboardAnimationCurveUserInfoKey] intValue];
+    NSTimeInterval animationDuration = [[[notification userInfo] valueForKey: UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    CGRect keyboardBounds = [(NSValue *)[[notification userInfo] objectForKey: UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+    [UIView beginAnimations:nil context: nil];
+    [UIView setAnimationCurve:animationCurve];
+    [UIView setAnimationDuration:animationDuration];
+    UIToolbar *toolbar = self.navigationController.toolbar;
+    [toolbar setFrame:CGRectMake(0.0f, self.view.frame.size.height - keyboardBounds.size.height - toolbar.frame.size.height,              toolbar.frame.size.width, toolbar.frame.size.height)];
+    [UIView commitAnimations];
+
+    [self scrollToBottom];
+}
+
+- (void)keyboardWillHide:(NSNotification*)notification
+{
+    UIViewAnimationCurve animationCurve = [[[notification userInfo] valueForKey: UIKeyboardAnimationCurveUserInfoKey] intValue];
+    NSTimeInterval animationDuration = [[[notification userInfo] valueForKey: UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    //CGRect keyboardBounds = [(NSValue *)[[notification userInfo] objectForKey: UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+    [UIView beginAnimations:nil context: nil];
+    [UIView setAnimationCurve:animationCurve];
+    [UIView setAnimationDuration:animationDuration];
+    UIToolbar *toolbar = self.navigationController.toolbar;
+    [toolbar setFrame:CGRectMake(0.0f, self.view.frame.size.height - 46.0f, toolbar.frame.size.width, toolbar.frame.size.height)];
+    [UIView commitAnimations];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -116,25 +160,25 @@
     return self.chatEntries.count;
 }
 
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    static NSString *CellIdentifier = @"Cell";
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-//    
-//    NSDictionary* singleEntry = self.chatEntries[indexPath.row];
-//    NSString* firstEntity = [singleEntry objectForKey:@"entity"];
-//    NSString* message = [[singleEntry objectForKey:@"message"] objectForKey:@"raw"];
-//    
-//    //JCEntryModel* entryModel = [[JCEntryModel alloc] initWithDictionary:singleEntry error:nil];
-//    NSArray* result = [ClientEntities MR_findByAttribute:@"entityId" withValue:firstEntity];
-//    ClientEntities* person = (ClientEntities*)result[0];
-//    
-//    cell.textLabel.text = [NSString stringWithFormat:@"%@", message ];
-//    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", person.firstLastName];
-//
-//    
-//    return cell;
-//}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+    NSDictionary* singleEntry = self.chatEntries[indexPath.row];
+    NSString* firstEntity = [singleEntry objectForKey:@"entity"];
+    NSString* message = [[singleEntry objectForKey:@"message"] objectForKey:@"raw"];
+    
+    //JCEntryModel* entryModel = [[JCEntryModel alloc] initWithDictionary:singleEntry error:nil];
+    NSArray* result = [ClientEntities MR_findByAttribute:@"entityId" withValue:firstEntity];
+    ClientEntities* person = (ClientEntities*)result[0];
+    
+    cell.textLabel.text = [NSString stringWithFormat:@"%@", message ];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", person.firstLastName];
+
+    
+    return cell;
+}
 
 /*
 // Override to support conditional editing of the table view.
@@ -187,120 +231,39 @@
 
  */
 
+- (void)sendFile:(id)sender
+{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"New Photo or Video", @"Existing Photo", @"Existing Video", @"Share Location", @"Share Contact", nil];
+    
+    [actionSheet showInView:messageTextView];
+}
+
 - (IBAction)sendMessage:(id)sender {
     
     //need to refactor this
     NSDictionary* singleEntry = self.chatEntries[0];
     NSString* entity = me.urn;
     NSString* conversationUrn = [singleEntry objectForKey:@"conversation"];
-    NSString *message = @"this is my message";
+    NSString *message = messageTextView.text;
     
     [[JCOsgiClient sharedClient] SubmitChatMessageForConversation:conversationUrn message:message withEntity:entity success:^(id JSON) {
         // update UI
     } failure:^(NSError *err) {
         // update UI
     }];
-}
-
-#pragma mark - Messages view delegate: REQUIRED
-
-- (void)didSendText:(NSString *)text fromSender:(NSString *)sender onDate:(NSDate *)date
-{
-    if ((self.chatEntries.count - 1) % 2) {
-        [JSMessageSoundEffect playMessageSentSound];
-    }
-    else {
-        // for demo purposes only, mimicing received messages
-        [JSMessageSoundEffect playMessageReceivedSound];
-        sender = arc4random_uniform(10) % 2 ? kSubtitleCook : kSubtitleWoz;
-    }
     
-    [self.chatEntries addObject:[[JCChatMessage alloc] initWithText:@"test" sender:@"me" date:[NSDate date]]];
-    [self finishSend];
-    [self scrollToBottomAnimated:YES];
+    [self cleanup];
 }
 
-- (UIImageView *)bubbleImageViewWithType:(JSBubbleMessageType)type
-                       forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)scrollToBottom
 {
-    if (indexPath.row % 2) {
-        return [JSBubbleImageViewFactory bubbleImageViewForType:type
-                                                          color:[UIColor js_bubbleLightGrayColor]];
-    }
-    
-    return [JSBubbleImageViewFactory bubbleImageViewForType:type
-                                                      color:[UIColor js_bubbleBlueColor]];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:(_chatEntries.count -1) inSection:0];
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 
-- (BOOL)shouldDisplayTimestampForRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)cleanup
 {
-    return NO;
+    messageTextView.text = @"";
 }
 
-- (NSDate *)timestampForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return [NSDate date];
-}
-
-#pragma mark - Messages view data source: REQUIRED
-
-- (JSBubbleMessageType)messageTypeForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    NSDictionary* singleEntry = self.chatEntries[indexPath.row];
-    NSString* firstEntity = [singleEntry objectForKey:@"entity"];
-    
-    if ([firstEntity isEqualToString:me.urn]) {
-        return JSBubbleMessageTypeOutgoing;
-    }
-    else {
-        return JSBubbleMessageTypeIncoming;
-    }
-}
-
-- (NSString *)textForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSDictionary* singleEntry = self.chatEntries[indexPath.row];
-    NSString* message = [[singleEntry objectForKey:@"message"] objectForKey:@"raw"];
-    return message;
-}
-
-- (JSMessagesViewTimestampPolicy)timestampPolicy
-{
-    return JSMessagesViewTimestampPolicyAll;
-}
-
-- (JSMessagesViewAvatarPolicy)avatarPolicy
-{
-    return JSMessagesViewAvatarPolicyAll;
-}
-
-- (JSMessagesViewSubtitlePolicy)subtitlePolicy
-{
-    return JSMessagesViewSubtitlePolicyAll;
-}
-
-- (UIImageView *)avatarImageViewForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSDictionary* singleEntry = self.chatEntries[indexPath.row];
-    NSString* firstEntity = [singleEntry objectForKey:@"entity"];
-    
-    //ClientEntities* person = [ClientEntities MR_findByAttribute:@"id" withValue:firstEntity];
-    NSArray* result = [ClientEntities MR_findByAttribute:@"entityId" withValue:firstEntity];
-    ClientEntities *person = (ClientEntities*)result[0];
-    
-    UIImageView *image = [[UIImageView alloc] init];
-    [image setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];    
-    return image;
-}
-
-- (NSString *)subtitleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return @"";
-}
-
-- (UIImageView *)avatarImageViewForRowAtIndexPath:(NSIndexPath *)indexPath sender:(NSString *)sender
-{
-    //UIImage *image = [self.avatars objectForKey:sender];
-    return nil; // [[UIImageView alloc] initWithImage:image];
-}
 @end
