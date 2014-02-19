@@ -12,6 +12,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "JCOsgiClient.h"
 #import "JCDirectoryDetailViewController.h"
+#import <AddressBookUI/AddressBookUI.h>
 
 
 @interface JCDirectoryViewController ()
@@ -19,6 +20,9 @@
     NSMutableArray *clientEntities;
     NSArray *sections;
 }
+
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segControl;
+
 @end
 
 @implementation JCDirectoryViewController
@@ -33,17 +37,27 @@
     sections = [NSArray arrayWithObjects:@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
     clientEntities = [[NSMutableArray alloc] init];
     
+    if ([self.segControl selectedSegmentIndex] == 0) {
+        [self loadCompanyDirectory];
+    } else {
+        [self loadLocalDirectory];
+    }
+    
+}
+
+- (void)loadCompanyDirectory {
+    
     for (NSString *section in sections) {
         NSPredicate *pred = [NSPredicate predicateWithFormat:@"(firstLastName BEGINSWITH[c] %@)", section];
         
         NSArray *sectionArray = [ClientEntities MR_findAllWithPredicate:pred];
         [clientEntities addObject:sectionArray];
-    
     }
-    
-    
-    
     [self refreshCompanyDirectory];
+}
+
+- (void)loadLocalDirectory {
+    
 }
 
 - (void)refreshCompanyDirectory

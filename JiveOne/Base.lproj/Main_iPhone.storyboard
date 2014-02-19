@@ -272,6 +272,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Directory" id="m0w-c6-XGP"/>
                     <connections>
+                        <outlet property="segControl" destination="Lqr-xn-be2" id="Mqn-VY-HQ2"/>
                         <outlet property="tableView" destination="mbq-mY-MdJ" id="hv1-OR-HQw"/>
                     </connections>
                 </viewController>
