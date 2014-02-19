@@ -60,15 +60,39 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"DirectoryDetailCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    if(indexPath.row==0){
+        // Create first cell
+        static NSString *CellIdentifier = @"DirectoryDetailNameCell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        
+        cell.textLabel.text = self.person.firstLastName;
+        [cell.imageView setImageWithURL:[NSURL URLWithString:self.person.picture]
+                       placeholderImage:[UIImage imageNamed:@"avatar.png"]];
+        
+        return cell;
+    }
     
-    cell.textLabel.text = self.person.firstLastName;
-    cell.detailTextLabel.text = self.person.email;
-    [cell.imageView setImageWithURL:[NSURL URLWithString:self.person.picture]
-                   placeholderImage:[UIImage imageNamed:@"avatar.png"]];
+    if(indexPath.row==1){
+        // Create second cell
+        static NSString *CellIdentifier = @"DirectoryDetailEmailCell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        
+        cell.textLabel.text = @"Email";
+        cell.detailTextLabel.text = self.person.email;
+        
+        return cell;
+    }
     
-    return cell;
+    else {
+        // Create all others
+        static NSString *CellIdentifier = @"DirectoryDetailCompanyCell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        
+        cell.textLabel.text = @"Company";
+        cell.detailTextLabel.text = self.person.company;
+        
+        return cell;
+    }
 }
 
 /*
