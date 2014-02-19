@@ -227,12 +227,9 @@
 // In a story board-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(UITableViewCell *)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    JCDirectoryDetailViewController *directoryDetail = [segue destinationViewController];
-    NSUInteger index = [self.tableView indexPathForCell:sender].row;
-    directoryDetail.person = clientEntities[index];
-
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+    ClientEntities *person = clientEntities[indexPath.section][indexPath.row];
+    [segue.destinationViewController setPerson:person];
 }
 
 
