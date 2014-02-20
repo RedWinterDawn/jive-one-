@@ -13,5 +13,6 @@
 @interface JCDirectoryDetailViewController : UITableViewController
 
 @property (strong, nonatomic) ClientEntities *person;
+@property (strong, nonatomic) NSDictionary *ABPerson;
 
 @end

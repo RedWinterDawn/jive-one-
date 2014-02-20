@@ -12,16 +12,22 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "JCOsgiClient.h"
 #import "JCDirectoryDetailViewController.h"
-#import <AddressBookUI/AddressBookUI.h>
+
+
+
+
+
 
 
 @interface JCDirectoryViewController ()
 {
     NSMutableArray *clientEntities;
+    NSMutableArray *localContacts;
     NSArray *sections;
 }
 
-@property (weak, nonatomic) IBOutlet UISegmentedControl *segControl;
+@property (nonatomic, weak) IBOutlet UISegmentedControl *segControl;
+
 
 @end
 
@@ -39,10 +45,10 @@
     
     if ([self.segControl selectedSegmentIndex] == 0) {
         [self loadCompanyDirectory];
+        [self refreshCompanyDirectory];
     } else {
         [self loadLocalDirectory];
     }
-    
 }
 
 - (void)loadCompanyDirectory {
@@ -53,12 +59,63 @@
         NSArray *sectionArray = [ClientEntities MR_findAllWithPredicate:pred];
         [clientEntities addObject:sectionArray];
     }
-    [self refreshCompanyDirectory];
+    [self.tableView reloadData];
+}
+
+- (ABAddressBookRequestAccessCompletionHandler)addressBookComplete {
+    return nil;
 }
 
 - (void)loadLocalDirectory {
     
+    CFErrorRef *error = nil;
+    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, error);
+    
+    NSArray *allContacts = (__bridge_transfer NSArray *)ABAddressBookCopyArrayOfAllPeople(addressBook);
+//    NSMutableDictionary *contact = [[NSMutableDictionary alloc] init];
+    
+    NSInteger sectionCount = [sections count];
+    NSInteger allContactsCount = [allContacts count];
+    for (int i = 0; i < sectionCount; i++) {
+        NSMutableArray *section = [[NSMutableArray alloc] init];
+        
+        for (int j = 0; j < allContactsCount; j++) {
+            NSString * firstName = (__bridge NSString *)(ABRecordCopyValue((__bridge ABRecordRef)(allContacts[j]), kABPersonFirstNameProperty));
+            NSString * lastName = (__bridge NSString *)(ABRecordCopyValue((__bridge ABRecordRef)(allContacts[j]), kABPersonLastNameProperty));
+            NSString * email = (__bridge NSString *)(ABRecordCopyValue((__bridge ABRecordRef)(allContacts[j]), kABPersonEmailProperty));
+            NSString * phone = (__bridge NSString *)(ABRecordCopyValue((__bridge ABRecordRef)(allContacts[j]), kABPersonPhoneProperty));
+            
+            if ([firstName hasPrefix:sections[j]]) {
+                NSMutableDictionary *tempDictionary = [[NSMutableDictionary alloc] init];
+                [tempDictionary setObject:firstName forKey:@"firstName"];
+                [tempDictionary setObject:lastName forKey:@"lastName"];
+                [tempDictionary setObject:email forKey:@"email"];
+                [tempDictionary setObject:phone forKey:@"phone"];
+            
+            [section addObject:tempDictionary];
+                
+            }
+        }
+        
+        [clientEntities addObject:section];
+    }
+    
+    [self.tableView reloadData];
+    
 }
+
+- (IBAction)segmentChanged:sender {
+    
+    if ([self.segControl selectedSegmentIndex] == 0) {
+        [self loadCompanyDirectory];
+        NSLog(@"First segment!");
+    } else {
+        [self loadLocalDirectory];
+        NSLog(@"Second Segment!");
+    }
+    
+}
+
 
 - (void)refreshCompanyDirectory
 {
@@ -123,7 +180,7 @@
     } failure:^(NSError *err) {
         NSLog([err description]);
     }];
-
+    
 }
 
 //- (void)createContactArraysByFirstName {
@@ -141,7 +198,11 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return sections.count;
+    if (clientEntities.count == 0) {
+        return 0;
+    } else {
+        return sections.count;
+    }
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
@@ -162,7 +223,13 @@
 {
     // Return the number of rows in the section.
     
-    return [(NSArray*)clientEntities[section] count];
+    if (clientEntities.count == 0) {
+        return 0;
+    } else {
+        return [(NSArray*)clientEntities[section] count];
+    }
+    
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -170,56 +237,61 @@
     static NSString *CellIdentifier = @"DirectoryCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    NSArray *section = clientEntities[indexPath.section];
-    
-    ClientEntities* person = section[indexPath.row];
-    
-    cell.textLabel.text = person.firstLastName;
-    cell.detailTextLabel.text = person.email;
-    [cell.imageView setImageWithURL:[NSURL URLWithString:person.picture]
-                   placeholderImage:[UIImage imageNamed:@"avatar.png"]];
-    
-    return cell;
+    if (clientEntities.count == 0) {
+        return nil;
+    } else {
+        
+        NSArray *section = clientEntities[indexPath.section];
+        
+        ClientEntities* person = section[indexPath.row];
+        
+        cell.textLabel.text = person.firstLastName;
+        cell.detailTextLabel.text = person.email;
+        [cell.imageView setImageWithURL:[NSURL URLWithString:person.picture]
+                       placeholderImage:[UIImage imageNamed:@"avatar.png"]];
+        
+        return cell;
+    }
 }
 
 /*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
+ // Override to support conditional editing of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ // Return NO if you do not want the specified item to be editable.
+ return YES;
+ }
+ */
 
 /*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
+ // Override to support editing the table view.
+ - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ if (editingStyle == UITableViewCellEditingStyleDelete) {
+ // Delete the row from the data source
+ [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+ }
+ else if (editingStyle == UITableViewCellEditingStyleInsert) {
+ // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+ }
+ }
+ */
 
 /*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
+ // Override to support rearranging the table view.
+ - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+ {
+ }
+ */
 
 /*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
+ // Override to support conditional rearranging of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ // Return NO if you do not want the item to be re-orderable.
+ return YES;
+ }
+ */
 
 
 #pragma mark - Navigation
@@ -228,8 +300,18 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(UITableViewCell *)sender
 {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
-    ClientEntities *person = clientEntities[indexPath.section][indexPath.row];
-    [segue.destinationViewController setPerson:person];
+    
+    if (self.segControl.selectedSegmentIndex == 0) {
+        ClientEntities *person = clientEntities[indexPath.section][indexPath.row];
+        [segue.destinationViewController setPerson:person];
+    }
+    else
+    {
+        // get ABDictionary
+  //      [segue.destinationViewController setABPerson:<#(NSDictionary *)#>];
+    }
+    
+    
 }
 
 

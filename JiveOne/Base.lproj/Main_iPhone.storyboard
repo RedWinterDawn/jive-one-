@@ -220,18 +220,21 @@
                                 </prototypes>
                             </tableView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Lqr-xn-be2">
-                                <rect key="frame" x="29" y="68" width="263" height="30"/>
+                                <rect key="frame" x="29" y="69" width="263" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <segments>
                                     <segment title="Company DIrectory"/>
-                                    <segment title=" Local Contacts"/>
+                                    <segment title="My Contacts"/>
                                 </segments>
+                                <connections>
+                                    <action selector="segmentChanged:" destination="eTh-sK-SbW" eventType="valueChanged" id="dJm-Ya-O9L"/>
+                                </connections>
                             </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Directory" id="m0w-c6-XGP"/>
+                    <navigationItem key="navigationItem" title="Directory" id="i9j-aS-UgH"/>
                     <connections>
                         <outlet property="segControl" destination="Lqr-xn-be2" id="Mqn-VY-HQ2"/>
                         <outlet property="tableView" destination="mbq-mY-MdJ" id="hv1-OR-HQw"/>
@@ -239,7 +242,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U3j-C6-zfv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1059" y="-158"/>
+            <point key="canvasLocation" x="1059" y="-155"/>
         </scene>
         <!--Recent View Controller - Conversations-->
         <scene sceneID="P3y-pc-Fre">

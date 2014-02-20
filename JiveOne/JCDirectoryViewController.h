@@ -7,10 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AddressBookUI/AddressBookUI.h>
+#import <AddressBook/AddressBook.h>
 
-@interface JCDirectoryViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+
+
+@interface JCDirectoryViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ABPeoplePickerNavigationControllerDelegate>
 - (IBAction)refreshDirectory:(id)sender;
 
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, weak) IBOutlet UITableView *tableView;
+
+
 
 @end
