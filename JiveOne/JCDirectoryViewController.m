@@ -49,27 +49,51 @@
     } else {
         [self loadLocalDirectory];
     }
+   
 }
 
-- (void)loadCompanyDirectory {
+
+
+#pragma mark -ABPeoplePickerDelegate methods
+- (void)peoplePickerNavigationControllerDidCancel:
+(ABPeoplePickerNavigationController *)peoplePicker
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
+      shouldContinueAfterSelectingPerson:(ABRecordRef)person {
     
-    for (NSString *section in sections) {
-        NSPredicate *pred = [NSPredicate predicateWithFormat:@"(firstLastName BEGINSWITH[c] %@)", section];
-        
-        NSArray *sectionArray = [ClientEntities MR_findAllWithPredicate:pred];
-        [clientEntities addObject:sectionArray];
-    }
-    [self.tableView reloadData];
+    [self dismissViewControllerAnimated:NO completion:nil];
+    return NO;
 }
 
-- (ABAddressBookRequestAccessCompletionHandler)addressBookComplete {
-    return nil;
+- (BOOL)peoplePickerNavigationController:
+(ABPeoplePickerNavigationController *)peoplePicker
+      shouldContinueAfterSelectingPerson:(ABRecordRef)person
+                                property:(ABPropertyID)property
+                              identifier:(ABMultiValueIdentifier)identifier
+{
+    return NO;
 }
+
+#pragma mark - Load Directories
 
 - (void)loadLocalDirectory {
+      ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
     
-    CFErrorRef *error = nil;
-    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, error);
+    if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined) {
+        ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
+            if (granted) {
+                NSLog(@"User granted permission to contacts");
+            } else {
+                // User denied access
+                // Display an alert telling user the contact could not be added
+            }
+        });
+    }
+  
     
     NSArray *allContacts = (__bridge_transfer NSArray *)ABAddressBookCopyArrayOfAllPeople(addressBook);
 //    NSMutableDictionary *contact = [[NSMutableDictionary alloc] init];
@@ -81,14 +105,16 @@
         
         for (int j = 0; j < allContactsCount; j++) {
             NSString * firstName = (__bridge NSString *)(ABRecordCopyValue((__bridge ABRecordRef)(allContacts[j]), kABPersonFirstNameProperty));
-            NSString * lastName = (__bridge NSString *)(ABRecordCopyValue((__bridge ABRecordRef)(allContacts[j]), kABPersonLastNameProperty));
-            NSString * email = (__bridge NSString *)(ABRecordCopyValue((__bridge ABRecordRef)(allContacts[j]), kABPersonEmailProperty));
-            NSString * phone = (__bridge NSString *)(ABRecordCopyValue((__bridge ABRecordRef)(allContacts[j]), kABPersonPhoneProperty));
             
-            if ([firstName hasPrefix:sections[j]]) {
+            if ([firstName hasPrefix:sections[i]] || [firstName hasPrefix:[sections[i] lowercaseString]]) {
+                NSString * lastName = (__bridge NSString *)(ABRecordCopyValue((__bridge ABRecordRef)(allContacts[j]), kABPersonLastNameProperty));
+                NSString * email = (__bridge NSString *)(ABRecordCopyValue((__bridge ABRecordRef)(allContacts[j]), kABPersonEmailProperty));
+                NSString * phone = (__bridge NSString *)(ABRecordCopyValue((__bridge ABRecordRef)(allContacts[j]), kABPersonPhoneProperty));
+                
                 NSMutableDictionary *tempDictionary = [[NSMutableDictionary alloc] init];
                 [tempDictionary setObject:firstName forKey:@"firstName"];
-                [tempDictionary setObject:lastName forKey:@"lastName"];
+                [tempDictionary setObject:[self padNilPhoneNames:lastName] forKey:@"lastName"];
+                [tempDictionary setObject:[self padNilPhoneNames:[NSString stringWithFormat:@"%@ %@", firstName, lastName] ] forKey:@"firstLast"];
                 [tempDictionary setObject:email forKey:@"email"];
                 [tempDictionary setObject:phone forKey:@"phone"];
             
@@ -103,9 +129,27 @@
     [self.tableView reloadData];
     
 }
+-(NSString*) padNilPhoneNames:(NSString*)string{
+    if(!string)
+        return @"";
+    else
+        return string;
+}
+
+- (void)loadCompanyDirectory {
+    
+    for (NSString *section in sections) {
+        NSPredicate *pred = [NSPredicate predicateWithFormat:@"(firstLastName BEGINSWITH[c] %@)", section];
+        
+        NSArray *sectionArray = [ClientEntities MR_findAllWithPredicate:pred];
+        [clientEntities addObject:sectionArray];
+    }
+    [self.tableView reloadData];
+}
 
 - (IBAction)segmentChanged:sender {
     
+    [clientEntities removeAllObjects];
     if ([self.segControl selectedSegmentIndex] == 0) {
         [self loadCompanyDirectory];
         NSLog(@"First segment!");
@@ -183,9 +227,6 @@
     
 }
 
-//- (void)createContactArraysByFirstName {
-//    if (
-//}
 
 - (void)didReceiveMemoryWarning
 {
@@ -243,12 +284,22 @@
         
         NSArray *section = clientEntities[indexPath.section];
         
-        ClientEntities* person = section[indexPath.row];
+        if([section[indexPath.row] isKindOfClass:[ClientEntities class]]){
         
-        cell.textLabel.text = person.firstLastName;
-        cell.detailTextLabel.text = person.email;
-        [cell.imageView setImageWithURL:[NSURL URLWithString:person.picture]
-                       placeholderImage:[UIImage imageNamed:@"avatar.png"]];
+            ClientEntities* person = section[indexPath.row];
+            
+            cell.textLabel.text = person.firstLastName;
+            cell.detailTextLabel.text = person.email;
+            [cell.imageView setImageWithURL:[NSURL URLWithString:person.picture]
+                           placeholderImage:[UIImage imageNamed:@"avatar.png"]];
+            
+        }else{
+            NSDictionary * pers = section[indexPath.row];
+            cell.textLabel.text = [pers objectForKey:@"firstLast"];
+            cell.detailTextLabel.text = @"";//[person objectForKey:@"email"];
+
+            }
+        
         
         return cell;
     }
@@ -304,11 +355,14 @@
     if (self.segControl.selectedSegmentIndex == 0) {
         ClientEntities *person = clientEntities[indexPath.section][indexPath.row];
         [segue.destinationViewController setPerson:person];
+        [segue.destinationViewController setABPerson:nil];
     }
     else
     {
+        NSDictionary * person = clientEntities[indexPath.section][indexPath.row];
         // get ABDictionary
-  //      [segue.destinationViewController setABPerson:<#(NSDictionary *)#>];
+        [segue.destinationViewController setABPerson:person];
+        [segue.destinationViewController setPerson:nil];
     }
     
     
