@@ -5,6 +5,25 @@
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
+      <PreActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "if [ `whoami` = &apos;_teamsserver&apos; ]; then&#10;echo &quot;running pod install as part of CI build&quot;&#10;chmod 777 /Library/Server/Xcode/Data&#10;cd ${SRCROOT}&#10;rm ./Podfile.lock&#10;rm -rf ./Pods&#10;sudo chown -R build .&#10;sudo -H -u build pod install&#10;sudo chown -R _teamsserver .&#10;fi"
+               shellToInvoke = "/bin/sh">
+               <EnvironmentBuildable>
+                  <BuildableReference
+                     BuildableIdentifier = "primary"
+                     BlueprintIdentifier = "275F4A4D18AD0FBC00D2F069"
+                     BuildableName = "JiveOne.app"
+                     BlueprintName = "JiveOne"
+                     ReferencedContainer = "container:JiveOne.xcodeproj">
+                  </BuildableReference>
+               </EnvironmentBuildable>
+            </ActionContent>
+         </ExecutionAction>
+      </PreActions>
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"
