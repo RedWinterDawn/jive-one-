@@ -11,6 +11,7 @@
 #import "TRVSMonitor.h"
 #import "JCAuthenticationManager.h"
 #import "JCDirectoryViewController.h"
+#import "JCDirectoryViewController.h"
 
 @interface JiveOneTests : XCTestCase
 
@@ -86,6 +87,23 @@
     XCTAssertEqual(tokenFromKeychain, @"", @"Token From Keychain Should Have Cleared");
     XCTAssertNil(tokenFromUserDefaults, @"Token From UserDefaults Should Have Cleared");
     
+}
+
+- (void)testGotContactsFromPhone {
+    
+    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+    
+    NSArray *allContacts = (__bridge_transfer NSArray *)ABAddressBookCopyArrayOfAllPeople(addressBook);
+    NSInteger allContactsCount = [allContacts count];
+    
+    if (allContactsCount > 0) {
+        NSLog(@"Got the contacts");
+    } else {
+        NSLog(@"Didn't get the contacts");
+    }
+    
+    XCTAssertNotNil(allContacts, @"allContacts should have a few contacts in there, beacuse you're reading this, sadly, it doesn't :(");
+    //XCTAssertNil(allContacts, @"allContacts has some stuff in it!!");         - this is the opposite of the above test and it fails!! :)
 }
 
 @end
