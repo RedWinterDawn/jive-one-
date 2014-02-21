@@ -176,7 +176,7 @@
         <!--Directory View Controller - Directory-->
         <scene sceneID="sgK-qG-NHh">
             <objects>
-                <viewController id="eTh-sK-SbW" customClass="JCDirectoryViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="JCDirectoryViewController" id="eTh-sK-SbW" customClass="JCDirectoryViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MQa-ev-5XW"/>
                         <viewControllerLayoutGuide type="bottom" id="sLN-OT-Xgd"/>

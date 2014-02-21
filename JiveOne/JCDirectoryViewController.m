@@ -14,19 +14,10 @@
 #import "JCDirectoryDetailViewController.h"
 
 
-
-
-
-
-
 @interface JCDirectoryViewController ()
-{
-    NSMutableArray *clientEntities;
-    NSMutableArray *localContacts;
-    NSArray *sections;
-}
 
-@property (nonatomic, weak) IBOutlet UISegmentedControl *segControl;
+
+
 
 
 @end
@@ -41,7 +32,7 @@
     self.tableView.dataSource = self;
     
     sections = [NSArray arrayWithObjects:@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
-    clientEntities = [[NSMutableArray alloc] init];
+    self.clientEntitiesArray = [[NSMutableArray alloc] init]; //- this was an istance variable but now it's a property
     
     if ([self.segControl selectedSegmentIndex] == 0) {
         [self loadCompanyDirectory];
@@ -81,7 +72,9 @@
 #pragma mark - Load Directories
 
 - (void)loadLocalDirectory {
-      ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+    
+    
+    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
     
     if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined) {
         ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
@@ -96,7 +89,6 @@
   
     
     NSArray *allContacts = (__bridge_transfer NSArray *)ABAddressBookCopyArrayOfAllPeople(addressBook);
-//    NSMutableDictionary *contact = [[NSMutableDictionary alloc] init];
     
     NSInteger sectionCount = [sections count];
     NSInteger allContactsCount = [allContacts count];
@@ -123,12 +115,12 @@
             }
         }
         
-        [clientEntities addObject:section];
+        [self.clientEntitiesArray addObject:section];
     }
     
     [self.tableView reloadData];
-    
 }
+
 -(NSString*) padNilPhoneNames:(NSString*)string{
     if(!string)
         return @"";
@@ -142,14 +134,14 @@
         NSPredicate *pred = [NSPredicate predicateWithFormat:@"(firstLastName BEGINSWITH[c] %@)", section];
         
         NSArray *sectionArray = [ClientEntities MR_findAllWithPredicate:pred];
-        [clientEntities addObject:sectionArray];
+        [self.clientEntitiesArray addObject:sectionArray];
     }
     [self.tableView reloadData];
 }
 
 - (IBAction)segmentChanged:sender {
     
-    [clientEntities removeAllObjects];
+    [self.clientEntitiesArray removeAllObjects];
     if ([self.segControl selectedSegmentIndex] == 0) {
         [self loadCompanyDirectory];
         NSLog(@"First segment!");
@@ -208,17 +200,16 @@
             [localContext MR_saveToPersistentStoreAndWait];
         }
         
-        [clientEntities removeAllObjects];
+        [self.clientEntitiesArray removeAllObjects];
         
         for (NSString *section in sections) {
             NSPredicate *pred = [NSPredicate predicateWithFormat:@"(firstLastName BEGINSWITH[c] %@)", section];
             
             NSArray *sectionArray = [ClientEntities MR_findAllWithPredicate:pred];
-            [clientEntities addObject:sectionArray];
+            [self.self.clientEntitiesArray addObject:sectionArray];
             
         }
         
-        //clientEntities = [ClientEntities MR_findAllSortedBy:@"firstLastName" ascending:YES];
         [self.tableView reloadData];
         
     } failure:^(NSError *err) {
@@ -239,7 +230,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    if (clientEntities.count == 0) {
+    if (self.clientEntitiesArray.count == 0) {
         return 0;
     } else {
         return sections.count;
@@ -264,10 +255,10 @@
 {
     // Return the number of rows in the section.
     
-    if (clientEntities.count == 0) {
+    if (self.clientEntitiesArray.count == 0) {
         return 0;
     } else {
-        return [(NSArray*)clientEntities[section] count];
+        return [(NSArray*)self.clientEntitiesArray[section] count];
     }
     
     
@@ -278,11 +269,11 @@
     static NSString *CellIdentifier = @"DirectoryCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    if (clientEntities.count == 0) {
+    if (self.clientEntitiesArray.count == 0) {
         return nil;
     } else {
         
-        NSArray *section = clientEntities[indexPath.section];
+        NSArray *section = self.clientEntitiesArray[indexPath.section];
         
         if([section[indexPath.row] isKindOfClass:[ClientEntities class]]){
         
@@ -353,13 +344,13 @@
     NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
     
     if (self.segControl.selectedSegmentIndex == 0) {
-        ClientEntities *person = clientEntities[indexPath.section][indexPath.row];
+        ClientEntities *person = self.clientEntitiesArray[indexPath.section][indexPath.row];
         [segue.destinationViewController setPerson:person];
         [segue.destinationViewController setABPerson:nil];
     }
     else
     {
-        NSDictionary * person = clientEntities[indexPath.section][indexPath.row];
+        NSDictionary * person = self.clientEntitiesArray[indexPath.section][indexPath.row];
         // get ABDictionary
         [segue.destinationViewController setABPerson:person];
         [segue.destinationViewController setPerson:nil];

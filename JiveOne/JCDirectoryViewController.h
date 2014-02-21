@@ -13,10 +13,18 @@
 
 
 @interface JCDirectoryViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ABPeoplePickerNavigationControllerDelegate>
+{
+    NSMutableArray *localContacts;
+    NSArray *sections;
+}
+
 - (IBAction)refreshDirectory:(id)sender;
 
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) NSMutableArray *clientEntitiesArray;
+@property (nonatomic, weak) IBOutlet UISegmentedControl *segControl;
 
+- (IBAction)segmentChanged:sender ;
 
 
 @end

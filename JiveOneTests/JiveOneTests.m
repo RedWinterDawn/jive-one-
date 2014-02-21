@@ -11,7 +11,6 @@
 #import "TRVSMonitor.h"
 #import "JCAuthenticationManager.h"
 #import "JCDirectoryViewController.h"
-#import "JCDirectoryViewController.h"
 
 @interface JiveOneTests : XCTestCase
 
@@ -35,10 +34,6 @@
     [super tearDown];
 }
 
-- (void)testExample
-{
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
-}
 
 - (void)testRetrieveAccountInformation {
     __block NSDictionary *json;
@@ -75,9 +70,6 @@
 
 - (void)testLogout {
     
-    //UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-    //JCDirectoryViewController *directoryVC = [storyboard instantiateViewControllerWithIdentifier:@"JCDirectoryViewController"];
-    
     [[JCAuthenticationManager sharedInstance] logout:nil];
     
     KeychainItemWrapper *wrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
@@ -89,21 +81,32 @@
     
 }
 
-- (void)testGotContactsFromPhone {
+- (void)testLoadLocalDirectory {
     
-    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+    JCDirectoryViewController *JCDirectory = [storyboard instantiateViewControllerWithIdentifier:@"JCDirectoryViewController"];
+    [JCDirectory viewDidLoad];
+    [JCDirectory.segControl setSelectedSegmentIndex:1];
+
+    [JCDirectory segmentChanged:nil];
+
     
-    NSArray *allContacts = (__bridge_transfer NSArray *)ABAddressBookCopyArrayOfAllPeople(addressBook);
-    NSInteger allContactsCount = [allContacts count];
     
-    if (allContactsCount > 0) {
-        NSLog(@"Got the contacts");
-    } else {
-        NSLog(@"Didn't get the contacts");
+    XCTAssertNotNil(JCDirectory.clientEntitiesArray, @"Client Entities Array did not get instantiated");
+    XCTAssertTrue([JCDirectory.clientEntitiesArray count] == 26, @"The array does not have 26 arrays");
+    int counter=1;
+    for (NSMutableArray *oneOfTwentySixArrays in JCDirectory.clientEntitiesArray) {
+        
+        XCTAssertNotNil(oneOfTwentySixArrays, @"The [%d]th array is nil", counter );
+        counter++;
     }
     
-    XCTAssertNotNil(allContacts, @"allContacts should have a few contacts in there, beacuse you're reading this, sadly, it doesn't :(");
-    //XCTAssertNil(allContacts, @"allContacts has some stuff in it!!");         - this is the opposite of the above test and it fails!! :)
+
+    
+}
+
+- (void)testLoadCompanyDirectory {
+    
 }
 
 @end
