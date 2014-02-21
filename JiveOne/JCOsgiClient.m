@@ -231,11 +231,10 @@
 }
 - (void)clearCookies {
     
+    //This will delete ALL cookies. 
+    NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
     
-    
-    NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[_manager baseURL]];
-    
-    for (NSHTTPCookie *cookie in cookies) {
+    for (NSHTTPCookie *cookie in [cookieJar cookies]) {
         [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
     }
     
