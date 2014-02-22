@@ -68,19 +68,6 @@
      XCTAssertEqualObjects([json objectForKey:@"name"], @"Jive Communications, Inc.", @"Company name doesn't match");
 }
 
-- (void)testLogout {
-    
-    [[JCAuthenticationManager sharedInstance] logout:nil];
-    
-    KeychainItemWrapper *wrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
-    NSString* tokenFromKeychain = [wrapper objectForKey:(__bridge id)(kSecAttrAccount)];
-    NSString* tokenFromUserDefaults = [[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"];
-    
-    XCTAssertEqual(tokenFromKeychain, @"", @"Token From Keychain Should Have Cleared");
-    XCTAssertNil(tokenFromUserDefaults, @"Token From UserDefaults Should Have Cleared");
-    
-}
-
 - (void)testLoadLocalDirectory {
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
@@ -106,6 +93,32 @@
 }
 
 - (void)testLoadCompanyDirectory {
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+    JCDirectoryViewController *JCDirectory = [storyboard instantiateViewControllerWithIdentifier:@"JCDirectoryViewController"];
+    [JCDirectory viewDidLoad];
+    
+    XCTAssertNotNil(JCDirectory.clientEntitiesArray, @"Client Entities Array did not get instantiated");
+    XCTAssertTrue([JCDirectory.clientEntitiesArray count] == 26, @"The array does not have 26 arrays");
+    int counter=1;
+    for (NSMutableArray *oneOfTwentySixArrays in JCDirectory.clientEntitiesArray) {
+        
+        XCTAssertNotNil(oneOfTwentySixArrays, @"The [%d]th array is nil", counter );
+        counter++;
+    }
+    
+}
+
+- (void)testLogout {
+    
+    [[JCAuthenticationManager sharedInstance] logout:nil];
+    
+    KeychainItemWrapper *wrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
+    NSString* tokenFromKeychain = [wrapper objectForKey:(__bridge id)(kSecAttrAccount)];
+    NSString* tokenFromUserDefaults = [[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"];
+    
+    XCTAssertEqual(tokenFromKeychain, @"", @"Token From Keychain Should Have Cleared");
+    XCTAssertNil(tokenFromUserDefaults, @"Token From UserDefaults Should Have Cleared");
     
 }
 
