@@ -79,7 +79,7 @@
 
     
     
-    XCTAssertNotNil(JCDirectory.clientEntitiesArray, @"Client Entities Array did not get instantiated");
+    XCTAssertNotNil(JCDirectory.clientEntitiesArray, @"Client Entities Array from local contacts did not get instantiated");
     XCTAssertTrue([JCDirectory.clientEntitiesArray count] == 26, @"The array does not have 26 arrays");
     int counter=1;
     for (NSMutableArray *oneOfTwentySixArrays in JCDirectory.clientEntitiesArray) {
@@ -98,7 +98,7 @@
     JCDirectoryViewController *JCDirectory = [storyboard instantiateViewControllerWithIdentifier:@"JCDirectoryViewController"];
     [JCDirectory viewDidLoad];
     
-    XCTAssertNotNil(JCDirectory.clientEntitiesArray, @"Client Entities Array did not get instantiated");
+    XCTAssertNotNil(JCDirectory.clientEntitiesArray, @"Client Entities Array from company contacts did not get instantiated");
     XCTAssertTrue([JCDirectory.clientEntitiesArray count] == 26, @"The array does not have 26 arrays");
     int counter=1;
     for (NSMutableArray *oneOfTwentySixArrays in JCDirectory.clientEntitiesArray) {
