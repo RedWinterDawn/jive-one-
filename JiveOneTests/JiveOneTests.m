@@ -54,7 +54,7 @@
     
     NSString *name = [[json objectForKey:@"name"] objectForKey:@"firstLast"];
     NSString *companyUrl = [json objectForKey:@"company"];
-    XCTAssertEqualObjects(name, @"Daniel George", @"Wrong name");
+    XCTAssertEqualObjects(name, @"Test User", @"Wrong name");
     
     [client RetrieveMyCompany:companyUrl:^(id JSON) {
         json = JSON;

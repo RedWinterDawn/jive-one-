@@ -233,16 +233,39 @@
                                     <action selector="segmentChanged:" destination="eTh-sK-SbW" eventType="valueChanged" id="dJm-Ya-O9L"/>
                                 </connections>
                             </segmentedControl>
+                            <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CQG-k6-UHp">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bI2-VU-Cz6">
+                                <rect key="frame" x="0.0" y="61" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="eTh-sK-SbW" id="8iz-WG-YFb"/>
+                                </connections>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Directory" id="i9j-aS-UgH"/>
                     <connections>
+                        <outlet property="searchDisplayController" destination="DBo-Lk-QsT" id="tws-pf-7QF"/>
                         <outlet property="segControl" destination="Lqr-xn-be2" id="Mqn-VY-HQ2"/>
                         <outlet property="tableView" destination="mbq-mY-MdJ" id="hv1-OR-HQw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U3j-C6-zfv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="DBo-Lk-QsT">
+                    <connections>
+                        <outlet property="delegate" destination="eTh-sK-SbW" id="KcF-bm-eY6"/>
+                        <outlet property="searchBar" destination="bI2-VU-Cz6" id="wDV-Yo-f7V"/>
+                        <outlet property="searchContentsController" destination="eTh-sK-SbW" id="mQU-ig-kTQ"/>
+                        <outlet property="searchResultsDataSource" destination="eTh-sK-SbW" id="DS1-ub-BTS"/>
+                        <outlet property="searchResultsDelegate" destination="eTh-sK-SbW" id="Kxt-s4-sJh"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="1059" y="-155"/>
         </scene>
