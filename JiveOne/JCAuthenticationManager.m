@@ -34,7 +34,7 @@
 
 - (void)checkForTokenValidity
 {
-    [[JCOsgiClient sharedClient] RetrieveConversations:^(id JSON) {
+    [[JCOsgiClient sharedClient] RetrieveMyEntitity:^(id JSON) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenSucceeded object:JSON];
     } failure:^(NSError *err) {
         NSLog(@"%@", err);
