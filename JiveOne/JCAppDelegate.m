@@ -8,6 +8,7 @@
 
 #import "JCAppDelegate.h"
 #import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
+#import "JCSocketDispatch.h"
 
 
 
@@ -18,6 +19,8 @@
     [MagicalRecord setupCoreDataStackWithStoreNamed:@"MyJiveDatabase.sqlite"];
     [[AFNetworkActivityLogger sharedLogger] startLogging];
     [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
+    
+    [[JCSocketDispatch sharedInstance] requestSession];
     
     return YES;
 }
@@ -37,6 +40,8 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
+    [[JCSocketDispatch sharedInstance] requestSession];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
