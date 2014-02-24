@@ -343,6 +343,7 @@
 {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
     
+<<<<<<< HEAD
     if (self.segControl.selectedSegmentIndex == 0) {
         ClientEntities *person = self.clientEntitiesArray[indexPath.section][indexPath.row];
         [segue.destinationViewController setPerson:person];
@@ -356,6 +357,13 @@
         [segue.destinationViewController setPerson:nil];
     }
     
+=======
+    // if corportate directory do this
+    ClientEntities *person = clientEntities[indexPath.section][indexPath.row];
+    [segue.destinationViewController setPerson:person];
+    //else - new stuff
+        //set personDictionary (that you created in DetailViewController)
+>>>>>>> Directory Detail ViewController 2-24-14
     
 }
 

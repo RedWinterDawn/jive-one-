@@ -14,6 +14,7 @@
 @interface JCDirectoryDetailViewController ()
 #define NUMBER_OF_ROWS_IN_SECTION 3
 #define NUMBER_OF_SECTIONS 1
+#define ZERO 0
 @end
 
 @implementation JCDirectoryDetailViewController
@@ -36,7 +37,7 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    [self.tableView reloadData];
+//    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -56,7 +57,10 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return NUMBER_OF_ROWS_IN_SECTION;
+    if (section == 0) {
+        return NUMBER_OF_ROWS_IN_SECTION;
+    }
+    return ZERO;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -79,6 +83,7 @@
             return cell;
         }
         
+<<<<<<< HEAD
         else if(indexPath.row==1){
             // Create second cell
             static NSString *CellIdentifier = @"DirectoryDetailEmailCell";
@@ -93,6 +98,15 @@
             }
             
             return cell;
+=======
+        cell.textLabel.text = @"Company";
+        //convert Company:"companies:jive" to "jive:
+        NSString *stringToDivide = self.person.company;
+        NSArray *stringParts = [stringToDivide componentsSeparatedByString:@":"];
+        if (stringParts[1]) {
+            //Capitilize Company Name
+            cell.detailTextLabel.text = [stringParts[1] capitalizedString];
+>>>>>>> Directory Detail ViewController 2-24-14
         }
         
         else {

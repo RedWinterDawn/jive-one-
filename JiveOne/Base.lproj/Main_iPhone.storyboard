@@ -146,6 +146,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
+                        <sections/>
                         <connections>
                             <outlet property="dataSource" destination="PiD-ab-JdW" id="gEw-vO-H4N"/>
                             <outlet property="delegate" destination="PiD-ab-JdW" id="njI-6G-lxv"/>
