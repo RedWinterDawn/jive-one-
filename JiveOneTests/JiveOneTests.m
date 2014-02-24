@@ -78,17 +78,24 @@
     [JCDirectory segmentChanged:nil];
 
     
-    
     XCTAssertNotNil(JCDirectory.clientEntitiesArray, @"Client Entities Array from local contacts did not get instantiated");
     XCTAssertTrue([JCDirectory.clientEntitiesArray count] == 26, @"The array does not have 26 arrays");
     int counter=1;
+    
     for (NSMutableArray *oneOfTwentySixArrays in JCDirectory.clientEntitiesArray) {
         
         XCTAssertNotNil(oneOfTwentySixArrays, @"The [%d]th array is nil", counter );
         counter++;
+        
+        if (oneOfTwentySixArrays.count != 0) {
+            NSMutableDictionary *localDictionary = oneOfTwentySixArrays[0];
+            
+             
+            XCTAssertNotNil([localDictionary objectForKey:@"firstName"], @"Dictionary does not contain firstName string");
+            XCTAssertNotNil([localDictionary objectForKey:@"lastName"], @"Dictionary does not contain lastName string");
+        }
+        
     }
-    
-
     
 }
 
@@ -97,6 +104,9 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     JCDirectoryViewController *JCDirectory = [storyboard instantiateViewControllerWithIdentifier:@"JCDirectoryViewController"];
     [JCDirectory viewDidLoad];
+    [JCDirectory.segControl setSelectedSegmentIndex:0];
+    
+    [JCDirectory segmentChanged:nil];
     
     XCTAssertNotNil(JCDirectory.clientEntitiesArray, @"Client Entities Array from company contacts did not get instantiated");
     XCTAssertTrue([JCDirectory.clientEntitiesArray count] == 26, @"The array does not have 26 arrays");
@@ -105,6 +115,14 @@
         
         XCTAssertNotNil(oneOfTwentySixArrays, @"The [%d]th array is nil", counter );
         counter++;
+        
+        if (oneOfTwentySixArrays.count != 0) {
+            ClientEntities *testContact = oneOfTwentySixArrays[0];
+            
+            
+            XCTAssertNotNil(testContact.firstName, @"Company contact does not contain firstName string");
+            XCTAssertNotNil(testContact.lastName, @"Company contact not contain lastName string");
+        }
     }
     
 }
