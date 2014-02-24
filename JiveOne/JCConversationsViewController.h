@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JCRecentViewController : UITableViewController
+@interface JCConversationsViewController : UITableViewController
 
 - (IBAction)refreshConversations:(id)sender;
+
+- (void) loadDatasource;
 
 @end

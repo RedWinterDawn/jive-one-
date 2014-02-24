@@ -6,40 +6,43 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCChatDetailViewController.h"
+#import "JCConversationDetailViewController.h"
 #import "ClientEntities.h"
 #import "JCEntryModel.h"
 #import "JCSocketDispatch.h"
 #import "JCOsgiClient.h"
 #import "JCChatMessage.h"
 #import "UIImageView+WebCache.h"
+#import "ConversationEntry.h"
 
 
-@interface JCChatDetailViewController ()
+@interface JCConversationDetailViewController ()
 {
     ClientEntities *me;
     UITextView *messageTextView;
+    NSMutableArray *chatEntries;
 }
 
 @end
 
-@implementation JCChatDetailViewController
+@implementation JCConversationDetailViewController
 
 #define kSubtitleJobs @"Jobs"
 #define kSubtitleWoz @"Steve Wozniak"
 #define kSubtitleCook @"Mr. Cook"
 
-- (void)setChatEntries:(NSMutableArray *)chatEntries
+
+- (void)setConversationId:(NSString *)conversationId
 {
-    if (![chatEntries isEqual:_chatEntries]) {
-        _chatEntries = chatEntries;
+    if (!_conversationId || ![_conversationId isEqualToString:conversationId]) {
+        _conversationId = conversationId;
+        [self loadDatasource];
     }
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[JCSocketDispatch sharedInstance] requestSession];
     
     me = [[JCOmniPresence sharedInstance] me];
     
@@ -48,12 +51,6 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-
-    
-    //self.dataSource = self;
-    //self.delegate = self;
-    
-    //[[JSBubbleView appearance] setFont:[UIFont fontWithName:fontName size:14.0f]];
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -71,8 +68,14 @@
     
     [self scrollToBottom];
     
-    
     [self.tableView reloadData];
+}
+
+- (void)loadDatasource
+{
+    chatEntries = [NSMutableArray arrayWithArray:[ConversationEntry MR_findByAttribute:@"conversationId" withValue:_conversationId]];
+    [self.tableView reloadData];
+    [self.tableView scrollRectToVisible:self.tableView.tableFooterView.frame animated:YES];
 }
 
 - (void) keyboardWillShow: (NSNotification *)notification
@@ -107,10 +110,8 @@
 {
     [super viewWillAppear:animated];
     
-    if (_chatEntries) {
-        NSDictionary *conversation = _chatEntries[0];
-        NSString *conversationId = [conversation objectForKey:@"conversation"];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incomingChatEntry:) name:conversationId object:nil];
+    if (chatEntries) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incomingChatEntry:) name:_conversationId object:nil];
     }
     
     //self.navigationController.tabBarController.tabBar.hidden = YES;
@@ -135,13 +136,32 @@
 #pragma mark - Incoming chat
 - (void)incomingChatEntry:(NSNotification*)notification
 {
-    NSDictionary* chatEntry = (NSDictionary*)notification.object;
-    NSMutableArray* temp = [[NSMutableArray alloc] initWithArray:_chatEntries];
-    [temp addObject:chatEntry];
-    _chatEntries = [[NSMutableArray alloc] initWithArray:temp];
+//    NSDictionary* entry = (NSDictionary*)notification.object;
     
-    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:_chatEntries.count - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
-    [self.tableView scrollRectToVisible:self.tableView.tableFooterView.frame animated:YES];
+//    NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
+//    ConversationEntry *convEntry = [ConversationEntry MR_createInContext:localContext];
+//    convEntry.conversationId = entry[@"conversation"];
+//    convEntry.entityId = entry[@"entity"];
+//    convEntry.createdDate = entry[@"createDate"];
+//    convEntry.call = entry[@"call"];
+//    convEntry.file = entry[@"file"];
+//    convEntry.message = entry[@"message"];
+//    convEntry.mentions = entry[@"mentions"];
+//    convEntry.tags = entry[@"tags"];
+//    convEntry.deliveryDate = entry[@"deliveryDate"];
+//    convEntry.type = entry[@"type"];
+//    convEntry.urn = entry[@"urn"];
+//    convEntry.entryId = entry[@"id"];
+//    
+//    //Save conversation entry
+//    [localContext MR_saveToPersistentStoreAndWait];
+//    
+//    
+//    [chatEntries addObject:convEntry];
+    
+    [self loadDatasource];
+    
+    //[self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:chatEntries.count - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 #pragma mark - Table view data source
@@ -157,7 +177,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return self.chatEntries.count;
+    return chatEntries.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -165,15 +185,11 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    NSDictionary* singleEntry = self.chatEntries[indexPath.row];
-    NSString* firstEntity = [singleEntry objectForKey:@"entity"];
-    NSString* message = [[singleEntry objectForKey:@"message"] objectForKey:@"raw"];
-    
-    //JCEntryModel* entryModel = [[JCEntryModel alloc] initWithDictionary:singleEntry error:nil];
-    NSArray* result = [ClientEntities MR_findByAttribute:@"entityId" withValue:firstEntity];
+    ConversationEntry *entry = chatEntries[indexPath.row];
+    NSArray* result = [ClientEntities MR_findByAttribute:@"entityId" withValue:entry.entityId];
     ClientEntities* person = (ClientEntities*)result[0];
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%@", message ];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@", entry.message[@"raw"]];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", person.firstLastName];
 
     
@@ -241,9 +257,9 @@
 - (IBAction)sendMessage:(id)sender {
     
     //need to refactor this
-    NSDictionary* singleEntry = self.chatEntries[0];
+    //NSDictionary* singleEntry = self.chatEntries[0];
     NSString* entity = me.urn;
-    NSString* conversationUrn = [singleEntry objectForKey:@"conversation"];
+    NSString* conversationUrn = _conversationId;
     NSString *message = messageTextView.text;
     
     [[JCOsgiClient sharedClient] SubmitChatMessageForConversation:conversationUrn message:message withEntity:entity success:^(id JSON) {
@@ -257,7 +273,7 @@
 
 - (void)scrollToBottom
 {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:(_chatEntries.count -1) inSection:0];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:(chatEntries.count -1) inSection:0];
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 

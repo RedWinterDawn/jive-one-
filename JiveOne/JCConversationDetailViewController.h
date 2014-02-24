@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "JSMessagesViewController.h"
 
-@interface JCChatDetailViewController : UITableViewController <UIActionSheetDelegate>
-@property (strong, nonatomic) NSMutableArray *chatEntries;
+@interface JCConversationDetailViewController : UITableViewController <UIActionSheetDelegate>
+@property (strong, nonatomic) NSString *conversationId;
 - (IBAction)sendMessage:(id)sender;
-
+- (void)loadDatasource;
 @end
