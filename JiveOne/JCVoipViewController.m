@@ -92,8 +92,8 @@ const uint8_t pongString[] = "pong\n";
     NSLog(@"%@",message);
     
     NSString *msgString = message;
-    NSData *data = [msgString dataUsingEncoding:NSUTF8StringEncoding];
-    NSDictionary *toUse = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+    //NSData *data = [msgString dataUsingEncoding:NSUTF8StringEncoding];
+    //NSDictionary *toUse = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
     
     [self addEvent:msgString];
     
@@ -126,7 +126,7 @@ const uint8_t pongString[] = "pong\n";
         KeychainItemWrapper* _keychainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
         
         NSDictionary* response = (NSDictionary*)JSON;
-        NSLog([response description]);
+        NSLog(@"%@",[response description]);
         
         sessionToken = [NSString stringWithFormat:@"%@",[response objectForKey:@"token"]];
         NSString* authToken = [_keychainWrapper objectForKey:(__bridge id)(kSecAttrAccount)];

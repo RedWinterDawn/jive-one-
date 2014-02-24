@@ -213,7 +213,7 @@
         [self.tableView reloadData];
         
     } failure:^(NSError *err) {
-        NSLog([err description]);
+        NSLog(@"%@",[err description]);
     }];
     
 }
