@@ -17,6 +17,8 @@
 @interface JCAccountViewController ()
 {
     ClientEntities *me;
+    NSMutableArray *presenceValues;
+    BOOL isPickerDisplay;
 }
 
 @end
@@ -53,7 +55,6 @@
         self.pbxDetail.text = me.entityCompany.pbxId;
         self.companyNameDetail.text = me.entityCompany.name;
     }
-    
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -140,13 +141,53 @@
     return [super tableView:tableView cellForRowAtIndexPath:indexPath];
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"Select Presence option:" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
+                            @"Available",
+                            @"Away",
+                            @"Busy",
+                            @"Do Not Disturb",
+                            @"Invisible",
+                            @"Offline",
+                            nil];
+    [popup showInView:self.view];
+}
+
 - (IBAction)logoutButtonPress:(id)sender {
     
     [[JCAuthenticationManager sharedInstance] logout:self];
-   
 }
 
-
+#pragma mark - UIActionSheet Delegate
+- (void)actionSheet:(UIActionSheet *)popup clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    NSString *state;
+    
+    switch (buttonIndex) {
+        case 0:
+            state = @"Availalbe";
+            break;
+        case 1:
+            state = @"Away";
+            break;
+        case 2:
+            state = @"Busy";
+            break;
+        case 3:
+            state = @"Do Not Disturb";
+            break;
+        case 4:
+            state = @"Invisible";
+            break;
+        case 5:
+            state = @"Offline";
+            break;
+        default:
+            state = _presenceDetail.text;
+    }
+    _presenceDetail.text = state;
+}
 
 
 /*

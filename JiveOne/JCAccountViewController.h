@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JCAccountViewController : UITableViewController
+@interface JCAccountViewController : UITableViewController <UIActionSheetDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *userNameDetail;
 @property (weak, nonatomic) IBOutlet UILabel *pbxDetail;
 @property (weak, nonatomic) IBOutlet UILabel *companyNameDetail;
+@property (weak, nonatomic) IBOutlet UILabel *presenceDetail;
 
 @end
