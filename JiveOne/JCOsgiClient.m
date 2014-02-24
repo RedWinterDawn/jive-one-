@@ -405,5 +405,28 @@
 }
 
 
+#pragma mark - Voicemail
+
+//Here is where doug is trying to make requests for voicemail - while currently we are just grabbing a file from dropbox eventually we will get it from osgi.
+- (IBAction)grabURLInBackground:(id)sender
+{
+    NSURL *url = [NSURL URLWithString:@"https://dl.dropboxusercontent.com/u/57157576/data/54321-123.m4a"];
+
+}
+
+//- (void)requestFinished:(HTTPRequest *)request
+//{
+//    // Use when fetching text data
+//    NSString *responseString = [request responseString];
+//    
+//    // Use when fetching binary data
+//    NSData *responseData = [request responseData];
+//}
+
+//- (void)requestFailed:(HTTPRequest *)request
+//{
+//    NSError *error = [request error];
+//}
+
 
 @end
