@@ -144,12 +144,12 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"Select Presence option:" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
-                            @"Available",
-                            @"Away",
-                            @"Busy",
-                            @"Do Not Disturb",
-                            @"Invisible",
-                            @"Offline",
+                            kPresenceAvailable,
+                            kPresenceAway,
+                            kPresenceBusy,
+                            kPresenceDoNotDisturb,
+                            kPresenceInvisible,
+                            kPresenceOffline,
                             nil];
     [popup showInView:self.view];
 }
@@ -163,30 +163,47 @@
 - (void)actionSheet:(UIActionSheet *)popup clickedButtonAtIndex:(NSInteger)buttonIndex {
     
     NSString *state;
+    JCPresenceType type;
     
     switch (buttonIndex) {
         case 0:
-            state = @"Availalbe";
+            state = kPresenceAvailable;
+            type = JCPresenceTypeAvailable;
             break;
         case 1:
-            state = @"Away";
+            state = kPresenceAway;
+            type = JCPresenceTypeAway;
             break;
         case 2:
-            state = @"Busy";
+            state = kPresenceBusy;
+            type = JCPresenceTypeBusy;
             break;
         case 3:
-            state = @"Do Not Disturb";
+            state = kPresenceDoNotDisturb;
+            type = JCPresenceTypeDoNotDisturb;
             break;
         case 4:
-            state = @"Invisible";
+            state = kPresenceInvisible;
+            type = JCPresenceTypeInvisible;
             break;
         case 5:
-            state = @"Offline";
+            state = kPresenceOffline;
+            type = JCPresenceTypeOffline;
             break;
         default:
             state = _presenceDetail.text;
+            type = JCPresenceTypeNone;
     }
+    
     _presenceDetail.text = state;
+    
+    if (type != JCPresenceTypeNone) {
+        [[JCOsgiClient sharedClient] UpdatePresence:type success:^(BOOL updated) {
+            NSLog(@"%hhd", updated);
+        } failure:^(NSError *err) {
+            NSLog(@"%@", err);
+        }];
+    }    
 }
 
 
