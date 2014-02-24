@@ -110,7 +110,7 @@
         
         [localContext MR_saveToPersistentStoreAndWait];
         
-        [self performSelectorOnMainThread:@selector(loadViews) withObject:nil waitUntilDone:nil];
+        [self performSelectorOnMainThread:@selector(loadViews) withObject:nil waitUntilDone:YES];
         
     } failure:^(NSError *err) {
         NSLog(@"%@", err);

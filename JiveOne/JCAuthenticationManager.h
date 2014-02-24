@@ -18,7 +18,6 @@
 
 - (void)didReceiveAuthenticationToken:(NSString*)token;
 - (void)checkForTokenValidity;
-- (void)showLoginViewController;
 - (void)logout:(UIViewController *)viewController;
 
 @end
