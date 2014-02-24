@@ -245,6 +245,31 @@
         failure(error);
     }];
 }
+
+- (void) UpdatePresence:(JCPresenceType)presence success:(void (^)(BOOL updated))success failure:(void(^)(NSError *err))failure
+{
+    NSString *presenceURN = [[JCOmniPresence sharedInstance] me].presence;
+    
+    NSDictionary *chatDictionary = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:presence], @"chat", nil];
+    NSDictionary *iteractionsDictionary = [NSDictionary dictionaryWithObjectsAndKeys:presenceURN, @"urn", chatDictionary, @"iteractions", nil];
+    NSDictionary *presenceDictionary = [NSDictionary dictionaryWithObjectsAndKeys:iteractionsDictionary, @"presence", nil];
+    
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:presenceDictionary options:kNilOptions error:nil];
+    NSString* jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    NSLog(@"%@", jsonString);
+   
+    NSString *url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], presenceURN];
+    
+    [_manager PATCH:url parameters:presenceDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"%@", responseObject);
+        success(YES);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@", error);
+        failure(error);
+    }];
+    
+}
+
 - (void)clearCookies {
     
     //This will delete ALL cookies. 

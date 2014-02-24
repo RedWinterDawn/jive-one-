@@ -43,6 +43,8 @@
 
 - (void) SubmitChatMessageForConversation:(NSString*)conversation message:(NSString*)message withEntity:(NSString*)entity success:(void (^)(id JSON))success
                                  failure:(void (^)(NSError* err))failure;
+- (void) UpdatePresence:(JCPresenceType)presence success:(void (^)(BOOL updated))success failure:(void(^)(NSError *err))failure;
+
 - (void) clearCookies;
 
 #pragma mark - CRUD for Conversation
