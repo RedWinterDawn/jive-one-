@@ -9,6 +9,8 @@
 #import "JCSocketDispatch.h"
 #import "JCOsgiClient.h"
 #import "KeychainItemWrapper.h"
+#import "ConversationEntry.h"
+
 
 @implementation JCSocketDispatch
 {
@@ -45,7 +47,7 @@
         KeychainItemWrapper* _keychainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
         
         NSDictionary* response = (NSDictionary*)JSON;
-        NSLog([response description]);
+        NSLog(@"%@",[response description]);
         
         sessionToken = [NSString stringWithFormat:@"%@",[response objectForKey:@"token"]];
         NSString* authToken = [_keychainWrapper objectForKey:(__bridge id)(kSecAttrAccount)];
@@ -115,7 +117,25 @@
     
     if ([type isEqualToString:@"chat"]) {
         NSString *conversationId = [body objectForKey:@"conversation"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:conversationId object:body];
+        
+        // regardless of having a conversation for this entry or not we need to save the entry.
+        [[JCOsgiClient sharedClient] addConversationEntry:body];
+        
+        // Check if we have a conversation for this entry
+        NSArray *conversation = [Conversation MR_findByAttribute:@"conversationId" withValue:conversationId];
+        
+        // if we dont' have, then fetch it
+        if (conversation.count == 0) {
+            [[JCOsgiClient sharedClient] RetrieveConversationsByConverationId:conversationId success:^(Conversation *conversation) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"NewConversation" object:conversation];
+            } failure:^(NSError *err) {
+                NSLog(@"%@", err);
+            }];
+        }
+        else {
+            [[NSNotificationCenter defaultCenter] postNotificationName:conversationId object:body];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"NewConversation" object:conversation];
+        }
     }
 }
 

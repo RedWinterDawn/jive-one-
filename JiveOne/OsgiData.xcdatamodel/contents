@@ -40,9 +40,36 @@
         <attribute name="timezone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="urn" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="Conversation" representedClassName="Conversation" syncable="YES">
+        <attribute name="conversationId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createdDate" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="entities" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="group" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isGroup" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="lastModified" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="urn" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="ConversationEntry" representedClassName="ConversationEntry" syncable="YES">
+        <attribute name="call" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="conversationId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createdDate" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="deliveryDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="entityId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="entryId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="file" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="lastModified" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="mentions" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="message" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="tags" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="urn" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <elements>
-        <element name="ClientEntities" positionX="43" positionY="80" width="128" height="313"/>
-        <element name="ClientMeta" positionX="367" positionY="108" width="128" height="148"/>
+        <element name="ClientEntities" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="ClientMeta" positionX="0" positionY="0" width="0" height="0"/>
         <element name="Company" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Conversation" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="ConversationEntry" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

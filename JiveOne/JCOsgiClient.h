@@ -7,6 +7,9 @@
 //
 
 #import "AFHTTPSessionManager.h"
+#import "ConversationEntry.h"
+#import "Conversation.h"
+#import "ConversationEntry.h"
 
 @interface JCOsgiClient : NSObject
 
@@ -26,6 +29,9 @@
 - (void) RetrieveConversations:(void (^)(id JSON))success
                        failure:(void (^)(NSError *err))failure;
 
+- (void) RetrieveConversationsByConverationId:(NSString*)conversationId success:(void (^)(Conversation * conversation)) success failure:(void (^)(NSError *err))failure;
+
+
 - (void) RequestSocketSession:(void (^)(id JSON))success
                        failure:(void (^)(NSError *err))failure;
 
@@ -39,6 +45,13 @@
                                  failure:(void (^)(NSError* err))failure;
 - (void) clearCookies;
 
+#pragma mark - CRUD for Conversation
+- (void)addConversations:(NSArray*)conversationArray;
+- (Conversation *)addConversation:(NSDictionary*)conversation;
+- (Conversation *)updateConversation:(Conversation*)conversation withDictinonary:(NSDictionary*)dictionary;
 
-
+#pragma mark - CRUD for ConversationEntry
+- (void)addConversationEntries:(NSArray *)entryArray;
+- (ConversationEntry *)addConversationEntry:(NSDictionary*)entry;
+- (ConversationEntry *)updateConversationEntry:(ConversationEntry*)entry withDictionary:(NSDictionary*)dictionary;
 @end
