@@ -361,10 +361,6 @@
     // if corportate directory do this
     ClientEntities *person = clientEntities[indexPath.section][indexPath.row];
     [segue.destinationViewController setPerson:person];
-    //else - new stuff
-        //set personDictionary (that you created in DetailViewController)
->>>>>>> Directory Detail ViewController 2-24-14
-    
 }
 
 
