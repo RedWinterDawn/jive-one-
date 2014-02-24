@@ -37,3 +37,22 @@
 #pragma mark - OAuth Credentials
 #define kOAuthClientSecret @"enXabnU5KuVm4XRSWGkU"
 #define kOAuthClientId @"f62d7f80-3749-11e3-9b37-542696d7c505"
+
+#pragma mark - Presence Constants
+#define kPresenceAvailable @"Available"
+#define kPresenceAway @"Away"
+#define kPresenceBusy @"Busy"
+#define kPresenceDoNotDisturb @"Do Not Disturb"
+#define kPresenceInvisible @"Invisible"
+#define kPresenceOffline @"Offline"
+
+typedef enum {
+    JCPresenceTypeOffline = 0,
+    JCPresenceTypeAvailable = 1,
+    JCPresenceTypeBusy = 2,
+    JCPresenceTypeInvisible = 4,
+    JCPresenceTypeDoNotDisturb = 5,
+    JCPresenceTypeAway = 7,  
+    JCPresenceTypeNone = -1
+} JCPresenceType;
+
