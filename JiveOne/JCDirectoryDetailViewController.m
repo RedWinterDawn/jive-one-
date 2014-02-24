@@ -83,7 +83,7 @@
             return cell;
         }
         
-<<<<<<< HEAD
+
         else if(indexPath.row==1){
             // Create second cell
             static NSString *CellIdentifier = @"DirectoryDetailEmailCell";
@@ -98,15 +98,6 @@
             }
             
             return cell;
-=======
-        cell.textLabel.text = @"Company";
-        //convert Company:"companies:jive" to "jive:
-        NSString *stringToDivide = self.person.company;
-        NSArray *stringParts = [stringToDivide componentsSeparatedByString:@":"];
-        if (stringParts[1]) {
-            //Capitilize Company Name
-            cell.detailTextLabel.text = [stringParts[1] capitalizedString];
->>>>>>> Directory Detail ViewController 2-24-14
         }
         
         else {
