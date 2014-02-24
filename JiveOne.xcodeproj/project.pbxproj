@@ -62,7 +62,7 @@
 		27C5F43918BBBC5B005FCAFD /* ConversationEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C5F43818BBBC5B005FCAFD /* ConversationEntry.m */; };
 		42A1D3B90E844E0DA4AB6197 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86ED89B2764949AC9BCC0C7B /* libPods.a */; };
 		91260EDD18B2965900704670 /* JCDirectoryDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91260EDC18B2965900704670 /* JCDirectoryDetailViewController.m */; };
-		91EF99A718B6788D009563D1 /* JCDirectoryDetailTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 91EF99A618B6788D009563D1 /* JCDirectoryDetailTests.m */; };
+		9135DDF518BBEDF50052E998 /* JCDirectoryDetailTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9135DDF418BBEDF50052E998 /* JCDirectoryDetailTests.m */; };
 		DD01933718AECA760065A8CD /* JCTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD01933618AECA760065A8CD /* JCTestViewController.m */; };
 		DD28DA5218AEC4F5003BFC44 /* JCAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD28DA5118AEC4F5003BFC44 /* JCAccountViewController.m */; };
 		F202433D18B2CF4A006DB2EF /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F202433C18B2CF4A006DB2EF /* README.md */; };
@@ -149,7 +149,7 @@
 		8B150D3FF8864E2786E514D9 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		91260EDB18B2965900704670 /* JCDirectoryDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDirectoryDetailViewController.h; sourceTree = "<group>"; };
 		91260EDC18B2965900704670 /* JCDirectoryDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDirectoryDetailViewController.m; sourceTree = "<group>"; };
-		91EF99A618B6788D009563D1 /* JCDirectoryDetailTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDirectoryDetailTests.m; sourceTree = "<group>"; };
+		9135DDF418BBEDF50052E998 /* JCDirectoryDetailTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDirectoryDetailTests.m; sourceTree = "<group>"; };
 		DD01933518AECA760065A8CD /* JCTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTestViewController.h; sourceTree = "<group>"; };
 		DD01933618AECA760065A8CD /* JCTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTestViewController.m; sourceTree = "<group>"; };
 		DD28DA5018AEC4F5003BFC44 /* JCAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAccountViewController.h; sourceTree = "<group>"; };
@@ -348,7 +348,7 @@
 			isa = PBXGroup;
 			children = (
 				275F4A8218AD0FBC00D2F069 /* JiveOneTests.m */,
-				91EF99A618B6788D009563D1 /* JCDirectoryDetailTests.m */,
+				9135DDF418BBEDF50052E998 /* JCDirectoryDetailTests.m */,
 				275F4A7D18AD0FBC00D2F069 /* Supporting Files */,
 				27426AC818B5303D00011635 /* JCOsgiClientTest.m */,
 			);
@@ -550,6 +550,7 @@
 				2751592618AD32E500FD8D3F /* JCConversationsViewController.m in Sources */,
 				2751592F18AD334E00FD8D3F /* JCEntryModel.m in Sources */,
 				272B61DE18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */,
+				9135DDF518BBEDF50052E998 /* JCDirectoryDetailTests.m in Sources */,
 				2751592818AD32E500FD8D3F /* JCConversationDetailViewController.m in Sources */,
 				275F4A8318AD0FBC00D2F069 /* JiveOneTests.m in Sources */,
 				2751592018AD303500FD8D3F /* JCDirectoryViewController.m in Sources */,
