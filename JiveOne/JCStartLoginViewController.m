@@ -217,13 +217,15 @@
 
 - (void)tokenValidityPassed:(NSNotification*)notification
 {
+    [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil) detail:NSLocalizedString(@"Signing In", nil)];
     [JCVersionTracker start];
     if ([JCVersionTracker isFirstLaunch] || [JCVersionTracker isFirstLaunchSinceUpdate]) {
-        [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil) detail:NSLocalizedString(@"Fetching Data For 1st Time", nil)];
+        [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil) detail:NSLocalizedString(@"Building Database", nil)];
         [self fetchDataForFirstTime];
     }
     else
     {
+        [self hideHud];
         [self performSegueWithIdentifier:@"ApplicationSegue" sender:nil];
     }
 }
@@ -246,6 +248,7 @@
 {
     [[JCOsgiClient sharedClient] RetrieveEntitiesPresence:^(BOOL updated) {
         [self hideHud];
+        
         [self performSegueWithIdentifier:@"ApplicationSegue" sender:nil];
     } failure:^(NSError *err) {
         [self hideHud];
