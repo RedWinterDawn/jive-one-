@@ -35,14 +35,15 @@
     self.tableView.dataSource = self;
     
     sections = [NSArray arrayWithObjects:@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
-    self.clientEntitiesArray = [[NSMutableArray alloc] init]; //- this was an istance variable but now it's a property
-    
+    self.clientEntitiesArray = [[NSMutableArray alloc] init];
+    self.clientEntitiesSearchArray = [[NSMutableArray alloc] init];
     if ([self.segControl selectedSegmentIndex] == 0) {
         [self loadCompanyDirectory];
         //[self refreshCompanyDirectory];
     } else {
         [self loadLocalDirectory];
     }
+        //TODO: disable search bar if no objects in clientEntitiesArray
    
 }
 
@@ -277,12 +278,19 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
-    
-    if (self.clientEntitiesArray.count == 0) {
-        return 0;
-    } else {
-        return [(NSArray*)self.clientEntitiesArray[section] count];
+    //show search results
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        if(self.clientEntitiesSearchArray.count ==0)
+            return 0;
+        else
+            return [(NSArray*)self.clientEntitiesSearchArray[section] count];
+    }else{
+    //show all results
+        if (self.clientEntitiesArray.count == 0) {
+            return 0;
+        } else {
+            return [(NSArray*)self.clientEntitiesArray[section] count];
+        }
     }
     
     
@@ -293,14 +301,29 @@
     static NSString *CellIdentifier = @"DirectoryCell";
     JCPersonCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
+    //no contacts loaded
     if (self.clientEntitiesArray.count == 0) {
-        return nil;
-    } else {
+        cell.textLabel.text = @"No contacts";
+        return cell;
+    }
+    //will show contacts loaded in clientEntitiesArray
+    else {
+            //show search results only
+        if(tableView == self.searchDisplayController.searchResultsTableView){
+            if (self.clientEntitiesSearchArray.count == 0) {
+                return nil;
+            }
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            section = self.clientEntitiesSearchArray[indexPath.section];
+        }
+        else{
+            //show all results
+            section = self.clientEntitiesArray[indexPath.section];
+        }
         
-        NSArray *section = self.clientEntitiesArray[indexPath.section];
-        
+        //Company contacts
         if([section[indexPath.row] isKindOfClass:[ClientEntities class]]){
-        
+            
             ClientEntities* person = section[indexPath.row];
             
             cell.personNameLabel.text = person.firstLastName;
@@ -397,6 +420,18 @@
     for(NSArray *sectionArray in self.clientEntitiesArray){
         [self.clientEntitiesSearchArray addObject:[sectionArray filteredArrayUsingPredicate:resultPredicate]];
     }
+}
+
+//called by UI delegate to begin constructing clientEntitesSearchArray
+-(BOOL)searchDisplayController:(UISearchDisplayController *)controller
+shouldReloadTableForSearchString:(NSString *)searchString
+{
+    [self filterContentForSearchText:searchString
+                               scope:[[self.searchDisplayController.searchBar scopeButtonTitles]
+                                      objectAtIndex:[self.searchDisplayController.searchBar
+                                                     selectedScopeButtonIndex]]];
+    
+    return YES;
 }
 
 /*
