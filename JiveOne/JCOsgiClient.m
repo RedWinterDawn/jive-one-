@@ -508,6 +508,10 @@
         pres.interactions = presence[@"interactions"];
         //pres.urn = presence[@"urn"];
         pres.presenceId = presence[@"id"];
+        
+        // update presence for asscociated entity
+        [[JCOmniPresence sharedInstance] entityByEntityId:pres.entityId].entityPresence = pres;
+        
         [localContext MR_saveToPersistentStoreAndWait];
     }
     
@@ -523,6 +527,10 @@
     presence.interactions = dictionary[@"interactions"];
     //pres.urn = presence[@"urn"];
     //presence.presenceId = dictionary[@"id"];
+    
+    // update presence for asscociated entity
+    [[JCOmniPresence sharedInstance] entityByEntityId:presence.entityId].entityPresence = presence;
+    
     [localContext MR_saveToPersistentStoreAndWait];
     
     return presence;
