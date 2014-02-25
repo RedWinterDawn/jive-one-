@@ -21,6 +21,7 @@
         <attribute name="urn" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="entityCompany" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Company" syncable="YES"/>
         <relationship name="entityMeta" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ClientMeta" syncable="YES"/>
+        <relationship name="entityPresence" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Presence" syncable="YES"/>
     </entity>
     <entity name="ClientMeta" representedClassName="ClientMeta" syncable="YES">
         <attribute name="activityOrder" optional="YES" attributeType="Transformable" syncable="YES"/>
@@ -82,7 +83,7 @@
         <element name="Company" positionX="0" positionY="0" width="0" height="0"/>
         <element name="Conversation" positionX="0" positionY="0" width="0" height="0"/>
         <element name="ConversationEntry" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Voicemail" positionX="0" positionY="0" width="0" height="0"/>
         <element name="Presence" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Voicemail" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>
