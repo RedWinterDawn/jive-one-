@@ -73,7 +73,9 @@
 
 - (void)loadDatasource
 {
-    chatEntries = [NSMutableArray arrayWithArray:[ConversationEntry MR_findByAttribute:@"conversationId" withValue:_conversationId]];
+    chatEntries = [NSMutableArray arrayWithArray:[ConversationEntry MR_findByAttribute:@"conversationId" withValue:_conversationId andOrderBy:@"lastModified" ascending:YES]];
+    
+    
     [self.tableView reloadData];
     [self.tableView scrollRectToVisible:self.tableView.tableFooterView.frame animated:YES];
 }
