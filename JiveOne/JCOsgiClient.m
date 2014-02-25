@@ -47,6 +47,13 @@
     keyChainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
     localContext  = [NSManagedObjectContext MR_contextForCurrentThread];
     
+    //For voicemail
+    NSURL *dropboxURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kDropboxBaseURL, kDropboxVoicemailRoute]];
+    _tempManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
+    
+    _tempManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    _tempManager.requestSerializer = [AFJSONRequestSerializer serializer];
+    
 #if DEBUG
     _manager.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
     _manager.securityPolicy.allowInvalidCertificates = YES;
@@ -320,6 +327,27 @@
     
 }
 
+
+#pragma mark - Voicemail
+
+//Here is where doug is trying to make requests for voicemail - while currently we are just grabbing a file from dropbox eventually we will get it from osgi.
+- (void) RetrieveVoicemailForEntity:(NSString*)entity :(void (^)(id JSON))success
+                    failure:(void (^)(NSError *err))failure
+{
+    //leave this commented code here for when we have the api, it will be ready to go
+    //[self setRequestAuthHeader];
+    NSString * url = [NSString stringWithFormat:@"%@%@%@", [_tempManager baseURL], kDropboxVoicemailRoute, entity];//TODO: update to use API when it is available.
+    NSLog(@"%@", url);
+    
+    [_tempManager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        success(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
+
+
+
 #pragma mark - CRUD for Conversation
 - (void)addConversations:(NSArray *)conversationArray
 {
@@ -468,15 +496,6 @@
     return entry;
 }
 
-
-#pragma mark - Voicemail
-
-//Here is where doug is trying to make requests for voicemail - while currently we are just grabbing a file from dropbox eventually we will get it from osgi.
-- (IBAction)grabURLInBackground:(id)sender
-{
-    NSURL *url = [NSURL URLWithString:@"https://dl.dropboxusercontent.com/u/57157576/data/54321-123.m4a"];
-
-}
 
 #pragma mark - CRUD for Presence
 

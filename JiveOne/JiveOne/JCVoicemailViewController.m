@@ -19,6 +19,9 @@
 
 
 @interface JCVoicemailViewController ()
+{
+        ClientEntities *me;
+}
 
 @end
 
@@ -29,6 +32,7 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
+        
     }
     return self;
 }
@@ -37,6 +41,10 @@
 {
     [super viewDidLoad];
 
+    if (!me) {
+        me = [[JCOmniPresence sharedInstance] me];
+    }
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  

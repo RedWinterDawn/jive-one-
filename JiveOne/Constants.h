@@ -28,6 +28,10 @@
 #define kOsgiSubscriptionRoute @"subscriptions"
 #define kOsgiPresenceRoute @"presence"
 
+#pragma mark - Temporary Voicemail Constants
+#define kDropboxVoicemailRoute @"/u/57157576/voicemail/"
+#define kDropboxBaseURL @"https://dl.dropboxusercontent.com"
+
 #pragma mark - Authentication Manager
 #define kAuthenticationFromTokenSucceeded @"keyauthenticationfortokensucceeded"
 #define kAuthenticationFromTokenFailed @"keyauthenticationfortokenfailed"
