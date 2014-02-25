@@ -10,10 +10,13 @@
 #import "JCAuthenticationManager.h"
 #import "JCOsgiClient.h"
 #import "ClientEntities.h"
+#import "JCVersionTracker.h"
+#import <MBProgressHUD/MBProgressHUD.h>
 
 @interface JCStartLoginViewController ()
 {
     NSMutableData *receivedData;
+    MBProgressHUD *hud;
 }
 
 @end
@@ -26,26 +29,34 @@
 
 @implementation JCStartLoginViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     _authWebview.delegate = self;
     
-//    [[JCOsgiClient sharedClient] OAuthLoginWithUsername:@"egueiros" password:@"jiveTeam2014" success:^(id JSON) {
-//        //some code;
-//    } failure:^(NSError *err) {
-//        //somce code;
-//    }];
     
+}
+
+- (void)showHudWithTitle:(NSString*)title detail:(NSString*)detail
+{
+    if (!hud) {
+        hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeIndeterminate;
+    }
+    
+    hud.labelText = title;
+    hud.detailsLabelText = detail;
+    [hud show:YES];
+}
+
+- (void)hideHud
+{
+    if (hud) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [hud removeFromSuperview];
+        hud = nil;
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -206,7 +217,39 @@
 
 - (void)tokenValidityPassed:(NSNotification*)notification
 {
-    [self performSegueWithIdentifier:@"ApplicationSegue" sender:nil];
+    [JCVersionTracker start];
+    if ([JCVersionTracker isFirstLaunch] || [JCVersionTracker isFirstLaunchSinceUpdate]) {
+        [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil) detail:NSLocalizedString(@"Fetching Data For 1st Time", nil)];
+        [self fetchDataForFirstTime];
+    }
+    else
+    {
+        [self performSegueWithIdentifier:@"ApplicationSegue" sender:nil];
+    }
+}
+
+- (void)fetchDataForFirstTime
+{
+    [self fetchEntities];
+}
+
+- (void)fetchEntities
+{
+    [[JCOsgiClient sharedClient] RetrieveClientEntitites:^(id JSON) {
+        [self fetchPresence];
+    } failure:^(NSError *err) {
+        [self hideHud];
+    }];
+}
+
+- (void)fetchPresence
+{
+    [[JCOsgiClient sharedClient] RetrieveEntitiesPresence:^(BOOL updated) {
+        [self hideHud];
+        [self performSegueWithIdentifier:@"ApplicationSegue" sender:nil];
+    } failure:^(NSError *err) {
+        [self hideHud];
+    }];
 }
 
 #pragma mark Base64 Util
