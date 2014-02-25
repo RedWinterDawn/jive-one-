@@ -9,6 +9,9 @@
 #import "JCAppDelegate.h"
 #import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
 #import "JCSocketDispatch.h"
+#import "JCVersionTracker.h"
+#import "JCOsgiClient.h"
+#import "ClientEntities.h"
 
 
 
@@ -21,6 +24,13 @@
     [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
     
     [[JCSocketDispatch sharedInstance] requestSession];
+    
+    [JCVersionTracker start];
+    if ([JCVersionTracker isFirstLaunch] || [JCVersionTracker isFirstLaunchSinceUpdate]) {
+        // init data fetch
+        [self fetchDataForFirstTime];
+    }
+    
     
     return YES;
 }
@@ -53,6 +63,27 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     [MagicalRecord cleanUp];
+}
+
+- (void)fetchDataForFirstTime
+{
+    [[JCOsgiClient sharedClient] RetrieveClientEntitites:^(id JSON) {
+        
+//        NSArray *entities = [ClientEntities MR_findAll];
+//        
+//        for (ClientEntities *entity in entities) {
+//            
+//            [[JCOsgiClient sharedClient] RetrievePresenceForEntity:entity.entityId withPresendUrn:entity.presence success:^(BOOL updated) {
+//                NSLog(@"%hhd", updated);
+//            } failure:^(NSError *err) {
+//                NSLog(@"%@", err);
+//            }];
+//        }
+        
+    } failure:^(NSError *err) {
+        NSLog(@"%@", err);
+    }];
+
 }
 
 @end
