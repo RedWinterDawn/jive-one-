@@ -25,13 +25,6 @@
     
     [[JCSocketDispatch sharedInstance] requestSession];
     
-    [JCVersionTracker start];
-    if ([JCVersionTracker isFirstLaunch] || [JCVersionTracker isFirstLaunchSinceUpdate]) {
-        // init data fetch
-        [self fetchDataForFirstTime];
-    }
-    
-    
     return YES;
 }
 							
@@ -65,25 +58,5 @@
     [MagicalRecord cleanUp];
 }
 
-- (void)fetchDataForFirstTime
-{
-    [[JCOsgiClient sharedClient] RetrieveClientEntitites:^(id JSON) {
-        
-//        NSArray *entities = [ClientEntities MR_findAll];
-//        
-//        for (ClientEntities *entity in entities) {
-//            
-//            [[JCOsgiClient sharedClient] RetrievePresenceForEntity:entity.entityId withPresendUrn:entity.presence success:^(BOOL updated) {
-//                NSLog(@"%hhd", updated);
-//            } failure:^(NSError *err) {
-//                NSLog(@"%@", err);
-//            }];
-//        }
-        
-    } failure:^(NSError *err) {
-        NSLog(@"%@", err);
-    }];
-
-}
 
 @end
