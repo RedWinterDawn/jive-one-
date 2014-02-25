@@ -11,6 +11,7 @@
 #import "Conversation.h"
 #import "ConversationEntry.h"
 #import "Presence.h"
+#import "ClientEntities.h"
 
 @interface JCOsgiClient : NSObject
 
