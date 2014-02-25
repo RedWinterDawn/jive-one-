@@ -246,6 +246,25 @@
     }];
 }
 
+- (void) RequestPresenceForEntity:(NSString*)entity withPresendUrn:(NSString*)presenceUrn success:(void (^)(BOOL updated))success failure:(void(^)(NSError *err))failure
+{
+    NSString *url = nil;
+    if (presenceUrn) {
+        url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], presenceUrn];
+    }
+    else {
+        url = [NSString stringWithFormat:@"%@presence:%@", [_manager baseURL], entity];
+    }
+    
+    [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+}
+
 - (void) UpdatePresence:(JCPresenceType)presence success:(void (^)(BOOL updated))success failure:(void(^)(NSError *err))failure
 {
     NSString *presenceURN = [[JCOmniPresence sharedInstance] me].presence;
@@ -262,6 +281,7 @@
     
     [_manager PATCH:url parameters:presenceDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"%@", responseObject);
+        [self addPresence:responseObject];
         success(YES);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@", error);
@@ -439,19 +459,45 @@
 
 }
 
-//- (void)requestFinished:(HTTPRequest *)request
-//{
-//    // Use when fetching text data
-//    NSString *responseString = [request responseString];
-//    
-//    // Use when fetching binary data
-//    NSData *responseData = [request responseData];
-//}
+#pragma mark - CRUD for Presence
 
-//- (void)requestFailed:(HTTPRequest *)request
-//{
-//    NSError *error = [request error];
-//}
+- (Presence *)addPresence:(NSDictionary*)presence
+{
+    NSString *presenceId = presence[@"id"];
+    NSArray *result = [Presence MR_findByAttribute:@"presenceId" withValue:presenceId];
+    Presence *pres = nil;
+    
+    if (result.count > 0) {
+        pres = result[0];
+        [self updatePresence:pres dictionary:presence];
+    }
+    else
+    {
+        pres = [Presence MR_createInContext:localContext];
+        pres.entityId = presence[@"entity"];
+        pres.lastModified = presence[@"lastModified"];
+        pres.createDate = presence[@"createDate"];
+        pres.interactions = presence[@"interactions"];
+        //pres.urn = presence[@"urn"];
+        pres.presenceId = presence[@"id"];
+        [localContext MR_saveToPersistentStoreAndWait];
+    }
+    
+    return pres;
+}
 
+- (Presence *)updatePresence:(Presence *)presence dictionary:(NSDictionary *)dictionary
+{
+    presence = [Presence MR_createInContext:localContext];
+    presence.entityId = dictionary[@"entity"];
+    presence.lastModified = dictionary[@"lastModified"];
+    //presence.createDate = dictionary[@"createDate"];
+    presence.interactions = dictionary[@"interactions"];
+    //pres.urn = presence[@"urn"];
+    //presence.presenceId = dictionary[@"id"];
+    [localContext MR_saveToPersistentStoreAndWait];
+    
+    return presence;
+}
 
 @end
