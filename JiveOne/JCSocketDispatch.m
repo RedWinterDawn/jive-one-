@@ -126,7 +126,7 @@
         
         // if we dont' have, then fetch it
         if (conversation.count == 0) {
-            [[JCOsgiClient sharedClient] RetrieveConversationsByConverationId:conversationId success:^(Conversation *conversation) {
+            [[JCOsgiClient sharedClient] RetrieveConversationsByConversationId:conversationId success:^(Conversation *conversation) {
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"NewConversation" object:conversation];
             } failure:^(NSError *err) {
                 NSLog(@"%@", err);
