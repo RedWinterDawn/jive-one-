@@ -15,8 +15,8 @@
 
 #pragma mark - OSGI Routes
 //#define kOsgiBaseURL @"https://my.jive.com/"
-#define kOsgiBaseURL @"https://test.my.jive.com/"
-//#define kOsgiBaseURL @"https://osgi.local.com:8000/"
+//#define kOsgiBaseURL @"https://test.my.jive.com/"
+#define kOsgiBaseURL @"https://osgi.local.com:8000/"
 #define kOsgiAuthURL @"https://auth.jive.com/oauth2/grant?client_id=%@&response_type=code&redirect_uri=%@"
 #define kOsgiAPIScheme @"api/"
 #define kOsgiURNScheme @"urn/"
@@ -26,6 +26,7 @@
 #define kOsgiConverationRoute @"conversations"
 #define kOsgiSessionRoute @"sessions"
 #define kOsgiSubscriptionRoute @"subscriptions"
+#define kOsgiPresenceRoute @"presence"
 
 #pragma mark - Authentication Manager
 #define kAuthenticationFromTokenSucceeded @"keyauthenticationfortokensucceeded"
