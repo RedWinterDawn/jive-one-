@@ -161,11 +161,11 @@
             }
         }
         
-        NSArray* result = [ClientEntities MR_findByAttribute:@"entityId" withValue:firstEntity];
-        ClientEntities * person = (ClientEntities*)result[0];
+        
+        ClientEntities * person = [[JCOmniPresence sharedInstance] entityByEntityId:firstEntity];\
         
         cell.textLabel.text = [NSString stringWithFormat:@"%@", person.firstLastName];
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", conv.lastModified];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", [self getPresence:[NSNumber numberWithInt:[person.entityPresence.interactions[@"chat"][@"code"] integerValue] ]]];
         [cell.imageView setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];
         
     }
@@ -203,7 +203,33 @@
     }
 }
 
-
+- (NSString *)getPresence:(NSNumber *)presence
+{
+    switch ([presence integerValue]) {
+        case JCPresenceTypeAvailable:
+            return kPresenceAvailable;
+            break;
+        case JCPresenceTypeAway:
+            return kPresenceAway;
+            break;
+        case JCPresenceTypeBusy:
+            return kPresenceBusy;
+            break;
+        case JCPresenceTypeDoNotDisturb:
+            return kPresenceDoNotDisturb;
+            break;
+        case JCPresenceTypeInvisible:
+            return kPresenceInvisible;
+            break;
+        case JCPresenceTypeOffline:
+            return kPresenceOffline;
+            break;
+            
+        default:
+            return @"Unknown";
+            break;
+    }
+}
 
 
 /*
