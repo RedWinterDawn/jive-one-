@@ -36,9 +36,11 @@
 
 - (void)initSession
 {
-    _webSocket = [[SRWebSocket alloc] initWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:ws]]];
-    _webSocket.delegate = self;
-    [_webSocket open];
+    if (_webSocket == nil || _webSocket.readyState == SR_CLOSING || _webSocket.readyState == SR_CLOSED) {
+        _webSocket = [[SRWebSocket alloc] initWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:ws]]];
+        _webSocket.delegate = self;
+        [_webSocket open];
+    }
 }
 
 - (void)requestSession
@@ -75,13 +77,27 @@
 
 - (void)subscribeSession
 {
-    NSDictionary* subscriptions = [NSDictionary dictionaryWithObjectsAndKeys:@"(conversations|permanentrooms|groupconversations|adhocrooms):*:entries:*", @"urn", nil];
+    NSDictionary* conversation = [NSDictionary dictionaryWithObjectsAndKeys:@"(conversations|permanentrooms|groupconversations|adhocrooms):*:entries:*", @"urn", nil];
+    NSDictionary* presence1 = [NSDictionary dictionaryWithObjectsAndKeys:@"presence:entities:*", @"urn", nil];
+    NSDictionary* presence2 = [NSDictionary dictionaryWithObjectsAndKeys:@"presence:(entities|nodes)", @"urn", nil];
+    NSDictionary* presence3 = [NSDictionary dictionaryWithObjectsAndKeys:@"presence:(entities|nodes):*", @"urn", nil];
     
-    [[JCOsgiClient sharedClient] SubscribeToSocketEventsWithAuthToken:sessionToken subscriptions:subscriptions success:^(id JSON) {
-        [self initSession];
-    } failure:^(NSError *err) {
-        NSLog(@"%@", err);
-    }];
+    NSArray *subscriptionArray = [NSArray arrayWithObjects:conversation, presence1, presence2, presence3, nil];
+    
+    for (NSDictionary *subscription in subscriptionArray) {
+        [[JCOsgiClient sharedClient] SubscribeToSocketEventsWithAuthToken:sessionToken subscriptions:subscription success:^(id JSON) {
+            NSLog(@"%@", JSON);
+            
+        } failure:^(NSError *err) {
+            NSLog(@"%@", err);
+        }];    }
+    [NSThread sleepForTimeInterval:2];
+    [self doneSubscribing];
+}
+
+- (void)doneSubscribing
+{
+    [self initSession];
 }
 
 #pragma mark - Websocket Delegates
@@ -104,10 +120,24 @@
 - (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error
 {
     NSLog(@"%@", [NSString stringWithFormat:@"Connection Failed: %@", [error description]]);
+    [self reconnect];
 }
 - (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean
 {
-   NSLog(@"Connection Closed");
+   NSDictionary *userInfo = @{
+           @"code": @(code),
+           @"reason": reason,
+           @"clean": @(wasClean)};
+    
+    NSLog(@"Connection Closed : %@", userInfo);
+    [self reconnect];
+}
+
+- (void)reconnect
+{
+    if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) {
+        [self requestSession];
+    }
 }
 
 - (void)messageDispatcher:(NSDictionary*)message
