@@ -13,6 +13,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "JCConversationDetailViewController.h"
 #import "ConversationEntry.h"
+#import "JCPersonCell.h"
 
 @interface JCConversationsViewController ()
 {
@@ -147,7 +148,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    JCPersonCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     Conversation *conv = conversations[indexPath.row];
     
@@ -159,14 +160,14 @@
             if (![entity isEqualToString:me.urn]) {
                 firstEntity = entity;
             }
-        }
-        
+        }        
         
         ClientEntities * person = [[JCOmniPresence sharedInstance] entityByEntityId:firstEntity];\
         
-        cell.textLabel.text = [NSString stringWithFormat:@"%@", person.firstLastName];
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", [self getPresence:[NSNumber numberWithInt:[person.entityPresence.interactions[@"chat"][@"code"] integerValue] ]]];
-        [cell.imageView setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];
+        cell.personNameLabel.text = [NSString stringWithFormat:@"%@", person.firstLastName];
+        cell.personDetailLabel.text = [NSString stringWithFormat:@"%@", person.email];
+        cell.personPresenceLabel.text = [self getPresence:[NSNumber numberWithInt:[person.entityPresence.interactions[@"chat"][@"code"] integerValue]]];
+        [cell.personPicture setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];
         
     }
     else
