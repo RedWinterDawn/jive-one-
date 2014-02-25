@@ -55,8 +55,8 @@
 		275F4A8318AD0FBC00D2F069 /* JiveOneTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 275F4A8218AD0FBC00D2F069 /* JiveOneTests.m */; };
 		2762C45818B4177D00885918 /* JCOmniPresence.m in Sources */ = {isa = PBXBuildFile; fileRef = 2762C45718B4177D00885918 /* JCOmniPresence.m */; };
 		2762C45918B4177D00885918 /* JCOmniPresence.m in Sources */ = {isa = PBXBuildFile; fileRef = 2762C45718B4177D00885918 /* JCOmniPresence.m */; };
+		2789731018BD08880046989C /* ClientEntities.m in Sources */ = {isa = PBXBuildFile; fileRef = 2789730F18BD08880046989C /* ClientEntities.m */; };
 		2797B92D18B82EA500DB2B9B /* Company.m in Sources */ = {isa = PBXBuildFile; fileRef = 2797B92C18B82EA500DB2B9B /* Company.m */; };
-		2797B93018B82EA500DB2B9B /* ClientEntities.m in Sources */ = {isa = PBXBuildFile; fileRef = 2797B92F18B82EA500DB2B9B /* ClientEntities.m */; };
 		2797B93318B82EA500DB2B9B /* ClientMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = 2797B93218B82EA500DB2B9B /* ClientMeta.m */; };
 		27C5F43318BBBC1F005FCAFD /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C5F43218BBBC1F005FCAFD /* Conversation.m */; };
 		27C5F43918BBBC5B005FCAFD /* ConversationEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C5F43818BBBC5B005FCAFD /* ConversationEntry.m */; };
@@ -140,10 +140,10 @@
 		275F4A8218AD0FBC00D2F069 /* JiveOneTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JiveOneTests.m; sourceTree = "<group>"; };
 		2762C45618B4177D00885918 /* JCOmniPresence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCOmniPresence.h; sourceTree = "<group>"; };
 		2762C45718B4177D00885918 /* JCOmniPresence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCOmniPresence.m; sourceTree = "<group>"; };
+		2789730E18BD08880046989C /* ClientEntities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientEntities.h; sourceTree = "<group>"; };
+		2789730F18BD08880046989C /* ClientEntities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClientEntities.m; sourceTree = "<group>"; };
 		2797B92B18B82EA500DB2B9B /* Company.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Company.h; sourceTree = "<group>"; };
 		2797B92C18B82EA500DB2B9B /* Company.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Company.m; sourceTree = "<group>"; };
-		2797B92E18B82EA500DB2B9B /* ClientEntities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientEntities.h; sourceTree = "<group>"; };
-		2797B92F18B82EA500DB2B9B /* ClientEntities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClientEntities.m; sourceTree = "<group>"; };
 		2797B93118B82EA500DB2B9B /* ClientMeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientMeta.h; sourceTree = "<group>"; };
 		2797B93218B82EA500DB2B9B /* ClientMeta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClientMeta.m; sourceTree = "<group>"; };
 		27C5F43118BBBC1F005FCAFD /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
@@ -269,6 +269,8 @@
 				27C5F43118BBBC1F005FCAFD /* Conversation.h */,
 				27C5F43218BBBC1F005FCAFD /* Conversation.m */,
 				2751591618AD300B00FD8D3F /* OsgiData.xcdatamodel */,
+				2789730E18BD08880046989C /* ClientEntities.h */,
+				2789730F18BD08880046989C /* ClientEntities.m */,
 				27C5F43A18BC104B005FCAFD /* Presence.h */,
 				27C5F43B18BC104B005FCAFD /* Presence.m */,
 				9135DE0818BC07F70052E998 /* Voicemail.h */,
@@ -277,8 +279,6 @@
 				27C5F43818BBBC5B005FCAFD /* ConversationEntry.m */,
 				2797B93118B82EA500DB2B9B /* ClientMeta.h */,
 				2797B93218B82EA500DB2B9B /* ClientMeta.m */,
-				2797B92E18B82EA500DB2B9B /* ClientEntities.h */,
-				2797B92F18B82EA500DB2B9B /* ClientEntities.m */,
 				2797B92B18B82EA500DB2B9B /* Company.h */,
 				2797B92C18B82EA500DB2B9B /* Company.m */,
 				2762C45618B4177D00885918 /* JCOmniPresence.h */,
@@ -539,7 +539,7 @@
 				2797B93318B82EA500DB2B9B /* ClientMeta.m in Sources */,
 				2751592518AD32E500FD8D3F /* JCConversationsViewController.m in Sources */,
 				27C5F43F18BC1946005FCAFD /* JCVersionTracker.m in Sources */,
-				2797B93018B82EA500DB2B9B /* ClientEntities.m in Sources */,
+				2789731018BD08880046989C /* ClientEntities.m in Sources */,
 				DD28DA5218AEC4F5003BFC44 /* JCAccountViewController.m in Sources */,
 				275F4A6218AD0FBC00D2F069 /* JCAppDelegate.m in Sources */,
 				27C5F43C18BC104B005FCAFD /* Presence.m in Sources */,
