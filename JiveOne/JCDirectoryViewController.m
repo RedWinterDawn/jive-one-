@@ -296,6 +296,24 @@
     }
 }
 
+#pragma mark -Search
+
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
+{
+    NSPredicate *resultPredicate = [NSPredicate
+//                                    predicateWithFormat:@"SELF contains[cd] %@",
+                                    predicateWithFormat:@"firstName contains[cd] %@",
+                                    searchText];
+// TODO: implement for name (first, last)
+//    number (phone or extension)
+//    special characters should not affect the search ()-.
+//    email/JiveID
+    
+    for(NSArray *sectionArray in self.clientEntitiesArray){
+        [self.clientEntitiesSearchArray addObject:[sectionArray filteredArrayUsingPredicate:resultPredicate]];
+    }
+}
+
 /*
  // Override to support conditional editing of the table view.
  - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath

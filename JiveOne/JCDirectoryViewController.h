@@ -22,6 +22,7 @@
 
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *clientEntitiesArray;
+@property (nonatomic, strong) NSMutableArray *clientEntitiesSearchArray;
 @property (nonatomic, weak) IBOutlet UISegmentedControl *segControl;
 
 - (IBAction)segmentChanged:sender ;
