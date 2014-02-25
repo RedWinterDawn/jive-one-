@@ -12,6 +12,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "JCOsgiClient.h"
 #import "JCDirectoryDetailViewController.h"
+#import "JCPersonCell.h"
 
 
 @interface JCDirectoryViewController ()
@@ -274,7 +275,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"DirectoryCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    JCPersonCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     if (self.clientEntitiesArray.count == 0) {
         return nil;
@@ -286,20 +287,49 @@
         
             ClientEntities* person = section[indexPath.row];
             
-            cell.textLabel.text = person.firstLastName;
-            cell.detailTextLabel.text = person.email;
-            [cell.imageView setImageWithURL:[NSURL URLWithString:person.picture]
+            cell.personNameLabel.text = person.firstLastName;
+            cell.personDetailLabel.text = person.email;
+            cell.personPresenceLabel.text = [self getPresence:[NSNumber numberWithInt:[person.entityPresence.interactions[@"chat"][@"code"] integerValue]]];
+            [cell.personPicture setImageWithURL:[NSURL URLWithString:person.picture]
                            placeholderImage:[UIImage imageNamed:@"avatar.png"]];
             
         }else{
             NSDictionary * pers = section[indexPath.row];
-            cell.textLabel.text = [pers objectForKey:@"firstLast"];
-            cell.detailTextLabel.text = @"";//[person objectForKey:@"email"];
+            cell.personNameLabel.text = [pers objectForKey:@"firstLast"];
+            cell.personDetailLabel.text = @"";//[person objectForKey:@"email"];
 
             }
         
         
         return cell;
+    }
+}
+
+- (NSString *)getPresence:(NSNumber *)presence
+{
+    switch ([presence integerValue]) {
+        case JCPresenceTypeAvailable:
+            return kPresenceAvailable;
+            break;
+        case JCPresenceTypeAway:
+            return kPresenceAway;
+            break;
+        case JCPresenceTypeBusy:
+            return kPresenceBusy;
+            break;
+        case JCPresenceTypeDoNotDisturb:
+            return kPresenceDoNotDisturb;
+            break;
+        case JCPresenceTypeInvisible:
+            return kPresenceInvisible;
+            break;
+        case JCPresenceTypeOffline:
+            return kPresenceOffline;
+            break;
+            
+        default:
+            return @"Unknown";
+            break;
     }
 }
 
