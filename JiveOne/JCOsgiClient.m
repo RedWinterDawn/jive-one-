@@ -246,8 +246,14 @@
     }];
 }
 
-- (void) RequestPresenceForEntity:(NSString*)entity withPresendUrn:(NSString*)presenceUrn success:(void (^)(BOOL updated))success failure:(void(^)(NSError *err))failure
+- (void)RetrieveEntitiesPresence:(void (^)(BOOL updated))success failure:(void(^)(NSError *err))failure
 {
+    [self setRequestAuthHeader];
+}
+
+- (void) RetrievePresenceForEntity:(NSString*)entity withPresendUrn:(NSString*)presenceUrn success:(void (^)(BOOL updated))success failure:(void(^)(NSError *err))failure
+{
+    [self setRequestAuthHeader];
     NSString *url = nil;
     if (presenceUrn) {
         url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], presenceUrn];
