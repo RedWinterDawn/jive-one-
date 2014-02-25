@@ -36,7 +36,7 @@
     
     if ([self.segControl selectedSegmentIndex] == 0) {
         [self loadCompanyDirectory];
-        [self refreshCompanyDirectory];
+        //[self refreshCompanyDirectory];
     } else {
         [self loadLocalDirectory];
     }
@@ -131,10 +131,17 @@
 - (void)loadCompanyDirectory {
     
     for (NSString *section in sections) {
-        NSPredicate *pred = [NSPredicate predicateWithFormat:@"(firstLastName BEGINSWITH[c] %@)", section];
         
+        // retrieve entities where first name starts with lether of alphabet
+        NSPredicate *pred = [NSPredicate predicateWithFormat:@"(firstLastName BEGINSWITH[c] %@)", section];
         NSArray *sectionArray = [ClientEntities MR_findAllWithPredicate:pred];
-        [self.clientEntitiesArray addObject:sectionArray];
+        
+        // sort array with bases on firstLastName property
+        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"firstLastName" ascending:YES];
+        NSArray *sortedArray= [sectionArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]];
+        
+        
+        [self.clientEntitiesArray addObject:sortedArray];
     }
     [self.tableView reloadData];
 }
