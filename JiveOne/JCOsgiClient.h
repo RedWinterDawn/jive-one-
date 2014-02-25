@@ -30,7 +30,7 @@
 - (void) RetrieveConversations:(void (^)(id JSON))success
                        failure:(void (^)(NSError *err))failure;
 
-- (void) RetrieveConversationsByConverationId:(NSString*)conversationId success:(void (^)(Conversation * conversation)) success failure:(void (^)(NSError *err))failure;
+- (void) RetrieveConversationsByConversationId:(NSString*)conversationId success:(void (^)(Conversation * conversation)) success failure:(void (^)(NSError *err))failure;
 
 
 - (void) RequestSocketSession:(void (^)(id JSON))success

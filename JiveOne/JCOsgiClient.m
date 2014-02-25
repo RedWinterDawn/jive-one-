@@ -107,7 +107,7 @@
     }];
 }
 
-- (void) RetrieveConversationsByConverationId:(NSString*)conversationId success:(void (^)(Conversation * conversation)) success failure:(void (^)(NSError *err))failure
+- (void) RetrieveConversationsByConversationId:(NSString*)conversationId success:(void (^)(Conversation * conversation)) success failure:(void (^)(NSError *err))failure
 {
     [self setRequestAuthHeader];
     
@@ -249,6 +249,14 @@
 - (void)RetrieveEntitiesPresence:(void (^)(BOOL updated))success failure:(void(^)(NSError *err))failure
 {
     [self setRequestAuthHeader];
+    
+    [_manager GET:kOsgiPresenceRoute parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSArray *presences = responseObject[@"entries"];
+        [self addPresences:presences];
+        success(YES);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
 }
 
 - (void) RetrievePresenceForEntity:(NSString*)entity withPresendUrn:(NSString*)presenceUrn success:(void (^)(BOOL updated))success failure:(void(^)(NSError *err))failure
@@ -466,6 +474,15 @@
 }
 
 #pragma mark - CRUD for Presence
+
+- (void)addPresences:(NSArray*)presences
+{
+    for (NSDictionary *presence in presences) {
+        if ([presence isKindOfClass:[NSDictionary class]]) {
+            [self addPresence:presence];
+        }
+    }
+}
 
 - (Presence *)addPresence:(NSDictionary*)presence
 {
