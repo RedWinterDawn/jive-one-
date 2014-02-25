@@ -60,6 +60,8 @@
 		2797B93318B82EA500DB2B9B /* ClientMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = 2797B93218B82EA500DB2B9B /* ClientMeta.m */; };
 		27C5F43318BBBC1F005FCAFD /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C5F43218BBBC1F005FCAFD /* Conversation.m */; };
 		27C5F43918BBBC5B005FCAFD /* ConversationEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C5F43818BBBC5B005FCAFD /* ConversationEntry.m */; };
+		27C5F43C18BC104B005FCAFD /* Presence.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C5F43B18BC104B005FCAFD /* Presence.m */; };
+		27C5F43F18BC1946005FCAFD /* JCVersionTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C5F43E18BC1946005FCAFD /* JCVersionTracker.m */; };
 		42A1D3B90E844E0DA4AB6197 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86ED89B2764949AC9BCC0C7B /* libPods.a */; };
 		91260EDD18B2965900704670 /* JCDirectoryDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91260EDC18B2965900704670 /* JCDirectoryDetailViewController.m */; };
 		9135DE0018BBFC7A0052E998 /* JCVoicemailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9135DDFF18BBFC7A0052E998 /* JCVoicemailViewController.m */; };
@@ -148,6 +150,10 @@
 		27C5F43218BBBC1F005FCAFD /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
 		27C5F43718BBBC5B005FCAFD /* ConversationEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationEntry.h; sourceTree = "<group>"; };
 		27C5F43818BBBC5B005FCAFD /* ConversationEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationEntry.m; sourceTree = "<group>"; };
+		27C5F43A18BC104B005FCAFD /* Presence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Presence.h; sourceTree = "<group>"; };
+		27C5F43B18BC104B005FCAFD /* Presence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Presence.m; sourceTree = "<group>"; };
+		27C5F43D18BC1946005FCAFD /* JCVersionTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVersionTracker.h; sourceTree = "<group>"; };
+		27C5F43E18BC1946005FCAFD /* JCVersionTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVersionTracker.m; sourceTree = "<group>"; };
 		86ED89B2764949AC9BCC0C7B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B150D3FF8864E2786E514D9 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		91260EDB18B2965900704670 /* JCDirectoryDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDirectoryDetailViewController.h; sourceTree = "<group>"; };
@@ -263,6 +269,8 @@
 				27C5F43118BBBC1F005FCAFD /* Conversation.h */,
 				27C5F43218BBBC1F005FCAFD /* Conversation.m */,
 				2751591618AD300B00FD8D3F /* OsgiData.xcdatamodel */,
+				27C5F43A18BC104B005FCAFD /* Presence.h */,
+				27C5F43B18BC104B005FCAFD /* Presence.m */,
 				9135DE0818BC07F70052E998 /* Voicemail.h */,
 				9135DE0918BC07F70052E998 /* Voicemail.m */,
 				27C5F43718BBBC5B005FCAFD /* ConversationEntry.h */,
@@ -290,6 +298,8 @@
 				275E809518AED884009AD776 /* JCSocketDispatch.m */,
 				275413B118B2C349001DBA68 /* JCChatMessage.h */,
 				275413B218B2C349001DBA68 /* JCChatMessage.m */,
+				27C5F43D18BC1946005FCAFD /* JCVersionTracker.h */,
+				27C5F43E18BC1946005FCAFD /* JCVersionTracker.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -528,9 +538,11 @@
 				272B61DD18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */,
 				2797B93318B82EA500DB2B9B /* ClientMeta.m in Sources */,
 				2751592518AD32E500FD8D3F /* JCConversationsViewController.m in Sources */,
+				27C5F43F18BC1946005FCAFD /* JCVersionTracker.m in Sources */,
 				2797B93018B82EA500DB2B9B /* ClientEntities.m in Sources */,
 				DD28DA5218AEC4F5003BFC44 /* JCAccountViewController.m in Sources */,
 				275F4A6218AD0FBC00D2F069 /* JCAppDelegate.m in Sources */,
+				27C5F43C18BC104B005FCAFD /* Presence.m in Sources */,
 				91260EDD18B2965900704670 /* JCDirectoryDetailViewController.m in Sources */,
 				2751591718AD300B00FD8D3F /* OsgiData.xcdatamodel in Sources */,
 				2751591118AD174F00FD8D3F /* KeychainItemWrapper.m in Sources */,
