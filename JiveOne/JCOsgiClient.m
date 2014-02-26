@@ -295,18 +295,20 @@
 {
     NSString *presenceURN = [[JCOmniPresence sharedInstance] me].presence;
     
-    NSDictionary *chatDictionary = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:presence], @"chat", nil];
-    NSDictionary *iteractionsDictionary = [NSDictionary dictionaryWithObjectsAndKeys:presenceURN, @"urn", chatDictionary, @"iteractions", nil];
-    NSDictionary *presenceDictionary = [NSDictionary dictionaryWithObjectsAndKeys:iteractionsDictionary, @"presence", nil];
+    NSDictionary *chatCodeDictonary = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:presence], @"code", nil];
+    NSDictionary *chatDictionary = [NSDictionary dictionaryWithObjectsAndKeys:chatCodeDictonary, @"chat", nil];
+    //NSDictionary *iteractionsDictionary = [NSDictionary dictionaryWithObjectsAndKeys:presenceURN, @"urn", chatDictionary, @"iteractions", nil];
+    NSDictionary *iteractionsDictionary = [NSDictionary dictionaryWithObjectsAndKeys:chatDictionary, @"interactions", nil];
+    //NSDictionary *presenceDictionary = [NSDictionary dictionaryWithObjectsAndKeys:iteractionsDictionary, @"presence", nil];
     
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:presenceDictionary options:kNilOptions error:nil];
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:iteractionsDictionary options:kNilOptions error:nil];
     NSString* jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     NSLog(@"%@", jsonString);
    
     NSString *url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], presenceURN];
     
-    [_manager PATCH:url parameters:presenceDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@", responseObject);
+    [_manager PATCH:url parameters:iteractionsDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //NSLog(@"%@", responseObject);
         [self addPresence:responseObject];
         success(YES);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
