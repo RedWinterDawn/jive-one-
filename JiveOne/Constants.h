@@ -36,8 +36,10 @@
 #define kAuthenticationFromTokenSucceeded @"keyauthenticationfortokensucceeded"
 #define kAuthenticationFromTokenFailed @"keyauthenticationfortokenfailed"
 
-#pragma mark - Modal Webview Notification
+#pragma mark - Notification Constants
 #define kWebViewDismissal @"keywebviewdismissal"
+#define kNewConversation @"keynewconversation"
+#define kPresenceChanged @"keypresencechanged"
 
 #pragma mark - OAuth Credentials
 #define kOAuthClientSecret @"enXabnU5KuVm4XRSWGkU"
@@ -50,6 +52,10 @@
 #define kPresenceDoNotDisturb @"Do Not Disturb"
 #define kPresenceInvisible @"Invisible"
 #define kPresenceOffline @"Offline"
+
+#pragma mark - Socket Message Types
+#define kSocketPresence @"presence"
+#define kSocketConversations @"conversations"
 
 typedef enum {
     JCPresenceTypeOffline = 0,
