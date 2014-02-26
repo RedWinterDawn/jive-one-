@@ -37,6 +37,7 @@
     
     [self loadDatasource];
     [self fetchLastConverstions];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -45,7 +46,10 @@
     if (!localContext) {
         localContext = [NSManagedObjectContext MR_contextForCurrentThread];
     }
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveConversation:) name:@"NewConversation" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveConversation:) name:kNewConversation object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdatePresence:) name:kPresenceChanged object:nil];
+    
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDataModelChange:) name:NSManagedObjectContextObjectsDidChangeNotification object:localContext];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -53,6 +57,15 @@
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
+//- (void)handleDataModelChange:(NSNotification *)note
+//{
+//    NSSet *updatedObjects = [[note userInfo] objectForKey:NSUpdatedObjectsKey];
+//    NSSet *deletedObjects = [[note userInfo] objectForKey:NSDeletedObjectsKey];
+//    NSSet *insertedObjects = [[note userInfo] objectForKey:NSInsertedObjectsKey];
+//    
+//    // Do something in response to this
+//}
 
 - (void) loadDatasource
 {
@@ -83,6 +96,28 @@
 {
     
 
+}
+
+#pragma mar - Did Update Presence
+- (void)didUpdatePresence:(NSNotification*)notification
+{
+    Presence *presence = (Presence*)notification.object;
+    NSMutableArray *indexPaths = [NSMutableArray array];
+    
+    for (NSInteger i = 0; i < [self.tableView numberOfRowsInSection:0]; ++i)
+    {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        JCPersonCell *cell = (JCPersonCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+        if ([cell.personId isEqualToString:presence.entityId]) {
+            [indexPaths addObject:indexPath];
+            break;
+        }
+    }
+   
+    if (indexPaths.count != 0) {
+        [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+    
 }
 
 #pragma mark - Did receive Notication
@@ -168,7 +203,7 @@
         cell.personDetailLabel.text = [NSString stringWithFormat:@"%@", person.email];
         cell.personPresenceLabel.text = [self getPresence:[NSNumber numberWithInt:[person.entityPresence.interactions[@"chat"][@"code"] integerValue]]];
         [cell.personPicture setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];
-        
+        cell.personId = person.entityId;
     }
     else
     {
