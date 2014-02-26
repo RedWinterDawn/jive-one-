@@ -14,4 +14,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *personDetailLabel;
 @property (weak, nonatomic) IBOutlet UILabel *personPresenceLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *personPicture;
+@property (strong, nonatomic) NSString *personId;
 @end
