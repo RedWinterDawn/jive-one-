@@ -291,6 +291,7 @@
             cell.personNameLabel.text = person.firstLastName;
             cell.personDetailLabel.text = person.email;
             cell.personPresenceLabel.text = [self getPresence:[NSNumber numberWithInt:[person.entityPresence.interactions[@"chat"][@"code"] integerValue]]];
+            cell.personPresenceLabel = [self presenceLabelForValue:cell.personPresenceLabel];
             [cell.personPicture setImageWithURL:[NSURL URLWithString:person.picture]
                            placeholderImage:[UIImage imageNamed:@"avatar.png"]];
             
@@ -332,6 +333,33 @@
             return @"Unknown";
             break;
     }
+}
+
+- (UILabel *)presenceLabelForValue:(UILabel*)presence
+{
+    UIColor *color = nil;
+    
+    if ([presence.text isEqualToString:kPresenceAvailable]) {
+        color = [UIColor greenColor];
+    }
+    else if ([presence.text isEqualToString:kPresenceAway]) {
+        color = [UIColor orangeColor];
+    }
+    else if ([presence.text isEqualToString:kPresenceBusy]) {
+        color = [UIColor orangeColor];
+    }
+    else if ([presence.text isEqualToString:kPresenceDoNotDisturb]) {
+        color = [UIColor redColor];
+    }
+    else if ([presence.text isEqualToString:kPresenceInvisible]) {
+        color = [UIColor darkGrayColor];
+    }
+    else if ([presence.text isEqualToString:kPresenceOffline]) {
+        color = [UIColor darkGrayColor];
+    }
+    
+    [presence setTextColor:color];
+    return presence;
 }
 
 #pragma mark -Search
