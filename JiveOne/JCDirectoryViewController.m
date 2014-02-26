@@ -18,10 +18,9 @@
 
 
 @interface JCDirectoryViewController ()
-
-
-
-
+{
+    NSMutableDictionary *personMap;
+}
 
 @end
 
@@ -30,6 +29,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -44,6 +44,19 @@
         [self loadLocalDirectory];
     }
    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    personMap = [[NSMutableDictionary alloc] init];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdatePresence:) name:kPresenceChanged object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    //[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
@@ -145,6 +158,8 @@
         
         [self.clientEntitiesArray addObject:sortedArray];
     }
+    
+    [personMap removeAllObjects];
     [self.tableView reloadData];
 }
 
@@ -295,6 +310,10 @@
             [cell.personPicture setImageWithURL:[NSURL URLWithString:person.picture]
                            placeholderImage:[UIImage imageNamed:@"avatar.png"]];
             
+            long row = indexPath.row;
+            long section = indexPath.section;
+            
+            [personMap setObject:[NSString stringWithFormat:@"%ld|%ld", row, section] forKey:person.entityId];
         }else{
             NSDictionary * pers = section[indexPath.row];
             cell.personNameLabel.text = [pers objectForKey:@"firstLast"];
@@ -460,6 +479,24 @@
 
 - (IBAction)refreshDirectory:(id)sender {
     [self refreshCompanyDirectory];
+}
+
+#pragma mark - Update UI on Presence Change
+- (void)didUpdatePresence:(NSNotification*)notification
+{
+    Presence *presence = (Presence*)notification.object;
+    NSMutableArray *indexPaths = [NSMutableArray array];
+    
+    // first we check in our simple structure
+    if (personMap && personMap[presence.entityId]) {
+        NSArray *rowSection = [personMap[presence.entityId] componentsSeparatedByString:@"|"];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[rowSection[0] integerValue] inSection:[rowSection[1] integerValue]];
+        [indexPaths addObject:indexPath];
+    }
+    
+    if (indexPaths.count != 0) {
+        [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
 }
 @end
 
