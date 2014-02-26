@@ -55,6 +55,8 @@
         self.pbxDetail.text = me.entityCompany.pbxId;
         self.companyNameDetail.text = me.entityCompany.name;
     }
+    
+    self.presenceDetail.text = [self getPresence:me.entityPresence.interactions[@"chat"][@"code"]];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -63,6 +65,7 @@
     if (!me) {
         me = [[JCOmniPresence sharedInstance] me];
     }
+    
 }
 
 - (void)updateAccountInformation
@@ -206,56 +209,33 @@
     }    
 }
 
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+- (NSString *)getPresence:(NSNumber *)presence
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a story board-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    switch ([presence integerValue]) {
+        case JCPresenceTypeAvailable:
+            return kPresenceAvailable;
+            break;
+        case JCPresenceTypeAway:
+            return kPresenceAway;
+            break;
+        case JCPresenceTypeBusy:
+            return kPresenceBusy;
+            break;
+        case JCPresenceTypeDoNotDisturb:
+            return kPresenceDoNotDisturb;
+            break;
+        case JCPresenceTypeInvisible:
+            return kPresenceInvisible;
+            break;
+        case JCPresenceTypeOffline:
+            return kPresenceOffline;
+            break;
+            
+        default:
+            return @"Unknown";
+            break;
+    }
 }
 
- */
 
 @end
