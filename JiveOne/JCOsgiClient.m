@@ -516,7 +516,7 @@
     
     if (result.count > 0) {
         pres = result[0];
-        [self updatePresence:pres dictionary:presence];
+        return [self updatePresence:pres dictionary:presence];
     }
     else
     {
@@ -539,18 +539,22 @@
 
 - (Presence *)updatePresence:(Presence *)presence dictionary:(NSDictionary *)dictionary
 {
-    presence = [Presence MR_createInContext:localContext];
-    presence.entityId = dictionary[@"entity"];
-    presence.lastModified = dictionary[@"lastModified"];
-    //presence.createDate = dictionary[@"createDate"];
-    presence.interactions = dictionary[@"interactions"];
-    //pres.urn = presence[@"urn"];
-    //presence.presenceId = dictionary[@"id"];
+    long lastModifiedFromEntity = [presence.lastModified integerValue];
+    long lastModifiedFromDictionary = [dictionary[@"lastModified"] integerValue];
     
-    // update presence for asscociated entity
-    [[JCOmniPresence sharedInstance] entityByEntityId:presence.entityId].entityPresence = presence;
-    
-    [localContext MR_saveToPersistentStoreAndWait];
+    if (lastModifiedFromDictionary != lastModifiedFromEntity) {
+        presence.entityId = dictionary[@"entity"];
+        presence.lastModified = dictionary[@"lastModified"];
+        //presence.createDate = dictionary[@"createDate"];
+        presence.interactions = dictionary[@"interactions"];
+        //pres.urn = presence[@"urn"];
+        //presence.presenceId = dictionary[@"id"];
+        
+        // update presence for asscociated entity
+        [[JCOmniPresence sharedInstance] entityByEntityId:presence.entityId].entityPresence = presence;
+        
+        [localContext MR_saveToPersistentStoreAndWait];
+    }
     
     return presence;
 }
@@ -616,8 +620,8 @@
 
 - (ClientEntities *)updateEntities:(ClientEntities *)entity withDictionary:(NSDictionary *)dictionary
 {
-    int lastModifiedFromEntity = [entity.lastModified integerValue];
-    int lastModifiedFromDictionary = [dictionary[@"lastModified"] integerValue];
+    long lastModifiedFromEntity = [entity.lastModified integerValue];
+    long lastModifiedFromDictionary = [dictionary[@"lastModified"] integerValue];
     
     if (lastModifiedFromDictionary != lastModifiedFromEntity) {
         entity.lastModified = [dictionary objectForKey:@"lastModified"];

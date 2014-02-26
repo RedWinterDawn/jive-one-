@@ -67,4 +67,10 @@
 - (void)addConversationEntries:(NSArray *)entryArray;
 - (ConversationEntry *)addConversationEntry:(NSDictionary*)entry;
 - (ConversationEntry *)updateConversationEntry:(ConversationEntry*)entry withDictionary:(NSDictionary*)dictionary;
+
+#pragma mark - CRUD for Presence
+- (void)addPresences:(NSArray*)presences;
+- (Presence *)addPresence:(NSDictionary*)presence;
+- (Presence *)updatePresence:(Presence *)presence dictionary:(NSDictionary *)dictionary;
+
 @end
