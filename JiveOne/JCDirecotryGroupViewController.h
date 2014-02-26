@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ClientEntities.h"
 
 @interface JCDirecotryGroupViewController : UITableViewController
+
+@property (nonatomic, strong) NSMutableArray *person;
+@property (nonatomic, strong) NSMutableArray *personDict;
 
 @end

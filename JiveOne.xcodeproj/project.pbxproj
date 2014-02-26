@@ -72,6 +72,7 @@
 		DD01933718AECA760065A8CD /* JCTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD01933618AECA760065A8CD /* JCTestViewController.m */; };
 		DD28DA5218AEC4F5003BFC44 /* JCAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD28DA5118AEC4F5003BFC44 /* JCAccountViewController.m */; };
 		F202433D18B2CF4A006DB2EF /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F202433C18B2CF4A006DB2EF /* README.md */; };
+		F258589218BD3A420020AF34 /* JCDirecotryGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F258589118BD3A420020AF34 /* JCDirecotryGroupViewController.m */; };
 		F266162618B42AA0000B770A /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266162418B42AA0000B770A /* AddressBook.framework */; };
 		F266162718B42AA0000B770A /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266162518B42AA0000B770A /* AddressBookUI.framework */; };
 /* End PBXBuildFile section */
@@ -172,6 +173,8 @@
 		DD28DA5018AEC4F5003BFC44 /* JCAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAccountViewController.h; sourceTree = "<group>"; };
 		DD28DA5118AEC4F5003BFC44 /* JCAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAccountViewController.m; sourceTree = "<group>"; };
 		F202433C18B2CF4A006DB2EF /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		F258589018BD3A420020AF34 /* JCDirecotryGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDirecotryGroupViewController.h; sourceTree = "<group>"; };
+		F258589118BD3A420020AF34 /* JCDirecotryGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDirecotryGroupViewController.m; sourceTree = "<group>"; };
 		F266162418B42AA0000B770A /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		F266162518B42AA0000B770A /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -239,12 +242,14 @@
 				DD28DA5118AEC4F5003BFC44 /* JCAccountViewController.m */,
 				2751590418AD118D00FD8D3F /* JCStartLoginViewController.h */,
 				2751590518AD118D00FD8D3F /* JCStartLoginViewController.m */,
-				2751591D18AD303500FD8D3F /* JCDirectoryViewController.h */,
-				2751591E18AD303500FD8D3F /* JCDirectoryViewController.m */,
 				9135DDFE18BBFC7A0052E998 /* JCVoicemailViewController.h */,
 				9135DDFF18BBFC7A0052E998 /* JCVoicemailViewController.m */,
+				2751591D18AD303500FD8D3F /* JCDirectoryViewController.h */,
+				2751591E18AD303500FD8D3F /* JCDirectoryViewController.m */,
 				91260EDB18B2965900704670 /* JCDirectoryDetailViewController.h */,
 				91260EDC18B2965900704670 /* JCDirectoryDetailViewController.m */,
+				F258589018BD3A420020AF34 /* JCDirecotryGroupViewController.h */,
+				F258589118BD3A420020AF34 /* JCDirecotryGroupViewController.m */,
 				2751592118AD32E500FD8D3F /* JCConversationsViewController.h */,
 				2751592218AD32E500FD8D3F /* JCConversationsViewController.m */,
 				2751592318AD32E500FD8D3F /* JCConversationDetailViewController.h */,
@@ -563,6 +568,7 @@
 				2797B92D18B82EA500DB2B9B /* Company.m in Sources */,
 				27C5F43318BBBC1F005FCAFD /* Conversation.m in Sources */,
 				2751591F18AD303500FD8D3F /* JCDirectoryViewController.m in Sources */,
+				F258589218BD3A420020AF34 /* JCDirecotryGroupViewController.m in Sources */,
 				DD01933718AECA760065A8CD /* JCTestViewController.m in Sources */,
 				2751593418AD3BD500FD8D3F /* JCVoipViewController.m in Sources */,
 				275E809618AED884009AD776 /* JCSocketDispatch.m in Sources */,

@@ -12,8 +12,11 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "JCOsgiClient.h"
 #import "JCDirectoryDetailViewController.h"
+<<<<<<< HEAD
 #import "JCPersonCell.h"
+=======
 #import "JCDirecotryGroupViewController.h"
+>>>>>>> US505 : TA1860 jk I forgot to stage the changes. Files added last time, functionality of segue added this time. :D
 
 
 @interface JCDirectoryViewController ()
