@@ -13,5 +13,6 @@
 
 @property (nonatomic, strong) NSMutableArray *person;
 @property (nonatomic, strong) NSMutableArray *personDict;
+@property (nonatomic, weak) NSNumber *contactGroup;
 
 @end

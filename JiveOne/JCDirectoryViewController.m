@@ -14,6 +14,7 @@
 #import "JCDirectoryDetailViewController.h"
 #import "JCPersonCell.h"
 #import "JCDirecotryGroupViewController.h"
+#import "ContactGroup.h"
 
 
 @interface JCDirectoryViewController ()
@@ -134,14 +135,13 @@
     
     for (NSString *section in sections) {
         
-        // retrieve entities where first name starts with lether of alphabet
+        // retrieve entities where first name starts with letter of alphabet
         NSPredicate *pred = [NSPredicate predicateWithFormat:@"(firstLastName BEGINSWITH[c] %@)", section];
         NSArray *sectionArray = [ClientEntities MR_findAllWithPredicate:pred];
         
         // sort array with bases on firstLastName property
         NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"firstLastName" ascending:YES];
         NSArray *sortedArray= [sectionArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]];
-        
         
         [self.clientEntitiesArray addObject:sortedArray];
     }
