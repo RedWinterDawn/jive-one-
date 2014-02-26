@@ -260,7 +260,7 @@
                                             <outlet property="personNameLabel" destination="y6e-5v-ggp" id="3gp-7d-oLg"/>
                                             <outlet property="personPicture" destination="pvb-EE-3cq" id="MW1-V6-jkl"/>
                                             <outlet property="personPresenceLabel" destination="LYC-K3-HWJ" id="DiJ-F3-oU7"/>
-                                            <segue destination="PiD-ab-JdW" kind="push" id="car-MK-thw"/>
+                                            <segue destination="PiD-ab-JdW" kind="push" identifier="directoryDetailView" id="car-MK-thw"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

@@ -439,9 +439,7 @@
             detailVC.ABPerson = nil;
         }
         
-        
     } else {
-        
         
         // get ABDictionary
         
