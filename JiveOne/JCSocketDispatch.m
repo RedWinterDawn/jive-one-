@@ -164,7 +164,7 @@
     NSArray  *explodedUrn = [incomingUrn componentsSeparatedByString:@":"];
     NSString *type = explodedUrn[0];
     
-    if ([type isEqualToString:kSocketConversations]) {
+    if ([type isEqualToString:kSocketConversations] || [type isEqualToString:kSocketPermanentRooms]) {
         NSString *conversationId = [body objectForKey:@"conversation"];
         
         // regardless of having a conversation for this entry or not we need to save the entry.
@@ -176,14 +176,14 @@
         // if we dont' have, then fetch it
         if (conversation.count == 0) {
             [[JCOsgiClient sharedClient] RetrieveConversationsByConversationId:conversationId success:^(Conversation *conversation) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"NewConversation" object:conversation];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kNewConversation object:conversation];
             } failure:^(NSError *err) {
                 NSLog(@"%@", err);
             }];
         }
         else {
             [[NSNotificationCenter defaultCenter] postNotificationName:conversationId object:body];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"NewConversation" object:conversation];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kNewConversation object:conversation];
         }
     }
     else if ([type isEqualToString:kSocketPresence])
