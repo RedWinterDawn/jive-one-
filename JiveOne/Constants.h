@@ -56,6 +56,7 @@
 #pragma mark - Socket Message Types
 #define kSocketPresence @"presence"
 #define kSocketConversations @"conversations"
+#define kSocketPermanentRooms @"permanentrooms"
 
 typedef enum {
     JCPresenceTypeOffline = 0,
