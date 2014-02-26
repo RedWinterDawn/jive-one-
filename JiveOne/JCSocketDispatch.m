@@ -45,11 +45,12 @@
 
 - (void)requestSession
 {
+    NSLog(@"Requestion Session For Socket");
     [[JCOsgiClient sharedClient] RequestSocketSession:^(id JSON) {
         KeychainItemWrapper* _keychainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
         
         NSDictionary* response = (NSDictionary*)JSON;
-        NSLog(@"%@",[response description]);
+        ///NSLog(@"%@",[response description]);
         
         sessionToken = [NSString stringWithFormat:@"%@",[response objectForKey:@"token"]];
         NSString* authToken = [_keychainWrapper objectForKey:(__bridge id)(kSecAttrAccount)];
@@ -66,38 +67,49 @@
         
         ws = [response objectForKey:@"ws"];
         
+        NSLog(@"Requestion Session For Socket : Success");
+        
         if (ws && sessionToken) {
             [self subscribeSession];
         }
         
     } failure:^(NSError *err) {
-        NSLog(@"%@", [err description]);
+        NSLog(@"Requestion Session For Socket : Failed");
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"com.jiveone.socketNotConnected" object:nil];
     }];
 }
 
 - (void)subscribeSession
 {
+    NSLog(@"Subscribing to Socket Events");
     NSDictionary* conversation = [NSDictionary dictionaryWithObjectsAndKeys:@"(conversations|permanentrooms|groupconversations|adhocrooms):*:entries:*", @"urn", nil];
     NSDictionary* presence1 = [NSDictionary dictionaryWithObjectsAndKeys:@"presence:entities:*", @"urn", nil];
-    NSDictionary* presence2 = [NSDictionary dictionaryWithObjectsAndKeys:@"presence:(entities|nodes)", @"urn", nil];
-    NSDictionary* presence3 = [NSDictionary dictionaryWithObjectsAndKeys:@"presence:(entities|nodes):*", @"urn", nil];
+//    NSDictionary* presence2 = [NSDictionary dictionaryWithObjectsAndKeys:@"presence:(entities|nodes)", @"urn", nil];
+//    NSDictionary* presence3 = [NSDictionary dictionaryWithObjectsAndKeys:@"presence:(entities|nodes):*", @"urn", nil];
     
-    NSArray *subscriptionArray = [NSArray arrayWithObjects:conversation, presence1, presence2, presence3, nil];
+    NSArray *subscriptionArray = [NSArray arrayWithObjects:conversation, presence1, nil];
     
     for (NSDictionary *subscription in subscriptionArray) {
+        NSLog(@"Subscribing to Socket Events : Success");
         [[JCOsgiClient sharedClient] SubscribeToSocketEventsWithAuthToken:sessionToken subscriptions:subscription success:^(id JSON) {
             NSLog(@"%@", JSON);
             
         } failure:^(NSError *err) {
+            NSLog(@"Subscribing to Socket Events : Failed");
             NSLog(@"%@", err);
-        }];    }
-    [NSThread sleepForTimeInterval:2];
+        }];
+    }
     [self doneSubscribing];
 }
 
 - (void)doneSubscribing
 {
     [self initSession];
+}
+
+- (void)closeSocket
+{
+    [_webSocket closeWithCode:200 reason:@"App is going on background"];
 }
 
 #pragma mark - Websocket Delegates
@@ -130,8 +142,12 @@
            @"clean": @(wasClean)};
     
     NSLog(@"Connection Closed : %@", userInfo);
-    [self reconnect];
+    if (code != 200) {
+        [self reconnect];
+    }
 }
+
+
 
 - (void)reconnect
 {
@@ -143,9 +159,12 @@
 - (void)messageDispatcher:(NSDictionary*)message
 {   
     NSDictionary *body = [[message objectForKey:@"data"] objectForKey:@"body"];
-    NSString *type = [body objectForKey:@"type"];
     
-    if ([type isEqualToString:@"chat"]) {
+    NSString *incomingUrn = body[@"urn"];
+    NSArray  *explodedUrn = [incomingUrn componentsSeparatedByString:@":"];
+    NSString *type = explodedUrn[0];
+    
+    if ([type isEqualToString:kSocketConversations]) {
         NSString *conversationId = [body objectForKey:@"conversation"];
         
         // regardless of having a conversation for this entry or not we need to save the entry.
@@ -166,6 +185,11 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:conversationId object:body];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"NewConversation" object:conversation];
         }
+    }
+    else if ([type isEqualToString:kSocketPresence])
+    {
+        Presence * presence = [[JCOsgiClient sharedClient] addPresence:body];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kPresenceChanged object:presence];
     }
 }
 

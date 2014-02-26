@@ -17,4 +17,6 @@
 
 - (void)requestSession;
 
+- (void)closeSocket;
+
 @end
