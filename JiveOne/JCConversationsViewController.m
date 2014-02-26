@@ -21,6 +21,8 @@
     ClientEntities *me;
     NSMutableArray *conversations;
     NSManagedObjectContext *localContext;
+    NSMutableDictionary *personMap;
+    int newMessagesCount;
 }
 
 @end
@@ -31,13 +33,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     me = [[JCOmniPresence sharedInstance] me];
-
+    
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     [self loadDatasource];
     [self fetchLastConverstions];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -46,32 +48,31 @@
     if (!localContext) {
         localContext = [NSManagedObjectContext MR_contextForCurrentThread];
     }
+    personMap = [[NSMutableDictionary alloc] init];
+    newMessagesCount = 0;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveConversation:) name:kNewConversation object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdatePresence:) name:kPresenceChanged object:nil];
     
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDataModelChange:) name:NSManagedObjectContextObjectsDidChangeNotification object:localContext];
+    
+    // set a different back button for the navigation controller
+    UIBarButtonItem *myBackButton = [[UIBarButtonItem alloc]init];
+    myBackButton.title = @"Messages";
+    self.navigationItem.backBarButtonItem = myBackButton;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    //[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
-//- (void)handleDataModelChange:(NSNotification *)note
-//{
-//    NSSet *updatedObjects = [[note userInfo] objectForKey:NSUpdatedObjectsKey];
-//    NSSet *deletedObjects = [[note userInfo] objectForKey:NSDeletedObjectsKey];
-//    NSSet *insertedObjects = [[note userInfo] objectForKey:NSInsertedObjectsKey];
-//    
-//    // Do something in response to this
-//}
 
 - (void) loadDatasource
 {
     conversations = [NSMutableArray arrayWithArray:[Conversation MR_findAllSortedBy:@"lastModified" ascending:FALSE]];
+    [personMap removeAllObjects];
     [self.tableView reloadData];
-
 }
 
 
@@ -83,6 +84,7 @@
         
     } failure:^(NSError *err) {
         NSLog(@"%@",[err description]);
+        [self loadDatasource];
     }];
 }
 
@@ -92,74 +94,46 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)didReceiveJsonObject:(NSArray*)conversationArray
-{
-    
-
-}
-
-#pragma mar - Did Update Presence
+#pragma mark - Update UI on Presence Change
 - (void)didUpdatePresence:(NSNotification*)notification
 {
     Presence *presence = (Presence*)notification.object;
     NSMutableArray *indexPaths = [NSMutableArray array];
     
-    for (NSInteger i = 0; i < [self.tableView numberOfRowsInSection:0]; ++i)
+    // first we check in our simple structure
+    if (personMap && personMap[presence.entityId]) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[personMap[presence.entityId] integerValue] inSection:0];
+        [indexPaths addObject:indexPath];
+    }
+    else
     {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
-        JCPersonCell *cell = (JCPersonCell*)[self.tableView cellForRowAtIndexPath:indexPath];
-        if ([cell.personId isEqualToString:presence.entityId]) {
-            [indexPaths addObject:indexPath];
-            break;
+        for (NSInteger i = 0; i < [self.tableView numberOfRowsInSection:0]; ++i)
+        {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+            JCPersonCell *cell = (JCPersonCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+            if ([cell.personId isEqualToString:presence.entityId]) {
+                [indexPaths addObject:indexPath];
+                break;
+            }
         }
     }
    
     if (indexPaths.count != 0) {
         [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
     }
-    
 }
 
 #pragma mark - Did receive Notication
 - (void)didReceiveConversation:(NSNotification*)notification
 {
-//    NSDictionary *conversation = (NSDictionary*)notification.object;
-//    
-//    //NSDictionary *entry = conversation[@"data"][@"body"];
-//    
-//    Conversation *conv = [Conversation MR_createInContext:localContext];
-//    conv.createdDate = conversation[@"createdDate"];
-//    conv.lastModified = conversation[@"lastModified"];
-//    //conv.urn = conversation[@"urn"];
-//    conv.conversationId = conversation[@"conversation"];
-//    
-//    if (conversation[@"group"] && conversation[@"name"]) {
-//        conv.isGroup = [NSNumber numberWithBool:YES];
-//        conv.group = conversation[@"group"];
-//        conv.name = conversation[@"name"];
-//        //conv.conversationId = conversation[@"groupId"];
-//    }
-//    else {
-//        //conv.conversationId = conversation[@"_id"];
-//        conv.entities = conversation[@"entities"];
-//    }   
-//    
-//    ConversationEntry *convEntry = [ConversationEntry MR_createInContext:localContext];
-//    convEntry.conversationId = conversation[@"conversation"];
-//    convEntry.entityId = conversation[@"entity"];
-//    convEntry.createdDate = conversation[@"createDate"];
-//    convEntry.call = conversation[@"call"];
-//    convEntry.file = conversation[@"file"];
-//    convEntry.message = conversation[@"message"];
-//    convEntry.mentions = conversation[@"mentions"];
-//    convEntry.tags = conversation[@"tags"];
-//    convEntry.deliveryDate = conversation[@"deliveryDate"];
-//    convEntry.type = conversation[@"type"];
-//    convEntry.urn = conversation[@"urn"];
-//    convEntry.entryId = conversation[@"id"];
-//    
-//    //Save conversation entry
-//    [localContext MR_saveToPersistentStoreAndWait];
+    if (!self.view.window) {
+        newMessagesCount++;
+        // set a different back button for the navigation controller
+        UIBarButtonItem *myBackButton = [[UIBarButtonItem alloc]init];
+        myBackButton.title = [NSString stringWithFormat:@"Messages (%i)", newMessagesCount];
+        self.navigationItem.backBarButtonItem = myBackButton;
+    }
+    
     
     [self refreshConversations:nil];
 }
@@ -197,19 +171,23 @@
             }
         }        
         
-        ClientEntities * person = [[JCOmniPresence sharedInstance] entityByEntityId:firstEntity];\
+        ClientEntities * person = [[JCOmniPresence sharedInstance] entityByEntityId:firstEntity];
         
         cell.personNameLabel.text = [NSString stringWithFormat:@"%@", person.firstLastName];
         cell.personDetailLabel.text = [NSString stringWithFormat:@"%@", person.email];
         cell.personPresenceLabel.text = [self getPresence:[NSNumber numberWithInt:[person.entityPresence.interactions[@"chat"][@"code"] integerValue]]];
         [cell.personPicture setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];
         cell.personId = person.entityId;
+        
+        [personMap setObject:[NSNumber numberWithInteger:indexPath.row] forKey:person.entityId];
     }
     else
     {
         cell.textLabel.text = [NSString stringWithFormat:@"%@", conv.name];
         cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", conv.group];
     }
+    
+    
     
     return cell;
 }
