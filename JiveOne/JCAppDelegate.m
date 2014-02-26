@@ -21,9 +21,12 @@
 {
     [MagicalRecord setupCoreDataStackWithStoreNamed:@"MyJiveDatabase.sqlite"];
     [[AFNetworkActivityLogger sharedLogger] startLogging];
-    [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
+    [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelFatal];
     
-    [[JCSocketDispatch sharedInstance] requestSession];
+    [self startSocket];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(socketDidConnect:) name:@"com.jiveone.socketConnected" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(socketDidFailToConnect:) name:@"com.jiveone.socketNotConnected" object:nil];
     
     return YES;
 }
@@ -44,7 +47,7 @@
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     
-    [[JCSocketDispatch sharedInstance] requestSession];
+    [self startSocket];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -56,6 +59,27 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     [MagicalRecord cleanUp];
+}
+
+#pragma mark - Socket Notifications
+- (void)socketDidConnect:(NSNotification *)notification
+{
+    NSLog(@"Socket is Connected");
+}
+
+- (void)socketDidFailToConnect:(NSNotification *)notification
+{
+    
+}
+
+- (void)startSocket
+{
+    [[JCSocketDispatch sharedInstance] requestSession];
+}
+
+- (void)stopSocket
+{
+    [[JCSocketDispatch sharedInstance] closeSocket];
 }
 
 
