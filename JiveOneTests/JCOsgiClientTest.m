@@ -44,6 +44,7 @@
         response = JSON;
         [monitor signal];
     } failure:^(NSError *err) {
+        NSLog(@"Error - testShouldRetrieveClientEntities: %@", [err description]);
         [monitor signal];
     }];
     
@@ -64,6 +65,7 @@
         response = JSON;
         [monitor signal];
     } failure:^(NSError *err) {
+        NSLog(@"Error - testShouldRetrieveMyEntity: %@", [err description]);
         [monitor signal];
     }];
     
@@ -87,6 +89,7 @@
         response = JSON;
         [monitor signal];
     } failure:^(NSError *err) {
+        NSLog(@"Error - testShouldRetrieveMyCompany: %@", [err description]);
         [monitor signal];
     }];
     
@@ -109,6 +112,7 @@
         response = JSON;
         [monitor signal];
     } failure:^(NSError *err) {
+        NSLog(@"Error - testShouldRetrieveConversations: %@", [err description]);
         [monitor signal];
     }];
      
@@ -130,6 +134,7 @@
         response = JSON;
         [monitor signal];
     } failure:^(NSError *err) {
+        NSLog(@"Error - testShouldRequestSocketSession: %@", [err description]);
         [monitor signal];
     }];
     
@@ -150,6 +155,7 @@
         response = JSON;
         [monitor signal];
     } failure:^(NSError *err) {
+        NSLog(@"Error - testShouldSubscribeToSocketEventsWithAuthToken: %@", [err description]);
         [monitor signal];
     }];
     
@@ -169,6 +175,7 @@
         response = JSON;
         [monitor signal];
     } failure:^(NSError *err) {
+        NSLog(@"Error - testShouldSubscribeToSocketEventsWithAuthToken: %@", [err description]);
         [monitor signal];
     }];
     
@@ -194,6 +201,7 @@
         response = JSON;
         [monitor signal];
     } failure:^(NSError *err) {
+        NSLog(@"Error - testShouldSubmittChatMessageForConversation: %@", [err description]);
         [monitor signal];
     }];
     
