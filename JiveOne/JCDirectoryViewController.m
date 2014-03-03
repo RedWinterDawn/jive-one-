@@ -18,9 +18,16 @@
 
 
 @interface JCDirectoryViewController ()
+<<<<<<< HEAD
 {
     NSMutableDictionary *personMap;
 }
+=======
+
+@property BOOL searchTableIsActive;
+
+
+>>>>>>> US1059: added some logic to select a row from search array vs regular.
 
 @end
 
@@ -434,6 +441,13 @@ shouldReloadTableForSearchString:(NSString *)searchString
     return YES;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        
+        self.searchTableIsActive = YES;
+    }
+}
 /*
  // Override to support conditional editing of the table view.
  - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -476,12 +490,13 @@ shouldReloadTableForSearchString:(NSString *)searchString
 #pragma mark - Navigation
 
 // In a story board-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(UITableViewCell *)sender
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     
     NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
     
     if (self.segControl.selectedSegmentIndex == 0) {
+<<<<<<< HEAD
         ClientEntities *person = self.clientEntitiesArray[indexPath.section][indexPath.row];
         
         if ([[segue identifier] isEqualToString:@"groupView"]) {
@@ -495,6 +510,24 @@ shouldReloadTableForSearchString:(NSString *)searchString
         
     } else {
         
+=======
+        ClientEntities *person;
+        if (sender == self.searchDisplayController.searchResultsTableView) {
+            person = self.clientEntitiesSearchArray[indexPath.section][indexPath.row];
+        }
+        else
+            person = self.clientEntitiesArray[indexPath.section][indexPath.row];
+        [segue.destinationViewController setPerson:person];
+        [segue.destinationViewController setABPerson:nil];
+    }
+    else
+    {
+        NSDictionary * person;
+        if([segue.identifier isEqualToString:@"showSearchDetail"])
+            person = self.clientEntitiesSearchArray[indexPath.section][indexPath.row];
+        else
+            person = self.clientEntitiesArray[indexPath.section][indexPath.row];
+>>>>>>> US1059: added some logic to select a row from search array vs regular.
         // get ABDictionary
         
         if ([[segue identifier] isEqualToString:@"groupView"]) {
