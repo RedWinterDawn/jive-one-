@@ -151,6 +151,8 @@
     TRVSMonitor *monitor = [TRVSMonitor monitor];
     __block NSDictionary* response;
     
+    
+    
     [[JCOsgiClient sharedClient] RequestSocketSession:^(id JSON) {
         response = JSON;
         [monitor signal];
@@ -195,7 +197,7 @@
     
     NSString *testConversation = @"permanentrooms:896";
     NSString *testMessage = [NSString stringWithFormat:@"Automated Test Message %@", [NSDate date]];
-    NSString *testEntity = [[JCOmniPresence sharedInstance] me].urn;
+    NSString *testEntity = @"entities:jivetesting10@gmail_com";
     
     [[JCOsgiClient sharedClient] SubmitChatMessageForConversation:testConversation message:testMessage withEntity:testEntity success:^(id JSON) {
         response = JSON;
