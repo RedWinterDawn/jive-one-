@@ -12,3 +12,6 @@ pod install
 ```
 
 ALWAYS use Jive.xcworkspace, not Jive.xcodeproj
+
+
+One feature that was implemented and then hidden was to display local contacts (on the phone in the address book app). This was show via segment control on the "directory" tab. The segmented control, however, was hidden and a search bar is now in its place. Segmented control can be seen by going into the storyboard and un-hiding it. 
