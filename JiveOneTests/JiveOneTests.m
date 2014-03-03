@@ -21,7 +21,12 @@
 - (void)setUp
 {
     [super setUp];
-   
+    
+    // test.my.jive.com token for user jivetesting10@gmail.com
+    if (![[JCAuthenticationManager sharedInstance] getAuthenticationToken]) {
+        NSString *testToken = @"6e4cd798-fb5c-434f-874c-7b2aa1aeeeca";
+        [[JCAuthenticationManager sharedInstance] didReceiveAuthenticationToken:testToken];
+    }
     
     // Put setup code here. This method is called before the invocation of each test method in the class.
     //Fire login event
@@ -54,7 +59,7 @@
     
     NSString *name = [[json objectForKey:@"name"] objectForKey:@"firstLast"];
     NSString *companyUrl = [json objectForKey:@"company"];
-    XCTAssertEqualObjects(name, @"Test User", @"Wrong name");
+    XCTAssertEqualObjects(name, @"Jive Testing 10", @"Wrong name");
     
     [client RetrieveMyCompany:companyUrl:^(id JSON) {
         json = JSON;

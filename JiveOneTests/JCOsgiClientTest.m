@@ -9,6 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "JCOsgiClient.h"
 #import "TRVSMonitor.h"
+#import "JCAuthenticationManager.h"
 
 @interface JCOsgiClientTest : XCTestCase
 
@@ -19,6 +20,12 @@
 - (void)setUp
 {
     [super setUp];
+    // test.my.jive.com token for user jivetesting10@gmail.com
+    //if (![[JCAuthenticationManager sharedInstance] getAuthenticationToken]) {
+        NSString *testToken = @"6e4cd798-fb5c-434f-874c-7b2aa1aeeeca";
+        [[JCAuthenticationManager sharedInstance] didReceiveAuthenticationToken:testToken];
+    //}
+    
     // Put setup code here; it will be run once, before the first test case.
 }
 
@@ -51,7 +58,7 @@
     TRVSMonitor *monitor = [TRVSMonitor monitor];
     __block NSDictionary* response;
     
-    NSString *expectedEmail = @"egueiros@jive.com";
+    NSString *expectedEmail = @"jivetesting10@gmail.com";
     
     [[JCOsgiClient sharedClient] RetrieveMyEntitity:^(id JSON) {
         response = JSON;
@@ -179,8 +186,8 @@
     TRVSMonitor *monitor = [TRVSMonitor monitor];
     __block NSDictionary* response;
     
-    NSString *testConversation = @"conversations:1555";
-    NSString *testMessage = @"Automated Test Message";
+    NSString *testConversation = @"permanentrooms:896";
+    NSString *testMessage = [NSString stringWithFormat:@"Automated Test Message %@", [NSDate date]];
     NSString *testEntity = [[JCOmniPresence sharedInstance] me].urn;
     
     [[JCOsgiClient sharedClient] SubmitChatMessageForConversation:testConversation message:testMessage withEntity:testEntity success:^(id JSON) {
