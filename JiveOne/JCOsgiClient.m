@@ -54,11 +54,12 @@
     _tempManager.responseSerializer = [AFJSONResponseSerializer serializer];
     _tempManager.requestSerializer = [AFJSONRequestSerializer serializer];
     
-#if DEBUG
+#warning REMOVE BEFORE PRODUCTION. This is meant to work with invalid certificates (local/testing.my.jive.com) 
+//#if DEBUG
     _manager.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
     _manager.securityPolicy.allowInvalidCertificates = YES;
 
-#endif
+//#endif
 }
 
 - (void) RetrieveClientEntitites:(void (^)(id JSON))success
@@ -585,6 +586,7 @@
     else {
         c_ent = [ClientEntities MR_createInContext:localContext];
         c_ent.lastModified = [entity objectForKey:@"lastModified"];
+        c_ent.externalId = [entity objectForKey:@"externalId"];
         c_ent.presence = [entity objectForKey:@"presence"];
         c_ent.company = [entity objectForKey:@"company"];
         c_ent.tags = [entity objectForKey:@"tags"];
