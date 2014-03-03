@@ -32,6 +32,12 @@
     NSLog(@"Token: %@",token);
 }
 
+- (NSString *)getAuthenticationToken
+{
+    NSString *token = [_keychainWrapper objectForKey:(__bridge id)(kSecAttrAccount)];
+    return token;
+}
+
 - (void)checkForTokenValidity
 {
     [[JCOsgiClient sharedClient] RetrieveMyEntitity:^(id JSON) {
