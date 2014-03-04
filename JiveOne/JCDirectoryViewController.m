@@ -18,16 +18,14 @@
 
 
 @interface JCDirectoryViewController ()
-<<<<<<< HEAD
+
 {
     NSMutableDictionary *personMap;
 }
-=======
+
 
 @property BOOL searchTableIsActive;
 
-
->>>>>>> US1059: added some logic to select a row from search array vs regular.
 
 @end
 
@@ -307,6 +305,7 @@
 {
     static NSString *CellIdentifier = @"DirectoryCell";
     JCPersonCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    NSArray *section;
     
     //no contacts loaded
     if (self.clientEntitiesArray.count == 0) {
@@ -320,7 +319,7 @@
             if (self.clientEntitiesSearchArray.count == 0) {
                 return nil;
             }
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            cell = [[JCPersonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             section = self.clientEntitiesSearchArray[indexPath.section];
         }
         else{
@@ -495,8 +494,8 @@ shouldReloadTableForSearchString:(NSString *)searchString
     
     NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
     
+    //check if it's a company or local contact
     if (self.segControl.selectedSegmentIndex == 0) {
-<<<<<<< HEAD
         ClientEntities *person = self.clientEntitiesArray[indexPath.section][indexPath.row];
         
         if ([[segue identifier] isEqualToString:@"groupView"]) {
@@ -506,20 +505,20 @@ shouldReloadTableForSearchString:(NSString *)searchString
             JCDirectoryDetailViewController *detailVC = segue.destinationViewController;
             detailVC.person = person;
             detailVC.ABPerson = nil;
-        }
         
-    } else {
-        
-=======
-        ClientEntities *person;
-        if (sender == self.searchDisplayController.searchResultsTableView) {
-            person = self.clientEntitiesSearchArray[indexPath.section][indexPath.row];
+            
+            
+            ClientEntities *person;
+            if (sender == self.searchDisplayController.searchResultsTableView) {
+                person = self.clientEntitiesSearchArray[indexPath.section][indexPath.row];
+            }
+            else
+                person = self.clientEntitiesArray[indexPath.section][indexPath.row];
+            [segue.destinationViewController setPerson:person];
+            [segue.destinationViewController setABPerson:nil];
         }
-        else
-            person = self.clientEntitiesArray[indexPath.section][indexPath.row];
-        [segue.destinationViewController setPerson:person];
-        [segue.destinationViewController setABPerson:nil];
     }
+    //local contact
     else
     {
         NSDictionary * person;
@@ -527,7 +526,6 @@ shouldReloadTableForSearchString:(NSString *)searchString
             person = self.clientEntitiesSearchArray[indexPath.section][indexPath.row];
         else
             person = self.clientEntitiesArray[indexPath.section][indexPath.row];
->>>>>>> US1059: added some logic to select a row from search array vs regular.
         // get ABDictionary
         
         if ([[segue identifier] isEqualToString:@"groupView"]) {
