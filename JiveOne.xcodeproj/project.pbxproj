@@ -56,6 +56,7 @@
 		275F4A8318AD0FBC00D2F069 /* JiveOneTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 275F4A8218AD0FBC00D2F069 /* JiveOneTests.m */; };
 		2762C45818B4177D00885918 /* JCOmniPresence.m in Sources */ = {isa = PBXBuildFile; fileRef = 2762C45718B4177D00885918 /* JCOmniPresence.m */; };
 		2762C45918B4177D00885918 /* JCOmniPresence.m in Sources */ = {isa = PBXBuildFile; fileRef = 2762C45718B4177D00885918 /* JCOmniPresence.m */; };
+		2777AD5F18C51F1E009856C5 /* JCRightToLeftSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2777AD5E18C51F1E009856C5 /* JCRightToLeftSegue.m */; };
 		2797B92D18B82EA500DB2B9B /* Company.m in Sources */ = {isa = PBXBuildFile; fileRef = 2797B92C18B82EA500DB2B9B /* Company.m */; };
 		2797B93318B82EA500DB2B9B /* ClientMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = 2797B93218B82EA500DB2B9B /* ClientMeta.m */; };
 		27C5F43318BBBC1F005FCAFD /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C5F43218BBBC1F005FCAFD /* Conversation.m */; };
@@ -145,6 +146,8 @@
 		275F4A8218AD0FBC00D2F069 /* JiveOneTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JiveOneTests.m; sourceTree = "<group>"; };
 		2762C45618B4177D00885918 /* JCOmniPresence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCOmniPresence.h; sourceTree = "<group>"; };
 		2762C45718B4177D00885918 /* JCOmniPresence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCOmniPresence.m; sourceTree = "<group>"; };
+		2777AD5D18C51F1E009856C5 /* JCRightToLeftSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCRightToLeftSegue.h; sourceTree = "<group>"; };
+		2777AD5E18C51F1E009856C5 /* JCRightToLeftSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCRightToLeftSegue.m; sourceTree = "<group>"; };
 		2797B92B18B82EA500DB2B9B /* Company.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Company.h; sourceTree = "<group>"; };
 		2797B92C18B82EA500DB2B9B /* Company.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Company.m; sourceTree = "<group>"; };
 		2797B93118B82EA500DB2B9B /* ClientMeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientMeta.h; sourceTree = "<group>"; };
@@ -315,6 +318,8 @@
 				27C5F43E18BC1946005FCAFD /* JCVersionTracker.m */,
 				2736698018BD441D0069B4B3 /* JCPersonCell.h */,
 				2736698118BD441D0069B4B3 /* JCPersonCell.m */,
+				2777AD5D18C51F1E009856C5 /* JCRightToLeftSegue.h */,
+				2777AD5E18C51F1E009856C5 /* JCRightToLeftSegue.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -566,6 +571,7 @@
 				2751591318AD174F00FD8D3F /* JCAuthenticationManager.m in Sources */,
 				2736698218BD441D0069B4B3 /* JCPersonCell.m in Sources */,
 				2751590B18AD16F300FD8D3F /* JCOsgiClient.m in Sources */,
+				2777AD5F18C51F1E009856C5 /* JCRightToLeftSegue.m in Sources */,
 				275413B318B2C349001DBA68 /* JCChatMessage.m in Sources */,
 				2751593018AD334E00FD8D3F /* JCEntryMetaModel.m in Sources */,
 				9135DE0018BBFC7A0052E998 /* JCVoicemailViewController.m in Sources */,
