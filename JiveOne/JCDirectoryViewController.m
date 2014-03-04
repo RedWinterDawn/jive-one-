@@ -304,7 +304,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"DirectoryCell";
-    JCPersonCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    UITableViewCell *cell;
+    if(tableView != self.searchDisplayController.searchResultsTableView){//redundant, but easier than rearranging all the if statements below.
+        //only instantiate the cell this way, if it is not part of the searchResutls Table view.
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    }
+    else{
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    }
     NSArray *section;
     
     //no contacts loaded
@@ -319,7 +326,8 @@
             if (self.clientEntitiesSearchArray.count == 0) {
                 return nil;
             }
-            cell = [[JCPersonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            //cell = [[UI alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];//can only be used if initWithStyle manually initializes all uilabel properties (since it's not being created by the storyboard)
+             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             section = self.clientEntitiesSearchArray[indexPath.section];
         }
         else{
@@ -332,11 +340,11 @@
             
             ClientEntities* person = section[indexPath.row];
             
-            cell.personNameLabel.text = person.firstLastName;
-            cell.personDetailLabel.text = person.email;
-            cell.personPresenceLabel.text = [self getPresence:[NSNumber numberWithInt:[person.entityPresence.interactions[@"chat"][@"code"] integerValue]]];
-            cell.personPresenceLabel = [self presenceLabelForValue:cell.personPresenceLabel];
-            [cell.personPicture setImageWithURL:[NSURL URLWithString:person.picture]
+            cell.textLabel.text = person.firstLastName;
+            cell.detailTextLabel.text = person.email;
+            //cell.personPresenceLabel.text = [self getPresence:[NSNumber numberWithInt:[person.entityPresence.interactions[@"chat"][@"code"] integerValue]]];
+            //cell.personPresenceLabel = [self presenceLabelForValue:cell.personPresenceLabel];
+            [cell.imageView setImageWithURL:[NSURL URLWithString:person.picture]
                            placeholderImage:[UIImage imageNamed:@"avatar.png"]];
             
             long row = indexPath.row;
@@ -344,9 +352,10 @@
             
             [personMap setObject:[NSString stringWithFormat:@"%ld|%ld", row, section] forKey:person.entityId];
         }else{
+            //local contacts
             NSDictionary * pers = section[indexPath.row];
-            cell.personNameLabel.text = [pers objectForKey:@"firstLast"];
-            cell.personDetailLabel.text = @"";//[person objectForKey:@"email"];
+            cell.textLabel.text = [pers objectForKey:@"firstLast"];
+            cell.detailTextLabel.text = @"";//[person objectForKey:@"email"];
 
             }
         
@@ -414,17 +423,31 @@
 
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
-    NSPredicate *resultPredicate = [NSPredicate
-//                                    predicateWithFormat:@"SELF contains[cd] %@",
-                                    predicateWithFormat:@"firstName contains[cd] %@",
-                                    searchText];
-// TODO: implement for name (first, last)
-//    number (phone or extension)
-//    special characters should not affect the search ()-.
-//    email/JiveID
+    //    number (phone or extension)
+    // TODO:   special characters should not affect the search ()-.
+    NSArray *searchTerms = [searchText componentsSeparatedByString:@" "];
+    NSPredicate *pred;
     
+    if ([searchTerms count] == 1) {
+        pred = [NSPredicate predicateWithFormat:@"(firstName contains[cd] %@) OR (lastName contains[cd] %@) OR (email contains[cd] %@)"
+                                  //OR (phoneNumber contains[cd] %@)", searchText
+                                  , searchText, searchText, searchText];;
+    } else {
+        NSMutableArray *subPredicates = [[NSMutableArray alloc] init];
+        for (NSString *term in searchTerms) {
+            NSPredicate *p = [NSPredicate predicateWithFormat:@"(firstName contains[cd] %@) OR (lastName contains[cd] %@) OR (email contains[cd] %@)"
+                              //OR (phoneNumber contains[cd] %@)", term
+                              , term, term, term];;
+            [subPredicates addObject:p];
+        }
+        pred = [NSCompoundPredicate andPredicateWithSubpredicates:subPredicates];
+        
+    }
+    
+    //clear the array or it will accumulate and be an union search instead of intersect
+    [self.clientEntitiesSearchArray removeAllObjects];
     for(NSArray *sectionArray in self.clientEntitiesArray){
-        [self.clientEntitiesSearchArray addObject:[sectionArray filteredArrayUsingPredicate:resultPredicate]];
+        [self.clientEntitiesSearchArray addObject:[sectionArray filteredArrayUsingPredicate:pred]];
     }
 }
 
@@ -443,8 +466,10 @@ shouldReloadTableForSearchString:(NSString *)searchString
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView == self.searchDisplayController.searchResultsTableView) {
-        
         self.searchTableIsActive = YES;
+        [self performSegueWithIdentifier:@"directoryDetailView" sender:indexPath];
+    }else{
+        self.searchTableIsActive = NO;//TODO: not effective beacuse this method is called after prepareForSegue
     }
 }
 /*
@@ -502,14 +527,12 @@ shouldReloadTableForSearchString:(NSString *)searchString
             JCDirecotryGroupViewController *groupVC = (JCDirecotryGroupViewController*)segue.destinationViewController;
             groupVC.person = self.clientEntitiesArray;
         } else if ([[segue identifier] isEqualToString:@"directoryDetailView"]) {
-            JCDirectoryDetailViewController *detailVC = segue.destinationViewController;
-            detailVC.person = person;
-            detailVC.ABPerson = nil;
+//            JCDirectoryDetailViewController *detailVC = segue.destinationViewController;
+//            detailVC.person = person;
+//            detailVC.ABPerson = nil;
         
-            
-            
-            ClientEntities *person;
-            if (sender == self.searchDisplayController.searchResultsTableView) {
+            if (self.searchTableIsActive) {
+                indexPath = sender;
                 person = self.clientEntitiesSearchArray[indexPath.section][indexPath.row];
             }
             else
