@@ -36,7 +36,7 @@
     
     me = [[JCOmniPresence sharedInstance] me];
     
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    //self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     [self loadDatasource];
     [self fetchLastConverstions];
@@ -73,6 +73,12 @@
     conversations = [NSMutableArray arrayWithArray:[Conversation MR_findAllSortedBy:@"lastModified" ascending:FALSE]];
     [personMap removeAllObjects];
     [self.tableView reloadData];
+}
+
+- (IBAction)startNewConversation:(id)sender {
+    
+    
+    [self performSegueWithIdentifier:@"ChatDetailSegue" sender:kNewConversation];
 }
 
 

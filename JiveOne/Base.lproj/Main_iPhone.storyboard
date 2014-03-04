@@ -372,7 +372,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="rOk-sd-Q2j">
                             <connections>
-                                <action selector="newConversation:" destination="Iav-LH-b6F" id="Awu-9e-czl"/>
+                                <action selector="startNewConversation:" destination="Iav-LH-b6F" id="lb2-Vi-3uj"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -425,6 +425,9 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="WJe-TW-2FR"/>
                     <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="tableView" destination="mzO-aS-OJM" id="zx6-0V-F7P"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GnR-yF-2Yb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

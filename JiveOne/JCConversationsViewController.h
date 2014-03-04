@@ -13,5 +13,6 @@
 - (IBAction)refreshConversations:(id)sender;
 
 - (void) loadDatasource;
+- (IBAction)startNewConversation:(id)sender;
 
 @end
