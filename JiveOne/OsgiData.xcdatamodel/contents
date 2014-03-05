@@ -82,13 +82,13 @@
         <attribute name="urn" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="ClientEntities" positionX="0" positionY="138" width="128" height="358"/>
-        <element name="ClientMeta" positionX="376" positionY="-162" width="128" height="150"/>
-        <element name="Company" positionX="142" positionY="21" width="128" height="150"/>
-        <element name="Conversation" positionX="-2" positionY="-207" width="128" height="165"/>
-        <element name="ConversationEntry" positionX="-180" positionY="-36" width="128" height="240"/>
-        <element name="Presence" positionX="628" positionY="-111" width="128" height="120"/>
-        <element name="Voicemail" positionX="160" positionY="-135" width="128" height="75"/>
-        <element name="ContactGroup" positionX="277" positionY="195" width="128" height="73"/>
+        <element name="ClientEntities" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="ClientMeta" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Company" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="ContactGroup" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Conversation" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="ConversationEntry" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Presence" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Voicemail" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>
