@@ -468,10 +468,12 @@ shouldReloadTableForSearchString:(NSString *)searchString
 {
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         self.searchTableIsActive = YES;
-        [self performSegueWithIdentifier:@"directoryDetailView" sender:indexPath];
+
     }else{
-        self.searchTableIsActive = NO;//TODO: not effective beacuse this method is called after prepareForSegue
+        self.searchTableIsActive = NO;
     }
+    [self performSegueWithIdentifier:@"directoryDetailView" sender:indexPath];
+    
 }
 
 
@@ -481,7 +483,7 @@ shouldReloadTableForSearchString:(NSString *)searchString
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+    NSIndexPath *indexPath = sender;
     
     //check if it's a company or local contact
     if (self.segControl.selectedSegmentIndex == 0) {
@@ -491,9 +493,6 @@ shouldReloadTableForSearchString:(NSString *)searchString
             JCDirecotryGroupViewController *groupVC = (JCDirecotryGroupViewController*)segue.destinationViewController;
             groupVC.person = self.clientEntitiesArray;
         } else if ([[segue identifier] isEqualToString:@"directoryDetailView"]) {
-//            JCDirectoryDetailViewController *detailVC = segue.destinationViewController;
-//            detailVC.person = person;
-//            detailVC.ABPerson = nil;
         
             if (self.searchTableIsActive) {
                 indexPath = sender;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13B3116" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="hBc-AN-e9c">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="hBc-AN-e9c">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
@@ -335,7 +335,6 @@
                                             <outlet property="personNameLabel" destination="y6e-5v-ggp" id="3gp-7d-oLg"/>
                                             <outlet property="personPicture" destination="pvb-EE-3cq" id="MW1-V6-jkl"/>
                                             <outlet property="personPresenceLabel" destination="LYC-K3-HWJ" id="DiJ-F3-oU7"/>
-                                            <segue destination="PiD-ab-JdW" kind="push" identifier="directoryDetailView" id="car-MK-thw"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -366,6 +365,7 @@
                         <outlet property="searchDisplayController" destination="DBo-Lk-QsT" id="tws-pf-7QF"/>
                         <outlet property="segControl" destination="Lqr-xn-be2" id="Mqn-VY-HQ2"/>
                         <outlet property="tableView" destination="mbq-mY-MdJ" id="hv1-OR-HQw"/>
+                        <segue destination="PiD-ab-JdW" kind="push" identifier="directoryDetailView" id="4I8-Ma-3wU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U3j-C6-zfv" userLabel="First Responder" sceneMemberID="firstResponder"/>
