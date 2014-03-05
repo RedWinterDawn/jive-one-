@@ -111,7 +111,7 @@
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
     NSLog(@"Section: %ld , Row: %ld", (long)indexPath.section, (long)indexPath.row);
     //UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];

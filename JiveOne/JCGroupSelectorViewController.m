@@ -145,6 +145,15 @@
     }
 }
 
+- (IBAction)saveGroup:(id)sender {
+    
+    [self dismissViewControllerAnimated:YES completion:nil]; 
+}
+
+- (IBAction)cancelGrouSelectorModal:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil]; 
+    
+}
 
 
 

@@ -71,7 +71,7 @@
             </objects>
             <point key="canvasLocation" x="-112" y="182"/>
         </scene>
-        <!--Group Selector View Controller - Groups Selector-->
+        <!--Group Selector View Controller - Create Group-->
         <scene sceneID="xUZ-5I-aJL">
             <objects>
                 <tableViewController id="C7X-xm-IHz" customClass="JCGroupSelectorViewController" sceneMemberID="viewController">
@@ -111,11 +111,22 @@
                             <outlet property="delegate" destination="C7X-xm-IHz" id="cBB-PN-5IA"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Groups Selector" id="b9W-1K-DbW"/>
+                    <navigationItem key="navigationItem" title="Create Group" id="b9W-1K-DbW">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="ZmE-Al-RPG">
+                            <connections>
+                                <action selector="cancelGrouSelectorModal:" destination="C7X-xm-IHz" id="ovD-ig-5Wx"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="Lz5-6w-dEA">
+                            <connections>
+                                <action selector="saveGroup:" destination="C7X-xm-IHz" id="iUh-Dz-pbS"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RL4-cL-zBY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1968" y="-869"/>
+            <point key="canvasLocation" x="2494" y="-869"/>
         </scene>
         <!--Direcotry Group View Controller - Groups-->
         <scene sceneID="H72-Gv-aQ4">
@@ -162,7 +173,7 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Ufi-sY-6dn">
                             <connections>
                                 <action selector="addGroupButton:" destination="T2Z-JV-v4U" id="tc7-QA-vI3"/>
-                                <segue destination="C7X-xm-IHz" kind="push" id="eE1-cm-nys"/>
+                                <segue destination="4vI-YJ-D5w" kind="modal" modalTransitionStyle="coverVertical" id="eE1-cm-nys"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -727,6 +738,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WQq-6j-LIb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="588" y="1935"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="gtq-Sz-Z5r">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4vI-YJ-D5w" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="mRy-Ib-MFG">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="C7X-xm-IHz" kind="relationship" relationship="rootViewController" id="zCY-ey-EsH"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="y6q-kt-A7W" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1968" y="-869"/>
         </scene>
     </scenes>
     <resources>
