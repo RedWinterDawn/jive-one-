@@ -71,6 +71,7 @@
 		9135DE0A18BC07F70052E998 /* Voicemail.m in Sources */ = {isa = PBXBuildFile; fileRef = 9135DE0918BC07F70052E998 /* Voicemail.m */; };
 		DD01933718AECA760065A8CD /* JCTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD01933618AECA760065A8CD /* JCTestViewController.m */; };
 		DD28DA5218AEC4F5003BFC44 /* JCAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD28DA5118AEC4F5003BFC44 /* JCAccountViewController.m */; };
+		DD50802918C7D60B00750DB4 /* JCDirectoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DD50802818C7D60B00750DB4 /* JCDirectoryTests.m */; };
 		F202433D18B2CF4A006DB2EF /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F202433C18B2CF4A006DB2EF /* README.md */; };
 		F23038AD18BE99060010966F /* ContactGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = F23038AC18BE99060010966F /* ContactGroup.m */; };
 		F23038B018BE99710010966F /* ClientEntities.m in Sources */ = {isa = PBXBuildFile; fileRef = F23038AF18BE99710010966F /* ClientEntities.m */; };
@@ -175,6 +176,7 @@
 		DD01933618AECA760065A8CD /* JCTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTestViewController.m; sourceTree = "<group>"; };
 		DD28DA5018AEC4F5003BFC44 /* JCAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAccountViewController.h; sourceTree = "<group>"; };
 		DD28DA5118AEC4F5003BFC44 /* JCAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAccountViewController.m; sourceTree = "<group>"; };
+		DD50802818C7D60B00750DB4 /* JCDirectoryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDirectoryTests.m; sourceTree = "<group>"; };
 		F202433C18B2CF4A006DB2EF /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		F23038AB18BE99050010966F /* ContactGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactGroup.h; sourceTree = "<group>"; };
 		F23038AC18BE99060010966F /* ContactGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactGroup.m; sourceTree = "<group>"; };
@@ -398,6 +400,7 @@
 			children = (
 				275F4A8218AD0FBC00D2F069 /* JiveOneTests.m */,
 				9135DE0118BC00FD0052E998 /* JCDirectoryDetailTests.m */,
+				DD50802818C7D60B00750DB4 /* JCDirectoryTests.m */,
 				275F4A7D18AD0FBC00D2F069 /* Supporting Files */,
 				27426AC818B5303D00011635 /* JCOsgiClientTest.m */,
 			);
@@ -612,6 +615,7 @@
 				2751592818AD32E500FD8D3F /* JCConversationDetailViewController.m in Sources */,
 				275F4A8318AD0FBC00D2F069 /* JiveOneTests.m in Sources */,
 				2751592018AD303500FD8D3F /* JCDirectoryViewController.m in Sources */,
+				DD50802918C7D60B00750DB4 /* JCDirectoryTests.m in Sources */,
 				27426AC918B5303D00011635 /* JCOsgiClientTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

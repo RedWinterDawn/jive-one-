@@ -420,7 +420,7 @@
     return presence;
 }
 
-#pragma mark -Search
+#pragma mark Search
 
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
 {

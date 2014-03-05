@@ -23,9 +23,9 @@
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *clientEntitiesArray;
 @property (nonatomic, strong) NSMutableArray *clientEntitiesSearchArray;
-@property (nonatomic, weak) IBOutlet UISegmentedControl *segControl;
+@property (nonatomic, strong) IBOutlet UISegmentedControl *segControl;
 
 - (IBAction)segmentChanged:sender ;
-
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope;
 
 @end
