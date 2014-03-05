@@ -110,6 +110,7 @@
         
         ContactGroup *group = self.testArray[indexPath.row];
         cell.textLabel.text = group.groupName;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.detailTextLabel.text = [(NSArray*)group.clientEntities componentsJoinedByString:@","];
     }
     
