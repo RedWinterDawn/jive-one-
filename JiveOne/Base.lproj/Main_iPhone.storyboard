@@ -119,7 +119,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="Lz5-6w-dEA">
                             <connections>
-                                <action selector="saveGroup:" destination="C7X-xm-IHz" id="iUh-Dz-pbS"/>
+                                <action selector="saveGroupDoneButton:" destination="C7X-xm-IHz" id="SzV-lj-VzV"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

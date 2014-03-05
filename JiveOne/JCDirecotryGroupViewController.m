@@ -27,26 +27,31 @@
 {
     [super viewDidLoad];
     
-    NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
+//    NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
     
     
-    // Here you'll see three test groups created. Each time you navigate to this view it'll load more so it'll get big until we fix it.
-    for (int i = 0; i < 3; i++) {
-        ContactGroup *group = [ContactGroup MR_createInContext:localContext];
-        group.groupName = [NSString stringWithFormat:@"GroupName = %d", i];
-        
-        if (i == 0) {
-            group.clientEntities = [NSArray arrayWithObjects:@"entities:eparker", @"entities:egueiros", nil];
-        }
-        else {
-            group.clientEntities = [NSArray arrayWithObjects:@"entities:eparker", nil];
-        }   
-        
-        [localContext MR_saveToPersistentStoreAndWait];
-    }
-    
-    self.testArray = [[NSMutableArray alloc] initWithArray:[ContactGroup MR_findAllSortedBy:@"groupName" ascending:YES]];
+//    // Here you'll see three test groups created. Each time you navigate to this view it'll load more so it'll get big until we fix it.
+//    for (int i = 0; i < 3; i++) {
+//        ContactGroup *group = [ContactGroup MR_createInContext:localContext];
+//        group.groupName = [NSString stringWithFormat:@"GroupName = %d", i];
+//        
+//        if (i == 0) {
+//            group.clientEntities = [NSArray arrayWithObjects:@"entities:eparker", @"entities:egueiros", nil];
+//        }
+//        else {
+//            group.clientEntities = [NSArray arrayWithObjects:@"entities:eparker", nil];
+//        }   
+//        
+//        [localContext MR_saveToPersistentStoreAndWait];
+//    }
 
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.testArray = [[NSMutableArray alloc] initWithArray:[ContactGroup MR_findAllSortedBy:@"groupName" ascending:YES]];
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning

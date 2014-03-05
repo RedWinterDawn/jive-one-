@@ -10,9 +10,10 @@
 #import "ClientEntities.h"
 #import "ContactGroup.h"
 
-@interface JCGroupSelectorViewController : UITableViewController
+@interface JCGroupSelectorViewController : UITableViewController <UIAlertViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray *companyContactsArray;
 @property (nonatomic, strong) NSArray *sections;
+@property (nonatomic, strong) NSMutableArray *contactGroupArray;
 
 @end

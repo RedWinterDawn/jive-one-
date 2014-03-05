@@ -8,6 +8,7 @@
 
 #import "JCGroupSelectorViewController.h"
 #import "JCPersonCell.h"
+#import "ContactGroup.h"
 
 @interface JCGroupSelectorViewController ()
 
@@ -140,19 +141,62 @@
         [itemChecked removeObject:indexPath];
     }
     
-    if (indexPath.row == 0) {
-        NSLog(@"you clicked the title");
+}
+
+// Done button action at top right of group creator modal
+- (IBAction)saveGroupDoneButton:(id)sender {
+    
+    [self addTitleToGroup];
+}
+
+- (void)addTitleToGroup {
+    
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Please name new group"
+                                                      message:nil
+                                                     delegate:self
+                                            cancelButtonTitle:@"Cancel"
+                                            otherButtonTitles:@"OK", nil];
+    
+    [message setAlertViewStyle:UIAlertViewStylePlainTextInput];
+    [message show];
+    
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    if (buttonIndex == 0) {
+        NSLog(@"cancel was clicked");
+    } else {
+        UITextField *textfield =  [alertView textFieldAtIndex: 0];
+        NSLog(@"%@", textfield.text);
+        
+        if ([textfield.text isEqualToString:@""]) {
+            return;
+        }
+        
+        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
+        ContactGroup *group = [ContactGroup MR_createInContext:localContext];
+        group.groupName = textfield.text;
+        
+        NSMutableArray *selectedEntities = [[NSMutableArray alloc] init];
+        
+        for (NSIndexPath *indexPath in itemChecked) {
+             NSString *entityId = ((ClientEntities *)self.companyContactsArray[indexPath.section][indexPath.row]).entityId;
+            [selectedEntities addObject:entityId];
+        }
+        
+        group.clientEntities = selectedEntities;
+        
+        [localContext MR_saveToPersistentStoreAndWait];
     }
-}
-
-- (IBAction)saveGroup:(id)sender {
     
-    [self dismissViewControllerAnimated:YES completion:nil]; 
+     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+// Cancel button action at top left of group creator modal
 - (IBAction)cancelGrouSelectorModal:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil]; 
     
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
