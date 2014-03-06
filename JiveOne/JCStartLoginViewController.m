@@ -72,7 +72,8 @@
 }
 - (void)viewDidDisappear:(BOOL)animated
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAuthenticationFromTokenFailed object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAuthenticationFromTokenSucceeded object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -93,7 +94,7 @@
                          
                          
                          NSString *url_path = [NSString stringWithFormat:kOsgiAuthURL, kOAuthClientId, kURLSchemeCallback];
-                         NSURL *url = [NSURL URLWithString:url_path];                        
+                         NSURL *url = [NSURL URLWithString:url_path];
                          
 #if DEBUG
                          [NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
@@ -117,6 +118,7 @@
                          
                      }
                      completion:^(BOOL finished) {
+                         //NSNotification *notification = [NSNotification notificationWithName:Nil object:[NSNumber numberWithBool:fromLogin]];
                          [self tokenValidityPassed:nil];
                      }];
 }
@@ -129,7 +131,7 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    NSLog(@"Webview Did Finish Load");
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"OsgiLoginScreen" object:webView];
 }
 
 #pragma mark - UIWebview Delegate
@@ -225,9 +227,28 @@
     }
     else
     {
-        [self hideHud];
-        [self performSegueWithIdentifier:@"ApplicationSegue" sender:nil];
+        if (!notification) {
+            //BOOL fromLogin = (BOOL)notification.object;
+            //if (fromLogin) {
+            [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil) detail:NSLocalizedString(@"Building Database", nil)];
+            [self fetchDataForFirstTime];
+            //}w
+        }
+        else {
+            NSArray *dataCheck = [ClientEntities MR_findAll];
+            
+            if (dataCheck.count == 0) {
+                [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil) detail:NSLocalizedString(@"Building Database", nil)];
+                [self fetchDataForFirstTime];
+            }
+            else {
+                [self hideHud];
+                [self performSegueWithIdentifier:@"ApplicationSegue" sender:nil];
+            }
+        }
     }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"OsgiLoginLogin" object:nil];
 }
 
 - (void)fetchDataForFirstTime
@@ -271,7 +292,6 @@
     NSLog(@"%@", decodedString); // foo
     return decodedString;
 }
-
 
 
 @end
