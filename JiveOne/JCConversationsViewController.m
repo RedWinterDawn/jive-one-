@@ -70,8 +70,7 @@
 
 - (void) loadDatasource
 {
-    conversations = [NSMutableArray arrayWithArray:[Conversation MR_findAll]];
-                     //[Conversation MR_findByAttribute:@"hasEntries" withValue:[NSNumber numberWithBool:YES] andOrderBy:@"lastModified" ascending:YES]];
+    conversations = [NSMutableArray arrayWithArray:[Conversation MR_findByAttribute:@"hasEntries" withValue:[NSNumber numberWithBool:YES] andOrderBy:@"lastModified" ascending:YES]];
     [personMap removeAllObjects];
     [self.tableView reloadData];
 }
