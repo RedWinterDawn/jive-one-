@@ -35,7 +35,7 @@
 {
     if (!_conversationId || ![_conversationId isEqualToString:conversationId]) {
         _conversationId = conversationId;
-        [self loadDatasource];
+        //[self loadDatasource];
     }
 }
 

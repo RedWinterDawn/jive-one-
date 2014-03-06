@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "THContactPickerView.h"
 
-@interface JCConversationDetailViewController : UITableViewController <UIActionSheetDelegate, UITextViewDelegate, THContactPickerDelegate>
+@interface JCConversationDetailViewController : UIViewController <UIActionSheetDelegate, UITextViewDelegate, THContactPickerDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) THContactPickerView *contactPickerView;
 @property (nonatomic, strong) UITableView *tableView;
