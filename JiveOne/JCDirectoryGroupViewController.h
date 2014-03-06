@@ -22,5 +22,4 @@
 @property (nonatomic, weak) NSNumber *contactGroup;
 @property (nonatomic, strong) NSMutableArray *testArray;
 
-
 @end

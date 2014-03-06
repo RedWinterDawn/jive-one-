@@ -15,6 +15,7 @@
 
 @property (nonatomic, strong) JCDirectoryGroupViewController *directoryGroupViewController;
 
+
 @end
 
 @implementation JCGroupsTests
@@ -31,7 +32,7 @@
     self.directoryGroupViewController = [[JCDirectoryGroupViewController alloc]initWithStyle:UITableViewStyleGrouped];
     self.directoryGroupViewController.tableView = [[UITableView alloc] initWithFrame:CGRectZero];
     [self forceLoadingOfTheView];
-  
+    
 }
 
 - (void)forceLoadingOfTheView
@@ -52,5 +53,7 @@
     XCTAssertTrue([self.directoryGroupViewController numberOfSectionsInTableView:self.directoryGroupViewController.tableView] == 3, @"Number of sections in table should be 3");
     
 }
+
+
 
 @end

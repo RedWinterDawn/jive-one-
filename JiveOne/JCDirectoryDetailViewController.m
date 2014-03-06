@@ -65,7 +65,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-        if(indexPath.row==0){
+        if (indexPath.row == 0) {
             // Create first cell
             static NSString *CellIdentifier = @"DirectoryDetailNameCell";
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
@@ -74,17 +74,13 @@
                 cell.textLabel.text = self.person.firstLastName;
                 [cell.imageView setImageWithURL:[NSURL URLWithString:self.person.picture]
                                placeholderImage:[UIImage imageNamed:@"avatar.png"]];
-            }
-            else{
+            } else {
                 cell.textLabel.text = [self.ABPerson objectForKey:@"firstLast"];
                 //TODO: picture
             }
             
             return cell;
-        }
-        
-
-        else if(indexPath.row==1){
+        } else if (indexPath.row == 1) {
             // Create second cell
             static NSString *CellIdentifier = @"DirectoryDetailEmailCell";
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
@@ -98,9 +94,7 @@
             }
             
             return cell;
-        }
-        
-        else {
+        } else {
             // Create all others
             static NSString *CellIdentifier = @"DirectoryDetailCompanyCell";
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
@@ -114,7 +108,7 @@
                     //Capitilize Company Name
                     cell.detailTextLabel.text = [stringParts[1] capitalizedString];
                 }
-            }else{
+            } else {
                 cell.textLabel.text = @"Phone";
                 cell.detailTextLabel.text = @"";//[self.ABPerson objectForKey:@"phone"];
             }
@@ -122,56 +116,5 @@
         }
     
 }
-
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- }
- else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
-
-/*
- #pragma mark - Navigation
- 
- // In a story board-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- 
- */
 
 @end

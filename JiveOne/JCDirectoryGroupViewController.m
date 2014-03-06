@@ -18,8 +18,7 @@
 
 @implementation JCDirectoryGroupViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
+- (id)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
@@ -27,47 +26,28 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
+    // This creates the main context used in this class via MagicalRecord, an open-source framework for interacting with CoreData
     localContext = [NSManagedObjectContext MR_contextForCurrentThread];
-    
-    
-//    // Here you'll see three test groups created. Each time you navigate to this view it'll load more so it'll get big until we fix it.
-//    for (int i = 0; i < 3; i++) {
-//        ContactGroup *group = [ContactGroup MR_createInContext:localContext];
-//        group.groupName = [NSString stringWithFormat:@"GroupName = %d", i];
-//        
-//        if (i == 0) {
-//            group.clientEntities = [NSArray arrayWithObjects:@"entities:eparker", @"entities:egueiros", nil];
-//        }
-//        else {
-//            group.clientEntities = [NSArray arrayWithObjects:@"entities:eparker", nil];
-//        }   
-//        
-//        [localContext MR_saveToPersistentStoreAndWait];
-//    }
 
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.testArray = [[NSMutableArray alloc] initWithArray:[ContactGroup MR_findAllSortedBy:@"groupName" ascending:YES]];
     [self.tableView reloadData];
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
     // If you make lots of sections it repeats the array!.
     return 3;
@@ -93,8 +73,7 @@
     
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
@@ -135,8 +114,7 @@
 }
 
 // This allows cells to be editable, we made it so the first cell which navigates back to "All Contacts" isn't deleteable
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section == 0 || indexPath.section == 1) {
         return NO;
@@ -146,11 +124,12 @@
 }
 
 // This allows you to delete a group, first it is deleted from the datamodel, from CoreData and the array stored in memory
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
+        
+        // Delete the row from the data source - using MagicalRecord to edit CoreData - all the contact groupe are shown in the third section of the table, hence "indexPath.section == 2"
         if (indexPath.section == 2) {
+            
             ContactGroup *group = self.testArray[indexPath.row];
             [self.testArray removeObjectAtIndex:indexPath.row];
             [group MR_deleteInContext:localContext];
@@ -158,15 +137,14 @@
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         }
         
-    }
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+       
     }
 }
 
-// Nothing implemented yet, but we may need to use this method to pass information to the next view when we want to select contacts for groups?
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
+// We pass information from the current ViewControllerl to the selector view?
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
     if ([sender isKindOfClass:[ContactGroup class]]) {
         JCGroupSelectorViewController *groupSelectorVC = (JCGroupSelectorViewController *)[[segue destinationViewController] visibleViewController];
         [groupSelectorVC setGroupEdit:sender];
@@ -178,7 +156,6 @@
 // This "+" button has a segue attached to it implemented in the storyboard. Click this to go to the "GroupSelector" VC
 - (IBAction)addGroupButton:(id)sender {
     
-    NSLog(@"addGroupButton was pressed, yo!");
 }
 
 @end
