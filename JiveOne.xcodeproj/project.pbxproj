@@ -63,6 +63,7 @@
 		2777AD5F18C51F1E009856C5 /* JCRightToLeftSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2777AD5E18C51F1E009856C5 /* JCRightToLeftSegue.m */; };
 		2797B92D18B82EA500DB2B9B /* Company.m in Sources */ = {isa = PBXBuildFile; fileRef = 2797B92C18B82EA500DB2B9B /* Company.m */; };
 		2797B93318B82EA500DB2B9B /* ClientMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = 2797B93218B82EA500DB2B9B /* ClientMeta.m */; };
+		279E602418C8C59900C5CC9F /* JCPersonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 279E602318C8C59900C5CC9F /* JCPersonCell.xib */; };
 		27C5F43918BBBC5B005FCAFD /* ConversationEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C5F43818BBBC5B005FCAFD /* ConversationEntry.m */; };
 		27C5F43C18BC104B005FCAFD /* Presence.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C5F43B18BC104B005FCAFD /* Presence.m */; };
 		27C5F43F18BC1946005FCAFD /* JCVersionTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C5F43E18BC1946005FCAFD /* JCVersionTracker.m */; };
@@ -165,6 +166,7 @@
 		2797B92C18B82EA500DB2B9B /* Company.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Company.m; sourceTree = "<group>"; };
 		2797B93118B82EA500DB2B9B /* ClientMeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientMeta.h; sourceTree = "<group>"; };
 		2797B93218B82EA500DB2B9B /* ClientMeta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClientMeta.m; sourceTree = "<group>"; };
+		279E602318C8C59900C5CC9F /* JCPersonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCPersonCell.xib; sourceTree = "<group>"; };
 		27C5F43718BBBC5B005FCAFD /* ConversationEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationEntry.h; sourceTree = "<group>"; };
 		27C5F43818BBBC5B005FCAFD /* ConversationEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationEntry.m; sourceTree = "<group>"; };
 		27C5F43A18BC104B005FCAFD /* Presence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Presence.h; sourceTree = "<group>"; };
@@ -334,6 +336,7 @@
 				27C5F43E18BC1946005FCAFD /* JCVersionTracker.m */,
 				2736698018BD441D0069B4B3 /* JCPersonCell.h */,
 				2736698118BD441D0069B4B3 /* JCPersonCell.m */,
+				279E602318C8C59900C5CC9F /* JCPersonCell.xib */,
 				2777AD5D18C51F1E009856C5 /* JCRightToLeftSegue.h */,
 				2777AD5E18C51F1E009856C5 /* JCRightToLeftSegue.m */,
 			);
@@ -536,6 +539,7 @@
 				275F4A6818AD0FBC00D2F069 /* Main_iPad.storyboard in Resources */,
 				275F4A7018AD0FBC00D2F069 /* Images.xcassets in Resources */,
 				275F4A6518AD0FBC00D2F069 /* Main_iPhone.storyboard in Resources */,
+				279E602418C8C59900C5CC9F /* JCPersonCell.xib in Resources */,
 				275158FF18AD10BB00FD8D3F /* Default-568h@2x.png in Resources */,
 				275158FE18AD10BB00FD8D3F /* Default@2x.png in Resources */,
 				275F4A5C18AD0FBC00D2F069 /* InfoPlist.strings in Resources */,
