@@ -10,8 +10,12 @@
 #import "JCOsgiClient.h"
 #import "TRVSMonitor.h"
 #import "JCAuthenticationManager.h"
+#import "JCStartLoginViewController.h"
 
 @interface JCOsgiClientTest : XCTestCase
+{
+    TRVSMonitor *classMonitor;
+}
 
 @end
 
@@ -20,13 +24,36 @@
 - (void)setUp
 {
     [super setUp];
-    // test.my.jive.com token for user jivetesting10@gmail.com
-    //if (![[JCAuthenticationManager sharedInstance] getAuthenticationToken]) {
-        NSString *testToken = @"6e4cd798-fb5c-434f-874c-7b2aa1aeeeca";
-        [[JCAuthenticationManager sharedInstance] didReceiveAuthenticationToken:testToken];
-    //}
+    if (!classMonitor) {
+        classMonitor = [TRVSMonitor monitor];
+    }
+    NSString *token = [[JCAuthenticationManager sharedInstance] getAuthenticationToken];
+    if ([self stringIsNilOrEmpty:token]) {
+        if ([self stringIsNilOrEmpty:[[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"]]) {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didLoadWebview:) name:@"OsgiLoginScreen" object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didLoggedIn:) name:@"OsgiLoginLogin" object:nil];
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+            JCStartLoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"JCStartLoginViewController"];
+            [loginVC showWebviewForLogin:nil];
+            [classMonitor wait];
+        }
+    }
+}
+
+- (void)didLoadWebview:(NSNotification *)notification
+{
+    UIWebView *webView = (UIWebView *)notification.object;
+    [webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.getElementById('username').value = '%@';document.getElementById('password').value = '%@';document.getElementById('go-button').click()", @"jivetesting10@gmail.com", @"testing12"]];
     
-    // Put setup code here; it will be run once, before the first test case.
+}
+
+- (void)didLoggedIn:(NSNotification *)notification
+{
+    [classMonitor signal];
+}
+
+-(BOOL)stringIsNilOrEmpty:(NSString*)aString {
+    return !(aString && aString.length);
 }
 
 - (void)tearDown
@@ -35,24 +62,7 @@
     [super tearDown];
 }
 
-- (void)testShouldRetrieveClientEntities
-{
-    TRVSMonitor *monitor = [TRVSMonitor monitor];
-    __block NSDictionary* response;
-    
-    [[JCOsgiClient sharedClient] RetrieveClientEntitites:^(id JSON) {
-        response = JSON;
-        [monitor signal];
-    } failure:^(NSError *err) {
-        NSLog(@"Error - testShouldRetrieveClientEntities: %@", [err description]);
-        [monitor signal];
-    }];
-    
-    [monitor wait];
-    
-    XCTAssertNotNil(response, @"Response should not be nil");
-    XCTAssertTrue(([response[@"entries"] count] > 0), @"Response should not have zero entries");
-}
+
 
 - (void)testShouldRetrieveMyEntity
 {
@@ -215,6 +225,24 @@
     XCTAssertEqualObjects(givenMessage, testMessage, @"Message received should be same as message posted");
 }
 
+- (void)testShouldRetrieveClientEntities
+{
+    TRVSMonitor *monitor = [TRVSMonitor monitor];
+    __block NSDictionary* response;
+    
+    [[JCOsgiClient sharedClient] RetrieveClientEntitites:^(id JSON) {
+        response = JSON;
+        [monitor signal];
+    } failure:^(NSError *err) {
+        NSLog(@"Error - testShouldRetrieveClientEntities: %@", [err description]);
+        [monitor signal];
+    }];
+    
+    [monitor wait];
+    
+    XCTAssertNotNil(response, @"Response should not be nil");
+    XCTAssertTrue(([response[@"entries"] count] > 0), @"Response should not have zero entries");
+}
 
 
 @end
