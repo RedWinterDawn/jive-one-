@@ -20,4 +20,6 @@
 
 - (Presence*)presenceByEntityId:(NSString*)entityId;
 
+- (void)truncateAllTablesAtLogout;
+
 @end

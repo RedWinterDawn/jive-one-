@@ -9,7 +9,12 @@
 #import "JCOmniPresence.h"
 #import "ClientEntities.h"
 #import "ClientMeta.h"
+#import "ContactGroup.h"
+#import "Conversation.h"
+#import "ConversationEntry.h"
+#import "Voicemail.h"
 #import "Presence.h"
+#import "Company.h"
 
 @implementation JCOmniPresence
 
@@ -39,5 +44,18 @@
     return [Presence MR_findFirstByAttribute:@"entityId" withValue:entityId];
 }
 
+- (void)truncateAllTablesAtLogout
+{
+    NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
+    [Presence MR_truncateAllInContext:localContext];
+    [ClientMeta MR_truncateAllInContext:localContext];
+    [Company MR_truncateAllInContext:localContext];
+    [ContactGroup MR_truncateAllInContext:localContext];
+    [ConversationEntry MR_truncateAllInContext:localContext];
+    [Conversation MR_truncateAllInContext:localContext];
+    [Voicemail MR_truncateAllInContext:localContext];
+    [ClientEntities MR_truncateAllInContext:localContext];
+    [localContext MR_saveToPersistentStoreAndWait];
+}
 
 @end

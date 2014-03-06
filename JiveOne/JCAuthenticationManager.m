@@ -67,6 +67,7 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [[JCOsgiClient sharedClient] clearCookies];
+    [[JCOmniPresence sharedInstance] truncateAllTablesAtLogout];
     
     if (viewController != nil) {        
         [viewController dismissViewControllerAnimated:YES completion:nil];
