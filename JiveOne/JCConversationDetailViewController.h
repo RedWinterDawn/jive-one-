@@ -7,10 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JSMessagesViewController.h"
+#import "THContactPickerView.h"
 
-@interface JCConversationDetailViewController : UITableViewController <UIActionSheetDelegate>
-@property (strong, nonatomic) NSString *conversationId;
+@interface JCConversationDetailViewController : UITableViewController <UIActionSheetDelegate, UITextViewDelegate, THContactPickerDelegate>
+
+@property (nonatomic, strong) THContactPickerView *contactPickerView;
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) NSArray *contacts;
+@property (nonatomic, strong) NSMutableArray *selectedContacts;
+@property (nonatomic, strong) NSArray *filteredContacts;
+@property (nonatomic, strong) NSString *conversationId;
+
 - (IBAction)sendMessage:(id)sender;
 - (void)loadDatasource;
 @end
