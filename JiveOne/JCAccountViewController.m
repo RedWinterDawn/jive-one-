@@ -52,7 +52,7 @@
     self.userNameDetail.text = me.firstLastName;
     
     if (me.entityCompany) {
-        self.pbxDetail.text = me.entityCompany.pbxId;
+        self.pbxDetail.text = me.entityCompany.name;
         self.companyNameDetail.text = me.entityCompany.name;
     }
     
