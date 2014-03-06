@@ -15,5 +15,6 @@
 @property (nonatomic, strong) NSMutableArray *companyContactsArray;
 @property (nonatomic, strong) NSArray *sections;
 @property (nonatomic, strong) NSMutableArray *contactGroupArray;
+@property (nonatomic, strong) ContactGroup *groupEdit;
 
 @end

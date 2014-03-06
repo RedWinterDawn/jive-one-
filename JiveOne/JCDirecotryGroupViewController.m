@@ -7,8 +7,12 @@
 //
 
 #import "JCDirecotryGroupViewController.h"
+#import "JCGroupSelectorViewController.h"
 
 @interface JCDirecotryGroupViewController ()
+{
+    NSManagedObjectContext *localContext;
+}
 
 @end
 
@@ -27,7 +31,7 @@
 {
     [super viewDidLoad];
     
-//    NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
+    localContext = [NSManagedObjectContext MR_contextForCurrentThread];
     
     
 //    // Here you'll see three test groups created. Each time you navigate to this view it'll load more so it'll get big until we fix it.
@@ -124,21 +128,50 @@
     
     if (indexPath.section == 0 && indexPath.row == 0) {
         [self.navigationController popToRootViewControllerAnimated:YES];
+    } else if (indexPath.section == 2) {
+        ContactGroup *group = self.testArray[indexPath.row];
+        [self performSegueWithIdentifier:@"groupContactSegue" sender:group];
+    }
+}
+
+// This allows cells to be editable, we made it so the first cell which navigates back to "All Contacts" isn't deleteable
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if (indexPath.section == 0 || indexPath.section == 1) {
+        return NO;
     }
     
-//    if ([cell.textLabel.text isEqualToString:@"All Contacts"]) {
-//        NSLog(@"You Clicked the title!!");
-//    }
-    
-    
-//    if (indexPath.row == 0) {
-//        NSLog(@"you clicked the title");
-//    }
+    return YES;
+}
+
+// This allows you to delete a group, first it is deleted from the datamodel, from CoreData and the array stored in memory
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        // Delete the row from the data source
+        if (indexPath.section == 2) {
+            ContactGroup *group = self.testArray[indexPath.row];
+            [self.testArray removeObjectAtIndex:indexPath.row];
+            [group MR_deleteInContext:localContext];
+            [localContext MR_saveToPersistentStoreAndWait];
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        }
+        
+    }
+    else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+    }
 }
 
 // Nothing implemented yet, but we may need to use this method to pass information to the next view when we want to select contacts for groups?
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    if ([sender isKindOfClass:[ContactGroup class]]) {
+        JCGroupSelectorViewController *groupSelectorVC = (JCGroupSelectorViewController *)[[segue destinationViewController] visibleViewController];
+        [groupSelectorVC setGroupEdit:sender];
+        
+    }
     
 }
 
