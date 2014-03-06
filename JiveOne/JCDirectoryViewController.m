@@ -32,10 +32,13 @@
 
 @implementation JCDirectoryViewController
 
+static NSString *CellIdentifier = @"DirectoryCell";
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    [self.tableView registerNib:[UINib nibWithNibName:@"JCPersonCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -304,8 +307,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"DirectoryCell";
-    UITableViewCell *cell;
+    
+    JCPersonCell *cell;
     if(tableView != self.searchDisplayController.searchResultsTableView){//redundant, but easier than rearranging all the if statements below.
         //only instantiate the cell this way, if it is not part of the searchResutls Table view.
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
@@ -327,8 +330,8 @@
             if (self.clientEntitiesSearchArray.count == 0) {
                 return nil;
             }
-            //cell = [[UI alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];//can only be used if initWithStyle manually initializes all uilabel properties (since it's not being created by the storyboard)
-             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            cell = [[JCPersonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];//can only be used if initWithStyle manually initializes all uilabel properties (since it's not being created by the storyboard)
+             //cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             section = self.clientEntitiesSearchArray[indexPath.section];
         }
         else{
@@ -341,11 +344,11 @@
             
             ClientEntities* person = section[indexPath.row];
             
-            cell.textLabel.text = person.firstLastName;
-            cell.detailTextLabel.text = person.email;
+            cell.personNameLabel.text = person.firstLastName;
+            cell.personDetailLabel.text = person.email;
             //cell.personPresenceLabel.text = [self getPresence:[NSNumber numberWithInt:[person.entityPresence.interactions[@"chat"][@"code"] integerValue]]];
             //cell.personPresenceLabel = [self presenceLabelForValue:cell.personPresenceLabel];
-            [cell.imageView setImageWithURL:[NSURL URLWithString:person.picture]
+            [cell.personPicture setImageWithURL:[NSURL URLWithString:person.picture]
                            placeholderImage:[UIImage imageNamed:@"avatar.png"]];
             
             long row = indexPath.row;
@@ -355,14 +358,19 @@
         }else{
             //local contacts
             NSDictionary * pers = section[indexPath.row];
-            cell.textLabel.text = [pers objectForKey:@"firstLast"];
-            cell.detailTextLabel.text = @"";//[person objectForKey:@"email"];
+            cell.personNameLabel.text = [pers objectForKey:@"firstLast"];
+            cell.personDetailLabel.text = @"";//[person objectForKey:@"email"];
 
             }
         
         
         return cell;
     }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 50;
 }
 
 - (NSString *)getPresence:(NSNumber *)presence
