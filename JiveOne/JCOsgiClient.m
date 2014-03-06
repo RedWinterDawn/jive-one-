@@ -238,6 +238,25 @@
     [_manager.requestSerializer setValue:token forHTTPHeaderField:@"Auth"];
 }
 
+- (void) SubmitConversationWithName:(NSString *)groupName forEntities:(NSArray *)entities creator:(NSString *)creator isGroupConversation:(BOOL)isGroup success:(void (^)(id JSON))success
+                            failure:(void (^)(NSError* err))failure
+{
+    [self setRequestAuthHeader];
+    
+    NSMutableDictionary * conversationDictionary = [[NSMutableDictionary alloc] initWithObjectsAndKeys:entities, @"entities", creator, @"creator", nil];
+    if (isGroup) {
+        [conversationDictionary setObject:@"groupconversations" forKey:@"type"];
+        [conversationDictionary setObject:groupName forKey:@"name"];
+    }
+    
+    [_manager POST:kOsgiConverationRoute parameters:conversationDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self addConversation:responseObject];
+        success(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
+
 - (void)SubmitChatMessageForConversation:(NSString*)conversation message:(NSString*)message withEntity:(NSString*)entity success:(void (^)(id JSON))success
                                  failure:(void (^)(NSError* err))failure
 {
