@@ -13,7 +13,7 @@
 #import "JCOsgiClient.h"
 #import "JCDirectoryDetailViewController.h"
 #import "JCPersonCell.h"
-#import "JCDirecotryGroupViewController.h"
+#import "JCDirectoryGroupViewController.h"
 #import "ContactGroup.h"
 
 
@@ -498,7 +498,7 @@ shouldReloadTableForSearchString:(NSString *)searchString
         
         
         if ([[segue identifier] isEqualToString:@"groupView"]) {
-            JCDirecotryGroupViewController *groupVC = (JCDirecotryGroupViewController*)segue.destinationViewController;
+            JCDirectoryGroupViewController *groupVC = (JCDirectoryGroupViewController*)segue.destinationViewController;
             groupVC.person = self.clientEntitiesArray;
         } else if ([[segue identifier] isEqualToString:@"directoryDetailView"]) {
         
@@ -525,7 +525,7 @@ shouldReloadTableForSearchString:(NSString *)searchString
         
         if ([[segue identifier] isEqualToString:@"groupView"]) {
             NSMutableArray *person = self.clientEntitiesArray;
-            JCDirecotryGroupViewController* groupVC = segue.destinationViewController;
+            JCDirectoryGroupViewController* groupVC = segue.destinationViewController;
             groupVC.personDict = person;
         } else if ([[segue identifier] isEqualToString:@"directoryDetailView"]) {
             NSDictionary *person = self.clientEntitiesArray[indexPath.section][indexPath.row];

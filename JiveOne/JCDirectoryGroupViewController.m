@@ -6,17 +6,17 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCDirecotryGroupViewController.h"
+#import "JCDirectoryGroupViewController.h"
 #import "JCGroupSelectorViewController.h"
 
-@interface JCDirecotryGroupViewController ()
+@interface JCDirectoryGroupViewController ()
 {
     NSManagedObjectContext *localContext;
 }
 
 @end
 
-@implementation JCDirecotryGroupViewController
+@implementation JCDirectoryGroupViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {

@@ -80,9 +80,10 @@
 		F23038AD18BE99060010966F /* ContactGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = F23038AC18BE99060010966F /* ContactGroup.m */; };
 		F23038B018BE99710010966F /* ClientEntities.m in Sources */ = {isa = PBXBuildFile; fileRef = F23038AF18BE99710010966F /* ClientEntities.m */; };
 		F2459BB218C67FC000AF56CF /* JCGroupSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2459BB118C67FC000AF56CF /* JCGroupSelectorViewController.m */; };
-		F258589218BD3A420020AF34 /* JCDirecotryGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F258589118BD3A420020AF34 /* JCDirecotryGroupViewController.m */; };
+		F258589218BD3A420020AF34 /* JCDirectoryGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F258589118BD3A420020AF34 /* JCDirectoryGroupViewController.m */; };
 		F266162618B42AA0000B770A /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266162418B42AA0000B770A /* AddressBook.framework */; };
 		F266162718B42AA0000B770A /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266162518B42AA0000B770A /* AddressBookUI.framework */; };
+		F2FEF42B18C91BBE0080D8CC /* JCGroupsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F2FEF42A18C91BBE0080D8CC /* JCGroupsTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -195,10 +196,11 @@
 		F23038AF18BE99710010966F /* ClientEntities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClientEntities.m; sourceTree = "<group>"; };
 		F2459BB018C67FC000AF56CF /* JCGroupSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCGroupSelectorViewController.h; sourceTree = "<group>"; };
 		F2459BB118C67FC000AF56CF /* JCGroupSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCGroupSelectorViewController.m; sourceTree = "<group>"; };
-		F258589018BD3A420020AF34 /* JCDirecotryGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDirecotryGroupViewController.h; sourceTree = "<group>"; };
-		F258589118BD3A420020AF34 /* JCDirecotryGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDirecotryGroupViewController.m; sourceTree = "<group>"; };
+		F258589018BD3A420020AF34 /* JCDirectoryGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDirectoryGroupViewController.h; sourceTree = "<group>"; };
+		F258589118BD3A420020AF34 /* JCDirectoryGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDirectoryGroupViewController.m; sourceTree = "<group>"; };
 		F266162418B42AA0000B770A /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		F266162518B42AA0000B770A /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		F2FEF42A18C91BBE0080D8CC /* JCGroupsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCGroupsTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -270,8 +272,8 @@
 				2751591E18AD303500FD8D3F /* JCDirectoryViewController.m */,
 				91260EDB18B2965900704670 /* JCDirectoryDetailViewController.h */,
 				91260EDC18B2965900704670 /* JCDirectoryDetailViewController.m */,
-				F258589018BD3A420020AF34 /* JCDirecotryGroupViewController.h */,
-				F258589118BD3A420020AF34 /* JCDirecotryGroupViewController.m */,
+				F258589018BD3A420020AF34 /* JCDirectoryGroupViewController.h */,
+				F258589118BD3A420020AF34 /* JCDirectoryGroupViewController.m */,
 				F2459BB018C67FC000AF56CF /* JCGroupSelectorViewController.h */,
 				F2459BB118C67FC000AF56CF /* JCGroupSelectorViewController.m */,
 				2751592118AD32E500FD8D3F /* JCConversationsViewController.h */,
@@ -412,6 +414,7 @@
 			isa = PBXGroup;
 			children = (
 				275F4A8218AD0FBC00D2F069 /* JiveOneTests.m */,
+				F2FEF42A18C91BBE0080D8CC /* JCGroupsTests.m */,
 				9135DE0118BC00FD0052E998 /* JCDirectoryDetailTests.m */,
 				DD50802818C7D60B00750DB4 /* JCDirectoryTests.m */,
 				275F4A7D18AD0FBC00D2F069 /* Supporting Files */,
@@ -627,7 +630,7 @@
 				27C5F43918BBBC5B005FCAFD /* ConversationEntry.m in Sources */,
 				2797B92D18B82EA500DB2B9B /* Company.m in Sources */,
 				2751591F18AD303500FD8D3F /* JCDirectoryViewController.m in Sources */,
-				F258589218BD3A420020AF34 /* JCDirecotryGroupViewController.m in Sources */,
+				F258589218BD3A420020AF34 /* JCDirectoryGroupViewController.m in Sources */,
 				DD01933718AECA760065A8CD /* JCTestViewController.m in Sources */,
 				2751593418AD3BD500FD8D3F /* JCVoipViewController.m in Sources */,
 				275E809618AED884009AD776 /* JCSocketDispatch.m in Sources */,
@@ -646,6 +649,7 @@
 				2751590718AD118D00FD8D3F /* JCStartLoginViewController.m in Sources */,
 				2762C45918B4177D00885918 /* JCOmniPresence.m in Sources */,
 				2751591818AD300B00FD8D3F /* OsgiData.xcdatamodel in Sources */,
+				F2FEF42B18C91BBE0080D8CC /* JCGroupsTests.m in Sources */,
 				2751592618AD32E500FD8D3F /* JCConversationsViewController.m in Sources */,
 				9135DE0218BC00FD0052E998 /* JCDirectoryDetailTests.m in Sources */,
 				2751592F18AD334E00FD8D3F /* JCEntryModel.m in Sources */,
