@@ -487,13 +487,14 @@ shouldReloadTableForSearchString:(NSString *)searchString
     
     //check if it's a company or local contact
     if (self.segControl.selectedSegmentIndex == 0) {
-        ClientEntities *person = self.clientEntitiesArray[indexPath.section][indexPath.row];
+        
         
         if ([[segue identifier] isEqualToString:@"groupView"]) {
             JCDirecotryGroupViewController *groupVC = (JCDirecotryGroupViewController*)segue.destinationViewController;
             groupVC.person = self.clientEntitiesArray;
         } else if ([[segue identifier] isEqualToString:@"directoryDetailView"]) {
         
+            ClientEntities *person = self.clientEntitiesArray[indexPath.section][indexPath.row];
             if (self.searchTableIsActive) {
                 indexPath = sender;
                 person = self.clientEntitiesSearchArray[indexPath.section][indexPath.row];
