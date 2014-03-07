@@ -31,13 +31,13 @@
 {
     [super setUp];
     
-    NSString *token = [[JCAuthenticationManager sharedInstance] getAuthenticationToken];
-    if ([self stringIsNilOrEmpty:token]) {
-        if ([self stringIsNilOrEmpty:[[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"]]) {
+//    NSString *token = [[JCAuthenticationManager sharedInstance] getAuthenticationToken];
+//    if ([self stringIsNilOrEmpty:token]) {
+//        if ([self stringIsNilOrEmpty:[[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"]]) {
             NSString *testToken = kTestAuthKey;
             [[JCAuthenticationManager sharedInstance] didReceiveAuthenticationToken:testToken];
-        }
-    }   
+//        }
+//    }
 }
 
 
