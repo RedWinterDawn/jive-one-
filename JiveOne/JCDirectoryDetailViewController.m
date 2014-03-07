@@ -102,24 +102,13 @@
             cell.textLabel.text = @"Company";
             //convert "companies:jive" to "jive:
             if(!self.ABPerson){
-<<<<<<< HEAD
-                NSString *stringToDivide = self.person.company;
+                NSString *stringToDivide = self.person.entityCompany.name;
                 NSArray *stringParts = [stringToDivide componentsSeparatedByString:@":"];
                 if (stringParts[1]) {
                     //Capitilize Company Name
                     cell.detailTextLabel.text = [stringParts[1] capitalizedString];
                 }
-            } else {
-=======
-                cell.detailTextLabel.text = self.person.entityCompany.name;
-//                NSString *stringToDivide = self.person.resourceGroupName;
-//                NSArray *stringParts = [stringToDivide componentsSeparatedByString:@":"];
-//                if (stringParts[1]) {
-//                    //Capitilize Company Name
-//                    cell.detailTextLabel.text = [stringParts[1] capitalizedString];
-//                }
             }else{
->>>>>>> renamed pbx to resourceGroupId
                 cell.textLabel.text = @"Phone";
                 cell.detailTextLabel.text = @"";//[self.ABPerson objectForKey:@"phone"];
             }
