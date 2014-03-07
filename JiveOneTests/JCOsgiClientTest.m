@@ -27,15 +27,13 @@
     if (!classMonitor) {
         classMonitor = [TRVSMonitor monitor];
     }
+    
+    // test.my.jive.com token for user jivetesting10@gmail.com
     NSString *token = [[JCAuthenticationManager sharedInstance] getAuthenticationToken];
     if ([self stringIsNilOrEmpty:token]) {
         if ([self stringIsNilOrEmpty:[[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"]]) {
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didLoadWebview:) name:@"OsgiLoginScreen" object:nil];
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didLoggedIn:) name:@"OsgiLoginLogin" object:nil];
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-            JCStartLoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"JCStartLoginViewController"];
-            [loginVC showWebviewForLogin:nil];
-            [classMonitor wait];
+            NSString *testToken = @"c8124461-0b9b-473b-a22e-fbf62feffa11";
+            [[JCAuthenticationManager sharedInstance] didReceiveAuthenticationToken:testToken];
         }
     }
 }
