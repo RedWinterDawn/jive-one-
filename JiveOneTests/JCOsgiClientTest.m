@@ -13,16 +13,11 @@
 #import "JCStartLoginViewController.h"
 
 @interface JCOsgiClientTest : XCTestCase
-{
-    TRVSMonitor *classMonitor;
-}
 
 @end
 
 @implementation JCOsgiClientTest
 {
-    UIWebView *loginWebview;
-    BOOL shouldStartLoadDelegate, didStartLoadDelegate, didFinishLoadDelegate, didFinishWithErrorDelegate;
     NSString *barName;
     NSString *barConversation;
 }
@@ -40,26 +35,12 @@
 //    }
 }
 
-
-- (void)didLoadWebview:(NSNotification *)notification
-{
-    UIWebView *webView = (UIWebView *)notification.object;
-    [webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.getElementById('username').value = '%@';document.getElementById('password').value = '%@';document.getElementById('go-button').click()", @"jivetesting10@gmail.com", @"testing12"]];
-}
-
-- (void)didLoggedIn:(NSNotification *)notification
-{
-    [classMonitor signal];
-}
-
--(BOOL)stringIsNilOrEmpty:(NSString*)aString {
-    return !(aString && aString.length);
-}
-
 - (void)tearDown
 {
     // Put teardown code here; it will be run once, after the last test case.
     [super tearDown];
+    
+    [[TRVSMonitor monitor] signal];
 }
 
 
