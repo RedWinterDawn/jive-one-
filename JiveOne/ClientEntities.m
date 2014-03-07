@@ -14,7 +14,7 @@
 
 @implementation ClientEntities
 
-@dynamic company;
+@dynamic resourceGroupName;
 @dynamic createDate;
 @dynamic email;
 @dynamic entityId;

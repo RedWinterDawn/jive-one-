@@ -616,7 +616,7 @@
         c_ent.lastModified = [entity objectForKey:@"lastModified"];
         c_ent.externalId = [entity objectForKey:@"externalId"];
         c_ent.presence = [entity objectForKey:@"presence"];
-        c_ent.company = [entity objectForKey:@"company"];
+        c_ent.resourceGroupName = [entity objectForKey:@"company"];
         c_ent.tags = [entity objectForKey:@"tags"];
         c_ent.location = [entity objectForKey:@"location"];
         c_ent.firstName = [[entity objectForKey:@"name"] objectForKey:@"first"];

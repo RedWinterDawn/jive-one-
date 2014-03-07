@@ -203,7 +203,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
             ClientEntities *c_ent = [ClientEntities MR_createInContext:localContext];
             c_ent.lastModified = [entity objectForKey:@"lastModified"];
             c_ent.presence = [entity objectForKey:@"presence"];
-            c_ent.company = [entity objectForKey:@"company"];
+            c_ent.resourceGroupName = [entity objectForKey:@"company"];
             c_ent.tags = [entity objectForKey:@"tags"];
             c_ent.location = [entity objectForKey:@"location"];
             c_ent.firstName = [[entity objectForKey:@"name"] objectForKey:@"first"];
@@ -346,8 +346,8 @@ static NSString *CellIdentifier = @"DirectoryCell";
             
             cell.personNameLabel.text = person.firstLastName;
             cell.personDetailLabel.text = person.email;
-            //cell.personPresenceLabel.text = [self getPresence:[NSNumber numberWithInt:[person.entityPresence.interactions[@"chat"][@"code"] integerValue]]];
-            //cell.personPresenceLabel = [self presenceLabelForValue:cell.personPresenceLabel];
+            cell.personPresenceLabel.text = [self getPresence:[NSNumber numberWithInt:[person.entityPresence.interactions[@"chat"][@"code"] integerValue]]];
+//            cell.personPresenceLabel = [self presenceLabelForValue:cell.personPresenceLabel];
             [cell.personPicture setImageWithURL:[NSURL URLWithString:person.picture]
                            placeholderImage:[UIImage imageNamed:@"avatar.png"]];
             

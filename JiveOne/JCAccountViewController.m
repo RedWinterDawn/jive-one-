@@ -40,7 +40,7 @@
         me = [[JCOmniPresence sharedInstance] me];
         
         if (!me.entityCompany) {
-            [self retrieveCompany:me.company];
+            [self retrieveCompany:me.resourceGroupName];
         }
     }
     
@@ -78,7 +78,7 @@
         me.presence = entity[@"presence"];
         me.email = entity[@"email"];
         me.externalId = entity[@"externalId"];
-        me.company = entity[@"company"];
+        me.resourceGroupName = entity[@"company"];
         me.location = entity[@"location"];
         me.firstLastName = entity[@"name"][@"firstLast"];
         me.groups = entity[@"groups"];

@@ -22,6 +22,8 @@
 {
         ClientEntities *me;
 }
+@property (strong, nonatomic) NSArray* extensions;
+@property (strong, nonatomic) NSArray* voicemailBoxIds;
 
 @end
 
@@ -44,6 +46,8 @@
     if (!me) {
         me = [[JCOmniPresence sharedInstance] me];
     }
+    
+    //TODO: run rest query on voicemail client to get json of extensions and voicemail box ids
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;

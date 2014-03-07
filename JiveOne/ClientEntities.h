@@ -13,7 +13,7 @@
 
 @interface ClientEntities : NSManagedObject
 
-@property (nonatomic, retain) NSString * company;
+@property (nonatomic, retain) NSString * resourceGroupName;
 @property (nonatomic, retain) NSNumber * createDate;
 @property (nonatomic, retain) NSString * email;
 @property (nonatomic, retain) NSString * entityId;
