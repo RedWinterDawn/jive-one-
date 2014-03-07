@@ -68,7 +68,6 @@
         return self.testArray.count;
     }
     
-    
     // Return the number of rows in the section.
     
 }
@@ -111,6 +110,7 @@
         ContactGroup *group = self.testArray[indexPath.row];
         [self performSegueWithIdentifier:@"groupContactSegue" sender:group];
     }
+    
 }
 
 // This allows cells to be editable, we made it so the first cell which navigates back to "All Contacts" isn't deleteable

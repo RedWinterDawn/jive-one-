@@ -32,6 +32,7 @@
     self.directoryGroupViewController = [[JCDirectoryGroupViewController alloc]initWithStyle:UITableViewStyleGrouped];
     self.directoryGroupViewController.tableView = [[UITableView alloc] initWithFrame:CGRectZero];
     [self forceLoadingOfTheView];
+    [self.directoryGroupViewController viewWillAppear:YES];
     
 }
 
@@ -47,13 +48,13 @@
 }
 
 
-- (void)testNumberOfSectionsInTableView
-{
+- (void)testNumberOfSectionsInTableView {
     
     XCTAssertTrue([self.directoryGroupViewController numberOfSectionsInTableView:self.directoryGroupViewController.tableView] == 3, @"Number of sections in table should be 3");
-    
 }
 
-
+- (void)testArrayOfConacts {
+    XCTAssertNotNil(self.directoryGroupViewController.testArray, @"testArray did not get instatiated");
+}
 
 @end
