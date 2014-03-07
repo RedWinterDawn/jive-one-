@@ -25,7 +25,7 @@ int main(int argc, char * argv[])
             if (!(token && token.length)) {
                 token = [[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"];
                 if (!(token && token.length)) {
-                    NSString *testToken = @"c8124461-0b9b-473b-a22e-fbf62feffa11";
+                    NSString *testToken = kTestAuthKey;
                     [[JCAuthenticationManager sharedInstance] didReceiveAuthenticationToken:testToken];
                 }
             }

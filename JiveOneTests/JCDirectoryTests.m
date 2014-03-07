@@ -24,7 +24,7 @@
     NSString *token = [[JCAuthenticationManager sharedInstance] getAuthenticationToken];
     if ([self stringIsNilOrEmpty:token]) {
         if ([self stringIsNilOrEmpty:[[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"]]) {
-            NSString *testToken = @"c8124461-0b9b-473b-a22e-fbf62feffa11";
+            NSString *testToken = kTestAuthKey;
             [[JCAuthenticationManager sharedInstance] didReceiveAuthenticationToken:testToken];
         }
     }

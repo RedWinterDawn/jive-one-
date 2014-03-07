@@ -44,6 +44,7 @@
 #pragma mark - OAuth Credentials
 #define kOAuthClientSecret @"enXabnU5KuVm4XRSWGkU"
 #define kOAuthClientId @"f62d7f80-3749-11e3-9b37-542696d7c505"
+#define kTestAuthKey @"c8124461-0b9b-473b-a22e-fbf62feffa11";
 
 #pragma mark - Presence Constants
 #define kPresenceAvailable @"Available"
