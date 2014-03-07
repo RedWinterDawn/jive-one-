@@ -21,9 +21,12 @@
     [super setUp];
     
     // test.my.jive.com token for user jivetesting10@gmail.com
-    if (![[JCAuthenticationManager sharedInstance] getAuthenticationToken]) {
-        NSString *testToken = @"6e4cd798-fb5c-434f-874c-7b2aa1aeeeca";
-        [[JCAuthenticationManager sharedInstance] didReceiveAuthenticationToken:testToken];
+    NSString *token = [[JCAuthenticationManager sharedInstance] getAuthenticationToken];
+    if ([self stringIsNilOrEmpty:token]) {
+        if ([self stringIsNilOrEmpty:[[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"]]) {
+            NSString *testToken = @"c8124461-0b9b-473b-a22e-fbf62feffa11";
+            [[JCAuthenticationManager sharedInstance] didReceiveAuthenticationToken:testToken];
+        }
     }
     
     
@@ -32,6 +35,10 @@
     self.JCDDVC.tableView = [[UITableView alloc] initWithFrame:CGRectZero];
     [self forceLoadingOfTheView];
 //    self.JCDDVC.tableView.dataSource
+}
+
+-(BOOL)stringIsNilOrEmpty:(NSString*)aString {
+    return !(aString && aString.length);
 }
 
 - (void)forceLoadingOfTheView

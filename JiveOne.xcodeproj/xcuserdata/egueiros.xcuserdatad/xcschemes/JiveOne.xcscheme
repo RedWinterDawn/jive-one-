@@ -41,6 +41,9 @@
                <Test
                   Identifier = "JiveOneTests/testLogout">
                </Test>
+               <Test
+                  Identifier = "JCOsgiClientTest/testShouldRetrieveClientEntities">
+               </Test>
             </SkippedTests>
          </TestableReference>
       </Testables>

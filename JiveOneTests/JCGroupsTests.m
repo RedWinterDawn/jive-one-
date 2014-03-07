@@ -24,9 +24,13 @@
 {
     [super setUp];
     
-    if (![[JCAuthenticationManager sharedInstance] getAuthenticationToken]) {
-        NSString *testToken = @"6e4cd798-fb5c-434f-874c-7b2aa1aeeeca";
-        [[JCAuthenticationManager sharedInstance] didReceiveAuthenticationToken:testToken];
+    // test.my.jive.com token for user jivetesting10@gmail.com
+    NSString *token = [[JCAuthenticationManager sharedInstance] getAuthenticationToken];
+    if ([self stringIsNilOrEmpty:token]) {
+        if ([self stringIsNilOrEmpty:[[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"]]) {
+            NSString *testToken = @"c8124461-0b9b-473b-a22e-fbf62feffa11";
+            [[JCAuthenticationManager sharedInstance] didReceiveAuthenticationToken:testToken];
+        }
     }
     
     self.directoryGroupViewController = [[JCDirectoryGroupViewController alloc]initWithStyle:UITableViewStyleGrouped];
@@ -34,6 +38,10 @@
     [self forceLoadingOfTheView];
     [self.directoryGroupViewController viewWillAppear:YES];
     
+}
+
+-(BOOL)stringIsNilOrEmpty:(NSString*)aString {
+    return !(aString && aString.length);
 }
 
 - (void)forceLoadingOfTheView

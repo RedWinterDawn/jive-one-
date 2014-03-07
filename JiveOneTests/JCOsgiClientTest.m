@@ -20,6 +20,12 @@
 @end
 
 @implementation JCOsgiClientTest
+{
+    UIWebView *loginWebview;
+    BOOL shouldStartLoadDelegate, didStartLoadDelegate, didFinishLoadDelegate, didFinishWithErrorDelegate;
+    NSString *barName;
+    NSString *barConversation;
+}
 
 - (void)setUp
 {
@@ -32,17 +38,28 @@
     NSString *token = [[JCAuthenticationManager sharedInstance] getAuthenticationToken];
     if ([self stringIsNilOrEmpty:token]) {
         if ([self stringIsNilOrEmpty:[[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"]]) {
-            NSString *testToken = @"c8124461-0b9b-473b-a22e-fbf62feffa11";
-            [[JCAuthenticationManager sharedInstance] didReceiveAuthenticationToken:testToken];
+            //NSString *testToken = @"c8124461-0b9b-473b-a22e-fbf62feffa11";
+            //[[JCAuthenticationManager sharedInstance] didReceiveAuthenticationToken:testToken];
+
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didLoadWebview:) name:@"OsgiLoginScreen" object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didLoggedIn:) name:@"OsgiLoginLogin" object:nil];
+//            UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+//            JCStartLoginViewController *loginVC = [storyBoard instantiateViewControllerWithIdentifier:@"JCStartLoginViewController"];
+//            loginWebview = loginVC.authWebview;
+//            [loginVC showWebviewForLogin:nil];
+            [classMonitor wait];
         }
     }
+    
+    
+    
 }
+
 
 - (void)didLoadWebview:(NSNotification *)notification
 {
     UIWebView *webView = (UIWebView *)notification.object;
     [webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.getElementById('username').value = '%@';document.getElementById('password').value = '%@';document.getElementById('go-button').click()", @"jivetesting10@gmail.com", @"testing12"]];
-    
 }
 
 - (void)didLoggedIn:(NSNotification *)notification
@@ -129,12 +146,23 @@
     XCTAssertNotNil(response, @"Response should not be nil");
     XCTAssertTrue(([response[@"entries"] count] > 0), @"Response should not have zero entries");
     
-    NSString *givenChatRoomName = (NSString*)response[@"entries"][0][@"name"];
+    
+    NSString *givenChatRoomName;
+    for (NSDictionary *entries in response[@"entries"]) {
+        if (entries[@"name"]) {
+            NSString *groupName = entries[@"name"];
+            if ([groupName isEqualToString:expectedChatRoomName]) {
+                givenChatRoomName = groupName;
+                barConversation = entries[@"id"];
+            }
+        }
+    }
     XCTAssertEqualObjects(givenChatRoomName, expectedChatRoomName, @"Response did not contain correct chat room name");
 }
 
 - (void)testShouldRequestSocketSession
 {
+    
     TRVSMonitor *monitor = [TRVSMonitor monitor];
     __block NSDictionary* response;
     
@@ -200,10 +228,12 @@
 
 - (void)testShouldSubmittChatMessageForConversation
 {
+    [self testShouldRetrieveConversations];
+    
     TRVSMonitor *monitor = [TRVSMonitor monitor];
     __block NSDictionary* response;
     
-    NSString *testConversation = @"permanentrooms:896";
+    NSString *testConversation = barConversation;
     NSString *testMessage = [NSString stringWithFormat:@"Automated Test Message %@", [NSDate date]];
     NSString *testEntity = @"entities:jivetesting10@gmail_com";
     
