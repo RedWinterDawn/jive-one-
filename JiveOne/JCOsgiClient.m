@@ -25,7 +25,7 @@
 
 
 
-
+#pragma mark - class initialization
 
 + (JCOsgiClient*)sharedClient {
     static JCOsgiClient *_sharedClient = nil;
@@ -61,6 +61,8 @@
 
 //#endif
 }
+
+#pragma mark - Retrieve Operations
 
 - (void) RetrieveClientEntitites:(void (^)(id JSON))success
                          failure:(void (^)(NSError *err))failure
@@ -133,11 +135,38 @@
     }];
 }
 
-- (void) OAuthLoginWithUsername:(NSString*)username password:(NSString*)password success:(void (^)(id JSON))success
-                        failure:(void (^)(NSError *err))failure
+- (void)RetrieveEntitiesPresence:(void (^)(BOOL updated))success failure:(void(^)(NSError *err))failure
 {
+    [self setRequestAuthHeader];
+    
+    [_manager GET:kOsgiPresenceRoute parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSArray *presences = responseObject[@"entries"];
+        [self addPresences:presences];
+        success(YES);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
 }
 
+- (void) RetrievePresenceForEntity:(NSString*)entity withPresendUrn:(NSString*)presenceUrn success:(void (^)(BOOL updated))success failure:(void(^)(NSError *err))failure
+{
+    [self setRequestAuthHeader];
+    NSString *url = nil;
+    if (presenceUrn) {
+        url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], presenceUrn];
+    }
+    else {
+        url = [NSString stringWithFormat:@"%@presence:%@", [_manager baseURL], entity];
+    }
+    
+    [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+}
 
 - (void) RequestSocketSession:(void (^)(id))success failure:(void (^)(NSError *))failure
 {
@@ -148,6 +177,13 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failure(error);
     }];
+}
+
+#pragma mark - Submit Operations
+
+- (void) OAuthLoginWithUsername:(NSString*)username password:(NSString*)password success:(void (^)(id JSON))success
+                        failure:(void (^)(NSError *err))failure
+{
 }
 
 - (void) SubscribeToSocketEventsWithAuthToken:(NSString*)token subscriptions:(NSDictionary*)subscriptions success:(void (^)(id JSON))success
@@ -207,37 +243,6 @@
     
 }
 
-- (void)setRequestAuthHeaderWithSocketSessionToken:(NSString*)token
-{
-    KeychainItemWrapper* _keychainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
-    NSString *authtoken = [_keychainWrapper objectForKey:(__bridge id)(kSecAttrAccount)];
-    
-    if (!authtoken) {
-        authtoken = (NSString*)[[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"];
-    }
-    
-    NSString *pipedToken = [NSString stringWithFormat:@"%@|%@", authtoken, token];
-    
-     _manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    [_manager.requestSerializer clearAuthorizationHeader];
-    [_manager.requestSerializer setValue:pipedToken forHTTPHeaderField:@"Auth"];
-
-}
-
-- (void)setRequestAuthHeader
-{
-    KeychainItemWrapper* _keychainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
-    NSString *token = [_keychainWrapper objectForKey:(__bridge id)(kSecAttrAccount)];
-    
-    if (!token) {
-        token = (NSString*)[[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"];
-    }
-    
-    _manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    [_manager.requestSerializer clearAuthorizationHeader];
-    [_manager.requestSerializer setValue:token forHTTPHeaderField:@"Auth"];
-}
-
 - (void) SubmitConversationWithName:(NSString *)groupName forEntities:(NSArray *)entities creator:(NSString *)creator isGroupConversation:(BOOL)isGroup success:(void (^)(id JSON))success
                             failure:(void (^)(NSError* err))failure
 {
@@ -278,38 +283,9 @@
     }];
 }
 
-- (void)RetrieveEntitiesPresence:(void (^)(BOOL updated))success failure:(void(^)(NSError *err))failure
-{
-    [self setRequestAuthHeader];
-    
-    [_manager GET:kOsgiPresenceRoute parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSArray *presences = responseObject[@"entries"];
-        [self addPresences:presences];
-        success(YES);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failure(error);
-    }];
-}
 
-- (void) RetrievePresenceForEntity:(NSString*)entity withPresendUrn:(NSString*)presenceUrn success:(void (^)(BOOL updated))success failure:(void(^)(NSError *err))failure
-{
-    [self setRequestAuthHeader];
-    NSString *url = nil;
-    if (presenceUrn) {
-        url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], presenceUrn];
-    }
-    else {
-        url = [NSString stringWithFormat:@"%@presence:%@", [_manager baseURL], entity];
-    }
-    
-    [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-    }];
-}
+
+#pragma mark - Update Operations
 
 - (void) UpdatePresence:(JCPresenceType)presence success:(void (^)(BOOL updated))success failure:(void(^)(NSError *err))failure
 {
@@ -336,6 +312,38 @@
         failure(error);
     }];
     
+}
+
+#pragma mark - Class Operations
+- (void)setRequestAuthHeaderWithSocketSessionToken:(NSString*)token
+{
+    KeychainItemWrapper* _keychainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
+    NSString *authtoken = [_keychainWrapper objectForKey:(__bridge id)(kSecAttrAccount)];
+    
+    if (!authtoken) {
+        authtoken = (NSString*)[[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"];
+    }
+    
+    NSString *pipedToken = [NSString stringWithFormat:@"%@|%@", authtoken, token];
+    
+    _manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [_manager.requestSerializer clearAuthorizationHeader];
+    [_manager.requestSerializer setValue:pipedToken forHTTPHeaderField:@"Auth"];
+    
+}
+
+- (void)setRequestAuthHeader
+{
+    KeychainItemWrapper* _keychainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
+    NSString *token = [_keychainWrapper objectForKey:(__bridge id)(kSecAttrAccount)];
+    
+    if (!token) {
+        token = (NSString*)[[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"];
+    }
+    
+    _manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [_manager.requestSerializer clearAuthorizationHeader];
+    [_manager.requestSerializer setValue:token forHTTPHeaderField:@"Auth"];
 }
 
 - (void)clearCookies {
