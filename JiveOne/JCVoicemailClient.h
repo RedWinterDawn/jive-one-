@@ -9,5 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface JCVoicemailClient : NSObject
+@property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
++ (JCVoicemailClient*)sharedClient;
+-(void)fetchExtensions:(void (^)(id JSON))success
+               failure:(void (^)(NSError *err))failure;
 
 @end

@@ -97,6 +97,9 @@
 -(void) testSearchTermFiltersContact{
     //after viewDidLoad, company contacts will be loaded
     XCTAssertTrue(0==[self.JCDVC.clientEntitiesSearchArray count], @"clientEntitiesSearchArray should be empty");
+    [self.JCDVC segmentChanged:nil];
+    NSArray * clientEntities = [NSArray arrayWithArray:self.JCDVC.clientEntitiesSearchArray];
+    XCTAssertTrue(clientEntities.count > 0, @"Array should contain company contacts");
     
     //get second contact from list
     ClientEntities *secondContact = self.JCDVC.clientEntitiesArray[0][1];

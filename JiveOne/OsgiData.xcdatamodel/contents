@@ -71,6 +71,11 @@
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="urn" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="Extension" syncable="YES">
+        <attribute name="extensionNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="voicemailBoxId" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="messages" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Voicemail" inverseName="extension" inverseEntity="Voicemail" syncable="YES"/>
+    </entity>
     <entity name="Presence" representedClassName="Presence" syncable="YES">
         <attribute name="createDate" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="entityId" optional="YES" attributeType="String" syncable="YES"/>
@@ -81,15 +86,17 @@
     <entity name="Voicemail" representedClassName="Voicemail" syncable="YES">
         <attribute name="message" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="urn" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="extension" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Extension" inverseName="messages" inverseEntity="Extension" syncable="YES"/>
     </entity>
     <elements>
-        <element name="ClientEntities" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="ClientMeta" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Company" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="ContactGroup" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Conversation" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="ConversationEntry" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Presence" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Voicemail" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="ClientEntities" positionX="0" positionY="0" width="128" height="360"/>
+        <element name="ClientMeta" positionX="0" positionY="0" width="128" height="150"/>
+        <element name="Company" positionX="0" positionY="0" width="128" height="150"/>
+        <element name="ContactGroup" positionX="0" positionY="0" width="128" height="75"/>
+        <element name="Conversation" positionX="0" positionY="0" width="128" height="180"/>
+        <element name="ConversationEntry" positionX="0" positionY="0" width="128" height="240"/>
+        <element name="Presence" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="Voicemail" positionX="189" positionY="81" width="128" height="90"/>
+        <element name="Extension" positionX="421" positionY="81" width="128" height="90"/>
     </elements>
 </model>

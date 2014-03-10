@@ -16,14 +16,17 @@
 
 #import "JCVoicemailViewController.h"
 #import <AVFoundation/AVFoundation.h>
+#import "JCVoicemailClient.h"
 
 
 @interface JCVoicemailViewController ()
 {
         ClientEntities *me;
 }
-@property (strong, nonatomic) NSArray* extensions;
+@property (strong, nonatomic) NSMutableArray* extensions;
 @property (strong, nonatomic) NSArray* voicemailBoxIds;
+@property (weak, nonatomic) JCVoicemailClient *voicemailClient;
+
 
 @end
 
@@ -46,6 +49,22 @@
     if (!me) {
         me = [[JCOmniPresence sharedInstance] me];
     }
+    self.voicemailClient = [JCVoicemailClient sharedClient];
+    [self.voicemailClient fetchExtensions:^(id JSON) {
+        //TODO: put in list
+        for(int i = 0; i< [(NSArray*)JSON count ]; i++){
+            if(!self.extensions){
+                self.extensions = [[NSMutableArray alloc] init];
+            }
+            [self.extensions addObject:JSON[i]];
+        }
+        NSLog(@"%@", JSON);
+        [self.tableView reloadData];
+    } failure:^(NSError *err) {
+        //TODO:
+        NSLog(@"%@", err);
+    }];
+    
     
     //TODO: run rest query on voicemail client to get json of extensions and voicemail box ids
     
@@ -66,22 +85,22 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return self.extensions.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+    cell.textLabel.text = self.extensions[indexPath.row];
     
     // Configure the cell...
     

@@ -31,6 +31,8 @@
 #pragma mark - Temporary Voicemail Constants
 #define kDropboxVoicemailRoute @"/u/57157576/voicemail/"
 #define kDropboxBaseURL @"https://dl.dropboxusercontent.com"
+#define kVoicemaiBaseURL @"http://10.103.1.57:8834"
+#define kVoicemailFetchRoute @"voicemail/pbxId/%@/userId/%@"
 
 #pragma mark - Authentication Manager
 #define kAuthenticationFromTokenSucceeded @"keyauthenticationfortokensucceeded"
