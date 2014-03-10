@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "THContactPickerView.h"
+#import "ContactGroup.h"
 
 @interface JCConversationDetailViewController : UIViewController <UIActionSheetDelegate, UITextViewDelegate, THContactPickerDelegate, UITableViewDataSource, UITableViewDelegate>
 
@@ -17,7 +18,8 @@
 @property (nonatomic, strong) NSMutableArray *selectedContacts;
 @property (nonatomic, strong) NSArray *filteredContacts;
 @property (nonatomic, strong) NSString *conversationId;
+@property (nonatomic, strong) ContactGroup *contactGroup;
+@property (nonatomic, strong) ClientEntities *person;
 
 - (IBAction)sendMessage:(id)sender;
-- (void)loadDatasource;
 @end

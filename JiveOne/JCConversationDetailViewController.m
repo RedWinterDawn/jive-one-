@@ -35,92 +35,111 @@
 {
     if (!_conversationId || ![_conversationId isEqualToString:conversationId]) {
         _conversationId = conversationId;
-        //[self loadDatasource];
+    }
+}
+
+- (void)setContactGroup:(ContactGroup *)contactGroup
+{
+    if ([contactGroup isKindOfClass:[ContactGroup class]]) {
+        if (_contactGroup != contactGroup) {
+            _contactGroup = contactGroup;
+        }
+    }
+}
+
+- (void)setPerson:(ClientEntities *)person
+{
+    if ([person isKindOfClass:[ClientEntities class]]) {
+        if (_person != person) {
+            _person = person;
+        }
     }
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //self.edgesForExtendedLayout = UIRectEdgeNone;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     me = [[JCOmniPresence sharedInstance] me];
     self.contacts = [ClientEntities MR_findAllSortedBy:@"firstLastName" ascending:YES];
+    
     self.selectedContacts = [NSMutableArray array];
     self.filteredContacts = self.contacts;
     
+    
+    //UIBarButtonItem *fileBarItemButton = [[UIBarButtonItem alloc] initWithTitle:@"File" style:UIBarButtonItemStyleBordered target:self action:nil];
+    
+    [self setupView];
+    
+}
+
+- (void)setupView
+{
+    // setup toolbar items
     messageTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 200, 35)];
     messageTextView.delegate = self;
     UIBarButtonItem *messageBarItemTextView = [[UIBarButtonItem alloc] initWithCustomView:messageTextView];
     UIBarButtonItem *sendBarItemButton = [[UIBarButtonItem alloc] initWithTitle:@"Send" style:UIBarButtonItemStyleBordered target:self action:@selector(sendMessage:)];
-    //UIBarButtonItem *fileBarItemButton = [[UIBarButtonItem alloc] initWithTitle:@"File" style:UIBarButtonItemStyleBordered target:self action:nil];
-    
     [self setToolbarItems:[NSArray arrayWithObjects:messageBarItemTextView, sendBarItemButton, nil]];
     
-    if (!_conversationId) {
-        // Initialize and add Contact Picker View
-        self.contactPickerView = [[THContactPickerView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
-        self.contactPickerView.delegate = self;
-        //UIToolbar *toobar = self.navigationController.toolbar;
-        //self.contactPickerView.textView.inputAccessoryView = toobar;
-        [self.contactPickerView setPlaceholderString:@"To:"];
-        //[self.contactPickerView.textView becomeFirstResponder];
-        
-        [self.view insertSubview:self.contactPickerView belowSubview:self.navigationController.toolbar];
-        
-        // Fill the rest of the view with the table view
-        self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,
-                                                                       self.contactPickerView.frame.size.height,
-                                                                       self.view.frame.size.width,
-                                                                       self.view.frame.size.height - self.contactPickerView.frame.size.height - kKeyboardHeight) style:UITableViewStylePlain];
-    }
-    else
-    {
-        
-        NSLog(@"View Width: %f", self.view.frame.size.width);
-        NSLog(@"View Height: %f", self.view.frame.size.height);
-        
-        self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-        chatEntries = [NSMutableArray arrayWithArray:[ConversationEntry MR_findByAttribute:@"conversationId" withValue:_conversationId andOrderBy:@"lastModified" ascending:YES]];
-        
-        
-        NSLog(@"Table Width: %f", self.tableView.frame.size.width);
-        NSLog(@"Table Width: %f", self.tableView.frame.size.height);
-    }
-    
+    // init tableview
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
     UIEdgeInsets inset = UIEdgeInsetsMake(64, 0, 0, 0);
     self.tableView.contentInset = inset;
     self.tableView.scrollIndicatorInsets = inset;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
+    // if we don't have a conversationId, start empty message with contactPicker Visible
     if (!_conversationId) {
+        // Initialize and add Contact Picker View
+        self.contactPickerView = [[THContactPickerView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
+        self.contactPickerView.delegate = self;
+        [self.contactPickerView setPlaceholderString:@"To:"];
+        
+        [self.view insertSubview:self.contactPickerView belowSubview:self.navigationController.toolbar];
+        
+        // Fill the rest of the view with the table view
+//        self.tableView.frame = CGRectMake(0,
+//                                           self.contactPickerView.frame.size.height,
+//                                           self.view.frame.size.width,
+//                                          self.view.frame.size.height - self.contactPickerView.frame.size.height - kKeyboardHeight);
         [self.view insertSubview:self.tableView belowSubview:self.contactPickerView];
+        
+        if (_person) {
+            [self.contactPickerView addContact:_person withName:_person.firstLastName];
+        }
     }
-    else {
+    // otherwise adjust table to fullscreen and no contactPicker, loads conversation by conversationId.
+    else
+    {
+        chatEntries = [NSMutableArray arrayWithArray:[ConversationEntry MR_findByAttribute:@"conversationId" withValue:_conversationId andOrderBy:@"lastModified" ascending:YES]];
+        
         [self.view addSubview:self.tableView];
     }
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
-    if (_conversationId) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incomingChatEntry:) name:_conversationId object:nil];
+    [self subscribeToConversationNotification:YES];
+    
+    // if chat is starting with a contactGroup, then check if there are existing conversations for that group and subscribe accordingly.
+    if (_contactGroup) {
+        [self checkForConversationWithEntities:_contactGroup.clientEntities];
     }
     
-    //self.navigationController.tabBarController.tabBar.hidden = YES;
     self.navigationController.toolbarHidden = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    if (_conversationId) {
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:_conversationId object:nil];
-    }
+    
+    [self subscribeToConversationNotification:NO];
     
     self.navigationController.tabBarController.tabBar.hidden = NO;
     self.navigationController.toolbarHidden = YES;
@@ -137,6 +156,12 @@
     UIToolbar *toolbar = self.navigationController.toolbar;
     if (!keyboardIsVisible) {
         [toolbar setFrame:CGRectMake(0.0f, self.view.frame.size.height - keyboardBounds.size.height - toolbar.frame.size.height, toolbar.frame.size.width, toolbar.frame.size.height)];
+        //Fill the rest of the view with the table view
+        self.tableView.frame = CGRectMake(0,
+                                           self.contactPickerView.frame.size.height,
+                                           self.view.frame.size.width,
+                                          self.view.frame.size.height - self.contactPickerView.frame.size.height - kKeyboardHeight - 44);
+
     }
     
     [UIView commitAnimations];
@@ -155,6 +180,7 @@
     UIToolbar *toolbar = self.navigationController.toolbar;
     if (keyboardIsVisible) {
         [toolbar setFrame:CGRectMake(0.0f, self.view.frame.size.height - 46.0f, toolbar.frame.size.width, toolbar.frame.size.height)];
+        self.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     }
     
     [UIView commitAnimations];
@@ -179,14 +205,28 @@
     // Dispose of any resources that can be recreated.
 }
 
+
 - (void)adjustTableViewFrame {
-    if (!_conversationId) {
-        
+    if (keyboardIsVisible) {
         CGRect frame = self.tableView.frame;
         frame.origin.y = self.contactPickerView.frame.size.height;
-        frame.size.height = self.view.frame.size.height - self.contactPickerView.frame.size.height - kKeyboardHeight;
+        frame.size.height = self.view.frame.size.height - self.contactPickerView.frame.size.height - kKeyboardHeight - 44;
         self.tableView.frame = frame;
     }
+}
+
+#pragma mark - Subscribe/Unsubcribe to conversation notifications
+- (void) subscribeToConversationNotification:(BOOL)subscribe
+{
+    // if we have a conversationId, subscribe to notifications for that conversation
+    if (_conversationId) {
+        if (subscribe) {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incomingChatEntry:) name:_conversationId object:nil];
+        }
+        else {
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:_conversationId object:nil];
+        }
+    }   
 }
 
 #pragma mark - Incoming chat
@@ -205,36 +245,41 @@
     NSString *message = messageTextView.text;
     
     // if conversation exists, then create entry for that conversation
-    //
     if (_conversationId != nil && ![_conversationId isEqualToString:@""]) {
         
         [[JCOsgiClient sharedClient] SubmitChatMessageForConversation:_conversationId message:message withEntity:entity success:^(id JSON) {
-            // update UI
+            // confirm to user message was sent
         } failure:^(NSError *err) {
-            // update UI
+            // alert user that message could not be sent. try again.
         }];
+        
+        [self cleanup];
     }
+    // otherwise, create a converstion first
     else {
         [self createConversation];
     }
-    [self cleanup];
 }
 
 - (void)createConversation
 {
-    BOOL isGroup = self.selectedContacts.count > 2;
+    BOOL isGroup = self.selectedContacts.count >= 2;
     NSArray *nameArray = [self.selectedContacts valueForKeyPath:@"firstLastName"];
     NSMutableArray *entityArray = [[NSMutableArray alloc] initWithArray:[self.selectedContacts valueForKeyPath:@"entityId"]];
     [entityArray addObject:me.entityId];
     NSString *groupName = isGroup? [nameArray componentsJoinedByString:@", "] : @"";
     
     [[JCOsgiClient sharedClient] SubmitConversationWithName:groupName forEntities:entityArray creator:me.urn isGroupConversation:isGroup success:^(id JSON) {
+        
+        // if conversation creation was successful, then subscribe for notifications to that conversationId
         _conversationId = JSON[@"id"];
-        if (_conversationId) {
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incomingChatEntry:) name:_conversationId object:nil];
-        }
+        [self subscribeToConversationNotification:YES];
+        
+        // we can now add entries to the conversation recently created.
         [self sendMessage:nil];
+        
     } failure:^(NSError *err) {
+        // alert user that message could not be sent. try again.
         NSLog(@"%@", [err description]);
     }];
 }
@@ -262,6 +307,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
+    // if we have a conversationId, the we load chat entries
     if (self.conversationId) {
         ConversationEntry *entry = chatEntries[indexPath.row];
         NSArray* result = [ClientEntities MR_findByAttribute:@"entityId" withValue:entry.entityId];
@@ -270,6 +316,7 @@
         cell.textLabel.text = [NSString stringWithFormat:@"%@", entry.message[@"raw"]];
         cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", person.firstLastName];
     }
+    // otherwise we'll load our contact list
     else {
         ClientEntities *user = [self.filteredContacts objectAtIndex:indexPath.row];
         
@@ -307,6 +354,8 @@
         
         self.filteredContacts = self.contacts;
         [self.tableView reloadData];
+        
+        // if we select someone who we alreay have an ongoing conversation, load that conversation.
         [self checkForConversationWithEntities:self.selectedContacts];
     }
 }
@@ -352,15 +401,34 @@
     [self.contactPickerView removeAllContacts];
     [self.selectedContacts removeAllObjects];
     self.filteredContacts = self.contacts;
+    [self subscribeToConversationNotification:NO];
     _conversationId = nil;
+
     [self.tableView reloadData];
 }
 
 #pragma mark - Conversation Loading
 - (void)checkForConversationWithEntities:(NSMutableArray*)entities
 {
-    NSArray *entityArray = [entities valueForKeyPath:@"entityId"];
-    //    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"entities IN %@", entityArray];
+    if  (!entities) {
+        return;
+    }
+    
+    if (entities.count == 0) {
+        return;
+    }
+    
+    NSArray *entityArray = nil;
+    
+    if ([entities[0] isKindOfClass:[ClientEntities class]]) {
+      entityArray = [entities valueForKeyPath:@"entityId"];
+    }
+    else {
+        entityArray = entities;
+    }
+    
+    
+         //    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"entities IN %@", entityArray];
     //
     //    NSArray *result = [Conversation MR_findAllWithPredicate:predicate];
     //
@@ -385,16 +453,17 @@
     if (existingConversation) {
         _conversationId = existingConversation.conversationId;
         chatEntries = [NSMutableArray arrayWithArray:[ConversationEntry MR_findByAttribute:@"conversationId" withValue:_conversationId andOrderBy:@"lastModified" ascending:YES]];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(incomingChatEntry:) name:_conversationId object:nil];
+        [self subscribeToConversationNotification:YES];
+        
+        [messageTextView becomeFirstResponder];
     }
     else {
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:_conversationId object:nil];
+        [self subscribeToConversationNotification:NO];
         _conversationId = nil;
         [chatEntries removeAllObjects];
         
     }
     
-    [messageTextView becomeFirstResponder];
     [self.tableView reloadData];
 }
 
