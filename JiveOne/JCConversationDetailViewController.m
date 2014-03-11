@@ -13,7 +13,7 @@
 #import "JCOsgiClient.h"
 #import "JCChatMessage.h"
 #import "UIImageView+WebCache.h"
-#import "ConversationEntry.h"
+#import "ConversationEntry+Custom.h"
 
 
 @interface JCConversationDetailViewController ()
@@ -114,7 +114,9 @@
     // otherwise adjust table to fullscreen and no contactPicker, loads conversation by conversationId.
     else
     {
-        chatEntries = [NSMutableArray arrayWithArray:[ConversationEntry MR_findByAttribute:@"conversationId" withValue:_conversationId andOrderBy:@"lastModified" ascending:YES]];
+        //chatEntries = [NSMutableArray arrayWithArray:[ConversationEntry MR_findByAttribute:@"conversationId" withValue:_conversationId andOrderBy:@"lastModified" ascending:YES]];
+        
+        chatEntries = [NSMutableArray arrayWithArray:[ConversationEntry RetrieveConversationEntryById:_conversationId]];
         
         [self.view addSubview:self.tableView];
     }

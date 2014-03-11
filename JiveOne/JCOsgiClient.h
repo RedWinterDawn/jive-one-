@@ -8,7 +8,7 @@
 
 #import "AFHTTPSessionManager.h"
 #import "ConversationEntry.h"
-#import "Conversation.h"
+#import "Conversation+Custom.h"
 #import "ConversationEntry.h"
 #import "Presence.h"
 #import "ClientEntities.h"
@@ -58,14 +58,14 @@
 - (void) clearCookies;
 
 #pragma mark - CRUD for Conversation
-- (void)addConversations:(NSArray*)conversationArray;
-- (Conversation *)addConversation:(NSDictionary*)conversation;
-- (Conversation *)updateConversation:(Conversation*)conversation withDictinonary:(NSDictionary*)dictionary;
+//- (void)addConversations:(NSArray*)conversationArray;
+//- (Conversation *)addConversation:(NSDictionary*)conversation;
+//- (Conversation *)updateConversation:(Conversation*)conversation withDictinonary:(NSDictionary*)dictionary;
 
 #pragma mark - CRUD for ConversationEntry
-- (void)addConversationEntries:(NSArray *)entryArray;
-- (ConversationEntry *)addConversationEntry:(NSDictionary*)entry;
-- (ConversationEntry *)updateConversationEntry:(ConversationEntry*)entry withDictionary:(NSDictionary*)dictionary;
+//- (void)addConversationEntries:(NSArray *)entryArray;
+//- (ConversationEntry *)addConversationEntry:(NSDictionary*)entry;
+//- (ConversationEntry *)updateConversationEntry:(ConversationEntry*)entry withDictionary:(NSDictionary*)dictionary;
 
 #pragma mark - CRUD for Presence
 - (void)addPresences:(NSArray*)presences;

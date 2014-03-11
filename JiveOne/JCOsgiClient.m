@@ -114,7 +114,7 @@
     [self setRequestAuthHeader];
     
     [_manager GET:kOsgiConverationRoute parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [self addConversations:responseObject[@"entries"]];
+        [Conversation addConversations:responseObject[@"entries"]];
         success(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@", operation.responseString);
@@ -129,7 +129,7 @@
     NSString *url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], conversationId];//TODO: not attaching baseURL to route constant
     
     [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {        ;
-        success([self addConversation:responseObject]);
+        success([Conversation addConversation:responseObject]);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failure(error);
     }];
@@ -255,7 +255,7 @@
     }
     
     [_manager POST:kOsgiConverationRoute parameters:conversationDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [self addConversation:responseObject];
+        [Conversation addConversation:responseObject];
         success(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failure(error);
@@ -379,161 +379,161 @@
 
 
 #pragma mark - CRUD for Conversation
-- (void)addConversations:(NSArray *)conversationArray
-{
-    for (NSDictionary *conversation in conversationArray) {
-        [self addConversation:conversation];
-    }
-}
+//- (void)addConversations:(NSArray *)conversationArray
+//{
+//    for (NSDictionary *conversation in conversationArray) {
+//        [self addConversation:conversation];
+//    }
+//}
+//
+//- (Conversation *)addConversation:(NSDictionary *)conversation
+//{
+//    // check if we already have that conversation
+//    NSArray *result = [Conversation MR_findByAttribute:@"conversationId" withValue:conversation[@"id"]];
+//    Conversation *conv;
+//    if (result.count > 0) {
+//        conv = result[0];
+//        [self updateConversation:conv withDictinonary:conversation];
+//    }
+//    else {
+//        //if ([conversation[@"entries"] count] > 0) {
+//        
+//        conv = [Conversation MR_createInContext:localContext];
+//        conv.hasEntries = [NSNumber numberWithBool:([conversation[@"entries"] count] > 0)];
+//        conv.createdDate = conversation[@"createdDate"];
+//        conv.lastModified = conversation[@"lastModified"];
+//        conv.urn = conversation[@"urn"];
+//        conv.conversationId = conversation[@"id"];
+//        
+//        if (conversation[@"name"]) {
+//            conv.isGroup = [NSNumber numberWithBool:YES];
+//            conv.group = conversation[@"group"] ? conversation[@"group"] : nil;
+//            conv.name = conversation[@"name"];
+//        }
+//        else {
+//            conv.entities = conversation[@"entities"];
+//        }
+//        
+//        // Save conversation
+//        [localContext MR_saveToPersistentStoreAndWait];
+//        
+//        [self addConversationEntries:conversation[@"entries"]];
+//        
+//        //}
+//    }
+//    return conv;
+//}
+//
+//- (Conversation *)updateConversation:(Conversation*)conversation withDictinonary:(NSDictionary*)dictionary
+//{
+//    // if last modified timestamps are the same, then there's no need to update anything.
+//    long lastModifiedFromEntity = [conversation.lastModified integerValue];
+//    long lastModifiedFromDictionary = [dictionary[@"lastModified"] integerValue];
+//    
+//    if (lastModifiedFromDictionary > lastModifiedFromEntity) {
+//        conversation.lastModified = dictionary[@"lastModified"];
+//        conversation.hasEntries = [NSNumber numberWithBool:([dictionary[@"entries"] count] > 0)];
+//        
+//        if (dictionary[@"name"]) {
+//            conversation.isGroup = [NSNumber numberWithBool:YES];
+//            conversation.group = dictionary[@"group"] ? dictionary[@"group"] : nil;
+//            conversation.name = dictionary[@"name"];
+//        }
+//        else {
+//            conversation.entities = dictionary[@"entities"];
+//        }
+//        
+//        // Save conversation
+//        [localContext MR_saveToPersistentStoreAndWait];
+//        
+//        // Save/Update entries
+//        [self addConversationEntries:dictionary[@"entries"]];
+//    }
+//    
+//    return conversation;
+//}
 
-- (Conversation *)addConversation:(NSDictionary *)conversation
-{
-    // check if we already have that conversation
-    NSArray *result = [Conversation MR_findByAttribute:@"conversationId" withValue:conversation[@"id"]];
-    Conversation *conv;
-    if (result.count > 0) {
-        conv = result[0];
-        [self updateConversation:conv withDictinonary:conversation];
-    }
-    else {
-        //if ([conversation[@"entries"] count] > 0) {
-        
-        conv = [Conversation MR_createInContext:localContext];
-        conv.hasEntries = [NSNumber numberWithBool:([conversation[@"entries"] count] > 0)];
-        conv.createdDate = conversation[@"createdDate"];
-        conv.lastModified = conversation[@"lastModified"];
-        conv.urn = conversation[@"urn"];
-        conv.conversationId = conversation[@"id"];
-        
-        if (conversation[@"name"]) {
-            conv.isGroup = [NSNumber numberWithBool:YES];
-            conv.group = conversation[@"group"] ? conversation[@"group"] : nil;
-            conv.name = conversation[@"name"];
-        }
-        else {
-            conv.entities = conversation[@"entities"];
-        }
-        
-        // Save conversation
-        [localContext MR_saveToPersistentStoreAndWait];
-        
-        [self addConversationEntries:conversation[@"entries"]];
-        
-        //}
-    }
-    return conv;
-}
-
-- (Conversation *)updateConversation:(Conversation*)conversation withDictinonary:(NSDictionary*)dictionary
-{
-    // if last modified timestamps are the same, then there's no need to update anything.
-    long lastModifiedFromEntity = [conversation.lastModified integerValue];
-    long lastModifiedFromDictionary = [dictionary[@"lastModified"] integerValue];
-    
-    if (lastModifiedFromDictionary > lastModifiedFromEntity) {
-        conversation.lastModified = dictionary[@"lastModified"];
-        conversation.hasEntries = [NSNumber numberWithBool:([dictionary[@"entries"] count] > 0)];
-        
-        if (dictionary[@"name"]) {
-            conversation.isGroup = [NSNumber numberWithBool:YES];
-            conversation.group = dictionary[@"group"] ? dictionary[@"group"] : nil;
-            conversation.name = dictionary[@"name"];
-        }
-        else {
-            conversation.entities = dictionary[@"entities"];
-        }
-        
-        // Save conversation
-        [localContext MR_saveToPersistentStoreAndWait];
-        
-        // Save/Update entries
-        [self addConversationEntries:dictionary[@"entries"]];
-    }
-    
-    return conversation;
-}
 
 
-
-#pragma mark - CRUD for ConversationEntry
-- (void)addConversationEntries:(NSArray *)entryArray
-{
-    for (NSDictionary *entry in entryArray) {
-        if ([entry isKindOfClass:[NSDictionary class]]) {
-            [self addConversationEntry:entry];
-        }
-    }
-}
-
-- (ConversationEntry *)addConversationEntry:(NSDictionary*)entry
-{
-    ConversationEntry *convEntry;
-    NSString *entryId =  entry[@"id"];
-    NSArray *result = [ConversationEntry MR_findByAttribute:@"entryId" withValue:entryId];
-    
-    // if there are results, we're updating, else we're creating
-    if (result.count > 0) {
-        convEntry = result[0];
-        [self updateConversationEntry:convEntry withDictionary:entry];
-    }
-    else {
-        convEntry = [ConversationEntry MR_createInContext:localContext];
-        convEntry.conversationId = entry[@"conversation"];
-        convEntry.entityId = entry[@"entity"];
-        convEntry.lastModified = entry[@"lastModified"];
-        convEntry.createdDate = entry[@"createDate"];
-        convEntry.call = entry[@"call"];
-        convEntry.file = entry[@"file"];
-        convEntry.message = entry[@"message"];
-        convEntry.mentions = entry[@"mentions"];
-        convEntry.tags = entry[@"tags"];
-        convEntry.deliveryDate = entry[@"deliveryDate"];
-        convEntry.type = entry[@"type"];
-        convEntry.urn = entry[@"urn"];
-        convEntry.entryId = entry[@"id"];
-        
-        //Update Conversation LastModified
-        Conversation *conversation = [Conversation MR_findFirstByAttribute:@"conversationId" withValue:convEntry.conversationId];
-        if (conversation) {
-            if (convEntry.lastModified > conversation.lastModified) {
-                conversation.lastModified = convEntry.lastModified;
-            }
-        }
-        
-        //Save conversation entry
-        [localContext MR_saveToPersistentStoreAndWait];
-    }
-    return convEntry;
-}
-
-- (ConversationEntry *)updateConversationEntry:(ConversationEntry*)entry withDictionary:(NSDictionary*)dictionary
-{
-    // if last modified timestamps are the same, then there's no need to update anything.
-    long lastModifiedFromEntity = [entry.lastModified integerValue];
-    long lastModifiedFromDictionary = [dictionary[@"lastModified"] integerValue];
-    
-    if (lastModifiedFromDictionary > lastModifiedFromEntity) {
-        
-        entry.conversationId = dictionary[@"conversation"];
-        entry.entityId = dictionary[@"entity"];
-        entry.lastModified = dictionary[@"lastModified"];
-        entry.createdDate = dictionary[@"createDate"];
-        entry.call = dictionary[@"call"];
-        entry.file = dictionary[@"file"];
-        entry.message = dictionary[@"message"];
-        entry.mentions = dictionary[@"mentions"];
-        entry.tags = dictionary[@"tags"];
-        entry.deliveryDate = dictionary[@"deliveryDate"];
-        entry.type = dictionary[@"type"];
-        entry.urn = dictionary[@"urn"];
-        entry.entryId = dictionary[@"id"];
-        
-        //Save conversation entry
-        [localContext MR_saveToPersistentStoreAndWait];
-    }
-    
-    return entry;
-}
+//#pragma mark - CRUD for ConversationEntry
+//- (void)addConversationEntries:(NSArray *)entryArray
+//{
+//    for (NSDictionary *entry in entryArray) {
+//        if ([entry isKindOfClass:[NSDictionary class]]) {
+//            [self addConversationEntry:entry];
+//        }
+//    }
+//}
+//
+//- (ConversationEntry *)addConversationEntry:(NSDictionary*)entry
+//{
+//    ConversationEntry *convEntry;
+//    NSString *entryId =  entry[@"id"];
+//    NSArray *result = [ConversationEntry MR_findByAttribute:@"entryId" withValue:entryId];
+//    
+//    // if there are results, we're updating, else we're creating
+//    if (result.count > 0) {
+//        convEntry = result[0];
+//        [self updateConversationEntry:convEntry withDictionary:entry];
+//    }
+//    else {
+//        convEntry = [ConversationEntry MR_createInContext:localContext];
+//        convEntry.conversationId = entry[@"conversation"];
+//        convEntry.entityId = entry[@"entity"];
+//        convEntry.lastModified = entry[@"lastModified"];
+//        convEntry.createdDate = entry[@"createDate"];
+//        convEntry.call = entry[@"call"];
+//        convEntry.file = entry[@"file"];
+//        convEntry.message = entry[@"message"];
+//        convEntry.mentions = entry[@"mentions"];
+//        convEntry.tags = entry[@"tags"];
+//        convEntry.deliveryDate = entry[@"deliveryDate"];
+//        convEntry.type = entry[@"type"];
+//        convEntry.urn = entry[@"urn"];
+//        convEntry.entryId = entry[@"id"];
+//        
+//        //Update Conversation LastModified
+//        Conversation *conversation = [Conversation MR_findFirstByAttribute:@"conversationId" withValue:convEntry.conversationId];
+//        if (conversation) {
+//            if (convEntry.lastModified > conversation.lastModified) {
+//                conversation.lastModified = convEntry.lastModified;
+//            }
+//        }
+//        
+//        //Save conversation entry
+//        [localContext MR_saveToPersistentStoreAndWait];
+//    }
+//    return convEntry;
+//}
+//
+//- (ConversationEntry *)updateConversationEntry:(ConversationEntry*)entry withDictionary:(NSDictionary*)dictionary
+//{
+//    // if last modified timestamps are the same, then there's no need to update anything.
+//    long lastModifiedFromEntity = [entry.lastModified integerValue];
+//    long lastModifiedFromDictionary = [dictionary[@"lastModified"] integerValue];
+//    
+//    if (lastModifiedFromDictionary > lastModifiedFromEntity) {
+//        
+//        entry.conversationId = dictionary[@"conversation"];
+//        entry.entityId = dictionary[@"entity"];
+//        entry.lastModified = dictionary[@"lastModified"];
+//        entry.createdDate = dictionary[@"createDate"];
+//        entry.call = dictionary[@"call"];
+//        entry.file = dictionary[@"file"];
+//        entry.message = dictionary[@"message"];
+//        entry.mentions = dictionary[@"mentions"];
+//        entry.tags = dictionary[@"tags"];
+//        entry.deliveryDate = dictionary[@"deliveryDate"];
+//        entry.type = dictionary[@"type"];
+//        entry.urn = dictionary[@"urn"];
+//        entry.entryId = dictionary[@"id"];
+//        
+//        //Save conversation entry
+//        [localContext MR_saveToPersistentStoreAndWait];
+//    }
+//    
+//    return entry;
+//}
 
 
 #pragma mark - CRUD for Presence

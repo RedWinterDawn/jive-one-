@@ -10,7 +10,7 @@
 #import "ClientEntities.h"
 #import "ClientMeta.h"
 #import "ContactGroup.h"
-#import "Conversation.h"
+#import "Conversation+Custom.h"
 #import "ConversationEntry.h"
 #import "Voicemail.h"
 #import "Presence.h"

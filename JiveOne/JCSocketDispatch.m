@@ -9,7 +9,7 @@
 #import "JCSocketDispatch.h"
 #import "JCOsgiClient.h"
 #import "KeychainItemWrapper.h"
-#import "ConversationEntry.h"
+#import "ConversationEntry+Custom.h"
 
 
 @implementation JCSocketDispatch
@@ -168,7 +168,7 @@
         NSString *conversationId = [body objectForKey:@"conversation"];
         
         // regardless of having a conversation for this entry or not we need to save the entry.
-        [[JCOsgiClient sharedClient] addConversationEntry:body];
+        [ConversationEntry addConversationEntry:body];
         
         // Check if we have a conversation for this entry
         NSArray *conversation = [Conversation MR_findByAttribute:@"conversationId" withValue:conversationId];

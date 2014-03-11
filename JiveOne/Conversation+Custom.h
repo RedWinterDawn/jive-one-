@@ -10,4 +10,9 @@
 
 @interface Conversation (Custom)
 
++ (void)addConversations:(NSArray*)conversationArray;
++ (Conversation *)addConversation:(NSDictionary*)conversation;
++ (Conversation *)addConversation:(NSDictionary*)conversation withManagedContext:(NSManagedObjectContext *)context;
++ (Conversation *)updateConversation:(Conversation*)conversation withDictinonary:(NSDictionary*)dictionary managedContext:(NSManagedObjectContext *)context;
+
 @end
