@@ -35,7 +35,7 @@
 
 + (ConversationEntry *)addConversationEntry:(NSDictionary*)entry withManagedContext:(NSManagedObjectContext *)context
 {
-    if (context) {
+    if (!context) {
         context = [NSManagedObjectContext MR_contextForCurrentThread];
     }
     
@@ -80,7 +80,7 @@
 
 + (ConversationEntry *)updateConversationEntry:(ConversationEntry*)entry withDictionary:(NSDictionary*)dictionary managedContext:(NSManagedObjectContext *)context
 {
-    if (context) {
+    if (!context) {
         context = [NSManagedObjectContext MR_contextForCurrentThread];
     }
     
