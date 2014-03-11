@@ -10,4 +10,12 @@
 
 @interface ConversationEntry (Custom)
 
++ (NSArray *)RetrieveConversationEntryById:(NSString *)conversationId;
+
+#pragma mark - CRUD for ConversationEntry
++ (void)addConversationEntries:(NSArray *)entryArray;
++ (ConversationEntry *)addConversationEntry:(NSDictionary*)entry;
++ (ConversationEntry *)addConversationEntry:(NSDictionary*)entry withManagedContext:(NSManagedObjectContext *)context;
++ (ConversationEntry *)updateConversationEntry:(ConversationEntry*)entry withDictionary:(NSDictionary*)dictionary managedContext:(NSManagedObjectContext *)context;
+
 @end
