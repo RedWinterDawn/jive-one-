@@ -16,16 +16,15 @@
 
 #import "JCVoicemailViewController.h"
 #import <AVFoundation/AVFoundation.h>
-#import "JCVoicemailClient.h"
+#import "JCOsgiClient.h"
 
 
 @interface JCVoicemailViewController ()
 {
         ClientEntities *me;
 }
-@property (strong, nonatomic) NSMutableArray* extensions;
-@property (strong, nonatomic) NSArray* voicemailBoxIds;
-@property (weak, nonatomic) JCVoicemailClient *voicemailClient;
+@property (strong, nonatomic) NSArray* voicemails; //of type voicemail(entity)
+@property (weak, nonatomic) JCOsgiClient *osgiClient;
 
 
 @end
@@ -49,22 +48,21 @@
     if (!me) {
         me = [[JCOmniPresence sharedInstance] me];
     }
-    self.voicemailClient = [JCVoicemailClient sharedClient];
-    [self.voicemailClient fetchExtensions:^(id JSON) {
-        //TODO: put in list
-        for(int i = 0; i< [(NSArray*)JSON count ]; i++){
-            if(!self.extensions){
-                self.extensions = [[NSMutableArray alloc] init];
-            }
-            [self.extensions addObject:JSON[i]];
-        }
-        NSLog(@"%@", JSON);
-        [self.tableView reloadData];
+    self.osgiClient = [JCOsgiClient sharedClient];
+    [self.osgiClient RetrieveVoicemailForEntity:^(id JSON) {
+        //TODO set in voicemails array
+        NSLog(@"%@",JSON);
+        
     } failure:^(NSError *err) {
-        //TODO:
-        NSLog(@"%@", err);
+        //TODO: retry later
+        NSLog(@"%@",err);
     }];
     
+    
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc]
+                                        init];
+    [refreshControl addTarget:self action:@selector(updateTable) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refreshControl;
     
     //TODO: run rest query on voicemail client to get json of extensions and voicemail box ids
     
@@ -73,6 +71,14 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+- (void)updateTable
+{
+    
+    [self.tableView reloadData];
+    
+    [self.refreshControl endRefreshing];
 }
 
 - (void)didReceiveMemoryWarning
@@ -92,7 +98,8 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return self.extensions.count;
+//    return self.extensions.count;
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -100,7 +107,7 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    cell.textLabel.text = self.extensions[indexPath.row];
+//    cell.textLabel.text = self.extensions[indexPath.row];
     
     // Configure the cell...
     
