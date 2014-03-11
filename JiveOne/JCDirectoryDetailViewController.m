@@ -88,8 +88,7 @@
             cell.textLabel.text = @"Email";
             if(!self.ABPerson){
                 cell.detailTextLabel.text = self.person.email;
-            }
-            else{
+            } else {
                 cell.detailTextLabel.text = @"";//[self.ABPerson objectForKey:@"email"];
             }
             
@@ -108,7 +107,7 @@
                     //Capitilize Company Name
                     cell.detailTextLabel.text = [stringParts[1] capitalizedString];
                 }
-            }else{
+            } else {
                 cell.textLabel.text = @"Phone";
                 cell.detailTextLabel.text = @"";//[self.ABPerson objectForKey:@"phone"];
             }
@@ -119,9 +118,18 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
-    if (self.person) {
-        [segue.destinationViewController setPerson:self.person];
+    if ([[segue identifier] isEqualToString:@"startChatDirectoryDetail"]) {
+        if (self.person) {
+            [segue.destinationViewController setPerson:self.person];
+            
+       //  an attempt to change the title of the chat to the person's name - but this just updates the nav bar button
+       //  self.title = [[NSString alloc] initWithFormat:self.person.firstLastName];
+
+            
+        }
     }
+    
+    
 }
 
 

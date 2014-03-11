@@ -206,7 +206,7 @@
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
-                                                <segue destination="lgc-CA-EPx" kind="push" id="Gny-mL-fzc"/>
+                                                <segue destination="lgc-CA-EPx" kind="push" identifier="startChatDirectoryDetail" id="Gny-mL-fzc"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -711,6 +711,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="OX2-kw-n4m"/>
+        <segue reference="Gny-mL-fzc"/>
     </inferredMetricsTieBreakers>
 </document>
