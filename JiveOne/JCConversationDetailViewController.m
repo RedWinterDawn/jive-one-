@@ -109,6 +109,7 @@
         
         if (_person) {
             [self.contactPickerView addContact:_person withName:_person.firstLastName];
+            [self.selectedContacts addObject:_person];
         }
     }
     // otherwise adjust table to fullscreen and no contactPicker, loads conversation by conversationId.
