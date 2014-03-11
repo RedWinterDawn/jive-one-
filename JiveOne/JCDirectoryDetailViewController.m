@@ -116,6 +116,13 @@
     
 }
 
+// This button created in case we need to call methods in conjunction with starting a chat from directory detail view
+- (IBAction)startChat:(id)sender {
+    NSLog(@"Start Chat button pressed");
+}
+
+
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
     if ([[segue identifier] isEqualToString:@"startChatDirectoryDetail"]) {
