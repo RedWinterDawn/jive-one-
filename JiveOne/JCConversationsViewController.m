@@ -185,7 +185,12 @@
         [cell.personPicture setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];
         cell.personId = person.entityId;
         
-        [personMap setObject:[NSNumber numberWithInteger:indexPath.row] forKey:person.entityId];
+        
+        // temporary fix just to make it not crash
+        if (firstEntity) {
+            [personMap setObject:[NSNumber numberWithInteger:indexPath.row] forKey:person.entityId];
+        }
+        
     }
     else
     {
