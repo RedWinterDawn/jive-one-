@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "JCPresenceView.h"
 @interface JCPersonCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *personNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *personDetailLabel;
-@property (weak, nonatomic) IBOutlet UILabel *personPresenceLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *personPicture;
-@property (strong, nonatomic) NSString *personId;
+@property (weak, nonatomic) IBOutlet JCPresenceView *personPresenceView;
+@property (nonatomic) ClientEntities *person;
 @end
