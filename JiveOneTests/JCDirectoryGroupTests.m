@@ -10,15 +10,16 @@
 #import "JCAuthenticationManager.h"
 #import "JCDirectoryGroupViewController.h"
 #import "JCGroupSelectorViewController.h"
+#import <OCMock/OCMock.h>
 
-@interface JCGroupsTests : XCTestCase
+@interface JCDirectoryGroupTests : XCTestCase
 
 @property (nonatomic, strong) JCDirectoryGroupViewController *directoryGroupViewController;
 
 
 @end
 
-@implementation JCGroupsTests
+@implementation JCDirectoryGroupTests
 
 - (void)setUp
 {
@@ -65,4 +66,20 @@
     XCTAssertNotNil(self.directoryGroupViewController.testArray, @"testArray did not get instatiated");
 }
 
+- (void)testJCDirectoryViewControllerMock {
+    
+    
+    id mockDirectoryGroupVC = [OCMockObject mockForClass:[JCDirectoryGroupViewController class]];
+    [[mockDirectoryGroupVC expect] viewDidLoad];
+   //  [mockDirectoryGroupVC verify]; - this breaks because I think you need to "verify" an actualy method from that class, right now we're just checking for NotNil
+    
+    XCTAssertNotNil(mockDirectoryGroupVC, @"Mock VC DirectoryGroupVC was nil");
+    
+}
+
+
 @end
+
+
+
+
