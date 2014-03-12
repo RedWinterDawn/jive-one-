@@ -17,19 +17,32 @@
 #import "JCVoicemailViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import "JCOsgiClient.h"
+#import "Voicemail.h"
 
 
 @interface JCVoicemailViewController ()
 {
-        ClientEntities *me;
+    ClientEntities *me;
 }
-@property (strong, nonatomic) NSArray* voicemails; //of type voicemail(entity)
+@property (strong, nonatomic) NSMutableArray* voicemails; //of type voicemail(entity)
 @property (weak, nonatomic) JCOsgiClient *osgiClient;
 
 
 @end
 
 @implementation JCVoicemailViewController
+
+- (NSMutableArray*)voicemails
+{
+    if(!_voicemails){
+        _voicemails = [[NSMutableArray alloc]init];
+    }
+    return _voicemails;
+}
+
+- (NSMutableArray*)getVoicemails{
+    return _voicemails;
+}
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -49,28 +62,51 @@
         me = [[JCOmniPresence sharedInstance] me];
     }
     self.osgiClient = [JCOsgiClient sharedClient];
-    [self.osgiClient RetrieveVoicemailForEntity:^(id JSON) {
-        //TODO set in voicemails array
-        NSLog(@"%@",JSON);
-        
-    } failure:^(NSError *err) {
-        //TODO: retry later
-        NSLog(@"%@",err);
-    }];
-    
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self updateVoicemailData];
     
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc]
                                         init];
     [refreshControl addTarget:self action:@selector(updateTable) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
     
-    //TODO: run rest query on voicemail client to get json of extensions and voicemail box ids
-    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+}
+
+- (void)updateVoicemailData
+{
+    [self.osgiClient RetrieveVoicemailForEntity:me success:^(id JSON) {
+        //TODO set in voicemails array
+        NSLog(@"%@",JSON);
+        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
+        
+        NSDictionary *voicemails = (NSDictionary*)JSON;
+        
+        for (NSDictionary* vmail in voicemails) {
+            
+            Voicemail *aVoicemail = [Voicemail MR_createInContext:localContext];
+            //TODO: add if statment to check what exists already in coredata
+            
+            aVoicemail.urn = vmail[@"filePath"];
+            aVoicemail.callerId = vmail[@"callerid"];
+            aVoicemail.origdate = vmail[@"origdate"];
+            
+            [self.voicemails addObject:aVoicemail];
+            
+            [localContext MR_saveToPersistentStoreAndWait];
+            [self.tableView reloadData];
+        }
+    } failure:^(NSError *err) {
+        //TODO: retry later
+        NSLog(@"%@",err);
+    }];
+    
 }
 
 - (void)updateTable
@@ -98,18 +134,18 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-//    return self.extensions.count;
-    return 1;
+
+    return self.voicemails.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"vCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-//    cell.textLabel.text = self.extensions[indexPath.row];
+    cell.textLabel.text = ((Voicemail*)self.voicemails[indexPath.row]).callerId;
     
-    // Configure the cell...
+
     
     return cell;
 }

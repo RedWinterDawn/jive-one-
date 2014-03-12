@@ -48,8 +48,8 @@
     localContext  = [NSManagedObjectContext MR_contextForCurrentThread];
     
     //For voicemail
-    NSURL *dropboxURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@", kDropboxBaseURL]];
-    _tempManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:dropboxURL];
+    NSURL *AWSURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@", kAWSBaseURL]];
+    _tempManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:AWSURL];
     
     _tempManager.responseSerializer = [AFJSONResponseSerializer serializer];
     _tempManager.requestSerializer = [AFJSONRequestSerializer serializer];
@@ -360,13 +360,14 @@
 
 #pragma mark - Voicemail
 
-//Here is where doug is trying to make requests for voicemail - while currently we are just grabbing a file from dropbox eventually we will get it from osgi.
-- (void) RetrieveVoicemailForEntity:(void (^)(id JSON))success
-                    failure:(void (^)(NSError *err))failure
+//Here is where doug is trying to make requests for voicemail - currently we are just grabbing a file from dropbox eventually we will get it from osgi.
+- (void) RetrieveVoicemailForEntity:(ClientEntities*)entity success:(void (^)(id JSON))success
+                            failure:(void (^)(NSError *err))failure
 {
     //leave this commented code here for when we have the api, it will be ready to go
     //[self setRequestAuthHeader];
-    NSString * url = [NSString stringWithFormat:@"%@%@", [_tempManager baseURL], kDropboxVoicemailRoute];//TODO: update to use API when it is available.
+    NSString *userId = entity.externalId;
+    NSString * url = [NSString stringWithFormat:@"%@%@%@%@", [_tempManager baseURL], kAWSVoicemailRoute, userId, @"/voicemail.json"];
     NSLog(@"%@", url);
     
     [_tempManager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
