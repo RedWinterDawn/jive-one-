@@ -120,10 +120,11 @@
     if (section.count != 0) {
 //        NSLog(@"Section: %ld Row: %ld", indexPath.section, (long)indexPath.row);
         ClientEntities *person = section[indexPath.row];
-        cell.personNameLabel.text = person.firstLastName;
-        cell.personDetailLabel.text = person.email;
-        cell.personPresenceLabel.text = @"";
-        [cell.personPicture setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];
+        cell.person = person;
+//        cell.personNameLabel.text = person.firstLastName;
+//        cell.personDetailLabel.text = person.email;
+//        cell.personPresenceLabel.text = @"";
+//        [cell.personPicture setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];
         
         if(existingEntities)
         {
@@ -143,7 +144,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 55;
+    return 60;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -59,6 +59,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     me = [[JCOmniPresence sharedInstance] me];
@@ -120,6 +123,10 @@
         chatEntries = [NSMutableArray arrayWithArray:[ConversationEntry RetrieveConversationEntryById:_conversationId]];
         
         [self.view addSubview:self.tableView];
+    }
+    
+    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [self.tableView setSeparatorInset:UIEdgeInsetsZero];
     }
 
 }
@@ -307,7 +314,13 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil){
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
+        
+        cell.textLabel.font = [UIFont boldSystemFontOfSize:14.0];
+        cell.detailTextLabel.font = [UIFont systemFontOfSize:14.0];
+        cell.detailTextLabel.numberOfLines = 0;
+        CGRect imageFrame = cell.imageView.frame;
+        [cell.imageView setFrame:CGRectMake(imageFrame.origin.x, imageFrame.origin.y, 30, 30)];
     }
     
     // if we have a conversationId, the we load chat entries
@@ -316,8 +329,12 @@
         NSArray* result = [ClientEntities MR_findByAttribute:@"entityId" withValue:entry.entityId];
         ClientEntities* person = (ClientEntities*)result[0];
         
-        cell.textLabel.text = [NSString stringWithFormat:@"%@", entry.message[@"raw"]];
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", person.firstLastName];
+        cell.textLabel.text = [NSString stringWithFormat:@"%@", person.firstLastName];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", entry.message[@"raw"]];
+        [cell.imageView setImageWithURL:[NSURL URLWithString:person.picture]
+                           placeholderImage:[UIImage imageNamed:@"avatar.png"]];
+        cell.imageView.frame = CGRectInset(cell.imageView.bounds, 20, 20);
+        
     }
     // otherwise we'll load our contact list
     else {
@@ -333,6 +350,32 @@
     }
     
     return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (_conversationId) {
+        
+        ConversationEntry *entry = chatEntries[indexPath.row];
+
+        NSString *cellText = entry.message[@"raw"];
+        UIFont *cellFont = [UIFont fontWithName:@"Helvetica" size:17.0];
+        CGSize constraintSize = CGSizeMake(280.0f, MAXFLOAT);
+        
+        NSAttributedString *attributedText = [[NSAttributedString alloc]
+                                              initWithString:cellText
+                                              attributes:@{NSFontAttributeName:cellFont}];
+        CGRect rect = [attributedText boundingRectWithSize:constraintSize
+                                                   options:NSStringDrawingUsesLineFragmentOrigin
+                                                   context:nil];
+        
+        CGSize labelSize = rect.size;
+        
+        return labelSize.height + 20;
+    }
+    else {
+        return 44;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

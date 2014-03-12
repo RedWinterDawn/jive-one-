@@ -9,7 +9,6 @@
 #import "JCDirectoryViewController.h"
 #import "ClientEntities.h"
 #import "ClientMeta.h"
-#import <SDWebImage/UIImageView+WebCache.h>
 #import "JCOsgiClient.h"
 #import "JCDirectoryDetailViewController.h"
 #import "JCPersonCell.h"
@@ -33,6 +32,7 @@
 @implementation JCDirectoryViewController
 
 static NSString *CellIdentifier = @"DirectoryCell";
+
 
 - (void)viewDidLoad
 {
@@ -344,17 +344,8 @@ static NSString *CellIdentifier = @"DirectoryCell";
             
             ClientEntities* person = section[indexPath.row];
             
-            cell.personNameLabel.text = person.firstLastName;
-            cell.personDetailLabel.text = person.email;
-            cell.personPresenceLabel.text = [self getPresence:[NSNumber numberWithInt:[person.entityPresence.interactions[@"chat"][@"code"] integerValue]]];
-//            cell.personPresenceLabel = [self presenceLabelForValue:cell.personPresenceLabel];
-            [cell.personPicture setImageWithURL:[NSURL URLWithString:person.picture]
-                           placeholderImage:[UIImage imageNamed:@"avatar.png"]];
+            cell.person = person;
             
-            long row = indexPath.row;
-            long section = indexPath.section;
-            
-            [personMap setObject:[NSString stringWithFormat:@"%ld|%ld", row, section] forKey:person.entityId];
         }else{
             //local contacts
             NSDictionary * pers = section[indexPath.row];
@@ -370,7 +361,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 50;
+    return 60;
 }
 
 - (NSString *)getPresence:(NSNumber *)presence
@@ -555,9 +546,9 @@ shouldReloadTableForSearchString:(NSString *)searchString
         [indexPaths addObject:indexPath];
     }
     
-    if (indexPaths.count != 0) {
-        [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-    }
+//    if (indexPaths.count != 0) {
+//        [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+//    }
 }
 @end
 

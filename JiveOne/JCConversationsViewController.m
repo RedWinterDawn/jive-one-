@@ -13,8 +13,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "JCConversationDetailViewController.h"
 #import "ConversationEntry.h"
-#import "JCPersonCell.h"
-
+#import "JCConversationTableViewCell.h"
 @interface JCConversationsViewController ()
 {
     //NSMutableArray *entries;
@@ -29,11 +28,13 @@
 
 @implementation JCConversationsViewController
 
+static NSString *CellIdentifier = @"ConversationCell";
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [self.tableView registerNib:[UINib nibWithNibName:@"JCConversationCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
+
     me = [[JCOmniPresence sharedInstance] me];
     
     //self.navigationItem.rightBarButtonItem = self.editButtonItem;
@@ -70,7 +71,7 @@
 
 - (void) loadDatasource
 {
-    conversations = [NSMutableArray arrayWithArray:[Conversation MR_findByAttribute:@"hasEntries" withValue:[NSNumber numberWithBool:YES] andOrderBy:@"lastModified" ascending:YES]];
+    conversations = [NSMutableArray arrayWithArray:[Conversation MR_findByAttribute:@"hasEntries" withValue:[NSNumber numberWithBool:YES] andOrderBy:@"lastModified" ascending:NO]];
     [personMap removeAllObjects];
     [self.tableView reloadData];
 }
@@ -103,30 +104,30 @@
 #pragma mark - Update UI on Presence Change
 - (void)didUpdatePresence:(NSNotification*)notification
 {
-    Presence *presence = (Presence*)notification.object;
-    NSMutableArray *indexPaths = [NSMutableArray array];
-    
-    // first we check in our simple structure
-    if (personMap && personMap[presence.entityId]) {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[personMap[presence.entityId] integerValue] inSection:0];
-        [indexPaths addObject:indexPath];
-    }
-    else
-    {
-        for (NSInteger i = 0; i < [self.tableView numberOfRowsInSection:0]; ++i)
-        {
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
-            JCPersonCell *cell = (JCPersonCell*)[self.tableView cellForRowAtIndexPath:indexPath];
-            if ([cell.personId isEqualToString:presence.entityId]) {
-                [indexPaths addObject:indexPath];
-                break;
-            }
-        }
-    }
-    
-    if (indexPaths.count != 0) {
-        [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-    }
+//    Presence *presence = (Presence*)notification.object;
+//    NSMutableArray *indexPaths = [NSMutableArray array];
+//    
+//    // first we check in our simple structure
+//    if (personMap && personMap[presence.entityId]) {
+//        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[personMap[presence.entityId] integerValue] inSection:0];
+//        [indexPaths addObject:indexPath];
+//    }
+//    else
+//    {
+//        for (NSInteger i = 0; i < [self.tableView numberOfRowsInSection:0]; ++i)
+//        {
+//            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+//            JCPersonCell *cell = (JCPersonCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+//            if ([cell.personId isEqualToString:presence.entityId]) {
+//                [indexPaths addObject:indexPath];
+//                break;
+//            }
+//        }
+//    }
+//    
+//    if (indexPaths.count != 0) {
+//        [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+//    }
 }
 
 #pragma mark - Did receive Notication
@@ -162,41 +163,56 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    JCPersonCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    JCConversationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     Conversation *conv = conversations[indexPath.row];
     
-    if (!conv.isGroup) {
-        NSArray *entitiesArray = (NSArray*)conv.entities;
-        NSString *firstEntity = nil;
-        
-        for (NSString* entity in entitiesArray) {
-            if (![entity isEqualToString:me.urn]) {
-                firstEntity = entity;
-            }
-        }
-        
-        ClientEntities * person = [[JCOmniPresence sharedInstance] entityByEntityId:firstEntity];
-        
-        cell.personNameLabel.text = [NSString stringWithFormat:@"%@", person.firstLastName];
-        cell.personDetailLabel.text = [NSString stringWithFormat:@"%@", person.email];
-        cell.personPresenceLabel.text = [self getPresence:[NSNumber numberWithInt:[person.entityPresence.interactions[@"chat"][@"code"] integerValue]]];
-        [cell.personPicture setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];
-        cell.personId = person.entityId;
-        
-        
-        // temporary fix just to make it not crash
-        if (firstEntity) {
-            [personMap setObject:[NSNumber numberWithInteger:indexPath.row] forKey:person.entityId];
-        }
-        
+    if (conv) {
+        cell.conversation = conv;
     }
-    else
-    {
-        cell.personNameLabel.text = [NSString stringWithFormat:@"%@", conv.name];
-        cell.personDetailLabel.text = [NSString stringWithFormat:@"%@", conv.group];
-    }
+    
+//    if (!conv.isGroup) {
+//        NSArray *entitiesArray = (NSArray*)conv.entities;
+//        NSString *firstEntity = nil;
+//        
+//        for (NSString* entity in entitiesArray) {
+//            if (![entity isEqualToString:me.urn]) {
+//                firstEntity = entity;
+//            }
+//        }
+//        
+//        ClientEntities * person = [[JCOmniPresence sharedInstance] entityByEntityId:firstEntity];
+//        
+//        if (person) {
+//            cell.person = person;
+//        }
+//        else
+//        {
+//            cell.person = nil;
+//            cell.personNameLabel.text = @"Unknown";
+//            cell.personDetailLabel.hidden = YES;
+//            cell.personPicture.hidden = YES;
+//        }
+//        
+////        cell.personNameLabel.text = [NSString stringWithFormat:@"%@", person.firstLastName];
+////        cell.personDetailLabel.text = [NSString stringWithFormat:@"%@", person.email];
+////        cell.personPresenceLabel.text = [self getPresence:[NSNumber numberWithInt:[person.entityPresence.interactions[@"chat"][@"code"] integerValue]]];
+////        [cell.personPicture setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];
+////        cell.personId = person.entityId;
+//        
+//        
+//        // temporary fix just to make it not crash
+//        //if (firstEntity) {
+//        //    [personMap setObject:[NSNumber numberWithInteger:indexPath.row] forKey:person.entityId];
+//        //}
+//        
+//    }
+//    else
+//    {
+//        cell.person = nil;
+//        cell.personNameLabel.text = [NSString stringWithFormat:@"%@", conv.name];
+//        cell.personDetailLabel.text = [NSString stringWithFormat:@"%@", conv.group];
+//    }
     
     
     
@@ -224,6 +240,11 @@
         
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60;
 }
 
 - (NSString *)getPresence:(NSNumber *)presence
@@ -305,12 +326,12 @@
     
     if ([sender isKindOfClass:[NSIndexPath class]]) {
         NSIndexPath *indexPath = (NSIndexPath *)sender;
-        Conversation *conv = conversations[indexPath.row];
-        JCPersonCell *cell = (JCPersonCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        //Conversation *conv = conversations[indexPath.row];
+        JCConversationTableViewCell *cell = (JCConversationTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
         
-        NSString *title = cell.personNameLabel.text;
+        NSString *title = cell.conversationTitle.text;
         
-        [segue.destinationViewController setConversationId:conv.conversationId];
+        [segue.destinationViewController setConversationId:cell.conversation.conversationId];
         [segue.destinationViewController setTitle:title];
         
     }
