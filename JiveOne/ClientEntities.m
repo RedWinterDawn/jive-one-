@@ -2,7 +2,7 @@
 //  ClientEntities.m
 //  JiveOne
 //
-//  Created by Ethan Parker on 2/26/14.
+//  Created by Eduardo Gueiros on 3/12/14.
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
@@ -14,7 +14,6 @@
 
 @implementation ClientEntities
 
-@dynamic resourceGroupName;
 @dynamic createDate;
 @dynamic email;
 @dynamic entityId;
@@ -30,6 +29,7 @@
 @dynamic me;
 @dynamic picture;
 @dynamic presence;
+@dynamic resourceGroupName;
 @dynamic tags;
 @dynamic urn;
 @dynamic entityCompany;

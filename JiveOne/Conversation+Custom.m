@@ -40,10 +40,11 @@
     else {
         //if ([conversation[@"entries"] count] > 0) {
         
+        
         conv = [Conversation MR_createInContext:context];
         conv.hasEntries = [NSNumber numberWithBool:([conversation[@"entries"] count] > 0)];
-        conv.createdDate = conversation[@"createdDate"];
-        conv.lastModified = conversation[@"lastModified"];
+        conv.createdDate = [NSNumber numberWithLongLong:[conversation[@"createdDate"] longLongValue]];
+        conv.lastModified = [NSNumber numberWithLongLong:[conversation[@"lastModified"] longLongValue]];
         conv.urn = conversation[@"urn"];
         conv.conversationId = conversation[@"id"];
         
@@ -72,11 +73,11 @@
         context = [NSManagedObjectContext MR_contextForCurrentThread];
     }
     // if last modified timestamps are the same, then there's no need to update anything.
-    long lastModifiedFromEntity = [conversation.lastModified integerValue];
-    long lastModifiedFromDictionary = [dictionary[@"lastModified"] integerValue];
+    long lastModifiedFromEntity = [conversation.lastModified longLongValue];
+    long lastModifiedFromDictionary = [dictionary[@"lastModified"] longLongValue];
     
     if (lastModifiedFromDictionary > lastModifiedFromEntity) {
-        conversation.lastModified = dictionary[@"lastModified"];
+        conversation.lastModified = [NSNumber numberWithLongLong:[dictionary[@"lastModified"] longLongValue]];
         conversation.hasEntries = [NSNumber numberWithBool:([dictionary[@"entries"] count] > 0)];
         
         if (dictionary[@"name"]) {

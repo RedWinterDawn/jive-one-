@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5063" systemVersion="13C64" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="ClientEntities" representedClassName="ClientEntities" syncable="YES">
-        <attribute name="createDate" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="createDate" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="entityId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="externalId" optional="YES" attributeType="String" syncable="YES"/>
@@ -10,7 +10,7 @@
         <attribute name="groups" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastFirstName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="lastModified" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="lastModified" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="location" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="me" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -25,17 +25,17 @@
     </entity>
     <entity name="ClientMeta" representedClassName="ClientMeta" syncable="YES">
         <attribute name="activityOrder" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="createDate" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="createDate" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="entityId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="lastModified" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="lastModified" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="metaId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pinnedActivityOrder" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="urn" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Company" representedClassName="Company" syncable="YES">
         <attribute name="companyId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="createDate" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="lastModified" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="createDate" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="lastModified" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pbxId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="timezone" optional="YES" attributeType="String" syncable="YES"/>
@@ -47,24 +47,24 @@
     </entity>
     <entity name="Conversation" representedClassName="Conversation" syncable="YES">
         <attribute name="conversationId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="createdDate" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="createdDate" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="entities" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="group" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="hasEntries" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isGroup" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="lastModified" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="lastModified" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="urn" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="ConversationEntry" representedClassName="ConversationEntry" syncable="YES">
         <attribute name="call" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="conversationId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="createdDate" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="createdDate" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="deliveryDate" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="entityId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="entryId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="file" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="lastModified" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="lastModified" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="mentions" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="message" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="tags" optional="YES" attributeType="Transformable" syncable="YES"/>
@@ -72,10 +72,10 @@
         <attribute name="urn" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Presence" representedClassName="Presence" syncable="YES">
-        <attribute name="createDate" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="createDate" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="entityId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="interactions" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="lastModified" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="lastModified" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="presenceId" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Voicemail" representedClassName="Voicemail" syncable="YES">
@@ -90,7 +90,8 @@
         <element name="ContactGroup" positionX="0" positionY="0" width="128" height="75"/>
         <element name="Conversation" positionX="0" positionY="0" width="128" height="180"/>
         <element name="ConversationEntry" positionX="0" positionY="0" width="128" height="240"/>
+        <element name="Extension" positionX="421" positionY="81" width="128" height="90"/>
         <element name="Presence" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="Voicemail" positionX="189" positionY="81" width="128" height="88"/>
+        <element name="Voicemail" positionX="189" positionY="81" width="128" height="90"/>
     </elements>
 </model>

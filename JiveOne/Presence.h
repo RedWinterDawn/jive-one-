@@ -2,7 +2,7 @@
 //  Presence.h
 //  JiveOne
 //
-//  Created by Eduardo Gueiros on 2/24/14.
+//  Created by Eduardo Gueiros on 3/12/14.
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
@@ -12,10 +12,10 @@
 
 @interface Presence : NSManagedObject
 
-@property (nonatomic, retain) NSString * presenceId;
-@property (nonatomic, retain) NSString * entityId;
-@property (nonatomic, retain) NSNumber * lastModified;
 @property (nonatomic, retain) NSNumber * createDate;
+@property (nonatomic, retain) NSString * entityId;
 @property (nonatomic, retain) id interactions;
+@property (nonatomic, retain) NSNumber * lastModified;
+@property (nonatomic, retain) NSString * presenceId;
 
 @end

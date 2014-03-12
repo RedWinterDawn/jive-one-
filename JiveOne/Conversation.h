@@ -2,7 +2,7 @@
 //  Conversation.h
 //  JiveOne
 //
-//  Created by Eduardo Gueiros on 3/5/14.
+//  Created by Eduardo Gueiros on 3/12/14.
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
@@ -16,10 +16,10 @@
 @property (nonatomic, retain) NSNumber * createdDate;
 @property (nonatomic, retain) id entities;
 @property (nonatomic, retain) NSString * group;
+@property (nonatomic, retain) NSNumber * hasEntries;
 @property (nonatomic, retain) NSNumber * isGroup;
 @property (nonatomic, retain) NSNumber * lastModified;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * urn;
-@property (nonatomic, retain) NSNumber * hasEntries;
 
 @end

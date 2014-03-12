@@ -2,7 +2,7 @@
 //  ClientEntities.h
 //  JiveOne
 //
-//  Created by Ethan Parker on 2/26/14.
+//  Created by Eduardo Gueiros on 3/12/14.
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
@@ -13,7 +13,6 @@
 
 @interface ClientEntities : NSManagedObject
 
-@property (nonatomic, retain) NSString * resourceGroupName;
 @property (nonatomic, retain) NSNumber * createDate;
 @property (nonatomic, retain) NSString * email;
 @property (nonatomic, retain) NSString * entityId;
@@ -29,6 +28,7 @@
 @property (nonatomic, retain) NSNumber * me;
 @property (nonatomic, retain) NSString * picture;
 @property (nonatomic, retain) NSString * presence;
+@property (nonatomic, retain) NSString * resourceGroupName;
 @property (nonatomic, retain) id tags;
 @property (nonatomic, retain) NSString * urn;
 @property (nonatomic, retain) Company *entityCompany;
