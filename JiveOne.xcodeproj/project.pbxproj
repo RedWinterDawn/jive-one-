@@ -88,6 +88,7 @@
 		F258589218BD3A420020AF34 /* JCDirectoryGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F258589118BD3A420020AF34 /* JCDirectoryGroupViewController.m */; };
 		F266162618B42AA0000B770A /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266162418B42AA0000B770A /* AddressBook.framework */; };
 		F266162718B42AA0000B770A /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266162518B42AA0000B770A /* AddressBookUI.framework */; };
+		F2CB896E18D1226D006A9438 /* JCStartChatMockTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F2CB896D18D1226D006A9438 /* JCStartChatMockTests.m */; };
 		F2FEF42B18C91BBE0080D8CC /* JCDirectoryGroupTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F2FEF42A18C91BBE0080D8CC /* JCDirectoryGroupTests.m */; };
 /* End PBXBuildFile section */
 
@@ -214,6 +215,7 @@
 		F258589118BD3A420020AF34 /* JCDirectoryGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDirectoryGroupViewController.m; sourceTree = "<group>"; };
 		F266162418B42AA0000B770A /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		F266162518B42AA0000B770A /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		F2CB896D18D1226D006A9438 /* JCStartChatMockTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCStartChatMockTests.m; sourceTree = "<group>"; };
 		F2FEF42A18C91BBE0080D8CC /* JCDirectoryGroupTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDirectoryGroupTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -446,6 +448,7 @@
 			children = (
 				275F4A8218AD0FBC00D2F069 /* JiveOneTests.m */,
 				F2FEF42A18C91BBE0080D8CC /* JCDirectoryGroupTests.m */,
+				F2CB896D18D1226D006A9438 /* JCStartChatMockTests.m */,
 				9135DE0118BC00FD0052E998 /* JCDirectoryDetailTests.m */,
 				DD50802818C7D60B00750DB4 /* JCDirectoryTests.m */,
 				275F4A7D18AD0FBC00D2F069 /* Supporting Files */,
@@ -682,6 +685,7 @@
 				2751593518AD3BD500FD8D3F /* JCVoipViewController.m in Sources */,
 				2751591418AD174F00FD8D3F /* JCAuthenticationManager.m in Sources */,
 				2751590C18AD16F300FD8D3F /* JCOsgiClient.m in Sources */,
+				F2CB896E18D1226D006A9438 /* JCStartChatMockTests.m in Sources */,
 				2751590718AD118D00FD8D3F /* JCStartLoginViewController.m in Sources */,
 				2762C45918B4177D00885918 /* JCOmniPresence.m in Sources */,
 				2751591818AD300B00FD8D3F /* OsgiData.xcdatamodel in Sources */,

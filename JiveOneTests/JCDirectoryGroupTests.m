@@ -71,7 +71,7 @@
     
     id mockDirectoryGroupVC = [OCMockObject mockForClass:[JCDirectoryGroupViewController class]];
     [[mockDirectoryGroupVC expect] viewDidLoad];
-   //  [mockDirectoryGroupVC verify]; - this breaks because I think you need to "verify" an actualy method from that class, right now we're just checking for NotNil
+   //  [mockDirectoryGroupVC verify]; - this breaks because I think you need to "verify" an actual method from that class, right now we're making a mock VC to allow checking for NotNil
     
     XCTAssertNotNil(mockDirectoryGroupVC, @"Mock VC DirectoryGroupVC was nil");
     
