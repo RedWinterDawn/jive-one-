@@ -56,6 +56,10 @@
 #define kPresenceInvisible @"Invisible"
 #define kPresenceOffline @"Offline"
 
+#pragma mark - KVO Constants
+#define kPresenceKeyPathForClientEntity @"entityPresence"
+#define kLastMofiedKeyPathForConversation @"lastModified"
+
 #pragma mark - Socket Message Types
 #define kSocketPresence @"presence"
 #define kSocketConversations @"conversations"
