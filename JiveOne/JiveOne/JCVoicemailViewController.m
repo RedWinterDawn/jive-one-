@@ -24,7 +24,7 @@
 {
     ClientEntities *me;
 }
-@property (strong, nonatomic) NSMutableArray* voicemails; //of type voicemail(entity)
+
 @property (weak, nonatomic) JCOsgiClient *osgiClient;
 
 
