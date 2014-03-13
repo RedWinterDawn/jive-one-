@@ -367,6 +367,7 @@
     //leave this commented code here for when we have the api, it will be ready to go
     //[self setRequestAuthHeader];
     NSString *userId = entity.externalId;
+    //TODO:remove hardcoded externalId once api is available
     userId = @"dleonard";
     NSString * url = [NSString stringWithFormat:@"%@%@%@%@", [_tempManager baseURL], kAWSVoicemailRoute, userId, @"/voicemail.json"];
     NSLog(@"%@", url);

@@ -237,10 +237,41 @@
     XCTAssertNotNil(response, @"Response should not be nil");
     XCTAssertTrue(([response[@"entries"] count] > 0), @"Response should not have zero entries");
 }
-
+/**
+ Tests RetrieveVoicemail Method
+ This method creates a client entity by saving it to coredata - this is the only way to create a "me" entity when testing becasue we dont login with any specific credentials and thus dont have the [JCOmniPresence me]
+ The Test Checks that the response object is not nil, that a random voicemail meta object from the responce object is not nil and, that a specific value for the "context" key is "outgoing"
+ */
 -(void)testShouldRetrieveVoicemail
 {
+    TRVSMonitor *monitor = [TRVSMonitor monitor];
+    __block NSDictionary* response;
+    NSDictionary* vmail1;
     
+    NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
+    ClientEntities *me = [ClientEntities MR_createInContext:localContext];
+    NSString *userId = @"dleonard";
+    me.externalId = userId;
+    [localContext MR_saveToPersistentStoreAndWait];
+    
+    [[JCOsgiClient sharedClient] RetrieveVoicemailForEntity:me success:^(id JSON){
+        response = JSON;
+        [monitor signal];
+    }failure:^(NSError *err) {
+        NSLog(@"Error - testShouldRetrieveVoicemail: %@", [err description]);
+        [monitor signal];
+    }];
+    
+    [monitor wait];
+    for (NSDictionary* vmail in response) {
+        vmail1 = [[NSDictionary alloc]initWithDictionary:vmail];
+    }// with NSDictionary you have no guarentee of order - thus we can only test to see if specific properties are not nil. or we could test a property that is the same on every voicemail if it exists.
+    
+    XCTAssertNotNil(response, @"Response should not be nil");
+    XCTAssertNotNil(vmail1, @"Response should not be nil");
+    NSString *expectedContext = @"outgoing";
+    NSString *givenContext = (NSString*)vmail1[@"context"];
+    XCTAssertEqualObjects(givenContext, expectedContext, @"Response did not contain correct context value");
 }
 
 
