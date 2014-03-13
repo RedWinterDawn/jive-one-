@@ -238,5 +238,10 @@
     XCTAssertTrue(([response[@"entries"] count] > 0), @"Response should not have zero entries");
 }
 
+-(void)testShouldRetrieveVoicemail
+{
+    
+}
+
 
 @end
