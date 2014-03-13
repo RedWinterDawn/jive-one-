@@ -100,7 +100,7 @@
     [self.JCDVC segmentChanged:nil];
     
     
-    NSArray * clientEntities = [NSArray arrayWithArray:self.JCDVC.clientEntitiesArray];
+    NSArray *clientEntities = [NSArray arrayWithArray:self.JCDVC.clientEntitiesArray];
     
 //    if (clientEntities.count == 0) {
 //        clientEntities = [ClientEntities MR_findAll];

@@ -142,7 +142,7 @@
     }
 }
 
-// We pass information from the current ViewControllerl to the selector view?
+// We pass information from the current ViewControllerl to the selector view
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
     if ([sender isKindOfClass:[ContactGroup class]]) {
