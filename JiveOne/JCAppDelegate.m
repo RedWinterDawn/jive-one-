@@ -30,6 +30,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(socketDidConnect:) name:@"com.jiveone.socketConnected" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(socketDidFailToConnect:) name:@"com.jiveone.socketNotConnected" object:nil];
     
+    //Register for PushNotifications
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert |
+                                                                           UIRemoteNotificationTypeBadge |
+                                                                           UIRemoteNotificationTypeSound)];
+    
     return YES;
 }
 							
@@ -43,6 +48,9 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    NSLog(@"applicationDidEnterBackground");
+    NSLog(@"%u", [JCSocketDispatch sharedInstance].webSocket.readyState);
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -66,7 +74,7 @@
 #pragma mark - Socket Notifications
 - (void)socketDidConnect:(NSNotification *)notification
 {
-    NSLog(@"Socket is Connected");
+    NSLog(@"APPDELEGATE - Socket is Connected");
 }
 
 - (void)socketDidFailToConnect:(NSNotification *)notification
@@ -82,6 +90,52 @@
 - (void)stopSocket
 {
     [[JCSocketDispatch sharedInstance] closeSocket];
+}
+
+#pragma mark - PushNotifications
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    NSString *newToken = [deviceToken description];
+	newToken = [newToken stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+	newToken = [newToken stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+	NSLog(@"APPDELEGATE - My token is: %@", newToken);
+}
+
+- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
+{
+	NSLog(@"APPDELEGATE - Failed to get token, error: %@", error);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    NSLog(@"APPDELEGATE - didReceiveRemoteNotification:fetchCompletionHandler");
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    NSLog(@"APPDELEGATE - didReceiveRemoteNotification");
+    
+    NSLog(@"Remote Notification Recieved");
+    UILocalNotification *notification = [[UILocalNotification alloc] init];
+    notification.alertBody =  @"Looks like i got a notification - fetch thingy";
+    [application presentLocalNotificationNow:notification];
+    completionHandler(UIBackgroundFetchResultNewData);
+}
+
+#pragma mark - Background Fetch
+- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    NSLog(@"Remote Notification Recieved");
+    UILocalNotification *notification = [[UILocalNotification alloc] init];
+    notification.alertBody =  @"Looks like i got a notification - fetch thingy";
+    [application presentLocalNotificationNow:notification];
+    completionHandler(UIBackgroundFetchResultNewData);
+}
+
+- (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler
+{
+    NSLog(@"APPDELEGATE - handleEventsForBackgroundURLSession");
 }
 
 
