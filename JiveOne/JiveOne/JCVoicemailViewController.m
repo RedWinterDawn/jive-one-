@@ -82,26 +82,44 @@
 - (void)updateVoicemailData
 {
     [self.osgiClient RetrieveVoicemailForEntity:me success:^(id JSON) {
-        //TODO set in voicemails array
+        //clear self.voicemails in case of refresh
+        [self.voicemails removeAllObjects];
+        
+        //parse voicemail objects from server and store in self.voicemails
         NSLog(@"%@",JSON);
         NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
         
         NSDictionary *voicemails = (NSDictionary*)JSON;
         
         for (NSDictionary* vmail in voicemails) {
+            //only create/save to core data if this is a new voicemail
+            NSPredicate *pred = [NSPredicate predicateWithFormat:@"urn = %@", vmail[@"filePath"]];
+            NSArray * arr = [Voicemail MR_findAllWithPredicate:pred];
+            Voicemail *aVoicemail;
+            if(arr.count==0){
+                //create and save
+                aVoicemail = [Voicemail MR_createInContext:localContext];
+                aVoicemail.urn = vmail[@"filePath"];
+                //non modifiable attributes go here
+                aVoicemail.callerId = vmail[@"callerid"];
+                aVoicemail.origdate = vmail[@"origdate"];
+                aVoicemail.duration = [NSNumber numberWithInteger:[vmail[@"duration"] intValue]];
+                [localContext MR_saveToPersistentStoreAndWait];
+                
+            }else if(arr.count==1){
+                //fetch and set
+                aVoicemail = arr[0];
+            }
+            else{
+                NSLog(@"More than one copy of the same voicemail in coredata.");
+            }
             
-            Voicemail *aVoicemail = [Voicemail MR_createInContext:localContext];
-            //TODO: add if statment to check what exists already in coredata
-            
-            aVoicemail.urn = vmail[@"filePath"];
-            aVoicemail.callerId = vmail[@"callerid"];
-            aVoicemail.origdate = vmail[@"origdate"];
-            
+            //modifiable attributes should be changed here
+//            aVoicemail.isRead = vmail[@"flag"];
             [self.voicemails addObject:aVoicemail];
             
-            [localContext MR_saveToPersistentStoreAndWait];
-            [self.tableView reloadData];
         }
+        [self.tableView reloadData];
     } failure:^(NSError *err) {
         //TODO: retry later
         NSLog(@"%@",err);
@@ -144,7 +162,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     cell.textLabel.text = ((Voicemail*)self.voicemails[indexPath.row]).callerId;
-    
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", ((Voicemail*)self.voicemails[indexPath.row]).duration];
 
     
     return cell;
