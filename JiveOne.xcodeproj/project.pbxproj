@@ -22,6 +22,7 @@
 		274493C518D0E98D002744CB /* ContactGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 274493C418D0E98D002744CB /* ContactGroup.m */; };
 		274493C818D0E98D002744CB /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 274493C718D0E98D002744CB /* Conversation.m */; };
 		274493CB18D0E98D002744CB /* ClientMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = 274493CA18D0E98D002744CB /* ClientMeta.m */; };
+		274493CE18D13538002744CB /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 274493CD18D13538002744CB /* Common.m */; };
 		275158FC18AD10BB00FD8D3F /* main-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 275158F718AD10BA00FD8D3F /* main-logo.png */; };
 		275158FD18AD10BB00FD8D3F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 275158F818AD10BA00FD8D3F /* Default.png */; };
 		275158FE18AD10BB00FD8D3F /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 275158F918AD10BB00FD8D3F /* Default@2x.png */; };
@@ -129,6 +130,8 @@
 		274493C718D0E98D002744CB /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
 		274493C918D0E98D002744CB /* ClientMeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientMeta.h; sourceTree = "<group>"; };
 		274493CA18D0E98D002744CB /* ClientMeta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClientMeta.m; sourceTree = "<group>"; };
+		274493CC18D13538002744CB /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
+		274493CD18D13538002744CB /* Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Common.m; sourceTree = "<group>"; };
 		275158F718AD10BA00FD8D3F /* main-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "main-logo.png"; sourceTree = "<group>"; };
 		275158F818AD10BA00FD8D3F /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		275158F918AD10BB00FD8D3F /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
@@ -284,6 +287,8 @@
 				275F4A6018AD0FBC00D2F069 /* JCAppDelegate.h */,
 				275F4A6118AD0FBC00D2F069 /* JCAppDelegate.m */,
 				2751590218AD10E500FD8D3F /* Constants.h */,
+				274493CC18D13538002744CB /* Common.h */,
+				274493CD18D13538002744CB /* Common.m */,
 			);
 			name = Application;
 			sourceTree = "<group>";
@@ -639,6 +644,7 @@
 				2751590618AD118D00FD8D3F /* JCStartLoginViewController.m in Sources */,
 				2751592E18AD334E00FD8D3F /* JCEntryModel.m in Sources */,
 				275F4A5E18AD0FBC00D2F069 /* main.m in Sources */,
+				274493CE18D13538002744CB /* Common.m in Sources */,
 				274493C818D0E98D002744CB /* Conversation.m in Sources */,
 				272B61DD18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */,
 				274493B918D0E98C002744CB /* Presence.m in Sources */,
