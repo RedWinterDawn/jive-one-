@@ -456,8 +456,8 @@
 				F2CB896D18D1226D006A9438 /* JCStartChatMockTests.m */,
 				9135DE0118BC00FD0052E998 /* JCDirectoryDetailTests.m */,
 				DD50802818C7D60B00750DB4 /* JCDirectoryTests.m */,
-				275F4A7D18AD0FBC00D2F069 /* Supporting Files */,
 				27426AC818B5303D00011635 /* JCOsgiClientTest.m */,
+				275F4A7D18AD0FBC00D2F069 /* Supporting Files */,
 			);
 			path = JiveOneTests;
 			sourceTree = "<group>";
