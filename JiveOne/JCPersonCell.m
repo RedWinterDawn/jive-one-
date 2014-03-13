@@ -10,7 +10,7 @@
 #import "JCPresenceView.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
-NSString *const kCustomCellPersonPresenceTypeKeyPath = @"entityPresence";
+//NSString *const kCustomCellPersonPresenceTypeKeyPath = @"entityPresence";
 
 @implementation JCPersonCell
 
@@ -36,7 +36,7 @@ NSString *const kCustomCellPersonPresenceTypeKeyPath = @"entityPresence";
         self.personPresenceView.presenceType = (JCPresenceType)[_person.entityPresence.interactions[@"chat"][@"code"] integerValue];
         [self.personPicture setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];
         
-        [person addObserver:self forKeyPath:kCustomCellPersonPresenceTypeKeyPath options:NSKeyValueObservingOptionNew context:NULL];
+        [person addObserver:self forKeyPath:kPresenceKeyPathForClientEntity options:NSKeyValueObservingOptionNew context:NULL];
     }   
 }
 
@@ -49,12 +49,12 @@ NSString *const kCustomCellPersonPresenceTypeKeyPath = @"entityPresence";
 -(void)removeObservers
 {
     if (_person)
-        [_person removeObserver:self forKeyPath:kCustomCellPersonPresenceTypeKeyPath];
+        [_person removeObserver:self forKeyPath:kPresenceKeyPathForClientEntity];
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if ([keyPath isEqualToString:kCustomCellPersonPresenceTypeKeyPath]) {
+    if ([keyPath isEqualToString:kPresenceKeyPathForClientEntity]) {
         ClientEntities *person = (ClientEntities *)object;
         self.personPresenceView.presenceType = (JCPresenceType)[person.entityPresence.interactions[@"chat"][@"code"] integerValue];
     }
