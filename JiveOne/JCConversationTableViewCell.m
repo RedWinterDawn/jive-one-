@@ -8,10 +8,13 @@
 
 #import "JCConversationTableViewCell.h"
 #import "ConversationEntry+Custom.h"
+#import "JCPersonCell.h"
+#import "Common.h"
 
 @implementation JCConversationTableViewCell
 
-NSString *const kCustomCellConversationTypeKeyPath = @"lastModified";
+//NSString *const kCustomCellConversationTypeKeyPath = @"lastModified";
+//NSString *const kCustomCellPersonPresenceTypeKeyPath = @"entityPresence";
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -26,7 +29,7 @@ NSString *const kCustomCellConversationTypeKeyPath = @"lastModified";
 
 -(void)setConversation:(Conversation *)conversation
 {
-    //[self removeObservers];
+    [self removeObservers];
     if ([conversation isKindOfClass:[Conversation class]]) {
         _conversation = conversation;
         
@@ -41,21 +44,24 @@ NSString *const kCustomCellConversationTypeKeyPath = @"lastModified";
             }
             
             ClientEntities * person = [[JCOmniPresence sharedInstance] entityByEntityId:firstEntity];
-            
             if (person) {
-                self.conversationTitle.text = person.firstLastName;
+                _person = person;
+                self.conversationTitle.text = _person.firstLastName;
+                self.presenceView.presenceType = (JCPresenceType)[person.entityPresence.interactions[@"chat"][@"code"] integerValue];
+                [_person addObserver:self forKeyPath:kPresenceKeyPathForClientEntity options:NSKeyValueObservingOptionNew context:NULL];
+                self.presenceView.hidden = NO;
+            }
+            else {
+                self.presenceView.hidden = YES;
             }
         }
         else
         {
             self.conversationTitle.text = [NSString stringWithFormat:@"%@", _conversation.name];
+            self.presenceView.hidden = YES;
         }
         
-        if ([_conversation.conversationId isEqualToString:@"permanentrooms:896"]) {
-            NSString *ny = @"";
-        }
-        
-        self.conversationTime.text = [self unixTimestapToDate:_conversation.lastModified];
+        self.conversationTime.text = [Common dateFromTimestamp:_conversation.lastModified];
         
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"conversationId ==[c] %@", _conversation.conversationId];
         ConversationEntry *lastEntry = [ConversationEntry MR_findFirstWithPredicate:predicate sortedBy:@"lastModified" ascending:NO];
@@ -63,25 +69,33 @@ NSString *const kCustomCellConversationTypeKeyPath = @"lastModified";
             self.conversationSnippet.text = lastEntry.message[@"raw"];
         }
         
-        [_conversation addObserver:self forKeyPath:kCustomCellConversationTypeKeyPath options:NSKeyValueObservingOptionNew context:NULL];
+        [_conversation addObserver:self forKeyPath:kLastMofiedKeyPathForConversation options:NSKeyValueObservingOptionNew context:NULL];
     }
 }
 
 -(void)prepareForReuse
 {
     [super prepareForReuse];
-    [self removeObservers];
+    //[self removeObservers];
 }
 
 -(void)removeObservers
 {
-    if (_conversation)
-        [_conversation removeObserver:self forKeyPath:kCustomCellConversationTypeKeyPath];
+    @try {
+        if (_conversation)
+            [_conversation removeObserver:self forKeyPath:kLastMofiedKeyPathForConversation];
+        if (_person)
+            [_person removeObserver:self forKeyPath:kPresenceKeyPathForClientEntity];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"%@", exception);
+    }
+    
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if ([keyPath isEqualToString:kCustomCellConversationTypeKeyPath]) {
+    if ([keyPath isEqualToString:kLastMofiedKeyPathForConversation]) {
         Conversation *conversation = (Conversation *)object;
         NSArray * conversationEntries = [ConversationEntry MR_findByAttribute:@"conversationId" withValue:conversation.conversationId andOrderBy:@"lastModified" ascending:NO];
         if (conversationEntries.count > 0) {
@@ -89,22 +103,11 @@ NSString *const kCustomCellConversationTypeKeyPath = @"lastModified";
             self.conversationSnippet.text = lastEntry.message[@"raw"];
             //self.conversationTime.text = [self unixTimestapToDate:(int)lastEntry.lastModified];
         }
-        
-        
+    }
+    else if ([keyPath isEqualToString:kPresenceKeyPathForClientEntity]) {
+        ClientEntities *person = (ClientEntities *)object;
+        self.presenceView.presenceType = (JCPresenceType)[person.entityPresence.interactions[@"chat"][@"code"] integerValue];
     }
 }
-
-- (NSString *)unixTimestapToDate:(NSNumber *)timestamp
-{
-    
-    NSTimeInterval timeInterval = [timestamp longLongValue]/1000;
-    NSDate *date = [[NSDate alloc]initWithTimeIntervalSince1970: timeInterval];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"MM/dd/yyyy"];
-    NSTimeZone *timezone = [NSTimeZone defaultTimeZone];
-    formatter.timeZone = timezone;
-    return [formatter stringFromDate:date];
-}
-
 
 @end

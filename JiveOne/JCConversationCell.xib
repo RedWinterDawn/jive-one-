@@ -29,7 +29,7 @@
                     <fontDescription key="fontDescription" type="system" pointSize="9"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yX6-5Q-4GO" customClass="JCPresenceView">
+                <view tag="101" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yX6-5Q-4GO" customClass="JCPresenceView">
                     <rect key="frame" x="279" y="17" width="25" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -41,6 +41,7 @@
                 <outlet property="conversationSnippet" destination="hmq-KI-b0O" id="c2f-du-wJp"/>
                 <outlet property="conversationTime" destination="Smx-py-ptb" id="HeA-v9-CQG"/>
                 <outlet property="conversationTitle" destination="O6w-rx-6BW" id="n1U-He-hq7"/>
+                <outlet property="presenceView" destination="yX6-5Q-4GO" id="ueu-ay-3JJ"/>
             </connections>
         </view>
     </objects>

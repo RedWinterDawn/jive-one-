@@ -19,5 +19,6 @@
 @property (weak, nonatomic) IBOutlet JCPresenceView *presenceView;
 
 @property (nonatomic) Conversation *conversation;
+@property (nonatomic) ClientEntities *person;
 
 @end
