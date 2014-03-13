@@ -51,17 +51,17 @@
 - (void)testJCDirectoryDetailViewControllerMock {
     
     id mockDVC = [OCMockObject mockForClass:[JCDirectoryViewController class]];
-    //id mockDDVC = [OCMockObject mockForClass:[JCDirectoryDetailViewController class]];
-    //id mockDirectoryGroupVC = [OCMockObject mockForClass:[JCDirectoryGroupViewController class]];
-    //id mockConversationDetailVC = [OCMockObject mockForClass:[JCConversationDetailViewController class]];
+    id mockDDVC = [OCMockObject mockForClass:[JCDirectoryDetailViewController class]];
+    id mockDirectoryGroupVC = [OCMockObject mockForClass:[JCDirectoryGroupViewController class]];
+    id mockConversationDetailVC = [OCMockObject mockForClass:[JCConversationDetailViewController class]];
     
     [[mockDVC expect] viewDidLoad];
     [mockDVC viewDidLoad];
     [mockDVC verify];
     
-//    [[mockDVC expect] segmentChanged:nil];
-//    [mockDVC segmentChanged:nil];
-//    [mockDVC verify];
+    [[mockDVC expect] segmentChanged:nil];
+    [mockDVC segmentChanged:nil];
+    [mockDVC verify];
     
     
     
@@ -80,9 +80,9 @@
     //- this was breaking because I think you need to "verify" an actual method from that class, right now we're making a mock VC to allow checking for NotNil
     
     XCTAssertNotNil(mockDVC, @"Mock VC DirectoryDetailVC was nil");
-    //XCTAssertNotNil(mockDDVC, @"Mock VC DirectoryDetailVC was nil");
-    //XCTAssertNotNil(mockDirectoryGroupVC, @"Mock VC DirectoryGroupVC was nil");
-    //XCTAssertNotNil(mockConversationDetailVC, @"Mock VC DirectoryGroupVC was nil");
+    XCTAssertNotNil(mockDDVC, @"Mock VC DirectoryDetailVC was nil");
+    XCTAssertNotNil(mockDirectoryGroupVC, @"Mock VC DirectoryGroupVC was nil");
+    XCTAssertNotNil(mockConversationDetailVC, @"Mock VC DirectoryGroupVC was nil");
     
     
 }
