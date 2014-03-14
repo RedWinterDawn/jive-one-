@@ -593,9 +593,11 @@
         //presence.presenceId = dictionary[@"id"];
         
         // update presence for asscociated entity
-        [[JCOmniPresence sharedInstance] entityByEntityId:presence.entityId].entityPresence = presence;
-        
-        [localContext MR_saveToPersistentStoreAndWait];
+        if (presence.interactions) {
+            [[JCOmniPresence sharedInstance] entityByEntityId:presence.entityId].entityPresence = presence;
+            
+            [localContext MR_saveToPersistentStoreAndWait];
+        }
     }
     
     return presence;
