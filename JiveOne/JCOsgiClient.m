@@ -393,6 +393,18 @@
     }];
     
 }
+- (void) DeleteVoicemail:(Voicemail*)voicemail sucess:(void (^)(id JSON))success
+                          failure:(void (^)(NSError *err))failure
+{
+    [self setRequestAuthHeader];
+    NSString *url = [NSString stringWithFormat:@"%@%@%@", self.manager.baseURL, kVoicemailDelete, voicemail.urn];//TODO: match Jessie's api
+    
+    [_manager DELETE:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        success(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
 
 
 

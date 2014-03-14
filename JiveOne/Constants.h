@@ -31,8 +31,7 @@
 #pragma mark - Temporary Voicemail Constants
 #define kAWSVoicemailRoute @"voicemail/userId/"
 #define kAWSBaseURL @"https://s3-us-west-2.amazonaws.com/jive-mobile/"
-//#define kVoicemaiBaseURL @"http://10.103.1.57:8834"
-//#define kVoicemailFetchRoute @"voicemail/pbxId/%@/userId/%@"
+#define kVoicemailDelete @"voicemail/delete/"
 
 #pragma mark - Authentication Manager
 #define kAuthenticationFromTokenSucceeded @"keyauthenticationfortokensucceeded"

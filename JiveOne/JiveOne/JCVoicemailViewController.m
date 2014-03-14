@@ -106,7 +106,7 @@
         
         for (NSDictionary* vmail in voicemails) {
             //only create/save to core data if this is a new voicemail
-            NSPredicate *pred = [NSPredicate predicateWithFormat:@"urn = %@", vmail[@"filePath"]];
+            NSPredicate *pred = [NSPredicate predicateWithFormat:@"urn == %@", vmail[@"filePath"]];
             NSArray * arr = [Voicemail MR_findAllWithPredicate:pred];
             Voicemail *aVoicemail;
             if(arr.count==0){
@@ -134,12 +134,12 @@
             [self.voicemails addObject:aVoicemail];
             
         }
+        NSLog(@"Currently %lu voicemails in core data", [Voicemail MR_findAll].count);
         [self.tableView reloadData];
     } failure:^(NSError *err) {
         //TODO: retry later
         NSLog(@"%@",err);
     }];
-    
 }
 
 - (NSData*)downloadVoicemailUsingString:(NSString*)URLString
@@ -156,6 +156,8 @@
 
 - (void)updateTable
 {
+    
+    [self updateVoicemailData];
     
     [self.tableView reloadData];
     
@@ -195,28 +197,52 @@
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
 
-/*
+//// Override to support conditional editing of the table view.
+//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    // Return NO if you do not want the specified item to be editable.
+//    return YES;
+//}
+
+
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    Voicemail *voicemailToDelete = ((Voicemail*)self.voicemails[indexPath.row]);
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        //attempt to delete from server first
+        [self.osgiClient DeleteVoicemail:voicemailToDelete sucess:^(id JSON) {
+
+            //delete from Core data
+            NSPredicate *pred = [NSPredicate predicateWithFormat:@"urn == %@", voicemailToDelete.urn];
+            if(![Voicemail MR_deleteAllMatchingPredicate:pred]){
+                //TODO: alert user that deletion from core data was unsucessful
+                NSLog(@"Deletion from core data unsuccessful");
+            }else{
+                NSLog(@"%lu voicemails remaining in Core data", (unsigned long)[Voicemail MR_findAll].count);
+            }
+            
+            //delete from self.voicemails
+            [self.voicemails removeObjectAtIndex:indexPath.row];
+            
+            //update view
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        } failure:^(NSError *err) {
+            //alert user that deleting from server failed
+            NSLog(@"%@",err);
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Deletion unsuccessful" message:@"Please try again when you have data connectivity" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+        }];
+        
+        
     }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+//    else if (editingStyle == UITableViewCellEditingStyleInsert) {
+//        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+//    }
 }
-*/
+
 
 /*
 // Override to support rearranging the table view.

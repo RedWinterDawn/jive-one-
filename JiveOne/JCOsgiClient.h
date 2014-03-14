@@ -12,6 +12,7 @@
 #import "ConversationEntry.h"
 #import "Presence.h"
 #import "ClientEntities.h"
+#import "Voicemail.h"
 
 @interface JCOsgiClient : NSObject
 
@@ -54,6 +55,9 @@
 - (void) RetrieveVoicemailFileUsingStringURL:(NSString*)StringURL success:(void (^)(id WAVFile))success
                             failure:(void (^)(NSError *err))failure;
 
+
+- (void) DeleteVoicemail:(Voicemail*)voicemail sucess:(void (^)(id JSON))success
+                 failure:(void (^)(NSError *err))failure;
 
 #pragma mark - Update Oparations
 
