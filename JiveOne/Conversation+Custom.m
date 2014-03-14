@@ -53,9 +53,9 @@
             conv.group = conversation[@"group"] ? conversation[@"group"] : nil;
             conv.name = conversation[@"name"];
         }
-        else {
-            conv.entities = conversation[@"entities"];
-        }
+        //else {
+        conv.entities = conversation[@"entities"];
+        //}
         
         // Save conversation
         [context MR_saveToPersistentStoreAndWait];

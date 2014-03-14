@@ -77,6 +77,21 @@
     
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self scrowTableviewToBottom];
+}
+
+- (void)scrowTableviewToBottom
+{
+    if (self.tableView.contentSize.height > self.tableView.frame.size.height)
+    {
+        CGPoint offset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height);
+        [self.tableView setContentOffset:offset animated:YES];
+    }
+}
+
 - (void)setupView
 {
     // setup toolbar items
@@ -113,6 +128,7 @@
         if (_person) {
             [self.contactPickerView addContact:_person withName:_person.firstLastName];
             [self.selectedContacts addObject:_person];
+            [self checkForConversationWithEntities:self.selectedContacts];
         }
     }
     // otherwise adjust table to fullscreen and no contactPicker, loads conversation by conversationId.
@@ -176,7 +192,7 @@
     
     [UIView commitAnimations];
     keyboardIsVisible = YES;
-    
+    [self scrowTableviewToBottom];
 }
 
 - (void)keyboardWillHide:(NSNotification*)notification
@@ -195,6 +211,7 @@
     
     [UIView commitAnimations];
     keyboardIsVisible = NO;
+    [self scrowTableviewToBottom];
 }
 
 - (void)viewDidLayoutSubviews {
