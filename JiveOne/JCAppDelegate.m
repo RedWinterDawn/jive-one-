@@ -30,6 +30,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(socketDidConnect:) name:@"com.jiveone.socketConnected" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(socketDidFailToConnect:) name:@"com.jiveone.socketNotConnected" object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveConversation:) name:kNewConversation object:nil];
+    
     //Register for PushNotifications
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert |
                                                                            UIRemoteNotificationTypeBadge |
@@ -136,6 +138,16 @@
 - (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler
 {
     NSLog(@"APPDELEGATE - handleEventsForBackgroundURLSession");
+}
+
+#pragma mark - Conversation
+- (void)didReceiveConversation:(NSNotification *)notification
+{
+    
+    UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
+    [tabController.viewControllers[1] tabBarItem].badgeValue = @"30";
+    
+//    [[self.tabBarController.tabBar.items objectAtIndex:2] setBadgeValue:[NSString stringWithFormat:@"%d",[UIApplication sharedApplication].applicationIconBadgeNumber]];
 }
 
 
