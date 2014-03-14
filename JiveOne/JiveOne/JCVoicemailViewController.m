@@ -44,6 +44,19 @@
     return _voicemails;
 }
 
+- (JCOsgiClient*)osgiClient
+{
+    if(!_osgiClient){
+        _osgiClient = [JCOsgiClient sharedClient];
+    }
+    return _osgiClient;
+}
+
+-(JCOsgiClient*)getOsgiClient
+{
+    return _osgiClient;
+}
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];

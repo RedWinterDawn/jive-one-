@@ -11,6 +11,7 @@
 #import "JCAuthenticationManager.h"
 #import "Voicemail.h"
 #import "JCOsgiClient.h"
+#import "TRVSMonitor.h"
 
 @interface JCVoicemailVCTests : XCTestCase
 @property (nonatomic, strong) JCVoicemailViewController * voicemailViewController;
@@ -34,8 +35,8 @@
     
     
     // Put setup code here. This method is called before the invocation of each test method in the class.
-    self.voicemailViewController = [[JCVoicemailViewController alloc]initWithStyle:UITableViewStyleGrouped];
-    self.voicemailViewController.tableView = [[UITableView alloc] initWithFrame:CGRectZero];
+    self.voicemailViewController = [[UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"JCVoicemailViewController"];
+//    self.voicemailViewController.tableView = [[UITableView alloc] initWithFrame:CGRectZero];
     [self forceLoadingOfTheView];
     //    self.JCDDVC.tableView.dataSource
 }
@@ -52,32 +53,32 @@
 
 -(void)testUpdateVoicemailData{
     
-//    if(!self.voicemailViewController.voicemails){
-//        self.voicemailViewController.voicemails = [[NSMutableArray alloc] init];
-//    }
-    __block id json;
+    if(!self.voicemailViewController.voicemails){
+        self.voicemailViewController.voicemails = [[NSMutableArray alloc] init];
+    }
+    TRVSMonitor *monitor = [TRVSMonitor monitor];
+    __block NSDictionary* json;
     
     //TODO: use OCMock to create NSManagedObject ClientEntity
-    ClientEntities *me = nil;
+    ClientEntities *me = [ClientEntities MR_createEntity];
+    me.externalId = @"dgeorge";
     
-    
-    //make a call to osgi client to fill json
-    JCOsgiClient *osgi = [JCOsgiClient sharedClient];
-    [osgi RetrieveVoicemailForEntity:me success:^(id JSON) {
+    [[JCOsgiClient sharedClient] RetrieveVoicemailForEntity:me success:^(id JSON) {
+        [self.voicemailViewController updateVoicemailData];
         json = JSON;
+        [monitor signal];
     } failure:^(NSError *err) {
-        NSLog(@"Fetch didn't work");
+        NSLog(@"Test failed");
     }];
-    
-    [self.voicemailViewController updateVoicemailData];
+    [monitor wait];
     
     //get voicemails in core data
     NSArray *array = [Voicemail MR_findAll];
     
     //get number of voicemails retrieved in call to server and stored in array
     NSUInteger jsonVoicemails = self.voicemailViewController.voicemails.count;
-    XCTAssertTrue(jsonVoicemails == array.count, @"Number of voicemails in core data does not match number retrieved by JSON");
-//    XCTAssertTrue(jsonVoicemails == array.count, @"Number of voicemails in core data does not match number set to voicemails array");
+    XCTAssertTrue(json.count == array.count, @"Number of voicemails in core data does not match number retrieved by JSON");
+    XCTAssertTrue(jsonVoicemails == array.count, @"Number of voicemails in core data does not match number set to voicemails array");
 }
 
 @end
