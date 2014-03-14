@@ -11,6 +11,7 @@
 		2710E40F18CEC8C300152C91 /* ConversationEntry+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 2710E40E18CEC8C300152C91 /* ConversationEntry+Custom.m */; };
 		272B61DD18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */; };
 		272B61DE18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */; };
+		272F65DA18D36F64009BD7B3 /* AudioRecordingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 272F65D818D36F64009BD7B3 /* AudioRecordingViewController.m */; };
 		2736698218BD441D0069B4B3 /* JCPersonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2736698118BD441D0069B4B3 /* JCPersonCell.m */; };
 		27426AC918B5303D00011635 /* JCOsgiClientTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 27426AC818B5303D00011635 /* JCOsgiClientTest.m */; };
 		274493AE18D0D538002744CB /* JCConversationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 274493AD18D0D538002744CB /* JCConversationTableViewCell.m */; };
@@ -111,6 +112,8 @@
 		2710E40E18CEC8C300152C91 /* ConversationEntry+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ConversationEntry+Custom.m"; sourceTree = "<group>"; };
 		272B61DB18B2A4DD00EB8ED5 /* TRVSMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRVSMonitor.h; sourceTree = "<group>"; };
 		272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRVSMonitor.m; sourceTree = "<group>"; };
+		272F65D818D36F64009BD7B3 /* AudioRecordingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioRecordingViewController.m; sourceTree = "<group>"; };
+		272F65D918D36F64009BD7B3 /* AudioRecordingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioRecordingViewController.h; sourceTree = "<group>"; };
 		2736698018BD441D0069B4B3 /* JCPersonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPersonCell.h; sourceTree = "<group>"; };
 		2736698118BD441D0069B4B3 /* JCPersonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPersonCell.m; sourceTree = "<group>"; };
 		27426AC818B5303D00011635 /* JCOsgiClientTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCOsgiClientTest.m; sourceTree = "<group>"; };
@@ -298,6 +301,8 @@
 		2751590318AD113C00FD8D3F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				272F65D818D36F64009BD7B3 /* AudioRecordingViewController.m */,
+				272F65D918D36F64009BD7B3 /* AudioRecordingViewController.h */,
 				DD01933518AECA760065A8CD /* JCTestViewController.h */,
 				DD01933618AECA760065A8CD /* JCTestViewController.m */,
 				DD28DA5018AEC4F5003BFC44 /* JCAccountViewController.h */,
@@ -650,6 +655,7 @@
 				2710E40C18CE873000152C91 /* Conversation+Custom.m in Sources */,
 				2762C45818B4177D00885918 /* JCOmniPresence.m in Sources */,
 				2751590618AD118D00FD8D3F /* JCStartLoginViewController.m in Sources */,
+				272F65DA18D36F64009BD7B3 /* AudioRecordingViewController.m in Sources */,
 				2751592E18AD334E00FD8D3F /* JCEntryModel.m in Sources */,
 				275F4A5E18AD0FBC00D2F069 /* main.m in Sources */,
 				274493CE18D13538002744CB /* Common.m in Sources */,
