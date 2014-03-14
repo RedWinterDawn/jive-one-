@@ -117,6 +117,8 @@
                 aVoicemail.callerId = vmail[@"callerid"];
                 aVoicemail.origdate = vmail[@"origdate"];
                 aVoicemail.duration = [NSNumber numberWithInteger:[vmail[@"duration"] intValue]];
+                aVoicemail.voicemail = [self downloadVoicemailUsingString:vmail[@"filePath"]];
+                
                 [localContext MR_saveToPersistentStoreAndWait];
                 
             }else if(arr.count==1){
@@ -138,6 +140,18 @@
         NSLog(@"%@",err);
     }];
     
+}
+
+- (NSData*)downloadVoicemailUsingString:(NSString*)URLString
+{
+    __block NSData *returnVmail = [[NSData alloc]init];
+    [self.osgiClient RetrieveVoicemailFileUsingStringURL:URLString success:^(id WAVFile) {
+        returnVmail = (NSData*)WAVFile;
+    } failure:^(NSError *err) {
+        
+        NSLog(@"%@",err);
+    }];
+    return returnVmail;
 }
 
 - (void)updateTable

@@ -86,17 +86,9 @@
         <attribute name="message" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="origdate" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="urn" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="voicemail" optional="YES" attributeType="Binary" syncable="YES"/>
     </entity>
     <elements>
-        <element name="ClientEntities" positionX="0" positionY="0" width="128" height="360"/>
-        <element name="ClientMeta" positionX="0" positionY="0" width="128" height="150"/>
-        <element name="Company" positionX="0" positionY="0" width="128" height="150"/>
-        <element name="ContactGroup" positionX="0" positionY="0" width="128" height="75"/>
-        <element name="Conversation" positionX="0" positionY="0" width="128" height="180"/>
-        <element name="ConversationEntry" positionX="0" positionY="0" width="128" height="240"/>
-        <element name="Extension" positionX="421" positionY="81" width="128" height="90"/>
-        <element name="Presence" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="Voicemail" positionX="189" positionY="81" width="128" height="90"/>
         <element name="ClientEntities" positionX="-81" positionY="90" width="128" height="360"/>
         <element name="ClientMeta" positionX="27" positionY="-126" width="128" height="150"/>
         <element name="Company" positionX="27" positionY="-126" width="128" height="150"/>
@@ -104,6 +96,6 @@
         <element name="Conversation" positionX="27" positionY="-126" width="128" height="180"/>
         <element name="ConversationEntry" positionX="115" positionY="-288" width="128" height="240"/>
         <element name="Presence" positionX="-198" positionY="-180" width="128" height="120"/>
-        <element name="Voicemail" positionX="279" positionY="45" width="128" height="148"/>
+        <element name="Voicemail" positionX="279" positionY="45" width="128" height="165"/>
     </elements>
 </model>

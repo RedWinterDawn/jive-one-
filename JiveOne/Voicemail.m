@@ -2,7 +2,7 @@
 //  Voicemail.m
 //  JiveOne
 //
-//  Created by Doug Leonard on 3/12/14.
+//  Created by Doug Leonard on 3/14/14.
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
@@ -11,12 +11,13 @@
 
 @implementation Voicemail
 
-@dynamic extension;
-@dynamic message;
-@dynamic urn;
 @dynamic callerId;
-@dynamic origdate;
 @dynamic duration;
+@dynamic extension;
 @dynamic isRead;
+@dynamic message;
+@dynamic origdate;
+@dynamic urn;
+@dynamic voicemail;
 
 @end

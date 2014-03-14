@@ -53,6 +53,9 @@
     
     _tempManager.responseSerializer = [AFJSONResponseSerializer serializer];
     _tempManager.requestSerializer = [AFJSONRequestSerializer serializer];
+    //_tempManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"audio/wav"];
+    //_tempManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"];
+   // @dleonard00: note to self for monday: probably need to just create a new Manager specifically for audio
     
 #warning REMOVE BEFORE PRODUCTION. This is meant to work with invalid certificates (local/testing.my.jive.com) 
 //#if DEBUG
@@ -377,6 +380,18 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failure(error);
     }];
+}
+
+- (void) RetrieveVoicemailFileUsingStringURL:(NSString*)StringURL success:(void (^)(id WAVFile))success
+                                     failure:(void (^)(NSError *err))failure
+{
+    NSLog(@"%@", StringURL);
+    [_tempManager GET:StringURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        success(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+    
 }
 
 
