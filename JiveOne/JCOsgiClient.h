@@ -52,8 +52,6 @@
 #pragma mark - Voicemail
 - (void) RetrieveVoicemailForEntity:(ClientEntities*)entity success:(void (^)(id JSON))success
                             failure:(void (^)(NSError *err))failure;
-- (void) RetrieveVoicemailFileUsingStringURL:(NSString*)StringURL success:(void (^)(id WAVFile))success
-                            failure:(void (^)(NSError *err))failure;
 
 
 - (void) DeleteVoicemail:(Voicemail*)voicemail sucess:(void (^)(id JSON))success
