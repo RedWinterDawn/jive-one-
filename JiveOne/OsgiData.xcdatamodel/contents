@@ -82,9 +82,10 @@
         <attribute name="callerId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="duration" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="extension" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="isRead" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="file" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="message" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="origdate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="read" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="urn" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="voicemail" optional="YES" attributeType="Binary" syncable="YES"/>
     </entity>
@@ -96,6 +97,6 @@
         <element name="Conversation" positionX="27" positionY="-126" width="128" height="180"/>
         <element name="ConversationEntry" positionX="115" positionY="-288" width="128" height="240"/>
         <element name="Presence" positionX="-198" positionY="-180" width="128" height="120"/>
-        <element name="Voicemail" positionX="279" positionY="45" width="128" height="165"/>
+        <element name="Voicemail" positionX="279" positionY="45" width="128" height="180"/>
     </elements>
 </model>
