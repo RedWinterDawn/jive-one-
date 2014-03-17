@@ -7,12 +7,13 @@
 //
 
 #import "AudioRecordingViewController.h"
-
+#include "Voicemail.h"
 @interface AudioRecordingViewController ()
 {
     NSURL* soundFileURL;
     NSString* soundFilePath;
     UIPopoverController *popoverController;
+    ClientEntities *me;
 }
 
 @end
@@ -72,6 +73,16 @@ void RouteChangeListener(	void *                  inClientData,
 #pragma mark - check if file exists
 -(BOOL) checkFileExists
 {
+    NSString *docsDir;
+    NSArray *dirPaths;
+    
+    dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    docsDir = [dirPaths objectAtIndex:0];
+    NSString *databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:@"VoicemailTest.wav"]];
+    
+    
+    soundFilePath = databasePath;
+    
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:soundFilePath isDirectory:NO];
     if (fileExists) {
         _playButton.enabled = YES;

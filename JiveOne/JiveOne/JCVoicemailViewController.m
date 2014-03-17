@@ -117,9 +117,8 @@
                 aVoicemail.callerId = vmail[@"callerid"];
                 aVoicemail.origdate = vmail[@"origdate"];
                 aVoicemail.duration = [NSNumber numberWithInteger:[vmail[@"duration"] intValue]];
-                NSData *audioData = [NSData dataWithContentsOfURL:[NSURL URLWithString:vmail[@"filePath"]]];
-                aVoicemail.voicemail = audioData;
                 
+                aVoicemail.voicemail = [self getVoiceMailDataUsingString:vmail[@"filePath"]];
                 
                 [localContext MR_saveToPersistentStoreAndWait];
                 
@@ -144,7 +143,26 @@
     }];
 }
 
-
+- (NSData*)getVoiceMailDataUsingString: (NSString*)URLString
+{
+    NSData *audioData = [[NSData alloc]init];
+    //TODO: Add Progress wheel of happiness
+    NSData* (^getVoicemailData)(NSString*) = ^(NSString* path){
+        
+        NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:path]];
+        NSString *docsDir;
+        NSArray *dirPaths;
+        
+        dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        docsDir = [dirPaths objectAtIndex:0];
+        NSString *databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:@"VoicemailTest.wav"]];
+        [data writeToFile:databasePath atomically:YES];
+        return data;
+    };
+    
+    
+    return audioData = getVoicemailData(URLString);
+}
 
 - (void)updateTable
 {
