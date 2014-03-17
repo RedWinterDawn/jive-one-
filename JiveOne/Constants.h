@@ -27,11 +27,11 @@
 #define kOsgiSessionRoute @"sessions"
 #define kOsgiSubscriptionRoute @"subscriptions"
 #define kOsgiPresenceRoute @"presence"
+#define kOsgiVoicemailRoute @"voicemails"
 
 #pragma mark - Temporary Voicemail Constants
 #define kAWSVoicemailRoute @"voicemail/userId/"
 #define kAWSBaseURL @"https://s3-us-west-2.amazonaws.com/jive-mobile/"
-#define kVoicemailDelete @"voicemail/delete/"
 
 #pragma mark - Authentication Manager
 #define kAuthenticationFromTokenSucceeded @"keyauthenticationfortokensucceeded"

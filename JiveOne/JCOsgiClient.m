@@ -387,7 +387,7 @@
                           failure:(void (^)(NSError *err))failure
 {
     [self setRequestAuthHeader];
-    NSString *url = [NSString stringWithFormat:@"%@%@%@", self.manager.baseURL, kVoicemailDelete, voicemail.urn];//TODO: match Jessie's api
+    NSString *url = [NSString stringWithFormat:@"%@%@", self.manager.baseURL, voicemail.urn];//TODO: match Jessie's api
     
     [_manager DELETE:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         success(responseObject);
