@@ -81,7 +81,6 @@
 		9135DE0018BBFC7A0052E998 /* JCVoicemailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9135DDFF18BBFC7A0052E998 /* JCVoicemailViewController.m */; };
 		9135DE0218BC00FD0052E998 /* JCDirectoryDetailTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9135DE0118BC00FD0052E998 /* JCDirectoryDetailTests.m */; };
 		9135DE0418BC01550052E998 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9135DE0318BC01550052E998 /* AVFoundation.framework */; };
-		91508A2918D3795B00612B8C /* Voicemail.m in Sources */ = {isa = PBXBuildFile; fileRef = 91508A2818D3795B00612B8C /* Voicemail.m */; };
 		DD01933718AECA760065A8CD /* JCTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD01933618AECA760065A8CD /* JCTestViewController.m */; };
 		DD28DA5218AEC4F5003BFC44 /* JCAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD28DA5118AEC4F5003BFC44 /* JCAccountViewController.m */; };
 		DD50802918C7D60B00750DB4 /* JCDirectoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DD50802818C7D60B00750DB4 /* JCDirectoryTests.m */; };
@@ -670,7 +669,6 @@
 				274493CB18D0E98D002744CB /* ClientMeta.m in Sources */,
 				27C5F43F18BC1946005FCAFD /* JCVersionTracker.m in Sources */,
 				274493AE18D0D538002744CB /* JCConversationTableViewCell.m in Sources */,
-				91508A2918D3795B00612B8C /* Voicemail.m in Sources */,
 				274493BC18D0E98C002744CB /* Company.m in Sources */,
 				DD28DA5218AEC4F5003BFC44 /* JCAccountViewController.m in Sources */,
 				274493C218D0E98D002744CB /* ConversationEntry.m in Sources */,
