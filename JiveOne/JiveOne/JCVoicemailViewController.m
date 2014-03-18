@@ -195,6 +195,25 @@
     return audioData = getVoicemailData(URLString);
 }
 
+//when the voicemail has been played, this is the callback
+//TODO: implement as callback
+-(void) voicemailShouldBeMarkedRead:(Voicemail*)voicemail{
+    //udpate this action in core data first
+    voicemail.read=[NSNumber numberWithInt:1];
+    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
+        if(success){
+            [self.tableView reloadData];
+            //attempt to save change to server
+            [self.osgiClient UpdateVoicemailToRead:voicemail success:^(id JSON) {
+                //if successful, do nothing
+            } failure:^(NSError *err) {
+                //TODO: if failure, resend update at when connection restored
+            }];
+        }else
+            NSLog(@"%@", error);
+    }];
+}
+
 
 /** Changes the currently selected voicemail cell - performing animations as appropriate */
 -(void)changeSelectedVoicemailCell:(JCVoicemailCell *)cell {
@@ -263,9 +282,11 @@
     NSArray* newVoicemails = [self.voicemails filteredArrayUsingPredicate:newPred];
     if(section==0)//new
     {
+        NSUInteger count = newVoicemails.count;
         return newVoicemails.count;
     }
     else{
+        NSUInteger count = self.voicemails.count-newVoicemails.count;
         return (self.voicemails.count-newVoicemails.count);
     }
 }
@@ -353,6 +374,13 @@
 //    return YES;
 //}
 
+//TODO: change this method to something that makes sense--not just selection
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"%ld", (long)indexPath.row);
+    if(indexPath.section==0){//if new, move to old
+        [self voicemailShouldBeMarkedRead:self.voicemails[indexPath.row]];
+    }
+}
 
 
 // Override to support editing the table view.

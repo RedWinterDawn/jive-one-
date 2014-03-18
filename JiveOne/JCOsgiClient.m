@@ -394,6 +394,22 @@
     }];
 }
 
+- (void) UpdateVoicemailToRead:(Voicemail*)voicemail success:(void (^)(id JSON))success
+                       failure:(void (^)(NSError *err))failure
+{
+    [self setRequestAuthHeader];
+    NSString *url = [NSString stringWithFormat:@"%@%@", self.manager.baseURL, voicemail.urn];
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [params setObject:@"true" forKey:@"read"];
+    [self.manager PATCH:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        success(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@", error);
+        failure(error);
+    }];
+    
+}
+
 
 
 #pragma mark - CRUD for Conversation

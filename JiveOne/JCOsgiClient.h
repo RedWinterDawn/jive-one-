@@ -57,6 +57,9 @@
 - (void) DeleteVoicemail:(Voicemail*)voicemail sucess:(void (^)(id JSON))success
                  failure:(void (^)(NSError *err))failure;
 
+- (void) UpdateVoicemailToRead:(Voicemail*)voicemail success:(void (^)(id JSON))success
+                       failure:(void (^)(NSError *err))failure;
+
 #pragma mark - Update Oparations
 
 - (void) UpdatePresence:(JCPresenceType)presence success:(void (^)(BOOL updated))success failure:(void(^)(NSError *err))failure;
