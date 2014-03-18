@@ -7,7 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HPGrowingTextView.h"
+#import <MBContactPicker/MBContactPicker.h>
+#import "ContactGroup.h"
 
-@interface JCMessageViewController : UITableViewController
+@interface JCMessageViewController : UIViewController <MBContactPickerDelegate, MBContactPickerDataSource,
+HPGrowingTextViewDelegate, UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic) ClientEntities *person;
+@property (nonatomic) NSString *conversationId;
+@property (nonatomic) ContactGroup *contactGroup;
+@property (nonatomic) JCMessageType messageType;
 
 @end
