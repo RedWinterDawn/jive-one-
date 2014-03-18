@@ -74,3 +74,10 @@ typedef enum {
     JCPresenceTypeNone = -1
 } JCPresenceType;
 
+typedef enum {
+    JCExistingConversation,
+    JCNewConversation,
+    JCNewConversationWithEntity,
+    JCNewConversationWithGroup
+} JCMessageType;
+
