@@ -10,7 +10,7 @@
 #import "THContactPickerView.h"
 #import "ContactGroup.h"
 
-@interface JCConversationDetailViewController : UIViewController <UIActionSheetDelegate, UITextViewDelegate, THContactPickerDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface JCConversationDetailViewControllerOld : UIViewController <UIActionSheetDelegate, UITextViewDelegate, THContactPickerDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) THContactPickerView *contactPickerView;
 @property (nonatomic, strong) UITableView *tableView;

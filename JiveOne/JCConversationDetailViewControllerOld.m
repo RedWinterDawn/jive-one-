@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCConversationDetailViewController.h"
+#import "JCConversationDetailViewControllerOld.h"
 #import "ClientEntities.h"
 #import "JCEntryModel.h"
 #import "JCSocketDispatch.h"
@@ -16,7 +16,7 @@
 #import "ConversationEntry+Custom.h"
 
 
-@interface JCConversationDetailViewController ()
+@interface JCConversationDetailViewControllerOld ()
 {
     ClientEntities *me;
     UITextView *messageTextView;
@@ -26,7 +26,7 @@
 
 @end
 
-@implementation JCConversationDetailViewController
+@implementation JCConversationDetailViewControllerOld
 
 #define kKeyboardHeight 216.0
 
@@ -529,6 +529,8 @@
     
     [self.tableView reloadData];
 }
+
+
 
 #pragma mark - UITextViewDelegate
 
