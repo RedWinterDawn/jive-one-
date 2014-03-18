@@ -18,6 +18,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "JCOsgiClient.h"
 #import "Voicemail.h"
+#import "JCVoicemailCell.h"
 
 
 @interface JCVoicemailViewController ()
@@ -25,6 +26,7 @@
     ClientEntities *me;
 }
 
+@property (nonatomic,strong) JCVoicemailCell *currentVoicemailCell;
 @property (weak, nonatomic) JCOsgiClient *osgiClient;
 
 
@@ -77,6 +79,7 @@
     self.osgiClient = [JCOsgiClient sharedClient];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    [self setupTable];
     [self updateVoicemailData];
     
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc]
@@ -90,6 +93,15 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
+}
+
+- (void)setupTable
+{
+    UINib *voicemailNib = [UINib nibWithNibName:@"JCVoicemailCell" bundle:nil];
+    //Registers a nib object containing a cell with the table view under a specified identifier. (the line below)
+    [self.tableView registerNib:voicemailNib forCellReuseIdentifier:[[JCVoicemailCell class] reuseIdentifier]];
+
+    self.clearsSelectionOnViewWillAppear = NO;
 }
 
 - (void)updateVoicemailData
@@ -164,6 +176,43 @@
     return audioData = getVoicemailData(URLString);
 }
 
+
+/** Changes the currently selected voicemail cell - performing animations as appropriate */
+-(void)changeSelectedVoicemailCell:(JCVoicemailCell *)cell {
+    if (self.currentVoicemailCell.voicemailObject != cell.voicemailObject) {
+        NSMutableArray *reloadCells = [NSMutableArray arrayWithCapacity:2];
+        
+        // if there's a previous cell
+        if (self.currentVoicemailCell) {
+            JCVoicemailCell *cell2 = (JCVoicemailCell *)[self visibleCellForItem:self.currentVoicemailCell.voicemailObject];
+            // stop playing
+            [cell2 stop];
+            // and add it to the reload list
+            [reloadCells addObject:[self.tableView indexPathForCell:cell2]];
+        }
+        
+        // add new cell to the reload list
+        if (cell) {
+            [reloadCells addObject:[self.tableView indexPathForCell:cell]];
+        }
+        self.currentVoicemailCell = cell;
+        [self.tableView beginUpdates];
+        [self.tableView reloadRowsAtIndexPaths:reloadCells withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView endUpdates];
+    }
+}
+
+
+/** Returns the cell associated with the item, or nil if it is not visible */
+-(UITableViewCell *)visibleCellForItem:(Voicemail *)item {
+    for (JCVoicemailCell *cell in self.tableView.visibleCells) {
+        if (cell.voicemailObject==item) {
+            return cell;
+        }
+    }
+    return nil;
+}
+
 - (void)updateTable
 {
     
@@ -197,15 +246,60 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"vCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    cell.textLabel.text = ((Voicemail*)self.voicemails[indexPath.row]).callerId;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", ((Voicemail*)self.voicemails[indexPath.row]).duration];
-
+    static NSString *CellIdentifier = @"VoicemailCell";
+    JCVoicemailCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    [cell configureWithItem:(Voicemail*)self.voicemails[indexPath.row] andDelegate:self];
     
     return cell;
 }
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    Voicemail *item = [self itemAtIndexPath:indexPath];
+    BOOL selected = [self.currentVoicemailCell.voicemailObject isEqual:item];
+    CGFloat height = [JCVoicemailCell cellHeightForData:item selected:selected];
+    return height;
+}
+
+-(Voicemail *)itemAtIndexPath:(NSIndexPath *)indexPath {
+    return (Voicemail*)self.voicemails[indexPath.row];
+}
+
+
+#pragma mark - JCVoicemailCellDelegate
+-(void)voiceCellArchiveTapped:(JCVoicemailCell *)cell {
+}
+
+-(void)voiceCellInfoTapped:(JCVoicemailCell *)cell {
+}
+
+-(void)voiceCellPlayTapped:(JCVoicemailCell *)cell {
+    if (cell.isPlaying) {
+        [cell pause];
+    }
+    else {
+        [cell play];
+    }
+}
+
+-(void)voiceCellReplyTapped:(JCVoicemailCell *)cell {
+}
+
+-(void)voiceCellSpeakerTapped:(JCVoicemailCell *)cell {
+    cell.useSpeaker = !cell.useSpeaker;
+}
+
+-(void)voiceCellToggleTapped:(JCVoicemailCell *)cell {
+
+    // if a selected cell is not the actively selected cell
+    if (![cell.voicemailObject isEqual:self.currentVoicemailCell.voicemailObject]) {
+        [self changeSelectedVoicemailCell:cell];
+    }// if the selected cell is the actively selected cell
+    else {
+        [self changeSelectedVoicemailCell:nil];
+    }
+}
+
+
 
 
 //// Override to support conditional editing of the table view.
