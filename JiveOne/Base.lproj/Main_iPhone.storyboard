@@ -207,7 +207,6 @@
                                             </state>
                                             <connections>
                                                 <action selector="startChat:" destination="PiD-ab-JdW" eventType="touchUpInside" id="q5P-7J-jdq"/>
-                                                <segue destination="lgc-CA-EPx" kind="push" identifier="startChatDirectoryDetail" id="Gny-mL-fzc"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -269,6 +268,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="Ndo-jy-8em"/>
+                    <connections>
+                        <segue destination="grR-ct-hD2" kind="push" identifier="StartMessageSegue" id="SHs-Ey-4vc"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3x1-kR-aGn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -387,11 +389,7 @@
                         </prototypes>
                     </tableView>
                     <navigationItem key="navigationItem" title="Conversations" id="xnl-54-rzv">
-                        <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="86T-MH-FVP">
-                            <connections>
-                                <action selector="refreshConversations:" destination="Iav-LH-b6F" id="mMx-hZ-I30"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="0sL-Sm-Thl"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="rOk-sd-Q2j">
                             <connections>
                                 <action selector="startNewConversation:" destination="Iav-LH-b6F" id="lb2-Vi-3uj"/>
@@ -399,17 +397,17 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="lgc-CA-EPx" kind="push" identifier="ChatDetailSegue" id="OX2-kw-n4m"/>
+                        <segue destination="grR-ct-hD2" kind="push" identifier="MessageSegue" id="q8f-7n-404"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iQK-UU-6cd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1067" y="518"/>
         </scene>
-        <!--Conversation Detail View Controller-->
+        <!--Conversation Detail View Controller Old-->
         <scene sceneID="JqD-sP-EgY">
             <objects>
-                <viewController id="lgc-CA-EPx" customClass="JCConversationDetailViewController" sceneMemberID="viewController">
+                <viewController id="lgc-CA-EPx" customClass="JCConversationDetailViewControllerOld" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="U2R-Kc-Nzi"/>
                         <viewControllerLayoutGuide type="bottom" id="Q2f-0k-hMq"/>
@@ -423,7 +421,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="es7-U0-yQv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1535" y="518"/>
+            <point key="canvasLocation" x="2383" y="518"/>
         </scene>
         <!--Navigation Controller - Conversations-->
         <scene sceneID="7yR-ZU-bxo">
@@ -802,7 +800,7 @@
                                 <rect key="frame" x="20" y="263" width="285" height="119"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.25" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                <string key="text">DISCLAIMER: This is a beta feature that is in test. Translation is not guaranteed to be accurate. In fact, substantial corrections might be needed. Please review the message text before issuing the alert. </string>
+                                <string key="text">DISCLAIMER: This is a beta feature that is in test. Translation is not guaranteed to be accurate. In fact, substantial corrections might be needed. Please review the message text before sending it.</string>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -827,6 +825,46 @@
             </objects>
             <point key="canvasLocation" x="1535" y="1219"/>
         </scene>
+        <!--Message View Controller-->
+        <scene sceneID="pIg-xh-lWm">
+            <objects>
+                <viewController id="grR-ct-hD2" customClass="JCMessageViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="45i-vb-Or9"/>
+                        <viewControllerLayoutGuide type="bottom" id="eLp-wN-T6B"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="NEw-aT-Mpn">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WZL-rz-kZ6" customClass="MBContactPicker">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="31"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="31" id="JJ0-Bx-QhY"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" id="yyC-xi-QRV">
+                        <barButtonItem key="rightBarButtonItem" title="Toggle" id="Bv6-qC-OvO">
+                            <connections>
+                                <action selector="toggleView:" destination="grR-ct-hD2" id="hBz-Mj-sqc"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="contactPickerView" destination="WZL-rz-kZ6" id="vNd-Xj-r0d"/>
+                        <outlet property="contactPickerViewHeightConstraint" destination="JJ0-Bx-QhY" id="0T9-KZ-wRa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cT4-dK-Zob" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1535" y="518"/>
+        </scene>
     </scenes>
     <resources>
         <image name="AccontTab" width="40" height="40"/>
@@ -840,6 +878,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Gny-mL-fzc"/>
+        <segue reference="SHs-Ey-4vc"/>
     </inferredMetricsTieBreakers>
 </document>
