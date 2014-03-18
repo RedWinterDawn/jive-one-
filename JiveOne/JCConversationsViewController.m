@@ -11,7 +11,7 @@
 #import "JCEntryModel.h"
 #import "ClientEntities.h"
 #import <SDWebImage/UIImageView+WebCache.h>
-#import "JCConversationDetailViewController.h"
+#import "JCMessageViewController.h"
 #import "ConversationEntry.h"
 #import "JCConversationTableViewCell.h"
 @interface JCConversationsViewController ()
@@ -79,7 +79,7 @@ static NSString *CellIdentifier = @"ConversationCell";
 - (IBAction)startNewConversation:(id)sender {
     
     
-    [self performSegueWithIdentifier:@"ChatDetailSegue" sender:kNewConversation];
+    [self performSegueWithIdentifier:@"MessageSegue" sender:kNewConversation];
 }
 
 
@@ -221,7 +221,7 @@ static NSString *CellIdentifier = @"ConversationCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self performSegueWithIdentifier:@"ChatDetailSegue" sender:indexPath];
+    [self performSegueWithIdentifier:@"MessageSegue" sender:indexPath];
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -331,12 +331,13 @@ static NSString *CellIdentifier = @"ConversationCell";
         
         NSString *title = cell.conversationTitle.text;
         
+        [segue.destinationViewController setMessageType:JCExistingConversation];
         [segue.destinationViewController setConversationId:cell.conversation.conversationId];
         [segue.destinationViewController setTitle:title];
         
     }
     else if ([sender isKindOfClass:[NSString class]]) {
-        [segue.destinationViewController setTitle:@"New Conversation"];
+        [segue.destinationViewController setMessageType:JCNewConversation];
     }
     [segue.destinationViewController setHidesBottomBarWhenPushed:YES];
 }

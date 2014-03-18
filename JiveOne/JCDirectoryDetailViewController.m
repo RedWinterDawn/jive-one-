@@ -8,6 +8,7 @@
 
 #import "JCDirectoryDetailViewController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "JCMessageViewController.h"
 #import "Company.h"
 
 
@@ -118,15 +119,16 @@
 
 // This button created in case we need to call methods in conjunction with starting a chat from directory detail view
 - (IBAction)startChat:(id)sender {
-    NSLog(@"Start Chat button pressed");
+    [self performSegueWithIdentifier:@"StartMessageSegue" sender:nil];
 }
 
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
-    if ([[segue identifier] isEqualToString:@"startChatDirectoryDetail"]) {
+    if ([[segue identifier] isEqualToString:@"StartMessageSegue"]) {
         if (self.person) {
+            [segue.destinationViewController setMessageType:JCNewConversationWithEntity];
             [segue.destinationViewController setPerson:self.person];
             
        //  an attempt to change the title of the chat to the person's name - but this just updates the nav bar button
