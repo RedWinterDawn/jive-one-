@@ -253,14 +253,21 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-
-    return self.voicemails.count;
+    NSPredicate *newPred = [NSPredicate predicateWithFormat:@"read = 0"];
+    NSArray* newVoicemails = [self.voicemails filteredArrayUsingPredicate:newPred];
+    if(section==0)//new
+    {
+        return newVoicemails.count;
+    }
+    else{
+        return (self.voicemails.count-newVoicemails.count);
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -270,6 +277,24 @@
     [cell configureWithItem:(Voicemail*)self.voicemails[indexPath.row] andDelegate:self];
     
     return cell;
+}
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSString *sectionName;
+    switch (section)
+    {
+        case 0:
+            sectionName = NSLocalizedString(@"New Voicemail", @"mySectionName");
+            break;
+        case 1:
+            sectionName = NSLocalizedString(@"Old Voicemail", @"myOtherSectionName");
+            break;
+            // ...
+        default:
+            sectionName = @"";
+            break;
+    }
+    return sectionName;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

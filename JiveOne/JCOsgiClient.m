@@ -376,7 +376,7 @@
     [_tempManager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         success(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@",failure);
+        NSLog(@"%@",error);
         failure(error);
     }];
 }
