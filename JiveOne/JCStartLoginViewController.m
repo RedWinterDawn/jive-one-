@@ -262,6 +262,10 @@
         [self fetchPresence];
     } failure:^(NSError *err) {
         [self hideHud];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Server Unavailable" message:@"We could not connect to the server at this time. Please try again" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        
+        [alert show];
+        [[JCAuthenticationManager sharedInstance] logout:self];
     }];
 }
 

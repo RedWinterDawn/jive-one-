@@ -156,6 +156,7 @@
             self.title = self.person.firstLastName;
             [self.selectedContacts addObject:self.person];
             [self checkForConversationWithEntities:self.selectedContacts];
+            [textView becomeFirstResponder];
             
             break;
         }
