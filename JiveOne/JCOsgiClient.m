@@ -632,39 +632,37 @@
 
 - (ClientEntities *)addEntity:(NSDictionary*)entity me:(NSString *)me
 {
-    
     ClientEntities *c_ent = nil;
-    NSString *entityId = entity[@"id"];
-    NSArray *result = [ClientEntities MR_findByAttribute:@"entityId" withValue:entityId];
-    
-    if (result.count > 0) {
-        c_ent = result[0];
-        return [self updateEntities:c_ent withDictionary:entity];
-    }
-    else {
-        c_ent = [ClientEntities MR_createInContext:localContext];
-        c_ent.lastModified = [entity objectForKey:@"lastModified"];
-        c_ent.externalId = [entity objectForKey:@"externalId"];
-        c_ent.presence = [entity objectForKey:@"presence"];
-        c_ent.resourceGroupName = [entity objectForKey:@"company"];
-        c_ent.tags = [entity objectForKey:@"tags"];
-        c_ent.location = [entity objectForKey:@"location"];
-        c_ent.firstName = [[entity objectForKey:@"name"] objectForKey:@"first"];
-        c_ent.lastName = [[entity objectForKey:@"name"] objectForKey:@"last"];
-        c_ent.lastFirstName = [[entity objectForKey:@"name"] objectForKey:@"lastFirst"];
-        c_ent.firstLastName = [[entity objectForKey:@"name"] objectForKey:@"firstLast"];
-        c_ent.groups = [entity objectForKey:@"groups"];
-        c_ent.urn = [entity objectForKey:@"urn"];
-        c_ent.id = [entity objectForKey:@"id"];
-        c_ent.entityId = [entity objectForKey:@"id"];
-        c_ent.me = [NSNumber numberWithBool:[c_ent.entityId isEqualToString:me]];
-        c_ent.picture = [entity objectForKey:@"picture"];
-        c_ent.email = [entity objectForKey:@"email"];
+    @try {
         
-        ClientMeta *c_meta = [ClientMeta MR_createInContext:localContext];
+        NSString *entityId = entity[@"id"];
+        NSArray *result = [ClientEntities MR_findByAttribute:@"entityId" withValue:entityId];
         
-        if (!(entity[@"meta"] == [NSNull null])) {
+        if (result.count > 0) {
+            c_ent = result[0];
+            return [self updateEntities:c_ent withDictionary:entity];
+        }
+        else {
+            c_ent = [ClientEntities MR_createInContext:localContext];
+            c_ent.lastModified = [entity objectForKey:@"lastModified"];
+            c_ent.externalId = [entity objectForKey:@"externalId"];
+            c_ent.presence = [entity objectForKey:@"presence"];
+            c_ent.resourceGroupName = [entity objectForKey:@"company"];
+            c_ent.tags = [entity objectForKey:@"tags"];
+            c_ent.location = [entity objectForKey:@"location"];
+            c_ent.firstName = [[entity objectForKey:@"name"] objectForKey:@"first"];
+            c_ent.lastName = [[entity objectForKey:@"name"] objectForKey:@"last"];
+            c_ent.lastFirstName = [[entity objectForKey:@"name"] objectForKey:@"lastFirst"];
+            c_ent.firstLastName = [[entity objectForKey:@"name"] objectForKey:@"firstLast"];
+            c_ent.groups = [entity objectForKey:@"groups"];
+            c_ent.urn = [entity objectForKey:@"urn"];
+            c_ent.id = [entity objectForKey:@"id"];
+            c_ent.entityId = [entity objectForKey:@"id"];
+            c_ent.me = [NSNumber numberWithBool:[c_ent.entityId isEqualToString:me]];
+            c_ent.picture = [entity objectForKey:@"picture"];
+            c_ent.email = [entity objectForKey:@"email"];
             
+            ClientMeta *c_meta = [ClientMeta MR_createInContext:localContext];
             c_meta.entityId = entity[@"meta"][@"entity"];
             c_meta.lastModified = entity[@"meta"][@"lastModified"];
             c_meta.createDate = entity[@"meta"][@"createDate"];
@@ -676,11 +674,19 @@
             c_ent.entityMeta = c_meta;
             
             NSLog(@"id:%@ - _id:%@", [entity objectForKey:@"id"], [entity objectForKey:@"_id"]);
-            
-            [localContext MR_saveToPersistentStoreAndWait];
         }
-        return c_ent;
+        
     }
+    @catch (NSException *exception) {
+        NSLog(@"%@", exception);
+    }
+    @finally {
+        [localContext MR_saveToPersistentStoreAndWait];
+    }
+    
+        
+    return c_ent;
+    
 }
 
 - (ClientEntities *)updateEntities:(ClientEntities *)entity withDictionary:(NSDictionary *)dictionary
