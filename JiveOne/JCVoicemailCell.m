@@ -2,7 +2,7 @@
 //  JCVoiceMailCell.m
 //  Jive
 //
-//  Created by Aneil Mallavarapu on 10/19/13.
+//  Created by Doug Leonard on 4/18/14.
 //  Copyright (c) 2013 Jive Communications. All rights reserved.
 //
 
