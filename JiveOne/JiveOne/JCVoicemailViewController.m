@@ -19,7 +19,7 @@
 #import "JCOsgiClient.h"
 #import "Voicemail.h"
 #import "JCVoicemailCell.h"
-
+#import "MBProgressHUD.h"
 
 @interface JCVoicemailViewController ()
 {
@@ -131,7 +131,6 @@
                 aVoicemail.createdDate = [vmail[@"createdDate"] stringValue];
                 aVoicemail.duration = [NSNumber numberWithInteger:[vmail[@"length"] intValue]];
                 aVoicemail.voicemail = [NSData dataWithContentsOfURL:[NSURL URLWithString:vmail[@"file"]]];
-                [localContext MR_saveToPersistentStoreAndWait];
                 
             }else if(arr.count==1){
                 //fetch and set
@@ -143,10 +142,11 @@
             
             //modifiable attributes should be changed here
             aVoicemail.read = [NSNumber numberWithBool:[vmail[@"read"] boolValue]];//TODO make sure this works
+            [localContext MR_saveToPersistentStoreAndWait];
             [self.voicemails addObject:aVoicemail];
             
         }
-        NSLog(@"Currently %lu voicemails in core data", [Voicemail MR_findAll].count);
+        NSLog(@"Currently %lu voicemail(s) in core data", [Voicemail MR_findAll].count);
         [self.tableView reloadData];
     } failure:^(NSError *err) {
         //TODO: retry later
@@ -352,7 +352,17 @@
             
             //update view
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        } failure:^(NSError *err) {
+            
+            //toast user
+            MBProgressHUD *toast = [MBProgressHUD showHUDAddedTo:[[[UIApplication sharedApplication] windows] lastObject] animated:YES];
+            toast.mode = MBProgressHUDModeText;
+            toast.labelText = @"Successfully Deleted";
+            toast.userInteractionEnabled = YES;
+            toast.margin = 10.f;
+            toast.yOffset = 150.f;
+            [toast hide:YES afterDelay:2];
+            [toast show:YES];
+            } failure:^(NSError *err) {
             //alert user that deleting from server failed
             NSLog(@"%@",err);
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Deletion unsuccessful" message:@"Please try again when you have data connectivity" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
