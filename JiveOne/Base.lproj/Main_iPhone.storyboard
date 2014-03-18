@@ -389,7 +389,6 @@
                         </prototypes>
                     </tableView>
                     <navigationItem key="navigationItem" title="Conversations" id="xnl-54-rzv">
-                        <barButtonItem key="leftBarButtonItem" title="Item" id="0sL-Sm-Thl"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="rOk-sd-Q2j">
                             <connections>
                                 <action selector="startNewConversation:" destination="Iav-LH-b6F" id="lb2-Vi-3uj"/>
@@ -403,25 +402,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iQK-UU-6cd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1067" y="518"/>
-        </scene>
-        <!--Conversation Detail View Controller Old-->
-        <scene sceneID="JqD-sP-EgY">
-            <objects>
-                <viewController id="lgc-CA-EPx" customClass="JCConversationDetailViewControllerOld" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="U2R-Kc-Nzi"/>
-                        <viewControllerLayoutGuide type="bottom" id="Q2f-0k-hMq"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="nwh-PC-cHc">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="793-Aj-zJ4"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="es7-U0-yQv" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2383" y="518"/>
         </scene>
         <!--Navigation Controller - Conversations-->
         <scene sceneID="7yR-ZU-bxo">
@@ -878,6 +858,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="SHs-Ey-4vc"/>
+        <segue reference="q8f-7n-404"/>
     </inferredMetricsTieBreakers>
 </document>

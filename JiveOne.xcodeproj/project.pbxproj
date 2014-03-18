@@ -46,8 +46,6 @@
 		2751592018AD303500FD8D3F /* JCDirectoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751591E18AD303500FD8D3F /* JCDirectoryViewController.m */; };
 		2751592518AD32E500FD8D3F /* JCConversationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751592218AD32E500FD8D3F /* JCConversationsViewController.m */; };
 		2751592618AD32E500FD8D3F /* JCConversationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751592218AD32E500FD8D3F /* JCConversationsViewController.m */; };
-		2751592718AD32E500FD8D3F /* JCConversationDetailViewControllerOld.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751592418AD32E500FD8D3F /* JCConversationDetailViewControllerOld.m */; };
-		2751592818AD32E500FD8D3F /* JCConversationDetailViewControllerOld.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751592418AD32E500FD8D3F /* JCConversationDetailViewControllerOld.m */; };
 		2751592E18AD334E00FD8D3F /* JCEntryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751592B18AD334E00FD8D3F /* JCEntryModel.m */; };
 		2751592F18AD334E00FD8D3F /* JCEntryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751592B18AD334E00FD8D3F /* JCEntryModel.m */; };
 		2751593018AD334E00FD8D3F /* JCEntryMetaModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751592D18AD334E00FD8D3F /* JCEntryMetaModel.m */; };
@@ -165,8 +163,6 @@
 		2751591E18AD303500FD8D3F /* JCDirectoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDirectoryViewController.m; sourceTree = "<group>"; };
 		2751592118AD32E500FD8D3F /* JCConversationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCConversationsViewController.h; sourceTree = "<group>"; };
 		2751592218AD32E500FD8D3F /* JCConversationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCConversationsViewController.m; sourceTree = "<group>"; };
-		2751592318AD32E500FD8D3F /* JCConversationDetailViewControllerOld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCConversationDetailViewControllerOld.h; sourceTree = "<group>"; };
-		2751592418AD32E500FD8D3F /* JCConversationDetailViewControllerOld.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCConversationDetailViewControllerOld.m; sourceTree = "<group>"; };
 		2751592A18AD334E00FD8D3F /* JCEntryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCEntryModel.h; sourceTree = "<group>"; };
 		2751592B18AD334E00FD8D3F /* JCEntryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCEntryModel.m; sourceTree = "<group>"; };
 		2751592C18AD334E00FD8D3F /* JCEntryMetaModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCEntryMetaModel.h; sourceTree = "<group>"; };
@@ -348,8 +344,6 @@
 				2751592218AD32E500FD8D3F /* JCConversationsViewController.m */,
 				272F65E118D37602009BD7B3 /* JCMessageViewController.h */,
 				272F65E218D37602009BD7B3 /* JCMessageViewController.m */,
-				2751592318AD32E500FD8D3F /* JCConversationDetailViewControllerOld.h */,
-				2751592418AD32E500FD8D3F /* JCConversationDetailViewControllerOld.m */,
 				2751593218AD3BD500FD8D3F /* JCVoipViewController.h */,
 				2751593318AD3BD500FD8D3F /* JCVoipViewController.m */,
 			);
@@ -721,7 +715,6 @@
 				275413B318B2C349001DBA68 /* JCChatMessage.m in Sources */,
 				2751593018AD334E00FD8D3F /* JCEntryMetaModel.m in Sources */,
 				9135DE0018BBFC7A0052E998 /* JCVoicemailViewController.m in Sources */,
-				2751592718AD32E500FD8D3F /* JCConversationDetailViewControllerOld.m in Sources */,
 				2710E40F18CEC8C300152C91 /* ConversationEntry+Custom.m in Sources */,
 				2751591F18AD303500FD8D3F /* JCDirectoryViewController.m in Sources */,
 				F258589218BD3A420020AF34 /* JCDirectoryGroupViewController.m in Sources */,
@@ -750,7 +743,6 @@
 				9135DE0218BC00FD0052E998 /* JCDirectoryDetailTests.m in Sources */,
 				2751592F18AD334E00FD8D3F /* JCEntryModel.m in Sources */,
 				272B61DE18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */,
-				2751592818AD32E500FD8D3F /* JCConversationDetailViewControllerOld.m in Sources */,
 				275F4A8318AD0FBC00D2F069 /* JiveOneTests.m in Sources */,
 				2751592018AD303500FD8D3F /* JCDirectoryViewController.m in Sources */,
 				DDFFB60118D2284E00372019 /* JCVoicemailVCTests.m in Sources */,
