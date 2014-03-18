@@ -7,7 +7,10 @@
 //
 
 #import "MBContactModel.h"
+#import "ClientEntities.h"
 
 @interface JCContactModel : MBContactModel
+
+@property (nonatomic)ClientEntities *person;
 
 @end
