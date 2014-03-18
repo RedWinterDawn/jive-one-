@@ -662,20 +662,23 @@
         c_ent.email = [entity objectForKey:@"email"];
         
         ClientMeta *c_meta = [ClientMeta MR_createInContext:localContext];
-        c_meta.entityId = entity[@"meta"][@"entity"];
-        c_meta.lastModified = entity[@"meta"][@"lastModified"];
-        c_meta.createDate = entity[@"meta"][@"createDate"];
-        c_meta.pinnedActivityOrder = entity[@"meta"][@"pinnedActivityOrder"];
-        c_meta.activityOrder = entity[@"meta"][@"activityOrder"];
-        c_meta.urn = entity[@"meta"][@"urn"];
-        c_meta.metaId = entity[@"meta"][@"id"];
         
-        c_ent.entityMeta = c_meta;
-        
-        NSLog(@"id:%@ - _id:%@", [entity objectForKey:@"id"], [entity objectForKey:@"_id"]);
-        
-        [localContext MR_saveToPersistentStoreAndWait];
-        
+        if (!(entity[@"meta"] == [NSNull null])) {
+            
+            c_meta.entityId = entity[@"meta"][@"entity"];
+            c_meta.lastModified = entity[@"meta"][@"lastModified"];
+            c_meta.createDate = entity[@"meta"][@"createDate"];
+            c_meta.pinnedActivityOrder = entity[@"meta"][@"pinnedActivityOrder"];
+            c_meta.activityOrder = entity[@"meta"][@"activityOrder"];
+            c_meta.urn = entity[@"meta"][@"urn"];
+            c_meta.metaId = entity[@"meta"][@"id"];
+            
+            c_ent.entityMeta = c_meta;
+            
+            NSLog(@"id:%@ - _id:%@", [entity objectForKey:@"id"], [entity objectForKey:@"_id"]);
+            
+            [localContext MR_saveToPersistentStoreAndWait];
+        }
         return c_ent;
     }
 }
