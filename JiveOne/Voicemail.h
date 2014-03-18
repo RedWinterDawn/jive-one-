@@ -17,7 +17,7 @@
 @property (nonatomic, retain) NSString * extension;
 @property (nonatomic, retain) NSNumber * read;
 @property (nonatomic, retain) NSData * message;
-@property (nonatomic, retain) NSString * origdate;
+@property (nonatomic, retain) NSString * createdDate;
 @property (nonatomic, retain) NSString * urn;
 @property (nonatomic, retain) NSData * voicemail;
 @property (nonatomic, retain) NSString * file;

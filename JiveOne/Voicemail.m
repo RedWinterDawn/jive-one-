@@ -16,7 +16,7 @@
 @dynamic extension;
 @dynamic read;
 @dynamic message;
-@dynamic origdate;
+@dynamic createdDate;
 @dynamic urn;
 @dynamic voicemail;
 @dynamic file;

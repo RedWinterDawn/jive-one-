@@ -114,25 +114,23 @@
         NSLog(@"%@",JSON);
         NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
         
-        NSDictionary *voicemails = (NSDictionary*)JSON;
+        NSDictionary *voicemails = [(NSDictionary*)JSON objectForKey:@"entries"];
         
         for (NSDictionary* vmail in voicemails) {
             //only create/save to core data if this is a new voicemail
-            NSPredicate *pred = [NSPredicate predicateWithFormat:@"urn == %@", vmail[@"filePath"]];
+            NSPredicate *pred = [NSPredicate predicateWithFormat:@"urn == %@", vmail[@"urn"]];
             NSArray * arr = [Voicemail MR_findAllWithPredicate:pred];
             Voicemail *aVoicemail;
             if(arr.count==0){
                 //create and save
                 aVoicemail = [Voicemail MR_createInContext:localContext];
-                aVoicemail.urn = vmail[@"filePath"];
+                aVoicemail.urn = vmail[@"urn"];
                 
                 //non modifiable attributes go here
-                aVoicemail.callerId = vmail[@"callerid"];
-                aVoicemail.origdate = vmail[@"origdate"];
-                aVoicemail.duration = [NSNumber numberWithInteger:[vmail[@"duration"] intValue]];
-                
-                aVoicemail.voicemail = [self getVoiceMailDataUsingString:vmail[@"filePath"]];
-                
+                aVoicemail.callerId = vmail[@"callerId"];
+                aVoicemail.createdDate = [vmail[@"createdDate"] stringValue];
+                aVoicemail.duration = [NSNumber numberWithInteger:[vmail[@"length"] intValue]];
+                aVoicemail.voicemail = [NSData dataWithContentsOfURL:[NSURL URLWithString:vmail[@"file"]]];
                 [localContext MR_saveToPersistentStoreAndWait];
                 
             }else if(arr.count==1){
@@ -144,7 +142,7 @@
             }
             
             //modifiable attributes should be changed here
-//            aVoicemail.isRead = vmail[@"flag"];
+            aVoicemail.read = [NSNumber numberWithBool:[vmail[@"read"] boolValue]];//TODO make sure this works
             [self.voicemails addObject:aVoicemail];
             
         }

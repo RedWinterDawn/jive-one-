@@ -369,11 +369,8 @@
                             failure:(void (^)(NSError *err))failure
 {
     //leave this commented code here for when we have the api, it will be ready to go
-    //[self setRequestAuthHeader];
-    NSString *userId = entity.externalId;
-    //TODO:remove hardcoded externalId once api is available
-    userId = @"dleonard";
-    NSString * url = [NSString stringWithFormat:@"%@%@%@%@", [_tempManager baseURL], kAWSVoicemailRoute, userId, @"/voicemail.json"];
+    [self setRequestAuthHeader];
+    NSString * url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], kOsgiVoicemailRoute];
     NSLog(@"%@", url);
     
     [_tempManager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -387,7 +384,7 @@
                           failure:(void (^)(NSError *err))failure
 {
     [self setRequestAuthHeader];
-    NSString *url = [NSString stringWithFormat:@"%@%@", self.manager.baseURL, voicemail.urn];//TODO: match Jessie's api
+    NSString *url = [NSString stringWithFormat:@"%@%@", self.manager.baseURL, voicemail.urn];
     
     [_manager DELETE:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         success(responseObject);
