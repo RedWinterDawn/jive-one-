@@ -125,6 +125,7 @@
                 //create and save
                 aVoicemail = [Voicemail MR_createInContext:localContext];
                 aVoicemail.urn = vmail[@"filePath"];
+                
                 //non modifiable attributes go here
                 aVoicemail.callerId = vmail[@"callerid"];
                 aVoicemail.origdate = vmail[@"origdate"];
@@ -155,20 +156,40 @@
     }];
 }
 
+- (NSString*)getLocalVoicemailFilePathUsingURN:(NSString*) URN
+{
+    NSRange startRange = [URN rangeOfString:@"/voicemail"];
+    NSRange endRange = [URN rangeOfString:@".wav"];
+    NSString *filePath = @"";
+    if (startRange.location >= 0 && endRange.location >= 0) {
+        NSString *docsDir;
+        NSArray *dirPaths;
+        NSRange searchRange = NSMakeRange(startRange.location , ((endRange.length + endRange.location) - startRange.location));
+        dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        docsDir = [dirPaths objectAtIndex:0];
+        filePath = [URN substringWithRange:searchRange];
+        NSString *databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:filePath]];
+        
+        return databasePath;
+    }
+    return @"";
+}
+
 - (NSData*)getVoiceMailDataUsingString: (NSString*)URLString
 {
     NSData *audioData = [[NSData alloc]init];
     //TODO: Add Progress wheel of happiness
     NSData* (^getVoicemailData)(NSString*) = ^(NSString* path){
-        
         NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:path]];
         NSString *docsDir;
         NSArray *dirPaths;
-        
         dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         docsDir = [dirPaths objectAtIndex:0];
-        NSString *databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:@"VoicemailTest.wav"]];
-        [data writeToFile:databasePath atomically:YES];
+        
+        NSString *filePath = [self getLocalVoicemailFilePathUsingURN:path];
+        NSString *databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:filePath]];
+//        [data writeToFile:databasePath atomically:YES];
+        
         return data;
     };
     

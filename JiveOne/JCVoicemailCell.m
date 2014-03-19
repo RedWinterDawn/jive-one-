@@ -70,9 +70,9 @@
 
 #pragma mark - AVAudioPlayer
 -(void)setupAudioPlayer {
-    if (self.voicemailObject.message) {
+    if (self.voicemailObject.voicemail) {
         NSError *error;
-        self.audioPlayer = [[AVAudioPlayer alloc] initWithData:self.voicemailObject.message fileTypeHint:@"m4a" error:&error];
+        self.audioPlayer = [[AVAudioPlayer alloc] initWithData:self.voicemailObject.voicemail fileTypeHint:AVFileTypeWAVE error:&error];
         self.audioPlayer.delegate = self;
         _useSpeaker = NO;
         if (error) {
