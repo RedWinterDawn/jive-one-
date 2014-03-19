@@ -85,9 +85,11 @@
 }
 
 - (IBAction)showWebviewForLogin:(id)sender {
-    
-    
-    
+    [self refreshAuthenticationCredentials:nil];
+}
+
+- (void)showWebview
+{
     [UIView animateWithDuration:0.8
                           delay: 0.0
                         options: UIViewAnimationOptionCurveLinear
@@ -206,7 +208,8 @@
     if ([tokenData objectForKey:@"access_token"]) {
         NSString* token = [tokenData objectForKey:@"access_token"];
         [[JCAuthenticationManager sharedInstance] didReceiveAuthenticationToken:token];
-        [self tokenValidityPassed:token];
+        //[self tokenValidityPassed:token];
+        [self dismissWebviewForLogin];
     }
 }
 
@@ -218,7 +221,10 @@
 - (void)refreshAuthenticationCredentials:(NSNotification*)notification
 {
     AFNetworkReachabilityStatus status = [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
-    if (status == AFNetworkReachabilityStatusNotReachable || status == AFNetworkReachabilityStatusUnknown) {
+    if (status == AFNetworkReachabilityStatusReachableViaWiFi || status == AFNetworkReachabilityStatusReachableViaWWAN) {
+        [self showWebview];
+    }
+    else {
         NSString* token = [[JCAuthenticationManager sharedInstance] getAuthenticationToken];
         if (![self stringIsNilOrEmpty:token]) {
             [self tokenValidityPassed:notification];
@@ -229,11 +235,6 @@
             [alert show];
         }
     }
-    else {
-        [self showWebviewForLogin:nil];
-    }
-    
-    
 }
 
 -(BOOL)stringIsNilOrEmpty:(NSString*)aString {
@@ -289,11 +290,7 @@
     [[JCOsgiClient sharedClient] RetrieveClientEntitites:^(id JSON) {
         [self fetchPresence];
     } failure:^(NSError *err) {
-        [self hideHud];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Server Unavailable" message:@"We could not connect to the server at this time. Please try again" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-        
-        [alert show];
-        [[JCAuthenticationManager sharedInstance] logout:self];
+        [self errorInitializingApp];
     }];
 }
 
@@ -302,7 +299,7 @@
     [[JCOsgiClient sharedClient] RetrieveEntitiesPresence:^(BOOL updated) {
         [self fetchConversations];
     } failure:^(NSError *err) {
-        [self hideHud];
+        [self errorInitializingApp];
     }];
 }
 
@@ -311,7 +308,7 @@
     [[JCOsgiClient sharedClient] RetrieveConversations:^(id JSON) {
         [self fetchCompany];
     } failure:^(NSError *err) {
-        [self hideHud];
+        [self errorInitializingApp];
     }];
 }
 
@@ -338,9 +335,18 @@
         
     } failure:^(NSError *err) {
         NSLog(@"%@", err);
-        [self hideHud];
+        [self errorInitializingApp];
     }];
 
+}
+
+- (void)errorInitializingApp
+{
+    [self hideHud];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Server Unavailable" message:@"We could not connect to the server at this time. Please try again" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+    
+    [alert show];
+    [[JCAuthenticationManager sharedInstance] logout:self];
 }
 
 #pragma mark Base64 Util

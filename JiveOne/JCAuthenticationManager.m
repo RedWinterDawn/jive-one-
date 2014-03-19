@@ -10,6 +10,7 @@
 #import "JCOsgiClient.h"
 #import "JCAppDelegate.h"
 #import "JCAccountViewController.h"
+#import "JCStartLoginViewController.h"
 
 @implementation JCAuthenticationManager
 
@@ -75,6 +76,8 @@
 //    }
     
     JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
+    
+    if(![viewController isKindOfClass:[JCStartLoginViewController class]]){
     [UIView transitionWithView:delegate.window
                       duration:0.5
                        options:UIViewAnimationOptionTransitionFlipFromLeft
@@ -82,6 +85,7 @@
                         [delegate changeRootViewController:JCRootLoginViewController];
                     }
                     completion:nil];
+    }
 }
 
 @end
