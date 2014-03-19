@@ -12,6 +12,8 @@
 #import "JCVersionTracker.h"
 #import "JCOsgiClient.h"
 #import "ClientEntities.h"
+#import "NotificationView.h"
+#import "JCStartLoginViewController.h"
 
 
 
@@ -38,7 +40,15 @@
                                                                            UIRemoteNotificationTypeSound)];
     
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
+
+    // add notification view to parent navigation controller
+    
+    
+        //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+    JCStartLoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"JCStartLoginViewController"];
+    [self.window setRootViewController:loginVC];
     
     return YES;
 }
@@ -61,7 +71,7 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    
+    [[NotificationView sharedInstance] didChangeConnection:nil];
     [self startSocket];
 }
 
@@ -158,9 +168,10 @@
 {
     AFNetworkReachabilityStatus status = [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
     switch (status) {
-        case AFNetworkReachabilityStatusNotReachable:
+        case AFNetworkReachabilityStatusNotReachable: {
             NSLog(@"No Internet Connection");
             break;
+        }
         case AFNetworkReachabilityStatusReachableViaWiFi:
             NSLog(@"WIFI");
             break;
@@ -175,6 +186,19 @@
     }
 }
 
+#pragma mark - Change Root ViewController
+- (void)changeRootViewController
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+    UITabBarController *tabVC = [storyboard instantiateViewControllerWithIdentifier:@"UITabBarController"];
+    [self.window setRootViewController:tabVC];  
+    
+    UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
+    //UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:tabController];
+    
+    [[NotificationView sharedInstance] showPanelInView:tabController.view];
+    [[NotificationView sharedInstance] didChangeConnection:nil];
+}
 
 
 @end
