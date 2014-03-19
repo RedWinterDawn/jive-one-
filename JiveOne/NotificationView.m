@@ -169,7 +169,7 @@ CGFloat panelWidth = 320;
     [self.cancelButton addTarget:self action:@selector(cancelUpload:) forControlEvents:UIControlEventTouchUpInside];
     self.cancelButton.hidden = NO;
     
-    [self.cancelButton setImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
+    [self.cancelButton setImage:[UIImage imageNamed:@"close_notification"] forState:UIControlStateNormal];
     [self.cancelButton sizeToFit];
     self.cancelButton.center = CGPointMake(panelWidth - 18, panelHeight / 2);
     [self addSubview:self.cancelButton];
