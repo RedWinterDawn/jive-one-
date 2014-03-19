@@ -19,6 +19,7 @@ CGFloat panelWidth = 320;
                                                  selector:@selector(handleDidChangeStatusBarOrientationNotification:)
                                                      name:UIApplicationDidChangeStatusBarOrientationNotification
                                                    object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
         
         panelWidth = [UIScreen mainScreen].bounds.size.width;
         
@@ -45,6 +46,11 @@ CGFloat panelWidth = 320;
         [self hide];
     }
     return self;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:AFNetworkingReachabilityDidChangeNotification object:nil];
 }
 
 - (void)handleDidChangeStatusBarOrientationNotification:(NSNotification *)notification;
@@ -93,9 +99,7 @@ CGFloat panelWidth = 320;
     [self show];
 }
 
-- (void)show {
-    
-    
+- (void)show {   
     self.frame = CGRectMake(0, panelHeight + 20, panelWidth, panelHeight);
     CATransition *transition = [CATransition animation];
     transition.duration = 0.75;
@@ -120,7 +124,6 @@ CGFloat panelWidth = 320;
     
     dispatch_once(&pred, ^{
         sharedOverlay = [[NotificationView alloc] init];
-        [[NSNotificationCenter defaultCenter] addObserver:sharedOverlay selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
     });
     
     return sharedOverlay;
@@ -145,6 +148,7 @@ CGFloat panelWidth = 320;
             break;
         default:
             NSLog(@"Unkown network status");
+            [self showWithTitle:NSLocalizedString(@"No Connection", @"No Connection") snippet:NSLocalizedString(@"please vefify your internet connection", @"please verify your internet connection") showProgress:NO];
             break;
             
             [[AFNetworkReachabilityManager sharedManager] startMonitoring];
@@ -185,7 +189,7 @@ CGFloat panelWidth = 320;
     self.waitingView.center = CGPointMake(24, panelHeight / 2);
     [_waitingView startAnimating];
 
-   [view addSubview:self];
+    [view addSubview:self];
 }
 
 - (void)hide {

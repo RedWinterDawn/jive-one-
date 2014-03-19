@@ -30,6 +30,8 @@
 
 - (void)hide;
 
+- (void)didChangeConnection:(NSNotification *)notification;
+
 @end
 
 @protocol ICProgressPanelDelegate <NSObject>
