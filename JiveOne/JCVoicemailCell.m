@@ -31,7 +31,7 @@
     
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.username.text = item.callerId;
-    self.creationTime.text = item.origdate;
+    self.creationTime.text = item.createdDate;
     self.voicemailObject = item;
     self.delegate = delegate;
     
