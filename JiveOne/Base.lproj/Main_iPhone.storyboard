@@ -454,7 +454,7 @@
         <scene sceneID="Sds-P7-Vc1">
             <objects>
                 <navigationController title="Voicemail" definesPresentationContext="YES" id="XFb-KJ-zT0" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Voicemail" id="Q9Q-II-fDb"/>
+                    <tabBarItem key="tabBarItem" title="Voicemail" image="vmail.png" id="Q9Q-II-fDb"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="wn2-pa-han">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -835,6 +835,7 @@
         <image name="Default.png" width="320" height="480"/>
         <image name="DirectoryTab" width="40" height="40"/>
         <image name="RecentTab" width="40" height="40"/>
+        <image name="vmail.png" width="32" height="32"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
