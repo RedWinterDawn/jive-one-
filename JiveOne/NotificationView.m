@@ -1,14 +1,13 @@
 //
 //  StatusPanel.m
-//  CRMA-Slide
 //
 //  Created by Eduardo Gueiros on 9/11/13.
 //  Copyright (c) 2013 Eduardo Gueiros. All rights reserved.
 //
 
-#import "StatusPanel.h"
+#import "NotificationView.h"
 
-@implementation StatusPanel
+@implementation NotificationView
 
 CGFloat panelHeight = 44;
 CGFloat panelWidth = 320;
@@ -28,13 +27,11 @@ CGFloat panelWidth = 320;
         
                
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 20)];
-        //_titleLabel.center = CGPointMake(panelWidth / 2, (panelHeight / 2) - 12);
         _titleLabel.font = [UIFont systemFontOfSize:17.0f];
         _titleLabel.backgroundColor = [UIColor clearColor];
         _titleLabel.textColor = [UIColor whiteColor];
         
         _snippetLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 20)];
-        //_snippetLabel.center = CGPointMake(panelWidth / 2, (panelHeight / 2) + 10);
         _snippetLabel.font = [UIFont systemFontOfSize:12.0f];
         _snippetLabel.backgroundColor = [UIColor clearColor];
         _snippetLabel.textColor = [UIColor whiteColor];
@@ -45,7 +42,7 @@ CGFloat panelWidth = 320;
         [self.waitingView sizeToFit];
         [self refreshView];
         [self addSubview: self.waitingView];
-        [self show];
+        [self hide];
     }
     return self;
 }
@@ -99,7 +96,7 @@ CGFloat panelWidth = 320;
 - (void)show {
     
     
-    self.frame = CGRectMake(0, 0, panelWidth, panelHeight);
+    self.frame = CGRectMake(0, panelHeight + 20, panelWidth, panelHeight);
     CATransition *transition = [CATransition animation];
     transition.duration = 0.75;
     transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
@@ -117,15 +114,41 @@ CGFloat panelWidth = 320;
     [self performSelector:@selector(hide) withObject:nil afterDelay:1];
 }
 
-+ (StatusPanel *)sharedInstance {
++ (NotificationView *)sharedInstance {
     static dispatch_once_t pred;
-    __strong static StatusPanel *sharedOverlay = nil;
+    __strong static NotificationView *sharedOverlay = nil;
     
     dispatch_once(&pred, ^{
-        sharedOverlay = [[StatusPanel alloc] init];
+        sharedOverlay = [[NotificationView alloc] init];
+        [[NSNotificationCenter defaultCenter] addObserver:sharedOverlay selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
     });
     
     return sharedOverlay;
+}
+
+
+#pragma mark - Reachability
+- (void)didChangeConnection:(NSNotification *)notification
+{
+    AFNetworkReachabilityStatus status = [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
+    switch (status) {
+        case AFNetworkReachabilityStatusNotReachable:
+            [self showWithTitle:NSLocalizedString(@"No Connection", @"No Connection") snippet:NSLocalizedString(@"please vefify your internet connection", @"please verify your internet connection") showProgress:NO];
+            break;
+        case AFNetworkReachabilityStatusReachableViaWiFi:
+            NSLog(@"WIFI");
+            [self hide];
+            break;
+        case AFNetworkReachabilityStatusReachableViaWWAN:
+            NSLog(@"3G");
+            [self hide];
+            break;
+        default:
+            NSLog(@"Unkown network status");
+            break;
+            
+            [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+    }
 }
 
 - (void)cancelUpload:(id)sender {
@@ -146,7 +169,7 @@ CGFloat panelWidth = 320;
     [self.cancelButton addTarget:self action:@selector(cancelUpload:) forControlEvents:UIControlEventTouchUpInside];
     self.cancelButton.hidden = NO;
     
-    [self.cancelButton setImage:[UIImage imageNamed:@"upload-delete"] forState:UIControlStateNormal];
+    [self.cancelButton setImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
     [self.cancelButton sizeToFit];
     self.cancelButton.center = CGPointMake(panelWidth - 18, panelHeight / 2);
     [self addSubview:self.cancelButton];
