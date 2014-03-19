@@ -127,6 +127,12 @@
     [self setupView];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self subscribeToConversationNotification:NO];
+}
+
 - (void) setupView
 {
     switch (_messageType) {
@@ -134,6 +140,7 @@
         case JCExistingConversation: {
             
             self.contactPickerView.hidden = YES;
+            [self subscribeToConversationNotification:YES];
             conversationEntries = [NSMutableArray arrayWithArray:[ConversationEntry RetrieveConversationEntryById:_conversationId]];
             
             if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
@@ -260,6 +267,7 @@
     if (_conversationId) {
         conversationEntries = [NSMutableArray arrayWithArray:[ConversationEntry MR_findByAttribute:@"conversationId" withValue:_conversationId andOrderBy:@"lastModified" ascending:YES]];
         [self.tableView reloadData];
+        [self scrollTableviewToBottom];
     }
 }
 
