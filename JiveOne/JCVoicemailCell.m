@@ -26,16 +26,12 @@
 }
 
 -(void)configureWithItem:(Voicemail *)item andDelegate:(id)delegate{
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleTapped:)];
+    [self addGestureRecognizer:tapGestureRecognizer];
+    
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.username.text = item.callerId;
-    
-    // Relative date formatting:  e.g., Today, 1:55 PM
-//    NSDateFormatter *df = [[NSDateFormatter alloc] init];
-//    df.dateStyle = NSDateFormatterMediumStyle;
-//    df.timeStyle = NSDateFormatterShortStyle;
-//    df.doesRelativeDateFormatting = YES;
     self.creationTime.text = item.origdate;
-    
     self.voicemailObject = item;
     self.delegate = delegate;
     
@@ -155,12 +151,11 @@
     [self setupSpeaker:useSpeaker];
 }
 
-#pragma mark - Actions
--(IBAction)toggleTapped:(id)sender {
-    
+-(void)toggleTapped:(id)sender {
     [self.delegate voiceCellToggleTapped:self];
 }
 
+#pragma mark - Actions
 -(IBAction)playTapped:(id)sender {
     
     [self.delegate voiceCellPlayTapped:self];

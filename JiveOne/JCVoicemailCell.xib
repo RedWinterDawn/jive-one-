@@ -84,16 +84,6 @@
                             <action selector="archiveTapped:" destination="O09-5V-FRi" eventType="touchUpInside" id="myF-AL-MSi"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U6W-IF-zxp" userLabel="expandToggleButton">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="52"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <state key="normal">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <connections>
-                            <action selector="toggleTapped:" destination="O09-5V-FRi" eventType="touchUpInside" id="p50-dH-7Hf"/>
-                        </connections>
-                    </button>
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lTo-3o-o9u" userLabel="speakerButton">
                         <rect key="frame" x="280" y="48" width="45" height="46"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -121,7 +111,6 @@
                 <outlet property="creationTime" destination="nIe-cq-PrP" id="3i7-Mt-aHq"/>
                 <outlet property="duration" destination="XyY-49-Zkf" id="OzS-DH-8Ov"/>
                 <outlet property="elapsed" destination="169-ch-QZb" id="jeM-4X-ebH"/>
-                <outlet property="expandToggleButton" destination="U6W-IF-zxp" id="H9f-M6-7IZ"/>
                 <outlet property="infoButton" destination="NL6-Qi-wGf" id="eOO-KL-buB"/>
                 <outlet property="playButton" destination="55j-Qi-OwJ" id="5yt-MV-tFo"/>
                 <outlet property="progressView" destination="Fyu-27-6bd" id="aAc-gg-Y5O"/>
