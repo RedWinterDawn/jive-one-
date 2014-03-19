@@ -55,7 +55,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
         [self loadLocalDirectory];
     }
         //TODO: disable search bar if no objects in clientEntitiesArray
-    [[NotificationView sharedInstance] showPanelInView:self.view];
+    //[[NotificationView sharedInstance] showPanelInView:self.view];
     //[[StatusPanel sharedInstance] showWithTitle:@"no internet" snippet:@"no internet" showProgress:NO];
     //[[StatusPanel sharedInstance] show];
 }

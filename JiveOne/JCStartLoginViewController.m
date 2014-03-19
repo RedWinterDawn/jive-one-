@@ -10,8 +10,10 @@
 #import "JCAuthenticationManager.h"
 #import "JCOsgiClient.h"
 #import "ClientEntities.h"
+#import "Company.h"
 #import "JCVersionTracker.h"
 #import <MBProgressHUD/MBProgressHUD.h>
+#import "JCAppDelegate.h"
 
 @interface JCStartLoginViewController ()
 {
@@ -85,6 +87,7 @@
 - (IBAction)showWebviewForLogin:(id)sender {
     
     
+    
     [UIView animateWithDuration:0.8
                           delay: 0.0
                         options: UIViewAnimationOptionCurveLinear
@@ -118,7 +121,7 @@
                          
                      }
                      completion:^(BOOL finished) {
-                         //NSNotification *notification = [NSNotification notificationWithName:Nil object:[NSNumber numberWithBool:fromLogin]];
+                         //NSNotification *notification = [NSNotification notificationWithName:Nil object:[NSNumber numberWithBool:YES]];
                          [self tokenValidityPassed:nil];
                      }];
 }
@@ -203,7 +206,7 @@
     if ([tokenData objectForKey:@"access_token"]) {
         NSString* token = [tokenData objectForKey:@"access_token"];
         [[JCAuthenticationManager sharedInstance] didReceiveAuthenticationToken:token];
-        [self dismissWebviewForLogin];
+        [self tokenValidityPassed:token];
     }
 }
 
@@ -214,7 +217,33 @@
 
 - (void)refreshAuthenticationCredentials:(NSNotification*)notification
 {
-    [self showWebviewForLogin:nil];
+    AFNetworkReachabilityStatus status = [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
+    if (status == AFNetworkReachabilityStatusNotReachable || status == AFNetworkReachabilityStatusUnknown) {
+        NSString* token = [[JCAuthenticationManager sharedInstance] getAuthenticationToken];
+        if (![self stringIsNilOrEmpty:token]) {
+            [self tokenValidityPassed:notification];
+        }
+        else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Server Unavailable" message:@"We could not connect to the server at this time. Please try again" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            
+            [alert show];
+        }
+    }
+    else {
+        [self showWebviewForLogin:nil];
+    }
+    
+    
+}
+
+-(BOOL)stringIsNilOrEmpty:(NSString*)aString {
+    return !(aString && aString.length);
+}
+
+- (void)goToApplication
+{
+    JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
+    [delegate changeRootViewController];
 }
 
 - (void)tokenValidityPassed:(NSNotification*)notification
@@ -232,7 +261,6 @@
             //if (fromLogin) {
             [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil) detail:NSLocalizedString(@"Building Database", nil)];
             [self fetchDataForFirstTime];
-            //}w
         }
         else {
             NSArray *dataCheck = [ClientEntities MR_findAll];
@@ -243,7 +271,7 @@
             }
             else {
                 [self hideHud];
-                [self performSegueWithIdentifier:@"ApplicationSegue" sender:nil];
+                [self goToApplication];
             }
         }
     }
@@ -272,12 +300,47 @@
 - (void)fetchPresence
 {
     [[JCOsgiClient sharedClient] RetrieveEntitiesPresence:^(BOOL updated) {
-        [self hideHud];
-        
-        [self performSegueWithIdentifier:@"ApplicationSegue" sender:nil];
+        [self fetchConversations];
     } failure:^(NSError *err) {
         [self hideHud];
     }];
+}
+
+- (void)fetchConversations
+{
+    [[JCOsgiClient sharedClient] RetrieveConversations:^(id JSON) {
+        [self fetchCompany];
+    } failure:^(NSError *err) {
+        [self hideHud];
+    }];
+}
+
+- (void)fetchCompany
+{
+    NSString* company = [[JCOmniPresence sharedInstance] me].resourceGroupName;
+    [[JCOsgiClient sharedClient] RetrieveMyCompany:company:^(id JSON) {
+        
+        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
+        Company *company = [Company MR_createInContext:localContext];
+        company.lastModified = JSON[@"lastModified"];
+        company.pbxId = JSON[@"pbxId"];
+        company.timezone = JSON[@"timezone"];
+        company.name = JSON[@"name"];
+        company.urn = JSON[@"urn"];
+        company.companyId = JSON[@"id"];
+        
+        [[JCOmniPresence sharedInstance] me].entityCompany = company;
+        
+        [localContext MR_saveToPersistentStoreAndWait];
+        
+        [self hideHud];
+        [self goToApplication];
+        
+    } failure:^(NSError *err) {
+        NSLog(@"%@", err);
+        [self hideHud];
+    }];
+
 }
 
 #pragma mark Base64 Util
