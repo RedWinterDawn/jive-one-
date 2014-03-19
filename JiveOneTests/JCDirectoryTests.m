@@ -112,7 +112,7 @@
     ClientEntities *secondContact = self.JCDVC.clientEntitiesArray[0][1];
     
     //calcuate how many times that name exists in clientEntitiesArray, so that we know how many to expect in clientEntitiesSearchArray
-    int aSectionCount = ((NSArray*)self.JCDVC.clientEntitiesArray[0]).count;
+    int aSectionCount = (int)((NSArray*)self.JCDVC.clientEntitiesArray[0]).count;
     
     int nameCount = 0;
     for (int i =0; i< aSectionCount; i++) {
@@ -140,4 +140,6 @@
     
     
 }
+
+
 @end
