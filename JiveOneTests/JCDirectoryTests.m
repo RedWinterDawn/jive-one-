@@ -112,6 +112,7 @@
     ClientEntities *secondContact = self.JCDVC.clientEntitiesArray[0][1];
     
     //calcuate how many times that name exists in clientEntitiesArray, so that we know how many to expect in clientEntitiesSearchArray
+    // This line had a warning that was causing the test to fail on certain devices. (int) casts result as proper type, passes test now
     int aSectionCount = (int)((NSArray*)self.JCDVC.clientEntitiesArray[0]).count;
     
     int nameCount = 0;
