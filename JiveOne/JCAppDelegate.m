@@ -30,12 +30,15 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(socketDidConnect:) name:@"com.jiveone.socketConnected" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(socketDidFailToConnect:) name:@"com.jiveone.socketNotConnected" object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveConversation:) name:kNewConversation object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveConversation:) name:kNewConversation object:nil];
     
     //Register for PushNotifications
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert |
                                                                            UIRemoteNotificationTypeBadge |
                                                                            UIRemoteNotificationTypeSound)];
+    
+    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
     
     return YES;
 }
@@ -149,6 +152,29 @@
     
 //    [[self.tabBarController.tabBar.items objectAtIndex:2] setBadgeValue:[NSString stringWithFormat:@"%d",[UIApplication sharedApplication].applicationIconBadgeNumber]];
 }
+
+#pragma mark - Reachability
+- (void)didChangeConnection:(NSNotification *)notification
+{
+    AFNetworkReachabilityStatus status = [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
+    switch (status) {
+        case AFNetworkReachabilityStatusNotReachable:
+            NSLog(@"No Internet Connection");
+            break;
+        case AFNetworkReachabilityStatusReachableViaWiFi:
+            NSLog(@"WIFI");
+            break;
+        case AFNetworkReachabilityStatusReachableViaWWAN:
+            NSLog(@"3G");
+            break;
+        default:
+            NSLog(@"Unkown network status");
+            break;
+            
+            [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+    }
+}
+
 
 
 @end

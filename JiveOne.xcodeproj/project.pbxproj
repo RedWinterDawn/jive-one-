@@ -76,6 +76,9 @@
 		2777AD5F18C51F1E009856C5 /* JCRightToLeftSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2777AD5E18C51F1E009856C5 /* JCRightToLeftSegue.m */; };
 		2787911318CF79DC004DE651 /* JCPresenceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2787911218CF79DC004DE651 /* JCPresenceView.m */; };
 		279E602418C8C59900C5CC9F /* JCPersonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 279E602318C8C59900C5CC9F /* JCPersonCell.xib */; };
+		27B8152618D93F1A00516BF6 /* NotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B8152518D93F1A00516BF6 /* NotificationView.m */; };
+		27B8152918D9479B00516BF6 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 27B8152718D9479B00516BF6 /* close.png */; };
+		27B8152A18D9479B00516BF6 /* close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27B8152818D9479B00516BF6 /* close@2x.png */; };
 		27C5F43F18BC1946005FCAFD /* JCVersionTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C5F43E18BC1946005FCAFD /* JCVersionTracker.m */; };
 		27FA3F9518D89469005AEF98 /* JCContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FA3F9418D89469005AEF98 /* JCContactModel.m */; };
 		42A1D3B90E844E0DA4AB6197 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86ED89B2764949AC9BCC0C7B /* libPods.a */; };
@@ -222,6 +225,10 @@
 		2787911118CF79DC004DE651 /* JCPresenceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPresenceView.h; sourceTree = "<group>"; };
 		2787911218CF79DC004DE651 /* JCPresenceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPresenceView.m; sourceTree = "<group>"; };
 		279E602318C8C59900C5CC9F /* JCPersonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCPersonCell.xib; sourceTree = "<group>"; };
+		27B8152418D93F1A00516BF6 /* NotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationView.h; sourceTree = "<group>"; };
+		27B8152518D93F1A00516BF6 /* NotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationView.m; sourceTree = "<group>"; };
+		27B8152718D9479B00516BF6 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
+		27B8152818D9479B00516BF6 /* close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close@2x.png"; sourceTree = "<group>"; };
 		27C5F43D18BC1946005FCAFD /* JCVersionTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVersionTracker.h; sourceTree = "<group>"; };
 		27C5F43E18BC1946005FCAFD /* JCVersionTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVersionTracker.m; sourceTree = "<group>"; };
 		27FA3F9318D89469005AEF98 /* JCContactModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCContactModel.h; sourceTree = "<group>"; };
@@ -376,6 +383,7 @@
 		2751590318AD113C00FD8D3F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				27B8151A18D8D7AB00516BF6 /* RootViewControllers */,
 				272F65D818D36F64009BD7B3 /* AudioRecordingViewController.m */,
 				272F65D918D36F64009BD7B3 /* AudioRecordingViewController.h */,
 				DD01933518AECA760065A8CD /* JCTestViewController.h */,
@@ -578,6 +586,15 @@
 			name = THPickerView;
 			sourceTree = "<group>";
 		};
+		27B8151A18D8D7AB00516BF6 /* RootViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				27B8152418D93F1A00516BF6 /* NotificationView.h */,
+				27B8152518D93F1A00516BF6 /* NotificationView.m */,
+			);
+			name = RootViewControllers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -683,6 +700,7 @@
 				91ADB9A218D8BD4200DF41A3 /* voicemail_archive_button.png in Resources */,
 				91ADB9AA18D8BD4200DF41A3 /* voicemail_mic.png in Resources */,
 				275F4A7018AD0FBC00D2F069 /* Images.xcassets in Resources */,
+				27B8152918D9479B00516BF6 /* close.png in Resources */,
 				275F4A6518AD0FBC00D2F069 /* Main_iPhone.storyboard in Resources */,
 				279E602418C8C59900C5CC9F /* JCPersonCell.xib in Resources */,
 				91ADB9A518D8BD4200DF41A3 /* voicemail_callback_button@2x.png in Resources */,
@@ -789,6 +807,7 @@
 				2751591F18AD303500FD8D3F /* JCDirectoryViewController.m in Sources */,
 				F258589218BD3A420020AF34 /* JCDirectoryGroupViewController.m in Sources */,
 				DD01933718AECA760065A8CD /* JCTestViewController.m in Sources */,
+				27B8152618D93F1A00516BF6 /* NotificationView.m in Sources */,
 				2751593418AD3BD500FD8D3F /* JCVoipViewController.m in Sources */,
 				274493C518D0E98D002744CB /* ContactGroup.m in Sources */,
 				275E809618AED884009AD776 /* JCSocketDispatch.m in Sources */,

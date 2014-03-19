@@ -14,6 +14,7 @@
 #import "JCPersonCell.h"
 #import "JCDirectoryGroupViewController.h"
 #import "ContactGroup.h"
+#import "NotificationView.h"
 
 
 @interface JCDirectoryViewController ()
@@ -38,6 +39,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
 {
     [super viewDidLoad];
     
+    
     [self.tableView registerNib:[UINib nibWithNibName:@"JCPersonCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
     
     self.tableView.delegate = self;
@@ -53,7 +55,9 @@ static NSString *CellIdentifier = @"DirectoryCell";
         [self loadLocalDirectory];
     }
         //TODO: disable search bar if no objects in clientEntitiesArray
-   
+    [[NotificationView sharedInstance] showPanelInView:self.view];
+    //[[StatusPanel sharedInstance] showWithTitle:@"no internet" snippet:@"no internet" showProgress:NO];
+    //[[StatusPanel sharedInstance] show];
 }
 
 - (void)viewWillAppear:(BOOL)animated
