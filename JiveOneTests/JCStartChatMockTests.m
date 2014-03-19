@@ -9,7 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "JCAuthenticationManager.h"
 #import "JCDirectoryDetailViewController.h"
-#import "JCConversationDetailViewController.h"
+
 #import "JCDirectoryViewController.h"
 #import "JCDirectoryGroupViewController.h"
 #import <OCMock/OCMock.h>
@@ -53,7 +53,7 @@
     
     id mockDDVC = [OCMockObject mockForClass:[JCDirectoryDetailViewController class]];
     id mockDirectoryGroupVC = [OCMockObject mockForClass:[JCDirectoryGroupViewController class]];
-    id mockConversationDetailVC = [OCMockObject mockForClass:[JCConversationDetailViewController class]];
+   
     
     id mockDVC = [OCMockObject mockForClass:[JCDirectoryViewController class]];
     [[mockDVC expect] viewDidLoad];
@@ -72,7 +72,7 @@
     XCTAssertNotNil(mockDVC, @"Mock VC DirectoryDetailVC was nil");
     XCTAssertNotNil(mockDDVC, @"Mock VC DirectoryDetailVC was nil");
     XCTAssertNotNil(mockDirectoryGroupVC, @"Mock VC DirectoryGroupVC was nil");
-    XCTAssertNotNil(mockConversationDetailVC, @"Mock VC DirectoryGroupVC was nil");
+   
     
     
 }
