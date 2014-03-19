@@ -8,6 +8,7 @@
 
 #import "JCAuthenticationManager.h"
 #import "JCOsgiClient.h"
+#import "JCAppDelegate.h"
 #import "JCAccountViewController.h"
 
 @implementation JCAuthenticationManager
@@ -69,11 +70,18 @@
     [[JCOsgiClient sharedClient] clearCookies];
     [[JCOmniPresence sharedInstance] truncateAllTablesAtLogout];
     
-    if (viewController != nil) {        
-        [viewController dismissViewControllerAnimated:YES completion:nil];
-    }
+//    if (viewController != nil) {        
+//        [viewController dismissViewControllerAnimated:YES completion:nil];
+//    }
     
-    
+    JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
+    [UIView transitionWithView:delegate.window
+                      duration:0.5
+                       options:UIViewAnimationOptionTransitionFlipFromLeft
+                    animations:^{
+                        [delegate changeRootViewController:JCRootLoginViewController];
+                    }
+                    completion:nil];
 }
 
 @end

@@ -46,9 +46,7 @@
     
         //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
     
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-    JCStartLoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"JCStartLoginViewController"];
-    [self.window setRootViewController:loginVC];
+    [self changeRootViewController:JCRootLoginViewController];
     
     return YES;
 }
@@ -187,17 +185,24 @@
 }
 
 #pragma mark - Change Root ViewController
-- (void)changeRootViewController
+- (void)changeRootViewController:(JCRootViewControllerType)type
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-    UITabBarController *tabVC = [storyboard instantiateViewControllerWithIdentifier:@"UITabBarController"];
-    [self.window setRootViewController:tabVC];  
+    if (type == JCRootTabbarViewController) {
+        
+        UITabBarController *tabVC = [storyboard instantiateViewControllerWithIdentifier:@"UITabBarController"];
+        [self.window setRootViewController:tabVC];
+        
+        [[NotificationView sharedInstance] showPanelInView:tabVC.view];
+        [[NotificationView sharedInstance] didChangeConnection:nil];
+    }
+    else if (type == JCRootLoginViewController)
+    {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+        JCStartLoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"JCStartLoginViewController"];
+        [self.window setRootViewController:loginVC];
+    }
     
-    UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
-    //UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:tabController];
-    
-    [[NotificationView sharedInstance] showPanelInView:tabController.view];
-    [[NotificationView sharedInstance] didChangeConnection:nil];
 }
 
 

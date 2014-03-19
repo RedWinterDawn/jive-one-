@@ -81,3 +81,8 @@ typedef enum {
     JCNewConversationWithGroup
 } JCMessageType;
 
+typedef enum {
+    JCRootLoginViewController,
+    JCRootTabbarViewController
+} JCRootViewControllerType;
+

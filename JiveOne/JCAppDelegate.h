@@ -12,6 +12,6 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
-- (void)changeRootViewController;
+- (void)changeRootViewController:(JCRootViewControllerType)type;
 
 @end

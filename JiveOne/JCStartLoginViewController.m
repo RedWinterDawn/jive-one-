@@ -243,7 +243,7 @@
 - (void)goToApplication
 {
     JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
-    [delegate changeRootViewController];
+    [delegate changeRootViewController:JCRootTabbarViewController];
 }
 
 - (void)tokenValidityPassed:(NSNotification*)notification
