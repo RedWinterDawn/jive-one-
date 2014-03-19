@@ -32,7 +32,7 @@
 @property (weak,nonatomic) IBOutlet UIProgressView *progressView;
 @property (weak,nonatomic) IBOutlet UILabel  *username;
 @property (weak,nonatomic) IBOutlet UIButton *speakerButton;
-@property (weak,nonatomic) IBOutlet UIButton *expandToggleButton;
+@property (weak,nonatomic) IBOutlet UISlider *slider;
 @property (nonatomic) BOOL useSpeaker;
 
 @property (weak,nonatomic) Voicemail *voicemailObject;

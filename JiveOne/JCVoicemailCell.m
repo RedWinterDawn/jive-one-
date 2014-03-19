@@ -28,7 +28,7 @@
 -(void)configureWithItem:(Voicemail *)item andDelegate:(id)delegate{
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleTapped:)];
     [self addGestureRecognizer:tapGestureRecognizer];
-    
+    [self.slider setThumbImage:[UIImage imageNamed:@"thumb1.png"] forState:UIControlStateNormal];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.username.text = item.callerId;
     self.creationTime.text = item.createdDate;
@@ -62,6 +62,7 @@
     self.duration.text = [self formatSeconds:self.audioPlayer.duration];
     self.elapsed.text = [self formatSeconds:self.audioPlayer.currentTime];
     self.progressView.progress = self.audioPlayer.currentTime / self.audioPlayer.duration;
+    self.slider.value = self.audioPlayer.currentTime / self.audioPlayer.duration;
 }
 
 #pragma mark - AVAudioPlayer
@@ -76,6 +77,7 @@
         else {
             [self.audioPlayer prepareToPlay];
             self.progressView.progress = 0;
+            self.slider.value = 0.0;
         }
     }
 //    else {
