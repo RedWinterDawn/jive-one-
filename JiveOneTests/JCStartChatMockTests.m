@@ -55,7 +55,7 @@
     id mockDirectoryGroupVC = [OCMockObject mockForClass:[JCDirectoryGroupViewController class]];
    
     
-    id mockDVC = [OCMockObject mockForClass:[JCDirectoryViewController class]];
+    id mockDVC = [OCMockObject niceMockForClass:[JCDirectoryViewController class]];
     [[mockDVC expect] viewDidLoad];
     [mockDVC viewDidLoad];
     [mockDVC verify];
@@ -64,9 +64,11 @@
     [mockDVC segmentChanged:nil];
     [mockDVC verify];
     
-   // NSArray *arrayForTest = [NSArray arrayWithArray:((JCDirectoryViewController *)mockDVC).clientEntitiesArray];
-   // XCTAssertNotNil(arrayForTest, @"Mock clientEntitiesArray was nil");
-   // [[[mockDVC stub] andReturnValue:0] segmentChanged:0];
+    [[[mockDVC stub] andReturnValue:0] segmentChanged:0];
+    
+    NSArray *arrayForTest = [NSArray arrayWithArray:((JCDirectoryViewController *)mockDVC).clientEntitiesArray];
+    XCTAssertNotNil(arrayForTest, @"Mock clientEntitiesArray was nil");
+    
    //- this was breaking because I think you need to "verify" an actual method from that class, right now we're making a mock VC to allow checking for NotNil - NOPE! Don't need to verify! In fact if you leave verify out, all it will do is falsely pass!
     
     XCTAssertNotNil(mockDVC, @"Mock VC DirectoryDetailVC was nil");
