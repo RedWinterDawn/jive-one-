@@ -30,7 +30,6 @@
 @property (weak,nonatomic) IBOutlet UILabel  *duration;
 @property (weak,nonatomic) IBOutlet UIButton *infoButton;
 @property (weak,nonatomic) IBOutlet UIButton *deleteButton;
-@property (weak,nonatomic) IBOutlet UIProgressView *progressView;
 @property (weak,nonatomic) IBOutlet UILabel  *username;
 @property (weak,nonatomic) IBOutlet UIButton *speakerButton;
 @property (weak,nonatomic) IBOutlet UISlider *slider;
