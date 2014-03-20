@@ -219,12 +219,12 @@ integer_t const oldVoicemails = 1;
         if(success){
             //attempt to save change to server
 //            TODO: uncomment
-//            [self.osgiClient UpdateVoicemailToRead:cell.voicemailObject success:^(id JSON) {
-//                //if successful, do nothing
-//            } failure:^(NSError *err) {
-//                //TODO: if failure, resend update at when connection restored
-//                NSLog(@"%@", err);
-//            }];
+            [self.osgiClient UpdateVoicemailToRead:cell.voicemailObject success:^(id JSON) {
+                //if successful, do nothing
+            } failure:^(NSError *err) {
+                //TODO: if failure, resend update at when connection restored
+                NSLog(@"%@", err);
+            }];
         }else
             NSLog(@"%@", error);
     }];
@@ -320,26 +320,28 @@ integer_t const oldVoicemails = 1;
     
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    Voicemail *vmail = [self itemAtIndexPath:indexPath];
+    if([self.currentVoicemailCell.voicemailObject isEqual:vmail]){//TODO:switch to asking cell if it is expanded
+        return NO;
+    }
+    else
+        return YES;
+    
+}
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Voicemail *voicemailToDelete = ((Voicemail*)self.voicemails[indexPath.row]);
 
 //    if(expanded)TODO: disable swipey delete if cell is expanded
+    
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         //attempt to delete from server first
         [self voiceCellDeleteTapped:nil];
     }
 }
-
-//TODO: change this method to something that makes sense--not just selection
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"%ld", (long)indexPath.row);
-    if(indexPath.section==0){//if new, move to old
-        [self voicemailShouldBeMarkedRead:self.voicemails[indexPath.row]];
-    }
-}
-
 
 #pragma mark - JCVoicemailCellDelegate
 -(void)voiceCellDeleteTapped:(JCVoicemailCell *)cell {
