@@ -19,6 +19,10 @@
 {
     NSMutableData *receivedData;
     MBProgressHUD *hud;
+    NSString* username;
+    NSString* password;
+    
+    int loginAttempts;
 }
 
 @end
@@ -31,11 +35,18 @@
 
 @implementation JCStartLoginViewController
 
+static int MAX_LOGIN_ATTEMPTS = 2;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     _authWebview.delegate = self;
+    
+    _usernameTextField.returnKeyType = UIReturnKeyNext;
+    _passwordTextField.returnKeyType = UIReturnKeyGo;
+    
+    _usernameTextField.delegate = self;
+    _passwordTextField.delegate = self;
     
     
 }
@@ -63,7 +74,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [self checkAuthTokenValidity];
+    //[self checkAuthTokenValidity];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -71,11 +82,50 @@
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshAuthenticationCredentials:) name:kAuthenticationFromTokenFailed object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tokenValidityPassed:) name:kAuthenticationFromTokenSucceeded object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
 }
 - (void)viewDidDisappear:(BOOL)animated
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kAuthenticationFromTokenFailed object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kAuthenticationFromTokenSucceeded object:nil];
+}
+
+- (void)keyboardDidShow:(NSNotification *)notification
+{
+    [UIView animateKeyframesWithDuration:0.5 delay:0.1 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
+        CGRect frame = self.view.frame;
+        frame.origin.y = (frame.origin.y - 60);
+        self.view.frame = frame;
+    } completion:^(BOOL finished) {
+        
+    }];
+    
+}
+
+- (void)keyboardDidHide:(NSNotification *)notification
+{
+    [UIView animateKeyframesWithDuration:0.5 delay:0.1 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
+        CGRect frame = self.view.frame;
+        frame.origin.y = (frame.origin.y + 60);
+        self.view.frame = frame;
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if (textField == _usernameTextField) {
+        [_passwordTextField becomeFirstResponder];
+        return NO;
+    }
+    else {
+        [self showWebviewForLogin:nil];
+        [_passwordTextField resignFirstResponder];
+        return YES;
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -85,6 +135,10 @@
 }
 
 - (IBAction)showWebviewForLogin:(id)sender {
+    username = _usernameTextField.text;
+    password = _passwordTextField.text;
+    loginAttempts = 0;
+    _loginStatusLabel.hidden = YES;
     [self refreshAuthenticationCredentials:nil];
 }
 
@@ -94,8 +148,8 @@
                           delay: 0.0
                         options: UIViewAnimationOptionCurveLinear
                      animations:^{
-                         _authWebview.hidden = NO;
-                         _authWebview.alpha = 1.0;
+                         _authWebview.hidden = YES;
+                         //_authWebview.alpha = 1.0;
                          
                          
                          NSString *url_path = [NSString stringWithFormat:kOsgiAuthURL, kOAuthClientId, kURLSchemeCallback];
@@ -136,7 +190,16 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"OsgiLoginScreen" object:webView];
+    if (loginAttempts < MAX_LOGIN_ATTEMPTS) {
+        [webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.getElementById('username').value = '%@';document.getElementById('password').value = '%@';document.getElementById('go-button').click()", username, password]];
+        loginAttempts++;
+    }
+    else {
+        [webView stopLoading];
+        _loginStatusLabel.text = NSLocalizedString(@"Invalid username/password", @"Invalid username/password");
+        _loginStatusLabel.hidden = NO;
+    }
+    
 }
 
 #pragma mark - UIWebview Delegate

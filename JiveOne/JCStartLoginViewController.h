@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JCStartLoginViewController : UIViewController <UIWebViewDelegate>
+@interface JCStartLoginViewController : UIViewController <UIWebViewDelegate, UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIWebView *authWebview;
+@property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (weak, nonatomic) IBOutlet UILabel *loginStatusLabel;
 - (IBAction)showWebviewForLogin:(id)sender;
 - (void)dismissWebviewForLogin;
 - (void)checkAuthTokenValidity;
