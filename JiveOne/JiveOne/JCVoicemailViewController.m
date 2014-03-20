@@ -33,17 +33,31 @@
 @end
 
 @implementation JCVoicemailViewController
+integer_t const newVoicemails = 0;
+integer_t const oldVoicemails = 1;
 
-- (NSMutableArray*)voicemails
+- (NSMutableArray*)oldVoicemails
 {
-    if(!_voicemails){
-        _voicemails = [[NSMutableArray alloc]init];
+    if(!_oldVoicemails){
+        _oldVoicemails = [[NSMutableArray alloc]init];
     }
-    return _voicemails;
+    return _oldVoicemails;
 }
 
-- (NSMutableArray*)getVoicemails{
-    return _voicemails;
+- (NSMutableArray*)getOldVoicemails{
+    return _oldVoicemails;
+}
+
+- (NSMutableArray*)newVoicemails
+{
+    if(!_newVoicemails){
+        _newVoicemails = [[NSMutableArray alloc]init];
+    }
+    return _newVoicemails;
+}
+
+- (NSMutableArray*)getNewVoicemails{
+    return _newVoicemails;
 }
 
 - (JCOsgiClient*)osgiClient
@@ -108,7 +122,8 @@
 {
     [self.osgiClient RetrieveVoicemailForEntity:me success:^(id JSON) {
         //clear self.voicemails in case of refresh
-        [self.voicemails removeAllObjects];
+        [self.oldVoicemails removeAllObjects];
+        [self.newVoicemails removeAllObjects];
         
         //parse voicemail objects from server and store in self.voicemails
         NSLog(@"%@",JSON);
@@ -143,10 +158,15 @@
             //modifiable attributes should be changed here
             aVoicemail.read = [NSNumber numberWithBool:[vmail[@"read"] boolValue]];//TODO make sure this works
             [localContext MR_saveToPersistentStoreAndWait];
-            [self.voicemails addObject:aVoicemail];
+            if([aVoicemail.read boolValue]){
+                [self.oldVoicemails addObject:aVoicemail];
+            }else{
+                [self.newVoicemails addObject:aVoicemail];
+            }
             
         }
         NSLog(@"Currently %lu voicemail(s) in core data", [Voicemail MR_findAll].count);
+        
         [self.tableView reloadData];
     } failure:^(NSError *err) {
         //TODO: retry later
@@ -196,19 +216,39 @@
 }
 
 //when the voicemail has been played, this is the callback
-//TODO: implement as callback
--(void) voicemailShouldBeMarkedRead:(Voicemail*)voicemail{
+-(void) voicemailShouldBeMarkedRead:(JCVoicemailCell*)cell{
     //udpate this action in core data first
-    voicemail.read=[NSNumber numberWithInt:1];
+    cell.voicemailObject.read=[NSNumber numberWithInt:1];
     [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
         if(success){
-            [self.tableView reloadData];
+//            //remove from newVoicemails and add to oldVoicemails
+//            NSPredicate *new = [NSPredicate predicateWithFormat:@"read == 0", cell.voicemailObject.urn];
+//            NSPredicate *old = [NSPredicate predicateWithFormat:@"read == 1", cell.voicemailObject.urn];
+//            [self.newVoicemails filterUsingPredicate:new];
+//            self.oldVoicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAllWithPredicate:old]];
+            NSIndexPath *insertIndexPath = [NSIndexPath indexPathForRow:0 inSection:1] ;
+          
+
+            
+            NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+            [self.oldVoicemails addObject:cell.voicemailObject];
+              [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:insertIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            
+            [self.newVoicemails removeObjectAtIndex:indexPath.row];
+            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+
+            
+            
+            //remove from tableview
+            
             //attempt to save change to server
-            [self.osgiClient UpdateVoicemailToRead:voicemail success:^(id JSON) {
-                //if successful, do nothing
-            } failure:^(NSError *err) {
-                //TODO: if failure, resend update at when connection restored
-            }];
+//            TODO: uncomment
+//            [self.osgiClient UpdateVoicemailToRead:cell.voicemailObject success:^(id JSON) {
+//                //if successful, do nothing
+//            } failure:^(NSError *err) {
+//                //TODO: if failure, resend update at when connection restored
+//                NSLog(@"%@", err);
+//            }];
         }else
             NSLog(@"%@", error);
     }];
@@ -278,16 +318,12 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    NSPredicate *newPred = [NSPredicate predicateWithFormat:@"read = 0"];
-    NSArray* newVoicemails = [self.voicemails filteredArrayUsingPredicate:newPred];
     if(section==0)//new
     {
-        NSUInteger count = newVoicemails.count;
-        return newVoicemails.count;
+        return self.newVoicemails.count;
     }
     else{
-        NSUInteger count = self.voicemails.count-newVoicemails.count;
-        return (self.voicemails.count-newVoicemails.count);
+        return (self.oldVoicemails.count);
     }
 }
 
@@ -295,7 +331,12 @@
 {
     static NSString *CellIdentifier = @"VoicemailCell";
     JCVoicemailCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    [cell configureWithItem:(Voicemail*)self.voicemails[indexPath.row] andDelegate:self];
+    if(indexPath.section == newVoicemails)//new section
+    {
+        [cell configureWithItem:(Voicemail*)self.newVoicemails[indexPath.row] andDelegate:self];
+    }else{
+        [cell configureWithItem:(Voicemail*)self.oldVoicemails[indexPath.row] andDelegate:self];
+    }
     
     return cell;
 }
@@ -326,8 +367,65 @@
 }
 
 -(Voicemail *)itemAtIndexPath:(NSIndexPath *)indexPath {
-    return (Voicemail*)self.voicemails[indexPath.row];
+    if(indexPath.section==newVoicemails)
+    return (Voicemail*)self.newVoicemails[indexPath.row];
+    else{
+        return (Voicemail*)self.oldVoicemails[indexPath.row];
+    }
 }
+
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    Voicemail *voicemailToDelete;
+    NSMutableArray *currentSectionArray;
+    if(indexPath.section==newVoicemails){//new voicemails section
+        voicemailToDelete = ((Voicemail*)self.newVoicemails[indexPath.row]);
+        currentSectionArray = self.newVoicemails;
+    }
+    else if(indexPath.section==oldVoicemails){//old voicemails section
+        voicemailToDelete = ((Voicemail*)self.oldVoicemails[indexPath.row]);
+        currentSectionArray = self.oldVoicemails;
+    }
+//    if(expanded)TODO: disable swipey delete if cell is expanded
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        //attempt to delete from server first
+        [self.osgiClient DeleteVoicemail:voicemailToDelete sucess:^(id JSON) {
+            
+            //delete from Core data
+            NSPredicate *pred = [NSPredicate predicateWithFormat:@"urn == %@", voicemailToDelete.urn];
+            if(![Voicemail MR_deleteAllMatchingPredicate:pred]){
+                //TODO: alert user that deletion from core data was unsucessful
+                NSLog(@"Deletion from core data unsuccessful");
+            }else{
+                NSLog(@"%lu voicemails remaining in Core data", (unsigned long)[Voicemail MR_findAll].count);
+            }
+            
+            //delete from self.voicemails
+            [currentSectionArray removeObjectAtIndex:indexPath.row];
+            
+            //update view
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            
+            //toast user
+            MBProgressHUD *toast = [MBProgressHUD showHUDAddedTo:[[[UIApplication sharedApplication] windows] lastObject] animated:YES];
+            toast.mode = MBProgressHUDModeText;
+            toast.labelText = @"Successfully Deleted";
+            toast.userInteractionEnabled = YES;
+            toast.margin = 10.f;
+            toast.yOffset = 150.f;
+            [toast hide:YES afterDelay:2];
+            [toast show:YES];
+        } failure:^(NSError *err) {
+            //alert user that deleting from server failed
+            NSLog(@"%@",err);
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Deletion unsuccessful" message:@"Please try again when you have data connectivity" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+        }];
+        
+    }
+}
+
 
 
 #pragma mark - JCVoicemailCellDelegate
@@ -344,6 +442,8 @@
     else {
         [cell play];
     }
+    if(![cell.voicemailObject.read boolValue])
+    {[self voicemailShouldBeMarkedRead:(JCVoicemailCell*)cell];}
 }
 
 -(void)voiceCellReplyTapped:(JCVoicemailCell *)cell {
@@ -364,70 +464,6 @@
     }
 }
 
-
-
-
-//// Override to support conditional editing of the table view.
-//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    // Return NO if you do not want the specified item to be editable.
-//    return YES;
-//}
-
-//TODO: change this method to something that makes sense--not just selection
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"%ld", (long)indexPath.row);
-    if(indexPath.section==0){//if new, move to old
-        [self voicemailShouldBeMarkedRead:self.voicemails[indexPath.row]];
-    }
-}
-
-
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    Voicemail *voicemailToDelete = ((Voicemail*)self.voicemails[indexPath.row]);
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        //attempt to delete from server first
-        [self.osgiClient DeleteVoicemail:voicemailToDelete sucess:^(id JSON) {
-
-            //delete from Core data
-            NSPredicate *pred = [NSPredicate predicateWithFormat:@"urn == %@", voicemailToDelete.urn];
-            if(![Voicemail MR_deleteAllMatchingPredicate:pred]){
-                //TODO: alert user that deletion from core data was unsucessful
-                NSLog(@"Deletion from core data unsuccessful");
-            }else{
-                NSLog(@"%lu voicemails remaining in Core data", (unsigned long)[Voicemail MR_findAll].count);
-            }
-            
-            //delete from self.voicemails
-            [self.voicemails removeObjectAtIndex:indexPath.row];
-            
-            //update view
-            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            
-            //toast user
-            MBProgressHUD *toast = [MBProgressHUD showHUDAddedTo:[[[UIApplication sharedApplication] windows] lastObject] animated:YES];
-            toast.mode = MBProgressHUDModeText;
-            toast.labelText = @"Successfully Deleted";
-            toast.userInteractionEnabled = YES;
-            toast.margin = 10.f;
-            toast.yOffset = 150.f;
-            [toast hide:YES afterDelay:2];
-            [toast show:YES];
-            } failure:^(NSError *err) {
-            //alert user that deleting from server failed
-            NSLog(@"%@",err);
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Deletion unsuccessful" message:@"Please try again when you have data connectivity" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alert show];
-        }];
-        
-        
-    }   
-//    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-//        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-//    }
-}
 
 
 /*

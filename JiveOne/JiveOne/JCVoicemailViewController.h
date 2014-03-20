@@ -10,7 +10,8 @@
 
 @interface JCVoicemailViewController : UITableViewController
 
-@property (strong, nonatomic) NSMutableArray* voicemails; //of type voicemail(entity). Exposed for testing
+@property (strong, nonatomic) NSMutableArray* newVoicemails; //of type voicemail(entity). Exposed for testing
+@property (strong, nonatomic) NSMutableArray* oldVoicemails; //of type voicemail(entity). Exposed for testing
 - (void)updateVoicemailData;
 - (NSData*)getVoiceMailDataUsingString: (NSString*)String;
 @end

@@ -31,7 +31,7 @@
     [self.slider setThumbImage:[UIImage imageNamed:@"thumb1.png"] forState:UIControlStateNormal];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.username.text = item.callerId;
-    self.creationTime.text = item.createdDate;
+    self.creationTime.text = [item.read stringValue];
     self.voicemailObject = item;
     self.delegate = delegate;
     
