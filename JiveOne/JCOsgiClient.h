@@ -18,8 +18,6 @@
 
 @property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
 
-//for Voicemanil
-@property (nonatomic, strong) AFHTTPRequestOperationManager *tempManager;
 
 + (instancetype)sharedClient;
 

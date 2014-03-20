@@ -48,15 +48,7 @@
     
     keyChainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
     localContext  = [NSManagedObjectContext MR_contextForCurrentThread];
-    
-    //For voicemail
-    NSURL *AWSURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@", kAWSBaseURL]];
-    _tempManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:AWSURL];
-    
-    _tempManager.responseSerializer = [AFJSONResponseSerializer serializer];
-    _tempManager.requestSerializer = [AFJSONRequestSerializer serializer];
 
-    
     
 #warning REMOVE BEFORE PRODUCTION. This is meant to work with invalid certificates (local/testing.my.jive.com) 
 //#if DEBUG
@@ -373,7 +365,7 @@
     NSString * url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], kOsgiVoicemailRoute];
     NSLog(@"%@", url);
     
-    [_tempManager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         success(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
