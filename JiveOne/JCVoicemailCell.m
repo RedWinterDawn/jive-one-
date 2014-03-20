@@ -8,6 +8,7 @@
 
 #import "JCVoicemailCell.h"
 #import <AVFoundation/AVFoundation.h>
+#import "Common.h"
 
 @interface JCVoicemailCell ()
 @property (nonatomic,strong) AVAudioPlayer *audioPlayer;
@@ -31,7 +32,8 @@
     [self.slider setThumbImage:[UIImage imageNamed:@"thumb1.png"] forState:UIControlStateNormal];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.username.text = item.callerId;
-    self.creationTime.text = [item.read stringValue];
+    //self.creationTime.text = [item.read stringValue];
+    self.creationTime.text = [Common dateFromTimestamp:[NSNumber numberWithLongLong:[item.createdDate longLongValue]]];
     self.voicemailObject = item;
     self.delegate = delegate;
     

@@ -39,6 +39,7 @@
 @property (weak,nonatomic) id<JCVoicemailCellDelegate> delegate;
 
 #pragma mark - Methods
++(NSString *)reuseIdentifier;
 +(CGFloat)cellHeightForData:(id)data selected:(BOOL)selected;
 -(void)configureWithItem:(Voicemail *)item andDelegate:(id)delegate;
 -(void)pause;

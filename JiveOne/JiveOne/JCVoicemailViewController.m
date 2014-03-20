@@ -82,6 +82,9 @@ integer_t const oldVoicemails = 1;
     self.osgiClient = [JCOsgiClient sharedClient];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    
+    self.voicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAll]];
+    
     [self setupTable];
     [self updateVoicemailData];
     
@@ -102,7 +105,7 @@ integer_t const oldVoicemails = 1;
 {
     UINib *voicemailNib = [UINib nibWithNibName:@"JCVoicemailCell" bundle:nil];
     //Registers a nib object containing a cell with the table view under a specified identifier. (the line below)
-    [self.tableView registerNib:voicemailNib forCellReuseIdentifier:[[JCVoicemailCell class] reuseIdentifier]];
+    [self.tableView registerNib:voicemailNib forCellReuseIdentifier:[JCVoicemailCell reuseIdentifier]];
 
     self.clearsSelectionOnViewWillAppear = NO;
 }
