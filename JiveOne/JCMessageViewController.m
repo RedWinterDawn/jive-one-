@@ -139,13 +139,16 @@
             
         case JCExistingConversation: {
             
-            self.contactPickerView.hidden = YES;
+            [self hideContactPicker];
             [self subscribeToConversationNotification:YES];
+            
             conversationEntries = [NSMutableArray arrayWithArray:[ConversationEntry RetrieveConversationEntryById:_conversationId]];
             
             if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
                 [self.tableView setSeparatorInset:UIEdgeInsetsZero];
             }
+            
+            [textView becomeFirstResponder];
             
             break;
         }
@@ -155,7 +158,7 @@
             break;
         }
         case JCNewConversationWithEntity: {
-            self.contactPickerView.hidden = YES;
+            [self hideContactPicker];
             if (!self.selectedContacts) {
                 self.selectedContacts = [[NSMutableArray alloc] init];
             }

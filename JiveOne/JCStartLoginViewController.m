@@ -48,6 +48,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     _usernameTextField.delegate = self;
     _passwordTextField.delegate = self;
     
+    [self checkAuthTokenValidity];
     
 }
 
@@ -74,7 +75,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    //[self checkAuthTokenValidity];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
