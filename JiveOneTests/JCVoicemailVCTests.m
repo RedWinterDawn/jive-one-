@@ -89,6 +89,13 @@
     [mockVoiceVC viewDidLoad];
     [mockVoiceVC verify];
     
+    [[mockVoiceVC expect] updateVoicemailData];
+    [mockVoiceVC updateVoicemailData];
+    [mockVoiceVC verify];
+    
+    XCTAssertNotNil(mockVoiceVC, @"Mock voicemail vc was nil");
+    
+    
 }
 
 @end
