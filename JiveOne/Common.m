@@ -20,17 +20,17 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.timeZone = [NSTimeZone defaultTimeZone];
     
-    int days = [self daysBeforeDate:date];
+    int days = [self differenceInDaysToDate:date];
     
     if (days == 0) {
         [formatter setDateFormat:@"HH:mm a"];
         NSString* hour = [formatter stringFromDate:date];
         return [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"Today", @"Today"), hour];
-    } else if (days == 1) {
+    } else if (days == -1) {
         [formatter setDateFormat:@"HH:mm a"];
         NSString* hour = [formatter stringFromDate:date];
         return [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"Yesterday", @"Yesterday"), hour];
-    } else if (days > 1 && days < 6) {
+    } else if (days < -1 && days > -6) {
         [formatter setDateFormat:@"EEEE HH:mm a"];
         return [formatter stringFromDate:date];
     }
@@ -88,14 +88,28 @@
 
 + (NSInteger) daysAfterDate: (NSDate *) aDate
 {
-	NSTimeInterval ti = [[NSDate date]  timeIntervalSinceDate:aDate];
-	return (NSInteger) (ti / D_DAY);
+    NSDate *now = [NSDate date];
+	NSTimeInterval ti = [now  timeIntervalSinceDate:aDate];
+    double result = (ti / D_DAY);
+	return (NSInteger) result;
 }
 
 + (NSInteger) daysBeforeDate: (NSDate *) aDate
 {
 	NSTimeInterval ti = [aDate timeIntervalSinceDate:[NSDate date]];
 	return (NSInteger) (ti / D_DAY);
+}
+
++ (NSInteger)differenceInDaysToDate:(NSDate *)otherDate {
+    NSCalendar *cal = [NSCalendar autoupdatingCurrentCalendar];
+    NSUInteger unit = NSDayCalendarUnit;
+    NSDate *startDays, *endDays;
+    
+    [cal rangeOfUnit:unit startDate:&startDays interval:NULL forDate:[NSDate date]];
+    [cal rangeOfUnit:unit startDate:&endDays interval:NULL forDate:otherDate];
+    
+    NSDateComponents *comp = [cal components:unit fromDate:startDays toDate:endDays options:0];
+    return [comp day];
 }
 
 
