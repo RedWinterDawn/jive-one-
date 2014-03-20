@@ -317,9 +317,58 @@ integer_t const oldVoicemails = 1;
     
 }
 
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    Voicemail *voicemailToDelete = ((Voicemail*)self.voicemails[indexPath.row]);
+
+//    if(expanded)TODO: disable swipey delete if cell is expanded
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        //attempt to delete from server first
+        [self voiceCellDeleteTapped:nil];
+    }
+}
+
+
 
 #pragma mark - JCVoicemailCellDelegate
--(void)voiceCellArchiveTapped:(JCVoicemailCell *)cell {
+-(void)voiceCellDeleteTapped:(JCVoicemailCell *)cell {
+    
+    [self.osgiClient DeleteVoicemail:cell.voicemailObject sucess:^(id JSON) {
+        
+        //delete from Core data
+        NSPredicate *pred = [NSPredicate predicateWithFormat:@"urn == %@", cell.voicemailObject.urn];
+        if(![Voicemail MR_deleteAllMatchingPredicate:pred]){
+            //TODO: alert user that deletion from core data was unsucessful
+            NSLog(@"Deletion from core data unsuccessful");
+        }else{
+            NSLog(@"%lu voicemails remaining in Core data", (unsigned long)[Voicemail MR_findAll].count);
+        }
+        
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+        
+        //delete from self.voicemails
+        [self.voicemails removeObjectAtIndex:indexPath.row];
+        
+        //update view
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
+        //toast user
+        MBProgressHUD *toast = [MBProgressHUD showHUDAddedTo:[[[UIApplication sharedApplication] windows] lastObject] animated:YES];
+        toast.mode = MBProgressHUDModeText;
+        toast.labelText = @"Successfully Deleted";
+        toast.userInteractionEnabled = YES;
+        toast.margin = 10.f;
+        toast.yOffset = 150.f;
+        [toast hide:YES afterDelay:2];
+        [toast show:YES];
+    } failure:^(NSError *err) {
+        //alert user that deleting from server failed
+        NSLog(@"%@",err);
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Deletion unsuccessful" message:@"Please try again when you have data connectivity" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    }];
+
 }
 
 -(void)voiceCellInfoTapped:(JCVoicemailCell *)cell {
@@ -330,12 +379,10 @@ integer_t const oldVoicemails = 1;
         [cell pause];
     }
     else {
-        if (cell.slider.value > 0) {
-            [cell playAtTime:cell.slider.value];
-        }else{
-            [cell play];
-        }
+        [cell play];
     }
+    if(![cell.voicemailObject.read boolValue])
+    {[self voicemailShouldBeMarkedRead:(JCVoicemailCell*)cell];}
 }
 
 -(void)voiceCellReplyTapped:(JCVoicemailCell *)cell {
@@ -343,13 +390,6 @@ integer_t const oldVoicemails = 1;
 
 -(void)voiceCellSpeakerTapped:(JCVoicemailCell *)cell {
     cell.useSpeaker = !cell.useSpeaker;
-}
-
-- (void)sliderValueChanged:(JCVoicemailCell *)cell {
-    if (cell.isPlaying) {
-        [cell pause];
-    }
-    [cell playAtTime:cell.slider.value];
 }
 
 -(void)voiceCellToggleTapped:(JCVoicemailCell *)cell {
@@ -363,68 +403,6 @@ integer_t const oldVoicemails = 1;
     }
 }
 
-
-
-
-//// Override to support conditional editing of the table view.
-//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    // Return NO if you do not want the specified item to be editable.
-//    return YES;
-//}
-
-//TODO: change this method to something that makes sense--not just selection
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"%ld", (long)indexPath.row);
-    if(indexPath.section==0){//if new, move to old
-        [self voicemailShouldBeMarkedRead:self.voicemails[indexPath.row]];
-    }
-}
-
-
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    Voicemail *voicemailToDelete = ((Voicemail*)self.voicemails[indexPath.row]);
-
-//    if(expanded)TODO: disable swipey delete if cell is expanded
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        //attempt to delete from server first
-        [self.osgiClient DeleteVoicemail:voicemailToDelete sucess:^(id JSON) {
-            
-            //delete from Core data
-            NSPredicate *pred = [NSPredicate predicateWithFormat:@"urn == %@", voicemailToDelete.urn];
-            if(![Voicemail MR_deleteAllMatchingPredicate:pred]){
-                //TODO: alert user that deletion from core data was unsucessful
-                NSLog(@"Deletion from core data unsuccessful");
-            }else{
-                NSLog(@"%lu voicemails remaining in Core data", (unsigned long)[Voicemail MR_findAll].count);
-            }
-            
-            //delete from self.voicemails
-            [self.voicemails removeObjectAtIndex:indexPath.row];
-            
-            //update view
-            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            
-            //toast user
-            MBProgressHUD *toast = [MBProgressHUD showHUDAddedTo:[[[UIApplication sharedApplication] windows] lastObject] animated:YES];
-            toast.mode = MBProgressHUDModeText;
-            toast.labelText = @"Successfully Deleted";
-            toast.userInteractionEnabled = YES;
-            toast.margin = 10.f;
-            toast.yOffset = 150.f;
-            [toast hide:YES afterDelay:2];
-            [toast show:YES];
-        } failure:^(NSError *err) {
-            //alert user that deleting from server failed
-            NSLog(@"%@",err);
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Deletion unsuccessful" message:@"Please try again when you have data connectivity" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alert show];
-        }];
-        
-    }
-}
 
 
 /*

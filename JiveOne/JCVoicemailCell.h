@@ -17,7 +17,7 @@
 -(void)voiceCellPlayTapped:(JCVoicemailCell *)cell;
 -(void)voiceCellInfoTapped:(JCVoicemailCell *)cell;
 -(void)voiceCellReplyTapped:(JCVoicemailCell *)cell;
--(void)voiceCellArchiveTapped:(JCVoicemailCell *)cell;
+-(void)voiceCellDeleteTapped:(JCVoicemailCell *)cell;
 -(void)voiceCellSpeakerTapped:(JCVoicemailCell *)cell;
 - (void)sliderValueChanged:(JCVoicemailCell *)cell;
 @end
@@ -29,7 +29,8 @@
 @property (weak,nonatomic) IBOutlet UILabel  *elapsed;
 @property (weak,nonatomic) IBOutlet UILabel  *duration;
 @property (weak,nonatomic) IBOutlet UIButton *infoButton;
-@property (weak,nonatomic) IBOutlet UIButton *archiveButton;
+@property (weak,nonatomic) IBOutlet UIButton *deleteButton;
+@property (weak,nonatomic) IBOutlet UIProgressView *progressView;
 @property (weak,nonatomic) IBOutlet UILabel  *username;
 @property (weak,nonatomic) IBOutlet UIButton *speakerButton;
 @property (weak,nonatomic) IBOutlet UISlider *slider;
@@ -50,7 +51,7 @@
 #pragma mark - Actions
 -(IBAction)playTapped:(id)sender;
 -(IBAction)infoTapped:(id)sender;
--(IBAction)archiveTapped:(id)sender;
+-(IBAction)deleteTapped:(id)sender;
 -(IBAction)replyTapped:(id)sender;
 -(IBAction)speakerTapped:(id)sender;
 @end

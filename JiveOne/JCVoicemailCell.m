@@ -180,9 +180,9 @@
     [self.delegate voiceCellInfoTapped:self];
 }
 
--(IBAction)archiveTapped:(id)sender {
+-(IBAction)deleteTapped:(id)sender {
     
-    [self.delegate voiceCellArchiveTapped:self];
+    [self.delegate voiceCellDeleteTapped:self];
 }
 
 -(IBAction)replyTapped:(id)sender {
