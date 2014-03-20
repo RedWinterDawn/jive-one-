@@ -329,6 +329,13 @@ integer_t const oldVoicemails = 1;
     }
 }
 
+//TODO: change this method to something that makes sense--not just selection
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"%ld", (long)indexPath.row);
+    if(indexPath.section==0){//if new, move to old
+        [self voicemailShouldBeMarkedRead:self.voicemails[indexPath.row]];
+    }
+}
 
 
 #pragma mark - JCVoicemailCellDelegate
