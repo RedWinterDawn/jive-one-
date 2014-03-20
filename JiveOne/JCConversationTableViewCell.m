@@ -22,7 +22,7 @@
     if (self) {
         NSArray *bundleArray = [[NSBundle mainBundle] loadNibNamed:@"JCPersonCell" owner:self options:nil];
         self = bundleArray[0];
-        
+        [self setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     }
     return self;
 }
