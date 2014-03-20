@@ -317,6 +317,71 @@ integer_t const oldVoicemails = 1;
     
 }
 
+
+#pragma mark - JCVoicemailCellDelegate
+-(void)voiceCellArchiveTapped:(JCVoicemailCell *)cell {
+}
+
+-(void)voiceCellInfoTapped:(JCVoicemailCell *)cell {
+}
+
+-(void)voiceCellPlayTapped:(JCVoicemailCell *)cell {
+    if (cell.isPlaying) {
+        [cell pause];
+    }
+    else {
+        if (cell.slider.value > 0) {
+            [cell playAtTime:cell.slider.value];
+        }else{
+            [cell play];
+        }
+    }
+}
+
+-(void)voiceCellReplyTapped:(JCVoicemailCell *)cell {
+}
+
+-(void)voiceCellSpeakerTapped:(JCVoicemailCell *)cell {
+    cell.useSpeaker = !cell.useSpeaker;
+}
+
+- (void)sliderValueChanged:(JCVoicemailCell *)cell {
+    if (cell.isPlaying) {
+        [cell pause];
+    }
+    [cell playAtTime:cell.slider.value];
+}
+
+-(void)voiceCellToggleTapped:(JCVoicemailCell *)cell {
+
+    // if a selected cell is not the actively selected cell
+    if (![cell.voicemailObject isEqual:self.currentVoicemailCell.voicemailObject]) {
+        [self changeSelectedVoicemailCell:cell];
+    }// if the selected cell is the actively selected cell
+    else {
+        [self changeSelectedVoicemailCell:nil];
+    }
+}
+
+
+
+
+//// Override to support conditional editing of the table view.
+//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    // Return NO if you do not want the specified item to be editable.
+//    return YES;
+//}
+
+//TODO: change this method to something that makes sense--not just selection
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"%ld", (long)indexPath.row);
+    if(indexPath.section==0){//if new, move to old
+        [self voicemailShouldBeMarkedRead:self.voicemails[indexPath.row]];
+    }
+}
+
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -360,45 +425,6 @@ integer_t const oldVoicemails = 1;
         
     }
 }
-
-
-
-#pragma mark - JCVoicemailCellDelegate
--(void)voiceCellArchiveTapped:(JCVoicemailCell *)cell {
-}
-
--(void)voiceCellInfoTapped:(JCVoicemailCell *)cell {
-}
-
--(void)voiceCellPlayTapped:(JCVoicemailCell *)cell {
-    if (cell.isPlaying) {
-        [cell pause];
-    }
-    else {
-        [cell play];
-    }
-    if(![cell.voicemailObject.read boolValue])
-    {[self voicemailShouldBeMarkedRead:(JCVoicemailCell*)cell];}
-}
-
--(void)voiceCellReplyTapped:(JCVoicemailCell *)cell {
-}
-
--(void)voiceCellSpeakerTapped:(JCVoicemailCell *)cell {
-    cell.useSpeaker = !cell.useSpeaker;
-}
-
--(void)voiceCellToggleTapped:(JCVoicemailCell *)cell {
-
-    // if a selected cell is not the actively selected cell
-    if (![cell.voicemailObject isEqual:self.currentVoicemailCell.voicemailObject]) {
-        [self changeSelectedVoicemailCell:cell];
-    }// if the selected cell is the actively selected cell
-    else {
-        [self changeSelectedVoicemailCell:nil];
-    }
-}
-
 
 
 /*

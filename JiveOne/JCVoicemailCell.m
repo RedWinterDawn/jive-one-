@@ -61,7 +61,7 @@
 -(void)updateProgress {
     self.duration.text = [self formatSeconds:self.audioPlayer.duration];
     self.elapsed.text = [self formatSeconds:self.audioPlayer.currentTime];
-    self.progressView.progress = self.audioPlayer.currentTime / self.audioPlayer.duration;
+//    self.progressView.progress = self.audioPlayer.currentTime / self.audioPlayer.duration;
     self.slider.value = self.audioPlayer.currentTime / self.audioPlayer.duration;
 }
 
@@ -76,7 +76,7 @@
         }
         else {
             [self.audioPlayer prepareToPlay];
-            self.progressView.progress = 0;
+//            self.progressView.progress = 0;
             self.slider.value = 0.0;
         }
     }
@@ -144,6 +144,14 @@
     [self startProgressTimer];
 }
 
+-(void)playAtTime:(NSInteger) time
+{
+//    self.audioPlayer.currentTime = time *;
+    [self setupSpeaker:self.useSpeaker];
+    [self.audioPlayer playAtTime:(time * self.audioPlayer.duration)];
+    [self startProgressTimer];
+}
+
 -(BOOL)isPlaying {
     return self.audioPlayer.isPlaying;
 }
@@ -161,6 +169,10 @@
 -(IBAction)playTapped:(id)sender {
     
     [self.delegate voiceCellPlayTapped:self];
+}
+
+- (IBAction)sliderValueChanged:(UISlider *)sender {
+    [self.delegate sliderValueChanged:self];
 }
 
 -(IBAction)infoTapped:(id)sender {

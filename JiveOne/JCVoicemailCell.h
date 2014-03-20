@@ -19,6 +19,7 @@
 -(void)voiceCellReplyTapped:(JCVoicemailCell *)cell;
 -(void)voiceCellArchiveTapped:(JCVoicemailCell *)cell;
 -(void)voiceCellSpeakerTapped:(JCVoicemailCell *)cell;
+- (void)sliderValueChanged:(JCVoicemailCell *)cell;
 @end
 
 @interface JCVoicemailCell : UITableViewCell <AVAudioPlayerDelegate>
@@ -29,7 +30,6 @@
 @property (weak,nonatomic) IBOutlet UILabel  *duration;
 @property (weak,nonatomic) IBOutlet UIButton *infoButton;
 @property (weak,nonatomic) IBOutlet UIButton *archiveButton;
-@property (weak,nonatomic) IBOutlet UIProgressView *progressView;
 @property (weak,nonatomic) IBOutlet UILabel  *username;
 @property (weak,nonatomic) IBOutlet UIButton *speakerButton;
 @property (weak,nonatomic) IBOutlet UISlider *slider;
@@ -44,10 +44,10 @@
 -(void)pause;
 -(void)stop;
 -(void)play;
+-(void)playAtTime:(NSInteger) time;
 -(BOOL)isPlaying;
 
 #pragma mark - Actions
--(IBAction)toggleTapped:(id)sender;
 -(IBAction)playTapped:(id)sender;
 -(IBAction)infoTapped:(id)sender;
 -(IBAction)archiveTapped:(id)sender;
