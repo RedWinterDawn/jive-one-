@@ -12,7 +12,6 @@
 #import "Voicemail.h"
 #import "JCOsgiClient.h"
 #import "TRVSMonitor.h"
-#import <OCMock/OCMock.h>
 
 @interface JCVoicemailVCTests : XCTestCase
 @property (nonatomic, strong) JCVoicemailViewController * voicemailViewController;
@@ -80,23 +79,6 @@
     NSUInteger jsonVoicemails = self.voicemailViewController.voicemails.count;
     XCTAssertTrue(json.count == array.count, @"Number of voicemails in core data does not match number retrieved by JSON");
     XCTAssertTrue(jsonVoicemails == array.count, @"Number of voicemails in core data does not match number set to voicemails array");
-}
-
-// Write tests for deleting a voicemail - TA 3257
-
-- (void)testDeleteVoicemail {
-    
-    id mockVoiceMailVC = [OCMockObject niceMockForClass:[JCVoicemailViewController class]];
-    [[mockVoiceMailVC expect] viewDidLoad];
-    [mockVoiceMailVC viewDidLoad];
-    [mockVoiceMailVC verify];
-    
-    [[mockVoiceMailVC expect] tableView];
-    [mockVoiceMailVC tableView];
-    [mockVoiceMailVC verify];
-    
-     XCTAssertNotNil(mockVoiceMailVC, @"Mock Voicemail VC was nil");
-    
 }
 
 @end
