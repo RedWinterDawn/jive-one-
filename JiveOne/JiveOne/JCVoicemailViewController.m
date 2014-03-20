@@ -333,13 +333,9 @@ integer_t const oldVoicemails = 1;
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Voicemail *voicemailToDelete = ((Voicemail*)self.voicemails[indexPath.row]);
-
-//    if(expanded)TODO: disable swipey delete if cell is expanded
-    
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         //attempt to delete from server first
-        [self voiceCellDeleteTapped:nil];
+        [self voiceCellDeleteTapped:(JCVoicemailCell*)[self.tableView cellForRowAtIndexPath:indexPath]];
     }
 }
 
