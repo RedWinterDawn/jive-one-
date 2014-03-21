@@ -76,6 +76,7 @@
 		2777AD5F18C51F1E009856C5 /* JCRightToLeftSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2777AD5E18C51F1E009856C5 /* JCRightToLeftSegue.m */; };
 		2787911318CF79DC004DE651 /* JCPresenceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2787911218CF79DC004DE651 /* JCPresenceView.m */; };
 		279E602418C8C59900C5CC9F /* JCPersonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 279E602318C8C59900C5CC9F /* JCPersonCell.xib */; };
+		27A49AB018DC8BC00084DEE0 /* launch.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A49AAF18DC8BC00084DEE0 /* launch.png */; };
 		27B8152618D93F1A00516BF6 /* NotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B8152518D93F1A00516BF6 /* NotificationView.m */; };
 		27B8153618D94E9C00516BF6 /* close_notification.png in Resources */ = {isa = PBXBuildFile; fileRef = 27B8153418D94E9C00516BF6 /* close_notification.png */; };
 		27B8153718D94E9C00516BF6 /* close_notification@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27B8153518D94E9C00516BF6 /* close_notification@2x.png */; };
@@ -228,6 +229,7 @@
 		2787911118CF79DC004DE651 /* JCPresenceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPresenceView.h; sourceTree = "<group>"; };
 		2787911218CF79DC004DE651 /* JCPresenceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPresenceView.m; sourceTree = "<group>"; };
 		279E602318C8C59900C5CC9F /* JCPersonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCPersonCell.xib; sourceTree = "<group>"; };
+		27A49AAF18DC8BC00084DEE0 /* launch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launch.png; sourceTree = "<group>"; };
 		27B8152418D93F1A00516BF6 /* NotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationView.h; sourceTree = "<group>"; };
 		27B8152518D93F1A00516BF6 /* NotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationView.m; sourceTree = "<group>"; };
 		27B8153418D94E9C00516BF6 /* close_notification.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close_notification.png; sourceTree = "<group>"; };
@@ -345,6 +347,7 @@
 		275158F618AD10A500FD8D3F /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				27A49AAF18DC8BC00084DEE0 /* launch.png */,
 				27B8153418D94E9C00516BF6 /* close_notification.png */,
 				919C448E18DA479F00F6566A /* thumb1.png */,
 				27B8153518D94E9C00516BF6 /* close_notification@2x.png */,
@@ -714,6 +717,7 @@
 				91ADB9A218D8BD4200DF41A3 /* voicemail_archive_button.png in Resources */,
 				91ADB9AA18D8BD4200DF41A3 /* voicemail_mic.png in Resources */,
 				919C448F18DA479F00F6566A /* thumb1.png in Resources */,
+				27A49AB018DC8BC00084DEE0 /* launch.png in Resources */,
 				275F4A7018AD0FBC00D2F069 /* Images.xcassets in Resources */,
 				275F4A6518AD0FBC00D2F069 /* Main_iPhone.storyboard in Resources */,
 				279E602418C8C59900C5CC9F /* JCPersonCell.xib in Resources */,

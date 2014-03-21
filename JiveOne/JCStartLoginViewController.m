@@ -48,6 +48,32 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     _usernameTextField.delegate = self;
     _passwordTextField.delegate = self;
     
+    UIColor* darkColor = [UIColor colorWithRed:0.745 green:0.125 blue:0.18 alpha:1];
+    UIColor* darkerColor = [UIColor colorWithRed:0.749 green:0.169 blue:0.227 alpha:1];
+    
+    NSString* fontName = @"Avenir-Book";
+    NSString* boldFontName = @"Avenir-Black";
+    
+    _usernameTextField.backgroundColor = [UIColor whiteColor];
+    _usernameTextField.placeholder = @"Email Address";
+    _usernameTextField.font = [UIFont fontWithName:fontName size:16.0f];
+    _usernameTextField.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:0.7].CGColor;
+    _usernameTextField.layer.borderWidth = 1.0f;
+    
+    UIView* leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 41, 20)];
+    _usernameTextField.leftViewMode = UITextFieldViewModeAlways;
+    _usernameTextField.leftView = leftView;
+    
+    _passwordTextField.backgroundColor = [UIColor whiteColor];
+    _passwordTextField.placeholder = @"Password";
+    _passwordTextField.font = [UIFont fontWithName:fontName size:16.0f];
+    _passwordTextField.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:0.7].CGColor;
+    _passwordTextField.layer.borderWidth = 1.0f;
+    
+    UIView* leftView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 41, 20)];
+    _passwordTextField.leftViewMode = UITextFieldViewModeAlways;
+    _passwordTextField.leftView = leftView2;
+    
     [self checkAuthTokenValidity];
     
 }
@@ -140,6 +166,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     password = _passwordTextField.text;
     loginAttempts = 0;
     _loginStatusLabel.hidden = YES;
+    [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil) detail:NSLocalizedString(@"Signing In", nil)];
     [self refreshAuthenticationCredentials:nil];
 }
 
@@ -317,7 +344,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil) detail:NSLocalizedString(@"Signing In", nil)];
     [JCVersionTracker start];
     if ([JCVersionTracker isFirstLaunch] || [JCVersionTracker isFirstLaunchSinceUpdate]) {
-        [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil) detail:NSLocalizedString(@"Building Database", nil)];
+        [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil) detail:NSLocalizedString(@"Preparing for first use", nil)];
         [self fetchDataForFirstTime];
     }
     else
@@ -325,14 +352,14 @@ static int MAX_LOGIN_ATTEMPTS = 2;
         if (!notification) {
             //BOOL fromLogin = (BOOL)notification.object;
             //if (fromLogin) {
-            [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil) detail:NSLocalizedString(@"Building Database", nil)];
+            [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil) detail:NSLocalizedString(@"Preparing for first use", nil)];
             [self fetchDataForFirstTime];
         }
         else {
             NSArray *dataCheck = [ClientEntities MR_findAll];
             
             if (dataCheck.count == 0) {
-                [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil) detail:NSLocalizedString(@"Building Database", nil)];
+                [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil) detail:NSLocalizedString(@"Preparing for first use", nil)];
                 [self fetchDataForFirstTime];
             }
             else {
@@ -391,8 +418,12 @@ static int MAX_LOGIN_ATTEMPTS = 2;
         company.urn = JSON[@"urn"];
         company.companyId = JSON[@"id"];
         
-        [[JCOmniPresence sharedInstance] me].entityCompany = company;
-        
+        //[[JCOmniPresence sharedInstance] me].entityCompany = company;
+        NSArray *clientEntities = [ClientEntities MR_findAll];
+        for (ClientEntities *entity in clientEntities) {
+            entity.entityCompany = company;
+        }
+            
         [localContext MR_saveToPersistentStoreAndWait];
         
         [self hideHud];
