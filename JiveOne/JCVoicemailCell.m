@@ -32,10 +32,21 @@
     [self.slider setThumbImage:[UIImage imageNamed:@"thumb1.png"] forState:UIControlStateNormal];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.username.text = item.callerId;
-    //self.creationTime.text = [item.read stringValue];
+    self.title.text = @"Voicemail";
     self.creationTime.text = [Common dateFromTimestamp:[NSNumber numberWithLongLong:[item.createdDate longLongValue]]];
     self.voicemailObject = item;
     self.delegate = delegate;
+    
+    if(![self.voicemailObject.read boolValue]){
+        
+        self.username.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
+        self.creationTime.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
+        self.title.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16];
+    }else{
+        self.username.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
+        self.creationTime.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
+        self.title.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
+    }
     
     [self setupAudioPlayer];
 }

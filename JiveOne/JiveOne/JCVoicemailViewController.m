@@ -83,7 +83,7 @@ integer_t const oldVoicemails = 1;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    self.voicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAll]];
+    self.voicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAllSortedBy:@"createdDate" ascending:NO]];
     
     [self setupTable];
     [self updateVoicemailData];
@@ -134,7 +134,7 @@ integer_t const oldVoicemails = 1;
                 
                 //non modifiable attributes go here
                 aVoicemail.callerId = vmail[@"callerId"];
-                aVoicemail.createdDate = [vmail[@"createdDate"] stringValue];
+                aVoicemail.createdDate = [NSNumber numberWithLongLong:[vmail[@"createdDate"] longLongValue]];
                 aVoicemail.duration = [NSNumber numberWithInteger:[vmail[@"length"] intValue]];
                 aVoicemail.voicemail = [NSData dataWithContentsOfURL:[NSURL URLWithString:vmail[@"file"]]];
                 
@@ -154,6 +154,15 @@ integer_t const oldVoicemails = 1;
         }
         NSLog(@"Currently %lu voicemail(s) in core data", [Voicemail MR_findAll].count);
         
+        //sort self.voicemails by createdDate
+        NSSortDescriptor *sortDescriptor;
+        sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdDate"
+                                                     ascending:NO];
+        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+        self.voicemails = [NSMutableArray arrayWithArray:[self.voicemails sortedArrayUsingDescriptors:sortDescriptors]];
+        
+//        self.voicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAllSortedBy:@"createdDate" ascending:NO]];
+        
         [self.tableView reloadData];
     } failure:^(NSError *err) {
         //TODO: retry later
@@ -168,6 +177,7 @@ integer_t const oldVoicemails = 1;
 
         NSLog(@"%@",err);
     }];
+   
 }
 
 - (NSString*)getLocalVoicemailFilePathUsingURN:(NSString*) URN
@@ -302,7 +312,6 @@ integer_t const oldVoicemails = 1;
     static NSString *CellIdentifier = @"VoicemailCell";
     JCVoicemailCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
    [cell configureWithItem:(Voicemail*)self.voicemails[indexPath.row] andDelegate:self];
-   
     
     return cell;
 }

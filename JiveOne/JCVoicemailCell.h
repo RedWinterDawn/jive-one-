@@ -23,6 +23,7 @@
 @end
 
 @interface JCVoicemailCell : UITableViewCell <AVAudioPlayerDelegate>
+@property (weak, nonatomic) IBOutlet UILabel *title;
 @property (weak,nonatomic) IBOutlet UIButton *playButton;
 @property (weak,nonatomic) IBOutlet UIButton *replyButton;
 @property (weak,nonatomic) IBOutlet UILabel  *creationTime;

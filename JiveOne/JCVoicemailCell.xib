@@ -16,7 +16,7 @@
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Voicemail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EDq-sG-3YO" userLabel="title">
                         <rect key="frame" x="30" y="7" width="125" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="voicemail_play.png" translatesAutoresizingMaskIntoConstraints="NO" id="hfg-rQ-aIp" userLabel="voicemailIcon">
@@ -118,6 +118,7 @@
                 <outlet property="replyButton" destination="naM-MV-wGQ" id="VvH-oZ-ksa"/>
                 <outlet property="slider" destination="9LY-YY-Jqs" id="yAH-3O-Hd6"/>
                 <outlet property="speakerButton" destination="lTo-3o-o9u" id="Sg7-g2-dlo"/>
+                <outlet property="title" destination="EDq-sG-3YO" id="bX2-ss-zYp"/>
                 <outlet property="username" destination="NZe-HX-VVJ" id="DIw-vB-bsE"/>
             </connections>
         </tableViewCell>
