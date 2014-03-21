@@ -102,12 +102,13 @@
             cell.textLabel.text = @"Company";
             //convert "companies:jive" to "jive:
             if(!self.ABPerson){
-                NSString *stringToDivide = self.person.entityCompany.name;
-                NSArray *stringParts = [stringToDivide componentsSeparatedByString:@":"];
-                if (stringParts[1]) {
-                    //Capitilize Company Name
-                    cell.detailTextLabel.text = [stringParts[1] capitalizedString];
-                }
+                cell.detailTextLabel.text = self.person.entityCompany.name;
+//                NSString *stringToDivide = self.person.entityCompany.name;
+//                NSArray *stringParts = [stringToDivide componentsSeparatedByString:@":"];
+//                if (stringParts[1]) {
+//                    //Capitilize Company Name
+//                    cell.detailTextLabel.text = [stringParts[1] capitalizedString];
+//                }
             } else {
                 cell.textLabel.text = @"Phone";
                 cell.detailTextLabel.text = @"";//[self.ABPerson objectForKey:@"phone"];
