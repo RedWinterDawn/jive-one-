@@ -10,6 +10,8 @@
 #import "KeychainItemWrapper.h"
 #import "ClientEntities.h"
 #import "ClientMeta.h"
+#import "Voicemail+Custom.h"
+
 
 #if DEBUG
 @interface NSURLRequest(Private)
@@ -366,11 +368,16 @@
     NSLog(@"%@", url);
     
     [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSArray *entries = [responseObject objectForKey:@"entries"];
+        [Voicemail addVoicemails:entries];
         success(responseObject);
+        //fetch voicemail data lazily/in background
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
         failure(error);
-    }];
+     }];
+    
 }
 
 - (void) DeleteVoicemail:(Voicemail*)voicemail sucess:(void (^)(id JSON))success

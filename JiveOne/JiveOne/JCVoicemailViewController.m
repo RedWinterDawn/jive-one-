@@ -24,6 +24,7 @@
 @interface JCVoicemailViewController ()
 {
     ClientEntities *me;
+    MBProgressHUD *hud;
 }
 
 @property (nonatomic,strong) JCVoicemailCell *currentVoicemailCell;
@@ -101,6 +102,28 @@ integer_t const oldVoicemails = 1;
     
 }
 
+- (void)showHudWithTitle:(NSString*)title detail:(NSString*)detail
+{
+    if (!hud) {
+        hud = [MBProgressHUD showHUDAddedTo:[[[UIApplication sharedApplication] windows] lastObject] animated:YES];
+        hud.mode = MBProgressHUDModeIndeterminate;
+    }
+    
+    hud.labelText = title;
+    hud.detailsLabelText = detail;
+    [hud show:YES];
+}
+
+- (void)hideHud
+{
+    if (hud) {
+        [MBProgressHUD hideHUDForView:[[[UIApplication sharedApplication] windows] lastObject] animated:YES];
+        [hud removeFromSuperview];
+        hud = nil;
+    }
+}
+
+
 - (void)setupTable
 {
     UINib *voicemailNib = [UINib nibWithNibName:@"JCVoicemailCell" bundle:nil];
@@ -112,59 +135,21 @@ integer_t const oldVoicemails = 1;
 
 - (void)updateVoicemailData
 {
+    [self showHudWithTitle:NSLocalizedString(@"Fetching Voicemail", nil) detail:nil];
     [self.osgiClient RetrieveVoicemailForEntity:me success:^(id JSON) {
         //clear self.voicemails in case of refresh
-        [self.voicemails removeAllObjects];
-        
-        //parse voicemail objects from server and store in self.voicemails
         NSLog(@"%@",JSON);
-        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
+        self.voicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAllSortedBy:@"createdDate" ascending:NO]];
         
-        NSDictionary *voicemails = [(NSDictionary*)JSON objectForKey:@"entries"];
         
-        for (NSDictionary* vmail in voicemails) {
-            //only create/save to core data if this is a new voicemail
-            NSPredicate *pred = [NSPredicate predicateWithFormat:@"urn == %@", vmail[@"urn"]];
-            NSArray * arr = [Voicemail MR_findAllWithPredicate:pred];
-            Voicemail *aVoicemail;
-            if(arr.count==0){
-                //create and save
-                aVoicemail = [Voicemail MR_createInContext:localContext];
-                aVoicemail.urn = vmail[@"urn"];
-                
-                //non modifiable attributes go here
-                aVoicemail.callerId = vmail[@"callerId"];
-                aVoicemail.createdDate = [NSNumber numberWithLongLong:[vmail[@"createdDate"] longLongValue]];
-                aVoicemail.duration = [NSNumber numberWithInteger:[vmail[@"length"] intValue]];
-                aVoicemail.voicemail = [NSData dataWithContentsOfURL:[NSURL URLWithString:vmail[@"file"]]];
-                
-            }else if(arr.count==1){
-                //fetch and set
-                aVoicemail = arr[0];
-            }
-            else{
-                NSLog(@"More than one copy of the same voicemail in coredata.");
-            }
-            
-            //modifiable attributes should be changed here
-            aVoicemail.read = [NSNumber numberWithBool:[vmail[@"read"] boolValue]];//TODO make sure this works
-            [localContext MR_saveToPersistentStoreAndWait];
-            [self.voicemails addObject:aVoicemail];
-            
-        }
         NSLog(@"Currently %lu voicemail(s) in core data", [Voicemail MR_findAll].count);
         
-        //sort self.voicemails by createdDate
-        NSSortDescriptor *sortDescriptor;
-        sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdDate"
-                                                     ascending:NO];
-        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-        self.voicemails = [NSMutableArray arrayWithArray:[self.voicemails sortedArrayUsingDescriptors:sortDescriptors]];
-        
-//        self.voicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAllSortedBy:@"createdDate" ascending:NO]];
+//
         
         [self.tableView reloadData];
+        [self hideHud];
     } failure:^(NSError *err) {
+        [self hideHud];
         //TODO: retry later
         MBProgressHUD *toast = [MBProgressHUD showHUDAddedTo:[[[UIApplication sharedApplication] windows] lastObject] animated:YES];
         toast.mode = MBProgressHUDModeText;

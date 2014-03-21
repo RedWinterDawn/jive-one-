@@ -37,16 +37,16 @@
     self.voicemailObject = item;
     self.delegate = delegate;
     
-    if(![self.voicemailObject.read boolValue]){
-        
-        self.username.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
-        self.creationTime.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
-        self.title.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16];
-    }else{
-        self.username.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
-        self.creationTime.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
-        self.title.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
-    }
+//    if(![self.voicemailObject.read boolValue]){
+//        
+//        self.username.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
+//        self.creationTime.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
+//        self.title.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16];
+//    }else{
+//        self.username.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
+//        self.creationTime.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
+//        self.title.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
+//    }
     
     [self setupAudioPlayer];
 }

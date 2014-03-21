@@ -84,6 +84,7 @@
         <attribute name="duration" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="extension" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="file" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastModified" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="message" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="read" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="urn" optional="YES" attributeType="String" syncable="YES"/>
@@ -97,6 +98,6 @@
         <element name="Conversation" positionX="0" positionY="0" width="128" height="180"/>
         <element name="ConversationEntry" positionX="0" positionY="0" width="128" height="240"/>
         <element name="Presence" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="Voicemail" positionX="0" positionY="0" width="128" height="180"/>
+        <element name="Voicemail" positionX="0" positionY="0" width="128" height="195"/>
     </elements>
 </model>

@@ -20,5 +20,6 @@
 @dynamic read;
 @dynamic urn;
 @dynamic voicemail;
+@dynamic lastModified;
 
 @end
