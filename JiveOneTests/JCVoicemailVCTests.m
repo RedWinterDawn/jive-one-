@@ -93,6 +93,9 @@
     [mockVoiceVC updateVoicemailData];
     [mockVoiceVC verify];
     
+    NSMutableArray *voicemailTest = [NSMutableArray arrayWithArray:((JCVoicemailViewController *)mockVoiceVC).voicemails];
+    XCTAssertNotNil(voicemailTest, @"voicemails was nil");
+    
     XCTAssertNotNil(mockVoiceVC, @"Mock voicemail vc was nil");
     
     
