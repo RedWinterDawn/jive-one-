@@ -48,8 +48,6 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     _usernameTextField.delegate = self;
     _passwordTextField.delegate = self;
     
-    UIColor* darkColor = [UIColor colorWithRed:0.745 green:0.125 blue:0.18 alpha:1];
-    UIColor* darkerColor = [UIColor colorWithRed:0.749 green:0.169 blue:0.227 alpha:1];
     
     NSString* fontName = @"Avenir-Book";
     NSString* boldFontName = @"Avenir-Black";
@@ -73,6 +71,8 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     UIView* leftView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 41, 20)];
     _passwordTextField.leftViewMode = UITextFieldViewModeAlways;
     _passwordTextField.leftView = leftView2;
+    
+    _loginStatusLabel.font = [UIFont fontWithName:boldFontName size:16.0f];
     
     [self checkAuthTokenValidity];
     
@@ -121,7 +121,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 - (void)keyboardDidShow:(NSNotification *)notification
 {
-    [UIView animateKeyframesWithDuration:0.5 delay:0.1 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
+    [UIView animateKeyframesWithDuration:0.2 delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
         CGRect frame = self.view.frame;
         frame.origin.y = (frame.origin.y - 60);
         self.view.frame = frame;
@@ -133,7 +133,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 - (void)keyboardDidHide:(NSNotification *)notification
 {
-    [UIView animateKeyframesWithDuration:0.5 delay:0.1 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
+    [UIView animateKeyframesWithDuration:0.2 delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
         CGRect frame = self.view.frame;
         frame.origin.y = (frame.origin.y + 60);
         self.view.frame = frame;
@@ -224,6 +224,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     }
     else {
         [webView stopLoading];
+        [self hideHud];
         _loginStatusLabel.text = NSLocalizedString(@"Invalid username/password", @"Invalid username/password");
         _loginStatusLabel.hidden = NO;
     }
@@ -306,7 +307,10 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 - (void)checkAuthTokenValidity
 {
-    [[JCAuthenticationManager sharedInstance] checkForTokenValidity];
+    NSString* token = [[JCAuthenticationManager sharedInstance] getAuthenticationToken];
+    if (![self stringIsNilOrEmpty:token]) {
+        [[JCAuthenticationManager sharedInstance] checkForTokenValidity];
+    }
 }
 
 - (void)refreshAuthenticationCredentials:(NSNotification*)notification
@@ -321,7 +325,10 @@ static int MAX_LOGIN_ATTEMPTS = 2;
             [self tokenValidityPassed:notification];
         }
         else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Server Unavailable" message:@"We could not connect to the server at this time. Please try again" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            NSString *title = NSLocalizedString(@"Server Unavailable", nil);
+            NSString *message = NSLocalizedString(@"We could not connect to the server at this time. Please try again", nil);
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title  message:message delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
             
             [alert show];
         }
