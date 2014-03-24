@@ -17,7 +17,6 @@
 
 @implementation JCVoicemailCell
 
-#pragma mark - JCRecentItemCellProtocol
 +(CGFloat)cellHeightForData:(id)data selected:(BOOL)selected {
     return selected ? 180 : 55;
 }
@@ -34,6 +33,7 @@
     self.username.text = item.callerId;
     self.title.text = @"Voicemail";
     self.creationTime.text = [Common dateFromTimestamp:[NSNumber numberWithLongLong:[item.createdDate longLongValue]]];
+    self.duration.text = [self formatSeconds:[item.duration doubleValue]];
     self.voicemailObject = item;
     self.delegate = delegate;
     
@@ -70,7 +70,7 @@
 
 #pragma mark - ProgressBar
 -(void)startProgressTimer {
-    // !am! It would have been nicer to observe audioPlayer.currentTime, but that doesn't seem to work.
+    // It would have been nicer to observe audioPlayer.currentTime, but that doesn't seem to work.
     if (self.progressTimer) {
         [self stopProgressTimer];
     }
@@ -89,6 +89,13 @@
 //    self.progressView.progress = self.audioPlayer.currentTime / self.audioPlayer.duration;
     self.slider.value = self.audioPlayer.currentTime / self.audioPlayer.duration;
 }
+
+-(IBAction)progressSliderMoved:(UISlider*)sender
+{
+    self.audioPlayer.currentTime = (sender.value * self.audioPlayer.duration);
+    [self updateProgress];
+}
+
 
 #pragma mark - AVAudioPlayer
 -(void)setupAudioPlayer {
@@ -145,7 +152,7 @@
 -(NSString *)formatSeconds:(NSTimeInterval)seconds {
     NSInteger minutes = (NSInteger)(seconds/60.);
     NSInteger remainingSeconds = (NSInteger)seconds % 60;
-    return [NSString stringWithFormat:@"%.2d:%.2d",minutes,remainingSeconds];
+    return [NSString stringWithFormat:@"%.2ld:%.2ld",(long)minutes,(long)remainingSeconds];
 }
 
 #pragma mark Audio player public methods

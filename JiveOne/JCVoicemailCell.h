@@ -55,4 +55,5 @@
 -(IBAction)deleteTapped:(id)sender;
 -(IBAction)replyTapped:(id)sender;
 -(IBAction)speakerTapped:(id)sender;
+-(IBAction)progressSliderMoved:(UISlider*)sender;
 @end
