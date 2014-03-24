@@ -17,6 +17,6 @@
 + (Voicemail *)addVoicemailEntry:(NSDictionary*)entry;
 + (Voicemail *)addVoicemailEntry:(NSDictionary*)dictionary withManagedContext:(NSManagedObjectContext *)context;
 + (Voicemail *)updateVoicemailEntry:(Voicemail*)entry withDictionary:(NSDictionary*)dictionary managedContext:(NSManagedObjectContext *)context;
-
++ (void)fetchVoicemailInBackground;
 
 @end

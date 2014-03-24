@@ -89,6 +89,7 @@
         <attribute name="read" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="urn" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="voicemail" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="voicemailUrl" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
         <element name="ClientEntities" positionX="0" positionY="0" width="128" height="360"/>
@@ -98,6 +99,6 @@
         <element name="Conversation" positionX="0" positionY="0" width="128" height="180"/>
         <element name="ConversationEntry" positionX="0" positionY="0" width="128" height="240"/>
         <element name="Presence" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="Voicemail" positionX="0" positionY="0" width="128" height="195"/>
+        <element name="Voicemail" positionX="0" positionY="0" width="128" height="210"/>
     </elements>
 </model>

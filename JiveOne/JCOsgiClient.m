@@ -371,7 +371,7 @@
         NSArray *entries = [responseObject objectForKey:@"entries"];
         [Voicemail addVoicemails:entries];
         success(responseObject);
-        //fetch voicemail data lazily/in background
+        [Voicemail fetchVoicemailInBackground];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);

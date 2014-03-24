@@ -37,6 +37,9 @@
     self.voicemailObject = item;
     self.delegate = delegate;
     
+    
+    [self.voicemailObject addObserver:self forKeyPath:kVoicemailKeyPathForVoicemal options:NSKeyValueObservingOptionNew context:NULL];
+    
 //    if(![self.voicemailObject.read boolValue]){
 //        
 //        self.username.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
@@ -49,6 +52,15 @@
 //    }
     
     [self setupAudioPlayer];
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:kVoicemailKeyPathForVoicemal]) {
+        Voicemail *voicemail = (Voicemail *)object;
+        self.voicemailObject = voicemail;
+        [self setupAudioPlayer];
+    }
 }
 
 -(void)dealloc {
