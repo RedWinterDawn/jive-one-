@@ -167,6 +167,7 @@
     if (self.audioPlayer.isPlaying) {
         [self.audioPlayer pause];
         [self stopProgressTimer];
+        [self.playButton setImage:[UIImage imageNamed:@"voicemail_scrub_play.png"] forState:UIControlStateNormal];
     }
 }
 
@@ -174,6 +175,7 @@
     [self setupSpeaker:self.useSpeaker];
     [self.audioPlayer play];
     [self startProgressTimer];
+    [self.playButton setImage:[UIImage imageNamed:@"voicemail_pause.png"] forState:UIControlStateNormal];
 }
 
 -(void)playAtTime:(NSInteger) time
