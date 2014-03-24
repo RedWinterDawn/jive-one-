@@ -93,43 +93,47 @@
     
     return vmail;
 }
-
-+ (void)backgroundLoadVoicemailWithDictionary:(NSDictionary*)dictionary managedContext:(NSManagedObjectContext *)context
-{
-    
-    if (!context) {
-        context = [NSManagedObjectContext MR_contextForCurrentThread];
-    }
-
-    NSArray* entries = [dictionary objectForKey:@"entries"];
-//    NSDictionary *voicemails = [(NSDictionary*)dictionary objectForKey:@"entries"];
-
-    
-    for (NSDictionary *vmail in entries){
-        //find voicemail in core data using predicate where vmail[urn] == voicemail.urn
-        Voicemail *aVoicemail = [Voicemail MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"urn == %@", vmail[@"urn"]] inContext:context][0];
-        
-        //if data is empty, do fetch vmail[file]
-        if(aVoicemail.message == nil ){
-            //TODO: preform fetch
-            
-            
-            //save voicemail back to core data
-            [context MR_saveToPersistentStoreAndWait];
-        }
-    }
-}
+//
+//+ (void)backgroundLoadVoicemailWithDictionary:(NSDictionary*)dictionary managedContext:(NSManagedObjectContext *)context
+//{
+//    
+//    if (!context) {
+//        context = [NSManagedObjectContext MR_contextForCurrentThread];
+//    }
+//
+//    NSArray* entries = [dictionary objectForKey:@"entries"];
+////    NSDictionary *voicemails = [(NSDictionary*)dictionary objectForKey:@"entries"];
+//
+//    
+//    for (NSDictionary *vmail in entries){
+//        //find voicemail in core data using predicate where vmail[urn] == voicemail.urn
+//        Voicemail *aVoicemail = [Voicemail MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"urn == %@", vmail[@"urn"]] inContext:context][0];
+//        
+//        //if data is empty, do fetch vmail[file]
+//        if(aVoicemail.message == nil ){
+//            //TODO: preform fetch
+//            
+//            
+//            //save voicemail back to core data
+//            [context MR_saveToPersistentStoreAndWait];
+//        }
+//    }
+//}
 
 + (void)fetchVoicemailInBackground
 {
+    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"voicemail == nil"];
     
     dispatch_queue_t queue = dispatch_queue_create("load voicemails", NULL);
     dispatch_async(queue, ^{
-        NSArray *voicemails = [Voicemail MR_findAll];
+        NSArray *voicemails = [Voicemail MR_findAllWithPredicate:pred inContext:context];
         for (Voicemail *vm in voicemails) {
             vm.voicemail = [NSData dataWithContentsOfURL:[NSURL URLWithString:vm.voicemailUrl]];
         }
+            [context MR_saveToPersistentStoreAndWait];
     });
+
 }
 
 
