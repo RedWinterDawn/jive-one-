@@ -6,12 +6,6 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-/**
- Just some brainstorming notes;
- View loads
- creates query to dropbox
- gets test voicemail from this URL: https://dl.dropboxusercontent.com/u/57157576/data/54321-123.m4a
- */
 
 
 #import "JCVoicemailViewController.h"
@@ -233,7 +227,11 @@ integer_t const oldVoicemails = 1;
         
         // if there's a previous cell
         if (self.currentVoicemailCell) {
+            //set previous VoicemailCell Selected to NO
+            self.currentVoicemailCell.selected = NO;
+            
             JCVoicemailCell *cell2 = (JCVoicemailCell *)[self visibleCellForItem:self.currentVoicemailCell.voicemailObject];
+            
             // stop playing
             [cell2 stop];
             // and add it to the reload list
@@ -242,6 +240,7 @@ integer_t const oldVoicemails = 1;
         
         // add new cell to the reload list
         if (cell) {
+            cell.selected = YES;
             [reloadCells addObject:[self.tableView indexPathForCell:cell]];
         }
         self.currentVoicemailCell = cell;
@@ -384,7 +383,9 @@ integer_t const oldVoicemails = 1;
         [cell play];
     }
     if(![cell.voicemailObject.read boolValue])
-    {[self voicemailShouldBeMarkedRead:(JCVoicemailCell*)cell];}
+    {
+        [self voicemailShouldBeMarkedRead:(JCVoicemailCell*)cell];
+    }
 }
 
 -(void)voiceCellReplyTapped:(JCVoicemailCell *)cell {
@@ -405,6 +406,19 @@ integer_t const oldVoicemails = 1;
     }
 }
 
+- (void)reloadcell:(JCVoicemailCell *)cell
+{
+    NSArray *cells = [self.tableView visibleCells];
+    for (JCVoicemailCell *cell2 in cells)
+    {
+        if (cell2.selected) {
+            NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
+            if (cellIndexPath) {
+                [self.tableView reloadRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+            }
+        }
+    }
+}
 
 
 /*

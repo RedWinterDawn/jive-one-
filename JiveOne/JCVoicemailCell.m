@@ -9,6 +9,7 @@
 #import "JCVoicemailCell.h"
 #import <AVFoundation/AVFoundation.h>
 #import "Common.h"
+#import "JCvoicemailViewController.h"
 
 @interface JCVoicemailCell ()
 @property (nonatomic,strong) AVAudioPlayer *audioPlayer;
@@ -37,6 +38,11 @@
     self.voicemailObject = item;
     self.delegate = delegate;
     
+    if (self.voicemailObject.voicemail.length > 0) {
+        [self.playButton setEnabled:YES];
+    }else{
+        [self.playButton setEnabled:NO];
+    }
     
     [self.voicemailObject addObserver:self forKeyPath:kVoicemailKeyPathForVoicemal options:NSKeyValueObservingOptionNew context:NULL];
     
@@ -60,6 +66,13 @@
         Voicemail *voicemail = (Voicemail *)object;
         self.voicemailObject = voicemail;
         [self setupAudioPlayer];
+        [self.playButton setEnabled:YES];
+        if (self.selected) {
+            
+//            [((JCVoicemailViewController *)self.delegate) reloadcell:self];
+            
+        }
+
     }
 }
 
@@ -108,7 +121,6 @@
         }
         else {
             [self.audioPlayer prepareToPlay];
-//            self.progressView.progress = 0;
             self.slider.value = 0.0;
         }
     }
@@ -160,6 +172,7 @@
     if (self.audioPlayer.isPlaying) {
         [self.audioPlayer stop];
         [self stopProgressTimer];
+        [self.playButton setImage:[UIImage imageNamed:@"voicemail_scrub_play.png"] forState:UIControlStateNormal];
     }
 }
 
@@ -180,7 +193,6 @@
 
 -(void)playAtTime:(NSInteger) time
 {
-//    self.audioPlayer.currentTime = time *;
     [self setupSpeaker:self.useSpeaker];
     [self.audioPlayer playAtTime:(time * self.audioPlayer.duration)];
     [self startProgressTimer];
@@ -205,9 +217,6 @@
     [self.delegate voiceCellPlayTapped:self];
 }
 
-- (IBAction)sliderValueChanged:(UISlider *)sender {
-    [self.delegate sliderValueChanged:self];
-}
 
 -(IBAction)infoTapped:(id)sender {
     

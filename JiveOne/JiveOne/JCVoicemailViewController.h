@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JCVoicemailCell.h"
 
 @interface JCVoicemailViewController : UITableViewController
 
 @property (strong, nonatomic) NSMutableArray* voicemails; //of type voicemail(entity). Exposed for testing
 
 - (void)updateVoicemailData;
+- (void)reloadcell:(JCVoicemailCell *)cell;
 - (NSData*)getVoiceMailDataUsingString: (NSString*)String;
 @end
