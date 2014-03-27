@@ -40,6 +40,7 @@
     
     
     Voicemail *vmail;
+    //find object in core data with same urn as voicemail entry in json
     NSArray *result = [Voicemail MR_findByAttribute:@"urn" withValue:dictionary[@"urn"]];
     
     // if there are results, we're updating, else we're creating
@@ -55,7 +56,7 @@
         vmail.callerId = dictionary[@"callerId"];
         vmail.createdDate = [NSNumber numberWithLongLong:[dictionary[@"createdDate"] longLongValue]];
         vmail.duration = [NSNumber numberWithInteger:[dictionary[@"length"] intValue]];
-        // vmail.voicemail = [NSData dataWithContentsOfURL:[NSURL URLWithString:dictionary[@"file"]]];//TODO: fetch lazily/in background
+        // vmail.voicemail = [NSData dataWithContentsOfURL:[NSURL URLWithString:dictionary[@"file"]]];//fetch in background
         vmail.voicemailUrl = dictionary[@"file"];
         vmail.read = [NSNumber numberWithBool:[dictionary[@"read"] boolValue]];
         

@@ -44,16 +44,17 @@ integer_t const oldVoicemails = 1;
 }
 
 
-- (JCOsgiClient*)osgiClient
+- (void)osgiClient:(JCOsgiClient*)client
 {
-    if(!_osgiClient){
-        _osgiClient = [JCOsgiClient sharedClient];
-    }
-    return _osgiClient;
+    _osgiClient = client;
 }
 
 -(JCOsgiClient*)getOsgiClient
 {
+    if(!_osgiClient){
+        _osgiClient = [JCOsgiClient sharedClient];
+
+    }
     return _osgiClient;
 }
 
@@ -138,7 +139,6 @@ integer_t const oldVoicemails = 1;
         
         NSLog(@"Currently %lu voicemail(s) in core data", [Voicemail MR_findAll].count);
         
-//
         
         [self.tableView reloadData];
         [self hideHud];

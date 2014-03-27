@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "JCVoicemailCell.h"
+#import "JCOsgiClient.h"
 
 @interface JCVoicemailViewController : UITableViewController
 
@@ -16,4 +17,6 @@
 - (void)updateVoicemailData;
 - (void)reloadcell:(JCVoicemailCell *)cell;
 - (NSData*)getVoiceMailDataUsingString: (NSString*)String;
+
+- (void)osgiClient:(JCOsgiClient*)client;
 @end
