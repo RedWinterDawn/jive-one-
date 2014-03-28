@@ -447,48 +447,6 @@ integer_t const oldVoicemails = 1;
     return _osgiClient;
 }
 
-//- (void)reloadcell:(JCVoicemailCell *)cell
-//{
-//    NSArray *cells = [self.tableView visibleCells];
-//    for (JCVoicemailCell *cell2 in cells)
-//    {
-//        if (cell2.selected) {
-//            NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
-//            if (cellIndexPath) {
-//                [self.tableView reloadRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationNone];
-//            }
-//        }
-//    }
-//}
-
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a story board-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-
- */
 @end
 
 
