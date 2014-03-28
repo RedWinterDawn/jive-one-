@@ -103,7 +103,7 @@ integer_t const oldVoicemails = 1;
         [self hideHud];
     } failure:^(NSError *err) {
         [self hideHud];
-        //TODO: retry later
+        //TODO: retry later @dGeorge
         MBProgressHUD *toast = [MBProgressHUD showHUDAddedTo:[[[UIApplication sharedApplication] windows] lastObject] animated:YES];
         toast.mode = MBProgressHUDModeText;
         toast.labelText = @"Unable to fetch voicemail from server";
@@ -155,7 +155,6 @@ integer_t const oldVoicemails = 1;
 - (NSData*)getVoiceMailDataUsingString: (NSString*)URLString
 {
     NSData *audioData = [[NSData alloc]init];
-    //TODO: Add Progress wheel of happiness
     NSData* (^getVoicemailData)(NSString*) = ^(NSString* path){
         NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:path]];
         NSString *docsDir;
@@ -181,11 +180,11 @@ integer_t const oldVoicemails = 1;
     [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
         if(success){
             //attempt to save change to server
-//            TODO: uncomment
+//            TODO: uncomment @dGeorge
             [self.osgiClient UpdateVoicemailToRead:cell.voicemailObject success:^(id JSON) {
                 //if successful, do nothing
             } failure:^(NSError *err) {
-                //TODO: if failure, resend update at when connection restored
+                //TODO: if failure, resend update at when connection restored @dGeorge
                 NSLog(@"%@", err);
             }];
         }else
@@ -239,7 +238,6 @@ integer_t const oldVoicemails = 1;
 
 - (void)updateTable
 {
-    
     [self updateVoicemailData];
     
     [self.tableView reloadData];
@@ -264,9 +262,9 @@ integer_t const oldVoicemails = 1;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return self.voicemails.count;
+    return self.voicemailDictionary.count;
 }
-
+//TODO: HERE ---->
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"VoicemailCell";
@@ -275,23 +273,23 @@ integer_t const oldVoicemails = 1;
     
     return cell;
 }
+
 //TODO: HERE
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Voicemail *item = [self itemAtIndexPath:indexPath];
-//    BOOL selected = [[tableView cellForRowAtIndexPath:indexPath] isSelected];
+    Voicemail *item = [self VoicemailObjectAtIndexPath:indexPath];
     BOOL selected = [self.currentVoicemailCell.voicemailObject isEqual:item];
     CGFloat height = [JCVoicemailCell cellHeightForSelectedState:selected];
     return height;
 }
 
--(Voicemail *)itemAtIndexPath:(NSIndexPath *)indexPath {
+-(Voicemail *)VoicemailObjectAtIndexPath:(NSIndexPath *)indexPath {
     
-    return (Voicemail*)self.voicemails[indexPath.row];
+    return (JCVoicemail*)self.voicemails[indexPath.row];
     
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    Voicemail *vmail = [self itemAtIndexPath:indexPath];
+    Voicemail *vmail = [self VoicemailObjectAtIndexPath:indexPath];
     if([self.currentVoicemailCell.voicemailObject isEqual:vmail]){//TODO:switch to asking cell if it is expanded
         return NO;
     }
