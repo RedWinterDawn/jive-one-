@@ -67,11 +67,6 @@
         Voicemail *voicemail = (Voicemail *)object;
         self.voicemailObject = voicemail;
         [self setupAudioPlayer];
-        if (self.expanded == YES) {
-            [self.playButton setEnabled:YES];
-            
-        }
-
     }
 }
 

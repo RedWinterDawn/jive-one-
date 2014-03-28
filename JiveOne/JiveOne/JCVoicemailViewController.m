@@ -31,7 +31,6 @@ integer_t const newVoicemails = 0;
 integer_t const oldVoicemails = 1;
 
 
-
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -55,13 +54,6 @@ integer_t const oldVoicemails = 1;
     
     self.voicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAllSortedBy:@"createdDate" ascending:NO]];
     
-    NSMutableArray *keys = [[NSMutableArray alloc] init];
-    for (Voicemail* v in self.voicemails) {
-        [keys addObject:v.voicemailUrl];
-    }
-    
-    self.voicemailDictionary = [NSMutableDictionary dictionaryWithObjects:self.voicemails forKeys:keys];
-    
     [self setupTable];
     [self updateVoicemailData];
     
@@ -75,8 +67,22 @@ integer_t const oldVoicemails = 1;
  
 }
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (((JCVoicemailCell*)cell).voicemailObject.voicemail.length > 0) {
+        [((JCVoicemailCell*)cell).playButton isEnabled];
+    }
+}
 
-
+//TODO: HERE ---->
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"VoicemailCell";
+    JCVoicemailCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    [cell configureWithItem:(Voicemail*)self.voicemails[indexPath.row] andDelegate:self];
+    
+    return cell;
+}
 
 - (void)setupTable
 {
@@ -93,14 +99,14 @@ integer_t const oldVoicemails = 1;
     [self.osgiClient RetrieveVoicemailForEntity:me success:^(id JSON) {
         //clear self.voicemails in case of refresh
         NSLog(@"%@",JSON);
-        self.voicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAllSortedBy:@"createdDate" ascending:NO]];
         
+        self.voicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAllSortedBy:@"createdDate" ascending:NO]];
+//        [self updateVoicemailDataSource];
         
         NSLog(@"Currently %lu voicemail(s) in core data", [Voicemail MR_findAll].count);
-        
-        
         [self.tableView reloadData];
         [self hideHud];
+        
     } failure:^(NSError *err) {
         [self hideHud];
         //TODO: retry later @dGeorge
@@ -121,13 +127,18 @@ integer_t const oldVoicemails = 1;
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ([keyPath isEqualToString:kVoicemailKeyPathForVoicemal]) {
-        NSArray *cells = [self.tableView visibleCells];
-        for (UITableViewCell *cell in cells)
-        {
-            if ((((JCVoicemailCell *)cell).voicemailObject.voicemail.length > 0) && (((JCVoicemailCell *)cell).voicemailObject == self.currentVoicemailCell.voicemailObject)) {
-                [((JCVoicemailCell *)cell).playButton setEnabled:YES];
-
-//                [self.tableView reloadData];
+        Voicemail *updatedVoicemail = (Voicemail *)object;
+        
+        for (Voicemail *v in self.voicemails) {
+            if ([v.voicemailUrl isEqual:updatedVoicemail.voicemailUrl]) {
+                NSIndexPath *ip = [NSIndexPath indexPathForRow:[self.voicemails indexOfObject:v] inSection:0];
+                UITableViewCell *c = [self.tableView cellForRowAtIndexPath:ip];
+                [((JCVoicemailCell*)c).playButton setEnabled:YES];
+//                [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
+                [self.tableView beginUpdates];
+                [self.tableView reloadRowsAtIndexPaths:@[ip] withRowAnimation:UITableViewRowAnimationAutomatic];
+                [self.tableView endUpdates];
+                
             }
         }
     }
@@ -150,27 +161,6 @@ integer_t const oldVoicemails = 1;
         return databasePath;
     }
     return @"";
-}
-
-- (NSData*)getVoiceMailDataUsingString: (NSString*)URLString
-{
-    NSData *audioData = [[NSData alloc]init];
-    NSData* (^getVoicemailData)(NSString*) = ^(NSString* path){
-        NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:path]];
-        NSString *docsDir;
-        NSArray *dirPaths;
-        dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        docsDir = [dirPaths objectAtIndex:0];
-        
-        NSString *filePath = [self getLocalVoicemailFilePathUsingURN:path];
-        NSString *databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:filePath]];
-//        [data writeToFile:databasePath atomically:YES];
-        
-        return data;
-    };
-    
-    
-    return audioData = getVoicemailData(URLString);
 }
 
 //when the voicemail has been played, this is the callback
@@ -201,7 +191,7 @@ integer_t const oldVoicemails = 1;
         // if there's a previous cell
         if (self.currentVoicemailCell) {
             //set previous VoicemailCell Selected to NO
-            [self.currentVoicemailCell setSelected:NO];
+//            [self.currentVoicemailCell setSelected:NO];
             self.currentVoicemailCell.expanded = NO;
             
             JCVoicemailCell *cell2 = (JCVoicemailCell *)[self visibleCellForItem:self.currentVoicemailCell.voicemailObject];
@@ -214,7 +204,7 @@ integer_t const oldVoicemails = 1;
         
         // add new cell to the reload list
         if (cell) {
-            [cell setSelected:YES];
+//            [cell setSelected:YES];
             cell.expanded = YES;
             [reloadCells addObject:[self.tableView indexPathForCell:cell]];
         }
@@ -262,17 +252,9 @@ integer_t const oldVoicemails = 1;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return self.voicemailDictionary.count;
+    return self.voicemails.count;
 }
-//TODO: HERE ---->
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"VoicemailCell";
-    JCVoicemailCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-   [cell configureWithItem:(Voicemail*)self.voicemails[indexPath.row] andDelegate:self];
-    
-    return cell;
-}
+
 
 //TODO: HERE
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -284,13 +266,13 @@ integer_t const oldVoicemails = 1;
 
 -(Voicemail *)VoicemailObjectAtIndexPath:(NSIndexPath *)indexPath {
     
-    return (JCVoicemail*)self.voicemails[indexPath.row];
+    return (Voicemail*)self.voicemails[indexPath.row];
     
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     Voicemail *vmail = [self VoicemailObjectAtIndexPath:indexPath];
-    if([self.currentVoicemailCell.voicemailObject isEqual:vmail]){//TODO:switch to asking cell if it is expanded
+    if([self.currentVoicemailCell.voicemailObject isEqual:vmail]){//TODO:switch to asking cell if it is expanded @dGeorge
         return NO;
     }
     else
@@ -298,7 +280,6 @@ integer_t const oldVoicemails = 1;
     
 }
 
-// Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
@@ -325,8 +306,8 @@ integer_t const oldVoicemails = 1;
         
         //delete from self.voicemails
         [self.voicemails removeObjectAtIndex:indexPath.row];
-        
-        //update view
+
+        //TODO:@dleonard -- this might not actually update the view -- update view
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         
         //toast user
@@ -406,18 +387,6 @@ integer_t const oldVoicemails = 1;
 
 #pragma mark - initailization
 
-- (NSMutableDictionary*)voicemailDictionary
-{
-    if (!self.voicemailDictionary) {
-        self.voicemailDictionary = [[NSMutableDictionary alloc]init];
-    }
-    return self.voicemailDictionary;
-}
-
--(void)setVoicemailDictionary:(NSMutableDictionary *)voicemaleDictionary
-{
-    self.voicemailDictionary = voicemaleDictionary;
-}
 
 - (NSMutableArray*)voicemails
 {
@@ -428,21 +397,10 @@ integer_t const oldVoicemails = 1;
     return _voicemails;
 }
 
-- (NSMutableArray*)getVoicemails{
-    return _voicemails;
-}
-
-
-- (void)osgiClient:(JCOsgiClient*)client
-{
-    _osgiClient = client;
-}
-
--(JCOsgiClient*)getOsgiClient
+-(JCOsgiClient*)osgiClient
 {
     if(!_osgiClient){
         _osgiClient = [JCOsgiClient sharedClient];
-        
     }
     return _osgiClient;
 }
