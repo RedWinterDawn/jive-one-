@@ -38,10 +38,11 @@
 
 @property (weak,nonatomic) Voicemail *voicemailObject;
 @property (weak,nonatomic) id<JCVoicemailCellDelegate> delegate;
+@property (nonatomic) BOOL expanded;
 
 #pragma mark - Methods
 +(NSString *)reuseIdentifier;
-+(CGFloat)cellHeightForData:(id)data selected:(BOOL)selected;
++(CGFloat)cellHeightForSelectedState:(BOOL)selected;
 -(void)configureWithItem:(Voicemail *)item andDelegate:(id)delegate;
 -(void)pause;
 -(void)stop;

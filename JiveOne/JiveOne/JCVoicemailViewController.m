@@ -24,39 +24,13 @@
 @property (nonatomic,strong) JCVoicemailCell *currentVoicemailCell;
 @property (weak, nonatomic) JCOsgiClient *osgiClient;
 
-
 @end
 
 @implementation JCVoicemailViewController
 integer_t const newVoicemails = 0;
 integer_t const oldVoicemails = 1;
 
-- (NSMutableArray*)voicemails
-{
-    if(!_voicemails){
-        _voicemails = [[NSMutableArray alloc]init];
-    }
-    return _voicemails;
-}
 
-- (NSMutableArray*)getVoicemails{
-    return _voicemails;
-}
-
-
-- (void)osgiClient:(JCOsgiClient*)client
-{
-    _osgiClient = client;
-}
-
--(JCOsgiClient*)getOsgiClient
-{
-    if(!_osgiClient){
-        _osgiClient = [JCOsgiClient sharedClient];
-
-    }
-    return _osgiClient;
-}
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -81,6 +55,13 @@ integer_t const oldVoicemails = 1;
     
     self.voicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAllSortedBy:@"createdDate" ascending:NO]];
     
+    NSMutableArray *keys = [[NSMutableArray alloc] init];
+    for (Voicemail* v in self.voicemails) {
+        [keys addObject:v.voicemailUrl];
+    }
+    
+    self.voicemailDictionary = [NSMutableDictionary dictionaryWithObjects:self.voicemails forKeys:keys];
+    
     [self setupTable];
     [self updateVoicemailData];
     
@@ -92,31 +73,9 @@ integer_t const oldVoicemails = 1;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
 }
 
-- (void)showHudWithTitle:(NSString*)title detail:(NSString*)detail
-{
-    if (!hud) {
-        hud = [MBProgressHUD showHUDAddedTo:[[[UIApplication sharedApplication] windows] lastObject] animated:YES];
-        hud.mode = MBProgressHUDModeIndeterminate;
-    }
-    
-    hud.labelText = title;
-    hud.detailsLabelText = detail;
-    [hud show:YES];
-}
 
-- (void)hideHud
-{
-    if (hud) {
-        [MBProgressHUD hideHUDForView:[[[UIApplication sharedApplication] windows] lastObject] animated:YES];
-        [hud removeFromSuperview];
-        hud = nil;
-    }
-}
 
 
 - (void)setupTable
@@ -157,6 +116,21 @@ integer_t const oldVoicemails = 1;
         NSLog(@"%@",err);
     }];
    
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:kVoicemailKeyPathForVoicemal]) {
+        NSArray *cells = [self.tableView visibleCells];
+        for (UITableViewCell *cell in cells)
+        {
+            if ((((JCVoicemailCell *)cell).voicemailObject.voicemail.length > 0) && (((JCVoicemailCell *)cell).voicemailObject == self.currentVoicemailCell.voicemailObject)) {
+                [((JCVoicemailCell *)cell).playButton setEnabled:YES];
+
+//                [self.tableView reloadData];
+            }
+        }
+    }
 }
 
 - (NSString*)getLocalVoicemailFilePathUsingURN:(NSString*) URN
@@ -228,7 +202,8 @@ integer_t const oldVoicemails = 1;
         // if there's a previous cell
         if (self.currentVoicemailCell) {
             //set previous VoicemailCell Selected to NO
-            self.currentVoicemailCell.selected = NO;
+            [self.currentVoicemailCell setSelected:NO];
+            self.currentVoicemailCell.expanded = NO;
             
             JCVoicemailCell *cell2 = (JCVoicemailCell *)[self visibleCellForItem:self.currentVoicemailCell.voicemailObject];
             
@@ -240,7 +215,8 @@ integer_t const oldVoicemails = 1;
         
         // add new cell to the reload list
         if (cell) {
-            cell.selected = YES;
+            [cell setSelected:YES];
+            cell.expanded = YES;
             [reloadCells addObject:[self.tableView indexPathForCell:cell]];
         }
         self.currentVoicemailCell = cell;
@@ -299,11 +275,12 @@ integer_t const oldVoicemails = 1;
     
     return cell;
 }
-
+//TODO: HERE
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     Voicemail *item = [self itemAtIndexPath:indexPath];
+//    BOOL selected = [[tableView cellForRowAtIndexPath:indexPath] isSelected];
     BOOL selected = [self.currentVoicemailCell.voicemailObject isEqual:item];
-    CGFloat height = [JCVoicemailCell cellHeightForData:item selected:selected];
+    CGFloat height = [JCVoicemailCell cellHeightForSelectedState:selected];
     return height;
 }
 
@@ -396,7 +373,6 @@ integer_t const oldVoicemails = 1;
 }
 
 -(void)voiceCellToggleTapped:(JCVoicemailCell *)cell {
-
     // if a selected cell is not the actively selected cell
     if (![cell.voicemailObject isEqual:self.currentVoicemailCell.voicemailObject]) {
         [self changeSelectedVoicemailCell:cell];
@@ -406,19 +382,86 @@ integer_t const oldVoicemails = 1;
     }
 }
 
-- (void)reloadcell:(JCVoicemailCell *)cell
+#pragma mark - HUD
+
+- (void)showHudWithTitle:(NSString*)title detail:(NSString*)detail
 {
-    NSArray *cells = [self.tableView visibleCells];
-    for (JCVoicemailCell *cell2 in cells)
-    {
-        if (cell2.selected) {
-            NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
-            if (cellIndexPath) {
-                [self.tableView reloadRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationNone];
-            }
-        }
+    if (!hud) {
+        hud = [MBProgressHUD showHUDAddedTo:[[[UIApplication sharedApplication] windows] lastObject] animated:YES];
+        hud.mode = MBProgressHUDModeIndeterminate;
+    }
+    
+    hud.labelText = title;
+    hud.detailsLabelText = detail;
+    [hud show:YES];
+}
+
+- (void)hideHud
+{
+    if (hud) {
+        [MBProgressHUD hideHUDForView:[[[UIApplication sharedApplication] windows] lastObject] animated:YES];
+        [hud removeFromSuperview];
+        hud = nil;
     }
 }
+
+
+#pragma mark - initailization
+
+- (NSMutableDictionary*)voicemailDictionary
+{
+    if (!self.voicemailDictionary) {
+        self.voicemailDictionary = [[NSMutableDictionary alloc]init];
+    }
+    return self.voicemailDictionary;
+}
+
+-(void)setVoicemailDictionary:(NSMutableDictionary *)voicemaleDictionary
+{
+    self.voicemailDictionary = voicemaleDictionary;
+}
+
+- (NSMutableArray*)voicemails
+{
+    if(!_voicemails){
+        _voicemails = [[NSMutableArray alloc]init];
+        
+    }
+    return _voicemails;
+}
+
+- (NSMutableArray*)getVoicemails{
+    return _voicemails;
+}
+
+
+- (void)osgiClient:(JCOsgiClient*)client
+{
+    _osgiClient = client;
+}
+
+-(JCOsgiClient*)getOsgiClient
+{
+    if(!_osgiClient){
+        _osgiClient = [JCOsgiClient sharedClient];
+        
+    }
+    return _osgiClient;
+}
+
+//- (void)reloadcell:(JCVoicemailCell *)cell
+//{
+//    NSArray *cells = [self.tableView visibleCells];
+//    for (JCVoicemailCell *cell2 in cells)
+//    {
+//        if (cell2.selected) {
+//            NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
+//            if (cellIndexPath) {
+//                [self.tableView reloadRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+//            }
+//        }
+//    }
+//}
 
 
 /*
@@ -448,5 +491,8 @@ integer_t const oldVoicemails = 1;
 }
 
  */
-
 @end
+
+
+
+
