@@ -62,16 +62,11 @@ integer_t const oldVoicemails = 1;
     [refreshControl addTarget:self action:@selector(updateTable) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (((JCVoicemailCell*)cell).voicemailObject.voicemail.length > 0) {
-        [((JCVoicemailCell*)cell).playButton isEnabled];
-    }
+
 }
 
 //TODO: HERE ---->
@@ -101,7 +96,6 @@ integer_t const oldVoicemails = 1;
         NSLog(@"%@",JSON);
         
         self.voicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAllSortedBy:@"createdDate" ascending:NO]];
-//        [self updateVoicemailDataSource];
         
         NSLog(@"Currently %lu voicemail(s) in core data", [Voicemail MR_findAll].count);
         [self.tableView reloadData];
@@ -133,8 +127,6 @@ integer_t const oldVoicemails = 1;
             if ([v.voicemailUrl isEqual:updatedVoicemail.voicemailUrl]) {
                 NSIndexPath *ip = [NSIndexPath indexPathForRow:[self.voicemails indexOfObject:v] inSection:0];
                 UITableViewCell *c = [self.tableView cellForRowAtIndexPath:ip];
-                [((JCVoicemailCell*)c).playButton setEnabled:YES];
-//                [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
                 [self.tableView beginUpdates];
                 [self.tableView reloadRowsAtIndexPaths:@[ip] withRowAnimation:UITableViewRowAnimationAutomatic];
                 [self.tableView endUpdates];

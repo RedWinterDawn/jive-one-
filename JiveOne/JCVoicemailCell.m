@@ -38,13 +38,6 @@
     self.voicemailObject = item;
     self.delegate = delegate;
     
-    
-    if (self.voicemailObject.voicemail.length > 0) {
-        [self.playButton setEnabled:YES];
-    }else{
-        [self.playButton setEnabled:NO];
-    }
-    
     [self.voicemailObject addObserver:self forKeyPath:kVoicemailKeyPathForVoicemal options:NSKeyValueObservingOptionNew context:NULL];
     [self.voicemailObject addObserver:self.delegate forKeyPath:kVoicemailKeyPathForVoicemal options:NSKeyValueObservingOptionNew context:NULL];
 //    if(![self.voicemailObject.read boolValue]){
