@@ -358,9 +358,11 @@
 
 #pragma mark - Voicemail
 
+//Here is where doug is trying to make requests for voicemail - currently we are just grabbing a file from dropbox eventually we will get it from osgi.
 - (void) RetrieveVoicemailForEntity:(ClientEntities*)entity success:(void (^)(id JSON))success
                             failure:(void (^)(NSError *err))failure
 {
+    //leave this commented code here for when we have the api, it will be ready to go
     [self setRequestAuthHeader];
     NSString * url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], kOsgiVoicemailRoute];
     NSLog(@"%@", url);

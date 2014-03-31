@@ -24,12 +24,39 @@
 @property (nonatomic,strong) JCVoicemailCell *currentVoicemailCell;
 @property (weak, nonatomic) JCOsgiClient *osgiClient;
 
+
 @end
 
 @implementation JCVoicemailViewController
 integer_t const newVoicemails = 0;
 integer_t const oldVoicemails = 1;
 
+- (NSMutableArray*)voicemails
+{
+    if(!_voicemails){
+        _voicemails = [[NSMutableArray alloc]init];
+    }
+    return _voicemails;
+}
+
+- (NSMutableArray*)getVoicemails{
+    return _voicemails;
+}
+
+
+- (void)osgiClient:(JCOsgiClient*)client
+{
+    _osgiClient = client;
+}
+
+-(JCOsgiClient*)getOsgiClient
+{
+    if(!_osgiClient){
+        _osgiClient = [JCOsgiClient sharedClient];
+
+    }
+    return _osgiClient;
+}
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -62,22 +89,35 @@ integer_t const oldVoicemails = 1;
     [refreshControl addTarget:self action:@selector(updateTable) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
     
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-
-}
-
-//TODO: HERE ---->
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"VoicemailCell";
-    JCVoicemailCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    [cell configureWithItem:(Voicemail*)self.voicemails[indexPath.row] andDelegate:self];
+    // Uncomment the following line to preserve selection between presentations.
+    // self.clearsSelectionOnViewWillAppear = NO;
+ 
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    return cell;
 }
+
+- (void)showHudWithTitle:(NSString*)title detail:(NSString*)detail
+{
+    if (!hud) {
+        hud = [MBProgressHUD showHUDAddedTo:[[[UIApplication sharedApplication] windows] lastObject] animated:YES];
+        hud.mode = MBProgressHUDModeIndeterminate;
+    }
+    
+    hud.labelText = title;
+    hud.detailsLabelText = detail;
+    [hud show:YES];
+}
+
+- (void)hideHud
+{
+    if (hud) {
+        [MBProgressHUD hideHUDForView:[[[UIApplication sharedApplication] windows] lastObject] animated:YES];
+        [hud removeFromSuperview];
+        hud = nil;
+    }
+}
+
 
 - (void)setupTable
 {
@@ -94,16 +134,17 @@ integer_t const oldVoicemails = 1;
     [self.osgiClient RetrieveVoicemailForEntity:me success:^(id JSON) {
         //clear self.voicemails in case of refresh
         NSLog(@"%@",JSON);
-        
         self.voicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAllSortedBy:@"createdDate" ascending:NO]];
         
+        
         NSLog(@"Currently %lu voicemail(s) in core data", [Voicemail MR_findAll].count);
+        
+        
         [self.tableView reloadData];
         [self hideHud];
-        
     } failure:^(NSError *err) {
         [self hideHud];
-        //TODO: retry later @dGeorge
+        //TODO: retry later
         MBProgressHUD *toast = [MBProgressHUD showHUDAddedTo:[[[UIApplication sharedApplication] windows] lastObject] animated:YES];
         toast.mode = MBProgressHUDModeText;
         toast.labelText = @"Unable to fetch voicemail from server";
@@ -116,24 +157,6 @@ integer_t const oldVoicemails = 1;
         NSLog(@"%@",err);
     }];
    
-}
-
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    if ([keyPath isEqualToString:kVoicemailKeyPathForVoicemal]) {
-        Voicemail *updatedVoicemail = (Voicemail *)object;
-        
-        for (Voicemail *v in self.voicemails) {
-            if ([v.voicemailUrl isEqual:updatedVoicemail.voicemailUrl]) {
-                NSIndexPath *ip = [NSIndexPath indexPathForRow:[self.voicemails indexOfObject:v] inSection:0];
-                UITableViewCell *c = [self.tableView cellForRowAtIndexPath:ip];
-                [self.tableView beginUpdates];
-                [self.tableView reloadRowsAtIndexPaths:@[ip] withRowAnimation:UITableViewRowAnimationAutomatic];
-                [self.tableView endUpdates];
-                
-            }
-        }
-    }
 }
 
 - (NSString*)getLocalVoicemailFilePathUsingURN:(NSString*) URN
@@ -155,6 +178,28 @@ integer_t const oldVoicemails = 1;
     return @"";
 }
 
+- (NSData*)getVoiceMailDataUsingString: (NSString*)URLString
+{
+    NSData *audioData = [[NSData alloc]init];
+    //TODO: Add Progress wheel of happiness
+    NSData* (^getVoicemailData)(NSString*) = ^(NSString* path){
+        NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:path]];
+        NSString *docsDir;
+        NSArray *dirPaths;
+        dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        docsDir = [dirPaths objectAtIndex:0];
+        
+        NSString *filePath = [self getLocalVoicemailFilePathUsingURN:path];
+        NSString *databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:filePath]];
+//        [data writeToFile:databasePath atomically:YES];
+        
+        return data;
+    };
+    
+    
+    return audioData = getVoicemailData(URLString);
+}
+
 //when the voicemail has been played, this is the callback
 -(void) voicemailShouldBeMarkedRead:(JCVoicemailCell*)cell{
     //udpate this action in core data first
@@ -162,11 +207,11 @@ integer_t const oldVoicemails = 1;
     [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
         if(success){
             //attempt to save change to server
-//            TODO: uncomment @dGeorge
+//            TODO: uncomment
             [self.osgiClient UpdateVoicemailToRead:cell.voicemailObject success:^(id JSON) {
                 //if successful, do nothing
             } failure:^(NSError *err) {
-                //TODO: if failure, resend update at when connection restored @dGeorge
+                //TODO: if failure, resend update at when connection restored
                 NSLog(@"%@", err);
             }];
         }else
@@ -183,8 +228,7 @@ integer_t const oldVoicemails = 1;
         // if there's a previous cell
         if (self.currentVoicemailCell) {
             //set previous VoicemailCell Selected to NO
-//            [self.currentVoicemailCell setSelected:NO];
-            self.currentVoicemailCell.expanded = NO;
+            self.currentVoicemailCell.selected = NO;
             
             JCVoicemailCell *cell2 = (JCVoicemailCell *)[self visibleCellForItem:self.currentVoicemailCell.voicemailObject];
             
@@ -196,8 +240,7 @@ integer_t const oldVoicemails = 1;
         
         // add new cell to the reload list
         if (cell) {
-//            [cell setSelected:YES];
-            cell.expanded = YES;
+            cell.selected = YES;
             [reloadCells addObject:[self.tableView indexPathForCell:cell]];
         }
         self.currentVoicemailCell = cell;
@@ -220,6 +263,7 @@ integer_t const oldVoicemails = 1;
 
 - (void)updateTable
 {
+    
     [self updateVoicemailData];
     
     [self.tableView reloadData];
@@ -247,24 +291,31 @@ integer_t const oldVoicemails = 1;
     return self.voicemails.count;
 }
 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"VoicemailCell";
+    JCVoicemailCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+   [cell configureWithItem:(Voicemail*)self.voicemails[indexPath.row] andDelegate:self];
+    
+    return cell;
+}
 
-//TODO: HERE
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Voicemail *item = [self VoicemailObjectAtIndexPath:indexPath];
+    Voicemail *item = [self itemAtIndexPath:indexPath];
     BOOL selected = [self.currentVoicemailCell.voicemailObject isEqual:item];
-    CGFloat height = [JCVoicemailCell cellHeightForSelectedState:selected];
+    CGFloat height = [JCVoicemailCell cellHeightForData:item selected:selected];
     return height;
 }
 
--(Voicemail *)VoicemailObjectAtIndexPath:(NSIndexPath *)indexPath {
+-(Voicemail *)itemAtIndexPath:(NSIndexPath *)indexPath {
     
     return (Voicemail*)self.voicemails[indexPath.row];
     
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    Voicemail *vmail = [self VoicemailObjectAtIndexPath:indexPath];
-    if([self.currentVoicemailCell.voicemailObject isEqual:vmail]){//TODO:switch to asking cell if it is expanded @dGeorge
+    Voicemail *vmail = [self itemAtIndexPath:indexPath];
+    if([self.currentVoicemailCell.voicemailObject isEqual:vmail]){//TODO:switch to asking cell if it is expanded
         return NO;
     }
     else
@@ -272,6 +323,7 @@ integer_t const oldVoicemails = 1;
     
 }
 
+// Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
@@ -298,8 +350,8 @@ integer_t const oldVoicemails = 1;
         
         //delete from self.voicemails
         [self.voicemails removeObjectAtIndex:indexPath.row];
-
-        //TODO:@dleonard -- this might not actually update the view -- update view
+        
+        //update view
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         
         //toast user
@@ -344,6 +396,7 @@ integer_t const oldVoicemails = 1;
 }
 
 -(void)voiceCellToggleTapped:(JCVoicemailCell *)cell {
+
     // if a selected cell is not the actively selected cell
     if (![cell.voicemailObject isEqual:self.currentVoicemailCell.voicemailObject]) {
         [self changeSelectedVoicemailCell:cell];
@@ -353,52 +406,47 @@ integer_t const oldVoicemails = 1;
     }
 }
 
-#pragma mark - HUD
-
-- (void)showHudWithTitle:(NSString*)title detail:(NSString*)detail
+- (void)reloadcell:(JCVoicemailCell *)cell
 {
-    if (!hud) {
-        hud = [MBProgressHUD showHUDAddedTo:[[[UIApplication sharedApplication] windows] lastObject] animated:YES];
-        hud.mode = MBProgressHUDModeIndeterminate;
-    }
-    
-    hud.labelText = title;
-    hud.detailsLabelText = detail;
-    [hud show:YES];
-}
-
-- (void)hideHud
-{
-    if (hud) {
-        [MBProgressHUD hideHUDForView:[[[UIApplication sharedApplication] windows] lastObject] animated:YES];
-        [hud removeFromSuperview];
-        hud = nil;
+    NSArray *cells = [self.tableView visibleCells];
+    for (JCVoicemailCell *cell2 in cells)
+    {
+        if (cell2.selected) {
+            NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
+            if (cellIndexPath) {
+                [self.tableView reloadRowsAtIndexPaths:@[cellIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+            }
+        }
     }
 }
 
 
-#pragma mark - initailization
-
-
-- (NSMutableArray*)voicemails
+/*
+// Override to support rearranging the table view.
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
-    if(!_voicemails){
-        _voicemails = [[NSMutableArray alloc]init];
-        
-    }
-    return _voicemails;
+}
+*/
+
+/*
+// Override to support conditional rearranging of the table view.
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Return NO if you do not want the item to be re-orderable.
+    return YES;
+}
+*/
+
+/*
+#pragma mark - Navigation
+
+// In a story board-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
 }
 
--(JCOsgiClient*)osgiClient
-{
-    if(!_osgiClient){
-        _osgiClient = [JCOsgiClient sharedClient];
-    }
-    return _osgiClient;
-}
+ */
 
 @end
-
-
-
-

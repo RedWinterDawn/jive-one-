@@ -18,7 +18,7 @@
 
 @implementation JCVoicemailCell
 
-+(CGFloat)cellHeightForSelectedState:(BOOL)selected {
++(CGFloat)cellHeightForData:(id)data selected:(BOOL)selected {
     return selected ? 180 : 55;
 }
 
@@ -38,8 +38,14 @@
     self.voicemailObject = item;
     self.delegate = delegate;
     
+    if (self.voicemailObject.voicemail.length > 0) {
+        [self.playButton setEnabled:YES];
+    }else{
+        [self.playButton setEnabled:NO];
+    }
+    
     [self.voicemailObject addObserver:self forKeyPath:kVoicemailKeyPathForVoicemal options:NSKeyValueObservingOptionNew context:NULL];
-    [self.voicemailObject addObserver:self.delegate forKeyPath:kVoicemailKeyPathForVoicemal options:NSKeyValueObservingOptionNew context:NULL];
+    
 //    if(![self.voicemailObject.read boolValue]){
 //        
 //        self.username.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
@@ -60,20 +66,19 @@
         Voicemail *voicemail = (Voicemail *)object;
         self.voicemailObject = voicemail;
         [self setupAudioPlayer];
+        [self.playButton setEnabled:YES];
+        if (self.selected) {
+            
+//            [((JCVoicemailViewController *)self.delegate) reloadcell:self];
+            
+        }
+
     }
 }
 
 -(void)dealloc {
     [self.audioPlayer stop];
     self.audioPlayer = nil;
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-    self.expanded = selected;
-//    [self setSelected:selected];
-    // Configure the view for the selected state
 }
 
 #pragma mark - ProgressBar
