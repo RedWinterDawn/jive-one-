@@ -380,7 +380,7 @@
     
 }
 
-- (void) DeleteVoicemail:(Voicemail*)voicemail sucess:(void (^)(id JSON))success
+- (void) DeleteVoicemail:(Voicemail*)voicemail success:(void (^)(id JSON))success
                           failure:(void (^)(NSError *err))failure
 {
     [self setRequestAuthHeader];

@@ -21,7 +21,7 @@
     MBProgressHUD *hud;
 }
 
-@property (nonatomic,strong) JCVoicemailCell *currentVoicemailCell;
+//@property (nonatomic,strong) JCVoicemailCell *currentVoicemailCell;
 @property (weak, nonatomic) JCOsgiClient *osgiClient;
 
 
@@ -335,7 +335,7 @@ integer_t const oldVoicemails = 1;
 #pragma mark - JCVoicemailCellDelegate
 -(void)voiceCellDeleteTapped:(JCVoicemailCell *)cell {
     
-    [self.osgiClient DeleteVoicemail:cell.voicemailObject sucess:^(id JSON) {
+    [self.osgiClient DeleteVoicemail:cell.voicemailObject success:^(id JSON) {
         
         //delete from Core data
         NSPredicate *pred = [NSPredicate predicateWithFormat:@"urn == %@", cell.voicemailObject.urn];

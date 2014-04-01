@@ -82,15 +82,11 @@
     XCTAssertTrue(jsonVoicemails == array.count, @"Number of voicemails in core data does not match number set to voicemails array");
 }
 
-
-
-
 //A real unit test
+//test whether the updateVoicemailData method will save a json(mocked) from the api into VoicemailViewController.voicemails (which is loaded from core data)
 -(void)testUpdateVoicemailDataSavesVoicemail{
     //mock the client
     id clientMock = [OCMockObject niceMockForClass:[JCOsgiClient class]];
-    
-  
     
         //when retriveVoicemailForEntity is called on client, return a JSON like the server would
      [[clientMock expect] RetrieveVoicemailForEntity:[OCMArg any]
@@ -129,7 +125,38 @@
     XCTAssertTrue(self.voicemailViewController.voicemails.count == 1, @"should be one voicemail...from the hard coded json string above");
 }
 
-
+//test that the voiceCellDeleteTappedDelete method deletes the voicemail object from core data and the VoicemailViewController.voicemails array after it's deleted from the server(mocked)
+-(void)testVoiceCellDeleteTappedDeletes{
+    id mockedClient = [OCMockObject niceMockForClass:[JCOsgiClient class]];
+    [[mockedClient expect] DeleteVoicemail:[OCMArg any] success:[OCMArg checkWithBlock:^BOOL(void (^successBlock)(AFHTTPRequestOperation *, id))
+    {
+        NSLog(@"server delete");
+        successBlock(nil, nil);//200?
+        return YES;
+    }] failure:OCMOCK_ANY];
+    
+    //setup mock cell(argument in test method)
+    id mockedCell = [OCMockObject niceMockForClass:[JCVoicemailCell class]];
+    [[[mockedCell expect] andReturn:[Voicemail MR_findAll][0]] voicemailObject];//TODO mock out tableView?
+    
+    //set the client property on voicemail view controller to our mock
+    [self.voicemailViewController osgiClient:mockedClient];
+    
+    NSUInteger beforeArrayCount = self.voicemailViewController.voicemails.count;
+    NSUInteger beforeCoreDataCount = [Voicemail MR_findAll].count;
+    
+    //actual test method
+    [self.voicemailViewController voiceCellDeleteTapped:mockedCell];//can be nil because this method is mocked
+    
+    //assert voicemail was deleted from     self.voicemailViewController.voicemails
+    XCTAssertTrue(self.voicemailViewController.voicemails.count<beforeArrayCount, @"method call should have deleted one from voicemails array");
+    XCTAssertTrue([Voicemail MR_findAll].count<beforeCoreDataCount, @"method call should have delete one from core data");
+    
+    
+        
+    
+    
+}
 
 
 
@@ -142,10 +169,6 @@
     [[mockVoiceVC expect] updateVoicemailData];//should be called in viewDidLoad
     [(JCVoicemailViewController*)mockVoiceVC viewDidLoad];
     [mockVoiceVC verify];
-    
-//    [[mockVoiceVC expect] updateVoicemailData];
-//    [mockVoiceVC updateVoicemailData];
-//    [mockVoiceVC verify];
     
     NSMutableArray *voicemailTest = ((JCVoicemailViewController *)mockVoiceVC).voicemails;
     XCTAssertNotNil(voicemailTest, @"voicemails was nil");
