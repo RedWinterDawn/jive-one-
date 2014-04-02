@@ -39,6 +39,9 @@
                                                                            UIRemoteNotificationTypeBadge |
                                                                            UIRemoteNotificationTypeSound)];
     
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0.169 green:0.204 blue:0.267 alpha:1.0]];
+    
+    
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
 
     // add notification view to parent navigation controller
@@ -191,6 +194,7 @@
     if (type == JCRootTabbarViewController) {
         
         UITabBarController *tabVC = [storyboard instantiateViewControllerWithIdentifier:@"UITabBarController"];
+        
         [self.window setRootViewController:tabVC];
         
         [[NotificationView sharedInstance] showPanelInView:tabVC.view];
