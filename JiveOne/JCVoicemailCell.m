@@ -40,7 +40,16 @@
     self.duration.text = [self formatSeconds:[item.duration doubleValue]];
     self.voicemailObject = item;
     self.delegate = delegate;
-
+    
+    //test to see if we have already downloaded the voicemail .wav file
+    if (self.voicemailObject.voicemail.length > 0) {
+        // if the activityIndicator is visible
+        if (![self.spinningWheel isHidden]) {
+            [self.spinningWheel performSelectorOnMainThread:@selector(stopAnimating) withObject:nil waitUntilDone:NO];
+            //stopAnimating should also hide the activity indicator
+        }
+    }
+    
     
     [self.voicemailObject addObserver:self forKeyPath:kVoicemailKeyPathForVoicemal options:NSKeyValueObservingOptionNew context:NULL];
     
