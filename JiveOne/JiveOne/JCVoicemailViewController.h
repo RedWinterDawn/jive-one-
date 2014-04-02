@@ -14,6 +14,7 @@
 
 @property (strong, nonatomic) NSMutableArray* voicemails; //of type voicemail(entity). Exposed for testing
 
+- (void)tableView:(UITableView*)tableView;
 - (void)updateVoicemailData;
 - (void)reloadcell:(JCVoicemailCell *)cell;
 - (NSData*)getVoiceMailDataUsingString: (NSString*)String;

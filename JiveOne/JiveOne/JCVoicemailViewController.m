@@ -43,6 +43,10 @@ integer_t const oldVoicemails = 1;
     return _voicemails;
 }
 
+- (void)tableView:(UITableView*)tableView{
+    self.tableView = tableView;
+}
+
 
 - (void)osgiClient:(JCOsgiClient*)client
 {
@@ -323,10 +327,10 @@ integer_t const oldVoicemails = 1;
 #pragma mark - JCVoicemailCellDelegate
 -(void)voiceCellDeleteTapped:(JCVoicemailCell *)cell {
     
-    [self.osgiClient DeleteVoicemail:cell.voicemailObject success:^(id JSON) {
+    [self.osgiClient DeleteVoicemail:cell.getVoicemailObject success:^(id JSON) {
         
         //delete from Core data
-        NSPredicate *pred = [NSPredicate predicateWithFormat:@"urn == %@", cell.voicemailObject.urn];
+        NSPredicate *pred = [NSPredicate predicateWithFormat:@"urn == %@", cell.getVoicemailObject.urn];
         if(![Voicemail MR_deleteAllMatchingPredicate:pred]){
             //TODO: alert user that deletion from core data was unsucessful
             NSLog(@"Deletion from core data unsuccessful");
@@ -340,7 +344,8 @@ integer_t const oldVoicemails = 1;
         [self.voicemails removeObjectAtIndex:indexPath.row];
         
         //update view
-        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView reloadData];
+//        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         
         //toast user
         MBProgressHUD *toast = [MBProgressHUD showHUDAddedTo:[[[UIApplication sharedApplication] windows] lastObject] animated:YES];

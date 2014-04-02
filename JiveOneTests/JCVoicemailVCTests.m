@@ -135,9 +135,15 @@
         return YES;
     }] failure:OCMOCK_ANY];
     
-    //setup mock cell(argument in test method)
+    //setup mocked dependencies(argument in test method)
     id mockedCell = [OCMockObject niceMockForClass:[JCVoicemailCell class]];
-    [[[mockedCell expect] andReturn:[Voicemail MR_findAll][0]] voicemailObject];//TODO mock out tableView?
+    [[[mockedCell expect] andReturn:([Voicemail MR_findAll][0])] getVoicemailObject];//this should set voicemail property of cell to [0]
+    
+    id mockedTableView = [OCMockObject niceMockForClass:[UITableView class]];
+    [[mockedTableView stub] deleteRowsAtIndexPaths:[OCMArg any] withRowAnimation:[OCMArg any]];
+
+    id mockedVoicemails = [OCMockObject niceMockForClass:[NSMutableArray class]];
+    [[mockedVoicemails stub] removeObjectAtIndex:[OCMArg any]];
     
     //set the client property on voicemail view controller to our mock
     [self.voicemailViewController osgiClient:mockedClient];
@@ -147,6 +153,8 @@
     
     //actual test method
     [self.voicemailViewController voiceCellDeleteTapped:mockedCell];//can be nil because this method is mocked
+    
+    [mockedCell verify];
     
     //assert voicemail was deleted from     self.voicemailViewController.voicemails
     XCTAssertTrue(self.voicemailViewController.voicemails.count<beforeArrayCount, @"method call should have deleted one from voicemails array");

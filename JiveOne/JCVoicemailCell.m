@@ -14,12 +14,17 @@
 @interface JCVoicemailCell ()
 @property (nonatomic,strong) AVAudioPlayer *audioPlayer;
 @property (nonatomic,strong) NSTimer *progressTimer;
+
 @end
 
 @implementation JCVoicemailCell
 {
     int count;
 }
+-(Voicemail*)getVoicemailObject{
+    return _voicemailObject;
+}
+
 
 +(CGFloat)cellHeightForData:(id)data selected:(BOOL)selected {
     return selected ? 180 : 55;

@@ -38,6 +38,7 @@
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinningWheel;
 
 @property (weak,nonatomic) Voicemail *voicemailObject;
+-(Voicemail*)getVoicemailObject;
 @property (weak,nonatomic) id<JCVoicemailCellDelegate> delegate;
 
 #pragma mark - Methods
