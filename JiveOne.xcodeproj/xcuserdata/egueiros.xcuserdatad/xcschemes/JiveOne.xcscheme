@@ -39,10 +39,10 @@
             </BuildableReference>
             <SkippedTests>
                <Test
-                  Identifier = "JiveOneTests/testLogout">
+                  Identifier = "JCOsgiClientTest/testShouldRetrieveClientEntities">
                </Test>
                <Test
-                  Identifier = "JCOsgiClientTest/testShouldRetrieveClientEntities">
+                  Identifier = "JiveOneTests/testLogout">
                </Test>
             </SkippedTests>
          </TestableReference>
