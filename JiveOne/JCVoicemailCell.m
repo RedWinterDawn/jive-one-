@@ -37,12 +37,7 @@
     self.duration.text = [self formatSeconds:[item.duration doubleValue]];
     self.voicemailObject = item;
     self.delegate = delegate;
-    
-    if (self.voicemailObject.voicemail.length > 0) {
-        [self.playButton setEnabled:YES];
-    }else{
-        [self.playButton setEnabled:NO];
-    }
+
     
     [self.voicemailObject addObserver:self forKeyPath:kVoicemailKeyPathForVoicemal options:NSKeyValueObservingOptionNew context:NULL];
     
@@ -67,11 +62,6 @@
         self.voicemailObject = voicemail;
         [self setupAudioPlayer];
         [self.playButton setEnabled:YES];
-        if (self.selected) {
-            
-//            [((JCVoicemailViewController *)self.delegate) reloadcell:self];
-            
-        }
 
     }
 }

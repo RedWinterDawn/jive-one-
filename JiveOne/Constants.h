@@ -65,6 +65,10 @@
 #define kSocketConversations @"conversations"
 #define kSocketPermanentRooms @"permanentrooms"
 
+#pragma mark - Debug Helpers
+#define kVoicemailURLOverRide @"NoDontUseAWSPlaceholderURL"
+//change to @"YesUseAWSPlaceholderURL" to toggle AWS Voicemail wav file
+
 typedef enum {
     JCPresenceTypeOffline = 0,
     JCPresenceTypeAvailable = 1,

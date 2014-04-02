@@ -7,6 +7,7 @@
 //
 
 #import "Voicemail+Custom.h"
+#import "Constants.h"
 
 @implementation Voicemail (Custom)
 
@@ -130,7 +131,11 @@
     dispatch_async(queue, ^{
         NSArray *voicemails = [Voicemail MR_findAllWithPredicate:pred inContext:context];
         for (Voicemail *vm in voicemails) {
-            vm.voicemail = [NSData dataWithContentsOfURL:[NSURL URLWithString:vm.voicemailUrl]];
+            if ([kVoicemailURLOverRide  isEqual:@"YesUseAWSPlaceholderURL"]) {
+                vm.voicemail = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"https://s3-us-west-2.amazonaws.com/jive-mobile/voicemail/userId/dleonard/TestVoicemail2.wav"]];
+            }else{
+                vm.voicemail = [NSData dataWithContentsOfURL:[NSURL URLWithString:vm.voicemailUrl]];
+            }
         }
             [context MR_saveToPersistentStoreAndWait];
     });
