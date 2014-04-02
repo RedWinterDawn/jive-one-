@@ -25,13 +25,16 @@
     if (days == 0) {
         [formatter setDateFormat:@"HH:mm a"];
         NSString* hour = [formatter stringFromDate:date];
-        return [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"Today", @"Today"), hour];
+        //return [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"Today", @"Today"), hour];
+        return hour;
     } else if (days == -1) {
-        [formatter setDateFormat:@"HH:mm a"];
-        NSString* hour = [formatter stringFromDate:date];
-        return [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"Yesterday", @"Yesterday"), hour];
+        //[formatter setDateFormat:@"HH:mm a"];
+        //NSString* hour = [formatter stringFromDate:date];
+        //return [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"Yesterday", @"Yesterday"), hour];
+        return NSLocalizedString(@"Yesterday", @"Yesterday");
     } else if (days < -1 && days > -6) {
-        [formatter setDateFormat:@"EEEE HH:mm a"];
+        //[formatter setDateFormat:@"EEEE HH:mm a"];
+        [formatter setDateFormat:@"EEE"];
         return [formatter stringFromDate:date];
     }
         
@@ -112,6 +115,51 @@
     return [comp day];
 }
 
+
+#pragma mark - UIImage Utils
+
++ (UIImage*)mergeImage:(UIImage*)first withImage:(UIImage*)second
+{
+    // get size of the first image
+    CGImageRef firstImageRef = first.CGImage;
+    CGFloat firstWidth = CGImageGetWidth(firstImageRef);
+    CGFloat firstHeight = CGImageGetHeight(firstImageRef);
+    
+    // get size of the second image
+    CGImageRef secondImageRef = second.CGImage;
+    CGFloat secondWidth = CGImageGetWidth(secondImageRef);
+    CGFloat secondHeight = CGImageGetHeight(secondImageRef);
+    
+    // build merged size
+    CGSize mergedSize = CGSizeMake(MAX(firstWidth, secondWidth), MAX(firstHeight, secondHeight));
+    
+    // capture image context ref
+    UIGraphicsBeginImageContext(mergedSize);
+    
+    //Draw images onto the context
+    [first drawInRect:CGRectMake(0, 0, firstWidth, firstHeight)];
+    [second drawInRect:CGRectMake(0, 0, secondWidth, secondHeight)];
+    
+    // assign context to new UIImage
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    // end context
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+}
+
++ (UIImage *) imageFromView:(UIView *)view
+{
+    UIGraphicsBeginImageContextWithOptions(view.bounds.size, NO, 0.0);
+    [view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    
+    UIImage * img = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return img;
+}
 
 
 
