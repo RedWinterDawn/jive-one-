@@ -68,7 +68,7 @@
         <scene sceneID="Vex-rW-GRa">
             <objects>
                 <tabBarController storyboardIdentifier="UITabBarController" id="8YX-ce-x5E" sceneMemberID="viewController">
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics" barStyle="black" translucent="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="JQR-rB-NYL">
                         <rect key="frame" x="0.0" y="431" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -404,6 +404,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Conversations" id="xnl-54-rzv">
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="rOk-sd-Q2j">
+                            <color key="tintColor" red="0.99215692280000001" green="0.99607849120000003" blue="0.99607849120000003" alpha="1" colorSpace="deviceRGB"/>
                             <connections>
                                 <action selector="startNewConversation:" destination="Iav-LH-b6F" id="lb2-Vi-3uj"/>
                             </connections>
