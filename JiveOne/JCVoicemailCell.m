@@ -17,6 +17,9 @@
 @end
 
 @implementation JCVoicemailCell
+{
+    int count;
+}
 
 +(CGFloat)cellHeightForData:(id)data selected:(BOOL)selected {
     return selected ? 180 : 55;
@@ -60,9 +63,9 @@
     if ([keyPath isEqualToString:kVoicemailKeyPathForVoicemal]) {
         Voicemail *voicemail = (Voicemail *)object;
         self.voicemailObject = voicemail;
-        [self setupAudioPlayer];
-        [self.playButton setEnabled:YES];
-
+        
+        [self performSelectorOnMainThread:@selector(setupAudioPlayer) withObject:nil waitUntilDone:NO];
+        [self.spinningWheel performSelectorOnMainThread:@selector(stopAnimating) withObject:nil waitUntilDone:NO];
     }
 }
 
@@ -89,7 +92,6 @@
 -(void)updateProgress {
     self.duration.text = [self formatSeconds:self.audioPlayer.duration];
     self.elapsed.text = [self formatSeconds:self.audioPlayer.currentTime];
-//    self.progressView.progress = self.audioPlayer.currentTime / self.audioPlayer.duration;
     self.slider.value = self.audioPlayer.currentTime / self.audioPlayer.duration;
 }
 
@@ -114,15 +116,6 @@
             self.slider.value = 0.0;
         }
     }
-//    else {
-//        [self.item loadMessage:^(NSError *error) {
-//            if (error) {
-//            }
-//            else {
-//                [self setupAudioPlayer];
-//            }
-//        }];
-//    }
 }
 
 -(void)setupSpeaker:(BOOL)useSpeaker {

@@ -35,6 +35,7 @@
 @property (weak,nonatomic) IBOutlet UIButton *speakerButton;
 @property (weak,nonatomic) IBOutlet UISlider *slider;
 @property (nonatomic) BOOL useSpeaker;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinningWheel;
 
 @property (weak,nonatomic) Voicemail *voicemailObject;
 @property (weak,nonatomic) id<JCVoicemailCellDelegate> delegate;

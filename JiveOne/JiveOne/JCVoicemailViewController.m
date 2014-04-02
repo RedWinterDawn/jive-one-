@@ -88,13 +88,6 @@ integer_t const oldVoicemails = 1;
                                         init];
     [refreshControl addTarget:self action:@selector(updateTable) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
 }
 
 - (void)showHudWithTitle:(NSString*)title detail:(NSString*)detail
@@ -195,8 +188,6 @@ integer_t const oldVoicemails = 1;
         
         return data;
     };
-    
-    
     return audioData = getVoicemailData(URLString);
 }
 
@@ -263,11 +254,8 @@ integer_t const oldVoicemails = 1;
 
 - (void)updateTable
 {
-    
     [self updateVoicemailData];
-    
     [self.tableView reloadData];
-    
     [self.refreshControl endRefreshing];
 }
 
@@ -382,6 +370,7 @@ integer_t const oldVoicemails = 1;
     else {
         [cell play];
     }
+    
     if(![cell.voicemailObject.read boolValue])
     {
         [self voicemailShouldBeMarkedRead:(JCVoicemailCell*)cell];
@@ -436,17 +425,5 @@ integer_t const oldVoicemails = 1;
     return YES;
 }
 */
-
-/*
-#pragma mark - Navigation
-
-// In a story board-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-
- */
 
 @end

@@ -106,6 +106,10 @@
                             <action selector="deleteTapped:" destination="O09-5V-FRi" eventType="touchUpInside" id="bb4-hX-Msc"/>
                         </connections>
                     </button>
+                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="o6o-BF-Pb3">
+                        <rect key="frame" x="146" y="61" width="20" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </activityIndicatorView>
                 </subviews>
             </tableViewCellContentView>
             <connections>
@@ -118,6 +122,7 @@
                 <outlet property="replyButton" destination="naM-MV-wGQ" id="VvH-oZ-ksa"/>
                 <outlet property="slider" destination="9LY-YY-Jqs" id="yAH-3O-Hd6"/>
                 <outlet property="speakerButton" destination="lTo-3o-o9u" id="Sg7-g2-dlo"/>
+                <outlet property="spinningWheel" destination="o6o-BF-Pb3" id="xaT-eY-sco"/>
                 <outlet property="title" destination="EDq-sG-3YO" id="bX2-ss-zYp"/>
                 <outlet property="username" destination="NZe-HX-VVJ" id="DIw-vB-bsE"/>
             </connections>
