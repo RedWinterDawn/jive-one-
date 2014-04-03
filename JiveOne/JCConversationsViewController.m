@@ -34,6 +34,8 @@ static NSString *CellIdentifier = @"ConversationCell";
 {
     [super viewDidLoad];
     [self.tableView registerNib:[UINib nibWithNibName:@"JCConversationCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+    [self.tableView setSeparatorInset:UIEdgeInsetsZero];
 
     me = [[JCOmniPresence sharedInstance] me];
     
