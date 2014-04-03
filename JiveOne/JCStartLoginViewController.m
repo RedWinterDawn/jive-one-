@@ -265,9 +265,12 @@ static int MAX_LOGIN_ATTEMPTS = 2;
             [request setHTTPBody:[data dataUsingEncoding:NSUTF8StringEncoding]];
             NSString* basicAuth = [@"Basic " stringByAppendingString:[self encodeStringToBase64:[NSString stringWithFormat:@"%@:%@", kOAuthClientId, kOAuthClientSecret]]];
             [request setValue:basicAuth forHTTPHeaderField:@"Authorization"];
-            NSURLConnection *theConnection=[[NSURLConnection alloc] initWithRequest:request delegate:self];
-            receivedData = [[NSMutableData alloc] init];
-            NSLog(@"%@",receivedData);
+            NSURLConnection *theConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+            
+            if (theConnection) {
+                receivedData = [[NSMutableData alloc] init];
+                NSLog(@"%@",receivedData);
+            }            
         }
     }
     

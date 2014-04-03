@@ -28,6 +28,7 @@
 
 - (void)didReceiveAuthenticationToken:(NSString *)token
 {
+    [_keychainWrapper setObject:(__bridge id)kSecAttrAccessibleAlways forKey:(__bridge id)kSecAttrAccount];
     [_keychainWrapper setObject:[NSString stringWithFormat:@"%@", token] forKey:(__bridge id)(kSecAttrAccount)];
     [[NSUserDefaults standardUserDefaults] setObject:token forKey:@"authToken"];
     [[NSUserDefaults standardUserDefaults] synchronize];

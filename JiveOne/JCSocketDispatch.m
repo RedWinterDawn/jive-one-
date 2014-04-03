@@ -11,17 +11,19 @@
 #import "KeychainItemWrapper.h"
 #import "ConversationEntry+Custom.h"
 
+@interface JCSocketDispatch()
+
+@property (strong, nonatomic) NSDictionary* cmd_start;
+@property (strong, nonatomic) NSDictionary* cmd_poll;
+@property (strong, nonatomic) NSString *json_start;
+@property (strong, nonatomic) NSString *json_poll;
+@property (strong, nonatomic) NSString* ws;
+@property (strong, nonatomic) NSString* pipedTokens;
+@property (strong, nonatomic) NSString *sessionToken;
+
+@end
 
 @implementation JCSocketDispatch
-{
-    NSDictionary* cmd_start;
-    NSDictionary* cmd_poll;
-    NSString *json_start;
-    NSString *json_poll;
-    NSString* ws;
-    NSString* pipedTokens;
-    NSString *sessionToken;
-}
 
 + (instancetype)sharedInstance
 {
@@ -40,6 +42,7 @@
 - (void)requestSession
 {
     NSLog(@"Requestion Session For Socket");
+    [self cleanup];
     [[JCOsgiClient sharedClient] RequestSocketSession:^(id JSON) {
         
         // First, get our current auth token
@@ -50,29 +53,29 @@
         NSDictionary* response = (NSDictionary*)JSON;
         
         // Retrive session token and pipe it together with our auth token
-        sessionToken = [NSString stringWithFormat:@"%@",[response objectForKey:@"token"]];
-        pipedTokens = [NSString stringWithFormat:@"%@|%@", authToken, sessionToken];
+        self.sessionToken = [NSString stringWithFormat:@"%@",[response objectForKey:@"token"]];
+        self.pipedTokens = [NSString stringWithFormat:@"%@|%@", authToken, self.sessionToken];
         
         // Create dictionaries that will be converted to JSON objects to be posted to the socket.
-        cmd_start = [NSDictionary dictionaryWithObjectsAndKeys:@"start", @"cmd", authToken, @"authToken", sessionToken, @"sessionToken", nil];
-        cmd_poll  = [NSDictionary dictionaryWithObjectsAndKeys:@"poll", @"cmd", authToken, @"authToken", sessionToken, @"sessionToken", nil];
+        self.cmd_start = [NSDictionary dictionaryWithObjectsAndKeys:@"start", @"cmd", authToken, @"authToken", self.sessionToken, @"sessionToken", nil];
+        self.cmd_poll  = [NSDictionary dictionaryWithObjectsAndKeys:@"poll", @"cmd", authToken, @"authToken", self.sessionToken, @"sessionToken", nil];
         
         NSError* error;
         // json start creation
-        NSData* jsonData = [NSJSONSerialization dataWithJSONObject:cmd_start options:NSJSONWritingPrettyPrinted error:&error];
-        json_start = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        NSData* jsonData = [NSJSONSerialization dataWithJSONObject:self.cmd_start options:NSJSONWritingPrettyPrinted error:&error];
+        self.json_start = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         // json poll creation
-        jsonData = [NSJSONSerialization dataWithJSONObject:cmd_poll options:NSJSONWritingPrettyPrinted error:&error];
-        json_poll = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        jsonData = [NSJSONSerialization dataWithJSONObject:self.cmd_poll options:NSJSONWritingPrettyPrinted error:&error];
+        self.json_poll = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         
         
         // Retrieve the ws parameter - this is the endpoint used to connect to our socket.
-        ws = [response objectForKey:@"ws"];
+        self.ws = [response objectForKey:@"ws"];
         
         NSLog(@"Requestion Session For Socket : Success");
         
         // If we have everyting we need, we can subscribe to events.
-        if (ws && sessionToken) {
+        if (self.ws && self.sessionToken) {
             [self subscribeSession];
         }
         
@@ -100,7 +103,7 @@
     
     for (NSDictionary *subscription in subscriptionArray) {
         
-        [[JCOsgiClient sharedClient] SubscribeToSocketEventsWithAuthToken:sessionToken subscriptions:subscription success:^(id JSON) {
+        [[JCOsgiClient sharedClient] SubscribeToSocketEventsWithAuthToken:self.sessionToken subscriptions:subscription success:^(id JSON) {
             //NSLog(@"%@", JSON);
             NSLog(@"Subscribing to Socket Events : Success");
             
@@ -117,7 +120,7 @@
 {
     // We have to make sure that the socket is in a initializable state.
     if (_webSocket == nil || _webSocket.readyState == SR_CLOSING || _webSocket.readyState == SR_CLOSED) {
-        _webSocket = [[SRWebSocket alloc] initWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:ws]]];
+        _webSocket = [[SRWebSocket alloc] initWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.ws]]];
         _webSocket.delegate = self;
         [_webSocket open];
     }
@@ -139,7 +142,7 @@
 - (void)webSocketDidOpen:(SRWebSocket *)webSocket
 {
     // Socket connected, send start command
-    [_webSocket send:json_start];
+    [_webSocket send:self.json_start];
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message{
@@ -152,7 +155,7 @@
     [self messageDispatcher:messageDictionary];
     
     // As soon as we're done processing the last received item, poll.
-    [_webSocket send:json_poll];
+    [_webSocket send:self.json_poll];
     
 }
 
@@ -160,6 +163,7 @@
 {
     //NSLog(@"%@", [NSString stringWithFormat:@"Connection Failed: %@", [error description]]);
     // If connection fails, try to reconnect.
+    
     [self reconnect];
 }
 
@@ -176,6 +180,17 @@
     if (code != 200) {
         [self reconnect];
     }
+}
+
+- (void)cleanup
+{
+    _cmd_start = nil;
+    _cmd_poll = nil;
+    _json_start = nil;
+    _json_poll = nil;
+    _ws = nil;
+    _pipedTokens = nil;
+    _sessionToken = nil;
 }
 
 - (void)messageDispatcher:(NSDictionary*)message
