@@ -40,6 +40,7 @@
     [self.slider setThumbImage:[UIImage imageNamed:@"thumb1.png"] forState:UIControlStateNormal];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     //split the callerId to get name and phone
+    //TODO: refactor when Jessie's API gives us these as properties in the json
     NSMutableArray* callerIdArray = [NSMutableArray arrayWithArray:[item.callerId componentsSeparatedByString:@"<"]];
     callerIdArray[1] = [((NSString*)callerIdArray[1]) stringByReplacingOccurrencesOfString:@">" withString:@""];
     
@@ -86,6 +87,8 @@
         self.creationTime.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
         self.callerId.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
         self.phone_state.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
+        self.voicemailIcon.image = [self.voicemailIcon.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        [self.voicemailIcon setTintColor:[UIColor blackColor]];
     }
     
     [self setupAudioPlayer];
@@ -181,6 +184,59 @@
     NSInteger minutes = (NSInteger)(seconds/60.);
     NSInteger remainingSeconds = (NSInteger)seconds % 60;
     return [NSString stringWithFormat:@"%.2ld:%.2ld",(long)minutes,(long)remainingSeconds];
+}
+
+#pragma mark Custom Swipe delete icon
+-(void)willTransitionToState:(UITableViewCellStateMask)state{
+    NSLog(@"EventTableCell willTransitionToState");
+    [super willTransitionToState:state];
+    if((state & UITableViewCellStateShowingDeleteConfirmationMask) == UITableViewCellStateShowingDeleteConfirmationMask){
+        [self recurseAndReplaceSubViewIfDeleteConfirmationControl:self.subviews];
+        [self performSelector:@selector(recurseAndReplaceSubViewIfDeleteConfirmationControl:) withObject:self.subviews afterDelay:0];
+    }
+}
+-(void)recurseAndReplaceSubViewIfDeleteConfirmationControl:(NSArray*)subviews{
+    NSString *delete_button_name = @"close_notification";
+    for (UIView *subview in subviews)
+    {
+        //handles ios6 and earlier
+        if ([NSStringFromClass([subview class]) isEqualToString:@"UITableViewCellDeleteConfirmationControl"])
+        {
+            //we'll add a view to cover the default control as the image used has a transparent BG
+            UIView *backgroundCoverDefaultControl = [[UIView alloc] initWithFrame:CGRectMake(0,0, 64, 33)];
+            [backgroundCoverDefaultControl setBackgroundColor:[UIColor whiteColor]];//assuming your view has a white BG
+            [[subview.subviews objectAtIndex:0] addSubview:backgroundCoverDefaultControl];
+            UIImage *deleteImage = [UIImage imageNamed:delete_button_name];
+            UIImageView *deleteBtn = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0,deleteImage.size.width, deleteImage.size.height)];
+            [deleteBtn setImage:[UIImage imageNamed:delete_button_name]];
+            [[subview.subviews objectAtIndex:0] addSubview:deleteBtn];
+        }
+        //the rest handles ios7
+        if ([NSStringFromClass([subview class]) isEqualToString:@"UITableViewCellDeleteConfirmationButton"])
+        {
+            UIButton *deleteButton = (UIButton *)subview;
+            [deleteButton setImage:[UIImage imageNamed:delete_button_name] forState:UIControlStateNormal];
+            [deleteButton setTitle:@"" forState:UIControlStateNormal];
+            [deleteButton setBackgroundColor:[UIColor redColor]];
+            for(UIView* view in subview.subviews){
+                if([view isKindOfClass:[UILabel class]]){
+                    [view removeFromSuperview];
+                }
+            }
+        }
+        if ([NSStringFromClass([subview class]) isEqualToString:@"UITableViewCellDeleteConfirmationView"])
+        {
+            for(UIView* innerSubView in subview.subviews){
+                if(![innerSubView isKindOfClass:[UIButton class]]){
+                    [innerSubView removeFromSuperview];
+                }
+            }
+        }
+        if([subview.subviews count]>0){
+            [self recurseAndReplaceSubViewIfDeleteConfirmationControl:subview.subviews];
+        }
+        
+    }
 }
 
 #pragma mark Audio player public methods

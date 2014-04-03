@@ -52,11 +52,11 @@
     self.userNameDetail.text = me.firstLastName;
     
     if (me.entityCompany) {
-        self.pbxDetail.text = me.entityCompany.name;
-        self.companyNameDetail.text = me.entityCompany.name;
+        self.jivePhoneNumber.text = me.entityCompany.name;
+        self.jiveMessenger.text = me.externalId;
     }
     
-    self.presenceDetail.text = [self getPresence:me.entityPresence.interactions[@"chat"][@"code"]];
+    [self.presenceDetail setTitle:[self getPresence:me.entityPresence.interactions[@"chat"][@"code"]]  forState:UIControlStateNormal];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -131,7 +131,7 @@
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -144,8 +144,23 @@
     return [super tableView:tableView cellForRowAtIndexPath:indexPath];
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+//-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+// 
+//}
+
+#pragma mark - Actions from UI
+- (IBAction)logoutButtonPress:(id)sender {
+    
+    [[JCAuthenticationManager sharedInstance] logout:self];
+}
+- (IBAction)soundSwitchPressed:(id)sender {
+    //TODO: implement
+}
+- (IBAction)vibrateSwitchPressed:(id)sender {
+    //TODO: implement
+}
+- (IBAction)presenceButtonSelected:(id)sender {
     UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"Select Presence option:" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
                             kPresenceAvailable,
                             kPresenceAway,
@@ -157,10 +172,6 @@
     [popup showInView:self.view];
 }
 
-- (IBAction)logoutButtonPress:(id)sender {
-    
-    [[JCAuthenticationManager sharedInstance] logout:self];
-}
 
 #pragma mark - UIActionSheet Delegate
 - (void)actionSheet:(UIActionSheet *)popup clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -194,11 +205,11 @@
             type = JCPresenceTypeOffline;
             break;
         default:
-            state = _presenceDetail.text;
+            state = self.presenceDetail ;
             type = JCPresenceTypeNone;
     }
     
-    _presenceDetail.text = state;
+    [self.presenceDetail setTitle:state forState:UIControlStateNormal];
     
     if (type != JCPresenceTypeNone) {
         [[JCOsgiClient sharedClient] UpdatePresence:type success:^(BOOL updated) {

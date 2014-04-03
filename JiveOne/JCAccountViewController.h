@@ -11,8 +11,10 @@
 @interface JCAccountViewController : UITableViewController <UIActionSheetDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *userNameDetail;
-@property (weak, nonatomic) IBOutlet UILabel *pbxDetail;
-@property (weak, nonatomic) IBOutlet UILabel *companyNameDetail;
-@property (weak, nonatomic) IBOutlet UILabel *presenceDetail;
+@property (weak, nonatomic) IBOutlet UILabel *jivePhoneNumber;
+@property (weak, nonatomic) IBOutlet UILabel *jiveMessenger;
+@property (weak, nonatomic) IBOutlet UISwitch *soundSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *vibrateSwitch;
+@property (weak, nonatomic) IBOutlet UIButton *presenceDetail;
 
 @end
