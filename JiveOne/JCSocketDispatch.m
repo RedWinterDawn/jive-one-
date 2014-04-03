@@ -93,7 +93,10 @@
     
     NSDictionary* presence1 = [NSDictionary dictionaryWithObjectsAndKeys:@"presence:entities:*", @"urn", nil];
     
-    NSArray *subscriptionArray = [NSArray arrayWithObjects:conversation, conversation1, conversation2, conversation3, conversation4, presence1, nil];
+    NSDictionary* calls = [NSDictionary dictionaryWithObjectsAndKeys:@"calls:#", @"urn", nil];
+    
+    
+    NSArray *subscriptionArray = [NSArray arrayWithObjects:conversation, conversation1, conversation2, conversation3, conversation4, presence1, calls, nil];
     
     for (NSDictionary *subscription in subscriptionArray) {
         
@@ -168,7 +171,7 @@
            @"reason": reason,
            @"clean": @(wasClean)};
     
-    // If the socket was not closed with on purpose (code 200), then try to reconnect
+    // If the socket was not closed on purpose (code 200), then try to reconnect
     NSLog(@"Connection Closed : %@", userInfo);
     if (code != 200) {
         [self reconnect];
