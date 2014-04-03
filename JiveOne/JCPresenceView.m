@@ -9,11 +9,11 @@
 #import "JCPresenceView.h"
 #import <QuartzCore/QuartzCore.h>
 
-#define DEFAULT_AVAILABLE_COLOR         [UIColor greenColor]
-#define DEFAULT_AWAY_COLOR              [UIColor yellowColor]
-#define DEFAULT_BUSY_COLOR              [UIColor yellowColor]
-#define DEFAULT_DO_NOT_DISTURB_COLOR    [UIColor redColor]
-#define DEFAULT_COLOR                   [UIColor darkGrayColor]
+#define DEFAULT_AVAILABLE_COLOR         [UIColor colorWithRed:129.0/255.0 green:205.0/255.0 blue:0.0/255.0 alpha:1]
+#define DEFAULT_AWAY_COLOR              [UIColor colorWithRed:233.0/255.0 green:195.0/255.0 blue:0.0/255.0 alpha:1]
+#define DEFAULT_BUSY_COLOR              [UIColor colorWithRed:233.0/255.0 green:195.0/255.0 blue:0.0/255.0 alpha:1]
+#define DEFAULT_DO_NOT_DISTURB_COLOR    [UIColor colorWithRed:233.0/255.0 green:0.0/255.0 blue:19.0/255.0 alpha:1]
+#define DEFAULT_COLOR                   [UIColor colorWithRed:186.0/255.0 green:186.0/255.0 blue:186.0/255.0 alpha:1]
 
 #define DEFAULT_LINE_WIDTH              3
 
@@ -144,8 +144,8 @@
         CGRect frame = CGRectMake(_lineWidth, _lineWidth, width, width);
         
         CGContextSaveGState(context);
-        CGContextSetLineWidth(context, _lineWidth);
-        CGContextSetFillColorWithColor(context, CGColorCreateCopyWithAlpha([self colorFromType:type].CGColor, 0.4));
+        //CGContextSetLineWidth(context, _lineWidth);
+        CGContextSetFillColorWithColor(context, CGColorCreateCopyWithAlpha([self colorFromType:type].CGColor, 1.0));
         CGContextSetStrokeColorWithColor(context, [self colorFromType:type].CGColor);
         CGContextFillEllipseInRect(context, frame);
         CGContextStrokeEllipseInRect(context, frame);

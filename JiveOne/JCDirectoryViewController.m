@@ -45,7 +45,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    sections = [NSArray arrayWithObjects:@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
+    sections = [NSArray arrayWithObjects:@"⭐️", @"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
     self.clientEntitiesArray = [[NSMutableArray alloc] init];
     self.clientEntitiesSearchArray = [[NSMutableArray alloc] init];
     if ([self.segControl selectedSegmentIndex] == 0) {
@@ -335,7 +335,6 @@ static NSString *CellIdentifier = @"DirectoryCell";
                 return nil;
             }
             cell = [[JCPersonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];//can only be used if initWithStyle manually initializes all uilabel properties (since it's not being created by the storyboard)
-             //cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             section = self.clientEntitiesSearchArray[indexPath.section];
         }
         else{
