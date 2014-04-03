@@ -117,12 +117,16 @@
     // setup message textview
     [self setup];
     
-    double y = self.contactPickerView.hidden ? 0 : self.contactPickerView.frame.size.height;
+    //double y = self.contactPickerView.hidden ? 0 : self.contactPickerView.frame.size.height;
     
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, y, self.view.frame.size.width, self.view.frame.size.height - 55.0 - y) style:UITableViewStylePlain];
+    //self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, y, self.view.frame.size.width, self.view.frame.size.height - 55.0 - y) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.backgroundColor = [UIColor lightGrayColor];
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    
     [self.view insertSubview:self.tableView belowSubview:self.contactPickerView];
+    
     
     [self setupView];
 }
@@ -586,6 +590,9 @@
         cell.detailTextLabel.numberOfLines = 0;
         CGRect imageFrame = cell.imageView.frame;
         [cell.imageView setFrame:CGRectMake(imageFrame.origin.x, imageFrame.origin.y, 30, 30)];
+        
+        cell.backgroundColor = [UIColor clearColor];
+        cell.contentView.backgroundColor = [UIColor whiteColor];
     }
     
     // if we have a conversationId, the we load chat entries
@@ -610,7 +617,7 @@
         ConversationEntry *entry = conversationEntries[indexPath.row];
         
         NSString *cellText = entry.message[@"raw"];
-        UIFont *cellFont = [UIFont fontWithName:@"Helvetica" size:17.0];
+        UIFont *cellFont = [UIFont fontWithName:@"Helvetica" size:16.0];
         CGSize constraintSize = CGSizeMake(280.0f, MAXFLOAT);
         
         NSAttributedString *attributedText = [[NSAttributedString alloc]
