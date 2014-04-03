@@ -335,7 +335,7 @@ static NSString *CellIdentifier = @"ConversationCell";
         
         [segue.destinationViewController setMessageType:JCExistingConversation];
         [segue.destinationViewController setConversationId:cell.conversation.conversationId];
-        [segue.destinationViewController setCallerId:title];
+        [segue.destinationViewController setTitle:title];
         
     }
     else if ([sender isKindOfClass:[NSString class]]) {
