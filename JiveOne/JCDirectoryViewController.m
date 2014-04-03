@@ -117,9 +117,9 @@ static NSString *CellIdentifier = @"DirectoryCell";
         });
     }
   
-    
+
     NSArray *allContacts = (__bridge_transfer NSArray *)ABAddressBookCopyArrayOfAllPeople(addressBook);
-    
+    CFRelease(addressBook);
     NSInteger sectionCount = [sections count];
     NSInteger allContactsCount = [allContacts count];
     for (int i = 0; i < sectionCount; i++) {
@@ -367,60 +367,6 @@ static NSString *CellIdentifier = @"DirectoryCell";
     return 60;
 }
 
-- (NSString *)getPresence:(NSNumber *)presence
-{
-    switch ([presence integerValue]) {
-        case JCPresenceTypeAvailable:
-            return kPresenceAvailable;
-            break;
-        case JCPresenceTypeAway:
-            return kPresenceAway;
-            break;
-        case JCPresenceTypeBusy:
-            return kPresenceBusy;
-            break;
-        case JCPresenceTypeDoNotDisturb:
-            return kPresenceDoNotDisturb;
-            break;
-        case JCPresenceTypeInvisible:
-            return kPresenceInvisible;
-            break;
-        case JCPresenceTypeOffline:
-            return kPresenceOffline;
-            break;
-            
-        default:
-            return @"Unknown";
-            break;
-    }
-}
-
-- (UILabel *)presenceLabelForValue:(UILabel*)presence
-{
-    UIColor *color = nil;
-    
-    if ([presence.text isEqualToString:kPresenceAvailable]) {
-        color = [UIColor greenColor];
-    }
-    else if ([presence.text isEqualToString:kPresenceAway]) {
-        color = [UIColor orangeColor];
-    }
-    else if ([presence.text isEqualToString:kPresenceBusy]) {
-        color = [UIColor orangeColor];
-    }
-    else if ([presence.text isEqualToString:kPresenceDoNotDisturb]) {
-        color = [UIColor redColor];
-    }
-    else if ([presence.text isEqualToString:kPresenceInvisible]) {
-        color = [UIColor darkGrayColor];
-    }
-    else if ([presence.text isEqualToString:kPresenceOffline]) {
-        color = [UIColor darkGrayColor];
-    }
-    
-    [presence setTextColor:color];
-    return presence;
-}
 
 #pragma mark Search
 
@@ -496,13 +442,14 @@ shouldReloadTableForSearchString:(NSString *)searchString
             groupVC.person = self.clientEntitiesArray;
         } else if ([[segue identifier] isEqualToString:@"directoryDetailView"]) {
         
-            ClientEntities *person = self.clientEntitiesArray[indexPath.section][indexPath.row];
+            ClientEntities *person = nil; //self.clientEntitiesArray[indexPath.section][indexPath.row];
             if (self.searchTableIsActive) {
                 indexPath = sender;
                 person = self.clientEntitiesSearchArray[indexPath.section][indexPath.row];
             }
-            else
+            else {
                 person = self.clientEntitiesArray[indexPath.section][indexPath.row];
+            }
             [segue.destinationViewController setPerson:person];
             [segue.destinationViewController setABPerson:nil];
         }
@@ -510,11 +457,13 @@ shouldReloadTableForSearchString:(NSString *)searchString
     //local contact
     else
     {
-        NSDictionary * person;
-        if([segue.identifier isEqualToString:@"showSearchDetail"])
-            person = self.clientEntitiesSearchArray[indexPath.section][indexPath.row];
-        else
-            person = self.clientEntitiesArray[indexPath.section][indexPath.row];
+//        NSDictionary *person = nil;
+//        if([segue.identifier isEqualToString:@"showSearchDetail"]) {
+//            person = self.clientEntitiesSearchArray[indexPath.section][indexPath.row];
+//        }
+//        else {
+//            person = self.clientEntitiesArray[indexPath.section][indexPath.row];
+//        }
         // get ABDictionary
         
         if ([[segue identifier] isEqualToString:@"groupView"]) {
