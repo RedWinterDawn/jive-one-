@@ -79,7 +79,7 @@
         }
         
         // set the conversastion time label
-        self.conversationTime.text = [Common dateFromTimestamp:_conversation.lastModified];
+        self.conversationTime.text = [Common shortDateFromTimestamp:_conversation.lastModified];
         
         // grab the last entry for the conversation and set in the snippet lable
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"conversationId ==[c] %@", _conversation.conversationId];
