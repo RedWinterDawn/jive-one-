@@ -39,9 +39,23 @@
     [self addGestureRecognizer:tapGestureRecognizer];
     [self.slider setThumbImage:[UIImage imageNamed:@"thumb1.png"] forState:UIControlStateNormal];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
-    self.username.text = item.callerId;
-    self.title.text = @"Voicemail";
-    self.creationTime.text = [Common dateFromTimestamp:[NSNumber numberWithLongLong:[item.createdDate longLongValue]]];
+    //split the callerId to get name and phone
+    NSMutableArray* callerIdArray = [NSMutableArray arrayWithArray:[item.callerId componentsSeparatedByString:@"<"]];
+    callerIdArray[1] = [((NSString*)callerIdArray[1]) stringByReplacingOccurrencesOfString:@">" withString:@""];
+    
+    //if callerid.name is empty-display phone in self.callerId.text
+    if([callerIdArray[0] isEqualToString:@""]){
+        self.callerId.text = callerIdArray[1];
+        self.phone_state.text = @"Utah";
+    }else{
+        self.callerId.text = callerIdArray[0];
+        self.phone_state.text = [NSString stringWithFormat:@"%@ Utah", callerIdArray[1]];
+    }
+    self.userImage.image = [UIImage imageNamed:@"avatar.png"];
+  
+
+    self.shortTime.text = [Common shortDateFromTimestamp:[NSNumber numberWithLongLong:[item.createdDate longLongValue]]];
+    self.creationTime.text = [Common longDateFromTimestamp:[NSNumber numberWithLongLong:[item.createdDate longLongValue]]];
     self.duration.text = [self formatSeconds:[item.duration doubleValue]];
     self.voicemailObject = item;
     self.delegate = delegate;
@@ -54,19 +68,24 @@
             //stopAnimating should also hide the activity indicator
         }
     }
-    
+//    theImageView.image = [theImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+//    [theImageView setTintColor:[UIColor redColor]];
     
     [self.voicemailObject addObserver:self forKeyPath:kVoicemailKeyPathForVoicemal options:NSKeyValueObservingOptionNew context:NULL];
     
     if(![self.voicemailObject.read boolValue]){
         
-        self.username.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
+        self.shortTime.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
         self.creationTime.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
-        self.title.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16];
+        self.callerId.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16];
+        self.phone_state.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
+        self.voicemailIcon.image = [self.voicemailIcon.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        [self.voicemailIcon setTintColor:[UIColor redColor]];
     }else{
-        self.username.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
+        self.shortTime.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
         self.creationTime.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
-        self.title.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
+        self.callerId.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
+        self.phone_state.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
     }
     
     [self setupAudioPlayer];

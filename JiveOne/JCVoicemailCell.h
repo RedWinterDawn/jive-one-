@@ -23,17 +23,17 @@
 @end
 
 @interface JCVoicemailCell : UITableViewCell <AVAudioPlayerDelegate>
-@property (weak, nonatomic) IBOutlet UILabel *title;
+@property (weak, nonatomic) IBOutlet UILabel *callerId;
+@property (weak, nonatomic) IBOutlet UILabel *phone_state;
 @property (weak,nonatomic) IBOutlet UIButton *playButton;
-@property (weak,nonatomic) IBOutlet UIButton *replyButton;
 @property (weak,nonatomic) IBOutlet UILabel  *creationTime;
 @property (weak,nonatomic) IBOutlet UILabel  *elapsed;
 @property (weak,nonatomic) IBOutlet UILabel  *duration;
-@property (weak,nonatomic) IBOutlet UIButton *infoButton;
-@property (weak,nonatomic) IBOutlet UIButton *deleteButton;
-@property (weak,nonatomic) IBOutlet UILabel  *username;
+@property (weak,nonatomic) IBOutlet UILabel  *shortTime;
 @property (weak,nonatomic) IBOutlet UIButton *speakerButton;
 @property (weak,nonatomic) IBOutlet UISlider *slider;
+@property (weak, nonatomic) IBOutlet UIImageView *userImage;
+@property (weak, nonatomic) IBOutlet UIImageView *voicemailIcon;
 @property (nonatomic) BOOL useSpeaker;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinningWheel;
 

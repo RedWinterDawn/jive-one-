@@ -13,7 +13,7 @@
 #define DATE_COMPONENTS (NSYearCalendarUnit| NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekCalendarUnit |  NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSWeekdayCalendarUnit | NSWeekdayOrdinalCalendarUnit)
 #define CURRENT_CALENDAR [NSCalendar currentCalendar]
 
-+(NSString *) dateFromTimestamp:(NSNumber *)timestamp
++(NSString *) shortDateFromTimestamp:(NSNumber *)timestamp
 {
     NSTimeInterval timeInterval = [timestamp longLongValue]/1000;
     NSDate *date = [[NSDate alloc]initWithTimeIntervalSince1970: timeInterval];
@@ -36,13 +36,24 @@
         //[formatter setDateFormat:@"EEEE HH:mm a"];
         [formatter setDateFormat:@"EEE"];
         return [formatter stringFromDate:date];
+    }else{
+        [formatter setDateFormat:@"MMM d"];
+        return [formatter stringFromDate:date];
     }
-        
+}
++(NSString*) longDateFromTimestamp:(NSNumber*)timestamp{
+    
+    NSTimeInterval timeInterval = [timestamp longLongValue]/1000;
+    NSDate *date = [[NSDate alloc]initWithTimeIntervalSince1970: timeInterval];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.timeZone = [NSTimeZone defaultTimeZone];
+
     [formatter setDateFormat:@"MM/dd/yyyy hh:mm a"];
     NSTimeZone *timezone = [NSTimeZone defaultTimeZone];
     formatter.timeZone = timezone;
     return [formatter stringFromDate:date];
 }
+
 
 + (BOOL) isEqualToDateIgnoringTime: (NSDate *) aDate
 {
