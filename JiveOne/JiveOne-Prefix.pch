@@ -18,4 +18,5 @@
     #import "CoreData+MagicalRecord.h"
     #import "JCOmniPresence.h"
     #import "NotificationView.h"
+    #import "JCAuthenticationManager.h"
 #endif
