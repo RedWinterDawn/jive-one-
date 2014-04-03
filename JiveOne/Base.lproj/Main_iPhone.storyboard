@@ -75,10 +75,10 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="vaI-vc-7Id" kind="relationship" relationship="viewControllers" id="uyj-sn-1Fm"/>
-                        <segue destination="6Dq-mE-F9w" kind="relationship" relationship="viewControllers" id="QMi-vO-8ci"/>
-                        <segue destination="4mQ-Xv-N0n" kind="relationship" relationship="viewControllers" id="dwi-Kf-NBW"/>
                         <segue destination="XFb-KJ-zT0" kind="relationship" relationship="viewControllers" id="qlu-mP-rqG"/>
+                        <segue destination="6Dq-mE-F9w" kind="relationship" relationship="viewControllers" id="QMi-vO-8ci"/>
+                        <segue destination="vaI-vc-7Id" kind="relationship" relationship="viewControllers" id="uyj-sn-1Fm"/>
+                        <segue destination="4mQ-Xv-N0n" kind="relationship" relationship="viewControllers" id="dwi-Kf-NBW"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FNP-y4-bzi" sceneMemberID="firstResponder"/>
@@ -646,11 +646,11 @@
             </objects>
             <point key="canvasLocation" x="1095" y="1916"/>
         </scene>
-        <!--Navigation Controller - Account-->
+        <!--Navigation Controller-->
         <scene sceneID="iH8-Ew-IaF">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4mQ-Xv-N0n" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Account" image="AccontTab" id="k9B-uW-1kv"/>
+                    <tabBarItem key="tabBarItem" systemItem="more" id="k9B-uW-1kv"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="CDo-hA-kaH">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -862,7 +862,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="AccontTab" width="40" height="40"/>
         <image name="DirectoryTab" width="40" height="40"/>
         <image name="RecentTab" width="40" height="40"/>
         <image name="launch.png" width="640" height="1136"/>
