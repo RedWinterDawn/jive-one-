@@ -126,6 +126,11 @@
     return [comp day];
 }
 
+#pragma mark - String Utils
++(BOOL)stringIsNilOrEmpty:(NSString*)aString {
+    return !(aString && aString.length);
+}
+
 
 #pragma mark - UIImage Utils
 

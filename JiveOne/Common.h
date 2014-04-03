@@ -29,6 +29,10 @@
 + (NSInteger) daysAfterDate: (NSDate *) aDate;
 + (NSInteger) daysBeforeDate: (NSDate *) aDate;
 
+#pragma mark - String Utils
++(BOOL)stringIsNilOrEmpty:(NSString*)aString;
+
+
 #pragma mark - UIImage Utils
 + (UIImage *)mergeImage:(UIImage*)first withImage:(UIImage*)second;
 + (UIImage *) imageFromView:(UIView *)view;
