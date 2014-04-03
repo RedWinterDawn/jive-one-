@@ -205,7 +205,7 @@
             type = JCPresenceTypeOffline;
             break;
         default:
-            state = self.presenceDetail ;
+            state = self.presenceDetail.titleLabel.text;
             type = JCPresenceTypeNone;
     }
     
@@ -213,7 +213,7 @@
     
     if (type != JCPresenceTypeNone) {
         [[JCOsgiClient sharedClient] UpdatePresence:type success:^(BOOL updated) {
-            NSLog(@"%hhd", updated);
+            NSLog(@"%i", updated);
         } failure:^(NSError *err) {
             NSLog(@"%@", err);
         }];
