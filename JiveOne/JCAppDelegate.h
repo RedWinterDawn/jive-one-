@@ -13,5 +13,7 @@
 @property (strong, nonatomic) UIWindow *window;
 
 - (void)changeRootViewController:(JCRootViewControllerType)type;
+- (void)startSocket;
+- (void)stopSocket;
 
 @end

@@ -71,11 +71,11 @@
     [[JCOsgiClient sharedClient] clearCookies];
     [[JCOmniPresence sharedInstance] truncateAllTablesAtLogout];
     
-//    if (viewController != nil) {        
-//        [viewController dismissViewControllerAnimated:YES completion:nil];
-//    }
+    
     
     JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
+    
+    [delegate stopSocket];
     
     if(![viewController isKindOfClass:[JCStartLoginViewController class]]){
     [UIView transitionWithView:delegate.window
