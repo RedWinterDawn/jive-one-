@@ -306,7 +306,7 @@
             </objects>
             <point key="canvasLocation" x="578" y="-160"/>
         </scene>
-        <!--Directory View Controller - Directory-->
+        <!--Directory View Controller - People-->
         <scene sceneID="sgK-qG-NHh">
             <objects>
                 <viewController storyboardIdentifier="JCDirectoryViewController" id="eTh-sK-SbW" customClass="JCDirectoryViewController" sceneMemberID="viewController">
@@ -356,7 +356,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Directory" id="i9j-aS-UgH">
+                    <navigationItem key="navigationItem" title="People" id="i9j-aS-UgH">
                         <barButtonItem key="leftBarButtonItem" title="Groups" id="j4n-ty-ab6">
                             <connections>
                                 <segue destination="T2Z-JV-v4U" kind="push" identifier="groupView" customClass="JCRightToLeftSegue" id="pAr-G9-p6b"/>
