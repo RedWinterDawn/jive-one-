@@ -216,7 +216,7 @@
 - (void)didSendText:(NSString *)text fromSender:(NSString *)sender onDate:(NSDate *)date
 {
 //    if ((self.messages.count - 1) % 2) {
-    [JSMessageSoundEffect playMessageSentSound];
+    
 //    }
 //    else {
 //        // for demo purposes only, mimicing received messages
@@ -262,6 +262,39 @@
 
 #pragma mark - Messages view delegate: OPTIONAL
 
+//
+//  *** Implement to customize cell further
+//
+- (void)configureCell:(JSBubbleMessageCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell messageType] == JSBubbleMessageTypeOutgoing) {
+        cell.bubbleView.textView.textColor = [UIColor whiteColor];
+        
+        if ([cell.bubbleView.textView respondsToSelector:@selector(linkTextAttributes)]) {
+            NSMutableDictionary *attrs = [cell.bubbleView.textView.linkTextAttributes mutableCopy];
+            [attrs setValue:[UIColor blueColor] forKey:UITextAttributeTextColor];
+            
+            cell.bubbleView.textView.linkTextAttributes = attrs;
+        }
+    }
+    
+    if (cell.timestampLabel) {
+        cell.timestampLabel.textColor = [UIColor darkGrayColor];
+        cell.timestampLabel.font = [UIFont systemFontOfSize:8.0f];
+        cell.timestampLabel.shadowOffset = CGSizeZero;
+    }
+    
+    if (cell.subtitleLabel) {
+        cell.subtitleLabel.textColor = [UIColor whiteColor];
+    }
+    
+#if TARGET_IPHONE_SIMULATOR
+    cell.bubbleView.textView.dataDetectorTypes = UIDataDetectorTypeNone;
+#else
+    cell.bubbleView.textView.dataDetectorTypes = UIDataDetectorTypeAll;
+#endif
+}
+
 - (BOOL)shouldDisplayTimestampForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row % 3 == 0) {
@@ -289,7 +322,6 @@
 
 -(JSMessage *)messageForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //JCChatMessage *message = [self.messages objectAtIndex:indexPath.row];
     return [self.messages objectAtIndex:indexPath.row];
 }
 
@@ -323,6 +355,7 @@
         [self setupDataSources];
         [self.tableView reloadData];
         [self scrollToBottomAnimated:YES];
+        [JSMessageSoundEffect playMessageReceivedSound];
 //        [self.tableView reloadData];
     }
 }
@@ -337,9 +370,9 @@
         
         [[JCOsgiClient sharedClient] SubmitChatMessageForConversation:_conversationId message:message withEntity:entity success:^(id JSON) {
             // confirm to user message was sent
-            //[self finishSend];
+           [JSMessageSoundEffect playMessageSentSound];
         } failure:^(NSError *err) {
-            // alert user that message could not be sent. try again.
+            NSLog(@"%@", err);
         }];
         
         //[self cleanup];
