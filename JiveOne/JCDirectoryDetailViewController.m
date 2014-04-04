@@ -10,12 +10,15 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "JCMessageViewController.h"
 #import "Company.h"
+#import "JCDirDetailPersonCell.h"
 
 
 @interface JCDirectoryDetailViewController ()
 #define NUMBER_OF_ROWS_IN_SECTION 3
 #define NUMBER_OF_SECTIONS 1
 #define ZERO 0
+#define kUINameRowHeight 66
+#define kUIRowHeight 50
 @end
 
 @implementation JCDirectoryDetailViewController
@@ -64,26 +67,28 @@
     return ZERO;
 }
 
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
         if (indexPath.row == 0) {
             // Create first cell
             static NSString *CellIdentifier = @"DirectoryDetailNameCell";
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-            
+             JCDirDetailPersonCell  *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+            //TODO: Monday finish creating top cell for this table view.
+//            cell.presenceView = self.personCell.personPresenceView;
+//            cell.nameLabel.text = self.person.firstLastName;
             if(!self.ABPerson){
-                cell.textLabel.text = self.person.firstLastName;
-                [cell.imageView setImageWithURL:[NSURL URLWithString:self.person.picture]
-                               placeholderImage:[UIImage imageNamed:@"avatar.png"]];
+//                self.Name.text = self.personCell.personNameLabel;
+                
             } else {
-                cell.textLabel.text = [self.ABPerson objectForKey:@"firstLast"];
+//                cell.textLabel.text = [self.ABPerson objectForKey:@"firstLast"];
                 //TODO: picture
             }
             
             return cell;
         } else if (indexPath.row == 1) {
             // Create second cell
-            static NSString *CellIdentifier = @"DirectoryDetailEmailCell";
+            static NSString *CellIdentifier = @"DirectoryDetailChatCell";
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
             
             cell.textLabel.text = @"Email";
@@ -96,7 +101,7 @@
             return cell;
         } else {
             // Create all others
-            static NSString *CellIdentifier = @"DirectoryDetailCompanyCell";
+            static NSString *CellIdentifier = @"DirectoryDetailMobileCell";
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
             
             cell.textLabel.text = @"Company";
@@ -117,6 +122,34 @@
         }
     
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat result;
+    
+    switch ([indexPath row])
+    {
+        case 0:
+        {
+            result = kUINameRowHeight;
+            break;
+        }
+        case 1:
+        {
+            result = kUIRowHeight;
+            break;
+        }
+        default:
+        {
+            result = kUIRowHeight;
+        }
+    }
+    return result;
+}
+
+
+
+
 
 // This button created in case we need to call methods in conjunction with starting a chat from directory detail view
 - (IBAction)startChat:(id)sender {

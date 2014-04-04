@@ -87,6 +87,8 @@
 		27E9A35818E0A17A0017B65D /* Presence+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E9A35718E0A17A0017B65D /* Presence+Custom.m */; };
 		27FA3F9518D89469005AEF98 /* JCContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FA3F9418D89469005AEF98 /* JCContactModel.m */; };
 		42A1D3B90E844E0DA4AB6197 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86ED89B2764949AC9BCC0C7B /* libPods.a */; };
+		91010E4F18EF3DA3008B914F /* JCDirDetailPersonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91010E4E18EF3DA3008B914F /* JCDirDetailPersonCell.xib */; };
+		91010E5218EF3E1C008B914F /* JCDirDetailPersonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 91010E5118EF3E1C008B914F /* JCDirDetailPersonCell.m */; };
 		911B3E9118E0E41D00105925 /* voicemail_pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 911B3E8F18E0E41D00105925 /* voicemail_pause.png */; };
 		911B3E9218E0E41D00105925 /* voicemail_pause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 911B3E9018E0E41D00105925 /* voicemail_pause@2x.png */; };
 		911BFDD518D9E9C300684964 /* vmail.png in Resources */ = {isa = PBXBuildFile; fileRef = 911BFDD418D9E9C300684964 /* vmail.png */; };
@@ -256,6 +258,9 @@
 		27FA3F9418D89469005AEF98 /* JCContactModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCContactModel.m; sourceTree = "<group>"; };
 		86ED89B2764949AC9BCC0C7B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B150D3FF8864E2786E514D9 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		91010E4E18EF3DA3008B914F /* JCDirDetailPersonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCDirDetailPersonCell.xib; sourceTree = "<group>"; };
+		91010E5018EF3E1C008B914F /* JCDirDetailPersonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDirDetailPersonCell.h; sourceTree = "<group>"; };
+		91010E5118EF3E1C008B914F /* JCDirDetailPersonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDirDetailPersonCell.m; sourceTree = "<group>"; };
 		911B3E8F18E0E41D00105925 /* voicemail_pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = voicemail_pause.png; sourceTree = "<group>"; };
 		911B3E9018E0E41D00105925 /* voicemail_pause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "voicemail_pause@2x.png"; sourceTree = "<group>"; };
 		911BFDD418D9E9C300684964 /* vmail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vmail.png; sourceTree = "<group>"; };
@@ -356,6 +361,9 @@
 				2736698018BD441D0069B4B3 /* JCPersonCell.h */,
 				2736698118BD441D0069B4B3 /* JCPersonCell.m */,
 				279E602318C8C59900C5CC9F /* JCPersonCell.xib */,
+				91010E4E18EF3DA3008B914F /* JCDirDetailPersonCell.xib */,
+				91010E5018EF3E1C008B914F /* JCDirDetailPersonCell.h */,
+				91010E5118EF3E1C008B914F /* JCDirDetailPersonCell.m */,
 				2787911118CF79DC004DE651 /* JCPresenceView.h */,
 				2787911218CF79DC004DE651 /* JCPresenceView.m */,
 				274493AC18D0D538002744CB /* JCConversationTableViewCell.h */,
@@ -436,6 +444,10 @@
 				2751591E18AD303500FD8D3F /* JCDirectoryViewController.m */,
 				F2459BB018C67FC000AF56CF /* JCGroupSelectorViewController.h */,
 				F2459BB118C67FC000AF56CF /* JCGroupSelectorViewController.m */,
+				27C3715518EE29F400F159EF /* JCMessagesViewController.h */,
+				27C3715618EE29F400F159EF /* JCMessagesViewController.m */,
+				272F65E118D37602009BD7B3 /* JCMessageViewController.h */,
+				272F65E218D37602009BD7B3 /* JCMessageViewController.m */,
 				2751590418AD118D00FD8D3F /* JCStartLoginViewController.h */,
 				2751590518AD118D00FD8D3F /* JCStartLoginViewController.m */,
 				DD01933518AECA760065A8CD /* JCTestViewController.h */,
@@ -444,10 +456,6 @@
 				9135DDFF18BBFC7A0052E998 /* JCVoicemailViewController.m */,
 				2751593218AD3BD500FD8D3F /* JCVoipViewController.h */,
 				2751593318AD3BD500FD8D3F /* JCVoipViewController.m */,
-				272F65E118D37602009BD7B3 /* JCMessageViewController.h */,
-				272F65E218D37602009BD7B3 /* JCMessageViewController.m */,
-				27C3715518EE29F400F159EF /* JCMessagesViewController.h */,
-				27C3715618EE29F400F159EF /* JCMessagesViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -744,6 +752,7 @@
 				91ADB9A218D8BD4200DF41A3 /* voicemail_archive_button.png in Resources */,
 				91ADB9AA18D8BD4200DF41A3 /* voicemail_mic.png in Resources */,
 				919C448F18DA479F00F6566A /* thumb1.png in Resources */,
+				91010E4F18EF3DA3008B914F /* JCDirDetailPersonCell.xib in Resources */,
 				27A49AB018DC8BC00084DEE0 /* launch.png in Resources */,
 				275F4A7018AD0FBC00D2F069 /* Images.xcassets in Resources */,
 				275F4A6518AD0FBC00D2F069 /* Main_iPhone.storyboard in Resources */,
@@ -853,6 +862,7 @@
 				2710E40F18CEC8C300152C91 /* ConversationEntry+Custom.m in Sources */,
 				2751591F18AD303500FD8D3F /* JCDirectoryViewController.m in Sources */,
 				DD3BD9F418DCB1740080318E /* Voicemail+Custom.m in Sources */,
+				91010E5218EF3E1C008B914F /* JCDirDetailPersonCell.m in Sources */,
 				F258589218BD3A420020AF34 /* JCDirectoryGroupViewController.m in Sources */,
 				27A49AB318DCE56B0084DEE0 /* Voicemail.m in Sources */,
 				DD01933718AECA760065A8CD /* JCTestViewController.m in Sources */,

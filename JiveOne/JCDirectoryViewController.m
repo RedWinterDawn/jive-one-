@@ -16,6 +16,9 @@
 #import "ContactGroup.h"
 #import "NotificationView.h"
 
+#define kUINameRowHeight 100
+#define kUIRowHeight 50
+
 
 @interface JCDirectoryViewController ()
 
@@ -45,7 +48,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    sections = [NSArray arrayWithObjects:@"⭐️", @"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
+    sections = [NSArray arrayWithObjects:@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
     self.clientEntitiesArray = [[NSMutableArray alloc] init];
     self.clientEntitiesSearchArray = [[NSMutableArray alloc] init];
     if ([self.segControl selectedSegmentIndex] == 0) {
@@ -452,6 +455,8 @@ shouldReloadTableForSearchString:(NSString *)searchString
             }
             [segue.destinationViewController setPerson:person];
             [segue.destinationViewController setABPerson:nil];
+            
+            [segue.destinationViewController setPersonCell:(JCPersonCell *)[self.tableView cellForRowAtIndexPath:sender]];
         }
     }
     //local contact
