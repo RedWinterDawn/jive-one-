@@ -550,7 +550,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Notifcations" id="tuk-14-hg2">
+                            <tableViewSection headerTitle="Notifications" id="tuk-14-hg2">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="ERG-Sj-6Jh">
                                         <rect key="frame" x="0.0" y="333" width="320" height="44"/>
