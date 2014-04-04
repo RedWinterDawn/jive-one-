@@ -11,7 +11,7 @@
 #import "JCEntryModel.h"
 #import "ClientEntities.h"
 #import <SDWebImage/UIImageView+WebCache.h>
-#import "JCMessageViewController.h"
+#import "JCMessagesViewController.h"
 #import "ConversationEntry.h"
 #import "JCConversationTableViewCell.h"
 @interface JCConversationsViewController ()

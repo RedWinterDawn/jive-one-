@@ -54,6 +54,12 @@
     return [formatter stringFromDate:date];
 }
 
++(NSDate *)NSDateFromTimestap:(NSNumber *)timestamp
+{
+    NSTimeInterval timeInterval = [timestamp longLongValue]/1000;
+    NSDate *date = [[NSDate alloc]initWithTimeIntervalSince1970: timeInterval];
+    return date;
+}
 
 + (BOOL) isEqualToDateIgnoringTime: (NSDate *) aDate
 {

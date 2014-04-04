@@ -17,7 +17,8 @@
 @interface Common : NSObject
 
 +(NSString *) shortDateFromTimestamp:(NSNumber *)timestamp;
-+(NSString*) longDateFromTimestamp:(NSNumber*)timestamp;
++(NSString *) longDateFromTimestamp:(NSNumber *)timestamp;
++(NSDate *)NSDateFromTimestap:(NSNumber *)timestamp;
 + (BOOL) isEqualToDateIgnoringTime: (NSDate *) aDate;
 + (BOOL) isEarlierThanDate: (NSDate *) aDate;
 + (BOOL) isLaterThanDate: (NSDate *) aDate;

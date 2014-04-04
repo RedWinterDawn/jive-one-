@@ -82,6 +82,8 @@
 		27B8153618D94E9C00516BF6 /* close_notification.png in Resources */ = {isa = PBXBuildFile; fileRef = 27B8153418D94E9C00516BF6 /* close_notification.png */; };
 		27B8153718D94E9C00516BF6 /* close_notification@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27B8153518D94E9C00516BF6 /* close_notification@2x.png */; };
 		27C3715218EDE9A000F159EF /* first_message.png in Resources */ = {isa = PBXBuildFile; fileRef = 27C3715118EDE9A000F159EF /* first_message.png */; };
+		27C3715418EE1AFF00F159EF /* JCMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27C3715318EE1AFF00F159EF /* JCMessageCell.xib */; };
+		27C3715718EE29F400F159EF /* JCMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C3715618EE29F400F159EF /* JCMessagesViewController.m */; };
 		27C5F43F18BC1946005FCAFD /* JCVersionTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C5F43E18BC1946005FCAFD /* JCVersionTracker.m */; };
 		27E9A35818E0A17A0017B65D /* Presence+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E9A35718E0A17A0017B65D /* Presence+Custom.m */; };
 		27FA3F9518D89469005AEF98 /* JCContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FA3F9418D89469005AEF98 /* JCContactModel.m */; };
@@ -243,6 +245,11 @@
 		27B8153418D94E9C00516BF6 /* close_notification.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close_notification.png; sourceTree = "<group>"; };
 		27B8153518D94E9C00516BF6 /* close_notification@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "close_notification@2x.png"; sourceTree = "<group>"; };
 		27C3715118EDE9A000F159EF /* first_message.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first_message.png; sourceTree = "<group>"; };
+		27C3715318EE1AFF00F159EF /* JCMessageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCMessageCell.xib; sourceTree = "<group>"; };
+		27C3715518EE29F400F159EF /* JCMessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMessagesViewController.h; sourceTree = "<group>"; };
+		27C3715618EE29F400F159EF /* JCMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMessagesViewController.m; sourceTree = "<group>"; };
+		27C3715818EE4B8B00F159EF /* JSMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSMessage.h; sourceTree = "<group>"; };
+		27C3715918EE4B8B00F159EF /* JSMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSMessage.m; sourceTree = "<group>"; };
 		27C5F43D18BC1946005FCAFD /* JCVersionTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVersionTracker.h; sourceTree = "<group>"; };
 		27C5F43E18BC1946005FCAFD /* JCVersionTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVersionTracker.m; sourceTree = "<group>"; };
 		27E9A35618E0A17A0017B65D /* Presence+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Presence+Custom.h"; sourceTree = "<group>"; };
@@ -356,6 +363,7 @@
 				274493AC18D0D538002744CB /* JCConversationTableViewCell.h */,
 				274493AD18D0D538002744CB /* JCConversationTableViewCell.m */,
 				274493AF18D0DA9B002744CB /* JCConversationCell.xib */,
+				27C3715318EE1AFF00F159EF /* JCMessageCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -431,8 +439,6 @@
 				2751591E18AD303500FD8D3F /* JCDirectoryViewController.m */,
 				F2459BB018C67FC000AF56CF /* JCGroupSelectorViewController.h */,
 				F2459BB118C67FC000AF56CF /* JCGroupSelectorViewController.m */,
-				272F65E118D37602009BD7B3 /* JCMessageViewController.h */,
-				272F65E218D37602009BD7B3 /* JCMessageViewController.m */,
 				2751590418AD118D00FD8D3F /* JCStartLoginViewController.h */,
 				2751590518AD118D00FD8D3F /* JCStartLoginViewController.m */,
 				DD01933518AECA760065A8CD /* JCTestViewController.h */,
@@ -441,6 +447,10 @@
 				9135DDFF18BBFC7A0052E998 /* JCVoicemailViewController.m */,
 				2751593218AD3BD500FD8D3F /* JCVoipViewController.h */,
 				2751593318AD3BD500FD8D3F /* JCVoipViewController.m */,
+				272F65E118D37602009BD7B3 /* JCMessageViewController.h */,
+				272F65E218D37602009BD7B3 /* JCMessageViewController.m */,
+				27C3715518EE29F400F159EF /* JCMessagesViewController.h */,
+				27C3715618EE29F400F159EF /* JCMessagesViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -501,6 +511,8 @@
 				275E809418AED884009AD776 /* JCSocketDispatch.h */,
 				275E809518AED884009AD776 /* JCSocketDispatch.m */,
 				275413B118B2C349001DBA68 /* JCChatMessage.h */,
+				27C3715818EE4B8B00F159EF /* JSMessage.h */,
+				27C3715918EE4B8B00F159EF /* JSMessage.m */,
 				275413B218B2C349001DBA68 /* JCChatMessage.m */,
 				27C5F43D18BC1946005FCAFD /* JCVersionTracker.h */,
 				27C5F43E18BC1946005FCAFD /* JCVersionTracker.m */,
@@ -714,6 +726,7 @@
 				91ADB9A618D8BD4200DF41A3 /* voicemail_email_button@2x.png in Resources */,
 				2751590018AD10BB00FD8D3F /* avatar-orig.png in Resources */,
 				91ADB9B118D8BD4200DF41A3 /* voicemail_speaker@2x.png in Resources */,
+				27C3715418EE1AFF00F159EF /* JCMessageCell.xib in Resources */,
 				91ADB9AC18D8BD4200DF41A3 /* voicemail_play.png in Resources */,
 				91ADB9AB18D8BD4200DF41A3 /* voicemail_mic@2x.png in Resources */,
 				91ADB9A918D8BD4200DF41A3 /* voicemail_info_button@2x.png in Resources */,
@@ -821,6 +834,7 @@
 				2751592518AD32E500FD8D3F /* JCConversationsViewController.m in Sources */,
 				2764BDBF18C83AC5007320B0 /* THContactBubble.m in Sources */,
 				275F4A6218AD0FBC00D2F069 /* JCAppDelegate.m in Sources */,
+				27C3715718EE29F400F159EF /* JCMessagesViewController.m in Sources */,
 				2764BDC018C83AC5007320B0 /* THContactPickerView.m in Sources */,
 				91260EDD18B2965900704670 /* JCDirectoryDetailViewController.m in Sources */,
 				2751591718AD300B00FD8D3F /* OsgiData.xcdatamodel in Sources */,
