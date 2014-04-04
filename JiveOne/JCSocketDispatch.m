@@ -203,18 +203,18 @@
         NSString *conversationId = [body objectForKey:@"conversation"];
         
         // regardless of having a conversation for this entry or not we need to save the entry.
-        [ConversationEntry addConversationEntry:body];
+        ConversationEntry *entry = [ConversationEntry addConversationEntry:body];
         
         // Check if we have a conversation for this entry
-        NSArray *conversation = [Conversation MR_findByAttribute:@"conversationId" withValue:conversationId];
+        NSArray *conversations = [Conversation MR_findByAttribute:@"conversationId" withValue:conversationId];
         
         // if we dont' have, then fetch it
-        if (conversation.count == 0) {
+        if (conversations.count == 0) {
             [self RetrieveNewConversation:conversationId];
         }
         else {
-            [[NSNotificationCenter defaultCenter] postNotificationName:conversationId object:body];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kNewConversation object:conversation];
+            [[NSNotificationCenter defaultCenter] postNotificationName:conversationId object:entry];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kNewConversation object:conversations];
         }
     }
     else if ([type isEqualToString:kSocketPresence])

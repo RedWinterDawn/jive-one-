@@ -88,7 +88,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self scrollToBottomAnimated:NO];
+    [self scrollToBottomAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -352,18 +352,25 @@
 - (void)incomingChatEntry:(NSNotification*)notification
 {
     if (_conversationId) {
+        
         [self setupDataSources];
-        [self.tableView reloadData];
-        [self scrollToBottomAnimated:YES];
-        [JSMessageSoundEffect playMessageReceivedSound];
-//        [self.tableView reloadData];
+        [self finishSend];
+        
+        ConversationEntry *entry = (ConversationEntry *)notification.object;
+        if (![entry.entityId isEqualToString:me.entityId]) {
+            [JSMessageSoundEffect playMessageReceivedSound];
+        }
     }
 }
 
 #pragma mark - Send/Create Conversation
 - (void)dispatchMessage:(NSString *)message {
     
+    
+    [self hideContactPicker];
     NSString* entity = me.urn;
+    
+    
     
     // if conversation exists, then create entry for that conversation
     if (_conversationId != nil && ![_conversationId isEqualToString:@""]) {
@@ -497,6 +504,52 @@
 - (NSArray *)contactModelsForContactPicker:(MBContactPicker*)contactPickerView
 {
     return self.contacts;
+}
+
+- (void) showContactPicker
+{
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        self.contactPickerView.hidden = NO;
+        self.contactPickerView.alpha = 1;
+        CGRect contactFrame = self.contactPickerView.frame;
+        // set the y coordinate to the current position minus the height of the view.
+        // this will move the view up the height of the bar, essentially moving it off the top of the view.
+        //double y = ;
+        contactFrame.origin.y = 0;
+        // set the position of the view
+        self.contactPickerView.frame = contactFrame;
+        
+        // update conversation table position
+        CGRect frame = self.tableView.frame;
+        frame.origin.y = self.contactPickerView.frame.size.height;
+        frame.size.height = frame.size.height - self.contactPickerView.frame.size.height;
+        self.tableView.frame = frame;
+        
+    } completion:^(BOOL finished) {
+    }];
+}
+
+- (void)hideContactPicker
+{
+    [UIView animateWithDuration:0.5 animations:^{
+        CGRect contactFrame = self.contactPickerView.frame;
+        // set the y coordinate to the current position minus the height of the view.
+        // this will move the view up the height of the bar, essentially moving it off the top of the view.
+        contactFrame.origin.y = -contactFrame.size.height;
+        // set the position of the view
+        self.contactPickerView.frame = contactFrame;
+        self.contactPickerView.alpha = 0;
+        
+        // update message table position
+        CGRect frame = self.tableView.frame;
+        frame.origin.y = 0;
+        frame.size.height = frame.size.height + self.contactPickerView.frame.size.height;
+        self.tableView.frame = frame;
+        
+    } completion:^(BOOL finished) {
+        self.contactPickerView.hidden = YES;
+    }];
 }
 
 #pragma mark - MBContactPickerDelegate
