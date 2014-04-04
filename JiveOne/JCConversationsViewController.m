@@ -42,6 +42,10 @@ static NSString *CellIdentifier = @"ConversationCell";
     //self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     [self fetchLastConverstions];
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc]
+                                        init];
+    [refreshControl addTarget:self action:@selector(updateTable) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refreshControl;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -69,6 +73,13 @@ static NSString *CellIdentifier = @"ConversationCell";
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+}
+
+- (void)updateTable
+{
+    [self fetchLastConverstions];
+    [self.tableView reloadData];
+    [self.refreshControl endRefreshing];
 }
 
 - (void) loadDatasource

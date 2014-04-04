@@ -75,6 +75,8 @@ integer_t const oldVoicemails = 1;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+    [self.tableView setSeparatorInset:UIEdgeInsetsZero];
 
     if (!me) {
         me = [[JCOmniPresence sharedInstance] me];
