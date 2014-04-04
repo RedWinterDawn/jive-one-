@@ -853,7 +853,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="ihd-2X-Fk4"/>
                     <connections>
                         <outlet property="contactPickerView" destination="zyf-z6-zcn" id="ATh-o8-opn"/>
@@ -862,7 +862,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7rQ-Lg-wzX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1595" y="518"/>
+            <point key="canvasLocation" x="1535" y="518"/>
         </scene>
         <!--Message View Controller-->
         <scene sceneID="pIg-xh-lWm">
