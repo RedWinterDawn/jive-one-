@@ -10,7 +10,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "JCMessageViewController.h"
 #import "Company.h"
-#import "JCDirDetailPersonCell.h"
+#import "JCPeopleDetailCell.h"
 
 
 @interface JCDirectoryDetailViewController ()
@@ -28,6 +28,7 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
+        
     }
     return self;
 }
@@ -35,6 +36,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"JCPeopleDetailCell" bundle:nil] forCellReuseIdentifier:@"JCPeopleDetailCell"];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -70,26 +73,32 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-        if (indexPath.row == 0) {
+    UITableViewCell *cell;
+    
+    switch ([indexPath row])
+    {
+        case 0:
+        {
             // Create first cell
-            static NSString *CellIdentifier = @"DirectoryDetailNameCell";
-             JCDirDetailPersonCell  *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-            //TODO: Monday finish creating top cell for this table view.
-//            cell.presenceView = self.personCell.personPresenceView;
-//            cell.nameLabel.text = self.person.firstLastName;
+            static NSString *CellIdentifier = @"JCPeopleDetailCell";
+            cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+            ((JCPeopleDetailCell *)cell).NameLabel.text = self.person.firstLastName;
+            ((JCPeopleDetailCell *)cell).presenceView.presenceType = (JCPresenceType)[_person.entityPresence.interactions[@"chat"][@"code"] integerValue];
+            CGRect newFrame = CGRectMake(0, 30, ((JCPeopleDetailCell *)cell).NameLabel.frame.size.width,((JCPeopleDetailCell *)cell).NameLabel.frame.size.height);
+            ((JCPeopleDetailCell *)cell).NameLabel.frame = newFrame;
+            //return cell;
             if(!self.ABPerson){
-//                self.Name.text = self.personCell.personNameLabel;
-                
+                //cell.textLabel.text = self.person.firstLastName;
             } else {
-//                cell.textLabel.text = [self.ABPerson objectForKey:@"firstLast"];
-                //TODO: picture
+                //cell.textLabel.text = @"";//[self.ABPerson objectForKey:@"email"];
             }
-            
-            return cell;
-        } else if (indexPath.row == 1) {
+            break;
+        }
+        case 1:
+        {
             // Create second cell
             static NSString *CellIdentifier = @"DirectoryDetailChatCell";
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+            cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
             
             cell.textLabel.text = @"Email";
             if(!self.ABPerson){
@@ -97,30 +106,34 @@
             } else {
                 cell.detailTextLabel.text = @"";//[self.ABPerson objectForKey:@"email"];
             }
-            
-            return cell;
-        } else {
+
+            break;
+        }
+        default:
+        {
             // Create all others
             static NSString *CellIdentifier = @"DirectoryDetailMobileCell";
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+            cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
             
             cell.textLabel.text = @"Company";
             //convert "companies:jive" to "jive:
             if(!self.ABPerson){
                 cell.detailTextLabel.text = self.person.entityCompany.name;
-//                NSString *stringToDivide = self.person.entityCompany.name;
-//                NSArray *stringParts = [stringToDivide componentsSeparatedByString:@":"];
-//                if (stringParts[1]) {
-//                    //Capitilize Company Name
-//                    cell.detailTextLabel.text = [stringParts[1] capitalizedString];
-//                }
+                //                NSString *stringToDivide = self.person.entityCompany.name;
+                //                NSArray *stringParts = [stringToDivide componentsSeparatedByString:@":"];
+                //                if (stringParts[1]) {
+                //                    //Capitilize Company Name
+                //                    cell.detailTextLabel.text = [stringParts[1] capitalizedString];
+                //                }
             } else {
                 cell.textLabel.text = @"Phone";
                 cell.detailTextLabel.text = @"";//[self.ABPerson objectForKey:@"phone"];
             }
-            return cell;
+
         }
+    }
     
+    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
