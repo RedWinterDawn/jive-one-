@@ -14,6 +14,7 @@
 #import "JCVersionTracker.h"
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "JCAppDelegate.h"
+#import "Common.h"
 
 @interface JCStartLoginViewController ()
 {
@@ -74,7 +75,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     
     _loginStatusLabel.font = [UIFont fontWithName:boldFontName size:16.0f];
     
-    [self checkAuthTokenValidity];
+    [JCStartLoginViewController checkAuthTokenValidity];
     
 }
 
@@ -259,23 +260,28 @@ static int MAX_LOGIN_ATTEMPTS = 2;
         if (verifier)
         {
             NSString *data = [NSString stringWithFormat:@"code=%@&client_id=%@&client_secret=%@&redirect_uri=%@&grant_type=authorization_code", verifier, kOAuthClientId, kOAuthClientSecret, kURLSchemeCallback];
-            NSString *url = [NSString stringWithFormat:@"https://auth.jive.com/oauth2/token"];
-            NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
-            [request setHTTPMethod:@"POST"];
-            [request setHTTPBody:[data dataUsingEncoding:NSUTF8StringEncoding]];
-            NSString* basicAuth = [@"Basic " stringByAppendingString:[self encodeStringToBase64:[NSString stringWithFormat:@"%@:%@", kOAuthClientId, kOAuthClientSecret]]];
-            [request setValue:basicAuth forHTTPHeaderField:@"Authorization"];
-            NSURLConnection *theConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-            
-            if (theConnection) {
-                receivedData = [[NSMutableData alloc] init];
-                NSLog(@"%@",receivedData);
-            }            
+            [self requestAccessToken:data];
         }
     }
     
     
     return YES;
+}
+
+- (void)requestAccessToken:(NSString *)data
+{
+    NSString *url = [NSString stringWithFormat:@"https://auth.jive.com/oauth2/token"];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:[data dataUsingEncoding:NSUTF8StringEncoding]];
+    NSString* basicAuth = [@"Basic " stringByAppendingString:[self encodeStringToBase64:[NSString stringWithFormat:@"%@:%@", kOAuthClientId, kOAuthClientSecret]]];
+    [request setValue:basicAuth forHTTPHeaderField:@"Authorization"];
+    NSURLConnection *theConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    
+    if (theConnection) {
+        receivedData = [[NSMutableData alloc] init];
+        NSLog(@"%@",receivedData);
+    }
 }
 
 
@@ -299,19 +305,16 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 {
     NSError *error;
     NSDictionary *tokenData = [NSJSONSerialization JSONObjectWithData:receivedData options:kNilOptions error:&error];
-    NSLog(@"%@", tokenData);
     if ([tokenData objectForKey:@"access_token"]) {
-        NSString* token = [tokenData objectForKey:@"access_token"];
-        [[JCAuthenticationManager sharedInstance] didReceiveAuthenticationToken:token];
-        //[self tokenValidityPassed:token];
+        [[JCAuthenticationManager sharedInstance] didReceiveAuthenticationToken:tokenData];       
         [self dismissWebviewForLogin];
     }
 }
 
-- (void)checkAuthTokenValidity
++ (void)checkAuthTokenValidity
 {
     NSString* token = [[JCAuthenticationManager sharedInstance] getAuthenticationToken];
-    if (![self stringIsNilOrEmpty:token]) {
+    if (![Common stringIsNilOrEmpty:token]) {
         [[JCAuthenticationManager sharedInstance] checkForTokenValidity];
     }
 }
@@ -320,7 +323,15 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 {
     AFNetworkReachabilityStatus status = [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
     if (status == AFNetworkReachabilityStatusReachableViaWiFi || status == AFNetworkReachabilityStatusReachableViaWWAN) {
-        [self showWebview];
+        
+        NSString *refreshToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"refreshToken"];
+        if (![Common stringIsNilOrEmpty:refreshToken]) {
+            NSString *data = [NSString stringWithFormat:@"refresh_token=%@&client_id=%@&redirect_uri=%@&grant_type=refresh_token", refreshToken, kOAuthClientId, kURLSchemeCallback];
+            [self requestAccessToken:data];
+        }
+        else {
+            [self showWebview];            
+        }
     }
     else {
         NSString* token = [[JCAuthenticationManager sharedInstance] getAuthenticationToken];

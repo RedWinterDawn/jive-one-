@@ -16,7 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *loginStatusLabel;
 - (IBAction)showWebviewForLogin:(id)sender;
 - (void)dismissWebviewForLogin;
-- (void)checkAuthTokenValidity;
++ (void)checkAuthTokenValidity;
 - (void)refreshAuthenticationCredentials:(NSNotification*)notification;
 - (void)tokenValidityPassed:(NSNotification*)notification;
 @end
