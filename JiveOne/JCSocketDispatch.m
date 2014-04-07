@@ -214,7 +214,7 @@
         }
         else {
             [[NSNotificationCenter defaultCenter] postNotificationName:conversationId object:entry];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kNewConversation object:conversations];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kNewConversation object:conversations[0]];
         }
     }
     else if ([type isEqualToString:kSocketPresence])

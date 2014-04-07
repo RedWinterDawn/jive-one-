@@ -24,6 +24,8 @@
     int newMessagesCount;
 }
 
+@property (nonatomic) NSString *currentConversationId;
+
 @end
 
 @implementation JCConversationsViewController
@@ -147,11 +149,19 @@ static NSString *CellIdentifier = @"ConversationCell";
 - (void)didReceiveConversation:(NSNotification*)notification
 {
     if (!self.view.window) {
-        newMessagesCount++;
-        // set a different back button for the navigation controller
-        UIBarButtonItem *myBackButton = [[UIBarButtonItem alloc]init];
-        myBackButton.title = [NSString stringWithFormat:@"Messages (%i)", newMessagesCount];
-        self.navigationItem.backBarButtonItem = myBackButton;
+        Conversation *conversation = (Conversation *)notification.object;
+        if (_currentConversationId && [_currentConversationId isEqualToString:conversation.conversationId]) {
+            NSLog(@"Received Conversation that is currently selected. So don't update Back button");
+        }
+        else
+        {
+            newMessagesCount++;
+            // set a different back button for the navigation controller
+            UIBarButtonItem *myBackButton = [[UIBarButtonItem alloc]init];
+            myBackButton.title = [NSString stringWithFormat:@"Messages (%i)", newMessagesCount];
+            self.navigationItem.backBarButtonItem = myBackButton;
+
+        }
     }
     
     [self loadDatasource];
@@ -348,9 +358,11 @@ static NSString *CellIdentifier = @"ConversationCell";
         [segue.destinationViewController setConversationId:cell.conversation.conversationId];
         [segue.destinationViewController setTitle:title];
         
+        _currentConversationId = cell.conversation.conversationId;
     }
     else if ([sender isKindOfClass:[NSString class]]) {
         [segue.destinationViewController setMessageType:JCNewConversation];
+        _currentConversationId = nil;
     }
     [segue.destinationViewController setHidesBottomBarWhenPushed:YES];
 }
