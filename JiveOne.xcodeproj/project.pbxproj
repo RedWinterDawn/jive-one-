@@ -1041,6 +1041,7 @@
 				INFOPLIST_FILE = "JiveOne/JiveOne-Info.plist";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
+					"-ObjC",
 					"-licucore",
 					"-framework",
 					AudioToolbox,
@@ -1185,6 +1186,7 @@
 				INFOPLIST_FILE = "JiveOne/JiveOne-Info.plist";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
+					"-ObjC",
 					"-licucore",
 					"-framework",
 					AudioToolbox,
@@ -1234,6 +1236,7 @@
 				INFOPLIST_FILE = "JiveOne/JiveOne-Info.plist";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
+					"-ObjC",
 					"-licucore",
 					"-framework",
 					AudioToolbox,
