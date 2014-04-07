@@ -15,6 +15,7 @@
 #import "NotificationView.h"
 #import "JCStartLoginViewController.h"
 #import "Common.h"
+#import <Parse/Parse.h>
 
 
 
@@ -47,6 +48,10 @@
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
 
     // add notification view to parent navigation controller
+    
+    //SETUP PARSE FRAMEWORK
+    [Parse setApplicationId:@"pF8x8MNin5QJY3EVyXvQF21PBasJxAmoxA5eo16B" clientKey:@"UQEeTqrFUkvglJUHwEiSItGaAttQvAUyExeZ0Iq9"];
+    
     
     
         //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
@@ -120,6 +125,10 @@
 #pragma mark - PushNotifications
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation setDeviceTokenFromData:deviceToken];
+    [currentInstallation saveInBackground];
+    
     NSString *newToken = [deviceToken description];
 	newToken = [newToken stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
 	newToken = [newToken stringByReplacingOccurrencesOfString:@" " withString:@""];
@@ -134,6 +143,7 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
+     [PFPush handlePush:userInfo];
     NSLog(@"APPDELEGATE - didReceiveRemoteNotification:fetchCompletionHandler");
 }
 
