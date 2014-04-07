@@ -38,4 +38,9 @@
 + (UIImage *)mergeImage:(UIImage*)first withImage:(UIImage*)second;
 + (UIImage *) imageFromView:(UIView *)view;
 
+#pragma mark - Encryption Utils
+
++ (NSString*)encodeStringToBase64:(NSString*)plainString;
++ (NSString*)decodeBase64ToString:(NSString*)base64String;
+
 @end

@@ -183,6 +183,24 @@
     return img;
 }
 
+#pragma mark - Encryption Utils
+
++ (NSString*)encodeStringToBase64:(NSString*)plainString
+{
+    NSData *plainData = [plainString dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *base64String = [plainData base64EncodedStringWithOptions:0];
+    NSLog(@"%@", base64String);
+    return base64String;
+}
+
++ (NSString*)decodeBase64ToString:(NSString*)base64String
+{
+    NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:base64String options:0];
+    NSString *decodedString = [[NSString alloc] initWithData:decodedData encoding:NSUTF8StringEncoding];
+    NSLog(@"%@", decodedString); // foo
+    return decodedString;
+}
+
 
 
 @end
