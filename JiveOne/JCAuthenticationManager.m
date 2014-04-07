@@ -26,11 +26,17 @@
 }
 
 
-- (void)didReceiveAuthenticationToken:(NSString *)token
+- (void)didReceiveAuthenticationToken:(NSDictionary *)token
 {
+    NSString *access_token = token[@"access_token"];
+    NSString *refresh_token = token[@"refresh_token"];
+    
     [_keychainWrapper setObject:(__bridge id)kSecAttrAccessibleAlways forKey:(__bridge id)kSecAttrAccount];
-    [_keychainWrapper setObject:[NSString stringWithFormat:@"%@", token] forKey:(__bridge id)(kSecAttrAccount)];
-    [[NSUserDefaults standardUserDefaults] setObject:token forKey:@"authToken"];
+    [_keychainWrapper setObject:[NSString stringWithFormat:@"%@", access_token] forKey:(__bridge id)(kSecAttrAccount)];
+    
+    
+    [[NSUserDefaults standardUserDefaults] setObject:access_token forKey:@"authToken"];
+    [[NSUserDefaults standardUserDefaults] setObject:refresh_token forKey:@"refreshToken"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     NSLog(@"Token: %@",token);
 }
@@ -48,6 +54,15 @@
     } failure:^(NSError *err) {
         NSLog(@"%@", err);
         [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenFailed object:err];
+        JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
+        [UIView transitionWithView:delegate.window
+                          duration:0.5
+                           options:UIViewAnimationOptionTransitionFlipFromLeft
+                        animations:^{
+                            [delegate changeRootViewController:JCRootLoginViewController];
+                        }
+                        completion:nil];
+        
     }];
 }
 

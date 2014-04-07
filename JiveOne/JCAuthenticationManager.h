@@ -16,7 +16,7 @@
 + (JCAuthenticationManager*)sharedInstance;
 - (void)showLoginViewControllerFromViewController:(UIViewController*)viewController completed:(void (^)(bool object))completed;
 
-- (void)didReceiveAuthenticationToken:(NSString*)token;
+- (void)didReceiveAuthenticationToken:(NSDictionary *)token;
 - (void)checkForTokenValidity;
 - (void)logout:(UIViewController *)viewController;
 - (NSString *)getAuthenticationToken;
