@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <JSMessagesViewController/JSMessagesViewController.h>
+#import "JSMessagesViewController.h"
 #import <MBContactPicker/MBContactPicker.h>
 #import "ContactGroup.h"
 

@@ -68,7 +68,7 @@ static NSString *CellIdentifier = @"ConversationCell";
     
     // set a different back button for the navigation controller
     UIBarButtonItem *myBackButton = [[UIBarButtonItem alloc]init];
-    myBackButton.title = @"Messages";
+    myBackButton.title = @"";
     self.navigationItem.backBarButtonItem = myBackButton;
 }
 

@@ -19,6 +19,8 @@
 @interface JCMessagesViewController ()
 {
     ClientEntities *me;
+    NSString *title;
+    NSString *subtitle;
 }
 
 @property (nonatomic) NSArray *contacts;
@@ -80,7 +82,7 @@
     self.contactPickerView.allowsCompletionOfSelectedContacts = NO;
     [self.view addSubview:self.contactPickerView];
     
-    [self setBackgroundColor:[UIColor lightGrayColor]];
+    [self setBackgroundColor:[UIColor colorWithRed:0.91 green:0.91 blue:0.91 alpha:1] /*#e8e8e8*/];
     
     [self setupView];
 }
@@ -88,7 +90,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self scrollToBottomAnimated:YES];
+    [self scrollToBottomAnimated:NO];
 }
 
 - (void)didReceiveMemoryWarning
@@ -100,23 +102,26 @@
 #pragma mark - View Type
 - (void) setupView
 {
+    
+    [self setCustomHeader];
+    
     switch (_messageType) {
             
         case JCExistingConversation: {
             
-            self.contactPickerView.hidden = YES;
+            [self.contactPickerView removeFromSuperview];
             [self subscribeToConversationNotification:YES];
-            
-            //conversationEntries = [NSMutableArray arrayWithArray:[ConversationEntry RetrieveConversationEntryById:_conversationId]];
             
             if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
                 [self.tableView setSeparatorInset:UIEdgeInsetsZero];
             }
             
+            [self setHeaderTitle:title andSubtitle:subtitle];
+            
             break;
         }
         case JCNewConversation: {
-            self.title = NSLocalizedString(@"New Message", @"New Message");
+            [self setHeaderTitle:NSLocalizedString(@"New Message", @"New Message") andSubtitle:nil] ;
             
             break;
         }
@@ -125,7 +130,7 @@
                 self.selectedContacts = [[NSMutableArray alloc] init];
             }
             
-            self.title = self.person.firstLastName;
+            [self setHeaderTitle:_person.firstLastName andSubtitle:_person.email] ;
             [self.selectedContacts addObject:self.person];
             [self checkForConversationWithEntities:self.selectedContacts];
             
@@ -149,45 +154,111 @@
         
         [self checkForConversationWithEntities:entities];
     }
+    
+}
+
+- (void) setCustomHeader
+{
+    // Replace titleView
+    CGRect headerTitleSubtitleFrame = CGRectMake(0, 0, 200, 44);
+    UIView* _headerTitleSubtitleView = [[UILabel alloc] initWithFrame:headerTitleSubtitleFrame];
+    _headerTitleSubtitleView.backgroundColor = [UIColor clearColor];
+    _headerTitleSubtitleView.autoresizesSubviews = YES;
+    
+    CGRect titleFrame = CGRectMake(0, 2, 200, 24);
+    UILabel *titleView = [[UILabel alloc] initWithFrame:titleFrame];
+    titleView.backgroundColor = [UIColor clearColor];
+    titleView.font = [UIFont boldSystemFontOfSize:20];
+    titleView.textAlignment = NSTextAlignmentCenter;
+    titleView.textColor = [UIColor whiteColor];
+    titleView.shadowColor = [UIColor darkGrayColor];
+    titleView.shadowOffset = CGSizeMake(0, -1);
+    titleView.text = @"";
+    titleView.adjustsFontSizeToFitWidth = YES;
+    [_headerTitleSubtitleView addSubview:titleView];
+    
+    CGRect subtitleFrame = CGRectMake(0, 24, 200, 44-24);
+    UILabel *subtitleView = [[UILabel alloc] initWithFrame:subtitleFrame];
+    subtitleView.backgroundColor = [UIColor clearColor];
+    subtitleView.font = [UIFont boldSystemFontOfSize:13];
+    subtitleView.textAlignment = NSTextAlignmentCenter;
+    subtitleView.textColor = [UIColor whiteColor];
+    subtitleView.shadowColor = [UIColor darkGrayColor];
+    subtitleView.shadowOffset = CGSizeMake(0, -1);
+    subtitleView.text = @"";
+    subtitleView.adjustsFontSizeToFitWidth = YES;
+    [_headerTitleSubtitleView addSubview:subtitleView];
+    
+    _headerTitleSubtitleView.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
+                                                 UIViewAutoresizingFlexibleRightMargin |
+                                                 UIViewAutoresizingFlexibleTopMargin |
+                                                 UIViewAutoresizingFlexibleBottomMargin);
+    
+    self.navigationItem.titleView = _headerTitleSubtitleView;
+
+}
+
+-(void) setHeaderTitle:(NSString*)headerTitle andSubtitle:(NSString*)headerSubtitle {
+    assert(self.navigationItem.titleView != nil);
+    UIView* headerTitleSubtitleView = self.navigationItem.titleView;
+    UILabel* titleView = [headerTitleSubtitleView.subviews objectAtIndex:0];
+    UILabel* subtitleView = [headerTitleSubtitleView.subviews objectAtIndex:1];
+    assert((titleView != nil) && (subtitleView != nil) && ([titleView isKindOfClass:[UILabel class]]) && ([subtitleView isKindOfClass:[UILabel class]]));
+    titleView.text = headerTitle;
+    subtitleView.text = headerSubtitle;
 }
 
 
 #pragma mark - Table view data source
 - (void)setupDataSources
 {
-    // datasource for avatars
-    Conversation *conversation = [Conversation MR_findFirstByAttribute:@"conversationId" withValue:_conversationId];
-    if (conversation) {
-        if(!self.avatars){
-            self.avatars = [NSMutableDictionary new];
-        }
-        
-        NSArray *conversationMembers = (NSArray *)conversation.entities;
-        
-        for (NSString* entityId in conversationMembers) {
+    if (_conversationId) {
             
-            ClientEntities *person = [ClientEntities MR_findFirstByAttribute:@"entityId" withValue:entityId];
-            if (person) {
-                [self.avatars setObject:person.picture forKey:person.firstLastName];
+        // datasource for avatars
+        Conversation *conversation = [Conversation MR_findFirstByAttribute:@"conversationId" withValue:_conversationId];
+        if (conversation) {
+            if(!self.avatars){
+                self.avatars = [NSMutableDictionary new];
+            }
+            
+            NSArray *conversationMembers = (NSArray *)conversation.entities;
+            
+            if ([conversation.isGroup boolValue]) {
+                title = conversation.name;
+            }
+            
+            
+            for (NSString* entityId in conversationMembers) {
+                
+                ClientEntities *person = [ClientEntities MR_findFirstByAttribute:@"entityId" withValue:entityId];
+                if (person) {
+                    [self.avatars setObject:person.picture forKey:person.firstLastName];
+                    
+                    if (person != me && ![conversation.isGroup boolValue]) {
+                        title = person.firstLastName;
+                        subtitle = person.email;
+                    }
+                }
             }
         }
+        
+        // datasouce for conversation entries
+        self.messages = [NSMutableArray array];
+        
+        NSArray *entries = [ConversationEntry RetrieveConversationEntryById:_conversationId];
+        
+        for (ConversationEntry *entry in entries) {
+            
+            NSArray* result = [ClientEntities MR_findByAttribute:@"entityId" withValue:entry.entityId];
+            ClientEntities* person = (ClientEntities*)result[0];
+            
+            NSString *sender = [NSString stringWithFormat:@"%@ - %@", person.firstLastName, [Common shortDateFromTimestamp:entry.lastModified]];
+            
+            JSMessage *message = [[JSMessage alloc] initWithText:entry.message[@"raw"] sender:sender date:[Common NSDateFromTimestap:entry.createdDate]];
+            
+            [self.messages addObject:message];
+        }
     }
-    
-    // datasouce for conversation entries
-    self.messages = [NSMutableArray array];
-    
-    NSArray *entries = [ConversationEntry RetrieveConversationEntryById:_conversationId];
-    
-    for (ConversationEntry *entry in entries) {
-        
-        NSArray* result = [ClientEntities MR_findByAttribute:@"entityId" withValue:entry.entityId];
-        ClientEntities* person = (ClientEntities*)result[0];
-        
-        JSMessage *message = [[JSMessage alloc] initWithText:entry.message[@"raw"] sender:person.firstLastName date:[Common NSDateFromTimestap:entry.createdDate]];
-        
-        [self.messages addObject:message];
-    }
-    
     
     // datasource for contactPicker
     NSArray *array = [ClientEntities MR_findAll];
@@ -215,15 +286,6 @@
 
 - (void)didSendText:(NSString *)text fromSender:(NSString *)sender onDate:(NSDate *)date
 {
-//    if ((self.messages.count - 1) % 2) {
-    
-//    }
-//    else {
-//        // for demo purposes only, mimicing received messages
-//        [JSMessageSoundEffect playMessageReceivedSound];
-//        sender = arc4random_uniform(10) % 2 ? kSubtitleCook : kSubtitleWoz;
-//    }
-    
     [self.messages addObject:[[JSMessage alloc] initWithText:text sender:sender date:date]];
     [self dispatchMessage:text];
     [self finishSend];
@@ -233,26 +295,32 @@
 - (JSBubbleMessageType)messageTypeForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *sender = ((JSMessage *)self.messages[indexPath.row]).sender;
-    if ([sender isEqualToString:me.firstLastName]) {
-        return JSBubbleMessageTypeOutgoing;
+    
+    NSRange range = [sender rangeOfString:me.firstLastName];
+    
+    if (range.location == NSNotFound) {
+        return JSBubbleMessageTypeIncoming;
     }
     else {
-        return JSBubbleMessageTypeIncoming;
+        return JSBubbleMessageTypeOutgoing;
     }
 }
 
 - (UIImageView *)bubbleImageViewWithType:(JSBubbleMessageType)type
                        forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *sender = ((JSMessage *)self.messages[indexPath.row]).sender;
-    if ([sender isEqualToString:me.firstLastName]) {
-        return [JSBubbleImageViewFactory bubbleImageViewForType:type
-                                                                 color:[UIColor js_bubbleLightGrayColor]];
-    }
-    else {
-        return [JSBubbleImageViewFactory bubbleImageViewForType:type
-                                                          color:[UIColor js_bubbleBlueColor]];
-    }
+//    NSString *sender = ((JSMessage *)self.messages[indexPath.row]).sender;
+//    if ([sender isEqualToString:me.firstLastName]) {
+//        return [JSBubbleImageViewFactory bubbleImageViewForType:type
+//                                                                 color:[UIColor js_bubbleLightGrayColor]];
+//    }
+//    else {
+//        return [JSBubbleImageViewFactory bubbleImageViewForType:type
+//                                                          color:[UIColor js_bubbleBlueColor]];
+//    }
+    
+    return [JSBubbleImageViewFactory bubbleImageViewForType:type color:[UIColor colorWithRed:1 green:1 blue:1 alpha:1]];
+    //return [JSBubbleImageViewFactory classicBubbleImageViewForType:type style:JSBubbleImageViewStyleClassicSquareGray];
 }
 
 - (JSMessageInputViewStyle)inputViewStyle
@@ -267,20 +335,20 @@
 //
 - (void)configureCell:(JSBubbleMessageCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    if ([cell messageType] == JSBubbleMessageTypeOutgoing) {
-        cell.bubbleView.textView.textColor = [UIColor whiteColor];
-        
-        if ([cell.bubbleView.textView respondsToSelector:@selector(linkTextAttributes)]) {
-            NSMutableDictionary *attrs = [cell.bubbleView.textView.linkTextAttributes mutableCopy];
-            [attrs setValue:[UIColor blueColor] forKey:UITextAttributeTextColor];
-            
-            cell.bubbleView.textView.linkTextAttributes = attrs;
-        }
-    }
+//    if ([cell messageType] == JSBubbleMessageTypeOutgoing) {
+//        cell.bubbleView.textView.textColor = [UIColor whiteColor];
+//        
+//        if ([cell.bubbleView.textView respondsToSelector:@selector(linkTextAttributes)]) {
+//            NSMutableDictionary *attrs = [cell.bubbleView.textView.linkTextAttributes mutableCopy];
+//            [attrs setValue:[UIColor blueColor] forKey:NSForegroundColorAttributeName];
+//            
+//            cell.bubbleView.textView.linkTextAttributes = attrs;
+//        }
+//    }
     
     if (cell.timestampLabel) {
         cell.timestampLabel.textColor = [UIColor darkGrayColor];
-        cell.timestampLabel.font = [UIFont systemFontOfSize:8.0f];
+        cell.timestampLabel.font = [UIFont systemFontOfSize:10.0f];
         cell.timestampLabel.shadowOffset = CGSizeZero;
     }
     
@@ -409,8 +477,11 @@
         [self dispatchMessage:message];
         
     } failure:^(NSError *err) {
-        // alert user that message could not be sent. try again.
-        NSLog(@"%@", [err description]);
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"Could not send your message at this time. Please try again.", nil) delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        
+        self.messageInputView.textView.text = message;
+        
+        [alertView show];
     }];
 }
 
@@ -472,7 +543,7 @@
         //NSMutableSet *convEntities = [NSMutableSet setWithArray:conversationEntities];
         //[convEntities intersectSet:[NSMutableSet setWithArray:entityArray]];
         
-        if (result.count != 0 && result.count == entitiesInConversation.count) {
+        if (result.count != 0 && result.count == entitiesInConversation.count && entitiesInConversation.count == entityArray.count) {
             NSLog(@"found");
             existingConversation = conv;
             break;
@@ -487,13 +558,14 @@
         _conversationId = existingConversation.conversationId;
         //conversationEntries = [NSMutableArray arrayWithArray:[ConversationEntry MR_findByAttribute:@"conversationId" withValue:_conversationId andOrderBy:@"lastModified" ascending:YES]];
         [self subscribeToConversationNotification:YES];
+        [self setupDataSources];
         //[textView becomeFirstResponder];
     }
     else {
         [self subscribeToConversationNotification:NO];
         _conversationId = nil;
-        //[conversationEntries removeAllObjects];
-        
+        [self.messages removeAllObjects];
+        [self setupDataSources];
     }
     
     [self.tableView reloadData];
