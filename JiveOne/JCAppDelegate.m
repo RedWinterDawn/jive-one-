@@ -53,6 +53,7 @@
     //SETUP PARSE FRAMEWORK
     [Parse setApplicationId:@"pF8x8MNin5QJY3EVyXvQF21PBasJxAmoxA5eo16B" clientKey:@"UQEeTqrFUkvglJUHwEiSItGaAttQvAUyExeZ0Iq9"];
     
+    [self handlePushNotifications:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]];
     
     
         //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
@@ -62,6 +63,8 @@
     
     return YES;
 }
+
+
 							
 - (void)applicationWillResignActive:(UIApplication *)application
 {
@@ -94,6 +97,11 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    if (currentInstallation.badge != 0) {
+        currentInstallation.badge = 0;
+        [currentInstallation saveEventually];
+    }
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
@@ -147,7 +155,7 @@
 	NSLog(@"APPDELEGATE - Failed to get token, error: %@", error);
 }
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo//never gets called
 {
      [PFPush handlePush:userInfo];
     NSLog(@"APPDELEGATE - didReceiveRemoteNotification:fetchCompletionHandler");
@@ -159,9 +167,37 @@
     
     NSLog(@"Remote Notification Recieved");
     UILocalNotification *notification = [[UILocalNotification alloc] init];
-    notification.alertBody =  @"Looks like i got a notification - fetch thingy";
+    notification.alertBody =  [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
     [application presentLocalNotificationNow:notification];
     completionHandler(UIBackgroundFetchResultNewData);
+    [self handlePushNotifications:userInfo];
+}
+
+-(void) handlePushNotifications:(NSDictionary*)payload{
+    NSUInteger pushCode = [[payload objectForKey:@"pushCode"] intValue];
+    if(!pushCode==0){
+        switch (pushCode) {
+            case 1:
+                //handle voicemail push
+                NSLog(@"Prefetching voicemail");
+                [[JCOsgiClient sharedClient] RetrieveVoicemailForEntity:nil success:^(id JSON) {
+                    //switch to Voicemail view controller?
+                    //add badge to tabbar- voicemail
+                    
+                } failure:^(NSError *err) {
+                    //Alert user
+                }];
+                break;
+            case 2:
+                //handle chat push
+                NSLog(@"Prefetching chat");
+                //add badge to tabbar- conversations
+                
+            default:
+                break;
+        }
+    }
+    
 }
 
 #pragma mark - Background Fetch
@@ -169,7 +205,7 @@
 {
     NSLog(@"Remote Notification Recieved");
     UILocalNotification *notification = [[UILocalNotification alloc] init];
-    notification.alertBody =  @"Looks like i got a notification - fetch thingy";
+    notification.alertBody =  @"APP DELGATE performFetchWithCompletionHandler";
     [application presentLocalNotificationNow:notification];
     completionHandler(UIBackgroundFetchResultNewData);
 }
