@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2700981D18F46C5600B6BC2F /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2700981C18F46C5600B6BC2F /* Parse.framework */; };
 		2710E40C18CE873000152C91 /* Conversation+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 2710E40B18CE873000152C91 /* Conversation+Custom.m */; };
 		2710E40F18CEC8C300152C91 /* ConversationEntry+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 2710E40E18CEC8C300152C91 /* ConversationEntry+Custom.m */; };
 		2718A3A718F36CBE00BB105C /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2718A3A618F36CBE00BB105C /* Crashlytics.framework */; };
@@ -152,6 +153,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2700981C18F46C5600B6BC2F /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		2710E40A18CE873000152C91 /* Conversation+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Conversation+Custom.h"; sourceTree = "<group>"; };
 		2710E40B18CE873000152C91 /* Conversation+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Conversation+Custom.m"; sourceTree = "<group>"; };
 		2710E40D18CEC8C300152C91 /* ConversationEntry+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConversationEntry+Custom.h"; sourceTree = "<group>"; };
@@ -347,6 +349,7 @@
 				F266162618B42AA0000B770A /* AddressBook.framework in Frameworks */,
 				2718A3A718F36CBE00BB105C /* Crashlytics.framework in Frameworks */,
 				F266162718B42AA0000B770A /* AddressBookUI.framework in Frameworks */,
+				2700981D18F46C5600B6BC2F /* Parse.framework in Frameworks */,
 				275F4A5418AD0FBC00D2F069 /* CoreGraphics.framework in Frameworks */,
 				275F4A5618AD0FBC00D2F069 /* UIKit.framework in Frameworks */,
 				275F4A5218AD0FBC00D2F069 /* Foundation.framework in Frameworks */,
@@ -578,6 +581,7 @@
 		275F4A5018AD0FBC00D2F069 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2700981C18F46C5600B6BC2F /* Parse.framework */,
 				DDCE1E9818F35749003A6615 /* Social.framework */,
 				DDCE1E9618F3565F003A6615 /* SystemConfiguration.framework */,
 				DDCE1E9418F35654003A6615 /* StoreKit.framework */,
