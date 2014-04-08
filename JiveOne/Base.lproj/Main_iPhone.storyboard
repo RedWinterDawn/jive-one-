@@ -419,12 +419,46 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="PxA-cB-BPd" kind="push" identifier="MessageSegue" id="zb6-xt-Wa8"/>
+                        <segue destination="xuv-bc-Gqj" kind="push" identifier="MessageSegue" id="Nyn-nw-5LE"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iQK-UU-6cd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1067" y="518"/>
+        </scene>
+        <!--Messages View Controller-->
+        <scene sceneID="Z6h-mb-aMW">
+            <objects>
+                <viewController id="xuv-bc-Gqj" customClass="JCMessagesViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="FXP-2F-4z3"/>
+                        <viewControllerLayoutGuide type="bottom" id="NRK-NG-r9K"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="cEM-6q-DDe">
+                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zyf-z6-zcn" customClass="MBContactPicker">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="33"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="31" id="zOX-mr-SDg"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" id="n1O-hC-4V2"/>
+                    <connections>
+                        <outlet property="contactPickerView" destination="zyf-z6-zcn" id="xgG-7E-2t2"/>
+                        <outlet property="contactPickerViewHeightConstraint" destination="zOX-mr-SDg" id="tVg-jX-0ri"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XuZ-GW-bg4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1502" y="506"/>
         </scene>
         <!--Navigation Controller - Conversations-->
         <scene sceneID="7yR-ZU-bxo">
@@ -694,40 +728,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y6q-kt-A7W" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1968" y="-869"/>
-        </scene>
-        <!--Messages View Controller-->
-        <scene sceneID="rlZ-74-3Pv">
-            <objects>
-                <viewController id="PxA-cB-BPd" customClass="JCMessagesViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="HbL-8B-9lr"/>
-                        <viewControllerLayoutGuide type="bottom" id="cxo-Uh-9mQ"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Y3y-90-S6D">
-                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zyf-z6-zcn" customClass="MBContactPicker">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="31"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="31" id="zOX-mr-SDg"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" id="ihd-2X-Fk4"/>
-                    <connections>
-                        <outlet property="contactPickerView" destination="zyf-z6-zcn" id="ATh-o8-opn"/>
-                        <outlet property="contactPickerViewHeightConstraint" destination="zOX-mr-SDg" id="vlB-gD-TUs"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7rQ-Lg-wzX" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1535" y="518"/>
         </scene>
         <!--Message View Controller-->
         <scene sceneID="pIg-xh-lWm">
