@@ -25,7 +25,8 @@
     if ([self stringIsNilOrEmpty:token]) {
         if ([self stringIsNilOrEmpty:[[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"]]) {
             NSString *testToken = kTestAuthKey;
-            [[JCAuthenticationManager sharedInstance] didReceiveAuthenticationToken:testToken];
+            NSDictionary *oauth_response = [NSDictionary dictionaryWithObjectsAndKeys:testToken, @"access_token", nil];
+            [[JCAuthenticationManager sharedInstance] didReceiveAuthenticationToken:oauth_response];
         }
     }
     
@@ -109,7 +110,20 @@
     XCTAssertTrue(clientEntities.count > 0, @"Array should contain company contacts");
     
     //get second contact from list
-    ClientEntities *secondContact = self.JCDVC.clientEntitiesArray[0][1];
+    NSArray *contacts = self.JCDVC.clientEntitiesArray;
+    int index = -1;
+    for (int i = 0; i < contacts.count; i++) {
+        
+        NSArray *letter = contacts[i];
+        if (letter.count > 0) {
+            index = i;
+            break;
+        }
+    }
+    
+    XCTAssertFalse(index == -1, @"No contacts found");
+    
+    ClientEntities *secondContact = contacts[index][0];
     
     //calcuate how many times that name exists in clientEntitiesArray, so that we know how many to expect in clientEntitiesSearchArray
     // This line had a warning that was causing the test to fail on certain devices. (int) casts result as proper type, passes test now

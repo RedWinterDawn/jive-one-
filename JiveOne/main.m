@@ -26,8 +26,8 @@ int main(int argc, char * argv[])
                 token = [[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"];
                 if (!(token && token.length)) {
                     NSString *testToken = kTestAuthKey;
-                    [[JCAuthenticationManager sharedInstance] didReceiveAuthenticationToken:testToken];
-                }
+                    NSDictionary *oauth_response = [NSDictionary dictionaryWithObjectsAndKeys:testToken, @"access_token", nil];
+                    [[JCAuthenticationManager sharedInstance] didReceiveAuthenticationToken:oauth_response];                }
             }
             //returnValue = UIApplicationMain(argc, argv, nil, @"TestsAppDelegate");
         }

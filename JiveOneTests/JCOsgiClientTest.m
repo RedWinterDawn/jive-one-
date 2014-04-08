@@ -30,7 +30,8 @@
 //    if ([self stringIsNilOrEmpty:token]) {
 //        if ([self stringIsNilOrEmpty:[[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"]]) {
             NSString *testToken = kTestAuthKey;
-            [[JCAuthenticationManager sharedInstance] didReceiveAuthenticationToken:testToken];
+    NSDictionary *oauth_response = [NSDictionary dictionaryWithObjectsAndKeys:testToken, @"access_token", nil];
+            [[JCAuthenticationManager sharedInstance] didReceiveAuthenticationToken:oauth_response];
 //        }
 //    }
 }
@@ -73,8 +74,8 @@
     TRVSMonitor *monitor = [TRVSMonitor monitor];
     __block NSDictionary* response;
     
-    NSString *testCompany = @"companies:jive";
-    NSString *expectedCompanyName = @"Jive Communications, Inc.";
+    NSString *testCompany = @"companies:integration";
+    NSString *expectedCompanyName = @"Integration Testing";
     
     [[JCOsgiClient sharedClient] RetrieveMyCompany:testCompany :^(id JSON) {
         response = JSON;
@@ -250,7 +251,7 @@
     
     NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
     ClientEntities *me = [ClientEntities MR_createInContext:localContext];
-    NSString *userId = @"dleonard";
+    NSString *userId = @"jivetesting10@gmail.com";
     me.externalId = userId;
     [localContext MR_saveToPersistentStoreAndWait];
     

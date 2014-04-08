@@ -27,7 +27,8 @@
     if ([self stringIsNilOrEmpty:token]) {
         if ([self stringIsNilOrEmpty:[[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"]]) {
             NSString *testToken = kTestAuthKey;
-            [[JCAuthenticationManager sharedInstance] didReceiveAuthenticationToken:testToken];
+            NSDictionary *oauth_response = [NSDictionary dictionaryWithObjectsAndKeys:testToken, @"access_token", nil];
+            [[JCAuthenticationManager sharedInstance] didReceiveAuthenticationToken:oauth_response];
         }
     }
     
@@ -77,7 +78,7 @@
     
     [monitor waitWithTimeout:5];
     
-     XCTAssertEqualObjects([json objectForKey:@"name"], @"Jive Communications, Inc.", @"Company name doesn't match");
+     XCTAssertEqualObjects([json objectForKey:@"name"], @"Integration Testing", @"Company name doesn't match");
 }
 
 

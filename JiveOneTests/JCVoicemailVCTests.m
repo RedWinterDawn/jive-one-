@@ -30,7 +30,8 @@
     if ([self stringIsNilOrEmpty:token]) {
         if ([self stringIsNilOrEmpty:[[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"]]) {
             NSString *testToken = kTestAuthKey;
-            [[JCAuthenticationManager sharedInstance] didReceiveAuthenticationToken:testToken];
+            NSDictionary *oauth_response = [NSDictionary dictionaryWithObjectsAndKeys:testToken, @"access_token", nil];
+            [[JCAuthenticationManager sharedInstance] didReceiveAuthenticationToken:oauth_response];
         }
     }
     
@@ -62,7 +63,7 @@
     
     //TODO: use OCMock to create NSManagedObject ClientEntity
     ClientEntities *me = [ClientEntities MR_createEntity];
-    me.externalId = @"dgeorge";
+    me.externalId = @"testing";
     
     [[JCOsgiClient sharedClient] RetrieveVoicemailForEntity:me success:^(id JSON) {
         [self.voicemailViewController updateVoicemailData];
