@@ -236,6 +236,11 @@ static const CGFloat kJSSubtitleLabelHeight = 15.0f;
     self.bubbleView.textView.text = text;
 }
 
+- (void)setBubleSender:(NSString *)text
+{
+    self.bubbleView.textViewSender.text = text;
+}
+
 - (void)setTimestamp:(NSDate *)date
 {
     self.timestampLabel.text = [NSDateFormatter localizedStringFromDate:date
@@ -251,8 +256,9 @@ static const CGFloat kJSSubtitleLabelHeight = 15.0f;
 - (void)setMessage:(id<JSMessageData>)message
 {
     [self setText:[message text]];
+    [self setBubleSender:[message sender]];
     [self setTimestamp:[message date]];
-    [self setSubtitle:[message sender]];
+    //[self setSubtitle:[message sender]];
 }
 
 - (void)setAvatarImageView:(UIImageView *)imageView

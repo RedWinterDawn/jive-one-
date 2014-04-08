@@ -18,10 +18,10 @@
 #import "JSAvatarImageFactory.h"
 #import "NSString+JSMessagesView.h"
 
-#define kMarginTop 8.0f
-#define kMarginBottom 4.0f
-#define kPaddingTop 4.0f
-#define kPaddingBottom 8.0f
+#define kMarginTop 14.0f
+#define kMarginBottom 6.0f
+#define kPaddingTop 6.0f
+#define kPaddingBottom 14.0f
 #define kBubblePaddingRight 35.0f
 
 
@@ -83,8 +83,29 @@
         [self bringSubviewToFront:textView];
         _textView = textView;
         
+        
+        UITextView *senderTextView = [[UITextView alloc] init];
+        senderTextView.font = [UIFont systemFontOfSize:9.0f];
+        senderTextView.textColor = [UIColor lightGrayColor];
+        senderTextView.editable = NO;
+        senderTextView.userInteractionEnabled = NO;
+        senderTextView.showsHorizontalScrollIndicator = NO;
+        senderTextView.showsVerticalScrollIndicator = NO;
+        senderTextView.scrollEnabled = NO;
+        senderTextView.backgroundColor = [UIColor clearColor];
+        senderTextView.contentInset = UIEdgeInsetsZero;
+        senderTextView.scrollIndicatorInsets = UIEdgeInsetsZero;
+        senderTextView.contentOffset = CGPointZero;
+        [self addSubview:senderTextView];
+        [self bringSubviewToFront:senderTextView];
+        _textViewSender = senderTextView;
+        
         if ([_textView respondsToSelector:@selector(textContainerInset)]) {
             _textView.textContainerInset = UIEdgeInsetsMake(8.0f, 4.0f, 2.0f, 4.0f);
+        }
+        
+        if ([_textViewSender respondsToSelector:@selector(textContainerInset)]) {
+            _textViewSender.textContainerInset = UIEdgeInsetsMake(8.0f, 4.0f, 2.0f, 4.0f);
         }
         
         [self addTextViewObservers];
@@ -126,6 +147,10 @@
                 forKeyPath:@"textColor"
                    options:NSKeyValueObservingOptionNew
                    context:nil];
+    [_textViewSender addObserver:self
+                      forKeyPath:@"text"
+                         options:NSKeyValueObservingOptionNew
+                         context:nil];
 }
 
 - (void)removeTextViewObservers
@@ -133,6 +158,7 @@
     [_textView removeObserver:self forKeyPath:@"text"];
     [_textView removeObserver:self forKeyPath:@"font"];
     [_textView removeObserver:self forKeyPath:@"textColor"];
+    [_textViewSender removeObserver:self forKeyPath:@"text"];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -140,7 +166,7 @@
                         change:(NSDictionary *)change
                        context:(void *)context
 {
-    if (object == self.textView) {
+    if (object == self.textView || object == self.textViewSender) {
         if ([keyPath isEqualToString:@"text"]
            || [keyPath isEqualToString:@"font"]
            || [keyPath isEqualToString:@"textColor"]) {
@@ -176,12 +202,15 @@
 
 - (CGRect)bubbleFrame
 {
-    CGSize bubbleSize = [JSBubbleView neededSizeForText:self.textView.text];
+    CGSize bubbleSizeForMessage = [JSBubbleView neededSizeForText:self.textView.text];
+    CGSize bubbleSizeForSender = [JSBubbleView neededSizeForText:self.textViewSender.text];
     
-    return CGRectIntegral(CGRectMake((self.type == JSBubbleMessageTypeOutgoing ? self.frame.size.width - bubbleSize.width : 0.0f),
+    CGSize selected = bubbleSizeForMessage.width > bubbleSizeForSender.width? bubbleSizeForMessage : bubbleSizeForSender;
+    
+    return CGRectIntegral(CGRectMake((self.type == JSBubbleMessageTypeOutgoing ? self.frame.size.width - selected.width : 0.0f),
                                      kMarginTop,
-                                     bubbleSize.width,
-                                     bubbleSize.height + kMarginTop));
+                                     selected.width,
+                                     selected.height + kMarginTop));
 }
 
 #pragma mark - Layout
@@ -204,6 +233,12 @@
                                   self.bubbleImageView.frame.size.height - kMarginTop);
     
     self.textView.frame = CGRectIntegral(textFrame);
+
+    CGRect senderTextFrame = CGRectMake(textX,
+                                        self.textView.frame.size.height, self.bubbleImageView.frame.size.width - (self.bubbleImageView.image.capInsets.right / 2.0f),
+                                        20);
+    
+    self.textViewSender.frame = senderTextFrame;
 }
 
 #pragma mark - Bubble view
