@@ -2,7 +2,7 @@
 //  ClientEntities.h
 //  JiveOne
 //
-//  Created by Eduardo Gueiros on 3/12/14.
+//  Created by Doug Leonard on 4/8/14.
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
@@ -31,6 +31,7 @@
 @property (nonatomic, retain) NSString * resourceGroupName;
 @property (nonatomic, retain) id tags;
 @property (nonatomic, retain) NSString * urn;
+@property (nonatomic, retain) NSNumber * isFavorite;
 @property (nonatomic, retain) Company *entityCompany;
 @property (nonatomic, retain) ClientMeta *entityMeta;
 @property (nonatomic, retain) Presence *entityPresence;

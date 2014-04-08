@@ -9,6 +9,7 @@
         <attribute name="firstName" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="groups" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isFavorite" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="lastFirstName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lastModified" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
@@ -92,13 +93,13 @@
         <attribute name="voicemailUrl" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="ClientEntities" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="ClientMeta" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Company" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="ContactGroup" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Conversation" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="ConversationEntry" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Presence" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Voicemail" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="ClientEntities" positionX="0" positionY="0" width="128" height="373"/>
+        <element name="ClientMeta" positionX="0" positionY="0" width="128" height="150"/>
+        <element name="Company" positionX="0" positionY="0" width="128" height="150"/>
+        <element name="ContactGroup" positionX="0" positionY="0" width="128" height="75"/>
+        <element name="Conversation" positionX="0" positionY="0" width="128" height="180"/>
+        <element name="ConversationEntry" positionX="0" positionY="0" width="128" height="240"/>
+        <element name="Presence" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="Voicemail" positionX="0" positionY="0" width="128" height="210"/>
     </elements>
 </model>
