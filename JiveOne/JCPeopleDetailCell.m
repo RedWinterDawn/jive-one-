@@ -26,8 +26,19 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        NSArray *bundleArray = [[NSBundle mainBundle] loadNibNamed:@"JCPersonCell" owner:self options:nil];
+        NSArray *bundleArray = [[NSBundle mainBundle] loadNibNamed:@"JCPeopleDetailCell" owner:self options:nil];
         self = bundleArray[0];
+        
+        UIColor *theRightShadeOfYellowForOurStar = [UIColor colorWithRed:255.0/255.0 green:212.0/255.0 blue:0.0/255.0 alpha:1.0];
+        UIColor *starColorForNotSelectedState = [UIColor colorWithRed:255.0/255.0 green:212.0/255.0 blue:0.0/255.0 alpha:1.0];
+
+        NSMutableAttributedString *attributedStarSelectedState = [[NSMutableAttributedString alloc]initWithString:@"★" attributes:@{NSForegroundColorAttributeName : theRightShadeOfYellowForOurStar}];
+        
+        
+        [self.favoriteButton setAttributedTitle:attributedStarSelectedState forState:UIControlStateSelected];
+        
+        
+        
         
     }
     return self;
@@ -35,7 +46,6 @@
 
 - (void)setPerson:(ClientEntities *)person
 {
-    //[self removeObservers];
     if ([person isKindOfClass:[ClientEntities class]]) {
         _person = person;
         
@@ -67,4 +77,16 @@
 
 
 
+- (IBAction)toggleIsFavorite:(id)sender {
+    self.person.isFavorite = @(self.person.isFavorite.boolValue);
+    if (self.person.isFavorite.boolValue) {
+        
+        //TODO:write to core data if the state has changed. account for when directory gets updated and potentially overwritten.
+        
+        
+        
+    }else{
+        
+    }
+}
 @end

@@ -13,4 +13,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *NameLabel;
 @property (strong, nonatomic) IBOutlet JCPresenceView *presenceView;
 @property (nonatomic) ClientEntities *person;
+@property (strong, nonatomic) IBOutlet UIButton *favoriteButton;
+
+- (IBAction)toggleIsFavorite:(id)sender;
 @end
