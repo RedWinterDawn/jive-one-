@@ -30,7 +30,7 @@
 #endif
     
     [MagicalRecord setupCoreDataStackWithStoreNamed:@"MyJiveDatabase.sqlite"];
-    [self startSocket];
+//    [self startSocket];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(socketDidConnect:) name:@"com.jiveone.socketConnected" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(socketDidFailToConnect:) name:@"com.jiveone.socketNotConnected" object:nil];
@@ -136,10 +136,14 @@
 	newToken = [newToken stringByReplacingOccurrencesOfString:@" " withString:@""];
     
 	NSLog(@"APPDELEGATE - My token is: %@", newToken);
+    [[NSUserDefaults standardUserDefaults] setObject:newToken forKey:@"deviceToken"];
+    
+    [self startSocket];
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
+    [self startSocket];
 	NSLog(@"APPDELEGATE - Failed to get token, error: %@", error);
 }
 

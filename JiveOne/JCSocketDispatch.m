@@ -20,6 +20,7 @@
 @property (strong, nonatomic) NSString* ws;
 @property (strong, nonatomic) NSString* pipedTokens;
 @property (strong, nonatomic) NSString *sessionToken;
+@property (strong, nonatomic) NSString *deviceToken;//used for sending a push notification to restore the session if lost
 
 @end
 

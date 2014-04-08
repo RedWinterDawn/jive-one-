@@ -21,3 +21,15 @@ Some useful links:
 
 Understand blocks
 http://code.tutsplus.com/tutorials/understanding-objective-c-blocks--mobile-14319
+
+How to send a push notification through Parse web service
+curl -X POST  -H "X-Parse-Application-Id: pF8x8MNin5QJY3EVyXvQF21PBasJxAmoxA5eo16B"  
+-H "X-Parse-REST-API-Key: KKGQt7I9D5mR1HlGn4fxwx8FbxH9LWfJ5iKGcqg6" 
+-H "Content-Type: application/json"  
+-d '{ 
+	"where": 
+		{"deviceToken": "9f4477a2408056e340cfdc0eaf9da40bd24639595e841f43fda28676502a51eb"}, 
+	"data": 
+		{"alert": "If you got this, tell Daniel"} 
+	}' 
+https://api.parse.com/1/push
