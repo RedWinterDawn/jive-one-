@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2710E40C18CE873000152C91 /* Conversation+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 2710E40B18CE873000152C91 /* Conversation+Custom.m */; };
 		2710E40F18CEC8C300152C91 /* ConversationEntry+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 2710E40E18CEC8C300152C91 /* ConversationEntry+Custom.m */; };
+		2718A3A718F36CBE00BB105C /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2718A3A618F36CBE00BB105C /* Crashlytics.framework */; };
 		272B61DD18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */; };
 		272B61DE18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */; };
 		272F65E318D37602009BD7B3 /* JCMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 272F65E218D37602009BD7B3 /* JCMessageViewController.m */; };
@@ -155,6 +156,7 @@
 		2710E40B18CE873000152C91 /* Conversation+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Conversation+Custom.m"; sourceTree = "<group>"; };
 		2710E40D18CEC8C300152C91 /* ConversationEntry+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConversationEntry+Custom.h"; sourceTree = "<group>"; };
 		2710E40E18CEC8C300152C91 /* ConversationEntry+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ConversationEntry+Custom.m"; sourceTree = "<group>"; };
+		2718A3A618F36CBE00BB105C /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		272B61DB18B2A4DD00EB8ED5 /* TRVSMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRVSMonitor.h; sourceTree = "<group>"; };
 		272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRVSMonitor.m; sourceTree = "<group>"; };
 		272F65E118D37602009BD7B3 /* JCMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMessageViewController.h; sourceTree = "<group>"; };
@@ -253,8 +255,6 @@
 		27C3715118EDE9A000F159EF /* first_message.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first_message.png; sourceTree = "<group>"; };
 		27C3715518EE29F400F159EF /* JCMessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMessagesViewController.h; sourceTree = "<group>"; };
 		27C3715618EE29F400F159EF /* JCMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMessagesViewController.m; sourceTree = "<group>"; };
-		27C3715818EE4B8B00F159EF /* JSMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSMessage.h; sourceTree = "<group>"; };
-		27C3715918EE4B8B00F159EF /* JSMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSMessage.m; sourceTree = "<group>"; };
 		27C5F43D18BC1946005FCAFD /* JCVersionTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVersionTracker.h; sourceTree = "<group>"; };
 		27C5F43E18BC1946005FCAFD /* JCVersionTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVersionTracker.m; sourceTree = "<group>"; };
 		27E9A35618E0A17A0017B65D /* Presence+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Presence+Custom.h"; sourceTree = "<group>"; };
@@ -345,6 +345,7 @@
 				DDCE1E8718F3561D003A6615 /* AudioToolbox.framework in Frameworks */,
 				9135DE0418BC01550052E998 /* AVFoundation.framework in Frameworks */,
 				F266162618B42AA0000B770A /* AddressBook.framework in Frameworks */,
+				2718A3A718F36CBE00BB105C /* Crashlytics.framework in Frameworks */,
 				F266162718B42AA0000B770A /* AddressBookUI.framework in Frameworks */,
 				275F4A5418AD0FBC00D2F069 /* CoreGraphics.framework in Frameworks */,
 				275F4A5618AD0FBC00D2F069 /* UIKit.framework in Frameworks */,
@@ -542,8 +543,6 @@
 				275E809418AED884009AD776 /* JCSocketDispatch.h */,
 				275E809518AED884009AD776 /* JCSocketDispatch.m */,
 				275413B118B2C349001DBA68 /* JCChatMessage.h */,
-				27C3715818EE4B8B00F159EF /* JSMessage.h */,
-				27C3715918EE4B8B00F159EF /* JSMessage.m */,
 				275413B218B2C349001DBA68 /* JCChatMessage.m */,
 				27C5F43D18BC1946005FCAFD /* JCVersionTracker.h */,
 				27C5F43E18BC1946005FCAFD /* JCVersionTracker.m */,
@@ -689,6 +688,7 @@
 				275F4A4B18AD0FBC00D2F069 /* Frameworks */,
 				275F4A4C18AD0FBC00D2F069 /* Resources */,
 				CB3D37AA11C3484F8D034661 /* Copy Pods Resources */,
+				2718A3A518F36C7C00BB105C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -818,6 +818,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		2718A3A518F36C7C00BB105C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run dd3685563712dc20cfb83957dedcfbe78fbb2be4 3db37eb4f8adc25e3a968d17d6b92daaa2afa2e77db0b7089c54b7f7a5bef8d7";
+		};
 		2D6CC6088E10467383A549A4 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

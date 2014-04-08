@@ -16,6 +16,7 @@
 #import "JCStartLoginViewController.h"
 #import "Common.h"
 #import <Parse/Parse.h>
+#import <Crashlytics/Crashlytics.h>
 
 
 
@@ -55,6 +56,7 @@
     
     
         //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
+    [Crashlytics startWithAPIKey:@"dd3685563712dc20cfb83957dedcfbe78fbb2be4"];
     
     [self changeRootViewController:JCRootLoginViewController];
     
