@@ -86,6 +86,7 @@
             ((JCPeopleDetailCell *)cell).presenceView.presenceType = (JCPresenceType)[_person.entityPresence.interactions[@"chat"][@"code"] integerValue];
             CGRect newFrame = CGRectMake(0, 30, ((JCPeopleDetailCell *)cell).NameLabel.frame.size.width,((JCPeopleDetailCell *)cell).NameLabel.frame.size.height);
             ((JCPeopleDetailCell *)cell).NameLabel.frame = newFrame;
+            ((JCPeopleDetailCell *)cell).delegate = self;
             //return cell;
             if(!self.ABPerson){
                 //cell.textLabel.text = self.person.firstLastName;
@@ -161,9 +162,6 @@
 }
 
 
-
-
-
 // This button created in case we need to call methods in conjunction with starting a chat from directory detail view
 - (IBAction)startChat:(id)sender {
     [self performSegueWithIdentifier:@"StartMessageSegue" sender:nil];
@@ -187,6 +185,24 @@
     
     
 }
+
+#pragma mark - delegate methods
+-(void)toggleIsFavorite:(JCPeopleDetailCell *)cell {
+    self.person.isFavorite = @(!self.person.isFavorite.boolValue);
+    UIColor *StarColor;
+    
+    if (self.person.isFavorite.boolValue == YES) {
+        StarColor = [UIColor colorWithRed:255.0/255.0 green:212.0/255.0 blue:0.0/255.0 alpha:1.0];
+    }else
+    {
+        StarColor = [UIColor colorWithRed:208.0/255.0 green:208.0/255.0 blue:208.0/255.0 alpha:1.0];
+    }
+    
+    NSMutableAttributedString *attributedStarSelectedState = [[NSMutableAttributedString alloc]initWithString:@"★" attributes:@{NSForegroundColorAttributeName : StarColor}];
+    [cell.favoriteButton setAttributedTitle:attributedStarSelectedState forState:UIControlStateNormal];
+}
+
+
 
 
 

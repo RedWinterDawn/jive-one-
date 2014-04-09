@@ -13,7 +13,21 @@
 - (void)awakeFromNib
 {
     // Initialization code
-}
+    
+    UIColor *StarColor;
+    
+    if (self.person.isFavorite) {
+        StarColor = [UIColor colorWithRed:255.0/255.0 green:212.0/255.0 blue:0.0/255.0 alpha:1.0];
+    }else
+    {
+        StarColor = [UIColor colorWithRed:208.0/255.0 green:208.0/255.0 blue:208.0/255.0 alpha:1.0];
+    }
+    
+    NSMutableAttributedString *attributedStarSelectedState = [[NSMutableAttributedString alloc]initWithString:@"★" attributes:@{NSForegroundColorAttributeName : StarColor}];
+    
+    [self.favoriteButton setAttributedTitle:attributedStarSelectedState forState:UIControlStateNormal];
+
+    }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
@@ -28,18 +42,6 @@
     if (self) {
         NSArray *bundleArray = [[NSBundle mainBundle] loadNibNamed:@"JCPeopleDetailCell" owner:self options:nil];
         self = bundleArray[0];
-        
-        UIColor *theRightShadeOfYellowForOurStar = [UIColor colorWithRed:255.0/255.0 green:212.0/255.0 blue:0.0/255.0 alpha:1.0];
-        UIColor *starColorForNotSelectedState = [UIColor colorWithRed:255.0/255.0 green:212.0/255.0 blue:0.0/255.0 alpha:1.0];
-
-        NSMutableAttributedString *attributedStarSelectedState = [[NSMutableAttributedString alloc]initWithString:@"★" attributes:@{NSForegroundColorAttributeName : theRightShadeOfYellowForOurStar}];
-        
-        
-        [self.favoriteButton setAttributedTitle:attributedStarSelectedState forState:UIControlStateSelected];
-        
-        
-        
-        
     }
     return self;
 }
@@ -78,15 +80,8 @@
 
 
 - (IBAction)toggleIsFavorite:(id)sender {
-    self.person.isFavorite = @(self.person.isFavorite.boolValue);
-    if (self.person.isFavorite.boolValue) {
-        
-        //TODO:write to core data if the state has changed. account for when directory gets updated and potentially overwritten.
-        
-        
-        
-    }else{
-        
-    }
+    
+    [self.delegate toggleIsFavorite:self];
+
 }
 @end
