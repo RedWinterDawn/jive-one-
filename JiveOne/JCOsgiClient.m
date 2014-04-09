@@ -170,7 +170,12 @@
 {
     [self setRequestAuthHeader];
     
-    NSDictionary *params = [NSDictionary dictionaryWithObject:[[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"] forKey:@"deviceToken"];
+    NSString *deviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"];
+    NSDictionary *params = nil;
+    if (deviceToken) {
+        params = [NSDictionary dictionaryWithObject:deviceToken forKey:@"deviceToken"];
+    }
+    
     
     [_manager POST:kOsgiSessionRoute parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         success(responseObject);
