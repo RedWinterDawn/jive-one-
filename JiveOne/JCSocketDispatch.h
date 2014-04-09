@@ -12,11 +12,14 @@
 @interface JCSocketDispatch : NSObject <SRWebSocketDelegate>
 
 @property (nonatomic, strong) SRWebSocket *webSocket;
+@property (nonatomic, strong) NSMutableDictionary *badges;
 
 + (instancetype)sharedInstance;
 
 - (void)requestSession;
 
 - (void)closeSocket;
+
+- (void)clearBadgeCountForVoicemail;
 
 @end

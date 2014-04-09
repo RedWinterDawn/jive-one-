@@ -14,6 +14,7 @@
 #import "Voicemail.h"
 #import "JCVoicemailCell.h"
 #import "MBProgressHUD.h"
+#import "JCSocketDispatch.h"
 
 @interface JCVoicemailViewController ()
 {
@@ -71,6 +72,13 @@ integer_t const oldVoicemails = 1;
     }
     return self;
 }
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [[JCSocketDispatch sharedInstance] clearBadgeCountForVoicemail];
+}
+
 
 - (void)viewDidLoad
 {
