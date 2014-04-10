@@ -32,7 +32,7 @@
         _person = person;
         
         //check to see if the person is a favorite
-        if (person.isFavorite) {
+        if (person.isFavorite.boolValue == 1) {
             NSMutableString *name = [[NSMutableString alloc]initWithString: person.firstLastName];
             NSString *star = @"  ★";
             NSString *nameAndStarAsAnNSString = [NSString stringWithString:[name stringByAppendingString:star]];

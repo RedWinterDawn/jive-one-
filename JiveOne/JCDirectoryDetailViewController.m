@@ -202,7 +202,7 @@
     [cell.favoriteButton setAttributedTitle:attributedStarSelectedState forState:UIControlStateNormal];
 }
 
-
+//TODO: Create Crud Method to getSpecific person from Coredata and update the their isFavorite attribute.
 
 
 

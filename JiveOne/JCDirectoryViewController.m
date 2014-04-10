@@ -224,6 +224,9 @@ static NSString *CellIdentifier = @"DirectoryCell";
             c_ent.me = [NSNumber numberWithBool:[c_ent.entityId isEqualToString:me]];
             c_ent.picture = [entity objectForKey:@"picture"];
             c_ent.email = [entity objectForKey:@"email"];
+            if (c_ent.isFavorite ==nil) {
+                c_ent.isFavorite = NO;
+            }
             
             ClientMeta *c_meta = [ClientMeta MR_createInContext:localContext];
             c_meta.entityId = entity[@"meta"][@"entity"];
