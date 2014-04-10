@@ -67,6 +67,19 @@
 		270098AC18F4714100B6BC2F /* message-received.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 2700987218F4714100B6BC2F /* message-received.aiff */; };
 		270098AD18F4714100B6BC2F /* message-sent.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 2700987318F4714100B6BC2F /* message-sent.aiff */; };
 		270098B018F482AD00B6BC2F /* JSDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 270098AF18F482AD00B6BC2F /* JSDemoViewController.m */; };
+		270098B218F5E4E400B6BC2F /* conv-bubble@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 270098B118F5E4E400B6BC2F /* conv-bubble@2x.png */; };
+		270098B418F5E4EA00B6BC2F /* conv-bubble.png in Resources */ = {isa = PBXBuildFile; fileRef = 270098B318F5E4EA00B6BC2F /* conv-bubble.png */; };
+		270098C118F5EA9300B6BC2F /* conv-compose.png in Resources */ = {isa = PBXBuildFile; fileRef = 270098B618F5EA9300B6BC2F /* conv-compose.png */; };
+		270098C218F5EA9300B6BC2F /* nav-conv@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 270098B718F5EA9300B6BC2F /* nav-conv@2x.png */; };
+		270098C318F5EA9300B6BC2F /* nav-conv.png in Resources */ = {isa = PBXBuildFile; fileRef = 270098B818F5EA9300B6BC2F /* nav-conv.png */; };
+		270098C418F5EA9300B6BC2F /* nav-more@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 270098B918F5EA9300B6BC2F /* nav-more@2x.png */; };
+		270098C518F5EA9300B6BC2F /* nav-more.png in Resources */ = {isa = PBXBuildFile; fileRef = 270098BA18F5EA9300B6BC2F /* nav-more.png */; };
+		270098C618F5EA9300B6BC2F /* nav-people@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 270098BB18F5EA9300B6BC2F /* nav-people@2x.png */; };
+		270098C718F5EA9300B6BC2F /* nav-people.png in Resources */ = {isa = PBXBuildFile; fileRef = 270098BC18F5EA9300B6BC2F /* nav-people.png */; };
+		270098C818F5EA9300B6BC2F /* avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 270098BD18F5EA9300B6BC2F /* avatar.png */; };
+		270098C918F5EA9300B6BC2F /* people-star-lrg.png in Resources */ = {isa = PBXBuildFile; fileRef = 270098BE18F5EA9300B6BC2F /* people-star-lrg.png */; };
+		270098CA18F5EA9300B6BC2F /* people-star-sm.png in Resources */ = {isa = PBXBuildFile; fileRef = 270098BF18F5EA9300B6BC2F /* people-star-sm.png */; };
+		270098CB18F5EA9300B6BC2F /* vm-delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 270098C018F5EA9300B6BC2F /* vm-delete.png */; };
 		2710E40C18CE873000152C91 /* Conversation+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 2710E40B18CE873000152C91 /* Conversation+Custom.m */; };
 		2710E40F18CEC8C300152C91 /* ConversationEntry+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 2710E40E18CEC8C300152C91 /* ConversationEntry+Custom.m */; };
 		2718A3A718F36CBE00BB105C /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2718A3A618F36CBE00BB105C /* Crashlytics.framework */; };
@@ -156,7 +169,7 @@
 		9135DE0018BBFC7A0052E998 /* JCVoicemailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9135DDFF18BBFC7A0052E998 /* JCVoicemailViewController.m */; };
 		9135DE0218BC00FD0052E998 /* JCDirectoryDetailTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9135DE0118BC00FD0052E998 /* JCDirectoryDetailTests.m */; };
 		9135DE0418BC01550052E998 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9135DE0318BC01550052E998 /* AVFoundation.framework */; };
-		9159C88D18EDD20700DF769B /* avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 9159C88C18EDD20700DF769B /* avatar.png */; };
+		9159C88D18EDD20700DF769B /* avatar-orig2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9159C88C18EDD20700DF769B /* avatar-orig2.png */; };
 		916B666B18F453A900D7D89C /* ClientEntities.m in Sources */ = {isa = PBXBuildFile; fileRef = 916B666A18F453A900D7D89C /* ClientEntities.m */; };
 		919C448F18DA479F00F6566A /* thumb1.png in Resources */ = {isa = PBXBuildFile; fileRef = 919C448E18DA479F00F6566A /* thumb1.png */; };
 		91ADB99018D8BBDA00DF41A3 /* JCVoicemailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 91ADB98E18D8BBDA00DF41A3 /* JCVoicemailCell.m */; };
@@ -288,6 +301,19 @@
 		2700987318F4714100B6BC2F /* message-sent.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "message-sent.aiff"; sourceTree = "<group>"; };
 		270098AE18F482AD00B6BC2F /* JSDemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSDemoViewController.h; sourceTree = "<group>"; };
 		270098AF18F482AD00B6BC2F /* JSDemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSDemoViewController.m; sourceTree = "<group>"; };
+		270098B118F5E4E400B6BC2F /* conv-bubble@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "conv-bubble@2x.png"; sourceTree = "<group>"; };
+		270098B318F5E4EA00B6BC2F /* conv-bubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "conv-bubble.png"; sourceTree = "<group>"; };
+		270098B618F5EA9300B6BC2F /* conv-compose.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "conv-compose.png"; sourceTree = "<group>"; };
+		270098B718F5EA9300B6BC2F /* nav-conv@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-conv@2x.png"; sourceTree = "<group>"; };
+		270098B818F5EA9300B6BC2F /* nav-conv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-conv.png"; sourceTree = "<group>"; };
+		270098B918F5EA9300B6BC2F /* nav-more@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-more@2x.png"; sourceTree = "<group>"; };
+		270098BA18F5EA9300B6BC2F /* nav-more.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-more.png"; sourceTree = "<group>"; };
+		270098BB18F5EA9300B6BC2F /* nav-people@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-people@2x.png"; sourceTree = "<group>"; };
+		270098BC18F5EA9300B6BC2F /* nav-people.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-people.png"; sourceTree = "<group>"; };
+		270098BD18F5EA9300B6BC2F /* avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar.png; sourceTree = "<group>"; };
+		270098BE18F5EA9300B6BC2F /* people-star-lrg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "people-star-lrg.png"; sourceTree = "<group>"; };
+		270098BF18F5EA9300B6BC2F /* people-star-sm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "people-star-sm.png"; sourceTree = "<group>"; };
+		270098C018F5EA9300B6BC2F /* vm-delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vm-delete.png"; sourceTree = "<group>"; };
 		2710E40A18CE873000152C91 /* Conversation+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Conversation+Custom.h"; sourceTree = "<group>"; };
 		2710E40B18CE873000152C91 /* Conversation+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Conversation+Custom.m"; sourceTree = "<group>"; };
 		2710E40D18CEC8C300152C91 /* ConversationEntry+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConversationEntry+Custom.h"; sourceTree = "<group>"; };
@@ -412,7 +438,7 @@
 		9135DDFF18BBFC7A0052E998 /* JCVoicemailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JCVoicemailViewController.m; path = JiveOne/JCVoicemailViewController.m; sourceTree = "<group>"; };
 		9135DE0118BC00FD0052E998 /* JCDirectoryDetailTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDirectoryDetailTests.m; sourceTree = "<group>"; };
 		9135DE0318BC01550052E998 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		9159C88C18EDD20700DF769B /* avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avatar.png; sourceTree = "<group>"; };
+		9159C88C18EDD20700DF769B /* avatar-orig2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatar-orig2.png"; sourceTree = "<group>"; };
 		916B666918F453A900D7D89C /* ClientEntities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientEntities.h; sourceTree = "<group>"; };
 		916B666A18F453A900D7D89C /* ClientEntities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClientEntities.m; sourceTree = "<group>"; };
 		919C448E18DA479F00F6566A /* thumb1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumb1.png; sourceTree = "<group>"; };
@@ -683,6 +709,26 @@
 			path = Sounds;
 			sourceTree = "<group>";
 		};
+		270098B518F5EA7900B6BC2F /* UX Images */ = {
+			isa = PBXGroup;
+			children = (
+				270098B318F5E4EA00B6BC2F /* conv-bubble.png */,
+				270098B118F5E4E400B6BC2F /* conv-bubble@2x.png */,
+				270098B618F5EA9300B6BC2F /* conv-compose.png */,
+				270098B718F5EA9300B6BC2F /* nav-conv@2x.png */,
+				270098B818F5EA9300B6BC2F /* nav-conv.png */,
+				270098B918F5EA9300B6BC2F /* nav-more@2x.png */,
+				270098BA18F5EA9300B6BC2F /* nav-more.png */,
+				270098BB18F5EA9300B6BC2F /* nav-people@2x.png */,
+				270098BC18F5EA9300B6BC2F /* nav-people.png */,
+				270098BD18F5EA9300B6BC2F /* avatar.png */,
+				270098BE18F5EA9300B6BC2F /* people-star-lrg.png */,
+				270098BF18F5EA9300B6BC2F /* people-star-sm.png */,
+				270098C018F5EA9300B6BC2F /* vm-delete.png */,
+			);
+			name = "UX Images";
+			sourceTree = "<group>";
+		};
 		272F65FA18D3A769009BD7B3 /* HPTextView */ = {
 			isa = PBXGroup;
 			children = (
@@ -720,6 +766,7 @@
 		275158F618AD10A500FD8D3F /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				270098B518F5EA7900B6BC2F /* UX Images */,
 				27C3715118EDE9A000F159EF /* first_message.png */,
 				27A49AAF18DC8BC00084DEE0 /* launch.png */,
 				27B8153418D94E9C00516BF6 /* close_notification.png */,
@@ -742,7 +789,7 @@
 				91ADB99E18D8BD4200DF41A3 /* voicemail_scrub_play.png */,
 				911B3E8F18E0E41D00105925 /* voicemail_pause.png */,
 				911B3E9018E0E41D00105925 /* voicemail_pause@2x.png */,
-				9159C88C18EDD20700DF769B /* avatar.png */,
+				9159C88C18EDD20700DF769B /* avatar-orig2.png */,
 				91ADB99F18D8BD4200DF41A3 /* voicemail_scrub_play@2x.png */,
 				91ADB9A018D8BD4200DF41A3 /* voicemail_speaker.png */,
 				91ADB9A118D8BD4200DF41A3 /* voicemail_speaker@2x.png */,
@@ -1088,6 +1135,7 @@
 				91ADB9A618D8BD4200DF41A3 /* voicemail_email_button@2x.png in Resources */,
 				2700989018F4714100B6BC2F /* bubble-classic-square-gray.png in Resources */,
 				2700989D18F4714100B6BC2F /* bubble-tailless@2x.png in Resources */,
+				270098C418F5EA9300B6BC2F /* nav-more@2x.png in Resources */,
 				2751590018AD10BB00FD8D3F /* avatar-orig.png in Resources */,
 				2700989118F4714100B6BC2F /* bubble-classic-square-gray@2x.png in Resources */,
 				91ADB9B118D8BD4200DF41A3 /* voicemail_speaker@2x.png in Resources */,
@@ -1104,7 +1152,7 @@
 				27B8153718D94E9C00516BF6 /* close_notification@2x.png in Resources */,
 				2700988218F4714100B6BC2F /* avatar-placeholder.png in Resources */,
 				F202433D18B2CF4A006DB2EF /* README.md in Resources */,
-				9159C88D18EDD20700DF769B /* avatar.png in Resources */,
+				9159C88D18EDD20700DF769B /* avatar-orig2.png in Resources */,
 				2700988A18F4714100B6BC2F /* bubble-classic-selected.png in Resources */,
 				9103271818F34BEC00437503 /* JCPeopleDetailCell.xib in Resources */,
 				270098A218F4714100B6BC2F /* input-field-cover.png in Resources */,
@@ -1118,9 +1166,11 @@
 				275158FD18AD10BB00FD8D3F /* Default.png in Resources */,
 				27C3715218EDE9A000F159EF /* first_message.png in Resources */,
 				91ADB9A318D8BD4200DF41A3 /* voicemail_archive_button@2x.png in Resources */,
+				270098C818F5EA9300B6BC2F /* avatar.png in Resources */,
 				911B3E9218E0E41D00105925 /* voicemail_pause@2x.png in Resources */,
 				2700989918F4714100B6BC2F /* bubble-stroked-tailless@2x.png in Resources */,
 				270098A418F4714100B6BC2F /* send-button-pressed.png in Resources */,
+				270098C318F5EA9300B6BC2F /* nav-conv.png in Resources */,
 				91ADB9AD18D8BD4200DF41A3 /* voicemail_play@2x.png in Resources */,
 				2700989B18F4714100B6BC2F /* bubble-stroked@2x.png in Resources */,
 				270098A318F4714100B6BC2F /* input-field-cover@2x.png in Resources */,
@@ -1133,15 +1183,19 @@
 				919C448F18DA479F00F6566A /* thumb1.png in Resources */,
 				270098A018F4714100B6BC2F /* input-bar-background.png in Resources */,
 				2700989718F4714100B6BC2F /* bubble-min@2x.png in Resources */,
+				270098CB18F5EA9300B6BC2F /* vm-delete.png in Resources */,
 				2700988F18F4714100B6BC2F /* bubble-classic-square-blue@2x.png in Resources */,
 				2700989618F4714100B6BC2F /* bubble-min.png in Resources */,
 				2700988D18F4714100B6BC2F /* bubble-classic-typing@2x.png in Resources */,
 				27A49AB018DC8BC00084DEE0 /* launch.png in Resources */,
 				275F4A7018AD0FBC00D2F069 /* Images.xcassets in Resources */,
 				275F4A6518AD0FBC00D2F069 /* Main_iPhone.storyboard in Resources */,
+				270098C718F5EA9300B6BC2F /* nav-people.png in Resources */,
 				279E602418C8C59900C5CC9F /* JCPersonCell.xib in Resources */,
 				2700988918F4714100B6BC2F /* bubble-classic-green@2x.png in Resources */,
+				270098C218F5EA9300B6BC2F /* nav-conv@2x.png in Resources */,
 				2700989818F4714100B6BC2F /* bubble-stroked-tailless.png in Resources */,
+				270098B418F5E4EA00B6BC2F /* conv-bubble.png in Resources */,
 				91ADB9A518D8BD4200DF41A3 /* voicemail_callback_button@2x.png in Resources */,
 				2700988418F4714100B6BC2F /* bubble-classic-blue.png in Resources */,
 				911BFDD518D9E9C300684964 /* vmail.png in Resources */,
@@ -1150,13 +1204,17 @@
 				91ADB9A718D8BD4200DF41A3 /* voicemail_email.png in Resources */,
 				2700988818F4714100B6BC2F /* bubble-classic-green.png in Resources */,
 				2700989F18F4714100B6BC2F /* bubble@2x.png in Resources */,
+				270098C918F5EA9300B6BC2F /* people-star-lrg.png in Resources */,
 				275158FF18AD10BB00FD8D3F /* Default-568h@2x.png in Resources */,
+				270098B218F5E4E400B6BC2F /* conv-bubble@2x.png in Resources */,
 				275158FE18AD10BB00FD8D3F /* Default@2x.png in Resources */,
 				91ADB9B018D8BD4200DF41A3 /* voicemail_speaker.png in Resources */,
+				270098C618F5EA9300B6BC2F /* nav-people@2x.png in Resources */,
 				2700988E18F4714100B6BC2F /* bubble-classic-square-blue.png in Resources */,
 				2700988318F4714100B6BC2F /* avatar-placeholder@2x.png in Resources */,
 				2700989518F4714100B6BC2F /* bubble-min-tailless@2x.png in Resources */,
 				91ADB9AF18D8BD4200DF41A3 /* voicemail_scrub_play@2x.png in Resources */,
+				270098C118F5EA9300B6BC2F /* conv-compose.png in Resources */,
 				275F4A5C18AD0FBC00D2F069 /* InfoPlist.strings in Resources */,
 				2700988618F4714100B6BC2F /* bubble-classic-gray.png in Resources */,
 				91ADB99118D8BBDA00DF41A3 /* JCVoicemailCell.xib in Resources */,
@@ -1165,6 +1223,8 @@
 				270098A618F4714100B6BC2F /* send-button.png in Resources */,
 				91ADB9A818D8BD4200DF41A3 /* voicemail_info_button.png in Resources */,
 				270098A118F4714100B6BC2F /* input-bar-background@2x.png in Resources */,
+				270098CA18F5EA9300B6BC2F /* people-star-sm.png in Resources */,
+				270098C518F5EA9300B6BC2F /* nav-more.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

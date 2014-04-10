@@ -55,7 +55,8 @@ static NSDictionary *bubbleImageDictionary;
 + (UIImageView *)bubbleImageViewForType:(JSBubbleMessageType)type
                                   color:(UIColor *)color
 {
-    UIImage *bubble = [UIImage imageNamed:@"bubble-classic-square-gray"];
+    //UIImage *bubble = [UIImage imageNamed:@"bubble-classic-square-gray"];
+    UIImage *bubble = [UIImage imageNamed:@"conv-bubble"];
     
     UIImage *normalBubble = [bubble js_imageMaskWithColor:color];
     UIImage *highlightedBubble = [bubble js_imageMaskWithColor:[color js_darkenColorWithValue:0.12f]];

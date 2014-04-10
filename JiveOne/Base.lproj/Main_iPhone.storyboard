@@ -310,11 +310,11 @@
             </objects>
             <point key="canvasLocation" x="1535" y="-160"/>
         </scene>
-        <!--Navigation Controller - Directory-->
+        <!--Navigation Controller - People-->
         <scene sceneID="4Zu-Qh-4wk">
             <objects>
                 <navigationController definesPresentationContext="YES" id="vaI-vc-7Id" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Directory" image="DirectoryTab" id="WUb-WZ-m0b"/>
+                    <tabBarItem key="tabBarItem" title="People" image="nav-people.png" id="WUb-WZ-m0b"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="bje-51-esT">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -464,7 +464,7 @@
         <scene sceneID="7yR-ZU-bxo">
             <objects>
                 <navigationController definesPresentationContext="YES" id="6Dq-mE-F9w" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Conversations" image="RecentTab" id="K12-Hv-Z3c"/>
+                    <tabBarItem key="tabBarItem" title="Conversations" image="nav-conv.png" id="K12-Hv-Z3c"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="lEx-Jd-cci">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -692,11 +692,11 @@
             </objects>
             <point key="canvasLocation" x="1095" y="1916"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Navigation Controller - More-->
         <scene sceneID="iH8-Ew-IaF">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4mQ-Xv-N0n" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="more" id="k9B-uW-1kv"/>
+                    <tabBarItem key="tabBarItem" title="More" image="nav-more.png" id="k9B-uW-1kv"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="CDo-hA-kaH">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -781,11 +781,12 @@
         </scene>
     </scenes>
     <resources>
-        <image name="DirectoryTab" width="40" height="40"/>
-        <image name="RecentTab" width="40" height="40"/>
         <image name="avatar.png" width="100" height="100"/>
         <image name="first_message.png" width="265" height="154"/>
         <image name="launch.png" width="640" height="1136"/>
+        <image name="nav-conv.png" width="30" height="30"/>
+        <image name="nav-more.png" width="44" height="44"/>
+        <image name="nav-people.png" width="44" height="44"/>
         <image name="vmail.png" width="32" height="32"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
