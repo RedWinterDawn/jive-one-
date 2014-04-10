@@ -12,6 +12,7 @@
 #import "KeychainItemWrapper.h"
 #import "ClientEntities.h"
 #import "Company.h"
+#import <AudioToolbox/AudioToolbox.h>
 
 
 @interface JCAccountViewController ()
@@ -154,12 +155,6 @@
     
     [[JCAuthenticationManager sharedInstance] logout:self];
 }
-- (IBAction)soundSwitchPressed:(id)sender {
-    //TODO: implement
-}
-- (IBAction)vibrateSwitchPressed:(id)sender {
-    //TODO: implement
-}
 - (IBAction)presenceButtonSelected:(id)sender {
     UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"Select Presence option:" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
                             kPresenceAvailable,
@@ -171,7 +166,6 @@
                             nil];
     [popup showInView:self.view];
 }
-
 
 #pragma mark - UIActionSheet Delegate
 - (void)actionSheet:(UIActionSheet *)popup clickedButtonAtIndex:(NSInteger)buttonIndex {

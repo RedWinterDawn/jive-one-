@@ -13,8 +13,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *userNameDetail;
 @property (weak, nonatomic) IBOutlet UILabel *jivePhoneNumber;
 @property (weak, nonatomic) IBOutlet UILabel *jiveMessenger;
-@property (weak, nonatomic) IBOutlet UISwitch *soundSwitch;
-@property (weak, nonatomic) IBOutlet UISwitch *vibrateSwitch;
 @property (weak, nonatomic) IBOutlet UIButton *presenceDetail;
 
 @end

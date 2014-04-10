@@ -56,7 +56,12 @@
     //SETUP PARSE FRAMEWORK
     [Parse setApplicationId:@"pF8x8MNin5QJY3EVyXvQF21PBasJxAmoxA5eo16B" clientKey:@"UQEeTqrFUkvglJUHwEiSItGaAttQvAUyExeZ0Iq9"];
     
-    [self handlePushNotifications:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]];
+    //only needed for when app is launched from push notification and app was not running in background
+    NSDictionary *pushNotif = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
+    if(pushNotif){
+        [self handlePushNotifications:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]];
+    }
+    
     
     
         //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
@@ -193,6 +198,12 @@
             case 2:
                 //handle chat push
                 NSLog(@"Prefetching chat");
+                //not sure how to prefetch chat
+                [[JCOsgiClient sharedClient] RequestSocketSession:^(id JSON) {
+                    //switch to chat tab
+                } failure:^(NSError *err) {
+                    //Alert user
+                }];
                 //add badge to tabbar- conversations
                 
             default:
