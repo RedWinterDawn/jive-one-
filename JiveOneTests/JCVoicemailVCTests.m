@@ -3,6 +3,7 @@
 //  JiveOne
 //
 //  Created by Daniel George on 3/13/14.
+//  Edited by Daniel Leonard on 4/10/14.
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
@@ -52,37 +53,6 @@
     XCTAssertNotNil(self.voicemailViewController.tableView, @"tableview is Nil");
 }
 
-
--(void)testUpdateVoicemailData{
-    
-    if(!self.voicemailViewController.voicemails){
-        self.voicemailViewController.voicemails = [[NSMutableArray alloc] init];
-    }
-    TRVSMonitor *monitor = [TRVSMonitor monitor];
-    __block NSDictionary* json;
-    
-    //TODO: use OCMock to create NSManagedObject ClientEntity
-    ClientEntities *me = [ClientEntities MR_createEntity];
-    me.externalId = @"testing";
-    
-    [[JCOsgiClient sharedClient] RetrieveVoicemailForEntity:me success:^(id JSON) {
-        [self.voicemailViewController updateVoicemailData];
-        json = JSON;
-        [monitor signal];
-    } failure:^(NSError *err) {
-        NSLog(@"Test failed");
-    }];
-    [monitor wait];
-    
-    //get voicemails in core data
-    NSArray *array = [Voicemail MR_findAll];
-    
-    //get number of voicemails retrieved in call to server and stored in array
-    NSUInteger jsonVoicemails = self.voicemailViewController.voicemails.count;
-    XCTAssertTrue(json.count == array.count, @"Number of voicemails in core data does not match number retrieved by JSON");
-    XCTAssertTrue(jsonVoicemails == array.count, @"Number of voicemails in core data does not match number set to voicemails array");
-}
-
 //A real unit test
 //test whether the updateVoicemailData method will save a json(mocked) from the api into VoicemailViewController.voicemails (which is loaded from core data)
 -(void)testUpdateVoicemailDataSavesVoicemail{
@@ -126,49 +96,48 @@
     XCTAssertTrue(self.voicemailViewController.voicemails.count == 1, @"should be one voicemail...from the hard coded json string above");
 }
 
-//test that the voiceCellDeleteTappedDelete method deletes the voicemail object from core data and the VoicemailViewController.voicemails array after it's deleted from the server(mocked)
--(void)testVoiceCellDeleteTappedDeletes{
-    id mockedClient = [OCMockObject niceMockForClass:[JCOsgiClient class]];
-    [[mockedClient expect] DeleteVoicemail:[OCMArg any] success:[OCMArg checkWithBlock:^BOOL(void (^successBlock)(AFHTTPRequestOperation *, id))
-    {
-        NSLog(@"server delete");
-        successBlock(nil, nil);//200?
-        return YES;
-    }] failure:OCMOCK_ANY];
-    
-    //setup mocked dependencies(argument in test method)
-    id mockedCell = [OCMockObject niceMockForClass:[JCVoicemailCell class]];
-    [[[mockedCell expect] andReturn:([Voicemail MR_findAll][0])] getVoicemailObject];//this should set voicemail property of cell to [0]
-    
-    id mockedTableView = [OCMockObject niceMockForClass:[UITableView class]];
-    [[mockedTableView stub] deleteRowsAtIndexPaths:[OCMArg any] withRowAnimation:[OCMArg any]];
 
-    id mockedVoicemails = [OCMockObject niceMockForClass:[NSMutableArray class]];
-    [[mockedVoicemails stub] removeObjectAtIndex:[OCMArg any]];
+//This is @DanLeonard's first test checking to see if there are no new voice males that we dont download anything else from the server.
+-(void)testNoUpdateVoicemailDataWhenNoNewVoicemail{
+    //mock the client
+    id clientMock = [OCMockObject niceMockForClass:[JCOsgiClient class]];
+    
+    //when retriveVoicemailForEntity is called on client, return a JSON like the server would
+    [[clientMock expect] RetrieveVoicemailForEntity:[OCMArg any]
+                                            success:[OCMArg checkWithBlock:^BOOL(void (^successBlock)(AFHTTPRequestOperation *, id))
+                                                     {
+                                                         // Here we capture the success block and execute it with a stubbed response.
+                                                         
+                                                         //created hardcoded json object as a return object from the server
+                                                         NSString *jsonString = @"{\"entries\":[],\"ETag\":\"message_171\"}";
+                                                         
+                                                         NSData *responseObject = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+                                                         NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+                                                         
+                                                         //because the method will add the json objects to core data and then populate JCVoicemailViewController.voicemails from core data, we need to make sure only our hard coded json object exists in core data
+                                                         [Voicemail MR_truncateAll];
+                                                         //now add our hard coded json to core data
+                                                         [Voicemail addVoicemails:dictionary[@"entries"]];
+                                                         
+                                                         successBlock(nil, jsonString);
+                                                         
+                                                         return YES;
+                                                     }]
+                                            failure:OCMOCK_ANY];
     
     //set the client property on voicemail view controller to our mock
-    [self.voicemailViewController osgiClient:mockedClient];
+    [self.voicemailViewController osgiClient:clientMock];
     
-    NSUInteger beforeArrayCount = self.voicemailViewController.voicemails.count;
-    NSUInteger beforeCoreDataCount = [Voicemail MR_findAll].count;
+    //voicemail view controller is setup in setup method
+    //now call updateVoicemailData which will call RetrieveVoicemailForEntity (because it's mocked we'll get the json string made above)
+    [self.voicemailViewController updateVoicemailData];
     
-    //actual test method
-    [self.voicemailViewController voiceCellDeleteTapped:mockedCell];//can be nil because this method is mocked
+    //ensure that Retrieve was called indirectly since we made a direct call to updateVoicemailData
+    [clientMock verify];
     
-    [mockedCell verify];
-    
-    //assert voicemail was deleted from     self.voicemailViewController.voicemails
-    XCTAssertTrue(self.voicemailViewController.voicemails.count<beforeArrayCount, @"method call should have deleted one from voicemails array");
-    XCTAssertTrue([Voicemail MR_findAll].count<beforeCoreDataCount, @"method call should have delete one from core data");
-    
-    
-        
-    
-    
+    //make sure it saved to viewcontroller.voicemails
+    XCTAssertTrue(self.voicemailViewController.voicemails.count == 0, @"should be no voicemail...from the hard coded json string above");
 }
-
-
-
 
 //:voicemail should be fetched from server and saved in core data
 - (void)testVoicemailFetch {
