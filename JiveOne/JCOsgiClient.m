@@ -365,19 +365,21 @@
 
 #pragma mark - Voicemail
 
-//Here is where doug is trying to make requests for voicemail - currently we are just grabbing a file from dropbox eventually we will get it from osgi.
+//Retrives all voicemails from the server. Entity object is not used.
 - (void) RetrieveVoicemailForEntity:(ClientEntities*)entity success:(void (^)(id JSON))success
                             failure:(void (^)(NSError *err))failure
 {
-    //leave this commented code here for when we have the api, it will be ready to go
     [self setRequestAuthHeader];
+    //https://test.my.jive.com/voicemails
     NSString * url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], kOsgiVoicemailRoute];
     NSLog(@"%@", url);
     
     [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSArray *entries = [responseObject objectForKey:@"entries"];
+        //get all voicemail metadata, but not actual voicemail messages
         [Voicemail addVoicemails:entries];
         success(responseObject);
+        //get all voicemail messages through a queue
         [Voicemail fetchVoicemailInBackground];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

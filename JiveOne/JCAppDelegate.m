@@ -59,7 +59,7 @@
     //only needed for when app is launched from push notification and app was not running in background
     NSDictionary *pushNotif = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
     if(pushNotif){
-        [self handlePushNotifications:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]];
+        [self handleLocalNotifications:pushNotif];
     }
     
     
@@ -173,38 +173,51 @@
     NSLog(@"APPDELEGATE - didReceiveRemoteNotification");
     
     NSLog(@"Remote Notification Recieved");
+    //setup local notification that user can click on to open app and call didReceiveLocalNotification
     UILocalNotification *notification = [[UILocalNotification alloc] init];
-    notification.alertBody =  [[userInfo objectForKey:@"aps"] objectForKey:@"alert"];
+    notification.alertBody =  [userInfo objectForKey:@"message"];
+    //set code in notification object so that proper view controller is opened
+    [notification setUserInfo:userInfo];
     [application presentLocalNotificationNow:notification];
     completionHandler(UIBackgroundFetchResultNewData);
-    [self handlePushNotifications:userInfo];
+    
 }
 
--(void) handlePushNotifications:(NSDictionary*)payload{
+#pragma mark - Local notifications
+
+- (void)application:(UIApplication *)app didReceiveLocalNotification:(UILocalNotification *)notif
+{
+    if (app.applicationState == UIApplicationStateInactive )
+    {
+        NSLog(@"app not running");
+        
+    }
+    else if(app.applicationState == UIApplicationStateActive )
+    {
+        NSLog(@"app running");
+    }
+    //get data from push notification
+    NSDictionary *payload = notif.userInfo;
+     [self handleLocalNotifications:payload];
+}
+
+
+-(void) handleLocalNotifications:(NSDictionary*)payload{
+    NSLog(@"handleLocalNotificaiton");
     NSUInteger pushCode = [[payload objectForKey:@"pushCode"] intValue];
     if(!pushCode==0){
         switch (pushCode) {
-            case 1:
-                //handle voicemail push
-                NSLog(@"Prefetching voicemail");
-                [[JCOsgiClient sharedClient] RetrieveVoicemailForEntity:nil success:^(id JSON) {
-                    //switch to Voicemail view controller?
-                    //add badge to tabbar- voicemail
-                    
-                } failure:^(NSError *err) {
-                    //Alert user
-                }];
+            case 1://handle voicemail push
+            {
+                //TODO: switch to voicemail tab
+                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+                UITabBarController *tabVC = [storyboard instantiateViewControllerWithIdentifier:@"UITabBarController"];
+                [tabVC setSelectedIndex:3];   
                 break;
-            case 2:
-                //handle chat push
-                NSLog(@"Prefetching chat");
-                //not sure how to prefetch chat
-                [[JCOsgiClient sharedClient] RequestSocketSession:^(id JSON) {
-                    //switch to chat tab
-                } failure:^(NSError *err) {
-                    //Alert user
-                }];
-                //add badge to tabbar- conversations
+            }
+            case 2://handle chat push
+                //switch to chat tab
+                
                 
             default:
                 break;
