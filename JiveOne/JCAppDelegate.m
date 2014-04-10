@@ -17,6 +17,7 @@
 #import "Common.h"
 #import <Parse/Parse.h>
 #import <Crashlytics/Crashlytics.h>
+#import "TRVSMonitor.h"
 
 
 
@@ -41,6 +42,8 @@
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert |
                                                                            UIRemoteNotificationTypeBadge |
                                                                            UIRemoteNotificationTypeSound)];
+    //Register for background fetches
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     
     [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0.169 green:0.204 blue:0.267 alpha:1.0]];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
@@ -77,8 +80,7 @@
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     
-    NSLog(@"applicationDidEnterBackground");
-    NSLog(@"%u", [JCSocketDispatch sharedInstance].webSocket.readyState);
+    [self stopSocket];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -200,15 +202,69 @@
     
 }
 
+
+
 #pragma mark - Background Fetch
-- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+-(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-    NSLog(@"Remote Notification Recieved");
-    UILocalNotification *notification = [[UILocalNotification alloc] init];
-    notification.alertBody =  @"APP DELGATE performFetchWithCompletionHandler";
-    [application presentLocalNotificationNow:notification];
-    completionHandler(UIBackgroundFetchResultNewData);
+
+    __block UIBackgroundFetchResult fetchResult = UIBackgroundFetchResultFailed;
+    __block BOOL requestFailed = NO;
+    TRVSMonitor *monitor = [TRVSMonitor monitor];
+//
+//    NSInteger preCount = [Conversation MR_findAll].count;
+//    
+//    [[JCOsgiClient sharedClient] RetrieveVoicemailForEntity:nil success:^(id JSON) {
+//        [monitor signal];
+//    } failure:^(NSError *err) {
+//        requestFailed = YES;
+//        [monitor signal];
+//    }];
+//    
+//    [monitor wait];
+//    
+//    
+//    [[JCOsgiClient sharedClient] RetrieveConversations:^(id JSON) {
+//        [monitor signal];
+//    } failure:^(NSError *err) {
+//        requestFailed = YES;
+//        [monitor signal];
+//    }];
+    
+    [self startSocket];
+    
+    [monitor waitWithTimeout:10];
+    
+    NSMutableDictionary *_badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
+    if (!_badges) {
+        fetchResult = UIBackgroundFetchResultNoData;
+    }
+    else {
+        for (NSString *key in _badges)
+        {
+            NSNumber *number = [_badges objectForKey:key];
+            NSInteger count = [number integerValue];
+            if (count > 0) {
+                fetchResult = UIBackgroundFetchResultNewData;
+                break;
+            }
+        }
+    }
+    
+    if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground ) {
+        [self stopSocket];
+    }
+    completionHandler(fetchResult);
+    
 }
+//- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+//{
+//    NSLog(@"Remote Notification Recieved");
+//    UILocalNotification *notification = [[UILocalNotification alloc] init];
+//    notification.alertBody =  @"APP DELGATE performFetchWithCompletionHandler";
+//    [application presentLocalNotificationNow:notification];
+//    completionHandler(UIBackgroundFetchResultNewData);
+//}
 
 - (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler
 {
