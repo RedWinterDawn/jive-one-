@@ -194,7 +194,6 @@
 		DD28DA5218AEC4F5003BFC44 /* JCAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD28DA5118AEC4F5003BFC44 /* JCAccountViewController.m */; };
 		DD3BD9F418DCB1740080318E /* Voicemail+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = DD3BD9F318DCB1740080318E /* Voicemail+Custom.m */; };
 		DD50802918C7D60B00750DB4 /* JCDirectoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DD50802818C7D60B00750DB4 /* JCDirectoryTests.m */; };
-		DDCE1E8518F355FE003A6615 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E8418F355FE003A6615 /* Parse.framework */; };
 		DDCE1E8718F3561D003A6615 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E8618F3561D003A6615 /* AudioToolbox.framework */; };
 		DDCE1E8918F35623003A6615 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E8818F35623003A6615 /* CFNetwork.framework */; };
 		DDCE1E8B18F3562D003A6615 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E8A18F3562D003A6615 /* CoreLocation.framework */; };
@@ -513,7 +512,6 @@
 				275F4A5418AD0FBC00D2F069 /* CoreGraphics.framework in Frameworks */,
 				275F4A5618AD0FBC00D2F069 /* UIKit.framework in Frameworks */,
 				275F4A5218AD0FBC00D2F069 /* Foundation.framework in Frameworks */,
-				DDCE1E8518F355FE003A6615 /* Parse.framework in Frameworks */,
 				42A1D3B90E844E0DA4AB6197 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1088,7 +1086,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = JC;
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Jive Communications, Inc";
 				TargetAttributes = {
 					275F4A4D18AD0FBC00D2F069 = {
@@ -1434,7 +1432,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1516,7 +1513,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8B150D3FF8864E2786E514D9 /* Pods.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/JiveOne.app/JiveOne";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1538,7 +1534,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1580,7 +1575,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1706,7 +1700,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8B150D3FF8864E2786E514D9 /* Pods.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/JiveOne.app/JiveOne";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1731,7 +1724,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8B150D3FF8864E2786E514D9 /* Pods.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/JiveOne.app/JiveOne";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				FRAMEWORK_SEARCH_PATHS = (
