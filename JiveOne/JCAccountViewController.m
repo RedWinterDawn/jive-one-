@@ -165,7 +165,7 @@
                             kPresenceInvisible,
                             kPresenceOffline,
                             nil];
-    [popup showInView:self.view];
+    [popup showFromTabBar:self.tabBarController.tabBar];
 }
 
 #pragma mark - UIActionSheet Delegate
