@@ -16,6 +16,32 @@ ALWAYS use Jive.xcworkspace, not Jive.xcodeproj
 
 One feature that was implemented and then hidden was to display local contacts (on the phone in the address book app). This was show via segment control on the "directory" tab. The segmented control, however, was hidden and a search bar is now in its place. Segmented control can be seen by going into the storyboard and un-hiding it. 
 
+
+TESTING AND USING OCMOCK
+==============
+Check out: http://en.wikipedia.org/wiki/Mock_object for a detailed explination of Mock objects and why we use them.
+
+Use the following guidelines when deciding to use OCMock or not:
+
+If an actual object has any of the following characteristics, it may be useful to use a mock object in its place.
+
+If the real object:
+* supplies non-deterministic results (e.g., the current time or the current temperature);
+* has states that are difficult to create or reproduce (e.g., a network error);
+* is slow (e.g., a complete database, which would have to be initialized before the test);
+* does not yet exist or may change behavior;
+* would have to include information and methods exclusively for testing purposes (and not for its actual task).
+
+For example, an alarm clock program which causes a bell to ring at a certain time might get the current time from the outside world. To test this, the test must wait until the alarm time to know whether it has rung the bell correctly. If a mock object is used in place of the real object, it can be programmed to provide the bell-ringing time (whether it is actually that time or not) so that the alarm clock program can be tested in isolation.
+
+
+
+
+
+
+
+
+
 ==========
 Some useful links:
 
