@@ -30,25 +30,8 @@
     //[self removeObservers];
     if ([person isKindOfClass:[ClientEntities class]]) {
         _person = person;
-        
-        //check to see if the person is a favorite
-        if (person.isFavorite.boolValue == 1) {
-            NSMutableString *name = [[NSMutableString alloc]initWithString: person.firstLastName];
-            NSString *star = @"  ★";
-            NSString *nameAndStarAsAnNSString = [NSString stringWithString:[name stringByAppendingString:star]];
-            
-            
-            UIColor *theRightShadeOfYellowForOurStar = [UIColor colorWithRed:255.0/255.0 green:212.0/255.0 blue:0.0/255.0 alpha:1.0];
-            NSRange starLocation = [nameAndStarAsAnNSString rangeOfString:@"★"];
-            NSMutableAttributedString *personAttributedName = [[NSMutableAttributedString alloc]initWithString:nameAndStarAsAnNSString];
-            [personAttributedName setAttributes:@{NSForegroundColorAttributeName : theRightShadeOfYellowForOurStar} range:starLocation];
-            
-            self.personNameLabel.attributedText = personAttributedName;
-        }else{
-            self.personNameLabel.text = person.firstLastName;
-        }
-        
-        
+                
+        self.personNameLabel.text = person.firstLastName;
         self.personDetailLabel.text = person.email;
         self.personPresenceView.presenceType = (JCPresenceType)[_person.entityPresence.interactions[@"chat"][@"code"] integerValue];
         [self.personPicture setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];

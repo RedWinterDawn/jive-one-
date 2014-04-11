@@ -19,6 +19,9 @@
 #define ZERO 0
 #define kUINameRowHeight 66
 #define kUIRowHeight 50
+
+@property (nonatomic) NSManagedObjectContext* managedContext;
+
 @end
 
 @implementation JCDirectoryDetailViewController
@@ -36,6 +39,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    _managedContext = [NSManagedObjectContext MR_contextForCurrentThread];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"JCPeopleDetailCell" bundle:nil] forCellReuseIdentifier:@"JCPeopleDetailCell"];
     
@@ -87,6 +91,9 @@
             CGRect newFrame = CGRectMake(0, 30, ((JCPeopleDetailCell *)cell).NameLabel.frame.size.width,((JCPeopleDetailCell *)cell).NameLabel.frame.size.height);
             ((JCPeopleDetailCell *)cell).NameLabel.frame = newFrame;
             ((JCPeopleDetailCell *)cell).delegate = self;
+            
+            [self updateFavoriteIcon:((JCPeopleDetailCell *)cell)];
+            
             //return cell;
             if(!self.ABPerson){
                 //cell.textLabel.text = self.person.firstLastName;
@@ -187,12 +194,25 @@
 }
 
 #pragma mark - delegate methods
--(void)toggleIsFavorite:(JCPeopleDetailCell *)cell {
+- (void)toggleIsFavorite:(JCPeopleDetailCell *)cell {
+    
     self.person.isFavorite = @(!self.person.isFavorite.boolValue);
+    
+    if (_managedContext) {
+        [_managedContext MR_saveToPersistentStoreAndWait];
+    }
+    
+    [self updateFavoriteIcon:cell];
+    
+}
+
+- (void) updateFavoriteIcon:(JCPeopleDetailCell *)cell
+{
     UIColor *StarColor;
     
     if (self.person.isFavorite.boolValue == YES) {
         StarColor = [UIColor colorWithRed:255.0/255.0 green:212.0/255.0 blue:0.0/255.0 alpha:1.0];
+        
     }else
     {
         StarColor = [UIColor colorWithRed:208.0/255.0 green:208.0/255.0 blue:208.0/255.0 alpha:1.0];
@@ -200,6 +220,7 @@
     
     NSMutableAttributedString *attributedStarSelectedState = [[NSMutableAttributedString alloc]initWithString:@"★" attributes:@{NSForegroundColorAttributeName : StarColor}];
     [cell.favoriteButton setAttributedTitle:attributedStarSelectedState forState:UIControlStateNormal];
+
 }
 
 //TODO: Create Crud Method to getSpecific person from Coredata and update the their isFavorite attribute.

@@ -47,20 +47,28 @@ static NSString *CellIdentifier = @"DirectoryCell";
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    
-    sections = [NSArray arrayWithObjects:@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
+    NSString *star = @"\u2605";
+    sections = [NSArray arrayWithObjects:star,@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
     self.clientEntitiesArray = [[NSMutableArray alloc] init];
     self.clientEntitiesSearchArray = [[NSMutableArray alloc] init];
-    if ([self.segControl selectedSegmentIndex] == 0) {
-        [self loadCompanyDirectory];
-        //[self refreshCompanyDirectory];
-    } else {
-        [self loadLocalDirectory];
-    }
+    
         //TODO: disable search bar if no objects in clientEntitiesArray
     //[[NotificationView sharedInstance] showPanelInView:self.view];
     //[[StatusPanel sharedInstance] showWithTitle:@"no internet" snippet:@"no internet" showProgress:NO];
     //[[StatusPanel sharedInstance] show];
+
+    
+    for(UIView *view in [self.tableView subviews])
+    {
+        NSLog([[view class] description]);
+        if([[[view class] description] isEqualToString:@"UITableViewIndex"])
+        {
+            CGRect frame = view.frame;
+            frame.origin.y = frame.origin.y + 100;
+            view.frame = frame;
+            break;
+        }
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -68,6 +76,8 @@ static NSString *CellIdentifier = @"DirectoryCell";
     [super viewWillAppear:animated];
     personMap = [[NSMutableDictionary alloc] init];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdatePresence:) name:kPresenceChanged object:nil];
+    
+    [self loadCompanyDirectory];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -163,11 +173,19 @@ static NSString *CellIdentifier = @"DirectoryCell";
 
 - (void)loadCompanyDirectory {
     
-    for (NSString *section in sections) {
-        
-        // retrieve entities where first name starts with letter of alphabet
-        NSPredicate *pred = [NSPredicate predicateWithFormat:@"(firstLastName BEGINSWITH[c] %@)", section];
-        NSArray *sectionArray = [ClientEntities MR_findAllWithPredicate:pred];
+    [self.clientEntitiesArray removeAllObjects];
+    
+    for (int i = 0; i < sections.count; i++) {
+        NSString *section = sections[i];
+        NSArray *sectionArray = nil;
+        if ([section isEqualToString:@"\u2605"]) {
+            sectionArray = [ClientEntities MR_findByAttribute:@"isFavorite" withValue:[NSNumber numberWithBool:YES]];
+        }
+        else {
+            // retrieve entities where first name starts with letter of alphabet
+            NSPredicate *pred = [NSPredicate predicateWithFormat:@"(firstLastName BEGINSWITH[c] %@)", section];
+            sectionArray = [ClientEntities MR_findAllWithPredicate:pred];
+        }
         
         // sort array with bases on firstLastName property
         NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"firstLastName" ascending:YES];
@@ -352,8 +370,24 @@ static NSString *CellIdentifier = @"DirectoryCell";
         if([section[indexPath.row] isKindOfClass:[ClientEntities class]]){
             
             ClientEntities* person = section[indexPath.row];
-            
             cell.person = person;
+            
+            //check to see if the person is a favorite
+            if ([person.isFavorite boolValue]) {
+                
+                
+                NSMutableString *name = [[NSMutableString alloc]initWithString: cell.personNameLabel.text];
+                NSString *star = @"  ★";
+                NSString *nameAndStarAsAnNSString = [NSString stringWithString:[name stringByAppendingString:star]];
+                
+                
+                UIColor *theRightShadeOfYellowForOurStar = [UIColor colorWithRed:255.0/255.0 green:212.0/255.0 blue:0.0/255.0 alpha:1.0];
+                NSRange starLocation = [nameAndStarAsAnNSString rangeOfString:@"★"];
+                NSMutableAttributedString *personAttributedName = [[NSMutableAttributedString alloc]initWithString:nameAndStarAsAnNSString];
+                [personAttributedName setAttributes:@{NSForegroundColorAttributeName : theRightShadeOfYellowForOurStar} range:starLocation];
+                
+                cell.personNameLabel.attributedText = personAttributedName;
+            }
             
         }else{
             //local contacts
@@ -362,8 +396,6 @@ static NSString *CellIdentifier = @"DirectoryCell";
             cell.personDetailLabel.text = @"";//[person objectForKey:@"email"];
 
             }
-        
-        
         return cell;
     }
 }
