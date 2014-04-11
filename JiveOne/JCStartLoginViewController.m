@@ -354,7 +354,6 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 }
 
 - (void)goToApplication
-
 {
     JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
     [delegate changeRootViewController:JCRootTabbarViewController];

@@ -155,6 +155,7 @@
     
     [[JCAuthenticationManager sharedInstance] logout:self];
 }
+
 - (IBAction)presenceButtonSelected:(id)sender {
     UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"Select Presence option:" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
                             kPresenceAvailable,

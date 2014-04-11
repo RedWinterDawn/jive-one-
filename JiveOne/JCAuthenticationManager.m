@@ -66,20 +66,19 @@
     }];
 }
 
-- (void)showLoginViewControllerFromViewController:(UIViewController*)viewController completed:(void (^)(bool))completed
-{
-//    JCWebViewController* webView = [viewController.storyboard instantiateViewControllerWithIdentifier:@"LoginStoryboard"];
-//    [viewController presentViewController:webView animated:YES completion:^{
-//        completed(YES);
-//    }];
-    //[viewController performSegueWithIdentifier:@"LoginSegue" sender:nil];
-}
+//- (void)showLoginViewControllerFromViewController:(UIViewController*)viewController completed:(void (^)(bool))completed
+//{
+////    JCWebViewController* webView = [viewController.storyboard instantiateViewControllerWithIdentifier:@"LoginStoryboard"];
+////    [viewController presentViewController:webView animated:YES completion:^{
+////        completed(YES);
+////    }];
+//    //[viewController performSegueWithIdentifier:@"LoginSegue" sender:nil];
+//}
 
 // IBAction method for logout is in the JCAccountViewController.m
 - (void)logout:(UIViewController *)viewController {
     
-    KeychainItemWrapper *wrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
-    [wrapper resetKeychainItem];
+    [self.keychainWrapper resetKeychainItem];
     
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"authToken"];
     [[NSUserDefaults standardUserDefaults] synchronize];
