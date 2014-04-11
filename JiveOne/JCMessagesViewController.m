@@ -126,6 +126,7 @@
             break;
         }
         case JCNewConversationWithEntity: {
+            [self.contactPickerView removeFromSuperview];
             if (!self.selectedContacts) {
                 self.selectedContacts = [[NSMutableArray alloc] init];
             }

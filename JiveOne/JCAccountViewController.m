@@ -54,7 +54,8 @@
     
     if (me.entityCompany) {
         self.jivePhoneNumber.text = me.entityCompany.name;
-        self.jiveMessenger.text = me.externalId;
+        self.jiveMessenger.text = me.email;
+        self.jivePhoneNumber.text = me.externalId;
     }
     
     [self.presenceDetail setTitle:[self getPresence:me.entityPresence.interactions[@"chat"][@"code"]]  forState:UIControlStateNormal];
@@ -132,7 +133,7 @@
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
