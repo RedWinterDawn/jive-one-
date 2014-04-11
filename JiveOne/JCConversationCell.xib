@@ -13,18 +13,15 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="72y-g8-oom">
-                        <rect key="frame" x="89" y="2" width="168" height="24"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="72y-g8-oom">
+                        <rect key="frame" x="83" y="5" width="177" height="24"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="168" id="YBQ-TU-GrB"/>
-                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zBl-iR-Y94">
-                        <rect key="frame" x="260" y="2" width="50" height="21"/>
+                        <rect key="frame" x="274" y="2" width="36" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -36,32 +33,22 @@
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view tag="101" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Awg-Y6-xXz" customClass="JCPresenceView">
-                        <rect key="frame" x="65" y="6" width="16" height="16"/>
+                    <view tag="101" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Awg-Y6-xXz" customClass="JCPresenceView">
+                        <rect key="frame" x="63" y="9" width="16" height="16"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="16" id="lpf-XE-OBd"/>
-                        </constraints>
                     </view>
-                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h3W-i7-IRg">
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h3W-i7-IRg">
                         <rect key="frame" x="7" y="5" width="48" height="48"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </view>
                 </subviews>
-                <constraints>
-                    <constraint firstItem="72y-g8-oom" firstAttribute="leading" secondItem="Awg-Y6-xXz" secondAttribute="trailing" constant="8" id="IwB-ji-5ft"/>
-                    <constraint firstItem="Awg-Y6-xXz" firstAttribute="leading" secondItem="h3W-i7-IRg" secondAttribute="trailing" constant="8" id="OY1-sT-rDY"/>
-                </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="conversationSnippet" destination="P66-SQ-a2G" id="Gvj-ks-5PY"/>
                 <outlet property="conversationThumbnailView" destination="h3W-i7-IRg" id="0iC-sU-RhU"/>
                 <outlet property="conversationTime" destination="zBl-iR-Y94" id="1a4-NH-IQr"/>
                 <outlet property="conversationTitle" destination="72y-g8-oom" id="eiM-Th-yNj"/>
-                <outlet property="presenceSpacing" destination="IwB-ji-5ft" id="at7-Fj-UIt"/>
                 <outlet property="presenceView" destination="Awg-Y6-xXz" id="KGS-7W-xaU"/>
-                <outlet property="presenceWidth" destination="lpf-XE-OBd" id="fZd-2i-LLb"/>
-                <outlet property="titleWidth" destination="YBQ-TU-GrB" id="MgW-t8-r2a"/>
             </connections>
         </tableViewCell>
     </objects>
