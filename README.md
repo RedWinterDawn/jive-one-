@@ -17,9 +17,9 @@ ALWAYS use Jive.xcworkspace, not Jive.xcodeproj
 One feature that was implemented and then hidden was to display local contacts (on the phone in the address book app). This was show via segment control on the "directory" tab. The segmented control, however, was hidden and a search bar is now in its place. Segmented control can be seen by going into the storyboard and un-hiding it. 
 
 
-`
+
 Install Test flight
-`
+=
 To install test flight app on your device you will need your Device added to the testflight group and to the develpoer povisioning profile
 Open XCode
 Pull latest version of the app from github

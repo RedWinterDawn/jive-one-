@@ -58,7 +58,7 @@
     
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
-    [Crashlytics startWithAPIKey:@"dd3685563712dc20cfb83957dedcfbe78fbb2be4"];
+
     
     if ([[JCAuthenticationManager sharedInstance] userAuthenticated]) {
         [self changeRootViewController:JCRootTabbarViewController];
