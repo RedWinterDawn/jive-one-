@@ -82,7 +82,6 @@
 		270098CB18F5EA9300B6BC2F /* vm-delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 270098C018F5EA9300B6BC2F /* vm-delete.png */; };
 		2710E40C18CE873000152C91 /* Conversation+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 2710E40B18CE873000152C91 /* Conversation+Custom.m */; };
 		2710E40F18CEC8C300152C91 /* ConversationEntry+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 2710E40E18CEC8C300152C91 /* ConversationEntry+Custom.m */; };
-		2718A3A718F36CBE00BB105C /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2718A3A618F36CBE00BB105C /* Crashlytics.framework */; };
 		272B61DD18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */; };
 		272B61DE18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */; };
 		272F65E318D37602009BD7B3 /* JCMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 272F65E218D37602009BD7B3 /* JCMessageViewController.m */; };
@@ -146,6 +145,7 @@
 		2764BDC018C83AC5007320B0 /* THContactPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2764BDBE18C83AC5007320B0 /* THContactPickerView.m */; };
 		2764BDC318C83B24007320B0 /* THBubbleColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 2764BDC218C83B24007320B0 /* THBubbleColor.m */; };
 		2777AD5F18C51F1E009856C5 /* JCRightToLeftSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2777AD5E18C51F1E009856C5 /* JCRightToLeftSegue.m */; };
+		277A1F8018F88987009A41F7 /* JCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 277A1F7F18F88987009A41F7 /* JCLoginViewController.m */; };
 		2787911318CF79DC004DE651 /* JCPresenceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2787911218CF79DC004DE651 /* JCPresenceView.m */; };
 		279E602418C8C59900C5CC9F /* JCPersonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 279E602318C8C59900C5CC9F /* JCPersonCell.xib */; };
 		27A49AB018DC8BC00084DEE0 /* launch.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A49AAF18DC8BC00084DEE0 /* launch.png */; };
@@ -317,7 +317,6 @@
 		2710E40B18CE873000152C91 /* Conversation+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Conversation+Custom.m"; sourceTree = "<group>"; };
 		2710E40D18CEC8C300152C91 /* ConversationEntry+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConversationEntry+Custom.h"; sourceTree = "<group>"; };
 		2710E40E18CEC8C300152C91 /* ConversationEntry+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ConversationEntry+Custom.m"; sourceTree = "<group>"; };
-		2718A3A618F36CBE00BB105C /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		272B61DB18B2A4DD00EB8ED5 /* TRVSMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRVSMonitor.h; sourceTree = "<group>"; };
 		272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRVSMonitor.m; sourceTree = "<group>"; };
 		272F65E118D37602009BD7B3 /* JCMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMessageViewController.h; sourceTree = "<group>"; };
@@ -403,6 +402,8 @@
 		2764BDC218C83B24007320B0 /* THBubbleColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THBubbleColor.m; sourceTree = "<group>"; };
 		2777AD5D18C51F1E009856C5 /* JCRightToLeftSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCRightToLeftSegue.h; sourceTree = "<group>"; };
 		2777AD5E18C51F1E009856C5 /* JCRightToLeftSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCRightToLeftSegue.m; sourceTree = "<group>"; };
+		277A1F7E18F88987009A41F7 /* JCLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCLoginViewController.h; sourceTree = "<group>"; };
+		277A1F7F18F88987009A41F7 /* JCLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCLoginViewController.m; sourceTree = "<group>"; };
 		2787911118CF79DC004DE651 /* JCPresenceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPresenceView.h; sourceTree = "<group>"; };
 		2787911218CF79DC004DE651 /* JCPresenceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPresenceView.m; sourceTree = "<group>"; };
 		279E602318C8C59900C5CC9F /* JCPersonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCPersonCell.xib; sourceTree = "<group>"; };
@@ -506,7 +507,6 @@
 				DDCE1E8718F3561D003A6615 /* AudioToolbox.framework in Frameworks */,
 				9135DE0418BC01550052E998 /* AVFoundation.framework in Frameworks */,
 				F266162618B42AA0000B770A /* AddressBook.framework in Frameworks */,
-				2718A3A718F36CBE00BB105C /* Crashlytics.framework in Frameworks */,
 				F266162718B42AA0000B770A /* AddressBookUI.framework in Frameworks */,
 				2700981D18F46C5600B6BC2F /* Parse.framework in Frameworks */,
 				275F4A5418AD0FBC00D2F069 /* CoreGraphics.framework in Frameworks */,
@@ -843,6 +843,8 @@
 				9135DDFF18BBFC7A0052E998 /* JCVoicemailViewController.m */,
 				2751593218AD3BD500FD8D3F /* JCVoipViewController.h */,
 				2751593318AD3BD500FD8D3F /* JCVoipViewController.m */,
+				277A1F7E18F88987009A41F7 /* JCLoginViewController.h */,
+				277A1F7F18F88987009A41F7 /* JCLoginViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1050,7 +1052,6 @@
 				275F4A4B18AD0FBC00D2F069 /* Frameworks */,
 				275F4A4C18AD0FBC00D2F069 /* Resources */,
 				CB3D37AA11C3484F8D034661 /* Copy Pods Resources */,
-				2718A3A518F36C7C00BB105C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1237,19 +1238,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2718A3A518F36C7C00BB105C /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "./Crashlytics.framework/run dd3685563712dc20cfb83957dedcfbe78fbb2be4 3db37eb4f8adc25e3a968d17d6b92daaa2afa2e77db0b7089c54b7f7a5bef8d7";
-		};
 		2D6CC6088E10467383A549A4 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1326,6 +1314,7 @@
 				2751591318AD174F00FD8D3F /* JCAuthenticationManager.m in Sources */,
 				2700988118F4714100B6BC2F /* JSMessageTextView.m in Sources */,
 				272F65FF18D3A7A4009BD7B3 /* HPGrowingTextView.m in Sources */,
+				277A1F8018F88987009A41F7 /* JCLoginViewController.m in Sources */,
 				2700987D18F4714100B6BC2F /* JSMessageInputView.m in Sources */,
 				27FA3F9518D89469005AEF98 /* JCContactModel.m in Sources */,
 				2764BDC318C83B24007320B0 /* THBubbleColor.m in Sources */,
