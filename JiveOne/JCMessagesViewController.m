@@ -398,7 +398,7 @@
 {
     UIImageView *avatarImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
     NSURL *imageURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kOsgiBaseURL, self.avatars[sender]]];
-    [avatarImageView setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:@"avatar.png"]];
+    [avatarImageView setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:@"avatar.png"] options:SDWebImageRefreshCached];
     return avatarImageView;
 }
 
