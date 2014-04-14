@@ -25,8 +25,8 @@
 #pragma mark - Retrieve Operations
 - (void) RetrieveClientEntitites:(void (^)(id JSON))success
                             failure:(void (^)(NSError *err))failure;
-- (void) RetrieveMyEntitity:(void (^)(id JSON))success
-                    failure:(void (^)(NSError *err))failure;
+- (void) RetrieveMyEntitity:(void (^)(id JSON, id operation))success
+                    failure:(void (^)(NSError *err, id operation))failure;
 - (void) RetrieveMyCompany:(NSString*)company :(void (^)(id JSON))success
                     failure:(void (^)(NSError *err))failure;
 - (void) RetrieveConversations:(void (^)(id JSON))success

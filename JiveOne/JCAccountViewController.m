@@ -72,7 +72,7 @@
 
 - (void)updateAccountInformation
 {
-    [[JCOsgiClient sharedClient] RetrieveMyEntitity:^(id JSON) {
+    [[JCOsgiClient sharedClient] RetrieveMyEntitity:^(id JSON, id operation) {
         
         NSDictionary *entity = (NSDictionary*)JSON;
         
@@ -95,7 +95,7 @@
         
         [self loadViews];
         
-    } failure:^(NSError *err) {
+    } failure:^(NSError *err, id operation) {
         NSLog(@"%@", err);
     }];
 }

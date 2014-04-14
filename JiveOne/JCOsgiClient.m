@@ -77,8 +77,8 @@
     }];
 }
 
-- (void) RetrieveMyEntitity:(void (^)(id JSON))success
-                         failure:(void (^)(NSError *err))failure
+- (void) RetrieveMyEntitity:(void (^)(id JSON, id operation))success
+                    failure:(void (^)(NSError *err, id operation))failure
 {
     [self setRequestAuthHeader];
    
@@ -86,9 +86,9 @@
     NSLog(@"%@", url);
     
     [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        success(responseObject);
+        success(responseObject, operation);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failure(error);
+        failure(error, operation);
     }];
 }
 

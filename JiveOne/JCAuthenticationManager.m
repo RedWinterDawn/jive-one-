@@ -11,6 +11,7 @@
 #import "JCAppDelegate.h"
 #import "JCAccountViewController.h"
 #import "JCStartLoginViewController.h"
+#import "JCLoginViewController.h"
 #import "Common.h"
 
 #if DEBUG
@@ -111,23 +112,39 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 - (void)checkForTokenValidity
 {
-    [[JCOsgiClient sharedClient] RetrieveMyEntitity:^(id JSON) {
+    [[JCOsgiClient sharedClient] RetrieveMyEntitity:^(id JSON, id operation) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenSucceeded object:JSON];
-    } failure:^(NSError *err) {
+    } failure:^(NSError *err, id operation) {
         NSLog(@"%@", err);
-        [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenFailed object:err];
-        //        JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
-        //        if (![delegate.window.rootViewController isKindOfClass:[JCStartLoginViewController class]]) {
-        //            [UIView transitionWithView:delegate.window
-        //                              duration:0.5
-        //                               options:UIViewAnimationOptionTransitionFlipFromLeft
-        //                            animations:^{
-        //                                [delegate changeRootViewController:JCRootLoginViewController];
-        //
-        //                            }
-        //                            completion:nil];
-        //        }
+        AFHTTPRequestOperation *AFOperation = (AFHTTPRequestOperation *)operation;
         
+        NSInteger status = AFOperation.response.statusCode;
+        
+        if ((status >= 400 && status <= 417) || status == 200) {
+            if ([self userAuthenticated]) {
+                [self refreshToken];
+            }
+            else
+            {
+                JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
+                if (![delegate.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
+                    //                [UIView transitionWithView:delegate.window
+                    //                                  duration:0.5
+                    //                                   options:UIViewAnimationOptionTransitionFlipFromLeft
+                    //                                animations:^{
+                    [delegate changeRootViewController:JCRootLoginViewController];
+                    
+                    //                                }
+                    //                                completion:nil];
+                }
+                else {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenFailed object:nil];
+                }
+            }
+        }
+        else {
+            NSLog(@"%@", AFOperation.response);
+        }       
     }];
 }
 
@@ -261,6 +278,10 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     if (![Common stringIsNilOrEmpty:refreshToken]) {
         NSString *data = [NSString stringWithFormat:@"refresh_token=%@&client_id=%@&redirect_uri=%@&grant_type=refresh_token", refreshToken, kOAuthClientId, kURLSchemeCallback];
         [self requestAccessToken:data];
+    }
+    else {
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserAuthenticated];
+        [self checkForTokenValidity];
     }
 }
 

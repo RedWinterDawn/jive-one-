@@ -65,8 +65,13 @@
     
     
         //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
-    
-    [self changeRootViewController:JCRootLoginViewController];
+    if ([[JCAuthenticationManager sharedInstance] userAuthenticated]) {
+        [self changeRootViewController:JCRootTabbarViewController];
+        [[JCAuthenticationManager sharedInstance] checkForTokenValidity];
+    }
+    else {
+        [self changeRootViewController:JCRootLoginViewController];
+    }
     
     return YES;
 }
@@ -90,13 +95,10 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    [[NotificationView sharedInstance] didChangeConnection:nil];
+    //[[NotificationView sharedInstance] didChangeConnection:nil];
     
-    
-    [[JCAuthenticationManager sharedInstance] checkForTokenValidity];
-    NSString *token = [[JCAuthenticationManager sharedInstance] getAuthenticationToken];
-    
-    if (![Common stringIsNilOrEmpty:token]) {
+    if ([[JCAuthenticationManager sharedInstance] userAuthenticated]) {
+        [[JCAuthenticationManager sharedInstance] checkForTokenValidity];
         [self startSocket];
     }   
 }
@@ -343,7 +345,7 @@
     else if (type == JCRootLoginViewController)
     {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-        JCStartLoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"JCStartLoginViewController"];
+        JCLoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"JCLoginViewController"];
         [self.window setRootViewController:loginVC];
     }
     
