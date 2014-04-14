@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -41,6 +41,13 @@
                         <rect key="frame" x="7" y="5" width="48" height="48"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </view>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="+99" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YVm-La-9Bn">
+                        <rect key="frame" x="284" y="12" width="26" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                        <color key="textColor" red="0.99215692280000001" green="0.011764707040000001" blue="0.039215687659999998" alpha="1" colorSpace="deviceRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
             </tableViewCellContentView>
             <connections>
@@ -48,6 +55,7 @@
                 <outlet property="conversationThumbnailView" destination="h3W-i7-IRg" id="0iC-sU-RhU"/>
                 <outlet property="conversationTime" destination="zBl-iR-Y94" id="1a4-NH-IQr"/>
                 <outlet property="conversationTitle" destination="72y-g8-oom" id="eiM-Th-yNj"/>
+                <outlet property="conversationUnseenMessages" destination="YVm-La-9Bn" id="tai-1Z-Zuf"/>
                 <outlet property="presenceView" destination="Awg-Y6-xXz" id="KGS-7W-xaU"/>
             </connections>
         </tableViewCell>

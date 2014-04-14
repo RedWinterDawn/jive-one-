@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *conversationSnippet;
 @property (weak, nonatomic) IBOutlet UILabel *conversationTime;
 @property (weak, nonatomic) IBOutlet UIView *conversationThumbnailView;
+@property (weak, nonatomic) IBOutlet UILabel *conversationUnseenMessages;
 @property (weak, nonatomic) IBOutlet JCPresenceView *presenceView;
 
 @property (nonatomic) Conversation *conversation;
