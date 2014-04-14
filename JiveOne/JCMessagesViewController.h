@@ -21,4 +21,6 @@
 @property (nonatomic) ContactGroup *contactGroup;
 @property (nonatomic) JCMessageType messageType;
 
++(void) sendOfflineMessagesQueue;
+
 @end

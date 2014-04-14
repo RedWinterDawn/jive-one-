@@ -18,6 +18,7 @@
 #import "Common.h"
 #import <Parse/Parse.h>
 #import "TRVSMonitor.h"
+#import "JCMessagesViewController.h"
 
 
 
@@ -439,9 +440,13 @@
         }
         case AFNetworkReachabilityStatusReachableViaWiFi:
             NSLog(@"WIFI");
+            //send any chat messages in the queue
+            [JCMessagesViewController sendOfflineMessagesQueue];
             break;
         case AFNetworkReachabilityStatusReachableViaWWAN:
             NSLog(@"3G");
+            //send any chat messages in the queue
+            [JCMessagesViewController sendOfflineMessagesQueue];
             break;
         default:
             NSLog(@"Unkown network status");

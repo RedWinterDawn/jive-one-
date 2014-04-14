@@ -466,20 +466,7 @@
            [JSMessageSoundEffect playMessageSentSound];
         } failure:^(NSError *err) {
             NSLog(@"%@", err);
-            //alert the user that message will be sent when connectivity is restored
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Message not sent" message:@"Messages will be sent when connectivity is restored" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alert show];
-            //build queue for sending unsent messages
-            NSArray *unsentMessages = [[NSUserDefaults standardUserDefaults] objectForKey:@"unsentMessageQueue"];
-            if(!unsentMessages){
-                unsentMessages = [[NSMutableArray alloc] init];
-            }
-            NSMutableArray *unsentMessagesMutable = [[NSMutableArray alloc] initWithArray:unsentMessages];
-            [unsentMessagesMutable addObject:message];
-            
-            //save queue to user defaults
-            [[NSUserDefaults standardUserDefaults] setObject:unsentMessagesMutable forKey:@"unsentMessageQueue"];
-            
+            [JCMessagesViewController handleFailedMessageDispatch:_conversationId withMessage:message];
         }];
         
         //[self cleanup];
@@ -488,6 +475,58 @@
     else {
         [self createConversation:message];
     }
+}
+
+//if a message cannot be sent (becuase of no connecitivity) this method is called. this method puts these messages into a queue (saved in user defaults)
++(void) handleFailedMessageDispatch:(NSString*)conversationId withMessage:(NSString*)message{
+    //alert the user that message will be sent when connectivity is restored
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Message not sent" message:@"Messages will be sent when connectivity is restored" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alert show];
+    
+    //build queue for sending unsent messages
+    NSDictionary *unsentQueue = [[NSUserDefaults standardUserDefaults] objectForKey:@"unsentMessageQueue"];
+    if(!unsentQueue){
+        unsentQueue = [[NSMutableDictionary alloc] init];
+    }
+    NSMutableDictionary *unsentQueueMutable = [[NSMutableDictionary alloc] initWithDictionary:unsentQueue];
+    
+    NSMutableArray *messages;
+    if([unsentQueue objectForKey:conversationId]){
+        messages  = [unsentQueueMutable objectForKey:conversationId];
+    }
+    else{
+        messages = [[NSMutableArray alloc] init];
+        [unsentQueueMutable setObject:messages forKey:conversationId];
+    }
+    [messages addObject:message];
+    
+    //save queue to user defaults
+    [[NSUserDefaults standardUserDefaults] setObject:unsentQueueMutable forKey:@"unsentMessageQueue"];
+
+}
+
+//when connectvitity is restored this method is called. this method retrives a queue of unsent messages from user defaults and begins sending them.
++(void) sendOfflineMessagesQueue{
+    NSDictionary *unsentMessagesQueue = [[NSUserDefaults standardUserDefaults] objectForKey:@"unsentMessageQueue"];
+
+    [unsentMessagesQueue enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSArray *messages, BOOL *stop) {
+        __block BOOL removeKey = YES;
+        for(int i=0;i<messages.count;i++){
+            
+            [[JCOsgiClient sharedClient] SubmitChatMessageForConversation:key message:messages[i] withEntity:nil success:^(id JSON) {
+                [JSMessageSoundEffect playMessageSentSound];
+                
+            } failure:^(NSError *err) {
+                removeKey = NO;
+                [self handleFailedMessageDispatch:key withMessage:messages[i]];
+            }];
+        }
+        //remove key from unsentQueue dictionary so long as there were no failures
+        if(removeKey){
+         //TODO: remove stuff
+        }
+    }];
+    //    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"unsentMessageQueue"];
 }
 
 - (void)createConversation:(NSString *)message
