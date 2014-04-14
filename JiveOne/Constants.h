@@ -64,6 +64,7 @@
 #define kSocketPresence @"presence"
 #define kSocketConversations @"conversations"
 #define kSocketPermanentRooms @"permanentrooms"
+#define kSocketVoicemail @"voicemail"
 
 #pragma mark - Debug Helpers
 #define kVoicemailURLOverRide @"NoDontUseAWSPlaceholderURL"

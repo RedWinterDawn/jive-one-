@@ -55,10 +55,13 @@
         [self handleLocalNotifications:pushNotif];
     }
     
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
     
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
 
+    
+    [self refreshTabBadges];
     
     if ([[JCAuthenticationManager sharedInstance] userAuthenticated]) {
         [self changeRootViewController:JCRootTabbarViewController];
@@ -91,7 +94,7 @@
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     //[[NotificationView sharedInstance] didChangeConnection:nil];
-    
+    [self refreshTabBadges];
     if ([[JCAuthenticationManager sharedInstance] userAuthenticated]) {
         [[JCAuthenticationManager sharedInstance] checkForTokenValidity];
         [self startSocket];
@@ -112,17 +115,6 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     [MagicalRecord cleanUp];
-}
-
-#pragma mark - Socket Notifications
-- (void)socketDidConnect:(NSNotification *)notification
-{
-    NSLog(@"APPDELEGATE - Socket is Connected");
-}
-
-- (void)socketDidFailToConnect:(NSNotification *)notification
-{
-    
 }
 
 - (void)startSocket
@@ -291,14 +283,149 @@
     NSLog(@"APPDELEGATE - handleEventsForBackgroundURLSession");
 }
 
-#pragma mark - Conversation
-- (void)didReceiveConversation:(NSNotification *)notification
+#pragma mark - Tabbar Badges
+
+- (void)incrementBadgeCountForConversation:(NSString *)conversationId
 {
+    NSMutableDictionary *_badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
+    if (!_badges) {
+        _badges = [[NSMutableDictionary alloc] init];
+    }
     
+    NSNumber *number = [_badges objectForKey:conversationId];
+    NSInteger count = [number integerValue];
+    count++;
+    
+    number = [NSNumber numberWithInteger:count];
+    [_badges setObject:number forKey:conversationId];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:[_badges copy] forKey:@"badges"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [self refreshTabBadges];
+}
+
+- (void)incrementBadgeCountForVoicemail
+{
+    NSMutableDictionary *_badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
+    if (!_badges) {
+        _badges = [[NSMutableDictionary alloc] init];
+    }
+    
+    NSNumber *number = [_badges objectForKey:@"voicemail"];
+    NSInteger count = [number integerValue];
+    count++;
+    
+    number = [NSNumber numberWithInteger:count];
+    [_badges setObject:number forKey:@"voicemail"];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:[_badges copy] forKey:@"badges"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [self refreshTabBadges];
+}
+
+- (void) decrementBadgeCountForConversation:(NSString *)conversationId
+{
+    NSMutableDictionary *_badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
+    if (!_badges) {
+        _badges = [[NSMutableDictionary alloc] init];
+    }
+    
+    NSNumber *number = [_badges objectForKey:conversationId];
+    NSInteger count = [number integerValue];
+    if (count > 0) {
+        count--;
+    }
+    
+    
+    number = [NSNumber numberWithInteger:count];
+    [_badges setObject:number forKey:conversationId];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:[_badges copy] forKey:@"badges"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [self refreshTabBadges];
+}
+
+- (void) decrementBadgeCountForVoicemail
+{
+    NSMutableDictionary *_badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
+    if (!_badges) {
+        _badges = [[NSMutableDictionary alloc] init];
+    }
+    
+    NSNumber *number = [_badges objectForKey:@"voicemail"];
+    NSInteger count = [number integerValue];
+    if (count > 0) {
+        count--;
+    }
+    
+    number = [NSNumber numberWithInteger:count];
+    [_badges setObject:number forKey:@"voicemail"];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:[_badges copy] forKey:@"badges"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [self refreshTabBadges];
+}
+
+- (void)clearBadgeCountForConversation:(NSString *)conversationId
+{
+    NSMutableDictionary *_badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
+    if (!_badges) {
+        _badges = [[NSMutableDictionary alloc] init];
+    }
+    
+    [_badges removeObjectForKey:conversationId];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:[_badges copy] forKey:@"badges"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [self refreshTabBadges];
+}
+
+- (void)clearBadgeCountForVoicemail
+{
+    NSMutableDictionary *_badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
+    if (!_badges) {
+        _badges = [[NSMutableDictionary alloc] init];
+    }
+    
+    NSNumber *number = [_badges objectForKey:@"voicemail"];
+    NSInteger count = [number integerValue];
+    count = 0;
+    
+    number = [NSNumber numberWithInteger:count];
+    [_badges setObject:number forKey:@"voicemail"];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:[_badges copy] forKey:@"badges"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [self refreshTabBadges];
+}
+
+- (void)refreshTabBadges
+{
     UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
-    [tabController.viewControllers[1] tabBarItem].badgeValue = @"30";
-    
-//    [[self.tabBarController.tabBar.items objectAtIndex:2] setBadgeValue:[NSString stringWithFormat:@"%d",[UIApplication sharedApplication].applicationIconBadgeNumber]];
+    if ([tabController isKindOfClass:[UITabBarController class]]) {
+        
+        NSMutableDictionary *_badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
+        if (_badges) {
+            
+            // load voice mail badge numbers
+            NSNumber *voicemailCount = [_badges objectForKey:@"voicemail"];
+            NSInteger count = voicemailCount.integerValue;
+            [tabController.viewControllers[1] tabBarItem].badgeValue = count == 0 ? nil : [voicemailCount stringValue];
+            
+            // load conversation counts
+            count = 0;
+            for (NSString* key in _badges) {
+                NSRange range = [key rangeOfString:@"conversations"];
+                if (range.location != NSNotFound) {
+                    count++;
+                }
+            }
+            
+            NSNumber *converationCount = [NSNumber numberWithInt:count];
+            [tabController.viewControllers[2] tabBarItem].badgeValue = count == 0 ? nil : [converationCount stringValue];
+            
+        }
+    }
 }
 
 #pragma mark - Reachability
@@ -334,8 +461,8 @@
         
         [self.window setRootViewController:tabVC];
         
-        [[NotificationView sharedInstance] showPanelInView:tabVC.view];
-        [[NotificationView sharedInstance] didChangeConnection:nil];
+        //[[NotificationView sharedInstance] showPanelInView:tabVC.view];
+        //[[NotificationView sharedInstance] didChangeConnection:nil];
     }
     else if (type == JCRootLoginViewController)
     {
