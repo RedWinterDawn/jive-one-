@@ -22,6 +22,7 @@
 @property (strong, nonatomic) NSString* pipedTokens;
 @property (strong, nonatomic) NSString *sessionToken;
 @property (strong, nonatomic) NSString *deviceToken;//used for sending a push notification to restore the session if lost
+@property (strong, nonatomic) NSTimer *timer;
 
 @end
 
@@ -37,6 +38,7 @@
     
     return sharedObject;
 }
+
 
 - (void)incrementBadgeCountForConversation:(NSString *)conversationId
 {
@@ -57,7 +59,9 @@
     
     JCAppDelegate *delegate = (JCAppDelegate*)[[UIApplication sharedApplication] delegate];
     UITabBarController *tabController = (UITabBarController *)delegate.window.rootViewController;
-    [tabController.viewControllers[1] tabBarItem].badgeValue = count == 0 ? nil : [number stringValue];
+    if ([tabController isKindOfClass:[UITabBarController class]]) {
+        [tabController.viewControllers[1] tabBarItem].badgeValue = count == 0 ? nil : [number stringValue];
+    }
 }
 
 - (void)incrementBadgeCountForVoicemail
@@ -79,8 +83,9 @@
     
     JCAppDelegate *delegate = (JCAppDelegate*)[[UIApplication sharedApplication] delegate];
     UITabBarController *tabController = (UITabBarController *)delegate.window.rootViewController;
-    [tabController.viewControllers[1] tabBarItem].badgeValue = count == 0 ? nil : [number stringValue];
-    
+    if ([tabController isKindOfClass:[UITabBarController class]]) {
+        [tabController.viewControllers[1] tabBarItem].badgeValue = count == 0 ? nil : [number stringValue];
+    }
 }
 
 - (void) decrementBadgeCountForConversation:(NSString *)conversationId
@@ -105,7 +110,9 @@
     
     JCAppDelegate *delegate = (JCAppDelegate*)[[UIApplication sharedApplication] delegate];
     UITabBarController *tabController = (UITabBarController *)delegate.window.rootViewController;
-    [tabController.viewControllers[1] tabBarItem].badgeValue = count == 0 ? nil : [number stringValue];
+    if ([tabController isKindOfClass:[UITabBarController class]]) {
+        [tabController.viewControllers[1] tabBarItem].badgeValue = count == 0 ? nil : [number stringValue];
+    }
 }
 
 - (void) decrementBadgeCountForVoicemail
@@ -129,7 +136,9 @@
     
     JCAppDelegate *delegate = (JCAppDelegate*)[[UIApplication sharedApplication] delegate];
     UITabBarController *tabController = (UITabBarController *)delegate.window.rootViewController;
-    [tabController.viewControllers[1] tabBarItem].badgeValue = count == 0 ? nil : [number stringValue];
+    if ([tabController isKindOfClass:[UITabBarController class]]) {
+        [tabController.viewControllers[1] tabBarItem].badgeValue = count == 0 ? nil : [number stringValue];
+    }
 }
 
 - (void)clearBadgeCountForVoicemail
@@ -151,7 +160,9 @@
     
     JCAppDelegate *delegate = (JCAppDelegate*)[[UIApplication sharedApplication] delegate];
     UITabBarController *tabController = (UITabBarController *)delegate.window.rootViewController;
-    [tabController.viewControllers[1] tabBarItem].badgeValue = count == 0 ? nil : [number stringValue];
+    if ([tabController isKindOfClass:[UITabBarController class]]) {
+        [tabController.viewControllers[1] tabBarItem].badgeValue = count == 0 ? nil : [number stringValue];
+    }
 }
 
 /*
@@ -163,6 +174,10 @@
     [self cleanup];
     [[JCOsgiClient sharedClient] RequestSocketSession:^(id JSON) {
         
+        if (_timer) {
+            [_timer invalidate];
+        }
+        
         // First, get our current auth token
         KeychainItemWrapper* _keychainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
         NSString* authToken = [_keychainWrapper objectForKey:(__bridge id)(kSecAttrAccount)];
@@ -173,7 +188,7 @@
         // Retrive session token and pipe it together with our auth token
         self.sessionToken = [NSString stringWithFormat:@"%@",[response objectForKey:@"token"]];
         self.pipedTokens = [NSString stringWithFormat:@"%@|%@", authToken, self.sessionToken];
-        
+         
         // Create dictionaries that will be converted to JSON objects to be posted to the socket.
         self.cmd_start = [NSDictionary dictionaryWithObjectsAndKeys:@"start", @"cmd", authToken, @"authToken", self.sessionToken, @"sessionToken", nil];
         self.cmd_poll  = [NSDictionary dictionaryWithObjectsAndKeys:@"poll", @"cmd", authToken, @"authToken", self.sessionToken, @"sessionToken", nil];
@@ -200,6 +215,12 @@
     } failure:^(NSError *err) {
         NSLog(@"Requestion Session For Socket : Failed");
         [[NSNotificationCenter defaultCenter] postNotificationName:@"com.jiveone.socketNotConnected" object:nil];
+        
+        // if we fail to get a session, then try again in 15 seconds
+        if (![_timer isValid]) {
+            _timer = [NSTimer scheduledTimerWithTimeInterval:15.0 target:self selector:@selector(elapsedTime:) userInfo:nil repeats:YES];
+        }
+        
     }];
 }
 
@@ -301,6 +322,9 @@
     if (code != 200) {
         [self reconnect];
     }
+    else {
+        [_timer invalidate];
+    }
 }
 
 - (void)cleanup
@@ -375,7 +399,11 @@
     }];
 }
 
-
+#pragma mark - NSTimer
+- (void)elapsedTime:(NSNotification *)notification
+{
+    [self reconnect];
+}
 
 
 @end
