@@ -449,6 +449,20 @@
            [JSMessageSoundEffect playMessageSentSound];
         } failure:^(NSError *err) {
             NSLog(@"%@", err);
+            //alert the user that message will be sent when connectivity is restored
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Message not sent" message:@"Messages will be sent when connectivity is restored" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+            //build queue for sending unsent messages
+            NSArray *unsentMessages = [[NSUserDefaults standardUserDefaults] objectForKey:@"unsentMessageQueue"];
+            if(!unsentMessages){
+                unsentMessages = [[NSMutableArray alloc] init];
+            }
+            NSMutableArray *unsentMessagesMutable = [[NSMutableArray alloc] initWithArray:unsentMessages];
+            [unsentMessagesMutable addObject:message];
+            
+            //save queue to user defaults
+            [[NSUserDefaults standardUserDefaults] setObject:unsentMessagesMutable forKey:@"unsentMessageQueue"];
+            
         }];
         
         //[self cleanup];

@@ -50,13 +50,11 @@ If the real object:
 
 For example, an alarm clock program which causes a bell to ring at a certain time might get the current time from the outside world. To test this, the test must wait until the alarm time to know whether it has rung the bell correctly. If a mock object is used in place of the real object, it can be programmed to provide the bell-ringing time (whether it is actually that time or not) so that the alarm clock program can be tested in isolation.
 
-==========
-Some useful links:
 
-Understand blocks
-http://code.tutsplus.com/tutorials/understanding-objective-c-blocks--mobile-14319
 
 How to send a push notification through Parse web service
+==========
+```
 curl -X POST  -H "X-Parse-Application-Id: pF8x8MNin5QJY3EVyXvQF21PBasJxAmoxA5eo16B"  
 -H "X-Parse-REST-API-Key: KKGQt7I9D5mR1HlGn4fxwx8FbxH9LWfJ5iKGcqg6" 
 -H "Content-Type: application/json"  
@@ -64,6 +62,13 @@ curl -X POST  -H "X-Parse-Application-Id: pF8x8MNin5QJY3EVyXvQF21PBasJxAmoxA5eo1
 	"where": 
 		{"deviceToken": "9f4477a2408056e340cfdc0eaf9da40bd24639595e841f43fda28676502a51eb"}, 
 	"data": 
-		{"alert": "If you got this, tell Daniel"} 
+		{ "message" : "silent remote", "content-available" : "1", "pushCode" : "1" }
 	}' 
 https://api.parse.com/1/push
+```
+
+Some useful links:
+==========
+
+Understand blocks
+http://code.tutsplus.com/tutorials/understanding-objective-c-blocks--mobile-14319
