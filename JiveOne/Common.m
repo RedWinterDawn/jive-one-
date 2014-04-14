@@ -7,6 +7,7 @@
 //
 
 #import "Common.h"
+#import "TRVSMonitor.h"
 
 @implementation Common
 
@@ -201,6 +202,54 @@
     return decodedString;
 }
 
+#pragma mark - Telephony Utils
++ (BOOL) IsConnectionFast
+{
+//    TRVSMonitor *monitor = [TRVSMonitor monitor];
+    CTTelephonyNetworkInfo *telephonyInfo = [CTTelephonyNetworkInfo new];
+    NSLog(@"Current Radio Access Technology: %@", telephonyInfo.currentRadioAccessTechnology);
+    
+//    [NSNotificationCenter.defaultCenter addObserverForName:CTRadioAccessTechnologyDidChangeNotification
+//                                                    object:nil
+//                                                     queue:nil
+//                                                usingBlock:^(NSNotification *note)
+//     {
+//         NSLog(@"New Radio Access Technology: %@", telephonyInfo.currentRadioAccessTechnology);
+//         
+//     }];
+    
+//    [monitor waitWithTimeout:10];
+    
+    return [self isFast:telephonyInfo.currentRadioAccessTechnology];
+}
+
++ (BOOL)isFast:(NSString*)radioAccessTechnology {
+    if ([radioAccessTechnology isEqualToString:CTRadioAccessTechnologyGPRS]) {
+        return NO;
+    } else if ([radioAccessTechnology isEqualToString:CTRadioAccessTechnologyEdge]) {
+        return NO;
+    } else if ([radioAccessTechnology isEqualToString:CTRadioAccessTechnologyWCDMA]) {
+        return YES;
+    } else if ([radioAccessTechnology isEqualToString:CTRadioAccessTechnologyHSDPA]) {
+        return YES;
+    } else if ([radioAccessTechnology isEqualToString:CTRadioAccessTechnologyHSUPA]) {
+        return YES;
+    } else if ([radioAccessTechnology isEqualToString:CTRadioAccessTechnologyCDMA1x]) {
+        return YES;
+    } else if ([radioAccessTechnology isEqualToString:CTRadioAccessTechnologyCDMAEVDORev0]) {
+        return YES;
+    } else if ([radioAccessTechnology isEqualToString:CTRadioAccessTechnologyCDMAEVDORevA]) {
+        return YES;
+    } else if ([radioAccessTechnology isEqualToString:CTRadioAccessTechnologyCDMAEVDORevB]) {
+        return YES;
+    } else if ([radioAccessTechnology isEqualToString:CTRadioAccessTechnologyeHRPD]) {
+        return YES;
+    } else if ([radioAccessTechnology isEqualToString:CTRadioAccessTechnologyLTE]) {
+        return YES;
+    }
+    
+    return YES;
+}
 
 
 @end

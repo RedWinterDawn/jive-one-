@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreTelephony/CTTelephonyNetworkInfo.h>
+
 
 #define D_MINUTE	60
 #define D_HOUR		3600
@@ -15,6 +17,7 @@
 #define D_YEAR		31556926
 
 @interface Common : NSObject
+
 
 +(NSString *) shortDateFromTimestamp:(NSNumber *)timestamp;
 +(NSString *) longDateFromTimestamp:(NSNumber *)timestamp;
@@ -42,5 +45,8 @@
 
 + (NSString*)encodeStringToBase64:(NSString*)plainString;
 + (NSString*)decodeBase64ToString:(NSString*)base64String;
+
+#pragma mark - Telephony Utils
++ (BOOL) IsConnectionFast;
 
 @end
