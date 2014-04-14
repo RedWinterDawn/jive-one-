@@ -20,11 +20,6 @@
 
 - (void)closeSocket;
 
-#pragma mark - Badge Updates
-- (void)incrementBadgeCountForConversation:(NSString *)conversationId;
-- (void)incrementBadgeCountForVoicemail;
-- (void)decrementBadgeCountForConversation:(NSString *)conversationId;
-- (void)decrementBadgeCountForVoicemail;
-- (void)clearBadgeCountForVoicemail;
+
 
 @end

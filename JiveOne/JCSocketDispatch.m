@@ -40,130 +40,7 @@
 }
 
 
-- (void)incrementBadgeCountForConversation:(NSString *)conversationId
-{
-    _badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
-    if (!_badges) {
-        _badges = [[NSMutableDictionary alloc] init];
-    }
-    
-    NSNumber *number = [_badges objectForKey:conversationId];
-    NSInteger count = [number integerValue];
-    count++;
-    
-    number = [NSNumber numberWithInteger:count];
-    [_badges setObject:number forKey:conversationId];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:[_badges copy] forKey:@"badges"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    JCAppDelegate *delegate = (JCAppDelegate*)[[UIApplication sharedApplication] delegate];
-    UITabBarController *tabController = (UITabBarController *)delegate.window.rootViewController;
-    if ([tabController isKindOfClass:[UITabBarController class]]) {
-        [tabController.viewControllers[1] tabBarItem].badgeValue = count == 0 ? nil : [number stringValue];
-    }
-}
 
-- (void)incrementBadgeCountForVoicemail
-{
-    _badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
-    if (!_badges) {
-        _badges = [[NSMutableDictionary alloc] init];
-    }
-    
-    NSNumber *number = [_badges objectForKey:@"voicemail"];
-    NSInteger count = [number integerValue];
-    count++;
-    
-    number = [NSNumber numberWithInteger:count];
-    [_badges setObject:number forKey:@"voicemail"];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:[_badges copy] forKey:@"badges"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    JCAppDelegate *delegate = (JCAppDelegate*)[[UIApplication sharedApplication] delegate];
-    UITabBarController *tabController = (UITabBarController *)delegate.window.rootViewController;
-    if ([tabController isKindOfClass:[UITabBarController class]]) {
-        [tabController.viewControllers[1] tabBarItem].badgeValue = count == 0 ? nil : [number stringValue];
-    }
-}
-
-- (void) decrementBadgeCountForConversation:(NSString *)conversationId
-{
-    _badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
-    if (!_badges) {
-        _badges = [[NSMutableDictionary alloc] init];
-    }
-    
-    NSNumber *number = [_badges objectForKey:conversationId];
-    NSInteger count = [number integerValue];
-    if (count > 0) {
-        count--;
-    }
-    
-    
-    number = [NSNumber numberWithInteger:count];
-    [_badges setObject:number forKey:conversationId];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:[_badges copy] forKey:@"badges"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    JCAppDelegate *delegate = (JCAppDelegate*)[[UIApplication sharedApplication] delegate];
-    UITabBarController *tabController = (UITabBarController *)delegate.window.rootViewController;
-    if ([tabController isKindOfClass:[UITabBarController class]]) {
-        [tabController.viewControllers[1] tabBarItem].badgeValue = count == 0 ? nil : [number stringValue];
-    }
-}
-
-- (void) decrementBadgeCountForVoicemail
-{
-    _badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
-    if (!_badges) {
-        _badges = [[NSMutableDictionary alloc] init];
-    }
-    
-    NSNumber *number = [_badges objectForKey:@"voicemail"];
-    NSInteger count = [number integerValue];
-    if (count > 0) {
-        count--;
-    }
-    
-    number = [NSNumber numberWithInteger:count];
-    [_badges setObject:number forKey:@"voicemail"];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:[_badges copy] forKey:@"badges"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    JCAppDelegate *delegate = (JCAppDelegate*)[[UIApplication sharedApplication] delegate];
-    UITabBarController *tabController = (UITabBarController *)delegate.window.rootViewController;
-    if ([tabController isKindOfClass:[UITabBarController class]]) {
-        [tabController.viewControllers[1] tabBarItem].badgeValue = count == 0 ? nil : [number stringValue];
-    }
-}
-
-- (void)clearBadgeCountForVoicemail
-{
-    _badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
-    if (!_badges) {
-        _badges = [[NSMutableDictionary alloc] init];
-    }
-    
-    NSNumber *number = [_badges objectForKey:@"voicemail"];
-    NSInteger count = [number integerValue];
-    count = 0;
-    
-    number = [NSNumber numberWithInteger:count];
-    [_badges setObject:number forKey:@"voicemail"];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:[_badges copy] forKey:@"badges"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    JCAppDelegate *delegate = (JCAppDelegate*)[[UIApplication sharedApplication] delegate];
-    UITabBarController *tabController = (UITabBarController *)delegate.window.rootViewController;
-    if ([tabController isKindOfClass:[UITabBarController class]]) {
-        [tabController.viewControllers[1] tabBarItem].badgeValue = count == 0 ? nil : [number stringValue];
-    }
-}
 
 /*
      Request Session Posts information to the API. The returned values are used to stablish a connection to the socket.
@@ -345,31 +222,42 @@
     NSDictionary *body = [[message objectForKey:@"data"] objectForKey:@"body"];
     
     if ([type isEqualToString:kSocketConversations] || [type isEqualToString:kSocketPermanentRooms]) {
-        NSString *conversationId = [body objectForKey:@"conversation"];
         
-        // regardless of having a conversation for this entry or not we need to save the entry.
-        ConversationEntry *entry = [ConversationEntry addConversationEntry:body];
-        
+        NSString *conversationIdForEntry = [body objectForKey:@"conversation"];
+        NSString *conversationId = body[@"id"];
         // Check if we have a conversation for this entry
-        NSArray *conversations = [Conversation MR_findByAttribute:@"conversationId" withValue:conversationId];
+        NSArray *conversations = [Conversation MR_findByAttribute:@"conversationId" withValue:conversationIdForEntry ? conversationIdForEntry : conversationId];
         
-        // if we dont' have, then fetch it
-        if (conversations.count == 0) {
-            [self RetrieveNewConversation:conversationId];
-        }
-        else {
-            [self incrementBadgeCountForConversation:conversationId];
-            [[NSNotificationCenter defaultCenter] postNotificationName:conversationId object:entry];
+        // if conversationId is nil...it's not a conversationEntry.
+        if (conversationIdForEntry) {
+            // regardless of having a conversation for this entry or not we need to save the entry.
+            ConversationEntry *entry = [ConversationEntry addConversationEntry:body];
+            // increment badge number for conversation ID
+            [(JCAppDelegate *)[UIApplication sharedApplication].delegate incrementBadgeCountForConversation:conversationIdForEntry];
+            // notify of new entry
+            [[NSNotificationCenter defaultCenter] postNotificationName:conversationIdForEntry object:entry];
             [[NSNotificationCenter defaultCenter] postNotificationName:kNewConversation object:conversations[0]];
         }
-        
+        else {
+            // this is probably a new conversation
+            conversationId = body[@"id"];
+            // if we dont' have, then fetch it
+            if (conversations.count == 0) {
+                [self RetrieveNewConversation:conversationId];
+            }
+//            else {
+//                [[NSNotificationCenter defaultCenter] postNotificationName:kNewConversation object:conversations[0]];
+//            }
+        }
         
     }
     else if ([type isEqualToString:kSocketPresence])
     {
         Presence * presence = [[JCOsgiClient sharedClient] addPresence:body];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kPresenceChanged object:presence];
-        [self incrementBadgeCountForVoicemail];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kPresenceChanged object:presence];        
+    }
+    else if ([type isEqualToString:kSocketVoicemail]) {
+        [(JCAppDelegate *)[UIApplication sharedApplication].delegate incrementBadgeCountForVoicemail];
     }
 }
 

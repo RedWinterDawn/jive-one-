@@ -1,4 +1,4 @@
-//
+ //
 //  JCMessagesViewController.m
 //  JiveOne
 //
@@ -15,6 +15,7 @@
 #import "JCContactModel.h"
 #import "JSMessage.h"
 #import "Common.h"
+#import "JCAppDelegate.h"
 
 @interface JCMessagesViewController ()
 {
@@ -214,37 +215,48 @@
 - (void)setupDataSources
 {
     if (_conversationId) {
+        
+        // clear badges for this conversation
+        [(JCAppDelegate *)[UIApplication sharedApplication].delegate clearBadgeCountForConversation:_conversationId];
             
         // datasource for avatars
-        Conversation *conversation = [Conversation MR_findFirstByAttribute:@"conversationId" withValue:_conversationId];
-        if (conversation) {
-            if(!self.avatars){
-                self.avatars = [NSMutableDictionary new];
-            }
-            
-            NSArray *conversationMembers = (NSArray *)conversation.entities;
-            
-            if ([conversation.isGroup boolValue]) {
-                title = conversation.name;
-            }
-            
-            
-            for (NSString* entityId in conversationMembers) {
+        if (!self.avatars){
+            Conversation *conversation = [Conversation MR_findFirstByAttribute:@"conversationId" withValue:_conversationId];
+            if (conversation) {
+                if(!self.avatars){
+                    self.avatars = [NSMutableDictionary new];
+                }
                 
-                ClientEntities *person = [ClientEntities MR_findFirstByAttribute:@"entityId" withValue:entityId];
-                if (person) {
-                    [self.avatars setObject:person.picture forKey:person.firstLastName];
+                NSArray *conversationMembers = (NSArray *)conversation.entities;
+                
+                if ([conversation.isGroup boolValue]) {
+                    title = conversation.name;
+                }
+                
+                
+                for (NSString* entityId in conversationMembers) {
                     
-                    if (person != me && ![conversation.isGroup boolValue]) {
-                        title = person.firstLastName;
-                        subtitle = person.email;
+                    ClientEntities *person = [ClientEntities MR_findFirstByAttribute:@"entityId" withValue:entityId];
+                    if (person) {
+                        [self.avatars setObject:person.picture forKey:person.firstLastName];
+                        
+                        if (person != me && ![conversation.isGroup boolValue]) {
+                            title = person.firstLastName;
+                            subtitle = person.email;
+                        }
                     }
                 }
             }
         }
         
+        
+        
         // datasouce for conversation entries
-        self.messages = [NSMutableArray array];
+        if (!self.messages) {
+            self.messages = [NSMutableArray array];
+        }
+        
+        [self.messages removeAllObjects];
         
         NSArray *entries = [ConversationEntry RetrieveConversationEntryById:_conversationId];
         
@@ -261,20 +273,23 @@
         }
     }
     
-    // datasource for contactPicker
-    NSArray *array = [ClientEntities MR_findAll];
     
-    NSMutableArray *contacts = [[NSMutableArray alloc] initWithCapacity:array.count];
-    for (ClientEntities *contact in array)
-    {
-        JCContactModel *model = [[JCContactModel alloc] init];
-        model.contactTitle = contact.firstLastName;
-        model.contactSubtitle = contact.email;
-        model.person = contact;
-        [contacts addObject:model];
+    
+    // datasource for contactPicker
+    if (!self.contacts) {
+        NSArray *array = [ClientEntities MR_findAll];
+        
+        NSMutableArray *contacts = [[NSMutableArray alloc] initWithCapacity:array.count];
+        for (ClientEntities *contact in array)
+        {
+            JCContactModel *model = [[JCContactModel alloc] init];
+            model.contactTitle = contact.firstLastName;
+            model.contactSubtitle = contact.email;
+            model.person = contact;
+            [contacts addObject:model];
+        }
+        self.contacts = contacts;
     }
-    self.contacts = contacts;
-
 }
 
 
@@ -423,7 +438,10 @@
     if (_conversationId) {
         
         [self setupDataSources];
-        [self finishSend];
+        [self.tableView reloadData];
+        [self scrollToBottomAnimated:YES];
+        
+        [(JCAppDelegate *)[UIApplication sharedApplication].delegate clearBadgeCountForConversation:_conversationId];
         
         ConversationEntry *entry = (ConversationEntry *)notification.object;
         if (![entry.entityId isEqualToString:me.entityId]) {
@@ -438,7 +456,6 @@
     
     [self hideContactPicker];
     NSString* entity = me.urn;
-    
     
     
     // if conversation exists, then create entry for that conversation
@@ -483,6 +500,8 @@
     [entityArray addObject:me.entityId];
     
     [[JCOsgiClient sharedClient] SubmitConversationWithName:groupName forEntities:entityArray creator:me.entityId  isGroupConversation:isGroup success:^(id JSON) {
+        
+        NSLog(@"%@", JSON);
         
         // if conversation creation was successful, then subscribe for notifications to that conversationId
         _conversationId = JSON[@"id"];
