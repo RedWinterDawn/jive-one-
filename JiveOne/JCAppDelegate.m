@@ -31,12 +31,6 @@
 #endif
     
     [MagicalRecord setupCoreDataStackWithStoreNamed:@"MyJiveDatabase.sqlite"];
-//    [self startSocket];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(socketDidConnect:) name:@"com.jiveone.socketConnected" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(socketDidFailToConnect:) name:@"com.jiveone.socketNotConnected" object:nil];
-    
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveConversation:) name:kNewConversation object:nil];
     
     //Register for PushNotifications
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert |
@@ -49,22 +43,20 @@
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName,nil]];
     
+    //Start monitor for Reachability
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
-
-    // add notification view to parent navigation controller
     
-    //SETUP PARSE FRAMEWORK
+    //Setup Parse Framework
     [Parse setApplicationId:@"pF8x8MNin5QJY3EVyXvQF21PBasJxAmoxA5eo16B" clientKey:@"UQEeTqrFUkvglJUHwEiSItGaAttQvAUyExeZ0Iq9"];
     
-    //only needed for when app is launched from push notification and app was not running in background
+    //Only needed for when app is launched from push notification and app was not running in background
     NSDictionary *pushNotif = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
     if(pushNotif){
         [self handleLocalNotifications:pushNotif];
     }
     
-    
-    
         //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
+    
     if ([[JCAuthenticationManager sharedInstance] userAuthenticated]) {
         [self changeRootViewController:JCRootTabbarViewController];
         [[JCAuthenticationManager sharedInstance] checkForTokenValidity];

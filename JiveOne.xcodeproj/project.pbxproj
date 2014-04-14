@@ -88,6 +88,7 @@
 		272F65FF18D3A7A4009BD7B3 /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 272F65FC18D3A7A4009BD7B3 /* HPGrowingTextView.m */; };
 		272F660018D3A7A4009BD7B3 /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 272F65FE18D3A7A4009BD7B3 /* HPTextViewInternal.m */; };
 		2736698218BD441D0069B4B3 /* JCPersonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2736698118BD441D0069B4B3 /* JCPersonCell.m */; };
+		2741EB8118FC4C0200F2FE64 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2741EB8018FC4C0200F2FE64 /* CoreTelephony.framework */; };
 		27426AC918B5303D00011635 /* JCOsgiClientTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 27426AC818B5303D00011635 /* JCOsgiClientTest.m */; };
 		274493AE18D0D538002744CB /* JCConversationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 274493AD18D0D538002744CB /* JCConversationTableViewCell.m */; };
 		274493B018D0DA9B002744CB /* JCConversationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 274493AF18D0DA9B002744CB /* JCConversationCell.xib */; };
@@ -327,6 +328,7 @@
 		272F65FE18D3A7A4009BD7B3 /* HPTextViewInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPTextViewInternal.m; sourceTree = "<group>"; };
 		2736698018BD441D0069B4B3 /* JCPersonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPersonCell.h; sourceTree = "<group>"; };
 		2736698118BD441D0069B4B3 /* JCPersonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPersonCell.m; sourceTree = "<group>"; };
+		2741EB8018FC4C0200F2FE64 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		27426AC818B5303D00011635 /* JCOsgiClientTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCOsgiClientTest.m; sourceTree = "<group>"; };
 		274493AC18D0D538002744CB /* JCConversationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCConversationTableViewCell.h; sourceTree = "<group>"; };
 		274493AD18D0D538002744CB /* JCConversationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCConversationTableViewCell.m; sourceTree = "<group>"; };
@@ -496,6 +498,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2741EB8118FC4C0200F2FE64 /* CoreTelephony.framework in Frameworks */,
 				DDCE1E9718F3565F003A6615 /* SystemConfiguration.framework in Frameworks */,
 				DDCE1E9518F35654003A6615 /* StoreKit.framework in Frameworks */,
 				DDCE1E9318F3564D003A6615 /* Security.framework in Frameworks */,
@@ -940,6 +943,7 @@
 		275F4A5018AD0FBC00D2F069 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2741EB8018FC4C0200F2FE64 /* CoreTelephony.framework */,
 				2700981C18F46C5600B6BC2F /* Parse.framework */,
 				DDCE1E9818F35749003A6615 /* Social.framework */,
 				DDCE1E9618F3565F003A6615 /* SystemConfiguration.framework */,
