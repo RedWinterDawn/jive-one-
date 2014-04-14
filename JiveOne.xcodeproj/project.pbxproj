@@ -103,7 +103,6 @@
 		275158FD18AD10BB00FD8D3F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 275158F818AD10BA00FD8D3F /* Default.png */; };
 		275158FE18AD10BB00FD8D3F /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 275158F918AD10BB00FD8D3F /* Default@2x.png */; };
 		275158FF18AD10BB00FD8D3F /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 275158FA18AD10BB00FD8D3F /* Default-568h@2x.png */; };
-		2751590018AD10BB00FD8D3F /* avatar-orig.png in Resources */ = {isa = PBXBuildFile; fileRef = 275158FB18AD10BB00FD8D3F /* avatar-orig.png */; };
 		2751590618AD118D00FD8D3F /* JCStartLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751590518AD118D00FD8D3F /* JCStartLoginViewController.m */; };
 		2751590718AD118D00FD8D3F /* JCStartLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751590518AD118D00FD8D3F /* JCStartLoginViewController.m */; };
 		2751590B18AD16F300FD8D3F /* JCOsgiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751590A18AD16F300FD8D3F /* JCOsgiClient.m */; };
@@ -351,7 +350,6 @@
 		275158F818AD10BA00FD8D3F /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		275158F918AD10BB00FD8D3F /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		275158FA18AD10BB00FD8D3F /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		275158FB18AD10BB00FD8D3F /* avatar-orig.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatar-orig.png"; sourceTree = "<group>"; };
 		2751590218AD10E500FD8D3F /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		2751590418AD118D00FD8D3F /* JCStartLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCStartLoginViewController.h; sourceTree = "<group>"; };
 		2751590518AD118D00FD8D3F /* JCStartLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCStartLoginViewController.m; sourceTree = "<group>"; };
@@ -798,7 +796,6 @@
 				275158F818AD10BA00FD8D3F /* Default.png */,
 				275158F918AD10BB00FD8D3F /* Default@2x.png */,
 				275158FA18AD10BB00FD8D3F /* Default-568h@2x.png */,
-				275158FB18AD10BB00FD8D3F /* avatar-orig.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -1139,7 +1136,6 @@
 				2700989018F4714100B6BC2F /* bubble-classic-square-gray.png in Resources */,
 				2700989D18F4714100B6BC2F /* bubble-tailless@2x.png in Resources */,
 				270098C418F5EA9300B6BC2F /* nav-more@2x.png in Resources */,
-				2751590018AD10BB00FD8D3F /* avatar-orig.png in Resources */,
 				2700989118F4714100B6BC2F /* bubble-classic-square-gray@2x.png in Resources */,
 				91ADB9B118D8BD4200DF41A3 /* voicemail_speaker@2x.png in Resources */,
 				2700989218F4714100B6BC2F /* bubble-classic-square-selected.png in Resources */,
