@@ -9,8 +9,17 @@
 #import "JCLoginViewController.h"
 #import "JCAuthenticationManager.h"
 #import "JCAppDelegate.h"
+#import <CoreTelephony/CTTelephonyNetworkInfo.h>
+#import "Common.h"
+#import "JCOsgiClient.h"
+#import "Company.h"
+#import <MBProgressHUD.h>
 
 @interface JCLoginViewController ()
+{
+    BOOL fastConnection;
+    MBProgressHUD *hud;
+}
 
 @end
 
@@ -43,7 +52,7 @@
     NSString* boldFontName = @"Avenir-Black";
     
     _usernameTextField.backgroundColor = [UIColor whiteColor];
-    _usernameTextField.placeholder = @"Email Address";
+    _usernameTextField.placeholder =  NSLocalizedString(@"Email Address", nil);
     _usernameTextField.font = [UIFont fontWithName:fontName size:16.0f];
     _usernameTextField.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:0.7].CGColor;
     _usernameTextField.layer.borderWidth = 1.0f;
@@ -53,7 +62,7 @@
     _usernameTextField.leftView = leftView;
     
     _passwordTextField.backgroundColor = [UIColor whiteColor];
-    _passwordTextField.placeholder = @"Password";
+    _passwordTextField.placeholder =  NSLocalizedString(@"Password", nil);
     _passwordTextField.font = [UIFont fontWithName:fontName size:16.0f];
     _passwordTextField.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:0.7].CGColor;
     _passwordTextField.layer.borderWidth = 1.0f;
@@ -64,6 +73,7 @@
     
     _loginStatusLabel.font = [UIFont fontWithName:boldFontName size:16.0f];
     // Do any additional setup after loading the view.
+    fastConnection = [Common IsConnectionFast];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -93,13 +103,15 @@
 
 - (void)validateFields
 {
+    self.loginStatusLabel.text = @"";
     if([_usernameTextField.text length] != 0 && [_passwordTextField.text length] != 0)
     {
+        [self showHudWithTitle:@"One Moment Please" detail:@"Logging In"];
         [[JCAuthenticationManager sharedInstance] loginWithUsername:_usernameTextField.text password:_passwordTextField.text];
     }
     else
     {
-        [self alertStatus:@"Invalid Parameters" message:@"UserName/Password Cannot Be Empty"];
+        [self alertStatus:NSLocalizedString(@"Invalid Parameters", nil) message: NSLocalizedString(@"UserName/Password Cannot Be Empty", nil)];
     }
 }
 
@@ -113,24 +125,117 @@
 
 - (void)refreshAuthenticationCredentials:(NSNotification*)notification
 {
+    [self hideHud];
     _loginStatusLabel.text = NSLocalizedString(@"Invalid username/password", @"Invalid username/password");
     _loginStatusLabel.hidden = NO;
 }
 
 - (void)tokenValidityPassed:(NSNotification*)notification
 {
+    [self showHudWithTitle:@"One Moment Please" detail:@"Preparing for first use"];
+    [self fetchEntities];
+}
+
+- (void)fetchEntities
+{
+    [[JCOsgiClient sharedClient] RetrieveClientEntitites:^(id JSON) {
+        if (fastConnection) {
+            [self fetchPresence];
+        }
+        else {
+            [self fetchCompany];
+        }
+    } failure:^(NSError *err) {
+        [self errorInitializingApp];
+    }];
+}
+
+- (void)fetchPresence
+{
+    [[JCOsgiClient sharedClient] RetrieveEntitiesPresence:^(BOOL updated) {
+        [self fetchConversations];
+    } failure:^(NSError *err) {
+        [self errorInitializingApp];
+    }];
+}
+
+- (void)fetchConversations
+{
+    [[JCOsgiClient sharedClient] RetrieveConversations:^(id JSON) {
+        [self fetchCompany];
+    } failure:^(NSError *err) {
+        [self errorInitializingApp];
+    }];
+}
+
+- (void)fetchCompany
+{
+    NSString* company = [[JCOmniPresence sharedInstance] me].resourceGroupName;
+    [[JCOsgiClient sharedClient] RetrieveMyCompany:company:^(id JSON) {
+        
+        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
+        Company *company = [Company MR_createInContext:localContext];
+        company.lastModified = JSON[@"lastModified"];
+        company.pbxId = JSON[@"pbxId"];
+        company.timezone = JSON[@"timezone"];
+        company.name = JSON[@"name"];
+        company.urn = JSON[@"urn"];
+        company.companyId = JSON[@"id"];
+        
+        //[[JCOmniPresence sharedInstance] me].entityCompany = company;
+        NSArray *clientEntities = [ClientEntities MR_findAll];
+        for (ClientEntities *entity in clientEntities) {
+            entity.entityCompany = company;
+        }
+        
+        [localContext MR_saveToPersistentStoreAndWait];
+        
+        [self hideHud];
+        [self goToApplication];
+        
+    } failure:^(NSError *err) {
+        NSLog(@"%@", err);
+        [self errorInitializingApp];
+    }];
+    
+}
+
+- (void)goToApplication
+{
     JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
     [delegate changeRootViewController:JCRootTabbarViewController];
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (void)errorInitializingApp
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    [self hideHud];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Server Unavailable", nil) message: NSLocalizedString(@"We could not connect to the server at this time. Please try again", nil) delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+    
+    [alert show];
+    [[JCAuthenticationManager sharedInstance] logout:self];
 }
-*/
+
+#pragma mark - HUD Operations
+- (void)showHudWithTitle:(NSString*)title detail:(NSString*)detail
+{
+    if (!hud) {
+        hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeIndeterminate;
+    }
+    
+    hud.labelText = title;
+    hud.detailsLabelText = detail;
+    [hud show:YES];
+}
+
+- (void)hideHud
+{
+    if (hud) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [hud removeFromSuperview];
+        hud = nil;
+    }
+}
+
 
 @end

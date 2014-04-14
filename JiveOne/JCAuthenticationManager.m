@@ -100,8 +100,6 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     [[NSUserDefaults standardUserDefaults] setObject:refresh_token forKey:@"refreshToken"];
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kUserAuthenticated];
     [[NSUserDefaults standardUserDefaults] synchronize];
-
-    [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenSucceeded object:nil];
 }
 
 - (NSString *)getAuthenticationToken
@@ -112,8 +110,12 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 - (void)checkForTokenValidity
 {
+    JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
+    
     [[JCOsgiClient sharedClient] RetrieveMyEntitity:^(id JSON, id operation) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenSucceeded object:JSON];
+        if (![delegate.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenSucceeded object:JSON];
+        }
     } failure:^(NSError *err, id operation) {
         NSLog(@"%@", err);
         AFHTTPRequestOperation *AFOperation = (AFHTTPRequestOperation *)operation;
@@ -126,7 +128,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
             }
             else
             {
-                JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
+                
                 if (![delegate.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
                     //                [UIView transitionWithView:delegate.window
                     //                                  duration:0.5
