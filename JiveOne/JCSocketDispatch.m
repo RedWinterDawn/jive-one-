@@ -236,7 +236,11 @@
             [(JCAppDelegate *)[UIApplication sharedApplication].delegate incrementBadgeCountForConversation:conversationIdForEntry];
             // notify of new entry
             [[NSNotificationCenter defaultCenter] postNotificationName:conversationIdForEntry object:entry];
-            [[NSNotificationCenter defaultCenter] postNotificationName:kNewConversation object:conversations[0]];
+            
+            //
+            if (conversations.count != 0) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kNewConversation object:conversations[0]];
+            }
         }
         else {
             // this is probably a new conversation
@@ -245,9 +249,6 @@
             if (conversations.count == 0) {
                 [self RetrieveNewConversation:conversationId];
             }
-//            else {
-//                [[NSNotificationCenter defaultCenter] postNotificationName:kNewConversation object:conversations[0]];
-//            }
         }
         
     }
