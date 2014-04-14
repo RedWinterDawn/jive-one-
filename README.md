@@ -17,6 +17,22 @@ ALWAYS use Jive.xcworkspace, not Jive.xcodeproj
 One feature that was implemented and then hidden was to display local contacts (on the phone in the address book app). This was show via segment control on the "directory" tab. The segmented control, however, was hidden and a search bar is now in its place. Segmented control can be seen by going into the storyboard and un-hiding it. 
 
 
+`
+Install Test flight
+`
+To install test flight app on your device you will need your Device added to the testflight group and to the develpoer povisioning profile
+Open XCode
+Pull latest version of the app from github
+```
+git clone https://github.com/jive/iOS-JiveOne.git
+```
+
+Then plug in the device directly into your computer.
+Build the app using your device as the build target.
+Then go to testflightapp.com on your device through safari.
+Login and launch the app.
+Install provisioning profile.
+
 TESTING AND USING OCMOCK
 ==============
 Check out: http://en.wikipedia.org/wiki/Mock_object for a detailed explination of Mock objects and why we use them.
@@ -33,14 +49,6 @@ If the real object:
 * would have to include information and methods exclusively for testing purposes (and not for its actual task).
 
 For example, an alarm clock program which causes a bell to ring at a certain time might get the current time from the outside world. To test this, the test must wait until the alarm time to know whether it has rung the bell correctly. If a mock object is used in place of the real object, it can be programmed to provide the bell-ringing time (whether it is actually that time or not) so that the alarm clock program can be tested in isolation.
-
-
-
-
-
-
-
-
 
 ==========
 Some useful links:
