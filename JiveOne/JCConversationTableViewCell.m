@@ -14,19 +14,7 @@
 
 @implementation JCConversationTableViewCell
 
-//NSString *const kCustomCellConversationTypeKeyPath = @"lastModified";
-//NSString *const kCustomCellPersonPresenceTypeKeyPath = @"entityPresence";
-
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        NSArray *bundleArray = [[NSBundle mainBundle] loadNibNamed:@"JCPersonCell" owner:self options:nil];
-        self = bundleArray[0];
-        [self setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    }
-    return self;
-}
+# define PRESENCE_POSITION CGRectMake(63, 9, 16, 16)
 
 -(void)setConversation:(Conversation *)conversation
 {
@@ -67,14 +55,15 @@
             else {
                 self.conversationTitle.text = person.firstLastName;
                 
-                // if it's a person we want to set presence;
+                 // if it's a person we want to set presence;
+                
                 self.presenceView.presenceType = (JCPresenceType)[person.entityPresence.interactions[@"chat"][@"code"] integerValue];
+                
                 self.presenceView.hidden = NO;
                 
                 UIImageView *singleImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
                 [singleImage setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];
                 [self.conversationThumbnailView addSubview:singleImage];
-                //[self.conversationImage setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];
             }
         }
         
@@ -117,17 +106,15 @@
 {
     if (self.presenceView.hidden) {
         self.presenceWidth.constant = .0f;
-        self.presenceSpacing.constant = .0f;
         CGFloat current = self.titleWidth.constant;
-        current = current + 16.0f;
+        current = current + 24.0f;
         self.titleWidth.constant = current;
     }
     else
     {
         self.presenceWidth.constant = 16.0f;
-        self.presenceSpacing.constant = .0f;
         CGFloat current = self.titleWidth.constant;
-        current = current - 16.0f;
+        current = current - 24.0f;
         self.titleWidth.constant = current;
     }
 }
@@ -136,6 +123,7 @@
 {
     [super prepareForReuse];
     [[self.conversationThumbnailView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [self setNeedsDisplay];
     [self removeObservers];
 }
 

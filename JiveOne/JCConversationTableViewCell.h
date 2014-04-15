@@ -24,7 +24,6 @@
 
 #pragma mark - Cell UI Constraints
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *presenceWidth;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *presenceSpacing;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleWidth;
 
 @end
