@@ -36,6 +36,8 @@
 #pragma mark - Authentication Manager
 #define kAuthenticationFromTokenSucceeded @"keyauthenticationfortokensucceeded"
 #define kAuthenticationFromTokenFailed @"keyauthenticationfortokenfailed"
+#define kAuthenticationFromTokenFailedWithTimeout @"keyauthenticationfortokenfailedwithtimeout"
+
 
 #pragma mark - Notification Constants
 #define kWebViewDismissal @"keywebviewdismissal"

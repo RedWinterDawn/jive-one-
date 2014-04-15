@@ -56,8 +56,8 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     NSString *url_path = [NSString stringWithFormat:kOsgiAuthURL, kOAuthClientId, kURLSchemeCallback];
     NSURL *url = [NSURL URLWithString:url_path];
     
-    _username = username;
-    _password = password;
+    _username = [username stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];;
+    _password = [password stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];;
     
 #if DEBUG
     [NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
@@ -69,7 +69,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     }
     
     // start the timeout timer
-    webviewTimer = [NSTimer scheduledTimerWithTimeInterval:20.0 target:self selector:@selector(timerElapsed:) userInfo:nil repeats:NO];
+    webviewTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(timerElapsed:) userInfo:nil repeats:NO];
     
     webview.delegate = self;
     [webview loadRequest:[NSURLRequest requestWithURL:url]];
@@ -130,14 +130,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
             {
                 
                 if (![delegate.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
-                    //                [UIView transitionWithView:delegate.window
-                    //                                  duration:0.5
-                    //                                   options:UIViewAnimationOptionTransitionFlipFromLeft
-                    //                                animations:^{
                     [delegate changeRootViewController:JCRootLoginViewController];
-                    
-                    //                                }
-                    //                                completion:nil];
                 }
                 else {
                     [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenFailed object:nil];
@@ -291,6 +284,6 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 - (void)timerElapsed:(NSNotification *)notification
 {
     [webview stopLoading];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenFailed object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenFailedWithTimeout object:kAuthenticationFromTokenFailedWithTimeout];
 }
 @end

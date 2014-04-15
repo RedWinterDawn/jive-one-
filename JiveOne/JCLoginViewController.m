@@ -39,6 +39,7 @@
     [super viewDidLoad];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshAuthenticationCredentials:) name:kAuthenticationFromTokenFailed object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshAuthenticationCredentials:) name:kAuthenticationFromTokenFailedWithTimeout object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tokenValidityPassed:) name:kAuthenticationFromTokenSucceeded object:nil];
     
     _usernameTextField.returnKeyType = UIReturnKeyNext;
@@ -79,7 +80,9 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kAuthenticationFromTokenFailed object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAuthenticationFromTokenFailedWithTimeout object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kAuthenticationFromTokenSucceeded object:nil];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -126,8 +129,16 @@
 - (void)refreshAuthenticationCredentials:(NSNotification*)notification
 {
     [self hideHud];
-    _loginStatusLabel.text = NSLocalizedString(@"Invalid username/password", @"Invalid username/password");
-    _loginStatusLabel.hidden = NO;
+    
+    if (notification.object != nil && [kAuthenticationFromTokenFailedWithTimeout isEqualToString:(NSString *)notification.object]) {
+        UIAlertView *alertview = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Login Timeout", nil) message:NSLocalizedString(@"Login could not be completed at this time. Please try again later.", nil) delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [alertview show];
+    }
+    else {
+    
+        _loginStatusLabel.text = NSLocalizedString(@"Invalid username/password", @"Invalid username/password");
+        _loginStatusLabel.hidden = NO;
+    }
 }
 
 - (void)tokenValidityPassed:(NSNotification*)notification
