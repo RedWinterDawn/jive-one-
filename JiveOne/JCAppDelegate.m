@@ -67,6 +67,11 @@
     if ([[JCAuthenticationManager sharedInstance] userAuthenticated]) {
         [self changeRootViewController:JCRootTabbarViewController];
         [[JCAuthenticationManager sharedInstance] checkForTokenValidity];
+        [[JCOsgiClient sharedClient] RetrieveEntitiesPresence:^(BOOL updated) {
+            //do nothing;
+        } failure:^(NSError *err) {
+            //do nothing;
+        }];
     }
     else {
         [self changeRootViewController:JCRootLoginViewController];
@@ -88,7 +93,7 @@
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     
-    //[self stopSocket];
+    [self stopSocket];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -98,6 +103,11 @@
     [self refreshTabBadges];
     if ([[JCAuthenticationManager sharedInstance] userAuthenticated]) {
         [[JCAuthenticationManager sharedInstance] checkForTokenValidity];
+        [[JCOsgiClient sharedClient] RetrieveEntitiesPresence:^(BOOL updated) {
+            //do nothing;
+        } failure:^(NSError *err) {
+            //do nothing;
+        }];
         [self startSocket];
     }   
 }
@@ -425,21 +435,35 @@
             NSNumber *converationCount = [NSNumber numberWithInt:count];
             [tabController.viewControllers[2] tabBarItem].badgeValue = count == 0 ? nil : [converationCount stringValue];
             
-            [self setNotification];
+            if (converationCount != 0 || voicemailCount != 0) {
+                [self setNotification:voicemailCount.integerValue conversation:converationCount.integerValue];
+            }
         }
     }
 }
 
 #pragma mark - Local Notifications
-- (void)setNotification {
+- (void)setNotification:(NSInteger)voicemailCount conversation:(NSInteger)conversationCount {
     
     if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
+        
+        NSString *alertMessage = @"You have ";
+        
+        if (voicemailCount != 0 && conversationCount != 0) {
+            alertMessage  = [alertMessage stringByAppendingString:[NSString stringWithFormat:@"%i new voicemail(s) and %i new conversation(s).", voicemailCount, conversationCount]];
+        }
+        else if (voicemailCount != 0) {
+            alertMessage  = [alertMessage stringByAppendingString:[NSString stringWithFormat:@"%i new voicemail(s).", voicemailCount]];
+        }
+        else if (conversationCount != 0) {
+            alertMessage  = [alertMessage stringByAppendingString:[NSString stringWithFormat:@"%i new conversation(s).", voicemailCount]];
+        }
+        
         UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-        localNotification.fireDate = [NSDate date];
-        localNotification.alertBody = [NSString stringWithFormat:@"Alert Fired at %@", [NSDate date]];
+        localNotification.alertBody = alertMessage;
         localNotification.soundName = UILocalNotificationDefaultSoundName;
         localNotification.applicationIconBadgeNumber = 1;
-        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
     }
 }
 
