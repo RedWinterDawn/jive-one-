@@ -19,13 +19,18 @@
 #import <Parse/Parse.h>
 #import "TRVSMonitor.h"
 #import "JCMessagesViewController.h"
-
+#import "TestFlight.h"
 
 
 @implementation JCAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    
+    // start of your application:didFinishLaunchingWithOptions // ...
+    [TestFlight takeOff:@"a48098ef-e65e-40b9-8609-e995adc426ac"];
+    
 #if DEBUG
     [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelError];
     [[AFNetworkActivityLogger sharedLogger] startLogging];
