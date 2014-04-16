@@ -153,7 +153,7 @@
 		27C5F43F18BC1946005FCAFD /* JCVersionTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C5F43E18BC1946005FCAFD /* JCVersionTracker.m */; };
 		27E9A35818E0A17A0017B65D /* Presence+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E9A35718E0A17A0017B65D /* Presence+Custom.m */; };
 		27F1779218FDEECE0073C6AD /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27F1778C18FDEECE0073C6AD /* libTestFlight.a */; };
-		27F1779318FDEECE0073C6AD /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 27F1778D18FDEECE0073C6AD /* README.md */; };
+		27F1779318FDEECE0073C6AD /* TestFlightREADME.md in Resources */ = {isa = PBXBuildFile; fileRef = 27F1778D18FDEECE0073C6AD /* TestFlightREADME.md */; };
 		27F1779418FDEECE0073C6AD /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 27F1778E18FDEECE0073C6AD /* release_notes.md */; };
 		27FA3F9518D89469005AEF98 /* JCContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FA3F9418D89469005AEF98 /* JCContactModel.m */; };
 		42A1D3B90E844E0DA4AB6197 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86ED89B2764949AC9BCC0C7B /* libPods.a */; };
@@ -418,7 +418,7 @@
 		27E9A35618E0A17A0017B65D /* Presence+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Presence+Custom.h"; sourceTree = "<group>"; };
 		27E9A35718E0A17A0017B65D /* Presence+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Presence+Custom.m"; sourceTree = "<group>"; };
 		27F1778C18FDEECE0073C6AD /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
-		27F1778D18FDEECE0073C6AD /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		27F1778D18FDEECE0073C6AD /* TestFlightREADME.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TestFlightREADME.md; sourceTree = "<group>"; };
 		27F1778E18FDEECE0073C6AD /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
 		27F1778F18FDEECE0073C6AD /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
 		27F1779018FDEECE0073C6AD /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
@@ -1087,7 +1087,7 @@
 			isa = PBXGroup;
 			children = (
 				27F1778C18FDEECE0073C6AD /* libTestFlight.a */,
-				27F1778D18FDEECE0073C6AD /* README.md */,
+				27F1778D18FDEECE0073C6AD /* TestFlightREADME.md */,
 				27F1778E18FDEECE0073C6AD /* release_notes.md */,
 				27F1778F18FDEECE0073C6AD /* TestFlight+AsyncLogging.h */,
 				27F1779018FDEECE0073C6AD /* TestFlight+ManualSessions.h */,
@@ -1195,7 +1195,7 @@
 				91ADB9B118D8BD4200DF41A3 /* voicemail_speaker@2x.png in Resources */,
 				2700989218F4714100B6BC2F /* bubble-classic-square-selected.png in Resources */,
 				91ADB9AC18D8BD4200DF41A3 /* voicemail_play.png in Resources */,
-				27F1779318FDEECE0073C6AD /* README.md in Resources */,
+				27F1779318FDEECE0073C6AD /* TestFlightREADME.md in Resources */,
 				2700988C18F4714100B6BC2F /* bubble-classic-typing.png in Resources */,
 				2700988B18F4714100B6BC2F /* bubble-classic-selected@2x.png in Resources */,
 				2700989C18F4714100B6BC2F /* bubble-tailless.png in Resources */,
