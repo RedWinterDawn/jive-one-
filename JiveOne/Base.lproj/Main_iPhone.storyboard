@@ -136,6 +136,81 @@
             </objects>
             <point key="canvasLocation" x="2494" y="-869"/>
         </scene>
+        <!--Status View Controller-->
+        <scene sceneID="nm6-rk-ymA">
+            <objects>
+                <viewController id="Tno-3D-71G" customClass="JCStatusViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="tsJ-aa-iGX"/>
+                        <viewControllerLayoutGuide type="bottom" id="wTX-eJ-avO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="HTf-TJ-tBL">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Socket Status" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gc6-KX-s4R">
+                                <rect key="frame" x="20" y="220" width="118" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bNj-ce-lga">
+                                <rect key="frame" x="146" y="220" width="154" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Last Socket Events" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Wb-lK-Rgu">
+                                <rect key="frame" x="20" y="249" width="156" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jxb-K4-1be">
+                                <rect key="frame" x="20" y="278" width="280" height="221"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Device Token" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7qc-A7-UqA">
+                                <rect key="frame" x="20" y="84" width="108" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u0h-jo-6Mz">
+                                <rect key="frame" x="136" y="84" width="164" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="6pO-5d-lKL">
+                        <barButtonItem key="leftBarButtonItem" title="Poll" id="m9s-zc-hnl">
+                            <connections>
+                                <action selector="poll:" destination="Tno-3D-71G" id="Utz-A8-q0u"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Refesh" id="Nmg-11-BbD">
+                            <connections>
+                                <action selector="refresh:" destination="Tno-3D-71G" id="cgd-0S-vRY"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="lastSocketEventTextView" destination="Jxb-K4-1be" id="vUD-Yr-9Xo"/>
+                        <outlet property="socketStatusLabel" destination="bNj-ce-lga" id="pby-Xg-Rbd"/>
+                        <outlet property="tokenLabel" destination="u0h-jo-6Mz" id="sH6-m6-P8z"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="taM-Jg-0Sf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1067" y="-882"/>
+        </scene>
         <!--Directory Group View Controller - Groups-->
         <scene sceneID="H72-Gv-aQ4">
             <objects>
@@ -363,6 +438,11 @@
                         <barButtonItem key="leftBarButtonItem" title="Groups" id="j4n-ty-ab6">
                             <connections>
                                 <segue destination="T2Z-JV-v4U" kind="push" identifier="groupView" customClass="JCRightToLeftSegue" id="pAr-G9-p6b"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Status" id="kfB-MA-GwQ">
+                            <connections>
+                                <segue destination="Tno-3D-71G" kind="push" id="9gm-eo-V0k"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -709,60 +789,9 @@
             </objects>
             <point key="canvasLocation" x="1968" y="-869"/>
         </scene>
-        <!--Message View Controller-->
-        <scene sceneID="pIg-xh-lWm">
-            <objects>
-                <viewController id="grR-ct-hD2" customClass="JCMessageViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="45i-vb-Or9"/>
-                        <viewControllerLayoutGuide type="bottom" id="eLp-wN-T6B"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="NEw-aT-Mpn">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="first_message.png" translatesAutoresizingMaskIntoConstraints="NO" id="0AS-LC-mbj">
-                                <rect key="frame" x="40" y="39" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WZL-rz-kZ6" customClass="MBContactPicker">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="31"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="31" id="JJ0-Bx-QhY"/>
-                                </constraints>
-                            </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="PP2-jN-nzx">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
-                        </subviews>
-                        <color key="backgroundColor" red="0.90935905612244894" green="0.90935905612244894" blue="0.90935905612244894" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
-                    <navigationItem key="navigationItem" id="yyC-xi-QRV">
-                        <barButtonItem key="rightBarButtonItem" title="Toggle" id="Bv6-qC-OvO">
-                            <connections>
-                                <action selector="toggleView:" destination="grR-ct-hD2" id="hBz-Mj-sqc"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="contactPickerView" destination="WZL-rz-kZ6" id="vNd-Xj-r0d"/>
-                        <outlet property="contactPickerViewHeightConstraint" destination="JJ0-Bx-QhY" id="0T9-KZ-wRa"/>
-                        <outlet property="tableView" destination="PP2-jN-nzx" id="FTn-Yw-OUM"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cT4-dK-Zob" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2121" y="533"/>
-        </scene>
     </scenes>
     <resources>
         <image name="avatar.png" width="100" height="100"/>
-        <image name="first_message.png" width="265" height="154"/>
         <image name="launch.png" width="640" height="1136"/>
         <image name="nav-conv.png" width="30" height="30"/>
         <image name="nav-more.png" width="44" height="44"/>

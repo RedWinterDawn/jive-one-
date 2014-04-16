@@ -84,7 +84,6 @@
 		2710E40F18CEC8C300152C91 /* ConversationEntry+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 2710E40E18CEC8C300152C91 /* ConversationEntry+Custom.m */; };
 		272B61DD18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */; };
 		272B61DE18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */; };
-		272F65E318D37602009BD7B3 /* JCMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 272F65E218D37602009BD7B3 /* JCMessageViewController.m */; };
 		272F65FF18D3A7A4009BD7B3 /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 272F65FC18D3A7A4009BD7B3 /* HPGrowingTextView.m */; };
 		272F660018D3A7A4009BD7B3 /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 272F65FE18D3A7A4009BD7B3 /* HPTextViewInternal.m */; };
 		2736698218BD441D0069B4B3 /* JCPersonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2736698118BD441D0069B4B3 /* JCPersonCell.m */; };
@@ -102,8 +101,6 @@
 		275158FD18AD10BB00FD8D3F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 275158F818AD10BA00FD8D3F /* Default.png */; };
 		275158FE18AD10BB00FD8D3F /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 275158F918AD10BB00FD8D3F /* Default@2x.png */; };
 		275158FF18AD10BB00FD8D3F /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 275158FA18AD10BB00FD8D3F /* Default-568h@2x.png */; };
-		2751590618AD118D00FD8D3F /* JCStartLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751590518AD118D00FD8D3F /* JCStartLoginViewController.m */; };
-		2751590718AD118D00FD8D3F /* JCStartLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751590518AD118D00FD8D3F /* JCStartLoginViewController.m */; };
 		2751590B18AD16F300FD8D3F /* JCOsgiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751590A18AD16F300FD8D3F /* JCOsgiClient.m */; };
 		2751590C18AD16F300FD8D3F /* JCOsgiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751590A18AD16F300FD8D3F /* JCOsgiClient.m */; };
 		2751591118AD174F00FD8D3F /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751590E18AD174F00FD8D3F /* KeychainItemWrapper.m */; };
@@ -120,8 +117,6 @@
 		2751592F18AD334E00FD8D3F /* JCEntryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751592B18AD334E00FD8D3F /* JCEntryModel.m */; };
 		2751593018AD334E00FD8D3F /* JCEntryMetaModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751592D18AD334E00FD8D3F /* JCEntryMetaModel.m */; };
 		2751593118AD334E00FD8D3F /* JCEntryMetaModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751592D18AD334E00FD8D3F /* JCEntryMetaModel.m */; };
-		2751593418AD3BD500FD8D3F /* JCVoipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751593318AD3BD500FD8D3F /* JCVoipViewController.m */; };
-		2751593518AD3BD500FD8D3F /* JCVoipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751593318AD3BD500FD8D3F /* JCVoipViewController.m */; };
 		275413B318B2C349001DBA68 /* JCChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 275413B218B2C349001DBA68 /* JCChatMessage.m */; };
 		275E809618AED884009AD776 /* JCSocketDispatch.m in Sources */ = {isa = PBXBuildFile; fileRef = 275E809518AED884009AD776 /* JCSocketDispatch.m */; };
 		275F4A5218AD0FBC00D2F069 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275F4A5118AD0FBC00D2F069 /* Foundation.framework */; };
@@ -145,6 +140,7 @@
 		2764BDC318C83B24007320B0 /* THBubbleColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 2764BDC218C83B24007320B0 /* THBubbleColor.m */; };
 		2777AD5F18C51F1E009856C5 /* JCRightToLeftSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2777AD5E18C51F1E009856C5 /* JCRightToLeftSegue.m */; };
 		277A1F8018F88987009A41F7 /* JCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 277A1F7F18F88987009A41F7 /* JCLoginViewController.m */; };
+		277F094218FED58C00EEF0E3 /* JCStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 277F094118FED58C00EEF0E3 /* JCStatusViewController.m */; };
 		2787911318CF79DC004DE651 /* JCPresenceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2787911218CF79DC004DE651 /* JCPresenceView.m */; };
 		279E602418C8C59900C5CC9F /* JCPersonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 279E602318C8C59900C5CC9F /* JCPersonCell.xib */; };
 		27A49AB018DC8BC00084DEE0 /* launch.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A49AAF18DC8BC00084DEE0 /* launch.png */; };
@@ -195,7 +191,6 @@
 		91ADB9AF18D8BD4200DF41A3 /* voicemail_scrub_play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91ADB99F18D8BD4200DF41A3 /* voicemail_scrub_play@2x.png */; };
 		91ADB9B018D8BD4200DF41A3 /* voicemail_speaker.png in Resources */ = {isa = PBXBuildFile; fileRef = 91ADB9A018D8BD4200DF41A3 /* voicemail_speaker.png */; };
 		91ADB9B118D8BD4200DF41A3 /* voicemail_speaker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91ADB9A118D8BD4200DF41A3 /* voicemail_speaker@2x.png */; };
-		DD01933718AECA760065A8CD /* JCTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD01933618AECA760065A8CD /* JCTestViewController.m */; };
 		DD28DA5218AEC4F5003BFC44 /* JCAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD28DA5118AEC4F5003BFC44 /* JCAccountViewController.m */; };
 		DD3BD9F418DCB1740080318E /* Voicemail+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = DD3BD9F318DCB1740080318E /* Voicemail+Custom.m */; };
 		DD50802918C7D60B00750DB4 /* JCDirectoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DD50802818C7D60B00750DB4 /* JCDirectoryTests.m */; };
@@ -324,8 +319,6 @@
 		2710E40E18CEC8C300152C91 /* ConversationEntry+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ConversationEntry+Custom.m"; sourceTree = "<group>"; };
 		272B61DB18B2A4DD00EB8ED5 /* TRVSMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRVSMonitor.h; sourceTree = "<group>"; };
 		272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRVSMonitor.m; sourceTree = "<group>"; };
-		272F65E118D37602009BD7B3 /* JCMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMessageViewController.h; sourceTree = "<group>"; };
-		272F65E218D37602009BD7B3 /* JCMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMessageViewController.m; sourceTree = "<group>"; };
 		272F65FB18D3A7A4009BD7B3 /* HPGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPGrowingTextView.h; sourceTree = "<group>"; };
 		272F65FC18D3A7A4009BD7B3 /* HPGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPGrowingTextView.m; sourceTree = "<group>"; };
 		272F65FD18D3A7A4009BD7B3 /* HPTextViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPTextViewInternal.h; sourceTree = "<group>"; };
@@ -356,8 +349,6 @@
 		275158F918AD10BB00FD8D3F /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		275158FA18AD10BB00FD8D3F /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		2751590218AD10E500FD8D3F /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		2751590418AD118D00FD8D3F /* JCStartLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCStartLoginViewController.h; sourceTree = "<group>"; };
-		2751590518AD118D00FD8D3F /* JCStartLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCStartLoginViewController.m; sourceTree = "<group>"; };
 		2751590918AD16F300FD8D3F /* JCOsgiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCOsgiClient.h; sourceTree = "<group>"; };
 		2751590A18AD16F300FD8D3F /* JCOsgiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCOsgiClient.m; sourceTree = "<group>"; };
 		2751590D18AD174F00FD8D3F /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
@@ -373,8 +364,6 @@
 		2751592B18AD334E00FD8D3F /* JCEntryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCEntryModel.m; sourceTree = "<group>"; };
 		2751592C18AD334E00FD8D3F /* JCEntryMetaModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCEntryMetaModel.h; sourceTree = "<group>"; };
 		2751592D18AD334E00FD8D3F /* JCEntryMetaModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCEntryMetaModel.m; sourceTree = "<group>"; };
-		2751593218AD3BD500FD8D3F /* JCVoipViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVoipViewController.h; sourceTree = "<group>"; };
-		2751593318AD3BD500FD8D3F /* JCVoipViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoipViewController.m; sourceTree = "<group>"; };
 		275413B118B2C349001DBA68 /* JCChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCChatMessage.h; sourceTree = "<group>"; };
 		275413B218B2C349001DBA68 /* JCChatMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCChatMessage.m; sourceTree = "<group>"; };
 		275E809418AED884009AD776 /* JCSocketDispatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSocketDispatch.h; sourceTree = "<group>"; };
@@ -409,6 +398,8 @@
 		2777AD5E18C51F1E009856C5 /* JCRightToLeftSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCRightToLeftSegue.m; sourceTree = "<group>"; };
 		277A1F7E18F88987009A41F7 /* JCLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCLoginViewController.h; sourceTree = "<group>"; };
 		277A1F7F18F88987009A41F7 /* JCLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCLoginViewController.m; sourceTree = "<group>"; };
+		277F094018FED58C00EEF0E3 /* JCStatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCStatusViewController.h; sourceTree = "<group>"; };
+		277F094118FED58C00EEF0E3 /* JCStatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCStatusViewController.m; sourceTree = "<group>"; };
 		2787911118CF79DC004DE651 /* JCPresenceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPresenceView.h; sourceTree = "<group>"; };
 		2787911218CF79DC004DE651 /* JCPresenceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPresenceView.m; sourceTree = "<group>"; };
 		279E602318C8C59900C5CC9F /* JCPersonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCPersonCell.xib; sourceTree = "<group>"; };
@@ -475,8 +466,6 @@
 		91ADB99F18D8BD4200DF41A3 /* voicemail_scrub_play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "voicemail_scrub_play@2x.png"; sourceTree = "<group>"; };
 		91ADB9A018D8BD4200DF41A3 /* voicemail_speaker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = voicemail_speaker.png; sourceTree = "<group>"; };
 		91ADB9A118D8BD4200DF41A3 /* voicemail_speaker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "voicemail_speaker@2x.png"; sourceTree = "<group>"; };
-		DD01933518AECA760065A8CD /* JCTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTestViewController.h; sourceTree = "<group>"; };
-		DD01933618AECA760065A8CD /* JCTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTestViewController.m; sourceTree = "<group>"; };
 		DD28DA5018AEC4F5003BFC44 /* JCAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAccountViewController.h; sourceTree = "<group>"; };
 		DD28DA5118AEC4F5003BFC44 /* JCAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAccountViewController.m; sourceTree = "<group>"; };
 		DD3BD9F218DCB1740080318E /* Voicemail+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Voicemail+Custom.h"; sourceTree = "<group>"; };
@@ -837,32 +826,13 @@
 		2751590318AD113C00FD8D3F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				DD28DA5018AEC4F5003BFC44 /* JCAccountViewController.h */,
-				DD28DA5118AEC4F5003BFC44 /* JCAccountViewController.m */,
-				2751592118AD32E500FD8D3F /* JCConversationsViewController.h */,
-				2751592218AD32E500FD8D3F /* JCConversationsViewController.m */,
-				91260EDB18B2965900704670 /* JCDirectoryDetailViewController.h */,
-				91260EDC18B2965900704670 /* JCDirectoryDetailViewController.m */,
-				F258589018BD3A420020AF34 /* JCDirectoryGroupViewController.h */,
-				F258589118BD3A420020AF34 /* JCDirectoryGroupViewController.m */,
-				2751591D18AD303500FD8D3F /* JCDirectoryViewController.h */,
-				2751591E18AD303500FD8D3F /* JCDirectoryViewController.m */,
-				F2459BB018C67FC000AF56CF /* JCGroupSelectorViewController.h */,
-				F2459BB118C67FC000AF56CF /* JCGroupSelectorViewController.m */,
-				27C3715518EE29F400F159EF /* JCMessagesViewController.h */,
-				27C3715618EE29F400F159EF /* JCMessagesViewController.m */,
-				272F65E218D37602009BD7B3 /* JCMessageViewController.m */,
-				2751590418AD118D00FD8D3F /* JCStartLoginViewController.h */,
-				2751590518AD118D00FD8D3F /* JCStartLoginViewController.m */,
-				272F65E118D37602009BD7B3 /* JCMessageViewController.h */,
-				DD01933518AECA760065A8CD /* JCTestViewController.h */,
-				DD01933618AECA760065A8CD /* JCTestViewController.m */,
-				9135DDFE18BBFC7A0052E998 /* JCVoicemailViewController.h */,
-				9135DDFF18BBFC7A0052E998 /* JCVoicemailViewController.m */,
-				2751593218AD3BD500FD8D3F /* JCVoipViewController.h */,
-				2751593318AD3BD500FD8D3F /* JCVoipViewController.m */,
-				277A1F7E18F88987009A41F7 /* JCLoginViewController.h */,
-				277A1F7F18F88987009A41F7 /* JCLoginViewController.m */,
+				277F093E18FECEB800EEF0E3 /* Account */,
+				277F093C18FECE8700EEF0E3 /* Conversation */,
+				277F093B18FECE5E00EEF0E3 /* Directory */,
+				277F093D18FECEA800EEF0E3 /* Voicemail */,
+				277F093F18FECECA00EEF0E3 /* Login */,
+				277F094018FED58C00EEF0E3 /* JCStatusViewController.h */,
+				277F094118FED58C00EEF0E3 /* JCStatusViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1058,6 +1028,59 @@
 				2764BDBE18C83AC5007320B0 /* THContactPickerView.m */,
 			);
 			name = THPickerView;
+			sourceTree = "<group>";
+		};
+		277F093B18FECE5E00EEF0E3 /* Directory */ = {
+			isa = PBXGroup;
+			children = (
+				F2459BB018C67FC000AF56CF /* JCGroupSelectorViewController.h */,
+				F2459BB118C67FC000AF56CF /* JCGroupSelectorViewController.m */,
+				91260EDB18B2965900704670 /* JCDirectoryDetailViewController.h */,
+				91260EDC18B2965900704670 /* JCDirectoryDetailViewController.m */,
+				F258589018BD3A420020AF34 /* JCDirectoryGroupViewController.h */,
+				F258589118BD3A420020AF34 /* JCDirectoryGroupViewController.m */,
+				2751591D18AD303500FD8D3F /* JCDirectoryViewController.h */,
+				2751591E18AD303500FD8D3F /* JCDirectoryViewController.m */,
+			);
+			name = Directory;
+			sourceTree = "<group>";
+		};
+		277F093C18FECE8700EEF0E3 /* Conversation */ = {
+			isa = PBXGroup;
+			children = (
+				2751592118AD32E500FD8D3F /* JCConversationsViewController.h */,
+				2751592218AD32E500FD8D3F /* JCConversationsViewController.m */,
+				27C3715518EE29F400F159EF /* JCMessagesViewController.h */,
+				27C3715618EE29F400F159EF /* JCMessagesViewController.m */,
+			);
+			name = Conversation;
+			sourceTree = "<group>";
+		};
+		277F093D18FECEA800EEF0E3 /* Voicemail */ = {
+			isa = PBXGroup;
+			children = (
+				9135DDFE18BBFC7A0052E998 /* JCVoicemailViewController.h */,
+				9135DDFF18BBFC7A0052E998 /* JCVoicemailViewController.m */,
+			);
+			name = Voicemail;
+			sourceTree = "<group>";
+		};
+		277F093E18FECEB800EEF0E3 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				DD28DA5018AEC4F5003BFC44 /* JCAccountViewController.h */,
+				DD28DA5118AEC4F5003BFC44 /* JCAccountViewController.m */,
+			);
+			name = Account;
+			sourceTree = "<group>";
+		};
+		277F093F18FECECA00EEF0E3 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				277A1F7E18F88987009A41F7 /* JCLoginViewController.h */,
+				277A1F7F18F88987009A41F7 /* JCLoginViewController.m */,
+			);
+			name = Login;
 			sourceTree = "<group>";
 		};
 		27F1778B18FDEECE0073C6AD /* TestFlightSDK3.0.0 */ = {
@@ -1313,11 +1336,11 @@
 				916B666B18F453A900D7D89C /* ClientEntities.m in Sources */,
 				9103271718F34BEC00437503 /* JCPeopleDetailCell.m in Sources */,
 				F2459BB218C67FC000AF56CF /* JCGroupSelectorViewController.m in Sources */,
+				277F094218FED58C00EEF0E3 /* JCStatusViewController.m in Sources */,
 				27E9A35818E0A17A0017B65D /* Presence+Custom.m in Sources */,
 				2700987818F4714100B6BC2F /* JSBubbleImageViewFactory.m in Sources */,
 				2710E40C18CE873000152C91 /* Conversation+Custom.m in Sources */,
 				2762C45818B4177D00885918 /* JCOmniPresence.m in Sources */,
-				2751590618AD118D00FD8D3F /* JCStartLoginViewController.m in Sources */,
 				2751592E18AD334E00FD8D3F /* JCEntryModel.m in Sources */,
 				2700987E18F4714100B6BC2F /* JSMessageSoundEffect.m in Sources */,
 				275F4A5E18AD0FBC00D2F069 /* main.m in Sources */,
@@ -1345,7 +1368,6 @@
 				91260EDD18B2965900704670 /* JCDirectoryDetailViewController.m in Sources */,
 				2751591718AD300B00FD8D3F /* OsgiData.xcdatamodel in Sources */,
 				2751591118AD174F00FD8D3F /* KeychainItemWrapper.m in Sources */,
-				272F65E318D37602009BD7B3 /* JCMessageViewController.m in Sources */,
 				2751591318AD174F00FD8D3F /* JCAuthenticationManager.m in Sources */,
 				2700988118F4714100B6BC2F /* JSMessageTextView.m in Sources */,
 				272F65FF18D3A7A4009BD7B3 /* HPGrowingTextView.m in Sources */,
@@ -1372,9 +1394,7 @@
 				2700987A18F4714100B6BC2F /* JSBubbleView.m in Sources */,
 				2700987918F4714100B6BC2F /* JSBubbleMessageCell.m in Sources */,
 				27A49AB318DCE56B0084DEE0 /* Voicemail.m in Sources */,
-				DD01933718AECA760065A8CD /* JCTestViewController.m in Sources */,
 				27B8152618D93F1A00516BF6 /* NotificationView.m in Sources */,
-				2751593418AD3BD500FD8D3F /* JCVoipViewController.m in Sources */,
 				274493C518D0E98D002744CB /* ContactGroup.m in Sources */,
 				275E809618AED884009AD776 /* JCSocketDispatch.m in Sources */,
 				2700987418F4714100B6BC2F /* NSString+JSMessagesView.m in Sources */,
@@ -1387,11 +1407,9 @@
 			files = (
 				2751593118AD334E00FD8D3F /* JCEntryMetaModel.m in Sources */,
 				2751591218AD174F00FD8D3F /* KeychainItemWrapper.m in Sources */,
-				2751593518AD3BD500FD8D3F /* JCVoipViewController.m in Sources */,
 				2751591418AD174F00FD8D3F /* JCAuthenticationManager.m in Sources */,
 				2751590C18AD16F300FD8D3F /* JCOsgiClient.m in Sources */,
 				F2CB896E18D1226D006A9438 /* JCStartChatMockTests.m in Sources */,
-				2751590718AD118D00FD8D3F /* JCStartLoginViewController.m in Sources */,
 				2762C45918B4177D00885918 /* JCOmniPresence.m in Sources */,
 				2751591818AD300B00FD8D3F /* OsgiData.xcdatamodel in Sources */,
 				F2FEF42B18C91BBE0080D8CC /* JCDirectoryGroupTests.m in Sources */,
