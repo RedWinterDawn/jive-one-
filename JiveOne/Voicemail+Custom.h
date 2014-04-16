@@ -10,7 +10,7 @@
 
 @interface Voicemail (Custom)
 
-#pragma mark - CRUD for ConversationEntry
+#pragma mark - CRUD for Voicemail
 + (void)addVoicemails:(NSArray *)entryArray;
 + (Voicemail *)addVoicemailEntry:(NSDictionary*)entry;
 + (Voicemail *)addVoicemail:(NSDictionary*)dictionary withManagedContext:(NSManagedObjectContext *)context;

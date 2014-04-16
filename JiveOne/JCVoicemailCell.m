@@ -39,25 +39,21 @@
     [self addGestureRecognizer:tapGestureRecognizer];
     [self.slider setThumbImage:[UIImage imageNamed:@"thumb1.png"] forState:UIControlStateNormal];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
-    //split the callerId to get name and phone
-    //TODO: refactor when Jessie's API gives us these as properties in the json
-    NSMutableArray* callerIdArray = [NSMutableArray arrayWithArray:[item.callerId componentsSeparatedByString:@"<"]];
-    callerIdArray[1] = [((NSString*)callerIdArray[1]) stringByReplacingOccurrencesOfString:@">" withString:@""];
+
     
-    //if callerid.name is empty-display phone in self.callerId.text
-    if([callerIdArray[0] isEqualToString:@""]){
-        self.callerId.text = callerIdArray[1];
+    if(!item.callerName){
+        self.callerId.text = item.callerNumber;
         self.phone_state.text = @"Utah";
     }else{
-        self.callerId.text = callerIdArray[0];
-        self.phone_state.text = [NSString stringWithFormat:@"%@ Utah", callerIdArray[1]];
+        self.callerId.text = item.callerName;
+        self.phone_state.text = [NSString stringWithFormat:@"%@ Utah", item.callerNumber];
     }
     self.userImage.image = [UIImage imageNamed:@"avatar.png"];
   
 
     self.shortTime.text = [Common shortDateFromTimestamp:[NSNumber numberWithLongLong:[item.createdDate longLongValue]]];
     self.creationTime.text = [Common longDateFromTimestamp:[NSNumber numberWithLongLong:[item.createdDate longLongValue]]];
-    self.duration.text = [self formatSeconds:[item.duration doubleValue]];
+    self.duration.text = [self formatSeconds:[item.lenght doubleValue]];
     self.voicemailObject = item;
     self.delegate = delegate;
     

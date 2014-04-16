@@ -51,16 +51,24 @@
     else {
         //create and save
         vmail = [Voicemail MR_createInContext:context];
-        vmail.urn = dictionary[@"urn"];
+        vmail.callerName = dictionary[@"callerName"];
+        vmail.callerNumber = dictionary[@"callerNumber"];
         vmail.lastModified = [NSNumber numberWithLongLong:[dictionary[@"lastModified"] longLongValue]];
+        vmail.pbxId = dictionary[@"pbxId"];
+        vmail.lineId = dictionary[@"lineId"];
+        vmail.mailboxId = dictionary[@"mailboxId"];
+        vmail.folderId = dictionary[@"folderId"];
+        vmail.messageId = dictionary[@"messageId"];
+        vmail.extensionNumber = dictionary[@"extensionNumber"];
+        vmail.extensionName = dictionary[@"extensionName"];
         vmail.callerId = dictionary[@"callerId"];
-        vmail.createdDate = [NSNumber numberWithLongLong:[dictionary[@"createdDate"] longLongValue]];
-        vmail.duration = [NSNumber numberWithInteger:[dictionary[@"length"] intValue]];
-        // vmail.voicemail = [NSData dataWithContentsOfURL:[NSURL URLWithString:dictionary[@"file"]]];//fetch in background
-        vmail.voicemailUrl = dictionary[@"file"];
+        vmail.lenght = [NSNumber numberWithInteger:[dictionary[@"length"] intValue]];
+        vmail.origFile = dictionary[@"origFile"];
         vmail.read = [NSNumber numberWithBool:[dictionary[@"read"] boolValue]];
-        
-        
+        vmail.file = dictionary[@"file"];
+        vmail.createdDate = [NSNumber numberWithLongLong:[dictionary[@"createdDate"] longLongValue]];
+        vmail.urn = dictionary[@"urn"];
+        vmail.voicemailId = dictionary[@"id"];
         //Save conversation entry
         [context MR_saveToPersistentStoreAndWait];
     }
@@ -74,18 +82,26 @@
     }
     
     // if last modified timestamps are the same, then there's no need to update anything.
-    long lastModifiedFromEntity = [vmail.lastModified longLongValue];
-    long lastModifiedFromDictionary = [dictionary[@"lastModified"] longLongValue];
+    long lastModifiedFromEntity = [vmail.lastModified integerValue];
+    long lastModifiedFromDictionary = [dictionary[@"lastModified"] integerValue];
     
     if (lastModifiedFromDictionary > lastModifiedFromEntity) {
         
-        vmail.urn = dictionary[@"urn"];
+        vmail.callerName = dictionary[@"callerName"];
+        vmail.callerNumber = dictionary[@"callerNumber"];
         vmail.lastModified = [NSNumber numberWithLongLong:[dictionary[@"lastModified"] longLongValue]];
+        vmail.pbxId = dictionary[@"pbxId"];
+        vmail.lineId = dictionary[@"lineId"];
+        vmail.mailboxId = dictionary[@"mailboxId"];
+        vmail.folderId = dictionary[@"folderId"];
+        vmail.messageId = dictionary[@"messageId"];
+        vmail.extensionNumber = dictionary[@"extensionNumber"];
+        vmail.extensionName = dictionary[@"extensionName"];
         vmail.callerId = dictionary[@"callerId"];
-        vmail.createdDate = [NSNumber numberWithLongLong:[dictionary[@"createdDate"] longLongValue]];
-        vmail.duration = [NSNumber numberWithInteger:[dictionary[@"length"] intValue]];
-        vmail.voicemailUrl = dictionary[@"file"];
+        vmail.lenght = [NSNumber numberWithInteger:[dictionary[@"length"] intValue]];
+        vmail.origFile = dictionary[@"origFile"];
         vmail.read = [NSNumber numberWithBool:[dictionary[@"read"] boolValue]];
+        vmail.file = dictionary[@"file"];
 
         
         //Save conversation dictionary
@@ -133,7 +149,7 @@
             if ([kVoicemailURLOverRide  isEqual:@"YesUseAWSPlaceholderURL"]) {
                 vm.voicemail = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"https://s3-us-west-2.amazonaws.com/jive-mobile/voicemail/userId/dleonard/TestVoicemail2.wav"]];
             }else{
-                vm.voicemail = [NSData dataWithContentsOfURL:[NSURL URLWithString:vm.voicemailUrl]];
+                vm.voicemail = [NSData dataWithContentsOfURL:[NSURL URLWithString:vm.file]];
             }
         }
             [context MR_saveToPersistentStoreAndWait];
