@@ -145,7 +145,7 @@ integer_t const oldVoicemails = 1;
         self.voicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAllSortedBy:@"createdDate" ascending:NO]];
         
         
-        NSLog(@"Currently %lu voicemail(s) in core data", [Voicemail MR_findAll].count);
+        NSLog(@"Currently %i voicemail(s) in core data", (int)[Voicemail MR_findAll].count);
         
         
         [self.tableView reloadData];

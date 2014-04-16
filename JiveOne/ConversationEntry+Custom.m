@@ -85,8 +85,8 @@
     }
     
     // if last modified timestamps are the same, then there's no need to update anything.
-    long lastModifiedFromEntity = [entry.lastModified longLongValue];
-    long lastModifiedFromDictionary = [dictionary[@"lastModified"] longLongValue];
+    long lastModifiedFromEntity = [entry.lastModified integerValue];
+    long lastModifiedFromDictionary = [dictionary[@"lastModified"] integerValue];
     
     if (lastModifiedFromDictionary > lastModifiedFromEntity) {
         

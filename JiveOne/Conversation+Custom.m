@@ -73,8 +73,8 @@
         context = [NSManagedObjectContext MR_contextForCurrentThread];
     }
     // if last modified timestamps are the same, then there's no need to update anything.
-    long lastModifiedFromEntity = [conversation.lastModified longLongValue];
-    long lastModifiedFromDictionary = [dictionary[@"lastModified"] longLongValue];
+    long lastModifiedFromEntity = [conversation.lastModified integerValue];
+    long lastModifiedFromDictionary = [dictionary[@"lastModified"] integerValue];
     
     if (lastModifiedFromDictionary > lastModifiedFromEntity) {
         conversation.lastModified = [NSNumber numberWithLongLong:[dictionary[@"lastModified"] longLongValue]];

@@ -60,7 +60,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
     
     for(UIView *view in [self.tableView subviews])
     {
-        NSLog(@"%@", [[view class] description]);
+        //NSLog([[view class] description]);
         if([[[view class] description] isEqualToString:@"UITableViewIndex"])
         {
             CGRect frame = view.frame;
