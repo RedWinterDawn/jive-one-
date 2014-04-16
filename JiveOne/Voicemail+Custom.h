@@ -15,8 +15,8 @@
 #pragma mark - CRUD for ConversationEntry
 + (void)addVoicemails:(NSArray *)entryArray;
 + (Voicemail *)addVoicemailEntry:(NSDictionary*)entry;
-+ (Voicemail *)addVoicemailEntry:(NSDictionary*)dictionary withManagedContext:(NSManagedObjectContext *)context;
-+ (Voicemail *)updateVoicemailEntry:(Voicemail*)entry withDictionary:(NSDictionary*)dictionary managedContext:(NSManagedObjectContext *)context;
++ (Voicemail *)addVoicemail:(NSDictionary*)dictionary withManagedContext:(NSManagedObjectContext *)context;
++ (Voicemail *)updateVoicemail:(Voicemail*)vmail withDictionary:(NSDictionary*)dictionary managedContext:(NSManagedObjectContext *)context;
 + (void)fetchVoicemailInBackground;
 
 @end

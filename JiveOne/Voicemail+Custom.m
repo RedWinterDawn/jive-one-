@@ -10,7 +10,7 @@
 #import "Constants.h"
 
 @implementation Voicemail (Custom)
-
+  
 + (NSArray *)RetrieveVoicemailById:(NSString *)conversationId
 {
     NSArray *conversations = [super MR_findByAttribute:@"conversationId" withValue:conversationId andOrderBy:@"lastModified" ascending:YES];
@@ -28,8 +28,7 @@
     }
 }
 
-+ (Voicemail *)addVoicemail:(NSDictionary *)entry
-{
++ (Voicemail *)addVoicemailEntry:(NSDictionary*)entry{
     return [self addVoicemail:entry withManagedContext:nil];
 }
 
