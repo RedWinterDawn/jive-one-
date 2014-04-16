@@ -13,8 +13,8 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "JCMessagesViewController.h"
 #import "ConversationEntry.h"
-#import "JCConversationTableViewCell.h"
-#import "JCGroupConvoTableViewCell.h"
+#import "JCConversationCell.h"
+#import "JCGroupConversationCell.h"
 @interface JCConversationsViewController ()
 {
     //NSMutableArray *entries;
@@ -38,8 +38,8 @@ static NSString *GroupCellIdentifier = @"GroupChatCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.tableView registerClass:[JCConversationTableViewCell class] forCellReuseIdentifier:CellIdentifier];
-    [self.tableView registerClass:[JCGroupConvoTableViewCell class] forCellReuseIdentifier:GroupCellIdentifier];
+    [self.tableView registerClass:[JCConversationCell class] forCellReuseIdentifier:CellIdentifier];
+    [self.tableView registerClass:[JCGroupConversationCell class] forCellReuseIdentifier:GroupCellIdentifier];
 
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     [self.tableView setSeparatorInset:UIEdgeInsetsZero];
@@ -198,13 +198,13 @@ static NSString *GroupCellIdentifier = @"GroupChatCell";
     }
     
         if (conv.isGroup) {
-            JCGroupConvoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:GroupCellIdentifier forIndexPath:indexPath];
+            JCGroupConversationCell *cell = [tableView dequeueReusableCellWithIdentifier:GroupCellIdentifier forIndexPath:indexPath];
             cell.conversation = conv;
             return cell;
 
             
         }else {
-            JCConversationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+            JCConversationCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
             cell.conversation = conv;
             return cell;
         
@@ -280,7 +280,7 @@ static NSString *GroupCellIdentifier = @"GroupChatCell";
     if ([sender isKindOfClass:[NSIndexPath class]]) {
         NSIndexPath *indexPath = (NSIndexPath *)sender;
         //Conversation *conv = conversations[indexPath.row];
-        JCConversationTableViewCell *cell = (JCConversationTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        JCConversationCell *cell = (JCConversationCell *)[self.tableView cellForRowAtIndexPath:indexPath];
         
         NSString *title = cell.conversationTitle.text;
         

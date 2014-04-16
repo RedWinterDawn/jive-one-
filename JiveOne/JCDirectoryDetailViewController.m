@@ -90,7 +90,7 @@
             ((JCPeopleDetailCell *)cell).presenceView.presenceType = (JCPresenceType)[_person.entityPresence.interactions[@"chat"][@"code"] integerValue];
             CGRect newFrame = CGRectMake(0, 30, ((JCPeopleDetailCell *)cell).NameLabel.frame.size.width,((JCPeopleDetailCell *)cell).NameLabel.frame.size.height);
             ((JCPeopleDetailCell *)cell).NameLabel.frame = newFrame;
-            ((JCPeopleDetailCell *)cell).delegate = self;
+            //((JCPeopleDetailCell *)cell).delegate = self;
             
             [self updateFavoriteIcon:((JCPeopleDetailCell *)cell)];
             

@@ -66,7 +66,7 @@
 #define kSocketPresence @"presence"
 #define kSocketConversations @"conversations"
 #define kSocketPermanentRooms @"permanentrooms"
-#define kSocketVoicemail @"voicemail"
+#define kSocketVoicemail @"voicemails"
 
 #pragma mark - UIConstants
 #define kShiftNameLabelThisMuch 5.0
