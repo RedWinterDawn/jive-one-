@@ -8,9 +8,9 @@
 
 #import "JCDirectoryDetailViewController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
-#import "JCMessageViewController.h"
-#import "Company.h"
+#import "JCMessagesViewController.h"
 #import "JCPeopleDetailCell.h"
+#import "Company.h"
 
 
 @interface JCDirectoryDetailViewController ()

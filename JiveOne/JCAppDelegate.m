@@ -13,7 +13,6 @@
 #import "JCOsgiClient.h"
 #import "ClientEntities.h"
 #import "NotificationView.h"
-#import "JCStartLoginViewController.h"
 #import "JCLoginViewController.h"
 #import "Common.h"
 #import <Parse/Parse.h>

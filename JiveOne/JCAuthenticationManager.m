@@ -10,7 +10,6 @@
 #import "JCOsgiClient.h"
 #import "JCAppDelegate.h"
 #import "JCAccountViewController.h"
-#import "JCStartLoginViewController.h"
 #import "JCLoginViewController.h"
 #import "Common.h"
 
@@ -161,7 +160,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     
     [delegate stopSocket];
     
-    if(![viewController isKindOfClass:[JCStartLoginViewController class]]){
+    if(![viewController isKindOfClass:[JCLoginViewController class]]){
         [UIView transitionWithView:delegate.window
                           duration:0.5
                            options:UIViewAnimationOptionTransitionFlipFromLeft
