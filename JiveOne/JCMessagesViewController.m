@@ -514,13 +514,13 @@
     NSDictionary *unsentMessagesQueueOld = [[NSUserDefaults standardUserDefaults] objectForKey:@"unsentMessageQueue"];
     NSMutableDictionary *unsentMessagesQueueNew = [[NSMutableDictionary alloc] init];
     
-    
+    NSString* myEntity = [[JCOmniPresence sharedInstance] me].entityId;
 
     [unsentMessagesQueueOld enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSArray *messages, BOOL *stop) {
          __block NSMutableArray *messagesMutable = [[NSMutableArray alloc] init];
         for(int i=0;i<messages.count;i++){
             
-            [[JCOsgiClient sharedClient] SubmitChatMessageForConversation:key message:messages[i] withEntity:nil success:^(id JSON) {
+            [[JCOsgiClient sharedClient] SubmitChatMessageForConversation:key message:messages[i] withEntity:myEntity success:^(id JSON) {
                 
                 NSLog(@"inside block. messages[i]:%@", messages[i]);
                 [JSMessageSoundEffect playMessageSentSound];
