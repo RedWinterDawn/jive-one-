@@ -10,6 +10,7 @@
 #import "JCOsgiClient.h"
 #import "KeychainItemWrapper.h"
 #import "ConversationEntry+Custom.h"
+#import "Voicemail+Custom.h"
 #import "JCAppDelegate.h"
 
 @interface JCSocketDispatch()
@@ -272,7 +273,10 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:kPresenceChanged object:presence];        
     }
     else if ([type isEqualToString:kSocketVoicemail]) {
-        [(JCAppDelegate *)[UIApplication sharedApplication].delegate incrementBadgeCountForVoicemail];
+        Voicemail *voicemail = [Voicemail addVoicemailEntry:body];
+        if (voicemail) {
+            [(JCAppDelegate *)[UIApplication sharedApplication].delegate incrementBadgeCountForVoicemail];
+        }
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"kSocketEvent" object:message];
