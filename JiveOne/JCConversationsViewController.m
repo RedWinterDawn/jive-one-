@@ -14,6 +14,7 @@
 #import "JCMessagesViewController.h"
 #import "ConversationEntry.h"
 #import "JCConversationTableViewCell.h"
+#import "JCGroupConvoTableViewCell.h"
 @interface JCConversationsViewController ()
 {
     //NSMutableArray *entries;
@@ -30,12 +31,16 @@
 
 @implementation JCConversationsViewController
 
-static NSString *CellIdentifier = @"ConversationCell";
+static NSString *CellIdentifier = @"twoPersonChatCell";
+static NSString *GroupCellIdentifier = @"GroupChatCell";
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.tableView registerNib:[UINib nibWithNibName:@"JCConversationCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
+    [self.tableView registerClass:[JCConversationTableViewCell class] forCellReuseIdentifier:CellIdentifier];
+    [self.tableView registerClass:[JCGroupConvoTableViewCell class] forCellReuseIdentifier:GroupCellIdentifier];
+
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     [self.tableView setSeparatorInset:UIEdgeInsetsZero];
 
@@ -186,60 +191,24 @@ static NSString *CellIdentifier = @"ConversationCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    JCConversationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
     Conversation *conv = conversations[indexPath.row];
     
-    if (conv) {
-        cell.conversation = conv;
+    if(!conv){
+        return nil;
     }
     
-//    if (!conv.isGroup) {
-//        NSArray *entitiesArray = (NSArray*)conv.entities;
-//        NSString *firstEntity = nil;
-//        
-//        for (NSString* entity in entitiesArray) {
-//            if (![entity isEqualToString:me.urn]) {
-//                firstEntity = entity;
-//            }
-//        }
-//        
-//        ClientEntities * person = [[JCOmniPresence sharedInstance] entityByEntityId:firstEntity];
-//        
-//        if (person) {
-//            cell.person = person;
-//        }
-//        else
-//        {
-//            cell.person = nil;
-//            cell.personNameLabel.text = @"Unknown";
-//            cell.personDetailLabel.hidden = YES;
-//            cell.personPicture.hidden = YES;
-//        }
-//        
-////        cell.personNameLabel.text = [NSString stringWithFormat:@"%@", person.firstLastName];
-////        cell.personDetailLabel.text = [NSString stringWithFormat:@"%@", person.email];
-////        cell.personPresenceLabel.text = [self getPresence:[NSNumber numberWithInt:[person.entityPresence.interactions[@"chat"][@"code"] integerValue]]];
-////        [cell.personPicture setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];
-////        cell.personId = person.entityId;
-//        
-//        
-//        // temporary fix just to make it not crash
-//        //if (firstEntity) {
-//        //    [personMap setObject:[NSNumber numberWithInteger:indexPath.row] forKey:person.entityId];
-//        //}
-//        
-//    }
-//    else
-//    {
-//        cell.person = nil;
-//        cell.personNameLabel.text = [NSString stringWithFormat:@"%@", conv.name];
-//        cell.personDetailLabel.text = [NSString stringWithFormat:@"%@", conv.group];
-//    }
-    
-    
-    
-    return cell;
+        if (conv.isGroup) {
+            JCGroupConvoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:GroupCellIdentifier forIndexPath:indexPath];
+            cell.conversation = conv;
+            return cell;
+
+            
+        }else {
+            JCConversationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+            cell.conversation = conv;
+            return cell;
+        
+        }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -298,45 +267,6 @@ static NSString *CellIdentifier = @"ConversationCell";
     }
 }
 
-
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- }
- else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
 
 
 #pragma mark - Navigation

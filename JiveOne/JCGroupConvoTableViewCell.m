@@ -1,26 +1,29 @@
 //
-//  JCConversationTableViewCell.m
+//  JCGroupConvoTableViewCell.m
 //  JiveOne
 //
-//  Created by Eduardo Gueiros on 3/12/14.
+//  Created by Doug Leonard on 4/15/14.
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCConversationTableViewCell.h"
+#import "JCGroupConvoTableViewCell.h"
 #import "ConversationEntry+Custom.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "Common.h"
 #import "Constants.h"
 
-@implementation JCConversationTableViewCell
+@implementation JCGroupConvoTableViewCell
 
-# define PRESENCE_POSITION CGRectMake(63, 9, 16, 16)
+- (void)awakeFromNib
+{
+    // Initialization code
+}
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        NSArray *bundleArray = [[NSBundle mainBundle] loadNibNamed:@"JCConversationCell" owner:self options:nil];
+        NSArray *bundleArray = [[NSBundle mainBundle] loadNibNamed:@"JCGroupConvoTableViewCell" owner:self options:nil];
         self = bundleArray[0];
         [self setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     }
@@ -48,8 +51,6 @@
         }
         
         ClientEntities * person = [[JCOmniPresence sharedInstance] entityByEntityId:firstEntity];
-        
-
         if (person) {
             _person = person;
             // add observer to the person presence, even if it's a group, just so our app don't break.
@@ -59,29 +60,18 @@
             if ([_conversation.isGroup boolValue]) {
                 self.conversationTitle.text = _conversation.name;
                 
-                // if it's a group, we don't need to set presence and we can hide it and we can move our
-                // name label origin to the right.
-                self.presenceView.hidden = YES;
-                
                 [self createComposedImageForGroup];
             }
             else {
                 self.conversationTitle.text = person.firstLastName;
                 
-                 // if it's a person we want to set presence;
                 
-                self.presenceView.presenceType = (JCPresenceType)[person.entityPresence.interactions[@"chat"][@"code"] integerValue];
-                
-                self.presenceView.hidden = NO;
                 
                 UIImageView *singleImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
                 [singleImage setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];
                 [self.conversationThumbnailView addSubview:singleImage];
+                //[self.conversationImage setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];
             }
-        }
-        else
-        {
-            self.conversationTitle.text = NSLocalizedString(@"Unknown", nil);
         }
         
         // set the conversastion time label
@@ -114,28 +104,6 @@
         else {
             _conversationUnseenMessages.hidden = YES;
         }
-        
-        [self adjustTitlePositionPresenceVisibility];
-    }
-}
-
-- (void) adjustTitlePositionPresenceVisibility
-{
-    if (self.presenceView.hidden) {
-            //Group message styling
-        
-        
-        self.conversationTitle.bounds = CGRectMake((self.conversationTitle.bounds.origin.x - kShiftNameLabelThisMuch),
-                                           self.conversationTitle.bounds.origin.y,
-                                           self.conversationTitle.bounds.size.width,
-                                           self.conversationTitle.bounds.size.height);
-//        self.nameLabel.bounds
-        //            [self.spinningWheel performSelectorOnMainThread:@selector(stopAnimating) withObject:nil waitUntilDone:NO];
-
-    }
-    else
-    {// chat with one other person styling
-        
     }
 }
 
@@ -143,7 +111,6 @@
 {
     [super prepareForReuse];
     [[self.conversationThumbnailView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    [self setNeedsDisplay];
     [self removeObservers];
 }
 
@@ -219,14 +186,10 @@
         Conversation *conversation = (Conversation *)object;
         NSArray * conversationEntries = [ConversationEntry MR_findByAttribute:@"conversationId" withValue:conversation.conversationId andOrderBy:@"lastModified" ascending:NO];
         if (conversationEntries.count > 0) {
-            ConversationEntry *lastEntry = conversationEntries[0];            
+            ConversationEntry *lastEntry = conversationEntries[0];
             self.conversationSnippet.text = lastEntry.message[@"raw"];
             //self.conversationTime.text = [self unixTimestapToDate:(int)lastEntry.lastModified];
         }
-    }
-    else if ([keyPath isEqualToString:kPresenceKeyPathForClientEntity]) {
-        ClientEntities *person = (ClientEntities *)object;
-        self.presenceView.presenceType = (JCPresenceType)[person.entityPresence.interactions[@"chat"][@"code"] integerValue];
     }
 }
 

@@ -68,6 +68,9 @@
 #define kSocketPermanentRooms @"permanentrooms"
 #define kSocketVoicemail @"voicemail"
 
+#pragma mark - UIConstants
+#define kShiftNameLabelThisMuch 5.0
+
 #pragma mark - Debug Helpers
 #define kVoicemailURLOverRide @"NoDontUseAWSPlaceholderURL"
 //change to @"YesUseAWSPlaceholderURL" to toggle AWS Voicemail wav file
