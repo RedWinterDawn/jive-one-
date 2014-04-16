@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCConversationTableViewCell.h"
+#import "JCConversationCell.h"
 #import "ConversationEntry+Custom.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "Common.h"
 #import "Constants.h"
 
-@implementation JCConversationTableViewCell
+@implementation JCConversationCell
 
 # define PRESENCE_POSITION CGRectMake(63, 9, 16, 16)
 

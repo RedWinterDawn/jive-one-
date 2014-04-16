@@ -10,7 +10,7 @@
 #import "Conversation+Custom.h"
 #import "JCPresenceView.h"
 
-@interface JCConversationTableViewCell : UITableViewCell
+@interface JCConversationCell : UITableViewCell
 
 @property (strong, nonatomic) IBOutlet UILabel *conversationTitle;
 @property (weak, nonatomic) IBOutlet UILabel *conversationSnippet;

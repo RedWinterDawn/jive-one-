@@ -295,7 +295,7 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uMz-cm-hR5">
+                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uMz-cm-hR5">
                                             <rect key="frame" x="212" y="0.0" width="108" height="44"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" title="Start Chat">
@@ -314,10 +314,10 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="uMz-cm-hR5" secondAttribute="trailing" id="R46-NP-NDQ"/>
-                                        <constraint firstItem="uMz-cm-hR5" firstAttribute="top" secondItem="zY2-Ui-cfZ" secondAttribute="top" id="VqN-5F-bbN"/>
-                                        <constraint firstItem="uMz-cm-hR5" firstAttribute="leading" secondItem="Opf-zp-s5x" secondAttribute="trailing" constant="83" id="cH4-wc-kmD"/>
-                                        <constraint firstAttribute="bottom" secondItem="uMz-cm-hR5" secondAttribute="bottom" constant="-1" id="xQM-Kp-XxL"/>
+                                        <constraint firstAttribute="trailing" secondItem="uMz-cm-hR5" secondAttribute="trailing" id="6OC-Bi-1rO"/>
+                                        <constraint firstItem="uMz-cm-hR5" firstAttribute="top" secondItem="zY2-Ui-cfZ" secondAttribute="top" id="SHC-mG-swx"/>
+                                        <constraint firstAttribute="bottom" secondItem="uMz-cm-hR5" secondAttribute="bottom" constant="-1" id="Tl1-0i-Ak8"/>
+                                        <constraint firstItem="uMz-cm-hR5" firstAttribute="leading" secondItem="Opf-zp-s5x" secondAttribute="trailing" constant="83" id="i5y-es-BpR"/>
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -519,26 +519,23 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zyf-z6-zcn" customClass="MBContactPicker">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="31"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="33"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="31" id="zOX-mr-SDg"/>
-                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="zyf-z6-zcn" firstAttribute="leading" secondItem="cEM-6q-DDe" secondAttribute="leading" id="1n4-kE-0ho"/>
-                            <constraint firstAttribute="trailing" secondItem="zyf-z6-zcn" secondAttribute="trailing" id="UxS-zG-E3f"/>
-                            <constraint firstItem="zyf-z6-zcn" firstAttribute="top" secondItem="cEM-6q-DDe" secondAttribute="top" id="tVP-xd-M0N"/>
+                            <constraint firstItem="zyf-z6-zcn" firstAttribute="top" secondItem="cEM-6q-DDe" secondAttribute="top" id="88w-sd-09B"/>
+                            <constraint firstItem="zyf-z6-zcn" firstAttribute="leading" secondItem="cEM-6q-DDe" secondAttribute="leading" id="KP7-Vd-Vb2"/>
+                            <constraint firstItem="NRK-NG-r9K" firstAttribute="top" secondItem="zyf-z6-zcn" secondAttribute="bottom" constant="422" id="RHz-eu-G84"/>
+                            <constraint firstAttribute="trailing" secondItem="zyf-z6-zcn" secondAttribute="trailing" id="x52-r2-IfC"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="n1O-hC-4V2"/>
                     <connections>
                         <outlet property="contactPickerView" destination="zyf-z6-zcn" id="xgG-7E-2t2"/>
-                        <outlet property="contactPickerViewHeightConstraint" destination="zOX-mr-SDg" id="tVg-jX-0ri"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XuZ-GW-bg4" userLabel="First Responder" sceneMemberID="firstResponder"/>

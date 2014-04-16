@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCGroupConvoTableViewCell.h"
+#import "JCGroupConversationCell.h"
 #import "ConversationEntry+Custom.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "Common.h"
 #import "Constants.h"
 
-@implementation JCGroupConvoTableViewCell
+@implementation JCGroupConversationCell
 
 - (void)awakeFromNib
 {
@@ -23,7 +23,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        NSArray *bundleArray = [[NSBundle mainBundle] loadNibNamed:@"JCGroupConvoTableViewCell" owner:self options:nil];
+        NSArray *bundleArray = [[NSBundle mainBundle] loadNibNamed:@"JCGroupConversationCell" owner:self options:nil];
         self = bundleArray[0];
         [self setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     }

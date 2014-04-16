@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Conversation+Custom.h"
 
-@interface JCGroupConvoTableViewCell : UITableViewCell
+@interface JCGroupConversationCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UILabel *conversationTitle;
 @property (strong, nonatomic) IBOutlet UILabel *conversationTime;
 @property (strong, nonatomic) IBOutlet UIView *conversationThumbnailView;
