@@ -1525,7 +1525,6 @@
 				INFOPLIST_FILE = "JiveOne/JiveOne-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/egueiros/Downloads/TestFlightSDK,
 					"$(PROJECT_DIR)/JiveOne/TestFlightSDK3.0.0",
 				);
 				ONLY_ACTIVE_ARCH = YES;
@@ -1673,7 +1672,6 @@
 				INFOPLIST_FILE = "JiveOne/JiveOne-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/egueiros/Downloads/TestFlightSDK,
 					"$(PROJECT_DIR)/JiveOne/TestFlightSDK3.0.0",
 				);
 				ONLY_ACTIVE_ARCH = YES;
@@ -1723,7 +1721,6 @@
 				INFOPLIST_FILE = "JiveOne/JiveOne-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/egueiros/Downloads/TestFlightSDK,
 					"$(PROJECT_DIR)/JiveOne/TestFlightSDK3.0.0",
 				);
 				ONLY_ACTIVE_ARCH = YES;
