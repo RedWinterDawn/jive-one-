@@ -16,6 +16,7 @@
 #import "JSMessage.h"
 #import "Common.h"
 #import "JCAppDelegate.h"
+#import "TRVSMonitor.h"
 
 @interface JCMessagesViewController ()
 {
@@ -492,12 +493,14 @@
     
     NSMutableArray *messages;
     if([unsentQueue objectForKey:conversationId]){
-        messages  = [unsentQueueMutable objectForKey:conversationId];
+        //use existing array for this conversation
+        messages  = [NSMutableArray arrayWithArray:[unsentQueueMutable objectForKey:conversationId]];
     }
     else{
+        //create new array to hold actual messages
         messages = [[NSMutableArray alloc] init];
-        [unsentQueueMutable setObject:messages forKey:conversationId];
     }
+    [unsentQueueMutable setObject:messages forKey:conversationId];
     [messages addObject:message];
     
     //save queue to user defaults
@@ -507,27 +510,38 @@
 
 //when connectvitity is restored this method is called. this method retrives a queue of unsent messages from user defaults and begins sending them.
 +(void) sendOfflineMessagesQueue{
-    NSDictionary *unsentMessagesQueue = [[NSUserDefaults standardUserDefaults] objectForKey:@"unsentMessageQueue"];
+    NSDictionary *unsentMessagesQueueOld = [[NSUserDefaults standardUserDefaults] objectForKey:@"unsentMessageQueue"];
+    NSMutableDictionary *unsentMessagesQueueNew = [[NSMutableDictionary alloc] init];
 
-    [unsentMessagesQueue enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSArray *messages, BOOL *stop) {
-        __block BOOL removeKey = YES;
+    [unsentMessagesQueueOld enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSArray *messages, BOOL *stop) {
+        TRVSMonitor *monitor = [TRVSMonitor monitor];
+        __block NSMutableArray *messagesMutable = [[NSMutableArray alloc] init];
         for(int i=0;i<messages.count;i++){
             
             [[JCOsgiClient sharedClient] SubmitChatMessageForConversation:key message:messages[i] withEntity:nil success:^(id JSON) {
+                NSLog(@"inside block. messages[i]:%@", messages[i]);
                 [JSMessageSoundEffect playMessageSentSound];
-                
+                [monitor signal];
             } failure:^(NSError *err) {
-                removeKey = NO;
-                [self handleFailedMessageDispatch:key withMessage:messages[i]];
+                [messagesMutable addObject:messages[i]];
+                [monitor signal];
             }];
+            
+            
         }
-        //remove key from unsentQueue dictionary so long as there were no failures
-        if(removeKey){
-         //TODO: remove stuff
+        [monitor waitWithTimeout:10];
+        if(messagesMutable.count!=0){
+            //if there are messages left resave the messages array to the queue
+            [unsentMessagesQueueNew setObject:messagesMutable forKey:key];
+        }else{
+            [unsentMessagesQueueNew removeObjectForKey:key];
         }
+        //save the queue to user defaults
+        [[NSUserDefaults standardUserDefaults] setObject:unsentMessagesQueueNew forKey:@"unsentMessageQueue"];
+
     }];
-    //    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"unsentMessageQueue"];
 }
+
 
 - (void)createConversation:(NSString *)message
 {
