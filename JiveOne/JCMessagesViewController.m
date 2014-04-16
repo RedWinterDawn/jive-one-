@@ -508,36 +508,44 @@
 
 }
 
+
 //when connectvitity is restored this method is called. this method retrives a queue of unsent messages from user defaults and begins sending them.
 +(void) sendOfflineMessagesQueue{
     NSDictionary *unsentMessagesQueueOld = [[NSUserDefaults standardUserDefaults] objectForKey:@"unsentMessageQueue"];
     NSMutableDictionary *unsentMessagesQueueNew = [[NSMutableDictionary alloc] init];
+    
+    
 
     [unsentMessagesQueueOld enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSArray *messages, BOOL *stop) {
-        TRVSMonitor *monitor = [TRVSMonitor monitor];
-        __block NSMutableArray *messagesMutable = [[NSMutableArray alloc] init];
+         __block NSMutableArray *messagesMutable = [[NSMutableArray alloc] init];
         for(int i=0;i<messages.count;i++){
             
             [[JCOsgiClient sharedClient] SubmitChatMessageForConversation:key message:messages[i] withEntity:nil success:^(id JSON) {
+                
                 NSLog(@"inside block. messages[i]:%@", messages[i]);
                 [JSMessageSoundEffect playMessageSentSound];
-                [monitor signal];
+                //if there are messages left this will resave the messages array to the queue
+                NSLog(@"success callback. Something in messagesMutable:%@", messagesMutable);
+                [unsentMessagesQueueNew setObject:messagesMutable forKey:key];
+                
+                //save the queue to user defaults
+                NSLog(@"success callback Saving to user defaults");
+                [[NSUserDefaults standardUserDefaults] setObject:unsentMessagesQueueNew forKey:@"unsentMessageQueue"];
             } failure:^(NSError *err) {
+                NSLog(@"Failed to send. and here's the error:%@",err);
                 [messagesMutable addObject:messages[i]];
-                [monitor signal];
+                
+                //if there are messages left this will resave the messages array to the queue
+                NSLog(@"failure callback. Something in messagesMutable:%@", messagesMutable);
+                [unsentMessagesQueueNew setObject:messagesMutable forKey:key];
+                
+                //save the queue to user defaults
+                NSLog(@" failure callback Saving to user defaults");
+                [[NSUserDefaults standardUserDefaults] setObject:unsentMessagesQueueNew forKey:@"unsentMessageQueue"];
             }];
             
-            
-        }
-        [monitor waitWithTimeout:10];
-        if(messagesMutable.count!=0){
-            //if there are messages left resave the messages array to the queue
-            [unsentMessagesQueueNew setObject:messagesMutable forKey:key];
-        }else{
-            [unsentMessagesQueueNew removeObjectForKey:key];
-        }
-        //save the queue to user defaults
-        [[NSUserDefaults standardUserDefaults] setObject:unsentMessagesQueueNew forKey:@"unsentMessageQueue"];
+        };
+       
 
     }];
 }
