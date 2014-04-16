@@ -205,12 +205,17 @@
     CGSize bubbleSizeForMessage = [JSBubbleView neededSizeForText:self.textView.text];
     CGSize bubbleSizeForSender = [JSBubbleView neededSizeForText:self.textViewSender.text];
     
-    CGSize selected = bubbleSizeForMessage.width > bubbleSizeForSender.width? bubbleSizeForMessage : bubbleSizeForSender;
+    float width = MAX(bubbleSizeForMessage.width, bubbleSizeForSender.width);
+    float height = MAX(bubbleSizeForMessage.height, bubbleSizeForSender.height);
     
-    return CGRectIntegral(CGRectMake((self.type == JSBubbleMessageTypeOutgoing ? self.frame.size.width - selected.width : 0.0f),
-                                     kMarginTop,
-                                     selected.width,
-                                     selected.height + kMarginTop));
+    CGSize selected = CGSizeMake(width, height);
+    
+    CGRect rect = CGRectMake((self.type == JSBubbleMessageTypeOutgoing ? self.frame.size.width - selected.width : 0.0f),
+                             kMarginTop,
+                             selected.width,
+                             selected.height + kMarginTop);
+    
+    return CGRectIntegral(rect);
 }
 
 #pragma mark - Layout
@@ -238,7 +243,7 @@
                                         self.textView.frame.size.height, self.bubbleImageView.frame.size.width - (self.bubbleImageView.image.capInsets.right / 2.0f),
                                         20);
     
-    self.textViewSender.frame = senderTextFrame;
+    self.textViewSender.frame =CGRectIntegral(senderTextFrame);
 }
 
 #pragma mark - Bubble view

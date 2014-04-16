@@ -233,12 +233,12 @@ static const CGFloat kJSSubtitleLabelHeight = 15.0f;
 
 - (void)setText:(NSString *)text
 {
-    self.bubbleView.textView.text = text;
+    self.bubbleView.textView.text = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 }
 
 - (void)setBubleSender:(NSString *)text
 {
-    self.bubbleView.textViewSender.text = text;
+    self.bubbleView.textViewSender.text = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 }
 
 - (void)setTimestamp:(NSDate *)date
