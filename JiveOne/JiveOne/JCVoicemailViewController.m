@@ -188,7 +188,6 @@ integer_t const oldVoicemails = 1;
 
 - (NSData*)getVoiceMailDataUsingString: (NSString*)URLString
 {
-    NSData *audioData = [[NSData alloc]init];
     //TODO: Add Progress wheel of happiness
     NSData* (^getVoicemailData)(NSString*) = ^(NSString* path){
         NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:path]];
@@ -197,13 +196,10 @@ integer_t const oldVoicemails = 1;
         dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         docsDir = [dirPaths objectAtIndex:0];
         
-        NSString *filePath = [self getLocalVoicemailFilePathUsingURN:path];
-        NSString *databasePath = [[NSString alloc] initWithString: [docsDir stringByAppendingPathComponent:filePath]];
-//        [data writeToFile:databasePath atomically:YES];
         
         return data;
     };
-    return audioData = getVoicemailData(URLString);
+    return getVoicemailData(URLString);
 }
 
 //when the voicemail has been played, this is the callback
