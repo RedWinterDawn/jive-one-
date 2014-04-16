@@ -188,15 +188,9 @@ integer_t const oldVoicemails = 1;
 
 - (NSData*)getVoiceMailDataUsingString: (NSString*)URLString
 {
-    //TODO: Add Progress wheel of happiness
     NSData* (^getVoicemailData)(NSString*) = ^(NSString* path){
         NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:path]];
-        NSString *docsDir;
-        NSArray *dirPaths;
-        dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        docsDir = [dirPaths objectAtIndex:0];
-        
-        
+    
         return data;
     };
     return getVoicemailData(URLString);
