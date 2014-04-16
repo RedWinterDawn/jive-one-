@@ -45,6 +45,20 @@
 /*
      Request Session Posts information to the API. The returned values are used to stablish a connection to the socket.
  */
+
+- (SRReadyState)socketState
+{
+    return _webSocket.readyState;
+}
+
+- (void)sendPoll
+{
+    if ([self socketState] == SR_OPEN) {
+        [_webSocket send:self.json_poll];
+    }
+}
+
+
 - (void)requestSession
 {
     NSLog(@"Requestion Session For Socket");
@@ -260,6 +274,8 @@
     else if ([type isEqualToString:kSocketVoicemail]) {
         [(JCAppDelegate *)[UIApplication sharedApplication].delegate incrementBadgeCountForVoicemail];
     }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"kSocketEvent" object:message];
 }
 
 - (NSString *)getMessageType:(NSDictionary *)message

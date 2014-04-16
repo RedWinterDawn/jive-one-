@@ -20,6 +20,8 @@
 
 - (void)closeSocket;
 
+- (SRReadyState)socketState;
 
+- (void)sendPoll;
 
 @end
