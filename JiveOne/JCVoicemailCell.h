@@ -43,6 +43,7 @@
 #pragma mark - Methods
 +(NSString *)reuseIdentifier;
 +(CGFloat)cellHeightForData:(id)data selected:(BOOL)selected;
+-(void)setupAudioPlayer;
 -(void)configureWithItem:(Voicemail *)item andDelegate:(id)delegate;
 -(void)pause;
 -(void)stop;

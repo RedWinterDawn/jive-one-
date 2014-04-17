@@ -346,48 +346,72 @@ integer_t const oldVoicemails = 1;
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         //attempt to delete from server first
-        [self voiceCellDeleteTapped:(JCVoicemailCell*)[self.tableView cellForRowAtIndexPath:indexPath]];
+        [self voiceCellDeleteTapped:indexPath];
     }
 }
 
 #pragma mark - JCVoicemailCellDelegate
--(void)voiceCellDeleteTapped:(JCVoicemailCell *)cell {
+-(void)voiceCellDeleteTapped:(NSIndexPath *)indexPath {
     
-    [self.osgiClient DeleteVoicemail:cell.getVoicemailObject success:^(id JSON) {
-        
-        //delete from Core data
-        NSPredicate *pred = [NSPredicate predicateWithFormat:@"urn == %@", cell.getVoicemailObject.urn];
-        if(![Voicemail MR_deleteAllMatchingPredicate:pred]){
-            //TODO: alert user that deletion from core data was unsucessful
-            NSLog(@"Deletion from core data unsuccessful");
-        }else{
-            NSLog(@"%lu voicemails remaining in Core data", (unsigned long)[Voicemail MR_findAll].count);
+    Voicemail *voicemail = self.voicemails[indexPath.row];
+    [Voicemail markVoicemailForDeletion:voicemail.voicemailId managedContext:nil];
+    
+    [self.voicemails removeObjectAtIndex:indexPath.row];
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    
+    [self deleteVoicemailsInBackground];
+}
+
+- (void)deleteVoicemailsInBackground
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"deleted ==[c] %@", [NSNumber numberWithBool:YES]];
+    NSArray *deletedVoicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAllWithPredicate:predicate]];
+    
+    if (deletedVoicemails.count > 0) {
+        for (Voicemail *voice in deletedVoicemails) {
+            [[JCOsgiClient sharedClient] DeleteVoicemail:voice success:^(id JSON) {
+                [Voicemail deleteVoicemail:voice.voicemailId managedContext:nil];
+            } failure:^(NSError *err) {
+                NSLog(@"%@", err);
+            }];
         }
-        
-        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-        
-        //delete from self.voicemails
-        [self.voicemails removeObjectAtIndex:indexPath.row];
-        
-        //update view
-        [self.tableView reloadData];
-//        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        
-        //toast user
-        MBProgressHUD *toast = [MBProgressHUD showHUDAddedTo:[[[UIApplication sharedApplication] windows] lastObject] animated:YES];
-        toast.mode = MBProgressHUDModeText;
-        toast.labelText = @"Successfully Deleted";
-        toast.userInteractionEnabled = YES;
-        toast.margin = 10.f;
-        toast.yOffset = 150.f;
-        [toast hide:YES afterDelay:2];
-        [toast show:YES];
-    } failure:^(NSError *err) {
-        //alert user that deleting from server failed
-        NSLog(@"%@",err);
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Deletion unsuccessful" message:@"Please try again when you have data connectivity" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
-    }];
+    }
+    
+//    [self.osgiClient DeleteVoicemail:cell.getVoicemailObject success:^(id JSON) {
+//        
+//        //delete from Core data
+//        NSPredicate *pred = [NSPredicate predicateWithFormat:@"urn == %@", cell.getVoicemailObject.urn];
+//        if(![Voicemail MR_deleteAllMatchingPredicate:pred]){
+//            //TODO: alert user that deletion from core data was unsucessful
+//            NSLog(@"Deletion from core data unsuccessful");
+//        }else{
+//            NSLog(@"%lu voicemails remaining in Core data", (unsigned long)[Voicemail MR_findAll].count);
+//        }
+//        
+//        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+//        
+//        //delete from self.voicemails
+//        [self.voicemails removeObjectAtIndex:indexPath.row];
+//        
+//        //update view
+//        [self.tableView reloadData];
+//        //        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//        
+//        //toast user
+//        MBProgressHUD *toast = [MBProgressHUD showHUDAddedTo:[[[UIApplication sharedApplication] windows] lastObject] animated:YES];
+//        toast.mode = MBProgressHUDModeText;
+//        toast.labelText = @"Successfully Deleted";
+//        toast.userInteractionEnabled = YES;
+//        toast.margin = 10.f;
+//        toast.yOffset = 150.f;
+//        [toast hide:YES afterDelay:2];
+//        [toast show:YES];
+//    } failure:^(NSError *err) {
+//        //alert user that deleting from server failed
+//        NSLog(@"%@",err);
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Deletion unsuccessful" message:@"Please try again when you have data connectivity" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//        [alert show];
+//    }];
 
 }
 
@@ -420,6 +444,8 @@ integer_t const oldVoicemails = 1;
     // if a selected cell is not the actively selected cell
     if (![cell.voicemailObject isEqual:self.currentVoicemailCell.voicemailObject]) {
         [self changeSelectedVoicemailCell:cell];
+        [cell stop];
+        [cell setupAudioPlayer];
     }// if the selected cell is the actively selected cell
     else {
         [self changeSelectedVoicemailCell:nil];

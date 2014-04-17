@@ -10,7 +10,8 @@
 #import "Constants.h"
 
 @implementation Voicemail (Custom)
-  
+
+
 + (NSArray *)RetrieveVoicemailById:(NSString *)conversationId
 {
     NSArray *conversations = [super MR_findByAttribute:@"conversationId" withValue:conversationId andOrderBy:@"lastModified" ascending:YES];
@@ -71,7 +72,12 @@
         vmail.voicemailId = dictionary[@"id"];
         vmail.deleted = [NSNumber numberWithBool:NO];
         //Save conversation entry
-        [context MR_saveToPersistentStoreAndWait];
+        @try {
+            [context MR_saveToPersistentStoreAndWait];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"%@", exception);
+        }
     }
     return vmail;
 }
@@ -108,7 +114,12 @@
 
         
         //Save conversation dictionary
-        [context MR_saveToPersistentStoreAndWait];
+        @try {
+            [context MR_saveToPersistentStoreAndWait];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"%@", exception);
+        }
     }
     
     return vmail;
@@ -123,41 +134,79 @@
     dispatch_async(queue, ^{
         NSArray *voicemails = [Voicemail MR_findAllWithPredicate:pred inContext:context];
         for (Voicemail *vm in voicemails) {
-            if ([kVoicemailURLOverRide  isEqual:@"YesUseAWSPlaceholderURL"]) {
-                vm.voicemail = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"https://s3-us-west-2.amazonaws.com/jive-mobile/voicemail/userId/dleonard/TestVoicemail2.wav"]];
-            }else{
-                vm.voicemail = [NSData dataWithContentsOfURL:[NSURL URLWithString:vm.file]];
-                [context MR_saveToPersistentStoreAndWait];
+            @try {
+                if ([kVoicemailURLOverRide  isEqual:@"YesUseAWSPlaceholderURL"]) {
+                    vm.voicemail = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"https://s3-us-west-2.amazonaws.com/jive-mobile/voicemail/userId/dleonard/TestVoicemail2.wav"]];
+                }else{
+                    vm.voicemail = [NSData dataWithContentsOfURL:[NSURL URLWithString:vm.file]];
+                    [context MR_saveToPersistentStoreAndWait];
+                }
             }
+            @catch (NSException *exception) {
+                NSLog(@"%@", exception);
+            }            
         }
     });
 }
 
-+ (Voicemail *)markVoicemailForDeletion:(Voicemail*)voicemail managedContext:(NSManagedObjectContext*)context
++ (Voicemail *)markVoicemailForDeletion:(NSString*)voicemailId managedContext:(NSManagedObjectContext*)context
 {
     if (!context) {
         context = [NSManagedObjectContext MR_contextForCurrentThread];
     }
     
-    voicemail.deleted = [NSNumber numberWithBool:YES];
-    [context MR_saveToPersistentStoreAndWait];
+    Voicemail *voicemail = [Voicemail MR_findFirstByAttribute:@"voicemailId" withValue:voicemailId];
+    
+    if (voicemail) {
+        voicemail.deleted = [NSNumber numberWithBool:YES];
+        [context MR_saveToPersistentStoreAndWait];
+        
+        //save to deleted voicemail storage
+        NSArray * deletedArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"kDeletedVoicemail"];
+        NSMutableArray *deletedList = nil;
+        if (deletedArray) {
+            deletedList = [NSMutableArray arrayWithArray:deletedArray];
+        }
+        else {
+            deletedList = [NSMutableArray array];
+        }
+        
+        [deletedList addObject:voicemailId];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSArray arrayWithArray:deletedList] forKey:@"kDeletedVoicemail"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
     
     return voicemail;
 }
 
-+ (BOOL)deleteVoicemail:(Voicemail*)voicemail managedContext:(NSManagedObjectContext*)context
++ (BOOL)deleteVoicemail:(NSString*)voicemailId managedContext:(NSManagedObjectContext*)context
 {
     if (!context) {
         context = [NSManagedObjectContext MR_contextForCurrentThread];
     }
     
     //delete from Core data
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"voicemailId == %@", voicemail.voicemailId];
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"voicemailId == %@", voicemailId];
     BOOL deleted = [Voicemail MR_deleteAllMatchingPredicate:pred];
     if (deleted) {
         [context MR_saveToPersistentStoreAndWait];
+        
+        
     }
     return deleted;
+}
+
++ (BOOL)isVoicemailInDeletedList:(NSString*)voicemailId
+{
+    NSArray * deletedArray = [[NSUserDefaults standardUserDefaults] objectForKey:@"kDeletedVoicemail"];
+    NSMutableArray *deletedList = nil;
+    if (deletedArray) {
+        deletedList = [NSMutableArray arrayWithArray:deletedArray];
+        
+        return [deletedList containsObject:voicemailId];
+    }
+    
+    return NO;
 }
 
 

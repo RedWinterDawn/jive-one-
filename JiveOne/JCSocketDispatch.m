@@ -234,6 +234,7 @@
 {
     
     NSString *type = [self getMessageType:message];
+    NSString *operation = message[@"data"][@"operation"];
     NSDictionary *body = [[message objectForKey:@"data"] objectForKey:@"body"];
     
     if ([type isEqualToString:kSocketConversations] || [type isEqualToString:kSocketPermanentRooms]) {
@@ -273,8 +274,21 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:kPresenceChanged object:presence];        
     }
     else if ([type isEqualToString:kSocketVoicemail]) {
-        Voicemail *voicemail = [Voicemail addVoicemailEntry:body];
-        if (voicemail) {
+        
+        NSString *voicemailId = body[@"urn"];
+        
+        NSArray *voicemails = [Voicemail MR_findByAttribute:@"urn" withValue:voicemailId];
+        
+        BOOL voicemailHasBeenPreviouslyDeleted = [Voicemail isVoicemailInDeletedList:voicemailId];
+        
+        Voicemail *voicemail = nil;
+        if (!voicemailHasBeenPreviouslyDeleted) {
+            voicemail = [Voicemail addVoicemailEntry:body];
+        }        
+        
+        //there was no voicemail prior, and now we have one meaning it was successfullt added. Otherwise it was an update.
+        if (voicemails.count == 0 && voicemail) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kNewVoicemail object:voicemail];
             [(JCAppDelegate *)[UIApplication sharedApplication].delegate incrementBadgeCountForVoicemail];
         }
     }

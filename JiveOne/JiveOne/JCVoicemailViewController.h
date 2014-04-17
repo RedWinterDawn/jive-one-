@@ -18,7 +18,7 @@
 - (void)updateVoicemailData;
 - (void)reloadcell:(JCVoicemailCell *)cell;
 - (NSData*)getVoiceMailDataUsingString: (NSString*)String;
--(void)voiceCellDeleteTapped:(JCVoicemailCell *)cell;//exposed for testing
+-(void)voiceCellDeleteTapped:(NSIndexPath*)indexPath;//exposed for testing
 @property (nonatomic,strong) JCVoicemailCell *currentVoicemailCell;
 
 - (void)osgiClient:(JCOsgiClient*)client;

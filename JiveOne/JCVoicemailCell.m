@@ -94,10 +94,13 @@
 {
     if ([keyPath isEqualToString:kVoicemailKeyPathForVoicemal]) {
         Voicemail *voicemail = (Voicemail *)object;
-        self.voicemailObject = voicemail;
         
-        [self performSelectorOnMainThread:@selector(setupAudioPlayer) withObject:nil waitUntilDone:NO];
-        [self.spinningWheel performSelectorOnMainThread:@selector(stopAnimating) withObject:nil waitUntilDone:NO];
+        if (voicemail && voicemail.voicemailId != nil && voicemail.urn != nil && voicemail.file != nil) {
+            self.voicemailObject = voicemail;
+            
+            [self performSelectorOnMainThread:@selector(setupAudioPlayer) withObject:nil waitUntilDone:NO];
+            [self.spinningWheel performSelectorOnMainThread:@selector(stopAnimating) withObject:nil waitUntilDone:NO];
+        }
     }
 }
 
