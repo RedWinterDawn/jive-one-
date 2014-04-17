@@ -31,5 +31,6 @@
 @property (nonatomic, retain) NSString * mailboxId;
 @property (nonatomic, retain) NSString * folderId;
 @property (nonatomic, retain) NSString * extensionName;
+@property (nonatomic, retain) NSNumber * deleted;
 
 @end

@@ -30,5 +30,6 @@
 @dynamic mailboxId;
 @dynamic folderId;
 @dynamic extensionName;
+@dynamic deleted;
 
 @end
