@@ -295,7 +295,7 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" placeholderIntrinsicWidth="81" placeholderIntrinsicHeight="44" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O6n-6O-iB6">
+                                        <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="81" placeholderIntrinsicHeight="44" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O6n-6O-iB6">
                                             <rect key="frame" x="240" y="0.0" width="81" height="44"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" title="Start Chat">
@@ -313,6 +313,10 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="O6n-6O-iB6" firstAttribute="top" secondItem="Pyn-0Z-UOJ" secondAttribute="top" id="9d3-pz-u6Z"/>
+                                        <constraint firstItem="O6n-6O-iB6" firstAttribute="leading" secondItem="Pyn-0Z-UOJ" secondAttribute="leading" constant="240" id="KeN-YU-XmP"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DirectoryDetailMobileCell" textLabel="1eE-By-mjG" detailTextLabel="kmg-QN-rrX" style="IBUITableViewCellStyleSubtitle" id="i1Z-2E-D2y">
@@ -421,7 +425,7 @@
                                     </connections>
                                 </searchBar>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="70" id="qGS-1g-rim" customClass="JCPersonCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ChangeMeIfNeeded" rowHeight="70" id="qGS-1g-rim" customClass="JCPersonCell">
                                         <rect key="frame" x="0.0" y="130" width="768" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qGS-1g-rim" id="cfK-Sv-kmN">
@@ -474,7 +478,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="70" id="Rja-WN-L9j">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ChangMeIfNeeded" rowHeight="70" id="Rja-WN-L9j">
                                 <rect key="frame" x="0.0" y="86" width="768" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Rja-WN-L9j" id="GBi-Cs-uob">
@@ -512,22 +516,24 @@
                         <rect key="frame" x="0.0" y="64" width="768" height="911"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FYW-Ug-5Lz" customClass="MBContactPicker">
-                                <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FYW-Ug-5Lz" customClass="MBContactPicker">
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="43"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="31" id="Krc-9Z-n7d"/>
-                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ehf-tU-KTm" firstAttribute="top" secondItem="FYW-Ug-5Lz" secondAttribute="bottom" constant="868" id="Ld3-qg-hSO"/>
+                            <constraint firstAttribute="trailing" secondItem="FYW-Ug-5Lz" secondAttribute="trailing" id="YKg-wf-ze3"/>
+                            <constraint firstItem="FYW-Ug-5Lz" firstAttribute="top" secondItem="hbb-No-5f0" secondAttribute="top" id="l9D-3d-Iq8"/>
+                            <constraint firstItem="FYW-Ug-5Lz" firstAttribute="leading" secondItem="hbb-No-5f0" secondAttribute="leading" id="olO-Ke-K26"/>
+                        </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="4GI-GJ-JVs"/>
                     <connections>
                         <outlet property="contactPickerView" destination="FYW-Ug-5Lz" id="VvV-1w-Qp5"/>
-                        <outlet property="contactPickerViewHeightConstraint" destination="Krc-9Z-n7d" id="naX-1o-7v8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AgW-WU-nIO" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -804,6 +810,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="AEF-Rc-GNd"/>
+        <segue reference="xgZ-n3-zc7"/>
     </inferredMetricsTieBreakers>
 </document>

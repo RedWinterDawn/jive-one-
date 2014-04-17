@@ -17,7 +17,7 @@
 @end
 
 
-@interface JCPeopleDetailCell : UITableViewCell
+@interface JCPeopleDetailCell : UITableViewCell <JCPeopleDetailCellDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *NameLabel;
 @property (strong, nonatomic) IBOutlet JCPresenceView *presenceView;
