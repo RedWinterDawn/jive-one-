@@ -236,7 +236,7 @@
 {
 
     __block UIBackgroundFetchResult fetchResult = UIBackgroundFetchResultFailed;
-    __block BOOL requestFailed = NO;
+//    __block BOOL requestFailed = NO;
     TRVSMonitor *monitor = [TRVSMonitor monitor];
 //
 //    NSInteger preCount = [Conversation MR_findAll].count;
