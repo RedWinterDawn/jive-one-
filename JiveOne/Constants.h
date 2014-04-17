@@ -43,6 +43,7 @@
 #define kWebViewDismissal @"keywebviewdismissal"
 #define kNewConversation @"keynewconversation"
 #define kPresenceChanged @"keypresencechanged"
+#define kNewVoicemail @"keynewvoicemail"
 
 #pragma mark - OAuth Credentials
 #define kOAuthClientSecret @"enXabnU5KuVm4XRSWGkU"
