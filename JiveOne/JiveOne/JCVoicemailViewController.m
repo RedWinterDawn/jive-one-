@@ -172,7 +172,7 @@ integer_t const oldVoicemails = 1;
     NSRange startRange = [URN rangeOfString:@"/voicemail"];
     NSRange endRange = [URN rangeOfString:@".wav"];
     NSString *filePath = @"";
-    if (startRange.location >= 0 && endRange.location >= 0) {
+    if (startRange.location && endRange.location) {
         NSString *docsDir;
         NSArray *dirPaths;
         NSRange searchRange = NSMakeRange(startRange.location , ((endRange.length + endRange.location) - startRange.location));

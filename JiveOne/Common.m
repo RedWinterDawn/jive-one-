@@ -21,7 +21,7 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.timeZone = [NSTimeZone defaultTimeZone];
     
-    int days = [self differenceInDaysToDate:date];
+    int days = (int)[self differenceInDaysToDate:date];
     
     if (days == 0) {
         [formatter setDateFormat:@"HH:mm a"];
