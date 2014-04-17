@@ -582,10 +582,10 @@
 
 - (NSString *)composeGroupName:(NSArray *)names
 {
-    int originalCount = names.count;
+    int originalCount = (int)names.count;
     if (names.count > 3) {
         names = [names subarrayWithRange:NSMakeRange(0, 3)];
-        return [NSString stringWithFormat:@"%@, +%i", [names componentsJoinedByString:@"," ], (originalCount - names.count)];
+        return [NSString stringWithFormat:@"%@, +%lu", [names componentsJoinedByString:@"," ], (originalCount - names.count)];
     }
     else {
         return [names componentsJoinedByString:@", "];
