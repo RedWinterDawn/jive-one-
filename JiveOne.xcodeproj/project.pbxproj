@@ -1036,14 +1036,14 @@
 		277F093B18FECE5E00EEF0E3 /* Directory */ = {
 			isa = PBXGroup;
 			children = (
-				F2459BB018C67FC000AF56CF /* JCGroupSelectorViewController.h */,
-				F2459BB118C67FC000AF56CF /* JCGroupSelectorViewController.m */,
-				91260EDB18B2965900704670 /* JCDirectoryDetailViewController.h */,
-				91260EDC18B2965900704670 /* JCDirectoryDetailViewController.m */,
-				F258589018BD3A420020AF34 /* JCDirectoryGroupViewController.h */,
-				F258589118BD3A420020AF34 /* JCDirectoryGroupViewController.m */,
 				2751591D18AD303500FD8D3F /* JCDirectoryViewController.h */,
 				2751591E18AD303500FD8D3F /* JCDirectoryViewController.m */,
+				91260EDB18B2965900704670 /* JCDirectoryDetailViewController.h */,
+				91260EDC18B2965900704670 /* JCDirectoryDetailViewController.m */,
+				F2459BB018C67FC000AF56CF /* JCGroupSelectorViewController.h */,
+				F2459BB118C67FC000AF56CF /* JCGroupSelectorViewController.m */,
+				F258589018BD3A420020AF34 /* JCDirectoryGroupViewController.h */,
+				F258589118BD3A420020AF34 /* JCDirectoryGroupViewController.m */,
 			);
 			name = Directory;
 			sourceTree = "<group>";

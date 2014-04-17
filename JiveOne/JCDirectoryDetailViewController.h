@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "ClientEntities.h"
 #import "JCPersonCell.h"
+#import "JCPeopleDetailCell.h"
 
-@interface JCDirectoryDetailViewController : UITableViewController
+@interface JCDirectoryDetailViewController : UITableViewController <JCPeopleDetailCellDelegate>
 
 @property (strong, nonatomic) ClientEntities *person;
 @property (strong, nonatomic) NSDictionary *ABPerson;
