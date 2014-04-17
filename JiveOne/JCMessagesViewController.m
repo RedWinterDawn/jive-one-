@@ -23,12 +23,15 @@
     ClientEntities *me;
     NSString *title;
     NSString *subtitle;
+    JCOsgiClient *osgiClient;
 }
 
 @property (nonatomic) NSArray *contacts;
 @property (nonatomic) NSMutableArray *selectedContacts;
 @property (weak, nonatomic) IBOutlet MBContactPicker *contactPickerView;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contactPickerViewHeightConstraint;
+
+
 
 @end
 
@@ -510,7 +513,7 @@
 
 
 //when connectvitity is restored this method is called. this method retrives a queue of unsent messages from user defaults and begins sending them.
-+(void) sendOfflineMessagesQueue{
++(void) sendOfflineMessagesQueue:(JCOsgiClient*)osgiClient{
     NSDictionary *unsentMessagesQueueOld = [[NSUserDefaults standardUserDefaults] objectForKey:@"unsentMessageQueue"];
     NSMutableDictionary *unsentMessagesQueueNew = [[NSMutableDictionary alloc] init];
     
@@ -520,7 +523,7 @@
          __block NSMutableArray *messagesMutable = [[NSMutableArray alloc] init];
         for(int i=0;i<messages.count;i++){
             
-            [[JCOsgiClient sharedClient] SubmitChatMessageForConversation:key message:messages[i] withEntity:myEntity success:^(id JSON) {
+            [osgiClient SubmitChatMessageForConversation:key message:messages[i] withEntity:myEntity success:^(id JSON) {
                 
                 NSLog(@"inside block. messages[i]:%@", messages[i]);
                 [JSMessageSoundEffect playMessageSentSound];

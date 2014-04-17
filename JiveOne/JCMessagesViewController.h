@@ -10,6 +10,7 @@
 #import "JSMessagesViewController.h"
 #import <MBContactPicker/MBContactPicker.h>
 #import "ContactGroup.h"
+#import "JCOsgiClient.h"
 
 @interface JCMessagesViewController : JSMessagesViewController <JSMessagesViewDataSource, JSMessagesViewDelegate, UITableViewDataSource, MBContactPickerDelegate, MBContactPickerDataSource>
 
@@ -21,6 +22,7 @@
 @property (nonatomic) ContactGroup *contactGroup;
 @property (nonatomic) JCMessageType messageType;
 
-+(void) sendOfflineMessagesQueue;
+
++(void) sendOfflineMessagesQueue:(JCOsgiClient*)osgiClient;
 
 @end

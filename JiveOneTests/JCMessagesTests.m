@@ -36,7 +36,7 @@
 //assuming there is an unsent queue, test that upon connection restore, all messages are sent and the queue is emptied
 - (void) testUnsentMessageQueueIsSentOnConnectionRestore{
     
-    //setup queue of unsent messages and put in user defaults
+    //setup queue of unsent messages
     NSMutableDictionary *unsentQueue = [[NSMutableDictionary alloc] init];
     NSMutableArray * conversation1 = [[NSMutableArray alloc] init];
     [conversation1 addObject:@"message 1"];
@@ -48,23 +48,35 @@
     [conversation2 addObject:@"message 4"];
     [unsentQueue setObject:conversation2 forKey:@"conversation2"];//key should be the conversation id
     
+    //save unsent queue to user defaults
+    [[NSUserDefaults standardUserDefaults] setObject:unsentQueue forKey:@"unsentMessageQueue"];
+    
     //setup mock server so that
     //server shows that all messages were successfully sent
     id mockClient = [OCMockObject niceMockForClass:[JCOsgiClient class]];
-    [[mockClient expect] SubmitChatMessageForConversation:OCMOCK_ANY message:OCMOCK_ANY withEntity:[OCMArg any] success:^(id JSON) {
-        <#code#>
-    } failure:^(NSError *err) {
-        <#code#>
-    }];
+    [[mockClient expect] SubmitChatMessageForConversation:OCMOCK_ANY message:OCMOCK_ANY withEntity:[OCMArg any]
+                                                  success:[OCMArg checkWithBlock:^BOOL(void (^successBlock)(AFHTTPRequestOperation *, id))
+                                                           {
+                                                               //TODO:
+                                                               //call the code in the block callbackk
+                                                               
+                                                               successBlock(nil, @"200");//how to make fail?
+                                                               return YES;
+                                                           }]
+                                                  failure:OCMOCK_ANY];
     
-    //not sure how to imitate restoring the connection, so i'll just call the method (sendOfflineMessagesQueue) that gets triggered directly
-    [JCMessagesViewController sendOfflineMessagesQueue];
+    //not sure how to imitate restoring the connection, so i'll just call the method, (sendOfflineMessagesQueue) that gets triggered, directly
+    [JCMessagesViewController sendOfflineMessagesQueue:mockClient];
     
+    NSLog(@"%@", [[NSUserDefaults standardUserDefaults] objectForKey:@"unsentMessageQueue"]);
     
-    
-    
-    
-    //queue is empty
+    //assert queue is empty
+    for(NSString* convKey in unsentQueue){
+        
+        NSArray *messages = [unsentQueue objectForKey:convKey];
+        
+        XCTAssert(messages.count==0 , @"Queue should be empty of any messages");
+    }
     
     
 }
