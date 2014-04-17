@@ -194,6 +194,7 @@
 		DD28DA5218AEC4F5003BFC44 /* JCAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD28DA5118AEC4F5003BFC44 /* JCAccountViewController.m */; };
 		DD3BD9F418DCB1740080318E /* Voicemail+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = DD3BD9F318DCB1740080318E /* Voicemail+Custom.m */; };
 		DD50802918C7D60B00750DB4 /* JCDirectoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DD50802818C7D60B00750DB4 /* JCDirectoryTests.m */; };
+		DDA4B1ED190045040039EE3F /* JCMessagesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DDA4B1EC190045040039EE3F /* JCMessagesTests.m */; };
 		DDCE1E8718F3561D003A6615 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E8618F3561D003A6615 /* AudioToolbox.framework */; };
 		DDCE1E8918F35623003A6615 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E8818F35623003A6615 /* CFNetwork.framework */; };
 		DDCE1E8B18F3562D003A6615 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E8A18F3562D003A6615 /* CoreLocation.framework */; };
@@ -471,6 +472,7 @@
 		DD3BD9F218DCB1740080318E /* Voicemail+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Voicemail+Custom.h"; sourceTree = "<group>"; };
 		DD3BD9F318DCB1740080318E /* Voicemail+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Voicemail+Custom.m"; sourceTree = "<group>"; };
 		DD50802818C7D60B00750DB4 /* JCDirectoryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDirectoryTests.m; sourceTree = "<group>"; };
+		DDA4B1EC190045040039EE3F /* JCMessagesTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMessagesTests.m; sourceTree = "<group>"; };
 		DDCE1E8418F355FE003A6615 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		DDCE1E8618F3561D003A6615 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		DDCE1E8818F35623003A6615 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -985,6 +987,7 @@
 		275F4A7C18AD0FBC00D2F069 /* JiveOneTests */ = {
 			isa = PBXGroup;
 			children = (
+				DDA4B1EC190045040039EE3F /* JCMessagesTests.m */,
 				275F4A8218AD0FBC00D2F069 /* JiveOneTests.m */,
 				F2FEF42A18C91BBE0080D8CC /* JCDirectoryGroupTests.m */,
 				F2CB896D18D1226D006A9438 /* JCStartChatMockTests.m */,
@@ -1419,6 +1422,7 @@
 				272B61DE18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */,
 				275F4A8318AD0FBC00D2F069 /* JiveOneTests.m in Sources */,
 				2751592018AD303500FD8D3F /* JCDirectoryViewController.m in Sources */,
+				DDA4B1ED190045040039EE3F /* JCMessagesTests.m in Sources */,
 				DDFFB60118D2284E00372019 /* JCVoicemailVCTests.m in Sources */,
 				DD50802918C7D60B00750DB4 /* JCDirectoryTests.m in Sources */,
 				27426AC918B5303D00011635 /* JCOsgiClientTest.m in Sources */,
