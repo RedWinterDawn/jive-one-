@@ -436,7 +436,7 @@
                 }
             }
             
-            NSNumber *converationCount = [NSNumber numberWithInt:count];
+            NSNumber *converationCount = [NSNumber numberWithInt:(int)count];
             [tabController.viewControllers[2] tabBarItem].badgeValue = count == 0 ? nil : [converationCount stringValue];
             
             if (converationCount != 0 || voicemailCount != 0) {
@@ -454,13 +454,13 @@
         NSString *alertMessage = @"You have ";
         
         if (voicemailCount != 0 && conversationCount != 0) {
-            alertMessage  = [alertMessage stringByAppendingString:[NSString stringWithFormat:@"%i new voicemail(s) and %i new conversation(s).", voicemailCount, conversationCount]];
+            alertMessage  = [alertMessage stringByAppendingString:[NSString stringWithFormat:@"%ld new voicemail(s) and %ld new conversation(s).", voicemailCount, conversationCount]];
         }
         else if (voicemailCount != 0) {
-            alertMessage  = [alertMessage stringByAppendingString:[NSString stringWithFormat:@"%i new voicemail(s).", voicemailCount]];
+            alertMessage  = [alertMessage stringByAppendingString:[NSString stringWithFormat:@"%ld new voicemail(s).", voicemailCount]];
         }
         else if (conversationCount != 0) {
-            alertMessage  = [alertMessage stringByAppendingString:[NSString stringWithFormat:@"%i new conversation(s).", voicemailCount]];
+            alertMessage  = [alertMessage stringByAppendingString:[NSString stringWithFormat:@"%ld new conversation(s).", voicemailCount]];
         }
         
         UILocalNotification *localNotification = [[UILocalNotification alloc] init];
