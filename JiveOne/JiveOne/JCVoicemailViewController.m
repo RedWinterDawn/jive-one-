@@ -11,7 +11,7 @@
 #import "JCVoicemailViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import "JCOsgiClient.h"
-#import "Voicemail.h"
+#import "Voicemail+Custom.h"
 #import "JCVoicemailCell.h"
 #import "MBProgressHUD.h"
 #import "JCAppDelegate.h"
@@ -94,15 +94,24 @@ integer_t const oldVoicemails = 1;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     
-    self.voicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAllSortedBy:@"createdDate" ascending:NO]];
     
     [self setupTable];
+    [self loadVoicemails];
+    
     [self updateVoicemailData];
     
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc]
                                         init];
     [refreshControl addTarget:self action:@selector(updateTable) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveNewVoicemail:) name:kNewVoicemail object:nil];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kNewVoicemail object:nil];
 }
 
 - (void)showHudWithTitle:(NSString*)title detail:(NSString*)detail
@@ -127,6 +136,26 @@ integer_t const oldVoicemails = 1;
 }
 
 
+- (void)didReceiveNewVoicemail:(NSNotification *)notification
+{
+    [self loadVoicemails];
+}
+
+- (void)loadVoicemails
+{
+    
+    if (self.voicemails) {
+        [self.voicemails removeAllObjects];
+    }
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"deleted ==[c] %@", [NSNumber numberWithBool:NO]];    
+    self.voicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAllSortedBy:@"createdDate" ascending:NO withPredicate:predicate]];
+    
+    
+    [self.tableView reloadData];
+}
+
+
 - (void)setupTable
 {
     UINib *voicemailNib = [UINib nibWithNibName:@"JCVoicemailCell" bundle:nil];
@@ -141,14 +170,10 @@ integer_t const oldVoicemails = 1;
     [self showHudWithTitle:NSLocalizedString(@"Fetching Voicemail", nil) detail:nil];
     [self.osgiClient RetrieveVoicemailForEntity:me success:^(id JSON) {
         //clear self.voicemails in case of refresh
-        NSLog(@"%@",JSON);
-        self.voicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAllSortedBy:@"createdDate" ascending:NO]];
-        
-        
+        //NSLog(@"%@",JSON);
         NSLog(@"Currently %i voicemail(s) in core data", (int)[Voicemail MR_findAll].count);
         
-        
-        [self.tableView reloadData];
+        [self loadVoicemails];
         [self hideHud];
     } failure:^(NSError *err) {
         [self hideHud];
@@ -306,15 +331,15 @@ integer_t const oldVoicemails = 1;
     
 }
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    Voicemail *vmail = [self itemAtIndexPath:indexPath];
-    if([self.currentVoicemailCell.voicemailObject isEqual:vmail]){//TODO:switch to asking cell if it is expanded
-        return NO;
-    }
-    else
-        return YES;
-    
-}
+//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+//    Voicemail *vmail = [self itemAtIndexPath:indexPath];
+//    if([self.currentVoicemailCell.voicemailObject isEqual:vmail]){//TODO:switch to asking cell if it is expanded
+//        return NO;
+//    }
+//    else
+//        return YES;
+//    
+//}
 
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
