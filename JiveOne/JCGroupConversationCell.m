@@ -123,7 +123,7 @@
     }
 }
 -(void)recurseAndReplaceSubViewIfDeleteConfirmationControl:(NSArray*)subviews{
-    NSString *delete_button_name = @"close_notification";
+    NSString *delete_button_name = @"vm-delete.png";
     for (UIView *subview in subviews)
     {
         //handles ios6 and earlier

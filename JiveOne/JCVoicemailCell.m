@@ -192,7 +192,7 @@
     }
 }
 -(void)recurseAndReplaceSubViewIfDeleteConfirmationControl:(NSArray*)subviews{
-    NSString *delete_button_name = @"close_notification";
+    NSString *delete_button_name = @"vm-delete.png";
     for (UIView *subview in subviews)
     {
         //handles ios6 and earlier
@@ -309,6 +309,7 @@
 #pragma mark - AVAudioPlayerDelegate
 -(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
     [self stopProgressTimer];
+    [self.playButton setImage:[UIImage imageNamed:@"voicemail_scrub_play.png"] forState:UIControlStateNormal];
 }
 
 -(void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error {
