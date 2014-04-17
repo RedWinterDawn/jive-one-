@@ -14,7 +14,9 @@
 + (void)addVoicemails:(NSArray *)entryArray;
 + (Voicemail *)addVoicemailEntry:(NSDictionary*)entry;
 + (Voicemail *)addVoicemail:(NSDictionary*)dictionary withManagedContext:(NSManagedObjectContext *)context;
-+ (Voicemail *)updateVoicemail:(Voicemail*)vmail withDictionary:(NSDictionary*)dictionary managedContext:(NSManagedObjectContext *)context;
++ (Voicemail *)updateVoicemail:(Voicemail*)voicemail withDictionary:(NSDictionary*)dictionary managedContext:(NSManagedObjectContext *)context;
++ (Voicemail *)markVoicemailForDeletion:(Voicemail*)voicemail managedContext:(NSManagedObjectContext*)context;
++ (BOOL)deleteVoicemail:(Voicemail*)voicemail managedContext:(NSManagedObjectContext*)context;
 + (void)fetchVoicemailInBackground;
 
 @end

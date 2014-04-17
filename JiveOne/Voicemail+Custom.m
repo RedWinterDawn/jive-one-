@@ -69,6 +69,7 @@
         vmail.createdDate = [NSNumber numberWithLongLong:[dictionary[@"createdDate"] longLongValue]];
         vmail.urn = dictionary[@"urn"];
         vmail.voicemailId = dictionary[@"id"];
+        vmail.deleted = [NSNumber numberWithBool:NO];
         //Save conversation entry
         [context MR_saveToPersistentStoreAndWait];
     }
@@ -82,24 +83,26 @@
     }
     
     // if last modified timestamps are the same, then there's no need to update anything.
-    long lastModifiedFromEntity = [vmail.lastModified integerValue];
-    long lastModifiedFromDictionary = [dictionary[@"lastModified"] integerValue];
+    long lastModifiedFromEntity = [vmail.lastModified longLongValue];
+    long lastModifiedFromDictionary = [dictionary[@"lastModified"] longLongValue];
     
     if (lastModifiedFromDictionary > lastModifiedFromEntity) {
         
-        vmail.callerName = dictionary[@"callerName"];
-        vmail.callerNumber = dictionary[@"callerNumber"];
+        //update the commented fields once the model coming in the socket is the same as the model from GET
+        
+//        vmail.callerName = dictionary[@"callerName"];
+//        vmail.callerNumber = dictionary[@"callerNumber"];
         vmail.lastModified = [NSNumber numberWithLongLong:[dictionary[@"lastModified"] longLongValue]];
-        vmail.pbxId = dictionary[@"pbxId"];
-        vmail.lineId = dictionary[@"lineId"];
-        vmail.mailboxId = dictionary[@"mailboxId"];
-        vmail.folderId = dictionary[@"folderId"];
-        vmail.messageId = dictionary[@"messageId"];
-        vmail.extensionNumber = dictionary[@"extensionNumber"];
-        vmail.extensionName = dictionary[@"extensionName"];
-        vmail.callerId = dictionary[@"callerId"];
-        vmail.lenght = [NSNumber numberWithInteger:[dictionary[@"length"] intValue]];
-        vmail.origFile = dictionary[@"origFile"];
+//        vmail.pbxId = dictionary[@"pbxId"];
+//        vmail.lineId = dictionary[@"lineId"];
+//        vmail.mailboxId = dictionary[@"mailboxId"];
+//        vmail.folderId = dictionary[@"folderId"];
+//        vmail.messageId = dictionary[@"messageId"];
+//        vmail.extensionNumber = dictionary[@"extensionNumber"];
+//        vmail.extensionName = dictionary[@"extensionName"];
+//        vmail.callerId = dictionary[@"callerId"];
+//        vmail.lenght = [NSNumber numberWithInteger:[dictionary[@"length"] intValue]];
+//        vmail.origFile = dictionary[@"origFile"];
         vmail.read = [NSNumber numberWithBool:[dictionary[@"read"] boolValue]];
         vmail.file = dictionary[@"file"];
 
@@ -110,32 +113,6 @@
     
     return vmail;
 }
-//
-//+ (void)backgroundLoadVoicemailWithDictionary:(NSDictionary*)dictionary managedContext:(NSManagedObjectContext *)context
-//{
-//    
-//    if (!context) {
-//        context = [NSManagedObjectContext MR_contextForCurrentThread];
-//    }
-//
-//    NSArray* entries = [dictionary objectForKey:@"entries"];
-////    NSDictionary *voicemails = [(NSDictionary*)dictionary objectForKey:@"entries"];
-//
-//    
-//    for (NSDictionary *vmail in entries){
-//        //find voicemail in core data using predicate where vmail[urn] == voicemail.urn
-//        Voicemail *aVoicemail = [Voicemail MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"urn == %@", vmail[@"urn"]] inContext:context][0];
-//        
-//        //if data is empty, do fetch vmail[file]
-//        if(aVoicemail.message == nil ){
-//            //TODO: preform fetch
-//            
-//            
-//            //save voicemail back to core data
-//            [context MR_saveToPersistentStoreAndWait];
-//        }
-//    }
-//}
 
 + (void)fetchVoicemailInBackground
 {
@@ -150,11 +127,37 @@
                 vm.voicemail = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"https://s3-us-west-2.amazonaws.com/jive-mobile/voicemail/userId/dleonard/TestVoicemail2.wav"]];
             }else{
                 vm.voicemail = [NSData dataWithContentsOfURL:[NSURL URLWithString:vm.file]];
+                [context MR_saveToPersistentStoreAndWait];
             }
         }
-            [context MR_saveToPersistentStoreAndWait];
     });
+}
 
++ (Voicemail *)markVoicemailForDeletion:(Voicemail*)voicemail managedContext:(NSManagedObjectContext*)context
+{
+    if (!context) {
+        context = [NSManagedObjectContext MR_contextForCurrentThread];
+    }
+    
+    voicemail.deleted = [NSNumber numberWithBool:YES];
+    [context MR_saveToPersistentStoreAndWait];
+    
+    return voicemail;
+}
+
++ (BOOL)deleteVoicemail:(Voicemail*)voicemail managedContext:(NSManagedObjectContext*)context
+{
+    if (!context) {
+        context = [NSManagedObjectContext MR_contextForCurrentThread];
+    }
+    
+    //delete from Core data
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"voicemailId == %@", voicemail.voicemailId];
+    BOOL deleted = [Voicemail MR_deleteAllMatchingPredicate:pred];
+    if (deleted) {
+        [context MR_saveToPersistentStoreAndWait];
+    }
+    return deleted;
 }
 
 
