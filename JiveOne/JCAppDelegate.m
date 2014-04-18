@@ -234,55 +234,45 @@
 #pragma mark - Background Fetch
 -(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-
     __block UIBackgroundFetchResult fetchResult = UIBackgroundFetchResultFailed;
-//    __block BOOL requestFailed = NO;
-    TRVSMonitor *monitor = [TRVSMonitor monitor];
-//
-//    NSInteger preCount = [Conversation MR_findAll].count;
-//    
-//    [[JCOsgiClient sharedClient] RetrieveVoicemailForEntity:nil success:^(id JSON) {
-//        [monitor signal];
-//    } failure:^(NSError *err) {
-//        requestFailed = YES;
-//        [monitor signal];
-//    }];
-//    
-//    [monitor wait];
-//    
-//    
-//    [[JCOsgiClient sharedClient] RetrieveConversations:^(id JSON) {
-//        [monitor signal];
-//    } failure:^(NSError *err) {
-//        requestFailed = YES;
-//        [monitor signal];
-//    }];
     
-    [self startSocket];
-    
-    [monitor waitWithTimeout:10];
-    
-    NSMutableDictionary *_badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
-    if (!_badges) {
-        fetchResult = UIBackgroundFetchResultNoData;
-    }
-    else {
-        for (NSString *key in _badges)
-        {
-            NSNumber *number = [_badges objectForKey:key];
-            NSInteger count = [number integerValue];
-            if (count > 0) {
-                fetchResult = UIBackgroundFetchResultNewData;
-                break;
+    @try {
+        
+        TRVSMonitor *monitor = [TRVSMonitor monitor];
+        [self startSocket];
+        [monitor waitWithTimeout:30];
+        
+        NSDictionary * badgeDictionary = [[NSUserDefaults standardUserDefaults] objectForKey:@"badges"];
+        NSMutableDictionary *_badges = nil;
+        if (badgeDictionary) {
+            _badges = [NSMutableDictionary dictionaryWithDictionary:badgeDictionary];
+        }
+        
+        if (!_badges) {
+            fetchResult = UIBackgroundFetchResultNoData;
+        }
+        else {
+            for (NSString *key in _badges)
+            {
+                NSNumber *number = [_badges objectForKey:key];
+                NSInteger count = [number integerValue];
+                if (count > 0) {
+                    fetchResult = UIBackgroundFetchResultNewData;
+                    [self refreshTabBadges];
+                    break;
+                }
             }
         }
     }
-    
-    if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground ) {
-        [self stopSocket];
+    @catch (NSException *exception) {
+        NSLog(@"%@", exception);
     }
-    completionHandler(fetchResult);
-    
+    @finally {
+        if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground ) {
+            [self stopSocket];
+        }
+        completionHandler(fetchResult);
+    }
 }
 //- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 //{
@@ -439,9 +429,9 @@
             NSNumber *converationCount = [NSNumber numberWithInt:(int)count];
             [tabController.viewControllers[2] tabBarItem].badgeValue = count == 0 ? nil : [converationCount stringValue];
             
-            if (converationCount != 0 || voicemailCount != 0) {
-                [self setNotification:voicemailCount.integerValue conversation:converationCount.integerValue];
-            }
+//            if (converationCount != 0 || voicemailCount != 0) {
+//                [self setNotification:voicemailCount.integerValue conversation:converationCount.integerValue];
+//            }
         }
     }
 }
@@ -454,13 +444,13 @@
         NSString *alertMessage = @"You have ";
         
         if (voicemailCount != 0 && conversationCount != 0) {
-            alertMessage  = [alertMessage stringByAppendingString:[NSString stringWithFormat:@"%ld new voicemail(s) and %ld new conversation(s).", voicemailCount, conversationCount]];
+            alertMessage  = [alertMessage stringByAppendingString:[NSString stringWithFormat:@"%d new voicemail(s) and %d new conversation(s).", (int)voicemailCount, (int)conversationCount]];
         }
         else if (voicemailCount != 0) {
-            alertMessage  = [alertMessage stringByAppendingString:[NSString stringWithFormat:@"%ld new voicemail(s).", voicemailCount]];
+            alertMessage  = [alertMessage stringByAppendingString:[NSString stringWithFormat:@"%d new voicemail(s).", (int)voicemailCount]];
         }
         else if (conversationCount != 0) {
-            alertMessage  = [alertMessage stringByAppendingString:[NSString stringWithFormat:@"%ld new conversation(s).", voicemailCount]];
+            alertMessage  = [alertMessage stringByAppendingString:[NSString stringWithFormat:@"%d new conversation(s).", (int)conversationCount]];
         }
         
         UILocalNotification *localNotification = [[UILocalNotification alloc] init];
