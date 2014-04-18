@@ -12,4 +12,16 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
+- (void)changeRootViewController:(JCRootViewControllerType)type;
+- (void)startSocket;
+- (void)stopSocket;
+
+#pragma mark - Badge Updates
+- (void)incrementBadgeCountForConversation:(NSString *)conversationId;
+- (void)incrementBadgeCountForVoicemail;
+- (void)decrementBadgeCountForConversation:(NSString *)conversationId;
+- (void)decrementBadgeCountForVoicemail;
+- (void)clearBadgeCountForVoicemail;
+- (void)clearBadgeCountForConversation:(NSString *)conversationId;
+
 @end

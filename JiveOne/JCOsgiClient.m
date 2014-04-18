@@ -8,6 +8,10 @@
 
 #import "JCOsgiClient.h"
 #import "KeychainItemWrapper.h"
+#import "PersonEntities+Custom.h"
+#import "Voicemail+Custom.h"
+#import "Presence+Custom.h"
+
 
 #if DEBUG
 @interface NSURLRequest(Private)
@@ -18,11 +22,12 @@
 @implementation JCOsgiClient
 {
     KeychainItemWrapper *keyChainWrapper;
+    NSManagedObjectContext *localContext;
 }
 
 
 
-
+#pragma mark - class initialization
 
 + (JCOsgiClient*)sharedClient {
     static JCOsgiClient *_sharedClient = nil;
@@ -36,19 +41,26 @@
 
 -(void)initialize
 {
+    
+    //TODO:implement AFCompoundSerializer This is useful for supporting multiple potential types and structures of server responses with a single serializer. @dleonard00 3/14/14
     NSURL *baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kOsgiBaseURL, kOsgiURNScheme]];
     _manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
     _manager.responseSerializer = [AFJSONResponseSerializer serializer];
     _manager.requestSerializer = [AFJSONRequestSerializer serializer];
     
     keyChainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
+    localContext  = [NSManagedObjectContext MR_contextForCurrentThread];
+
     
-#if DEBUG
+#warning REMOVE BEFORE PRODUCTION. This is meant to work with invalid certificates (local/testing.my.jive.com) 
+//#if DEBUG
     _manager.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
     _manager.securityPolicy.allowInvalidCertificates = YES;
 
-#endif
+//#endif
 }
+
+#pragma mark - Retrieve Operations
 
 - (void) RetrieveClientEntitites:(void (^)(id JSON))success
                          failure:(void (^)(NSError *err))failure
@@ -56,18 +68,37 @@
     [self setRequestAuthHeader];
     
     [_manager GET:kOsgiEntityRoute parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *me = [responseObject objectForKey:@"me"];
+        NSArray* entityArray = [responseObject objectForKey:@"entries"];
+        [PersonEntities addEntities:entityArray me:me];
         success(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failure(error);
     }];
 }
 
-- (void) RetrieveMyEntitity:(void (^)(id JSON))success
-                         failure:(void (^)(NSError *err))failure
+- (void) RetrieveMyEntitity:(void (^)(id JSON, id operation))success
+                    failure:(void (^)(NSError *err, id operation))failure
+{
+    [self setRequestAuthHeader];
+   
+    NSString * url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], kOsgiMyEntityRoute];//TODO: not attaching baseURL to route constant
+    NSLog(@"%@", url);
+    
+    [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        success(responseObject, operation);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error, operation);
+    }];
+}
+
+- (void) RetrieveMyCompany:(NSString*)company :(void (^)(id JSON))success
+                              failure:(void (^)(NSError *err))failure
 {
     [self setRequestAuthHeader];
     
-    [_manager GET:kOsgiMyEntityRoute parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSString *url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], company];//TODO: not attaching baseURL to route constant
+    [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         success(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failure(error);
@@ -81,6 +112,7 @@
     [self setRequestAuthHeader];
     
     [_manager GET:kOsgiConverationRoute parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [Conversation addConversations:responseObject[@"entries"]];
         success(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@", operation.responseString);
@@ -88,21 +120,75 @@
     }];
 }
 
-- (void) OAuthLoginWithUsername:(NSString*)username password:(NSString*)password success:(void (^)(id JSON))success
-                        failure:(void (^)(NSError *err))failure
+- (void) RetrieveConversationsByConversationId:(NSString*)conversationId success:(void (^)(Conversation * conversation)) success failure:(void (^)(NSError *err))failure
 {
+    [self setRequestAuthHeader];
+    
+    NSString *url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], conversationId];//TODO: not attaching baseURL to route constant
+    
+    [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {        ;
+        success([Conversation addConversation:responseObject]);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
 }
 
+- (void)RetrieveEntitiesPresence:(void (^)(BOOL updated))success failure:(void(^)(NSError *err))failure
+{
+    [self setRequestAuthHeader];
+    
+    [_manager GET:kOsgiPresenceRoute parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSArray *presences = responseObject[@"entries"];
+        [Presence addPresences:presences];
+        success(YES);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
+
+- (void) RetrievePresenceForEntity:(NSString*)entity withPresendUrn:(NSString*)presenceUrn success:(void (^)(BOOL updated))success failure:(void(^)(NSError *err))failure
+{
+    [self setRequestAuthHeader];
+    NSString *url = nil;
+    if (presenceUrn) {
+        url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], presenceUrn];
+    }
+    else {
+        url = [NSString stringWithFormat:@"%@presence:%@", [_manager baseURL], entity];
+    }
+    
+    [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+}
 
 - (void) RequestSocketSession:(void (^)(id))success failure:(void (^)(NSError *))failure
 {
     [self setRequestAuthHeader];
     
-    [_manager POST:kOsgiSessionRoute parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSString *deviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"];
+    NSDictionary *params = nil;
+    if (deviceToken) {
+        params = [NSDictionary dictionaryWithObject:deviceToken forKey:@"deviceToken"];
+    }
+    
+    
+    [_manager POST:kOsgiSessionRoute parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         success(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failure(error);
     }];
+}
+
+#pragma mark - Submit Operations
+
+- (void) OAuthLoginWithUsername:(NSString*)username password:(NSString*)password success:(void (^)(id JSON))success
+                        failure:(void (^)(NSError *err))failure
+{
 }
 
 - (void) SubscribeToSocketEventsWithAuthToken:(NSString*)token subscriptions:(NSDictionary*)subscriptions success:(void (^)(id JSON))success
@@ -162,6 +248,78 @@
     
 }
 
+- (void) SubmitConversationWithName:(NSString *)groupName forEntities:(NSArray *)entities creator:(NSString *)creator isGroupConversation:(BOOL)isGroup success:(void (^)(id JSON))success
+                            failure:(void (^)(NSError* err))failure
+{
+    [self setRequestAuthHeader];
+    
+    NSMutableDictionary * conversationDictionary = [[NSMutableDictionary alloc] initWithObjectsAndKeys:entities, @"entities", creator, @"creator", nil];
+    if (isGroup) {
+        [conversationDictionary setObject:@"groupconversations" forKey:@"type"];
+        [conversationDictionary setObject:groupName forKey:@"name"];
+    }
+    
+    [_manager POST:kOsgiConverationRoute parameters:conversationDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [Conversation addConversation:responseObject];
+        success(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
+
+- (void)SubmitChatMessageForConversation:(NSString*)conversation message:(NSString*)message withEntity:(NSString*)entity success:(void (^)(id JSON))success
+                                 failure:(void (^)(NSError* err))failure
+{
+    [self setRequestAuthHeader];
+    
+    NSDictionary *messageDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:message, @"raw", nil];
+    NSDictionary *conversationDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:entity, @"entity", conversation, @"conversation", messageDictionary, @"message", nil];
+    
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:conversationDictionary options:kNilOptions error:nil];
+    NSString* jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    NSLog(@"%@", jsonString);
+    
+    NSString *urlWithEntry = [NSString stringWithFormat:@"%@%@:entries", [_manager baseURL], conversation];
+    
+    [_manager POST:urlWithEntry parameters:conversationDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        success(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
+
+
+
+#pragma mark - Update Operations
+
+- (void) UpdatePresence:(JCPresenceType)presence success:(void (^)(BOOL updated))success failure:(void(^)(NSError *err))failure
+{
+    NSString *presenceURN = [[JCOmniPresence sharedInstance] me].presence;
+    
+    NSDictionary *chatCodeDictonary = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:presence], @"code", nil];
+    NSDictionary *chatDictionary = [NSDictionary dictionaryWithObjectsAndKeys:chatCodeDictonary, @"chat", nil];
+    //NSDictionary *iteractionsDictionary = [NSDictionary dictionaryWithObjectsAndKeys:presenceURN, @"urn", chatDictionary, @"iteractions", nil];
+    NSDictionary *iteractionsDictionary = [NSDictionary dictionaryWithObjectsAndKeys:chatDictionary, @"interactions", nil];
+    //NSDictionary *presenceDictionary = [NSDictionary dictionaryWithObjectsAndKeys:iteractionsDictionary, @"presence", nil];
+    
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:iteractionsDictionary options:kNilOptions error:nil];
+    NSString* jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    NSLog(@"%@", jsonString);
+   
+    NSString *url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], presenceURN];
+    
+    [_manager PATCH:url parameters:iteractionsDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //NSLog(@"%@", responseObject);
+        [Presence addPresence:responseObject];
+        success(YES);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@", error);
+        failure(error);
+    }];
+    
+}
+
+#pragma mark - Class Operations
 - (void)setRequestAuthHeaderWithSocketSessionToken:(NSString*)token
 {
     KeychainItemWrapper* _keychainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
@@ -173,10 +331,10 @@
     
     NSString *pipedToken = [NSString stringWithFormat:@"%@|%@", authtoken, token];
     
-     _manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    _manager.requestSerializer = [AFJSONRequestSerializer serializer];
     [_manager.requestSerializer clearAuthorizationHeader];
     [_manager.requestSerializer setValue:pipedToken forHTTPHeaderField:@"Auth"];
-
+    
 }
 
 - (void)setRequestAuthHeader
@@ -193,6 +351,82 @@
     [_manager.requestSerializer setValue:token forHTTPHeaderField:@"Auth"];
 }
 
+- (void)clearCookies {
+    
+    //This will delete ALL cookies. 
+    NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    
+    for (NSHTTPCookie *cookie in [cookieJar cookies]) {
+        [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
+    }
+    
+}
 
+
+#pragma mark - Voicemail
+
+//Retrives all voicemails from the server. Entity object is not used.
+- (void) RetrieveVoicemailForEntity:(PersonEntities*)entity success:(void (^)(id JSON))success
+                            failure:(void (^)(NSError *err))failure
+{
+    [self setRequestAuthHeader];
+    //https://test.my.jive.com/voicemails
+    NSString * url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], kOsgiVoicemailRoute];
+    NSLog(@"%@", url);
+    
+    [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSArray *entries = [responseObject objectForKey:@"entries"];
+        //get all voicemail metadata, but not actual voicemail messages
+        [Voicemail addVoicemails:entries];
+        success(responseObject);
+        //get all voicemail messages through a queue
+        [Voicemail fetchVoicemailInBackground];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+        failure(error);
+     }];
+    
+}
+
+- (void) DeleteVoicemail:(Voicemail*)voicemail success:(void (^)(id JSON))success
+                          failure:(void (^)(NSError *err))failure
+{
+    [self setRequestAuthHeader];
+    NSString *url = [NSString stringWithFormat:@"%@%@", self.manager.baseURL, voicemail.urn];
+    
+    [_manager DELETE:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        success(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
+
+- (void) UpdateVoicemailToRead:(Voicemail*)voicemail success:(void (^)(id JSON))success
+                       failure:(void (^)(NSError *err))failure
+{
+    [self setRequestAuthHeader];
+    NSString *url = [NSString stringWithFormat:@"%@%@", self.manager.baseURL, voicemail.urn];
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [params setObject:@"true" forKey:@"read"];
+    [self.manager PATCH:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        success(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@", error);
+        failure(error);
+    }];
+    
+}
+
+
+
+#pragma mark - CRUD for Conversation
+
+
+
+#pragma mark - CRUD for Presence
+
+
+#pragma mark - CRUD for Entities
 
 @end

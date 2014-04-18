@@ -7,6 +7,10 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "JCOsgiClient.h"
+#import "TRVSMonitor.h"
+#import "JCAuthenticationManager.h"
+#import "JCDirectoryViewController.h"
 
 @interface JiveOneTests : XCTestCase
 
@@ -17,7 +21,24 @@
 - (void)setUp
 {
     [super setUp];
+    
+    // test.my.jive.com token for user jivetesting10@gmail.com
+    NSString *token = [[JCAuthenticationManager sharedInstance] getAuthenticationToken];
+    if ([self stringIsNilOrEmpty:token]) {
+        if ([self stringIsNilOrEmpty:[[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"]]) {
+            NSString *testToken = kTestAuthKey;
+            NSDictionary *oauth_response = [NSDictionary dictionaryWithObjectsAndKeys:testToken, @"access_token", nil];
+            [[JCAuthenticationManager sharedInstance] didReceiveAuthenticationToken:oauth_response];
+        }
+    }
+    
     // Put setup code here. This method is called before the invocation of each test method in the class.
+    //Fire login event
+    
+}
+
+-(BOOL)stringIsNilOrEmpty:(NSString*)aString {
+    return !(aString && aString.length);
 }
 
 - (void)tearDown
@@ -26,9 +47,54 @@
     [super tearDown];
 }
 
-- (void)testExample
-{
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+
+- (void)testRetrieveAccountInformation {
+    __block NSDictionary *json;
+    
+    TRVSMonitor *monitor = [TRVSMonitor monitor];
+    
+    JCOsgiClient *client = [JCOsgiClient sharedClient];
+    
+    [client RetrieveMyEntitity:^(id JSON, id operation) {
+        json = JSON;
+        [monitor signal];
+        
+    } failure:^(NSError *err, id operation) {
+        XCTFail(@"Retrieve My Company method has failed");
+    }];
+    
+    [monitor waitWithTimeout:5];
+    
+    NSString *name = [[json objectForKey:@"name"] objectForKey:@"firstLast"];
+    NSString *companyUrl = [json objectForKey:@"company"];
+    XCTAssertEqualObjects(name, @"Jive Testing 10", @"Wrong name");
+    
+    [client RetrieveMyCompany:companyUrl:^(id JSON) {
+        json = JSON;
+        [monitor signal];
+    } failure:^(NSError *err) {
+        NSLog(@"%@", err);
+    }];
+    
+    [monitor waitWithTimeout:5];
+    
+     XCTAssertEqualObjects([json objectForKey:@"name"], @"Integration Testing", @"Company name doesn't match");
+}
+
+
+
+- (void)testLogout {
+    
+    [[JCAuthenticationManager sharedInstance] logout:nil];
+    
+    KeychainItemWrapper *wrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
+    NSString* tokenFromKeychain = [wrapper objectForKey:(__bridge id)(kSecAttrAccount)];
+    NSString* tokenFromUserDefaults = [[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"];
+    
+    XCTAssertEqual(tokenFromKeychain, @"", @"Token From Keychain Should Have Cleared");
+    XCTAssertNil(tokenFromUserDefaults, @"Token From UserDefaults Should Have Cleared");
+    
 }
 
 @end
+

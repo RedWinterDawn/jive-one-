@@ -9,15 +9,18 @@
 #import <Foundation/Foundation.h>
 #import "KeychainItemWrapper.h"
 
-@interface JCAuthenticationManager : NSObject
+@class JCAuthenticationManager;
+
+@interface JCAuthenticationManager : NSObject <UIWebViewDelegate>
 
 @property (strong, nonatomic) KeychainItemWrapper *keychainWrapper;
 
 + (JCAuthenticationManager*)sharedInstance;
-- (void)showLoginViewControllerFromViewController:(UIViewController*)viewController completed:(void (^)(bool object))completed;
 
-- (void)didReceiveAuthenticationToken:(NSString*)token;
+- (void)loginWithUsername:(NSString *)username password:(NSString*)password;
+- (void)didReceiveAuthenticationToken:(NSDictionary *)token;
+- (BOOL)userAuthenticated;
 - (void)checkForTokenValidity;
-- (void)showLoginViewController;
-
+- (void)logout:(UIViewController *)viewController;
+- (NSString *)getAuthenticationToken;
 @end

@@ -15,8 +15,8 @@
 
 #pragma mark - OSGI Routes
 //#define kOsgiBaseURL @"https://my.jive.com/"
-//#define kOsgiBaseURL @"https://test.my.jive.com/"
-#define kOsgiBaseURL @"https://osgi.local.com:8000/"
+#define kOsgiBaseURL @"https://test.my.jive.com/"
+//#define kOsgiBaseURL @"https://osgi.local.com:8000/"
 #define kOsgiAuthURL @"https://auth.jive.com/oauth2/grant?client_id=%@&response_type=code&redirect_uri=%@"
 #define kOsgiAPIScheme @"api/"
 #define kOsgiURNScheme @"urn/"
@@ -26,14 +26,75 @@
 #define kOsgiConverationRoute @"conversations"
 #define kOsgiSessionRoute @"sessions"
 #define kOsgiSubscriptionRoute @"subscriptions"
+#define kOsgiPresenceRoute @"presence"
+#define kOsgiVoicemailRoute @"voicemails"
+
+#pragma mark - Temporary Voicemail Constants
+#define kAWSVoicemailRoute @"voicemail/userId/"
+#define kAWSBaseURL @"https://s3-us-west-2.amazonaws.com/jive-mobile/"
 
 #pragma mark - Authentication Manager
 #define kAuthenticationFromTokenSucceeded @"keyauthenticationfortokensucceeded"
 #define kAuthenticationFromTokenFailed @"keyauthenticationfortokenfailed"
+#define kAuthenticationFromTokenFailedWithTimeout @"keyauthenticationfortokenfailedwithtimeout"
 
-#pragma mark - Modal Webview Notification
+
+#pragma mark - Notification Constants
 #define kWebViewDismissal @"keywebviewdismissal"
+#define kNewConversation @"keynewconversation"
+#define kPresenceChanged @"keypresencechanged"
+#define kNewVoicemail @"keynewvoicemail"
 
 #pragma mark - OAuth Credentials
 #define kOAuthClientSecret @"enXabnU5KuVm4XRSWGkU"
 #define kOAuthClientId @"f62d7f80-3749-11e3-9b37-542696d7c505"
+#define kTestAuthKey @"d2def06b-a122-403c-a29c-2009819e9ac4";
+
+#pragma mark - Presence Constants
+#define kPresenceAvailable @"Available"
+#define kPresenceAway @"Away"
+#define kPresenceBusy @"Busy"
+#define kPresenceDoNotDisturb @"Do Not Disturb"
+#define kPresenceInvisible @"Invisible"
+#define kPresenceOffline @"Offline"
+
+#pragma mark - KVO Constants
+#define kPresenceKeyPathForClientEntity @"entityPresence"
+#define kLastMofiedKeyPathForConversation @"lastModified"
+#define kVoicemailKeyPathForVoicemal @"voicemail"
+
+#pragma mark - Socket Message Types
+#define kSocketPresence @"presence"
+#define kSocketConversations @"conversations"
+#define kSocketPermanentRooms @"permanentrooms"
+#define kSocketVoicemail @"voicemails"
+
+#pragma mark - UIConstants
+#define kShiftNameLabelThisMuch 5.0
+
+#pragma mark - Debug Helpers
+#define kVoicemailURLOverRide @"NoDontUseAWSPlaceholderURL"
+//change to @"YesUseAWSPlaceholderURL" to toggle AWS Voicemail wav file
+
+typedef enum {
+    JCPresenceTypeOffline = 0,
+    JCPresenceTypeAvailable = 1,
+    JCPresenceTypeBusy = 2,
+    JCPresenceTypeInvisible = 4,
+    JCPresenceTypeDoNotDisturb = 5,
+    JCPresenceTypeAway = 7,  
+    JCPresenceTypeNone = -1
+} JCPresenceType;
+
+typedef enum {
+    JCExistingConversation,
+    JCNewConversation,
+    JCNewConversationWithEntity,
+    JCNewConversationWithGroup
+} JCMessageType;
+
+typedef enum {
+    JCRootLoginViewController,
+    JCRootTabbarViewController
+} JCRootViewControllerType;
+

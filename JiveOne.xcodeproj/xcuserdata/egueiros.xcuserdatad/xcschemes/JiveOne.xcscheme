@@ -37,6 +37,14 @@
                BlueprintName = "JiveOneTests"
                ReferencedContainer = "container:JiveOne.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "JCOsgiClientTest/testShouldRetrieveClientEntities">
+               </Test>
+               <Test
+                  Identifier = "JiveOneTests/testLogout">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
       <MacroExpansion>
