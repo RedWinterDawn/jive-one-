@@ -173,6 +173,15 @@
 - (void)fetchConversations
 {
     [[JCOsgiClient sharedClient] RetrieveConversations:^(id JSON) {
+        [self fetchVoicemails];
+    } failure:^(NSError *err) {
+        [self errorInitializingApp];
+    }];
+}
+
+- (void)fetchVoicemails
+{
+    [[JCOsgiClient sharedClient] RetrieveVoicemailForEntity:nil success:^(id JSON) {
         [self fetchCompany];
     } failure:^(NSError *err) {
         [self errorInitializingApp];
