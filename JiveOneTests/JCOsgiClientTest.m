@@ -10,7 +10,7 @@
 #import "JCOsgiClient.h"
 #import "TRVSMonitor.h"
 #import "JCAuthenticationManager.h"
-#import "JCStartLoginViewController.h"
+
 
 @interface JCOsgiClientTest : XCTestCase
 
@@ -53,10 +53,10 @@
     
     NSString *expectedEmail = @"jivetesting10@gmail.com";
     
-    [[JCOsgiClient sharedClient] RetrieveMyEntitity:^(id JSON) {
+    [[JCOsgiClient sharedClient] RetrieveMyEntitity:^(id JSON, id operation) {
         response = JSON;
         [monitor signal];
-    } failure:^(NSError *err) {
+    } failure:^(NSError *err, id operation) {
         NSLog(@"Error - testShouldRetrieveMyEntity: %@", [err description]);
         [monitor signal];
     }];

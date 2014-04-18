@@ -55,11 +55,11 @@
     
     JCOsgiClient *client = [JCOsgiClient sharedClient];
     
-    [client RetrieveMyEntitity:^(id JSON) {
+    [client RetrieveMyEntitity:^(id JSON, id operation) {
         json = JSON;
         [monitor signal];
         
-    } failure:^(NSError *err) {
+    } failure:^(NSError *err, id operation) {
         XCTFail(@"Retrieve My Company method has failed");
     }];
     
