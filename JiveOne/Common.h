@@ -40,6 +40,7 @@
 #pragma mark - UIImage Utils
 + (UIImage *)mergeImage:(UIImage*)first withImage:(UIImage*)second;
 + (UIImage *) imageFromView:(UIView *)view;
++ (UIImage *)tintedImageWithColor:(UIColor *)tintColor image:(UIImage *)image;
 
 #pragma mark - Encryption Utils
 
