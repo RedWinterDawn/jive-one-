@@ -203,8 +203,8 @@
         company.companyId = JSON[@"id"];
         
         //[[JCOmniPresence sharedInstance] me].entityCompany = company;
-        NSArray *clientEntities = [ClientEntities MR_findAll];
-        for (ClientEntities *entity in clientEntities) {
+        NSArray *clientEntities = [PersonEntities MR_findAll];
+        for (PersonEntities *entity in clientEntities) {
             entity.entityCompany = company;
         }
         

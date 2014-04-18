@@ -11,7 +11,7 @@
 #import "JCSocketDispatch.h"
 #import "JCVersionTracker.h"
 #import "JCOsgiClient.h"
-#import "ClientEntities.h"
+#import "PersonEntities.h"
 #import "NotificationView.h"
 #import "JCLoginViewController.h"
 #import "Common.h"

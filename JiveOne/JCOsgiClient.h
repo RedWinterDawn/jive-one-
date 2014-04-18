@@ -11,7 +11,7 @@
 #import "Conversation+Custom.h"
 #import "ConversationEntry.h"
 #import "Presence.h"
-#import "ClientEntities.h"
+#import "PersonEntities.h"
 #import "Voicemail.h"
 
 @interface JCOsgiClient : NSObject
@@ -48,7 +48,7 @@
                                  failure:(void (^)(NSError* err))failure;
 
 #pragma mark - Voicemail
-- (void) RetrieveVoicemailForEntity:(ClientEntities*)entity success:(void (^)(id JSON))success
+- (void) RetrieveVoicemailForEntity:(PersonEntities*)entity success:(void (^)(id JSON))success
                             failure:(void (^)(NSError *err))failure;
 
 

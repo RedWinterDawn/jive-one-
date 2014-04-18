@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ClientEntities.h"
+#import "PersonEntities.h"
 #import "ContactGroup.h"
 
 @interface JCGroupSelectorViewController : UITableViewController <UIAlertViewDelegate>

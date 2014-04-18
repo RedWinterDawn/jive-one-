@@ -65,7 +65,7 @@
         
         // retrieve entities where first name starts with letter of alphabet
         NSPredicate *pred = [NSPredicate predicateWithFormat:@"(firstLastName BEGINSWITH[c] %@)", section];
-        NSArray *sectionArray = [ClientEntities MR_findAllWithPredicate:pred];
+        NSArray *sectionArray = [PersonEntities MR_findAllWithPredicate:pred];
         
         // sort array with bases on firstLastName property
         NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"firstLastName" ascending:YES];
@@ -119,7 +119,7 @@
     
     if (section.count != 0) {
 //        NSLog(@"Section: %ld Row: %ld", indexPath.section, (long)indexPath.row);
-        ClientEntities *person = section[indexPath.row];
+        PersonEntities *person = section[indexPath.row];
         cell.person = person;
         cell.personPresenceView.hidden = YES;
         if(existingEntities)
@@ -216,7 +216,7 @@
         NSMutableArray *selectedEntities = [[NSMutableArray alloc] init];
         
         for (NSIndexPath *indexPath in itemChecked) {
-            NSString *entityId = ((ClientEntities *)self.companyContactsArray[indexPath.section][indexPath.row]).entityId;
+            NSString *entityId = ((PersonEntities *)self.companyContactsArray[indexPath.section][indexPath.row]).entityId;
             [selectedEntities addObject:entityId];
         }
         
@@ -227,7 +227,7 @@
         NSMutableArray *selectedEntities = [[NSMutableArray alloc] init];
         
         for (NSIndexPath *indexPath in itemChecked) {
-            NSString *entityId = ((ClientEntities *)self.companyContactsArray[indexPath.section][indexPath.row]).entityId;
+            NSString *entityId = ((PersonEntities *)self.companyContactsArray[indexPath.section][indexPath.row]).entityId;
             [selectedEntities addObject:entityId];
         }
         _groupEdit.clientEntities = selectedEntities;

@@ -96,7 +96,7 @@
 		274493C218D0E98D002744CB /* ConversationEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 274493C118D0E98D002744CB /* ConversationEntry.m */; };
 		274493C518D0E98D002744CB /* ContactGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 274493C418D0E98D002744CB /* ContactGroup.m */; };
 		274493C818D0E98D002744CB /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 274493C718D0E98D002744CB /* Conversation.m */; };
-		274493CB18D0E98D002744CB /* ClientMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = 274493CA18D0E98D002744CB /* ClientMeta.m */; };
+		274493CB18D0E98D002744CB /* PersonMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = 274493CA18D0E98D002744CB /* PersonMeta.m */; };
 		274493CE18D13538002744CB /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 274493CD18D13538002744CB /* Common.m */; };
 		275158FC18AD10BB00FD8D3F /* main-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 275158F718AD10BA00FD8D3F /* main-logo.png */; };
 		275158FD18AD10BB00FD8D3F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 275158F818AD10BA00FD8D3F /* Default.png */; };
@@ -173,7 +173,7 @@
 		9137919918FDB0EE00709AD3 /* JCGroupConversationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9137919718FDB0EE00709AD3 /* JCGroupConversationCell.xib */; };
 		9159C88D18EDD20700DF769B /* avatar-orig2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9159C88C18EDD20700DF769B /* avatar-orig2.png */; };
 		916958FF18FEDD76006FDD60 /* JCConversationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 274493AF18D0DA9B002744CB /* JCConversationCell.xib */; };
-		916B666B18F453A900D7D89C /* ClientEntities.m in Sources */ = {isa = PBXBuildFile; fileRef = 916B666A18F453A900D7D89C /* ClientEntities.m */; };
+		916B666B18F453A900D7D89C /* PersonEntities.m in Sources */ = {isa = PBXBuildFile; fileRef = 916B666A18F453A900D7D89C /* PersonEntities.m */; };
 		919C448F18DA479F00F6566A /* thumb1.png in Resources */ = {isa = PBXBuildFile; fileRef = 919C448E18DA479F00F6566A /* thumb1.png */; };
 		91ADB99018D8BBDA00DF41A3 /* JCVoicemailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 91ADB98E18D8BBDA00DF41A3 /* JCVoicemailCell.m */; };
 		91ADB99118D8BBDA00DF41A3 /* JCVoicemailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91ADB98F18D8BBDA00DF41A3 /* JCVoicemailCell.xib */; };
@@ -345,8 +345,8 @@
 		274493C418D0E98D002744CB /* ContactGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactGroup.m; sourceTree = "<group>"; };
 		274493C618D0E98D002744CB /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
 		274493C718D0E98D002744CB /* Conversation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Conversation.m; sourceTree = "<group>"; };
-		274493C918D0E98D002744CB /* ClientMeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientMeta.h; sourceTree = "<group>"; };
-		274493CA18D0E98D002744CB /* ClientMeta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClientMeta.m; sourceTree = "<group>"; };
+		274493C918D0E98D002744CB /* PersonMeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonMeta.h; sourceTree = "<group>"; };
+		274493CA18D0E98D002744CB /* PersonMeta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonMeta.m; sourceTree = "<group>"; };
 		274493CC18D13538002744CB /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		274493CD18D13538002744CB /* Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Common.m; sourceTree = "<group>"; };
 		275158F718AD10BA00FD8D3F /* main-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "main-logo.png"; sourceTree = "<group>"; };
@@ -451,8 +451,8 @@
 		9137919618FDB0EE00709AD3 /* JCGroupConversationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCGroupConversationCell.m; sourceTree = "<group>"; };
 		9137919718FDB0EE00709AD3 /* JCGroupConversationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JCGroupConversationCell.xib; path = JiveOne/JCGroupConversationCell.xib; sourceTree = SOURCE_ROOT; };
 		9159C88C18EDD20700DF769B /* avatar-orig2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatar-orig2.png"; sourceTree = "<group>"; };
-		916B666918F453A900D7D89C /* ClientEntities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientEntities.h; sourceTree = "<group>"; };
-		916B666A18F453A900D7D89C /* ClientEntities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClientEntities.m; sourceTree = "<group>"; };
+		916B666918F453A900D7D89C /* PersonEntities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonEntities.h; sourceTree = "<group>"; };
+		916B666A18F453A900D7D89C /* PersonEntities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonEntities.m; sourceTree = "<group>"; };
 		919C448E18DA479F00F6566A /* thumb1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumb1.png; sourceTree = "<group>"; };
 		91ADB98D18D8BBDA00DF41A3 /* JCVoicemailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVoicemailCell.h; sourceTree = "<group>"; };
 		91ADB98E18D8BBDA00DF41A3 /* JCVoicemailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoicemailCell.m; sourceTree = "<group>"; };
@@ -859,8 +859,8 @@
 		2751591518AD2FF700FD8D3F /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				274493C918D0E98D002744CB /* ClientMeta.h */,
-				274493CA18D0E98D002744CB /* ClientMeta.m */,
+				274493C918D0E98D002744CB /* PersonMeta.h */,
+				274493CA18D0E98D002744CB /* PersonMeta.m */,
 				274493BA18D0E98C002744CB /* Company.h */,
 				274493BB18D0E98C002744CB /* Company.m */,
 				274493C318D0E98D002744CB /* ContactGroup.h */,
@@ -878,8 +878,8 @@
 				277F094918FF4F5100EEF0E3 /* Voicemail.h */,
 				277F094A18FF4F5100EEF0E3 /* Voicemail.m */,
 				2751591618AD300B00FD8D3F /* OsgiData.xcdatamodel */,
-				916B666918F453A900D7D89C /* ClientEntities.h */,
-				916B666A18F453A900D7D89C /* ClientEntities.m */,
+				916B666918F453A900D7D89C /* PersonEntities.h */,
+				916B666A18F453A900D7D89C /* PersonEntities.m */,
 				27E9A35618E0A17A0017B65D /* Presence+Custom.h */,
 				27E9A35718E0A17A0017B65D /* Presence+Custom.m */,
 				274493B718D0E98C002744CB /* Presence.h */,
@@ -1346,7 +1346,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				916B666B18F453A900D7D89C /* ClientEntities.m in Sources */,
+				916B666B18F453A900D7D89C /* PersonEntities.m in Sources */,
 				9103271718F34BEC00437503 /* JCPeopleDetailCell.m in Sources */,
 				F2459BB218C67FC000AF56CF /* JCGroupSelectorViewController.m in Sources */,
 				277F094218FED58C00EEF0E3 /* JCStatusViewController.m in Sources */,
@@ -1363,7 +1363,7 @@
 				272B61DD18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */,
 				274493B918D0E98C002744CB /* Presence.m in Sources */,
 				2700987F18F4714100B6BC2F /* JSMessagesViewController.m in Sources */,
-				274493CB18D0E98D002744CB /* ClientMeta.m in Sources */,
+				274493CB18D0E98D002744CB /* PersonMeta.m in Sources */,
 				27C5F43F18BC1946005FCAFD /* JCVersionTracker.m in Sources */,
 				2700987618F4714100B6BC2F /* UIImage+JSMessagesView.m in Sources */,
 				2700988018F4714100B6BC2F /* JSMessageTableView.m in Sources */,

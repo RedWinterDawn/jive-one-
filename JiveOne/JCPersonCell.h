@@ -14,6 +14,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *personDetailLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *personPicture;
 @property (weak, nonatomic) IBOutlet JCPresenceView *personPresenceView;
-@property (nonatomic) ClientEntities *person;
+@property (nonatomic) PersonEntities *person;
 @end
 

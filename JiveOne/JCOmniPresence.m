@@ -7,8 +7,8 @@
 //
 
 #import "JCOmniPresence.h"
-#import "ClientEntities.h"
-#import "ClientMeta.h"
+#import "PersonEntities.h"
+#import "PersonMeta.h"
 #import "ContactGroup.h"
 #import "Conversation+Custom.h"
 #import "ConversationEntry.h"
@@ -29,14 +29,14 @@
     return sharedObject;
 }
 
-- (ClientEntities*)me
+- (PersonEntities*)me
 {
-    return [ClientEntities MR_findFirstByAttribute:@"me" withValue:[NSNumber numberWithBool:YES]];
+    return [PersonEntities MR_findFirstByAttribute:@"me" withValue:[NSNumber numberWithBool:YES]];
 }
 
-- (ClientEntities*)entityByEntityId:(NSString*)entityId
+- (PersonEntities*)entityByEntityId:(NSString*)entityId
 {
-    return [ClientEntities MR_findFirstByAttribute:@"entityId" withValue:entityId];
+    return [PersonEntities MR_findFirstByAttribute:@"entityId" withValue:entityId];
 }
 
 - (Presence*)presenceByEntityId:(NSString*)entityId
@@ -48,13 +48,13 @@
 {
     NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
     [Presence MR_truncateAllInContext:localContext];
-    [ClientMeta MR_truncateAllInContext:localContext];
+    [PersonMeta MR_truncateAllInContext:localContext];
     [Company MR_truncateAllInContext:localContext];
     [ContactGroup MR_truncateAllInContext:localContext];
     [ConversationEntry MR_truncateAllInContext:localContext];
     [Conversation MR_truncateAllInContext:localContext];
     [Voicemail MR_truncateAllInContext:localContext];
-    [ClientEntities MR_truncateAllInContext:localContext];
+    [PersonEntities MR_truncateAllInContext:localContext];
     [localContext MR_saveToPersistentStoreAndWait];
 }
 

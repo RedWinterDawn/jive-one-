@@ -234,7 +234,7 @@
 {
     
     NSString *type = [self getMessageType:message];
-    NSString *operation = message[@"data"][@"operation"];
+    //NSString *operation = message[@"data"][@"operation"];
     NSDictionary *body = [[message objectForKey:@"data"] objectForKey:@"body"];
     
     if ([type isEqualToString:kSocketConversations] || [type isEqualToString:kSocketPermanentRooms]) {

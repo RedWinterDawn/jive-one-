@@ -19,7 +19,7 @@
 
 @interface JCVoicemailViewController ()
 {
-    ClientEntities *me;
+    PersonEntities *me;
     MBProgressHUD *hud;
 }
 

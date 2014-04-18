@@ -7,16 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ClientEntities.h"
+#import "PersonEntities.h"
 #import "Presence.h"
 
 @interface JCOmniPresence : NSObject
 
 +(instancetype)sharedInstance;
 
-- (ClientEntities*)me;
+- (PersonEntities*)me;
 
-- (ClientEntities*)entityByEntityId:(NSString*)entityId;
+- (PersonEntities*)entityByEntityId:(NSString*)entityId;
 
 - (Presence*)presenceByEntityId:(NSString*)entityId;
 

@@ -17,7 +17,7 @@
 @property (strong, nonatomic) NSMutableArray *messages;
 @property (strong, nonatomic) NSMutableDictionary *avatars;
 
-@property (nonatomic) ClientEntities *person;
+@property (nonatomic) PersonEntities *person;
 @property (nonatomic) NSString *conversationId;
 @property (nonatomic) ContactGroup *contactGroup;
 @property (nonatomic) JCMessageType messageType;

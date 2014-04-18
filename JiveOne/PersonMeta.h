@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 
 
-@interface ClientMeta : NSManagedObject
+@interface PersonMeta : NSManagedObject
 
 @property (nonatomic, retain) id activityOrder;
 @property (nonatomic, retain) NSNumber * createDate;

@@ -11,7 +11,7 @@
 #import "Conversation+Custom.h"
 #import "ConversationEntry+Custom.h"
 #import "JCOsgiClient.h"
-#import "ClientEntities.h"
+#import "PersonEntities.h"
 #import "JCContactModel.h"
 #import "JSMessage.h"
 #import "Common.h"
@@ -20,7 +20,7 @@
 
 @interface JCMessagesViewController ()
 {
-    ClientEntities *me;
+    PersonEntities *me;
     NSString *title;
     NSString *subtitle;
     JCOsgiClient *osgiClient;
@@ -43,9 +43,9 @@
     _messageType = messageType;
 }
 
-- (void)setPerson:(ClientEntities *)person
+- (void)setPerson:(PersonEntities *)person
 {
-    if (person && [person isKindOfClass:[ClientEntities class]]) {
+    if (person && [person isKindOfClass:[PersonEntities class]]) {
         _person = person;
     }
 }
@@ -240,7 +240,7 @@
                 
                 for (NSString* entityId in conversationMembers) {
                     
-                    ClientEntities *person = [ClientEntities MR_findFirstByAttribute:@"entityId" withValue:entityId];
+                    PersonEntities *person = [PersonEntities MR_findFirstByAttribute:@"entityId" withValue:entityId];
                     if (person) {
                         [self.avatars setObject:person.picture forKey:person.firstLastName];
                         
@@ -266,8 +266,8 @@
         
         for (ConversationEntry *entry in entries) {
             
-            NSArray* result = [ClientEntities MR_findByAttribute:@"entityId" withValue:entry.entityId];
-            ClientEntities* person = (ClientEntities*)result[0];
+            NSArray* result = [PersonEntities MR_findByAttribute:@"entityId" withValue:entry.entityId];
+            PersonEntities* person = (PersonEntities*)result[0];
             
             NSString *sender = [NSString stringWithFormat:@"%@ - %@", person.firstLastName, [Common shortDateFromTimestamp:entry.lastModified]];
             
@@ -281,10 +281,10 @@
     
     // datasource for contactPicker
     if (!self.contacts) {
-        NSArray *array = [ClientEntities MR_findAll];
+        NSArray *array = [PersonEntities MR_findAll];
         
         NSMutableArray *contacts = [[NSMutableArray alloc] initWithCapacity:array.count];
-        for (ClientEntities *contact in array)
+        for (PersonEntities *contact in array)
         {
             JCContactModel *model = [[JCContactModel alloc] init];
             model.contactTitle = contact.firstLastName;
@@ -610,7 +610,7 @@
     
     NSArray *entityArray = nil;
     
-    if ([entities[0] isKindOfClass:[ClientEntities class]]) {
+    if ([entities[0] isKindOfClass:[PersonEntities class]]) {
         entityArray = [entities valueForKeyPath:@"entityId"];
     }
     else {

@@ -9,7 +9,7 @@
 #import "JCConversationsViewController.h"
 #import "JCOsgiClient.h"
 #import "JCEntryModel.h"
-#import "ClientEntities.h"
+#import "PersonEntities.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "JCMessagesViewController.h"
 #import "ConversationEntry.h"
@@ -18,7 +18,7 @@
 @interface JCConversationsViewController ()
 {
     //NSMutableArray *entries;
-    ClientEntities *me;
+    PersonEntities *me;
     NSMutableArray *conversations;
     NSManagedObjectContext *localContext;
     NSMutableDictionary *personMap;

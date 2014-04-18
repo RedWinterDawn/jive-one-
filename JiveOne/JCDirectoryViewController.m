@@ -7,8 +7,8 @@
 //
 
 #import "JCDirectoryViewController.h"
-#import "ClientEntities.h"
-#import "ClientMeta.h"
+#import "PersonEntities.h"
+#import "PersonMeta.h"
 #import "JCOsgiClient.h"
 #import "JCDirectoryDetailViewController.h"
 #import "JCPersonCell.h"
@@ -179,12 +179,12 @@ static NSString *CellIdentifier = @"DirectoryCell";
         NSString *section = sections[i];
         NSArray *sectionArray = nil;
         if ([section isEqualToString:@"\u2605"]) {
-            sectionArray = [ClientEntities MR_findByAttribute:@"isFavorite" withValue:[NSNumber numberWithBool:YES]];
+            sectionArray = [PersonEntities MR_findByAttribute:@"isFavorite" withValue:[NSNumber numberWithBool:YES]];
         }
         else {
             // retrieve entities where first name starts with letter of alphabet
             NSPredicate *pred = [NSPredicate predicateWithFormat:@"(firstLastName BEGINSWITH[c] %@)", section];
-            sectionArray = [ClientEntities MR_findAllWithPredicate:pred];
+            sectionArray = [PersonEntities MR_findAllWithPredicate:pred];
         }
         
         // sort array with bases on firstLastName property
@@ -220,12 +220,12 @@ static NSString *CellIdentifier = @"DirectoryCell";
         NSArray* entityArray = [JSON objectForKey:@"entries"];
         NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
         
-        [ClientEntities MR_truncateAllInContext:localContext];
-        [ClientMeta MR_truncateAllInContext:localContext];
+        [PersonEntities MR_truncateAllInContext:localContext];
+        [PersonMeta MR_truncateAllInContext:localContext];
         [localContext MR_saveToPersistentStoreAndWait];
         
         for (NSDictionary* entity in entityArray) {
-            ClientEntities *c_ent = [ClientEntities MR_createInContext:localContext];
+            PersonEntities *c_ent = [PersonEntities MR_createInContext:localContext];
             c_ent.lastModified = [entity objectForKey:@"lastModified"];
             c_ent.presence = [entity objectForKey:@"presence"];
             c_ent.resourceGroupName = [entity objectForKey:@"company"];
@@ -246,7 +246,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
                 c_ent.isFavorite = NO;
             }
             
-            ClientMeta *c_meta = [ClientMeta MR_createInContext:localContext];
+            PersonMeta *c_meta = [PersonMeta MR_createInContext:localContext];
             c_meta.entityId = entity[@"meta"][@"entity"];
             c_meta.lastModified = entity[@"meta"][@"lastModified"];
             c_meta.createDate = entity[@"meta"][@"createDate"];
@@ -267,7 +267,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
         for (NSString *section in sections) {
             NSPredicate *pred = [NSPredicate predicateWithFormat:@"(firstLastName BEGINSWITH[c] %@)", section];
             
-            NSArray *sectionArray = [ClientEntities MR_findAllWithPredicate:pred];
+            NSArray *sectionArray = [PersonEntities MR_findAllWithPredicate:pred];
             [self.self.clientEntitiesArray addObject:sectionArray];
             
         }
@@ -367,9 +367,9 @@ static NSString *CellIdentifier = @"DirectoryCell";
         }
         
         //Company contacts
-        if([section[indexPath.row] isKindOfClass:[ClientEntities class]]){
+        if([section[indexPath.row] isKindOfClass:[PersonEntities class]]){
             
-            ClientEntities* person = section[indexPath.row];
+            PersonEntities* person = section[indexPath.row];
             cell.person = person;
             
             //check to see if the person is a favorite
@@ -480,7 +480,7 @@ shouldReloadTableForSearchString:(NSString *)searchString
             groupVC.person = self.clientEntitiesArray;
         } else if ([[segue identifier] isEqualToString:@"directoryDetailView"]) {
         
-            ClientEntities *person = nil; //self.clientEntitiesArray[indexPath.section][indexPath.row];
+            PersonEntities *person = nil; //self.clientEntitiesArray[indexPath.section][indexPath.row];
             if (self.searchTableIsActive) {
                 indexPath = sender;
                 person = self.clientEntitiesSearchArray[indexPath.section][indexPath.row];

@@ -250,7 +250,7 @@
     NSDictionary* vmail1;
     
     NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
-    ClientEntities *me = [ClientEntities MR_createInContext:localContext];
+    PersonEntities *me = [PersonEntities MR_createInContext:localContext];
     NSString *userId = @"jivetesting10@gmail.com";
     me.externalId = userId;
     [localContext MR_saveToPersistentStoreAndWait];

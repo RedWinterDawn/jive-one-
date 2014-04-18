@@ -21,7 +21,7 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *NameLabel;
 @property (strong, nonatomic) IBOutlet JCPresenceView *presenceView;
-@property (nonatomic) ClientEntities *person;
+@property (nonatomic) PersonEntities *person;
 @property (strong, nonatomic) IBOutlet UIButton *favoriteButton;
 @property (weak,nonatomic) id<JCPeopleDetailCellDelegate> delegate;
 

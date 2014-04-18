@@ -8,8 +8,8 @@
 
 #import "JCOsgiClient.h"
 #import "KeychainItemWrapper.h"
-#import "ClientEntities.h"
-#import "ClientMeta.h"
+#import "PersonEntities.h"
+#import "PersonMeta.h"
 #import "Voicemail+Custom.h"
 
 
@@ -366,7 +366,7 @@
 #pragma mark - Voicemail
 
 //Retrives all voicemails from the server. Entity object is not used.
-- (void) RetrieveVoicemailForEntity:(ClientEntities*)entity success:(void (^)(id JSON))success
+- (void) RetrieveVoicemailForEntity:(PersonEntities*)entity success:(void (^)(id JSON))success
                             failure:(void (^)(NSError *err))failure
 {
     [self setRequestAuthHeader];
@@ -652,20 +652,20 @@
     }
 }
 
-- (ClientEntities *)addEntity:(NSDictionary*)entity me:(NSString *)me
+- (PersonEntities *)addEntity:(NSDictionary*)entity me:(NSString *)me
 {
-    ClientEntities *c_ent = nil;
+    PersonEntities *c_ent = nil;
     @try {
         
         NSString *entityId = entity[@"id"];
-        NSArray *result = [ClientEntities MR_findByAttribute:@"entityId" withValue:entityId];
+        NSArray *result = [PersonEntities MR_findByAttribute:@"entityId" withValue:entityId];
         
         if (result.count > 0) {
             c_ent = result[0];
             return [self updateEntities:c_ent withDictionary:entity];
         }
         else {
-            c_ent = [ClientEntities MR_createInContext:localContext];
+            c_ent = [PersonEntities MR_createInContext:localContext];
             c_ent.lastModified = [entity objectForKey:@"lastModified"];
             c_ent.externalId = [entity objectForKey:@"externalId"];
             c_ent.presence = [entity objectForKey:@"presence"];
@@ -684,7 +684,7 @@
             c_ent.picture = [entity objectForKey:@"picture"];
             c_ent.email = [entity objectForKey:@"email"];
             
-            ClientMeta *c_meta = [ClientMeta MR_createInContext:localContext];
+            PersonMeta *c_meta = [PersonMeta MR_createInContext:localContext];
             c_meta.entityId = entity[@"meta"][@"entity"];
             c_meta.lastModified = entity[@"meta"][@"lastModified"];
             c_meta.createDate = entity[@"meta"][@"createDate"];
@@ -711,7 +711,7 @@
     
 }
 
-- (ClientEntities *)updateEntities:(ClientEntities *)entity withDictionary:(NSDictionary *)dictionary
+- (PersonEntities *)updateEntities:(PersonEntities *)entity withDictionary:(NSDictionary *)dictionary
 {
     long lastModifiedFromEntity = [entity.lastModified integerValue];
     long lastModifiedFromDictionary = [dictionary[@"lastModified"] integerValue];

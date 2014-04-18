@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "ClientMeta.h"
+#import "PersonMeta.h"
 
 
-@implementation ClientMeta
+@implementation PersonMeta
 
 @dynamic activityOrder;
 @dynamic createDate;

@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class ClientMeta, Company, Presence;
+@class PersonMeta, Company, Presence;
 
-@interface ClientEntities : NSManagedObject
+@interface PersonEntities : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * createDate;
 @property (nonatomic, retain) NSString * email;
@@ -33,7 +33,7 @@
 @property (nonatomic, retain) NSString * urn;
 @property (nonatomic, retain) NSNumber * isFavorite;
 @property (nonatomic, retain) Company *entityCompany;
-@property (nonatomic, retain) ClientMeta *entityMeta;
+@property (nonatomic, retain) PersonMeta *entityMeta;
 @property (nonatomic, retain) Presence *entityPresence;
 
 @end

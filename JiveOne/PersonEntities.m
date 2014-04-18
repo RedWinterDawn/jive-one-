@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "ClientEntities.h"
-#import "ClientMeta.h"
+#import "PersonEntities.h"
+#import "PersonMeta.h"
 #import "Company.h"
 #import "Presence.h"
 
 
-@implementation ClientEntities
+@implementation PersonEntities
 
 @dynamic createDate;
 @dynamic email;

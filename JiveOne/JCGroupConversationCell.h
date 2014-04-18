@@ -17,6 +17,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *conversationSnippet;
 
 @property (nonatomic) Conversation *conversation;
-@property (nonatomic) ClientEntities *person;
+@property (nonatomic) PersonEntities *person;
 
 @end

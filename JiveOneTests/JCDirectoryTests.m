@@ -8,7 +8,7 @@
 #import <XCTest/XCTest.h>
 #import "JCDirectoryViewController.h"
 #import "JCAuthenticationManager.h"
-#import "ClientEntities.h"
+#import "PersonEntities.h"
 
 @interface JCDirectoryTests : XCTestCase
 @property (nonatomic, strong) JCDirectoryViewController *JCDVC;
@@ -85,7 +85,7 @@
         counter++;
         
         if (oneOfTwentySixArrays.count != 0) {
-            ClientEntities *testContact = oneOfTwentySixArrays[0];
+            PersonEntities *testContact = oneOfTwentySixArrays[0];
             
             
             XCTAssertNotNil(testContact.firstName, @"Company contact does not contain firstName string");
@@ -123,7 +123,7 @@
     
     XCTAssertFalse(index == -1, @"No contacts found");
     
-    ClientEntities *secondContact = contacts[index][0];
+    PersonEntities *secondContact = contacts[index][0];
     
     //calcuate how many times that name exists in clientEntitiesArray, so that we know how many to expect in clientEntitiesSearchArray
     // This line had a warning that was causing the test to fail on certain devices. (int) casts result as proper type, passes test now
@@ -131,7 +131,7 @@
     
     int nameCount = 0;
     for (int i =0; i< aSectionCount; i++) {
-        if( [((ClientEntities*)self.JCDVC.clientEntitiesArray[0][i]).firstLastName isEqualToString:secondContact.firstLastName]){
+        if( [((PersonEntities*)self.JCDVC.clientEntitiesArray[0][i]).firstLastName isEqualToString:secondContact.firstLastName]){
             nameCount++;
         }
     }
@@ -144,7 +144,7 @@
     //calcuate how many times that name exists in clientEntitiesArray, so that we know how many to expect in clientEntitiesSearchArray
     int emailCount = 0;
     for (int i =0; i<aSectionCount; i++) {
-        if( [((ClientEntities*)self.JCDVC.clientEntitiesArray[0][i]).email isEqualToString:secondContact.email]){
+        if( [((PersonEntities*)self.JCDVC.clientEntitiesArray[0][i]).email isEqualToString:secondContact.email]){
             emailCount++;
         }
     }

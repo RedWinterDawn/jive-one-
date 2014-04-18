@@ -10,14 +10,14 @@
 #import "JCOsgiClient.h"
 #import "JCAuthenticationManager.h"
 #import "KeychainItemWrapper.h"
-#import "ClientEntities.h"
+#import "PersonEntities.h"
 #import "Company.h"
 #import <AudioToolbox/AudioToolbox.h>
 
 
 @interface JCAccountViewController ()
 {
-    ClientEntities *me;
+    PersonEntities *me;
     NSMutableArray *presenceValues;
     BOOL isPickerDisplay;
 }

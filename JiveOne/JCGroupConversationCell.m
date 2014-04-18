@@ -50,7 +50,7 @@
             }
         }
         
-        ClientEntities * person = [[JCOmniPresence sharedInstance] entityByEntityId:firstEntity];
+        PersonEntities * person = [[JCOmniPresence sharedInstance] entityByEntityId:firstEntity];
         if (person) {
             _person = person;
             // add observer to the person presence, even if it's a group, just so our app don't break.
@@ -204,7 +204,7 @@
     //UIView *compositeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
     
     for (NSString* entity in self.conversation.entities) {
-        ClientEntities *person = [ClientEntities MR_findFirstByAttribute:@"entityId" withValue:entity];
+        PersonEntities *person = [PersonEntities MR_findFirstByAttribute:@"entityId" withValue:entity];
         if (person) {
             NSURL *imageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", @"https://my.jive.com", person.picture]];
             

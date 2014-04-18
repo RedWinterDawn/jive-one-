@@ -46,9 +46,9 @@
     return self;
 }
 
-- (void)setPerson:(ClientEntities *)person
+- (void)setPerson:(PersonEntities *)person
 {
-    if ([person isKindOfClass:[ClientEntities class]]) {
+    if ([person isKindOfClass:[PersonEntities class]]) {
         _person = person;
         
         self.NameLabel.text = person.firstLastName;
@@ -72,7 +72,7 @@
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ([keyPath isEqualToString:kPresenceKeyPathForClientEntity]) {
-        ClientEntities *person = (ClientEntities *)object;
+        PersonEntities *person = (PersonEntities *)object;
         self.presenceView.presenceType = (JCPresenceType)[person.entityPresence.interactions[@"chat"][@"code"] integerValue];
     }
 }
