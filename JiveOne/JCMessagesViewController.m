@@ -518,6 +518,8 @@
     NSMutableDictionary *unsentMessagesQueueNew = [[NSMutableDictionary alloc] init];
     
     NSString* myEntity = [[JCOmniPresence sharedInstance] me].entityId;
+    
+    //TODO: refactor to remove keys with empty arrays. Possibly by setting up an external counter.
 
     [unsentMessagesQueueOld enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSArray *messages, BOOL *stop) {
          __block NSMutableArray *messagesMutable = [[NSMutableArray alloc] init];
@@ -528,7 +530,7 @@
                 NSLog(@"inside block. messages[i]:%@", messages[i]);
                 [JSMessageSoundEffect playMessageSentSound];
                 //if there are messages left this will resave the messages array to the queue
-                NSLog(@"success callback. Something in messagesMutable:%@", messagesMutable);
+                NSLog(@"success callback. Contents of messagesMutable:%@", messagesMutable);
                 [unsentMessagesQueueNew setObject:messagesMutable forKey:key];
                 
                 //save the queue to user defaults
