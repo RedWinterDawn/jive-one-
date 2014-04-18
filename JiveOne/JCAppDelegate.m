@@ -9,7 +9,6 @@
 #import "JCAppDelegate.h"
 #import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
 #import "JCSocketDispatch.h"
-#import "JCVersionTracker.h"
 #import "JCOsgiClient.h"
 #import "PersonEntities.h"
 #import "NotificationView.h"
@@ -393,10 +392,10 @@
     }
     
     NSNumber *number = [_badges objectForKey:@"voicemail"];
-    NSInteger count = [number integerValue];
-    count = 0;
     
-    number = [NSNumber numberWithInteger:count];
+    NSLog(@"%@", number);
+    
+    number = [NSNumber numberWithInteger:0];
     [_badges setObject:number forKey:@"voicemail"];
     
     [[NSUserDefaults standardUserDefaults] setObject:[_badges copy] forKey:@"badges"];

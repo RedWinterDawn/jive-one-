@@ -19,9 +19,8 @@
 
 
 - (id)initWithName:(NSString *)name {
-    if ([self initWithName:name color:nil selectedColor:nil]) {
-
-    }
+    
+    self = [self initWithName:name color:nil selectedColor:nil];
     return self;
 }
 

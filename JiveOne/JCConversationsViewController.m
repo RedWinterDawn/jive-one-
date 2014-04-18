@@ -8,7 +8,6 @@
 
 #import "JCConversationsViewController.h"
 #import "JCOsgiClient.h"
-#import "JCEntryModel.h"
 #import "PersonEntities.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "JCMessagesViewController.h"
