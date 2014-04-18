@@ -10,4 +10,9 @@
 
 @interface Presence (Custom)
 
++ (void)addPresences:(NSArray*)presences;
++ (Presence *)addPresence:(NSDictionary*)presence;
++ (Presence *)addPresence:(NSDictionary*)presence withManagedContext:(NSManagedObjectContext *)context;
++ (Presence *)updatePresence:(Presence *)presence dictionary:(NSDictionary *)dictionary withManagedContext:(NSManagedObjectContext *)context;
+
 @end

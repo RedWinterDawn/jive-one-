@@ -8,9 +8,9 @@
 
 #import "JCOsgiClient.h"
 #import "KeychainItemWrapper.h"
-#import "PersonEntities.h"
-#import "PersonMeta.h"
+#import "PersonEntities+Custom.h"
 #import "Voicemail+Custom.h"
+#import "Presence+Custom.h"
 
 
 #if DEBUG
@@ -70,7 +70,7 @@
     [_manager GET:kOsgiEntityRoute parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *me = [responseObject objectForKey:@"me"];
         NSArray* entityArray = [responseObject objectForKey:@"entries"];
-        [self addEntities:entityArray me:me];
+        [PersonEntities addEntities:entityArray me:me];
         success(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failure(error);
@@ -139,7 +139,7 @@
     
     [_manager GET:kOsgiPresenceRoute parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSArray *presences = responseObject[@"entries"];
-        [self addPresences:presences];
+        [Presence addPresences:presences];
         success(YES);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failure(error);
@@ -310,7 +310,7 @@
     
     [_manager PATCH:url parameters:iteractionsDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //NSLog(@"%@", responseObject);
-        [self addPresence:responseObject];
+        [Presence addPresence:responseObject];
         success(YES);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@", error);
@@ -421,333 +421,12 @@
 
 
 #pragma mark - CRUD for Conversation
-//- (void)addConversations:(NSArray *)conversationArray
-//{
-//    for (NSDictionary *conversation in conversationArray) {
-//        [self addConversation:conversation];
-//    }
-//}
-//
-//- (Conversation *)addConversation:(NSDictionary *)conversation
-//{
-//    // check if we already have that conversation
-//    NSArray *result = [Conversation MR_findByAttribute:@"conversationId" withValue:conversation[@"id"]];
-//    Conversation *conv;
-//    if (result.count > 0) {
-//        conv = result[0];
-//        [self updateConversation:conv withDictinonary:conversation];
-//    }
-//    else {
-//        //if ([conversation[@"entries"] count] > 0) {
-//        
-//        conv = [Conversation MR_createInContext:localContext];
-//        conv.hasEntries = [NSNumber numberWithBool:([conversation[@"entries"] count] > 0)];
-//        conv.createdDate = conversation[@"createdDate"];
-//        conv.lastModified = conversation[@"lastModified"];
-//        conv.urn = conversation[@"urn"];
-//        conv.conversationId = conversation[@"id"];
-//        
-//        if (conversation[@"name"]) {
-//            conv.isGroup = [NSNumber numberWithBool:YES];
-//            conv.group = conversation[@"group"] ? conversation[@"group"] : nil;
-//            conv.name = conversation[@"name"];
-//        }
-//        else {
-//            conv.entities = conversation[@"entities"];
-//        }
-//        
-//        // Save conversation
-//        [localContext MR_saveToPersistentStoreAndWait];
-//        
-//        [self addConversationEntries:conversation[@"entries"]];
-//        
-//        //}
-//    }
-//    return conv;
-//}
-//
-//- (Conversation *)updateConversation:(Conversation*)conversation withDictinonary:(NSDictionary*)dictionary
-//{
-//    // if last modified timestamps are the same, then there's no need to update anything.
-//    long lastModifiedFromEntity = [conversation.lastModified integerValue];
-//    long lastModifiedFromDictionary = [dictionary[@"lastModified"] integerValue];
-//    
-//    if (lastModifiedFromDictionary > lastModifiedFromEntity) {
-//        conversation.lastModified = dictionary[@"lastModified"];
-//        conversation.hasEntries = [NSNumber numberWithBool:([dictionary[@"entries"] count] > 0)];
-//        
-//        if (dictionary[@"name"]) {
-//            conversation.isGroup = [NSNumber numberWithBool:YES];
-//            conversation.group = dictionary[@"group"] ? dictionary[@"group"] : nil;
-//            conversation.name = dictionary[@"name"];
-//        }
-//        else {
-//            conversation.entities = dictionary[@"entities"];
-//        }
-//        
-//        // Save conversation
-//        [localContext MR_saveToPersistentStoreAndWait];
-//        
-//        // Save/Update entries
-//        [self addConversationEntries:dictionary[@"entries"]];
-//    }
-//    
-//    return conversation;
-//}
 
-
-
-//#pragma mark - CRUD for ConversationEntry
-//- (void)addConversationEntries:(NSArray *)entryArray
-//{
-//    for (NSDictionary *entry in entryArray) {
-//        if ([entry isKindOfClass:[NSDictionary class]]) {
-//            [self addConversationEntry:entry];
-//        }
-//    }
-//}
-//
-//- (ConversationEntry *)addConversationEntry:(NSDictionary*)entry
-//{
-//    ConversationEntry *convEntry;
-//    NSString *entryId =  entry[@"id"];
-//    NSArray *result = [ConversationEntry MR_findByAttribute:@"entryId" withValue:entryId];
-//    
-//    // if there are results, we're updating, else we're creating
-//    if (result.count > 0) {
-//        convEntry = result[0];
-//        [self updateConversationEntry:convEntry withDictionary:entry];
-//    }
-//    else {
-//        convEntry = [ConversationEntry MR_createInContext:localContext];
-//        convEntry.conversationId = entry[@"conversation"];
-//        convEntry.entityId = entry[@"entity"];
-//        convEntry.lastModified = entry[@"lastModified"];
-//        convEntry.createdDate = entry[@"createDate"];
-//        convEntry.call = entry[@"call"];
-//        convEntry.file = entry[@"file"];
-//        convEntry.message = entry[@"message"];
-//        convEntry.mentions = entry[@"mentions"];
-//        convEntry.tags = entry[@"tags"];
-//        convEntry.deliveryDate = entry[@"deliveryDate"];
-//        convEntry.type = entry[@"type"];
-//        convEntry.urn = entry[@"urn"];
-//        convEntry.entryId = entry[@"id"];
-//        
-//        //Update Conversation LastModified
-//        Conversation *conversation = [Conversation MR_findFirstByAttribute:@"conversationId" withValue:convEntry.conversationId];
-//        if (conversation) {
-//            if (convEntry.lastModified > conversation.lastModified) {
-//                conversation.lastModified = convEntry.lastModified;
-//            }
-//        }
-//        
-//        //Save conversation entry
-//        [localContext MR_saveToPersistentStoreAndWait];
-//    }
-//    return convEntry;
-//}
-//
-//- (ConversationEntry *)updateConversationEntry:(ConversationEntry*)entry withDictionary:(NSDictionary*)dictionary
-//{
-//    // if last modified timestamps are the same, then there's no need to update anything.
-//    long lastModifiedFromEntity = [entry.lastModified integerValue];
-//    long lastModifiedFromDictionary = [dictionary[@"lastModified"] integerValue];
-//    
-//    if (lastModifiedFromDictionary > lastModifiedFromEntity) {
-//        
-//        entry.conversationId = dictionary[@"conversation"];
-//        entry.entityId = dictionary[@"entity"];
-//        entry.lastModified = dictionary[@"lastModified"];
-//        entry.createdDate = dictionary[@"createDate"];
-//        entry.call = dictionary[@"call"];
-//        entry.file = dictionary[@"file"];
-//        entry.message = dictionary[@"message"];
-//        entry.mentions = dictionary[@"mentions"];
-//        entry.tags = dictionary[@"tags"];
-//        entry.deliveryDate = dictionary[@"deliveryDate"];
-//        entry.type = dictionary[@"type"];
-//        entry.urn = dictionary[@"urn"];
-//        entry.entryId = dictionary[@"id"];
-//        
-//        //Save conversation entry
-//        [localContext MR_saveToPersistentStoreAndWait];
-//    }
-//    
-//    return entry;
-//}
 
 
 #pragma mark - CRUD for Presence
 
-- (void)addPresences:(NSArray*)presences
-{
-    for (NSDictionary *presence in presences) {
-        if ([presence isKindOfClass:[NSDictionary class]]) {
-            [self addPresence:presence];
-        }
-    }
-}
-
-- (Presence *)addPresence:(NSDictionary*)presence
-{
-    NSString *presenceId = presence[@"id"];
-    NSArray *result = [Presence MR_findByAttribute:@"presenceId" withValue:presenceId];
-    Presence *pres = nil;
-    
-    if (result.count > 0) {
-        pres = result[0];
-        return [self updatePresence:pres dictionary:presence];
-    }
-    else
-    {
-        pres = [Presence MR_createInContext:localContext];
-        pres.entityId = presence[@"entity"];
-        pres.lastModified = presence[@"lastModified"];
-        pres.createDate = presence[@"createDate"];
-        pres.interactions = presence[@"interactions"];
-        //pres.urn = presence[@"urn"];
-        pres.presenceId = presence[@"id"];
-        
-        // update presence for asscociated entity
-        [[JCOmniPresence sharedInstance] entityByEntityId:pres.entityId].entityPresence = pres;
-        
-        [localContext MR_saveToPersistentStoreAndWait];
-    }
-    
-    return pres;
-}
-
-- (Presence *)updatePresence:(Presence *)presence dictionary:(NSDictionary *)dictionary
-{
-    long lastModifiedFromEntity = [presence.lastModified integerValue];
-    long lastModifiedFromDictionary = [dictionary[@"lastModified"] integerValue];
-    
-    if (lastModifiedFromDictionary != lastModifiedFromEntity) {
-        presence.entityId = dictionary[@"entity"];
-        presence.lastModified = dictionary[@"lastModified"];
-        //presence.createDate = dictionary[@"createDate"];
-        presence.interactions = dictionary[@"interactions"];
-        //pres.urn = presence[@"urn"];
-        //presence.presenceId = dictionary[@"id"];
-        
-        // update presence for asscociated entity
-        if (presence.interactions) {
-            [[JCOmniPresence sharedInstance] entityByEntityId:presence.entityId].entityPresence = presence;
-            
-            [localContext MR_saveToPersistentStoreAndWait];
-        }
-    }
-    
-    return presence;
-}
 
 #pragma mark - CRUD for Entities
-- (void)addEntities:(NSArray *)entities me:(NSString *)me
-{
-    for (NSDictionary *entity in entities) {
-        if ([entity isKindOfClass:[NSDictionary class]]) {
-            [self addEntity:entity me:me];
-        }
-    }
-}
-
-- (PersonEntities *)addEntity:(NSDictionary*)entity me:(NSString *)me
-{
-    PersonEntities *c_ent = nil;
-    @try {
-        
-        NSString *entityId = entity[@"id"];
-        NSArray *result = [PersonEntities MR_findByAttribute:@"entityId" withValue:entityId];
-        
-        if (result.count > 0) {
-            c_ent = result[0];
-            return [self updateEntities:c_ent withDictionary:entity];
-        }
-        else {
-            c_ent = [PersonEntities MR_createInContext:localContext];
-            c_ent.lastModified = [entity objectForKey:@"lastModified"];
-            c_ent.externalId = [entity objectForKey:@"externalId"];
-            c_ent.presence = [entity objectForKey:@"presence"];
-            c_ent.resourceGroupName = [entity objectForKey:@"company"];
-            c_ent.tags = [entity objectForKey:@"tags"];
-            c_ent.location = [entity objectForKey:@"location"];
-            c_ent.firstName = [[entity objectForKey:@"name"] objectForKey:@"first"];
-            c_ent.lastName = [[entity objectForKey:@"name"] objectForKey:@"last"];
-            c_ent.lastFirstName = [[entity objectForKey:@"name"] objectForKey:@"lastFirst"];
-            c_ent.firstLastName = [[entity objectForKey:@"name"] objectForKey:@"firstLast"];
-            c_ent.groups = [entity objectForKey:@"groups"];
-            c_ent.urn = [entity objectForKey:@"urn"];
-            c_ent.id = [entity objectForKey:@"id"];
-            c_ent.entityId = [entity objectForKey:@"id"];
-            c_ent.me = [NSNumber numberWithBool:[c_ent.entityId isEqualToString:me]];
-            c_ent.picture = [entity objectForKey:@"picture"];
-            c_ent.email = [entity objectForKey:@"email"];
-            
-            PersonMeta *c_meta = [PersonMeta MR_createInContext:localContext];
-            c_meta.entityId = entity[@"meta"][@"entity"];
-            c_meta.lastModified = entity[@"meta"][@"lastModified"];
-            c_meta.createDate = entity[@"meta"][@"createDate"];
-            c_meta.pinnedActivityOrder = entity[@"meta"][@"pinnedActivityOrder"];
-            c_meta.activityOrder = entity[@"meta"][@"activityOrder"];
-            c_meta.urn = entity[@"meta"][@"urn"];
-            c_meta.metaId = entity[@"meta"][@"id"];
-            
-            c_ent.entityMeta = c_meta;
-            
-            NSLog(@"id:%@ - _id:%@", [entity objectForKey:@"id"], [entity objectForKey:@"_id"]);
-        }
-        
-    }
-    @catch (NSException *exception) {
-        NSLog(@"%@", exception);
-    }
-    @finally {
-        [localContext MR_saveToPersistentStoreAndWait];
-    }
-    
-        
-    return c_ent;
-    
-}
-
-- (PersonEntities *)updateEntities:(PersonEntities *)entity withDictionary:(NSDictionary *)dictionary
-{
-    long lastModifiedFromEntity = [entity.lastModified integerValue];
-    long lastModifiedFromDictionary = [dictionary[@"lastModified"] integerValue];
-    
-    if (lastModifiedFromDictionary != lastModifiedFromEntity) {
-        entity.lastModified = [dictionary objectForKey:@"lastModified"];
-        entity.presence = [dictionary objectForKey:@"presence"];
-        //entity.company = [dictionary objectForKey:@"company"];
-        entity.tags = [dictionary objectForKey:@"tags"];
-        entity.location = [dictionary objectForKey:@"location"];
-        entity.firstName = [[dictionary objectForKey:@"name"] objectForKey:@"first"];
-        entity.lastName = [[dictionary objectForKey:@"name"] objectForKey:@"last"];
-        entity.lastFirstName = [[dictionary objectForKey:@"name"] objectForKey:@"lastFirst"];
-        entity.firstLastName = [[dictionary objectForKey:@"name"] objectForKey:@"firstLast"];
-        entity.groups = [dictionary objectForKey:@"groups"];
-        //entity.urn = [dictionary objectForKey:@"urn"];
-        //entity.id = [dictionary objectForKey:@"id"];
-        //entity.entityId = [dictionary objectForKey:@"id"];
-        //entity.me = [NSNumber numberWithBool:[entity.entityId isEqualToString:me]];
-        entity.picture = [dictionary objectForKey:@"picture"];
-        entity.email = [dictionary objectForKey:@"email"];
-        
-        entity.entityMeta.entityId = dictionary[@"meta"][@"entity"];
-        entity.entityMeta.lastModified = dictionary[@"meta"][@"lastModified"];
-        entity.entityMeta.createDate = dictionary[@"meta"][@"createDate"];
-        entity.entityMeta.pinnedActivityOrder = dictionary[@"meta"][@"pinnedActivityOrder"];
-        entity.entityMeta.activityOrder = dictionary[@"meta"][@"activityOrder"];
-        entity.entityMeta.urn = dictionary[@"meta"][@"urn"];
-        entity.entityMeta.metaId = dictionary[@"meta"][@"id"];
-        
-        //NSLog(@"id:%@ - _id:%@", [dictionary objectForKey:@"id"], [dictionary objectForKey:@"_id"]);
-        
-        [localContext MR_saveToPersistentStoreAndWait];
-    }
-    
-    return entity;
-}
 
 @end

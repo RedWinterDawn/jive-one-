@@ -11,6 +11,7 @@
 #import "KeychainItemWrapper.h"
 #import "ConversationEntry+Custom.h"
 #import "Voicemail+Custom.h"
+#import "Presence+Custom.h"
 #import "JCAppDelegate.h"
 
 @interface JCSocketDispatch()
@@ -270,7 +271,7 @@
     }
     else if ([type isEqualToString:kSocketPresence])
     {
-        Presence * presence = [[JCOsgiClient sharedClient] addPresence:body];
+        Presence * presence = [Presence addPresence:body];
         [[NSNotificationCenter defaultCenter] postNotificationName:kPresenceChanged object:presence];        
     }
     else if ([type isEqualToString:kSocketVoicemail]) {

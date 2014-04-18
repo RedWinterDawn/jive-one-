@@ -10,4 +10,8 @@
 
 @interface PersonEntities (Custom)
 
++ (void)addEntities:(NSArray *)entities me:(NSString *)me;
++ (PersonEntities *)addEntity:(NSDictionary*)entity me:(NSString *)me;
++ (PersonEntities *)addEntity:(NSDictionary*)entity me:(NSString *)me withManagedContext:(NSManagedObjectContext *)context;
++ (PersonEntities *)updateEntities:(PersonEntities *)entity withDictionary:(NSDictionary *)dictionary withManagedContext:(NSManagedObjectContext *)context;;
 @end

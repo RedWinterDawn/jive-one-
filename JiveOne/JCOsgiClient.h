@@ -10,7 +10,6 @@
 #import "ConversationEntry.h"
 #import "Conversation+Custom.h"
 #import "ConversationEntry.h"
-#import "Presence.h"
 #import "PersonEntities.h"
 #import "Voicemail.h"
 
@@ -65,20 +64,5 @@
 #pragma mark - Class Operations
 
 - (void) clearCookies;
-
-#pragma mark - CRUD for Conversation
-//- (void)addConversations:(NSArray*)conversationArray;
-//- (Conversation *)addConversation:(NSDictionary*)conversation;
-//- (Conversation *)updateConversation:(Conversation*)conversation withDictinonary:(NSDictionary*)dictionary;
-
-#pragma mark - CRUD for ConversationEntry
-//- (void)addConversationEntries:(NSArray *)entryArray;
-//- (ConversationEntry *)addConversationEntry:(NSDictionary*)entry;
-//- (ConversationEntry *)updateConversationEntry:(ConversationEntry*)entry withDictionary:(NSDictionary*)dictionary;
-
-#pragma mark - CRUD for Presence
-- (void)addPresences:(NSArray*)presences;
-- (Presence *)addPresence:(NSDictionary*)presence;
-- (Presence *)updatePresence:(Presence *)presence dictionary:(NSDictionary *)dictionary;
 
 @end
