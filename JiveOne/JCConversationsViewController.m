@@ -20,7 +20,6 @@
     PersonEntities *me;
     NSMutableArray *conversations;
     NSManagedObjectContext *localContext;
-    NSMutableDictionary *personMap;
     int newMessagesCount;
 }
 
@@ -62,7 +61,6 @@ static NSString *GroupCellIdentifier = @"GroupChatCell";
     if (!localContext) {
         localContext = [NSManagedObjectContext MR_contextForCurrentThread];
     }
-    personMap = [[NSMutableDictionary alloc] init];
     newMessagesCount = 0;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveConversation:) name:kNewConversation object:nil];
@@ -91,7 +89,6 @@ static NSString *GroupCellIdentifier = @"GroupChatCell";
 - (void) loadDatasource
 {
     conversations = [NSMutableArray arrayWithArray:[Conversation MR_findByAttribute:@"hasEntries" withValue:[NSNumber numberWithBool:YES] andOrderBy:@"lastModified" ascending:NO]];
-    [personMap removeAllObjects];
     [self.tableView reloadData];
 }
 
@@ -111,6 +108,8 @@ static NSString *GroupCellIdentifier = @"GroupChatCell";
     } failure:^(NSError *err) {
         NSLog(@"%@",[err description]);
         [self loadDatasource];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Offline" message:@"Could not load new conversation data. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
     }];
 }
 
