@@ -145,7 +145,7 @@
                         <viewControllerLayoutGuide type="bottom" id="wTX-eJ-avO"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="HTf-TJ-tBL">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Socket Status" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gc6-KX-s4R">
@@ -216,7 +216,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="43O-f6-3Ku" style="IBUITableViewCellStyleDefault" id="z9R-mx-G9E">
-                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="z9R-mx-G9E" id="XfK-9X-fA8">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -436,14 +436,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="People" id="i9j-aS-UgH">
-                        <barButtonItem key="leftBarButtonItem" title="Groups" id="j4n-ty-ab6">
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="ryW-6T-R4F">
                             <connections>
-                                <segue destination="T2Z-JV-v4U" kind="push" identifier="groupView" customClass="JCRightToLeftSegue" id="pAr-G9-p6b"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Status" id="kfB-MA-GwQ">
-                            <connections>
-                                <segue destination="Tno-3D-71G" kind="push" id="9gm-eo-V0k"/>
+                                <action selector="searchPeople:" destination="eTh-sK-SbW" id="WC5-dG-OOY"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

@@ -76,6 +76,10 @@ static NSString *CellIdentifier = @"DirectoryCell";
     [super viewWillAppear:animated];
     personMap = [[NSMutableDictionary alloc] init];
     [self loadCompanyDirectory];
+    
+    if (self.searchTableIsActive) {
+        [self.searchDisplayController.searchBar resignFirstResponder];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -501,6 +505,12 @@ static NSString *CellIdentifier = @"DirectoryCell";
         results = [results valueForKeyPath:@"entityId"];
         [self.clientEntitiesSearchArray addObjectsFromArray:results];
     }
+}
+
+- (IBAction)searchPeople:(id)sender {
+    
+    [self.searchDisplayController.searchBar becomeFirstResponder];
+    
 }
 
 //called by UI delegate to begin constructing clientEntitesSearchArray
