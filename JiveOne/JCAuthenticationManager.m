@@ -22,6 +22,7 @@
 @interface JCAuthenticationManager ()
 
 #define kUserAuthenticated @"keyuserauthenticated"
+#define kUserLoadedMinimumData @"keyuserloadedminimumdata"
 
 @property (nonatomic) NSString *username;
 @property (nonatomic) NSString *password;
@@ -84,6 +85,22 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     }
     
     return NO;
+}
+
+- (BOOL)userLoadedMininumData
+{
+    BOOL loaded = [[NSUserDefaults standardUserDefaults]  boolForKey:kUserLoadedMinimumData];
+    if (loaded) {
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (void)setUserLoadedMinimumData:(BOOL)loaded
+{
+    [[NSUserDefaults standardUserDefaults] setBool:loaded forKey:kUserLoadedMinimumData];
+    [[NSUserDefaults standardUserDefaults] synchronize];    
 }
 
 - (void)didReceiveAuthenticationToken:(NSDictionary *)token
@@ -151,6 +168,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"authToken"];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"refreshToken"];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserAuthenticated];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserLoadedMinimumData];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [[JCOsgiClient sharedClient] clearCookies];

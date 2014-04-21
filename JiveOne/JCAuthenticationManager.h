@@ -20,6 +20,8 @@
 - (void)loginWithUsername:(NSString *)username password:(NSString*)password;
 - (void)didReceiveAuthenticationToken:(NSDictionary *)token;
 - (BOOL)userAuthenticated;
+- (BOOL)userLoadedMininumData;
+- (void)setUserLoadedMinimumData:(BOOL)loaded;
 - (void)checkForTokenValidity;
 - (void)logout:(UIViewController *)viewController;
 - (NSString *)getAuthenticationToken;

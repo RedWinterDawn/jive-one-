@@ -67,7 +67,7 @@
     
     [self refreshTabBadges];
     
-    if ([[JCAuthenticationManager sharedInstance] userAuthenticated]) {
+    if ([[JCAuthenticationManager sharedInstance] userAuthenticated] && [[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {
         [self changeRootViewController:JCRootTabbarViewController];
         [[JCAuthenticationManager sharedInstance] checkForTokenValidity];
         [[JCOsgiClient sharedClient] RetrieveEntitiesPresence:^(BOOL updated) {
@@ -104,7 +104,7 @@
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     //[[NotificationView sharedInstance] didChangeConnection:nil];
     [self refreshTabBadges];
-    if ([[JCAuthenticationManager sharedInstance] userAuthenticated]) {
+    if ([[JCAuthenticationManager sharedInstance] userAuthenticated] && [[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {
         [[JCAuthenticationManager sharedInstance] checkForTokenValidity];
         [[JCOsgiClient sharedClient] RetrieveEntitiesPresence:^(BOOL updated) {
             //do nothing;

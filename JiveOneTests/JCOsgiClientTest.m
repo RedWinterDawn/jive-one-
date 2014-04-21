@@ -51,7 +51,7 @@
     TRVSMonitor *monitor = [TRVSMonitor monitor];
     __block NSDictionary* response;
     
-    NSString *expectedEmail = @"jivetesting10@gmail.com";
+    NSString *expectedEmail = @"jivetesting13@gmail.com";
     
     [[JCOsgiClient sharedClient] RetrieveMyEntitity:^(id JSON, id operation) {
         response = JSON;

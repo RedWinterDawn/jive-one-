@@ -150,38 +150,6 @@
 - (void)fetchEntities
 {
     [[JCOsgiClient sharedClient] RetrieveClientEntitites:^(id JSON) {
-        if (fastConnection) {
-            [self fetchPresence];
-        }
-        else {
-            [self fetchCompany];
-        }
-    } failure:^(NSError *err) {
-        [self errorInitializingApp];
-    }];
-}
-
-- (void)fetchPresence
-{
-    [[JCOsgiClient sharedClient] RetrieveEntitiesPresence:^(BOOL updated) {
-        [self fetchConversations];
-    } failure:^(NSError *err) {
-        [self errorInitializingApp];
-    }];
-}
-
-- (void)fetchConversations
-{
-    [[JCOsgiClient sharedClient] RetrieveConversations:^(id JSON) {
-        [self fetchVoicemails];
-    } failure:^(NSError *err) {
-        [self errorInitializingApp];
-    }];
-}
-
-- (void)fetchVoicemails
-{
-    [[JCOsgiClient sharedClient] RetrieveVoicemailForEntity:nil success:^(id JSON) {
         [self fetchCompany];
     } failure:^(NSError *err) {
         [self errorInitializingApp];
@@ -210,15 +178,53 @@
         
         [localContext MR_saveToPersistentStoreAndWait];
         
-        [self hideHud];
-        [self goToApplication];
+        [[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
+        
+        if (fastConnection) {
+            [self fetchPresence];
+        }
+        else {
+            [self hideHud];
+            [self goToApplication];
+         }
         
     } failure:^(NSError *err) {
         NSLog(@"%@", err);
         [self errorInitializingApp];
     }];
-    
 }
+
+- (void)fetchPresence
+{
+    [[JCOsgiClient sharedClient] RetrieveEntitiesPresence:^(BOOL updated) {
+        [self fetchConversations];
+    } failure:^(NSError *err) {
+        [self errorInitializingApp];
+    }];
+}
+
+- (void)fetchConversations
+{
+    [[JCOsgiClient sharedClient] RetrieveConversations:^(id JSON) {
+        [self fetchVoicemails];
+    } failure:^(NSError *err) {
+        [self errorInitializingApp];
+    }];
+}
+
+- (void)fetchVoicemails
+{
+    [[JCOsgiClient sharedClient] RetrieveVoicemailForEntity:nil success:^(id JSON) {
+        
+        [self hideHud];
+        [self goToApplication];
+        
+    } failure:^(NSError *err) {
+        [self errorInitializingApp];
+    }];
+}
+
+
 
 - (void)goToApplication
 {
