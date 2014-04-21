@@ -45,6 +45,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
                                         init];
     [refreshControl addTarget:self action:@selector(updateTable) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 
 }
 

@@ -590,7 +590,7 @@
     int originalCount = (int)names.count;
     if (names.count > 3) {
         names = [names subarrayWithRange:NSMakeRange(0, 3)];
-        return [NSString stringWithFormat:@"%@, +%lu", [names componentsJoinedByString:@"," ], (originalCount - names.count)];
+        return [NSString stringWithFormat:@"%@, +%u", [names componentsJoinedByString:@"," ], (int)(originalCount - names.count)];
     }
     else {
         return [names componentsJoinedByString:@", "];
