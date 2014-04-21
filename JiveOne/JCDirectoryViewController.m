@@ -75,15 +75,13 @@ static NSString *CellIdentifier = @"DirectoryCell";
 {
     [super viewWillAppear:animated];
     personMap = [[NSMutableDictionary alloc] init];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didUpdatePresence:) name:kPresenceChanged object:nil];
-    
     [self loadCompanyDirectory];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    //[[NSNotificationCenter defaultCenter] removeObserver:self];
+    
 }
 
 
@@ -292,11 +290,18 @@ static NSString *CellIdentifier = @"DirectoryCell";
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    if (self.clientEntitiesArray.count == 0) {
-        return 0;
-    } else {
+    if (tableView == self.tableView) {
         return sections.count;
     }
+    else {
+        return 1;
+    }
+        
+//    if (self.clientEntitiesArray.count == 0) {
+//        return 0;
+//    } else {
+//        return sections.count;
+//    }
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
@@ -317,10 +322,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
 {
     //show search results
     if (tableView == self.searchDisplayController.searchResultsTableView) {
-        if(self.clientEntitiesSearchArray.count ==0)
-            return 0;
-        else
-            return [(NSArray*)self.clientEntitiesSearchArray[section] count];
+        return self.clientEntitiesSearchArray.count;
     }else{
     //show all results
         if (self.clientEntitiesArray.count == 0) {
@@ -337,67 +339,122 @@ static NSString *CellIdentifier = @"DirectoryCell";
 {
     
     JCPersonCell *cell;
-    if(tableView != self.searchDisplayController.searchResultsTableView){//redundant, but easier than rearranging all the if statements below.
+    PersonEntities *person;
+    if(tableView == self.tableView){//redundant, but easier than rearranging all the if statements below.
         //only instantiate the cell this way, if it is not part of the searchResutls Table view.
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        
+        
+        person = self.clientEntitiesArray[indexPath.section][indexPath.row];
+    
+        
     }
     else{
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    }
-    NSArray *section;
-    
-    //no contacts loaded
-    if (self.clientEntitiesArray.count == 0) {
-        cell.textLabel.text = @"No contacts";
-        return cell;
-    }
-    //will show contacts loaded in clientEntitiesArray
-    else {
-            //show search results only
-        if(tableView == self.searchDisplayController.searchResultsTableView){
-            if (self.clientEntitiesSearchArray.count == 0) {
-                return nil;
-            }
-            cell = [[JCPersonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];//can only be used if initWithStyle manually initializes all uilabel properties (since it's not being created by the storyboard)
-            section = self.clientEntitiesSearchArray[indexPath.section];
-        }
-        else{
-            //show all results
-            section = self.clientEntitiesArray[indexPath.section];
+        if (!cell) {
+            cell = [[JCPersonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
         
-        //Company contacts
-        if([section[indexPath.row] isKindOfClass:[PersonEntities class]]){
-            
-            PersonEntities* person = section[indexPath.row];
-            cell.person = person;
-            
-            //check to see if the person is a favorite
-            if ([person.isFavorite boolValue]) {
-                
-                
-                NSMutableString *name = [[NSMutableString alloc]initWithString: cell.personNameLabel.text];
-                NSString *star = @"  ★";
-                NSString *nameAndStarAsAnNSString = [NSString stringWithString:[name stringByAppendingString:star]];
-                
-                
-                UIColor *theRightShadeOfYellowForOurStar = [UIColor colorWithRed:255.0/255.0 green:212.0/255.0 blue:0.0/255.0 alpha:1.0];
-                NSRange starLocation = [nameAndStarAsAnNSString rangeOfString:@"★"];
-                NSMutableAttributedString *personAttributedName = [[NSMutableAttributedString alloc]initWithString:nameAndStarAsAnNSString];
-                [personAttributedName setAttributes:@{NSForegroundColorAttributeName : theRightShadeOfYellowForOurStar} range:starLocation];
-                
-                cell.personNameLabel.attributedText = personAttributedName;
-            }
-            
-        }else{
-            //local contacts
-            NSDictionary * pers = section[indexPath.row];
-            cell.personNameLabel.text = [pers objectForKey:@"firstLast"];
-            cell.personDetailLabel.text = @"";//[person objectForKey:@"email"];
-
-            }
-        return cell;
+        NSString *entityId = self.clientEntitiesSearchArray[indexPath.row];
+        person = [self getPersonFromListByEntityId:entityId];
     }
+    
+    if (person) {
+    
+        cell.person = person;
+        
+        //check to see if the person is a favorite
+        if ([person.isFavorite boolValue]) {
+            
+            
+            NSMutableString *name = [[NSMutableString alloc]initWithString: cell.personNameLabel.text];
+            NSString *star = @"  ★";
+            NSString *nameAndStarAsAnNSString = [NSString stringWithString:[name stringByAppendingString:star]];
+            
+            
+            UIColor *theRightShadeOfYellowForOurStar = [UIColor colorWithRed:255.0/255.0 green:212.0/255.0 blue:0.0/255.0 alpha:1.0];
+            NSRange starLocation = [nameAndStarAsAnNSString rangeOfString:@"★"];
+            NSMutableAttributedString *personAttributedName = [[NSMutableAttributedString alloc]initWithString:nameAndStarAsAnNSString];
+            [personAttributedName setAttributes:@{NSForegroundColorAttributeName : theRightShadeOfYellowForOurStar} range:starLocation];
+            
+            cell.personNameLabel.attributedText = personAttributedName;
+        }
+    }
+
+    return cell;
+    
+//    NSArray *section;
+//    
+//    //no contacts loaded
+//    if (self.clientEntitiesArray.count == 0) {
+//        cell.textLabel.text = @"No contacts";
+//        return cell;
+//    }
+//    //will show contacts loaded in clientEntitiesArray
+//    else {
+//            //show search results only
+//        if(tableView == self.searchDisplayController.searchResultsTableView){
+//            if (self.clientEntitiesSearchArray.count == 0) {
+//                return nil;
+//            }
+//            cell = [[JCPersonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];//can only be used if initWithStyle manually initializes all uilabel properties (since it's not being created by the storyboard)
+//            section = 0;
+//        }
+//        else{
+//            //show all results
+//            section = self.clientEntitiesArray[indexPath.section];
+//        }
+//        
+//        //Company contacts
+//        if([section[indexPath.row] isKindOfClass:[PersonEntities class]]){
+//            
+//            PersonEntities* person;
+//            if(tableView == self.searchDisplayController.searchResultsTableView) {
+//                person = self.clientEntitiesSearchArray[indexPath.row];
+//            }
+//            else {
+//                person = section[indexPath.row];
+//            }
+//            cell.person = person;
+//            
+//            //check to see if the person is a favorite
+//            if ([person.isFavorite boolValue]) {
+//                
+//                
+//                NSMutableString *name = [[NSMutableString alloc]initWithString: cell.personNameLabel.text];
+//                NSString *star = @"  ★";
+//                NSString *nameAndStarAsAnNSString = [NSString stringWithString:[name stringByAppendingString:star]];
+//                
+//                
+//                UIColor *theRightShadeOfYellowForOurStar = [UIColor colorWithRed:255.0/255.0 green:212.0/255.0 blue:0.0/255.0 alpha:1.0];
+//                NSRange starLocation = [nameAndStarAsAnNSString rangeOfString:@"★"];
+//                NSMutableAttributedString *personAttributedName = [[NSMutableAttributedString alloc]initWithString:nameAndStarAsAnNSString];
+//                [personAttributedName setAttributes:@{NSForegroundColorAttributeName : theRightShadeOfYellowForOurStar} range:starLocation];
+//                
+//                cell.personNameLabel.attributedText = personAttributedName;
+//            }
+//            
+//        }else{
+//            //local contacts
+//            NSDictionary * pers = section[indexPath.row];
+//            cell.personNameLabel.text = [pers objectForKey:@"firstLast"];
+//            cell.personDetailLabel.text = @"";//[person objectForKey:@"email"];
+//
+//            }
+//        return cell;
+//    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        self.searchTableIsActive = YES;
+        
+    }else{
+        self.searchTableIsActive = NO;
+    }
+    [self performSegueWithIdentifier:@"directoryDetailView" sender:indexPath];
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -433,8 +490,16 @@ static NSString *CellIdentifier = @"DirectoryCell";
     
     //clear the array or it will accumulate and be an union search instead of intersect
     [self.clientEntitiesSearchArray removeAllObjects];
-    for(NSArray *sectionArray in self.clientEntitiesArray){
-        [self.clientEntitiesSearchArray addObject:[sectionArray filteredArrayUsingPredicate:pred]];
+    for (int i = 0; i < self.clientEntitiesArray.count; i++) {
+        
+        if (i == 0) {
+            continue;
+        }
+        
+        NSArray *sectionArray = self.clientEntitiesArray[i];
+        NSArray *results = [sectionArray filteredArrayUsingPredicate:pred];
+        results = [results valueForKeyPath:@"entityId"];
+        [self.clientEntitiesSearchArray addObjectsFromArray:results];
     }
 }
 
@@ -450,17 +515,23 @@ shouldReloadTableForSearchString:(NSString *)searchString
     return YES;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
-        self.searchTableIsActive = YES;
 
-    }else{
-        self.searchTableIsActive = NO;
+- (PersonEntities *)getPersonFromListByEntityId:(NSString *)entityId
+{
+    for (NSArray *section in self.clientEntitiesArray) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"entityId ==[c] %@", entityId];
+        NSArray *result = [section filteredArrayUsingPredicate:predicate];
+        
+        if (result.count > 0) {
+            PersonEntities *person = result[0];
+            return person;
+        }
     }
-    [self performSegueWithIdentifier:@"directoryDetailView" sender:indexPath];
     
+    return nil;
 }
+
+
 
 
 #pragma mark - Navigation
@@ -470,55 +541,72 @@ shouldReloadTableForSearchString:(NSString *)searchString
 {
     
     NSIndexPath *indexPath = sender;
+    PersonEntities *person;
     
-    //check if it's a company or local contact
-    if (self.segControl.selectedSegmentIndex == 0) {
-        
-        
-        if ([[segue identifier] isEqualToString:@"groupView"]) {
-            JCDirectoryGroupViewController *groupVC = (JCDirectoryGroupViewController*)segue.destinationViewController;
-            groupVC.person = self.clientEntitiesArray;
-        } else if ([[segue identifier] isEqualToString:@"directoryDetailView"]) {
-        
-            PersonEntities *person = nil; //self.clientEntitiesArray[indexPath.section][indexPath.row];
-            if (self.searchTableIsActive) {
-                indexPath = sender;
-                person = self.clientEntitiesSearchArray[indexPath.section][indexPath.row];
-            }
-            else {
-                person = self.clientEntitiesArray[indexPath.section][indexPath.row];
-            }
-            [segue.destinationViewController setPerson:person];
-            [segue.destinationViewController setABPerson:nil];
-            
-            [segue.destinationViewController setPersonCell:(JCPersonCell *)[self.tableView cellForRowAtIndexPath:sender]];
-        }
+    if (self.searchTableIsActive) {
+        NSString *entityId = self.clientEntitiesSearchArray[indexPath.row];
+        person = [self getPersonFromListByEntityId:entityId];
     }
-    //local contact
-    else
-    {
-//        NSDictionary *person = nil;
-//        if([segue.identifier isEqualToString:@"showSearchDetail"]) {
-//            person = self.clientEntitiesSearchArray[indexPath.section][indexPath.row];
-//        }
-//        else {
-//            person = self.clientEntitiesArray[indexPath.section][indexPath.row];
-//        }
-        // get ABDictionary
-        
-        if ([[segue identifier] isEqualToString:@"groupView"]) {
-            NSMutableArray *person = self.clientEntitiesArray;
-            JCDirectoryGroupViewController* groupVC = segue.destinationViewController;
-            groupVC.personDict = person;
-        } else if ([[segue identifier] isEqualToString:@"directoryDetailView"]) {
-            NSDictionary *person = self.clientEntitiesArray[indexPath.section][indexPath.row];
-            JCDirectoryDetailViewController* detailVC = segue.destinationViewController;
-            detailVC.ABPerson = person;
-            detailVC.person = nil;
-        }
-        
+    else {
+        person = self.clientEntitiesArray[indexPath.section][indexPath.row];
     }
     
+    if (person) {
+        [segue.destinationViewController setPerson:person];
+    }
+    
+
+    
+    
+//    //check if it's a company or local contact
+//    if (self.segControl.selectedSegmentIndex == 0) {
+//        
+//        
+//        if ([[segue identifier] isEqualToString:@"groupView"]) {
+//            JCDirectoryGroupViewController *groupVC = (JCDirectoryGroupViewController*)segue.destinationViewController;
+//            groupVC.person = self.clientEntitiesArray;
+//        } else if ([[segue identifier] isEqualToString:@"directoryDetailView"]) {
+//        
+//            PersonEntities *person = nil; //self.clientEntitiesArray[indexPath.section][indexPath.row];
+//            if (self.searchTableIsActive) {
+//                indexPath = sender;
+//                person = self.clientEntitiesSearchArray[indexPath.section][indexPath.row];
+//            }
+//            else {
+//                person = self.clientEntitiesArray[indexPath.section][indexPath.row];
+//            }
+//            [segue.destinationViewController setEntityId:person.entityId];
+//            //[segue.destinationViewController setPerson:person];
+//            //[segue.destinationViewController setABPerson:nil];
+//            
+//            //[segue.destinationViewController setPersonCell:(JCPersonCell *)[self.tableView cellForRowAtIndexPath:sender]];
+//        }
+//    }
+//    //local contact
+//    else
+//    {
+////        NSDictionary *person = nil;
+////        if([segue.identifier isEqualToString:@"showSearchDetail"]) {
+////            person = self.clientEntitiesSearchArray[indexPath.section][indexPath.row];
+////        }
+////        else {
+////            person = self.clientEntitiesArray[indexPath.section][indexPath.row];
+////        }
+//        // get ABDictionary
+//        
+//        if ([[segue identifier] isEqualToString:@"groupView"]) {
+//            NSMutableArray *person = self.clientEntitiesArray;
+//            JCDirectoryGroupViewController* groupVC = segue.destinationViewController;
+//            groupVC.personDict = person;
+//        } else if ([[segue identifier] isEqualToString:@"directoryDetailView"]) {
+//            NSDictionary *person = self.clientEntitiesArray[indexPath.section][indexPath.row];
+//            JCDirectoryDetailViewController* detailVC = segue.destinationViewController;
+//            detailVC.ABPerson = person;
+//            detailVC.person = nil;
+//        }
+//        
+//    }
+//    
 }
 
 - (IBAction)refreshDirectory:(id)sender {
