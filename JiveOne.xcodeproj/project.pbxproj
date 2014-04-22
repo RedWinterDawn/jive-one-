@@ -66,7 +66,6 @@
 		270098AB18F4714100B6BC2F /* input-bar-flat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2700987018F4714100B6BC2F /* input-bar-flat@2x.png */; };
 		270098AC18F4714100B6BC2F /* message-received.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 2700987218F4714100B6BC2F /* message-received.aiff */; };
 		270098AD18F4714100B6BC2F /* message-sent.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 2700987318F4714100B6BC2F /* message-sent.aiff */; };
-		270098B018F482AD00B6BC2F /* JSDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 270098AF18F482AD00B6BC2F /* JSDemoViewController.m */; };
 		270098B218F5E4E400B6BC2F /* conv-bubble@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 270098B118F5E4E400B6BC2F /* conv-bubble@2x.png */; };
 		270098B418F5E4EA00B6BC2F /* conv-bubble.png in Resources */ = {isa = PBXBuildFile; fileRef = 270098B318F5E4EA00B6BC2F /* conv-bubble.png */; };
 		270098C118F5EA9300B6BC2F /* conv-compose.png in Resources */ = {isa = PBXBuildFile; fileRef = 270098B618F5EA9300B6BC2F /* conv-compose.png */; };
@@ -295,8 +294,6 @@
 		2700987018F4714100B6BC2F /* input-bar-flat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "input-bar-flat@2x.png"; sourceTree = "<group>"; };
 		2700987218F4714100B6BC2F /* message-received.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "message-received.aiff"; sourceTree = "<group>"; };
 		2700987318F4714100B6BC2F /* message-sent.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "message-sent.aiff"; sourceTree = "<group>"; };
-		270098AE18F482AD00B6BC2F /* JSDemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSDemoViewController.h; sourceTree = "<group>"; };
-		270098AF18F482AD00B6BC2F /* JSDemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSDemoViewController.m; sourceTree = "<group>"; };
 		270098B118F5E4E400B6BC2F /* conv-bubble@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "conv-bubble@2x.png"; sourceTree = "<group>"; };
 		270098B318F5E4EA00B6BC2F /* conv-bubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "conv-bubble.png"; sourceTree = "<group>"; };
 		270098B618F5EA9300B6BC2F /* conv-compose.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "conv-compose.png"; sourceTree = "<group>"; };
@@ -561,8 +558,6 @@
 				2700983C18F4714100B6BC2F /* JSMessageTableView.m */,
 				2700983D18F4714100B6BC2F /* JSMessageTextView.h */,
 				2700983E18F4714100B6BC2F /* JSMessageTextView.m */,
-				270098AE18F482AD00B6BC2F /* JSDemoViewController.h */,
-				270098AF18F482AD00B6BC2F /* JSDemoViewController.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1396,7 +1391,6 @@
 				2751591F18AD303500FD8D3F /* JCDirectoryViewController.m in Sources */,
 				DD3BD9F418DCB1740080318E /* Voicemail+Custom.m in Sources */,
 				F258589218BD3A420020AF34 /* JCDirectoryGroupViewController.m in Sources */,
-				270098B018F482AD00B6BC2F /* JSDemoViewController.m in Sources */,
 				2700987A18F4714100B6BC2F /* JSBubbleView.m in Sources */,
 				2700987918F4714100B6BC2F /* JSBubbleMessageCell.m in Sources */,
 				27B8152618D93F1A00516BF6 /* NotificationView.m in Sources */,
