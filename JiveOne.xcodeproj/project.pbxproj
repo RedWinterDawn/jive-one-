@@ -759,6 +759,8 @@
 				275E809518AED884009AD776 /* JCSocketDispatch.m */,
 				2762C45618B4177D00885918 /* JCOmniPresence.h */,
 				2762C45718B4177D00885918 /* JCOmniPresence.m */,
+				2751590F18AD174F00FD8D3F /* JCAuthenticationManager.h */,
+				2751591018AD174F00FD8D3F /* JCAuthenticationManager.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -843,8 +845,6 @@
 			children = (
 				2751590D18AD174F00FD8D3F /* KeychainItemWrapper.h */,
 				2751590E18AD174F00FD8D3F /* KeychainItemWrapper.m */,
-				2751590F18AD174F00FD8D3F /* JCAuthenticationManager.h */,
-				2751591018AD174F00FD8D3F /* JCAuthenticationManager.m */,
 				275F4A6018AD0FBC00D2F069 /* JCAppDelegate.h */,
 				275F4A6118AD0FBC00D2F069 /* JCAppDelegate.m */,
 				2751590218AD10E500FD8D3F /* Constants.h */,
