@@ -266,8 +266,15 @@
         stringSize = CGRectIntegral(stringRect).size;
     }
     else {
+        //supress deprecated compiler warning
+        #pragma GCC diagnostic push
+        #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+         
         stringSize = [txt sizeWithFont:[[JSBubbleView appearance] font]
                      constrainedToSize:CGSizeMake(maxWidth, maxHeight)];
+            
+        //restore previous compiler settings
+        #pragma GCC diagnostic pop
     }
     
     return CGSizeMake(roundf(stringSize.width), roundf(stringSize.height));

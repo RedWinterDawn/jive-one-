@@ -111,7 +111,15 @@
         }
         else {
             [self.placeholderColor set];
+            //supress deprecated compiler warning
+            #pragma GCC diagnostic push
+            #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+ 
             [self.placeholder drawInRect:CGRectMake(8.0f, 8.0f, self.frame.size.width - 16.0f, self.frame.size.height - 16.0f) withFont:self.font];
+            
+            //restore previous compiler settings
+            #pragma GCC diagnostic pop
+                        
         }
     }
 }
