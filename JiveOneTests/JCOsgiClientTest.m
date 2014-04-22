@@ -251,7 +251,7 @@
     
     NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
     PersonEntities *me = [PersonEntities MR_createInContext:localContext];
-    NSString *userId = @"dleonard@getjive.com";
+    NSString *userId = @"jivetesting10@gmail.com";
     me.externalId = userId;
     [localContext MR_saveToPersistentStoreAndWait];
     
