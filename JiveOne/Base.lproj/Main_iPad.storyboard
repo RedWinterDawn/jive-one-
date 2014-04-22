@@ -681,16 +681,13 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YNR-5l-rtn">
-                                                    <rect key="frame" x="184" y="7" width="103" height="30"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rn4-nF-ndN">
+                                                    <rect key="frame" x="473" y="11" width="256" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <state key="normal" title="Available">
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="presenceButtonSelected:" destination="RRs-E0-zHQ" eventType="touchUpInside" id="U7V-HZ-VMa"/>
-                                                    </connections>
-                                                </button>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -750,7 +747,7 @@
                     <connections>
                         <outlet property="jiveMessenger" destination="ZBI-Pz-KHN" id="Iax-4D-o2w"/>
                         <outlet property="jivePhoneNumber" destination="bfX-fV-yQ5" id="cl4-AC-V16"/>
-                        <outlet property="presenceDetail" destination="YNR-5l-rtn" id="jDG-df-5bT"/>
+                        <outlet property="presenceDetail" destination="rn4-nF-ndN" id="FB1-e2-LhZ"/>
                         <outlet property="userNameDetail" destination="WcV-um-tSk" id="iXn-sR-pgg"/>
                     </connections>
                 </tableViewController>
