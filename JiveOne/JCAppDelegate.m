@@ -463,7 +463,6 @@
 #pragma mark - Reachability
 - (void)didChangeConnection:(NSNotification *)notification
 {
-    //TODO: try to initialize socket connection
     AFNetworkReachabilityStatus status = [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
     switch (status) {
         case AFNetworkReachabilityStatusNotReachable: {
@@ -474,11 +473,15 @@
             NSLog(@"WIFI");
             //send any chat messages in the queue
             [JCMessagesViewController sendOfflineMessagesQueue:[JCOsgiClient sharedClient]];
+            //try to initialize socket connections
+            [self startSocket];
             break;
         case AFNetworkReachabilityStatusReachableViaWWAN:
             NSLog(@"3G");
             //send any chat messages in the queue
             [JCMessagesViewController sendOfflineMessagesQueue:[JCOsgiClient sharedClient]];
+            //try to initialize socket connections
+            [self startSocket];
             break;
         default:
             NSLog(@"Unkown network status");
