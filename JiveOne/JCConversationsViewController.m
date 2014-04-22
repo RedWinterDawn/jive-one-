@@ -108,7 +108,7 @@ static NSString *GroupCellIdentifier = @"GroupChatCell";
     } failure:^(NSError *err) {
         NSLog(@"%@",[err description]);
         [self loadDatasource];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Offline" message:@"Could not load new conversation data. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection Problem" message:@"Could not load new conversation data. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
     }];
 }

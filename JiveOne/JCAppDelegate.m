@@ -463,6 +463,7 @@
 #pragma mark - Reachability
 - (void)didChangeConnection:(NSNotification *)notification
 {
+    //TODO: try to initialize socket connection
     AFNetworkReachabilityStatus status = [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
     switch (status) {
         case AFNetworkReachabilityStatusNotReachable: {
