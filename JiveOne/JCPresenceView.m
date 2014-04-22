@@ -155,9 +155,9 @@
         [[JCPresenceView cachedPresenceImages] setObject:presenceImage forKey:key];
         UIGraphicsEndImageContext();
     }
-    else{
-        NSLog(@"Cache Hit For Presence Image");
-    }
+//    else{
+//        NSLog(@"Cache Hit For Presence Image");
+//    }
     return presenceImage;
 }
 
