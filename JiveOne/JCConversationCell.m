@@ -275,7 +275,7 @@
                 
                 UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 20)];
                 label.textColor = [UIColor whiteColor];
-                label.text = [NSString stringWithFormat:@"+%lu", entities.count - 4];
+                label.text = [NSString stringWithFormat:@"+%u", (int)(entities.count - 4)];
                 [label sizeToFit];
                 label.font = [UIFont boldSystemFontOfSize:12.0f];
                 label.center = groupCount.center;

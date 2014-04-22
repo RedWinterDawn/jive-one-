@@ -58,7 +58,7 @@
         self.jivePhoneNumber.text = me.externalId;
     }
     
-    [self.presenceDetail setTitle:[self getPresence:me.entityPresence.interactions[@"chat"][@"code"]]  forState:UIControlStateNormal];
+    [self.presenceDetail setText:[self getPresence:me.entityPresence.interactions[@"chat"][@"code"]]];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -146,10 +146,22 @@
     return [super tableView:tableView cellForRowAtIndexPath:indexPath];
 }
 
-//-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-// 
-//}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.section==1){
+        //launch action sheet
+        UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"Select Presence option:" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
+                                kPresenceAvailable,
+                                kPresenceAway,
+                                kPresenceBusy,
+                                kPresenceDoNotDisturb,
+                                kPresenceInvisible,
+                                kPresenceOffline,
+                                nil];
+        [popup showFromTabBar:self.tabBarController.tabBar];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
+}
 
 #pragma mark - Actions from UI
 - (IBAction)logoutButtonPress:(id)sender {
@@ -157,17 +169,6 @@
     [[JCAuthenticationManager sharedInstance] logout:self];
 }
 
-- (IBAction)presenceButtonSelected:(id)sender {
-    UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"Select Presence option:" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
-                            kPresenceAvailable,
-                            kPresenceAway,
-                            kPresenceBusy,
-                            kPresenceDoNotDisturb,
-                            kPresenceInvisible,
-                            kPresenceOffline,
-                            nil];
-    [popup showFromTabBar:self.tabBarController.tabBar];
-}
 
 #pragma mark - UIActionSheet Delegate
 - (void)actionSheet:(UIActionSheet *)popup clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -201,11 +202,11 @@
             type = JCPresenceTypeOffline;
             break;
         default:
-            state = self.presenceDetail.titleLabel.text;
+            state = self.presenceDetail.text;
             type = JCPresenceTypeNone;
     }
     
-    [self.presenceDetail setTitle:state forState:UIControlStateNormal];
+    [self.presenceDetail setText:state];
     
     if (type != JCPresenceTypeNone) {
         [[JCOsgiClient sharedClient] UpdatePresence:type success:^(BOOL updated) {

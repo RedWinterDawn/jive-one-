@@ -139,13 +139,13 @@
         <!--Status View Controller-->
         <scene sceneID="nm6-rk-ymA">
             <objects>
-                <viewController id="Tno-3D-71G" customClass="JCStatusViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="StatusViewController" id="Tno-3D-71G" customClass="JCStatusViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="tsJ-aa-iGX"/>
                         <viewControllerLayoutGuide type="bottom" id="wTX-eJ-avO"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="HTf-TJ-tBL">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Socket Status" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gc6-KX-s4R">
@@ -216,7 +216,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="43O-f6-3Ku" style="IBUITableViewCellStyleDefault" id="z9R-mx-G9E">
-                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="z9R-mx-G9E" id="XfK-9X-fA8">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -290,9 +290,12 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uMz-cm-hR5">
-                                            <rect key="frame" x="212" y="0.0" width="108" height="44"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uMz-cm-hR5">
+                                            <rect key="frame" x="227" y="0.0" width="73" height="44"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="73" id="UI3-t0-JDj"/>
+                                            </constraints>
                                             <state key="normal" title="Start Chat">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
@@ -309,10 +312,9 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="uMz-cm-hR5" secondAttribute="trailing" id="6OC-Bi-1rO"/>
-                                        <constraint firstItem="uMz-cm-hR5" firstAttribute="top" secondItem="zY2-Ui-cfZ" secondAttribute="top" id="SHC-mG-swx"/>
-                                        <constraint firstAttribute="bottom" secondItem="uMz-cm-hR5" secondAttribute="bottom" constant="-1" id="Tl1-0i-Ak8"/>
-                                        <constraint firstItem="uMz-cm-hR5" firstAttribute="leading" secondItem="Opf-zp-s5x" secondAttribute="trailing" constant="83" id="i5y-es-BpR"/>
+                                        <constraint firstAttribute="trailing" secondItem="uMz-cm-hR5" secondAttribute="trailing" constant="20" symbolic="YES" id="3k8-2c-Dsx"/>
+                                        <constraint firstItem="uMz-cm-hR5" firstAttribute="top" secondItem="zY2-Ui-cfZ" secondAttribute="top" id="80J-oR-sVF"/>
+                                        <constraint firstAttribute="bottom" secondItem="uMz-cm-hR5" secondAttribute="bottom" constant="-1" id="g2p-to-MWp"/>
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -378,7 +380,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3x1-kR-aGn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1535" y="-160"/>
+            <point key="canvasLocation" x="1643" y="-160"/>
         </scene>
         <!--Navigation Controller - People-->
         <scene sceneID="4Zu-Qh-4wk">
@@ -436,21 +438,16 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="People" id="i9j-aS-UgH">
-                        <barButtonItem key="leftBarButtonItem" title="Groups" id="j4n-ty-ab6">
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="ryW-6T-R4F">
                             <connections>
-                                <segue destination="T2Z-JV-v4U" kind="push" identifier="groupView" customClass="JCRightToLeftSegue" id="pAr-G9-p6b"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Status" id="kfB-MA-GwQ">
-                            <connections>
-                                <segue destination="Tno-3D-71G" kind="push" id="9gm-eo-V0k"/>
+                                <action selector="searchPeople:" destination="eTh-sK-SbW" id="WC5-dG-OOY"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="searchDisplayController" destination="DBo-Lk-QsT" id="tws-pf-7QF"/>
                         <outlet property="tableView" destination="mbq-mY-MdJ" id="hv1-OR-HQw"/>
-                        <segue destination="PiD-ab-JdW" kind="push" identifier="directoryDetailView" id="4I8-Ma-3wU"/>
+                        <segue destination="PiD-ab-JdW" kind="push" identifier="directoryDetailView" id="wrS-Xm-g1u"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U3j-C6-zfv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -662,16 +659,13 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GdY-P1-nPz">
-                                                    <rect key="frame" x="184" y="7" width="103" height="30"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sgE-3U-Nxi">
+                                                    <rect key="frame" x="161" y="11" width="126" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <state key="normal" title="Available">
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="presenceButtonSelected:" destination="xfW-W8-tPR" eventType="touchUpInside" id="xra-Fv-zJD"/>
-                                                    </connections>
-                                                </button>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -731,7 +725,7 @@
                     <connections>
                         <outlet property="jiveMessenger" destination="0ai-Ig-Dss" id="Qbu-t1-FZ5"/>
                         <outlet property="jivePhoneNumber" destination="u6x-29-mLI" id="D7U-Ge-pvD"/>
-                        <outlet property="presenceDetail" destination="GdY-P1-nPz" id="IEX-VA-Lya"/>
+                        <outlet property="presenceDetail" destination="sgE-3U-Nxi" id="lYc-TW-cvx"/>
                         <outlet property="userNameDetail" destination="rfh-N6-UZm" id="buu-u6-fFG"/>
                     </connections>
                 </tableViewController>

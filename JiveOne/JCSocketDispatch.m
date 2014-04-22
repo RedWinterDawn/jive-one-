@@ -111,7 +111,7 @@
         
         // if we fail to get a session, then try again in 15 seconds
         if (![_timer isValid]) {
-            _timer = [NSTimer scheduledTimerWithTimeInterval:15.0 target:self selector:@selector(elapsedTime:) userInfo:nil repeats:YES];
+            _timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(elapsedTime:) userInfo:nil repeats:YES];
         }
         
     }];
@@ -182,7 +182,7 @@
 
 - (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message{
     
-    NSLog(@"%@",message);
+    //NSLog(@"%@",message);
     
     NSString *msgString = message;
     NSData *data = [msgString dataUsingEncoding:NSUTF8StringEncoding];

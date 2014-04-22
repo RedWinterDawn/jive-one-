@@ -14,9 +14,16 @@
 
 
 #pragma mark - OSGI Routes
-//#define kOsgiBaseURL @"https://my.jive.com/"
-#define kOsgiBaseURL @"https://test.my.jive.com/"
-//#define kOsgiBaseURL @"https://osgi.local.com:8000/"
+
+
+#if DEBUG
+    #define kOsgiBaseURL @"https://test.my.jive.com/"
+    //#define kOsgiBaseURL @"https://osgi.local.com:8000/"
+#else
+    #define kOsgiBaseURL @"https://my.jive.com/"
+#endif
+
+
 #define kOsgiAuthURL @"https://auth.jive.com/oauth2/grant?client_id=%@&response_type=code&redirect_uri=%@"
 #define kOsgiAPIScheme @"api/"
 #define kOsgiURNScheme @"urn/"
@@ -48,7 +55,7 @@
 #pragma mark - OAuth Credentials
 #define kOAuthClientSecret @"enXabnU5KuVm4XRSWGkU"
 #define kOAuthClientId @"f62d7f80-3749-11e3-9b37-542696d7c505"
-#define kTestAuthKey @"d2def06b-a122-403c-a29c-2009819e9ac4";
+#define kTestAuthKey @"9eff6cb6-817a-4699-b663-2fd370749a05";
 
 #pragma mark - Presence Constants
 #define kPresenceAvailable @"Available"

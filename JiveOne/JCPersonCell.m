@@ -40,24 +40,46 @@
     }   
 }
 
--(void)prepareForReuse
+- (void)prepareForReuse
 {
     [super prepareForReuse];
     [self removeObservers];
 }
 
--(void)removeObservers
+- (void)removeObservers
 {
     if (_person)
         [_person removeObserver:self forKeyPath:kPresenceKeyPathForClientEntity];
 }
 
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+- (void)dealloc
+{
+    [self removeObservers];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ([keyPath isEqualToString:kPresenceKeyPathForClientEntity]) {
         PersonEntities *person = (PersonEntities *)object;
-        self.personPresenceView.presenceType = (JCPresenceType)[person.entityPresence.interactions[@"chat"][@"code"] integerValue];
+        self.personPresenceView.presenceType = [self extractPresenceType:person];
     }
+}
+
+- (JCPresenceType)extractPresenceType:(PersonEntities *)person
+{
+    if (person) {
+        if (person.entityPresence) {
+            if (person.entityPresence.interactions) {
+                if (person.entityPresence.interactions[@"chat"]) {
+                    if (person.entityPresence.interactions[@"chat"][@"code"]) {
+                        return (int)[person.entityPresence.interactions[@"chat"][@"code"] integerValue];
+                    }
+                }
+            }
+        }
+    }
+    
+    return 0;
 }
 
 
