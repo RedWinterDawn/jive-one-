@@ -74,8 +74,8 @@
     TRVSMonitor *monitor = [TRVSMonitor monitor];
     __block NSDictionary* response;
     
-    NSString *testCompany = @"companies:integration";
-    NSString *expectedCompanyName = @"Integration Testing";
+    NSString *testCompany = @"companies:jive";
+    NSString *expectedCompanyName = @"Jive Communications, Inc.";
     
     [[JCOsgiClient sharedClient] RetrieveMyCompany:testCompany :^(id JSON) {
         response = JSON;
