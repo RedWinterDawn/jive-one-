@@ -72,7 +72,7 @@
             if (person.entityPresence.interactions) {
                 if (person.entityPresence.interactions[@"chat"]) {
                     if (person.entityPresence.interactions[@"chat"][@"code"]) {
-                        return [person.entityPresence.interactions[@"chat"][@"code"] integerValue];
+                        return (int)[person.entityPresence.interactions[@"chat"][@"code"] integerValue];
                     }
                 }
             }
