@@ -52,12 +52,11 @@
     localContext  = [NSManagedObjectContext MR_contextForCurrentThread];
 
     
-#warning REMOVE BEFORE PRODUCTION. This is meant to work with invalid certificates (local/testing.my.jive.com) 
-//#if DEBUG
+
+#if DEBUG
     _manager.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
     _manager.securityPolicy.allowInvalidCertificates = YES;
-
-//#endif
+#endif
 }
 
 #pragma mark - Retrieve Operations
