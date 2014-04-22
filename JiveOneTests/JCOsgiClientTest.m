@@ -251,7 +251,7 @@
     
     NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
     PersonEntities *me = [PersonEntities MR_createInContext:localContext];
-    NSString *userId = @"jivetesting10@gmail.com";
+    NSString *userId = @"dleonard@getjive.com";
     me.externalId = userId;
     [localContext MR_saveToPersistentStoreAndWait];
     
@@ -264,8 +264,11 @@
     }];
     
     [monitor wait];
+
     for (NSDictionary* vmail in response) {
-        vmail1 = [[NSDictionary alloc]initWithDictionary:vmail];
+        if ([vmail isMemberOfClass: [NSMutableDictionary class]]){
+            vmail1 = [[NSDictionary alloc]initWithDictionary:vmail];
+        }
     }// with NSDictionary you have no guarentee of order - thus we can only test to see if specific properties are not nil. or we could test a property that is the same on every voicemail if it exists.
     
     XCTAssertNotNil(response, @"Response should not be nil");
