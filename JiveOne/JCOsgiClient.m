@@ -287,6 +287,19 @@
     }];
 }
 
+- (void) DeleteConversation:(NSString*)conversation success:(void(^)(id JSON, AFHTTPRequestOperation *operation))success
+                                                             failure:(void (^)(NSError*err, AFHTTPRequestOperation *operation))failure
+{
+    [self setRequestAuthHeader];
+    
+    NSString *urlWithConv = [NSString stringWithFormat:@"%@%@", [_manager baseURL], conversation];
+    
+    [_manager DELETE:urlWithConv parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        success(responseObject, operation);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error, operation);
+    }];
+}
 
 
 #pragma mark - Update Operations

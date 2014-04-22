@@ -33,6 +33,10 @@ Then go to testflightapp.com on your device through safari.
 Login and launch the app.
 Install provisioning profile.
 
+Testing login
+username: jivetesting12@gmail.com
+password: testing12
+
 TESTING AND USING OCMOCK
 ==============
 Check out: http://en.wikipedia.org/wiki/Mock_object for a detailed explination of Mock objects and why we use them.

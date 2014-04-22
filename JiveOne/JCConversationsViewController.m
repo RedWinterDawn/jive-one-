@@ -14,6 +14,7 @@
 #import "ConversationEntry.h"
 #import "JCConversationCell.h"
 #import "JCGroupConversationCell.h"
+#import <MBProgressHUD/MBProgressHUD.h>
 @interface JCConversationsViewController ()
 {
     //NSMutableArray *entries;
@@ -224,11 +225,38 @@ static NSString *GroupCellIdentifier = @"GroupChatCell";
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
         Conversation *conv = conversations[indexPath.row];
+        NSString* conversationId = conv.conversationId;
         [conversations removeObjectAtIndex:indexPath.row];
         [conv MR_deleteEntity];
         [localContext MR_saveToPersistentStoreAndWait];
         
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
+        //remove conversation from server
+        [[JCOsgiClient sharedClient] DeleteConversation:conversationId success:^(id JSON, AFHTTPRequestOperation* operation) {
+            //Toast deleted successfully
+           MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[[[UIApplication sharedApplication] windows] lastObject] animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.detailsLabelText = @"Successfully deleted Conversation";
+            hud.userInteractionEnabled=NO;//does not block User interaction
+            [hud hide:YES afterDelay:3];
+            [hud show:YES];
+        } failure:^(NSError *err, AFHTTPRequestOperation *operation) {
+            
+            //if 401 alert user that they do not have permission to delete
+            if(operation.response.statusCode==401){
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[[[UIApplication sharedApplication] windows] lastObject] animated:YES];
+                hud.mode = MBProgressHUDModeText;
+                hud.detailsLabelText = @"You do not have permission to delete this conversation";
+                hud.userInteractionEnabled=NO;//does not block User interaction
+                [hud hide:YES afterDelay:3];
+                [hud show:YES];
+
+            }else{
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connectivity Problem" message:@"Could not reach server. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                [alert show];
+            }
+        }];
     }
 }
 

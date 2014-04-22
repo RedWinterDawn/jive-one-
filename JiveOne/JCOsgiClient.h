@@ -45,6 +45,8 @@
                             failure:(void (^)(NSError* err))failure;
 - (void) SubmitChatMessageForConversation:(NSString*)conversation message:(NSString*)message withEntity:(NSString*)entity success:(void (^)(id JSON))success
                                  failure:(void (^)(NSError* err))failure;
+- (void) DeleteConversation:(NSString*)conversation success:(void(^)(id JSON, AFHTTPRequestOperation *operation))success
+                    failure:(void (^)(NSError*err, AFHTTPRequestOperation *operation))failure;
 
 #pragma mark - Voicemail
 - (void) RetrieveVoicemailForEntity:(PersonEntities*)entity success:(void (^)(id JSON))success

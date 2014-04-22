@@ -558,7 +558,7 @@
 
 - (void)createConversation:(NSString *)message
 {
-    BOOL isGroup = self.selectedContacts.count >= 2;
+    BOOL isGroup = self.selectedContacts.count > 2;
     NSArray *nameArray = [self.selectedContacts valueForKeyPath:@"firstName"];
     NSString *groupName = isGroup? [self composeGroupName:nameArray] : @"";
     
