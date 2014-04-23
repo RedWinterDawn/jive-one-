@@ -126,7 +126,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 - (void)checkForTokenValidity
 {
-    JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
+    //JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
     
 //    [[JCOsgiClient sharedClient] RetrieveMyEntitity:^(id JSON, id operation) {
 //        if (![delegate.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {

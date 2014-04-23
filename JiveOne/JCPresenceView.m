@@ -145,8 +145,9 @@
         
         CGContextSaveGState(context);
         //CGContextSetLineWidth(context, _lineWidth);
-        CGContextSetFillColorWithColor(context, CGColorCreateCopyWithAlpha([self colorFromType:type].CGColor, 1.0));
-        CGContextSetStrokeColorWithColor(context, [self colorFromType:type].CGColor);
+        UIColor *color = [self colorFromType:type];
+        CGContextSetFillColorWithColor(context, CGColorCreateCopyWithAlpha(color.CGColor, 1.0));
+        CGContextSetStrokeColorWithColor(context, color.CGColor);
         CGContextFillEllipseInRect(context, frame);
         CGContextStrokeEllipseInRect(context, frame);
         CGContextRestoreGState(context);
