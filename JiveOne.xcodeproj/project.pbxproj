@@ -197,7 +197,6 @@
 		DDCE1E8F18F35640003A6615 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E8E18F35640003A6615 /* MobileCoreServices.framework */; };
 		DDCE1E9118F35647003A6615 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E9018F35647003A6615 /* QuartzCore.framework */; };
 		DDCE1E9318F3564D003A6615 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E9218F3564D003A6615 /* Security.framework */; };
-		DDCE1E9518F35654003A6615 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E9418F35654003A6615 /* StoreKit.framework */; };
 		DDCE1E9718F3565F003A6615 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E9618F3565F003A6615 /* SystemConfiguration.framework */; };
 		DDFFB60118D2284E00372019 /* JCVoicemailVCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DDFFB60018D2284E00372019 /* JCVoicemailVCTests.m */; };
 		F202433D18B2CF4A006DB2EF /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F202433C18B2CF4A006DB2EF /* README.md */; };
@@ -470,7 +469,6 @@
 		DDCE1E8E18F35640003A6615 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		DDCE1E9018F35647003A6615 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		DDCE1E9218F3564D003A6615 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		DDCE1E9418F35654003A6615 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		DDCE1E9618F3565F003A6615 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		DDCE1E9818F35749003A6615 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		DDFFB60018D2284E00372019 /* JCVoicemailVCTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoicemailVCTests.m; sourceTree = "<group>"; };
@@ -493,7 +491,6 @@
 				27F1779218FDEECE0073C6AD /* libTestFlight.a in Frameworks */,
 				2741EB8118FC4C0200F2FE64 /* CoreTelephony.framework in Frameworks */,
 				DDCE1E9718F3565F003A6615 /* SystemConfiguration.framework in Frameworks */,
-				DDCE1E9518F35654003A6615 /* StoreKit.framework in Frameworks */,
 				DDCE1E9318F3564D003A6615 /* Security.framework in Frameworks */,
 				DDCE1E9118F35647003A6615 /* QuartzCore.framework in Frameworks */,
 				DDCE1E8F18F35640003A6615 /* MobileCoreServices.framework in Frameworks */,
@@ -928,7 +925,6 @@
 				2700981C18F46C5600B6BC2F /* Parse.framework */,
 				DDCE1E9818F35749003A6615 /* Social.framework */,
 				DDCE1E9618F3565F003A6615 /* SystemConfiguration.framework */,
-				DDCE1E9418F35654003A6615 /* StoreKit.framework */,
 				DDCE1E9218F3564D003A6615 /* Security.framework */,
 				DDCE1E9018F35647003A6615 /* QuartzCore.framework */,
 				DDCE1E8E18F35640003A6615 /* MobileCoreServices.framework */,
@@ -1153,6 +1149,9 @@
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
+							};
+							com.apple.InAppPurchase = {
+								enabled = 0;
 							};
 						};
 					};
@@ -1512,8 +1511,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Jive Communications, Inc (5NE3JJD5L3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jive Communications, Inc (5NE3JJD5L3)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1708,8 +1707,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Jive Communications, Inc (5NE3JJD5L3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jive Communications, Inc (5NE3JJD5L3)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1745,7 +1744,7 @@
 					SystemConfiguration,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "A7D86927-C364-4106-990B-F8C3685C6779";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
