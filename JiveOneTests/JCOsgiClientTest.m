@@ -201,8 +201,8 @@
     __block NSDictionary* response;
     
     NSString *testConversation = barConversation;
-    NSString *testMessage = [NSString stringWithFormat:@"Automated Test Message %@", [NSDate date]];
-    NSString *testEntity = @"entities:jivetesting10@gmail_com";
+    NSString *testMessage = [NSString stringWithFormat:@"Automated Test Message From %@ - %@ - %@", [[UIDevice currentDevice] name], [[UIDevice currentDevice] model], [NSDate date]];
+    NSString *testEntity = @"entities:jivetesting13@gmail_com";
     
     [[JCOsgiClient sharedClient] SubmitChatMessageForConversation:testConversation message:testMessage withEntity:testEntity success:^(id JSON) {
         response = JSON;
@@ -264,18 +264,21 @@
     }];
     
     [monitor wait];
-
-    for (NSDictionary* vmail in response) {
-        if ([vmail isMemberOfClass: [NSMutableDictionary class]]){
-            vmail1 = [[NSDictionary alloc]initWithDictionary:vmail];
-        }
-    }// with NSDictionary you have no guarentee of order - thus we can only test to see if specific properties are not nil. or we could test a property that is the same on every voicemail if it exists.
     
     XCTAssertNotNil(response, @"Response should not be nil");
-    XCTAssertNotNil(vmail1, @"Response should not be nil");
-    NSString *expectedContext = @"outgoing";
-    NSString *givenContext = (NSString*)vmail1[@"context"];
-    XCTAssertEqualObjects(givenContext, expectedContext, @"Response did not contain correct context value");
+    
+    NSArray *entries = response[@"entries"];
+    if (entries && entries.count > 0) {
+        vmail1 = entries[0];
+        XCTAssertNotNil(vmail1, @"Response should not be nil");
+        NSString *expectedContext = @"outgoing";
+        NSString *givenContext = (NSString*)vmail1[@"context"];
+        XCTAssertEqualObjects(givenContext, expectedContext, @"Response did not contain correct context value");
+    }
+    else {
+        XCTAssertTrue(entries.count == 0, @"Should have no entries");
+    }
+    
 }
 
 
