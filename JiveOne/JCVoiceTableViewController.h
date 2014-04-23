@@ -14,4 +14,5 @@
 
 @property (nonatomic) NSMutableArray *voicemails; // exposed for testing
 - (void)updateTable;
+- (void)loadVoicemails;
 @end

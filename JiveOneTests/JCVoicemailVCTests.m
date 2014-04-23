@@ -68,7 +68,7 @@
     //now add our hard coded json to core data
     [Voicemail addVoicemails:dictionary[@"entries"]];
 
-    [self.voicemailViewController updateTable];
+    [self.voicemailViewController loadVoicemails];
     
     //make sure it saved to viewcontroller.voicemails
     NSLog(@"Count of items is: %lu", (unsigned long)self.voicemailViewController.voicemails.count);
