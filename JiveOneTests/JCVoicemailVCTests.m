@@ -67,11 +67,13 @@
     [Voicemail MR_truncateAll];
     //now add our hard coded json to core data
     [Voicemail addVoicemails:dictionary[@"entries"]];
+    NSLog(@"Count of items in CoreData: %lu", (unsigned long)[Voicemail MR_findAll].count);
 
     [self.voicemailViewController loadVoicemails];
     
     //make sure it saved to viewcontroller.voicemails
     NSLog(@"Count of items is: %lu", (unsigned long)self.voicemailViewController.voicemails.count);
+    
     NSLog(@"%@",[dictionary description]);
         XCTAssertTrue(self.voicemailViewController.voicemails.count == 1, @"should be 1 voicemail instead the voicemail count is: %lu", (unsigned long)self.voicemailViewController.voicemails.count);
 }
