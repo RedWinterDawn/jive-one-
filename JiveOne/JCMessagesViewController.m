@@ -224,7 +224,7 @@
         [(JCAppDelegate *)[UIApplication sharedApplication].delegate clearBadgeCountForConversation:_conversationId];
             
         // datasource for avatars
-        if (!self.avatars){
+        
             Conversation *conversation = [Conversation MR_findFirstByAttribute:@"conversationId" withValue:_conversationId];
             if (conversation) {
                 if(!self.avatars){
@@ -238,6 +238,7 @@
                 }
                 
                 
+            if (self.avatars.count == 0){
                 for (NSString* entityId in conversationMembers) {
                     
                     PersonEntities *person = [PersonEntities MR_findFirstByAttribute:@"entityId" withValue:entityId];
@@ -457,10 +458,7 @@
 #pragma mark - Send/Create Conversation
 - (void)dispatchMessage:(NSString *)message {
     
-    
-    [self hideContactPicker];
     NSString* entity = me.urn;
-    
     
     // if conversation exists, then create entry for that conversation
     if (_conversationId != nil && ![_conversationId isEqualToString:@""]) {
@@ -478,6 +476,57 @@
     // otherwise, create a converstion first
     else {
         [self createConversation:message];
+    }
+}
+
+- (void)createConversation:(NSString *)message
+{
+    BOOL isGroup = self.selectedContacts.count > 2;
+    NSArray *nameArray = [self.selectedContacts valueForKeyPath:@"firstName"];
+    NSString *groupName = isGroup? [self composeGroupName:nameArray] : @"";
+    
+    NSMutableArray *entityArray = [[NSMutableArray alloc] initWithArray:[self.selectedContacts valueForKeyPath:@"entityId"]];
+    [entityArray addObject:me.entityId];
+    
+    [[JCOsgiClient sharedClient] SubmitConversationWithName:groupName forEntities:entityArray creator:me.entityId  isGroupConversation:isGroup success:^(id JSON) {
+        // if conversation creation was successful, then subscribe for notifications to that conversationId
+        _conversationId = JSON[@"id"];
+        if (_conversationId) {
+            
+            [self subscribeToConversationNotification:YES];\
+            
+            // Add message to table so we provice user imediate feedback
+            NSString *sender = [NSString stringWithFormat:@"%@ - %@", me.firstLastName, [NSDate date]];
+            JSMessage *messageEntry = [[JSMessage alloc] initWithText:message sender:sender date:[NSDate date]];
+            [self.messages addObject:messageEntry];
+            [self setupDataSources];            
+            [self.tableView reloadData];
+            
+            
+            [self hideContactPicker];
+            
+            // we can now add entries to the conversation recently created.
+            [self dispatchMessage:message];
+        }
+        
+    } failure:^(NSError *err) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"Could not send your message at this time. Please try again.", nil) delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        
+        self.messageInputView.textView.text = message;
+        
+        [alertView show];
+    }];
+}
+
+- (NSString *)composeGroupName:(NSArray *)names
+{
+    int originalCount = (int)names.count;
+    if (names.count > 3) {
+        names = [names subarrayWithRange:NSMakeRange(0, 3)];
+        return [NSString stringWithFormat:@"%@, +%u", [names componentsJoinedByString:@"," ], (int)(originalCount - names.count)];
+    }
+    else {
+        return [names componentsJoinedByString:@", "];
     }
 }
 
@@ -556,46 +605,7 @@
 }
 
 
-- (void)createConversation:(NSString *)message
-{
-    BOOL isGroup = self.selectedContacts.count > 2;
-    NSArray *nameArray = [self.selectedContacts valueForKeyPath:@"firstName"];
-    NSString *groupName = isGroup? [self composeGroupName:nameArray] : @"";
-    
-    NSMutableArray *entityArray = [[NSMutableArray alloc] initWithArray:[self.selectedContacts valueForKeyPath:@"entityId"]];
-    [entityArray addObject:me.entityId];
-    
-    [[JCOsgiClient sharedClient] SubmitConversationWithName:groupName forEntities:entityArray creator:me.entityId  isGroupConversation:isGroup success:^(id JSON) {
-        
-        NSLog(@"%@", JSON);
-        
-        // if conversation creation was successful, then subscribe for notifications to that conversationId
-        _conversationId = JSON[@"id"];
-        [self subscribeToConversationNotification:YES];
-        
-        // we can now add entries to the conversation recently created.
-        [self dispatchMessage:message];
-        
-    } failure:^(NSError *err) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"Could not send your message at this time. Please try again.", nil) delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-        
-        self.messageInputView.textView.text = message;
-        
-        [alertView show];
-    }];
-}
 
-- (NSString *)composeGroupName:(NSArray *)names
-{
-    int originalCount = (int)names.count;
-    if (names.count > 3) {
-        names = [names subarrayWithRange:NSMakeRange(0, 3)];
-        return [NSString stringWithFormat:@"%@, +%u", [names componentsJoinedByString:@"," ], (int)(originalCount - names.count)];
-    }
-    else {
-        return [names componentsJoinedByString:@", "];
-    }
-}
 
 #pragma mark - Conversation Loading
 - (void)checkForConversationWithEntities:(NSMutableArray*)entities
