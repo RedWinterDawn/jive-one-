@@ -21,7 +21,7 @@
     MBProgressHUD *hud;
     
 }
-@property (nonatomic) NSMutableArray *voicemails;
+
 @property (nonatomic) NSMutableArray *selectedIndexPaths;
 @property (nonatomic, retain) NSTimer *progressTimer;
 

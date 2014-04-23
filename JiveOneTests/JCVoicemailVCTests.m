@@ -8,7 +8,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "JCVoicemailViewController.h"
+#import "JCVoiceTableViewController.h"
 #import "JCAuthenticationManager.h"
 #import "JCOsgiClient.h"
 #import "TRVSMonitor.h"
@@ -16,7 +16,7 @@
 #import "Voicemail+Custom.h"
 
 @interface JCVoicemailVCTests : XCTestCase
-@property (nonatomic, strong) JCVoicemailViewController * voicemailViewController;
+@property (nonatomic, strong) JCVoiceTableViewController *voicemailViewController;
 
 @end
 
@@ -56,104 +56,23 @@
 //A real unit test
 //test whether the updateVoicemailData method will save a json(mocked) from the api into VoicemailViewController.voicemails (which is loaded from core data)
 -(void)testUpdateVoicemailDataSavesVoicemail{
-    //mock the client
-    id clientMock = [OCMockObject niceMockForClass:[JCOsgiClient class]];
     
-        //when retriveVoicemailForEntity is called on client, return a JSON like the server would
-     [[clientMock expect] RetrieveVoicemailForEntity:[OCMArg any]
-                              success:[OCMArg checkWithBlock:^BOOL(void (^successBlock)(AFHTTPRequestOperation *, id))
-                                       {
-                                           // Here we capture the success block and execute it with a stubbed response.
-                                           
-                                            //created hardcoded json object as a return object from the server
-                                           NSString *jsonString = @"{\"entries\":[{\"_id\":\"voicemails:2921\",\"lastModified\":1395761052406,\"entity\":\"entities:dgeorge\",\"pbxId\":\"0127d974-f9f3-0704-2dee-000100420001\",\"lineId\":\"0144d212-122f-edbf-5867-000100620002\",\"mailboxId\":\"0144d212-122f-edc0-5867-000100620002\",\"folderId\":\"INBOX\",\"messageId\":\"msg0001\",\"extensionNumber\":\"6006\",\"extensionName\":\"test User\",\"callerId\":\"<15412078581>\",\"length\":5,\"origFile\":\"http://nfsweb/pbx/voicemail/0127d974-f9f3-0704-2dee-000100420001/0144d212-122f-edc0-5867-000100620002/INBOX/msg0001.ulaw\",\"__v\":0,\"read\":false,\"createdDate\":1395158996000,\"file\":\"https://test.my.jive.com/urn/voicemails:2921:file\",\"urn\":\"voicemails:2921\",\"id\":\"voicemails:2921\"}],\"ETag\":\"message_18533\"}";
-                                           
-                                           NSData *responseObject = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
-                                           NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
-                                           
-                                           //because the method will add the json objects to core data and then populate JCVoicemailViewController.voicemails from core data, we need to make sure only our hard coded json object exists in core data
-                                           [Voicemail MR_truncateAll];
-                                           //now add our hard coded json to core data
-                                           [Voicemail addVoicemails:dictionary[@"entries"]];
+    //created hardcoded json object as a return object from the server
+    NSString *jsonString = @"{\"entries\":[{\"_id\":\"voicemails:2921\",\"lastModified\":1395761052406,\"entity\":\"entities:dgeorge\",\"pbxId\":\"0127d974-f9f3-0704-2dee-000100420001\",\"lineId\":\"0144d212-122f-edbf-5867-000100620002\",\"mailboxId\":\"0144d212-122f-edc0-5867-000100620002\",\"folderId\":\"INBOX\",\"messageId\":\"msg0001\",\"extensionNumber\":\"6006\",\"extensionName\":\"test User\",\"callerId\":\"<15412078581>\",\"length\":5,\"origFile\":\"http://nfsweb/pbx/voicemail/0127d974-f9f3-0704-2dee-000100420001/0144d212-122f-edc0-5867-000100620002/INBOX/msg0001.ulaw\",\"__v\":0,\"read\":false,\"createdDate\":1395158996000,\"file\":\"https://test.my.jive.com/urn/voicemails:2921:file\",\"urn\":\"voicemails:2921\",\"id\":\"voicemails:2921\"}],\"ETag\":\"message_18533\"}";
 
-                                           successBlock(nil, jsonString);
-                                           
-                                           return YES;
-                                       }]
-                              failure:OCMOCK_ANY];
+    NSData *responseObject = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
 
-    //set the client property on voicemail view controller to our mock
-    [self.voicemailViewController osgiClient:clientMock];
-    
-    //voicemail view controller is setup in setup method
-    //now call updateVoicemailData which will call RetrieveVoicemailForEntity (because it's mocked we'll get the json string made above)
-    [self.voicemailViewController updateVoicemailData];
-    
-    //ensure that Retrieve was called indirectly since we made a direct call to updateVoicemailData
-    [clientMock verify];
+    //because the method will add the json objects to core data and then populate JCVoicemailViewController.voicemails from core data, we need to make sure only our hard coded json object exists in core data
+    [Voicemail MR_truncateAll];
+    //now add our hard coded json to core data
+    [Voicemail addVoicemails:dictionary[@"entries"]];
+
+    [self.voicemailViewController updateTable];
     
     //make sure it saved to viewcontroller.voicemails
-    XCTAssertTrue(self.voicemailViewController.voicemails.count == 1, @"should be one voicemail...from the hard coded json string above");
+        XCTAssertTrue(self.voicemailViewController.voicemails.count == 1, @"should be 1 voicemail instead the voicemail count is: %lul", (unsigned long)self.voicemailViewController.voicemails.count);
 }
 
-
-//This is @DanLeonard's first test checking to see if there are no new voice males that we dont download anything else from the server.
--(void)testNoUpdateVoicemailDataWhenNoNewVoicemail{
-    //mock the client
-    id clientMock = [OCMockObject niceMockForClass:[JCOsgiClient class]];
-    
-    //when retriveVoicemailForEntity is called on client, return a JSON like the server would
-    [[clientMock expect] RetrieveVoicemailForEntity:[OCMArg any]
-                                            success:[OCMArg checkWithBlock:^BOOL(void (^successBlock)(AFHTTPRequestOperation *, id))
-                                                     {
-                                                         // Here we capture the success block and execute it with a stubbed response.
-                                                         
-                                                         //created hardcoded json object as a return object from the server
-                                                         NSString *jsonString = @"{\"entries\":[],\"ETag\":\"message_171\"}";
-                                                         
-                                                         NSData *responseObject = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
-                                                         NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
-                                                         
-                                                         //because the method will add the json objects to core data and then populate JCVoicemailViewController.voicemails from core data, we need to make sure only our hard coded json object exists in core data
-                                                         [Voicemail MR_truncateAll];
-                                                         //now add our hard coded json to core data
-                                                         [Voicemail addVoicemails:dictionary[@"entries"]];
-                                                         
-                                                         successBlock(nil, jsonString);
-                                                         
-                                                         return YES;
-                                                     }]
-                                            failure:OCMOCK_ANY];
-    
-    //set the client property on voicemail view controller to our mock
-    [self.voicemailViewController osgiClient:clientMock];
-    
-    //voicemail view controller is setup in setup method
-    //now call updateVoicemailData which will call RetrieveVoicemailForEntity (because it's mocked we'll get the json string made above)
-    [self.voicemailViewController updateVoicemailData];
-    
-    //ensure that Retrieve was called indirectly since we made a direct call to updateVoicemailData
-    [clientMock verify];
-    
-    //make sure it saved to viewcontroller.voicemails
-    XCTAssertTrue(self.voicemailViewController.voicemails.count == 0, @"should be no voicemail...from the hard coded json string above");
-}
-
-//:voicemail should be fetched from server and saved in core data
-- (void)testVoicemailFetch {
-    
-    
-    id mockVoiceVC = [OCMockObject niceMockForClass:[JCVoicemailViewController class]];
-    [[mockVoiceVC expect] updateVoicemailData];//should be called in viewDidLoad
-    [(JCVoicemailViewController*)mockVoiceVC viewDidLoad];
-    [mockVoiceVC verify];
-    
-    NSMutableArray *voicemailTest = ((JCVoicemailViewController *)mockVoiceVC).voicemails;
-    XCTAssertNotNil(voicemailTest, @"voicemails was nil");
-    
-    XCTAssertNotNil(mockVoiceVC, @"Mock voicemail vc was nil");
-    
-    
-}
 
 @end
