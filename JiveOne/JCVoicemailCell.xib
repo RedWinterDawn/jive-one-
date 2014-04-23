@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -43,7 +43,7 @@
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="0:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="169-ch-QZb" userLabel="elapsed">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="0:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="169-ch-QZb" userLabel="elapsed">
                         <rect key="frame" x="30" y="88" width="28" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
@@ -59,7 +59,7 @@
                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lTo-3o-o9u" userLabel="speakerButton">
+                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lTo-3o-o9u" userLabel="speakerButton">
                         <rect key="frame" x="280" y="76" width="45" height="46"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <state key="normal" image="voicemail_speaker.png">
@@ -79,9 +79,12 @@
                             <action selector="playPauseButtonTapped:" destination="O09-5V-FRi" eventType="touchUpInside" id="SFk-OA-PPZ"/>
                         </connections>
                     </button>
-                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="9LY-YY-Jqs">
+                    <slider opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="9LY-YY-Jqs">
                         <rect key="frame" x="61" y="84" width="190" height="31"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="186" id="H09-SZ-UOH"/>
+                        </constraints>
                         <connections>
                             <action selector="progressSliderMoved:" destination="O09-5V-FRi" eventType="touchUpInside" id="d2o-Q5-Q9T"/>
                             <action selector="progressSliderTouched:" destination="O09-5V-FRi" eventType="touchDown" id="YCd-Mi-D7W"/>
@@ -91,25 +94,36 @@
                         <rect key="frame" x="146" y="60" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </activityIndicatorView>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Utah" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WOB-bN-zYU" userLabel="phone_state">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Utah" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WOB-bN-zYU" userLabel="phone_state">
                         <rect key="frame" x="69" y="28" width="196" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k9i-98-w2e" userLabel="userImage">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="k9i-98-w2e" userLabel="userImage">
                         <rect key="frame" x="9" y="5" width="50" height="50"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="1oZ-eJ-VtG"/>
+                            <constraint firstAttribute="width" constant="50" id="68V-7D-h0Y"/>
+                        </constraints>
                     </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="hfg-rQ-aIp" firstAttribute="leading" secondItem="EDq-sG-3YO" secondAttribute="trailing" constant="32" id="96q-eT-xdf"/>
-                    <constraint firstItem="XyY-49-Zkf" firstAttribute="top" secondItem="169-ch-QZb" secondAttribute="top" id="9k6-iO-5ma"/>
-                    <constraint firstItem="EDq-sG-3YO" firstAttribute="leading" secondItem="nIe-cq-PrP" secondAttribute="leading" id="EB7-pV-AD6"/>
-                    <constraint firstItem="XyY-49-Zkf" firstAttribute="baseline" secondItem="169-ch-QZb" secondAttribute="baseline" id="rMZ-Yr-jIj"/>
-                    <constraint firstItem="EDq-sG-3YO" firstAttribute="bottom" secondItem="NZe-HX-VVJ" secondAttribute="bottom" id="t4D-Hd-DcC"/>
-                    <constraint firstItem="hfg-rQ-aIp" firstAttribute="trailing" secondItem="NZe-HX-VVJ" secondAttribute="trailing" id="uzG-sv-ety"/>
+                    <constraint firstItem="EDq-sG-3YO" firstAttribute="leading" secondItem="k9i-98-w2e" secondAttribute="trailing" constant="5" id="4I8-oq-Co0"/>
+                    <constraint firstItem="k9i-98-w2e" firstAttribute="leading" secondItem="Mm7-dv-qCm" secondAttribute="leading" constant="9" id="66K-hl-vlo"/>
+                    <constraint firstItem="nIe-cq-PrP" firstAttribute="leading" secondItem="Mm7-dv-qCm" secondAttribute="leading" constant="64" id="8FT-QF-QAU"/>
+                    <constraint firstItem="WOB-bN-zYU" firstAttribute="leading" secondItem="Mm7-dv-qCm" secondAttribute="leading" constant="69" id="HAV-Qh-50j"/>
+                    <constraint firstAttribute="trailing" secondItem="XyY-49-Zkf" secondAttribute="trailing" constant="31" id="HfX-VD-xJr"/>
+                    <constraint firstItem="EDq-sG-3YO" firstAttribute="leading" secondItem="Mm7-dv-qCm" secondAttribute="leading" constant="64" id="PdU-dh-FVU"/>
+                    <constraint firstAttribute="trailing" secondItem="9LY-YY-Jqs" secondAttribute="trailing" constant="71" id="YbM-Sy-Wxh"/>
+                    <constraint firstAttribute="trailing" secondItem="hfg-rQ-aIp" secondAttribute="trailing" constant="7" id="awH-ou-uUN"/>
+                    <constraint firstItem="169-ch-QZb" firstAttribute="leading" secondItem="Mm7-dv-qCm" secondAttribute="leading" constant="30" id="fSe-es-3Et"/>
+                    <constraint firstItem="k9i-98-w2e" firstAttribute="top" secondItem="Mm7-dv-qCm" secondAttribute="top" constant="5" id="jVM-rY-2cu"/>
+                    <constraint firstItem="9LY-YY-Jqs" firstAttribute="leading" secondItem="Mm7-dv-qCm" secondAttribute="leading" constant="63" id="n6E-El-tFx"/>
+                    <constraint firstAttribute="trailing" secondItem="NZe-HX-VVJ" secondAttribute="trailing" constant="7" id="v5C-gV-dnZ"/>
+                    <constraint firstAttribute="trailing" secondItem="lTo-3o-o9u" secondAttribute="trailing" constant="-5" id="zm2-DA-R7B"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
