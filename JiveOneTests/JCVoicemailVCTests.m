@@ -71,7 +71,7 @@
     [self.voicemailViewController updateTable];
     
     //make sure it saved to viewcontroller.voicemails
-        XCTAssertTrue(self.voicemailViewController.voicemails.count == 1, @"should be 1 voicemail instead the voicemail count is: %lul", (unsigned long)self.voicemailViewController.voicemails.count);
+        XCTAssertTrue(self.voicemailViewController.voicemails.count == 1, @"should be 1 voicemail instead the voicemail count is: %lu", (unsigned long)self.voicemailViewController.voicemails.count);
 }
 
 
