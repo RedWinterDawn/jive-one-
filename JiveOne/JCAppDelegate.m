@@ -494,7 +494,19 @@
 #pragma mark - Change Root ViewController
 - (void)changeRootViewController:(JCRootViewControllerType)type
 {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+    UIStoryboard *storyboard;
+    //check if we are using a iphone or ipad
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        storyboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
+//        rvc = [storyboard instantiateViewControllerWithIdentifier:@"identifierForController"];
+    }
+    else {
+        storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+//        rvc = [storyboard instantiateViewControllerWithIdentifier:@"identifierForController"];
+    }
+    
+    
+//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     if (type == JCRootTabbarViewController) {
         
         UITabBarController *tabVC = [storyboard instantiateViewControllerWithIdentifier:@"UITabBarController"];
@@ -506,7 +518,7 @@
     }
     else if (type == JCRootLoginViewController)
     {
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+//        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
         JCLoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"JCLoginViewController"];
         [self.window setRootViewController:loginVC];
     }
