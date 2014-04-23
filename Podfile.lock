@@ -1,0 +1,62 @@
+PODS:
+  - AFNetworkActivityLogger (2.0.2):
+    - AFNetworking/NSURLSession (~> 2.0)
+  - AFNetworking (2.1.0):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+    - AFNetworking/UIKit
+  - AFNetworking/NSURLConnection (2.1.0):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (2.1.0):
+    - AFNetworking/NSURLConnection
+  - AFNetworking/Reachability (2.1.0)
+  - AFNetworking/Security (2.1.0)
+  - AFNetworking/Serialization (2.1.0)
+  - AFNetworking/UIKit (2.1.0):
+    - AFNetworking/NSURLConnection
+  - Facebook-iOS-SDK (3.13.1)
+  - JSONModel (0.11.0)
+  - JSQSystemSoundPlayer (1.4.0)
+  - MagicalRecord (2.2):
+    - MagicalRecord/Core
+  - MagicalRecord/Core (2.2)
+  - MBContactPicker (0.1.4)
+  - MBProgressHUD (0.8)
+  - OCMock (2.2.4)
+  - SDWebImage (3.5.4):
+    - SDWebImage/Core
+  - SDWebImage/Core (3.5.4)
+  - SocketRocket (0.3.1-beta2)
+
+DEPENDENCIES:
+  - AFNetworkActivityLogger (~> 2.0.1)
+  - AFNetworking (~> 2.1.0)
+  - Facebook-iOS-SDK (~> 3.13)
+  - JSONModel (~> 0.11.0)
+  - JSQSystemSoundPlayer (~> 1.4.0)
+  - MagicalRecord (~> 2.2)
+  - MBContactPicker
+  - MBProgressHUD (~> 0.8)
+  - OCMock (~> 2.2.3)
+  - SDWebImage (~> 3.5.2)
+  - SocketRocket (~> 0.3.1-beta2)
+
+SPEC CHECKSUMS:
+  AFNetworkActivityLogger: 3d12891eb7cb77b4ad0f0b50fe5d877385bd135d
+  AFNetworking: c7d7901a83f631414c7eda1737261f696101a5cd
+  Facebook-iOS-SDK: 0d121e16437981fabff9379e07bf646bd5ab245c
+  JSONModel: a5f2eb85c46df008a67569447ec408d1040d4bf4
+  JSQSystemSoundPlayer: 28ccd01a92a0cebc6de6361e8499011b4cb6dab7
+  MagicalRecord: 95d49d74ef752cd52f6ad87bcb474817fc3978cf
+  MBContactPicker: 190957a185728658df24b48bc1a3d3f7a06b4527
+  MBProgressHUD: 2bbc6f470111daf7f3eaa4eb12b8cbf01c4c0622
+  OCMock: 5008fae4b4789b8fc3e48cd7660f2eb5ef8ce89e
+  SDWebImage: 1a62010700adbba823b621fc217906739dbf6aa5
+  SocketRocket: 7ac946bcce46287a791dfff3c1f8daa692821dae
+
+COCOAPODS: 0.32.1
