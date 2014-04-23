@@ -511,23 +511,26 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zyf-z6-zcn" customClass="MBContactPicker">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="33"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="31"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="31" id="zOX-mr-SDg"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="zyf-z6-zcn" firstAttribute="top" secondItem="cEM-6q-DDe" secondAttribute="top" id="88w-sd-09B"/>
-                            <constraint firstItem="zyf-z6-zcn" firstAttribute="leading" secondItem="cEM-6q-DDe" secondAttribute="leading" id="KP7-Vd-Vb2"/>
-                            <constraint firstItem="NRK-NG-r9K" firstAttribute="top" secondItem="zyf-z6-zcn" secondAttribute="bottom" constant="422" id="RHz-eu-G84"/>
-                            <constraint firstAttribute="trailing" secondItem="zyf-z6-zcn" secondAttribute="trailing" id="x52-r2-IfC"/>
+                            <constraint firstItem="zyf-z6-zcn" firstAttribute="leading" secondItem="cEM-6q-DDe" secondAttribute="leading" id="1n4-kE-0ho"/>
+                            <constraint firstAttribute="trailing" secondItem="zyf-z6-zcn" secondAttribute="trailing" id="UxS-zG-E3f"/>
+                            <constraint firstItem="zyf-z6-zcn" firstAttribute="top" secondItem="cEM-6q-DDe" secondAttribute="top" id="tVP-xd-M0N"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="n1O-hC-4V2"/>
                     <connections>
                         <outlet property="contactPickerView" destination="zyf-z6-zcn" id="xgG-7E-2t2"/>
+                        <outlet property="contactPickerViewHeightConstraint" destination="zOX-mr-SDg" id="tVg-jX-0ri"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XuZ-GW-bg4" userLabel="First Responder" sceneMemberID="firstResponder"/>
