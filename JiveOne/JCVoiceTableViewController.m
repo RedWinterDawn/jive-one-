@@ -182,6 +182,43 @@ static NSString *CellIdentifier = @"VoicemailCell";
     }
 }
 
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        //attempt to delete from server first
+        [self voiceCellDeleteTapped:indexPath];
+    }
+}
+
+#pragma mark - JCVoicemailCellDelegate
+-(void)voiceCellDeleteTapped:(NSIndexPath *)indexPath {
+    
+    Voicemail *voicemail = self.voicemails[indexPath.row];
+    [Voicemail markVoicemailForDeletion:voicemail.voicemailId managedContext:nil];
+    
+    [self.voicemails removeObjectAtIndex:indexPath.row];
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    
+    [self deleteVoicemailsInBackground];
+}
+
+- (void)deleteVoicemailsInBackground
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"deleted ==[c] %@", [NSNumber numberWithBool:YES]];
+    NSArray *deletedVoicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAllWithPredicate:predicate]];
+    
+    if (deletedVoicemails.count > 0) {
+        for (Voicemail *voice in deletedVoicemails) {
+            [[JCOsgiClient sharedClient] DeleteVoicemail:voice success:^(id JSON) {
+                [Voicemail deleteVoicemail:voice.voicemailId managedContext:nil];
+            } failure:^(NSError *err) {
+                NSLog(@"%@", err);
+            }];
+        }
+    }
+}
+
 - (void)addOrRemoveSelectedIndexPath:(NSIndexPath *)indexPath
 {
     if (!self.selectedIndexPaths) {
