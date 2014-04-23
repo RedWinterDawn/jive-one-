@@ -235,6 +235,11 @@
                 
                 if ([conversation.isGroup boolValue]) {
                     title = conversation.name;
+                }else if(conversationMembers.count>2){
+#if DEBUG
+                    NSLog(@"How can you have a nongroup conversation with more 2 people!?!?!?");
+                    abort();
+#endif
                 }
                 
                 
