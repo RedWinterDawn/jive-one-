@@ -47,11 +47,6 @@ static NSString *CellIdentifier = @"DirectoryCell";
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    
-    CGRect frame = self.tableView.frame;
-    frame = CGRectMake(frame.origin.x, frame.origin.y, self.view.frame.size.width, self.view.frame.size.height);
-    self.tableView.frame = frame;
-    
     NSString *star = @"\u2605";
     sections = [NSArray arrayWithObjects:star,@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
     self.clientEntitiesArray = [[NSMutableArray alloc] init];
@@ -62,6 +57,18 @@ static NSString *CellIdentifier = @"DirectoryCell";
     //[[StatusPanel sharedInstance] showWithTitle:@"no internet" snippet:@"no internet" showProgress:NO];
     //[[StatusPanel sharedInstance] show];
 
+    
+    for(UIView *view in [self.tableView subviews])
+    {
+        //NSLog([[view class] description]);
+        if([[[view class] description] isEqualToString:@"UITableViewIndex"])
+        {
+            CGRect frame = view.frame;
+            frame.origin.y = frame.origin.y + 100;
+            view.frame = frame;
+            break;
+        }
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
