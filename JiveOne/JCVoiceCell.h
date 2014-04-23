@@ -45,4 +45,5 @@
 - (IBAction)speakerTouched:(id)sender;
 - (void)setSliderValue:(float)position;
 - (void)setSpeakerButtonTint:(UIColor*)color;
+- (void)styleCellForRead;
 @end

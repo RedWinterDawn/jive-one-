@@ -81,7 +81,7 @@
         Voicemail *voicemail = (Voicemail *)object;
         
         if (voicemail && voicemail.voicemailId != nil && voicemail.urn != nil && voicemail.file != nil) {
-            self.voicemail = voicemail;
+            _voicemail = voicemail;
             
             //[self performSelectorOnMainThread:@selector(setupAudioPlayer) withObject:nil waitUntilDone:NO];
             [self.spinningWheel performSelectorOnMainThread:@selector(stopAnimating) withObject:nil waitUntilDone:NO];

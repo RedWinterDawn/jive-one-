@@ -180,11 +180,6 @@ static NSString *CellIdentifier = @"VoicemailCell";
     if (isSelected) {
         [self prepareAudioForIndexPath:indexPath];
     }
-    
-//    if (self.selectedIndexPaths && self.selectedIndexPaths.count <= 1 ) {
-//        [self performTableViewReloadRows];
-//    }
-    
 }
 
 - (void)addOrRemoveSelectedIndexPath:(NSIndexPath *)indexPath
@@ -235,6 +230,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
     // save to local storage
     [context MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
         if (success) {
+            [selectedCell  performSelectorOnMainThread:@selector(styleCellForRead) withObject:nil waitUntilDone:NO];
             // now send update to server
             [[JCOsgiClient sharedClient] UpdateVoicemailToRead:selectedCell.voicemail success:^(id JSON) {
                 NSLog(@"Success Updating Read On Server");
@@ -313,7 +309,6 @@ static NSString *CellIdentifier = @"VoicemailCell";
         if (![selectedCell.voicemail.read boolValue]) {
             [self markVoicemailAsRead];
         }
-        
     }
 }
 
