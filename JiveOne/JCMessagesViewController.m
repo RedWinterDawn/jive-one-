@@ -27,7 +27,7 @@
 }
 
 @property (nonatomic) NSArray *contacts;
-@property (nonatomic) NSMutableArray *selectedContacts;
+@property (nonatomic) NSMutableSet *selectedContacts;
 @property (weak, nonatomic) IBOutlet MBContactPicker *contactPickerView;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contactPickerViewHeightConstraint;
 
@@ -133,7 +133,7 @@
         case JCNewConversationWithEntity: {
             [self.contactPickerView removeFromSuperview];
             if (!self.selectedContacts) {
-                self.selectedContacts = [[NSMutableArray alloc] init];
+                self.selectedContacts = [[NSMutableSet alloc] init];
             }
             
             [self setHeaderTitle:_person.firstLastName andSubtitle:_person.email] ;
@@ -150,12 +150,12 @@
     
     if (self.messageType == JCNewConversationWithGroup || self.messageType == JCNewConversationWithEntity) {
         // check if there's a previous conversation with the group or person
-        NSMutableArray *entities;
+        NSMutableSet *entities;
         if (self.messageType == JCNewConversationWithEntity) {
-            entities = [[NSMutableArray alloc] initWithObjects:self.person.entityId, nil];
+            entities = [[NSMutableSet alloc] initWithObjects:self.person.entityId, nil];
         }
         else if (self.messageType == JCNewConversationWithGroup) {
-            entities = [NSMutableArray arrayWithArray:self.contactGroup.clientEntities];
+            entities = [NSMutableSet setWithArray:self.contactGroup.clientEntities];
         }
         
         [self checkForConversationWithEntities:entities];
@@ -253,8 +253,6 @@
                 }
             }
         }
-        
-        
         
         // datasouce for conversation entries
         if (!self.messages) {
@@ -498,6 +496,12 @@
             // Add message to table so we provice user imediate feedback
             NSString *sender = [NSString stringWithFormat:@"%@ - %@", me.firstLastName, [NSDate date]];
             JSMessage *messageEntry = [[JSMessage alloc] initWithText:message sender:sender date:[NSDate date]];
+            PersonEntities *person = self.selectedContacts.allObjects[0];
+            if (person) {
+                _person = person;
+                _messageType = JCNewConversationWithEntity;
+                [self setupView];
+            }
             [self.messages addObject:messageEntry];
             [self setupDataSources];            
             [self.tableView reloadData];
@@ -608,7 +612,7 @@
 
 
 #pragma mark - Conversation Loading
-- (void)checkForConversationWithEntities:(NSMutableArray*)entities
+- (void)checkForConversationWithEntities:(NSMutableSet*)entities
 {
     if  (!entities) {
         return;
@@ -620,11 +624,11 @@
     
     NSArray *entityArray = nil;
     
-    if ([entities[0] isKindOfClass:[PersonEntities class]]) {
+    if ([entities.allObjects[0] isKindOfClass:[PersonEntities class]]) {
         entityArray = [entities valueForKeyPath:@"entityId"];
     }
     else {
-        entityArray = entities;
+        entityArray = entities.allObjects;
     }
     
     Conversation *existingConversation = nil;
@@ -745,7 +749,7 @@
 {
     NSLog(@"Did Add: %@", model.contactTitle);
     if (!self.selectedContacts) {
-        self.selectedContacts = [[NSMutableArray alloc] init];
+        self.selectedContacts = [[NSMutableSet alloc] init];
     }
     [self.selectedContacts addObject:((JCContactModel *)model).person];
     
