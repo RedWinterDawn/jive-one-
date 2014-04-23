@@ -20,8 +20,9 @@
     BOOL useSpeaker;
     MBProgressHUD *hud;
     
+    
 }
-
+@property (weak, nonatomic) JCOsgiClient *osgiClient;
 @property (nonatomic) NSMutableArray *selectedIndexPaths;
 @property (nonatomic, retain) NSTimer *progressTimer;
 
@@ -30,6 +31,20 @@
 @implementation JCVoiceTableViewController
 
 static NSString *CellIdentifier = @"VoicemailCell";
+
+- (void)osgiClient:(JCOsgiClient*)client
+{
+    _osgiClient = client;
+}
+
+-(JCOsgiClient*)getOsgiClient
+{
+    if(!_osgiClient){
+        _osgiClient = [JCOsgiClient sharedClient];
+        
+    }
+    return _osgiClient;
+}
 
 - (void)viewDidLoad
 {
@@ -84,7 +99,8 @@ static NSString *CellIdentifier = @"VoicemailCell";
 
 - (void)updateTable
 {
-    [[JCOsgiClient sharedClient] RetrieveVoicemailForEntity:nil success:^(id JSON) {
+    
+    [self.osgiClient RetrieveVoicemailForEntity:nil success:^(id JSON) {
         [self.refreshControl endRefreshing];
         [self loadVoicemails];
     } failure:^(NSError *err) {
