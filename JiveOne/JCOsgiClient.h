@@ -66,5 +66,4 @@
 #pragma mark - Class Operations
 
 - (void) clearCookies;
-
 @end

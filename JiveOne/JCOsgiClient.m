@@ -354,6 +354,8 @@
     KeychainItemWrapper* _keychainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
     NSString *token = [_keychainWrapper objectForKey:(__bridge id)(kSecAttrAccount)];
     
+    [self clearCookies];
+    
     if (!token) {
         token = (NSString*)[[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"];
     }
@@ -433,8 +435,6 @@
 
 
 #pragma mark - CRUD for Conversation
-
-
 
 #pragma mark - CRUD for Presence
 

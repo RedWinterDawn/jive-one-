@@ -128,35 +128,36 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 {
     JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
     
-    [[JCOsgiClient sharedClient] RetrieveMyEntitity:^(id JSON, id operation) {
-        if (![delegate.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenSucceeded object:JSON];
-        }
-    } failure:^(NSError *err, id operation) {
-        NSLog(@"%@", err);
-        AFHTTPRequestOperation *AFOperation = (AFHTTPRequestOperation *)operation;
-        
-        NSInteger status = AFOperation.response.statusCode;
-        
-        if ((status >= 400 && status <= 417) || status == 200) {
-            if ([self userAuthenticated]) {
-                [self refreshToken];
-            }
-            else
-            {
-                
-                if (![delegate.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
-                    [delegate changeRootViewController:JCRootLoginViewController];
-                }
-                else {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenFailed object:nil];
-                }
-            }
-        }
-        else {
-            NSLog(@"%@", AFOperation.response);
-        }       
-    }];
+//    [[JCOsgiClient sharedClient] RetrieveMyEntitity:^(id JSON, id operation) {
+//        if (![delegate.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
+//            [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenSucceeded object:JSON];
+//        }
+//    } failure:^(NSError *err, id operation) {
+    
+    [self verifyToken];
+//        NSLog(@"%@", err);
+//        AFHTTPRequestOperation *AFOperation = (AFHTTPRequestOperation *)operation;
+//        
+//        NSInteger status = AFOperation.response.statusCode;
+//        
+//        if ((status >= 400 && status <= 417) || status == 200) {
+//            if ([self userAuthenticated]) {
+//                [self refreshToken];
+//            }
+//            else
+//            {
+//                if (![delegate.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
+//                    [delegate changeRootViewController:JCRootLoginViewController];
+//                }
+//                else {
+//                    [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenFailed object:nil];
+//                }
+//            }
+//        }
+//        else {
+//            NSLog(@"%@", AFOperation.response);
+//        }       
+//    }];
 }
 
 // IBAction method for logout is in the JCAccountViewController.m
@@ -215,7 +216,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
         if (verifier)
         {
             NSString *data = [NSString stringWithFormat:@"code=%@&client_id=%@&client_secret=%@&redirect_uri=%@&grant_type=authorization_code", verifier, kOAuthClientId, kOAuthClientSecret, kURLSchemeCallback];
-            [self requestAccessToken:data];
+            [self requestOauthOperation:data type:0];
         }
     }
     return YES;
@@ -240,9 +241,18 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 }
 
 #pragma mark - NSURLConnectionDelegate
-- (void)requestAccessToken:(NSString *)data
+- (void)requestOauthOperation:(NSString *)data type:(NSInteger)type
 {
-    NSString *url = [NSString stringWithFormat:@"https://auth.jive.com/oauth2/token"];
+    NSString *termination;
+    
+    if (type == 0) {
+        termination = @"token";
+    }
+    else {
+        termination = @"verify";
+    }
+    
+    NSString *url = [NSString stringWithFormat:@"https://auth.jive.com/oauth2/%@", termination];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:[data dataUsingEncoding:NSUTF8StringEncoding]];
@@ -281,6 +291,25 @@ static int MAX_LOGIN_ATTEMPTS = 2;
         [webviewTimer invalidate];
         
     }
+    else if ([tokenData objectForKey:@"valid"])
+    {
+        BOOL tokenValid = [tokenData[@"valid"] boolValue];
+        if (!tokenValid) {
+            if ([self userAuthenticated]) {
+                [self refreshToken];
+            }
+            else
+            {
+                JCAppDelegate *delegate = [UIApplication sharedApplication].delegate;
+                if (![delegate.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
+                    [delegate changeRootViewController:JCRootLoginViewController];
+                }
+                else {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenFailed object:nil];
+                }
+            }
+        }
+    }
     else
     {
         [self logout:nil];
@@ -293,13 +322,23 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     NSString *refreshToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"refreshToken"];
     if (![Common stringIsNilOrEmpty:refreshToken]) {
         NSString *data = [NSString stringWithFormat:@"refresh_token=%@&client_id=%@&redirect_uri=%@&grant_type=refresh_token", refreshToken, kOAuthClientId, kURLSchemeCallback];
-        [self requestAccessToken:data];
+        [self requestOauthOperation:data type:0];
     }
     else {
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserAuthenticated];
         [self checkForTokenValidity];
     }
 }
+
+- (void)verifyToken
+{
+    NSString *token = [self getAuthenticationToken];
+    if (![Common stringIsNilOrEmpty:token]) {
+        NSString *data = [NSString stringWithFormat:@"token=%@", token];
+        [self requestOauthOperation:data type:1];
+    }
+}
+
 
 #pragma mark - Timer expired
 - (void)timerElapsed:(NSNotification *)notification
