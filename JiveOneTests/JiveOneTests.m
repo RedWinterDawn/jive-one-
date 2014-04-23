@@ -67,7 +67,7 @@
     
     NSString *name = [[json objectForKey:@"name"] objectForKey:@"firstLast"];
     NSString *companyUrl = [json objectForKey:@"company"];
-    XCTAssertEqualObjects(name, @"Jive Testing 10", @"Wrong name");
+    XCTAssertEqualObjects(name, @"Jive Testing 13", @"Wrong name");
     
     [client RetrieveMyCompany:companyUrl:^(id JSON) {
         json = JSON;
@@ -78,7 +78,7 @@
     
     [monitor waitWithTimeout:5];
     
-     XCTAssertEqualObjects([json objectForKey:@"name"], @"Integration Testing", @"Company name doesn't match");
+     XCTAssertEqualObjects([json objectForKey:@"name"], @"Jive Communications, Inc.", @"Company name doesn't match");
 }
 
 
