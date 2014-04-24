@@ -24,6 +24,7 @@
     int newMessagesCount;
 }
 
+@property (nonatomic) BOOL alertShowing;
 @property (nonatomic) NSString *currentConversationId;
 
 @end
@@ -109,9 +110,17 @@ static NSString *GroupCellIdentifier = @"GroupChatCell";
     } failure:^(NSError *err) {
         NSLog(@"%@",[err description]);
         [self loadDatasource];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection Problem" message:@"Could not load new conversation data. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
+        if(!self.alertShowing){
+            self.alertShowing = YES;
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection Problem" message:@"Could not load new conversation data. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+        }
     }];
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    self.alertShowing = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -159,6 +168,7 @@ static NSString *GroupCellIdentifier = @"GroupChatCell";
         }
         else
         {
+            [self refreshConversations:nil];
             newMessagesCount++;
             // set a different back button for the navigation controller
             UIBarButtonItem *myBackButton = [[UIBarButtonItem alloc]init];
@@ -173,7 +183,7 @@ static NSString *GroupCellIdentifier = @"GroupChatCell";
     }
     
     [self loadDatasource];
-    [self refreshConversations:nil];
+    
 }
 
 #pragma mark - Table view data source

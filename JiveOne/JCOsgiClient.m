@@ -12,6 +12,7 @@
 #import "Voicemail+Custom.h"
 #import "Presence+Custom.h"
 #import "NSNull+IntValue.h"
+#import "Common.h"
 
 
 #if DEBUG
@@ -268,13 +269,13 @@
     }];
 }
 
-- (void)SubmitChatMessageForConversation:(NSString*)conversation message:(NSString*)message withEntity:(NSString*)entity success:(void (^)(id JSON))success
+- (void)SubmitChatMessageForConversation:(NSString*)conversation message:(NSString*)message withEntity:(NSString*)entity withTimestamp:(NSDate*)timestamp success:(void (^)(id JSON))success
                                  failure:(void (^)(NSError* err))failure
 {
     [self setRequestAuthHeader];
     
     NSDictionary *messageDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:message, @"raw", nil];
-    NSDictionary *conversationDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:entity, @"entity", conversation, @"conversation", messageDictionary, @"message", nil];
+    NSDictionary *conversationDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:entity, @"entity", conversation, @"conversation", messageDictionary, @"message", [Common epochFromNSDate:timestamp], @"createdDate", nil];
     
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:conversationDictionary options:kNilOptions error:nil];
     NSString* jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];

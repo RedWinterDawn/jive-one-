@@ -238,7 +238,7 @@
                 }
                 else if(conversationMembers.count>2){
 #if DEBUG
-                    NSLog(@"How can you have a nongroup conversation with more 2 people!?!?!?");
+                    NSLog(@"How can you have a nongroup conversation with more than 2 people!?!?!?");
                     abort();
 #endif
                 }
@@ -469,12 +469,13 @@
     // if conversation exists, then create entry for that conversation
     if (_conversationId != nil && ![_conversationId isEqualToString:@""]) {
         
-        [[JCOsgiClient sharedClient] SubmitChatMessageForConversation:_conversationId message:message withEntity:entity success:^(id JSON) {
+        NSDate *timestamp = [NSDate date];
+        [[JCOsgiClient sharedClient] SubmitChatMessageForConversation:_conversationId message:message withEntity:entity withTimestamp:timestamp success:^(id JSON) {
             // confirm to user message was sent
            [JSMessageSoundEffect playMessageSentSound];
         } failure:^(NSError *err) {
             NSLog(@"%@", err);
-            [JCMessagesViewController handleFailedMessageDispatch:_conversationId withMessage:message];
+            [JCMessagesViewController handleFailedMessageDispatch:_conversationId withMessage:message withTimestamp:timestamp];
         }];
         
         //[self cleanup];
@@ -537,10 +538,10 @@
 }
 
 //if a message cannot be sent (becuase of no connecitivity) this method is called. this method puts these messages into a queue (saved in user defaults)
-+(void) handleFailedMessageDispatch:(NSString*)conversationId withMessage:(NSString*)message{
++(void) handleFailedMessageDispatch:(NSString*)conversationId withMessage:(NSString*)message withTimestamp:(NSDate*)timestamp{
     //alert the user that message will be sent when connectivity is restored
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Message not sent" message:@"Messages will be sent when connectivity is restored" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-    [alert show];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Message not sent" message:@"Messages will be sent when connectivity is restored" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
     
     //build queue for sending unsent messages
     NSDictionary *unsentQueue = [[NSUserDefaults standardUserDefaults] objectForKey:@"unsentMessageQueue"];
@@ -549,7 +550,7 @@
     }
     NSMutableDictionary *unsentQueueMutable = [[NSMutableDictionary alloc] initWithDictionary:unsentQueue];
     
-    NSMutableArray *messages;
+    NSMutableArray *messages;//array of JSMessages
     if([unsentQueue objectForKey:conversationId]){
         //use existing array for this conversation
         messages  = [NSMutableArray arrayWithArray:[unsentQueueMutable objectForKey:conversationId]];
@@ -559,7 +560,8 @@
         messages = [[NSMutableArray alloc] init];
     }
     [unsentQueueMutable setObject:messages forKey:conversationId];
-    [messages addObject:message];
+    JSMessage *jsmessage = [[JSMessage alloc] initWithText:message sender:nil date:timestamp];
+    [messages addObject:jsmessage];
     
     //save queue to user defaults
     [[NSUserDefaults standardUserDefaults] setObject:unsentQueueMutable forKey:@"unsentMessageQueue"];
@@ -576,13 +578,13 @@
     
     //TODO: refactor to remove keys with empty arrays. Possibly by setting up an external counter.
 
-    [unsentMessagesQueueOld enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSArray *messages, BOOL *stop) {
+    [unsentMessagesQueueOld enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSArray *jsmessages, BOOL *stop) {
          __block NSMutableArray *messagesMutable = [[NSMutableArray alloc] init];
-        for(int i=0;i<messages.count;i++){
+        for(int i=0;i<jsmessages.count;i++){
             
-            [osgiClient SubmitChatMessageForConversation:key message:messages[i] withEntity:myEntity success:^(id JSON) {
+            [osgiClient SubmitChatMessageForConversation:key message:((JSMessage*)jsmessages[i]).text withEntity:myEntity withTimestamp:((JSMessage*)jsmessages[i]).date success:^(id JSON) {
                 
-                NSLog(@"inside block. messages[i]:%@", messages[i]);
+                NSLog(@"inside block. messages[i]:%@", jsmessages[i]);
                 [JSMessageSoundEffect playMessageSentSound];
                 //if there are messages left this will resave the messages array to the queue
                 NSLog(@"success callback. Contents of messagesMutable:%@", messagesMutable);
@@ -593,7 +595,7 @@
                 [[NSUserDefaults standardUserDefaults] setObject:unsentMessagesQueueNew forKey:@"unsentMessageQueue"];
             } failure:^(NSError *err) {
                 NSLog(@"Failed to send. and here's the error:%@",err);
-                [messagesMutable addObject:messages[i]];
+                [messagesMutable addObject:jsmessages[i]];
                 
                 //if there are messages left this will resave the messages array to the queue
                 NSLog(@"failure callback. Something in messagesMutable:%@", messagesMutable);

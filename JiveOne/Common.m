@@ -81,6 +81,10 @@
 	return ([[NSDate date] compare:aDate] == NSOrderedDescending);
 }
 
++ (long) epochFromNSDate:timestamp{
+    return  [@(floor([timestamp timeIntervalSince1970] * 1000)) longLongValue];
+}
+
 #pragma mark Retrieving Intervals
 
 + (NSInteger) minutesAfterDate: (NSDate *) aDate
@@ -208,7 +212,7 @@
     return coloredImage;
 }
 
-#pragma mark - Encryption Utils
+#pragma mark - Encoding Utils
 
 + (NSString*)encodeStringToBase64:(NSString*)plainString
 {
