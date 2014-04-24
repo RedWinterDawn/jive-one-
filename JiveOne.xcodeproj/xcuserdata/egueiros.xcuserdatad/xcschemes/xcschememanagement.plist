@@ -14,12 +14,7 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
-		<key>JiveOne_CI_Release.xcscheme_^#shared#^_</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>3</integer>
-		</dict>
-		<key>JiveOne_CI_Testflight.xcscheme</key>
+		<key>JiveOne_CI_Testflight.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>2</integer>
