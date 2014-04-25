@@ -226,7 +226,7 @@
         <!--Directory View Controller - People-->
         <scene sceneID="sgK-qG-NHh">
             <objects>
-                <viewController storyboardIdentifier="JCDirectoryViewController" id="eTh-sK-SbW" customClass="JCDirectoryViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="JCDirectoryViewController" autoresizesArchivedViewToFullSize="NO" id="eTh-sK-SbW" customClass="JCDirectoryViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MQa-ev-5XW"/>
                         <viewControllerLayoutGuide type="bottom" id="sLN-OT-Xgd"/>
@@ -235,7 +235,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="mbq-mY-MdJ">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="mbq-mY-MdJ">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -261,7 +261,14 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="mbq-mY-MdJ" firstAttribute="leading" secondItem="wHC-dQ-9va" secondAttribute="leading" id="0DB-8o-pV7"/>
+                            <constraint firstAttribute="bottom" secondItem="mbq-mY-MdJ" secondAttribute="bottom" id="Y5b-d9-3fw"/>
+                            <constraint firstAttribute="trailing" secondItem="mbq-mY-MdJ" secondAttribute="trailing" id="bf7-qE-vQR"/>
+                            <constraint firstItem="mbq-mY-MdJ" firstAttribute="top" secondItem="wHC-dQ-9va" secondAttribute="top" id="wLO-sv-YgJ"/>
+                        </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" title="People" id="i9j-aS-UgH">
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="ryW-6T-R4F">
                             <connections>
