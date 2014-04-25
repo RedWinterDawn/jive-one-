@@ -239,7 +239,7 @@
                 else if(conversationMembers.count>2){
 #if DEBUG
                     NSLog(@"How can you have a nongroup conversation with more than 2 people!?!?!?");
-                    abort();
+                    exit(0);
 #endif
                 }
                 
@@ -544,34 +544,37 @@
         [alert show];
     
     //build queue for sending unsent messages
-    NSDictionary *unsentQueue = [[NSUserDefaults standardUserDefaults] objectForKey:@"unsentMessageQueue"];
+    NSDictionary *unsentQueue = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"unsentMessageQueue"]];
     if(!unsentQueue){
         unsentQueue = [[NSMutableDictionary alloc] init];
     }
     NSMutableDictionary *unsentQueueMutable = [[NSMutableDictionary alloc] initWithDictionary:unsentQueue];
     
-    NSMutableArray *messages;//array of JSMessages
+    NSMutableArray *messages;//array of Messages
+//    NSMutableArray *timestamps;//array of corresponding timestamps
     if([unsentQueue objectForKey:conversationId]){
         //use existing array for this conversation
         messages  = [NSMutableArray arrayWithArray:[unsentQueueMutable objectForKey:conversationId]];
+//        timestamps = [NSMutableArray arrayWithArray:[unsentQueueMutable objectForKey:<#(id)#>]]
     }
     else{
         //create new array to hold actual messages
         messages = [[NSMutableArray alloc] init];
+//        timestamps = [[NSMutableArray alloc] init];
     }
     [unsentQueueMutable setObject:messages forKey:conversationId];
     JSMessage *jsmessage = [[JSMessage alloc] initWithText:message sender:nil date:timestamp];
     [messages addObject:jsmessage];
     
     //save queue to user defaults
-    [[NSUserDefaults standardUserDefaults] setObject:unsentQueueMutable forKey:@"unsentMessageQueue"];
-
+    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:unsentQueueMutable] forKey:@"unsentMessageQueue"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 
 //when connectvitity is restored this method is called. this method retrives a queue of unsent messages from user defaults and begins sending them.
 +(void) sendOfflineMessagesQueue:(JCOsgiClient*)osgiClient{
-    NSDictionary *unsentMessagesQueueOld = [[NSUserDefaults standardUserDefaults] objectForKey:@"unsentMessageQueue"];
+    NSDictionary *unsentMessagesQueueOld = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"unsentMessageQueue"]];
     NSMutableDictionary *unsentMessagesQueueNew = [[NSMutableDictionary alloc] init];
     
     NSString* myEntity = [[JCOmniPresence sharedInstance] me].entityId;
@@ -592,7 +595,7 @@
                 
                 //save the queue to user defaults
                 NSLog(@"success callback Saving to user defaults");
-                [[NSUserDefaults standardUserDefaults] setObject:unsentMessagesQueueNew forKey:@"unsentMessageQueue"];
+                [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:unsentMessagesQueueNew] forKey:@"unsentMessageQueue"];
             } failure:^(NSError *err) {
                 NSLog(@"Failed to send. and here's the error:%@",err);
                 [messagesMutable addObject:jsmessages[i]];
@@ -603,7 +606,7 @@
                 
                 //save the queue to user defaults
                 NSLog(@" failure callback Saving to user defaults");
-                [[NSUserDefaults standardUserDefaults] setObject:unsentMessagesQueueNew forKey:@"unsentMessageQueue"];
+                [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:unsentMessagesQueueNew] forKey:@"unsentMessageQueue"];
             }];
             
         };

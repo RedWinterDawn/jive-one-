@@ -203,8 +203,9 @@
     NSString *testConversation = barConversation;
     NSString *testMessage = [NSString stringWithFormat:@"Automated Test Message From %@ - %@ - %@", [[UIDevice currentDevice] name], [[UIDevice currentDevice] model], [NSDate date]];
     NSString *testEntity = @"entities:jivetesting13@gmail_com";
+    NSDate *testDate = [NSDate date];
     
-    [[JCOsgiClient sharedClient] SubmitChatMessageForConversation:testConversation message:testMessage withEntity:testEntity success:^(id JSON) {
+    [[JCOsgiClient sharedClient] SubmitChatMessageForConversation:testConversation message:testMessage withEntity:testEntity withTimestamp:testDate success:^(id JSON) {
         response = JSON;
         [monitor signal];
     } failure:^(NSError *err) {

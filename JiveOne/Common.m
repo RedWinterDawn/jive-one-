@@ -81,8 +81,9 @@
 	return ([[NSDate date] compare:aDate] == NSOrderedDescending);
 }
 
-+ (long) epochFromNSDate:timestamp{
-    return  [@(floor([timestamp timeIntervalSince1970] * 1000)) longLongValue];
++ (long) epochFromNSDate:(NSDate*)timestamp{
+    long time = [@(floor([timestamp timeIntervalSince1970] * 1000)) longLongValue];
+    return time;
 }
 
 #pragma mark Retrieving Intervals

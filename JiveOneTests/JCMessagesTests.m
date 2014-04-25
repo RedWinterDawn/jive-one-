@@ -49,13 +49,14 @@
     [unsentQueue setObject:conversation2 forKey:@"conversation2"];//key should be the conversation id
     
     //save unsent queue to user defaults
-    [[NSUserDefaults standardUserDefaults] setObject:unsentQueue forKey:@"unsentMessageQueue"];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:unsentQueue] forKey:@"unsentMessageQueue"];
+//    [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"unsentMessageQueue"]];
     
     //setup mock server so that
     //server shows that all messages were successfully sent
     __block int counter=0;
     id mockClient = [OCMockObject niceMockForClass:[JCOsgiClient class]];
-    [[mockClient expect] SubmitChatMessageForConversation:OCMOCK_ANY message:OCMOCK_ANY withEntity:[OCMArg any]
+    [[mockClient expect] SubmitChatMessageForConversation:OCMOCK_ANY message:OCMOCK_ANY withEntity:[OCMArg any] withTimestamp:[OCMArg any]
                                                   success:[OCMArg checkWithBlock:^BOOL(void (^successBlock)(AFHTTPRequestOperation *, id))
                                                            {
                                                                counter++;
@@ -71,7 +72,7 @@
     [JCMessagesViewController sendOfflineMessagesQueue:mockClient];
     [mockClient verify];
     
-    NSDictionary *updatedUnsentQueue = [[NSUserDefaults standardUserDefaults] objectForKey:@"unsentMessageQueue"];
+    NSDictionary *updatedUnsentQueue = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"unsentMessageQueue"]];
     NSLog(@"%@", updatedUnsentQueue);
     
     //assert queue is empty
@@ -101,13 +102,13 @@
     [unsentQueue setObject:conversation2 forKey:@"conversation2"];//key should be the conversation id
     
     //save unsent queue to user defaults
-    [[NSUserDefaults standardUserDefaults] setObject:unsentQueue forKey:@"unsentMessageQueue"];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:unsentQueue] forKey:@"unsentMessageQueue"];
 
     //setup mock server so that
     //messages fail to send
     __block int counter =0;
     id mockClient = [OCMockObject niceMockForClass:[JCOsgiClient class]];
-    [[mockClient expect] SubmitChatMessageForConversation:OCMOCK_ANY message:OCMOCK_ANY withEntity:[OCMArg any]
+    [[mockClient expect] SubmitChatMessageForConversation:OCMOCK_ANY message:OCMOCK_ANY withEntity:[OCMArg any] withTimestamp:[OCMArg any]
                                                   success:OCMOCK_ANY
                                                   failure:[OCMArg checkWithBlock:^BOOL(void (^failureBlock)(id))
                                                            {
@@ -127,7 +128,7 @@
     //server shows that messages were not successfully sent
     
     //queue is full
-    NSDictionary *updatedUnsentQueue = [[NSUserDefaults standardUserDefaults] objectForKey:@"unsentMessageQueue"];
+    NSDictionary *updatedUnsentQueue = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"unsentMessageQueue"]];
     NSLog(@"%@", updatedUnsentQueue);
     
     //assert queue is empty
@@ -156,7 +157,7 @@
     [unsentQueue setObject:conversation2 forKey:@"conversation2"];//key should be the conversation id
     
     //save unsent queue to user defaults
-    [[NSUserDefaults standardUserDefaults] setObject:unsentQueue forKey:@"unsentMessageQueue"];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:unsentQueue] forKey:@"unsentMessageQueue"];
     
     //setup mock server so that
     //messages for conversation1 send
@@ -164,7 +165,7 @@
     
     //for conversation1 we want it to come back successfull
      __block int counter1 =0;
-    [[mockClient expect] SubmitChatMessageForConversation:@"conversation1" message:OCMOCK_ANY withEntity:[OCMArg any]
+    [[mockClient expect] SubmitChatMessageForConversation:@"conversation1" message:OCMOCK_ANY withEntity:[OCMArg any] withTimestamp:[OCMArg any]
                                                   success:[OCMArg checkWithBlock:^BOOL(void (^successBlock)(AFHTTPRequestOperation *, id))
                                                            {
                                                                counter1++;
@@ -178,7 +179,7 @@
     
     //for conversation2 we want it to come back as a failure
      __block int counter2 =0;
-    [[mockClient expect] SubmitChatMessageForConversation:@"conversation2" message:OCMOCK_ANY withEntity:[OCMArg any]
+    [[mockClient expect] SubmitChatMessageForConversation:@"conversation2" message:OCMOCK_ANY withEntity:[OCMArg any] withTimestamp:[OCMArg any]
                                                    success:OCMOCK_ANY
                                                    failure:[OCMArg checkWithBlock:^BOOL(void (^failureBlock)(id))
                                                             {
@@ -196,7 +197,7 @@
     [mockClient verify];
     
     //queue is full
-    NSDictionary *updatedUnsentQueue = [[NSUserDefaults standardUserDefaults] objectForKey:@"unsentMessageQueue"];
+    NSDictionary *updatedUnsentQueue = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"unsentMessageQueue"]];
     NSLog(@"%@", updatedUnsentQueue);
     
     //assert queue is empty

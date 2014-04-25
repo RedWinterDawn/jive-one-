@@ -25,7 +25,7 @@
 + (BOOL) isEqualToDateIgnoringTime: (NSDate *) aDate;
 + (BOOL) isEarlierThanDate: (NSDate *) aDate;
 + (BOOL) isLaterThanDate: (NSDate *) aDate;
-+ (long) epochFromNSDate:timestamp;
++ (long) epochFromNSDate:(NSDate*)timestamp;
 // Retrieving intervals
 + (NSInteger) minutesAfterDate: (NSDate *) aDate;
 + (NSInteger) minutesBeforeDate: (NSDate *) aDate;
