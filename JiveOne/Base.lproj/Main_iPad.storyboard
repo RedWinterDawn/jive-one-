@@ -411,7 +411,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="975"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="yEI-Gy-n7k">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="yEI-Gy-n7k">
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="975"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -437,6 +437,12 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="yEI-Gy-n7k" secondAttribute="trailing" id="Bpx-Rg-NrC"/>
+                            <constraint firstItem="yEI-Gy-n7k" firstAttribute="top" secondItem="SVZ-zf-NMq" secondAttribute="top" id="NdA-vw-np7"/>
+                            <constraint firstItem="yEI-Gy-n7k" firstAttribute="leading" secondItem="SVZ-zf-NMq" secondAttribute="leading" id="QeA-pn-m3i"/>
+                            <constraint firstAttribute="bottom" secondItem="yEI-Gy-n7k" secondAttribute="bottom" id="xPK-d4-jBZ"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="People" id="e6i-od-nx2">
                         <barButtonItem key="leftBarButtonItem" title="Groups" id="dnh-LT-Evu">
