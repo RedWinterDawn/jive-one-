@@ -7,6 +7,7 @@
 //
 
 #import "Conversation+Custom.h"
+#import "ConversationETag.h"
 #import "ConversationEntry+Custom.h"
 
 @implementation Conversation (Custom)
@@ -97,6 +98,34 @@
     }
     
     return conversation;
+}
+
++ (void)saveConversationEtag:(NSInteger)etag managedContext:(NSManagedObjectContext*)context
+{
+    if (!context) {
+        context = [NSManagedObjectContext MR_contextForCurrentThread];
+    }
+    
+    ConversationETag *currentETag = [ConversationETag MR_findFirst];
+    if (!currentETag) {
+        currentETag = [ConversationETag MR_createEntity];
+    }
+    
+    if (etag > [currentETag.etag integerValue]) {
+        currentETag.etag = [NSNumber numberWithInteger:etag];
+        [context MR_saveToPersistentStoreAndWait];
+    }
+}
+
++ (NSNumber *)getConversationEtag
+{
+    ConversationETag *currentETag = [ConversationETag MR_findFirst];
+    if (currentETag) {
+        return currentETag.etag;
+    }
+    else {
+        return 0;
+    }
 }
 
 

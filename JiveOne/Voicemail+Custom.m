@@ -7,6 +7,7 @@
 //
 
 #import "Voicemail+Custom.h"
+#import "VoicemailETag.h"
 #import "Constants.h"
 
 @implementation Voicemail (Custom)
@@ -207,6 +208,34 @@
     }
     
     return NO;
+}
+
++ (void)saveVoicemailEtag:(NSInteger)etag managedContext:(NSManagedObjectContext*)context;
+{
+    if (!context) {
+        context = [NSManagedObjectContext MR_contextForCurrentThread];
+    }
+    
+    VoicemailETag *currentETag = [VoicemailETag MR_findFirst];
+    if (!currentETag) {
+        currentETag = [VoicemailETag MR_createEntity];
+    }
+    
+    if (etag > [currentETag.etag integerValue]) {
+        currentETag.etag = [NSNumber numberWithInteger:etag];
+        [context MR_saveToPersistentStoreAndWait];
+    }
+}
+
++ (NSNumber *)getVoicemailEtag
+{
+    VoicemailETag *currentETag = [VoicemailETag MR_findFirst];
+    if (currentETag) {
+        return currentETag.etag;
+    }
+    else {
+        return 0;
+    }
 }
 
 

@@ -19,5 +19,6 @@
 + (BOOL)isVoicemailInDeletedList:(NSString*)voicemailId;
 + (BOOL)deleteVoicemail:(NSString*)voicemailId managedContext:(NSManagedObjectContext*)context;
 + (void)fetchVoicemailInBackground;
-
++ (void)saveVoicemailEtag:(NSInteger)etag managedContext:(NSManagedObjectContext*)context;
++ (NSNumber *)getVoicemailEtag;
 @end

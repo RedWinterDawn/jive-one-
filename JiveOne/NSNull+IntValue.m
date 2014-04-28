@@ -9,5 +9,7 @@
 #import "NSNull+IntValue.h"
 
 @implementation NSNull (IntValue)
+-(int)intValue { return 0; }
+- (NSInteger)integerValue { return 0; }
 
 @end
