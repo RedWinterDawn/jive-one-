@@ -75,6 +75,15 @@
     _loginStatusLabel.font = [UIFont fontWithName:boldFontName size:16.0f];
     // Do any additional setup after loading the view.
     fastConnection = [Common IsConnectionFast];
+    
+    //if the user has not seen the tutorial - show it --should only see on first opening of app...
+    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"hasSeenTutorial"]){
+        //[self displayTutorial];
+        //at end of showing tutorial fire the following line
+        //[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasSeenTutorial"];
+        //[[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    
 }
 
 - (void)viewDidDisappear:(BOOL)animated
