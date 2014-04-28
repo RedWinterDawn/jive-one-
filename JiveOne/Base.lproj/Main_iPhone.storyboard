@@ -58,6 +58,24 @@
             </objects>
             <point key="canvasLocation" x="-620" y="182"/>
         </scene>
+        <!--App Tutorial View Controller-->
+        <scene sceneID="OU5-z6-JEy">
+            <objects>
+                <viewController storyboardIdentifier="JCAppTutorialViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="8GL-QL-iYb" customClass="JCAppTutorialViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="FZG-yM-gzn"/>
+                        <viewControllerLayoutGuide type="bottom" id="8aH-z2-KSv"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Htu-bZ-jre">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" red="1" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yi3-oi-Auf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-629" y="903"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Vex-rW-GRa">
             <objects>

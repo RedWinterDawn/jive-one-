@@ -19,8 +19,8 @@
 #import "JCMessagesViewController.h"
 #import "TestFlight.h"
 
-
 @implementation JCAppDelegate
+NSString *seenTutorial;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -492,38 +492,46 @@
 }
 
 #pragma mark - Change Root ViewController
+
 - (void)changeRootViewController:(JCRootViewControllerType)type
 {
-    UIStoryboard *storyboard;
+    seenTutorial = @"NO";
+    if(![@"YES" isEqualToString:[[NSUserDefaults standardUserDefaults]
+                               objectForKey:@"seenAppTutorial"]]){
+        seenTutorial = @"NO";
+    }else {
+        seenTutorial = @"YES";
+    }
+    seenTutorial = @"YES";
+    
+    BOOL deviceIsIPhone = YES;
+    self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+    
     //check if we are using a iphone or ipad
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        storyboard = [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
-//        rvc = [storyboard instantiateViewControllerWithIdentifier:@"identifierForController"];
-    }
-    else {
-        storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-//        rvc = [storyboard instantiateViewControllerWithIdentifier:@"identifierForController"];
+        deviceIsIPhone = NO;
     }
     
+    UIStoryboard *storyboard = deviceIsIPhone ? [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] : [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
     
-//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     if (type == JCRootTabbarViewController) {
         
         UITabBarController *tabVC = [storyboard instantiateViewControllerWithIdentifier:@"UITabBarController"];
-        
         [self.window setRootViewController:tabVC];
         
-        //[[NotificationView sharedInstance] showPanelInView:tabVC.view];
-        //[[NotificationView sharedInstance] didChangeConnection:nil];
     }
     else if (type == JCRootLoginViewController)
     {
-//        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-        JCLoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"JCLoginViewController"];
-        [self.window setRootViewController:loginVC];
+        UIViewController *loginOrAppTutorialVC = [seenTutorial isEqualToString:@"YES"] ? [storyboard instantiateViewControllerWithIdentifier:@"JCLoginViewController"] : [storyboard instantiateViewControllerWithIdentifier:@"JCAppTutorialViewController"];
+        [self.window setRootViewController:loginOrAppTutorialVC];
+        
+        //at end of showing tutorial fire the following lines
+        //[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasSeenTutorial"];
+        //[[NSUserDefaults standardUserDefaults] synchronize];
     }
-    
+    [self.window makeKeyAndVisible];
 }
+
 
 
 @end
