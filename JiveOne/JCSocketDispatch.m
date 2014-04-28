@@ -124,21 +124,26 @@
 - (void)subscribeSession
 {
     NSLog(@"Subscribing to Socket Events");
-    NSDictionary* conversation = [NSDictionary dictionaryWithObjectsAndKeys:@"(conversations|permanentrooms|groupconversations|adhocrooms):*:entries:*", @"urn", nil];
-    NSDictionary* conversation1 = [NSDictionary dictionaryWithObjectsAndKeys:@"(conversations|permanentrooms|groupconversations|adhocrooms):*:entries", @"urn", nil];
-    NSDictionary* conversation2 = [NSDictionary dictionaryWithObjectsAndKeys:@"meta:(conversations|permanentrooms|groupconversations|adhocrooms):*:entities", @"urn", nil];
-    NSDictionary* conversation3 = [NSDictionary dictionaryWithObjectsAndKeys:@"meta:(conversations|permanentrooms|groupconversations|adhocrooms):*:entities:*", @"urn", nil];
-    NSDictionary* conversation4 = [NSDictionary dictionaryWithObjectsAndKeys:@"(conversations|permanentrooms|groupconversations|adhocrooms):*", @"urn", nil];
+//    NSDictionary* conversation = [NSDictionary dictionaryWithObjectsAndKeys:@"(conversations|permanentrooms|groupconversations|adhocrooms):*:entries:*", @"urn", nil];
+//    NSDictionary* conversation1 = [NSDictionary dictionaryWithObjectsAndKeys:@"(conversations|permanentrooms|groupconversations|adhocrooms):*:entries", @"urn", nil];w
+//    NSDictionary* conversation2 = [NSDictionary dictionaryWithObjectsAndKeys:@"meta:(conversations|permanentrooms|groupconversations|adhocrooms):*:entities", @"urn", nil];
+//    NSDictionary* conversation3 = [NSDictionary dictionaryWithObjectsAndKeys:@"meta:(conversations|permanentrooms|groupconversations|adhocrooms):*:entities:*", @"urn", nil];
     
-    NSDictionary* presence1 = [NSDictionary dictionaryWithObjectsAndKeys:@"presence:entities:*", @"urn", nil];
     
+    NSDictionary* presence = [NSDictionary dictionaryWithObjectsAndKeys:@"presence:entities:*", @"urn", nil];
     NSDictionary* calls = [NSDictionary dictionaryWithObjectsAndKeys:@"calls:#", @"urn", nil];
+    
+    NSMutableDictionary* conversation4 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"(conversations|permanentrooms|groupconversations|adhocrooms):*", @"urn", nil];
+    if ([Conversation getConversationEtag] != 0) {
+        [conversation4 setValue:[Conversation getConversationEtag] forKey:@"ETag"];
+    }
 
-    NSDictionary* voicemail = [NSDictionary dictionaryWithObjectsAndKeys:@"voicemails:*", @"urn", nil];
+    NSMutableDictionary* voicemail = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"voicemails:*", @"urn", nil];
+    if ([[Voicemail getVoicemailEtag] integerValue] != 0) {
+        [voicemail setValue:[Voicemail getVoicemailEtag] forKey:@"ETag"];
+    }
     
-    
-    
-    NSArray *subscriptionArray = [NSArray arrayWithObjects:voicemail, conversation, conversation1, conversation2, conversation3, conversation4, presence1, calls, nil];
+    NSArray *subscriptionArray = [NSArray arrayWithObjects:voicemail, conversation4, presence, calls, nil];
     
     for (NSDictionary *subscription in subscriptionArray) {
         

@@ -11,6 +11,7 @@
 #import "PersonEntities+Custom.h"
 #import "Voicemail+Custom.h"
 #import "Presence+Custom.h"
+#import "NSNull+IntValue.h"
 
 
 #if DEBUG
@@ -111,6 +112,7 @@
     [self setRequestAuthHeader];
     
     [_manager GET:kOsgiConverationRoute parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [Conversation saveConversationEtag:[responseObject[@"ETag"] integerValue] managedContext:nil];
         [Conversation addConversations:responseObject[@"entries"]];
         success(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -389,6 +391,8 @@
     NSLog(@"%@", url);
     
     [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        [Voicemail saveVoicemailEtag:[responseObject[@"ETag"] integerValue] managedContext:nil];
         NSArray *entries = [responseObject objectForKey:@"entries"];
         //get all voicemail metadata, but not actual voicemail messages
         [Voicemail addVoicemails:entries];
