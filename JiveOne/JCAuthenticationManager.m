@@ -113,7 +113,9 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     
     
     [[NSUserDefaults standardUserDefaults] setObject:access_token forKey:@"authToken"];
-    [[NSUserDefaults standardUserDefaults] setObject:refresh_token forKey:@"refreshToken"];
+    if (refresh_token) {
+        [[NSUserDefaults standardUserDefaults] setObject:refresh_token forKey:@"refreshToken"];
+    }
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kUserAuthenticated];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
@@ -126,38 +128,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 - (void)checkForTokenValidity
 {
-    //JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
-    
-//    [[JCOsgiClient sharedClient] RetrieveMyEntitity:^(id JSON, id operation) {
-//        if (![delegate.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
-//            [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenSucceeded object:JSON];
-//        }
-//    } failure:^(NSError *err, id operation) {
-    
     [self verifyToken];
-//        NSLog(@"%@", err);
-//        AFHTTPRequestOperation *AFOperation = (AFHTTPRequestOperation *)operation;
-//        
-//        NSInteger status = AFOperation.response.statusCode;
-//        
-//        if ((status >= 400 && status <= 417) || status == 200) {
-//            if ([self userAuthenticated]) {
-//                [self refreshToken];
-//            }
-//            else
-//            {
-//                if (![delegate.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
-//                    [delegate changeRootViewController:JCRootLoginViewController];
-//                }
-//                else {
-//                    [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenFailed object:nil];
-//                }
-//            }
-//        }
-//        else {
-//            NSLog(@"%@", AFOperation.response);
-//        }       
-//    }];
 }
 
 // IBAction method for logout is in the JCAccountViewController.m

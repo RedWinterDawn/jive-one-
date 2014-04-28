@@ -65,56 +65,60 @@
 {
     NSLog(@"Requestion Session For Socket");
     [self cleanup];
-    [[JCOsgiClient sharedClient] RequestSocketSession:^(id JSON) {
+    
+    if ([[JCAuthenticationManager sharedInstance] userAuthenticated])  {
         
-        if (_timer) {
-            [_timer invalidate];
-        }
-        
-        // First, get our current auth token
-        KeychainItemWrapper* _keychainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
-        NSString* authToken = [_keychainWrapper objectForKey:(__bridge id)(kSecAttrAccount)];
-        
-        // From our response dictionary we'll get some info
-        NSDictionary* response = (NSDictionary*)JSON;
-        
-        // Retrive session token and pipe it together with our auth token
-        self.sessionToken = [NSString stringWithFormat:@"%@",[response objectForKey:@"token"]];
-        self.pipedTokens = [NSString stringWithFormat:@"%@|%@", authToken, self.sessionToken];
-         
-        // Create dictionaries that will be converted to JSON objects to be posted to the socket.
-        self.cmd_start = [NSDictionary dictionaryWithObjectsAndKeys:@"start", @"cmd", authToken, @"authToken", self.sessionToken, @"sessionToken", nil];
-        self.cmd_poll  = [NSDictionary dictionaryWithObjectsAndKeys:@"poll", @"cmd", authToken, @"authToken", self.sessionToken, @"sessionToken", nil];
-        
-        NSError* error;
-        // json start creation
-        NSData* jsonData = [NSJSONSerialization dataWithJSONObject:self.cmd_start options:NSJSONWritingPrettyPrinted error:&error];
-        self.json_start = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        // json poll creation
-        jsonData = [NSJSONSerialization dataWithJSONObject:self.cmd_poll options:NSJSONWritingPrettyPrinted error:&error];
-        self.json_poll = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        
-        
-        // Retrieve the ws parameter - this is the endpoint used to connect to our socket.
-        self.ws = [response objectForKey:@"ws"];
-        
-        NSLog(@"Requestion Session For Socket : Success");
-        
-        // If we have everyting we need, we can subscribe to events.
-        if (self.ws && self.sessionToken) {
-            [self subscribeSession];
-        }
-        
-    } failure:^(NSError *err) {
-        NSLog(@"Requestion Session For Socket : Failed");
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"com.jiveone.socketNotConnected" object:nil];
-        
-        // if we fail to get a session, then try again in 15 seconds
-        if (![_timer isValid]) {
-            _timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(elapsedTime:) userInfo:nil repeats:YES];
-        }
-        
-    }];
+        [[JCOsgiClient sharedClient] RequestSocketSession:^(id JSON) {
+            
+            if (_timer) {
+                [_timer invalidate];
+            }
+            
+            // First, get our current auth token
+            KeychainItemWrapper* _keychainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
+            NSString* authToken = [_keychainWrapper objectForKey:(__bridge id)(kSecAttrAccount)];
+            
+            // From our response dictionary we'll get some info
+            NSDictionary* response = (NSDictionary*)JSON;
+            
+            // Retrive session token and pipe it together with our auth token
+            self.sessionToken = [NSString stringWithFormat:@"%@",[response objectForKey:@"token"]];
+            self.pipedTokens = [NSString stringWithFormat:@"%@|%@", authToken, self.sessionToken];
+            
+            // Create dictionaries that will be converted to JSON objects to be posted to the socket.
+            self.cmd_start = [NSDictionary dictionaryWithObjectsAndKeys:@"start", @"cmd", authToken, @"authToken", self.sessionToken, @"sessionToken", nil];
+            self.cmd_poll  = [NSDictionary dictionaryWithObjectsAndKeys:@"poll", @"cmd", authToken, @"authToken", self.sessionToken, @"sessionToken", nil];
+            
+            NSError* error;
+            // json start creation
+            NSData* jsonData = [NSJSONSerialization dataWithJSONObject:self.cmd_start options:NSJSONWritingPrettyPrinted error:&error];
+            self.json_start = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            // json poll creation
+            jsonData = [NSJSONSerialization dataWithJSONObject:self.cmd_poll options:NSJSONWritingPrettyPrinted error:&error];
+            self.json_poll = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            
+            
+            // Retrieve the ws parameter - this is the endpoint used to connect to our socket.
+            self.ws = [response objectForKey:@"ws"];
+            
+            NSLog(@"Requestion Session For Socket : Success");
+            
+            // If we have everyting we need, we can subscribe to events.
+            if (self.ws && self.sessionToken) {
+                [self subscribeSession];
+            }
+            
+        } failure:^(NSError *err) {
+            NSLog(@"Requestion Session For Socket : Failed");
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"com.jiveone.socketNotConnected" object:nil];
+            
+            // if we fail to get a session, then try again in 15 seconds
+            if (![_timer isValid]) {
+                _timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(elapsedTime:) userInfo:nil repeats:YES];
+            }
+            
+        }];
+    }    
 }
 
 - (void)subscribeSession

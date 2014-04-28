@@ -16,12 +16,12 @@
 #pragma mark - OSGI Routes
 
 
-#if DEBUG
+//#if DEBUG
     #define kOsgiBaseURL @"https://test.my.jive.com/"
     //#define kOsgiBaseURL @"https://osgi.local.com:8000/"
-#else
-    #define kOsgiBaseURL @"https://my.jive.com/"
-#endif
+//#else
+    //#define kOsgiBaseURL @"https://my.jive.com/"
+//#endif
 
 
 #define kOsgiAuthURL @"https://auth.jive.com/oauth2/grant?client_id=%@&response_type=code&redirect_uri=%@"
