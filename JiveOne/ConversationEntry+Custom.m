@@ -53,7 +53,7 @@
         convEntry.conversationId = entry[@"conversation"];
         convEntry.entityId = entry[@"entity"];
         convEntry.lastModified = [NSNumber numberWithLongLong:[entry[@"lastModified"] longLongValue]];
-        convEntry.createdDate = [NSNumber numberWithLongLong:[entry[@"createDate"] longLongValue]];
+        convEntry.createdDate = [NSNumber numberWithLongLong:[entry[@"createdDate"] longLongValue]];
         convEntry.call = entry[@"call"];
         convEntry.file = entry[@"file"];
         convEntry.message = entry[@"message"];
@@ -93,7 +93,7 @@
         entry.conversationId = dictionary[@"conversation"];
         entry.entityId = dictionary[@"entity"];
         entry.lastModified = [NSNumber numberWithLongLong:[dictionary[@"lastModified"] longLongValue]];
-        entry.createdDate = [NSNumber numberWithLongLong:[dictionary[@"createDate"] longLongValue]];
+        entry.createdDate = [NSNumber numberWithLongLong:[dictionary[@"createdDate"] longLongValue]];
         entry.call = dictionary[@"call"];
         entry.file = dictionary[@"file"];
         entry.message = dictionary[@"message"];

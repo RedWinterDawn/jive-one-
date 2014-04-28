@@ -36,6 +36,7 @@
         <attribute name="mentions" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="message" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="tags" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="tempUrn" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="urn" optional="YES" attributeType="String" syncable="YES"/>
     </entity>

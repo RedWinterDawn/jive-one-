@@ -84,6 +84,14 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kAuthenticationFromTokenFailedWithTimeout object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kAuthenticationFromTokenSucceeded object:nil];
     
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAuthenticationFromTokenFailed object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAuthenticationFromTokenSucceeded object:nil];
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -222,6 +230,29 @@
         
     } failure:^(NSError *err) {
         [self errorInitializingApp];
+    }];
+}
+
+- (void)keyboardDidShow:(NSNotification *)notification
+{
+    [UIView animateKeyframesWithDuration:0.2 delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
+        CGRect frame = self.view.frame;
+        frame.origin.y = (frame.origin.y - 60);
+        self.view.frame = frame;
+    } completion:^(BOOL finished) {
+        
+    }];
+    
+}
+
+- (void)keyboardDidHide:(NSNotification *)notification
+{
+    [UIView animateKeyframesWithDuration:0.2 delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
+        CGRect frame = self.view.frame;
+        frame.origin.y = (frame.origin.y + 60);
+        self.view.frame = frame;
+    } completion:^(BOOL finished) {
+        
     }];
 }
 

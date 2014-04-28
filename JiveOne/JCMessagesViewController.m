@@ -273,7 +273,7 @@
         
         for (ConversationEntry *entry in entries) {
             
-            NSArray* result = [PersonEntities MR_findByAttribute:@"entityId" withValue:entry.entityId];
+            NSArray* result = [PersonEntities MR_findByAttribute:@"entityId" withValue:entry.entityId andOrderBy:@"createdDate" ascending:NO];
             PersonEntities* person = (PersonEntities*)result[0];
             
             NSString *sender = [NSString stringWithFormat:@"%@ - %@", person.firstLastName, [Common shortDateFromTimestamp:entry.lastModified]];
