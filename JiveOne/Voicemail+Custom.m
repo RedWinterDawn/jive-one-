@@ -227,11 +227,11 @@
     }
 }
 
-+ (NSNumber *)getVoicemailEtag
++ (NSInteger)getVoicemailEtag
 {
     VoicemailETag *currentETag = [VoicemailETag MR_findFirst];
     if (currentETag) {
-        return currentETag.etag;
+        return [currentETag.etag integerValue];
     }
     else {
         return 0;
