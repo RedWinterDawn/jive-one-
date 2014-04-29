@@ -174,14 +174,45 @@ NSString *seenTutorial;
 {
     NSLog(@"APPDELEGATE - didReceiveRemoteNotification");
     
-    NSLog(@"Remote Notification Recieved");
-    //setup local notification that user can click on to open app and call didReceiveLocalNotification
-    UILocalNotification *notification = [[UILocalNotification alloc] init];
-    notification.alertBody =  [userInfo objectForKey:@"message"];
-    //set code in notification object so that proper view controller is opened
-    [notification setUserInfo:userInfo];
-    [application presentLocalNotificationNow:notification];
-    completionHandler(UIBackgroundFetchResultNewData);
+    __block UIBackgroundFetchResult fetchResult = UIBackgroundFetchResultFailed;
+    
+    @try {
+        
+        TRVSMonitor *monitor = [TRVSMonitor monitor];
+        [self startSocket];
+        [monitor waitWithTimeout:30];
+        
+        NSDictionary * badgeDictionary = [[NSUserDefaults standardUserDefaults] objectForKey:@"badges"];
+        NSMutableDictionary *_badges = nil;
+        if (badgeDictionary) {
+            _badges = [NSMutableDictionary dictionaryWithDictionary:badgeDictionary];
+        }
+        
+        if (!_badges) {
+            fetchResult = UIBackgroundFetchResultNoData;
+        }
+        else {
+            for (NSString *key in _badges)
+            {
+                NSNumber *number = [_badges objectForKey:key];
+                NSInteger count = [number integerValue];
+                if (count > 0) {
+                    fetchResult = UIBackgroundFetchResultNewData;
+                    [self refreshTabBadges];
+                    break;
+                }
+            }
+        }
+    }
+    @catch (NSException *exception) {
+        NSLog(@"%@", exception);
+    }
+    @finally {
+        if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground ) {
+            [self stopSocket];
+        }
+        completionHandler(fetchResult);
+    }
     
 }
 
@@ -218,8 +249,7 @@ NSString *seenTutorial;
                 break;
             }
             case 2://handle chat push
-                //switch to chat tab
-                
+                //switch to chat tab               
                 
             default:
                 break;

@@ -15,5 +15,5 @@
 + (Conversation *)addConversation:(NSDictionary*)conversation withManagedContext:(NSManagedObjectContext *)context;
 + (Conversation *)updateConversation:(Conversation*)conversation withDictinonary:(NSDictionary*)dictionary managedContext:(NSManagedObjectContext *)context;
 + (void)saveConversationEtag:(NSInteger)etag managedContext:(NSManagedObjectContext*)context;
-+ (NSNumber *)getConversationEtag;
++ (NSInteger)getConversationEtag;
 @end

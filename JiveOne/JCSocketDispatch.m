@@ -66,7 +66,7 @@
     NSLog(@"Requestion Session For Socket");
     [self cleanup];
     
-    if ([[JCAuthenticationManager sharedInstance] userAuthenticated])  {
+    if ([[JCAuthenticationManager sharedInstance] userAuthenticated] && [self socketState] == SR_CLOSED)  {
         
         [[JCOsgiClient sharedClient] RequestSocketSession:^(id JSON) {
             
@@ -124,7 +124,7 @@
 - (void)subscribeSession
 {
     NSLog(@"Subscribing to Socket Events");
-//    NSDictionary* conversation = [NSDictionary dictionaryWithObjectsAndKeys:@"(conversations|permanentrooms|groupconversations|adhocrooms):*:entries:*", @"urn", nil];
+    NSDictionary* conversation = [NSDictionary dictionaryWithObjectsAndKeys:@"(conversations|permanentrooms|groupconversations|adhocrooms):*:entries:*", @"urn", nil];
 //    NSDictionary* conversation1 = [NSDictionary dictionaryWithObjectsAndKeys:@"(conversations|permanentrooms|groupconversations|adhocrooms):*:entries", @"urn", nil];w
 //    NSDictionary* conversation2 = [NSDictionary dictionaryWithObjectsAndKeys:@"meta:(conversations|permanentrooms|groupconversations|adhocrooms):*:entities", @"urn", nil];
 //    NSDictionary* conversation3 = [NSDictionary dictionaryWithObjectsAndKeys:@"meta:(conversations|permanentrooms|groupconversations|adhocrooms):*:entities:*", @"urn", nil];
@@ -135,16 +135,16 @@
     
     NSMutableDictionary* conversation4 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"(conversations|permanentrooms|groupconversations|adhocrooms):*", @"urn", nil];
     if ([Conversation getConversationEtag] != 0) {
-        [conversation4 setValue:[Conversation getConversationEtag] forKey:@"ETag"];
+        [conversation4 setValue:[NSString stringWithFormat:@"%ld", (long)[Conversation getConversationEtag]] forKey:@"ETag"];
     }
 
     NSMutableDictionary* voicemail = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"voicemails:*", @"urn", nil];
-    if ([[Voicemail getVoicemailEtag] integerValue] != 0) {
-        [voicemail setValue:[Voicemail getVoicemailEtag] forKey:@"ETag"];
+    if ([Voicemail getVoicemailEtag] != 0) {
+        [voicemail setValue:[NSString stringWithFormat:@"%ld", (long)[Voicemail getVoicemailEtag]] forKey:@"ETag"];
     }
     
-    NSArray *subscriptionArray = [NSArray arrayWithObjects:voicemail, conversation4, presence, calls, nil];
-    
+    NSArray *subscriptionArray = [NSArray arrayWithObjects:voicemail, conversation, conversation4, presence, calls, nil];
+    int count = 1;
     for (NSDictionary *subscription in subscriptionArray) {
         
         [[JCOsgiClient sharedClient] SubscribeToSocketEventsWithAuthToken:self.sessionToken subscriptions:subscription success:^(id JSON) {
@@ -152,18 +152,27 @@
             NSLog(@"Subscribing to Socket Events : Success");
             
             
+            
         } failure:^(NSError *err) {
             NSLog(@"Subscribing to Socket Events : Failed");
             NSLog(@"%@", err);
         }];
+        
+        if (count == subscriptionArray.count) {
+            [self initSession];
+            break;
+        }
+        
+        count++;
     }
-    [self initSession];
+//    [self initSession];
 }
 
 - (void)initSession
 {
     // We have to make sure that the socket is in a initializable state.
     if (_webSocket == nil || _webSocket.readyState == SR_CLOSING || _webSocket.readyState == SR_CLOSED) {
+        NSLog(@"Starting Socket");
         _webSocket = [[SRWebSocket alloc] initWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.ws]]];
         _webSocket.delegate = self;
         [_webSocket open];
@@ -185,13 +194,15 @@
 #pragma mark - Websocket Delegates
 - (void)webSocketDidOpen:(SRWebSocket *)webSocket
 {
+    NSLog(@"Socket Did Open");
+    
     // Socket connected, send start command
     [_webSocket send:self.json_start];
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message{
     
-    //NSLog(@"%@",message);
+    NSLog(@"%@",message);
     
     NSString *msgString = message;
     NSData *data = [msgString dataUsingEncoding:NSUTF8StringEncoding];
@@ -205,7 +216,7 @@
 
 - (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error
 {
-    //NSLog(@"%@", [NSString stringWithFormat:@"Connection Failed: %@", [error description]]);
+    NSLog(@"%@", [NSString stringWithFormat:@"Connection Failed: %@", [error description]]);
     // If connection fails, try to reconnect.
     
     [self reconnect];

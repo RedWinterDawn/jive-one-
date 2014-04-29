@@ -117,11 +117,11 @@
     }
 }
 
-+ (NSNumber *)getConversationEtag
++ (NSInteger)getConversationEtag
 {
     ConversationETag *currentETag = [ConversationETag MR_findFirst];
     if (currentETag) {
-        return currentETag.etag;
+        return [currentETag.etag integerValue];
     }
     else {
         return 0;
