@@ -269,13 +269,13 @@
     }];
 }
 
-- (void)SubmitChatMessageForConversation:(NSString*)conversation message:(NSString*)message withEntity:(NSString*)entity withTimestamp:(NSDate*)timestamp success:(void (^)(id JSON))success
+- (void)SubmitChatMessageForConversation:(NSString*)conversation message:(NSString*)message withEntity:(NSString*)entity withTimestamp:(long)timestamp success:(void (^)(id JSON))success
                                  failure:(void (^)(NSError* err))failure
 {
     [self setRequestAuthHeader];
     
     NSDictionary *messageDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:message, @"raw", nil];
-    NSDictionary *conversationDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:entity, @"entity", conversation, @"conversation", messageDictionary, @"message", [NSString stringWithFormat: @"%ld", [Common epochFromNSDate:timestamp]], @"createdDate", nil];
+    NSDictionary *conversationDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:entity, @"entity", conversation, @"conversation", messageDictionary, @"message", [NSString stringWithFormat: @"%ld", timestamp], @"createdDate", nil];
     
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:conversationDictionary options:kNilOptions error:nil];
     NSString* jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];

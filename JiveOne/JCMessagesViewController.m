@@ -470,16 +470,17 @@
     if (_conversationId != nil && ![_conversationId isEqualToString:@""]) {
         
         NSDate *timestamp = [NSDate date];
-        __block ConversationEntry *entry = [self createEntryLocallyForConversation:_conversationId withMessage:message withTimestamp:timestamp];
+        __block NSManagedObjectContext*  context = [NSManagedObjectContext MR_contextForCurrentThread];
+        __block ConversationEntry *entry = [self createEntryLocallyForConversation:_conversationId withMessage:message withTimestamp:timestamp inContext:context];
         
-        [[JCOsgiClient sharedClient] SubmitChatMessageForConversation:_conversationId message:message withEntity:entity withTimestamp:timestamp success:^(id JSON) {
+        [[JCOsgiClient sharedClient] SubmitChatMessageForConversation:_conversationId message:message withEntity:entity withTimestamp:[Common epochFromNSDate:timestamp] success:^(id JSON) {
             // confirm to user message was sent
            [JSMessageSoundEffect playMessageSentSound];
+           [context MR_saveToPersistentStoreAndWait];
         } failure:^(NSError *err) {
             NSLog(@"%@", err);
             entry.failedToSend = [NSNumber numberWithBool:YES];
-            [JCMessagesViewController handleFailedMessageDispatch:entry];
-            
+            [context MR_saveToPersistentStoreAndWait];
             
         }];
         
@@ -491,13 +492,13 @@
     }
 }
 
--(ConversationEntry*) createEntryLocallyForConversation:(NSString*)conversationId withMessage:(NSString*)message withTimestamp:(NSDate*)timestamp{
-    ConversationEntry *entry = [ConversationEntry MR_createEntity];
+-(ConversationEntry*) createEntryLocallyForConversation:(NSString*)conversationId withMessage:(NSString*)message withTimestamp:(NSDate*)timestamp inContext:(NSManagedObjectContext*)context{
+    
+    ConversationEntry *entry = [ConversationEntry MR_createInContext:context];
     entry.conversationId = conversationId;
     entry.message = message;
     entry.createdDate = [NSNumber numberWithLong:[Common epochFromNSDate:timestamp]];
     entry.tempUrn = [NSUUID UUID];
-//    MagicalRecord sav
     return entry;
 }
 
@@ -552,82 +553,25 @@
     }
 }
 
-//if a message cannot be sent (becuase of no connecitivity) this method is called. this method puts these messages into a queue (saved in user defaults)
-+(void) handleFailedMessageDispatch:(NSString*)conversationId withMessage:(NSString*)message withTimestamp:(NSDate*)timestamp{
-    //alert the user that message will be sent when connectivity is restored
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Message not sent" message:@"Messages will be sent when connectivity is restored" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
-    
-    //build queue for sending unsent messages
-    NSDictionary *unsentQueue = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"unsentMessageQueue"]];
-    if(!unsentQueue){
-        unsentQueue = [[NSMutableDictionary alloc] init];
-    }
-    NSMutableDictionary *unsentQueueMutable = [[NSMutableDictionary alloc] initWithDictionary:unsentQueue];
-    
-    NSMutableArray *messages;//array of Messages
-//    NSMutableArray *timestamps;//array of corresponding timestamps
-    if([unsentQueue objectForKey:conversationId]){
-        //use existing array for this conversation
-        messages  = [NSMutableArray arrayWithArray:[unsentQueueMutable objectForKey:conversationId]];
-//        timestamps = [NSMutableArray arrayWithArray:[unsentQueueMutable objectForKey:<#(id)#>]]
-    }
-    else{
-        //create new array to hold actual messages
-        messages = [[NSMutableArray alloc] init];
-//        timestamps = [[NSMutableArray alloc] init];
-    }
-    [unsentQueueMutable setObject:messages forKey:conversationId];
-    JSMessage *jsmessage = [[JSMessage alloc] initWithText:message sender:nil date:timestamp];
-    [messages addObject:jsmessage];
-    
-    //save queue to user defaults
-    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:unsentQueueMutable] forKey:@"unsentMessageQueue"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
 
 //when connectvitity is restored this method is called. this method retrives a queue of unsent messages from user defaults and begins sending them.
 +(void) sendOfflineMessagesQueue:(JCOsgiClient*)osgiClient{
-    NSDictionary *unsentMessagesQueueOld = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"unsentMessageQueue"]];
-    NSMutableDictionary *unsentMessagesQueueNew = [[NSMutableDictionary alloc] init];
     
-    NSString* myEntity = [[JCOmniPresence sharedInstance] me].entityId;
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"failedToSend == YES"];
+    NSArray *unsentMessags = [ConversationEntry MR_findAllWithPredicate:pred];
     
-    //TODO: refactor to remove keys with empty arrays. Possibly by setting up an external counter.
-
-    [unsentMessagesQueueOld enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSArray *jsmessages, BOOL *stop) {
-         __block NSMutableArray *messagesMutable = [[NSMutableArray alloc] init];
-        for(int i=0;i<jsmessages.count;i++){
-            
-            [osgiClient SubmitChatMessageForConversation:key message:((JSMessage*)jsmessages[i]).text withEntity:myEntity withTimestamp:((JSMessage*)jsmessages[i]).date success:^(id JSON) {
-                
-                NSLog(@"inside block. messages[i]:%@", jsmessages[i]);
-                [JSMessageSoundEffect playMessageSentSound];
-                //if there are messages left this will resave the messages array to the queue
-                NSLog(@"success callback. Contents of messagesMutable:%@", messagesMutable);
-                [unsentMessagesQueueNew setObject:messagesMutable forKey:key];
-                
-                //save the queue to user defaults
-                NSLog(@"success callback Saving to user defaults");
-                [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:unsentMessagesQueueNew] forKey:@"unsentMessageQueue"];
-            } failure:^(NSError *err) {
-                NSLog(@"Failed to send. and here's the error:%@",err);
-                [messagesMutable addObject:jsmessages[i]];
-                
-                //if there are messages left this will resave the messages array to the queue
-                NSLog(@"failure callback. Something in messagesMutable:%@", messagesMutable);
-                [unsentMessagesQueueNew setObject:messagesMutable forKey:key];
-                
-                //save the queue to user defaults
-                NSLog(@" failure callback Saving to user defaults");
-                [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:unsentMessagesQueueNew] forKey:@"unsentMessageQueue"];
-            }];
-            
-        };
-       
-
-    }];
+    for(ConversationEntry *conv in unsentMessags){
+        
+        [osgiClient SubmitChatMessageForConversation:conv.conversationId message:conv.message withEntity:conv.entryId withTimestamp:[conv.createdDate longValue] success:^(id JSON) {
+            [JSMessageSoundEffect playMessageSentSound];
+            conv.failedToSend = [NSNumber numberWithBool:NO];
+            [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+            //TODO: save
+        } failure:^(NSError *err) {
+            NSLog(@"%@", err);
+        }];
+        
+    }
 }
 
 

@@ -211,14 +211,10 @@
             XCTAssertTrue(messages.count==0 , @"Queue should have 0 messages in each array");
         }
     }
-
-<<<<<<< HEAD
     
     //restore connection
     
     
 }
 
-=======
->>>>>>> US2721: saving conversation locally with tempUrn.
 @end
