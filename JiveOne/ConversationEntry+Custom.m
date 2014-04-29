@@ -41,11 +41,18 @@
     
     ConversationEntry *convEntry;
     NSString *entryId =  entry[@"id"];
-    NSArray *result = [ConversationEntry MR_findByAttribute:@"entryId" withValue:entryId];
+    NSArray *resultsForId = [ConversationEntry MR_findByAttribute:@"entryId" withValue:entryId];
+    
+    NSString *entryTempUrn = entry[@"tempUrn"];
+    NSArray *resultsForTempUrn = [ConversationEntry MR_findByAttribute:@"tempUrn" withValue:entryTempUrn];
     
     // if there are results, we're updating, else we're creating
-    if (result.count > 0) {
-        convEntry = result[0];
+    if (resultsForId.count > 0) {
+        convEntry = resultsForId[0];
+        [self updateConversationEntry:convEntry withDictionary:entry managedContext:context];
+    }
+    else if(resultsForTempUrn.count>0){
+        convEntry = resultsForTempUrn[0];
         [self updateConversationEntry:convEntry withDictionary:entry managedContext:context];
     }
     else {

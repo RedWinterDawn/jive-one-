@@ -470,12 +470,17 @@
     if (_conversationId != nil && ![_conversationId isEqualToString:@""]) {
         
         NSDate *timestamp = [NSDate date];
+        __block ConversationEntry *entry = [self createEntryLocallyForConversation:_conversationId withMessage:message withTimestamp:timestamp];
+        
         [[JCOsgiClient sharedClient] SubmitChatMessageForConversation:_conversationId message:message withEntity:entity withTimestamp:timestamp success:^(id JSON) {
             // confirm to user message was sent
            [JSMessageSoundEffect playMessageSentSound];
         } failure:^(NSError *err) {
             NSLog(@"%@", err);
-            [JCMessagesViewController handleFailedMessageDispatch:_conversationId withMessage:message withTimestamp:timestamp];
+            entry.failedToSend = [NSNumber numberWithBool:YES];
+            [JCMessagesViewController handleFailedMessageDispatch:entry];
+            
+            
         }];
         
         //[self cleanup];
@@ -484,6 +489,16 @@
     else {
         [self createConversation:message];
     }
+}
+
+-(ConversationEntry*) createEntryLocallyForConversation:(NSString*)conversationId withMessage:(NSString*)message withTimestamp:(NSDate*)timestamp{
+    ConversationEntry *entry = [ConversationEntry MR_createEntity];
+    entry.conversationId = conversationId;
+    entry.message = message;
+    entry.createdDate = [NSNumber numberWithLong:[Common epochFromNSDate:timestamp]];
+    entry.tempUrn = [NSUUID UUID];
+//    MagicalRecord sav
+    return entry;
 }
 
 - (void)createConversation:(NSString *)message

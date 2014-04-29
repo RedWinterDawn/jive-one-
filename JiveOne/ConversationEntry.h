@@ -2,7 +2,7 @@
 //  ConversationEntry.h
 //  JiveOne
 //
-//  Created by Eduardo Gueiros on 3/12/14.
+//  Created by Daniel George on 4/29/14.
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
@@ -23,7 +23,9 @@
 @property (nonatomic, retain) id mentions;
 @property (nonatomic, retain) id message;
 @property (nonatomic, retain) id tags;
+@property (nonatomic, retain) NSString * tempUrn;
 @property (nonatomic, retain) NSString * type;
 @property (nonatomic, retain) NSString * urn;
+@property (nonatomic, retain) NSNumber * failedToSend;
 
 @end

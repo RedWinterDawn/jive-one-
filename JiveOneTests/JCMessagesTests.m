@@ -212,10 +212,13 @@
         }
     }
 
+<<<<<<< HEAD
     
     //restore connection
     
     
 }
 
+=======
+>>>>>>> US2721: saving conversation locally with tempUrn.
 @end
