@@ -164,8 +164,12 @@ static NSString *GroupCellIdentifier = @"GroupChatCell";
             UIBarButtonItem *myBackButton = [[UIBarButtonItem alloc]init];
             myBackButton.title = [NSString stringWithFormat:@"Messages (%i)", newMessagesCount];
             self.navigationItem.backBarButtonItem = myBackButton;
-
+            [JSMessageSoundEffect playMessageReceivedAlert];
         }
+    }
+    else
+    {
+        [JSMessageSoundEffect playMessageReceivedAlert];
     }
     
     [self loadDatasource];

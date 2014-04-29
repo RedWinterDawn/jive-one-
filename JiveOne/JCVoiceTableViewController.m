@@ -10,6 +10,7 @@
 #import "JCVoiceCell.h"
 #import "JCOsgiClient.h"
 #import <MBProgressHUD/MBProgressHUD.h>
+#import "JCMessagesViewController.h"
 
 @interface JCVoiceTableViewController ()
 {
@@ -147,6 +148,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
 - (void)didReceiveNewVoicemail:(NSNotification *)notification
 {
     [self loadVoicemails];
+    [JSMessageSoundEffect playMessageSentSound];
 }
 
 #pragma mark - Table view data source
