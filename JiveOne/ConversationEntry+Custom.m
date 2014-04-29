@@ -13,7 +13,7 @@
 
 + (NSArray *)RetrieveConversationEntryById:(NSString *)conversationId
 {
-    NSArray *conversations = [super MR_findByAttribute:@"conversationId" withValue:conversationId andOrderBy:@"lastModified" ascending:YES];
+    NSArray *conversations = [super MR_findByAttribute:@"conversationId" withValue:conversationId andOrderBy:@"createdDate" ascending:YES];
     return conversations;
 }
 
@@ -100,7 +100,7 @@
         entry.conversationId = dictionary[@"conversation"];
         entry.entityId = dictionary[@"entity"];
         entry.lastModified = [NSNumber numberWithLongLong:[dictionary[@"lastModified"] longLongValue]];
-        entry.createdDate = [NSNumber numberWithLongLong:[dictionary[@"createdDate"] longLongValue]];
+        //poentry.createdDate = [NSNumber numberWithLongLong:[dictionary[@"createdDate"] longLongValue]];
         entry.call = dictionary[@"call"];
         entry.file = dictionary[@"file"];
         entry.message = dictionary[@"message"];

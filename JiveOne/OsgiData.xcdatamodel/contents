@@ -45,7 +45,6 @@
         <attribute name="etag" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="PersonEntities" representedClassName="PersonEntities" syncable="YES">
-        <attribute name="createDate" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="entityId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="externalId" optional="YES" attributeType="String" syncable="YES"/>
@@ -115,7 +114,7 @@
         <element name="Conversation" positionX="0" positionY="0" width="128" height="180"/>
         <element name="ConversationEntry" positionX="0" positionY="0" width="128" height="268"/>
         <element name="ConversationETag" positionX="18" positionY="162" width="128" height="60"/>
-        <element name="PersonEntities" positionX="0" positionY="0" width="128" height="375"/>
+        <element name="PersonEntities" positionX="0" positionY="0" width="128" height="360"/>
         <element name="PersonMeta" positionX="0" positionY="0" width="128" height="150"/>
         <element name="Presence" positionX="0" positionY="0" width="128" height="120"/>
         <element name="Voicemail" positionX="0" positionY="0" width="128" height="345"/>

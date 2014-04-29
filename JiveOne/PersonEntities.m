@@ -1,20 +1,19 @@
 //
-//  ClientEntities.m
+//  PersonEntities.m
 //  JiveOne
 //
-//  Created by Doug Leonard on 4/8/14.
+//  Created by Daniel George on 4/29/14.
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
 #import "PersonEntities.h"
-#import "PersonMeta.h"
 #import "Company.h"
+#import "PersonMeta.h"
 #import "Presence.h"
 
 
 @implementation PersonEntities
 
-@dynamic createDate;
 @dynamic email;
 @dynamic entityId;
 @dynamic externalId;
@@ -22,6 +21,7 @@
 @dynamic firstName;
 @dynamic groups;
 @dynamic id;
+@dynamic isFavorite;
 @dynamic lastFirstName;
 @dynamic lastModified;
 @dynamic lastName;
@@ -32,7 +32,6 @@
 @dynamic resourceGroupName;
 @dynamic tags;
 @dynamic urn;
-@dynamic isFavorite;
 @dynamic entityCompany;
 @dynamic entityMeta;
 @dynamic entityPresence;
