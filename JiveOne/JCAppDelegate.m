@@ -532,7 +532,7 @@ NSString *seenTutorial;
     }else {
         seenTutorial = @"YES";
     }
-    seenTutorial = @"YES";
+    //seenTutorial = @"YES";
     
     BOOL deviceIsIPhone = YES;
     self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];

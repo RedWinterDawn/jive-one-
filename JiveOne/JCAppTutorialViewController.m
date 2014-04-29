@@ -13,9 +13,7 @@
 @interface JCAppTutorialViewController ()
 
 //Views we can move.
-@property (weak, nonatomic) IBOutlet UIView *square1;
-@property (weak, nonatomic) IBOutlet UIView *square2;
-@property (weak, nonatomic) IBOutlet UIView *square3;
+
 @end
 
 
@@ -30,6 +28,7 @@ UIBezierPath* bezierPathOne;
 UIBezierPath* bezierPathTwo;
 UIBezierPath* bezierPathThree;
 
+CALayer* text;
 
 CAShapeLayer *racetrack;
 CAShapeLayer *track1;
@@ -55,12 +54,21 @@ double firstY;
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    //// Rectangle Drawing
-    squareOne = [CALayer layer];
-	squareOne.bounds = CGRectMake(19, 36, 90, 90);
-    squareOne.backgroundColor = [UIColor magentaColor].CGColor;
-	[self.view.layer addSublayer:squareOne];
+    //text
+    text = [CALayer layer];
+    text.bounds = CGRectMake(19, 36, 90, 90);
+//    text.backgroundColor = [UIColor yellowColor].CGColor;
+    CATextLayer *label = [[CATextLayer alloc]init];
+    [label setFont:@"Helvetica-Bold"];
+    [label setFontSize:20];
+    [label setFrame:text.bounds];
+    [label setString:@"Hello"];
+    [label setAlignmentMode:kCAAlignmentCenter];
+    [label setForegroundColor:[[UIColor blackColor] CGColor]];
+    [text addSublayer:label];
+    [self.view.layer addSublayer:text];
     
+    //// Rectangle Drawing
     squareTwo = [CALayer layer];
 	squareTwo.bounds = CGRectMake(118, 36, 90, 90);
     squareTwo.backgroundColor = [UIColor blueColor].CGColor;
@@ -71,6 +79,10 @@ double firstY;
     squareThree.backgroundColor = [UIColor greenColor].CGColor;
 	[self.view.layer addSublayer:squareThree];
     
+    bezierPath = [UIBezierPath bezierPath];
+    [bezierPath moveToPoint: CGPointMake(297.5, 24.5)];
+    [bezierPath addLineToPoint: CGPointMake(56.5, 185.5)];
+
     
     //// Bezier Drawing
     bezierPathOne = [UIBezierPath bezierPath];
@@ -90,12 +102,6 @@ double firstY;
     [bezierPathThree addCurveToPoint: CGPointMake(253.5, 522.5) controlPoint1: CGPointMake(70.89, 362.13) controlPoint2: CGPointMake(158.84, 532.62)];
     [bezierPathThree addCurveToPoint: CGPointMake(266.5, 186.5) controlPoint1: CGPointMake(321.99, 515.18) controlPoint2: CGPointMake(274.98, 246.96)];
     [bezierPathThree addCurveToPoint: CGPointMake(58.5, 82.5) controlPoint1: CGPointMake(232.58, -55.33) controlPoint2: CGPointMake(58.5, 82.5)];
-
-    
-    bezierPath = [UIBezierPath bezierPath];
-    [bezierPath moveToPoint: CGPointMake(166.85, 7.5)];
-    [bezierPath addCurveToPoint: CGPointMake(82.86, 323.17) controlPoint1: CGPointMake(166.85, 7.5) controlPoint2: CGPointMake(-128.62, 195.4)];
-    [bezierPath addCurveToPoint: CGPointMake(144.45, 478.5) controlPoint1: CGPointMake(294.34, 450.94) controlPoint2: CGPointMake(144.45, 478.5)];
 
     track1 = [CAShapeLayer layer];
 	track1.path = bezierPathOne.CGPath;
@@ -118,27 +124,6 @@ double firstY;
 	track3.lineWidth = 10.0;
 	[self.view.layer addSublayer:track3];
     
-    
-//    racetrack = [CAShapeLayer layer];
-//	racetrack.path = bezierPath.CGPath;
-//	racetrack.strokeColor = [UIColor blackColor].CGColor;
-//	racetrack.fillColor = [UIColor clearColor].CGColor;
-//	racetrack.lineWidth = 10.0;
-//	[self.view.layer addSublayer:racetrack];
-//    
-//    car = [CALayer layer];
-//	car.bounds = CGRectMake(0, 0, 90, 90);
-//	car.position = P(160, 325);
-//    car.backgroundColor = [UIColor magentaColor].CGColor;
-//	[self.view.layer addSublayer:car];
-    
-}
-- (void)loadView{
-    [super loadView];
-
-
-
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -149,43 +134,29 @@ double firstY;
 - (IBAction)panView:(UIPanGestureRecognizer *)gestureRecognizer {
     //UIView *piece = [gestureRecognizer view];
     
-    UIView *piece = self.square1;
 //    [self adjustAnchorPointForGestureRecognizer:gestureRecognizer];
     
     if ([gestureRecognizer state] == UIGestureRecognizerStateBegan || [gestureRecognizer state] == UIGestureRecognizerStateChanged) {
-        CGPoint translation = [gestureRecognizer translationInView:[piece superview]];
-        
-        [piece setCenter:CGPointMake([piece center].x + translation.x, [piece center].y)];
-        //[piece setCenter:CGPointMake([piece center].x + translation.x, [piece center].y + translation.y)];
-        [gestureRecognizer setTranslation:CGPointZero inView:[piece superview]];
+        CGPoint translation = [gestureRecognizer translationInView:self.view ];
         
         CAKeyframeAnimation *anim = [CAKeyframeAnimation animationWithKeyPath:@"position"];
         anim.path = bezierPath.CGPath;
-        anim.rotationMode = kCAAnimationRotateAuto;
-        //	anim.repeatCount = HUGE_VALF;
+        anim.rotationMode = kCAAnimationLinear;
         anim.speed = 0.0;
-        anim.removedOnCompletion = NO;
+        anim.removedOnCompletion = YES;
         xCoord = xCoord + translation.x;
-        anim.timeOffset = xCoord/320;
-        NSLog(@"%f : %f", translation.x, xCoord/320 );
+        anim.timeOffset = xCoord/3200;
+        NSLog(@"%f : %f", translation.x, xCoord/3200 );
         anim.duration = 1.0;
-        [car addAnimation:anim forKey:@"race"];
+        [text addAnimation:anim forKey:@"race"];
         
-        CAKeyframeAnimation *anim1 = [CAKeyframeAnimation animationWithKeyPath:@"position"];
-        anim1.path = bezierPathOne.CGPath;
-        anim1.rotationMode = kCAAnimationRotateAuto;
-        anim1.speed = 0.0;
-        anim1.removedOnCompletion = NO;
-        anim1.timeOffset = xCoord/320;
-        anim1.duration = 1.0;
-        [squareOne addAnimation:anim1 forKey:@"race"];
         
         CAKeyframeAnimation *anim2 = [CAKeyframeAnimation animationWithKeyPath:@"position"];
         anim2.path = bezierPathTwo.CGPath;
         anim2.rotationMode = kCAAnimationRotateAuto;
         anim2.speed = 0.0;
         anim2.removedOnCompletion = NO;
-        anim2.timeOffset = xCoord/320;
+        anim2.timeOffset = xCoord/3200;
         anim2.duration = 1.0;
         [squareTwo addAnimation:anim2 forKey:@"race"];
         
@@ -194,7 +165,7 @@ double firstY;
         anim3.rotationMode = kCAAnimationRotateAuto;
         anim3.speed = 0.0;
         anim3.removedOnCompletion = NO;
-        anim3.timeOffset = xCoord/320;
+        anim3.timeOffset = xCoord/3200;
         anim3.duration = 1.0;
         [squareThree addAnimation:anim3 forKey:@"race"];
     }
