@@ -7,12 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
 @interface JCTermsAndConditonsVCViewController : UIViewController
-<<<<<<< HEAD
-
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *x;
-=======
->>>>>>> TA6189  Added Dummy link for EULA on login page.
 
 @end
