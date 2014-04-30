@@ -16,6 +16,12 @@
 
 @interface JCSocketDispatch()
 
+{
+    NSTimer *subscriptionTimer;
+    BOOL startedInBackground;
+    BOOL didSignalToCloseSocket;
+}
+
 @property (strong, nonatomic) NSDictionary* cmd_start;
 @property (strong, nonatomic) NSDictionary* cmd_poll;
 @property (strong, nonatomic) NSString *json_start;
@@ -29,6 +35,8 @@
 @end
 
 @implementation JCSocketDispatch
+
+
 
 + (instancetype)sharedInstance
 {
@@ -61,12 +69,13 @@
 }
 
 
-- (void)requestSession
+- (void)requestSession:(BOOL)inBackground
 {
     NSLog(@"Requestion Session For Socket");
+    startedInBackground = inBackground;
     [self cleanup];
     
-    if ([[JCAuthenticationManager sharedInstance] userAuthenticated] && [self socketState] == SR_CLOSED)  {
+    if ([[JCAuthenticationManager sharedInstance] userAuthenticated] )  {
         
         [[JCOsgiClient sharedClient] RequestSocketSession:^(id JSON) {
             
@@ -105,7 +114,7 @@
             
             // If we have everyting we need, we can subscribe to events.
             if (self.ws && self.sessionToken) {
-                [self subscribeSession];
+                [self initSession];
             }
             
         } failure:^(NSError *err) {
@@ -121,37 +130,42 @@
     }    
 }
 
+- (void)timesUpforSubscription
+{
+    [subscriptionTimer invalidate];
+    [_webSocket close];
+}
+
 - (void)subscribeSession
 {
-    NSLog(@"Subscribing to Socket Events");
-    NSDictionary* conversation = [NSDictionary dictionaryWithObjectsAndKeys:@"(conversations|permanentrooms|groupconversations|adhocrooms):*:entries:*", @"urn", nil];
 //    NSDictionary* conversation1 = [NSDictionary dictionaryWithObjectsAndKeys:@"(conversations|permanentrooms|groupconversations|adhocrooms):*:entries", @"urn", nil];w
 //    NSDictionary* conversation2 = [NSDictionary dictionaryWithObjectsAndKeys:@"meta:(conversations|permanentrooms|groupconversations|adhocrooms):*:entities", @"urn", nil];
 //    NSDictionary* conversation3 = [NSDictionary dictionaryWithObjectsAndKeys:@"meta:(conversations|permanentrooms|groupconversations|adhocrooms):*:entities:*", @"urn", nil];
+    //[self initSession];
     
+    subscriptionTimer = [NSTimer timerWithTimeInterval:10 target:self selector:@selector(timesUpforSubscription) userInfo:nil repeats:NO];
+    NSLog(@"Subscribing to Socket Events");
     
     NSDictionary* presence = [NSDictionary dictionaryWithObjectsAndKeys:@"presence:entities:*", @"urn", nil];
     NSDictionary* calls = [NSDictionary dictionaryWithObjectsAndKeys:@"calls:#", @"urn", nil];
-    
+    NSMutableDictionary* conversation = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"(conversations|permanentrooms|groupconversations|adhocrooms):*:entries:*", @"urn", nil];
     NSMutableDictionary* conversation4 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"(conversations|permanentrooms|groupconversations|adhocrooms):*", @"urn", nil];
     if ([Conversation getConversationEtag] != 0) {
+        [conversation setValue:[NSString stringWithFormat:@"%ld", (long)[Conversation getConversationEtag]] forKey:@"ETag"];
         [conversation4 setValue:[NSString stringWithFormat:@"%ld", (long)[Conversation getConversationEtag]] forKey:@"ETag"];
     }
-
     NSMutableDictionary* voicemail = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"voicemails:*", @"urn", nil];
     if ([Voicemail getVoicemailEtag] != 0) {
         [voicemail setValue:[NSString stringWithFormat:@"%ld", (long)[Voicemail getVoicemailEtag]] forKey:@"ETag"];
     }
     
     NSArray *subscriptionArray = [NSArray arrayWithObjects:voicemail, conversation, conversation4, presence, calls, nil];
+    
     int count = 1;
     for (NSDictionary *subscription in subscriptionArray) {
         
         [[JCOsgiClient sharedClient] SubscribeToSocketEventsWithAuthToken:self.sessionToken subscriptions:subscription success:^(id JSON) {
-            //NSLog(@"%@", JSON);
             NSLog(@"Subscribing to Socket Events : Success");
-            
-            
             
         } failure:^(NSError *err) {
             NSLog(@"Subscribing to Socket Events : Failed");
@@ -159,7 +173,7 @@
         }];
         
         if (count == subscriptionArray.count) {
-            [self initSession];
+            [subscriptionTimer invalidate];
             break;
         }
         
@@ -181,13 +195,18 @@
 
 - (void)closeSocket
 {
-    [_webSocket closeWithCode:200 reason:@"App is going on background"];
+    if ([subscriptionTimer isValid]) {
+        [subscriptionTimer invalidate];
+    }
+    
+    didSignalToCloseSocket = YES;
+    [_webSocket close];
 }
 
 - (void)reconnect
 {
-    if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) {
-        [self requestSession];
+    if (startedInBackground || [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) {
+        [self requestSession:startedInBackground];
     }
 }
 
@@ -198,6 +217,8 @@
     
     // Socket connected, send start command
     [_webSocket send:self.json_start];
+    
+    [self subscribeSession];
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message{
@@ -205,13 +226,20 @@
     NSLog(@"%@",message);
     
     NSString *msgString = message;
+    
     NSData *data = [msgString dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *messageDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+    
+    if (messageDictionary[@"cmd"]) {
+        if ([messageDictionary[@"cmd"] isEqualToString:@"noMessage"] && startedInBackground) {
+            [self closeSocket];
+        }
+    }
+    
     [self messageDispatcher:messageDictionary];
     
     // As soon as we're done processing the last received item, poll.
     [_webSocket send:self.json_poll];
-    
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error
@@ -225,6 +253,7 @@
 
 - (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean
 {
+    reason = reason == nil? @"" : reason;
    NSDictionary *userInfo = @{
            @"code": @(code),
            @"reason": reason,
@@ -232,12 +261,19 @@
     
     // If the socket was not closed on purpose (code 200), then try to reconnect
     NSLog(@"Connection Closed : %@", userInfo);
-    if (code != 200) {
+    
+    
+    if (!didSignalToCloseSocket) {
         [self reconnect];
     }
     else {
         [_timer invalidate];
+        if (startedInBackground) {
+            self.completionBlock(YES, nil);
+        }
     }
+    
+    didSignalToCloseSocket = NO;
 }
 
 - (void)cleanup
@@ -267,6 +303,8 @@
         
         // if conversationId is nil...it's not a conversationEntry.
         if (conversationIdForEntry) {
+            [Conversation saveConversationEtag:[message[@"ETag"] integerValue] managedContext:nil];
+            
             // regardless of having a conversation for this entry or not we need to save the entry.
             ConversationEntry *entry = [ConversationEntry addConversationEntry:body];
             // increment badge number for conversation ID
@@ -304,6 +342,7 @@
         
         Voicemail *voicemail = nil;
         if (!voicemailHasBeenPreviouslyDeleted) {
+            [Conversation saveConversationEtag:[message[@"ETag"] integerValue] managedContext:nil];
             voicemail = [Voicemail addVoicemailEntry:body];
         }        
         
@@ -347,6 +386,20 @@
 - (void)elapsedTime:(NSNotification *)notification
 {
     [self reconnect];
+}
+
+- (void)startPoolingFromSocketWithCompletion:(CompletionBlock)completed;
+{
+    _completionBlock = completed;
+    @try {
+        [self requestSession:YES];
+        //completed(YES, nil);
+    }
+    @catch (NSException *exception) {
+        didSignalToCloseSocket = YES;
+        [self closeSocket];
+        //completed(NO, [NSError errorWithDomain:exception.reason code:exception.hash userInfo:exception.userInfo]);
+    }
 }
 
 

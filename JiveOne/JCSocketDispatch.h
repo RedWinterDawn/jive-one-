@@ -9,15 +9,22 @@
 #import <Foundation/Foundation.h>
 #import <SocketRocket/SRWebSocket.h>
 
+
+
 @interface JCSocketDispatch : NSObject <SRWebSocketDelegate>
+
+typedef void (^CompletionBlock) (BOOL success, NSError *error);
 
 @property (nonatomic, strong) SRWebSocket *webSocket;
 @property (nonatomic, strong) NSMutableDictionary *badges;
+@property (nonatomic, copy) CompletionBlock completionBlock;
+
+
+- (void)startPoolingFromSocketWithCompletion:(CompletionBlock)completed;
 
 + (instancetype)sharedInstance;
 
-- (void)requestSession;
-
+- (void)requestSession:(BOOL)inBackground;
 - (void)closeSocket;
 
 - (SRReadyState)socketState;
