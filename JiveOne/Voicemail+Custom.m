@@ -221,10 +221,10 @@
         currentETag = [VoicemailETag MR_createEntity];
     }
     
-    if (etag > [currentETag.etag integerValue]) {
+    //if (etag > [currentETag.etag integerValue]) {
         currentETag.etag = [NSNumber numberWithInteger:etag];
         [context MR_saveToPersistentStoreAndWait];
-    }
+    //}
 }
 
 + (NSInteger)getVoicemailEtag
