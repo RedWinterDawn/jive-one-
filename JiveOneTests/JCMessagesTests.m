@@ -56,7 +56,7 @@
     //server shows that all messages were successfully sent
     __block int counter=0;
     id mockClient = [OCMockObject niceMockForClass:[JCOsgiClient class]];
-    [[mockClient expect] SubmitChatMessageForConversation:OCMOCK_ANY message:OCMOCK_ANY withEntity:[OCMArg any] withTimestamp:[OCMArg any]
+    [[mockClient expect] SubmitChatMessageForConversation:OCMOCK_ANY message:OCMOCK_ANY withEntity:[OCMArg any] withTimestamp:OCMOCK_ANY withTempUrn:[OCMArg any]
                                                   success:[OCMArg checkWithBlock:^BOOL(void (^successBlock)(AFHTTPRequestOperation *, id))
                                                            {
                                                                counter++;
@@ -108,7 +108,7 @@
     //messages fail to send
     __block int counter =0;
     id mockClient = [OCMockObject niceMockForClass:[JCOsgiClient class]];
-    [[mockClient expect] SubmitChatMessageForConversation:OCMOCK_ANY message:OCMOCK_ANY withEntity:[OCMArg any] withTimestamp:[OCMArg any]
+    [[mockClient expect] SubmitChatMessageForConversation:OCMOCK_ANY message:OCMOCK_ANY withEntity:[OCMArg any] withTimestamp:OCMOCK_ANY withTempUrn:[OCMArg any]
                                                   success:OCMOCK_ANY
                                                   failure:[OCMArg checkWithBlock:^BOOL(void (^failureBlock)(id))
                                                            {
@@ -165,7 +165,7 @@
     
     //for conversation1 we want it to come back successfull
      __block int counter1 =0;
-    [[mockClient expect] SubmitChatMessageForConversation:@"conversation1" message:OCMOCK_ANY withEntity:[OCMArg any] withTimestamp:[OCMArg any]
+    [[mockClient expect] SubmitChatMessageForConversation:@"conversation1" message:OCMOCK_ANY withEntity:[OCMArg any] withTimestamp:OCMOCK_ANY withTempUrn:[OCMArg any]
                                                   success:[OCMArg checkWithBlock:^BOOL(void (^successBlock)(AFHTTPRequestOperation *, id))
                                                            {
                                                                counter1++;
@@ -179,7 +179,7 @@
     
     //for conversation2 we want it to come back as a failure
      __block int counter2 =0;
-    [[mockClient expect] SubmitChatMessageForConversation:@"conversation2" message:OCMOCK_ANY withEntity:[OCMArg any] withTimestamp:[OCMArg any]
+    [[mockClient expect] SubmitChatMessageForConversation:@"conversation2" message:OCMOCK_ANY withEntity:[OCMArg any] withTimestamp:OCMOCK_ANY withTempUrn:[OCMArg any]
                                                    success:OCMOCK_ANY
                                                    failure:[OCMArg checkWithBlock:^BOOL(void (^failureBlock)(id))
                                                             {
