@@ -25,12 +25,26 @@
     if(!self.context){
         self.context = [NSManagedObjectContext MR_contextForCurrentThread];
     }
-    ConversationEntry *entry = [ConversationEntry MR_createInContext:self.context];
-    
-    entry.failedToSend = [NSNumber numberWithBool:YES];
-    entry.createdDate = [NSNumber numberWithLong:2000000];
     
     
+    Conversation *conv = [
+    
+    
+    
+    ConversationEntry *entry1 = [ConversationEntry MR_createInContext:self.context];
+    
+    entry1.failedToSend = [NSNumber numberWithBool:YES];
+    entry1.createdDate = [NSNumber numberWithLong:2000000];
+    entry1.tempUrn = @"tempUrn123";
+    entry1.message = [NSDictionary dictionaryWithObjectsAndKeys:@"hi", @"raw", nil];
+    
+    ConversationEntry *entry2 = [ConversationEntry MR_createInContext:self.context];
+    
+    entry2.failedToSend = [NSNumber numberWithBool:YES];
+    entry2.createdDate = [NSNumber numberWithLong:2000000];
+    entry2.tempUrn = @"tempUrn123";
+    entry2.message = [NSDictionary dictionaryWithObjectsAndKeys:@"hi back", @"raw", nil];
+
     [self.context MR_saveToPersistentStoreAndWait];
     
 }
