@@ -183,11 +183,8 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0vD-5q-70A" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-<<<<<<< HEAD
             <point key="canvasLocation" x="-112" y="-554"/>
-=======
             <point key="canvasLocation" x="-94" y="456"/>
->>>>>>> TA6187 fixed navigation controller
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Vex-rW-GRa">
