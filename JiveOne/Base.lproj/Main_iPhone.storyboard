@@ -77,7 +77,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="5zA-3K-XAa" kind="modal" id="uBv-Z5-ZUZ"/>
+                                    <segue destination="3YL-KL-rn1" kind="modal" id="uBv-Z5-ZUZ"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -122,33 +122,27 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h61-mR-gL6">
-                                <rect key="frame" x="0.0" y="44" width="320" height="524"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </webView>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="neZ-tV-KYl">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <items>
-                                    <navigationItem title="Title" id="S8a-QB-Lrk">
-                                        <barButtonItem key="leftBarButtonItem" style="done" systemItem="stop" id="gBP-hJ-hQ2">
-                                            <connections>
-                                                <action selector="dismissEULAButtonPressed:" destination="5zA-3K-XAa" id="s9a-97-TXm"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="S8a-QB-Lrk">
+                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="gBP-hJ-hQ2">
+                            <connections>
+                                <action selector="dismissEULAButtonPressed:" destination="5zA-3K-XAa" id="s9a-97-TXm"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="myWebview" destination="h61-mR-gL6" id="Q62-up-EQ9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iFw-8N-nYJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-112" y="-1224"/>
+            <point key="canvasLocation" x="414" y="-1224"/>
         </scene>
         <!--Terms And ConditonsVC View Controller-->
         <scene sceneID="5ti-Vq-dxr">
@@ -184,7 +178,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0vD-5q-70A" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-112" y="-554"/>
-            <point key="canvasLocation" x="-94" y="456"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Vex-rW-GRa">
@@ -784,7 +777,6 @@
         <!--Navigation Controller-->
         <scene sceneID="lCk-hb-okc">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="XiR-SP-7my" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="rZc-lh-rwn" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="HRx-5q-K36">
@@ -796,8 +788,27 @@
                         <segue destination="b1a-gb-jxo" kind="relationship" relationship="rootViewController" id="V5d-xN-YzW"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XiR-SP-7my" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-620" y="456"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ecN-Ox-2bF">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3xv-N7-hYe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="3YL-KL-rn1" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="uUK-sf-MCE">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="5zA-3K-XAa" kind="relationship" relationship="rootViewController" id="E10-an-wpf"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="-112" y="-1224"/>
         </scene>
     </scenes>
     <resources>

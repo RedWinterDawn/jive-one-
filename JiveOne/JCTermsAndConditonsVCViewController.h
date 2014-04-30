@@ -8,6 +8,4 @@
 
 #import <UIKit/UIKit.h>
 @interface JCTermsAndConditonsVCViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *x;
-
 @end

@@ -299,4 +299,7 @@
 - (IBAction)termsAndConditionsButton:(id)sender {
     [self performSegueWithIdentifier: @"TCSegue" sender: self];
 }
+- (IBAction)EULAButton:(id)sender {
+    [self performSegueWithIdentifier: @"EULASegue" sender: self];
+}
 @end
