@@ -176,6 +176,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
 - (void)loadCompanyDirectory {
     
     [self.clientEntitiesArray removeAllObjects];
+    BOOL noData = YES;
     
     for (int i = 0; i < sections.count; i++) {
         NSString *section = sections[i];
@@ -193,7 +194,19 @@ static NSString *CellIdentifier = @"DirectoryCell";
         NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"firstLastName" ascending:YES];
         NSArray *sortedArray= [sectionArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]];
         
+        if (noData) {
+            noData = sortedArray.count == 0;
+        }
+        
         [self.clientEntitiesArray addObject:sortedArray];
+    }
+    
+    if(noData)
+    {
+        NSLog(@"NoData");
+        NSArray *allPeople = [PersonEntities MR_findAll];
+        NSLog(@"All People Count = %lu", (unsigned long)allPeople.count);
+        [self refreshCompanyDirectory];
     }
     
     [personMap removeAllObjects];
@@ -217,64 +230,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
 - (void)refreshCompanyDirectory
 {
     [[JCOsgiClient sharedClient] RetrieveClientEntitites:^(id JSON) {
-        
-        NSString *me = [JSON objectForKey:@"me"];
-        NSArray* entityArray = [JSON objectForKey:@"entries"];
-        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
-        
-        [PersonEntities MR_truncateAllInContext:localContext];
-        [PersonMeta MR_truncateAllInContext:localContext];
-        [localContext MR_saveToPersistentStoreAndWait];
-        
-        for (NSDictionary* entity in entityArray) {
-            PersonEntities *c_ent = [PersonEntities MR_createInContext:localContext];
-            c_ent.lastModified = [entity objectForKey:@"lastModified"];
-            c_ent.presence = [entity objectForKey:@"presence"];
-            c_ent.resourceGroupName = [entity objectForKey:@"company"];
-            c_ent.tags = [entity objectForKey:@"tags"];
-            c_ent.location = [entity objectForKey:@"location"];
-            c_ent.firstName = [[entity objectForKey:@"name"] objectForKey:@"first"];
-            c_ent.lastName = [[entity objectForKey:@"name"] objectForKey:@"last"];
-            c_ent.lastFirstName = [[entity objectForKey:@"name"] objectForKey:@"lastFirst"];
-            c_ent.firstLastName = [[entity objectForKey:@"name"] objectForKey:@"firstLast"];
-            c_ent.groups = [entity objectForKey:@"groups"];
-            c_ent.urn = [entity objectForKey:@"urn"];
-            c_ent.id = [entity objectForKey:@"id"];
-            c_ent.entityId = [entity objectForKey:@"_id"];
-            c_ent.me = [NSNumber numberWithBool:[c_ent.entityId isEqualToString:me]];
-            c_ent.picture = [entity objectForKey:@"picture"];
-            c_ent.email = [entity objectForKey:@"email"];
-            if (c_ent.isFavorite ==nil) {
-                c_ent.isFavorite = NO;
-            }
-            
-            PersonMeta *c_meta = [PersonMeta MR_createInContext:localContext];
-            c_meta.entityId = entity[@"meta"][@"entity"];
-            c_meta.lastModified = entity[@"meta"][@"lastModified"];
-            c_meta.createDate = entity[@"meta"][@"createDate"];
-            c_meta.pinnedActivityOrder = entity[@"meta"][@"pinnedActivityOrder"];
-            c_meta.activityOrder = entity[@"meta"][@"activityOrder"];
-            c_meta.urn = entity[@"meta"][@"urn"];
-            c_meta.metaId = entity[@"meta"][@"id"];
-            
-            c_ent.entityMeta = c_meta;
-            
-            NSLog(@"id:%@ - _id:%@", [entity objectForKey:@"id"], [entity objectForKey:@"_id"]);
-            
-            [localContext MR_saveToPersistentStoreAndWait];
-        }
-        
-        [self.clientEntitiesArray removeAllObjects];
-        
-        for (NSString *section in sections) {
-            NSPredicate *pred = [NSPredicate predicateWithFormat:@"(firstLastName BEGINSWITH[c] %@)", section];
-            
-            NSArray *sectionArray = [PersonEntities MR_findAllWithPredicate:pred];
-            [self.self.clientEntitiesArray addObject:sectionArray];
-            
-        }
-        
-        [self.tableView reloadData];
+        [self loadCompanyDirectory];
         
     } failure:^(NSError *err) {
         NSLog(@"%@",[err description]);
