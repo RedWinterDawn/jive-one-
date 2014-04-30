@@ -169,12 +169,9 @@
 		9137919918FDB0EE00709AD3 /* JCGroupConversationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9137919718FDB0EE00709AD3 /* JCGroupConversationCell.xib */; };
 		9159C88D18EDD20700DF769B /* avatar-orig2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9159C88C18EDD20700DF769B /* avatar-orig2.png */; };
 		916958FF18FEDD76006FDD60 /* JCConversationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 274493AF18D0DA9B002744CB /* JCConversationCell.xib */; };
-<<<<<<< HEAD
-=======
 		916B666B18F453A900D7D89C /* PersonEntities.m in Sources */ = {isa = PBXBuildFile; fileRef = 916B666A18F453A900D7D89C /* PersonEntities.m */; };
 		9187215019106D99002A4271 /* JCTutorialContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9187214F19106D99002A4271 /* JCTutorialContentViewController.m */; };
 		9187215319106EE6002A4271 /* JCInitialTutorialVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9187215219106EE6002A4271 /* JCInitialTutorialVC.m */; };
->>>>>>> TA6201 - intermediate commit as I implement a page view controller.
 		919C448F18DA479F00F6566A /* thumb1.png in Resources */ = {isa = PBXBuildFile; fileRef = 919C448E18DA479F00F6566A /* thumb1.png */; };
 		91ADB99018D8BBDA00DF41A3 /* JCVoicemailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 91ADB98E18D8BBDA00DF41A3 /* JCVoicemailCell.m */; };
 		91ADB99118D8BBDA00DF41A3 /* JCVoicemailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91ADB98F18D8BBDA00DF41A3 /* JCVoicemailCell.xib */; };
@@ -448,15 +445,12 @@
 		9137919618FDB0EE00709AD3 /* JCGroupConversationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCGroupConversationCell.m; sourceTree = "<group>"; };
 		9137919718FDB0EE00709AD3 /* JCGroupConversationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JCGroupConversationCell.xib; path = JiveOne/JCGroupConversationCell.xib; sourceTree = SOURCE_ROOT; };
 		9159C88C18EDD20700DF769B /* avatar-orig2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatar-orig2.png"; sourceTree = "<group>"; };
-<<<<<<< HEAD
-=======
 		916B666918F453A900D7D89C /* PersonEntities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonEntities.h; sourceTree = "<group>"; };
 		916B666A18F453A900D7D89C /* PersonEntities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonEntities.m; sourceTree = "<group>"; };
 		9187214E19106D99002A4271 /* JCTutorialContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTutorialContentViewController.h; sourceTree = "<group>"; };
 		9187214F19106D99002A4271 /* JCTutorialContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTutorialContentViewController.m; sourceTree = "<group>"; };
 		9187215119106EE6002A4271 /* JCInitialTutorialVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCInitialTutorialVC.h; sourceTree = "<group>"; };
 		9187215219106EE6002A4271 /* JCInitialTutorialVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCInitialTutorialVC.m; sourceTree = "<group>"; };
->>>>>>> TA6201 - intermediate commit as I implement a page view controller.
 		919C448E18DA479F00F6566A /* thumb1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumb1.png; sourceTree = "<group>"; };
 		91ADB98D18D8BBDA00DF41A3 /* JCVoicemailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVoicemailCell.h; sourceTree = "<group>"; };
 		91ADB98E18D8BBDA00DF41A3 /* JCVoicemailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoicemailCell.m; sourceTree = "<group>"; };
