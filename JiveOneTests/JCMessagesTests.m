@@ -12,6 +12,7 @@
 #import "JCOsgiClient.h"
 
 @interface JCMessagesTests : XCTestCase
+@property (strong, nonatomic) NSManagedObjectContext *context;
 
 @end
 
@@ -21,6 +22,17 @@
 {
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
+    if(!self.context){
+        self.context = [NSManagedObjectContext MR_contextForCurrentThread];
+    }
+    ConversationEntry *entry = [ConversationEntry MR_createInContext:self.context];
+    
+    entry.failedToSend = [NSNumber numberWithBool:YES];
+    entry.createdDate = [NSNumber numberWithLong:2000000];
+    
+    
+    [self.context MR_saveToPersistentStoreAndWait];
+    
 }
 
 - (void)tearDown
@@ -34,7 +46,7 @@
 
 
 //assuming there is an unsent queue, test that upon connection restore, all messages are sent and the queue is emptied
-- (void) testUnsentMessageQueueIsSentOnConnectionRestore{
+- (void) testUnsentMessagesAreSentOnConnectionRestore{
     
     //setup queue of unsent messages
     NSMutableDictionary *unsentQueue = [[NSMutableDictionary alloc] init];
@@ -56,7 +68,7 @@
     //server shows that all messages were successfully sent
     __block int counter=0;
     id mockClient = [OCMockObject niceMockForClass:[JCOsgiClient class]];
-    [[mockClient expect] SubmitChatMessageForConversation:OCMOCK_ANY message:OCMOCK_ANY withEntity:[OCMArg any] withTimestamp:OCMOCK_ANY withTempUrn:[OCMArg any]
+    [[mockClient expect] SubmitChatMessageForConversation:OCMOCK_ANY message:OCMOCK_ANY withEntity:[OCMArg any] withTimestamp:2000000 withTempUrn:[OCMArg any]
                                                   success:[OCMArg checkWithBlock:^BOOL(void (^successBlock)(AFHTTPRequestOperation *, id))
                                                            {
                                                                counter++;
@@ -108,7 +120,7 @@
     //messages fail to send
     __block int counter =0;
     id mockClient = [OCMockObject niceMockForClass:[JCOsgiClient class]];
-    [[mockClient expect] SubmitChatMessageForConversation:OCMOCK_ANY message:OCMOCK_ANY withEntity:[OCMArg any] withTimestamp:OCMOCK_ANY withTempUrn:[OCMArg any]
+    [[mockClient expect] SubmitChatMessageForConversation:OCMOCK_ANY message:OCMOCK_ANY withEntity:[OCMArg any] withTimestamp:2000000 withTempUrn:[OCMArg any]
                                                   success:OCMOCK_ANY
                                                   failure:[OCMArg checkWithBlock:^BOOL(void (^failureBlock)(id))
                                                            {
@@ -165,7 +177,7 @@
     
     //for conversation1 we want it to come back successfull
      __block int counter1 =0;
-    [[mockClient expect] SubmitChatMessageForConversation:@"conversation1" message:OCMOCK_ANY withEntity:[OCMArg any] withTimestamp:OCMOCK_ANY withTempUrn:[OCMArg any]
+    [[mockClient expect] SubmitChatMessageForConversation:@"conversation1" message:OCMOCK_ANY withEntity:[OCMArg any] withTimestamp:2000000 withTempUrn:[OCMArg any]
                                                   success:[OCMArg checkWithBlock:^BOOL(void (^successBlock)(AFHTTPRequestOperation *, id))
                                                            {
                                                                counter1++;
@@ -179,7 +191,7 @@
     
     //for conversation2 we want it to come back as a failure
      __block int counter2 =0;
-    [[mockClient expect] SubmitChatMessageForConversation:@"conversation2" message:OCMOCK_ANY withEntity:[OCMArg any] withTimestamp:OCMOCK_ANY withTempUrn:[OCMArg any]
+    [[mockClient expect] SubmitChatMessageForConversation:@"conversation2" message:OCMOCK_ANY withEntity:[OCMArg any] withTimestamp:2000000 withTempUrn:[OCMArg any]
                                                    success:OCMOCK_ANY
                                                    failure:[OCMArg checkWithBlock:^BOOL(void (^failureBlock)(id))
                                                             {

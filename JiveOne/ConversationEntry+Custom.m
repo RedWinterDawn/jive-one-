@@ -56,6 +56,7 @@
         [self updateConversationEntry:convEntry withDictionary:entry managedContext:context];
     }
     else {
+        NSLog(@"No id or tempUrn found for this entry in core data. This should only happen if the user logged out or on a new install.");
         convEntry = [ConversationEntry MR_createInContext:context];
         convEntry.conversationId = entry[@"conversation"];
         convEntry.entityId = entry[@"entity"];

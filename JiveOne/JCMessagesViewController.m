@@ -464,16 +464,15 @@
 #pragma mark - Send/Create Conversation
 - (void)dispatchMessage:(NSString *)message {
     
-    NSString* entity = me.urn;
+//    NSString* entity = me.urn;
     
     // if conversation exists, then create entry for that conversation
     if (_conversationId != nil && ![_conversationId isEqualToString:@""]) {
         
-        NSDate *timestamp = [NSDate date];
         __block NSManagedObjectContext*  context = [NSManagedObjectContext MR_contextForCurrentThread];
-        __block ConversationEntry *entry = [self createEntryLocallyForConversation:_conversationId withMessage:message withTimestamp:timestamp inContext:context];
+        __block ConversationEntry *entry = [self createEntryLocallyForConversation:_conversationId withMessage:message withTimestamp:[NSDate date] inContext:context];
         
-        [[JCOsgiClient sharedClient] SubmitChatMessageForConversation:_conversationId message:message withEntity:entity withTimestamp:[Common epochFromNSDate:timestamp] withTempUrn:entry.tempUrn success:^(id JSON) {
+        [[JCOsgiClient sharedClient] SubmitChatMessageForConversation:_conversationId message:entry.message withEntity:entry.entityId withTimestamp:[entry.createdDate longValue] withTempUrn:entry.tempUrn success:^(id JSON) {
             // confirm to user message was sent
            [JSMessageSoundEffect playMessageSentSound];
            [context MR_saveToPersistentStoreAndWait];
@@ -497,8 +496,7 @@
     ConversationEntry *entry = [ConversationEntry MR_createInContext:context];
     entry.conversationId = conversationId;
     entry.entityId = me.entityId;
-//    entry.message = [NSDictionary dictionaryWithObjectsAndKeys:message, @"raw", nil];
-    entry.message = message;
+    entry.message = [NSDictionary dictionaryWithObjectsAndKeys:message, @"raw", nil];
     entry.createdDate = [NSNumber numberWithLong:[Common epochFromNSDate:timestamp]];
     entry.tempUrn = [[NSUUID UUID] UUIDString];
 //    [context MR_saveToPersistentStoreAndWait];
@@ -562,7 +560,6 @@
     
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"failedToSend == YES"];
     NSArray *unsentMessags = [ConversationEntry MR_findAllWithPredicate:pred];
-    //TODO: some messages "post" because they come back successful. but they are not actually posted on the server
     
     for(ConversationEntry *conv in unsentMessags){
         
@@ -571,7 +568,6 @@
             conv.failedToSend = [NSNumber numberWithBool:NO];
             [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
             NSLog(@"Posted message with tempUrn: %@", conv.tempUrn);
-            //TODO: save
         } failure:^(NSError *err) {
             NSLog(@"Failed to send message from offline queue: %@. With error:%@", conv.tempUrn,  err);
         }];

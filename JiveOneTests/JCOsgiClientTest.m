@@ -10,6 +10,7 @@
 #import "JCOsgiClient.h"
 #import "TRVSMonitor.h"
 #import "JCAuthenticationManager.h"
+#import "Common.h"
 
 
 @interface JCOsgiClientTest : XCTestCase
@@ -201,11 +202,12 @@
     __block NSDictionary* response;
     
     NSString *testConversation = barConversation;
-    NSString *testMessage = [NSString stringWithFormat:@"Automated Test Message From %@ - %@ - %@", [[UIDevice currentDevice] name], [[UIDevice currentDevice] model], [NSDate date]];
+    NSDictionary *testMessage = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"Automated Test Message From %@ - %@ - %@", [[UIDevice currentDevice] name], [[UIDevice currentDevice] model], [NSDate date]], @"raw", nil];
     NSString *testEntity = @"entities:jivetesting13@gmail_com";
-    NSDate *testDate = [NSDate date];
+    long testDate = [Common epochFromNSDate:[NSDate date]];
+    NSString *tempUrn = @"tempUrn";
     
-    [[JCOsgiClient sharedClient] SubmitChatMessageForConversation:testConversation message:testMessage withEntity:testEntity withTimestamp:testDate success:^(id JSON) {
+    [[JCOsgiClient sharedClient] SubmitChatMessageForConversation:testConversation message:testMessage withEntity:testEntity withTimestamp:testDate withTempUrn:tempUrn success:^(id JSON) {
         response = JSON;
         [monitor signal];
     } failure:^(NSError *err) {
