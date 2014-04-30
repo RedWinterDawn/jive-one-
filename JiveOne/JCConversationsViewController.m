@@ -84,8 +84,6 @@ static NSString *GroupCellIdentifier = @"GroupChatCell";
 - (void)updateTable
 {
     [self fetchLastConverstions];
-    [self.tableView reloadData];
-    [self.refreshControl endRefreshing];
 }
 
 - (void) loadDatasource
@@ -106,9 +104,12 @@ static NSString *GroupCellIdentifier = @"GroupChatCell";
     [[JCOsgiClient sharedClient] RetrieveConversations:^(id JSON) {
         
         [self loadDatasource];
+        [self.refreshControl endRefreshing];
+
         
     } failure:^(NSError *err) {
         NSLog(@"%@",[err description]);
+        [self.refreshControl endRefreshing];
         [self loadDatasource];
         if(!self.alertShowing){
             self.alertShowing = YES;
