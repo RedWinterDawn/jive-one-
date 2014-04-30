@@ -24,13 +24,13 @@
     NSString *title;
     NSString *subtitle;
     JCOsgiClient *osgiClient;
+    NSManagedObjectContext *context;
 }
 
 @property (nonatomic) NSArray *contacts;
 @property (nonatomic) NSMutableArray *selectedContacts;
 @property (weak, nonatomic) IBOutlet MBContactPicker *contactPickerView;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contactPickerViewHeightConstraint;
-
 
 
 @end
@@ -92,9 +92,19 @@
     [self setupView];
 }
 
+- (NSManagedObjectContext *)context
+{
+    if (!context) {
+        context = [NSManagedObjectContext MR_contextForCurrentThread];
+    }
+    
+    return context;
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    context = [self context];
     [self scrollToBottomAnimated:NO];
 }
 
@@ -464,22 +474,18 @@
 #pragma mark - Send/Create Conversation
 - (void)dispatchMessage:(NSString *)message {
     
-//    NSString* entity = me.urn;
-    
     // if conversation exists, then create entry for that conversation
     if (_conversationId != nil && ![_conversationId isEqualToString:@""]) {
         
-        __block NSManagedObjectContext*  context = [NSManagedObjectContext MR_contextForCurrentThread];
-        __block ConversationEntry *entry = [self createEntryLocallyForConversation:_conversationId withMessage:message withTimestamp:[NSDate date] inContext:context];
+        __block ConversationEntry *entry = [self createEntryLocallyForConversation:_conversationId withMessage:message withTimestamp:[NSDate date] inContext:[self context]];
         
-        [[JCOsgiClient sharedClient] SubmitChatMessageForConversation:_conversationId message:entry.message withEntity:entry.entityId withTimestamp:[entry.createdDate longValue] withTempUrn:entry.tempUrn success:^(id JSON) {
+        [[JCOsgiClient sharedClient] SubmitChatMessageForConversation:_conversationId message:entry.message withEntity:entry.entityId withTimestamp:[entry.createdDate longLongValue] withTempUrn:entry.tempUrn success:^(id JSON) {
             // confirm to user message was sent
            [JSMessageSoundEffect playMessageSentSound];
-           [context MR_saveToPersistentStoreAndWait];
         } failure:^(NSError *err) {
             NSLog(@"%@", err);
             entry.failedToSend = [NSNumber numberWithBool:YES];
-            [context MR_saveToPersistentStoreAndWait];
+            [[self context] MR_saveToPersistentStoreAndWait];
             
         }];
         
@@ -491,15 +497,26 @@
     }
 }
 
--(ConversationEntry*) createEntryLocallyForConversation:(NSString*)conversationId withMessage:(NSString*)message withTimestamp:(NSDate*)timestamp inContext:(NSManagedObjectContext*)context{
+- (ConversationEntry*) createEntryLocallyForConversation:(NSString *)conversationId withMessage:(NSString *)message withTimestamp:(NSDate *)timestamp inContext:(NSManagedObjectContext *)currentContext {
     
-    ConversationEntry *entry = [ConversationEntry MR_createInContext:context];
+    if (!currentContext) {
+        currentContext = [self context];
+    }
+    
+    ConversationEntry *entry = [ConversationEntry MR_createInContext:currentContext];
     entry.conversationId = conversationId;
     entry.entityId = me.entityId;
-    entry.message = [NSDictionary dictionaryWithObjectsAndKeys:message, @"raw", nil];
-    entry.createdDate = [NSNumber numberWithLong:[Common epochFromNSDate:timestamp]];
+    
+    //sanity check
+    NSDictionary *messageDictionary = [NSDictionary dictionaryWithObjectsAndKeys:message, @"raw", nil];
+    NSLog(@"%@", messageDictionary);
+    
+    entry.message = messageDictionary;
+    entry.createdDate = [NSNumber numberWithLongLong:[Common epochFromNSDate:timestamp]];
     entry.tempUrn = [[NSUUID UUID] UUIDString];
-//    [context MR_saveToPersistentStoreAndWait];
+    
+    [currentContext MR_saveToPersistentStoreAndWait];
+    
     return entry;
 }
 
@@ -520,9 +537,9 @@
             [self subscribeToConversationNotification:YES];
             
             // Add message to table so we provice user imediate feedback
-            NSString *sender = [NSString stringWithFormat:@"%@ - %@", me.firstLastName, [NSDate date]];
-            JSMessage *messageEntry = [[JSMessage alloc] initWithText:message sender:sender date:[NSDate date]];
-            [self.messages addObject:messageEntry];
+            //NSString *sender = [NSString stringWithFormat:@"%@ - %@", me.firstLastName, [NSDate date]];
+            //JSMessage *messageEntry = [[JSMessage alloc] initWithText:message sender:sender date:[NSDate date]];
+            //[self.messages addObject:messageEntry];
             [self setupDataSources];            
             [self.tableView reloadData];
             
@@ -563,7 +580,7 @@
     
     for(ConversationEntry *conv in unsentMessags){
         
-        [osgiClient SubmitChatMessageForConversation:conv.conversationId message:conv.message withEntity:conv.entityId withTimestamp:[conv.createdDate longValue] withTempUrn:conv.tempUrn success:^(id JSON) {
+        [osgiClient SubmitChatMessageForConversation:conv.conversationId message:conv.message withEntity:conv.entityId withTimestamp:[conv.createdDate longLongValue] withTempUrn:conv.tempUrn success:^(id JSON) {
             [JSMessageSoundEffect playMessageSentSound];
             conv.failedToSend = [NSNumber numberWithBool:NO];
             [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
