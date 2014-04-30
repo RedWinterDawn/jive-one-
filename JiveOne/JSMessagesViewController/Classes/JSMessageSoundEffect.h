@@ -39,4 +39,6 @@
  */
 + (void)playMessageSentAlert;
 
++ (void)playSMSReceived;
+
 @end
