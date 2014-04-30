@@ -172,18 +172,18 @@ static NSString *GroupCellIdentifier = @"GroupChatCell";
             newMessagesCount++;
             // set a different back button for the navigation controller
             UIBarButtonItem *myBackButton = [[UIBarButtonItem alloc]init];
-            myBackButton.title = [NSString stringWithFormat:@"Messages (%i)", newMessagesCount];
+            myBackButton.title = [NSString stringWithFormat:@"(%i)", newMessagesCount];
             self.navigationItem.backBarButtonItem = myBackButton;
-            [JSMessageSoundEffect playMessageReceivedAlert];
+            [JSMessageSoundEffect playSMSReceived];
         }
     }
     else
     {
-        [JSMessageSoundEffect playMessageReceivedAlert];
+        [JSMessageSoundEffect playSMSReceived];
     }
     
     [self loadDatasource];
-    
+    //[self refreshConversations:nil];
 }
 
 #pragma mark - Table view data source
