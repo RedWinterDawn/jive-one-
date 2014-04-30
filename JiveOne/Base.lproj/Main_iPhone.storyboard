@@ -90,17 +90,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hBg-Sb-m4h">
+                            <webView contentMode="scaleToFill" fixedFrame="YES" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hBg-Sb-m4h">
                                 <rect key="frame" x="-36" y="44" width="356" height="529"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </webView>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4g0-aU-vGn">
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" backIndicatorImage="people-star-lrg.png" translatesAutoresizingMaskIntoConstraints="NO" id="4g0-aU-vGn">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
                                     <navigationItem title="Title" id="6T7-ZD-KcV">
-                                        <barButtonItem key="leftBarButtonItem" title="Back" id="NvP-JH-sau">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="NvP-JH-sau">
                                             <connections>
                                                 <action selector="backButtonPressed:" destination="b1a-gb-jxo" id="Jog-dZ-Xao"/>
                                             </connections>
@@ -113,6 +113,7 @@
                     </view>
                     <connections>
                         <outlet property="myWebview" destination="hBg-Sb-m4h" id="Sns-nO-9cs"/>
+                        <outlet property="x" destination="NvP-JH-sau" id="sd1-G2-KVB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0vD-5q-70A" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -721,6 +722,7 @@
         <image name="nav-conv.png" width="30" height="30"/>
         <image name="nav-more.png" width="44" height="44"/>
         <image name="nav-people.png" width="44" height="44"/>
+        <image name="people-star-lrg.png" width="44" height="44"/>
         <image name="vmail.png" width="32" height="32"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
