@@ -297,6 +297,6 @@
 
 
 - (IBAction)termsAndConditionsButton:(id)sender {
-    
+    [self performSegueWithIdentifier: @"TCSegue" sender: self];
 }
 @end

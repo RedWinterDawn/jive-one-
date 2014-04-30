@@ -27,6 +27,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+//    [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
     // Do any additional setup after loading the view.
     NSURL *websiteUrl = [NSURL URLWithString:@"http://www.jive.com"];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:websiteUrl];

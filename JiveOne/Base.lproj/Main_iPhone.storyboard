@@ -55,7 +55,7 @@
                                 </state>
                                 <connections>
                                     <action selector="termsAndConditionsButton:" destination="hBc-AN-e9c" eventType="touchUpInside" id="1Sz-Tb-0xw"/>
-                                    <segue destination="b1a-gb-jxo" kind="modal" id="F1G-FB-Ony"/>
+                                    <segue destination="rZc-lh-rwn" kind="modal" identifier="TCSegue" id="F1G-FB-Ony"/>
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By signing in you agree to our" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="174" translatesAutoresizingMaskIntoConstraints="NO" id="zDj-yl-OIT">
@@ -107,7 +107,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KCP-nN-szi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-620" y="182"/>
+            <point key="canvasLocation" x="-1164" y="-78"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="CD6-Xa-a24">
@@ -163,34 +163,31 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" fixedFrame="YES" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hBg-Sb-m4h">
-                                <rect key="frame" x="-36" y="44" width="356" height="529"/>
+                                <rect key="frame" x="-36" y="-5" width="356" height="578"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </webView>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" backIndicatorImage="people-star-lrg.png" translatesAutoresizingMaskIntoConstraints="NO" id="4g0-aU-vGn">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <items>
-                                    <navigationItem title="Title" id="6T7-ZD-KcV">
-                                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="NvP-JH-sau">
-                                            <connections>
-                                                <action selector="backButtonPressed:" destination="b1a-gb-jxo" id="Jog-dZ-Xao"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="cfl-D7-GQU">
+                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="BYO-Uk-cCG">
+                            <connections>
+                                <action selector="backButtonPressed:" destination="b1a-gb-jxo" id="FTb-Ue-8PP"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="myWebview" destination="hBg-Sb-m4h" id="Sns-nO-9cs"/>
-                        <outlet property="x" destination="NvP-JH-sau" id="sd1-G2-KVB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0vD-5q-70A" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+<<<<<<< HEAD
             <point key="canvasLocation" x="-112" y="-554"/>
+=======
+            <point key="canvasLocation" x="-94" y="456"/>
+>>>>>>> TA6187 fixed navigation controller
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Vex-rW-GRa">
@@ -211,7 +208,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FNP-y4-bzi" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-112" y="182"/>
+            <point key="canvasLocation" x="414" y="182"/>
         </scene>
         <!--Initial TutorialVC-->
         <scene sceneID="Uxn-LN-Vtt">
@@ -277,7 +274,7 @@
                 <pageViewController storyboardIdentifier="PageViewController" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="d61-IG-C01" customClass="JCTutorialPageVC" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MaN-XO-MTe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-112" y="887"/>
+            <point key="canvasLocation" x="414" y="887"/>
         </scene>
         <!--Directory Detail View Controller-->
         <scene sceneID="WkT-56-JQg">
@@ -405,7 +402,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3x1-kR-aGn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1643" y="-160"/>
+            <point key="canvasLocation" x="2169" y="-160"/>
         </scene>
         <!--Navigation Controller - People-->
         <scene sceneID="4Zu-Qh-4wk">
@@ -421,7 +418,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LhL-WC-axz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="578" y="-160"/>
+            <point key="canvasLocation" x="1104" y="-160"/>
         </scene>
         <!--Directory View Controller - People-->
         <scene sceneID="sgK-qG-NHh">
@@ -493,7 +490,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="1059" y="-155"/>
+            <point key="canvasLocation" x="1585" y="-155"/>
         </scene>
         <!--Conversations View Controller - Conversations-->
         <scene sceneID="P3y-pc-Fre">
@@ -528,7 +525,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iQK-UU-6cd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1067" y="518"/>
+            <point key="canvasLocation" x="1593" y="518"/>
         </scene>
         <!--Messages View Controller-->
         <scene sceneID="Z6h-mb-aMW">
@@ -567,7 +564,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XuZ-GW-bg4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1502" y="506"/>
+            <point key="canvasLocation" x="2028" y="506"/>
         </scene>
         <!--Navigation Controller - Conversations-->
         <scene sceneID="7yR-ZU-bxo">
@@ -583,7 +580,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hmR-Es-IUG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="578" y="518"/>
+            <point key="canvasLocation" x="1104" y="518"/>
         </scene>
         <!--Voice Table View Controller - Voicemail-->
         <scene sceneID="i1y-0K-YmZ">
@@ -787,6 +784,24 @@
             </objects>
             <point key="canvasLocation" x="588" y="1935"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="lCk-hb-okc">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XiR-SP-7my" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="rZc-lh-rwn" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="HRx-5q-K36">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="b1a-gb-jxo" kind="relationship" relationship="rootViewController" id="V5d-xN-YzW"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="-620" y="456"/>
+        </scene>
     </scenes>
     <resources>
         <image name="avatar.png" width="100" height="100"/>
@@ -794,7 +809,6 @@
         <image name="nav-conv.png" width="30" height="30"/>
         <image name="nav-more.png" width="44" height="44"/>
         <image name="nav-people.png" width="44" height="44"/>
-        <image name="people-star-lrg.png" width="44" height="44"/>
         <image name="vmail.png" width="32" height="32"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
