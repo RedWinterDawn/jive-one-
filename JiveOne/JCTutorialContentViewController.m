@@ -7,6 +7,7 @@
 //
 
 #import "JCTutorialContentViewController.h"
+#import "JCInitialTutorialVC.h"
 
 @interface JCTutorialContentViewController ()
 

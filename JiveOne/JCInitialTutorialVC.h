@@ -15,5 +15,5 @@
 - (IBAction)startButton:(id)sender;
 @property (strong, nonatomic) JCTutorialPageVC *pageViewController;
 @property (strong, nonatomic) NSArray *pageTitles;
-
+@property CGFloat percentage;
 @end
