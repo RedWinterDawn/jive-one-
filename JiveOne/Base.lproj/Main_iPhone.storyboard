@@ -28,7 +28,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="280" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GZW-BX-qe0">
                                         <rect key="frame" x="0.0" y="32" width="280" height="30"/>
