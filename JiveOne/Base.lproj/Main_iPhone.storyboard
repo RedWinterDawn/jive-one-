@@ -117,7 +117,7 @@
                         <viewControllerLayoutGuide type="top" id="pfe-68-9UM"/>
                         <viewControllerLayoutGuide type="bottom" id="S0T-b2-0jQ"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Pqp-wd-EGT" customClass="UIScrollView">
+                    <view key="view" contentMode="scaleToFill" id="Pqp-wd-EGT">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
@@ -138,10 +138,10 @@
             </objects>
             <point key="canvasLocation" x="-112" y="1641"/>
         </scene>
-        <!--Page View Controller-->
+        <!--Tutorial PageVC-->
         <scene sceneID="M6b-Bu-O81">
             <objects>
-                <pageViewController storyboardIdentifier="PageViewController" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="d61-IG-C01" sceneMemberID="viewController"/>
+                <pageViewController storyboardIdentifier="PageViewController" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="d61-IG-C01" customClass="JCTutorialPageVC" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MaN-XO-MTe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-112" y="887"/>

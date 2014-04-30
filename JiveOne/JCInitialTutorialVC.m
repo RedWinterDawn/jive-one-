@@ -44,6 +44,12 @@
     [self addChildViewController:_pageViewController];
     [self.view addSubview:_pageViewController.view];
     [self.pageViewController didMoveToParentViewController:self];
+    
+    for (UIView *view in self.pageViewController.view.subviews) {
+        if ([view isKindOfClass:[UIScrollView class]]) {
+            [(UIScrollView *)view setDelegate:self];
+        }
+    }
 
 }
 

@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "JCTutorialContentViewController.h"
+#import "JCTutorialPageVC.h"
 
-@interface JCInitialTutorialVC : UIViewController <UIPageViewControllerDataSource>
+@interface JCInitialTutorialVC : UIViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate>
 
 - (IBAction)startButton:(id)sender;
-@property (strong, nonatomic) UIPageViewController *pageViewController;
+@property (strong, nonatomic) JCTutorialPageVC *pageViewController;
 @property (strong, nonatomic) NSArray *pageTitles;
 
 @end
