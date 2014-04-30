@@ -171,6 +171,7 @@
 		9159C88D18EDD20700DF769B /* avatar-orig2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9159C88C18EDD20700DF769B /* avatar-orig2.png */; };
 		916958FF18FEDD76006FDD60 /* JCConversationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 274493AF18D0DA9B002744CB /* JCConversationCell.xib */; };
 		91743A9D191145B100FF8A09 /* JCTutorialPageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 91743A9C191145B100FF8A09 /* JCTutorialPageVC.m */; };
+		91743AA0191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91743A9F191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m */; };
 		9187215019106D99002A4271 /* JCTutorialContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9187214F19106D99002A4271 /* JCTutorialContentViewController.m */; };
 		9187215319106EE6002A4271 /* JCInitialTutorialVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9187215219106EE6002A4271 /* JCInitialTutorialVC.m */; };
 		919C448F18DA479F00F6566A /* thumb1.png in Resources */ = {isa = PBXBuildFile; fileRef = 919C448E18DA479F00F6566A /* thumb1.png */; };
@@ -449,6 +450,8 @@
 		9159C88C18EDD20700DF769B /* avatar-orig2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatar-orig2.png"; sourceTree = "<group>"; };
 		91743A9B191145B100FF8A09 /* JCTutorialPageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTutorialPageVC.h; sourceTree = "<group>"; };
 		91743A9C191145B100FF8A09 /* JCTutorialPageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTutorialPageVC.m; sourceTree = "<group>"; };
+		91743A9E191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTermsAndConditonsVCViewController.h; sourceTree = "<group>"; };
+		91743A9F191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTermsAndConditonsVCViewController.m; sourceTree = "<group>"; };
 		9187214E19106D99002A4271 /* JCTutorialContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTutorialContentViewController.h; sourceTree = "<group>"; };
 		9187214F19106D99002A4271 /* JCTutorialContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTutorialContentViewController.m; sourceTree = "<group>"; };
 		9187215119106EE6002A4271 /* JCInitialTutorialVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCInitialTutorialVC.h; sourceTree = "<group>"; };
@@ -1107,6 +1110,8 @@
 			children = (
 				277A1F7E18F88987009A41F7 /* JCLoginViewController.h */,
 				277A1F7F18F88987009A41F7 /* JCLoginViewController.m */,
+				91743A9E191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.h */,
+				91743A9F191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -1414,6 +1419,7 @@
 				27EA1DFD1900A83D0075CAEE /* JCVoiceTableViewController.m in Sources */,
 				2700987718F4714100B6BC2F /* JSAvatarImageFactory.m in Sources */,
 				DD28DA5218AEC4F5003BFC44 /* JCAccountViewController.m in Sources */,
+				91743AA0191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m in Sources */,
 				2751592518AD32E500FD8D3F /* JCConversationsViewController.m in Sources */,
 				2764BDBF18C83AC5007320B0 /* THContactBubble.m in Sources */,
 				2700987518F4714100B6BC2F /* UIColor+JSMessagesView.m in Sources */,

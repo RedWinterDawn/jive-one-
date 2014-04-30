@@ -296,4 +296,7 @@
 }
 
 
+- (IBAction)termsAndConditionsButton:(id)sender {
+    
+}
 @end
