@@ -9,11 +9,15 @@
 #import <UIKit/UIKit.h>
 
 @interface JCAppDelegate : UIResponder <UIApplicationDelegate>
+{
+    NSInteger previousBadgeCount;
+    NSInteger afterBadgeCount;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 
 - (void)changeRootViewController:(JCRootViewControllerType)type;
-- (void)startSocket;
+- (void)startSocket:(BOOL)inBackground;
 - (void)stopSocket;
 
 #pragma mark - Badge Updates
