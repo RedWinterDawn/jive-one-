@@ -177,7 +177,7 @@ NSString *seenTutorial;
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     NSLog(@"APPDELEGATE - didReceiveRemoteNotification");
-    
+    [[JCAuthenticationManager sharedInstance] checkForTokenValidity];
     if ([[JCSocketDispatch sharedInstance] socketState] != SR_OPEN) {
         
         __block UIBackgroundFetchResult fetchResult = UIBackgroundFetchResultFailed;
@@ -300,7 +300,7 @@ NSString *seenTutorial;
 -(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     NSLog(@"APPDELEGATE - performFetchWithCompletionHandler");
-    
+    [[JCAuthenticationManager sharedInstance] checkForTokenValidity];
     if ([[JCSocketDispatch sharedInstance] socketState] != SR_OPEN) {
         __block UIBackgroundFetchResult fetchResult = UIBackgroundFetchResultFailed;
         
