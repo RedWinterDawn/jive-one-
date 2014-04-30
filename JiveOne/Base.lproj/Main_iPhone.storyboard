@@ -58,33 +58,6 @@
             </objects>
             <point key="canvasLocation" x="-620" y="182"/>
         </scene>
-        <!--App Tutorial View Controller-->
-        <scene sceneID="OU5-z6-JEy">
-            <objects>
-                <viewController storyboardIdentifier="JCAppTutorialViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="8GL-QL-iYb" customClass="JCAppTutorialViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="FZG-yM-gzn"/>
-                        <viewControllerLayoutGuide type="bottom" id="8aH-z2-KSv"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Htu-bZ-jre">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <gestureRecognizers/>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="RTg-7n-6Og" appends="YES" id="ye1-M7-Mn7"/>
-                        </connections>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="yi3-oi-Auf" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="RTg-7n-6Og">
-                    <connections>
-                        <action selector="panView:" destination="8GL-QL-iYb" id="xWT-eQ-Ciq"/>
-                    </connections>
-                </panGestureRecognizer>
-            </objects>
-            <point key="canvasLocation" x="-629" y="903"/>
-        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Vex-rW-GRa">
             <objects>
@@ -105,6 +78,73 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FNP-y4-bzi" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-112" y="182"/>
+        </scene>
+        <!--Initial TutorialVC-->
+        <scene sceneID="Uxn-LN-Vtt">
+            <objects>
+                <viewController storyboardIdentifier="JCInitialTutorialVC" id="o37-aF-65i" customClass="JCInitialTutorialVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="CIe-Xf-p9V"/>
+                        <viewControllerLayoutGuide type="bottom" id="7Kq-HZ-NLW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="lxo-AH-p2w">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ovY-B9-Wzt">
+                                <rect key="frame" x="99" y="512" width="122" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="startButton:" destination="o37-aF-65i" eventType="touchUpInside" id="S4w-lo-om5"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="D2p-qa-C4g" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-620" y="1179"/>
+        </scene>
+        <!--Tutorial Content View Controller-->
+        <scene sceneID="1Lo-Md-THD">
+            <objects>
+                <viewController storyboardIdentifier="JCTutorialContentViewController" id="57f-6E-IIu" customClass="JCTutorialContentViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="pfe-68-9UM"/>
+                        <viewControllerLayoutGuide type="bottom" id="S0T-b2-0jQ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Pqp-wd-EGT" customClass="UIScrollView">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lfv-d1-SKU">
+                                <rect key="frame" x="20" y="116" width="280" height="43"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="titleLabel" destination="Lfv-d1-SKU" id="6au-F1-Lbc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2Ej-cd-Rp6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-112" y="1641"/>
+        </scene>
+        <!--Page View Controller-->
+        <scene sceneID="M6b-Bu-O81">
+            <objects>
+                <pageViewController storyboardIdentifier="PageViewController" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="d61-IG-C01" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MaN-XO-MTe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-112" y="887"/>
         </scene>
         <!--Directory Detail View Controller-->
         <scene sceneID="WkT-56-JQg">
