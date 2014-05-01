@@ -27,7 +27,11 @@
     }
     
     
-//    Conversation *conv = [
+    Conversation *conv1 = [Conversation MR_createInContext:self.context];
+    conv1.conversationId = @"conversation1";
+    
+    Conversation *conv2 = [Conversation MR_createInContext:self.context];
+    conv2.conversationId = @"conversation2";
     
     
     
@@ -37,6 +41,7 @@
     entry1.createdDate = [NSNumber numberWithLong:2000000];
     entry1.tempUrn = @"tempUrn123";
     entry1.message = [NSDictionary dictionaryWithObjectsAndKeys:@"hi", @"raw", nil];
+    entry1.conversationId = conv1.conversationId;
     
     ConversationEntry *entry2 = [ConversationEntry MR_createInContext:self.context];
     
@@ -44,7 +49,26 @@
     entry2.createdDate = [NSNumber numberWithLong:2000000];
     entry2.tempUrn = @"tempUrn123";
     entry2.message = [NSDictionary dictionaryWithObjectsAndKeys:@"hi back", @"raw", nil];
+    entry2.conversationId = conv1.conversationId;
 
+    
+    ConversationEntry *entry3 = [ConversationEntry MR_createInContext:self.context];
+    
+    entry3.failedToSend = [NSNumber numberWithBool:YES];
+    entry3.createdDate = [NSNumber numberWithLong:2000000];
+    entry3.tempUrn = @"tempUrn123";
+    entry3.message = [NSDictionary dictionaryWithObjectsAndKeys:@"hi", @"raw", nil];
+    entry3.conversationId = conv2.conversationId;
+    
+    ConversationEntry *entry4 = [ConversationEntry MR_createInContext:self.context];
+    
+    entry4.failedToSend = [NSNumber numberWithBool:YES];
+    entry4.createdDate = [NSNumber numberWithLong:2000000];
+    entry4.tempUrn = @"tempUrn123";
+    entry4.message = [NSDictionary dictionaryWithObjectsAndKeys:@"hi back", @"raw", nil];
+    entry4.conversationId = conv2.conversationId;
+
+    
     [self.context MR_saveToPersistentStoreAndWait];
     
 }
@@ -63,31 +87,20 @@
 - (void) testUnsentMessagesAreSentOnConnectionRestore{
     
     //setup queue of unsent messages
-    NSMutableDictionary *unsentQueue = [[NSMutableDictionary alloc] init];
-    NSMutableArray * conversation1 = [[NSMutableArray alloc] init];
-    [conversation1 addObject:@"message 1"];
-    [conversation1 addObject:@"message 2"];
-    [unsentQueue setObject:conversation1 forKey:@"conversation1"];//key should be the conversation id
-
-    NSMutableArray * conversation2 = [[NSMutableArray alloc] init];
-    [conversation2 addObject:@"message 3"];
-    [conversation2 addObject:@"message 4"];
-    [unsentQueue setObject:conversation2 forKey:@"conversation2"];//key should be the conversation id
     
     //save unsent queue to user defaults
-    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:unsentQueue] forKey:@"unsentMessageQueue"];
-//    [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"unsentMessageQueue"]];
     
     //setup mock server so that
-    //server shows that all messages were successfully sent
-    __block int counter=0;
+    //server shows that all messages are successfully sent
+    __block NSUInteger counter= [ConversationEntry MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"failedToSend == YES"]].count;
+    
     id mockClient = [OCMockObject niceMockForClass:[JCOsgiClient class]];
     [[mockClient expect] SubmitChatMessageForConversation:OCMOCK_ANY message:OCMOCK_ANY withEntity:[OCMArg any] withTimestamp:2000000 withTempUrn:[OCMArg any]
                                                   success:[OCMArg checkWithBlock:^BOOL(void (^successBlock)(AFHTTPRequestOperation *, id))
                                                            {
-                                                               counter++;
+                                                               counter--;
                                                                successBlock(nil, @"200");
-                                                               if(counter==4){
+                                                               if(counter==0){
                                                                    return YES;
                                                                }
                                                                return NO;
@@ -98,16 +111,13 @@
     [JCMessagesViewController sendOfflineMessagesQueue:mockClient];
     [mockClient verify];
     
-    NSDictionary *updatedUnsentQueue = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"unsentMessageQueue"]];
-    NSLog(@"%@", updatedUnsentQueue);
+    //query core data for all messages that are still unsent
+    NSArray *entries = [ConversationEntry MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"failedToSend == YES"]];
     
-    //assert queue is empty
-    for(NSString* convKey in updatedUnsentQueue){
-        
-        NSArray *messages = [updatedUnsentQueue objectForKey:convKey];
-        
-        XCTAssert(messages.count==0 , @"Queue should be empty of any messages");
-    }
+    NSLog(@"%@", entries);
+    
+   //assert that none are found
+   XCTAssert(entries.count==0 , @"Core data should be empty of any messages with flag 'failedToSend', but found %lu", entries.count);
     
     
 }
@@ -116,31 +126,19 @@
 - (void) testUnsentMessageQueueIsNotSentOnConnectionLoss{
     
     //setup queue of unsent messages and put in user defaults
-    NSMutableDictionary *unsentQueue = [[NSMutableDictionary alloc] init];
-    NSMutableArray * conversation1 = [[NSMutableArray alloc] init];
-    [conversation1 addObject:@"message 1"];
-    [conversation1 addObject:@"message 2"];
-    [unsentQueue setObject:conversation1 forKey:@"conversation1"];//key should be the conversation id
-    
-    NSMutableArray * conversation2 = [[NSMutableArray alloc] init];
-    [conversation2 addObject:@"message 3"];
-    [conversation2 addObject:@"message 4"];
-    [unsentQueue setObject:conversation2 forKey:@"conversation2"];//key should be the conversation id
-    
-    //save unsent queue to user defaults
-    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:unsentQueue] forKey:@"unsentMessageQueue"];
 
     //setup mock server so that
     //messages fail to send
-    __block int counter =0;
+    __block NSUInteger counter= [ConversationEntry MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"failedToSend == YES"]].count;
+    NSUInteger assertCounter = counter;
     id mockClient = [OCMockObject niceMockForClass:[JCOsgiClient class]];
     [[mockClient expect] SubmitChatMessageForConversation:OCMOCK_ANY message:OCMOCK_ANY withEntity:[OCMArg any] withTimestamp:2000000 withTempUrn:[OCMArg any]
                                                   success:OCMOCK_ANY
                                                   failure:[OCMArg checkWithBlock:^BOOL(void (^failureBlock)(id))
                                                            {
-                                                               counter++;
+                                                               counter--;
                                                                failureBlock(nil);
-                                                               if(counter==4){
+                                                               if(counter==0){
                                                                    return YES;
                                                                }
                                                                return NO;
@@ -149,54 +147,34 @@
     //not sure how to imitate restoring the connection, so i'll just call the method, (sendOfflineMessagesQueue) that gets triggered, directly
     [JCMessagesViewController sendOfflineMessagesQueue:mockClient];
     [mockClient verify];
-    XCTAssertTrue(counter==4, @"Should have been called 4 times. Once for each message");
     
     //server shows that messages were not successfully sent
     
     //queue is full
-    NSDictionary *updatedUnsentQueue = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"unsentMessageQueue"]];
-    NSLog(@"%@", updatedUnsentQueue);
+    NSArray *entries = [ConversationEntry MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"failedToSend == YES"]];
+    NSLog(@"%@", entries);
     
     //assert queue is empty
-    for(NSString* convKey in updatedUnsentQueue){
-        
-        NSArray *messages = [updatedUnsentQueue objectForKey:convKey];
-        
-        XCTAssertTrue(messages.count==2 , @"Queue should have 2 messages in each array, but only found %lu", (unsigned long)messages.count);
-    }
+    XCTAssert(entries.count==assertCounter , @"Core data should have the same number of messages with flag 'failedToSend' that existed before message sending was attempted (%lu), but only found %lu", assertCounter, (unsigned long)entries.count);
 }
 
 //assuming there is an unsent queue, test that upon intermittent connection, sent messages do not reappear in queue, but unsent messages do
 -(void) testUnsentMessageQueueKeepUnsentOnIntermittentConnection{
     
     //setup queue of unsent messages and put in user defaults
-    //setup queue of unsent messages and put in user defaults
-    NSMutableDictionary *unsentQueue = [[NSMutableDictionary alloc] init];
-    NSMutableArray * conversation1 = [[NSMutableArray alloc] init];
-    [conversation1 addObject:@"message 1"];
-    [conversation1 addObject:@"message 2"];
-    [unsentQueue setObject:conversation1 forKey:@"conversation1"];//key should be the conversation id
-    
-    NSMutableArray * conversation2 = [[NSMutableArray alloc] init];
-    [conversation2 addObject:@"message 3"];
-    [conversation2 addObject:@"message 4"];
-    [unsentQueue setObject:conversation2 forKey:@"conversation2"];//key should be the conversation id
-    
-    //save unsent queue to user defaults
-    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:unsentQueue] forKey:@"unsentMessageQueue"];
     
     //setup mock server so that
     //messages for conversation1 send
     id mockClient = [OCMockObject niceMockForClass:[JCOsgiClient class]];
     
     //for conversation1 we want it to come back successfull
-     __block int counter1 =0;
+    __block NSUInteger counter1 = [ConversationEntry MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"failedToSend == YES AND conversationId == %@", @"conversation1"]].count;
     [[mockClient expect] SubmitChatMessageForConversation:@"conversation1" message:OCMOCK_ANY withEntity:[OCMArg any] withTimestamp:2000000 withTempUrn:[OCMArg any]
                                                   success:[OCMArg checkWithBlock:^BOOL(void (^successBlock)(AFHTTPRequestOperation *, id))
                                                            {
-                                                               counter1++;
+                                                               counter1--;
                                                                successBlock(nil, @"200");
-                                                               if(counter1==2){
+                                                               if(counter1==0){
                                                                    return YES;
                                                                }
                                                                return NO;
@@ -204,14 +182,16 @@
                                                   failure:OCMOCK_ANY];
     
     //for conversation2 we want it to come back as a failure
-     __block int counter2 =0;
+    __block NSUInteger counter2 = [ConversationEntry MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"failedToSend == YES and conversationId == %@", @"conversation2"]].count;
+    NSUInteger failCounter = counter2;
+
     [[mockClient expect] SubmitChatMessageForConversation:@"conversation2" message:OCMOCK_ANY withEntity:[OCMArg any] withTimestamp:2000000 withTempUrn:[OCMArg any]
                                                    success:OCMOCK_ANY
                                                    failure:[OCMArg checkWithBlock:^BOOL(void (^failureBlock)(id))
                                                             {
-                                                                counter2++;
+                                                                counter2--;
                                                                 failureBlock(nil);
-                                                                if(counter2==2){
+                                                                if(counter2==0){
                                                                     return YES;
                                                                 }
                                                                 return NO;
@@ -223,21 +203,11 @@
     [mockClient verify];
     
     //queue is full
-    NSDictionary *updatedUnsentQueue = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"unsentMessageQueue"]];
-    NSLog(@"%@", updatedUnsentQueue);
+    NSArray *entries = [ConversationEntry MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"failedToSend == YES"]];
+    NSLog(@"%@", entries);
     
     //assert queue is empty
-    for(NSString* convKey in updatedUnsentQueue){
-        
-        NSArray *messages = [updatedUnsentQueue objectForKey:convKey];
-        
-        if([convKey isEqualToString:@"conversation2"]){
-        XCTAssertTrue(messages.count==2 , @"Queue should have 2 messages in each array, but only found %lu", (unsigned long)messages.count);
-        }else{
-            XCTAssertTrue(messages.count==0 , @"Queue should have 0 messages in each array");
-        }
-    }
-    
+    XCTAssert(entries.count==failCounter , @"Core data should have %lu messages (count of messages with flag 'failedToSend' is true and conversationId = 'conversation2' at beginning of test), but only found %lu", failCounter, (unsigned long)entries.count);
     //restore connection
     
     
