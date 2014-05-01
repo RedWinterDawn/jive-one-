@@ -307,10 +307,6 @@ static int MAX_LOGIN_ATTEMPTS = 2;
             }
         }
     }
-    else
-    {
-        [self logout:nil];
-    }
 }
 
 #pragma mark - OAUTH RefreshToken Implementation

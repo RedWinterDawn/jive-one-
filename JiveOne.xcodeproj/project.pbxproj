@@ -130,6 +130,8 @@
 		275F4A7918AD0FBC00D2F069 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275F4A5518AD0FBC00D2F069 /* UIKit.framework */; };
 		275F4A8118AD0FBC00D2F069 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 275F4A7F18AD0FBC00D2F069 /* InfoPlist.strings */; };
 		275F4A8318AD0FBC00D2F069 /* JiveOneTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 275F4A8218AD0FBC00D2F069 /* JiveOneTests.m */; };
+		2762151E1912AA2500CFBCC8 /* NSDictionary+QueryString.m in Sources */ = {isa = PBXBuildFile; fileRef = 2762151D1912AA2500CFBCC8 /* NSDictionary+QueryString.m */; };
+		276215211912AA7400CFBCC8 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 276215201912AA7400CFBCC8 /* NSString+URLEncoding.m */; };
 		2762C45818B4177D00885918 /* JCOmniPresence.m in Sources */ = {isa = PBXBuildFile; fileRef = 2762C45718B4177D00885918 /* JCOmniPresence.m */; };
 		2762C45918B4177D00885918 /* JCOmniPresence.m in Sources */ = {isa = PBXBuildFile; fileRef = 2762C45718B4177D00885918 /* JCOmniPresence.m */; };
 		2764BDBF18C83AC5007320B0 /* THContactBubble.m in Sources */ = {isa = PBXBuildFile; fileRef = 2764BDBC18C83AC5007320B0 /* THContactBubble.m */; };
@@ -388,6 +390,10 @@
 		275F4A7E18AD0FBC00D2F069 /* JiveOneTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "JiveOneTests-Info.plist"; sourceTree = "<group>"; };
 		275F4A8018AD0FBC00D2F069 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		275F4A8218AD0FBC00D2F069 /* JiveOneTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JiveOneTests.m; sourceTree = "<group>"; };
+		2762151C1912AA2500CFBCC8 /* NSDictionary+QueryString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+QueryString.h"; sourceTree = "<group>"; };
+		2762151D1912AA2500CFBCC8 /* NSDictionary+QueryString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+QueryString.m"; sourceTree = "<group>"; };
+		2762151F1912AA7400CFBCC8 /* NSString+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncoding.h"; sourceTree = "<group>"; };
+		276215201912AA7400CFBCC8 /* NSString+URLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncoding.m"; sourceTree = "<group>"; };
 		2762C45618B4177D00885918 /* JCOmniPresence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCOmniPresence.h; sourceTree = "<group>"; };
 		2762C45718B4177D00885918 /* JCOmniPresence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCOmniPresence.m; sourceTree = "<group>"; };
 		2764BDBB18C83AC5007320B0 /* THContactBubble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THContactBubble.h; sourceTree = "<group>"; };
@@ -1126,6 +1132,10 @@
 			children = (
 				2788F148190EB1260099348D /* NSNull+IntValue.h */,
 				2788F149190EB1260099348D /* NSNull+IntValue.m */,
+				2762151C1912AA2500CFBCC8 /* NSDictionary+QueryString.h */,
+				2762151D1912AA2500CFBCC8 /* NSDictionary+QueryString.m */,
+				2762151F1912AA7400CFBCC8 /* NSString+URLEncoding.h */,
+				276215201912AA7400CFBCC8 /* NSString+URLEncoding.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -1428,6 +1438,7 @@
 				91743AA0191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m in Sources */,
 				2751592518AD32E500FD8D3F /* JCConversationsViewController.m in Sources */,
 				2764BDBF18C83AC5007320B0 /* THContactBubble.m in Sources */,
+				2762151E1912AA2500CFBCC8 /* NSDictionary+QueryString.m in Sources */,
 				2700987518F4714100B6BC2F /* UIColor+JSMessagesView.m in Sources */,
 				275F4A6218AD0FBC00D2F069 /* JCAppDelegate.m in Sources */,
 				DDEC37D6191029B800E166CC /* PersonEntities.m in Sources */,
@@ -1451,6 +1462,7 @@
 				2787911318CF79DC004DE651 /* JCPresenceView.m in Sources */,
 				2700987C18F4714100B6BC2F /* JSMessage.m in Sources */,
 				91ADB99018D8BBDA00DF41A3 /* JCVoicemailCell.m in Sources */,
+				276215211912AA7400CFBCC8 /* NSString+URLEncoding.m in Sources */,
 				9137919818FDB0EE00709AD3 /* JCGroupConversationCell.m in Sources */,
 				2751590B18AD16F300FD8D3F /* JCOsgiClient.m in Sources */,
 				9135DE0018BBFC7A0052E998 /* JCVoicemailViewController.m in Sources */,
