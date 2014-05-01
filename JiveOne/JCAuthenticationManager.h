@@ -11,13 +11,13 @@
 
 @class JCAuthenticationManager;
 
-@interface JCAuthenticationManager : NSObject <UIWebViewDelegate>
+@interface JCAuthenticationManager : NSObject 
 
 @property (strong, nonatomic) KeychainItemWrapper *keychainWrapper;
 
 + (JCAuthenticationManager*)sharedInstance;
 
-- (void)loginWithUsername:(NSString *)username password:(NSString*)password;
+- (void)loginWithUsername:(NSString *)username password:(NSString*)password completed:(void (^)(BOOL success, NSError *error)) completed;
 - (void)didReceiveAuthenticationToken:(NSDictionary *)token;
 - (BOOL)userAuthenticated;
 - (BOOL)userLoadedMininumData;

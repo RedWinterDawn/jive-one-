@@ -32,7 +32,7 @@
 @implementation JCAuthenticationManager
 {
     NSMutableData *receivedData;
-    UIWebView *webview;
+    //UIWebView *webview;
     int loginAttempts;
     NSTimer *webviewTimer;
 }
@@ -51,7 +51,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 }
 
 #pragma mark - Class methods
-- (void)loginWithUsername:(NSString *)username password:(NSString*)password
+- (void)loginWithUsername:(NSString *)username password:(NSString*)password completed:(void (^)(BOOL success, NSError *error)) completed;
 {
     NSString *url_path = [NSString stringWithFormat:kOsgiAuthURL, kOAuthClientId, kURLSchemeCallback];
     NSURL *url = [NSURL URLWithString:url_path];
@@ -64,15 +64,41 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     NSLog(@"AUTH PATH: %@", url_path);
 #endif
     
-    if (!webview) {
-        webview = [[UIWebView alloc] init];
-    }
+    [[JCOsgiClient sharedClient] OAuthLoginWithUsername:username password:password success:^(id JSON) {
+        
+        if (JSON[@"access_token"]) {
+            
+            [self didReceiveAuthenticationToken:JSON];
+            completed(YES, nil);
+            
+        }
+        else {
+            
+            NSError *error;
+            if (JSON[@"error"]) {
+                error = [NSError errorWithDomain:@"com.jive.JiveOne" code:12 userInfo:JSON];
+            }
+            else {
+                NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"An Unknown Error has occurred. Please try again. If the problem persists contact support", nil), @"error", nil];
+                error = [NSError errorWithDomain:@"com.jive.JiveOne" code:10 userInfo:dictionary];
+            }
+            
+            completed(NO, error);
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *err) {
+        completed (NO, err);
+    }];
     
-    // start the timeout timer
-    webviewTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(timerElapsed:) userInfo:nil repeats:NO];
-    
-    webview.delegate = self;
-    [webview loadRequest:[NSURLRequest requestWithURL:url]];
+//    if (!webview) {
+//        webview = [[UIWebView alloc] init];
+//    }
+//    
+//    // start the timeout timer
+//    webviewTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(timerElapsed:) userInfo:nil repeats:NO];
+//    
+//    webview.delegate = self;
+//    [webview loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
 - (BOOL)userAuthenticated {
@@ -162,55 +188,55 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 }
 
 
-#pragma mark - UIWebview Delegates
-- (BOOL)webView:(UIWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType {
-    //    [indicator startAnimating];
-    
-#if DEBUG
-    NSLog(@"%@", [request description]);
-#endif
-    
-    if ([[[request URL] scheme] isEqualToString:@"jiveclient"]) {
-        
-        // Extract oauth_verifier from URL query
-        NSString* verifier = nil;
-        NSArray* urlParams = [[[request URL] query] componentsSeparatedByString:@"&"];
-        for (NSString* param in urlParams) {
-            NSArray* keyValue = [param componentsSeparatedByString:@"="];
-            NSString* key = [keyValue objectAtIndex:0];
-            if ([key isEqualToString:@"code"]) {
-                verifier = [keyValue objectAtIndex:1];
-                break;
-            }
-        }
-        
-        if (verifier)
-        {
-            NSString *data = [NSString stringWithFormat:@"code=%@&client_id=%@&client_secret=%@&redirect_uri=%@&grant_type=authorization_code", verifier, kOAuthClientId, kOAuthClientSecret, kURLSchemeCallback];
-            [self requestOauthOperation:data type:0];
-        }
-    }
-    return YES;
-}
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView
-{
-    if (loginAttempts < MAX_LOGIN_ATTEMPTS) {
-        [webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.getElementById('username').value = '%@';document.getElementById('password').value = '%@';document.getElementById('go-button').click()", _username, _password]];
-        loginAttempts++;
-    }
-    else {
-        [webView stopLoading];
-        loginAttempts = 0;
-        [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenFailed object:nil];
-    }
-}
-
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
-{
-    NSLog(@"Did Fail Load With Error");
-}
-
+//#pragma mark - UIWebview Delegates
+//- (BOOL)webView:(UIWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType {
+//    //    [indicator startAnimating];
+//    
+//#if DEBUG
+//    NSLog(@"%@", [request description]);
+//#endif
+//    
+//    if ([[[request URL] scheme] isEqualToString:@"jiveclient"]) {
+//        
+//        // Extract oauth_verifier from URL query
+//        NSString* verifier = nil;
+//        NSArray* urlParams = [[[request URL] query] componentsSeparatedByString:@"&"];
+//        for (NSString* param in urlParams) {
+//            NSArray* keyValue = [param componentsSeparatedByString:@"="];
+//            NSString* key = [keyValue objectAtIndex:0];
+//            if ([key isEqualToString:@"code"]) {
+//                verifier = [keyValue objectAtIndex:1];
+//                break;
+//            }
+//        }
+//        
+//        if (verifier)
+//        {
+//            NSString *data = [NSString stringWithFormat:@"code=%@&client_id=%@&client_secret=%@&redirect_uri=%@&grant_type=authorization_code", verifier, kOAuthClientId, kOAuthClientSecret, kURLSchemeCallback];
+//            [self requestOauthOperation:data type:0];
+//        }
+//    }
+//    return YES;
+//}
+//
+//- (void)webViewDidFinishLoad:(UIWebView *)webView
+//{
+//    if (loginAttempts < MAX_LOGIN_ATTEMPTS) {
+//        [webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.getElementById('username').value = '%@';document.getElementById('password').value = '%@';document.getElementById('go-button').click()", _username, _password]];
+//        loginAttempts++;
+//    }
+//    else {
+//        [webView stopLoading];
+//        loginAttempts = 0;
+//        [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenFailed object:nil];
+//    }
+//}
+//
+//- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+//{
+//    NSLog(@"Did Fail Load With Error");
+//}
+//
 #pragma mark - NSURLConnectionDelegate
 - (void)requestOauthOperation:(NSString *)data type:(NSInteger)type
 {
@@ -314,7 +340,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 #pragma mark - Timer expired
 - (void)timerElapsed:(NSNotification *)notification
 {
-    [webview stopLoading];
+    //[webview stopLoading];
     [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenFailedWithTimeout object:kAuthenticationFromTokenFailedWithTimeout];
 }
 @end

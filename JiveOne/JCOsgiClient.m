@@ -13,6 +13,7 @@
 #import "Presence+Custom.h"
 #import "NSNull+IntValue.h"
 #import "Common.h"
+#import "NSDictionary+QueryString.h"
 
 
 #if DEBUG
@@ -48,7 +49,7 @@
     NSURL *baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kOsgiBaseURL, kOsgiURNScheme]];
     _manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
     _manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    _manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    //_manager.requestSerializer = [AFJSONRequestSerializer serializer];
     
     keyChainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
     localContext  = [NSManagedObjectContext MR_contextForCurrentThread];
@@ -189,8 +190,24 @@
 #pragma mark - Submit Operations
 
 - (void) OAuthLoginWithUsername:(NSString*)username password:(NSString*)password success:(void (^)(id JSON))success
-                        failure:(void (^)(NSError *err))failure
+                        failure:(void (^)(AFHTTPRequestOperation *operation, NSError *err))failure;
 {
+    NSString *basicAuth = [@"Basic " stringByAppendingString:[Common encodeStringToBase64:[NSString stringWithFormat:@"%@:%@", kOAuthClientId, kOAuthClientSecret]]];
+    NSString *authURL = @"https://auth.jive.com/oauth2/token";
+    NSString *dataString = [NSString stringWithFormat:@"client_id=%@&redirect_uri=%@&grant_type=password&username=%@&password=%@", kOAuthClientId, kURLSchemeCallback, username, password];
+    
+    NSDictionary *dataDictionary = [NSDictionary dictionaryWithQueryString:dataString];    
+    
+    
+    _manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    [_manager.requestSerializer clearAuthorizationHeader];
+    [_manager.requestSerializer setValue:basicAuth forHTTPHeaderField:@"Authorization"];
+    
+    [_manager POST:authURL parameters:dataDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        success(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(operation, error);
+    }];
 }
 
 - (void) SubscribeToSocketEventsWithAuthToken:(NSString*)token subscriptions:(NSDictionary*)subscriptions success:(void (^)(id JSON))success

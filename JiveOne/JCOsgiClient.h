@@ -38,7 +38,7 @@
 
 #pragma mark - Submit Operations
 - (void) OAuthLoginWithUsername:(NSString*)username password:(NSString*)password success:(void (^)(id JSON))success
-                      failure:(void (^)(NSError *err))failure;
+                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *err))failure;
 - (void) SubscribeToSocketEventsWithAuthToken:(NSString*)token subscriptions:(NSDictionary*)subscriptions success:(void (^)(id JSON))success
                                       failure:(void (^)(NSError* err))failure;
 - (void) SubmitConversationWithName:(NSString *)groupName forEntities:(NSArray *)entities creator:(NSString *)creator isGroupConversation:(BOOL)isGroup success:(void (^)(id JSON))success

@@ -119,7 +119,21 @@
     if([_usernameTextField.text length] != 0 && [_passwordTextField.text length] != 0)
     {
         [self showHudWithTitle:@"One Moment Please" detail:@"Logging In"];
-        [[JCAuthenticationManager sharedInstance] loginWithUsername:_usernameTextField.text password:_passwordTextField.text];
+        [[JCAuthenticationManager sharedInstance] loginWithUsername:_usernameTextField.text password:_passwordTextField.text completed:^(BOOL success, NSError *error) {
+            [self hideHud];
+            if (success) {
+                [self tokenValidityPassed:nil];
+            }
+            else {
+                if (error.userInfo[@"error"]) {
+                    [self alertStatus:@"Authentication Error" message:error.userInfo[@"error"]];
+                }
+                else {
+                    [self alertStatus:@"Authentication Error" message:[error.userInfo description]];
+                }
+            }
+            
+        }];
     }
     else
     {
