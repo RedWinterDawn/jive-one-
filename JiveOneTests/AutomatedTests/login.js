@@ -1,24 +1,28 @@
-var testName = "Login Test";
-var target = UIATarget.localTarget();
-var app = target.frontMostApp();
-var window = app.mainWindow();
+#import "Common.js"
 
-window.logElementTree();
+test("Login Test", function(target, app, log){
+	var currentWindow = app.mainWindow();
 
-window.textFields()["emailTextField"].setValue("jivetesting12@gmail.com");
-window.secureTextFields()["passwordTextField"].setValue("testing12");
-window.logElementTree();
-app.keyboard().elements()["Go"].tap();
+	//login
+	currentWindow.textFields()["emailTextField"].setValue("jivetesting12@gmail.com");
+	currentWindow.secureTextFields()["passwordTextField"].setValue("testing12");
+	app.keyboard().elements()["Go"].tap();
 
-UIATarget.localTarget().pushTimeout(200);
-window.navigationBar().name()["People"];
-UIATarget.localTarget().popTimeout();
+	//wait for login
+	UIATarget.localTarget().pushTimeout(200);
+	currentWindow.navigationBar().name()["People"];
+	UIATarget.localTarget().popTimeout();
+	currentWindow = app.mainWindow();
 
-if(window.navigationBar().name() == "People"){
-	target.delay(5);
-	window.logElementTree();
-	UIALogger.logPass( testName); 
-}
-else{
-	UIALogger.logFail( testName ); 
-}
+	//capture navigation bar name
+	var title = currentWindow.navigationBar().name()
+
+	//get count of contacts
+	var contactsList = currentWindow.tableViews()[0];
+	var count = contactsList.cells().length;
+
+	assertEquals("People", title, "Should have loaded 'People' tab");
+	UIALogger.logDebug("the count was " + count);
+	assertTrue(count>0, "contacts should have loaded");
+});
+
