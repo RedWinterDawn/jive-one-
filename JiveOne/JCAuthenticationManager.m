@@ -64,7 +64,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     NSLog(@"AUTH PATH: %@", url_path);
 #endif
     
-    [[JCOsgiClient sharedClient] OAuthLoginWithUsername:username password:password success:^(id JSON) {
+    [[JCOsgiClient sharedClient] OAuthLoginWithUsername:username password:password success:^(AFHTTPRequestOperation *operation, id JSON) {
         
         if (JSON[@"access_token"]) {
             
@@ -74,26 +74,37 @@ static int MAX_LOGIN_ATTEMPTS = 2;
         }
         else {
             
+            NSInteger statusCode = 0;
+            if (operation.response) {
+                statusCode = operation.response.statusCode;
+            }
+            
             NSError *error;
             if (JSON[@"error"]) {
-                error = [NSError errorWithDomain:@"com.jive.JiveOne" code:12 userInfo:JSON];
+                error = [NSError errorWithDomain:@"com.jive.JiveOne" code:statusCode userInfo:JSON];
             }
             else {
                 NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"An Unknown Error has occurred. Please try again. If the problem persists contact support", nil), @"error", nil];
-                error = [NSError errorWithDomain:@"com.jive.JiveOne" code:10 userInfo:dictionary];
+                error = [NSError errorWithDomain:@"com.jive.JiveOne" code:statusCode userInfo:dictionary];
             }
             
             completed(NO, error);
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *err) {
+        
+        NSInteger statusCode = 0;
+        if (operation.response) {
+            statusCode = operation.response.statusCode;
+        }
+        
         NSError *error;
         if (operation.responseObject[@"error"]) {
-            error = [NSError errorWithDomain:@"com.jive.JiveOne" code:12 userInfo:operation.responseObject];
+            error = [NSError errorWithDomain:@"com.jive.JiveOne" code:statusCode userInfo:operation.responseObject];
         }
         else {
             NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"An Unknown Error has occurred. Please try again. If the problem persists contact support", nil), @"error", nil];
-            error = [NSError errorWithDomain:@"com.jive.JiveOne" code:10 userInfo:dictionary];
+            error = [NSError errorWithDomain:@"com.jive.JiveOne" code:statusCode userInfo:dictionary];
         }
         
         completed(NO, error);

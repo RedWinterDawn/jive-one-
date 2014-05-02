@@ -127,9 +127,11 @@
             else {
                 if (error.userInfo[@"error"]) {
                     [self alertStatus:@"Authentication Error" message:error.userInfo[@"error"]];
+                    NSLog(@"Authentication error: %@", error);
                 }
                 else {
                     [self alertStatus:@"Authentication Error" message:error.localizedDescription];
+                     NSLog(@"Authentication error: %@", error);
                 }
             }
             
@@ -175,7 +177,7 @@
     [[JCOsgiClient sharedClient] RetrieveClientEntitites:^(id JSON) {
         [self fetchCompany];
     } failure:^(NSError *err) {
-        [self errorInitializingApp];
+        [self errorInitializingApp:err];
     }];
 }
 
@@ -212,8 +214,8 @@
          }
         
     } failure:^(NSError *err) {
-        NSLog(@"%@", err);
-        [self errorInitializingApp];
+        NSLog(@"fetchCompany error: %@", err);
+        [self errorInitializingApp:err];
     }];
 }
 
@@ -222,7 +224,7 @@
     [[JCOsgiClient sharedClient] RetrieveEntitiesPresence:^(BOOL updated) {
         [self fetchConversations];
     } failure:^(NSError *err) {
-        [self errorInitializingApp];
+        [self errorInitializingApp:err];
     }];
 }
 
@@ -231,7 +233,7 @@
     [[JCOsgiClient sharedClient] RetrieveConversations:^(id JSON) {
         [self fetchVoicemails];
     } failure:^(NSError *err) {
-        [self errorInitializingApp];
+        [self errorInitializingApp:err];
     }];
 }
 
@@ -243,7 +245,7 @@
         [self goToApplication];
         
     } failure:^(NSError *err) {
-        [self errorInitializingApp];
+        [self errorInitializingApp:err];
     }];
 }
 
@@ -279,8 +281,9 @@
     [delegate startSocket:NO];
 }
 
-- (void)errorInitializingApp
+- (void)errorInitializingApp:(NSError*)err
 {
+    NSLog(@"errorInitializingApp: %@",err);
     [self hideHud];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Server Unavailable", nil) message: NSLocalizedString(@"We could not connect to the server at this time. Please try again", nil) delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
     

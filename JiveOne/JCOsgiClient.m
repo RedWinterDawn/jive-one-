@@ -56,7 +56,9 @@
 
     
 
+    NSLog(@"About to go into debug mode for server certificate");
 #if DEBUG
+    NSLog(@"Debug mode active");
     _manager.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
     _manager.securityPolicy.allowInvalidCertificates = YES;
 #endif
@@ -189,7 +191,7 @@
 
 #pragma mark - Submit Operations
 
-- (void) OAuthLoginWithUsername:(NSString*)username password:(NSString*)password success:(void (^)(id JSON))success
+- (void) OAuthLoginWithUsername:(NSString*)username password:(NSString*)password success:(void (^)(AFHTTPRequestOperation *operation, id JSON))success
                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *err))failure;
 {
     NSString *basicAuth = [@"Basic " stringByAppendingString:[Common encodeStringToBase64:[NSString stringWithFormat:@"%@:%@", kOAuthClientId, kOAuthClientSecret]]];
@@ -204,7 +206,7 @@
     [_manager.requestSerializer setValue:basicAuth forHTTPHeaderField:@"Authorization"];
     
     [_manager POST:authURL parameters:dataDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        success(responseObject);
+        success(operation, responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failure(operation, error);
     }];
