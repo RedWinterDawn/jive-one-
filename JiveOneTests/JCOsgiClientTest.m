@@ -204,7 +204,7 @@
     NSString *testConversation = barConversation;
     NSDictionary *testMessage = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"Automated Test Message From %@ - %@ - %@", [[UIDevice currentDevice] name], [[UIDevice currentDevice] model], [NSDate date]], @"raw", nil];
     NSString *testEntity = @"entities:jivetesting13@gmail_com";
-    long testDate = [Common epochFromNSDate:[NSDate date]];
+    long long testDate = [Common epochFromNSDate:[NSDate date]];
     NSString *tempUrn = @"tempUrn";
     
     [[JCOsgiClient sharedClient] SubmitChatMessageForConversation:testConversation message:testMessage withEntity:testEntity withTimestamp:testDate withTempUrn:tempUrn success:^(id JSON) {

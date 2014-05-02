@@ -49,7 +49,7 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.timeZone = [NSTimeZone defaultTimeZone];
 
-    [formatter setDateFormat:@"MM/dd/yyyy hh:mm a"];
+    [formatter setDateFormat:@"M/dd/yyyy hh:mm a"];//TODO: check this works in october
     NSTimeZone *timezone = [NSTimeZone defaultTimeZone];
     formatter.timeZone = timezone;
     return [formatter stringFromDate:date];
