@@ -129,7 +129,7 @@
                     [self alertStatus:@"Authentication Error" message:error.userInfo[@"error"]];
                 }
                 else {
-                    [self alertStatus:@"Authentication Error" message:[error.userInfo description]];
+                    [self alertStatus:@"Authentication Error" message:error.localizedDescription];
                 }
             }
             
@@ -276,6 +276,7 @@
 {
     JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
     [delegate changeRootViewController:JCRootTabbarViewController];
+    [delegate startSocket:NO];
 }
 
 - (void)errorInitializingApp

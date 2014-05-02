@@ -87,7 +87,16 @@ static int MAX_LOGIN_ATTEMPTS = 2;
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *err) {
-        completed (NO, err);
+        NSError *error;
+        if (operation.responseObject[@"error"]) {
+            error = [NSError errorWithDomain:@"com.jive.JiveOne" code:12 userInfo:operation.responseObject];
+        }
+        else {
+            NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"An Unknown Error has occurred. Please try again. If the problem persists contact support", nil), @"error", nil];
+            error = [NSError errorWithDomain:@"com.jive.JiveOne" code:10 userInfo:dictionary];
+        }
+        
+        completed(NO, error);
     }];
     
 //    if (!webview) {
