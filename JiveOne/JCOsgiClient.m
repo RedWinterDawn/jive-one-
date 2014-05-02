@@ -291,7 +291,6 @@
 {
     [self setRequestAuthHeader];
     
-//    NSDictionary *messageDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:message, @"raw", nil];
     NSDictionary *conversationDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:entity, @"entity", conversation, @"conversation", message, @"message", [NSString stringWithFormat: @"%lld", timestamp], @"createdDate", tempUrn, @"tempUrn", nil];
     
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:conversationDictionary options:kNilOptions error:nil];

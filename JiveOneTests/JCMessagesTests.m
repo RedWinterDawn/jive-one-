@@ -10,6 +10,7 @@
 #import "JCMessagesViewController.h"
 #import <OCMock/OCMock.h>
 #import "JCOsgiClient.h"
+#import "ConversationEntry+Custom.h"
 
 @interface JCMessagesTests : XCTestCase
 @property (strong, nonatomic) NSManagedObjectContext *context;
@@ -26,6 +27,9 @@
         self.context = [NSManagedObjectContext MR_contextForCurrentThread];
     }
     
+}
+
+-(void)setupVoicemailDummyData{
     
     Conversation *conv1 = [Conversation MR_createInContext:self.context];
     conv1.conversationId = @"conversation1";
@@ -50,7 +54,7 @@
     entry2.tempUrn = @"tempUrn123";
     entry2.message = [NSDictionary dictionaryWithObjectsAndKeys:@"hi back", @"raw", nil];
     entry2.conversationId = conv1.conversationId;
-
+    
     
     ConversationEntry *entry3 = [ConversationEntry MR_createInContext:self.context];
     
@@ -67,10 +71,11 @@
     entry4.tempUrn = @"tempUrn123";
     entry4.message = [NSDictionary dictionaryWithObjectsAndKeys:@"hi back", @"raw", nil];
     entry4.conversationId = conv2.conversationId;
-
+    
     
     [self.context MR_saveToPersistentStoreAndWait];
     
+
 }
 
 - (void)tearDown
@@ -87,6 +92,7 @@
 - (void) testUnsentMessagesAreSentOnConnectionRestore{
     
     //setup queue of unsent messages
+    [self setupVoicemailDummyData];
     
     //save unsent queue to user defaults
     
@@ -117,7 +123,7 @@
     NSLog(@"%@", entries);
     
    //assert that none are found
-   XCTAssert(entries.count==0 , @"Core data should be empty of any messages with flag 'failedToSend', but found %lu", entries.count);
+   XCTAssert(entries.count==0 , @"Core data should be empty of any messages with flag 'failedToSend', but found %lu", (unsigned long)entries.count);
     
     
 }
@@ -126,6 +132,7 @@
 - (void) testUnsentMessageQueueIsNotSentOnConnectionLoss{
     
     //setup queue of unsent messages and put in user defaults
+   [self setupVoicemailDummyData];
 
     //setup mock server so that
     //messages fail to send
@@ -155,13 +162,14 @@
     NSLog(@"%@", entries);
     
     //assert queue is empty
-    XCTAssert(entries.count==assertCounter , @"Core data should have the same number of messages with flag 'failedToSend' that existed before message sending was attempted (%lu), but only found %lu", assertCounter, (unsigned long)entries.count);
+    XCTAssert(entries.count==assertCounter , @"Core data should have the same number of messages with flag 'failedToSend' that existed before message sending was attempted (%lu), but only found %lu", (unsigned long)assertCounter, (unsigned long)entries.count);
 }
 
 //assuming there is an unsent queue, test that upon intermittent connection, sent messages do not reappear in queue, but unsent messages do
 -(void) testUnsentMessageQueueKeepUnsentOnIntermittentConnection{
     
     //setup queue of unsent messages and put in user defaults
+   [self setupVoicemailDummyData];
     
     //setup mock server so that
     //messages for conversation1 send
@@ -207,10 +215,44 @@
     NSLog(@"%@", entries);
     
     //assert queue is empty
-    XCTAssert(entries.count==failCounter , @"Core data should have %lu messages (count of messages with flag 'failedToSend' is true and conversationId = 'conversation2' at beginning of test), but only found %lu", failCounter, (unsigned long)entries.count);
+    XCTAssert(entries.count==failCounter , @"Core data should have %lu messages (count of messages with flag 'failedToSend' is true and conversationId = 'conversation2' at beginning of test), but only found %lu", (unsigned long)failCounter, (unsigned long)entries.count);
     //restore connection
     
     
 }
+
+//test that after a message is created locally, and the server returns the response (mocked) that the message's (with that tempUrn) timestamp does not get changed when calling addConversationEntry
+-(void) testTimestampIsImmutableOnServerSync{
+    
+    [Conversation MR_truncateAll];
+    [ConversationEntry MR_truncateAll];
+    
+    //put some unsent messages in core data so when i run sendOfflineMessagesQueue it will send some messages
+    [self setupVoicemailDummyData];
+    
+    //get info about first conversationEntry in core data
+    NSArray *conversation1Entries = [ConversationEntry MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"conversationId == %@", @"conversation1"]];
+    
+    //what will we send the server
+    long timestampToCheck = [((ConversationEntry*)conversation1Entries[0]).createdDate longValue];
+    
+    //tempUrn so we can find the right message in core data later
+    NSString *tempUrn = ((ConversationEntry*)conversation1Entries[0]).tempUrn;
+    
+    //setup dictionary that will be what the server returned and give it a bad createdDate (different than what we sent up)
+    NSDictionary *entry = [NSDictionary dictionaryWithObjectsAndKeys:@"conversation1", @"conversation", @"entities:andrew", @"entity", @"conversations:7753:entries:7761", @"id", @"1398981121840", @"lastModified", @"raw", @"message", tempUrn, @"tempUrn", @"chat", @"type", @"conversations:7753:entries:7761", @"urn", [NSNumber numberWithLong:156],@"createdDate", nil];
+    
+    //method being tested
+    [ConversationEntry addConversationEntry:entry];
+   
+    //retrived the message we sent up earlier, returned by the server, and then updated in core data by method above
+    ConversationEntry *message = [ConversationEntry MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"tempUrn == %@", tempUrn]][0];
+    
+    //assert that timestamp is the same as earlier
+    XCTAssert(timestampToCheck==[message.createdDate longValue], @"Timestamp should have been the same before (%lu) and after addConversationEntry(), but was (%lu)", timestampToCheck, [message.createdDate longValue]);
+
+}
+
+
 
 @end

@@ -101,7 +101,7 @@
         entry.conversationId = dictionary[@"conversation"];
         entry.entityId = dictionary[@"entity"];
         entry.lastModified = [NSNumber numberWithLongLong:[dictionary[@"lastModified"] longLongValue]];
-        //poentry.createdDate = [NSNumber numberWithLongLong:[dictionary[@"createdDate"] longLongValue]];
+//        entry.createdDate = [NSNumber numberWithLongLong:[dictionary[@"createdDate"] longLongValue]];
         entry.call = dictionary[@"call"];
         entry.file = dictionary[@"file"];
         entry.message = dictionary[@"message"];

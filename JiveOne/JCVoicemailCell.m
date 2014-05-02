@@ -27,7 +27,7 @@
 
 
 +(CGFloat)cellHeightForData:(id)data selected:(BOOL)selected {
-    return selected ? 120 : 60;
+    return selected ? 300 : 60;
 }
 
 +(NSString *)reuseIdentifier {
