@@ -1,4 +1,5 @@
 #import "Common.js"
+#import "jquery.min.js"
 
 test("Receive a chat", function(target, app){
 
@@ -17,12 +18,21 @@ test("Receive a chat", function(target, app){
 	cell.tap();
 	target.delay(1);
 
+
 	//send a message
 	app.Keyboard().keys("Your message");
 	app.mainWindow().logElementTree();
 	app.keyboard().elements()["Send"].tap();
 
 	//verify that the recipient received the message
+		//log onto the server using jivetesting11's credentials
+	$.get(
+    	"my.jive.com",
+    	{username : "jivetesting11", password : 'testing12'},
+    	function(data) {
+       		alert('page content: ' + data);
+    }
+);
 	
 
 	more.tap();
