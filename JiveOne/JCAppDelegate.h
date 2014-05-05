@@ -15,6 +15,7 @@
 }
 
 @property (strong, nonatomic) UIWindow *window;
+@property BOOL deviceIsIPhone;
 
 - (void)changeRootViewController:(JCRootViewControllerType)type;
 - (void)startSocket:(BOOL)inBackground;

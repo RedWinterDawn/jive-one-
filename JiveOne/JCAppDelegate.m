@@ -27,6 +27,8 @@ NSString *seenTutorial;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
+    //check if we are using a iphone or ipad
+    self.deviceIsIPhone = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? NO : YES;
     
     // start of your application:didFinishLaunchingWithOptions // ...
     [TestFlight takeOff:@"a48098ef-e65e-40b9-8609-e995adc426ac"];
@@ -58,14 +60,14 @@ NSString *seenTutorial;
     //Only needed for when app is launched from push notification and app was not running in background
     //NSDictionary *pushNotif = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
     //if(pushNotif){
-        //[self handleLocalNotifications:pushNotif];
+    //[self handleLocalNotifications:pushNotif];
     //}
     
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
     
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
-
+    
     
     [self refreshTabBadges:NO];
     
@@ -86,7 +88,7 @@ NSString *seenTutorial;
 }
 
 
-							
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -95,7 +97,7 @@ NSString *seenTutorial;
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     
     [self stopSocket];
@@ -114,7 +116,7 @@ NSString *seenTutorial;
             //do nothing;
         }];
         [self startSocket:NO];
-    }   
+    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -170,7 +172,7 @@ NSString *seenTutorial;
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo//never gets called
 {
-     [PFPush handlePush:userInfo];
+    [PFPush handlePush:userInfo];
     NSLog(@"APPDELEGATE - didReceiveRemoteNotification:fetchCompletionHandler");
 }
 
@@ -228,7 +230,7 @@ NSString *seenTutorial;
     if (badgeDictionary) {
         _badges = [NSMutableDictionary dictionaryWithDictionary:badgeDictionary];
     }
-
+    
     NSInteger count = 0;
     if (_badges) {
         for (NSString *key in _badges)
@@ -248,7 +250,7 @@ NSString *seenTutorial;
 //    if (app.applicationState == UIApplicationStateInactive )
 //    {
 //        NSLog(@"app not running");
-//        
+//
 //    }
 //    else if(app.applicationState == UIApplicationStateActive )
 //    {
@@ -270,23 +272,23 @@ NSString *seenTutorial;
 //                //TODO: switch to voicemail tab
 //                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
 //                UITabBarController *tabVC = [storyboard instantiateViewControllerWithIdentifier:@"UITabBarController"];
-//                [tabVC setSelectedIndex:3];   
+//                [tabVC setSelectedIndex:3];
 //                break;
 //            }
 //            case 2://handle chat push
-//                //switch to chat tab               
-//                
+//                //switch to chat tab
+//
 //            default:
 //                break;
 //        }
 //    }
-//    
+//
 //}
 
 //- (void)didCloseSocket:(NSNotification *)notification
 //{
 //    NSInteger afterCount = [self currentBadgeCount];
-//    
+//
 //    if (afterCount == 0 || (afterCount == previousCount)) {
 //        fetchResult = UIBackgroundFetchResultNoData;
 //    }
@@ -600,22 +602,18 @@ NSString *seenTutorial;
 {
     seenTutorial = @"NO";
     if(![@"YES" isEqualToString:[[NSUserDefaults standardUserDefaults]
-                               objectForKey:@"seenAppTutorial"]]){
+                                 objectForKey:@"seenAppTutorial"]]){
         seenTutorial = @"NO";
     }else {
         seenTutorial = @"YES";
     }
-    seenTutorial = @"YES";
+        seenTutorial = @"YES";
     
-    BOOL deviceIsIPhone = YES;
     self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
     
-    //check if we are using a iphone or ipad
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        deviceIsIPhone = NO;
-    }
     
-    UIStoryboard *storyboard = deviceIsIPhone ? [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] : [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
+    
+    UIStoryboard *storyboard = self.deviceIsIPhone ? [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] : [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
     
     if (type == JCRootTabbarViewController) {
         
