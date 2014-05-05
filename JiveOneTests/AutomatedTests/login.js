@@ -4,7 +4,7 @@ test("Login Test", function(target, app, log){
 	var currentWindow = app.mainWindow();
 
 	//login
-	currentWindow.textFields()["emailTextField"].setValue("jivetesting12@gmail.com");
+	currentWindow.textFields()["emailTextField"].setValue("jivetesting10@gmail.com");
 	currentWindow.secureTextFields()["passwordTextField"].setValue("testing12");
 	app.keyboard().elements()["Go"].tap();
 

@@ -2,7 +2,7 @@
 
 test("Receive a chat", function(target, app){
 
-	var mainWindow = app.mainWindow();
+	var w = app.mainWindow();
 
 	//navigate to chat window
 	var conversations = mainWindow.tabBar().buttons()[2];
@@ -11,9 +11,16 @@ test("Receive a chat", function(target, app){
 	assertEquals("Conversations", app.mainWindow().navigationBar().name(), "Title should be 'Conversations'");
 
 	//select a person to chat
-	//if none exist, create one
+	app.mainWindow().logElementTree();
+	w = app.mainWindow();
+	var cell = w.tableViews()[0].cells["The Bar"];
+	cell.tap();
+	target.delay(1);
 
 	//send a message
+	app.Keyboard().keys("Your message");
+	app.mainWindow().logElementTree();
+	app.keyboard().elements()["Send"].tap();
 
 	//verify that the recipient received the message
 	
