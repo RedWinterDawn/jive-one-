@@ -728,6 +728,7 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <accessibility key="accessibilityConfiguration" label="My Info"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
