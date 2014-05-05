@@ -2,17 +2,26 @@
 //  JCContainerViewController.m
 //  JiveOne
 //
-//  Created by Doug on 5/1/14.
+//  Created by Doug on 5/5/14.
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
 #import "JCContainerViewController.h"
-#import "JCAppDelegate.h"
 #import "JCPage1ViewController.h"
+#import "JCPage2ViewController.h"
+#import "JCPage3ViewController.h"
+#import "JCPage4ViewController.h"
+
 
 @interface JCContainerViewController ()
 @property (strong, nonatomic) UIPageViewController *pageViewController;
-@property (strong, nonatomic) NSMutableArray *arrayOfPageViewControllers;
+@property (strong, nonatomic) UIViewController *vc;
+@property (strong, nonatomic) JCPage1ViewController *page1;
+@property (strong, nonatomic) JCPage2ViewController *page2;
+@property (strong, nonatomic) JCPage3ViewController *page3;
+@property (strong, nonatomic) JCPage4ViewController *page4;
+@property (nonatomic) NSArray* pages;
+@property (nonatomic) NSInteger* currentIndex;
 @end
 
 @implementation JCContainerViewController
@@ -29,136 +38,111 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    // Create page view controller
+    
+    self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"JCPageViewController"];
     self.pageViewController.dataSource = self;
     
-
+    NSArray *viewControllers = @[self.page1];
+    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    
+    // Change the size of page view controller
+    self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 30);
+    
+    [self addChildViewController:_pageViewController];
+    [self.view addSubview:_pageViewController.view];
+    [self.pageViewController didMoveToParentViewController:self];
 }
 
-#pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+-(NSInteger *)currentIndex
 {
-    CGFloat offset = scrollView.contentOffset.x;
-    
-        CGFloat pullOffset = MAX(0, offset);
-        [_delegate scrollingDidChangePullOffset:pullOffset];
-    
-    if (scrollView.contentOffset.x > 319 && scrollView.contentOffset.x < 321) {
-        NSLog(@"*********");
-    }else if(scrollView.contentOffset.x < 319)
-    {
-        //range is 0 - 319
-        //scale is 319
-        CGFloat percentage = (scrollView.contentOffset.x / 319);
-        percentage = (percentage < .000001) ? .000001 : percentage;
-        
-        self.percentDoneOfAnimationProgress = percentage;
-        
-        NSLog(@"Offset<: %f : %f", scrollView.contentOffset.x, percentage );
-//        self.anchor = CGPointMake(self.anchor.x + (self.percentDoneOfAnimationProgress), self.anchor.y);
-        
-//        NSLog(@"anchor.x : %f frame.orgin.x : %f", self.anchor.x, self.headingLabel2.frame.origin.x);
-        
-//        [self.attachment setAnchorPoint:self.anchor];
-        
-        
-        
-    }else if (scrollView.contentOffset.x > 321){
-        //range is 321 - 640
-        //scale is 319
-        CGFloat percentage = ((scrollView.contentOffset.x - 319) / 321);
-        percentage = (percentage > .999999) ? .999999 : percentage;
-        self.percentDoneOfAnimationProgress = percentage;
-        NSLog(@"Offset>: %f : %f", scrollView.contentOffset.x, percentage );
-//        self.anchor = CGPointMake(self.anchor.x - (self.percentDoneOfAnimationProgress), self.anchor.y);
-//        [self.attachment setAnchorPoint:self.anchor];
-        
-//        NSLog(@"anchor.x : %f frame.orgin.x : %f", self.anchor.x, self.headingLabel2.frame.origin.x);
-        
+    if (!_currentIndex) {
+        _currentIndex = 0;
     }
-
-    
-    
+    return _currentIndex;
 }
-
-
-#pragma mark - Page1Delegate
-
-- (void)scrollingDidChangePullOffset:(CGFloat)offset
+-(NSArray *)pages
 {
-    
-    
-    
-    
-}
-
-
-
-#pragma mark - properties
-
-- (NSArray*)arrayOfPageViewControllers{
-    if (!_arrayOfPageViewControllers) {
-        _arrayOfPageViewControllers = [[NSMutableArray alloc]init];
-        
-        NSArray *pagesStoryBoardIDs = @[@"Page1", @"Page2", @"Page3", @"Page4"];
-        
-        for (NSString *index in pagesStoryBoardIDs) {
-            JCPage1ViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier: index];
-//            viewController.delegate = self;
-            
-            [_arrayOfPageViewControllers addObject: viewController];
-        }
+    if (!_pages) {
+        _pages =@[self.page1, self.page2, self.page3, self.page4];
     }
-    return  _arrayOfPageViewControllers;
+    return _pages;
+}
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
-
--(UIViewController*)pageViewController
+-(JCPage1ViewController*)page1
 {
-    if (!_pageViewController) {
-       _pageViewController = [self.storyboard instantiateViewControllerWithIdentifier: @"PageVC"];
-        [_pageViewController setViewControllers:self.arrayOfPageViewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-        //change size of pageVC
-        _pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 30);
-        [self addChildViewController:_pageViewController];
-        [self.view addSubview:_pageViewController.view];
-        [_pageViewController didMoveToParentViewController:self];
-        for (UIView *view in self.pageViewController.view.subviews) {
-            if ([view isKindOfClass:[UIScrollView class]]) {
-                [(UIScrollView *)view setDelegate:self];
-            }
-        }
+    if (!_page1) {
+        _page1 = [self.storyboard instantiateViewControllerWithIdentifier:@"JCPage1ViewController"];
+
     }
-    return _pageViewController;
+    return _page1;
+}
+-(JCPage2ViewController*)page2
+{
+    if (!_page2) {
+        _page2 = [self.storyboard instantiateViewControllerWithIdentifier:@"JCPage2ViewController"];
+    }
+    return _page2;
+}
+-(JCPage3ViewController*)page3
+{
+    if (!_page3) {
+        _page3 = [self.storyboard instantiateViewControllerWithIdentifier:@"JCPage3ViewController"];
+    }
+    return _page3;
+}
+-(JCPage4ViewController*)page4
+{
+    if (!_page4) {
+        _page4 = [self.storyboard instantiateViewControllerWithIdentifier:@"JCPage4ViewController"];
+    }
+    return _page4;
 }
 
-- (UIViewController *)viewControllerAtIndex:(NSUInteger)index
+
+
+- (JCPageClass *)viewControllerAtIndex:(NSUInteger)index
 {
-    if (index >= [self.arrayOfPageViewControllers count]) {
-        return nil;
+//    if (([self.pageTitles count] == 0) || (index >= [self.pageTitles count])) {
+//        return nil;
+//    }
+    
+    // Create a new view controller and pass suitable data.
+    JCPageClass *pageContentViewController;
+    
+    switch (index) {
+        case 0:
+            pageContentViewController = (JCPageClass *)self.page1;
+
+            break;
+        case 1:
+            pageContentViewController = (JCPageClass *)self.page2;
+            break;
+        case 2:
+            pageContentViewController = (JCPageClass *)self.page3;
+
+            break;
+        case 3:
+            pageContentViewController = (JCPageClass *)self.page4;
+
+            break;
     }
     
-    return self.arrayOfPageViewControllers[index];
-}
-
-- (CGFloat)percentDoneOfAnimationProgress
-{
-    if (!self.percentDoneOfAnimationProgress) {
-        self.percentDoneOfAnimationProgress = 0.0;
-    }
-    return self.percentDoneOfAnimationProgress;
-}
-
--(void)setPercentDoneOfAnimationProgress:(CGFloat)percentDoneOfAnimationProgress
-{
-    self.percentDoneOfAnimationProgress = percentDoneOfAnimationProgress;
+    return pageContentViewController;
 }
 
 #pragma mark - Page View Controller Data Source
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
-    NSUInteger index = [self.arrayOfPageViewControllers indexOfObject:viewController];
+    
+    NSUInteger index = [self.pages indexOfObject:viewController];
     
     if ((index == 0) || (index == NSNotFound)) {
         return nil;
@@ -170,64 +154,61 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
-    NSUInteger index = [self.arrayOfPageViewControllers indexOfObject:viewController];
+    NSUInteger index = [self.pages indexOfObject:viewController];
     
     if (index == NSNotFound) {
         return nil;
     }
     
     index++;
-    if (index == [self.arrayOfPageViewControllers count]) {
+    if (index == 4) {
         return nil;
     }
     return [self viewControllerAtIndex:index];
 }
 
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//    
-//    //need to determine if the view offset value is positive or negitive based on the previous value. for springback..
-//    
-//    
-//    if (scrollView.contentOffset.x > 319 && scrollView.contentOffset.x < 321) {
-//        NSLog(@"*****0*****");
-//    }else if(scrollView.contentOffset.x < 319)
-//    {
-//        //range is 0 - 319
-//        //scale is 319
-//        CGFloat percentage = (scrollView.contentOffset.x / 319);
-//        percentage = (percentage < .000001) ? .000001 : percentage;
-//        self.percentDoneOfAnimationProgress = percentage;
-//        
-//        
-//        
-//        
-//    }else if (scrollView.contentOffset.x > 321){
-//        //range is 321 - 640
-//        //scale is 319
-//        CGFloat percentage = ((scrollView.contentOffset.x - 319) / 321);
-//        percentage = (percentage > .999999) ? .999999 : percentage;
-//        self.percentDoneOfAnimationProgress = percentage;
-//        
-//        
-//    }
-//}
-
 - (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController
 {
-    return [self.arrayOfPageViewControllers count];
+    return 4;
 }
 
 - (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController
 {
-    return [self.arrayOfPageViewControllers count];
+    return 0;
 }
 
-
-- (void)didReceiveMemoryWarning
+- (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+//    NSUInteger index = [self.pages indexOfObject:pageViewController];
+
+    [self.pageViewController setViewControllers:@[self.pages[(NSInteger)self.currentIndex]] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+
 }
 
+- (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
+{
+    self.currentIndex = (NSInteger*)[self.pages indexOfObject:[[pageViewController viewControllers] objectAtIndex:0]];
+}
+
+//- (IBAction)startButton:(id)sender {
+//    JCTutorialContentViewController *startingViewController = [self viewControllerAtIndex:0];
+//    NSArray *viewControllers = @[startingViewController];
+//    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionReverse animated:NO completion:nil];
+//}
+
+
+
+
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
 
 @end

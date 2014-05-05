@@ -4,6 +4,32 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
+        <!--Page4 View Controller-->
+        <scene sceneID="YOn-53-1Um">
+            <objects>
+                <viewController storyboardIdentifier="JCPage4ViewController" id="BJ5-Dg-VP1" customClass="JCPage4ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="VoO-Kb-RQw"/>
+                        <viewControllerLayoutGuide type="bottom" id="flK-7R-cCy"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7MK-FK-2ds">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="JCPage4VC" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uEh-6k-0S5">
+                                <rect key="frame" x="84" y="260" width="202" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wtd-bQ-Ty4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="42" y="-1665"/>
+        </scene>
         <!--Login View Controller-->
         <scene sceneID="yum-B5-f91">
             <objects>
@@ -260,6 +286,84 @@
             </objects>
             <point key="canvasLocation" x="-912" y="599"/>
         </scene>
+        <!--Page View Controller - JCPage1ViewController-->
+        <scene sceneID="ZtT-Cx-ctV">
+            <objects>
+                <pageViewController storyboardIdentifier="JCPageViewController" autoresizesArchivedViewToFullSize="NO" title="JCPage1ViewController" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="R8Y-OS-UTf" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="du5-UC-Fyt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1462" y="-1665"/>
+        </scene>
+        <!--Container View Controller-->
+        <scene sceneID="W4k-dG-q3a">
+            <objects>
+                <viewController storyboardIdentifier="JCContainerViewController" id="0GY-Sf-KwF" customClass="JCContainerViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="uob-yX-DO5"/>
+                        <viewControllerLayoutGuide type="bottom" id="l1u-V1-baZ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9R9-Fg-9O1">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="h46-yP-dwC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1438" y="-1000"/>
+        </scene>
+        <!--Page2 View Controller-->
+        <scene sceneID="72L-8n-cy9">
+            <objects>
+                <viewController storyboardIdentifier="JCPage2ViewController" id="TkM-7f-esE" customClass="JCPage2ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="x6p-9O-Ce9"/>
+                        <viewControllerLayoutGuide type="bottom" id="aIW-Y0-bqw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="AXz-jT-fKn">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="JCPage2VC" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7OX-v3-45a">
+                                <rect key="frame" x="107" y="164" width="126" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zyW-hB-dec" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-704" y="-1665"/>
+        </scene>
+        <!--Page3 View Controller-->
+        <scene sceneID="n1A-5c-52t">
+            <objects>
+                <viewController storyboardIdentifier="JCPage3ViewController" id="VFC-Qv-mmk" customClass="JCPage3ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="dwF-bJ-aLF"/>
+                        <viewControllerLayoutGuide type="bottom" id="ef1-Hs-Sn9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9g5-Ku-aDj">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="JCPage3VC" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VZx-Yf-rsg">
+                                <rect key="frame" x="72" y="204" width="176" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GlY-f6-z4h" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-322" y="-1665"/>
+        </scene>
         <!--Tutorial PageVC-->
         <scene sceneID="M6b-Bu-O81">
             <objects>
@@ -267,6 +371,32 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MaN-XO-MTe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-912" y="-155"/>
+        </scene>
+        <!--Page1 View Controller - sdfgsfgddgfs-->
+        <scene sceneID="BEY-al-vFu">
+            <objects>
+                <viewController storyboardIdentifier="JCPage1ViewController" title="sdfgsfgddgfs" id="IEH-8M-zCg" customClass="JCPage1ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jZE-6C-mpm"/>
+                        <viewControllerLayoutGuide type="bottom" id="jfr-2l-ihC"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="gdP-s3-OU7">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="JCPage1VC" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n5W-c4-Pce">
+                                <rect key="frame" x="67" y="149" width="126" height="38"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CWy-mT-UHy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1080" y="-1665"/>
         </scene>
         <!--Directory Detail View Controller-->
         <scene sceneID="WkT-56-JQg">

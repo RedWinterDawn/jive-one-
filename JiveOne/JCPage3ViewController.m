@@ -23,10 +23,16 @@
     return self;
 }
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+}
+
+
+- (NSInteger)index{
+    return 2;
 }
 
 - (void)didReceiveMemoryWarning

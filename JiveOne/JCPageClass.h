@@ -1,5 +1,5 @@
 //
-//  JCContainerViewController.h
+//  JCPageClass.h
 //  JiveOne
 //
 //  Created by Doug on 5/5/14.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JCContainerViewController : UIViewController <UIPageViewControllerDataSource>
-
+@interface JCPageClass : UIViewController
+//@property (nonatomic) NSInteger index;
 @end

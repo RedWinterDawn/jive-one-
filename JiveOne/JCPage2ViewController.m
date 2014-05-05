@@ -29,6 +29,11 @@
     // Do any additional setup after loading the view.
 }
 
+- (NSInteger)index{
+    return 1;
+}
+
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

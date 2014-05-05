@@ -623,7 +623,7 @@ NSString *seenTutorial;
     }
     else if (type == JCRootLoginViewController)
     {
-        UIViewController *loginOrAppTutorialVC = [seenTutorial isEqualToString:@"YES"] ? [storyboard instantiateViewControllerWithIdentifier:@"JCLoginViewController"] : [storyboard instantiateViewControllerWithIdentifier:@"JCInitialTutorialVC"];
+        UIViewController *loginOrAppTutorialVC = [seenTutorial isEqualToString:@"YES"] ? [storyboard instantiateViewControllerWithIdentifier:@"JCLoginViewController"] : [storyboard instantiateViewControllerWithIdentifier:@"JCContainerViewController"];
         [self.window setRootViewController:loginOrAppTutorialVC];
         
         //at end of showing tutorial fire the following lines

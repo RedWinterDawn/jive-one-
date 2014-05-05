@@ -1,18 +1,18 @@
 //
-//  JCPage4ViewController.m
+//  JCPageClass.m
 //  JiveOne
 //
-//  Created by Doug on 5/1/14.
+//  Created by Doug on 5/5/14.
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCPage4ViewController.h"
+#import "JCPageClass.h"
 
-@interface JCPage4ViewController ()
+@interface JCPageClass ()
 
 @end
 
-@implementation JCPage4ViewController
+@implementation JCPageClass
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -27,10 +27,6 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-}
-
-- (NSInteger)index{
-    return 3;
 }
 
 

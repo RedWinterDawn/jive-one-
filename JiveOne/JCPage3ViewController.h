@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JCPageClass.h"
 
-@interface JCPage3ViewController : UIViewController
+
+@interface JCPage3ViewController : JCPageClass
+@property (nonatomic) NSInteger index;
 
 @end

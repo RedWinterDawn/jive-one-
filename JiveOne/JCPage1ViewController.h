@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JCPageClass.h"
 
 @protocol Page1Delegate;
 
-@interface JCPage1ViewController : UIViewController <UIScrollViewDelegate>
+@interface JCPage1ViewController : JCPageClass <UIScrollViewDelegate>
 @property (strong,nonatomic) UIAttachmentBehavior* attachment;
-
+@property (nonatomic) NSInteger index;
 @end
 
 @protocol Page1Delegate <NSObject>
