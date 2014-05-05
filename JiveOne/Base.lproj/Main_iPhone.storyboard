@@ -228,64 +228,6 @@
             </objects>
             <point key="canvasLocation" x="414" y="182"/>
         </scene>
-        <!--Initial TutorialVC-->
-        <scene sceneID="Uxn-LN-Vtt">
-            <objects>
-                <viewController storyboardIdentifier="JCInitialTutorialVC" id="o37-aF-65i" customClass="JCInitialTutorialVC" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="CIe-Xf-p9V"/>
-                        <viewControllerLayoutGuide type="bottom" id="7Kq-HZ-NLW"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="lxo-AH-p2w">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ovY-B9-Wzt">
-                                <rect key="frame" x="99" y="512" width="122" height="36"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="startButton:" destination="o37-aF-65i" eventType="touchUpInside" id="S4w-lo-om5"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="D2p-qa-C4g" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1420" y="137"/>
-        </scene>
-        <!--Tutorial Content View Controller-->
-        <scene sceneID="1Lo-Md-THD">
-            <objects>
-                <viewController storyboardIdentifier="JCTutorialContentViewController" id="57f-6E-IIu" customClass="JCTutorialContentViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="pfe-68-9UM"/>
-                        <viewControllerLayoutGuide type="bottom" id="S0T-b2-0jQ"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Pqp-wd-EGT">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lfv-d1-SKU">
-                                <rect key="frame" x="20" y="20" width="280" height="43"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                    </view>
-                    <connections>
-                        <outlet property="titleLabel" destination="Lfv-d1-SKU" id="6au-F1-Lbc"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="2Ej-cd-Rp6" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-912" y="599"/>
-        </scene>
         <!--Page View Controller - JCPage1ViewController-->
         <scene sceneID="ZtT-Cx-ctV">
             <objects>
@@ -305,7 +247,6 @@
                     <view key="view" contentMode="scaleToFill" id="9R9-Fg-9O1">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h46-yP-dwC" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -363,14 +304,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GlY-f6-z4h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-322" y="-1665"/>
-        </scene>
-        <!--Tutorial PageVC-->
-        <scene sceneID="M6b-Bu-O81">
-            <objects>
-                <pageViewController storyboardIdentifier="PageViewController" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="d61-IG-C01" customClass="JCTutorialPageVC" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="MaN-XO-MTe" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-912" y="-155"/>
         </scene>
         <!--Page1 View Controller - sdfgsfgddgfs-->
         <scene sceneID="BEY-al-vFu">
