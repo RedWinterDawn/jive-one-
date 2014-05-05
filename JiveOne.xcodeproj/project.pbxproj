@@ -172,6 +172,11 @@
 		9137919918FDB0EE00709AD3 /* JCGroupConversationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9137919718FDB0EE00709AD3 /* JCGroupConversationCell.xib */; };
 		9159C88D18EDD20700DF769B /* avatar-orig2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9159C88C18EDD20700DF769B /* avatar-orig2.png */; };
 		916958FF18FEDD76006FDD60 /* JCConversationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 274493AF18D0DA9B002744CB /* JCConversationCell.xib */; };
+		9172ACF61917E8EE00481B01 /* JCContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9172ACED1917E8EE00481B01 /* JCContainerViewController.m */; };
+		9172ACF71917E8EE00481B01 /* JCPage1ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9172ACEF1917E8EE00481B01 /* JCPage1ViewController.m */; };
+		9172ACF81917E8EE00481B01 /* JCPage2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9172ACF11917E8EE00481B01 /* JCPage2ViewController.m */; };
+		9172ACF91917E8EE00481B01 /* JCPage3ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9172ACF31917E8EE00481B01 /* JCPage3ViewController.m */; };
+		9172ACFA1917E8EE00481B01 /* JCPage4ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9172ACF51917E8EE00481B01 /* JCPage4ViewController.m */; };
 		91743A9D191145B100FF8A09 /* JCTutorialPageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 91743A9C191145B100FF8A09 /* JCTutorialPageVC.m */; };
 		91743AA0191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91743A9F191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m */; };
 		9187215019106D99002A4271 /* JCTutorialContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9187214F19106D99002A4271 /* JCTutorialContentViewController.m */; };
@@ -455,6 +460,16 @@
 		9137919618FDB0EE00709AD3 /* JCGroupConversationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCGroupConversationCell.m; sourceTree = "<group>"; };
 		9137919718FDB0EE00709AD3 /* JCGroupConversationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JCGroupConversationCell.xib; path = JiveOne/JCGroupConversationCell.xib; sourceTree = SOURCE_ROOT; };
 		9159C88C18EDD20700DF769B /* avatar-orig2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatar-orig2.png"; sourceTree = "<group>"; };
+		9172ACEC1917E8EE00481B01 /* JCContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCContainerViewController.h; sourceTree = "<group>"; };
+		9172ACED1917E8EE00481B01 /* JCContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCContainerViewController.m; sourceTree = "<group>"; };
+		9172ACEE1917E8EE00481B01 /* JCPage1ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPage1ViewController.h; sourceTree = "<group>"; };
+		9172ACEF1917E8EE00481B01 /* JCPage1ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPage1ViewController.m; sourceTree = "<group>"; };
+		9172ACF01917E8EE00481B01 /* JCPage2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPage2ViewController.h; sourceTree = "<group>"; };
+		9172ACF11917E8EE00481B01 /* JCPage2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPage2ViewController.m; sourceTree = "<group>"; };
+		9172ACF21917E8EE00481B01 /* JCPage3ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPage3ViewController.h; sourceTree = "<group>"; };
+		9172ACF31917E8EE00481B01 /* JCPage3ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPage3ViewController.m; sourceTree = "<group>"; };
+		9172ACF41917E8EE00481B01 /* JCPage4ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPage4ViewController.h; sourceTree = "<group>"; };
+		9172ACF51917E8EE00481B01 /* JCPage4ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPage4ViewController.m; sourceTree = "<group>"; };
 		91743A9B191145B100FF8A09 /* JCTutorialPageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTutorialPageVC.h; sourceTree = "<group>"; };
 		91743A9C191145B100FF8A09 /* JCTutorialPageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTutorialPageVC.m; sourceTree = "<group>"; };
 		91743A9E191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTermsAndConditonsVCViewController.h; sourceTree = "<group>"; };
@@ -1162,6 +1177,16 @@
 				9187215219106EE6002A4271 /* JCInitialTutorialVC.m */,
 				9187214E19106D99002A4271 /* JCTutorialContentViewController.h */,
 				9187214F19106D99002A4271 /* JCTutorialContentViewController.m */,
+				9172ACEC1917E8EE00481B01 /* JCContainerViewController.h */,
+				9172ACED1917E8EE00481B01 /* JCContainerViewController.m */,
+				9172ACEE1917E8EE00481B01 /* JCPage1ViewController.h */,
+				9172ACEF1917E8EE00481B01 /* JCPage1ViewController.m */,
+				9172ACF01917E8EE00481B01 /* JCPage2ViewController.h */,
+				9172ACF11917E8EE00481B01 /* JCPage2ViewController.m */,
+				9172ACF21917E8EE00481B01 /* JCPage3ViewController.h */,
+				9172ACF31917E8EE00481B01 /* JCPage3ViewController.m */,
+				9172ACF41917E8EE00481B01 /* JCPage4ViewController.h */,
+				9172ACF51917E8EE00481B01 /* JCPage4ViewController.m */,
 			);
 			name = AppTutorial;
 			sourceTree = "<group>";
@@ -1434,6 +1459,8 @@
 				274493BC18D0E98C002744CB /* Company.m in Sources */,
 				27EA1DFD1900A83D0075CAEE /* JCVoiceTableViewController.m in Sources */,
 				2700987718F4714100B6BC2F /* JSAvatarImageFactory.m in Sources */,
+				9172ACF81917E8EE00481B01 /* JCPage2ViewController.m in Sources */,
+				9172ACF61917E8EE00481B01 /* JCContainerViewController.m in Sources */,
 				DD28DA5218AEC4F5003BFC44 /* JCAccountViewController.m in Sources */,
 				91743AA0191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m in Sources */,
 				2751592518AD32E500FD8D3F /* JCConversationsViewController.m in Sources */,
@@ -1468,9 +1495,11 @@
 				9135DE0018BBFC7A0052E998 /* JCVoicemailViewController.m in Sources */,
 				273CC25E1900B23B005A2857 /* JCVoiceCell.m in Sources */,
 				2710E40F18CEC8C300152C91 /* ConversationEntry+Custom.m in Sources */,
+				9172ACF91917E8EE00481B01 /* JCPage3ViewController.m in Sources */,
 				91743A9D191145B100FF8A09 /* JCTutorialPageVC.m in Sources */,
 				277F094B18FF4F5100EEF0E3 /* Voicemail.m in Sources */,
 				2751591F18AD303500FD8D3F /* JCDirectoryViewController.m in Sources */,
+				9172ACF71917E8EE00481B01 /* JCPage1ViewController.m in Sources */,
 				DD3BD9F418DCB1740080318E /* Voicemail+Custom.m in Sources */,
 				F258589218BD3A420020AF34 /* JCDirectoryGroupViewController.m in Sources */,
 				2700987A18F4714100B6BC2F /* JSBubbleView.m in Sources */,
@@ -1478,6 +1507,7 @@
 				27B8152618D93F1A00516BF6 /* NotificationView.m in Sources */,
 				274493C518D0E98D002744CB /* ContactGroup.m in Sources */,
 				275E809618AED884009AD776 /* JCSocketDispatch.m in Sources */,
+				9172ACFA1917E8EE00481B01 /* JCPage4ViewController.m in Sources */,
 				2700987418F4714100B6BC2F /* NSString+JSMessagesView.m in Sources */,
 				9187215319106EE6002A4271 /* JCInitialTutorialVC.m in Sources */,
 			);
