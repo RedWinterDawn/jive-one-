@@ -55,7 +55,7 @@
         self.percentDoneOfAnimationProgress = percentage;
         
         NSLog(@"Offset<: %f : %f", scrollView.contentOffset.x, percentage );
-        self.anchor = CGPointMake(self.anchor.x + (self.percentDoneOfAnimationProgress), self.anchor.y);
+//        self.anchor = CGPointMake(self.anchor.x + (self.percentDoneOfAnimationProgress), self.anchor.y);
         
 //        NSLog(@"anchor.x : %f frame.orgin.x : %f", self.anchor.x, self.headingLabel2.frame.origin.x);
         
@@ -104,7 +104,7 @@
         
         for (NSString *index in pagesStoryBoardIDs) {
             JCPage1ViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier: index];
-            viewController.delegate = self;
+//            viewController.delegate = self;
             
             [_arrayOfPageViewControllers addObject: viewController];
         }
@@ -183,34 +183,34 @@
     return [self viewControllerAtIndex:index];
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
-    //need to determine if the view offset value is positive or negitive based on the previous value. for springback..
-    
-    
-    if (scrollView.contentOffset.x > 319 && scrollView.contentOffset.x < 321) {
-        NSLog(@"*****0*****");
-    }else if(scrollView.contentOffset.x < 319)
-    {
-        //range is 0 - 319
-        //scale is 319
-        CGFloat percentage = (scrollView.contentOffset.x / 319);
-        percentage = (percentage < .000001) ? .000001 : percentage;
-        self.percentDoneOfAnimationProgress = percentage;
-        
-        
-        
-        
-    }else if (scrollView.contentOffset.x > 321){
-        //range is 321 - 640
-        //scale is 319
-        CGFloat percentage = ((scrollView.contentOffset.x - 319) / 321);
-        percentage = (percentage > .999999) ? .999999 : percentage;
-        self.percentDoneOfAnimationProgress = percentage;
-        
-        
-    }
-}
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    
+//    //need to determine if the view offset value is positive or negitive based on the previous value. for springback..
+//    
+//    
+//    if (scrollView.contentOffset.x > 319 && scrollView.contentOffset.x < 321) {
+//        NSLog(@"*****0*****");
+//    }else if(scrollView.contentOffset.x < 319)
+//    {
+//        //range is 0 - 319
+//        //scale is 319
+//        CGFloat percentage = (scrollView.contentOffset.x / 319);
+//        percentage = (percentage < .000001) ? .000001 : percentage;
+//        self.percentDoneOfAnimationProgress = percentage;
+//        
+//        
+//        
+//        
+//    }else if (scrollView.contentOffset.x > 321){
+//        //range is 321 - 640
+//        //scale is 319
+//        CGFloat percentage = ((scrollView.contentOffset.x - 319) / 321);
+//        percentage = (percentage > .999999) ? .999999 : percentage;
+//        self.percentDoneOfAnimationProgress = percentage;
+//        
+//        
+//    }
+//}
 
 - (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController
 {

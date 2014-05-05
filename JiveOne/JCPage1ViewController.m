@@ -66,10 +66,10 @@
 
 - (UIDynamicBehavior *)attachment
 {
-    if(!_attachment){
-        _attachment = [[UIAttachmentBehavior alloc] initWithItem:self.headingLabel2 attachedToAnchor:anchor];
-        [self.animator addBehavior:self.attachment];
-    }
+//    if(!_attachment){
+//        _attachment = [[UIAttachmentBehavior alloc] initWithItem:self.headingLabel2 attachedToAnchor:anchor];
+//        [self.animator addBehavior:self.attachment];
+//    }
     return _attachment;
 }
 
