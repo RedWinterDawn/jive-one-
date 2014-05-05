@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
+#import "JCAppDelegate.h"
 #import "JCContainerViewController.h"
 #import "JCPage1ViewController.h"
 #import "JCPage2ViewController.h"
@@ -53,6 +54,10 @@
     [self addChildViewController:_pageViewController];
     [self.view addSubview:_pageViewController.view];
     [self.pageViewController didMoveToParentViewController:self];
+    
+    //never show the intro again...
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasSeenTutorial"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 -(NSInteger *)currentIndex
@@ -119,7 +124,7 @@
     switch (index) {
         case 0:
             pageContentViewController = (JCPageClass *)self.page1;
-
+            
             break;
         case 1:
             pageContentViewController = (JCPageClass *)self.page2;
@@ -130,7 +135,7 @@
             break;
         case 3:
             pageContentViewController = (JCPageClass *)self.page4;
-
+            
             break;
     }
     
@@ -177,38 +182,15 @@
     return 0;
 }
 
-- (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers
+
+- (void)goToApplication
 {
-//    NSUInteger index = [self.pages indexOfObject:pageViewController];
-
-    [self.pageViewController setViewControllers:@[self.pages[(NSInteger)self.currentIndex]] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-
+    JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
+    [delegate changeRootViewController:JCRootTutorialViewController];
+    [delegate startSocket:NO];
 }
 
-- (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
-{
-    self.currentIndex = (NSInteger*)[self.pages indexOfObject:[[pageViewController viewControllers] objectAtIndex:0]];
+- (IBAction)dismissButtonPressed:(id)sender {
+    [self goToApplication];
 }
-
-//- (IBAction)startButton:(id)sender {
-//    JCTutorialContentViewController *startingViewController = [self viewControllerAtIndex:0];
-//    NSArray *viewControllers = @[startingViewController];
-//    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionReverse animated:NO completion:nil];
-//}
-
-
-
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 @end

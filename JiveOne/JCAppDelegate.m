@@ -18,6 +18,7 @@
 #import "TRVSMonitor.h"
 #import "JCMessagesViewController.h"
 #import "TestFlight.h"
+#import "JCContainerViewController.h"
 
 @implementation JCAppDelegate
 
@@ -617,19 +618,23 @@ NSString *seenTutorial;
     
     if (type == JCRootTabbarViewController) {
         
-        UITabBarController *tabVC = [storyboard instantiateViewControllerWithIdentifier:@"UITabBarController"];
-        [self.window setRootViewController:tabVC];
+//        UITabBarController *tabVC = [storyboard instantiateViewControllerWithIdentifier:@"UITabBarController"];
+//        [self.window setRootViewController:tabVC];
+        UIViewController *tabOrAppTutorialVC = [seenTutorial isEqualToString:@"YES"] ? [storyboard instantiateViewControllerWithIdentifier:@"UITabBarController"] : [storyboard instantiateViewControllerWithIdentifier:@"JCContainerViewController"];
+        [self.window setRootViewController:tabOrAppTutorialVC];
         
     }
     else if (type == JCRootLoginViewController)
     {
-        UIViewController *loginOrAppTutorialVC = [seenTutorial isEqualToString:@"YES"] ? [storyboard instantiateViewControllerWithIdentifier:@"JCLoginViewController"] : [storyboard instantiateViewControllerWithIdentifier:@"JCContainerViewController"];
-        [self.window setRootViewController:loginOrAppTutorialVC];
+
+        UIViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"JCLoginViewController"];
+        [self.window setRootViewController:loginVC];
+
+    }else if(type == JCRootTutorialViewController)
+    {
         
-        //at end of showing tutorial fire the following lines
-        //[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasSeenTutorial"];
-        //[[NSUserDefaults standardUserDefaults] synchronize];
     }
+    
     [self.window makeKeyAndVisible];
 }
 

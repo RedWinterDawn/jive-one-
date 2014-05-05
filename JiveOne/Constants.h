@@ -102,6 +102,7 @@ typedef enum {
 
 typedef enum {
     JCRootLoginViewController,
-    JCRootTabbarViewController
+    JCRootTabbarViewController,
+    JCRootTutorialViewController
 } JCRootViewControllerType;
 
