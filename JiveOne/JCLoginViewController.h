@@ -14,6 +14,10 @@
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UILabel *loginStatusLabel;
+@property (nonatomic) BOOL seenTutorial;
+@property (nonatomic) BOOL doneLoadingContent;
+@property (nonatomic) BOOL userIsDoneWithTutorial;
+
 - (IBAction)termsAndConditionsButton:(id)sender;
 
 @end

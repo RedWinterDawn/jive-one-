@@ -28,7 +28,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wtd-bQ-Ty4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1918" y="-2409"/>
+            <point key="canvasLocation" x="3004" y="-2369"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="yum-B5-f91">
@@ -131,11 +131,12 @@
                         <outlet property="loginStatusLabel" destination="IdV-9W-Sm5" id="kRF-Zh-sB9"/>
                         <outlet property="passwordTextField" destination="GZW-BX-qe0" id="McQ-Ao-Xqa"/>
                         <outlet property="usernameTextField" destination="Tho-ch-vQR" id="NY5-OJ-rkG"/>
+                        <segue destination="0GY-Sf-KwF" kind="modal" identifier="AppTutorialSegue" modalTransitionStyle="coverVertical" id="rnB-Wd-ic6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KCP-nN-szi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="420" y="-958"/>
+            <point key="canvasLocation" x="450" y="-1652"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="CD6-Xa-a24">
@@ -234,7 +235,7 @@
                 <pageViewController storyboardIdentifier="JCPageViewController" autoresizesArchivedViewToFullSize="NO" title="JCPage1ViewController" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="R8Y-OS-UTf" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="du5-UC-Fyt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="414" y="-2409"/>
+            <point key="canvasLocation" x="1500" y="-2369"/>
         </scene>
         <!--Container View Controller-->
         <scene sceneID="W4k-dG-q3a">
@@ -267,10 +268,11 @@
                         </subviews>
                         <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
+                    <navigationItem key="navigationItem" id="bq9-7d-CLc"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h46-yP-dwC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="438" y="-1744"/>
+            <point key="canvasLocation" x="1108" y="-2369"/>
         </scene>
         <!--Page2 View Controller-->
         <scene sceneID="72L-8n-cy9">
@@ -299,7 +301,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zyW-hB-dec" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1172" y="-2409"/>
+            <point key="canvasLocation" x="2258" y="-2369"/>
         </scene>
         <!--Page3 View Controller-->
         <scene sceneID="n1A-5c-52t">
@@ -328,7 +330,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GlY-f6-z4h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1554" y="-2409"/>
+            <point key="canvasLocation" x="2640" y="-2369"/>
         </scene>
         <!--Page1 View Controller - sdfgsfgddgfs-->
         <scene sceneID="BEY-al-vFu">
@@ -357,7 +359,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CWy-mT-UHy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="796" y="-2409"/>
+            <point key="canvasLocation" x="1882" y="-2369"/>
         </scene>
         <!--Directory Detail View Controller-->
         <scene sceneID="WkT-56-JQg">

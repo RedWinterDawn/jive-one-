@@ -37,7 +37,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"seenAppTutorial"]) {
+        self.userIsDoneWithTutorial = YES;
+    }
+    else
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkIfLoadingHasFinished:) name:@"AppTutorialDismissed" object:nil];
+    }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshAuthenticationCredentials:) name:kAuthenticationFromTokenFailed object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshAuthenticationCredentials:) name:kAuthenticationFromTokenFailedWithTimeout object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tokenValidityPassed:) name:kAuthenticationFromTokenSucceeded object:nil];
@@ -121,6 +127,7 @@
         [self showHudWithTitle:@"One Moment Please" detail:@"Logging In"];
         [[JCAuthenticationManager sharedInstance] loginWithUsername:_usernameTextField.text password:_passwordTextField.text completed:^(BOOL success, NSError *error) {
             [self hideHud];
+            self.doneLoadingContent = NO;
             if (success) {
                 [self tokenValidityPassed:nil];
             }
@@ -166,9 +173,54 @@
     }
 }
 
+-(BOOL)seenTutorial
+{
+    return _seenTutorial = [[NSUserDefaults standardUserDefaults] boolForKey:@"seenAppTutorial"];
+}
+
+-(BOOL)doneLoadingContent
+{
+    if (!_doneLoadingContent) {
+        _doneLoadingContent = NO;
+    }
+    return _doneLoadingContent;
+}
+-(BOOL)userIsDoneWithTutorial
+{
+    if (!_userIsDoneWithTutorial) {
+        _userIsDoneWithTutorial = NO;
+    }
+    return _userIsDoneWithTutorial;
+}
+
+- (void)checkIfLoadingHasFinished:(NSNotification *)notification
+{
+    self.userIsDoneWithTutorial = YES;
+    if ([[notification name] isEqualToString:@"AppTutorialDismissed"])
+    {
+        NSLog (@"Successfully received the AppTutorialDismissed notification!");
+        if (!self.doneLoadingContent) {
+            [self showHudWithTitle:@"One Moment Please" detail:@"Preparing for first use"];
+        }
+        else
+        {
+            [self goToApplication];
+        }
+    }
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"seenAppTutorial"]) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AppTutorialDismissed" object:nil];
+    }
+    
+
+}
+
 - (void)tokenValidityPassed:(NSNotification*)notification
 {
-    [self showHudWithTitle:@"One Moment Please" detail:@"Preparing for first use"];
+    if (!self.seenTutorial) {
+        [self performSegueWithIdentifier: @"AppTutorialSegue" sender: self];
+    }
+    
+//    [self showHudWithTitle:@"One Moment Please" detail:@"Preparing for first use"];
     [self fetchEntities];
 }
 
@@ -210,7 +262,9 @@
         }
         else {
             [self hideHud];
-            [self goToApplication];
+            if (self.doneLoadingContent && self.userIsDoneWithTutorial) {
+                [self goToApplication];
+            }
          }
         
     } failure:^(NSError *err) {
@@ -242,7 +296,9 @@
     [[JCOsgiClient sharedClient] RetrieveVoicemailForEntity:nil success:^(id JSON) {
         
         [self hideHud];
-        [self goToApplication];
+        if (self.userIsDoneWithTutorial) {
+            [self goToApplication];
+        }
         
     } failure:^(NSError *err) {
         [self errorInitializingApp:err];
@@ -272,13 +328,11 @@
     }];
 }
 
-
-
 - (void)goToApplication
 {
-    JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
-    [delegate changeRootViewController:JCRootTabbarViewController];
-    [delegate startSocket:NO];
+        JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
+        [delegate changeRootViewController:JCRootTabbarViewController];
+        [delegate startSocket:NO];
 }
 
 - (void)errorInitializingApp:(NSError*)err
@@ -306,6 +360,7 @@
 
 - (void)hideHud
 {
+    self.doneLoadingContent = YES;
     if (hud) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [hud removeFromSuperview];
@@ -317,6 +372,7 @@
 - (IBAction)termsAndConditionsButton:(id)sender {
     [self performSegueWithIdentifier: @"TCSegue" sender: self];
 }
+
 - (IBAction)EULAButton:(id)sender {
     [self performSegueWithIdentifier: @"EULASegue" sender: self];
 }

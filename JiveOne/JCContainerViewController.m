@@ -191,6 +191,15 @@
 }
 
 - (IBAction)dismissButtonPressed:(id)sender {
-    [self goToApplication];
+//    [self goToApplication];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    dispatch_async(dispatch_get_main_queue(),^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"AppTutorialDismissed" object:nil];
+    });
+//    [[NSNotificationCenter defaultCenter]
+//     postNotificationName:@"AppTutorialDismissed"
+//     object:self];
+//    [self showHudWithTitle:@"One Moment Please" detail:@"Preparing for first use"];
+
 }
 @end

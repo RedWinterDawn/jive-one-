@@ -608,22 +608,14 @@
 
 - (void)changeRootViewController:(JCRootViewControllerType)type
 {
-    
-    
-//    seenTutorial = YES;
-    
     self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
-    
-    
     
     UIStoryboard *storyboard = self.deviceIsIPhone ? [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] : [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
     
     if (type == JCRootTabbarViewController) {
         
-//        UITabBarController *tabVC = [storyboard instantiateViewControllerWithIdentifier:@"UITabBarController"];
-//        [self.window setRootViewController:tabVC];
-        UIViewController *tabOrAppTutorialVC = self.seenTutorial ? [storyboard instantiateViewControllerWithIdentifier:@"UITabBarController"] : [storyboard instantiateViewControllerWithIdentifier:@"JCContainerViewController"];
-        [self.window setRootViewController:tabOrAppTutorialVC];
+        UIViewController *tabVC = [storyboard instantiateViewControllerWithIdentifier:@"UITabBarController"];
+        [self.window setRootViewController:tabVC];
         
     }
     else if (type == JCRootLoginViewController)
@@ -632,9 +624,6 @@
         UIViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"JCLoginViewController"];
         [self.window setRootViewController:loginVC];
 
-    }else if(type == JCRootTutorialViewController)
-    {
-        
     }
     
     [self.window makeKeyAndVisible];
