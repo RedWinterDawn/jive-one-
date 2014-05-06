@@ -32,7 +32,7 @@
     self.creationTime.text = [Common longDateFromTimestamp:voicemail.createdDate];
     self.elapsed.text = @"0:00";
     self.duration.text = @"0:00";
-    [self.slider setThumbImage:[UIImage imageNamed:@"thumb1.png"] forState:UIControlStateNormal];
+//    [self.slider setThumbImage:[UIImage imageNamed:@"thumb1.png"] forState:UIControlStateNormal];
     self.elapsed.adjustsFontSizeToFitWidth = YES;
 	self.duration.adjustsFontSizeToFitWidth = YES;
 	_slider.minimumValue = 0.0;
