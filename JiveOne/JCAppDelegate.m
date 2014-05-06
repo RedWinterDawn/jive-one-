@@ -22,11 +22,13 @@
 
 @implementation JCAppDelegate
 
-
-NSString *seenTutorial;
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //load UserDefaults
+    NSString *defaultPrefsFile = [[NSBundle mainBundle] pathForResource:@"UserDefaults" ofType:@"plist"];
+    NSDictionary *defaultPreferences = [NSDictionary dictionaryWithContentsOfFile:defaultPrefsFile];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:defaultPreferences];
+    
     
     //check if we are using a iphone or ipad
     self.deviceIsIPhone = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? NO : YES;
@@ -597,18 +599,18 @@ NSString *seenTutorial;
     }
 }
 
+-(BOOL)seenTutorial
+{
+    return _seenTutorial = [[NSUserDefaults standardUserDefaults] boolForKey:@"seenAppTutorial"];
+}
+
 #pragma mark - Change Root ViewController
 
 - (void)changeRootViewController:(JCRootViewControllerType)type
 {
-    seenTutorial = @"NO";
-    if(![@"YES" isEqualToString:[[NSUserDefaults standardUserDefaults]
-                                 objectForKey:@"seenAppTutorial"]]){
-        seenTutorial = @"NO";
-    }else {
-        seenTutorial = @"YES";
-    }
-        seenTutorial = @"YES";
+    
+    
+//    seenTutorial = YES;
     
     self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
     
@@ -620,7 +622,7 @@ NSString *seenTutorial;
         
 //        UITabBarController *tabVC = [storyboard instantiateViewControllerWithIdentifier:@"UITabBarController"];
 //        [self.window setRootViewController:tabVC];
-        UIViewController *tabOrAppTutorialVC = [seenTutorial isEqualToString:@"YES"] ? [storyboard instantiateViewControllerWithIdentifier:@"UITabBarController"] : [storyboard instantiateViewControllerWithIdentifier:@"JCContainerViewController"];
+        UIViewController *tabOrAppTutorialVC = self.seenTutorial ? [storyboard instantiateViewControllerWithIdentifier:@"UITabBarController"] : [storyboard instantiateViewControllerWithIdentifier:@"JCContainerViewController"];
         [self.window setRootViewController:tabOrAppTutorialVC];
         
     }

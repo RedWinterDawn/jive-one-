@@ -56,7 +56,7 @@
     [self.pageViewController didMoveToParentViewController:self];
     
     //never show the intro again...
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasSeenTutorial"];
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"seenAppTutorial"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -186,7 +186,7 @@
 - (void)goToApplication
 {
     JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
-    [delegate changeRootViewController:JCRootTutorialViewController];
+    [delegate changeRootViewController:JCRootTabbarViewController];
     [delegate startSocket:NO];
 }
 

@@ -16,7 +16,7 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property BOOL deviceIsIPhone;
-
+@property (nonatomic) BOOL seenTutorial;
 - (void)changeRootViewController:(JCRootViewControllerType)type;
 - (void)startSocket:(BOOL)inBackground;
 - (void)stopSocket;
