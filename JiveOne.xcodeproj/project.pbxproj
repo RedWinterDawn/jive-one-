@@ -2099,7 +2099,7 @@
 					"-framework",
 					SystemConfiguration,
 				);
-				PRODUCT_NAME = "JiveOne Enterprise";
+				PRODUCT_NAME = JiveOneEnterprise;
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2149,7 +2149,7 @@
 					"-framework",
 					SystemConfiguration,
 				);
-				PRODUCT_NAME = "JiveOne Enterprise";
+				PRODUCT_NAME = JiveOneEnterprise;
 				PROVISIONING_PROFILE = "5D91116E-2070-4EF3-880B-C4A07E2656B7";
 				WRAPPER_EXTENSION = app;
 			};
