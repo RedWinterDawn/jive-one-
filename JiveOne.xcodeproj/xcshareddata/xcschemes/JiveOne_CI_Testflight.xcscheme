@@ -58,12 +58,6 @@
             </BuildableReference>
             <SkippedTests>
                <Test
-                  Identifier = "JCOsgiClientTest">
-               </Test>
-               <Test
-                  Identifier = "JiveOneTests">
-               </Test>
-               <Test
                   Identifier = "JiveOneTests/testLogout">
                </Test>
             </SkippedTests>
