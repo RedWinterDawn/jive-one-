@@ -533,7 +533,7 @@
 		2710E40E18CEC8C300152C91 /* ConversationEntry+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ConversationEntry+Custom.m"; sourceTree = "<group>"; };
 		271EBDAE1910525E00421BA9 /* GTalkNotify.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = GTalkNotify.aiff; sourceTree = "<group>"; };
 		2727F420191AA92F00A41185 /* JiveOne Enterprise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JiveOne Enterprise.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2727F421191AA92F00A41185 /* JiveOne Enterprise-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "JiveOne Enterprise-Info.plist"; path = "/Users/egueiros/Development/iOS-JiveOne/JiveOne Enterprise-Info.plist"; sourceTree = "<absolute>"; };
+		2727F421191AA92F00A41185 /* JiveOne Enterprise-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = "JiveOne Enterprise-Info.plist"; path = "../../../../egueiros/Development/iOS-JiveOne/JiveOne Enterprise-Info.plist"; sourceTree = SOURCE_ROOT; };
 		272B61DB18B2A4DD00EB8ED5 /* TRVSMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRVSMonitor.h; sourceTree = "<group>"; };
 		272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRVSMonitor.m; sourceTree = "<group>"; };
 		272F65FB18D3A7A4009BD7B3 /* HPGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPGrowingTextView.h; sourceTree = "<group>"; };
