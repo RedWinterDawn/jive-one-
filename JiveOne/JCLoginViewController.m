@@ -134,10 +134,12 @@
                 if (error.userInfo[@"error"]) {
                     [self alertStatus:@"Authentication Error" message:error.userInfo[@"error"]];
                     NSLog(@"Authentication error: %@", error);
+                    [self hideHud];
                 }
                 else {
                     [self alertStatus:@"Authentication Error" message:error.localizedDescription];
                      NSLog(@"Authentication error: %@", error);
+                    [self hideHud];
                 }
             }
             
