@@ -8,10 +8,10 @@
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "275F4A4D18AD0FBC00D2F069"
@@ -26,7 +26,7 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
-      buildConfiguration = "Debug">
+      buildConfiguration = "Release">
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -37,22 +37,14 @@
                BlueprintName = "JiveOneTests"
                ReferencedContainer = "container:JiveOne.xcodeproj">
             </BuildableReference>
-            <SkippedTests>
-               <Test
-                  Identifier = "JCOsgiClientTest/testShouldRetrieveClientEntities">
-               </Test>
-               <Test
-                  Identifier = "JiveOneTests/testLogout">
-               </Test>
-            </SkippedTests>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "275F4A4D18AD0FBC00D2F069"
-            BuildableName = "JiveOne.app"
-            BlueprintName = "JiveOne"
+            BlueprintIdentifier = "2727F350191AA92F00A41185"
+            BuildableName = "JiveOne Enterprise.app"
+            BlueprintName = "JiveOne Enterprise"
             ReferencedContainer = "container:JiveOne.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -62,16 +54,16 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "275F4A4D18AD0FBC00D2F069"
-            BuildableName = "JiveOne.app"
-            BlueprintName = "JiveOne"
+            BlueprintIdentifier = "2727F350191AA92F00A41185"
+            BuildableName = "JiveOne Enterprise.app"
+            BlueprintName = "JiveOne Enterprise"
             ReferencedContainer = "container:JiveOne.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -87,18 +79,27 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "275F4A4D18AD0FBC00D2F069"
-            BuildableName = "JiveOne.app"
-            BlueprintName = "JiveOne"
+            BlueprintIdentifier = "2727F350191AA92F00A41185"
+            BuildableName = "JiveOne Enterprise.app"
+            BlueprintName = "JiveOne Enterprise"
             ReferencedContainer = "container:JiveOne.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
-      buildConfiguration = "Debug">
+      buildConfiguration = "Release">
    </AnalyzeAction>
    <ArchiveAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       revealArchiveInOrganizer = "YES">
+      <PostActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "&#10;# DO NOT EDIT BELOW HERE!&#10;########################################&#10;DSYM=&quot;/tmp/Archive.xcarchive/dSYMs/${PRODUCT_NAME}.app.dSYM&quot;&#10;&#10;IPA=&quot;/tmp/${PRODUCT_NAME}.ipa&quot;&#10;&#10;APP=&quot;/tmp/Archive.xcarchive/Products/Applications/${PRODUCT_NAME}.app&quot;&#10;&#10;# Clear out any old copies of the Archive&#10;echo &quot;Removing old Archive files from /tmp...&quot;;&#10;/bin/rm -rf /tmp/Archive.xcarchive*&#10;&#10;#Copy over the latest build the bot just created&#10;echo &quot;Copying latest Archive to /tmp/...&quot;;&#10;LATESTBUILD=$(ls -1rt /Library/Server/Xcode/Data/BotRuns | tail -1)&#10;/bin/cp -Rp &quot;/Library/Server/Xcode/Data/BotRuns/${LATESTBUILD}/output/Archive.xcarchive&quot; &quot;/tmp/&quot;&#10;&#10;echo &quot;Creating .ipa for ${PRODUCT_NAME}&quot;&#10;/bin/rm &quot;${IPA}&quot;&#10;/usr/bin/xcrun -sdk iphoneos PackageApplication -v &quot;${APP}&quot; -o &quot;${IPA}&quot; --sign &quot;${SIGNING_IDENTITY}&quot; --embed &quot;${PROVISIONING_PROFILE}&quot;&#10;echo &quot;Done with IPA creation.&quot;&#10;&#10;echo &quot;Copying IPA to jiveios.local Directory.&quot;&#10;/bin/cp -p &quot;${IPA}&quot; &quot;/Library/Server/Web/Data/Sites/Default/&quot;&#10;echo &quot;Done copying IPA to jiveios.local Directory.&quot;">
+            </ActionContent>
+         </ExecutionAction>
+      </PostActions>
    </ArchiveAction>
 </Scheme>
