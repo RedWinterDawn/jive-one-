@@ -185,21 +185,17 @@
 
 - (void)goToApplication
 {
-    JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
-    [delegate changeRootViewController:JCRootTabbarViewController];
-    [delegate startSocket:NO];
+    [self performSegueWithIdentifier: @"TutorialToTabBarSegue" sender: self];
 }
 
 - (IBAction)dismissButtonPressed:(id)sender {
-//    [self goToApplication];
-    [self dismissViewControllerAnimated:YES completion:nil];
-    dispatch_async(dispatch_get_main_queue(),^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"AppTutorialDismissed" object:nil];
-    });
+    [self dismissViewControllerAnimated:YES completion:^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"AppTutorialDismissed" object:nil];
+            }];
+    
 //    [[NSNotificationCenter defaultCenter]
 //     postNotificationName:@"AppTutorialDismissed"
 //     object:self];
-//    [self showHudWithTitle:@"One Moment Please" detail:@"Preparing for first use"];
-
+//    [self goToApplication];
 }
 @end

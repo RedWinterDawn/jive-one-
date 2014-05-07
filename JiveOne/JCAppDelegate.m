@@ -615,6 +615,7 @@
     if (type == JCRootTabbarViewController) {
         
         UIViewController *tabVC = [storyboard instantiateViewControllerWithIdentifier:@"UITabBarController"];
+        
         [self.window setRootViewController:tabVC];
         
     }

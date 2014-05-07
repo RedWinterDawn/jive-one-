@@ -112,6 +112,7 @@
                         <outlet property="passwordTextField" destination="GZW-BX-qe0" id="McQ-Ao-Xqa"/>
                         <outlet property="usernameTextField" destination="Tho-ch-vQR" id="NY5-OJ-rkG"/>
                         <segue destination="0GY-Sf-KwF" kind="modal" identifier="AppTutorialSegue" modalTransitionStyle="crossDissolve" id="rnB-Wd-ic6"/>
+                        <segue destination="8YX-ce-x5E" kind="modal" identifier="LoginToTabBarSegue" modalTransitionStyle="crossDissolve" id="PKy-V4-VLv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KCP-nN-szi" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -214,10 +215,13 @@
                         <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="bq9-7d-CLc"/>
+                    <connections>
+                        <segue destination="8YX-ce-x5E" kind="modal" identifier="TutorialToTabBarSegue" modalTransitionStyle="crossDissolve" id="SEu-ym-TIt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h46-yP-dwC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-390" y="-434"/>
+            <point key="canvasLocation" x="-940" y="-306"/>
         </scene>
         <!--Page2 View Controller-->
         <scene sceneID="72L-8n-cy9">
@@ -855,5 +859,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="Nyn-nw-5LE"/>
+        <segue reference="SEu-ym-TIt"/>
     </inferredMetricsTieBreakers>
 </document>

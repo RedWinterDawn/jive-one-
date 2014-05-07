@@ -126,7 +126,7 @@
     {
         [self showHudWithTitle:@"One Moment Please" detail:@"Logging In"];
         [[JCAuthenticationManager sharedInstance] loginWithUsername:_usernameTextField.text password:_passwordTextField.text completed:^(BOOL success, NSError *error) {
-            [self hideHud];
+//            [self hideHud];
             self.doneLoadingContent = NO;
             if (success) {
                 [self tokenValidityPassed:nil];
@@ -219,8 +219,11 @@
     if (!self.seenTutorial) {
         [self performSegueWithIdentifier: @"AppTutorialSegue" sender: self];
     }
+//    else
+//    {
+//        [self showHudWithTitle:@"One Moment Please" detail:@"Preparing for first use"];
+//    }
     
-//    [self showHudWithTitle:@"One Moment Please" detail:@"Preparing for first use"];
     [self fetchEntities];
 }
 
@@ -330,9 +333,12 @@
 
 - (void)goToApplication
 {
-        JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
-        [delegate changeRootViewController:JCRootTabbarViewController];
-        [delegate startSocket:NO];
+    
+    [self performSegueWithIdentifier: @"LoginToTabBarSegue" sender: self];
+
+//        JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
+//        [delegate changeRootViewController:JCRootTabbarViewController];
+//        [delegate startSocket:NO];
 }
 
 - (void)errorInitializingApp:(NSError*)err
