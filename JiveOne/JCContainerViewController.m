@@ -192,10 +192,5 @@
     [self dismissViewControllerAnimated:YES completion:^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"AppTutorialDismissed" object:nil];
             }];
-    
-//    [[NSNotificationCenter defaultCenter]
-//     postNotificationName:@"AppTutorialDismissed"
-//     object:self];
-//    [self goToApplication];
 }
 @end

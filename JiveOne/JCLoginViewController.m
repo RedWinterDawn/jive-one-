@@ -126,7 +126,6 @@
     {
         [self showHudWithTitle:@"One Moment Please" detail:@"Logging In"];
         [[JCAuthenticationManager sharedInstance] loginWithUsername:_usernameTextField.text password:_passwordTextField.text completed:^(BOOL success, NSError *error) {
-//            [self hideHud];
             self.doneLoadingContent = NO;
             if (success) {
                 [self tokenValidityPassed:nil];
@@ -333,12 +332,7 @@
 
 - (void)goToApplication
 {
-    
     [self performSegueWithIdentifier: @"LoginToTabBarSegue" sender: self];
-
-//        JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
-//        [delegate changeRootViewController:JCRootTabbarViewController];
-//        [delegate startSocket:NO];
 }
 
 - (void)errorInitializingApp:(NSError*)err

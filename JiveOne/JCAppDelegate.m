@@ -73,9 +73,13 @@
     
     
     [self refreshTabBadges:NO];
+    self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+    UIStoryboard *storyboard = self.deviceIsIPhone ? [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] : [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
     
     if ([[JCAuthenticationManager sharedInstance] userAuthenticated] && [[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {
-        [self changeRootViewController:JCRootTabbarViewController];
+//        [self changeRootViewController:JCRootTabbarViewController];
+        UIViewController *rootVC = [storyboard instantiateViewControllerWithIdentifier:@"JCLoginViewController"];
+        [self.window setRootViewController:rootVC];
         [[JCAuthenticationManager sharedInstance] checkForTokenValidity];
         [[JCOsgiClient sharedClient] RetrieveEntitiesPresence:^(BOOL updated) {
             //do nothing;
@@ -84,7 +88,9 @@
         }];
     }
     else {
-        [self changeRootViewController:JCRootLoginViewController];
+//        [self changeRootViewController:JCRootLoginViewController];
+        UIViewController *rootVC = [storyboard instantiateViewControllerWithIdentifier:@"JCLoginViewController"];
+        [self.window setRootViewController:rootVC];
     }
     
     return YES;
@@ -611,6 +617,7 @@
     self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
     
     UIStoryboard *storyboard = self.deviceIsIPhone ? [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] : [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
+    
     
     if (type == JCRootTabbarViewController) {
         
