@@ -46,16 +46,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Release">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "275F4A7418AD0FBC00D2F069"
-               BuildableName = "JiveOneTests.xctest"
-               BlueprintName = "JiveOneTests"
-               ReferencedContainer = "container:JiveOne.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
