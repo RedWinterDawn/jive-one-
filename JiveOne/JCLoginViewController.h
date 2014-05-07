@@ -10,7 +10,6 @@
 
 @interface JCLoginViewController : UIViewController <UITextFieldDelegate>
 
-@property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UILabel *loginStatusLabel;
@@ -18,6 +17,7 @@
 @property (nonatomic) BOOL doneLoadingContent;
 @property (nonatomic) BOOL userIsDoneWithTutorial;
 
+- (void)goToApplication;
 - (IBAction)termsAndConditionsButton:(id)sender;
 
 @end

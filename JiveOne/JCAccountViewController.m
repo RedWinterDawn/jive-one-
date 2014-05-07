@@ -165,8 +165,8 @@
 
 #pragma mark - Actions from UI
 - (IBAction)logoutButtonPress:(id)sender {
-    
     [[JCAuthenticationManager sharedInstance] logout:self];
+    [self.tabBarController performSegueWithIdentifier:@"logoutSegue" sender:self.tabBarController];
 }
 
 

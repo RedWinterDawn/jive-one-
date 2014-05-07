@@ -20,6 +20,15 @@
 #import "TestFlight.h"
 #import "JCContainerViewController.h"
 
+
+@interface JCAppDelegate ()
+
+@property (nonatomic) UIStoryboard* storyboard;
+@property (strong, nonatomic) UIViewController *tabBarViewController;
+@property (strong, nonatomic) JCLoginViewController *loginViewController;
+
+@end
+
 @implementation JCAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -72,14 +81,12 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
     
     
-    [self refreshTabBadges:NO];
-    self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
-    UIStoryboard *storyboard = self.deviceIsIPhone ? [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] : [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
-    
+    [self refreshTabBadges:NO];    
     if ([[JCAuthenticationManager sharedInstance] userAuthenticated] && [[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {
 //        [self changeRootViewController:JCRootTabbarViewController];
-        UIViewController *rootVC = [storyboard instantiateViewControllerWithIdentifier:@"JCLoginViewController"];
-        [self.window setRootViewController:rootVC];
+//        UIViewController *rootVC = [storyboard instantiateViewControllerWithIdentifier:@"UITabBarController"];
+        [self.window setRootViewController:self.tabBarViewController];
+//        [self.window setRootViewController:rootVC];
         [[JCAuthenticationManager sharedInstance] checkForTokenValidity];
         [[JCOsgiClient sharedClient] RetrieveEntitiesPresence:^(BOOL updated) {
             //do nothing;
@@ -89,8 +96,8 @@
     }
     else {
 //        [self changeRootViewController:JCRootLoginViewController];
-        UIViewController *rootVC = [storyboard instantiateViewControllerWithIdentifier:@"JCLoginViewController"];
-        [self.window setRootViewController:rootVC];
+//        UIViewController *rootVC = [storyboard instantiateViewControllerWithIdentifier:@"JCLoginViewController"];
+        [self.window setRootViewController:self.loginViewController];
     }
     
     return YES;
@@ -610,28 +617,55 @@
     return _seenTutorial = [[NSUserDefaults standardUserDefaults] boolForKey:@"seenAppTutorial"];
 }
 
-#pragma mark - Change Root ViewController
+- (UIStoryboard *)storyboard
+{
+    if (!_storyboard) {
+        _storyboard = self.deviceIsIPhone ? [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] : [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
+    }
+    return _storyboard;
+}
 
+- (UIWindow*)window
+{
+    if (!_window) {
+        _window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+    }
+    return _window;
+}
+
+- (JCLoginViewController*)loginViewController
+{
+    if (!_loginViewController) {
+        _loginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"JCLoginViewController"];
+    }
+    return _loginViewController;
+}
+
+- (UIViewController*)tabBarViewController
+{
+    if (!_tabBarViewController) {
+        _tabBarViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"UITabBarController"];
+    }
+    return _tabBarViewController;
+}
+
+#pragma mark - Change Root ViewController
+- (void)logout
+{
+    [self.tabBarViewController performSegueWithIdentifier:@"logoutSegue" sender:self.tabBarViewController];
+}
 - (void)changeRootViewController:(JCRootViewControllerType)type
 {
-    self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
-    
-    UIStoryboard *storyboard = self.deviceIsIPhone ? [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] : [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
-    
-    
     if (type == JCRootTabbarViewController) {
         
-        UIViewController *tabVC = [storyboard instantiateViewControllerWithIdentifier:@"UITabBarController"];
-        
-        [self.window setRootViewController:tabVC];
+        [self.loginViewController goToApplication];
+//        [self.window setRootViewController:self.tabBarViewController];
         
     }
     else if (type == JCRootLoginViewController)
     {
-
-        UIViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"JCLoginViewController"];
-        [self.window setRootViewController:loginVC];
-
+        [self logout];
+//        [self.window setRootViewController:self.loginViewController];
     }
     
     [self.window makeKeyAndVisible];

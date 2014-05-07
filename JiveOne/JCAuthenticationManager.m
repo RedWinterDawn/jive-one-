@@ -197,13 +197,15 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     [delegate stopSocket];
     
     if(![viewController isKindOfClass:[JCLoginViewController class]]){
-        [UIView transitionWithView:delegate.window
-                          duration:0.5
-                           options:UIViewAnimationOptionTransitionFlipFromLeft
-                        animations:^{
-                            [delegate changeRootViewController:JCRootLoginViewController];
-                        }
-                        completion:nil];
+//        [UIView transitionWithView:delegate.window
+//                          duration:0.5
+//                           options:UIViewAnimationOptionTransitionFlipFromLeft
+//                        animations:^{
+//                            [delegate changeRootViewController:JCRootLoginViewController];
+//                        }
+//                        completion:nil];
+        
+        [delegate changeRootViewController:JCRootLoginViewController];
     }
 }
 
