@@ -1,0 +1,11 @@
+#!/bin/sh
+if [[ ! -d .git/hooks/pre-commit ]] ; then
+echo "Will create .git/hooks directory"
+path=".git/hooks"
+mkdir $path
+pwd
+echo "Finished Creating .git/hooks directory"
+fi
+echo "Starting copy of pre-commit to .git/hooks"
+cp Scripts/pre-commit .git/hooks/
+echo "Finished copy of pre-commit to .git/hooks"
