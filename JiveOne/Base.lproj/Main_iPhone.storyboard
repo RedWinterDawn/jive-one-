@@ -46,7 +46,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
-                            <view alpha="0.39999999999999963" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AVw-9n-3yN">
+                            <view alpha="0.39999999999999963" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AVw-9n-3yN">
                                 <rect key="frame" x="20" y="248" width="280" height="91"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -73,7 +73,7 @@
                                     </label>
                                 </subviews>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0pL-1i-BoH">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0pL-1i-BoH">
                                 <rect key="frame" x="97" y="448" width="126" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -96,15 +96,19 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="f6l-GA-NmS" firstAttribute="centerX" secondItem="AVw-9n-3yN" secondAttribute="centerX" id="7Fy-0q-U2r"/>
                             <constraint firstItem="f6l-GA-NmS" firstAttribute="leading" secondItem="ECf-jH-nSb" secondAttribute="leading" id="7vx-ht-2we"/>
+                            <constraint firstItem="AVw-9n-3yN" firstAttribute="leading" secondItem="ECf-jH-nSb" secondAttribute="leading" constant="20" symbolic="YES" id="A9x-4L-GoI"/>
+                            <constraint firstItem="AVw-9n-3yN" firstAttribute="centerX" secondItem="zDj-yl-OIT" secondAttribute="centerX" id="Inq-pP-Rc3"/>
+                            <constraint firstItem="AVw-9n-3yN" firstAttribute="centerX" secondItem="0pL-1i-BoH" secondAttribute="centerX" id="UvA-fa-C5K"/>
+                            <constraint firstItem="0pL-1i-BoH" firstAttribute="top" secondItem="zDj-yl-OIT" secondAttribute="bottom" constant="-3" id="a3w-KJ-cMA"/>
                             <constraint firstItem="f6l-GA-NmS" firstAttribute="top" secondItem="ECf-jH-nSb" secondAttribute="top" id="cq7-uG-0FU"/>
                             <constraint firstItem="Ycj-Wi-V2g" firstAttribute="top" secondItem="zDj-yl-OIT" secondAttribute="bottom" constant="117" id="fAu-ch-0sa"/>
+                            <constraint firstItem="AVw-9n-3yN" firstAttribute="top" secondItem="MXr-cp-xra" secondAttribute="bottom" constant="228" id="gHc-N4-PWy"/>
                             <constraint firstItem="zDj-yl-OIT" firstAttribute="leading" secondItem="ECf-jH-nSb" secondAttribute="leading" constant="73" id="gUN-QA-dOp"/>
-                            <constraint firstItem="zDj-yl-OIT" firstAttribute="top" secondItem="AVw-9n-3yN" secondAttribute="bottom" constant="97" id="t0Q-YH-fnt"/>
+                            <constraint firstItem="AVw-9n-3yN" firstAttribute="centerX" secondItem="f6l-GA-NmS" secondAttribute="centerX" id="lKC-Ze-I7d"/>
                             <constraint firstAttribute="bottom" secondItem="f6l-GA-NmS" secondAttribute="bottom" id="tkn-ql-J3m"/>
+                            <constraint firstItem="zDj-yl-OIT" firstAttribute="top" secondItem="AVw-9n-3yN" secondAttribute="bottom" constant="97" id="uYr-L7-eFc"/>
                             <constraint firstItem="zDj-yl-OIT" firstAttribute="centerX" secondItem="ECf-jH-nSb" secondAttribute="centerX" id="vrd-yI-U8H"/>
-                            <constraint firstItem="zDj-yl-OIT" firstAttribute="centerX" secondItem="AVw-9n-3yN" secondAttribute="centerX" id="xya-eM-mk4"/>
                         </constraints>
                     </view>
                     <connections>
