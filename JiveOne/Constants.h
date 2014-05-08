@@ -82,6 +82,7 @@
 #pragma mark - Debug Helpers
 #define kVoicemailURLOverRide @"NoDontUseAWSPlaceholderURL"
 //change to @"YesUseAWSPlaceholderURL" to toggle AWS Voicemail wav file
+#define UDdeviceToken @"deviceToken"
 
 typedef enum {
     JCPresenceTypeOffline = 0,

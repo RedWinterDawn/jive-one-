@@ -64,7 +64,7 @@
 
 - (IBAction)refresh:(id)sender {
     
-    NSString *deviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"];
+    NSString *deviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:UDdeviceToken];
     
     if (deviceToken) {
         self.tokenLabel.text = deviceToken;

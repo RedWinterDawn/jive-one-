@@ -175,10 +175,10 @@
 {
     [self setRequestAuthHeader];
     
-    NSString *deviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"];
+    NSString *deviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:UDdeviceToken];
     NSDictionary *params = nil;
     if (deviceToken) {
-        params = [NSDictionary dictionaryWithObject:deviceToken forKey:@"deviceToken"];
+        params = [NSDictionary dictionaryWithObject:deviceToken forKey:UDdeviceToken];
     }
     
     

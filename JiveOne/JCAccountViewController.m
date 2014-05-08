@@ -46,6 +46,12 @@
     }
     
     [self loadViews];
+    if(![[NSUserDefaults standardUserDefaults] objectForKey:UDdeviceToken]){
+        //Register for PushNotifications
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert |
+                                                                               UIRemoteNotificationTypeBadge |
+                                                                               UIRemoteNotificationTypeSound)];
+    }
 }
 
 - (void) loadViews

@@ -53,10 +53,7 @@
     
     [MagicalRecord setupCoreDataStackWithStoreNamed:@"MyJiveDatabase.sqlite"];
     
-    //Register for PushNotifications
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert |
-                                                                           UIRemoteNotificationTypeBadge |
-                                                                           UIRemoteNotificationTypeSound)];
+    
     //Register for background fetches
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     
@@ -176,7 +173,7 @@
 	newToken = [newToken stringByReplacingOccurrencesOfString:@" " withString:@""];
     
 	NSLog(@"APPDELEGATE - My token is: %@", newToken);
-    [[NSUserDefaults standardUserDefaults] setObject:newToken forKey:@"deviceToken"];
+    [[NSUserDefaults standardUserDefaults] setObject:newToken forKey:UDdeviceToken];
     
     [self startSocket:NO];
 }
