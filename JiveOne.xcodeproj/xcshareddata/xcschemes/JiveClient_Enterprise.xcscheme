@@ -100,6 +100,24 @@
    <ArchiveAction
       buildConfiguration = "Release"
       revealArchiveInOrganizer = "YES">
+      <PreActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "&#10;echo &quot;This is the working direcrtory&quot;&#10;pwd&#10;echo &quot;This is the working direcrtory&quot;&#10;&#10;">
+               <EnvironmentBuildable>
+                  <BuildableReference
+                     BuildableIdentifier = "primary"
+                     BlueprintIdentifier = "2727F350191AA92F00A41185"
+                     BuildableName = "JiveOneEnterprise.app"
+                     BlueprintName = "JiveOne Enterprise"
+                     ReferencedContainer = "container:JiveOne.xcodeproj">
+                  </BuildableReference>
+               </EnvironmentBuildable>
+            </ActionContent>
+         </ExecutionAction>
+      </PreActions>
       <PostActions>
          <ExecutionAction
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
