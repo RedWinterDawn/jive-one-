@@ -200,9 +200,12 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="607"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gtQ-uO-uxm">
-                                <rect key="frame" x="210" y="534" width="90" height="14"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gtQ-uO-uxm">
+                                <rect key="frame" x="210" y="514" width="90" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="90" id="9Ct-2G-fnc"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Dismiss">
                                     <color key="titleColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -214,6 +217,11 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="gtQ-uO-uxm" firstAttribute="top" relation="lessThanOrEqual" secondItem="uob-yX-DO5" secondAttribute="bottom" priority="750" constant="514" id="5hR-OS-VFg"/>
+                            <constraint firstAttribute="bottom" secondItem="gtQ-uO-uxm" secondAttribute="bottom" constant="20" symbolic="YES" id="pSZ-Nj-VeJ"/>
+                            <constraint firstAttribute="trailing" secondItem="gtQ-uO-uxm" secondAttribute="trailing" constant="20" symbolic="YES" id="pwC-7P-5nu"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="bq9-7d-CLc"/>
                     <connections>
@@ -859,7 +867,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="PKy-V4-VLv"/>
+        <segue reference="SEu-ym-TIt"/>
         <segue reference="Nyn-nw-5LE"/>
     </inferredMetricsTieBreakers>
 </document>
