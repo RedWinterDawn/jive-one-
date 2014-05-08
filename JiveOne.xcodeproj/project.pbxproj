@@ -532,7 +532,7 @@
 		2710E40D18CEC8C300152C91 /* ConversationEntry+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConversationEntry+Custom.h"; sourceTree = "<group>"; };
 		2710E40E18CEC8C300152C91 /* ConversationEntry+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ConversationEntry+Custom.m"; sourceTree = "<group>"; };
 		271EBDAE1910525E00421BA9 /* GTalkNotify.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = GTalkNotify.aiff; sourceTree = "<group>"; };
-		2727F420191AA92F00A41185 /* JiveOne Enterprise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JiveOne Enterprise.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2727F420191AA92F00A41185 /* JiveOneEnterprise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JiveOneEnterprise.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2727F421191AA92F00A41185 /* JiveOne Enterprise-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = "JiveOne Enterprise-Info.plist"; path = "../../../../egueiros/Development/iOS-JiveOne/JiveOne Enterprise-Info.plist"; sourceTree = SOURCE_ROOT; };
 		272B61DB18B2A4DD00EB8ED5 /* TRVSMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRVSMonitor.h; sourceTree = "<group>"; };
 		272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRVSMonitor.m; sourceTree = "<group>"; };
@@ -1201,7 +1201,7 @@
 			children = (
 				275F4A4E18AD0FBC00D2F069 /* JiveOne.app */,
 				275F4A7518AD0FBC00D2F069 /* JiveOneTests.xctest */,
-				2727F420191AA92F00A41185 /* JiveOne Enterprise.app */,
+				2727F420191AA92F00A41185 /* JiveOneEnterprise.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1437,7 +1437,7 @@
 			);
 			name = "JiveOne Enterprise";
 			productName = JiveOne;
-			productReference = 2727F420191AA92F00A41185 /* JiveOne Enterprise.app */;
+			productReference = 2727F420191AA92F00A41185 /* JiveOneEnterprise.app */;
 			productType = "com.apple.product-type.application";
 		};
 		275F4A4D18AD0FBC00D2F069 /* JiveOne */ = {
@@ -1487,6 +1487,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Jive Communications, Inc";
 				TargetAttributes = {
+					2727F350191AA92F00A41185 = {
+						DevelopmentTeam = 5HH6RJ3UN7;
+					};
 					275F4A4D18AD0FBC00D2F069 = {
 						DevelopmentTeam = 5NE3JJD5L3;
 						SystemCapabilities = {
@@ -2100,7 +2103,7 @@
 					SystemConfiguration,
 				);
 				PRODUCT_NAME = JiveOneEnterprise;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "5D91116E-2070-4EF3-880B-C4A07E2656B7";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
