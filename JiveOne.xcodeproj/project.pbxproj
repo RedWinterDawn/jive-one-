@@ -2073,7 +2073,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JiveOne/JiveOne-Prefix.pch";
-				INFOPLIST_FILE = "JiveOne Enterprise-Info.plist";
+				INFOPLIST_FILE = "JiveOneEnterprise-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/JiveOne/TestFlightSDK3.0.0",
@@ -2123,7 +2123,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JiveOne/JiveOne-Prefix.pch";
-				INFOPLIST_FILE = "JiveOne Enterprise-Info.plist";
+				INFOPLIST_FILE = "JiveOneEnterprise-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/JiveOne/TestFlightSDK3.0.0",
