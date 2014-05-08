@@ -1487,6 +1487,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Jive Communications, Inc";
 				TargetAttributes = {
+					2727F350191AA92F00A41185 = {
+						DevelopmentTeam = 5HH6RJ3UN7;
+					};
 					275F4A4D18AD0FBC00D2F069 = {
 						DevelopmentTeam = 5NE3JJD5L3;
 						SystemCapabilities = {
@@ -2100,7 +2103,7 @@
 					SystemConfiguration,
 				);
 				PRODUCT_NAME = JiveOneEnterprise;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "5D91116E-2070-4EF3-880B-C4A07E2656B7";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
