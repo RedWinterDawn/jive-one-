@@ -48,14 +48,17 @@
     
     // if there are results, we're updating, else we're creating
     if (resultsForId.count > 0) {
+        //two ways this gets called. 1) pull down refresh fetches all messages, including ones you already have. 2) socket sends you a message you already have, because you did a pull down referesh
         convEntry = resultsForId[0];
         [self updateConversationEntry:convEntry withDictionary:entry managedContext:context];
     }
     else if(resultsForTempUrn.count>0){
+        //only gets called when you send the message and the server sends back a confirmation that it was sent, plus all new metadata.
         convEntry = resultsForTempUrn[0];
         [self updateConversationEntry:convEntry withDictionary:entry managedContext:context];
     }
     else {
+        //gets called when app is new install, for old messages, and when server sends messages to me
         NSLog(@"No id or tempUrn found for this entry in core data. This should only happen if the user logged out or on a new install.");
         convEntry = [ConversationEntry MR_createInContext:context];
         convEntry.conversationId = entry[@"conversation"];
