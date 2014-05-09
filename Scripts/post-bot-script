@@ -1,0 +1,23 @@
+#!/bin/sh
+#read the first line of the file
+
+FILE=/Library/Server/Web/Data/Sites/Default/LatestVersion
+#run only if file exists
+if [ ! -f ${FILE} ] ; then
+	echo "$FILE does not exist... Exiting without incrementing value"
+fi
+if [ -f ${FILE} ] ; then
+
+	VALUE=$(head -n 1 $FILE)
+	ORIG=$(head -n 1 $FILE)
+	if [[ "${VALUE}" == "" ]]; then
+	echo "No value in $FILE"
+	echo "Exiting without incrementing count"
+	exit 2
+	fi
+
+	VALUE=$(expr $VALUE + 1)
+	echo "Changing value in $FILE from $ORIG to $VALUE"
+	echo $VALUE > $FILE
+	
+fi
