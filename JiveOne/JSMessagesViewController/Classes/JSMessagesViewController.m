@@ -351,7 +351,7 @@
 
 - (void)textViewDidChange:(UITextView *)textView
 {
-    self.messageInputView.sendButton.enabled = ([[textView.text js_stringByTrimingWhitespace] length] > 0);
+    self.messageInputView.sendButton.enabled = (([[textView.text js_stringByTrimingWhitespace] length] > 0) && self.hasMininumContacts);
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView
