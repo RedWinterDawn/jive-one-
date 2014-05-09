@@ -35,6 +35,7 @@
 #define kOsgiSubscriptionRoute @"subscriptions"
 #define kOsgiPresenceRoute @"presence"
 #define kOsgiVoicemailRoute @"voicemails"
+#define kVersionURL @"http://jiveios.local/LatestVersion"
 
 #pragma mark - Temporary Voicemail Constants
 #define kAWSVoicemailRoute @"voicemail/userId/"
