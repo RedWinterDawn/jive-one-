@@ -137,7 +137,6 @@
         }
         case JCNewConversation: {
             [self setHeaderTitle:NSLocalizedString(@"New Message", @"New Message") andSubtitle:nil] ;
-            
             break;
         }
         case JCNewConversationWithEntity: {
@@ -170,6 +169,8 @@
         
         [self checkForConversationWithEntities:entities];
     }
+    
+    [self enableSendButtonBasedOnSelectedContacts];
     
 }
 
@@ -737,12 +738,19 @@
     }
     [self.selectedContacts addObject:((JCContactModel *)model).person];
     
+    [self enableSendButtonBasedOnSelectedContacts];
+    
     [self checkForConversationWithEntities:self.selectedContacts];
 }
 
 - (void)contactCollectionView:(MBContactCollectionView*)contactCollectionView didRemoveContact:(id<MBContactPickerModelProtocol>)model
 {
     NSLog(@"Did Remove: %@", model.contactTitle);
+    
+    PersonEntities *person = ((JCContactModel *)model).person;
+    [self.selectedContacts removeObject:person];
+    
+    [self enableSendButtonBasedOnSelectedContacts];
 }
 
 // This delegate method is called to allow the parent view to increase the size of
@@ -784,6 +792,22 @@
     }];
 }
 
+- (void)enableSendButtonBasedOnSelectedContacts
+{
+    if (self.messageInputView.sendButton) {
+        if (self.selectedContacts) {
+            if (self.selectedContacts.count > 0) {
+                self.messageInputView.sendButton.enabled = YES;
+            }
+            else {
+                self.messageInputView.sendButton.enabled = NO;
+            }
+        }
+        else {
+            self.messageInputView.sendButton.enabled = NO;
+        }
+    }    
+}
 
 
 @end
