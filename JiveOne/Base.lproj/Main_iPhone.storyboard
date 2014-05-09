@@ -663,6 +663,10 @@
                                     <constraint firstAttribute="height" constant="31" id="zOX-mr-SDg"/>
                                 </constraints>
                             </view>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="first_message.png" translatesAutoresizingMaskIntoConstraints="NO" id="HBL-Cb-J1w">
+                                <rect key="frame" x="40" y="39" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -676,6 +680,7 @@
                     <connections>
                         <outlet property="contactPickerView" destination="zyf-z6-zcn" id="xgG-7E-2t2"/>
                         <outlet property="contactPickerViewHeightConstraint" destination="zOX-mr-SDg" id="tVg-jX-0ri"/>
+                        <outlet property="imageViewNewMessage" destination="HBL-Cb-J1w" id="Ctg-40-Uzj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XuZ-GW-bg4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -923,6 +928,7 @@
     <resources>
         <image name="ES-voicemail-1.jpg" width="640" height="1136"/>
         <image name="avatar.png" width="100" height="100"/>
+        <image name="first_message.png" width="265" height="154"/>
         <image name="launch.png" width="640" height="1136"/>
         <image name="nav-conv.png" width="30" height="30"/>
         <image name="nav-more.png" width="44" height="44"/>
@@ -936,7 +942,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="SEu-ym-TIt"/>
+        <segue reference="PKy-V4-VLv"/>
         <segue reference="Nyn-nw-5LE"/>
     </inferredMetricsTieBreakers>
 </document>

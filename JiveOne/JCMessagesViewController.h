@@ -21,6 +21,7 @@
 @property (nonatomic) NSString *conversationId;
 @property (nonatomic) ContactGroup *contactGroup;
 @property (nonatomic) JCMessageType messageType;
+@property (weak, nonatomic) IBOutlet UIImageView *imageViewNewMessage;
 
 
 +(void) sendOfflineMessagesQueue:(JCOsgiClient*)osgiClient;
