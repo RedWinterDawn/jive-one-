@@ -117,6 +117,22 @@
                </EnvironmentBuildable>
             </ActionContent>
          </ExecutionAction>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "#!/bin/sh&#10;&#10;FILE=/Library/Server/Web/Data/Sites/Default/LatestVersion&#10;#run only if file exists&#10;if [ ! -f ${FILE} ] ; then&#10;echo &quot;$FILE does not exist... Exiting without incrementing value&quot;&#10;fi&#10;if [ -f ${FILE} ] ; then&#10;&#10;VALUE=$(head -n 1 $FILE)&#10;ORIG=$(head -n 1 $FILE)&#10;if [[ &quot;${VALUE}&quot; == &quot;&quot; ]]; then&#10;echo &quot;No value in $FILE&quot;&#10;echo &quot;Exiting without incrementing count&quot;&#10;exit 2&#10;fi&#10;&#10;VALUE=$(expr $VALUE + 1)&#10;echo &quot;Changing value in $FILE from $ORIG to $VALUE&quot;&#10;echo $VALUE &gt; $FILE&#10;&#10;fi">
+               <EnvironmentBuildable>
+                  <BuildableReference
+                     BuildableIdentifier = "primary"
+                     BlueprintIdentifier = "2727F350191AA92F00A41185"
+                     BuildableName = "JiveOneEnterprise.app"
+                     BlueprintName = "JiveOne Enterprise"
+                     ReferencedContainer = "container:JiveOne.xcodeproj">
+                  </BuildableReference>
+               </EnvironmentBuildable>
+            </ActionContent>
+         </ExecutionAction>
       </PostActions>
    </ArchiveAction>
 </Scheme>
