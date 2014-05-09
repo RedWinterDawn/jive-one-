@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UAirship.h"
+#import "UAConfig.h"
+#import "UAPush.h"
 
-@interface JCAppDelegate : UIResponder <UIApplicationDelegate>
+@interface JCAppDelegate : UIResponder <UIApplicationDelegate, UAPushNotificationDelegate, UARegistrationDelegate>
 {
     NSInteger previousBadgeCount;
     NSInteger afterBadgeCount;

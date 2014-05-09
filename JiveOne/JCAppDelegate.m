@@ -14,7 +14,6 @@
 #import "NotificationView.h"
 #import "JCLoginViewController.h"
 #import "Common.h"
-#import <Parse/Parse.h>
 #import "TRVSMonitor.h"
 #import "JCMessagesViewController.h"
 #import "TestFlight.h"
@@ -64,8 +63,24 @@
     //Start monitor for Reachability
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     
+    // Populate AirshipConfig.plist with your app's info from https://go.urbanairship.com
+    // or set runtime properties here.
+    UAConfig *config = [UAConfig defaultConfig];
+    
+    // You can also programmatically override the plist values:
+    // config.developmentAppKey = @"YourKey";
+    // etc.
+    
+    // Call takeOff (which creates the UAirship singleton)
+    [UAirship takeOff:config];
+    
+    // Request a custom set of notification types
+    [UAPush shared].notificationTypes = (UIRemoteNotificationTypeBadge |
+                                         UIRemoteNotificationTypeSound |
+                                         UIRemoteNotificationTypeAlert);
+    
     //Setup Parse Framework
-    [Parse setApplicationId:@"pF8x8MNin5QJY3EVyXvQF21PBasJxAmoxA5eo16B" clientKey:@"UQEeTqrFUkvglJUHwEiSItGaAttQvAUyExeZ0Iq9"];
+    //[Parse setApplicationId:@"pF8x8MNin5QJY3EVyXvQF21PBasJxAmoxA5eo16B" clientKey:@"UQEeTqrFUkvglJUHwEiSItGaAttQvAUyExeZ0Iq9"];
     
     //Only needed for when app is launched from push notification and app was not running in background
     //NSDictionary *pushNotif = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
@@ -135,11 +150,11 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-    if (currentInstallation.badge != 0) {
-        currentInstallation.badge = 0;
-        [currentInstallation saveEventually];
-    }
+//    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+//    if (currentInstallation.badge != 0) {
+//        currentInstallation.badge = 0;
+//        [currentInstallation saveEventually];
+//    }
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
@@ -162,11 +177,13 @@
 }
 
 #pragma mark - PushNotifications
+
+
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-    [currentInstallation setDeviceTokenFromData:deviceToken];
-    [currentInstallation saveInBackground];
+//    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+//    [currentInstallation setDeviceTokenFromData:deviceToken];
+//    [currentInstallation saveInBackground];
     
     NSString *newToken = [deviceToken description];
 	newToken = [newToken stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
@@ -186,56 +203,10 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo//never gets called
 {
-    [PFPush handlePush:userInfo];
+//    [PFPush handlePush:userInfo];
     NSLog(@"APPDELEGATE - didReceiveRemoteNotification:fetchCompletionHandler");
 }
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
-{
-    NSLog(@"APPDELEGATE - didReceiveRemoteNotification");
-    [[JCAuthenticationManager sharedInstance] checkForTokenValidity];
-    if ([[JCSocketDispatch sharedInstance] socketState] != SR_OPEN) {
-        
-        __block UIBackgroundFetchResult fetchResult = UIBackgroundFetchResultFailed;
-        
-        @try {
-            
-            TRVSMonitor *monitor = [TRVSMonitor monitor];
-            NSInteger previousCount = [self currentBadgeCount];
-            
-            [[JCSocketDispatch sharedInstance] startPoolingFromSocketWithCompletion:^(BOOL success, NSError *error) {
-                if (success) {
-                    NSLog(@"Success Done with Block");
-                }
-                else {
-                    NSLog(@"Error Done With Block %@", error);
-                }
-                [monitor signal];
-            }];
-            
-            [monitor waitWithTimeout:15];
-            
-            NSInteger afterCount = [self currentBadgeCount];
-            
-            if (afterCount == 0 || (afterCount == previousCount)) {
-                fetchResult = UIBackgroundFetchResultNoData;
-            }
-            else if (afterCount > previousCount) {
-                fetchResult = UIBackgroundFetchResultNewData;
-                [self refreshTabBadges:YES];
-            }
-        }
-        @catch (NSException *exception) {
-            NSLog(@"%@", exception);
-        }
-        @finally {
-            if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground ) {
-                [self stopSocket];
-            }
-            completionHandler(fetchResult);
-        }
-    }
-}
 
 - (NSInteger)currentBadgeCount
 {
@@ -257,63 +228,17 @@
     return count;
 }
 
-//#pragma mark - Local notifications
-//
-//- (void)application:(UIApplication *)app didReceiveLocalNotification:(UILocalNotification *)notif
-//{
-//    if (app.applicationState == UIApplicationStateInactive )
-//    {
-//        NSLog(@"app not running");
-//
-//    }
-//    else if(app.applicationState == UIApplicationStateActive )
-//    {
-//        NSLog(@"app running");
-//    }
-//    //get data from push notification
-//    NSDictionary *payload = notif.userInfo;
-//     [self handleLocalNotifications:payload];
-//}
-
-
-//-(void) handleLocalNotifications:(NSDictionary*)payload{
-//    NSLog(@"handleLocalNotificaiton");
-//    NSUInteger pushCode = [[payload objectForKey:@"pushCode"] intValue];
-//    if(!pushCode==0){
-//        switch (pushCode) {
-//            case 1://handle voicemail push
-//            {
-//                //TODO: switch to voicemail tab
-//                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-//                UITabBarController *tabVC = [storyboard instantiateViewControllerWithIdentifier:@"UITabBarController"];
-//                [tabVC setSelectedIndex:3];
-//                break;
-//            }
-//            case 2://handle chat push
-//                //switch to chat tab
-//
-//            default:
-//                break;
-//        }
-//    }
-//
-//}
-
-//- (void)didCloseSocket:(NSNotification *)notification
-//{
-//    NSInteger afterCount = [self currentBadgeCount];
-//
-//    if (afterCount == 0 || (afterCount == previousCount)) {
-//        fetchResult = UIBackgroundFetchResultNoData;
-//    }
-//    else if (afterCount > previousCount) {
-//        fetchResult = UIBackgroundFetchResultNewData;
-//        [self refreshTabBadges:YES];
-//    }
-//}
-
 #pragma mark - Background Fetch
--(void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+- (void)receivedForegroundNotification:(NSDictionary *)notification fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    completionHandler([self BackgroundPerformFetchWithCompletionHandler]);
+}
+- (void)receivedBackgroundNotification:(NSDictionary *)notification fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    completionHandler([self BackgroundPerformFetchWithCompletionHandler]);
+}
+
+- (UIBackgroundFetchResult)BackgroundPerformFetchWithCompletionHandler
 {
     NSLog(@"APPDELEGATE - performFetchWithCompletionHandler");
     [[JCAuthenticationManager sharedInstance] checkForTokenValidity];
@@ -354,23 +279,11 @@
             if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground ) {
                 [self stopSocket];
             }
-            completionHandler(fetchResult);
+            return fetchResult;
         }
     }
 }
-//- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
-//{
-//    NSLog(@"Remote Notification Recieved");
-//    UILocalNotification *notification = [[UILocalNotification alloc] init];
-//    notification.alertBody =  @"APP DELGATE performFetchWithCompletionHandler";
-//    [application presentLocalNotificationNow:notification];
-//    completionHandler(UIBackgroundFetchResultNewData);
-//}
 
-- (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler
-{
-    NSLog(@"APPDELEGATE - handleEventsForBackgroundURLSession");
-}
 
 #pragma mark - Tabbar Badges
 
