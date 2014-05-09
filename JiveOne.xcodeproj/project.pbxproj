@@ -419,6 +419,7 @@
 		9137919818FDB0EE00709AD3 /* JCGroupConversationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9137919618FDB0EE00709AD3 /* JCGroupConversationCell.m */; };
 		9137919918FDB0EE00709AD3 /* JCGroupConversationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9137919718FDB0EE00709AD3 /* JCGroupConversationCell.xib */; };
 		9145E31F191D842500840D66 /* JCVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 9145E31E191D842500840D66 /* JCVersion.m */; };
+		9145E320191D881D00840D66 /* JCVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 9145E31E191D842500840D66 /* JCVersion.m */; };
 		9159C88D18EDD20700DF769B /* avatar-orig2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9159C88C18EDD20700DF769B /* avatar-orig2.png */; };
 		916958FF18FEDD76006FDD60 /* JCConversationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 274493AF18D0DA9B002744CB /* JCConversationCell.xib */; };
 		9172ACF71917E8EE00481B01 /* JCPage1ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9172ACEF1917E8EE00481B01 /* JCPage1ViewController.m */; };
@@ -2369,6 +2370,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9145E320191D881D00840D66 /* JCVersion.m in Sources */,
 				2727F353191AA92F00A41185 /* JCPeopleDetailCell.m in Sources */,
 				2727F354191AA92F00A41185 /* JCGroupSelectorViewController.m in Sources */,
 				2727F355191AA92F00A41185 /* JCStatusViewController.m in Sources */,
