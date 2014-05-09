@@ -1,7 +1,0 @@
-Setup Git Hooks
-
-Everyone must run the the following command once on their personal machines.
-after navigating to the project root dir run:
-sh Scripts/RunThisOnce
-
-if you had issues - make sure you are running this from the project root dir.
