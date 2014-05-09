@@ -84,6 +84,9 @@
     
     self.contactPickerView.delegate = self;
     self.contactPickerView.datasource = self;
+    CGRect frame = self.contactPickerView.frame;
+    frame.size.height = 38.0f;
+    [self.contactPickerView setFrame:frame];
     self.contactPickerView.allowsCompletionOfSelectedContacts = NO;
     [self.view addSubview:self.contactPickerView];
     [self.view insertSubview:self.imageViewNewMessage belowSubview:self.contactPickerView]; 
@@ -760,6 +763,13 @@
     
     [self enableSendButtonBasedOnSelectedContacts];
 }
+//
+//- (NSLayoutConstraint *)contactPickerViewHeightConstraint
+//{
+//    NSLayoutConstraint *heightConstraint = [NSLayoutConstraint new];
+//    heightConstraint.constant = 38.0f;
+//    return heightConstraint;
+//}
 
 // This delegate method is called to allow the parent view to increase the size of
 // the contact picker view to show the search table view
