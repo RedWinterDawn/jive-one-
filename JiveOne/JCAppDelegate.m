@@ -18,7 +18,7 @@
 #import "JCMessagesViewController.h"
 #import "TestFlight.h"
 #import "JCContainerViewController.h"
-#import "JCVersionClient.h"
+#import "JCVersion.h"
 
 
 @interface JCAppDelegate ()
@@ -35,8 +35,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-//    [[JCVersionClient sharedClient] getVersion];
-    
     //load UserDefaults
     NSString *defaultPrefsFile = [[NSBundle mainBundle] pathForResource:@"UserDefaults" ofType:@"plist"];
     NSDictionary *defaultPreferences = [NSDictionary dictionaryWithContentsOfFile:defaultPrefsFile];
@@ -159,7 +157,7 @@
 //        currentInstallation.badge = 0;
 //        [currentInstallation saveEventually];
 //    }
-    [[JCVersionClient sharedClient] getVersion];
+    [[[JCVersion alloc]init] getVersion];
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 

@@ -1,31 +1,20 @@
 //
-//  JCVersionClient.m
+//  JCVersion.m
 //  JiveOne
 //
 //  Created by Doug on 5/9/14.
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCVersionClient.h"
+#import "JCVersion.h"
 
-@implementation JCVersionClient
+@implementation JCVersion
 {
     NSMutableData *receivedData;
     NSURLConnection *theConnection;
     int version;
 }
 
-
-
-+ (JCVersionClient*)sharedClient {
-    static JCVersionClient *_sharedClient = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _sharedClient = [[super alloc] init];
-        [_sharedClient initialize];
-    });
-    return _sharedClient;
-}
 
 -(void)initialize
 {
@@ -73,15 +62,15 @@
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
     
     [NSURLConnection sendAsynchronousRequest:urlRequest queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
-    {
-        if ([data length] > 0 && error == nil)
-            [self.delegate receivedData:data];
-        else if ([data length] == 0 && error == nil)
-            [self.delegate emptyReply];
-        else if (error != nil)
-            [self.delegate downloadError];
-    }];
-
+     {
+         if ([data length] > 0 && error == nil)
+             [self.delegate receivedData:data];
+         else if ([data length] == 0 && error == nil)
+             [self.delegate emptyReply];
+         else if (error != nil)
+             [self.delegate downloadError];
+     }];
+    
 }
 
 @end

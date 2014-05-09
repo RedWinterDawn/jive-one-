@@ -418,7 +418,7 @@
 		9135DE0418BC01550052E998 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9135DE0318BC01550052E998 /* AVFoundation.framework */; };
 		9137919818FDB0EE00709AD3 /* JCGroupConversationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9137919618FDB0EE00709AD3 /* JCGroupConversationCell.m */; };
 		9137919918FDB0EE00709AD3 /* JCGroupConversationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9137919718FDB0EE00709AD3 /* JCGroupConversationCell.xib */; };
-		9145E31C191D827700840D66 /* JCVersionClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 9145E31B191D827700840D66 /* JCVersionClient.m */; };
+		9145E31F191D842500840D66 /* JCVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 9145E31E191D842500840D66 /* JCVersion.m */; };
 		9159C88D18EDD20700DF769B /* avatar-orig2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9159C88C18EDD20700DF769B /* avatar-orig2.png */; };
 		916958FF18FEDD76006FDD60 /* JCConversationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 274493AF18D0DA9B002744CB /* JCConversationCell.xib */; };
 		9172ACF71917E8EE00481B01 /* JCPage1ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9172ACEF1917E8EE00481B01 /* JCPage1ViewController.m */; };
@@ -863,8 +863,8 @@
 		9137919518FDB0EE00709AD3 /* JCGroupConversationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCGroupConversationCell.h; sourceTree = "<group>"; };
 		9137919618FDB0EE00709AD3 /* JCGroupConversationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCGroupConversationCell.m; sourceTree = "<group>"; };
 		9137919718FDB0EE00709AD3 /* JCGroupConversationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JCGroupConversationCell.xib; path = JiveOne/JCGroupConversationCell.xib; sourceTree = SOURCE_ROOT; };
-		9145E31A191D827700840D66 /* JCVersionClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVersionClient.h; sourceTree = "<group>"; };
-		9145E31B191D827700840D66 /* JCVersionClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVersionClient.m; sourceTree = "<group>"; };
+		9145E31D191D842500840D66 /* JCVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVersion.h; sourceTree = "<group>"; };
+		9145E31E191D842500840D66 /* JCVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVersion.m; sourceTree = "<group>"; };
 		9159C88C18EDD20700DF769B /* avatar-orig2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatar-orig2.png"; sourceTree = "<group>"; };
 		9172ACEE1917E8EE00481B01 /* JCPage1ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPage1ViewController.h; sourceTree = "<group>"; };
 		9172ACEF1917E8EE00481B01 /* JCPage1ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPage1ViewController.m; sourceTree = "<group>"; };
@@ -1360,8 +1360,8 @@
 			children = (
 				2751590918AD16F300FD8D3F /* JCOsgiClient.h */,
 				2751590A18AD16F300FD8D3F /* JCOsgiClient.m */,
-				9145E31A191D827700840D66 /* JCVersionClient.h */,
-				9145E31B191D827700840D66 /* JCVersionClient.m */,
+				9145E31D191D842500840D66 /* JCVersion.h */,
+				9145E31E191D842500840D66 /* JCVersion.m */,
 			);
 			name = Clients;
 			sourceTree = "<group>";
@@ -2510,6 +2510,7 @@
 				2700988118F4714100B6BC2F /* JSMessageTextView.m in Sources */,
 				27F1F2E8191C171300AEAFD7 /* UAPushSettingsChannelInfoViewController.m in Sources */,
 				272F65FF18D3A7A4009BD7B3 /* HPGrowingTextView.m in Sources */,
+				9145E31F191D842500840D66 /* JCVersion.m in Sources */,
 				277A1F8018F88987009A41F7 /* JCLoginViewController.m in Sources */,
 				270152C61901D1FF00F271CE /* PersonEntities+Custom.m in Sources */,
 				2700987D18F4714100B6BC2F /* JSMessageInputView.m in Sources */,
@@ -2544,7 +2545,6 @@
 				27F1F2D5191C171300AEAFD7 /* UAInboxAlertHandler.m in Sources */,
 				275E809618AED884009AD776 /* JCSocketDispatch.m in Sources */,
 				9172ACFA1917E8EE00481B01 /* JCPage4ViewController.m in Sources */,
-				9145E31C191D827700840D66 /* JCVersionClient.m in Sources */,
 				2700987418F4714100B6BC2F /* NSString+JSMessagesView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
