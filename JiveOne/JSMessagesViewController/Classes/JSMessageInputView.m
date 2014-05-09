@@ -35,7 +35,7 @@
 
 - (void)setup
 {
-    self.backgroundColor = [UIColor whiteColor];
+    self.backgroundColor = [UIColor colorWithRed:0.82 green:0.84 blue:0.85 alpha:1.0]; /*#d2d5da*///[UIColor whiteColor];
     self.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin);
     self.opaque = YES;
     self.userInteractionEnabled = YES;
@@ -69,16 +69,17 @@
         [self addSubview:inputFieldBack];
     }
     else {
-        _textView.frame = CGRectMake(4.0f, 4.5f, width, height);
-        _textView.backgroundColor = [UIColor clearColor];
+        _textView.frame = CGRectMake(4.0f, 5.5, width, height);
+        _textView.backgroundColor = [UIColor whiteColor];
         _textView.layer.borderColor = [UIColor colorWithWhite:0.8f alpha:1.0f].CGColor;
         _textView.layer.borderWidth = 0.65f;
         _textView.layer.cornerRadius = 6.0f;
         
-        self.image = [[UIImage imageNamed:@"input-bar-flat"] resizableImageWithCapInsets:UIEdgeInsetsMake(2.0f, 0.0f, 0.0f, 0.0f)
-                                                                            resizingMode:UIImageResizingModeStretch];
+        //self.image = [[UIImage imageNamed:@"input-bar-flat"] resizableImageWithCapInsets:UIEdgeInsetsMake(2.0f, 0.0f, 0.0f, 0.0f)
+                                                                            //resizingMode:UIImageResizingModeStretch];
     }
 }
+
 
 - (void)configureSendButtonWithStyle:(JSMessageInputViewStyle)style
 {
