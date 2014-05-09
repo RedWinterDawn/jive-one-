@@ -15,6 +15,15 @@
     int version;
 }
 
++ (JCVersion*)sharedClient {
+    static JCVersion *_sharedClient = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _sharedClient = [[super alloc] init];
+        [_sharedClient initialize];
+    });
+    return _sharedClient;
+}
 
 -(void)initialize
 {
@@ -27,6 +36,7 @@
     if (version < 1) {
         NSString *stringData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         version = [[[stringData componentsSeparatedByCharactersInSet: [[NSCharacterSet decimalDigitCharacterSet] invertedSet]] componentsJoinedByString:@""] intValue];
+        NSLog(@"Initial Build Version is: %i",version);
         [[NSUserDefaults standardUserDefaults] setInteger:version forKey:@"appBuildNumber"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }//else if version has a value - check to see if this install is the latest version.
@@ -36,6 +46,9 @@
         version = [[[stringData componentsSeparatedByCharactersInSet: [[NSCharacterSet decimalDigitCharacterSet] invertedSet]] componentsJoinedByString:@""] intValue];
         if (version > [[NSUserDefaults standardUserDefaults] integerForKey:@"appBuildNumber"]) {
             NSLog(@"Prompt for new install.");
+            dispatch_async(dispatch_get_main_queue(),^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"AppIsOutdated" object:nil];
+            });
         }
     }
 }

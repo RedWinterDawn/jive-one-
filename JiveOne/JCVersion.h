@@ -18,7 +18,8 @@
 @end
 
 @interface JCVersion : NSObject <JCVersionClientDelegateProtocol>
++ (instancetype)sharedClient;
 
-@property (nonatomic, retain) id<JCVersionClientDelegateProtocol> delegate;
+@property (nonatomic, weak) id<JCVersionClientDelegateProtocol> delegate;
 -(void)getVersion;
 @end

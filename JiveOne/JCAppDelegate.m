@@ -26,7 +26,6 @@
 @property (nonatomic) UIStoryboard* storyboard;
 @property (strong, nonatomic) UIViewController *tabBarViewController;
 @property (strong, nonatomic) JCLoginViewController *loginViewController;
-@property (strong, nonatomic) NSString *version;
 @end
 
 
@@ -157,10 +156,29 @@
 //        currentInstallation.badge = 0;
 //        [currentInstallation saveEventually];
 //    }
-    [[[JCVersion alloc]init] getVersion];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(alertUserToUpdate:) name:@"AppIsOutdated" object:nil];
+    [[JCVersion sharedClient] getVersion];
+
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
+-(void)alertUserToUpdate:(NSNotification *)notification
+{
+    if ([[notification name] isEqualToString:@"AppIsOutdated"])
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update Required"
+                                                        message:@"Please download the latest version of JiveApp Beta."
+                                                       delegate:self
+                                              cancelButtonTitle:@"Maybe later"
+                                              otherButtonTitles:@"Download", nil];
+        [alert show];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-services://?action=download-manifest&url=https://jiveios.local/JiveOneEnterprise.plist"]];
+}
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
