@@ -26,12 +26,11 @@
 @property (nonatomic) UIStoryboard* storyboard;
 @property (strong, nonatomic) UIViewController *tabBarViewController;
 @property (strong, nonatomic) JCLoginViewController *loginViewController;
-@property int didNotify;
 @end
 
 
 @implementation JCAppDelegate
-
+int didNotify;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -165,7 +164,7 @@
 
 -(void)alertUserToUpdate:(NSNotification *)notification
 {
-    if ([[notification name] isEqualToString:@"AppIsOutdated"] && (self.didNotify < 1))
+    if ([[notification name] isEqualToString:@"AppIsOutdated"] && (didNotify < 1))
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update Required"
                                                         message:@"Please download the latest version of JiveApp Beta."
@@ -174,7 +173,7 @@
                                               otherButtonTitles:@"Download", nil];
         [alert show];
     }
-    self.didNotify = 1;
+    didNotify = 1;
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
@@ -185,6 +184,7 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     [MagicalRecord cleanUp];
+    didNotify = 0;
 }
 
 - (void)startSocket:(BOOL)inBackground
