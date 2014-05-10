@@ -178,7 +178,9 @@ int didNotify;
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-services://?action=download-manifest&url=https://jiveios.local/JiveOneEnterprise.plist"]];
+    if (buttonIndex == 0) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-services://?action=download-manifest&url=https://jiveios.local/JiveOneEnterprise.plist"]];
+    }
 }
 - (void)applicationWillTerminate:(UIApplication *)application
 {
