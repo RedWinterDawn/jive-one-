@@ -139,7 +139,7 @@
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -154,7 +154,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.section==1){
+    if(indexPath.section == 1){
         //launch action sheet
         UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"Select Presence option:" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
                                 kPresenceAvailable,
@@ -166,6 +166,9 @@
                                 nil];
         [popup showFromTabBar:self.tabBarController.tabBar];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
+    else if (indexPath.section == 3) {
+        [self logoutButtonPress:nil];
     }
 }
 
