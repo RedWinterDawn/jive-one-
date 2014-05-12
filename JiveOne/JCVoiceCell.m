@@ -61,7 +61,7 @@
 {
     [_voicemailIcon.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     if(![self.voicemail.read boolValue]){
-        self.shortTime.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
+        self.shortTime.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
         self.creationTime.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
         self.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16];
         self.detailLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
