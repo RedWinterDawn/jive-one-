@@ -447,7 +447,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
         
         if (!error) {
             if (useSpeaker) {
-                [selectedCell performSelectorOnMainThread:@selector(setSpeakerButtonTint:) withObject:[UIColor greenColor] waitUntilDone:NO];
+                [selectedCell performSelectorOnMainThread:@selector(setSpeakerButtonTint:) withObject:[UIColor colorWithRed:0.294 green:0.62 blue:0.89 alpha:1] waitUntilDone:NO];
             }
             else {
                 [selectedCell performSelectorOnMainThread:@selector(setSpeakerButtonTint:) withObject:[UIColor blackColor] waitUntilDone:NO];

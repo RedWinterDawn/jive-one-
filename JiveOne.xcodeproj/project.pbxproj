@@ -85,6 +85,8 @@
 		271EBDAF1910525E00421BA9 /* GTalkNotify.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 271EBDAE1910525E00421BA9 /* GTalkNotify.aiff */; };
 		272580F0192120500027887C /* people-start-conv.png in Resources */ = {isa = PBXBuildFile; fileRef = 272580EF192120500027887C /* people-start-conv.png */; };
 		272580F1192120500027887C /* people-start-conv.png in Resources */ = {isa = PBXBuildFile; fileRef = 272580EF192120500027887C /* people-start-conv.png */; };
+		272580F31921302D0027887C /* vm-volume.png in Resources */ = {isa = PBXBuildFile; fileRef = 272580F21921302D0027887C /* vm-volume.png */; };
+		272580F41921302D0027887C /* vm-volume.png in Resources */ = {isa = PBXBuildFile; fileRef = 272580F21921302D0027887C /* vm-volume.png */; };
 		2727F353191AA92F00A41185 /* JCPeopleDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9103271518F34BEC00437503 /* JCPeopleDetailCell.m */; };
 		2727F354191AA92F00A41185 /* JCGroupSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2459BB118C67FC000AF56CF /* JCGroupSelectorViewController.m */; };
 		2727F355191AA92F00A41185 /* JCStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 277F094118FED58C00EEF0E3 /* JCStatusViewController.m */; };
@@ -586,6 +588,7 @@
 		2710E40E18CEC8C300152C91 /* ConversationEntry+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ConversationEntry+Custom.m"; sourceTree = "<group>"; };
 		271EBDAE1910525E00421BA9 /* GTalkNotify.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = GTalkNotify.aiff; sourceTree = "<group>"; };
 		272580EF192120500027887C /* people-start-conv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "people-start-conv.png"; sourceTree = "<group>"; };
+		272580F21921302D0027887C /* vm-volume.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "vm-volume.png"; sourceTree = "<group>"; };
 		2727F420191AA92F00A41185 /* JiveOneEnterprise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JiveOneEnterprise.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2727F421191AA92F00A41185 /* JiveOneEnterprise-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "JiveOneEnterprise-Info.plist"; sourceTree = SOURCE_ROOT; };
 		272B61DB18B2A4DD00EB8ED5 /* TRVSMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRVSMonitor.h; sourceTree = "<group>"; };
@@ -1187,6 +1190,7 @@
 		270098B518F5EA7900B6BC2F /* UX Images */ = {
 			isa = PBXGroup;
 			children = (
+				272580F21921302D0027887C /* vm-volume.png */,
 				272580EF192120500027887C /* people-start-conv.png */,
 				270098B318F5E4EA00B6BC2F /* conv-bubble.png */,
 				270098B118F5E4E400B6BC2F /* conv-bubble@2x.png */,
@@ -2092,6 +2096,7 @@
 				2727F3D9191AA92F00A41185 /* avatar.png in Resources */,
 				2727F3DA191AA92F00A41185 /* voicemail_pause@2x.png in Resources */,
 				2727F3DB191AA92F00A41185 /* ES-voicemail-1.jpg in Resources */,
+				272580F41921302D0027887C /* vm-volume.png in Resources */,
 				2727F3DC191AA92F00A41185 /* unnamed.jpg in Resources */,
 				2727F3DD191AA92F00A41185 /* bubble-stroked-tailless@2x.png in Resources */,
 				2727F3DE191AA92F00A41185 /* send-button-pressed.png in Resources */,
@@ -2244,6 +2249,7 @@
 				9172AD5C19192A1500481B01 /* UserDefaults.plist in Resources */,
 				270098CB18F5EA9300B6BC2F /* vm-delete.png in Resources */,
 				2700988F18F4714100B6BC2F /* bubble-classic-square-blue@2x.png in Resources */,
+				272580F31921302D0027887C /* vm-volume.png in Resources */,
 				2700989618F4714100B6BC2F /* bubble-min.png in Resources */,
 				27F1F2F5191C171300AEAFD7 /* UALocationSettingsViewController.xib in Resources */,
 				2700988D18F4714100B6BC2F /* bubble-classic-typing@2x.png in Resources */,
