@@ -428,15 +428,14 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uMz-cm-hR5">
-                                            <rect key="frame" x="227" y="0.0" width="73" height="44"/>
+                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uMz-cm-hR5">
+                                            <rect key="frame" x="257" y="7" width="28" height="24"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="73" id="UI3-t0-JDj"/>
+                                                <constraint firstAttribute="width" constant="34" id="6zg-aN-Z8L"/>
                                             </constraints>
-                                            <state key="normal" title="Start Chat">
-                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                            </state>
+                                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                            <state key="normal" image="people-start-conv.png"/>
                                             <connections>
                                                 <action selector="startChat:" destination="PiD-ab-JdW" eventType="touchUpInside" id="q5P-7J-jdq"/>
                                             </connections>
@@ -450,9 +449,9 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="uMz-cm-hR5" secondAttribute="trailing" constant="20" symbolic="YES" id="3k8-2c-Dsx"/>
-                                        <constraint firstItem="uMz-cm-hR5" firstAttribute="top" secondItem="zY2-Ui-cfZ" secondAttribute="top" id="80J-oR-sVF"/>
-                                        <constraint firstAttribute="bottom" secondItem="uMz-cm-hR5" secondAttribute="bottom" constant="-1" id="g2p-to-MWp"/>
+                                        <constraint firstItem="uMz-cm-hR5" firstAttribute="centerY" secondItem="zY2-Ui-cfZ" secondAttribute="centerY" id="AON-xy-EIv"/>
+                                        <constraint firstAttribute="trailing" secondItem="uMz-cm-hR5" secondAttribute="trailing" constant="29" id="H9V-aK-ugp"/>
+                                        <constraint firstItem="uMz-cm-hR5" firstAttribute="top" secondItem="zY2-Ui-cfZ" secondAttribute="top" constant="7" id="tIn-Mr-jpA"/>
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -933,6 +932,7 @@
         <image name="nav-conv.png" width="30" height="30"/>
         <image name="nav-more.png" width="44" height="44"/>
         <image name="nav-people.png" width="44" height="44"/>
+        <image name="people-start-conv.png" width="44" height="44"/>
         <image name="presenceView.png" width="640" height="1136"/>
         <image name="vmail.png" width="32" height="32"/>
     </resources>
@@ -943,6 +943,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="PKy-V4-VLv"/>
-        <segue reference="Nyn-nw-5LE"/>
+        <segue reference="4tJ-oe-047"/>
     </inferredMetricsTieBreakers>
 </document>
