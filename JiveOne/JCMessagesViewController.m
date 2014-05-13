@@ -142,6 +142,7 @@
         case JCNewConversation: {
             [self setHeaderTitle:NSLocalizedString(@"New Message", @"New Message") andSubtitle:nil] ;
             self.imageViewNewMessage.hidden = NO;
+            [self.contactPickerView becomeFirstResponder];
             break;
         }
         case JCNewConversationWithEntity: {

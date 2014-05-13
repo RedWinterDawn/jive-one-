@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "JSMessagesViewController.h"
-#import <MBContactPicker/MBContactPicker.h>
+#import "MBContactPicker/MBContactPicker.h"
 #import "ContactGroup.h"
 #import "JCOsgiClient.h"
 
