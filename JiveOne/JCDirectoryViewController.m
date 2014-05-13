@@ -15,6 +15,7 @@
 #import "JCDirectoryGroupViewController.h"
 #import "ContactGroup.h"
 #import "NotificationView.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define kUINameRowHeight 100
 #define kUIRowHeight 50
@@ -421,6 +422,52 @@ static NSString *CellIdentifier = @"DirectoryCell";
 {
     return 60;
 }
+
+/**
+ This code left intentionally commentend. Uncomment the code bellow for a custom, dashed section 
+ headers. 
+ **/
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+//{
+//    if (section == 0 && ((NSArray*)self.clientEntitiesArray[section]).count == 0) {
+//        return 20;
+//    }
+//    return 15;
+//}
+
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//    
+//    UIView *dashedView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width - 13, 25)];
+//    CAShapeLayer *shapeLayer = [CAShapeLayer layer];
+//    [shapeLayer setBounds:dashedView.bounds];
+//    [shapeLayer setPosition:dashedView.center];
+//    [shapeLayer setFillColor:[[UIColor clearColor] CGColor]];
+//    [shapeLayer setStrokeColor:[[UIColor lightGrayColor] CGColor]];
+//    [shapeLayer setLineWidth:1.5f];
+//    [shapeLayer setLineJoin:kCALineJoinRound];
+//    [shapeLayer setLineDashPattern:
+//     [NSArray arrayWithObjects:[NSNumber numberWithInt:10],
+//      [NSNumber numberWithInt:5],nil]];
+//    
+//    // Setup the path
+//    CGMutablePathRef path = CGPathCreateMutable();
+//    CGPathMoveToPoint(path, NULL, 0.0, 0.0);
+//    CGPathAddLineToPoint(path, NULL, tableView.frame.size.width - 13, 0.0);
+//    
+//    [shapeLayer setPath:path];
+//    CGPathRelease(path);
+//    [dashedView.layer addSublayer:shapeLayer];
+//    
+//    UILabel *letter = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, tableView.frame.size.width, 15)];
+//    letter.text = sections[section];
+//    letter.textColor = [UIColor grayColor];
+//    letter.font = [UIFont boldSystemFontOfSize:12];
+//    
+//    [dashedView addSubview:letter];
+//    
+//    return dashedView;
+//}
 
 
 #pragma mark Search
