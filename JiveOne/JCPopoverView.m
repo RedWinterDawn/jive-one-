@@ -29,7 +29,6 @@
         textLabel.textAlignment = NSTextAlignmentCenter;
         textLabel.frame = CGRectMake(pView.frame.origin.x, pView.frame.origin.y, pView.frame.size.width, pView.frame.size.height/1.5);
         [self addSubview:textLabel];
-        [[UIApplication sharedApplication].keyWindow bringSubviewToFront:pView];
     }
     return self;
 }
