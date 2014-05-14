@@ -17,7 +17,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.font = [UIFont boldSystemFontOfSize:15.0f];
-        [self CreatePopup];
         UIView* pView = [self CreatePopup];
         [self addSubview:pView];
 
@@ -59,6 +58,7 @@
     CGContextAddLineToPoint(context,44.25, 35.14);
     CGContextAddLineToPoint(context,20, 35.14);
     CGContextClosePath(context);
+    
 
     CGContextSetStrokeColorWithColor(context, color.CGColor);
 

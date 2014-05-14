@@ -12,6 +12,7 @@
 @interface JCPopoverSlider : UISlider
 
 @property (strong, nonatomic) JCPopoverView *popupView;
+@property (strong, nonatomic) UIImageView *sliderView;
 @property (nonatomic, readonly) CGRect thumbRect;
 
 @end
