@@ -33,6 +33,7 @@
 - (void)receivedData:(NSData *)data
 {
     //determine that this is the first time the user has opened this install of the app and that version has a value
+    NSLog(@"Build Version is: %i",version);
     if (version < 1) {
         NSString *stringData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         version = [[[stringData componentsSeparatedByCharactersInSet: [[NSCharacterSet decimalDigitCharacterSet] invertedSet]] componentsJoinedByString:@""] intValue];
@@ -40,12 +41,13 @@
         [[NSUserDefaults standardUserDefaults] setInteger:version forKey:@"appBuildNumber"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }//else if version has a value - check to see if this install is the latest version.
-    else if((version > 1))
+    else if(version > 1)
     {
         NSString *stringData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         version = [[[stringData componentsSeparatedByCharactersInSet: [[NSCharacterSet decimalDigitCharacterSet] invertedSet]] componentsJoinedByString:@""] intValue];
         if (version > [[NSUserDefaults standardUserDefaults] integerForKey:@"appBuildNumber"]) {
             NSLog(@"Prompt for new install.");
+            version--;
             dispatch_async(dispatch_get_main_queue(),^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"AppIsOutdated" object:nil];
             });
@@ -69,9 +71,15 @@
 
 -(void)getVersion
 {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@", kVersionURL]];
     
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+    NSURLRequest *urlRequest=[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@", kVersionURL]]
+                                              cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                                          timeoutInterval:15.0];
+    NSLog(@"RequestMadeWithOutUsingCache");
+    
+//    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@", kVersionURL]];
+//    
+//    NSURLRequest *urlRequest = [[NSURLRequest requestWithURL:url] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
     
     [NSURLConnection sendAsynchronousRequest:urlRequest queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
