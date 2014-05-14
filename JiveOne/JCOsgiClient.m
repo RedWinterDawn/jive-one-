@@ -28,8 +28,6 @@
     NSManagedObjectContext *localContext;
 }
 
-
-
 #pragma mark - class initialization
 
 + (JCOsgiClient*)sharedClient {
@@ -53,8 +51,6 @@
     
     keyChainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
     localContext  = [NSManagedObjectContext MR_contextForCurrentThread];
-
-    
 
     NSLog(@"About to go into debug mode for server certificate");
 #if DEBUG
@@ -163,8 +159,6 @@
     }
     
     [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         

@@ -25,7 +25,29 @@
     _popupView.backgroundColor = [UIColor clearColor];
     _popupView.alpha = 0.0;
     [self addSubview:_popupView];
+    UIImage *thumbImage = [self createSliderImage];
+    [[JCPopoverSlider appearance] setThumbImage:thumbImage forState:UIControlStateNormal];
 }
+
+-(UIImage*)createSliderImage{
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(30, 20), FALSE, [[UIScreen mainScreen]scale]);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    //// Color Declarations
+    UIColor* color = [UIColor colorWithRed: 0.275 green: 0.396 blue: 0.843 alpha: 1];
+    
+    //// Rectangle Drawing
+    CGContextAddRect(context, CGRectMake(0, 0, 30, 20));
+    
+    CGContextSetStrokeColorWithColor(context, color.CGColor);
+    
+    CGContextSetFillColorWithColor(context, color.CGColor);
+    CGContextDrawPath(context, kCGPathFillStroke);
+    //get the image from the context
+    UIImage *sliderImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return sliderImage;
+}
+
 
 
 //The default initWithFrame: method is not invoked when creating an object from a .xib file. Instead, it is this method that is invoked - initWithCoder:.
