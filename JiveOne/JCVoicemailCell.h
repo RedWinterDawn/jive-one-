@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import "Voicemail.h"
+#import "JCPopoverSlider.h"
 
 @class JCVoicemailCell;
 @protocol JCVoicemailCellDelegate <NSObject>
@@ -30,7 +31,7 @@
 @property (weak,nonatomic) IBOutlet UILabel  *duration;
 @property (weak,nonatomic) IBOutlet UILabel  *shortTime;
 @property (weak,nonatomic) IBOutlet UIButton *speakerButton;
-@property (weak,nonatomic) IBOutlet UISlider *slider;
+@property (weak,nonatomic) IBOutlet JCPopoverSlider *slider;
 @property (weak, nonatomic) IBOutlet UIImageView *userImage;
 @property (weak, nonatomic) IBOutlet UIImageView *voicemailIcon;
 @property (nonatomic) BOOL useSpeaker;

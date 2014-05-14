@@ -447,6 +447,10 @@
 		91743AA0191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91743A9F191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m */; };
 		918EF0A4191A963400435DC3 /* launch640x1136.png in Resources */ = {isa = PBXBuildFile; fileRef = 918EF0A3191A963400435DC3 /* launch640x1136.png */; };
 		919C448F18DA479F00F6566A /* thumb1.png in Resources */ = {isa = PBXBuildFile; fileRef = 919C448E18DA479F00F6566A /* thumb1.png */; };
+		919DD29D1922E2C90039205E /* JCPopoverSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 919DD29C1922E2C90039205E /* JCPopoverSlider.m */; };
+		919DD29E1922E2C90039205E /* JCPopoverSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 919DD29C1922E2C90039205E /* JCPopoverSlider.m */; };
+		919DD2A11922E3570039205E /* JCPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 919DD2A01922E3570039205E /* JCPopoverView.m */; };
+		919DD2A21922E3570039205E /* JCPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 919DD2A01922E3570039205E /* JCPopoverView.m */; };
 		91ADB99018D8BBDA00DF41A3 /* JCVoicemailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 91ADB98E18D8BBDA00DF41A3 /* JCVoicemailCell.m */; };
 		91ADB99118D8BBDA00DF41A3 /* JCVoicemailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91ADB98F18D8BBDA00DF41A3 /* JCVoicemailCell.xib */; };
 		91ADB9A218D8BD4200DF41A3 /* voicemail_archive_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 91ADB99218D8BD4200DF41A3 /* voicemail_archive_button.png */; };
@@ -907,6 +911,10 @@
 		91743A9F191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTermsAndConditonsVCViewController.m; sourceTree = "<group>"; };
 		918EF0A3191A963400435DC3 /* launch640x1136.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launch640x1136.png; sourceTree = "<group>"; };
 		919C448E18DA479F00F6566A /* thumb1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumb1.png; sourceTree = "<group>"; };
+		919DD29B1922E2C90039205E /* JCPopoverSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPopoverSlider.h; sourceTree = "<group>"; };
+		919DD29C1922E2C90039205E /* JCPopoverSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPopoverSlider.m; sourceTree = "<group>"; };
+		919DD29F1922E3570039205E /* JCPopoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPopoverView.h; sourceTree = "<group>"; };
+		919DD2A01922E3570039205E /* JCPopoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPopoverView.m; sourceTree = "<group>"; };
 		91ADB98D18D8BBDA00DF41A3 /* JCVoicemailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVoicemailCell.h; sourceTree = "<group>"; };
 		91ADB98E18D8BBDA00DF41A3 /* JCVoicemailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoicemailCell.m; sourceTree = "<group>"; };
 		91ADB98F18D8BBDA00DF41A3 /* JCVoicemailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCVoicemailCell.xib; sourceTree = "<group>"; };
@@ -1401,6 +1409,7 @@
 		2751592918AD332A00FD8D3F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				919DD29A1922E2770039205E /* JCPopoverSlider */,
 				2743985218D0CFAA00ABCD69 /* Views */,
 			);
 			name = Models;
@@ -1932,6 +1941,17 @@
 			path = Shared;
 			sourceTree = "<group>";
 		};
+		919DD29A1922E2770039205E /* JCPopoverSlider */ = {
+			isa = PBXGroup;
+			children = (
+				919DD29B1922E2C90039205E /* JCPopoverSlider.h */,
+				919DD29C1922E2C90039205E /* JCPopoverSlider.m */,
+				919DD29F1922E3570039205E /* JCPopoverView.h */,
+				919DD2A01922E3570039205E /* JCPopoverView.m */,
+			);
+			name = JCPopoverSlider;
+			sourceTree = "<group>";
+		};
 		91F87CF4190EE16B00152FDB /* AppTutorial */ = {
 			isa = PBXGroup;
 			children = (
@@ -2451,6 +2471,7 @@
 				2727F384191AA92F00A41185 /* JCPersonCell.m in Sources */,
 				2727F385191AA92F00A41185 /* VoicemailETag.m in Sources */,
 				279E4CB4192273E5002A556C /* MBContactModel.m in Sources */,
+				919DD29E1922E2C90039205E /* JCPopoverSlider.m in Sources */,
 				279E4CB0192273E5002A556C /* MBContactCollectionViewFlowLayout.m in Sources */,
 				2727F386191AA92F00A41185 /* JCPresenceView.m in Sources */,
 				2727F387191AA92F00A41185 /* JSMessage.m in Sources */,
@@ -2467,6 +2488,7 @@
 				2727F392191AA92F00A41185 /* JCDirectoryViewController.m in Sources */,
 				2727F393191AA92F00A41185 /* JCPage1ViewController.m in Sources */,
 				2727F394191AA92F00A41185 /* Voicemail+Custom.m in Sources */,
+				919DD2A21922E3570039205E /* JCPopoverView.m in Sources */,
 				2727F395191AA92F00A41185 /* JCDirectoryGroupViewController.m in Sources */,
 				2727F396191AA92F00A41185 /* JSBubbleView.m in Sources */,
 				2727F397191AA92F00A41185 /* JSBubbleMessageCell.m in Sources */,
@@ -2507,7 +2529,9 @@
 				275F4A5E18AD0FBC00D2F069 /* main.m in Sources */,
 				274493CE18D13538002744CB /* Common.m in Sources */,
 				27F1F2D8191C171300AEAFD7 /* UAInboxMessageViewController.m in Sources */,
+				919DD2A11922E3570039205E /* JCPopoverView.m in Sources */,
 				2700987B18F4714100B6BC2F /* JSDismissiveTextView.m in Sources */,
+				919DD29D1922E2C90039205E /* JCPopoverSlider.m in Sources */,
 				274493C818D0E98D002744CB /* Conversation.m in Sources */,
 				272B61DD18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */,
 				274493B918D0E98C002744CB /* Presence.m in Sources */,
