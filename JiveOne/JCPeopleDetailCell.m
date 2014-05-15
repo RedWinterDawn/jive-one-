@@ -23,7 +23,7 @@
         StarColor = [UIColor colorWithRed:208.0/255.0 green:208.0/255.0 blue:208.0/255.0 alpha:1.0];
     }
     
-    NSMutableAttributedString *attributedStarSelectedState = [[NSMutableAttributedString alloc]initWithString:@"★" attributes:@{NSForegroundColorAttributeName : StarColor}];
+    NSMutableAttributedString *attributedStarSelectedState = [[NSMutableAttributedString alloc]initWithString:@"★" attributes:@{NSForegroundColorAttributeName : StarColor, NSFontAttributeName:[UIFont systemFontOfSize:22.0f]}];
     
     [self.favoriteButton setAttributedTitle:attributedStarSelectedState forState:UIControlStateNormal];
 

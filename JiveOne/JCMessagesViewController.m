@@ -84,8 +84,12 @@
     
     self.contactPickerView.delegate = self;
     self.contactPickerView.datasource = self;
+    CGRect frame = self.contactPickerView.frame;
+    frame.size.height = 38.0f;
+    [self.contactPickerView setFrame:frame];
     self.contactPickerView.allowsCompletionOfSelectedContacts = NO;
     [self.view addSubview:self.contactPickerView];
+    [self.view insertSubview:self.imageViewNewMessage belowSubview:self.contactPickerView]; 
     
     [self setBackgroundColor:[UIColor colorWithRed:0.91 green:0.91 blue:0.91 alpha:1] /*#e8e8e8*/];
     
@@ -137,7 +141,8 @@
         }
         case JCNewConversation: {
             [self setHeaderTitle:NSLocalizedString(@"New Message", @"New Message") andSubtitle:nil] ;
-            
+            self.imageViewNewMessage.hidden = NO;
+            [self.contactPickerView becomeFirstResponder];
             break;
         }
         case JCNewConversationWithEntity: {
@@ -170,6 +175,8 @@
         
         [self checkForConversationWithEntities:entities];
     }
+    
+    [self enableSendButtonBasedOnSelectedContacts];
     
 }
 
@@ -323,6 +330,10 @@
 
 - (void)didSendText:(NSString *)text fromSender:(NSString *)sender onDate:(NSDate *)date
 {
+    if ([Common stringIsNilOrEmpty:text]) {
+        return;
+    }
+    
     [self.messages addObject:[[JSMessage alloc] initWithText:text sender:sender date:date]];
     [self dispatchMessage:text];
     [self finishSend];
@@ -473,6 +484,8 @@
 
 #pragma mark - Send/Create Conversation
 - (void)dispatchMessage:(NSString *)message {
+    
+    self.imageViewNewMessage.hidden = YES;
     
     // if conversation exists, then create entry for that conversation
     if (_conversationId != nil && ![_conversationId isEqualToString:@""]) {
@@ -737,13 +750,27 @@
     }
     [self.selectedContacts addObject:((JCContactModel *)model).person];
     
+    [self enableSendButtonBasedOnSelectedContacts];
+    
     [self checkForConversationWithEntities:self.selectedContacts];
 }
 
 - (void)contactCollectionView:(MBContactCollectionView*)contactCollectionView didRemoveContact:(id<MBContactPickerModelProtocol>)model
 {
     NSLog(@"Did Remove: %@", model.contactTitle);
+    
+    PersonEntities *person = ((JCContactModel *)model).person;
+    [self.selectedContacts removeObject:person];
+    
+    [self enableSendButtonBasedOnSelectedContacts];
 }
+//
+//- (NSLayoutConstraint *)contactPickerViewHeightConstraint
+//{
+//    NSLayoutConstraint *heightConstraint = [NSLayoutConstraint new];
+//    heightConstraint.constant = 38.0f;
+//    return heightConstraint;
+//}
 
 // This delegate method is called to allow the parent view to increase the size of
 // the contact picker view to show the search table view
@@ -784,6 +811,25 @@
     }];
 }
 
+- (void)enableSendButtonBasedOnSelectedContacts
+{
+    if (self.messageInputView.sendButton && _messageType == JCNewConversation) {
+        if (self.selectedContacts) {
+            if (self.selectedContacts.count > 0) {
+                self.hasMininumContacts = YES;
+            }
+            else {
+                self.hasMininumContacts = NO;
+            }
+        }
+        else {
+            self.hasMininumContacts = NO;
+        }
+    }
+    else {
+        self.hasMininumContacts = YES;
+    }
+}
 
 
 @end

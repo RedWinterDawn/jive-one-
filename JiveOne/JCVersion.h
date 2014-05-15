@@ -1,5 +1,5 @@
 //
-//  JCVersionClient.h
+//  JCVersion.h
 //  JiveOne
 //
 //  Created by Doug on 5/9/14.
@@ -7,11 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AFHTTPSessionManager.h"
 
 @protocol JCVersionClientDelegateProtocol <NSObject>
 
-@required
 - (void)receivedData:(NSData *)data;
 - (void)emptyReply;
 - (void)timedOut;
@@ -19,10 +17,9 @@
 
 @end
 
-@interface JCVersionClient : NSObject <JCVersionClientDelegateProtocol>
-
-@property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
-@property (nonatomic, retain) id<JCVersionClientDelegateProtocol> delegate;
+@interface JCVersion : NSObject <JCVersionClientDelegateProtocol>
 + (instancetype)sharedClient;
+
+@property (nonatomic, weak) id<JCVersionClientDelegateProtocol> delegate;
 -(void)getVersion;
 @end

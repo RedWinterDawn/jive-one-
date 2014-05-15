@@ -139,8 +139,10 @@
                 if ([kVoicemailURLOverRide  isEqual:@"YesUseAWSPlaceholderURL"]) {
                     vm.voicemail = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"https://s3-us-west-2.amazonaws.com/jive-mobile/voicemail/userId/dleonard/TestVoicemail2.wav"]];
                 }else{
-                    vm.voicemail = [NSData dataWithContentsOfURL:[NSURL URLWithString:vm.file]];
-                    [context MR_saveToPersistentStoreAndWait];
+                    if (!vm.voicemail) {
+                        vm.voicemail = [NSData dataWithContentsOfURL:[NSURL URLWithString:vm.file]];
+                        [context MR_saveToPersistentStoreAndWait];
+                    }                    
                 }
             }
             @catch (NSException *exception) {

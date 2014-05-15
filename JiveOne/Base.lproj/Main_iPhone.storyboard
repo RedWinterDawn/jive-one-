@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="8YX-ce-x5E">
     <dependencies>
+        <deployment defaultVersion="1552" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
@@ -428,15 +429,14 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uMz-cm-hR5">
-                                            <rect key="frame" x="227" y="0.0" width="73" height="44"/>
+                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uMz-cm-hR5">
+                                            <rect key="frame" x="257" y="7" width="28" height="24"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="73" id="UI3-t0-JDj"/>
+                                                <constraint firstAttribute="width" constant="34" id="6zg-aN-Z8L"/>
                                             </constraints>
-                                            <state key="normal" title="Start Chat">
-                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                            </state>
+                                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                            <state key="normal" image="people-start-conv.png"/>
                                             <connections>
                                                 <action selector="startChat:" destination="PiD-ab-JdW" eventType="touchUpInside" id="q5P-7J-jdq"/>
                                             </connections>
@@ -450,9 +450,9 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="uMz-cm-hR5" secondAttribute="trailing" constant="20" symbolic="YES" id="3k8-2c-Dsx"/>
-                                        <constraint firstItem="uMz-cm-hR5" firstAttribute="top" secondItem="zY2-Ui-cfZ" secondAttribute="top" id="80J-oR-sVF"/>
-                                        <constraint firstAttribute="bottom" secondItem="uMz-cm-hR5" secondAttribute="bottom" constant="-1" id="g2p-to-MWp"/>
+                                        <constraint firstItem="uMz-cm-hR5" firstAttribute="centerY" secondItem="zY2-Ui-cfZ" secondAttribute="centerY" id="AON-xy-EIv"/>
+                                        <constraint firstAttribute="trailing" secondItem="uMz-cm-hR5" secondAttribute="trailing" constant="29" id="H9V-aK-ugp"/>
+                                        <constraint firstItem="uMz-cm-hR5" firstAttribute="top" secondItem="zY2-Ui-cfZ" secondAttribute="top" constant="7" id="tIn-Mr-jpA"/>
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -656,13 +656,17 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zyf-z6-zcn" customClass="MBContactPicker">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="31"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="38"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="31" id="zOX-mr-SDg"/>
+                                    <constraint firstAttribute="height" constant="38" id="zOX-mr-SDg"/>
                                 </constraints>
                             </view>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="first_message.png" translatesAutoresizingMaskIntoConstraints="NO" id="HBL-Cb-J1w">
+                                <rect key="frame" x="40" y="39" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -676,6 +680,7 @@
                     <connections>
                         <outlet property="contactPickerView" destination="zyf-z6-zcn" id="xgG-7E-2t2"/>
                         <outlet property="contactPickerViewHeightConstraint" destination="zOX-mr-SDg" id="tVg-jX-0ri"/>
+                        <outlet property="imageViewNewMessage" destination="HBL-Cb-J1w" id="Ctg-40-Uzj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XuZ-GW-bg4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -820,33 +825,16 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Other" id="iqw-4v-MF1">
+                            <tableViewSection id="iqw-4v-MF1">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="Muc-Ko-5ap" rowHeight="44" style="IBUITableViewCellStyleDefault" id="KSU-OC-CZn">
-                                        <rect key="frame" x="0.0" y="425" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="397" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KSU-OC-CZn" id="gpq-iI-QYD">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Terms of Service" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Muc-Ko-5ap">
-                                                    <rect key="frame" x="15" y="0.0" width="270" height="43"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="7Yl-5l-DVQ" rowHeight="44" style="IBUITableViewCellStyleDefault" id="GJC-xY-ikg">
-                                        <rect key="frame" x="0.0" y="469" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GJC-xY-ikg" id="LuQ-7S-dPk">
-                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="EULA" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7Yl-5l-DVQ">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="EULA / Terms of Service" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Muc-Ko-5ap">
                                                     <rect key="frame" x="15" y="0.0" width="270" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -858,19 +846,36 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection id="FIq-OK-lak">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="mFC-oP-zvy" rowHeight="44" style="IBUITableViewCellStyleDefault" id="qrj-of-6fI">
+                                        <rect key="frame" x="0.0" y="461" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qrj-of-6fI" id="zMQ-oF-jqH">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Sign Out" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mFC-oP-zvy">
+                                                    <rect key="frame" x="15" y="0.0" width="290" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <color key="backgroundColor" red="1" green="0.0097322759530000004" blue="0.064019456969999999" alpha="0.16" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" red="1" green="0.0097322759530000004" blue="0.064019456969999999" alpha="0.16" colorSpace="calibratedRGB"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="xfW-W8-tPR" id="3bh-ny-JXk"/>
                             <outlet property="delegate" destination="xfW-W8-tPR" id="qpG-Oa-9dI"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Account" id="7BX-g7-cjd">
-                        <barButtonItem key="rightBarButtonItem" title="Logout" id="QAD-m4-2XA">
-                            <connections>
-                                <action selector="logoutButtonPress:" destination="xfW-W8-tPR" id="o7U-4l-Wbh"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Account" id="7BX-g7-cjd"/>
                     <connections>
                         <outlet property="jiveMessenger" destination="0ai-Ig-Dss" id="Qbu-t1-FZ5"/>
                         <outlet property="jivePhoneNumber" destination="u6x-29-mLI" id="D7U-Ge-pvD"/>
@@ -923,10 +928,12 @@
     <resources>
         <image name="ES-voicemail-1.jpg" width="640" height="1136"/>
         <image name="avatar.png" width="100" height="100"/>
+        <image name="first_message.png" width="265" height="154"/>
         <image name="launch.png" width="640" height="1136"/>
         <image name="nav-conv.png" width="30" height="30"/>
         <image name="nav-more.png" width="44" height="44"/>
         <image name="nav-people.png" width="44" height="44"/>
+        <image name="people-start-conv.png" width="44" height="44"/>
         <image name="presenceView.png" width="640" height="1136"/>
         <image name="vmail.png" width="32" height="32"/>
     </resources>
@@ -936,7 +943,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="SEu-ym-TIt"/>
-        <segue reference="Nyn-nw-5LE"/>
+        <segue reference="PKy-V4-VLv"/>
+        <segue reference="4tJ-oe-047"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -37,7 +37,7 @@
     NSTimer *webviewTimer;
 }
 
-static int MAX_LOGIN_ATTEMPTS = 2;
+//static int MAX_LOGIN_ATTEMPTS = 2;
 
 + (JCAuthenticationManager *)sharedInstance
 {

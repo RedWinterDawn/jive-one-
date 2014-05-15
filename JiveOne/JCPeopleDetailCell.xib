@@ -14,7 +14,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zeC-wt-GnH">
-                        <rect key="frame" x="34" y="24" width="231" height="21"/>
+                        <rect key="frame" x="34" y="21" width="231" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="231" id="ZAE-oo-yPX"/>
@@ -23,32 +23,34 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OcW-0l-mCg" customClass="JCPresenceView">
-                        <rect key="frame" x="13" y="26" width="18" height="18"/>
+                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OcW-0l-mCg" customClass="JCPresenceView">
+                        <rect key="frame" x="8" y="26" width="18" height="18"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZB0-82-ojU">
-                        <rect key="frame" x="250" y="10" width="50" height="50"/>
+                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZB0-82-ojU">
+                        <rect key="frame" x="256" y="20" width="44" height="44"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="50" id="SBw-1e-QZo"/>
+                            <constraint firstAttribute="width" constant="44" id="qwW-iG-zSb"/>
                         </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                        <state key="normal" title="★"/>
                         <connections>
                             <action selector="toggleIsFavorite:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="UPp-yJ-lZn"/>
                         </connections>
                     </button>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" secondItem="ZB0-82-ojU" secondAttribute="trailing" constant="20" symbolic="YES" id="3u0-rK-HAV"/>
                     <constraint firstItem="zeC-wt-GnH" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="24" id="9F3-Zm-LQs"/>
-                    <constraint firstAttribute="bottom" secondItem="ZB0-82-ojU" secondAttribute="bottom" constant="9" id="AVY-4d-e5I"/>
-                    <constraint firstItem="OcW-0l-mCg" firstAttribute="centerY" secondItem="ZB0-82-ojU" secondAttribute="centerY" id="FbI-4Q-5k1"/>
-                    <constraint firstAttribute="trailing" secondItem="ZB0-82-ojU" secondAttribute="trailing" constant="20" symbolic="YES" id="Fy1-8T-XfL"/>
                     <constraint firstItem="OcW-0l-mCg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="26" id="GQE-Fm-rlB"/>
                     <constraint firstItem="zeC-wt-GnH" firstAttribute="leading" secondItem="OcW-0l-mCg" secondAttribute="trailing" constant="3" id="GoO-C0-9v4"/>
                     <constraint firstItem="OcW-0l-mCg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="13" id="L8V-01-kB6"/>
-                    <constraint firstItem="ZB0-82-ojU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="TRf-9l-60D"/>
                     <constraint firstAttribute="trailing" secondItem="zeC-wt-GnH" secondAttribute="trailing" constant="55" id="Uhy-Bh-79f"/>
+                    <constraint firstItem="ZB0-82-ojU" firstAttribute="centerY" secondItem="OcW-0l-mCg" secondAttribute="centerY" id="ZPE-V6-LyC"/>
+                    <constraint firstAttribute="bottom" secondItem="ZB0-82-ojU" secondAttribute="bottom" constant="15" id="e8A-9H-OPR"/>
+                    <constraint firstItem="ZB0-82-ojU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="fb5-7L-37s"/>
                     <constraint firstItem="zeC-wt-GnH" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="34" id="xrJ-oW-Thu"/>
                 </constraints>
             </tableViewCellContentView>

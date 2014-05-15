@@ -57,7 +57,7 @@
 	_isUserScrolling = NO;
     
     JSMessageInputViewStyle inputViewStyle = [self.delegate inputViewStyle];
-    CGFloat inputViewHeight = (inputViewStyle == JSMessageInputViewStyleFlat) ? 35.0f : 40.0f;
+    CGFloat inputViewHeight = (inputViewStyle == JSMessageInputViewStyleFlat) ? 40.0f : 40.0f;
     
 	JSMessageTableView *tableView = [[JSMessageTableView alloc] initWithFrame:self.view.frame style:UITableViewStylePlain];
 	tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -351,7 +351,7 @@
 
 - (void)textViewDidChange:(UITextView *)textView
 {
-    self.messageInputView.sendButton.enabled = ([[textView.text js_stringByTrimingWhitespace] length] > 0);
+    self.messageInputView.sendButton.enabled = (([[textView.text js_stringByTrimingWhitespace] length] > 0) && self.hasMininumContacts);
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView

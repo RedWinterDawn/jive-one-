@@ -203,28 +203,32 @@
     
     //UIView *compositeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
     
+    NSArray *colorArray = [NSArray arrayWithObjects:[UIColor redColor],
+                           [UIColor purpleColor],
+                           [UIColor greenColor], nil];
+    
     for (NSString* entity in self.conversation.entities) {
         PersonEntities *person = [PersonEntities MR_findFirstByAttribute:@"entityId" withValue:entity];
         if (person) {
-            NSURL *imageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", @"https://my.jive.com", person.picture]];
+            NSURL *imageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kOsgiBaseURL, person.picture]];
             
             UIImageView * iv = [[UIImageView alloc] init];
             CGRect frame;
             switch (count) {
                 case 0:
-                    frame = CGRectMake(0, 0, 25, 25);
-                    imageUrl = [NSURL URLWithString:@"http://png-3.findicons.com/files/icons/1072/face_avatars/300/i02.png"];
+                    frame = CGRectMake(0, 0, 27, 27);
+                    //imageUrl = [NSURL URLWithString:@"http://png-3.findicons.com/files/icons/1072/face_avatars/300/i02.png"];
                     break;
                 case 1:
-                    frame = CGRectMake(25, 0, 25, 25);
-                    imageUrl = [NSURL URLWithString:@"http://png-5.findicons.com/files/icons/1072/face_avatars/300/n02.png"];
+                    frame = CGRectMake(27, 0, 27, 27);
+                    //imageUrl = [NSURL URLWithString:@"http://png-5.findicons.com/files/icons/1072/face_avatars/300/n02.png"];
                     break;
                 case 2:
-                    frame = CGRectMake(0, 25, 25, 25);
-                    imageUrl = [NSURL URLWithString:@"http://png-1.findicons.com/files/icons/1072/face_avatars/300/g01.png"];
+                    frame = CGRectMake(0, 27, 27, 27);
+                    //imageUrl = [NSURL URLWithString:@"http://png-1.findicons.com/files/icons/1072/face_avatars/300/g01.png"];
                     break;
                 case 3:
-                    frame = CGRectMake(25, 25, 25, 25);
+                    frame = CGRectMake(27, 27, 27, 27);
                     break;
                     
                 default:
@@ -233,7 +237,7 @@
             iv.frame = frame;
             
             if (count == 3) {
-                UIView * groupCount = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+                UIView * groupCount = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 28, 28)];
                 groupCount.backgroundColor = [UIColor colorWithRed:0.043 green:0.455 blue:0.808 alpha:1];
                 
                 UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 20)];
@@ -249,7 +253,28 @@
                 [iv setImage:countImage];
             }
             else {
-                [iv setImageWithURL:imageUrl];
+                
+                NSRange range = [[imageUrl description] rangeOfString:@"avatar"];
+                if (range.location == NSNotFound) {
+                    [iv setImageWithURL:imageUrl];
+                }
+                else {
+                    UIView * groupCount = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 28, 28)];
+                    uint32_t rnd = arc4random_uniform([colorArray count]);
+                    groupCount.backgroundColor = colorArray[rnd];
+                    
+                    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 20)];
+                    label.textColor = [UIColor whiteColor];
+                    label.text = [NSString stringWithFormat:@"%@%@", [person.firstName substringToIndex:1], [person.lastName substringToIndex:1]];
+                    [label sizeToFit];
+                    label.font = [UIFont boldSystemFontOfSize:12.0f];
+                    label.center = groupCount.center;
+                    label.bounds = CGRectInset(label.frame, 2, 0);
+                    [groupCount addSubview:label];
+                    
+                    UIImage *countImage = [Common imageFromView:groupCount];
+                    [iv setImage:countImage];
+                }
             }
             
             iv.bounds = CGRectInset(iv.frame, 2, 2);

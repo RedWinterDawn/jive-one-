@@ -9,6 +9,7 @@
 #import "JCPersonCell.h"
 #import "JCPresenceView.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "Common.h"
 
 //NSString *const kCustomCellPersonPresenceTypeKeyPath = @"entityPresence";
 
@@ -34,7 +35,10 @@
         self.personNameLabel.text = person.firstLastName;
         self.personDetailLabel.text = person.email;
         self.personPresenceView.presenceType = (JCPresenceType)[_person.entityPresence.interactions[@"chat"][@"code"] integerValue];
-        [self.personPicture setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];
+        
+        // Set person's image based on whether they actually have one or not
+        [self setPersonImage];
+        //[self.personPicture setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];
         
         [person addObserver:self forKeyPath:kPresenceKeyPathForClientEntity options:NSKeyValueObservingOptionNew context:NULL];
     }   
@@ -82,6 +86,61 @@
     return 0;
 }
 
+- (void)setPersonImage
+{
+    
+    
+    NSURL *imageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kOsgiBaseURL, self.person.picture]];
+    NSRange range = [[imageUrl description] rangeOfString:@"avatar"];
+    if (range.location == NSNotFound) {
+        [self.personPicture setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"avatar.png"]];
+    }
+    else {
+        
+        NSString *key = [NSString stringWithFormat:@"%@%@", [self.person.firstName substringToIndex:1], [self.person.lastName substringToIndex:1]];
+        
+        UIImage *initialsImage = [[JCPersonCell cachedPresenceImages] objectForKey:key];
+        if (!initialsImage) {
+            UIView * groupCount = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 28, 28)];
+            groupCount.backgroundColor = [UIColor colorWithRed:0.043 green:0.455 blue:0.808 alpha:1];
+            
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 20)];
+            label.textColor = [UIColor whiteColor];
+            label.text = [NSString stringWithFormat:@"%@%@", [self.person.firstName substringToIndex:1], [self.person.lastName substringToIndex:1]];
+            [label sizeToFit];
+            label.font = [UIFont boldSystemFontOfSize:12.0f];
+            label.center = groupCount.center;
+            label.bounds = CGRectInset(label.frame, 2.5f, 0);
+            [groupCount addSubview:label];
+            
+            initialsImage = [Common imageFromView:groupCount];
+            [[JCPersonCell cachedPresenceImages] setObject:initialsImage forKey:key];
+        }
+        else {
+            NSLog(@"Cache hit for key: %@", key);
+        }
+        
+        //[iv setImage:countImage];
+        
+        [self.personPicture setImage:initialsImage];
+    }
+}
+
+/**
+* Image Cache
+*
+* As images are created, the are added to the image cache. We have a static
+* mutable array that is shared by all instaces of the initialsImage. We use the
+* dispatch once to ensure that it is only ever instanced once.
+*/
++ (NSMutableDictionary *)cachedPresenceImages {
+  static NSMutableDictionary *cachedPresenceImages = nil;
+  static dispatch_once_t oncePredicate;
+  dispatch_once(&oncePredicate, ^{
+      cachedPresenceImages = [NSMutableDictionary new];
+  });
+  return cachedPresenceImages;
+}
 
 
 @end

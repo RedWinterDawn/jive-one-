@@ -32,7 +32,6 @@
     self.creationTime.text = [Common longDateFromTimestamp:voicemail.createdDate];
     self.elapsed.text = @"0:00";
     self.duration.text = @"0:00";
-//    [self.slider setThumbImage:[UIImage imageNamed:@"thumb1.png"] forState:UIControlStateNormal];
     self.elapsed.adjustsFontSizeToFitWidth = YES;
 	self.duration.adjustsFontSizeToFitWidth = YES;
 	_slider.minimumValue = 0.0;
@@ -61,7 +60,7 @@
 {
     [_voicemailIcon.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     if(![self.voicemail.read boolValue]){
-        self.shortTime.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
+        self.shortTime.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
         self.creationTime.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
         self.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16];
         self.detailLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];

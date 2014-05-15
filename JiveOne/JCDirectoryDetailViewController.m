@@ -112,7 +112,7 @@
             if(!self.ABPerson){
                 cell.detailTextLabel.text = self.person.email;
             } else {
-                cell.detailTextLabel.text = @"";//[self.ABPerson objectForKey:@"email"];
+                cell.detailTextLabel.text = @""; //[self.ABPerson objectForKey:@"email"];
             }
 
             break;

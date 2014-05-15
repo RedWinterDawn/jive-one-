@@ -25,18 +25,18 @@
 
 @implementation JCLoginViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (void)setClient:(JCOsgiClient *)client
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+    _client = client;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self setClient:[JCOsgiClient sharedClient]];
+    
+    
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"seenAppTutorial"]) {
         self.userIsDoneWithTutorial = YES;
     }
@@ -81,6 +81,7 @@
     _loginStatusLabel.font = [UIFont fontWithName:boldFontName size:16.0f];
     // Do any additional setup after loading the view.
     fastConnection = [Common IsConnectionFast];
+    
     
 }
 
@@ -230,7 +231,7 @@
 
 - (void)fetchEntities
 {
-    [[JCOsgiClient sharedClient] RetrieveClientEntitites:^(id JSON) {
+    [self.client RetrieveClientEntitites:^(id JSON) {
         [self fetchCompany];
     } failure:^(NSError *err) {
         [self errorInitializingApp:err];
@@ -240,7 +241,7 @@
 - (void)fetchCompany
 {
     NSString* company = [[JCOmniPresence sharedInstance] me].resourceGroupName;
-    [[JCOsgiClient sharedClient] RetrieveMyCompany:company:^(id JSON) {
+    [self.client RetrieveMyCompany:company:^(id JSON) {
         
         NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
         Company *company = [Company MR_createInContext:localContext];
@@ -279,7 +280,7 @@
 
 - (void)fetchPresence
 {
-    [[JCOsgiClient sharedClient] RetrieveEntitiesPresence:^(BOOL updated) {
+    [self.client RetrieveEntitiesPresence:^(BOOL updated) {
         [self fetchConversations];
     } failure:^(NSError *err) {
         [self errorInitializingApp:err];
@@ -288,7 +289,7 @@
 
 - (void)fetchConversations
 {
-    [[JCOsgiClient sharedClient] RetrieveConversations:^(id JSON) {
+    [self.client RetrieveConversations:^(id JSON) {
         [self fetchVoicemails];
     } failure:^(NSError *err) {
         [self errorInitializingApp:err];
@@ -297,7 +298,7 @@
 
 - (void)fetchVoicemails
 {
-    [[JCOsgiClient sharedClient] RetrieveVoicemailForEntity:nil success:^(id JSON) {
+    [self.client RetrieveVoicemailForEntity:nil success:^(id JSON) {
         
         [self hideHud];
         if (self.userIsDoneWithTutorial) {

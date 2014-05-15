@@ -20,7 +20,7 @@
     NSManagedObjectContext *context;
     BOOL useSpeaker;
     MBProgressHUD *hud;
-    
+    NSTimer *requestTimeout;
     
 }
 @property (weak, nonatomic) JCOsgiClient *osgiClient;
@@ -86,7 +86,6 @@ static NSString *CellIdentifier = @"VoicemailCell";
 
 - (void)loadVoicemails
 {
-    
     if (self.voicemails) {
         [self.voicemails removeAllObjects];
     }
@@ -100,14 +99,33 @@ static NSString *CellIdentifier = @"VoicemailCell";
 
 - (void)updateTable
 {
+    if (requestTimeout && [requestTimeout isValid]) {
+        [requestTimeout invalidate];
+    }
+    
+    requestTimeout = [NSTimer timerWithTimeInterval:20 target:self selector:@selector(requestDidTimedOut) userInfo:nil repeats:NO];
+    [[NSRunLoop currentRunLoop] addTimer:requestTimeout forMode:NSRunLoopCommonModes];
     
     [self.osgiClient RetrieveVoicemailForEntity:nil success:^(id JSON) {
+        if ([requestTimeout isValid]) {
+            [requestTimeout invalidate];
+        }
         [self.refreshControl endRefreshing];
         [self loadVoicemails];
     } failure:^(NSError *err) {
-        [self showHudWithTitle:NSLocalizedString(@"Oh oh", nil) detail:NSLocalizedString(@"Could not check for voicemails at this moment. Please try again.", nil) mode:MBProgressHUDModeText];
-        [self.refreshControl endRefreshing];
+        [self requestDidTimedOut];
     }];
+}
+
+- (void)requestDidTimedOut
+{
+    if ([requestTimeout isValid]) {
+        [requestTimeout invalidate];
+    }
+
+    
+    [self showHudWithTitle:NSLocalizedString(@"Server Not Reachable", nil) detail:NSLocalizedString(@"Could not check for voicemails at this moment. Please try again.", nil) mode:MBProgressHUDModeText];
+    [self.refreshControl endRefreshing];
 }
 
 #pragma mark - HUD Operations
@@ -184,7 +202,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BOOL isSelected = [self.selectedIndexPaths containsObject:indexPath];
-    return isSelected ? 160.0f : 60.0f;
+    return isSelected ? 130.0f : 60.0f;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -429,7 +447,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
         
         if (!error) {
             if (useSpeaker) {
-                [selectedCell performSelectorOnMainThread:@selector(setSpeakerButtonTint:) withObject:[UIColor greenColor] waitUntilDone:NO];
+                [selectedCell performSelectorOnMainThread:@selector(setSpeakerButtonTint:) withObject:[UIColor colorWithRed:0.294 green:0.62 blue:0.89 alpha:1] waitUntilDone:NO];
             }
             else {
                 [selectedCell performSelectorOnMainThread:@selector(setSpeakerButtonTint:) withObject:[UIColor blackColor] waitUntilDone:NO];

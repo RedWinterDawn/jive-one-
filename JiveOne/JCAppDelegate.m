@@ -18,7 +18,7 @@
 #import "JCMessagesViewController.h"
 #import "TestFlight.h"
 #import "JCContainerViewController.h"
-#import "JCVersionClient.h"
+#import "JCVersion.h"
 
 
 @interface JCAppDelegate ()
@@ -26,22 +26,24 @@
 @property (nonatomic) UIStoryboard* storyboard;
 @property (strong, nonatomic) UIViewController *tabBarViewController;
 @property (strong, nonatomic) JCLoginViewController *loginViewController;
-@property (strong, nonatomic) NSString *version;
 @end
 
 
 @implementation JCAppDelegate
-
+int didNotify;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-//    [[JCVersionClient sharedClient] getVersion];
+    //Create a sharedCache for AFNetworking
+    NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:2 * 1024 * 1024
+                                                            diskCapacity:100 * 1024 * 1024
+                                                                diskPath:nil];
+    [NSURLCache setSharedURLCache:sharedCache];
     
-    //load UserDefaults
+    //set UserDefaults
     NSString *defaultPrefsFile = [[NSBundle mainBundle] pathForResource:@"UserDefaults" ofType:@"plist"];
     NSDictionary *defaultPreferences = [NSDictionary dictionaryWithContentsOfFile:defaultPrefsFile];
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultPreferences];
-    
     
     //check if we are using a iphone or ipad
     self.deviceIsIPhone = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? NO : YES;
@@ -159,14 +161,38 @@
 //        currentInstallation.badge = 0;
 //        [currentInstallation saveEventually];
 //    }
-    [[JCVersionClient sharedClient] getVersion];
+    didNotify = 0;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(alertUserToUpdate:) name:@"AppIsOutdated" object:nil];
+    [[JCVersion sharedClient] getVersion];
+
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
+-(void)alertUserToUpdate:(NSNotification *)notification
+{
+    if ([[notification name] isEqualToString:@"AppIsOutdated"] && (didNotify < 1))
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update Required"
+                                                        message:@"Please download the latest version of JiveApp Beta."
+                                                       delegate:self
+                                              cancelButtonTitle:@"Maybe later"
+                                              otherButtonTitles:@"Download", nil];
+        [alert show];
+    }
+    didNotify = 1;
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex > 0) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-services://?action=download-manifest&url=https://jiveios.local/JiveOneEnterprise.plist"]];
+    }
+}
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     [MagicalRecord cleanUp];
+    didNotify = 0;
 }
 
 - (void)startSocket:(BOOL)inBackground
