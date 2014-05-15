@@ -11,7 +11,6 @@
 @property (strong,nonatomic) UIImage* sliderImage;
 @property (nonatomic, strong) NSString *sliderText;
 @property (nonatomic, strong) UIFont *sliderFont;
-@property (strong, nonatomic) UILabel *sliderTextLabel;
 
 
 @end
@@ -37,8 +36,7 @@
     [self addSubview:_popupView];
     [[JCPopoverSlider appearance] setThumbImage:self.sliderImage forState:UIControlStateNormal];
     [self addSubview: self.sliderTextLabel];
-    
-    
+    [self.sliderTextLabel setNeedsDisplay];
 }
 
 -(UIImage*)sliderImage
@@ -69,10 +67,7 @@
     }
     return _sliderImage;
 }
-- (void)updateSliderImage
-{
 
-}
 - (IBAction)sliderValueChanged:(UISlider *)sender {
     NSLog(@"slider value = %f", sender.value);
     [self positionAndUpdateSlider];
@@ -87,10 +82,14 @@
 
 -(UILabel*)sliderTextLabel{
     if (!_sliderTextLabel) {
-        _sliderTextLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,-6,self.sliderImage.size.width, self.sliderImage.size.width)];
+        _sliderTextLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,0,self.sliderImage.size.width, self.sliderImage.size.height)];
 //        CGRectMake(self.thumbRect.origin.x, self.thumbRect.origin.y, self.sliderImage.size.width, self.sliderImage.size.width)
         _sliderTextLabel.text = [self formatSeconds:self.value];
         _sliderTextLabel.font = [UIFont systemFontOfSize:10];
+        UIColor* color = [UIColor colorWithRed: 0.275 green: 0.396 blue: 0.843 alpha: 1];
+        [_sliderTextLabel setTextColor:[UIColor whiteColor]];
+        _sliderTextLabel.textAlignment = NSTextAlignmentCenter;
+        [[_sliderTextLabel layer] setBackgroundColor:color.CGColor];
         [_sliderTextLabel setNeedsDisplay];
     }
     return _sliderTextLabel;
@@ -123,6 +122,7 @@
 //    _sliderTextLabel.text = [self formatSeconds:self.value];
     self.sliderText = [self formatSeconds:self.value];
     self.sliderTextLabel.text = self.sliderText;
+    [self bringSubviewToFront:self.sliderTextLabel];
     [self.sliderTextLabel setNeedsDisplay];
 }
 -(void)positionAndUpdatePopupView {
