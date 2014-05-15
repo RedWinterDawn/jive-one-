@@ -29,11 +29,15 @@
 
 #pragma mark - Helper methods
 -(void)constructSlider {
+    [self addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+    self.continuous = YES;
     _popupView = [[JCPopoverView alloc] initWithFrame:CGRectZero];
     _popupView.backgroundColor = [UIColor clearColor];
     _popupView.alpha = 0.0;
     [self addSubview:_popupView];
     [[JCPopoverSlider appearance] setThumbImage:self.sliderImage forState:UIControlStateNormal];
+    [self addSubview: self.sliderTextLabel];
+    
     
 }
 
@@ -43,8 +47,8 @@
         UIGraphicsBeginImageContextWithOptions(CGSizeMake(32, 20), FALSE, [[UIScreen mainScreen]scale]);
         CGContextRef context = UIGraphicsGetCurrentContext();
         //// Color Declarations
-        UIColor* color = [UIColor colorWithRed: 0.275 green: 0.396 blue: 0.843 alpha: 1];
-        
+//        UIColor* color = [UIColor colorWithRed: 0.275 green: 0.396 blue: 0.843 alpha: 1];
+        UIColor* color = [UIColor clearColor];
         //// Rectangle Drawing
         CGRect rect = CGRectMake(0, 0, 32, 20);
         CGContextAddRect(context, rect);
@@ -53,10 +57,10 @@
         
         CGContextSetFillColorWithColor(context, color.CGColor);
         CGContextDrawPath(context, kCGPathFillStroke);
-        UIFont *font = [UIFont boldSystemFontOfSize:10];
+//        UIFont *font = [UIFont boldSystemFontOfSize:10];
 
-        [[UIColor whiteColor] set];
-        [[self formatSeconds:self.value] drawInRect:CGRectIntegral(CGRectMake(3, 3, rect.size.width, rect.size.height)) withFont:font];
+//        [[UIColor whiteColor] set];
+//        [[self formatSeconds:self.value] drawInRect:CGRectIntegral(CGRectMake(3, 3, rect.size.width, rect.size.height)) withFont:font];
         //get the image from the context
         _sliderImage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
@@ -64,6 +68,14 @@
         
     }
     return _sliderImage;
+}
+- (void)updateSliderImage
+{
+
+}
+- (IBAction)sliderValueChanged:(UISlider *)sender {
+    NSLog(@"slider value = %f", sender.value);
+    [self positionAndUpdateSlider];
 }
 
 -(UIImageView*)sliderView{
@@ -73,18 +85,15 @@
     return _sliderView;
 }
 
-+(UIImage*) drawText:(NSString*)text inImage:(UIImage*)image atPoint:(CGPoint)point
-{
-    UIFont *font = [UIFont boldSystemFontOfSize:12];
-    UIGraphicsBeginImageContext(image.size);
-    [image drawInRect:CGRectMake(0, 0, image.size.width, image.size.height)];
-    CGRect rect = CGRectMake(point.x, point.y, image.size.width, image.size.height);
-    [[UIColor whiteColor] set];
-    [text drawInRect:CGRectIntegral(rect) withFont:font];
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return newImage;
+-(UILabel*)sliderTextLabel{
+    if (!_sliderTextLabel) {
+        _sliderTextLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,-6,self.sliderImage.size.width, self.sliderImage.size.width)];
+//        CGRectMake(self.thumbRect.origin.x, self.thumbRect.origin.y, self.sliderImage.size.width, self.sliderImage.size.width)
+        _sliderTextLabel.text = [self formatSeconds:self.value];
+        _sliderTextLabel.font = [UIFont systemFontOfSize:10];
+        [_sliderTextLabel setNeedsDisplay];
+    }
+    return _sliderTextLabel;
 }
 
 //The default initWithFrame: method is not invoked when creating an object from a .xib file. Instead, it is this method that is invoked - initWithCoder:.
@@ -109,12 +118,12 @@
 
 -(void)positionAndUpdateSlider
 {
-    _sliderView.frame = self.thumbRect;
+    _sliderTextLabel.frame = self.thumbRect;
     
-    
+//    _sliderTextLabel.text = [self formatSeconds:self.value];
     self.sliderText = [self formatSeconds:self.value];
     self.sliderTextLabel.text = self.sliderText;
-    [self setNeedsDisplay];
+    [self.sliderTextLabel setNeedsDisplay];
 }
 -(void)positionAndUpdatePopupView {
     CGRect zeThumbRect = self.thumbRect;
