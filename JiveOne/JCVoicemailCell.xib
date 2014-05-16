@@ -91,7 +91,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="9LY-YY-Jqs" userLabel="slider" customClass="JCPopoverSlider">
-                        <rect key="frame" x="40" y="89" width="215" height="31"/>
+                        <rect key="frame" x="40" y="96" width="215" height="31"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <connections>
                             <action selector="progressSliderMoved:" destination="O09-5V-FRi" eventType="touchUpInside" id="d2o-Q5-Q9T"/>

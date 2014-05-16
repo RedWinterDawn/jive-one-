@@ -425,6 +425,10 @@
 		91260EDD18B2965900704670 /* JCDirectoryDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91260EDC18B2965900704670 /* JCDirectoryDetailViewController.m */; };
 		9135DE0218BC00FD0052E998 /* JCDirectoryDetailTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9135DE0118BC00FD0052E998 /* JCDirectoryDetailTests.m */; };
 		9135DE0418BC01550052E998 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9135DE0318BC01550052E998 /* AVFoundation.framework */; };
+		9136FF231925D48D0040B367 /* slider_maximum@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9136FF211925D48D0040B367 /* slider_maximum@2x.png */; };
+		9136FF241925D48D0040B367 /* slider_maximum@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9136FF211925D48D0040B367 /* slider_maximum@2x.png */; };
+		9136FF281925D7350040B367 /* slider_min@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9136FF271925D7350040B367 /* slider_min@2x.png */; };
+		9136FF291925D7350040B367 /* slider_min@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9136FF271925D7350040B367 /* slider_min@2x.png */; };
 		9137919818FDB0EE00709AD3 /* JCGroupConversationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9137919618FDB0EE00709AD3 /* JCGroupConversationCell.m */; };
 		9137919918FDB0EE00709AD3 /* JCGroupConversationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9137919718FDB0EE00709AD3 /* JCGroupConversationCell.xib */; };
 		9145E31F191D842500840D66 /* JCVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 9145E31E191D842500840D66 /* JCVersion.m */; };
@@ -879,6 +883,8 @@
 		91260EDC18B2965900704670 /* JCDirectoryDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDirectoryDetailViewController.m; sourceTree = "<group>"; };
 		9135DE0118BC00FD0052E998 /* JCDirectoryDetailTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDirectoryDetailTests.m; sourceTree = "<group>"; };
 		9135DE0318BC01550052E998 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		9136FF211925D48D0040B367 /* slider_maximum@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider_maximum@2x.png"; sourceTree = "<group>"; };
+		9136FF271925D7350040B367 /* slider_min@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider_min@2x.png"; sourceTree = "<group>"; };
 		9137919518FDB0EE00709AD3 /* JCGroupConversationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCGroupConversationCell.h; sourceTree = "<group>"; };
 		9137919618FDB0EE00709AD3 /* JCGroupConversationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCGroupConversationCell.m; sourceTree = "<group>"; };
 		9137919718FDB0EE00709AD3 /* JCGroupConversationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JCGroupConversationCell.xib; path = JiveOne/JCGroupConversationCell.xib; sourceTree = SOURCE_ROOT; };
@@ -1936,6 +1942,8 @@
 				919DD29C1922E2C90039205E /* JCPopoverSlider.m */,
 				919DD29F1922E3570039205E /* JCPopoverView.h */,
 				919DD2A01922E3570039205E /* JCPopoverView.m */,
+				9136FF271925D7350040B367 /* slider_min@2x.png */,
+				9136FF211925D48D0040B367 /* slider_maximum@2x.png */,
 			);
 			name = JCPopoverSlider;
 			sourceTree = "<group>";
@@ -2143,6 +2151,7 @@
 				2727F3F2191AA92F00A41185 /* bubble-min.png in Resources */,
 				2727F3F3191AA92F00A41185 /* bubble-classic-typing@2x.png in Resources */,
 				2727F3F4191AA92F00A41185 /* launch.png in Resources */,
+				9136FF291925D7350040B367 /* slider_min@2x.png in Resources */,
 				2727F3F5191AA92F00A41185 /* Images.xcassets in Resources */,
 				2727F3F6191AA92F00A41185 /* Main_iPhone.storyboard in Resources */,
 				2727F3F7191AA92F00A41185 /* nav-people.png in Resources */,
@@ -2170,6 +2179,7 @@
 				2727F40D191AA92F00A41185 /* bubble-min-tailless@2x.png in Resources */,
 				2727F40E191AA92F00A41185 /* voicemail_scrub_play@2x.png in Resources */,
 				2727F40F191AA92F00A41185 /* conv-compose.png in Resources */,
+				9136FF241925D48D0040B367 /* slider_maximum@2x.png in Resources */,
 				2727F410191AA92F00A41185 /* InfoPlist.strings in Resources */,
 				279E4C6E19226FA3002A556C /* people-search-nofocus.png in Resources */,
 				2727F411191AA92F00A41185 /* bubble-classic-gray.png in Resources */,
@@ -2200,6 +2210,7 @@
 				2700989018F4714100B6BC2F /* bubble-classic-square-gray.png in Resources */,
 				27F1F308191C1A7300AEAFD7 /* AirshipConfig.plist in Resources */,
 				27F1F300191C171300AEAFD7 /* UAPushSettingsView.xib in Resources */,
+				9136FF231925D48D0040B367 /* slider_maximum@2x.png in Resources */,
 				2700989D18F4714100B6BC2F /* bubble-tailless@2x.png in Resources */,
 				270098C418F5EA9300B6BC2F /* nav-more@2x.png in Resources */,
 				2700989118F4714100B6BC2F /* bubble-classic-square-gray@2x.png in Resources */,
@@ -2234,6 +2245,7 @@
 				2700989418F4714100B6BC2F /* bubble-min-tailless.png in Resources */,
 				2700989E18F4714100B6BC2F /* bubble.png in Resources */,
 				911BFDD718D9EA1800684964 /* vmail@2x.png in Resources */,
+				9136FF281925D7350040B367 /* slider_min@2x.png in Resources */,
 				270098A818F4714100B6BC2F /* button-photo.png in Resources */,
 				270098AA18F4714100B6BC2F /* input-bar-flat.png in Resources */,
 				911B3E9118E0E41D00105925 /* voicemail_pause.png in Resources */,

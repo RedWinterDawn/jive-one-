@@ -418,11 +418,11 @@ static NSString *CellIdentifier = @"VoicemailCell";
     [selectedCell setSliderValue:player.currentTime];
 }
 
-/** Time formatting helper fn: N seconds => MM:SS */
+/** Time formatting helper fn: N seconds => M:SS */
 -(NSString *)formatSeconds:(NSTimeInterval)seconds {
     NSInteger minutes = (NSInteger)(seconds/60.);
     NSInteger remainingSeconds = (NSInteger)seconds % 60;
-    return [NSString stringWithFormat:@"%.2ld:%.2ld",(long)minutes,(long)remainingSeconds];
+    return [NSString stringWithFormat:@"%.1ld:%.2ld",(long)minutes,(long)remainingSeconds];
 }
 
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {

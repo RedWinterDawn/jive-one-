@@ -16,17 +16,16 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.font = [UIFont boldSystemFontOfSize:15.0f];
+        self.font = [UIFont boldSystemFontOfSize:22.0f];
         UIView* pView = [self CreatePopup];
         [self addSubview:pView];
 
-        textLabel = [[UILabel alloc] init];
+        textLabel = [[UILabel alloc] initWithFrame:CGRectMake(pView.frame.origin.x, pView.frame.origin.y, pView.frame.size.width-2, pView.frame.size.height/1.4)];
         textLabel.backgroundColor = [UIColor clearColor];
         textLabel.font = self.font;
         textLabel.textColor = [UIColor whiteColor];
         textLabel.text = self.text;
         textLabel.textAlignment = NSTextAlignmentCenter;
-        textLabel.frame = CGRectMake(pView.frame.origin.x, pView.frame.origin.y, pView.frame.size.width, pView.frame.size.height/1.5);
         [self addSubview:textLabel];
     }
     return self;
@@ -43,12 +42,12 @@
 
 
 -(UIImageView*)CreatePopup{
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(100, 60), FALSE, [[UIScreen mainScreen]scale]);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(100, 70), FALSE, [[UIScreen mainScreen]scale]);
     CGContextRef context = UIGraphicsGetCurrentContext();
     //// Color Declarations
     UIColor* color = [UIColor colorWithRed: 0.275 green: 0.396 blue: 0.843 alpha: 1];
 
-    //// Rectangle Drawing
+/**    //// Rectangle Drawing
     CGContextMoveToPoint(context, 20, 35.14);
     CGContextAddLineToPoint(context,20, 5);
     CGContextAddLineToPoint(context,85, 5);
@@ -58,8 +57,27 @@
     CGContextAddLineToPoint(context,44.25, 35.14);
     CGContextAddLineToPoint(context,20, 35.14);
     CGContextClosePath(context);
+ **/
+    //// Bezier Drawing
+    UIBezierPath* bezierPath = [UIBezierPath bezierPath];
+    [bezierPath moveToPoint: CGPointMake(88, 25)];
+    [bezierPath addCurveToPoint: CGPointMake(68, 45) controlPoint1: CGPointMake(88, 36) controlPoint2: CGPointMake(79, 45)];
+    [bezierPath addLineToPoint: CGPointMake(58.9, 45)];
+    [bezierPath addLineToPoint: CGPointMake(47.8, 68.2)];
+    [bezierPath addLineToPoint: CGPointMake(36.7, 45)];
+    [bezierPath addLineToPoint: CGPointMake(28, 45)];
+    [bezierPath addCurveToPoint: CGPointMake(8, 25) controlPoint1: CGPointMake(17, 45) controlPoint2: CGPointMake(8, 36)];
+    [bezierPath addLineToPoint: CGPointMake(8, 25)];
+    [bezierPath addCurveToPoint: CGPointMake(28, 5) controlPoint1: CGPointMake(8, 14) controlPoint2: CGPointMake(17, 5)];
+    [bezierPath addLineToPoint: CGPointMake(68, 5)];
+    [bezierPath addCurveToPoint: CGPointMake(88, 25) controlPoint1: CGPointMake(79, 5) controlPoint2: CGPointMake(88, 14)];
+    [bezierPath addLineToPoint: CGPointMake(88, 25)];
+    [bezierPath closePath];
+    bezierPath.miterLimit = 4;
     
-
+    [color setFill];
+    [bezierPath fill];
+    
     CGContextSetStrokeColorWithColor(context, color.CGColor);
 
     CGContextSetFillColorWithColor(context, color.CGColor);
@@ -75,6 +93,6 @@
 -(NSString *)formatSeconds:(NSTimeInterval)seconds {
     NSInteger minutes = (NSInteger)(seconds/60.);
     NSInteger remainingSeconds = (NSInteger)seconds % 60;
-    return [NSString stringWithFormat:@"%.2ld:%.2ld",(long)minutes,(long)remainingSeconds];
+    return [NSString stringWithFormat:@"%.1ld:%.2ld",(long)minutes,(long)remainingSeconds];
 }
 @end

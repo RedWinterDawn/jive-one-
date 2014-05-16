@@ -8,7 +8,7 @@
 
 #import "JCPopoverSlider.h"
 @interface JCPopoverSlider()
-
+@property (strong, nonatomic) UIColor* JCBlue;
 @end
 
 @implementation JCPopoverSlider
@@ -35,7 +35,11 @@
 #pragma mark - Helper methods
 -(void)constructSlider {
     self.continuous = YES;
-
+    UIImage *minImage = [[UIImage imageNamed:@"slider_maximum.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 5)];
+    UIImage *maxImage = [[UIImage imageNamed:@"slider_min.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 5)];
+    [[JCPopoverSlider appearance] setMaximumTrackImage:maxImage forState:UIControlStateNormal];
+    [[JCPopoverSlider appearance] setMinimumTrackImage:minImage forState:UIControlStateNormal];
+    
     [[JCPopoverSlider appearance] setThumbImage: sliderImage([self formatSeconds:self.value]) forState:UIControlStateNormal];
     [[JCPopoverSlider appearance] setThumbImage: justASliderBox() forState:UIControlStateHighlighted];
     
@@ -76,16 +80,20 @@
 
 -(void)positionAndUpdatePopupView {
     CGRect zeThumbRect = self.thumbRect;
-    CGRect popupRect = CGRectOffset(zeThumbRect, -35, -floor(zeThumbRect.size.height * 2.8));
+    CGRect popupRect = CGRectOffset(zeThumbRect, -27, -floor(zeThumbRect.size.height * 3));
     self.popupView.frame = CGRectInset(popupRect, -10, -10);
     self.popupView.value = self.value;
 }
 
-/** Time formatting helper fn: N seconds => MM:SS */
+/** Time formatting helper fn: N seconds => M:SS */
 -(NSString *)formatSeconds:(NSTimeInterval)seconds {
     NSInteger minutes = (NSInteger)(seconds/60.);
     NSInteger remainingSeconds = (NSInteger)seconds % 60;
-    return [NSString stringWithFormat:@"%.2ld:%.2ld",(long)minutes,(long)remainingSeconds];
+    return [NSString stringWithFormat:@"%.1ld:%.2ld",(long)minutes,(long)remainingSeconds];
+}
+
+- (CGRect)trackRectForBounds:(CGRect)bounds{
+    return CGRectMake(bounds.origin.x, bounds.origin.y, bounds.size.width, 3);
 }
 
 #pragma mark - Property accessors
@@ -95,19 +103,45 @@
     return thumbR;
 }
 
+-(UIColor*)JCBlue{
+    if (!_JCBlue) {
+        _JCBlue = [UIColor colorWithRed: 0.275 green: 0.396 blue: 0.843 alpha: 1];
+    }
+    return _JCBlue;
+}
+
 #pragma mark - ThumbImages
 UIImage *sliderImage(NSString* text)
 {
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(32, 15), FALSE, [[UIScreen mainScreen]scale]);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(35, 17), FALSE, [[UIScreen mainScreen]scale]);
     CGContextRef context = UIGraphicsGetCurrentContext();
     //// Color Declarations
     UIColor* color = [UIColor colorWithRed: 0.275 green: 0.396 blue: 0.843 alpha: 1];
     //// Rectangle Drawing
-    CGRect rect = CGRectMake(0, 2, 32, 15);
-    CGContextAddRect(context, rect);
+    CGRect rect = CGRectMake(0, 2, 35, 17);
+//    CGContextAddRect(context, rect);
+//    
+//    CGContextSetStrokeColorWithColor(context, color.CGColor);
+//    CGContextSetFillColorWithColor(context, color.CGColor);
+    //// Bezier Drawing
+    UIBezierPath* bezierPath = [UIBezierPath bezierPath];
+    [bezierPath moveToPoint: CGPointMake(35, 8.5)];
+    [bezierPath addCurveToPoint: CGPointMake(26.25, 17) controlPoint1: CGPointMake(35, 13.17) controlPoint2: CGPointMake(31.06, 17)];
+    [bezierPath addLineToPoint: CGPointMake(22.27, 17)];
+    [bezierPath addLineToPoint: CGPointMake(12.56, 17)];
+    [bezierPath addLineToPoint: CGPointMake(8.75, 17)];
+    [bezierPath addCurveToPoint: CGPointMake(0, 8.5) controlPoint1: CGPointMake(3.94, 17) controlPoint2: CGPointMake(0, 13.17)];
+    [bezierPath addLineToPoint: CGPointMake(0, 8.5)];
+    [bezierPath addCurveToPoint: CGPointMake(8.75, 0) controlPoint1: CGPointMake(0, 3.83) controlPoint2: CGPointMake(3.94, 0)];
+    [bezierPath addLineToPoint: CGPointMake(26.25, 0)];
+    [bezierPath addCurveToPoint: CGPointMake(35, 8.5) controlPoint1: CGPointMake(31.06, 0) controlPoint2: CGPointMake(35, 3.83)];
+    [bezierPath addLineToPoint: CGPointMake(35, 8.5)];
+    [bezierPath closePath];
+    bezierPath.miterLimit = 4;
     
-    CGContextSetStrokeColorWithColor(context, color.CGColor);
-    CGContextSetFillColorWithColor(context, color.CGColor);
+    [color setFill];
+    [bezierPath fill];
+    
     CGContextDrawPath(context, kCGPathFillStroke);
     [[UIColor whiteColor] set];
     UIFont *font = [UIFont boldSystemFontOfSize:10];
@@ -129,7 +163,7 @@ UIImage *sliderImage(NSString* text)
 
 UIImage *justASliderBox()
 {
-    const int circleDiameter = 22;
+    const int circleDiameter = 20;
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(circleDiameter, circleDiameter), FALSE, [[UIScreen mainScreen]scale]);
     CGContextRef context = UIGraphicsGetCurrentContext();
     //// Color Declarations
@@ -157,6 +191,7 @@ UIImage *justASliderBox()
 // Expand the slider to accommodate the bigger thumb
 - (void)startDrag:(UISlider *)aSlider
 {
+    [self positionAndUpdatePopupView];
 //	self.frame = CGRectInset(self.frame, 0.0f, -30.0f);
 }
 
