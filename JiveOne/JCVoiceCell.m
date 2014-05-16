@@ -34,7 +34,7 @@
     self.duration.text = @"0:00";
     self.elapsed.adjustsFontSizeToFitWidth = YES;
 	self.duration.adjustsFontSizeToFitWidth = YES;
-	_slider.minimumValue = 0.0;
+	self.slider.minimumValue = 0.0;
     
     //set initial image for playbutton
     UIImage *playImage = [UIImage imageNamed:@"voicemail_scrub_play.png"];

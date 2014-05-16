@@ -207,8 +207,6 @@ static NSString *CellIdentifier = @"VoicemailCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //[tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
     [self addOrRemoveSelectedIndexPath:indexPath];
     
     BOOL isSelected = [self.selectedIndexPaths containsObject:indexPath];
@@ -225,6 +223,12 @@ static NSString *CellIdentifier = @"VoicemailCell";
         //attempt to delete from server first
         [self voiceCellDeleteTapped:indexPath];
     }
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    BOOL isSelected = [self.selectedIndexPaths containsObject:indexPath];
+    
+    return !isSelected;
 }
 
 #pragma mark - JCVoicemailCellDelegate
