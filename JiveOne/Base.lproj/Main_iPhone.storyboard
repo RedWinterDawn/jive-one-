@@ -158,8 +158,8 @@
                     </tabBar>
                     <connections>
                         <segue destination="hBc-AN-e9c" kind="modal" identifier="logoutSegue" modalTransitionStyle="flipHorizontal" id="FYf-gt-lpx"/>
-                        <segue destination="XFb-KJ-zT0" kind="relationship" relationship="viewControllers" id="qlu-mP-rqG"/>
                         <segue destination="vaI-vc-7Id" kind="relationship" relationship="viewControllers" id="uyj-sn-1Fm"/>
+                        <segue destination="XFb-KJ-zT0" kind="relationship" relationship="viewControllers" id="qlu-mP-rqG"/>
                         <segue destination="6Dq-mE-F9w" kind="relationship" relationship="viewControllers" id="QMi-vO-8ci"/>
                         <segue destination="4mQ-Xv-N0n" kind="relationship" relationship="viewControllers" id="dwi-Kf-NBW"/>
                     </connections>
