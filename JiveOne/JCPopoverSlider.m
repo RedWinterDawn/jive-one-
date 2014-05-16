@@ -21,6 +21,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        
         [self constructSlider];
     }
     return self;
@@ -28,49 +29,54 @@
 
 #pragma mark - Helper methods
 -(void)constructSlider {
-    [self addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
     self.continuous = YES;
+    [self addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
     _popupView = [[JCPopoverView alloc] initWithFrame:CGRectZero];
     _popupView.backgroundColor = [UIColor clearColor];
     _popupView.alpha = 0.0;
     [self addSubview:_popupView];
-    [[JCPopoverSlider appearance] setThumbImage:self.sliderImage forState:UIControlStateNormal];
-    [self addSubview: self.sliderTextLabel];
+    [[JCPopoverSlider appearance] setThumbImage:sliderImage([self formatSeconds:self.value]) forState:UIControlStateNormal];
+//    [self addSubview: self.sliderTextLabel];
     [self.sliderTextLabel setNeedsDisplay];
 }
 
--(UIImage*)sliderImage
+UIImage *sliderImage(NSString* text)
 {
-    if (!_sliderImage) {
-        UIGraphicsBeginImageContextWithOptions(CGSizeMake(32, 20), FALSE, [[UIScreen mainScreen]scale]);
-        CGContextRef context = UIGraphicsGetCurrentContext();
-        //// Color Declarations
-//        UIColor* color = [UIColor colorWithRed: 0.275 green: 0.396 blue: 0.843 alpha: 1];
-        UIColor* color = [UIColor clearColor];
-        //// Rectangle Drawing
-        CGRect rect = CGRectMake(0, 0, 32, 20);
-        CGContextAddRect(context, rect);
-        
-        CGContextSetStrokeColorWithColor(context, color.CGColor);
-        
-        CGContextSetFillColorWithColor(context, color.CGColor);
-        CGContextDrawPath(context, kCGPathFillStroke);
-//        UIFont *font = [UIFont boldSystemFontOfSize:10];
-
-//        [[UIColor whiteColor] set];
-//        [[self formatSeconds:self.value] drawInRect:CGRectIntegral(CGRectMake(3, 3, rect.size.width, rect.size.height)) withFont:font];
-        //get the image from the context
-        _sliderImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        
-        
-    }
-    return _sliderImage;
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(32, 16), FALSE, [[UIScreen mainScreen]scale]);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    //// Color Declarations
+    UIColor* color = [UIColor colorWithRed: 0.275 green: 0.396 blue: 0.843 alpha: 1];
+    //// Rectangle Drawing
+    CGRect rect = CGRectMake(0, 2, 32, 15);
+    CGContextAddRect(context, rect);
+    
+    CGContextSetStrokeColorWithColor(context, color.CGColor);
+    
+    CGContextSetFillColorWithColor(context, color.CGColor);
+    CGContextDrawPath(context, kCGPathFillStroke);
+    [[UIColor whiteColor] set];
+    UIFont *font = [UIFont boldSystemFontOfSize:10];
+    NSMutableParagraphStyle *paragrapStyle = [[NSMutableParagraphStyle alloc] init];
+    paragrapStyle.alignment = NSTextAlignmentCenter;
+    NSDictionary *att = @{
+      NSFontAttributeName : font,
+      NSForegroundColorAttributeName : [UIColor whiteColor],
+      NSParagraphStyleAttributeName : paragrapStyle
+    };
+    [text drawInRect:rect withAttributes:att];
+    //get the image from the context
+    UIImage* sliderImage = UIGraphicsGetImageFromCurrentImageContext();
+    [sliderImage drawInRect:rect];
+    UIGraphicsEndImageContext();
+    
+    return sliderImage;
 }
 
 - (IBAction)sliderValueChanged:(UISlider *)sender {
     NSLog(@"slider value = %f", sender.value);
-    [self positionAndUpdateSlider];
+//    [self positionAndUpdateSlider];
+    UIImage *customimg = sliderImage([self formatSeconds:self.value]);
+	[self setThumbImage: customimg forState: UIControlStateHighlighted];
 }
 
 -(UIImageView*)sliderView{
@@ -80,20 +86,7 @@
     return _sliderView;
 }
 
--(UILabel*)sliderTextLabel{
-    if (!_sliderTextLabel) {
-        _sliderTextLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,0,self.sliderImage.size.width, self.sliderImage.size.height)];
-//        CGRectMake(self.thumbRect.origin.x, self.thumbRect.origin.y, self.sliderImage.size.width, self.sliderImage.size.width)
-        _sliderTextLabel.text = [self formatSeconds:self.value];
-        _sliderTextLabel.font = [UIFont systemFontOfSize:10];
-        UIColor* color = [UIColor colorWithRed: 0.275 green: 0.396 blue: 0.843 alpha: 1];
-        [_sliderTextLabel setTextColor:[UIColor whiteColor]];
-        _sliderTextLabel.textAlignment = NSTextAlignmentCenter;
-        [[_sliderTextLabel layer] setBackgroundColor:color.CGColor];
-        [_sliderTextLabel setNeedsDisplay];
-    }
-    return _sliderTextLabel;
-}
+
 
 //The default initWithFrame: method is not invoked when creating an object from a .xib file. Instead, it is this method that is invoked - initWithCoder:.
 -(id)initWithCoder:(NSCoder *)aDecoder {

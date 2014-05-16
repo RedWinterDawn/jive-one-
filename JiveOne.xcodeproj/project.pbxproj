@@ -1398,7 +1398,6 @@
 		2751592918AD332A00FD8D3F /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				919DD29A1922E2770039205E /* JCPopoverSlider */,
 				2743985218D0CFAA00ABCD69 /* Views */,
 			);
 			name = Models;
@@ -1553,6 +1552,7 @@
 		277F093D18FECEA800EEF0E3 /* Voicemail */ = {
 			isa = PBXGroup;
 			children = (
+				919DD29A1922E2770039205E /* JCPopoverSlider */,
 				27EA1DFB1900A83D0075CAEE /* JCVoiceTableViewController.h */,
 				27EA1DFC1900A83D0075CAEE /* JCVoiceTableViewController.m */,
 				273CC25C1900B23B005A2857 /* JCVoiceCell.h */,
