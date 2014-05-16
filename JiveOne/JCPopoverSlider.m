@@ -57,7 +57,9 @@
 
 - (void)updateThumb{
 //    NSLog(@"slider value = %f", sender.value);
-    UIImage *customimg = sliderImage([self formatSeconds:self.value]);
+//    UIImage *customimg = sliderImage([self formatSeconds:self.value]);
+    UIImage *customimg = justASliderBox();
+
 	[self setThumbImage: customimg forState: UIControlStateHighlighted];
 }
 
@@ -74,8 +76,8 @@
 
 -(void)positionAndUpdatePopupView {
     CGRect zeThumbRect = self.thumbRect;
-    CGRect popupRect = CGRectOffset(zeThumbRect, -(zeThumbRect.size.width/2), -floor(zeThumbRect.size.height * 2.6));
-    self.popupView.frame = CGRectInset(popupRect, -20, -10);
+    CGRect popupRect = CGRectOffset(zeThumbRect, -35, -floor(zeThumbRect.size.height * 2.8));
+    self.popupView.frame = CGRectInset(popupRect, -10, -10);
     self.popupView.value = self.value;
 }
 
@@ -96,7 +98,7 @@
 #pragma mark - ThumbImages
 UIImage *sliderImage(NSString* text)
 {
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(32, 16), FALSE, [[UIScreen mainScreen]scale]);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(32, 15), FALSE, [[UIScreen mainScreen]scale]);
     CGContextRef context = UIGraphicsGetCurrentContext();
     //// Color Declarations
     UIColor* color = [UIColor colorWithRed: 0.275 green: 0.396 blue: 0.843 alpha: 1];
@@ -128,12 +130,12 @@ UIImage *sliderImage(NSString* text)
 
 UIImage *justASliderBox()
 {
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(20, 20), FALSE, [[UIScreen mainScreen]scale]);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(15, 15), FALSE, [[UIScreen mainScreen]scale]);
     CGContextRef context = UIGraphicsGetCurrentContext();
     //// Color Declarations
     UIColor* color = [UIColor colorWithRed: 0.275 green: 0.396 blue: 0.843 alpha: 1];
     //// Rectangle Drawing
-    CGRect rect = CGRectMake(0, 0, 20, 20);
+    CGRect rect = CGRectMake(0, 0, 15, 15);
     CGContextAddRect(context, rect);
     CGContextSetStrokeColorWithColor(context, color.CGColor);
     CGContextSetFillColorWithColor(context, color.CGColor);
@@ -151,13 +153,13 @@ UIImage *justASliderBox()
 // Expand the slider to accommodate the bigger thumb
 - (void)startDrag:(UISlider *)aSlider
 {
-	self.frame = CGRectInset(self.frame, 0.0f, -30.0f);
+//	self.frame = CGRectInset(self.frame, 0.0f, -30.0f);
 }
 
 // At release, shrink the frame back to normal
 - (void)endDrag:(UISlider *)aSlider
 {
-    self.frame = CGRectInset(self.frame, 0.0f, 30.0f);
+//    self.frame = CGRectInset(self.frame, 0.0f, 30.0f);
 }
 
 -(BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {

@@ -23,7 +23,7 @@
         textLabel = [[UILabel alloc] init];
         textLabel.backgroundColor = [UIColor clearColor];
         textLabel.font = self.font;
-        textLabel.textColor = [UIColor colorWithWhite:1.0f alpha:0.7];
+        textLabel.textColor = [UIColor whiteColor];
         textLabel.text = self.text;
         textLabel.textAlignment = NSTextAlignmentCenter;
         textLabel.frame = CGRectMake(pView.frame.origin.x, pView.frame.origin.y, pView.frame.size.width, pView.frame.size.height/1.5);
