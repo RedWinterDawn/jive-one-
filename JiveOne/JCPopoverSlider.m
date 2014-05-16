@@ -107,7 +107,6 @@ UIImage *sliderImage(NSString* text)
     CGContextAddRect(context, rect);
     
     CGContextSetStrokeColorWithColor(context, color.CGColor);
-    
     CGContextSetFillColorWithColor(context, color.CGColor);
     CGContextDrawPath(context, kCGPathFillStroke);
     [[UIColor whiteColor] set];
@@ -130,13 +129,18 @@ UIImage *sliderImage(NSString* text)
 
 UIImage *justASliderBox()
 {
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(15, 15), FALSE, [[UIScreen mainScreen]scale]);
+    const int circleDiameter = 22;
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(circleDiameter, circleDiameter), FALSE, [[UIScreen mainScreen]scale]);
     CGContextRef context = UIGraphicsGetCurrentContext();
     //// Color Declarations
     UIColor* color = [UIColor colorWithRed: 0.275 green: 0.396 blue: 0.843 alpha: 1];
     //// Rectangle Drawing
-    CGRect rect = CGRectMake(0, 0, 15, 15);
-    CGContextAddRect(context, rect);
+    CGRect rect1 = CGRectMake(0, 0, circleDiameter, circleDiameter);
+    CGRect rect = CGRectInset(rect1, 2, 2);
+//    CGContextAddRect(context, rect);
+    CGContextAddEllipseInRect(context, rect);
+    CGContextSetFillColor(context, CGColorGetComponents([[UIColor blueColor] CGColor]));
+    
     CGContextSetStrokeColorWithColor(context, color.CGColor);
     CGContextSetFillColorWithColor(context, color.CGColor);
     CGContextDrawPath(context, kCGPathFillStroke);
