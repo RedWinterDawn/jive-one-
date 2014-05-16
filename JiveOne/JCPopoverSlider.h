@@ -15,5 +15,5 @@
 @property (strong, nonatomic) UIImageView *sliderView;
 @property (nonatomic, readonly) CGRect thumbRect;
 @property (strong, nonatomic) UILabel *sliderTextLabel;
-
+- (void)updateThumbWithCurrentProgress;
 @end

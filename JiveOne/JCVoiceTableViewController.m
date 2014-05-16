@@ -401,7 +401,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
             [self stopProgressTimerForVoicemail];
         }
         
-        self.progressTimer = [NSTimer scheduledTimerWithTimeInterval:.05 target:self selector:@selector(updateProgress:) userInfo:nil repeats:YES];
+        self.progressTimer = [NSTimer scheduledTimerWithTimeInterval:.01 target:self selector:@selector(updateProgress:) userInfo:nil repeats:YES];
     }    
 }
 
@@ -416,6 +416,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
     selectedCell.duration.text = [self formatSeconds:player.duration];
     selectedCell.elapsed.text = [self formatSeconds:player.currentTime];
     [selectedCell setSliderValue:player.currentTime];
+    [selectedCell.slider updateThumbWithCurrentProgress];
 }
 
 /** Time formatting helper fn: N seconds => M:SS */

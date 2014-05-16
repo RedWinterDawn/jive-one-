@@ -66,6 +66,13 @@
 
 	[self setThumbImage: customimg forState: UIControlStateHighlighted];
 }
+- (void)updateThumbWithCurrentProgress{
+    //    NSLog(@"slider value = %f", sender.value);
+          UIImage *customimg = sliderImage([self formatSeconds:self.value]);
+//    UIImage *customimg = justASliderBox();
+    
+	[self setThumbImage: customimg forState: UIControlStateNormal];
+}
 
 -(void)fadePopupViewInAndOut:(BOOL)aFadeIn {
     [UIView beginAnimations:nil context:NULL];

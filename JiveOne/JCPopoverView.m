@@ -46,18 +46,7 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     //// Color Declarations
     UIColor* color = [UIColor colorWithRed: 0.275 green: 0.396 blue: 0.843 alpha: 1];
-
-/**    //// Rectangle Drawing
-    CGContextMoveToPoint(context, 20, 35.14);
-    CGContextAddLineToPoint(context,20, 5);
-    CGContextAddLineToPoint(context,85, 5);
-    CGContextAddLineToPoint(context,85, 35.14);
-    CGContextAddLineToPoint(context,60.75, 35.14);
-    CGContextAddLineToPoint(context,52.5, 50);
-    CGContextAddLineToPoint(context,44.25, 35.14);
-    CGContextAddLineToPoint(context,20, 35.14);
-    CGContextClosePath(context);
- **/
+    
     //// Bezier Drawing
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(88, 25)];
