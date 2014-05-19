@@ -363,10 +363,10 @@
             </objects>
             <point key="canvasLocation" x="1614" y="-484"/>
         </scene>
-        <!--Page1 View Controller - sdfgsfgddgfs-->
+        <!--Page1 View Controller-->
         <scene sceneID="BEY-al-vFu">
             <objects>
-                <viewController storyboardIdentifier="JCPage1ViewController" title="sdfgsfgddgfs" id="IEH-8M-zCg" customClass="JCPage1ViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="JCPage1ViewController" id="IEH-8M-zCg" customClass="JCPage1ViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jZE-6C-mpm"/>
                         <viewControllerLayoutGuide type="bottom" id="jfr-2l-ihC"/>
@@ -527,6 +527,9 @@
                     <tabBarItem key="tabBarItem" title="People" image="nav-people.png" id="WUb-WZ-m0b"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="bje-51-esT">
                         <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <offsetWrapper key="textShadowOffset" horizontal="0.0" vertical="0.0"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="eTh-sK-SbW" kind="relationship" relationship="rootViewController" id="WmZ-ZY-oep"/>
@@ -608,7 +611,7 @@
             </objects>
             <point key="canvasLocation" x="1004" y="255"/>
         </scene>
-        <!--Conversations View Controller - Conversations-->
+        <!--Conversations View Controller-->
         <scene sceneID="P3y-pc-Fre">
             <objects>
                 <tableViewController id="Iav-LH-b6F" customClass="JCConversationsViewController" sceneMemberID="viewController">
@@ -627,7 +630,7 @@
                             </tableViewCell>
                         </prototypes>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Conversations" id="xnl-54-rzv">
+                    <navigationItem key="navigationItem" id="xnl-54-rzv">
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="rOk-sd-Q2j">
                             <color key="tintColor" red="0.99215692280000001" green="0.99607849120000003" blue="0.99607849120000003" alpha="1" colorSpace="deviceRGB"/>
                             <connections>
@@ -640,6 +643,13 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iQK-UU-6cd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="81I-gi-UV2">
+                    <rect key="frame" x="0.0" y="0.0" width="42" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </objects>
             <point key="canvasLocation" x="1012" y="944"/>
         </scene>
@@ -944,6 +954,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="PKy-V4-VLv"/>
-        <segue reference="4tJ-oe-047"/>
+        <segue reference="Nyn-nw-5LE"/>
     </inferredMetricsTieBreakers>
 </document>
