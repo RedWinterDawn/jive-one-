@@ -1361,6 +1361,7 @@
 		2751590118AD10D400FD8D3F /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				91F6DFA9192A7009001C54FB /* Configuration */,
 				2751590D18AD174F00FD8D3F /* KeychainItemWrapper.h */,
 				2751590E18AD174F00FD8D3F /* KeychainItemWrapper.m */,
 				9172AD5B19192A1500481B01 /* UserDefaults.plist */,
@@ -1368,7 +1369,6 @@
 				275F4A6118AD0FBC00D2F069 /* JCAppDelegate.m */,
 				2751590218AD10E500FD8D3F /* Constants.h */,
 				274493CC18D13538002744CB /* Common.h */,
-				91F6DFA9192A7009001C54FB /* Configuration */,
 				274493CD18D13538002744CB /* Common.m */,
 				91F6DFA5192A6CCD001C54FB /* JCLog.h */,
 				91F6DFA6192A6CCD001C54FB /* JCLog.m */,
