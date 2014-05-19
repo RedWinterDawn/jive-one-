@@ -19,6 +19,7 @@
 #import "TestFlight.h"
 #import "JCContainerViewController.h"
 #import "JCVersion.h"
+#import "JCLog.h"
 
 
 @interface JCAppDelegate ()
@@ -50,6 +51,15 @@ int didNotify;
     
     // start of your application:didFinishLaunchingWithOptions // ...
     [TestFlight takeOff:@"a48098ef-e65e-40b9-8609-e995adc426ac"];
+    
+    // JCLog configuration
+#ifdef CONFIGURATION_JiveClient_Release
+    JCLogLevelSetConfiguration(JCLogLevelOff);
+#else
+    JCLogLevelSetConfiguration(JCLogLevelDebug);
+#endif
+    
+    JCLogInfo(@"launchOptions:%@",launchOptions);
     
 #if DEBUG
     [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelError];
@@ -126,12 +136,14 @@ int didNotify;
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
+    JCLogInfo_();
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
+    JCLogInfo_();
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     
@@ -140,6 +152,7 @@ int didNotify;
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
+    JCLogInfo_();
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     //[[NotificationView sharedInstance] didChangeConnection:nil];
     [self refreshTabBadges:NO];
@@ -156,6 +169,7 @@ int didNotify;
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    JCLogInfo_();
 //    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
 //    if (currentInstallation.badge != 0) {
 //        currentInstallation.badge = 0;
@@ -170,6 +184,7 @@ int didNotify;
 
 -(void)alertUserToUpdate:(NSNotification *)notification
 {
+    JCLogInfo_();
     if ([[notification name] isEqualToString:@"AppIsOutdated"] && (didNotify < 1))
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update Required"
@@ -184,12 +199,14 @@ int didNotify;
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
+    JCLogInfo_();
     if (buttonIndex > 0) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-services://?action=download-manifest&url=https://jiveios.local/JiveOneEnterprise.plist"]];
     }
 }
 - (void)applicationWillTerminate:(UIApplication *)application
 {
+    JCLogInfo_();
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     [MagicalRecord cleanUp];
     didNotify = 0;
@@ -197,6 +214,7 @@ int didNotify;
 
 - (void)startSocket:(BOOL)inBackground
 {
+    JCLogInfo_();
     //if ([[JCSocketDispatch sharedInstance] socketState] == SR_CLOSED || [[JCSocketDispatch sharedInstance] socketState] == SR_CLOSING) {
     [[JCSocketDispatch sharedInstance] requestSession:inBackground];
     //}
@@ -204,6 +222,7 @@ int didNotify;
 
 - (void)stopSocket
 {
+    JCLogInfo_();
     [[JCSocketDispatch sharedInstance] closeSocket];
 }
 
@@ -212,6 +231,7 @@ int didNotify;
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
+    JCLogInfo_();
 //    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
 //    [currentInstallation setDeviceTokenFromData:deviceToken];
 //    [currentInstallation saveInBackground];
@@ -228,12 +248,14 @@ int didNotify;
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
+    JCLogInfo_();
     [self startSocket:NO];
 	NSLog(@"APPDELEGATE - Failed to get token, error: %@", error);
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo//never gets called
 {
+    JCLogInfo_();
 //    [PFPush handlePush:userInfo];
     NSLog(@"APPDELEGATE - didReceiveRemoteNotification:fetchCompletionHandler");
 }
@@ -241,6 +263,7 @@ int didNotify;
 
 - (NSInteger)currentBadgeCount
 {
+    JCLogInfo_();
     NSDictionary * badgeDictionary = [[NSUserDefaults standardUserDefaults] objectForKey:@"badges"];
     NSMutableDictionary *_badges = nil;
     if (badgeDictionary) {
@@ -262,15 +285,18 @@ int didNotify;
 #pragma mark - Background Fetch
 - (void)receivedForegroundNotification:(NSDictionary *)notification fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
+    JCLogInfo_();
     completionHandler([self BackgroundPerformFetchWithCompletionHandler]);
 }
 - (void)receivedBackgroundNotification:(NSDictionary *)notification fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
+    JCLogInfo_();
     completionHandler([self BackgroundPerformFetchWithCompletionHandler]);
 }
 
 - (UIBackgroundFetchResult)BackgroundPerformFetchWithCompletionHandler
 {
+    JCLogInfo_();
     NSLog(@"APPDELEGATE - performFetchWithCompletionHandler");
     [[JCAuthenticationManager sharedInstance] checkForTokenValidity];
     if ([[JCSocketDispatch sharedInstance] socketState] != SR_OPEN) {
@@ -320,6 +346,7 @@ int didNotify;
 
 - (void)incrementBadgeCountForConversation:(NSString *)conversationId
 {
+    JCLogInfo_();
     NSMutableDictionary *_badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
     if (!_badges) {
         _badges = [[NSMutableDictionary alloc] init];
@@ -339,6 +366,7 @@ int didNotify;
 
 - (void)incrementBadgeCountForVoicemail
 {
+    JCLogInfo_();
     NSMutableDictionary *_badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
     if (!_badges) {
         _badges = [[NSMutableDictionary alloc] init];
@@ -358,6 +386,7 @@ int didNotify;
 
 - (void) decrementBadgeCountForConversation:(NSString *)conversationId
 {
+    JCLogInfo_();
     NSMutableDictionary *_badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
     if (!_badges) {
         _badges = [[NSMutableDictionary alloc] init];
@@ -380,6 +409,7 @@ int didNotify;
 
 - (void) decrementBadgeCountForVoicemail
 {
+    JCLogInfo_();
     NSMutableDictionary *_badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
     if (!_badges) {
         _badges = [[NSMutableDictionary alloc] init];
@@ -401,6 +431,7 @@ int didNotify;
 
 - (void)clearBadgeCountForConversation:(NSString *)conversationId
 {
+    JCLogInfo_();
     NSMutableDictionary *_badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
     if (!_badges) {
         _badges = [[NSMutableDictionary alloc] init];
@@ -415,6 +446,7 @@ int didNotify;
 
 - (void)clearBadgeCountForVoicemail
 {
+    JCLogInfo_();
     NSMutableDictionary *_badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
     if (!_badges) {
         _badges = [[NSMutableDictionary alloc] init];
@@ -434,6 +466,7 @@ int didNotify;
 
 - (void)refreshTabBadges:(BOOL)fromRemoteNotification
 {
+    JCLogInfo_();
     UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
     if ([tabController isKindOfClass:[UITabBarController class]]) {
         
@@ -486,7 +519,7 @@ int didNotify;
 
 #pragma mark - Local Notifications
 - (void)setNotification:(NSInteger)voicemailCount conversation:(NSInteger)conversationCount {
-    
+    JCLogInfo_();
     if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive)  {
         
         NSString *alertMessage = @"You have ";
@@ -524,6 +557,7 @@ int didNotify;
 #pragma mark - Reachability
 - (void)didChangeConnection:(NSNotification *)notification
 {
+    JCLogInfo_();
     AFNetworkReachabilityStatus status = [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
     BOOL appIsActive = [UIApplication sharedApplication].applicationState == UIApplicationStateActive;
     switch (status) {
@@ -556,6 +590,7 @@ int didNotify;
 
 -(BOOL)seenTutorial
 {
+    JCLogInfo_();
     return _seenTutorial = [[NSUserDefaults standardUserDefaults] boolForKey:@"seenAppTutorial"];
 }
 
