@@ -196,7 +196,6 @@
 		2727F3C7191AA92F00A41185 /* close_notification@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27B8153518D94E9C00516BF6 /* close_notification@2x.png */; };
 		2727F3C8191AA92F00A41185 /* JCGroupConversationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9137919718FDB0EE00709AD3 /* JCGroupConversationCell.xib */; };
 		2727F3C9191AA92F00A41185 /* avatar-placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 2700984218F4714100B6BC2F /* avatar-placeholder.png */; };
-		2727F3CA191AA92F00A41185 /* launch640x1136.png in Resources */ = {isa = PBXBuildFile; fileRef = 918EF0A3191A963400435DC3 /* launch640x1136.png */; };
 		2727F3CB191AA92F00A41185 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F202433C18B2CF4A006DB2EF /* README.md */; };
 		2727F3CC191AA92F00A41185 /* avatar-orig2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9159C88C18EDD20700DF769B /* avatar-orig2.png */; };
 		2727F3CD191AA92F00A41185 /* bubble-classic-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 2700984B18F4714100B6BC2F /* bubble-classic-selected.png */; };
@@ -446,7 +445,6 @@
 		9172AD58191849F500481B01 /* unnamed.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9172AD57191849F500481B01 /* unnamed.jpg */; };
 		9172AD5C19192A1500481B01 /* UserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9172AD5B19192A1500481B01 /* UserDefaults.plist */; };
 		91743AA0191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91743A9F191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m */; };
-		918EF0A4191A963400435DC3 /* launch640x1136.png in Resources */ = {isa = PBXBuildFile; fileRef = 918EF0A3191A963400435DC3 /* launch640x1136.png */; };
 		919C448F18DA479F00F6566A /* thumb1.png in Resources */ = {isa = PBXBuildFile; fileRef = 919C448E18DA479F00F6566A /* thumb1.png */; };
 		919DD29D1922E2C90039205E /* JCPopoverSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 919DD29C1922E2C90039205E /* JCPopoverSlider.m */; };
 		919DD29E1922E2C90039205E /* JCPopoverSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 919DD29C1922E2C90039205E /* JCPopoverSlider.m */; };
@@ -925,7 +923,6 @@
 		9172AD5B19192A1500481B01 /* UserDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserDefaults.plist; sourceTree = "<group>"; };
 		91743A9E191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTermsAndConditonsVCViewController.h; sourceTree = "<group>"; };
 		91743A9F191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTermsAndConditonsVCViewController.m; sourceTree = "<group>"; };
-		918EF0A3191A963400435DC3 /* launch640x1136.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launch640x1136.png; sourceTree = "<group>"; };
 		919C448E18DA479F00F6566A /* thumb1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumb1.png; sourceTree = "<group>"; };
 		919DD29B1922E2C90039205E /* JCPopoverSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPopoverSlider.h; sourceTree = "<group>"; };
 		919DD29C1922E2C90039205E /* JCPopoverSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPopoverSlider.m; sourceTree = "<group>"; };
@@ -1333,7 +1330,6 @@
 				27C3715118EDE9A000F159EF /* first_message.png */,
 				9172AD53191847D800481B01 /* ES-voicemail-1.jpg */,
 				9172AD55191848CE00481B01 /* presenceView.png */,
-				918EF0A3191A963400435DC3 /* launch640x1136.png */,
 				9172AD57191849F500481B01 /* unnamed.jpg */,
 				27A49AAF18DC8BC00084DEE0 /* launch.png */,
 				27B8153418D94E9C00516BF6 /* close_notification.png */,
@@ -2159,7 +2155,6 @@
 				2727F3C7191AA92F00A41185 /* close_notification@2x.png in Resources */,
 				2727F3C8191AA92F00A41185 /* JCGroupConversationCell.xib in Resources */,
 				2727F3C9191AA92F00A41185 /* avatar-placeholder.png in Resources */,
-				2727F3CA191AA92F00A41185 /* launch640x1136.png in Resources */,
 				2727F3CB191AA92F00A41185 /* README.md in Resources */,
 				2727F3CC191AA92F00A41185 /* avatar-orig2.png in Resources */,
 				2727F3CD191AA92F00A41185 /* bubble-classic-selected.png in Resources */,
@@ -2296,7 +2291,6 @@
 				27B8153718D94E9C00516BF6 /* close_notification@2x.png in Resources */,
 				9137919918FDB0EE00709AD3 /* JCGroupConversationCell.xib in Resources */,
 				2700988218F4714100B6BC2F /* avatar-placeholder.png in Resources */,
-				918EF0A4191A963400435DC3 /* launch640x1136.png in Resources */,
 				F202433D18B2CF4A006DB2EF /* README.md in Resources */,
 				9159C88D18EDD20700DF769B /* avatar-orig2.png in Resources */,
 				2700988A18F4714100B6BC2F /* bubble-classic-selected.png in Resources */,

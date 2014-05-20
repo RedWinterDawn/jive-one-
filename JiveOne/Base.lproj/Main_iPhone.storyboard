@@ -30,10 +30,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch.png" translatesAutoresizingMaskIntoConstraints="NO" id="f6l-GA-NmS">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            </imageView>
                             <view alpha="0.39999999999999963" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AVw-9n-3yN">
                                 <rect key="frame" x="20" y="248" width="280" height="91"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -81,20 +77,20 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="loginJiveLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="2Pn-QE-C05">
+                                <rect key="frame" x="40" y="59" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="f6l-GA-NmS" firstAttribute="leading" secondItem="ECf-jH-nSb" secondAttribute="leading" id="7vx-ht-2we"/>
                             <constraint firstItem="AVw-9n-3yN" firstAttribute="leading" secondItem="ECf-jH-nSb" secondAttribute="leading" constant="20" symbolic="YES" id="A9x-4L-GoI"/>
                             <constraint firstItem="AVw-9n-3yN" firstAttribute="centerX" secondItem="zDj-yl-OIT" secondAttribute="centerX" id="Inq-pP-Rc3"/>
                             <constraint firstItem="AVw-9n-3yN" firstAttribute="centerX" secondItem="0pL-1i-BoH" secondAttribute="centerX" id="UvA-fa-C5K"/>
                             <constraint firstItem="0pL-1i-BoH" firstAttribute="top" secondItem="zDj-yl-OIT" secondAttribute="bottom" constant="-3" id="a3w-KJ-cMA"/>
-                            <constraint firstItem="f6l-GA-NmS" firstAttribute="top" secondItem="ECf-jH-nSb" secondAttribute="top" id="cq7-uG-0FU"/>
                             <constraint firstItem="Ycj-Wi-V2g" firstAttribute="top" secondItem="zDj-yl-OIT" secondAttribute="bottom" constant="117" id="fAu-ch-0sa"/>
                             <constraint firstItem="AVw-9n-3yN" firstAttribute="top" secondItem="MXr-cp-xra" secondAttribute="bottom" constant="228" id="gHc-N4-PWy"/>
                             <constraint firstItem="zDj-yl-OIT" firstAttribute="leading" secondItem="ECf-jH-nSb" secondAttribute="leading" constant="73" id="gUN-QA-dOp"/>
-                            <constraint firstItem="AVw-9n-3yN" firstAttribute="centerX" secondItem="f6l-GA-NmS" secondAttribute="centerX" id="lKC-Ze-I7d"/>
-                            <constraint firstAttribute="bottom" secondItem="f6l-GA-NmS" secondAttribute="bottom" id="tkn-ql-J3m"/>
                             <constraint firstItem="zDj-yl-OIT" firstAttribute="top" secondItem="AVw-9n-3yN" secondAttribute="bottom" constant="97" id="uYr-L7-eFc"/>
                             <constraint firstItem="zDj-yl-OIT" firstAttribute="centerX" secondItem="ECf-jH-nSb" secondAttribute="centerX" id="vrd-yI-U8H"/>
                         </constraints>
@@ -144,7 +140,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0vD-5q-70A" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-394" y="944"/>
+            <point key="canvasLocation" x="-390" y="1104"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Vex-rW-GRa">
@@ -166,7 +162,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FNP-y4-bzi" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-394" y="250"/>
+            <point key="canvasLocation" x="-374" y="226"/>
         </scene>
         <!--Page View Controller - JCPage1ViewController-->
         <scene sceneID="ZtT-Cx-ctV">
@@ -928,14 +924,15 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XiR-SP-7my" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-940" y="944"/>
+            <point key="canvasLocation" x="-948" y="1104"/>
         </scene>
     </scenes>
     <resources>
         <image name="ES-voicemail-1.jpg" width="640" height="1136"/>
         <image name="avatar.png" width="100" height="100"/>
         <image name="first_message.png" width="265" height="154"/>
-        <image name="launch.png" width="640" height="1136"/>
+        <image name="launch.png" width="2199" height="2048"/>
+        <image name="loginJiveLogo.png" width="2199" height="2048"/>
         <image name="nav-conv.png" width="30" height="30"/>
         <image name="nav-more.png" width="44" height="44"/>
         <image name="nav-people.png" width="44" height="44"/>
