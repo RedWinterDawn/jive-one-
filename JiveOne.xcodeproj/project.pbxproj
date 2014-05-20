@@ -445,12 +445,9 @@
 		9172AD58191849F500481B01 /* unnamed.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9172AD57191849F500481B01 /* unnamed.jpg */; };
 		9172AD5C19192A1500481B01 /* UserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9172AD5B19192A1500481B01 /* UserDefaults.plist */; };
 		91743AA0191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91743A9F191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m */; };
-<<<<<<< HEAD
-=======
 		917E8C16192BC13500097111 /* JCSearchDisplayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 917E8C15192BC13500097111 /* JCSearchDisplayController.m */; };
 		917E8C17192BC13500097111 /* JCSearchDisplayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 917E8C15192BC13500097111 /* JCSearchDisplayController.m */; };
 		918EF0A4191A963400435DC3 /* launch640x1136.png in Resources */ = {isa = PBXBuildFile; fileRef = 918EF0A3191A963400435DC3 /* launch640x1136.png */; };
->>>>>>> TA7985 - Added behavior for search bar
 		919C448F18DA479F00F6566A /* thumb1.png in Resources */ = {isa = PBXBuildFile; fileRef = 919C448E18DA479F00F6566A /* thumb1.png */; };
 		919DD29D1922E2C90039205E /* JCPopoverSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 919DD29C1922E2C90039205E /* JCPopoverSlider.m */; };
 		919DD29E1922E2C90039205E /* JCPopoverSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 919DD29C1922E2C90039205E /* JCPopoverSlider.m */; };
@@ -929,12 +926,9 @@
 		9172AD5B19192A1500481B01 /* UserDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserDefaults.plist; sourceTree = "<group>"; };
 		91743A9E191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTermsAndConditonsVCViewController.h; sourceTree = "<group>"; };
 		91743A9F191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTermsAndConditonsVCViewController.m; sourceTree = "<group>"; };
-<<<<<<< HEAD
-=======
 		917E8C14192BC13500097111 /* JCSearchDisplayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSearchDisplayController.h; sourceTree = "<group>"; };
 		917E8C15192BC13500097111 /* JCSearchDisplayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSearchDisplayController.m; sourceTree = "<group>"; };
 		918EF0A3191A963400435DC3 /* launch640x1136.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launch640x1136.png; sourceTree = "<group>"; };
->>>>>>> TA7985 - Added behavior for search bar
 		919C448E18DA479F00F6566A /* thumb1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumb1.png; sourceTree = "<group>"; };
 		919DD29B1922E2C90039205E /* JCPopoverSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPopoverSlider.h; sourceTree = "<group>"; };
 		919DD29C1922E2C90039205E /* JCPopoverSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPopoverSlider.m; sourceTree = "<group>"; };
