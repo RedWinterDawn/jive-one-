@@ -469,6 +469,12 @@
 		91ADB9AF18D8BD4200DF41A3 /* voicemail_scrub_play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91ADB99F18D8BD4200DF41A3 /* voicemail_scrub_play@2x.png */; };
 		91ADB9B018D8BD4200DF41A3 /* voicemail_speaker.png in Resources */ = {isa = PBXBuildFile; fileRef = 91ADB9A018D8BD4200DF41A3 /* voicemail_speaker.png */; };
 		91ADB9B118D8BD4200DF41A3 /* voicemail_speaker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91ADB9A118D8BD4200DF41A3 /* voicemail_speaker@2x.png */; };
+		91B7CFC5192ABDF800927DDD /* JCSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B7CFC4192ABDF800927DDD /* JCSearchBar.m */; };
+		91B7CFC6192ABDF800927DDD /* JCSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B7CFC4192ABDF800927DDD /* JCSearchBar.m */; };
+		91B7CFCB192AD5B900927DDD /* search2.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7CFCA192AD5B900927DDD /* search2.png */; };
+		91B7CFCC192AD5B900927DDD /* search2.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7CFCA192AD5B900927DDD /* search2.png */; };
+		91B7CFCE192AD78B00927DDD /* searchGray2.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7CFCD192AD78B00927DDD /* searchGray2.png */; };
+		91B7CFCF192AD78B00927DDD /* searchGray2.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7CFCD192AD78B00927DDD /* searchGray2.png */; };
 		91F6DFA7192A6CCD001C54FB /* JCLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F6DFA6192A6CCD001C54FB /* JCLog.m */; };
 		91F6DFA8192A6CCD001C54FB /* JCLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F6DFA6192A6CCD001C54FB /* JCLog.m */; };
 		91F6DFAB192A702F001C54FB /* Shared.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 91F6DFAA192A702F001C54FB /* Shared.xcconfig */; };
@@ -942,6 +948,10 @@
 		91ADB99F18D8BD4200DF41A3 /* voicemail_scrub_play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "voicemail_scrub_play@2x.png"; sourceTree = "<group>"; };
 		91ADB9A018D8BD4200DF41A3 /* voicemail_speaker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = voicemail_speaker.png; sourceTree = "<group>"; };
 		91ADB9A118D8BD4200DF41A3 /* voicemail_speaker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "voicemail_speaker@2x.png"; sourceTree = "<group>"; };
+		91B7CFC3192ABDF800927DDD /* JCSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSearchBar.h; sourceTree = "<group>"; };
+		91B7CFC4192ABDF800927DDD /* JCSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSearchBar.m; sourceTree = "<group>"; };
+		91B7CFCA192AD5B900927DDD /* search2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search2.png; sourceTree = "<group>"; };
+		91B7CFCD192AD78B00927DDD /* searchGray2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = searchGray2.png; sourceTree = "<group>"; };
 		91F6DFA5192A6CCD001C54FB /* JCLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCLog.h; sourceTree = "<group>"; };
 		91F6DFA6192A6CCD001C54FB /* JCLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCLog.m; sourceTree = "<group>"; };
 		91F6DFAA192A702F001C54FB /* Shared.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Shared.xcconfig; sourceTree = "<group>"; };
@@ -1552,6 +1562,7 @@
 			isa = PBXGroup;
 			children = (
 				2751591D18AD303500FD8D3F /* JCDirectoryViewController.h */,
+				91B7CFC2192ABBEF00927DDD /* SearchBar */,
 				2751591E18AD303500FD8D3F /* JCDirectoryViewController.m */,
 				91260EDB18B2965900704670 /* JCDirectoryDetailViewController.h */,
 				91260EDC18B2965900704670 /* JCDirectoryDetailViewController.m */,
@@ -1967,6 +1978,17 @@
 			name = JCPopoverSlider;
 			sourceTree = "<group>";
 		};
+		91B7CFC2192ABBEF00927DDD /* SearchBar */ = {
+			isa = PBXGroup;
+			children = (
+				91B7CFC3192ABDF800927DDD /* JCSearchBar.h */,
+				91B7CFC4192ABDF800927DDD /* JCSearchBar.m */,
+				91B7CFCD192AD78B00927DDD /* searchGray2.png */,
+				91B7CFCA192AD5B900927DDD /* search2.png */,
+			);
+			name = SearchBar;
+			sourceTree = "<group>";
+		};
 		91F6DFA9192A7009001C54FB /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
@@ -2195,6 +2217,7 @@
 				2727F3FB191AA92F00A41185 /* bubble-stroked-tailless.png in Resources */,
 				2727F3FC191AA92F00A41185 /* conv-bubble.png in Resources */,
 				2727F3FD191AA92F00A41185 /* voicemail_callback_button@2x.png in Resources */,
+				91B7CFCF192AD78B00927DDD /* searchGray2.png in Resources */,
 				2727F3FE191AA92F00A41185 /* bubble-classic-blue.png in Resources */,
 				2727F3FF191AA92F00A41185 /* vmail.png in Resources */,
 				2727F400191AA92F00A41185 /* send-button@2x.png in Resources */,
@@ -2224,6 +2247,7 @@
 				2727F416191AA92F00A41185 /* JCConversationCell.xib in Resources */,
 				2727F417191AA92F00A41185 /* voicemail_info_button.png in Resources */,
 				27F1F301191C178600AEAFD7 /* libUAirship-4.0.0.a in Resources */,
+				91B7CFCC192AD5B900927DDD /* search2.png in Resources */,
 				2727F418191AA92F00A41185 /* input-bar-background@2x.png in Resources */,
 				2727F419191AA92F00A41185 /* people-star.png in Resources */,
 				2727F41A191AA92F00A41185 /* nav-more.png in Resources */,
@@ -2258,10 +2282,12 @@
 				2700988C18F4714100B6BC2F /* bubble-classic-typing.png in Resources */,
 				27F1F2FF191C171300AEAFD7 /* UAPushSettingsUserInfoView.xib in Resources */,
 				2700988B18F4714100B6BC2F /* bubble-classic-selected@2x.png in Resources */,
+				91B7CFCB192AD5B900927DDD /* search2.png in Resources */,
 				2700989C18F4714100B6BC2F /* bubble-tailless.png in Resources */,
 				2700989318F4714100B6BC2F /* bubble-classic-square-selected@2x.png in Resources */,
 				27EA5DB2190888AD008C7590 /* Draft_iPhone.storyboard in Resources */,
 				91ADB9AB18D8BD4200DF41A3 /* voicemail_mic@2x.png in Resources */,
+				91B7CFCE192AD78B00927DDD /* searchGray2.png in Resources */,
 				27F1F2F2191C171300AEAFD7 /* middle-detail@2x.png in Resources */,
 				91ADB9A918D8BD4200DF41A3 /* voicemail_info_button@2x.png in Resources */,
 				275158FC18AD10BB00FD8D3F /* main-logo.png in Resources */,
@@ -2467,6 +2493,7 @@
 				2727F359191AA92F00A41185 /* Conversation+Custom.m in Sources */,
 				2727F35A191AA92F00A41185 /* JCOmniPresence.m in Sources */,
 				2727F35B191AA92F00A41185 /* ConversationEntry.m in Sources */,
+				91B7CFC6192ABDF800927DDD /* JCSearchBar.m in Sources */,
 				2727F35C191AA92F00A41185 /* ConversationETag.m in Sources */,
 				2727F35D191AA92F00A41185 /* JSMessageSoundEffect.m in Sources */,
 				2727F35E191AA92F00A41185 /* main.m in Sources */,
@@ -2617,6 +2644,7 @@
 				2787911318CF79DC004DE651 /* JCPresenceView.m in Sources */,
 				2700987C18F4714100B6BC2F /* JSMessage.m in Sources */,
 				276215211912AA7400CFBCC8 /* NSString+URLEncoding.m in Sources */,
+				91B7CFC5192ABDF800927DDD /* JCSearchBar.m in Sources */,
 				27F1F2D4191C171300AEAFD7 /* UADateUtils.m in Sources */,
 				9137919818FDB0EE00709AD3 /* JCGroupConversationCell.m in Sources */,
 				2751590B18AD16F300FD8D3F /* JCOsgiClient.m in Sources */,
