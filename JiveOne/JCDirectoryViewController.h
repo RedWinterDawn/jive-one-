@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import <AddressBook/AddressBook.h>
+#import "JCSearchBar.h"
 
 
-
-@interface JCDirectoryViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ABPeoplePickerNavigationControllerDelegate>
+@interface JCDirectoryViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ABPeoplePickerNavigationControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate>
 {
     NSMutableArray *localContacts;
     NSArray *sections;

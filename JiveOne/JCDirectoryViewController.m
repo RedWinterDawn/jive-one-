@@ -22,14 +22,22 @@
 
 
 @interface JCDirectoryViewController ()
-
-
 {
     NSMutableDictionary *personMap;
 }
-
+@property (strong, nonatomic) UIView* searchBarView;
 
 @property BOOL searchTableIsActive;
+@property BOOL scrollDirectionIsUp;
+@property float previousOffset;
+@property float amountScrolledSinceLastDirectionChange;
+@property float scrollViewOffsetReference;
+@property float deltaOffsetSinceLastDirectionChange;
+@property float deltaSearchBarY_SinceLastDirectionChange;
+@property float searchBarY_Reference;
+
+
+
 
 
 @end
@@ -42,7 +50,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.previousOffset = 0;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"JCPersonCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
     
@@ -53,11 +61,8 @@ static NSString *CellIdentifier = @"DirectoryCell";
     self.clientEntitiesArray = [[NSMutableArray alloc] init];
     self.clientEntitiesSearchArray = [[NSMutableArray alloc] init];
     
-        //TODO: disable search bar if no objects in clientEntitiesArray
-    //[[NotificationView sharedInstance] showPanelInView:self.view];
-    //[[StatusPanel sharedInstance] showWithTitle:@"no internet" snippet:@"no internet" showProgress:NO];
-    //[[StatusPanel sharedInstance] show];
-
+    self.searchBarView.backgroundColor = [UIColor redColor];
+    [self.view addSubview:self.searchBarView];
     
     for(UIView *view in [self.tableView subviews])
     {
@@ -88,7 +93,62 @@ static NSString *CellIdentifier = @"DirectoryCell";
     [super viewWillDisappear:animated];
     
 }
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    const int MAX_Y = 87;
+    const int MIN_Y = -22;
+    
+    NSLog(@"offset y: %f viewCenter y: %f", scrollView.contentOffset.y, self.searchBarView.center.y);
+    NSLog(@"delta: %f", self.amountScrolledSinceLastDirectionChange);
+    self.amountScrolledSinceLastDirectionChange = abs(self.scrollViewOffsetReference - scrollView.contentOffset.y);
+    
+        // scrolling up
+        if (scrollView.contentOffset.y > self.previousOffset) {
+            
+            //direction changed
+            if(self.scrollDirectionIsUp == NO){
+                    self.scrollViewOffsetReference = scrollView.contentOffset.y;
+                    self.searchBarY_Reference = self.searchBarView.center.y;
+                }
+            
+            self.deltaOffsetSinceLastDirectionChange = abs(self.scrollViewOffsetReference - scrollView.contentOffset.y);
+            self.searchBarView.center = CGPointMake(self.searchBarView.center.x, (self.searchBarY_Reference - self.deltaOffsetSinceLastDirectionChange));
+            self.scrollDirectionIsUp = YES;
+            
+        }//scrolling down or - initalizing the first time through
+        else if((scrollView.contentOffset.y < self.previousOffset) && (self.previousOffset != 0))
+        {
+            //direction changed
+            if(self.scrollDirectionIsUp){
+                self.scrollViewOffsetReference = scrollView.contentOffset.y;
+                self.searchBarY_Reference = self.searchBarView.center.y;
+            }
 
+            self.deltaOffsetSinceLastDirectionChange = abs(self.scrollViewOffsetReference - scrollView.contentOffset.y);
+            self.searchBarView.center = CGPointMake(self.searchBarView.center.x, (self.searchBarY_Reference + self.deltaOffsetSinceLastDirectionChange));
+            self.scrollDirectionIsUp = NO;
+        }
+    
+    //set how far down the search bar can go - account for when we are at the top of the view and want it to animate down with the rest of the tableviewcells.
+    if ((self.searchBarView.center.y > 87) && (scrollView.contentOffset.y > -64)) {
+        self.searchBarView.center = CGPointMake(self.searchBarView.center.x, MAX_Y);
+    }
+    
+    //set how far up we alow the search bar to go (we allow it to go just off the top of the screen.)
+    if ((self.searchBarView.center.y < -(self.searchBarView.frame.size.height/2))) {
+            self.searchBarView.center = CGPointMake(self.searchBarView.center.x, MIN_Y);
+    }
+
+    self.previousOffset = scrollView.contentOffset.y;
+}
+
+
+- (UIView *)searchBarView
+{
+    if (!_searchBarView) {
+        _searchBarView = [[UIView alloc]initWithFrame:CGRectMake(0, 65, 320, 44)];
+    }
+    return _searchBarView;
+}
 
 
 #pragma mark -ABPeoplePickerDelegate methods
@@ -343,67 +403,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
     }
 
     return cell;
-    
-//    NSArray *section;
-//    
-//    //no contacts loaded
-//    if (self.clientEntitiesArray.count == 0) {
-//        cell.textLabel.text = @"No contacts";
-//        return cell;
-//    }
-//    //will show contacts loaded in clientEntitiesArray
-//    else {
-//            //show search results only
-//        if(tableView == self.searchDisplayController.searchResultsTableView){
-//            if (self.clientEntitiesSearchArray.count == 0) {
-//                return nil;
-//            }
-//            cell = [[JCPersonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];//can only be used if initWithStyle manually initializes all uilabel properties (since it's not being created by the storyboard)
-//            section = 0;
-//        }
-//        else{
-//            //show all results
-//            section = self.clientEntitiesArray[indexPath.section];
-//        }
-//        
-//        //Company contacts
-//        if([section[indexPath.row] isKindOfClass:[PersonEntities class]]){
-//            
-//            PersonEntities* person;
-//            if(tableView == self.searchDisplayController.searchResultsTableView) {
-//                person = self.clientEntitiesSearchArray[indexPath.row];
-//            }
-//            else {
-//                person = section[indexPath.row];
-//            }
-//            cell.person = person;
-//            
-//            //check to see if the person is a favorite
-//            if ([person.isFavorite boolValue]) {
-//                
-//                
-//                NSMutableString *name = [[NSMutableString alloc]initWithString: cell.personNameLabel.text];
-//                NSString *star = @"  ★";
-//                NSString *nameAndStarAsAnNSString = [NSString stringWithString:[name stringByAppendingString:star]];
-//                
-//                
-//                UIColor *theRightShadeOfYellowForOurStar = [UIColor colorWithRed:255.0/255.0 green:212.0/255.0 blue:0.0/255.0 alpha:1.0];
-//                NSRange starLocation = [nameAndStarAsAnNSString rangeOfString:@"★"];
-//                NSMutableAttributedString *personAttributedName = [[NSMutableAttributedString alloc]initWithString:nameAndStarAsAnNSString];
-//                [personAttributedName setAttributes:@{NSForegroundColorAttributeName : theRightShadeOfYellowForOurStar} range:starLocation];
-//                
-//                cell.personNameLabel.attributedText = personAttributedName;
-//            }
-//            
-//        }else{
-//            //local contacts
-//            NSDictionary * pers = section[indexPath.row];
-//            cell.personNameLabel.text = [pers objectForKey:@"firstLast"];
-//            cell.personDetailLabel.text = @"";//[person objectForKey:@"email"];
-//
-//            }
-//        return cell;
-//    }
+ 
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -435,39 +435,6 @@ static NSString *CellIdentifier = @"DirectoryCell";
 //    return 15;
 //}
 
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//    
-//    UIView *dashedView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width - 13, 25)];
-//    CAShapeLayer *shapeLayer = [CAShapeLayer layer];
-//    [shapeLayer setBounds:dashedView.bounds];
-//    [shapeLayer setPosition:dashedView.center];
-//    [shapeLayer setFillColor:[[UIColor clearColor] CGColor]];
-//    [shapeLayer setStrokeColor:[[UIColor lightGrayColor] CGColor]];
-//    [shapeLayer setLineWidth:1.5f];
-//    [shapeLayer setLineJoin:kCALineJoinRound];
-//    [shapeLayer setLineDashPattern:
-//     [NSArray arrayWithObjects:[NSNumber numberWithInt:10],
-//      [NSNumber numberWithInt:5],nil]];
-//    
-//    // Setup the path
-//    CGMutablePathRef path = CGPathCreateMutable();
-//    CGPathMoveToPoint(path, NULL, 0.0, 0.0);
-//    CGPathAddLineToPoint(path, NULL, tableView.frame.size.width - 13, 0.0);
-//    
-//    [shapeLayer setPath:path];
-//    CGPathRelease(path);
-//    [dashedView.layer addSublayer:shapeLayer];
-//    
-//    UILabel *letter = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, tableView.frame.size.width, 15)];
-//    letter.text = sections[section];
-//    letter.textColor = [UIColor grayColor];
-//    letter.font = [UIFont boldSystemFontOfSize:12];
-//    
-//    [dashedView addSubview:letter];
-//    
-//    return dashedView;
-//}
 
 
 #pragma mark Search
@@ -570,56 +537,6 @@ shouldReloadTableForSearchString:(NSString *)searchString
     
 
     
-    
-//    //check if it's a company or local contact
-//    if (self.segControl.selectedSegmentIndex == 0) {
-//        
-//        
-//        if ([[segue identifier] isEqualToString:@"groupView"]) {
-//            JCDirectoryGroupViewController *groupVC = (JCDirectoryGroupViewController*)segue.destinationViewController;
-//            groupVC.person = self.clientEntitiesArray;
-//        } else if ([[segue identifier] isEqualToString:@"directoryDetailView"]) {
-//        
-//            PersonEntities *person = nil; //self.clientEntitiesArray[indexPath.section][indexPath.row];
-//            if (self.searchTableIsActive) {
-//                indexPath = sender;
-//                person = self.clientEntitiesSearchArray[indexPath.section][indexPath.row];
-//            }
-//            else {
-//                person = self.clientEntitiesArray[indexPath.section][indexPath.row];
-//            }
-//            [segue.destinationViewController setEntityId:person.entityId];
-//            //[segue.destinationViewController setPerson:person];
-//            //[segue.destinationViewController setABPerson:nil];
-//            
-//            //[segue.destinationViewController setPersonCell:(JCPersonCell *)[self.tableView cellForRowAtIndexPath:sender]];
-//        }
-//    }
-//    //local contact
-//    else
-//    {
-////        NSDictionary *person = nil;
-////        if([segue.identifier isEqualToString:@"showSearchDetail"]) {
-////            person = self.clientEntitiesSearchArray[indexPath.section][indexPath.row];
-////        }
-////        else {
-////            person = self.clientEntitiesArray[indexPath.section][indexPath.row];
-////        }
-//        // get ABDictionary
-//        
-//        if ([[segue identifier] isEqualToString:@"groupView"]) {
-//            NSMutableArray *person = self.clientEntitiesArray;
-//            JCDirectoryGroupViewController* groupVC = segue.destinationViewController;
-//            groupVC.personDict = person;
-//        } else if ([[segue identifier] isEqualToString:@"directoryDetailView"]) {
-//            NSDictionary *person = self.clientEntitiesArray[indexPath.section][indexPath.row];
-//            JCDirectoryDetailViewController* detailVC = segue.destinationViewController;
-//            detailVC.ABPerson = person;
-//            detailVC.person = nil;
-//        }
-//        
-//    }
-//    
 }
 
 - (IBAction)refreshDirectory:(id)sender {
@@ -638,10 +555,6 @@ shouldReloadTableForSearchString:(NSString *)searchString
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[rowSection[0] integerValue] inSection:[rowSection[1] integerValue]];
         [indexPaths addObject:indexPath];
     }
-    
-//    if (indexPaths.count != 0) {
-//        [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-//    }
 }
 @end
 
