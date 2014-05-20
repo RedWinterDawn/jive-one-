@@ -132,6 +132,9 @@ static NSString *CellIdentifier = @"DirectoryCell";
     if ((self.searchBarView.center.y > 87) && (scrollView.contentOffset.y > -64)) {
         self.searchBarView.center = CGPointMake(self.searchBarView.center.x, MAX_Y);
     }
+    if (scrollView.contentOffset.y <= -64) {
+        self.searchBarView.center = CGPointMake(self.searchBarView.center.x, MAX_Y + abs(scrollView.contentOffset.y + 64));
+    }
     
     //set how far up we alow the search bar to go (we allow it to go just off the top of the screen.)
     if ((self.searchBarView.center.y < -(self.searchBarView.frame.size.height/2))) {
