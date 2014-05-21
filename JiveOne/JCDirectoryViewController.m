@@ -24,6 +24,7 @@
 @interface JCDirectoryViewController ()
 {
     NSMutableDictionary *personMap;
+    UISearchDisplayController *searchDisplayController;
 }
 @property (strong, nonatomic) UIView* searchBarView;
 
@@ -35,10 +36,7 @@
 @property float deltaOffsetSinceLastDirectionChange;
 @property float deltaSearchBarY_SinceLastDirectionChange;
 @property float searchBarY_Reference;
-
-
-
-
+@property (strong, nonatomic) JCSearchBar *searchBar;
 
 @end
 
@@ -57,12 +55,22 @@ static NSString *CellIdentifier = @"DirectoryCell";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     NSString *star = @"\u2605";
-    sections = [NSArray arrayWithObjects:star,@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
+    sections = [NSArray arrayWithObjects:star, @"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
     self.clientEntitiesArray = [[NSMutableArray alloc] init];
     self.clientEntitiesSearchArray = [[NSMutableArray alloc] init];
     
-    self.searchBarView.backgroundColor = [UIColor redColor];
+    [self.searchBarView addSubview:self.searchBar];
+    [self.searchBar setDelegate:self];
+//    self.searchBarView.backgroundColor = [UIColor redColor];
     [self.view addSubview:self.searchBarView];
+    
+    // detect when user tap's outside the search bar
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer:tap];
+    
+    searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
+    searchDisplayController.delegate = self;
+    searchDisplayController.searchResultsDataSource = self;
     
     for(UIView *view in [self.tableView subviews])
     {
@@ -93,14 +101,38 @@ static NSString *CellIdentifier = @"DirectoryCell";
     [super viewWillDisappear:animated];
     
 }
+
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+    [UIView animateWithDuration:0.3
+                          delay:0
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                         [self.searchBarView setFrame:CGRectMake(0, 20, self.searchBarView.bounds.size.width, self.searchBarView.bounds.size.height)];
+                     }
+                     completion:nil];
+    
+    
+    return YES;
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    NSLog(@"didEdit y: %f", self.searchBarView.center.y);
+
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    const int MAX_Y = 87;
+    const int MAX_Y = 86;
     const int MIN_Y = -22;
     
-    NSLog(@"offset y: %f viewCenter y: %f", scrollView.contentOffset.y, self.searchBarView.center.y);
-    NSLog(@"delta: %f", self.amountScrolledSinceLastDirectionChange);
-    self.amountScrolledSinceLastDirectionChange = abs(self.scrollViewOffsetReference - scrollView.contentOffset.y);
+    if (![self.searchBar isFirstResponder]) {
+        
     
+        NSLog(@"offset y: %f viewCenter y: %f", scrollView.contentOffset.y, self.searchBarView.center.y);
+        NSLog(@"delta: %f", self.amountScrolledSinceLastDirectionChange);
+        self.amountScrolledSinceLastDirectionChange = abs(self.scrollViewOffsetReference - scrollView.contentOffset.y);
+        
         // scrolling up
         if (scrollView.contentOffset.y > self.previousOffset) {
             
@@ -127,7 +159,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
             self.searchBarView.center = CGPointMake(self.searchBarView.center.x, (self.searchBarY_Reference + self.deltaOffsetSinceLastDirectionChange));
             self.scrollDirectionIsUp = NO;
         }
-    
+    }
     //set how far down the search bar can go - account for when we are at the top of the view and want it to animate down with the rest of the tableviewcells.
     if ((self.searchBarView.center.y > 87) && (scrollView.contentOffset.y > -64)) {
         self.searchBarView.center = CGPointMake(self.searchBarView.center.x, MAX_Y);
@@ -153,6 +185,19 @@ static NSString *CellIdentifier = @"DirectoryCell";
     return _searchBarView;
 }
 
+-(JCSearchBar *)searchBar
+{
+    if (!_searchBar) {
+        _searchBar = [[JCSearchBar alloc]initWithFrame:CGRectMake(0,0, self.searchBarView.frame.size.width, self.searchBarView.frame.size.height)];
+        [_searchBar setBarTintColor:[UIColor whiteColor]];
+        [_searchBar layoutSubviews];
+    }
+    return _searchBar;
+}
+
+-(void)dismissKeyboard {
+    [self.searchBar resignFirstResponder];
+}
 
 #pragma mark -ABPeoplePickerDelegate methods
 - (void)peoplePickerNavigationControllerDidCancel:

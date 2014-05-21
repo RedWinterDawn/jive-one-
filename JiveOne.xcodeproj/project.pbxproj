@@ -447,7 +447,6 @@
 		91743AA0191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91743A9F191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m */; };
 		917E8C16192BC13500097111 /* JCSearchDisplayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 917E8C15192BC13500097111 /* JCSearchDisplayController.m */; };
 		917E8C17192BC13500097111 /* JCSearchDisplayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 917E8C15192BC13500097111 /* JCSearchDisplayController.m */; };
-		918EF0A4191A963400435DC3 /* launch640x1136.png in Resources */ = {isa = PBXBuildFile; fileRef = 918EF0A3191A963400435DC3 /* launch640x1136.png */; };
 		919C448F18DA479F00F6566A /* thumb1.png in Resources */ = {isa = PBXBuildFile; fileRef = 919C448E18DA479F00F6566A /* thumb1.png */; };
 		919DD29D1922E2C90039205E /* JCPopoverSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 919DD29C1922E2C90039205E /* JCPopoverSlider.m */; };
 		919DD29E1922E2C90039205E /* JCPopoverSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 919DD29C1922E2C90039205E /* JCPopoverSlider.m */; };
@@ -928,7 +927,6 @@
 		91743A9F191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTermsAndConditonsVCViewController.m; sourceTree = "<group>"; };
 		917E8C14192BC13500097111 /* JCSearchDisplayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSearchDisplayController.h; sourceTree = "<group>"; };
 		917E8C15192BC13500097111 /* JCSearchDisplayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSearchDisplayController.m; sourceTree = "<group>"; };
-		918EF0A3191A963400435DC3 /* launch640x1136.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launch640x1136.png; sourceTree = "<group>"; };
 		919C448E18DA479F00F6566A /* thumb1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumb1.png; sourceTree = "<group>"; };
 		919DD29B1922E2C90039205E /* JCPopoverSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPopoverSlider.h; sourceTree = "<group>"; };
 		919DD29C1922E2C90039205E /* JCPopoverSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPopoverSlider.m; sourceTree = "<group>"; };
@@ -1393,7 +1391,7 @@
 			children = (
 				277F093E18FECEB800EEF0E3 /* Account */,
 				277F093C18FECE8700EEF0E3 /* Conversation */,
-				277F093B18FECE5E00EEF0E3 /* Directory */,
+				277F093B18FECE5E00EEF0E3 /* People */,
 				277F093D18FECEA800EEF0E3 /* Voicemail */,
 				277F093F18FECECA00EEF0E3 /* Login */,
 				91F87CF4190EE16B00152FDB /* AppTutorial */,
@@ -1560,7 +1558,7 @@
 			name = Vendors;
 			sourceTree = "<group>";
 		};
-		277F093B18FECE5E00EEF0E3 /* Directory */ = {
+		277F093B18FECE5E00EEF0E3 /* People */ = {
 			isa = PBXGroup;
 			children = (
 				91B7CFC2192ABBEF00927DDD /* SearchBar */,
@@ -1573,7 +1571,7 @@
 				F258589018BD3A420020AF34 /* JCDirectoryGroupViewController.h */,
 				F258589118BD3A420020AF34 /* JCDirectoryGroupViewController.m */,
 			);
-			name = Directory;
+			name = People;
 			sourceTree = "<group>";
 		};
 		277F093C18FECE8700EEF0E3 /* Conversation */ = {
