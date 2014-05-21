@@ -52,7 +52,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
     self.previousOffset = 0;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"JCPersonCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
-    
+
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     NSString *star = @"\u2605";
@@ -72,6 +72,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
     searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
     searchDisplayController.delegate = self;
     searchDisplayController.searchResultsDataSource = self;
+    [searchDisplayController.searchResultsTableView setDelegate:self];
     for(UIView *view in [self.tableView subviews])
     {
         //NSLog([[view class] description]);
@@ -147,11 +148,6 @@ static NSString *CellIdentifier = @"DirectoryCell";
                          self.doneAnimatingToolbarFromFirstResponderState = YES;
                      }];
     [self.searchBar resignFirstResponder];
-}
-
-- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
-{
-
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -461,20 +457,15 @@ NSLog(@"4topInset: %f", self.tableView.contentInset.top);
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     JCPersonCell *cell;
     PersonEntities *person;
     if(tableView == self.tableView){//redundant, but easier than rearranging all the if statements below.
         //only instantiate the cell this way, if it is not part of the searchResutls Table view.
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-        
-        
         person = self.clientEntitiesArray[indexPath.section][indexPath.row];
-    
-        
     }
     else{
-        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+
         if (!cell) {
             cell = [[JCPersonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
@@ -525,20 +516,6 @@ NSLog(@"4topInset: %f", self.tableView.contentInset.top);
 {
     return 60;
 }
-
-/**
- This code left intentionally commentend. Uncomment the code bellow for a custom, dashed section 
- headers. 
- **/
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-//{
-//    if (section == 0 && ((NSArray*)self.clientEntitiesArray[section]).count == 0) {
-//        return 20;
-//    }
-//    return 15;
-//}
-
-
 
 #pragma mark Search
 
@@ -637,8 +614,6 @@ shouldReloadTableForSearchString:(NSString *)searchString
     if (person) {
         [segue.destinationViewController setPerson:person];
     }
-    
-
     
 }
 
