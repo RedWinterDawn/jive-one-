@@ -30,6 +30,7 @@
 
 @property BOOL searchTableIsActive;
 @property BOOL scrollDirectionIsUp;
+@property BOOL doneAnimatingToolbarFromFirstResponderState;
 @property float previousOffset;
 @property float amountScrolledSinceLastDirectionChange;
 @property float scrollViewOffsetReference;
@@ -104,7 +105,8 @@ static NSString *CellIdentifier = @"DirectoryCell";
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
-    [UIView animateWithDuration:0.3
+
+    [UIView animateWithDuration:0.25
                           delay:0
                         options:UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
@@ -112,13 +114,25 @@ static NSString *CellIdentifier = @"DirectoryCell";
                      }
                      completion:nil];
     
-    
     return YES;
+}
+
+-(void)dismissKeyboard {
+    self.doneAnimatingToolbarFromFirstResponderState = NO;
+    [UIView animateWithDuration:0.25
+                          delay:0.15
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                         [self.searchBarView setFrame:CGRectMake(0, 64, self.searchBarView.bounds.size.width, self.searchBarView.bounds.size.height)];
+                     }
+                     completion:^(BOOL finished){
+                         self.doneAnimatingToolbarFromFirstResponderState = YES;
+                     }];
+    [self.searchBar resignFirstResponder];
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
-    NSLog(@"didEdit y: %f", self.searchBarView.center.y);
 
 }
 
@@ -126,7 +140,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
     const int MAX_Y = 86;
     const int MIN_Y = -22;
     
-    if (![self.searchBar isFirstResponder]) {
+    if ((![self.searchBar isFirstResponder]) && (self.doneAnimatingToolbarFromFirstResponderState == YES)) {
         
     
         NSLog(@"offset y: %f viewCenter y: %f", scrollView.contentOffset.y, self.searchBarView.center.y);
@@ -195,9 +209,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
     return _searchBar;
 }
 
--(void)dismissKeyboard {
-    [self.searchBar resignFirstResponder];
-}
+
 
 #pragma mark -ABPeoplePickerDelegate methods
 - (void)peoplePickerNavigationControllerDidCancel:
