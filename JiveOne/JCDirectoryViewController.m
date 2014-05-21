@@ -59,10 +59,10 @@ static NSString *CellIdentifier = @"DirectoryCell";
     sections = [NSArray arrayWithObjects:star, @"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
     self.clientEntitiesArray = [[NSMutableArray alloc] init];
     self.clientEntitiesSearchArray = [[NSMutableArray alloc] init];
-    
+    self.doneAnimatingToolbarFromFirstResponderState = YES;
     [self.searchBarView addSubview:self.searchBar];
     [self.searchBar setDelegate:self];
-//    self.searchBarView.backgroundColor = [UIColor redColor];
+    self.searchBarView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.searchBarView];
     
     // detect when user tap's outside the search bar
@@ -114,6 +114,22 @@ static NSString *CellIdentifier = @"DirectoryCell";
                      }
                      completion:nil];
     
+    return YES;
+}
+
+- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
+{
+    self.doneAnimatingToolbarFromFirstResponderState = NO;
+    [UIView animateWithDuration:0.2
+                          delay:0
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                         [self.searchBarView setFrame:CGRectMake(0, 64, self.searchBarView.bounds.size.width, self.searchBarView.bounds.size.height)];
+                     }
+                     completion:^(BOOL finished){
+                         self.doneAnimatingToolbarFromFirstResponderState = YES;
+                     }];
+    [self.searchBar resignFirstResponder];
     return YES;
 }
 
