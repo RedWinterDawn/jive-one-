@@ -201,11 +201,21 @@ static NSString *CellIdentifier = @"DirectoryCell";
     //set how far down the search bar can go - account for when we are at the top of the view and want it to animate down with the rest of the tableviewcells.
     if ((self.searchBarView.center.y > 87) && (scrollView.contentOffset.y > -64)) {
         self.searchBarView.center = CGPointMake(self.searchBarView.center.x, MAX_Y);
+        float topInset = self.searchBarView.frame.origin.y + self.searchBarView.frame.size.height;
+        NSLog(@"3topInset: %f", topInset);
+        if (topInset < 64){
+            topInset = 64;
+        }
+        [self.tableView setContentInset:UIEdgeInsetsMake(topInset, 0, 0, 0)];
     }
     if (scrollView.contentOffset.y <= -64) {
         self.searchBarView.center = CGPointMake(self.searchBarView.center.x, MAX_Y + abs(scrollView.contentOffset.y + 64));
         NSLog(@"2topInset: %f", self.tableView.contentInset.top);
-
+        float topInset = self.searchBarView.frame.origin.y + self.searchBarView.frame.size.height;
+        if (topInset > 64){
+            topInset = 64;
+        }
+        [self.tableView setContentInset:UIEdgeInsetsMake(topInset, 0, 0, 0)];
     }
     
     //set how far up we alow the search bar to go (we allow it to go just off the top of the screen.)
