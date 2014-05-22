@@ -58,7 +58,7 @@
     NSString* fontName = @"Avenir-Book";
     NSString* boldFontName = @"Avenir-Black";
     
-    _usernameTextField.backgroundColor = [UIColor whiteColor];
+    //_usernameTextField.backgroundColor = [UIColor whiteColor];
     _usernameTextField.placeholder =  NSLocalizedString(@"Email Address", nil);
     _usernameTextField.font = [UIFont fontWithName:fontName size:16.0f];
     _usernameTextField.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:0.7].CGColor;
@@ -68,7 +68,7 @@
     _usernameTextField.leftViewMode = UITextFieldViewModeAlways;
     _usernameTextField.leftView = leftView;
     
-    _passwordTextField.backgroundColor = [UIColor whiteColor];
+    //_passwordTextField.backgroundColor = [UIColor whiteColor];
     _passwordTextField.placeholder =  NSLocalizedString(@"Password", nil);
     _passwordTextField.font = [UIFont fontWithName:fontName size:16.0f];
     _passwordTextField.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:0.7].CGColor;
