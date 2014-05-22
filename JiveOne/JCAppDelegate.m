@@ -89,11 +89,14 @@ int didNotify;
     
     // Call takeOff (which creates the UAirship singleton)
     [UAirship takeOff:config];
-    
+    //[UAPush shared].pushNotificationDelegate = self;
     // Request a custom set of notification types
+    [[UAPush shared] registerForRemoteNotifications];
     [UAPush shared].notificationTypes = (UIRemoteNotificationTypeBadge |
                                          UIRemoteNotificationTypeSound |
                                          UIRemoteNotificationTypeAlert);
+    
+    
     
     //Setup Parse Framework
     //[Parse setApplicationId:@"pF8x8MNin5QJY3EVyXvQF21PBasJxAmoxA5eo16B" clientKey:@"UQEeTqrFUkvglJUHwEiSItGaAttQvAUyExeZ0Iq9"];
@@ -253,12 +256,12 @@ int didNotify;
 	NSLog(@"APPDELEGATE - Failed to get token, error: %@", error);
 }
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo//never gets called
-{
-    JCLogInfo_();
-//    [PFPush handlePush:userInfo];
-    NSLog(@"APPDELEGATE - didReceiveRemoteNotification:fetchCompletionHandler");
-}
+//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo//never gets called
+//{
+//    JCLogInfo_();
+////    [PFPush handlePush:userInfo];
+//    NSLog(@"APPDELEGATE - didReceiveRemoteNotification:fetchCompletionHandler");
+//}
 
 
 - (NSInteger)currentBadgeCount
@@ -282,24 +285,41 @@ int didNotify;
     return count;
 }
 
+
+// foreground
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    JCLogInfo_();
+    completionHandler([self BackgroundPerformFetchWithCompletionHandler]);
+}
+
+
+- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    JCLogInfo_();
+    completionHandler([self BackgroundPerformFetchWithCompletionHandler]);
+}
+
 #pragma mark - Background Fetch
 - (void)receivedForegroundNotification:(NSDictionary *)notification fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     JCLogInfo_();
     completionHandler([self BackgroundPerformFetchWithCompletionHandler]);
 }
+
 - (void)receivedBackgroundNotification:(NSDictionary *)notification fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     JCLogInfo_();
     completionHandler([self BackgroundPerformFetchWithCompletionHandler]);
 }
 
+
 - (UIBackgroundFetchResult)BackgroundPerformFetchWithCompletionHandler
 {
     JCLogInfo_();
     NSLog(@"APPDELEGATE - performFetchWithCompletionHandler");
-    [[JCAuthenticationManager sharedInstance] checkForTokenValidity];
     if ([[JCSocketDispatch sharedInstance] socketState] != SR_OPEN) {
+        [[JCAuthenticationManager sharedInstance] checkForTokenValidity];
         __block UIBackgroundFetchResult fetchResult = UIBackgroundFetchResultFailed;
         
         @try {
