@@ -13,7 +13,7 @@
 
 + (NSArray *)RetrieveConversationEntryById:(NSString *)conversationId
 {
-    NSArray *conversations = [super MR_findByAttribute:@"conversationId" withValue:conversationId andOrderBy:@"createdDate" ascending:YES];
+    NSArray *conversations = [super MR_findByAttribute:@"conversationId" withValue:conversationId andOrderBy:@"lastModified" ascending:YES];
     return conversations;
 }
 
@@ -52,7 +52,7 @@
         convEntry = resultsForId[0];
         [self updateConversationEntry:convEntry withDictionary:entry managedContext:context];
     }
-    else if(resultsForTempUrn.count>0){
+    else if(resultsForTempUrn.count > 0 && entryTempUrn){
         //only gets called when you send the message and the server sends back a confirmation that it was sent, plus all new metadata.
         convEntry = resultsForTempUrn[0];
         [self updateConversationEntry:convEntry withDictionary:entry managedContext:context];

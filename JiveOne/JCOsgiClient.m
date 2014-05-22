@@ -399,7 +399,6 @@
                             failure:(void (^)(NSError *err))failure
 {
     [self setRequestAuthHeader];
-    //https://test.my.jive.com/voicemails
     NSString * url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], kOsgiVoicemailRoute];
     NSLog(@"%@", url);
     

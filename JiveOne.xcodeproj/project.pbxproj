@@ -1322,12 +1322,6 @@
 		2743985218D0CFAA00ABCD69 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				274493AF18D0DA9B002744CB /* JCConversationCell.xib */,
-				274493AC18D0D538002744CB /* JCConversationCell.h */,
-				274493AD18D0D538002744CB /* JCConversationCell.m */,
-				9137919518FDB0EE00709AD3 /* JCGroupConversationCell.h */,
-				9137919618FDB0EE00709AD3 /* JCGroupConversationCell.m */,
-				9137919718FDB0EE00709AD3 /* JCGroupConversationCell.xib */,
 				9103271418F34BEB00437503 /* JCPeopleDetailCell.h */,
 				9103271518F34BEC00437503 /* JCPeopleDetailCell.m */,
 				9103271618F34BEC00437503 /* JCPeopleDetailCell.xib */,
@@ -1601,6 +1595,12 @@
 				2751592218AD32E500FD8D3F /* JCConversationsViewController.m */,
 				27C3715518EE29F400F159EF /* JCMessagesViewController.h */,
 				27C3715618EE29F400F159EF /* JCMessagesViewController.m */,
+				274493AF18D0DA9B002744CB /* JCConversationCell.xib */,
+				274493AC18D0D538002744CB /* JCConversationCell.h */,
+				274493AD18D0D538002744CB /* JCConversationCell.m */,
+				9137919518FDB0EE00709AD3 /* JCGroupConversationCell.h */,
+				9137919618FDB0EE00709AD3 /* JCGroupConversationCell.m */,
+				9137919718FDB0EE00709AD3 /* JCGroupConversationCell.xib */,
 			);
 			name = Conversation;
 			sourceTree = "<group>";
