@@ -106,7 +106,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
     requestTimeout = [NSTimer timerWithTimeInterval:20 target:self selector:@selector(requestDidTimedOut) userInfo:nil repeats:NO];
     [[NSRunLoop currentRunLoop] addTimer:requestTimeout forMode:NSRunLoopCommonModes];
     
-    [self.osgiClient RetrieveVoicemailForEntity:nil success:^(id JSON) {
+    [[self getOsgiClient] RetrieveVoicemailForEntity:nil success:^(id JSON) {
         if ([requestTimeout isValid]) {
             [requestTimeout invalidate];
         }

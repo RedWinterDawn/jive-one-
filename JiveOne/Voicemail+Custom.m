@@ -90,8 +90,8 @@
     }
     
     // if last modified timestamps are the same, then there's no need to update anything.
-    long lastModifiedFromEntity = [vmail.lastModified integerValue];
-    long lastModifiedFromDictionary = [dictionary[@"lastModified"] integerValue];
+    long long lastModifiedFromEntity = [vmail.lastModified longLongValue];
+    long long lastModifiedFromDictionary = [dictionary[@"lastModified"] longLongValue];
     
     if (lastModifiedFromDictionary > lastModifiedFromEntity) {
         
