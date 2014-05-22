@@ -197,7 +197,6 @@
 		2727F3C8191AA92F00A41185 /* JCGroupConversationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9137919718FDB0EE00709AD3 /* JCGroupConversationCell.xib */; };
 		2727F3C9191AA92F00A41185 /* avatar-placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 2700984218F4714100B6BC2F /* avatar-placeholder.png */; };
 		2727F3CB191AA92F00A41185 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F202433C18B2CF4A006DB2EF /* README.md */; };
-		2727F3CC191AA92F00A41185 /* avatar-orig2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9159C88C18EDD20700DF769B /* avatar-orig2.png */; };
 		2727F3CD191AA92F00A41185 /* bubble-classic-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 2700984B18F4714100B6BC2F /* bubble-classic-selected.png */; };
 		2727F3CE191AA92F00A41185 /* JCPeopleDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9103271618F34BEC00437503 /* JCPeopleDetailCell.xib */; };
 		2727F3CF191AA92F00A41185 /* input-field-cover.png in Resources */ = {isa = PBXBuildFile; fileRef = 2700986618F4714100B6BC2F /* input-field-cover.png */; };
@@ -432,7 +431,6 @@
 		9137919918FDB0EE00709AD3 /* JCGroupConversationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9137919718FDB0EE00709AD3 /* JCGroupConversationCell.xib */; };
 		9145E31F191D842500840D66 /* JCVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 9145E31E191D842500840D66 /* JCVersion.m */; };
 		9145E320191D881D00840D66 /* JCVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 9145E31E191D842500840D66 /* JCVersion.m */; };
-		9159C88D18EDD20700DF769B /* avatar-orig2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9159C88C18EDD20700DF769B /* avatar-orig2.png */; };
 		916958FF18FEDD76006FDD60 /* JCConversationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 274493AF18D0DA9B002744CB /* JCConversationCell.xib */; };
 		9172ACF71917E8EE00481B01 /* JCPage1ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9172ACEF1917E8EE00481B01 /* JCPage1ViewController.m */; };
 		9172ACF81917E8EE00481B01 /* JCPage2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9172ACF11917E8EE00481B01 /* JCPage2ViewController.m */; };
@@ -507,6 +505,18 @@
 		F266162718B42AA0000B770A /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266162518B42AA0000B770A /* AddressBookUI.framework */; };
 		F2CB896E18D1226D006A9438 /* JCStartChatMockTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F2CB896D18D1226D006A9438 /* JCStartChatMockTests.m */; };
 		F2FEF42B18C91BBE0080D8CC /* JCDirectoryGroupTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F2FEF42A18C91BBE0080D8CC /* JCDirectoryGroupTests.m */; };
+		F5EBDDC7192DCD1800DE67BC /* iPadLaunch1X.png in Resources */ = {isa = PBXBuildFile; fileRef = F5EBDDC1192DCD1800DE67BC /* iPadLaunch1X.png */; };
+		F5EBDDC8192DCD1800DE67BC /* iPadLaunch1X.png in Resources */ = {isa = PBXBuildFile; fileRef = F5EBDDC1192DCD1800DE67BC /* iPadLaunch1X.png */; };
+		F5EBDDC9192DCD1800DE67BC /* iPadLaunch2X.png in Resources */ = {isa = PBXBuildFile; fileRef = F5EBDDC2192DCD1800DE67BC /* iPadLaunch2X.png */; };
+		F5EBDDCA192DCD1800DE67BC /* iPadLaunch2X.png in Resources */ = {isa = PBXBuildFile; fileRef = F5EBDDC2192DCD1800DE67BC /* iPadLaunch2X.png */; };
+		F5EBDDCB192DCD1800DE67BC /* iPhoneLaunch1X.png in Resources */ = {isa = PBXBuildFile; fileRef = F5EBDDC3192DCD1800DE67BC /* iPhoneLaunch1X.png */; };
+		F5EBDDCC192DCD1800DE67BC /* iPhoneLaunch1X.png in Resources */ = {isa = PBXBuildFile; fileRef = F5EBDDC3192DCD1800DE67BC /* iPhoneLaunch1X.png */; };
+		F5EBDDCD192DCD1800DE67BC /* iPhoneLaunch2X.png in Resources */ = {isa = PBXBuildFile; fileRef = F5EBDDC4192DCD1800DE67BC /* iPhoneLaunch2X.png */; };
+		F5EBDDCE192DCD1800DE67BC /* iPhoneLaunch2X.png in Resources */ = {isa = PBXBuildFile; fileRef = F5EBDDC4192DCD1800DE67BC /* iPhoneLaunch2X.png */; };
+		F5EBDDCF192DCD1800DE67BC /* iPhoneLaunch2XBlur.png in Resources */ = {isa = PBXBuildFile; fileRef = F5EBDDC5192DCD1800DE67BC /* iPhoneLaunch2XBlur.png */; };
+		F5EBDDD0192DCD1800DE67BC /* iPhoneLaunch2XBlur.png in Resources */ = {isa = PBXBuildFile; fileRef = F5EBDDC5192DCD1800DE67BC /* iPhoneLaunch2XBlur.png */; };
+		F5EBDDD1192DCD1800DE67BC /* iPhoneLaunch2XBlurSm.png in Resources */ = {isa = PBXBuildFile; fileRef = F5EBDDC6192DCD1800DE67BC /* iPhoneLaunch2XBlurSm.png */; };
+		F5EBDDD2192DCD1800DE67BC /* iPhoneLaunch2XBlurSm.png in Resources */ = {isa = PBXBuildFile; fileRef = F5EBDDC6192DCD1800DE67BC /* iPhoneLaunch2XBlurSm.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -906,7 +916,6 @@
 		9137919718FDB0EE00709AD3 /* JCGroupConversationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JCGroupConversationCell.xib; path = JiveOne/JCGroupConversationCell.xib; sourceTree = SOURCE_ROOT; };
 		9145E31D191D842500840D66 /* JCVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVersion.h; sourceTree = "<group>"; };
 		9145E31E191D842500840D66 /* JCVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVersion.m; sourceTree = "<group>"; };
-		9159C88C18EDD20700DF769B /* avatar-orig2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "avatar-orig2.png"; sourceTree = "<group>"; };
 		9172ACEE1917E8EE00481B01 /* JCPage1ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPage1ViewController.h; sourceTree = "<group>"; };
 		9172ACEF1917E8EE00481B01 /* JCPage1ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPage1ViewController.m; sourceTree = "<group>"; };
 		9172ACF01917E8EE00481B01 /* JCPage2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPage2ViewController.h; sourceTree = "<group>"; };
@@ -989,6 +998,12 @@
 		F266162518B42AA0000B770A /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		F2CB896D18D1226D006A9438 /* JCStartChatMockTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCStartChatMockTests.m; sourceTree = "<group>"; };
 		F2FEF42A18C91BBE0080D8CC /* JCDirectoryGroupTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDirectoryGroupTests.m; sourceTree = "<group>"; };
+		F5EBDDC1192DCD1800DE67BC /* iPadLaunch1X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPadLaunch1X.png; sourceTree = "<group>"; };
+		F5EBDDC2192DCD1800DE67BC /* iPadLaunch2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPadLaunch2X.png; sourceTree = "<group>"; };
+		F5EBDDC3192DCD1800DE67BC /* iPhoneLaunch1X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhoneLaunch1X.png; sourceTree = "<group>"; };
+		F5EBDDC4192DCD1800DE67BC /* iPhoneLaunch2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhoneLaunch2X.png; sourceTree = "<group>"; };
+		F5EBDDC5192DCD1800DE67BC /* iPhoneLaunch2XBlur.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhoneLaunch2XBlur.png; sourceTree = "<group>"; };
+		F5EBDDC6192DCD1800DE67BC /* iPhoneLaunch2XBlurSm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhoneLaunch2XBlurSm.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1356,8 +1371,13 @@
 				91ADB99E18D8BD4200DF41A3 /* voicemail_scrub_play.png */,
 				911B3E8F18E0E41D00105925 /* voicemail_pause.png */,
 				911B3E9018E0E41D00105925 /* voicemail_pause@2x.png */,
-				9159C88C18EDD20700DF769B /* avatar-orig2.png */,
 				91ADB99F18D8BD4200DF41A3 /* voicemail_scrub_play@2x.png */,
+				F5EBDDC1192DCD1800DE67BC /* iPadLaunch1X.png */,
+				F5EBDDC2192DCD1800DE67BC /* iPadLaunch2X.png */,
+				F5EBDDC3192DCD1800DE67BC /* iPhoneLaunch1X.png */,
+				F5EBDDC4192DCD1800DE67BC /* iPhoneLaunch2X.png */,
+				F5EBDDC5192DCD1800DE67BC /* iPhoneLaunch2XBlur.png */,
+				F5EBDDC6192DCD1800DE67BC /* iPhoneLaunch2XBlurSm.png */,
 				91ADB9A018D8BD4200DF41A3 /* voicemail_speaker.png */,
 				91ADB9A118D8BD4200DF41A3 /* voicemail_speaker@2x.png */,
 				275158F718AD10BA00FD8D3F /* main-logo.png */,
@@ -2155,14 +2175,15 @@
 				2727F3C1191AA92F00A41185 /* bubble-classic-square-selected@2x.png in Resources */,
 				2727F3C2191AA92F00A41185 /* Draft_iPhone.storyboard in Resources */,
 				2727F3C3191AA92F00A41185 /* voicemail_mic@2x.png in Resources */,
+				F5EBDDCE192DCD1800DE67BC /* iPhoneLaunch2X.png in Resources */,
 				2727F3C4191AA92F00A41185 /* voicemail_info_button@2x.png in Resources */,
 				2727F3C5191AA92F00A41185 /* main-logo.png in Resources */,
+				F5EBDDCA192DCD1800DE67BC /* iPadLaunch2X.png in Resources */,
 				2727F3C6191AA92F00A41185 /* voicemail_scrub_play.png in Resources */,
 				2727F3C7191AA92F00A41185 /* close_notification@2x.png in Resources */,
 				2727F3C8191AA92F00A41185 /* JCGroupConversationCell.xib in Resources */,
 				2727F3C9191AA92F00A41185 /* avatar-placeholder.png in Resources */,
 				2727F3CB191AA92F00A41185 /* README.md in Resources */,
-				2727F3CC191AA92F00A41185 /* avatar-orig2.png in Resources */,
 				2727F3CD191AA92F00A41185 /* bubble-classic-selected.png in Resources */,
 				2727F3CE191AA92F00A41185 /* JCPeopleDetailCell.xib in Resources */,
 				2727F3CF191AA92F00A41185 /* input-field-cover.png in Resources */,
@@ -2174,6 +2195,7 @@
 				2727F3D5191AA92F00A41185 /* voicemail_pause.png in Resources */,
 				2727F3D6191AA92F00A41185 /* Default.png in Resources */,
 				2727F3D7191AA92F00A41185 /* first_message.png in Resources */,
+				F5EBDDC8192DCD1800DE67BC /* iPadLaunch1X.png in Resources */,
 				2727F3D8191AA92F00A41185 /* voicemail_archive_button@2x.png in Resources */,
 				2727F3D9191AA92F00A41185 /* avatar.png in Resources */,
 				2727F3DA191AA92F00A41185 /* voicemail_pause@2x.png in Resources */,
@@ -2185,6 +2207,7 @@
 				2727F3DF191AA92F00A41185 /* nav-conv.png in Resources */,
 				2727F3E0191AA92F00A41185 /* voicemail_play@2x.png in Resources */,
 				2727F3E1191AA92F00A41185 /* bubble-stroked@2x.png in Resources */,
+				F5EBDDCC192DCD1800DE67BC /* iPhoneLaunch1X.png in Resources */,
 				2727F3E2191AA92F00A41185 /* input-field-cover@2x.png in Resources */,
 				2727F3E3191AA92F00A41185 /* release_notes.md in Resources */,
 				2727F3E4191AA92F00A41185 /* Main_iPad.storyboard in Resources */,
@@ -2226,6 +2249,7 @@
 				2727F402191AA92F00A41185 /* voicemail_email.png in Resources */,
 				2727F403191AA92F00A41185 /* bubble-classic-green.png in Resources */,
 				2727F404191AA92F00A41185 /* bubble@2x.png in Resources */,
+				F5EBDDD2192DCD1800DE67BC /* iPhoneLaunch2XBlurSm.png in Resources */,
 				2727F405191AA92F00A41185 /* people-star@2x.png in Resources */,
 				2727F406191AA92F00A41185 /* Default-568h@2x.png in Resources */,
 				2727F407191AA92F00A41185 /* conv-bubble@2x.png in Resources */,
@@ -2235,6 +2259,7 @@
 				2727F40B191AA92F00A41185 /* bubble-classic-square-blue.png in Resources */,
 				2727F40C191AA92F00A41185 /* avatar-placeholder@2x.png in Resources */,
 				2727F40D191AA92F00A41185 /* bubble-min-tailless@2x.png in Resources */,
+				F5EBDDD0192DCD1800DE67BC /* iPhoneLaunch2XBlur.png in Resources */,
 				2727F40E191AA92F00A41185 /* voicemail_scrub_play@2x.png in Resources */,
 				2727F40F191AA92F00A41185 /* conv-compose.png in Resources */,
 				9136FF241925D48D0040B367 /* slider_maximum@2x.png in Resources */,
@@ -2267,6 +2292,7 @@
 				27F1F2FC191C171300AEAFD7 /* UAPushSettingsSoundsViewController.xib in Resources */,
 				279E4C6D19226FA3002A556C /* people-search-nofocus.png in Resources */,
 				2700989018F4714100B6BC2F /* bubble-classic-square-gray.png in Resources */,
+				F5EBDDCF192DCD1800DE67BC /* iPhoneLaunch2XBlur.png in Resources */,
 				27F1F308191C1A7300AEAFD7 /* AirshipConfig.plist in Resources */,
 				27F1F300191C171300AEAFD7 /* UAPushSettingsView.xib in Resources */,
 				9136FF231925D48D0040B367 /* slider_maximum@2x.png in Resources */,
@@ -2298,13 +2324,13 @@
 				9137919918FDB0EE00709AD3 /* JCGroupConversationCell.xib in Resources */,
 				2700988218F4714100B6BC2F /* avatar-placeholder.png in Resources */,
 				F202433D18B2CF4A006DB2EF /* README.md in Resources */,
-				9159C88D18EDD20700DF769B /* avatar-orig2.png in Resources */,
 				2700988A18F4714100B6BC2F /* bubble-classic-selected.png in Resources */,
 				9103271818F34BEC00437503 /* JCPeopleDetailCell.xib in Resources */,
 				27F1F2DC191C171300AEAFD7 /* list-image-placeholder@2x.png in Resources */,
 				270098A218F4714100B6BC2F /* input-field-cover.png in Resources */,
 				2700989418F4714100B6BC2F /* bubble-min-tailless.png in Resources */,
 				2700989E18F4714100B6BC2F /* bubble.png in Resources */,
+				F5EBDDC7192DCD1800DE67BC /* iPadLaunch1X.png in Resources */,
 				911BFDD718D9EA1800684964 /* vmail@2x.png in Resources */,
 				9136FF281925D7350040B367 /* slider_min@2x.png in Resources */,
 				91F6DFAF192A7053001C54FB /* Release.xcconfig in Resources */,
@@ -2320,6 +2346,7 @@
 				91ADB9A318D8BD4200DF41A3 /* voicemail_archive_button@2x.png in Resources */,
 				270098C818F5EA9300B6BC2F /* avatar.png in Resources */,
 				911B3E9218E0E41D00105925 /* voicemail_pause@2x.png in Resources */,
+				F5EBDDD1192DCD1800DE67BC /* iPhoneLaunch2XBlurSm.png in Resources */,
 				9172AD54191847D800481B01 /* ES-voicemail-1.jpg in Resources */,
 				91F6DFAB192A702F001C54FB /* Shared.xcconfig in Resources */,
 				9172AD58191849F500481B01 /* unnamed.jpg in Resources */,
@@ -2331,6 +2358,7 @@
 				2700989B18F4714100B6BC2F /* bubble-stroked@2x.png in Resources */,
 				270098A318F4714100B6BC2F /* input-field-cover@2x.png in Resources */,
 				27F1779418FDEECE0073C6AD /* release_notes.md in Resources */,
+				F5EBDDCD192DCD1800DE67BC /* iPhoneLaunch2X.png in Resources */,
 				275F4A6818AD0FBC00D2F069 /* Main_iPad.storyboard in Resources */,
 				2700988518F4714100B6BC2F /* bubble-classic-blue@2x.png in Resources */,
 				272580F0192120500027887C /* people-start-conv.png in Resources */,
@@ -2383,6 +2411,7 @@
 				27F1F2F7191C171300AEAFD7 /* UAPushLocalization.bundle in Resources */,
 				2700989518F4714100B6BC2F /* bubble-min-tailless@2x.png in Resources */,
 				91ADB9AF18D8BD4200DF41A3 /* voicemail_scrub_play@2x.png in Resources */,
+				F5EBDDCB192DCD1800DE67BC /* iPhoneLaunch1X.png in Resources */,
 				270098C118F5EA9300B6BC2F /* conv-compose.png in Resources */,
 				275F4A5C18AD0FBC00D2F069 /* InfoPlist.strings in Resources */,
 				27F1F2DE191C171300AEAFD7 /* UAInboxMessageListCell.xib in Resources */,
@@ -2398,6 +2427,7 @@
 				270098A618F4714100B6BC2F /* send-button.png in Resources */,
 				916958FF18FEDD76006FDD60 /* JCConversationCell.xib in Resources */,
 				91ADB9A818D8BD4200DF41A3 /* voicemail_info_button.png in Resources */,
+				F5EBDDC9192DCD1800DE67BC /* iPadLaunch2X.png in Resources */,
 				270098A118F4714100B6BC2F /* input-bar-background@2x.png in Resources */,
 				270098CA18F5EA9300B6BC2F /* people-star.png in Resources */,
 				270098C518F5EA9300B6BC2F /* nav-more.png in Resources */,
