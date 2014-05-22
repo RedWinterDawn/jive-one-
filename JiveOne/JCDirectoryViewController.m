@@ -16,6 +16,7 @@
 #import "ContactGroup.h"
 #import "NotificationView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "JCLog.h"go
 
 #define kUINameRowHeight 100
 #define kUIRowHeight 50
@@ -37,6 +38,8 @@
 @property float deltaOffsetSinceLastDirectionChange;
 @property float deltaSearchBarY_SinceLastDirectionChange;
 @property float searchBarY_Reference;
+@property float scrollViewOffset;
+
 @property (strong, nonatomic) JCSearchBar *searchBar;
 
 @end
@@ -66,13 +69,16 @@ static NSString *CellIdentifier = @"DirectoryCell";
     [self.view addSubview:self.searchBarView];
     
     // detect when user tap's outside the search bar
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismissKeyboard)];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTapGesture)];
+    tap.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tap];
     
     searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
     searchDisplayController.delegate = self;
     searchDisplayController.searchResultsDataSource = self;
     [searchDisplayController.searchResultsTableView setDelegate:self];
+    [searchDisplayController.searchResultsTableView setDataSource:self];
+    
     for(UIView *view in [self.tableView subviews])
     {
         //NSLog([[view class] description]);
@@ -111,8 +117,6 @@ static NSString *CellIdentifier = @"DirectoryCell";
                         options:UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
                          [self.searchBarView setFrame:CGRectMake(0, 20, self.searchBarView.bounds.size.width, self.searchBarView.bounds.size.height)];
-
-
                      }
                      completion:nil];
     
@@ -136,7 +140,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
     return YES;
 }
 
--(void)dismissKeyboard {
+-(void)handleTapGesture{
     self.doneAnimatingToolbarFromFirstResponderState = NO;
     [UIView animateWithDuration:0.25
                           delay:0.15
@@ -153,80 +157,110 @@ static NSString *CellIdentifier = @"DirectoryCell";
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     const int MAX_Y = 86;
     const int MIN_Y = -22;
+    self.scrollViewOffset = scrollView.contentOffset.y;
     
-    if ((![self.searchBar isFirstResponder]) && (self.doneAnimatingToolbarFromFirstResponderState == YES)) {
-        
     
-        NSLog(@"offset y: %f viewCenter y: %f", scrollView.contentOffset.y, self.searchBarView.center.y);
-        NSLog(@"delta: %f", self.amountScrolledSinceLastDirectionChange);
-        self.amountScrolledSinceLastDirectionChange = abs(self.scrollViewOffsetReference - scrollView.contentOffset.y);
-        
-        // scrolling up
-        if (scrollView.contentOffset.y > self.previousOffset) {
-            
-            //direction changed
-            if(self.scrollDirectionIsUp == NO){
-                    self.scrollViewOffsetReference = scrollView.contentOffset.y;
-                    self.searchBarY_Reference = self.searchBarView.center.y;
-                }
-            
-            self.deltaOffsetSinceLastDirectionChange = abs(self.scrollViewOffsetReference - scrollView.contentOffset.y);
-            self.searchBarView.center = CGPointMake(self.searchBarView.center.x, (self.searchBarY_Reference - self.deltaOffsetSinceLastDirectionChange));
-            self.scrollDirectionIsUp = YES;
-            
-        }//scrolling down or - initalizing the first time through
-        else if((scrollView.contentOffset.y < self.previousOffset) && (self.previousOffset != 0))
-        {
-            //direction changed
-            if(self.scrollDirectionIsUp){
-                self.scrollViewOffsetReference = scrollView.contentOffset.y;
-                self.searchBarY_Reference = self.searchBarView.center.y;
-            }
+    
+    
+    
+    if ((![self.searchBar isFirstResponder]) && (self.doneAnimatingToolbarFromFirstResponderState == YES))
+    {
+        self.amountScrolledSinceLastDirectionChange = abs(self.scrollViewOffsetReference - self.scrollViewOffset);
+        NSLog(@"-----: %f, %f, %f, %f", self.scrollViewOffsetReference, self.scrollViewOffset, self.amountScrolledSinceLastDirectionChange, self.searchBarView.frame.origin.y);
 
-            self.deltaOffsetSinceLastDirectionChange = abs(self.scrollViewOffsetReference - scrollView.contentOffset.y);
-            self.searchBarView.center = CGPointMake(self.searchBarView.center.x, (self.searchBarY_Reference + self.deltaOffsetSinceLastDirectionChange));
-            self.scrollDirectionIsUp = NO;
-            
-            float topInset = self.searchBarView.frame.origin.y + self.searchBarView.frame.size.height;
-            NSLog(@"1topInset: %f", topInset);
-            if (topInset > 64 && topInset < 109){
-                [self.tableView setContentInset:UIEdgeInsetsMake(topInset, 0, 0, 0)];
+        if (self.scrollViewOffset > self.previousOffset)
+        {// if scroll Direction is up
+            if(self.scrollDirectionIsUp == NO)
+            {// if this is the first call since the scroll direction changed
+                [self scrollDirectionDidChangeToUp];
             }
+            [self handleScrollUp];
         }
-    }
-    //set how far down the search bar can go - account for when we are at the top of the view and want it to animate down with the rest of the tableviewcells.
-    if ((self.searchBarView.center.y > 87) && (scrollView.contentOffset.y > -64)) {
-        self.searchBarView.center = CGPointMake(self.searchBarView.center.x, MAX_Y);
-        float topInset = self.searchBarView.frame.origin.y + self.searchBarView.frame.size.height;
-        NSLog(@"3topInset: %f", topInset);
-        if (topInset < 64){
-            topInset = 64;
+        else if((self.scrollViewOffset < self.previousOffset) && (self.previousOffset != 0))
+        {//if scroll direction is down or this is first call when view loads
+            if(self.scrollDirectionIsUp)
+            {// if this is the first call since the scroll direction changed
+                [self scrollDirectionDidChangeToDown];
+            }
+            [self handleScrollDown];
         }
-        [self.tableView setContentInset:UIEdgeInsetsMake(topInset, 0, 0, 0)];
+        [self handleScrollAtTop];
+        
+        [self setInsetPosition:scrollView];
+        [self setSearchBarPosition:scrollView];
+        NSLog(@"_____: %f, %f, %f, %f", self.scrollViewOffsetReference, self.scrollViewOffset, self.amountScrolledSinceLastDirectionChange, self.searchBarView.frame.origin.y);
+
     }
-    if (scrollView.contentOffset.y <= -64) {
-        self.searchBarView.center = CGPointMake(self.searchBarView.center.x, MAX_Y + abs(scrollView.contentOffset.y + 64));
-        NSLog(@"2topInset: %f", self.tableView.contentInset.top);
-        float topInset = self.searchBarView.frame.origin.y + self.searchBarView.frame.size.height;
-        if (topInset > 64){
-            topInset = 64;
-        }
-        [self.tableView setContentInset:UIEdgeInsetsMake(topInset, 0, 0, 0)];
+    self.previousOffset = self.scrollViewOffset;
+}
+
+-(void)handleScrollAtTop
+{
+    if (self.scrollViewOffset <= -64) {
+        float frame_orgin_y = (-self.scrollViewOffset);
+        self.searchBarView.frame = CGRectMake(self.searchBarView.frame.origin.x,
+                                              frame_orgin_y,
+                                              self.searchBarView.frame.size.width, self.searchBarView.frame.size.height);
     }
+}
+
+-(void)handleScrollUp
+{
+    const float UPPER_THREASHOLD = -64;// top of the window
+    self.deltaOffsetSinceLastDirectionChange = abs(self.scrollViewOffsetReference - self.scrollViewOffset);
+    NSLog(@"⬆︎Frame: %f", self.searchBarView.frame.origin.y);
+    float frame_orgin_y = (self.searchBarView.frame.origin.y <= UPPER_THREASHOLD) ? UPPER_THREASHOLD : (self.searchBarY_Reference - self.deltaOffsetSinceLastDirectionChange);
+    self.searchBarView.frame = CGRectMake(self.searchBarView.frame.origin.x,
+                                      frame_orgin_y,
+                                      self.searchBarView.frame.size.width, self.searchBarView.frame.size.height);
+    self.scrollDirectionIsUp = YES;
+    NSLog(@"⬆︎_: %f", frame_orgin_y);
+    NSLog(@"⬆︎movethisMuch:  %f+%f=%f",self.searchBarY_Reference, self.deltaOffsetSinceLastDirectionChange, (self.searchBarY_Reference - self.deltaOffsetSinceLastDirectionChange));
+
+}
+
+- (void)scrollDirectionDidChangeToUp
+{
+    NSLog(@"☀︎⬆︎Frame: %f", self.searchBarView.frame.origin.y);
+
+    self.scrollViewOffsetReference = self.scrollViewOffset;
+    self.searchBarY_Reference = self.searchBarView.frame.origin.y;
+    NSLog(@"☀︎⬆︎: %f : %f", self.scrollViewOffsetReference, self.searchBarY_Reference);
+
+}
+
+- (void)scrollDirectionDidChangeToDown
+{
+    self.scrollViewOffsetReference = self.scrollViewOffset;
+    self.searchBarY_Reference = self.searchBarView.frame.origin.y;
+    NSLog(@"☀︎⬇︎: %f : %f", self.scrollViewOffsetReference, self.searchBarY_Reference);
+}
+
+-(void)handleScrollDown
+{
+    const float LOWER_THREASHOLD = 64;
+    self.deltaOffsetSinceLastDirectionChange = (abs(self.scrollViewOffsetReference - self.scrollViewOffset));
+    NSLog(@"⬇︎Frame: %f", self.searchBarView.frame.origin.y);
+    float frame_orgin_y = (self.searchBarView.frame.origin.y >= LOWER_THREASHOLD) ? LOWER_THREASHOLD : (self.searchBarY_Reference + self.deltaOffsetSinceLastDirectionChange);
+    self.searchBarView.frame = CGRectMake(self.searchBarView.frame.origin.x,
+                                      frame_orgin_y,
+                                      self.searchBarView.frame.size.width, self.searchBarView.frame.size.height);
+    self.scrollDirectionIsUp = NO;
+    NSLog(@"⬇︎_: %f", frame_orgin_y);
+    NSLog(@"⬇︎movethisMuch: %f+%f=%f",self.searchBarY_Reference, self.deltaOffsetSinceLastDirectionChange, (self.searchBarY_Reference + self.deltaOffsetSinceLastDirectionChange));
     
-    //set how far up we alow the search bar to go (we allow it to go just off the top of the screen.)
-    if ((self.searchBarView.center.y < -(self.searchBarView.frame.size.height/2))) {
-            self.searchBarView.center = CGPointMake(self.searchBarView.center.x, MIN_Y);
-        float topInset = self.searchBarView.frame.origin.y + self.searchBarView.frame.size.height;
-        NSLog(@"3topInset: %f", topInset);
-        if (topInset < 64){
-            topInset = 64;
-        }
-        [self.tableView setContentInset:UIEdgeInsetsMake(topInset, 0, 0, 0)];
-    }
-NSLog(@"4topInset: %f", self.tableView.contentInset.top);
+
+
+}
+
+-(void)setInsetPosition:(UIScrollView *)scrollView
+{
     
-    self.previousOffset = scrollView.contentOffset.y;
+}
+
+-(void)setSearchBarPosition:(UIScrollView *)scrollView
+{
+    
 }
 
 
@@ -244,6 +278,8 @@ NSLog(@"4topInset: %f", self.tableView.contentInset.top);
         _searchBar = [[JCSearchBar alloc]initWithFrame:CGRectMake(0,0, self.searchBarView.frame.size.width, self.searchBarView.frame.size.height)];
         [_searchBar setBarTintColor:[UIColor whiteColor]];
         [_searchBar layoutSubviews];
+        self.scrollViewOffsetReference = -64;
+        self.searchBarY_Reference = -64;
     }
     return _searchBar;
 }
