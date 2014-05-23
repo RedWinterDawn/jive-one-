@@ -350,6 +350,10 @@
 		279E4CB6192273E5002A556C /* MBContactPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E4CA8192273E5002A556C /* MBContactPicker.m */; };
 		279E602418C8C59900C5CC9F /* JCPersonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 279E602318C8C59900C5CC9F /* JCPersonCell.xib */; };
 		27A0160A192EBCA70073C824 /* libFlurry_5.0.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27A01609192EBCA70073C824 /* libFlurry_5.0.0.a */; };
+		27A0160C192EEA830073C824 /* conversation.json in Resources */ = {isa = PBXBuildFile; fileRef = 27A0160B192EEA830073C824 /* conversation.json */; };
+		27A0160E192EEF6F0073C824 /* entities.json in Resources */ = {isa = PBXBuildFile; fileRef = 27A0160D192EEF6F0073C824 /* entities.json */; };
+		27A01610192EF11C0073C824 /* voicemails.json in Resources */ = {isa = PBXBuildFile; fileRef = 27A0160F192EF11C0073C824 /* voicemails.json */; };
+		27A01612192EF1E80073C824 /* companies.json in Resources */ = {isa = PBXBuildFile; fileRef = 27A01611192EF1E80073C824 /* companies.json */; };
 		27A49AB018DC8BC00084DEE0 /* launch.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A49AAF18DC8BC00084DEE0 /* launch.png */; };
 		27B8152618D93F1A00516BF6 /* NotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B8152518D93F1A00516BF6 /* NotificationView.m */; };
 		27B8153618D94E9C00516BF6 /* close_notification.png in Resources */ = {isa = PBXBuildFile; fileRef = 27B8153418D94E9C00516BF6 /* close_notification.png */; };
@@ -728,6 +732,10 @@
 		279E602318C8C59900C5CC9F /* JCPersonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCPersonCell.xib; sourceTree = "<group>"; };
 		27A01608192EBCA70073C824 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		27A01609192EBCA70073C824 /* libFlurry_5.0.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_5.0.0.a; sourceTree = "<group>"; };
+		27A0160B192EEA830073C824 /* conversation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = conversation.json; sourceTree = "<group>"; };
+		27A0160D192EEF6F0073C824 /* entities.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = entities.json; sourceTree = "<group>"; };
+		27A0160F192EF11C0073C824 /* voicemails.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = voicemails.json; sourceTree = "<group>"; };
+		27A01611192EF1E80073C824 /* companies.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = companies.json; sourceTree = "<group>"; };
 		27A49AAF18DC8BC00084DEE0 /* launch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launch.png; sourceTree = "<group>"; };
 		27B8152418D93F1A00516BF6 /* NotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationView.h; sourceTree = "<group>"; };
 		27B8152518D93F1A00516BF6 /* NotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationView.m; sourceTree = "<group>"; };
@@ -1561,6 +1569,10 @@
 			children = (
 				275F4A7E18AD0FBC00D2F069 /* JiveOneTests-Info.plist */,
 				275F4A7F18AD0FBC00D2F069 /* InfoPlist.strings */,
+				27A0160B192EEA830073C824 /* conversation.json */,
+				27A0160D192EEF6F0073C824 /* entities.json */,
+				27A0160F192EF11C0073C824 /* voicemails.json */,
+				27A01611192EF1E80073C824 /* companies.json */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -2452,7 +2464,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27A0160C192EEA830073C824 /* conversation.json in Resources */,
+				27A0160E192EEF6F0073C824 /* entities.json in Resources */,
+				27A01612192EF1E80073C824 /* companies.json in Resources */,
 				275F4A8118AD0FBC00D2F069 /* InfoPlist.strings in Resources */,
+				27A01610192EF11C0073C824 /* voicemails.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

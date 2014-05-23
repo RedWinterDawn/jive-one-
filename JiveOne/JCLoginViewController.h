@@ -23,4 +23,7 @@
 - (IBAction)termsAndConditionsButton:(id)sender;
 - (void)fetchEntities;
 - (void)fetchCompany;
+- (void)fetchPresence;
+- (void)fetchConversations;
+- (void)fetchVoicemails;
 @end
