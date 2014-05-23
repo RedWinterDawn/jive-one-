@@ -98,10 +98,10 @@
         NSMutableDictionary *badges = (NSMutableDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"];
         if (badges) {
             if ([badges objectForKey:_conversation.conversationId]) {
-                NSNumber *number = [badges objectForKey:_conversation.conversationId];
-                if (number.integerValue != 0) {
+                NSMutableDictionary *entries = [badges objectForKey:_conversation.conversationId];
+                if (entries.count != 0) {
                     _conversationUnseenMessages.hidden = NO;
-                    _conversationUnseenMessages.text = number.stringValue;
+                    _conversationUnseenMessages.text = [NSString stringWithFormat:@"%i", entries.count];
                 }
                 else {
                     _conversationUnseenMessages.hidden = YES;

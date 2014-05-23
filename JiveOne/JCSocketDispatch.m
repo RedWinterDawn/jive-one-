@@ -309,7 +309,7 @@
             // regardless of having a conversation for this entry or not we need to save the entry.
             ConversationEntry *entry = [ConversationEntry addConversationEntry:body];
             // increment badge number for conversation ID
-            [(JCAppDelegate *)[UIApplication sharedApplication].delegate incrementBadgeCountForConversation:conversationIdForEntry];
+            [(JCAppDelegate *)[UIApplication sharedApplication].delegate incrementBadgeCountForConversation:conversationIdForEntry entryId:entry.entryId];
             // notify of new entry
             [[NSNotificationCenter defaultCenter] postNotificationName:conversationIdForEntry object:entry];
             
@@ -351,7 +351,7 @@
         if (voicemails.count == 0 && voicemail) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kNewVoicemail object:voicemail];
             [JSMessageSoundEffect playSMSReceived];
-            [(JCAppDelegate *)[UIApplication sharedApplication].delegate incrementBadgeCountForVoicemail];
+            [(JCAppDelegate *)[UIApplication sharedApplication].delegate incrementBadgeCountForVoicemail:voicemail.voicemailId];
         }
     }
     
