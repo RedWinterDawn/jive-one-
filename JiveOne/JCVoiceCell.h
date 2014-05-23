@@ -16,6 +16,7 @@
 - (void)voiceCellSliderMoved:(float)value;
 - (void)voiceCellSliderTouched:(BOOL)touched;
 - (void)voicecellSpeakerTouched:(BOOL)touched;
+- (void)voiceCellAudioAvailable:(NSIndexPath *)indexPath;
 @end
 
 @interface JCVoiceCell : UITableViewCell
@@ -39,6 +40,7 @@
 @property (nonatomic, retain)	NSTimer			*updateTimer;
 @property (nonatomic) BOOL useSpeaker;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinningWheel;
+@property (strong, nonatomic) NSIndexPath *indexPath;
 - (IBAction)playPauseButtonTapped:(id)sender;
 - (void)setPlayButtonState:(UIImage *)image;
 - (IBAction)progressSliderMoved:(id)sender;

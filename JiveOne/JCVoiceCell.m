@@ -64,13 +64,13 @@
         self.creationTime.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
         self.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16];
         self.detailLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
-        self.voicemailIcon.image = [Common tintedImageWithColor:[UIColor redColor] image:self.voicemailIcon.image];
+        //self.voicemailIcon.image = [Common tintedImageWithColor:[UIColor redColor] image:self.voicemailIcon.image];
     }else{
         self.shortTime.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
         self.creationTime.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
         self.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
         self.detailLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
-        self.voicemailIcon.image = [Common tintedImageWithColor:[UIColor blackColor] image:self.voicemailIcon.image];
+        //self.voicemailIcon.image = [Common tintedImageWithColor:[UIColor blackColor] image:self.voicemailIcon.image];
     }
 }
 
@@ -84,6 +84,9 @@
             
             //[self performSelectorOnMainThread:@selector(setupAudioPlayer) withObject:nil waitUntilDone:NO];
             [self.spinningWheel performSelectorOnMainThread:@selector(stopAnimating) withObject:nil waitUntilDone:NO];
+            if (_delegate) {
+                [_delegate voiceCellAudioAvailable:_indexPath];
+            }
         }
     }
 }

@@ -11,6 +11,7 @@
 #import "JCOsgiClient.h"
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "JCMessagesViewController.h"
+#import "JCAppDelegate.h"
 
 @interface JCVoiceTableViewController ()
 {
@@ -54,7 +55,6 @@ static NSString *CellIdentifier = @"VoicemailCell";
     [self.tableView setSeparatorInset:UIEdgeInsetsZero];
     [self.tableView registerClass:[JCVoiceCell class] forCellReuseIdentifier:CellIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"JCVoicemailCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
-    [self loadVoicemails];
     self.progressTimer = nil;
     
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc]
@@ -69,6 +69,8 @@ static NSString *CellIdentifier = @"VoicemailCell";
 {
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveNewVoicemail:) name:kNewVoicemail object:nil];
+    [(JCAppDelegate *)[UIApplication sharedApplication].delegate clearBadgeCountForVoicemail];
+    [self loadVoicemails];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -165,8 +167,10 @@ static NSString *CellIdentifier = @"VoicemailCell";
 #pragma mark - New Voicemail
 - (void)didReceiveNewVoicemail:(NSNotification *)notification
 {
+    if (self.view.window) {
+        [(JCAppDelegate *)[UIApplication sharedApplication].delegate clearBadgeCountForVoicemail];
+    }
     [self loadVoicemails];
-    [JSMessageSoundEffect playMessageSentSound];
 }
 
 #pragma mark - Table view data source
@@ -194,6 +198,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
     Voicemail *voicemail = self.voicemails[indexPath.row];
     
     cell.voicemail = voicemail;
+    cell.indexPath = indexPath;
     cell.delegate = self;
     
     return cell;
@@ -341,6 +346,13 @@ static NSString *CellIdentifier = @"VoicemailCell";
 {
     useSpeaker = !useSpeaker;
     [self setupSpeaker];
+}
+
+- (void)voiceCellAudioAvailable:(NSIndexPath *)indexPath
+{
+    if (!player.isPlaying) {
+        [self prepareAudioForIndexPath:indexPath];
+    }
 }
 
 #pragma mark - Audio Operations

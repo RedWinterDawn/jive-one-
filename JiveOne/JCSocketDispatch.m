@@ -13,6 +13,7 @@
 #import "Voicemail+Custom.h"
 #import "Presence+Custom.h"
 #import "JCAppDelegate.h"
+#import "JSMessageSoundEffect.h"
 
 @interface JCSocketDispatch()
 
@@ -349,6 +350,7 @@
         //there was no voicemail prior, and now we have one meaning it was successfullt added. Otherwise it was an update.
         if (voicemails.count == 0 && voicemail) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kNewVoicemail object:voicemail];
+            [JSMessageSoundEffect playSMSReceived];
             [(JCAppDelegate *)[UIApplication sharedApplication].delegate incrementBadgeCountForVoicemail];
         }
     }
