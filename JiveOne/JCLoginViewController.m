@@ -47,36 +47,45 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshAuthenticationCredentials:) name:kAuthenticationFromTokenFailed object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshAuthenticationCredentials:) name:kAuthenticationFromTokenFailedWithTimeout object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tokenValidityPassed:) name:kAuthenticationFromTokenSucceeded object:nil];
+    self.usernameTextField.returnKeyType = UIReturnKeyNext;
     
-    _usernameTextField.returnKeyType = UIReturnKeyNext;
-    _passwordTextField.returnKeyType = UIReturnKeyGo;
+    self.usernameTextField.returnKeyType = UIReturnKeyNext;
+    self.passwordTextField.returnKeyType = UIReturnKeyGo;
     
-    _usernameTextField.delegate = self;
-    _passwordTextField.delegate = self;
+    self.usernameTextField.delegate = self;
+    self.passwordTextField.delegate = self;
     
     
     NSString* fontName = @"Avenir-Book";
     NSString* boldFontName = @"Avenir-Black";
     
-    //_usernameTextField.backgroundColor = [UIColor whiteColor];
-    _usernameTextField.placeholder =  NSLocalizedString(@"Email Address", nil);
-    _usernameTextField.font = [UIFont fontWithName:fontName size:16.0f];
-    _usernameTextField.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:0.7].CGColor;
-    _usernameTextField.layer.borderWidth = 1.0f;
+    self.usernameTextField.placeholder =  NSLocalizedString(@"Email Address", nil);
+    self.usernameTextField.font = [UIFont fontWithName:fontName size:16.0f];
+    self.usernameTextField.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:0.7].CGColor;
+    self.usernameTextField.layer.borderWidth = 1.0f;
     
     UIView* leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 41, 20)];
-    _usernameTextField.leftViewMode = UITextFieldViewModeAlways;
-    _usernameTextField.leftView = leftView;
+    self.usernameTextField.leftViewMode = UITextFieldViewModeAlways;
+    self.usernameTextField.leftView = leftView;
     
-    //_passwordTextField.backgroundColor = [UIColor whiteColor];
-    _passwordTextField.placeholder =  NSLocalizedString(@"Password", nil);
-    _passwordTextField.font = [UIFont fontWithName:fontName size:16.0f];
-    _passwordTextField.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:0.7].CGColor;
-    _passwordTextField.layer.borderWidth = 1.0f;
+    self.passwordTextField.placeholder =  NSLocalizedString(@"Password", nil);
+    self.passwordTextField.font = [UIFont fontWithName:fontName size:16.0f];
+    self.passwordTextField.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:0.7].CGColor;
+    self.passwordTextField.layer.borderWidth = 1.0f;
+    
+    // @Pete Adding rounded corners for the elements on login screen
+    self.passwordTextField.layer.cornerRadius = 5;
+    self.passwordTextField.layer.masksToBounds = YES;
+    self.usernameTextField.layer.cornerRadius = 5;
+    self.usernameTextField.layer.masksToBounds = YES;
+    self.loginViewContainer.layer.cornerRadius = 5;
+    [self.loginViewContainer.layer setCornerRadius:5];
+    
+    
     
     UIView* leftView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 41, 20)];
-    _passwordTextField.leftViewMode = UITextFieldViewModeAlways;
-    _passwordTextField.leftView = leftView2;
+    self.passwordTextField.leftViewMode = UITextFieldViewModeAlways;
+    self.passwordTextField.leftView = leftView2;
     
     _loginStatusLabel.font = [UIFont fontWithName:boldFontName size:16.0f];
     // Do any additional setup after loading the view.
@@ -110,13 +119,13 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if (textField == _usernameTextField) {
-        [_passwordTextField becomeFirstResponder];
+    if (textField == self.usernameTextField) {
+        [self.passwordTextField becomeFirstResponder];
         return NO;
     }
     else {
         [self validateFields];
-        [_passwordTextField resignFirstResponder];
+        [self.passwordTextField resignFirstResponder];
         return YES;
     }
 }
@@ -124,10 +133,10 @@
 - (void)validateFields
 {
     self.loginStatusLabel.text = @"";
-    if([_usernameTextField.text length] != 0 && [_passwordTextField.text length] != 0)
+    if([self.usernameTextField.text length] != 0 && [self.passwordTextField.text length] != 0)
     {
         [self showHudWithTitle:@"One Moment Please" detail:@"Logging In"];
-        [[JCAuthenticationManager sharedInstance] loginWithUsername:_usernameTextField.text password:_passwordTextField.text completed:^(BOOL success, NSError *error) {
+        [[JCAuthenticationManager sharedInstance] loginWithUsername:self.usernameTextField.text password:self.passwordTextField.text completed:^(BOOL success, NSError *error) {
             self.doneLoadingContent = NO;
             if (success) {
                 [self tokenValidityPassed:nil];

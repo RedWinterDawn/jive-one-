@@ -18,6 +18,8 @@
 @property (nonatomic) BOOL doneLoadingContent;
 @property (nonatomic) BOOL userIsDoneWithTutorial;
 @property (nonatomic) JCOsgiClient *client;
+@property (weak, nonatomic) IBOutlet UIView *loginViewContainer;
+
 
 - (void)goToApplication;
 - (IBAction)termsAndConditionsButton:(id)sender;

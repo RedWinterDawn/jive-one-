@@ -30,12 +30,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" image="iPhoneLaunch2X.png" translatesAutoresizingMaskIntoConstraints="NO" id="TD2-6q-cVF">
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" image="iPhone2Xnew.png" translatesAutoresizingMaskIntoConstraints="NO" id="e8O-2j-1gU">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uq2-OG-5Nj">
-                                <rect key="frame" x="84" y="161" width="152" height="144"/>
+                                <rect key="frame" x="84" y="60" width="152" height="144"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" image="loginlogo" translatesAutoresizingMaskIntoConstraints="NO" id="e66-ar-CXX">
@@ -49,44 +49,44 @@
                                 </constraints>
                             </view>
                             <view clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AVw-9n-3yN">
-                                <rect key="frame" x="20" y="315" width="280" height="98"/>
+                                <rect key="frame" x="20" y="214" width="280" height="150"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="top" fixedFrame="YES" image="iPhoneLaunch2XBlurSm.png" translatesAutoresizingMaskIntoConstraints="NO" id="cI1-fQ-IPY">
-                                        <rect key="frame" x="-20" y="-212" width="320" height="568"/>
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" image="iPhone2XnewBlurSmall.png" translatesAutoresizingMaskIntoConstraints="NO" id="BG2-EN-8KO">
+                                        <rect key="frame" x="-25" y="-207" width="330" height="525"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                     </imageView>
                                     <textField clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="email" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Tho-ch-vQR">
-                                        <rect key="frame" x="20" y="10" width="240" height="34"/>
+                                        <rect key="frame" x="20" y="30" width="240" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
                                         <accessibility key="accessibilityConfiguration" label="emailTextField"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="240" id="1LD-ns-ffR"/>
-                                            <constraint firstAttribute="height" constant="34" id="23I-gy-YdR"/>
+                                            <constraint firstAttribute="height" constant="40" id="23I-gy-YdR"/>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="240" id="Fye-DJ-cKM"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                     </textField>
                                     <textField clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="password" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="GZW-BX-qe0">
-                                        <rect key="frame" x="20" y="54" width="240" height="34"/>
+                                        <rect key="frame" x="20" y="80" width="240" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
                                         <accessibility key="accessibilityConfiguration" label="passwordTextField"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="240" id="P5E-bo-MTH"/>
-                                            <constraint firstAttribute="height" constant="34" id="u0T-nE-41z"/>
+                                            <constraint firstAttribute="height" constant="40" id="u0T-nE-41z"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="Tho-ch-vQR" firstAttribute="top" secondItem="AVw-9n-3yN" secondAttribute="top" constant="10" id="WkA-7r-3Jf"/>
+                                    <constraint firstItem="Tho-ch-vQR" firstAttribute="top" secondItem="AVw-9n-3yN" secondAttribute="top" constant="30" id="WkA-7r-3Jf"/>
                                     <constraint firstItem="GZW-BX-qe0" firstAttribute="leading" secondItem="AVw-9n-3yN" secondAttribute="leading" constant="20" id="ZRp-rg-zgW"/>
                                     <constraint firstItem="Tho-ch-vQR" firstAttribute="leading" secondItem="AVw-9n-3yN" secondAttribute="leading" constant="20" symbolic="YES" id="aIz-bL-Ii6"/>
-                                    <constraint firstAttribute="bottom" secondItem="GZW-BX-qe0" secondAttribute="bottom" constant="10" id="bFV-Wh-SEW"/>
+                                    <constraint firstAttribute="bottom" secondItem="GZW-BX-qe0" secondAttribute="bottom" constant="30" id="bFV-Wh-SEW"/>
                                     <constraint firstItem="GZW-BX-qe0" firstAttribute="top" secondItem="Tho-ch-vQR" secondAttribute="bottom" constant="10" id="nvc-UM-5Np"/>
                                 </constraints>
                             </view>
@@ -94,8 +94,8 @@
                                 <rect key="frame" x="0.0" y="523" width="320" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="iPhoneLaunch2XBlurSm.png" translatesAutoresizingMaskIntoConstraints="NO" id="iSy-TM-TBI">
-                                        <rect key="frame" x="0.0" y="-523" width="320" height="568"/>
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" image="iPhone2XnewBlurSmall.png" translatesAutoresizingMaskIntoConstraints="NO" id="n95-vt-iwu">
+                                        <rect key="frame" x="0.0" y="-494" width="320" height="539"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                     </imageView>
                                     <view clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hQg-62-q5W">
@@ -119,6 +119,7 @@
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="45" id="G3d-UC-qhc"/>
+                                            <constraint firstAttribute="width" constant="320" id="NkT-7e-10k"/>
                                             <constraint firstItem="0pL-1i-BoH" firstAttribute="top" secondItem="hQg-62-q5W" secondAttribute="top" constant="9" id="dmj-4v-DJa"/>
                                             <constraint firstItem="0pL-1i-BoH" firstAttribute="leading" secondItem="hQg-62-q5W" secondAttribute="leading" constant="182" id="xx8-r1-58f"/>
                                         </constraints>
@@ -141,30 +142,28 @@
                                     <constraint firstAttribute="bottom" secondItem="hQg-62-q5W" secondAttribute="bottom" id="FaW-Yk-CE7"/>
                                     <constraint firstItem="hQg-62-q5W" firstAttribute="centerY" secondItem="SFI-xL-Fri" secondAttribute="centerY" id="GOf-5k-pMd"/>
                                     <constraint firstAttribute="bottom" secondItem="hQg-62-q5W" secondAttribute="bottom" id="RBz-W9-EEQ"/>
-                                    <constraint firstItem="hQg-62-q5W" firstAttribute="leading" secondItem="iSy-TM-TBI" secondAttribute="leading" id="UIg-LL-UNR"/>
-                                    <constraint firstItem="hQg-62-q5W" firstAttribute="trailing" secondItem="iSy-TM-TBI" secondAttribute="trailing" id="cr8-nY-a5u"/>
                                     <constraint firstItem="zDj-yl-OIT" firstAttribute="top" secondItem="SFI-xL-Fri" secondAttribute="top" constant="15" id="k1S-8M-Uvd"/>
                                     <constraint firstAttribute="width" constant="320" id="rGl-4h-y5Q"/>
                                     <constraint firstItem="zDj-yl-OIT" firstAttribute="leading" secondItem="SFI-xL-Fri" secondAttribute="leading" constant="10" id="sKU-ga-Jjm"/>
-                                    <constraint firstItem="hQg-62-q5W" firstAttribute="bottom" secondItem="iSy-TM-TBI" secondAttribute="bottom" id="vzy-G9-lem"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="AVw-9n-3yN" firstAttribute="leading" secondItem="ECf-jH-nSb" secondAttribute="leading" constant="20" id="C8l-LW-pEl"/>
+                            <constraint firstItem="uq2-OG-5Nj" firstAttribute="top" secondItem="ECf-jH-nSb" secondAttribute="top" constant="60" id="D6s-wl-DRk"/>
                             <constraint firstItem="AVw-9n-3yN" firstAttribute="top" secondItem="uq2-OG-5Nj" secondAttribute="bottom" constant="10" id="FG4-v3-lTR"/>
                             <constraint firstItem="uq2-OG-5Nj" firstAttribute="leading" secondItem="ECf-jH-nSb" secondAttribute="leading" constant="84" id="I7D-DT-Xxa"/>
                             <constraint firstItem="SFI-xL-Fri" firstAttribute="leading" secondItem="ECf-jH-nSb" secondAttribute="leading" id="Mgc-Ke-YJ8"/>
                             <constraint firstItem="SFI-xL-Fri" firstAttribute="leading" secondItem="ECf-jH-nSb" secondAttribute="leading" id="QWg-wl-cEd"/>
                             <constraint firstAttribute="trailing" secondItem="AVw-9n-3yN" secondAttribute="trailing" constant="20" symbolic="YES" id="QZq-Iq-Hbl"/>
                             <constraint firstItem="SFI-xL-Fri" firstAttribute="leading" secondItem="ECf-jH-nSb" secondAttribute="leading" id="RGs-JA-RfO"/>
-                            <constraint firstAttribute="bottom" secondItem="AVw-9n-3yN" secondAttribute="bottom" constant="155" id="lEv-ma-VOl"/>
                             <constraint firstAttribute="bottom" secondItem="SFI-xL-Fri" secondAttribute="bottom" id="vUj-k9-afg"/>
                             <constraint firstAttribute="bottom" secondItem="SFI-xL-Fri" secondAttribute="bottom" id="y8x-dG-fCE"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="loginViewContainer" destination="AVw-9n-3yN" id="IFa-4A-SO1"/>
                         <outlet property="passwordTextField" destination="GZW-BX-qe0" id="McQ-Ao-Xqa"/>
                         <outlet property="usernameTextField" destination="Tho-ch-vQR" id="NY5-OJ-rkG"/>
                         <segue destination="0GY-Sf-KwF" kind="modal" identifier="AppTutorialSegue" modalTransitionStyle="crossDissolve" id="rnB-Wd-ic6"/>
@@ -173,7 +172,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KCP-nN-szi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1556" y="548"/>
+            <point key="canvasLocation" x="-1535" y="547"/>
         </scene>
         <!--Terms And ConditonsVC View Controller-->
         <scene sceneID="5ti-Vq-dxr">
@@ -984,8 +983,8 @@
         <image name="ES-voicemail-1.jpg" width="640" height="1136"/>
         <image name="avatar.png" width="100" height="100"/>
         <image name="first_message.png" width="265" height="154"/>
-        <image name="iPhoneLaunch2X.png" width="640" height="1136"/>
-        <image name="iPhoneLaunch2XBlurSm.png" width="320" height="568"/>
+        <image name="iPhone2Xnew.png" width="640" height="1136"/>
+        <image name="iPhone2XnewBlurSmall.png" width="320" height="480"/>
         <image name="loginlogo" width="376" height="380"/>
         <image name="nav-conv.png" width="30" height="30"/>
         <image name="nav-more.png" width="44" height="44"/>
