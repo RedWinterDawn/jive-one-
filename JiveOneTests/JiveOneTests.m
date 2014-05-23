@@ -48,38 +48,38 @@
 }
 
 
-- (void)testRetrieveAccountInformation {
-    __block NSDictionary *json;
-    
-    TRVSMonitor *monitor = [TRVSMonitor monitor];
-    
-    JCOsgiClient *client = [JCOsgiClient sharedClient];
-    
-    [client RetrieveMyEntitity:^(id JSON, id operation) {
-        json = JSON;
-        [monitor signal];
-        
-    } failure:^(NSError *err, id operation) {
-        XCTFail(@"Retrieve My Company method has failed");
-    }];
-    
-    [monitor waitWithTimeout:5];
-    
-    NSString *name = [[json objectForKey:@"name"] objectForKey:@"firstLast"];
-    NSString *companyUrl = [json objectForKey:@"company"];
-    XCTAssertEqualObjects(name, @"Jive Testing 13", @"Wrong name");
-    
-    [client RetrieveMyCompany:companyUrl:^(id JSON) {
-        json = JSON;
-        [monitor signal];
-    } failure:^(NSError *err) {
-        NSLog(@"%@", err);
-    }];
-    
-    [monitor waitWithTimeout:5];
-    
-     XCTAssertEqualObjects([json objectForKey:@"name"], @"Jive Communications, Inc.", @"Company name doesn't match");
-}
+//- (void)testRetrieveAccountInformation {
+//    __block NSDictionary *json;
+//    
+//    TRVSMonitor *monitor = [TRVSMonitor monitor];
+//    
+//    JCOsgiClient *client = [JCOsgiClient sharedClient];
+//    
+//    [client RetrieveMyEntitity:^(id JSON, id operation) {
+//        json = JSON;
+//        [monitor signal];
+//        
+//    } failure:^(NSError *err, id operation) {
+//        XCTFail(@"Retrieve My Company method has failed");
+//    }];
+//    
+//    [monitor waitWithTimeout:5];
+//    
+//    NSString *name = [[json objectForKey:@"name"] objectForKey:@"firstLast"];
+//    NSString *companyUrl = [json objectForKey:@"company"];
+//    XCTAssertEqualObjects(name, @"Jive Testing 13", @"Wrong name");
+//    
+//    [client RetrieveMyCompany:companyUrl:^(id JSON) {
+//        json = JSON;
+//        [monitor signal];
+//    } failure:^(NSError *err) {
+//        NSLog(@"%@", err);
+//    }];
+//    
+//    [monitor waitWithTimeout:5];
+//    
+//     XCTAssertEqualObjects([json objectForKey:@"name"], @"Jive Communications, Inc.", @"Company name doesn't match");
+//}
 
 
 

@@ -319,7 +319,7 @@
             }
             else
             {
-                JCAppDelegate *delegate = [UIApplication sharedApplication].delegate;
+                JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
                 if (![delegate.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
                     [delegate changeRootViewController:JCRootLoginViewController];
                 }

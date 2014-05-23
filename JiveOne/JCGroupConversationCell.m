@@ -260,7 +260,7 @@
                 }
                 else {
                     UIView * groupCount = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 28, 28)];
-                    uint32_t rnd = arc4random_uniform([colorArray count]);
+                    uint32_t rnd = arc4random_uniform((int)colorArray.count);
                     groupCount.backgroundColor = colorArray[rnd];
                     
                     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 20)];
