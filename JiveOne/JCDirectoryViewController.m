@@ -31,7 +31,6 @@
 @property (strong, nonatomic) UIScrollView* scrollView;
 @property BOOL searchTableIsActive;
 @property BOOL scrollDirectionIsUp;
-@property BOOL fireOnceTrigger;
 @property BOOL doneAnimatingToolbarFromFirstResponderState;
 @property float previousOffset;
 @property float amountScrolledSinceLastDirectionChange;
@@ -286,7 +285,6 @@ static NSString *CellIdentifier = @"DirectoryCell";
         [_searchBar layoutSubviews];
         self.scrollViewOffsetReference = -64;
         self.searchBarY_Reference = -64;
-        self.fireOnceTrigger = NO;
     }
     return _searchBar;
 }
