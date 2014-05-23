@@ -480,7 +480,11 @@ static NSString *CellIdentifier = @"DirectoryCell";
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return [sections objectAtIndex:section];
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        return @"Search Results";
+    }else{
+        return [sections objectAtIndex:section];
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
