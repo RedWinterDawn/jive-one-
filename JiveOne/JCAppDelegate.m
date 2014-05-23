@@ -383,18 +383,22 @@ int didNotify;
     }
     
     NSNumber *number = [_badges objectForKey:conversationId];
-    NSInteger count = [number integerValue];
-    count++;
-    
-    number = [NSNumber numberWithInteger:count];
-    [_badges setObject:number forKey:conversationId];
+    if (![number boolValue]) {
+        number = [NSNumber numberWithBool:NO];
+        [_badges setObject:number forKey:conversationId];
+    }
+//    NSInteger count = [number integerValue];
+//    count++;
+//    
+//    number = [NSNumber numberWithInteger:count];
+//    [_badges setObject:number forKey:conversationId];
     
     [[NSUserDefaults standardUserDefaults] setObject:[_badges copy] forKey:@"badges"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [self refreshTabBadges:NO];
 }
 
-- (void)incrementBadgeCountForVoicemail
+- (void)incrementBadgeCountForVoicemail:(NSString *)voicemailId
 {
     JCLogInfo_();
     NSMutableDictionary *_badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
@@ -402,12 +406,12 @@ int didNotify;
         _badges = [[NSMutableDictionary alloc] init];
     }
     
-    NSNumber *number = [_badges objectForKey:@"voicemail"];
-    NSInteger count = [number integerValue];
-    count++;
+    NSNumber *number = [_badges objectForKey:voicemailId];
+    if (![number boolValue]) {
+        number = [NSNumber numberWithBool:NO];
+        [_badges setObject:number forKey:voicemailId];
+    }
     
-    number = [NSNumber numberWithInteger:count];
-    [_badges setObject:number forKey:@"voicemail"];
     
     [[NSUserDefaults standardUserDefaults] setObject:[_badges copy] forKey:@"badges"];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -504,43 +508,50 @@ int didNotify;
         if (_badges) {
             
             // load voice mail badge numbers
-            NSNumber *voicemailCount = [_badges objectForKey:@"voicemail"];
-            NSInteger count = voicemailCount.integerValue;
-            [tabController.viewControllers[1] tabBarItem].badgeValue = count == 0 ? nil : [voicemailCount stringValue];
+            //NSNumber *voicemailCount = [_badges objectForKey:@"voicemail"];
+            //NSInteger count = voicemailCount.integerValue;
+            //[tabController.viewControllers[1] tabBarItem].badgeValue = count == 0 ? nil : [voicemailCount stringValue];
             
             // load conversation counts
-            count = 0;
+            int voicemailCount = 0;
+            int conversationCount = 0;
             for (NSString* key in _badges) {
                 
                 //some house keeping.
-                if (![key isEqualToString:@"voicemail"]) {
+                //NSRange rangeVoicemail = [key rangeOfString:@"voicemails"];
+                //if (rangeVoicemail.location == NSNotFound) {
                     if (_badges[key]) {
                         NSNumber *currentCount = _badges[key];
-                        if (currentCount.integerValue == 0) {
+                        if (currentCount.boolValue == YES) {
                             [_badges removeObjectForKey:key];
+                            continue;
                         }
                     }
-                }
+                //}
                 
                 NSRange rangeConversation = [key rangeOfString:@"conversations"];
                 NSRange rangeRooms = [key rangeOfString:@"permanentrooms"];
                 if (rangeConversation.location != NSNotFound || rangeRooms.location != NSNotFound) {
-                    count++;
+                    conversationCount++;
                 }
                 
+                NSRange rangeVoicemail = [key rangeOfString:@"voicemails"];
+                if (rangeVoicemail.location != NSNotFound ) {
+                    voicemailCount++;
+                }
                 
             }
             
-            NSNumber *converationCount = [NSNumber numberWithInteger:count];
-            [tabController.viewControllers[2] tabBarItem].badgeValue = count == 0 ? nil : [converationCount stringValue];
+            [tabController.viewControllers[2] tabBarItem].badgeValue = conversationCount == 0 ? nil : [NSString stringWithFormat:@"%i", conversationCount];
+            [tabController.viewControllers[1] tabBarItem].badgeValue = voicemailCount == 0 ? nil : [NSString stringWithFormat:@"%i", voicemailCount];
             
             // update Application Badge
-            NSInteger appBadge = converationCount.integerValue + voicemailCount.integerValue;
+            NSInteger appBadge = conversationCount + voicemailCount;//.integerValue + voicemailCount.integerValue;
             [UIApplication sharedApplication].applicationIconBadgeNumber = appBadge;
             
             if (fromRemoteNotification) {
-                if (converationCount != 0 || voicemailCount != 0) {
-                    [self setNotification:voicemailCount.integerValue conversation:converationCount.integerValue];
+                if (conversationCount != 0 || voicemailCount != 0) {
+                    [self setNotification:voicemailCount conversation:conversationCount];
                 }
             }
         }
@@ -552,13 +563,37 @@ int didNotify;
     JCLogInfo_();
     if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive)  {
         
+       NSMutableDictionary *_badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
+        
         NSString *alertMessage = @"You have ";
         
         if (voicemailCount != 0 && conversationCount != 0) {
             alertMessage  = [alertMessage stringByAppendingString:[NSString stringWithFormat:@"%d new voicemail(s) and %d new conversation(s).", (int)voicemailCount, (int)conversationCount]];
+            
+            for (NSString* key in _badges) {
+                //some house keeping.
+                if (_badges[key]) {
+                    NSNumber *currentCount = _badges[key];
+                    currentCount = [NSNumber numberWithBool:YES];
+                }
+            }
         }
         else if (voicemailCount != 0) {
             alertMessage  = [alertMessage stringByAppendingString:[NSString stringWithFormat:@"%d new voicemail(s).", (int)voicemailCount]];
+            
+            for (NSString* key in _badges) {
+                NSRange rangeVoicemail = [key rangeOfString:@"voicemails"];
+                if (rangeVoicemail.location != NSNotFound) {
+                    if (_badges[key]) {
+                        NSNumber *currentCount = _badges[key];
+                        if (currentCount.boolValue == YES) {
+                            [_badges removeObjectForKey:key];
+                            continue;
+                        }
+                    }
+                }
+            }
+            
         }
         else if (conversationCount != 0) {
             
@@ -573,6 +608,21 @@ int didNotify;
             else {
                 alertMessage  = [alertMessage stringByAppendingString:[NSString stringWithFormat:@"%d new conversation(s).", (int)conversationCount]];
             }
+            
+            for (NSString* key in _badges) {
+                NSRange rangeConversation = [key rangeOfString:@"conversations"];
+                NSRange rangeRooms = [key rangeOfString:@"permanentrooms"];
+                if (rangeConversation.location != NSNotFound || rangeRooms.location != NSNotFound) {
+                    if (_badges[key]) {
+                        NSNumber *currentCount = _badges[key];
+                        if (currentCount.boolValue == YES) {
+                            [_badges removeObjectForKey:key];
+                            continue;
+                        }
+                    }
+                }
+            }
+
         }
         
         
