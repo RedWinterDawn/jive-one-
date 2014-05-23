@@ -98,7 +98,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [Flurry logEvent:@"Contact View"];    
+//    [Flurry logEvent:@"Contact View"];    
     personMap = [[NSMutableDictionary alloc] init];
     [self loadCompanyDirectory];
     
@@ -196,7 +196,6 @@ static NSString *CellIdentifier = @"DirectoryCell";
     if (self.searchBarView.frame.origin.y != frame_orgin_y) {
         NSLog(@"2 - Changed sFrame from %f to %f", self.searchBarView.frame.origin.y, frame_orgin_y);
     }
-    if (frame_orgin_y < 64) frame_orgin_y = 64;
     self.searchBarView.frame = CGRectMake(self.searchBarView.frame.origin.x,
                                       frame_orgin_y,
                                       self.searchBarView.frame.size.width, self.searchBarView.frame.size.height);
