@@ -31,7 +31,7 @@
     [super layoutSubviews];
     [self setShowsCancelButton:NO animated:NO];
     [self setBarStyle:UIBarStyleDefault];
-    [self setPlaceholder:@"Search                                                   "];
+    [self setPlaceholder:@"Search                                                      "];
     // yes this is necessary see: http://stackoverflow.com/questions/19289406/uisearchbar-search-icon-isnot-left-aligned-in-ios7
     [self setImage:[UIImage imageNamed:@"searchGray2.png"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
 //    [self setImage:[UIImage imageNamed:@"search2.png"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateHighlighted];

@@ -447,8 +447,6 @@
 		9172AD58191849F500481B01 /* unnamed.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9172AD57191849F500481B01 /* unnamed.jpg */; };
 		9172AD5C19192A1500481B01 /* UserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9172AD5B19192A1500481B01 /* UserDefaults.plist */; };
 		91743AA0191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91743A9F191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m */; };
-		917E8C16192BC13500097111 /* JCSearchDisplayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 917E8C15192BC13500097111 /* JCSearchDisplayController.m */; };
-		917E8C17192BC13500097111 /* JCSearchDisplayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 917E8C15192BC13500097111 /* JCSearchDisplayController.m */; };
 		919C448F18DA479F00F6566A /* thumb1.png in Resources */ = {isa = PBXBuildFile; fileRef = 919C448E18DA479F00F6566A /* thumb1.png */; };
 		919DD29D1922E2C90039205E /* JCPopoverSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 919DD29C1922E2C90039205E /* JCPopoverSlider.m */; };
 		919DD29E1922E2C90039205E /* JCPopoverSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 919DD29C1922E2C90039205E /* JCPopoverSlider.m */; };
@@ -946,8 +944,6 @@
 		9172AD5B19192A1500481B01 /* UserDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserDefaults.plist; sourceTree = "<group>"; };
 		91743A9E191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTermsAndConditonsVCViewController.h; sourceTree = "<group>"; };
 		91743A9F191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTermsAndConditonsVCViewController.m; sourceTree = "<group>"; };
-		917E8C14192BC13500097111 /* JCSearchDisplayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSearchDisplayController.h; sourceTree = "<group>"; };
-		917E8C15192BC13500097111 /* JCSearchDisplayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSearchDisplayController.m; sourceTree = "<group>"; };
 		919C448E18DA479F00F6566A /* thumb1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumb1.png; sourceTree = "<group>"; };
 		919DD29B1922E2C90039205E /* JCPopoverSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPopoverSlider.h; sourceTree = "<group>"; };
 		919DD29C1922E2C90039205E /* JCPopoverSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPopoverSlider.m; sourceTree = "<group>"; };
@@ -2031,8 +2027,6 @@
 			children = (
 				91B7CFC3192ABDF800927DDD /* JCSearchBar.h */,
 				91B7CFC4192ABDF800927DDD /* JCSearchBar.m */,
-				917E8C14192BC13500097111 /* JCSearchDisplayController.h */,
-				917E8C15192BC13500097111 /* JCSearchDisplayController.m */,
 				91B7CFCD192AD78B00927DDD /* searchGray2.png */,
 				91B7CFCA192AD5B900927DDD /* search2.png */,
 			);
@@ -2563,7 +2557,6 @@
 				279E4CAA192273E5002A556C /* MBContactCollectionView.m in Sources */,
 				2727F360191AA92F00A41185 /* JSDismissiveTextView.m in Sources */,
 				2727F361191AA92F00A41185 /* Conversation.m in Sources */,
-				917E8C17192BC13500097111 /* JCSearchDisplayController.m in Sources */,
 				2727F362191AA92F00A41185 /* TRVSMonitor.m in Sources */,
 				2727F363191AA92F00A41185 /* Presence.m in Sources */,
 				2727F364191AA92F00A41185 /* JSMessagesViewController.m in Sources */,
@@ -2706,7 +2699,6 @@
 				27F1F2EA191C171300AEAFD7 /* UAPushSettingsTagsViewController.m in Sources */,
 				2787911318CF79DC004DE651 /* JCPresenceView.m in Sources */,
 				2700987C18F4714100B6BC2F /* JSMessage.m in Sources */,
-				917E8C16192BC13500097111 /* JCSearchDisplayController.m in Sources */,
 				276215211912AA7400CFBCC8 /* NSString+URLEncoding.m in Sources */,
 				91B7CFC5192ABDF800927DDD /* JCSearchBar.m in Sources */,
 				27F1F2D4191C171300AEAFD7 /* UADateUtils.m in Sources */,
