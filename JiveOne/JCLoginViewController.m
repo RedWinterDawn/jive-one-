@@ -64,7 +64,7 @@
     self.usernameTextField.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:0.7].CGColor;
     self.usernameTextField.layer.borderWidth = 1.0f;
     
-    UIView* leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 41, 20)];
+    UIView* leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 20)];
     self.usernameTextField.leftViewMode = UITextFieldViewModeAlways;
     self.usernameTextField.leftView = leftView;
     
@@ -83,7 +83,7 @@
     
     
     
-    UIView* leftView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 41, 20)];
+    UIView* leftView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 20)];
     self.passwordTextField.leftViewMode = UITextFieldViewModeAlways;
     self.passwordTextField.leftView = leftView2;
     
