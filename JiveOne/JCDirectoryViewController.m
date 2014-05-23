@@ -65,6 +65,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
     self.clientEntitiesSearchArray = [[NSMutableArray alloc] init];
     self.doneAnimatingToolbarFromFirstResponderState = YES;
     [self.searchBarView addSubview:self.searchBar];
+    [self.searchBar setShowsCancelButton:YES];
     [self.searchBar setDelegate:self];
     self.searchBarView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.searchBarView];
@@ -97,10 +98,9 @@ static NSString *CellIdentifier = @"DirectoryCell";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    [Flurry logEvent:@"Contact View"];    
     personMap = [[NSMutableDictionary alloc] init];
     [self loadCompanyDirectory];
-    
+    NSLog(@"1 - Offset %f Inset %f Bar %f", self.tableView.contentOffset.y, self.tableView.contentInset.top, self.searchBarView.frame.origin.y);
     if (self.searchTableIsActive) {
         [self.searchDisplayController.searchBar resignFirstResponder];
     }
@@ -111,6 +111,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
     [super viewWillDisappear:animated];
     
 }
+
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
@@ -143,6 +144,8 @@ static NSString *CellIdentifier = @"DirectoryCell";
     return YES;
 }
 
+
+
 -(void)handleTapGesture{
     self.doneAnimatingToolbarFromFirstResponderState = NO;
     [UIView animateWithDuration:0.25
@@ -160,8 +163,16 @@ static NSString *CellIdentifier = @"DirectoryCell";
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     self.scrollViewOffset = scrollView.contentOffset.y;
     
+    if (!self.searchDisplayController.isActive) {
+        
     [self setSearchBarPosition:scrollView];
     [self handleScrollAtTop];
+    }
+    else
+    {
+        NSLog(@"Positiion %f",self.searchBarView.frame.origin.y);
+        [self.searchBarView setFrame:CGRectMake(0, 20, self.searchBarView.bounds.size.width, self.searchBarView.bounds.size.height)];
+    }
     
     self.previousOffset = self.scrollViewOffset;
 }
@@ -457,12 +468,6 @@ static NSString *CellIdentifier = @"DirectoryCell";
     else {
         return 1;
     }
-        
-//    if (self.clientEntitiesArray.count == 0) {
-//        return 0;
-//    } else {
-//        return sections.count;
-//    }
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
@@ -655,7 +660,8 @@ shouldReloadTableForSearchString:(NSString *)searchString
     if (person) {
         [segue.destinationViewController setPerson:person];
     }
-    
+    NSLog(@"0 - Offset %f Inset %f Bar %f", self.tableView.contentOffset.y, self.tableView.contentInset.top, self.searchBarView.frame.origin.y);
+
 }
 
 - (IBAction)refreshDirectory:(id)sender {
@@ -675,6 +681,7 @@ shouldReloadTableForSearchString:(NSString *)searchString
         [indexPaths addObject:indexPath];
     }
 }
+
 @end
 
 
