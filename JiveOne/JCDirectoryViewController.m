@@ -16,7 +16,7 @@
 #import "ContactGroup.h"
 #import "NotificationView.h"
 #import <QuartzCore/QuartzCore.h>
-#import "JCLog.h"go
+#import "JCLog.h"
 
 #define kUINameRowHeight 100
 #define kUIRowHeight 50
@@ -28,7 +28,7 @@
     UISearchDisplayController *searchDisplayController;
 }
 @property (strong, nonatomic) UIView* searchBarView;
-
+@property (strong, nonatomic) UIScrollView* scrollView;
 @property BOOL searchTableIsActive;
 @property BOOL scrollDirectionIsUp;
 @property BOOL doneAnimatingToolbarFromFirstResponderState;
@@ -155,42 +155,12 @@ static NSString *CellIdentifier = @"DirectoryCell";
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    const int MAX_Y = 86;
-    const int MIN_Y = -22;
     self.scrollViewOffset = scrollView.contentOffset.y;
     
+    [self setSearchBarPosition:scrollView];
+    [self setInsetPosition:scrollView];
+    [self handleScrollAtTop];
     
-    
-    
-    
-    if ((![self.searchBar isFirstResponder]) && (self.doneAnimatingToolbarFromFirstResponderState == YES))
-    {
-        self.amountScrolledSinceLastDirectionChange = abs(self.scrollViewOffsetReference - self.scrollViewOffset);
-        NSLog(@"-----: %f, %f, %f, %f", self.scrollViewOffsetReference, self.scrollViewOffset, self.amountScrolledSinceLastDirectionChange, self.searchBarView.frame.origin.y);
-
-        if (self.scrollViewOffset > self.previousOffset)
-        {// if scroll Direction is up
-            if(self.scrollDirectionIsUp == NO)
-            {// if this is the first call since the scroll direction changed
-                [self scrollDirectionDidChangeToUp];
-            }
-            [self handleScrollUp];
-        }
-        else if((self.scrollViewOffset < self.previousOffset) && (self.previousOffset != 0))
-        {//if scroll direction is down or this is first call when view loads
-            if(self.scrollDirectionIsUp)
-            {// if this is the first call since the scroll direction changed
-                [self scrollDirectionDidChangeToDown];
-            }
-            [self handleScrollDown];
-        }
-        [self handleScrollAtTop];
-        
-        [self setInsetPosition:scrollView];
-        [self setSearchBarPosition:scrollView];
-        NSLog(@"_____: %f, %f, %f, %f", self.scrollViewOffsetReference, self.scrollViewOffset, self.amountScrolledSinceLastDirectionChange, self.searchBarView.frame.origin.y);
-
-    }
     self.previousOffset = self.scrollViewOffset;
 }
 
@@ -216,6 +186,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
     self.scrollDirectionIsUp = YES;
     NSLog(@"⬆︎_: %f", frame_orgin_y);
     NSLog(@"⬆︎movethisMuch:  %f+%f=%f",self.searchBarY_Reference, self.deltaOffsetSinceLastDirectionChange, (self.searchBarY_Reference - self.deltaOffsetSinceLastDirectionChange));
+    self.scrollView.contentInset = UIEdgeInsetsMake(64, 0, 0, 0);
 
 }
 
@@ -249,18 +220,43 @@ static NSString *CellIdentifier = @"DirectoryCell";
     NSLog(@"⬇︎_: %f", frame_orgin_y);
     NSLog(@"⬇︎movethisMuch: %f+%f=%f",self.searchBarY_Reference, self.deltaOffsetSinceLastDirectionChange, (self.searchBarY_Reference + self.deltaOffsetSinceLastDirectionChange));
     
-
+    self.scrollView.contentInset = UIEdgeInsetsMake(108, 0, 0, 0);
 
 }
 
 -(void)setInsetPosition:(UIScrollView *)scrollView
 {
-    
+
 }
 
 -(void)setSearchBarPosition:(UIScrollView *)scrollView
 {
-    
+    self.scrollView = scrollView;
+    if ((![self.searchBar isFirstResponder]) && (self.doneAnimatingToolbarFromFirstResponderState == YES))
+    {
+        self.amountScrolledSinceLastDirectionChange = abs(self.scrollViewOffsetReference - self.scrollViewOffset);
+        NSLog(@"-----: %f, %f, %f, %f", self.scrollViewOffsetReference, self.scrollViewOffset, self.amountScrolledSinceLastDirectionChange, self.searchBarView.frame.origin.y);
+        
+        if (self.scrollViewOffset > self.previousOffset)
+        {// if scroll Direction is up
+            if(self.scrollDirectionIsUp == NO)
+            {// if this is the first call since the scroll direction changed
+                [self scrollDirectionDidChangeToUp];
+            }
+            [self handleScrollUp];
+        }
+        else if((self.scrollViewOffset < self.previousOffset) && (self.previousOffset != 0))
+        {//if scroll direction is down or this is first call when view loads
+            if(self.scrollDirectionIsUp)
+            {// if this is the first call since the scroll direction changed
+                [self scrollDirectionDidChangeToDown];
+            }
+            [self handleScrollDown];
+        }
+        
+        NSLog(@"_____: %f, %f, %f, %f", self.scrollViewOffsetReference, self.scrollViewOffset, self.amountScrolledSinceLastDirectionChange, self.searchBarView.frame.origin.y);
+        
+    }
 }
 
 
