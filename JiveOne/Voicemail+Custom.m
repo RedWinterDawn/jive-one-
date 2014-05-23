@@ -79,6 +79,10 @@
         @catch (NSException *exception) {
             NSLog(@"%@", exception);
         }
+        
+        
+        //get all voicemail messages through a queue
+        [Voicemail fetchVoicemailInBackground];
     }
     return vmail;
 }

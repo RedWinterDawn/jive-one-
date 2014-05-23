@@ -409,8 +409,6 @@
         //get all voicemail metadata, but not actual voicemail messages
         [Voicemail addVoicemails:entries];
         success(responseObject);
-        //get all voicemail messages through a queue
-        [Voicemail fetchVoicemailInBackground];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
