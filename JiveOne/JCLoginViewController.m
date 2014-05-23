@@ -29,6 +29,10 @@
 {
     _client = client;
 }
+//@peter This hadles when you touch anywhere else on the screen the key board is dismissed.
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
+}
 
 - (void)viewDidLoad
 {
