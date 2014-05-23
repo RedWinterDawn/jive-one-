@@ -20,6 +20,7 @@
 #import "JCContainerViewController.h"
 #import "JCVersion.h"
 #import "JCLog.h"
+#import "Flurry.h"
 
 
 @interface JCAppDelegate ()
@@ -45,6 +46,12 @@ int didNotify;
     NSString *defaultPrefsFile = [[NSBundle mainBundle] pathForResource:@"UserDefaults" ofType:@"plist"];
     NSDictionary *defaultPreferences = [NSDictionary dictionaryWithContentsOfFile:defaultPrefsFile];
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultPreferences];
+    
+    //note: iOS only allows one crash reporting tool per app; if using another, set to: NO
+    [Flurry setCrashReportingEnabled:YES];
+    
+    // Replace YOUR_API_KEY with the api key in the downloaded package
+    [Flurry startSession:@"JCMVPQDYJZNCZVCJQ59P"];
     
     //check if we are using a iphone or ipad
     self.deviceIsIPhone = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? NO : YES;

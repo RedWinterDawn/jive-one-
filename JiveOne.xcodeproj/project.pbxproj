@@ -349,6 +349,7 @@
 		279E4CB5192273E5002A556C /* MBContactPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E4CA8192273E5002A556C /* MBContactPicker.m */; };
 		279E4CB6192273E5002A556C /* MBContactPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E4CA8192273E5002A556C /* MBContactPicker.m */; };
 		279E602418C8C59900C5CC9F /* JCPersonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 279E602318C8C59900C5CC9F /* JCPersonCell.xib */; };
+		27A0160A192EBCA70073C824 /* libFlurry_5.0.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27A01609192EBCA70073C824 /* libFlurry_5.0.0.a */; };
 		27A49AB018DC8BC00084DEE0 /* launch.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A49AAF18DC8BC00084DEE0 /* launch.png */; };
 		27B8152618D93F1A00516BF6 /* NotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B8152518D93F1A00516BF6 /* NotificationView.m */; };
 		27B8153618D94E9C00516BF6 /* close_notification.png in Resources */ = {isa = PBXBuildFile; fileRef = 27B8153418D94E9C00516BF6 /* close_notification.png */; };
@@ -725,6 +726,8 @@
 		279E4CA7192273E5002A556C /* MBContactPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBContactPicker.h; sourceTree = "<group>"; };
 		279E4CA8192273E5002A556C /* MBContactPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBContactPicker.m; sourceTree = "<group>"; };
 		279E602318C8C59900C5CC9F /* JCPersonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCPersonCell.xib; sourceTree = "<group>"; };
+		27A01608192EBCA70073C824 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
+		27A01609192EBCA70073C824 /* libFlurry_5.0.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_5.0.0.a; sourceTree = "<group>"; };
 		27A49AAF18DC8BC00084DEE0 /* launch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launch.png; sourceTree = "<group>"; };
 		27B8152418D93F1A00516BF6 /* NotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationView.h; sourceTree = "<group>"; };
 		27B8152518D93F1A00516BF6 /* NotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationView.m; sourceTree = "<group>"; };
@@ -1041,6 +1044,7 @@
 				DDCE1E8B18F3562D003A6615 /* CoreLocation.framework in Frameworks */,
 				2741EB8118FC4C0200F2FE64 /* CoreTelephony.framework in Frameworks */,
 				DDCE1E9718F3565F003A6615 /* SystemConfiguration.framework in Frameworks */,
+				27A0160A192EBCA70073C824 /* libFlurry_5.0.0.a in Frameworks */,
 				DDCE1E9318F3564D003A6615 /* Security.framework in Frameworks */,
 				DDCE1E8F18F35640003A6615 /* MobileCoreServices.framework in Frameworks */,
 				275F4A5218AD0FBC00D2F069 /* Foundation.framework in Frameworks */,
@@ -1564,6 +1568,7 @@
 		2764BDB918C83A80007320B0 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
+				27A01607192EBCA70073C824 /* Flurry */,
 				279E4C9A192273E5002A556C /* MBContactPicker */,
 				27F1F229191C171300AEAFD7 /* Airship */,
 				27F1778B18FDEECE0073C6AD /* TestFlightSDK3.0.0 */,
@@ -1670,6 +1675,15 @@
 				279E4CA8192273E5002A556C /* MBContactPicker.m */,
 			);
 			path = MBContactPicker;
+			sourceTree = "<group>";
+		};
+		27A01607192EBCA70073C824 /* Flurry */ = {
+			isa = PBXGroup;
+			children = (
+				27A01608192EBCA70073C824 /* Flurry.h */,
+				27A01609192EBCA70073C824 /* libFlurry_5.0.0.a */,
+			);
+			path = Flurry;
 			sourceTree = "<group>";
 		};
 		27F1778B18FDEECE0073C6AD /* TestFlightSDK3.0.0 */ = {
@@ -3011,6 +3025,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/JiveOne/TestFlightSDK3.0.0",
 					"$(PROJECT_DIR)/JiveOne/Airship",
+					"$(PROJECT_DIR)/JiveOne/Flurry",
 				);
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -3084,6 +3099,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/JiveOne/TestFlightSDK3.0.0",
 					"$(PROJECT_DIR)/JiveOne/Airship",
+					"$(PROJECT_DIR)/JiveOne/Flurry",
 				);
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -3241,6 +3257,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/JiveOne/TestFlightSDK3.0.0",
 					"$(PROJECT_DIR)/JiveOne/Airship",
+					"$(PROJECT_DIR)/JiveOne/Flurry",
 				);
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
 				ONLY_ACTIVE_ARCH = YES;
