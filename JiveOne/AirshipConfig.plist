@@ -12,5 +12,7 @@
 	<string></string>
 	<key>productionAppSecret</key>
 	<string></string>
+	<key>analyticsEnabled</key>
+	<false/>
 </dict>
 </plist>
