@@ -100,7 +100,6 @@ static NSString *CellIdentifier = @"DirectoryCell";
     [super viewWillAppear:animated];
     personMap = [[NSMutableDictionary alloc] init];
     [self loadCompanyDirectory];
-    NSLog(@"1 - Offset %f Inset %f Bar %f", self.tableView.contentOffset.y, self.tableView.contentInset.top, self.searchBarView.frame.origin.y);
     if (self.searchTableIsActive) {
         [self.searchDisplayController.searchBar resignFirstResponder];
     }
@@ -163,15 +162,15 @@ static NSString *CellIdentifier = @"DirectoryCell";
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     self.scrollViewOffset = scrollView.contentOffset.y;
     
-    if (!self.searchDisplayController.isActive) {
-        
+    if (!self.searchDisplayController.isActive){
     [self setSearchBarPosition:scrollView];
     [self handleScrollAtTop];
     }
-    else
+    else if (self.searchDisplayController.isActive)
     {
-        NSLog(@"Positiion %f",self.searchBarView.frame.origin.y);
+        // keep the content view from scrolling off the screen.
         [self.searchBarView setFrame:CGRectMake(0, 20, self.searchBarView.bounds.size.width, self.searchBarView.bounds.size.height)];
+        [self.searchDisplayController.searchResultsTableView setContentInset:UIEdgeInsetsMake(self.searchDisplayController.searchResultsTableView.contentInset.top, 0, 0, 0)];
     }
     
     self.previousOffset = self.scrollViewOffset;
@@ -660,8 +659,6 @@ shouldReloadTableForSearchString:(NSString *)searchString
     if (person) {
         [segue.destinationViewController setPerson:person];
     }
-    NSLog(@"0 - Offset %f Inset %f Bar %f", self.tableView.contentOffset.y, self.tableView.contentInset.top, self.searchBarView.frame.origin.y);
-
 }
 
 - (IBAction)refreshDirectory:(id)sender {
