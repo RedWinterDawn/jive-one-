@@ -68,6 +68,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [Flurry logEvent:@"Voicemail View"];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveNewVoicemail:) name:kNewVoicemail object:nil];
     [(JCAppDelegate *)[UIApplication sharedApplication].delegate clearBadgeCountForVoicemail];
     [self loadVoicemails];

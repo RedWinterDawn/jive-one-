@@ -99,6 +99,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
+    [Flurry logEvent:@"Login View"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -219,6 +220,7 @@
 - (void)tokenValidityPassed:(NSNotification*)notification
 {
     if (!self.seenTutorial) {
+        [Flurry logEvent:@"First Login"];
         [self performSegueWithIdentifier: @"AppTutorialSegue" sender: self];
     }
 //    else

@@ -28,10 +28,14 @@
             [self addVoicemail:entry withManagedContext:context];
         }
     }
+    
+    [self fetchVoicemailInBackground];
 }
 
 + (Voicemail *)addVoicemailEntry:(NSDictionary*)entry{
-    return [self addVoicemail:entry withManagedContext:nil];
+    Voicemail *voicemail = [self addVoicemail:entry withManagedContext:nil];
+    [self fetchVoicemailInBackground];
+    return voicemail;
 }
 
 + (Voicemail *)addVoicemail:(NSDictionary*)dictionary withManagedContext:(NSManagedObjectContext *)context
@@ -82,7 +86,6 @@
         
         
         //get all voicemail messages through a queue
-        [Voicemail fetchVoicemailInBackground];
     }
     return vmail;
 }

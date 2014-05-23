@@ -57,6 +57,7 @@ static NSString *GroupCellIdentifier = @"GroupChatCell";
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [Flurry logEvent:@"Conversation View"];
     [super viewWillAppear:animated];
     [self loadDatasource];
     

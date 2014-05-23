@@ -95,6 +95,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [Flurry logEvent:@"Contact View"];    
     personMap = [[NSMutableDictionary alloc] init];
     [self loadCompanyDirectory];
     

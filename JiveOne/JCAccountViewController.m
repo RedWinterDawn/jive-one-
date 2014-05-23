@@ -70,6 +70,7 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [Flurry logEvent:@"More View"];
     if (!me) {
         me = [[JCOmniPresence sharedInstance] me];
     }
@@ -176,6 +177,7 @@
 - (IBAction)logoutButtonPress:(id)sender {
     [[JCAuthenticationManager sharedInstance] logout:self];
     [self.tabBarController performSegueWithIdentifier:@"logoutSegue" sender:self.tabBarController];
+    [Flurry logEvent:@"Log out"];
 }
 
 

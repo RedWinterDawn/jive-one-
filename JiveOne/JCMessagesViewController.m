@@ -108,6 +108,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [Flurry logEvent:@"Message View"];
     context = [self context];
     [self scrollToBottomAnimated:NO];
 }
