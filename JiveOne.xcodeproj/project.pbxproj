@@ -2862,6 +2862,7 @@
 					"COCOAPODS=1",
 					"${inherited}",
 					"CONFIGURATION_$(CONFIGURATION)",
+					"LOGGER_TARGET=@\\\"$(LOGGER_TARGET)\\\"",
 				);
 				INFOPLIST_FILE = "JiveOneEnterprise-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
