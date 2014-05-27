@@ -97,16 +97,36 @@
     }
     else {
         
-        NSString *key = [NSString stringWithFormat:@"%@%@", [self.person.firstName substringToIndex:1], [self.person.lastName substringToIndex:1]];
+        NSString *firstInitial = @"";
+        NSString *secondInitial = @"";
         
-        UIImage *initialsImage = [[JCPersonCell cachedPresenceImages] objectForKey:key];
+        if (self.person.firstName && [self.person.firstName length] > 0) {
+            firstInitial = [self.person.firstName substringToIndex:1];
+        }
+        else {
+            [self.personPicture setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"avatar.png"]];
+            return;
+        }
+        
+        if (self.person.lastName && [self.person.lastName length] > 0) {
+            secondInitial = [self.person.lastName substringToIndex:1];
+        }
+        else {
+            [self.personPicture setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"avatar.png"]];
+            return;
+        }
+        
+        NSString *key = [NSString stringWithFormat:@"%@%@", firstInitial, secondInitial];
+        
+        UIImage *initialsImage = [[JCPersonCell chachedInitialsImages] objectForKey:key];
         if (!initialsImage) {
             UIView * groupCount = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 28, 28)];
             groupCount.backgroundColor = [UIColor colorWithRed:0.240 green:0.242 blue:0.242 alpha:.2];
             
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 20)];
-            label.textColor = [UIColor whiteColor];
-            label.text = [NSString stringWithFormat:@"%@%@", [self.person.firstName substringToIndex:1], [self.person.lastName substringToIndex:1]];
+            label.textColor = [UIColor whiteColor];           
+            
+            label.text = [NSString stringWithFormat:@"%@%@", firstInitial, secondInitial];
             [label sizeToFit];
             label.font = [UIFont boldSystemFontOfSize:12.0f];
             label.center = groupCount.center;
@@ -114,13 +134,11 @@
             [groupCount addSubview:label];
             
             initialsImage = [Common imageFromView:groupCount];
-            [[JCPersonCell cachedPresenceImages] setObject:initialsImage forKey:key];
+            [[JCPersonCell chachedInitialsImages] setObject:initialsImage forKey:key];
         }
         else {
             NSLog(@"Cache hit for key: %@", key);
         }
-        
-        //[iv setImage:countImage];
         
         [self.personPicture setImage:initialsImage];
     }
@@ -133,7 +151,7 @@
 * mutable array that is shared by all instaces of the initialsImage. We use the
 * dispatch once to ensure that it is only ever instanced once.
 */
-+ (NSMutableDictionary *)cachedPresenceImages {
++ (NSMutableDictionary *)chachedInitialsImages {
   static NSMutableDictionary *cachedPresenceImages = nil;
   static dispatch_once_t oncePredicate;
   dispatch_once(&oncePredicate, ^{
