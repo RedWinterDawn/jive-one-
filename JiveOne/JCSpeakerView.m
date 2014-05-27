@@ -11,7 +11,7 @@
 #import "JCStyleKit.h"
 
 @interface JCSpeakerView()
-@property BOOL isSelected;
+@property (nonatomic) BOOL isSelected;
 @property (nonatomic) JCVoiceCell* parentCell;
 @end
 
@@ -33,12 +33,14 @@
     [JCStyleKit drawSpeakerButtonWithSpeakerFrame:self.bounds speakerIsSelected:self.isSelected];
 }
 
+-(void)setIsSelected:(BOOL)isSelected
+{
+    _isSelected = isSelected;
+    [self setNeedsDisplay];
+
+}
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    NSLog(@"%@",self.superview.superview.superview.class);
-    
-    self.isSelected = !self.isSelected;
-    [self setNeedsDisplay];
     if (self.parentCell.delegate && [self.parentCell.delegate respondsToSelector:@selector(voicecellSpeakerTouched:)]) {
         [self.parentCell.delegate voicecellSpeakerTouched:YES];
     }

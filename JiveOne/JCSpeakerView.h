@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface JCSpeakerView : UIView
-
+-(void)setIsSelected:(BOOL)isSelected;
 @end
