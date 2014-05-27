@@ -79,6 +79,7 @@
 
 #pragma mark - UIConstants
 #define kShiftNameLabelThisMuch 5.0
+#define kShiftKeyboardTHisMuch 90
 
 #pragma mark - Debug Helpers
 #define kVoicemailURLOverRide @"NoDontUseAWSPlaceholderURL"

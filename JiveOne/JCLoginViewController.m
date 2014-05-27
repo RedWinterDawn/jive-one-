@@ -332,7 +332,7 @@
         CGRect frame = self.loginViewContainer.frame;
         CGRect logo = self.logo.frame;
         
-        frame.origin.y = (frame.origin.y - 40);
+        frame.origin.y = (frame.origin.y - kShiftKeyboardTHisMuch);
         //logo.origin.y = (frame.origin.y + 20);
         
         self.loginViewContainer.frame = frame;
@@ -349,7 +349,7 @@
     [UIView animateKeyframesWithDuration:0.2 delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
         CGRect frame = self.loginViewContainer.frame;
         
-        frame.origin.y = (frame.origin.y + 40);
+        frame.origin.y = (frame.origin.y + kShiftKeyboardTHisMuch);
         self.loginViewContainer.frame = frame;
     } completion:^(BOOL finished) {
         
