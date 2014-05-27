@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Conversation+Custom.h"
 
 @interface JCConversationParticipantsTableViewController : UITableViewController
+
+@property (nonatomic, strong) NSArray *entitiesArray;
+@property (nonatomic, strong) Conversation *conversation;
 
 @end

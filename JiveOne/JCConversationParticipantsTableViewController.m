@@ -7,31 +7,73 @@
 //
 
 #import "JCConversationParticipantsTableViewController.h"
+#import "JCPersonCell.h"
 
 @interface JCConversationParticipantsTableViewController ()
+
+@property (nonatomic, strong) NSMutableArray *peopleInConversation;
 
 @end
 
 @implementation JCConversationParticipantsTableViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
+static NSString *CellIdentifier = @"DirectoryCell";
+
+- (void)setConversation:(Conversation *)conversation
 {
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+    _conversation = conversation;
 }
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.tableView registerNib:[UINib nibWithNibName:@"JCPersonCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
+    UISwipeGestureRecognizer *swipeLeftGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeGesture:)];
+    [self.tableView addGestureRecognizer:swipeLeftGesture];
+    swipeLeftGesture.direction = UISwipeGestureRecognizerDirectionRight;
+
+    [self loadPeopleInConversation];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+}
+
+- (void)loadPeopleInConversation
+{
+    if (!_peopleInConversation) {
+        _peopleInConversation = [[NSMutableArray alloc] init];
+    }
+    else {
+        [_peopleInConversation removeAllObjects];
+    }
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    NSInteger conversationCount = ((NSArray *)_conversation.entities).count;
+    NSInteger personCount = [PersonEntities MR_findAll].count;
+    
+    if (conversationCount == personCount) {
+        _peopleInConversation = [NSMutableArray arrayWithArray:[PersonEntities MR_findAll]];
+    }
+    else {    
+        for (NSString *entityId in _conversation.entities) {
+            PersonEntities *person = [PersonEntities MR_findFirstByAttribute:@"entityId" withValue:entityId];
+            if (person) {
+                [_peopleInConversation addObject:person];
+            }
+        }
+    }
+}
+
+
+
+-(void)handleSwipeGesture:(UIGestureRecognizer *) sender
+{
+    NSUInteger touches = sender.numberOfTouches;
+    if (touches == 1 )
+    {
+        if (sender.state == UIGestureRecognizerStateEnded)
+        {
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -44,28 +86,28 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
+
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
+
     // Return the number of rows in the section.
-    return 0;
+    return _peopleInConversation.count;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    JCPersonCell *cell = [[JCPersonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     
-    // Configure the cell...
+    cell.person = _peopleInConversation[indexPath.row];
     
     return cell;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.
