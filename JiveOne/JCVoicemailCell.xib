@@ -80,7 +80,7 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="9LY-YY-Jqs" userLabel="slider" customClass="JCPopoverSlider">
+                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="9LY-YY-Jqs" userLabel="slider" customClass="JCPopoverSlider">
                         <rect key="frame" x="62" y="96" width="223" height="31"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <connections>
@@ -116,6 +116,7 @@
                 <outlet property="playButton" destination="55j-Qi-OwJ" id="5yt-MV-tFo"/>
                 <outlet property="shortTime" destination="NZe-HX-VVJ" id="S9Q-zV-Ltr"/>
                 <outlet property="slider" destination="9LY-YY-Jqs" id="yAH-3O-Hd6"/>
+                <outlet property="speakerView" destination="cp3-bc-vEw" id="fvq-Zd-4jk"/>
                 <outlet property="spinningWheel" destination="o6o-BF-Pb3" id="xaT-eY-sco"/>
                 <outlet property="titleLabel" destination="EDq-sG-3YO" id="yi6-wM-0DR"/>
                 <outlet property="userImage" destination="k9i-98-w2e" id="wNj-BW-VOo"/>

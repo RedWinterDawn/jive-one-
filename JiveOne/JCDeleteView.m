@@ -8,9 +8,12 @@
 
 #import "JCDeleteView.h"
 #import "JCStyleKit.h"
-
+#import "JCVoiceCell.h" 
+#import "JCVoiceTableViewController.h"
 @interface JCDeleteView()
 @property BOOL isSelected;
+@property (nonatomic) JCVoiceCell* parentCell;
+
 @end
 
 @implementation JCDeleteView
@@ -38,10 +41,26 @@
 {
     self.isSelected = !self.isSelected;
     [self setNeedsDisplay];
+    //close the cell then delete it.
+    if (self.parentCell.delegate && [self.parentCell.delegate respondsToSelector:@selector(voiceCellDeleteTapped:)]) {
+        if ([self.parentCell.delegate isKindOfClass:[JCVoiceTableViewController class]]) {
+            [(JCVoiceTableViewController*)self.parentCell.delegate addOrRemoveSelectedIndexPath:self.parentCell.indexPath];
+        }
+        [self.parentCell.delegate voiceCellDeleteTapped:self.parentCell.indexPath];
+    }
 }
 
--(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)sendDeleteMessage
 {
+    
+}
 
+- (JCVoiceCell*)parentCell
+{
+    if (![self.superview.superview.superview isKindOfClass:[JCVoiceCell class]]) {
+        NSLog(@"View Hierarchy is messed up for JCDeleteView");
+        return nil;
+    }
+    return (JCVoiceCell*)self.superview.superview.superview;
 }
 @end

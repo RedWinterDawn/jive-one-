@@ -7,10 +7,12 @@
 //
 
 #import "JCSpeakerView.h"
+#import "JCVoiceCell.h"
 #import "JCStyleKit.h"
 
 @interface JCSpeakerView()
 @property BOOL isSelected;
+@property (nonatomic) JCVoiceCell* parentCell;
 @end
 
 @implementation JCSpeakerView
@@ -21,6 +23,7 @@
     if (self) {
         // Initialization code
         self.isSelected = NO;
+
     }
     return self;
 }
@@ -32,9 +35,21 @@
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    NSLog(@"%@",self.superview.superview.superview.class);
+    
     self.isSelected = !self.isSelected;
     [self setNeedsDisplay];
+    if (self.parentCell.delegate && [self.parentCell.delegate respondsToSelector:@selector(voicecellSpeakerTouched:)]) {
+        [self.parentCell.delegate voicecellSpeakerTouched:YES];
+    }
 }
 
-
+- (JCVoiceCell*)parentCell
+{
+    if (![self.superview.superview.superview isKindOfClass:[JCVoiceCell class]]) {
+        NSLog(@"View Hierarchy is messed up for JCSpeakerView");
+        return nil;
+    }
+    return (JCVoiceCell*)self.superview.superview.superview;
+}
 @end

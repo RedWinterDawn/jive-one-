@@ -1641,9 +1641,9 @@
 			isa = PBXGroup;
 			children = (
 				919DD29A1922E2770039205E /* JCPopoverSlider */,
+				91E3738219351E0C00534C7C /* VoiceMailIcons */,
 				27EA1DFB1900A83D0075CAEE /* JCVoiceTableViewController.h */,
 				27EA1DFC1900A83D0075CAEE /* JCVoiceTableViewController.m */,
-				91E3738219351E0C00534C7C /* VoicMailIcons */,
 				273CC25C1900B23B005A2857 /* JCVoiceCell.h */,
 				273CC25D1900B23B005A2857 /* JCVoiceCell.m */,
 				91ADB98F18D8BBDA00DF41A3 /* JCVoicemailCell.xib */,
@@ -2060,7 +2060,7 @@
 			name = StyleKit;
 			sourceTree = "<group>";
 		};
-		91E3738219351E0C00534C7C /* VoicMailIcons */ = {
+		91E3738219351E0C00534C7C /* VoiceMailIcons */ = {
 			isa = PBXGroup;
 			children = (
 				91DDB1971935008A00550F10 /* JCSpeakerView.h */,
@@ -2068,7 +2068,7 @@
 				91DDB19B193500B500550F10 /* JCDeleteView.h */,
 				91DDB19C193500B500550F10 /* JCDeleteView.m */,
 			);
-			name = VoicMailIcons;
+			name = VoiceMailIcons;
 			sourceTree = "<group>";
 		};
 		91F6DFA9192A7009001C54FB /* Configuration */ = {

@@ -12,6 +12,12 @@
 @implementation JCVoiceCell
 
 
+- (void)awakeFromNib
+{
+    // Initialization code
+}
+
+
 - (void)setVoicemail:(Voicemail *)voicemail
 {
     _voicemail = voicemail;
@@ -49,21 +55,9 @@
         }
     }
     
-    [self setupButtons];
-    
-    
     [self.voicemail addObserver:self forKeyPath:kVoicemailKeyPathForVoicemal options:NSKeyValueObservingOptionNew context:NULL];
     
     [self styleCellForRead];
-}
-
--(void)setupButtons
-{
-    [self.speakerButton setImage:[JCStyleKit imageOfSpeakerButtonWithSpeakerFrame:self.speakerButton.bounds speakerIsSelected:NO] forState:UIControlStateNormal];
-    [self.speakerButton setImage:[JCStyleKit imageOfSpeakerButtonWithSpeakerFrame:self.speakerButton.frame speakerIsSelected:YES] forState:UIControlStateSelected];
-    [self.deleteButton setImage:[JCStyleKit imageOfSpeakerButtonWithSpeakerFrame:self.deleteButton.frame speakerIsSelected:NO]forState:UIControlStateNormal];
-    [self.deleteButton setImage:[JCStyleKit imageOfSpeakerButtonWithSpeakerFrame:self.deleteButton.frame speakerIsSelected:YES]forState:UIControlStateSelected];
-    
 }
 
 - (void)styleCellForRead
@@ -184,6 +178,12 @@
     }
 }
 
+-(IBAction)voiceCellDeleteTapped:(NSIndexPath *)indexPath
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(voiceCellDeleteTapped:)]) {
+        [self.delegate voiceCellDeleteTapped:indexPath];
+    }
+}
 - (void)setSpeakerButtonTint:(UIColor*)color
 {
     [_speakerButton.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];

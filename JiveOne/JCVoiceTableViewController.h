@@ -17,4 +17,6 @@
 - (void)updateTable;
 - (void)loadVoicemails;
 - (void)osgiClient:(JCOsgiClient*)client;
+- (void)voiceCellDeleteTapped:(NSIndexPath *)indexPath;
+- (void)addOrRemoveSelectedIndexPath:(NSIndexPath *)indexPath;
 @end
