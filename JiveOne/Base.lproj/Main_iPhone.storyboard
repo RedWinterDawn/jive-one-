@@ -709,7 +709,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="xnl-54-rzv">
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="rOk-sd-Q2j">
-                            <color key="tintColor" red="0.99215692280000001" green="0.99607849120000003" blue="0.99607849120000003" alpha="1" colorSpace="deviceRGB"/>
+                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="startNewConversation:" destination="Iav-LH-b6F" id="0TK-Bh-H7k"/>
                             </connections>
@@ -1032,7 +1032,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="PKy-V4-VLv"/>
-        <segue reference="4tJ-oe-047"/>
+        <segue reference="SEu-ym-TIt"/>
+        <segue reference="Nyn-nw-5LE"/>
     </inferredMetricsTieBreakers>
 </document>
