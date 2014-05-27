@@ -68,7 +68,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [Flurry logEvent:@"Voicemail View"];
+//    [Flurry logEvent:@"Voicemail View"];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveNewVoicemail:) name:kNewVoicemail object:nil];
     [(JCAppDelegate *)[UIApplication sharedApplication].delegate clearBadgeCountForVoicemail];
     [self loadVoicemails];
@@ -208,7 +208,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BOOL isSelected = [self.selectedIndexPaths containsObject:indexPath];
-    return isSelected ? 130.0f : 60.0f;
+    return isSelected ? 170.0f : 60.0f;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -346,6 +346,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
 - (void)voicecellSpeakerTouched:(BOOL)touched
 {
     useSpeaker = !useSpeaker;
+    [selectedCell.speakerButton setSelected:useSpeaker];
     [self setupSpeaker];
 }
 
@@ -465,10 +466,10 @@ static NSString *CellIdentifier = @"VoicemailCell";
         
         if (!error) {
             if (useSpeaker) {
-                [selectedCell performSelectorOnMainThread:@selector(setSpeakerButtonTint:) withObject:[UIColor colorWithRed:0.294 green:0.62 blue:0.89 alpha:1] waitUntilDone:NO];
+//                [selectedCell performSelectorOnMainThread:@selector(setSpeakerButtonTint:) withObject:[UIColor colorWithRed:0.294 green:0.62 blue:0.89 alpha:1] waitUntilDone:NO];
             }
             else {
-                [selectedCell performSelectorOnMainThread:@selector(setSpeakerButtonTint:) withObject:[UIColor blackColor] waitUntilDone:NO];
+//                [selectedCell performSelectorOnMainThread:@selector(setSpeakerButtonTint:) withObject:[UIColor blackColor] waitUntilDone:NO];
             }
         }
     }

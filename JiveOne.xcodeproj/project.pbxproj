@@ -353,7 +353,6 @@
 		27A0160E192EEF6F0073C824 /* entities.json in Resources */ = {isa = PBXBuildFile; fileRef = 27A0160D192EEF6F0073C824 /* entities.json */; };
 		27A01610192EF11C0073C824 /* voicemails.json in Resources */ = {isa = PBXBuildFile; fileRef = 27A0160F192EF11C0073C824 /* voicemails.json */; };
 		27A01612192EF1E80073C824 /* companies.json in Resources */ = {isa = PBXBuildFile; fileRef = 27A01611192EF1E80073C824 /* companies.json */; };
-		27A49AB018DC8BC00084DEE0 /* launch.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A49AAF18DC8BC00084DEE0 /* launch.png */; };
 		27B8152618D93F1A00516BF6 /* NotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B8152518D93F1A00516BF6 /* NotificationView.m */; };
 		27B8153618D94E9C00516BF6 /* close_notification.png in Resources */ = {isa = PBXBuildFile; fileRef = 27B8153418D94E9C00516BF6 /* close_notification.png */; };
 		27B8153718D94E9C00516BF6 /* close_notification@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27B8153518D94E9C00516BF6 /* close_notification@2x.png */; };
@@ -475,6 +474,12 @@
 		91B7CFCC192AD5B900927DDD /* search2.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7CFCA192AD5B900927DDD /* search2.png */; };
 		91B7CFCE192AD78B00927DDD /* searchGray2.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7CFCD192AD78B00927DDD /* searchGray2.png */; };
 		91B7CFCF192AD78B00927DDD /* searchGray2.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7CFCD192AD78B00927DDD /* searchGray2.png */; };
+		91DDB1891934E1E900550F10 /* JCStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DDB1881934E1E900550F10 /* JCStyleKit.m */; };
+		91DDB18A1934E1E900550F10 /* JCStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DDB1881934E1E900550F10 /* JCStyleKit.m */; };
+		91DDB1991935008A00550F10 /* JCSpeakerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DDB1981935008A00550F10 /* JCSpeakerView.m */; };
+		91DDB19A1935008A00550F10 /* JCSpeakerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DDB1981935008A00550F10 /* JCSpeakerView.m */; };
+		91DDB19D193500B500550F10 /* JCDeleteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DDB19C193500B500550F10 /* JCDeleteView.m */; };
+		91DDB19E193500B500550F10 /* JCDeleteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DDB19C193500B500550F10 /* JCDeleteView.m */; };
 		91F6DFA7192A6CCD001C54FB /* JCLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F6DFA6192A6CCD001C54FB /* JCLog.m */; };
 		91F6DFA8192A6CCD001C54FB /* JCLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F6DFA6192A6CCD001C54FB /* JCLog.m */; };
 		91F6DFAB192A702F001C54FB /* Shared.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 91F6DFAA192A702F001C54FB /* Shared.xcconfig */; };
@@ -735,7 +740,6 @@
 		27A0160D192EEF6F0073C824 /* entities.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = entities.json; sourceTree = "<group>"; };
 		27A0160F192EF11C0073C824 /* voicemails.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = voicemails.json; sourceTree = "<group>"; };
 		27A01611192EF1E80073C824 /* companies.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = companies.json; sourceTree = "<group>"; };
-		27A49AAF18DC8BC00084DEE0 /* launch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launch.png; sourceTree = "<group>"; };
 		27B8152418D93F1A00516BF6 /* NotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationView.h; sourceTree = "<group>"; };
 		27B8152518D93F1A00516BF6 /* NotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationView.m; sourceTree = "<group>"; };
 		27B8153418D94E9C00516BF6 /* close_notification.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close_notification.png; sourceTree = "<group>"; };
@@ -970,6 +974,12 @@
 		91B7CFC4192ABDF800927DDD /* JCSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSearchBar.m; sourceTree = "<group>"; };
 		91B7CFCA192AD5B900927DDD /* search2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search2.png; sourceTree = "<group>"; };
 		91B7CFCD192AD78B00927DDD /* searchGray2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = searchGray2.png; sourceTree = "<group>"; };
+		91DDB1871934E1E900550F10 /* JCStyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCStyleKit.h; sourceTree = "<group>"; };
+		91DDB1881934E1E900550F10 /* JCStyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCStyleKit.m; sourceTree = "<group>"; };
+		91DDB1971935008A00550F10 /* JCSpeakerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSpeakerView.h; sourceTree = "<group>"; };
+		91DDB1981935008A00550F10 /* JCSpeakerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSpeakerView.m; sourceTree = "<group>"; };
+		91DDB19B193500B500550F10 /* JCDeleteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDeleteView.h; sourceTree = "<group>"; };
+		91DDB19C193500B500550F10 /* JCDeleteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDeleteView.m; sourceTree = "<group>"; };
 		91F6DFA5192A6CCD001C54FB /* JCLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCLog.h; sourceTree = "<group>"; };
 		91F6DFA6192A6CCD001C54FB /* JCLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCLog.m; sourceTree = "<group>"; };
 		91F6DFAA192A702F001C54FB /* Shared.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Shared.xcconfig; sourceTree = "<group>"; };
@@ -1396,6 +1406,7 @@
 			isa = PBXGroup;
 			children = (
 				91F6DFA9192A7009001C54FB /* Configuration */,
+				91DDB1821934DED700550F10 /* StyleKit */,
 				2751590D18AD174F00FD8D3F /* KeychainItemWrapper.h */,
 				2751590E18AD174F00FD8D3F /* KeychainItemWrapper.m */,
 				9172AD5B19192A1500481B01 /* UserDefaults.plist */,
@@ -1626,6 +1637,10 @@
 				919DD29A1922E2770039205E /* JCPopoverSlider */,
 				27EA1DFB1900A83D0075CAEE /* JCVoiceTableViewController.h */,
 				27EA1DFC1900A83D0075CAEE /* JCVoiceTableViewController.m */,
+				91DDB1971935008A00550F10 /* JCSpeakerView.h */,
+				91DDB19B193500B500550F10 /* JCDeleteView.h */,
+				91DDB19C193500B500550F10 /* JCDeleteView.m */,
+				91DDB1981935008A00550F10 /* JCSpeakerView.m */,
 				273CC25C1900B23B005A2857 /* JCVoiceCell.h */,
 				273CC25D1900B23B005A2857 /* JCVoiceCell.m */,
 				91ADB98F18D8BBDA00DF41A3 /* JCVoicemailCell.xib */,
@@ -2031,6 +2046,15 @@
 				91B7CFCA192AD5B900927DDD /* search2.png */,
 			);
 			name = SearchBar;
+			sourceTree = "<group>";
+		};
+		91DDB1821934DED700550F10 /* StyleKit */ = {
+			isa = PBXGroup;
+			children = (
+				91DDB1871934E1E900550F10 /* JCStyleKit.h */,
+				91DDB1881934E1E900550F10 /* JCStyleKit.m */,
+			);
+			name = StyleKit;
 			sourceTree = "<group>";
 		};
 		91F6DFA9192A7009001C54FB /* Configuration */ = {
@@ -2550,6 +2574,7 @@
 				2727F35A191AA92F00A41185 /* JCOmniPresence.m in Sources */,
 				2727F35B191AA92F00A41185 /* ConversationEntry.m in Sources */,
 				91B7CFC6192ABDF800927DDD /* JCSearchBar.m in Sources */,
+				91DDB19E193500B500550F10 /* JCDeleteView.m in Sources */,
 				2727F35C191AA92F00A41185 /* ConversationETag.m in Sources */,
 				2727F35D191AA92F00A41185 /* JSMessageSoundEffect.m in Sources */,
 				2727F35E191AA92F00A41185 /* main.m in Sources */,
@@ -2575,6 +2600,7 @@
 				2727F371191AA92F00A41185 /* NSDictionary+QueryString.m in Sources */,
 				2727F372191AA92F00A41185 /* UIColor+JSMessagesView.m in Sources */,
 				279E4CB2192273E5002A556C /* MBContactCollectionViewPromptCell.m in Sources */,
+				91DDB19A1935008A00550F10 /* JCSpeakerView.m in Sources */,
 				2727F373191AA92F00A41185 /* JCAppDelegate.m in Sources */,
 				2727F374191AA92F00A41185 /* PersonEntities.m in Sources */,
 				2727F375191AA92F00A41185 /* NSNull+IntValue.m in Sources */,
@@ -2615,6 +2641,7 @@
 				2727F398191AA92F00A41185 /* NotificationView.m in Sources */,
 				2727F399191AA92F00A41185 /* ContactGroup.m in Sources */,
 				2727F39A191AA92F00A41185 /* JCSocketDispatch.m in Sources */,
+				91DDB18A1934E1E900550F10 /* JCStyleKit.m in Sources */,
 				2727F39B191AA92F00A41185 /* JCPage4ViewController.m in Sources */,
 				2727F39C191AA92F00A41185 /* NSString+JSMessagesView.m in Sources */,
 			);
@@ -2684,7 +2711,9 @@
 				27F1F2D7191C171300AEAFD7 /* UAInboxMessageListController.m in Sources */,
 				91260EDD18B2965900704670 /* JCDirectoryDetailViewController.m in Sources */,
 				2751591718AD300B00FD8D3F /* OsgiData.xcdatamodel in Sources */,
+				91DDB19D193500B500550F10 /* JCDeleteView.m in Sources */,
 				2751591118AD174F00FD8D3F /* KeychainItemWrapper.m in Sources */,
+				91DDB1991935008A00550F10 /* JCSpeakerView.m in Sources */,
 				2751591318AD174F00FD8D3F /* JCAuthenticationManager.m in Sources */,
 				2700988118F4714100B6BC2F /* JSMessageTextView.m in Sources */,
 				27F1F2E8191C171300AEAFD7 /* UAPushSettingsChannelInfoViewController.m in Sources */,
@@ -2694,6 +2723,7 @@
 				2700987D18F4714100B6BC2F /* JSMessageInputView.m in Sources */,
 				27F1F2D9191C171300AEAFD7 /* UAInboxNavUI.m in Sources */,
 				9172AD521918362800481B01 /* JCPageClass.m in Sources */,
+				91DDB1891934E1E900550F10 /* JCStyleKit.m in Sources */,
 				2736698218BD441D0069B4B3 /* JCPersonCell.m in Sources */,
 				2788F143190EACD20099348D /* VoicemailETag.m in Sources */,
 				27F1F2EA191C171300AEAFD7 /* UAPushSettingsTagsViewController.m in Sources */,
