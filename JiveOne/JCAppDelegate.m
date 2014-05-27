@@ -51,7 +51,6 @@ int didNotify;
     
     // Replace YOUR_API_KEY with the api key in the downloaded package
     [Flurry startSession:@"JCMVPQDYJZNCZVCJQ59P"];
-    [Flurry logEvent:@"Begin Session"];
     
     //check if we are using a iphone or ipad
     self.deviceIsIPhone = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? NO : YES;
@@ -282,16 +281,21 @@ int didNotify;
         _badges = [NSMutableDictionary dictionaryWithDictionary:badgeDictionary];
     }
     
-    NSInteger count = 0;
-    if (_badges) {
-        for (NSString *key in _badges)
-        {
-            NSNumber *number = [_badges objectForKey:key];
-            count = count + [number integerValue];
-        }
-    }
+    return _badges.count;
+//    NSInteger count = 0;
+//    if (_badges) {
+//        
+//        [_badges enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+//            NSNumber *number = [_badges objectForKey:key];
+//            count = count + [number integerValue];
+//        }];
+//        for (NSString *key in _badges)
+//        {
+//            
+//        }
+//    }
     
-    return count;
+//    return count;
 }
 
 
@@ -327,47 +331,55 @@ int didNotify;
 {
     JCLogInfo_();
     NSLog(@"APPDELEGATE - performFetchWithCompletionHandler");
+    __block UIBackgroundFetchResult fetchResult = UIBackgroundFetchResultFailed;
     if ([[JCSocketDispatch sharedInstance] socketState] != SR_OPEN) {
-        [[JCAuthenticationManager sharedInstance] checkForTokenValidity];
+        //[[JCAuthenticationManager sharedInstance] checkForTokenValidity];
         __block UIBackgroundFetchResult fetchResult = UIBackgroundFetchResultFailed;
         
-        @try {
-            
-            TRVSMonitor *monitor = [TRVSMonitor monitor];
-            NSInteger previousCount = [self currentBadgeCount];
-            
-            [[JCSocketDispatch sharedInstance] startPoolingFromSocketWithCompletion:^(BOOL success, NSError *error) {
-                if (success) {
-                    NSLog(@"Success Done with Block");
-                }
-                else {
-                    NSLog(@"Error Done With Block %@", error);
-                }
-                [monitor signal];
-            }];
-            
-            [monitor waitWithTimeout:25];
-            
-            NSInteger afterCount = [self currentBadgeCount];
-            
-            if (afterCount == 0 || (afterCount == previousCount)) {
-                fetchResult = UIBackgroundFetchResultNoData;
-            }
-            else if (afterCount > previousCount) {
-                fetchResult = UIBackgroundFetchResultNewData;
-                [self refreshTabBadges:YES];
-            }
-        }
-        @catch (NSException *exception) {
-            NSLog(@"%@", exception);
-        }
-        @finally {
-            if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground ) {
-                [self stopSocket];
-            }
-            return fetchResult;
-        }
+//        @try {
+//            
+//            TRVSMonitor *monitor = [TRVSMonitor monitor];
+//            NSInteger previousCount = [self currentBadgeCount];
+//            
+//            [[JCSocketDispatch sharedInstance] startPoolingFromSocketWithCompletion:^(BOOL success, NSError *error) {
+//                if (success) {
+//                    NSLog(@"Success Done with Block");
+//                }
+//                else {
+//                    NSLog(@"Error Done With Block %@", error);
+//                }
+//                [monitor signal];
+//            }];
+//            
+//            [monitor waitWithTimeout:25];
+//            
+//            NSInteger afterCount = [self currentBadgeCount];
+//            
+//            if (afterCount == 0 || (afterCount == previousCount)) {
+//                fetchResult = UIBackgroundFetchResultNoData;
+//            }
+//            else if (afterCount > previousCount) {
+//                fetchResult = UIBackgroundFetchResultNewData;
+//                [self refreshTabBadges:YES];
+//            }
+//        }
+//        @catch (NSException *exception) {
+//            NSLog(@"%@", exception);
+//        }
+//        @finally {
+//            if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground ) {
+//                if ([[JCSocketDispatch sharedInstance] socketState] == SR_OPEN) {
+//                    [self stopSocket];
+//                }
+//
+//            }
+//            
+//        }
+        
+        
     }
+    
+    return fetchResult;
 }
 
 
@@ -599,20 +611,20 @@ int didNotify;
     //if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive)  {
         
         NSMutableDictionary *_badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
-        
-        NSMutableDictionary *convCopy;
-        for (NSString *key in _badges) {
-            convCopy = nil;
+    
+    
+        [_badges enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
             NSRange rangeConversation = [key rangeOfString:@"conversations"];
             NSRange rangeRooms = [key rangeOfString:@"permanentrooms"];
             if (rangeConversation.location != NSNotFound || rangeRooms.location != NSNotFound) {
+                NSMutableDictionary *convCopy = nil;
                 NSMutableDictionary *conversations = [_badges[key] mutableCopy];
                 if (conversations) {
                     convCopy = [[conversations copy] mutableCopy];
                     for (NSString *entry in conversations) {
                         NSNumber *shown = conversations[entry];
                         if (![shown boolValue]) {
-                           
+                            
                             ConversationEntry *lastEntry = [ConversationEntry MR_findFirstByAttribute:@"entryId" withValue:entry];
                             PersonEntities *person = [PersonEntities MR_findFirstByAttribute:@"entityId" withValue:lastEntry.entityId];
                             NSString *alertMessage = [NSString stringWithFormat:@"%@: \"%@\"", person.firstName, lastEntry.message[@"raw"]];
@@ -628,21 +640,27 @@ int didNotify;
                 
             }
             
-//            NSRange rangeVoicemail = [key rangeOfString:@"voicemails"];
-//            if (rangeVoicemail.location != NSNotFound ) {
-//                NSNumber *notified = _badges[key];
-//                if (![notified boolValue]) {
-//                    Voicemail *lastEntry = [ConversationEntry MR_findFirstByAttribute:@"voicemailId" withValue:key];
-//                    if (lastEntry) {
-//                         NSString *alertMessage = [NSString stringWithFormat:@"New voicemail from %@", lastEntry.callerNumber];
-//                        [self showLocalNotificationWithType:@"voicemail" alertMessage:alertMessage];
-//                        
-//                         [_badges setObject:[NSNumber numberWithBool:YES] forKey:key];
+            NSRange rangeVoicemail = [key rangeOfString:@"voicemails"];
+            if (rangeVoicemail.location != NSNotFound ) {
+                NSNumber *notified = _badges[key];
+                if (![notified boolValue]) {
+                    notified = [NSNumber numberWithBool:YES];
+                    Voicemail *lastEntry = [Voicemail MR_findFirstByAttribute:@"voicemailId" withValue:key];
+                    if (lastEntry) {
+                        NSString *alertMessage = lastEntry.callerNumber ? [NSString stringWithFormat:@"New voicemail from %@", lastEntry.callerNumber]  : @"Unknown";
+                        [self showLocalNotificationWithType:@"voicemail" alertMessage:alertMessage];
+                    }
+                }
+                _badges[key] = notified;
+                //[[NSUserDefaults standardUserDefaults] setObject:[_badges copy] forKey:@"badges"];
+                //[[NSUserDefaults standardUserDefaults] synchronize];
+            }
+
+        }];
+    
+//        for (NSString *key in _badges) {
 //                    }
-//                }
-//            }
-        }
-        
+    
         [[NSUserDefaults standardUserDefaults] setObject:[_badges copy] forKey:@"badges"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     //}
