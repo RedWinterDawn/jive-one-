@@ -14,6 +14,8 @@
 
 - (void) loadDatasource;
 - (IBAction)startNewConversation:(id)sender;
+- (IBAction)startNewConversationWithNewSearch:(id)sender;
+
 -(void)DeleteConversationFromServer:(NSString*)conversationId;
 
 @end

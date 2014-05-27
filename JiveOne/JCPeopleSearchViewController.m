@@ -1,12 +1,12 @@
 //
-//  JCDirectoryViewController.m
-//  JiveAppOne
+//  JCPeopleSearchViewController.m
+//  JiveOne
 //
-//  Created by Eduardo Gueiros on 2/10/14.
+//  Created by P Leonard on 5/27/14.
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCDirectoryViewController.h"
+#import "JCPeopleSearchViewController.h"
 #import "PersonEntities.h"
 #import "PersonMeta.h"
 #import "JCOsgiClient.h"
@@ -21,7 +21,7 @@
 
 
 
-@interface JCDirectoryViewController ()
+@interface JCPeopleSearchViewController ()
 {
     NSMutableDictionary *personMap;
     UISearchDisplayController *searchDisplayController;
@@ -44,7 +44,7 @@
 
 @end
 
-@implementation JCDirectoryViewController
+@implementation JCPeopleSearchViewController
 
 static NSString *CellIdentifier = @"DirectoryCell";
 
@@ -55,7 +55,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
     self.previousOffset = 0;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"JCPersonCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
-
+    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     NSString *star = @"\u2605";
@@ -113,7 +113,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
-
+    
     [UIView animateWithDuration:0.25
                           delay:0
                         options:UIViewAnimationOptionBeginFromCurrentState
@@ -162,8 +162,8 @@ static NSString *CellIdentifier = @"DirectoryCell";
     self.scrollViewOffset = scrollView.contentOffset.y;
     
     if (!self.searchDisplayController.isActive){
-    [self setSearchBarPosition:scrollView];
-    [self handleScrollAtTop];
+        [self setSearchBarPosition:scrollView];
+        [self handleScrollAtTop];
     }
     else if (self.searchDisplayController.isActive)
     {
@@ -204,22 +204,22 @@ static NSString *CellIdentifier = @"DirectoryCell";
         NSLog(@"2 - Changed sFrame from %f to %f", self.searchBarView.frame.origin.y, frame_orgin_y);
     }
     self.searchBarView.frame = CGRectMake(self.searchBarView.frame.origin.x,
-                                      frame_orgin_y,
-                                      self.searchBarView.frame.size.width, self.searchBarView.frame.size.height);
+                                          frame_orgin_y,
+                                          self.searchBarView.frame.size.width, self.searchBarView.frame.size.height);
     self.scrollDirectionIsUp = YES;
     if (self.scrollViewOffset > -64) {
         float inset = (frame_orgin_y + 44) < 64 ? 64 : frame_orgin_y + 44;
         if (self.scrollView.contentInset.top != inset) NSLog(@"2.1 - Changed Inset from: %f to: %f", self.scrollView.contentInset.top , inset);
         self.scrollView.contentInset = UIEdgeInsetsMake(inset , 0, 0, 0);
     }
-
+    
 }
 
 - (void)scrollDirectionDidChangeToUp
 {
     self.scrollViewOffsetReference = self.scrollViewOffset;
     self.searchBarY_Reference = self.searchBarView.frame.origin.y;
-
+    
 }
 
 - (void)scrollDirectionDidChangeToDown
@@ -230,7 +230,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
 
 -(void)handleScrollDown
 {
-
+    
     const float LOWER_THREASHOLD = 64;
     self.deltaOffsetSinceLastDirectionChange = (abs(self.scrollViewOffsetReference - self.scrollViewOffset));
     float frame_orgin_y = (self.searchBarView.frame.origin.y >= LOWER_THREASHOLD) ? LOWER_THREASHOLD : (self.searchBarY_Reference + self.deltaOffsetSinceLastDirectionChange);
@@ -238,8 +238,8 @@ static NSString *CellIdentifier = @"DirectoryCell";
         NSLog(@"3 - Changed sFrame from %f to %f", self.searchBarView.frame.origin.y, frame_orgin_y);
     }
     self.searchBarView.frame = CGRectMake(self.searchBarView.frame.origin.x,
-                                      frame_orgin_y,
-                                      self.searchBarView.frame.size.width, self.searchBarView.frame.size.height);
+                                          frame_orgin_y,
+                                          self.searchBarView.frame.size.width, self.searchBarView.frame.size.height);
     self.scrollDirectionIsUp = NO;
     
     //set the inset - to control the position of the section headers.
@@ -341,8 +341,8 @@ static NSString *CellIdentifier = @"DirectoryCell";
             }
         });
     }
-  
-
+    
+    
     NSArray *allContacts = (__bridge_transfer NSArray *)ABAddressBookCopyArrayOfAllPeople(addressBook);
     CFRelease(addressBook);
     NSInteger sectionCount = [sections count];
@@ -364,8 +364,8 @@ static NSString *CellIdentifier = @"DirectoryCell";
                 [tempDictionary setObject:[self padNilPhoneNames:[NSString stringWithFormat:@"%@ %@", firstName, lastName] ] forKey:@"firstLast"];
                 [tempDictionary setObject:email forKey:@"email"];
                 [tempDictionary setObject:phone forKey:@"phone"];
-            
-            [section addObject:tempDictionary];
+                
+                [section addObject:tempDictionary];
                 
             }
         }
@@ -492,7 +492,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         return self.clientEntitiesSearchArray.count;
     }else{
-    //show all results
+        //show all results
         if (self.clientEntitiesArray.count == 0) {
             return 0;
         } else {
@@ -513,7 +513,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
         person = self.clientEntitiesArray[indexPath.section][indexPath.row];
     }
     else{
-
+        
         if (!cell) {
             cell = [[JCPersonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
@@ -523,7 +523,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
     }
     
     if (person) {
-    
+        
         cell.person = person;
         
         //check to see if the person is a favorite
@@ -543,9 +543,9 @@ static NSString *CellIdentifier = @"DirectoryCell";
             cell.personNameLabel.attributedText = personAttributedName;
         }
     }
-
+    
     return cell;
- 
+    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -576,8 +576,8 @@ static NSString *CellIdentifier = @"DirectoryCell";
     
     if ([searchTerms count] == 1) {
         pred = [NSPredicate predicateWithFormat:@"(firstName contains[cd] %@) OR (lastName contains[cd] %@) OR (email contains[cd] %@)"
-                                  //OR (phoneNumber contains[cd] %@)", searchText
-                                  , searchText, searchText, searchText];;
+                //OR (phoneNumber contains[cd] %@)", searchText
+                , searchText, searchText, searchText];;
     } else {
         NSMutableArray *subPredicates = [[NSMutableArray alloc] init];
         for (NSString *term in searchTerms) {
@@ -683,10 +683,4 @@ shouldReloadTableForSearchString:(NSString *)searchString
 }
 
 @end
-
-
-
-
-
-
 

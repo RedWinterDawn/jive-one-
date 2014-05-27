@@ -526,6 +526,8 @@
 		F59AE2CA192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2BC192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png */; };
 		F59AE2CC192F0B0D00CAF0F3 /* iPadLaunch2Xnew.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2CB192F0B0D00CAF0F3 /* iPadLaunch2Xnew.png */; };
 		F59AE2CD192F0B0D00CAF0F3 /* iPadLaunch2Xnew.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2CB192F0B0D00CAF0F3 /* iPadLaunch2Xnew.png */; };
+		F5C8F16A19351604007372A1 /* JCPeopleSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C8F16919351604007372A1 /* JCPeopleSearchViewController.m */; };
+		F5C8F16B19351604007372A1 /* JCPeopleSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C8F16919351604007372A1 /* JCPeopleSearchViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1023,6 +1025,8 @@
 		F59AE2BB192F07BA00CAF0F3 /* iPhone2XnewBlur.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhone2XnewBlur.png; sourceTree = "<group>"; };
 		F59AE2BC192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhone2XnewBlurSmall.png; sourceTree = "<group>"; };
 		F59AE2CB192F0B0D00CAF0F3 /* iPadLaunch2Xnew.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPadLaunch2Xnew.png; sourceTree = "<group>"; };
+		F5C8F16819351604007372A1 /* JCPeopleSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPeopleSearchViewController.h; sourceTree = "<group>"; };
+		F5C8F16919351604007372A1 /* JCPeopleSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPeopleSearchViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1627,6 +1631,8 @@
 				9137919518FDB0EE00709AD3 /* JCGroupConversationCell.h */,
 				9137919618FDB0EE00709AD3 /* JCGroupConversationCell.m */,
 				9137919718FDB0EE00709AD3 /* JCGroupConversationCell.xib */,
+				F5C8F16819351604007372A1 /* JCPeopleSearchViewController.h */,
+				F5C8F16919351604007372A1 /* JCPeopleSearchViewController.m */,
 			);
 			name = Conversation;
 			sourceTree = "<group>";
@@ -2567,6 +2573,7 @@
 				2727F354191AA92F00A41185 /* JCGroupSelectorViewController.m in Sources */,
 				2727F355191AA92F00A41185 /* JCStatusViewController.m in Sources */,
 				2727F356191AA92F00A41185 /* Presence+Custom.m in Sources */,
+				F5C8F16B19351604007372A1 /* JCPeopleSearchViewController.m in Sources */,
 				279E4CAC192273E5002A556C /* MBContactCollectionViewContactCell.m in Sources */,
 				2727F357191AA92F00A41185 /* JCContactModel.m in Sources */,
 				2727F358191AA92F00A41185 /* JSBubbleImageViewFactory.m in Sources */,
@@ -2651,6 +2658,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5C8F16A19351604007372A1 /* JCPeopleSearchViewController.m in Sources */,
 				9103271718F34BEC00437503 /* JCPeopleDetailCell.m in Sources */,
 				F2459BB218C67FC000AF56CF /* JCGroupSelectorViewController.m in Sources */,
 				277F094218FED58C00EEF0E3 /* JCStatusViewController.m in Sources */,

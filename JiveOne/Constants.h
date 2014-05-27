@@ -80,6 +80,9 @@
 #pragma mark - UIConstants
 #define kShiftNameLabelThisMuch 5.0
 #define kShiftKeyboardTHisMuch 90
+//Applied to the People view
+#define kUINameRowHeight 100
+#define kUIRowHeight 50
 
 #pragma mark - Debug Helpers
 #define kVoicemailURLOverRide @"NoDontUseAWSPlaceholderURL"

@@ -99,6 +99,9 @@ static NSString *GroupCellIdentifier = @"GroupChatCell";
     [self performSegueWithIdentifier:@"MessageSegue" sender:kNewConversation];
 }
 
+- (IBAction)startNewConversationWithNewSearch:(id)sender {
+    [self performSegueWithIdentifier:@"MessageSegue" sender:kNewConversation];
+}
 
 - (void)fetchLastConverstions
 {
