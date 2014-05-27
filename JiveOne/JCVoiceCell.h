@@ -34,6 +34,7 @@
 @property (weak,nonatomic) IBOutlet UILabel  *duration;
 @property (weak,nonatomic) IBOutlet UILabel  *shortTime;
 @property (weak,nonatomic) IBOutlet UIButton *speakerButton;
+@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 @property (weak,nonatomic) IBOutlet JCPopoverSlider *slider;
 @property (weak, nonatomic) IBOutlet UIImageView *userImage;
 @property (weak, nonatomic) IBOutlet UIImageView *voicemailIcon;
@@ -47,6 +48,6 @@
 - (IBAction)progressSliderTouched:(id)sender;
 - (IBAction)speakerTouched:(id)sender;
 - (void)setSliderValue:(float)position;
-- (void)setSpeakerButtonTint:(UIColor*)color;
 - (void)styleCellForRead;
+- (void)setupButtons;
 @end
