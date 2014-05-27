@@ -30,6 +30,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="iPhone2Xnew.png" translatesAutoresizingMaskIntoConstraints="NO" id="e8O-2j-1gU">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="656"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </imageView>
                             <view clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AVw-9n-3yN">
                                 <rect key="frame" x="20" y="318" width="280" height="150"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -79,10 +83,6 @@
                                     <constraint firstItem="BG2-EN-8KO" firstAttribute="top" secondItem="AVw-9n-3yN" secondAttribute="top" constant="-207" id="pQt-cz-Kvt"/>
                                 </constraints>
                             </view>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="iPhone2Xnew.png" translatesAutoresizingMaskIntoConstraints="NO" id="e8O-2j-1gU">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="656"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uq2-OG-5Nj">
                                 <rect key="frame" x="84" y="20" width="152" height="232"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
