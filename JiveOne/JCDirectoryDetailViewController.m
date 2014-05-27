@@ -17,6 +17,7 @@
 @interface JCDirectoryDetailViewController ()
 
 
+
 @property (nonatomic) NSManagedObjectContext* managedContext;
 
 @end
@@ -149,7 +150,7 @@
     {
         case 0:
         {
-            result = kUINameRowHeight;
+            result = kUINameRowHeight-44;
             break;
         }
         case 1:
