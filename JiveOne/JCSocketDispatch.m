@@ -196,6 +196,8 @@
 
 - (void)closeSocket
 {
+    NSLog(@"Did pull before closing the socket");
+    
     if ([subscriptionTimer isValid]) {
         [subscriptionTimer invalidate];
     }
@@ -233,6 +235,7 @@
     
     if (messageDictionary[@"cmd"]) {
         if ([messageDictionary[@"cmd"] isEqualToString:@"noMessage"] && startedInBackground) {
+            [_webSocket send:self.json_poll];
             [self closeSocket];
         }
     }
@@ -292,7 +295,11 @@
 {
     
     NSString *type = [self getMessageType:message];
-    //NSString *operation = message[@"data"][@"operation"];
+    NSString *operation = nil;
+    if (message[@"data"][@"operation"]) {
+        operation = message[@"data"][@"operation"];
+    }
+    
     NSDictionary *body = [[message objectForKey:@"data"] objectForKey:@"body"];
     
     if ([type isEqualToString:kSocketConversations] || [type isEqualToString:kSocketPermanentRooms]) {
@@ -348,7 +355,7 @@
         }        
         
         //there was no voicemail prior, and now we have one meaning it was successfullt added. Otherwise it was an update.
-        if (voicemails.count == 0 && voicemail) {
+        if (voicemails.count == 0 && voicemail && [operation isEqualToString:@"posted"]) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kNewVoicemail object:voicemail];
             [JSMessageSoundEffect playSMSReceived];
             [(JCAppDelegate *)[UIApplication sharedApplication].delegate incrementBadgeCountForVoicemail:voicemail.voicemailId];
