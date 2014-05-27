@@ -327,10 +327,16 @@
 
 - (void)keyboardDidShow:(NSNotification *)notification
 {
+    //This animates the view when the keyboard appears and shifts it up in responce.
     [UIView animateKeyframesWithDuration:0.2 delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
-        CGRect frame = self.view.frame;
-        frame.origin.y = (frame.origin.y - 60);
-        self.view.frame = frame;
+        CGRect frame = self.loginViewContainer.frame;
+        CGRect logo = self.logo.frame;
+        
+        frame.origin.y = (frame.origin.y - 40);
+        //logo.origin.y = (frame.origin.y + 20);
+        
+        self.loginViewContainer.frame = frame;
+        self.logo.frame = logo;
     } completion:^(BOOL finished) {
         
     }];
@@ -339,10 +345,12 @@
 
 - (void)keyboardDidHide:(NSNotification *)notification
 {
+    //This animates the view when the keyboard disappears and shifts it down in responce.
     [UIView animateKeyframesWithDuration:0.2 delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
-        CGRect frame = self.view.frame;
-        frame.origin.y = (frame.origin.y + 60);
-        self.view.frame = frame;
+        CGRect frame = self.loginViewContainer.frame;
+        
+        frame.origin.y = (frame.origin.y + 40);
+        self.loginViewContainer.frame = frame;
     } completion:^(BOOL finished) {
         
     }];
