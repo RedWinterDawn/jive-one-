@@ -470,7 +470,11 @@ static NSString *CellIdentifier = @"DirectoryCell";
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
+    if (self.searchDisplayController.active) {
+        return nil;
+    } else {
     return sections;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString*)title atIndex:(NSInteger)index
