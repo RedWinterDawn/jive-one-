@@ -17,6 +17,7 @@
 #import "Common.h"
 #import "JCAppDelegate.h"
 #import "TRVSMonitor.h"
+#import "JCConversationParticipantsTableViewController.h"
 
 @interface JCMessagesViewController ()
 {
@@ -31,6 +32,7 @@
 @property (nonatomic) NSMutableArray *selectedContacts;
 @property (weak, nonatomic) IBOutlet MBContactPicker *contactPickerView;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contactPickerViewHeightConstraint;
+@property (nonatomic, strong) Conversation *conversation;
 
 
 @end
@@ -125,6 +127,17 @@
     
     [self setCustomHeader];
     
+    
+    UISwipeGestureRecognizer *swipeLeftGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeGesture:)];
+    [self.tableView addGestureRecognizer:swipeLeftGesture];
+    swipeLeftGesture.direction=UISwipeGestureRecognizerDirectionLeft;
+    
+    // set a different back button for the navigation controller
+    UIBarButtonItem *myBackButton = [[UIBarButtonItem alloc]init];
+    myBackButton.title = @"";
+    self.navigationItem.backBarButtonItem = myBackButton;
+    
+    
     switch (_messageType) {
             
         case JCExistingConversation: {
@@ -179,6 +192,25 @@
     
     [self enableSendButtonBasedOnSelectedContacts];
     
+}
+
+-(void)handleSwipeGesture:(UIGestureRecognizer *) sender
+{
+    NSUInteger touches = sender.numberOfTouches;
+    if (touches == 1 )
+    {
+        if (sender.state == UIGestureRecognizerStateEnded)
+        {
+            if (_conversationId) {
+                [self performSegueWithIdentifier:@"participantsSegue" sender:nil];
+            }
+        }
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    [segue.destinationViewController setConversation:_conversation];
 }
 
 - (void) setCustomHeader
@@ -243,16 +275,16 @@
             
         // datasource for avatars
         
-            Conversation *conversation = [Conversation MR_findFirstByAttribute:@"conversationId" withValue:_conversationId];
-            if (conversation) {
+            _conversation = [Conversation MR_findFirstByAttribute:@"conversationId" withValue:_conversationId];
+            if (_conversation) {
                 if(!self.avatars){
                     self.avatars = [NSMutableDictionary new];
                 }
                 
-                NSArray *conversationMembers = (NSArray *)conversation.entities;
+                NSArray *conversationMembers = (NSArray *)_conversation.entities;
                 
-                if ([conversation.isGroup boolValue]) {
-                    title = conversation.name;
+                if ([_conversation.isGroup boolValue]) {
+                    title = _conversation.name;
                 }
                 else if(conversationMembers.count > 2){
 #if DEBUG
@@ -269,7 +301,7 @@
                     if (person) {
                         [self.avatars setObject:person.picture forKey:person.firstLastName];
                         
-                        if (person != me && ![conversation.isGroup boolValue]) {
+                        if (person != me && ![_conversation.isGroup boolValue]) {
                             title = person.firstLastName;
                             subtitle = person.email;
                         }
