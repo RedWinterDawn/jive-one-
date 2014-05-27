@@ -30,12 +30,18 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
-    [JCStyleKit drawTrashButtonWithOuterFrame:self.bounds speakerIsSelected:self.isSelected];
+    [JCStyleKit drawTrashButtonWithOuterFrame:self.bounds selectWithDeleteColor:self.isSelected];
+
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     self.isSelected = !self.isSelected;
     [self setNeedsDisplay];
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+
 }
 @end

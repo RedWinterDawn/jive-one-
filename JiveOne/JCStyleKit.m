@@ -32,37 +32,15 @@
 
 
     //// Subframes
-    CGRect innerFrame = CGRectMake(CGRectGetMinX(speakerFrame) + floor(CGRectGetWidth(speakerFrame) * 0.34359 + 0.5), CGRectGetMinY(speakerFrame) + floor(CGRectGetHeight(speakerFrame) * 0.17722 + 0.5), floor(CGRectGetWidth(speakerFrame) * 0.66154 + 0.5) - floor(CGRectGetWidth(speakerFrame) * 0.34359 + 0.5), floor(CGRectGetHeight(speakerFrame) * 0.81013 + 0.5) - floor(CGRectGetHeight(speakerFrame) * 0.17722 + 0.5));
-    CGRect speakerGroup = CGRectMake(CGRectGetMinX(innerFrame) + 1.75, CGRectGetMinY(innerFrame) + floor(CGRectGetHeight(innerFrame) * 0.05000 + 0.5), floor((CGRectGetWidth(innerFrame) - 1.75) * 0.99419 + 1.6) - 1.1, floor(CGRectGetHeight(innerFrame) * 1.00000) - floor(CGRectGetHeight(innerFrame) * 0.05000 + 0.5) + 0.5);
+    CGRect innerFrame = CGRectMake(CGRectGetMinX(speakerFrame) + floor(CGRectGetWidth(speakerFrame) * 0.37949 + 0.5), CGRectGetMinY(speakerFrame) + floor(CGRectGetHeight(speakerFrame) * 0.21429 + 0.5), floor(CGRectGetWidth(speakerFrame) * 0.62051 + 0.5) - floor(CGRectGetWidth(speakerFrame) * 0.37949 + 0.5), floor(CGRectGetHeight(speakerFrame) * 0.77143 + 0.5) - floor(CGRectGetHeight(speakerFrame) * 0.21429 + 0.5));
+    CGRect speakerGroup = CGRectMake(CGRectGetMinX(innerFrame) + 0.75, CGRectGetMinY(innerFrame) + floor(CGRectGetHeight(innerFrame) * 0.02564) + 0.5, floor((CGRectGetWidth(innerFrame) - 0.75) * 0.99243 + 0.6) - 0.1, floor(CGRectGetHeight(innerFrame) * 0.98718 - 0.5) - floor(CGRectGetHeight(innerFrame) * 0.02564) + 0.5);
 
 
-    //// SpeakerOutline Drawing
-    UIBezierPath* speakerOutlinePath = UIBezierPath.bezierPath;
-    [speakerOutlinePath moveToPoint: CGPointMake(CGRectGetMinX(speakerFrame) + 6.59, CGRectGetMinY(speakerFrame) + 2)];
-    [speakerOutlinePath addLineToPoint: CGPointMake(CGRectGetMaxX(speakerFrame) - 6.59, CGRectGetMinY(speakerFrame) + 2)];
-    [speakerOutlinePath addCurveToPoint: CGPointMake(CGRectGetMaxX(speakerFrame) - 4.01, CGRectGetMinY(speakerFrame) + 2.2) controlPoint1: CGPointMake(CGRectGetMaxX(speakerFrame) - 5.27, CGRectGetMinY(speakerFrame) + 2) controlPoint2: CGPointMake(CGRectGetMaxX(speakerFrame) - 4.61, CGRectGetMinY(speakerFrame) + 2)];
-    [speakerOutlinePath addLineToPoint: CGPointMake(CGRectGetMaxX(speakerFrame) - 3.89, CGRectGetMinY(speakerFrame) + 2.23)];
-    [speakerOutlinePath addCurveToPoint: CGPointMake(CGRectGetMaxX(speakerFrame) - 2.22, CGRectGetMinY(speakerFrame) + 3.9) controlPoint1: CGPointMake(CGRectGetMaxX(speakerFrame) - 3.12, CGRectGetMinY(speakerFrame) + 2.51) controlPoint2: CGPointMake(CGRectGetMaxX(speakerFrame) - 2.51, CGRectGetMinY(speakerFrame) + 3.12)];
-    [speakerOutlinePath addCurveToPoint: CGPointMake(CGRectGetMaxX(speakerFrame) - 2, CGRectGetMinY(speakerFrame) + 6.61) controlPoint1: CGPointMake(CGRectGetMaxX(speakerFrame) - 2, CGRectGetMinY(speakerFrame) + 4.62) controlPoint2: CGPointMake(CGRectGetMaxX(speakerFrame) - 2, CGRectGetMinY(speakerFrame) + 5.28)];
-    [speakerOutlinePath addLineToPoint: CGPointMake(CGRectGetMaxX(speakerFrame) - 2, CGRectGetMaxY(speakerFrame) - 6.61)];
-    [speakerOutlinePath addCurveToPoint: CGPointMake(CGRectGetMaxX(speakerFrame) - 2.2, CGRectGetMaxY(speakerFrame) - 4.02) controlPoint1: CGPointMake(CGRectGetMaxX(speakerFrame) - 2, CGRectGetMaxY(speakerFrame) - 5.28) controlPoint2: CGPointMake(CGRectGetMaxX(speakerFrame) - 2, CGRectGetMaxY(speakerFrame) - 4.62)];
-    [speakerOutlinePath addLineToPoint: CGPointMake(CGRectGetMaxX(speakerFrame) - 2.22, CGRectGetMaxY(speakerFrame) - 3.9)];
-    [speakerOutlinePath addCurveToPoint: CGPointMake(CGRectGetMaxX(speakerFrame) - 3.89, CGRectGetMaxY(speakerFrame) - 2.23) controlPoint1: CGPointMake(CGRectGetMaxX(speakerFrame) - 2.51, CGRectGetMaxY(speakerFrame) - 3.12) controlPoint2: CGPointMake(CGRectGetMaxX(speakerFrame) - 3.12, CGRectGetMaxY(speakerFrame) - 2.51)];
-    [speakerOutlinePath addCurveToPoint: CGPointMake(CGRectGetMaxX(speakerFrame) - 6.59, CGRectGetMaxY(speakerFrame) - 2) controlPoint1: CGPointMake(CGRectGetMaxX(speakerFrame) - 4.61, CGRectGetMaxY(speakerFrame) - 2) controlPoint2: CGPointMake(CGRectGetMaxX(speakerFrame) - 5.27, CGRectGetMaxY(speakerFrame) - 2)];
-    [speakerOutlinePath addLineToPoint: CGPointMake(CGRectGetMinX(speakerFrame) + 6.59, CGRectGetMaxY(speakerFrame) - 2)];
-    [speakerOutlinePath addCurveToPoint: CGPointMake(CGRectGetMinX(speakerFrame) + 4.01, CGRectGetMaxY(speakerFrame) - 2.2) controlPoint1: CGPointMake(CGRectGetMinX(speakerFrame) + 5.27, CGRectGetMaxY(speakerFrame) - 2) controlPoint2: CGPointMake(CGRectGetMinX(speakerFrame) + 4.61, CGRectGetMaxY(speakerFrame) - 2)];
-    [speakerOutlinePath addLineToPoint: CGPointMake(CGRectGetMinX(speakerFrame) + 3.89, CGRectGetMaxY(speakerFrame) - 2.23)];
-    [speakerOutlinePath addCurveToPoint: CGPointMake(CGRectGetMinX(speakerFrame) + 2.22, CGRectGetMaxY(speakerFrame) - 3.9) controlPoint1: CGPointMake(CGRectGetMinX(speakerFrame) + 3.12, CGRectGetMaxY(speakerFrame) - 2.51) controlPoint2: CGPointMake(CGRectGetMinX(speakerFrame) + 2.51, CGRectGetMaxY(speakerFrame) - 3.12)];
-    [speakerOutlinePath addCurveToPoint: CGPointMake(CGRectGetMinX(speakerFrame) + 2, CGRectGetMaxY(speakerFrame) - 6.61) controlPoint1: CGPointMake(CGRectGetMinX(speakerFrame) + 2, CGRectGetMaxY(speakerFrame) - 4.62) controlPoint2: CGPointMake(CGRectGetMinX(speakerFrame) + 2, CGRectGetMaxY(speakerFrame) - 5.28)];
-    [speakerOutlinePath addLineToPoint: CGPointMake(CGRectGetMinX(speakerFrame) + 2, CGRectGetMinY(speakerFrame) + 6.61)];
-    [speakerOutlinePath addCurveToPoint: CGPointMake(CGRectGetMinX(speakerFrame) + 2.2, CGRectGetMinY(speakerFrame) + 4.02) controlPoint1: CGPointMake(CGRectGetMinX(speakerFrame) + 2, CGRectGetMinY(speakerFrame) + 5.28) controlPoint2: CGPointMake(CGRectGetMinX(speakerFrame) + 2, CGRectGetMinY(speakerFrame) + 4.62)];
-    [speakerOutlinePath addLineToPoint: CGPointMake(CGRectGetMinX(speakerFrame) + 2.22, CGRectGetMinY(speakerFrame) + 3.9)];
-    [speakerOutlinePath addCurveToPoint: CGPointMake(CGRectGetMinX(speakerFrame) + 3.89, CGRectGetMinY(speakerFrame) + 2.23) controlPoint1: CGPointMake(CGRectGetMinX(speakerFrame) + 2.51, CGRectGetMinY(speakerFrame) + 3.12) controlPoint2: CGPointMake(CGRectGetMinX(speakerFrame) + 3.12, CGRectGetMinY(speakerFrame) + 2.51)];
-    [speakerOutlinePath addCurveToPoint: CGPointMake(CGRectGetMinX(speakerFrame) + 6.59, CGRectGetMinY(speakerFrame) + 2) controlPoint1: CGPointMake(CGRectGetMinX(speakerFrame) + 4.61, CGRectGetMinY(speakerFrame) + 2) controlPoint2: CGPointMake(CGRectGetMinX(speakerFrame) + 5.27, CGRectGetMinY(speakerFrame) + 2)];
-    [speakerOutlinePath closePath];
-    [UIColor.lightGrayColor setStroke];
-    speakerOutlinePath.lineWidth = 1;
-    [speakerOutlinePath stroke];
+    //// Rectangle Drawing
+    UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(CGRectGetMinX(speakerFrame) + 2, CGRectGetMinY(speakerFrame) + 2, floor((CGRectGetWidth(speakerFrame) - 2) * 0.98964 + 0.5), floor((CGRectGetHeight(speakerFrame) - 2) * 0.97059 + 0.5)) cornerRadius: 1];
+    [expression setStroke];
+    rectanglePath.lineWidth = 0.5;
+    [rectanglePath stroke];
 
 
     //// SpeakerGroup
@@ -105,48 +83,26 @@
     }
 }
 
-+ (void)drawTrashButtonWithOuterFrame: (CGRect)outerFrame speakerIsSelected: (BOOL)speakerIsSelected;
++ (void)drawTrashButtonWithOuterFrame: (CGRect)outerFrame selectWithDeleteColor: (BOOL)selectWithDeleteColor;
 {
     //// Color Declarations
     UIColor* unSelectedButtonColor = [UIColor colorWithRed: 0.282 green: 0.298 blue: 0.333 alpha: 1];
-    UIColor* selectedButtonColor = [UIColor colorWithRed: 0.275 green: 0.396 blue: 0.843 alpha: 1];
+    UIColor* deleteColor = [UIColor colorWithRed: 0.949 green: 0.302 blue: 0.216 alpha: 1];
 
     //// Variable Declarations
-    UIColor* expression = speakerIsSelected ? selectedButtonColor : unSelectedButtonColor;
+    UIColor* isSelectWithDeleteColor = selectWithDeleteColor ? deleteColor : unSelectedButtonColor;
 
 
     //// Subframes
-    CGRect innerFrame = CGRectMake(CGRectGetMinX(outerFrame) + floor(CGRectGetWidth(outerFrame) * 0.27500 + 0.5), CGRectGetMinY(outerFrame) + floor(CGRectGetHeight(outerFrame) * 0.20000 + 0.5), floor(CGRectGetWidth(outerFrame) * 0.73750 + 0.5) - floor(CGRectGetWidth(outerFrame) * 0.27500 + 0.5), floor(CGRectGetHeight(outerFrame) * 0.78571 + 0.5) - floor(CGRectGetHeight(outerFrame) * 0.20000 + 0.5));
-    CGRect group = CGRectMake(CGRectGetMinX(innerFrame) + 1, CGRectGetMinY(innerFrame) + 1, floor((CGRectGetWidth(innerFrame) - 1) * 0.97222 + 0.5), floor((CGRectGetHeight(innerFrame) - 1) * 0.97500 + 0.5));
+    CGRect innerFrame = CGRectMake(CGRectGetMinX(outerFrame) + floor(CGRectGetWidth(outerFrame) * 0.29268 + 0.5), CGRectGetMinY(outerFrame) + floor(CGRectGetHeight(outerFrame) * 0.21429 + 0.5), floor(CGRectGetWidth(outerFrame) * 0.71951 + 0.5) - floor(CGRectGetWidth(outerFrame) * 0.29268 + 0.5), floor(CGRectGetHeight(outerFrame) * 0.77143 + 0.5) - floor(CGRectGetHeight(outerFrame) * 0.21429 + 0.5));
+    CGRect group = CGRectMake(CGRectGetMinX(innerFrame) + 1, CGRectGetMinY(innerFrame) + 1, floor((CGRectGetWidth(innerFrame) - 1) * 0.97059 + 0.5), floor((CGRectGetHeight(innerFrame) - 1) * 0.97368 + 0.5));
 
 
-    //// SpeakerOutline Drawing
-    UIBezierPath* speakerOutlinePath = UIBezierPath.bezierPath;
-    [speakerOutlinePath moveToPoint: CGPointMake(CGRectGetMinX(outerFrame) + 0.04405 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.02500 * CGRectGetHeight(outerFrame))];
-    [speakerOutlinePath addLineToPoint: CGPointMake(CGRectGetMinX(outerFrame) + 0.95595 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.02500 * CGRectGetHeight(outerFrame))];
-    [speakerOutlinePath addCurveToPoint: CGPointMake(CGRectGetMinX(outerFrame) + 0.96887 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.02747 * CGRectGetHeight(outerFrame)) controlPoint1: CGPointMake(CGRectGetMinX(outerFrame) + 0.96257 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.02500 * CGRectGetHeight(outerFrame)) controlPoint2: CGPointMake(CGRectGetMinX(outerFrame) + 0.96588 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.02500 * CGRectGetHeight(outerFrame))];
-    [speakerOutlinePath addLineToPoint: CGPointMake(CGRectGetMinX(outerFrame) + 0.96945 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.02782 * CGRectGetHeight(outerFrame))];
-    [speakerOutlinePath addCurveToPoint: CGPointMake(CGRectGetMinX(outerFrame) + 0.97782 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.04879 * CGRectGetHeight(outerFrame)) controlPoint1: CGPointMake(CGRectGetMinX(outerFrame) + 0.97334 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.03137 * CGRectGetHeight(outerFrame)) controlPoint2: CGPointMake(CGRectGetMinX(outerFrame) + 0.97640 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.03904 * CGRectGetHeight(outerFrame))];
-    [speakerOutlinePath addCurveToPoint: CGPointMake(CGRectGetMinX(outerFrame) + 0.97895 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.08258 * CGRectGetHeight(outerFrame)) controlPoint1: CGPointMake(CGRectGetMinX(outerFrame) + 0.97895 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.05771 * CGRectGetHeight(outerFrame)) controlPoint2: CGPointMake(CGRectGetMinX(outerFrame) + 0.97895 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.06600 * CGRectGetHeight(outerFrame))];
-    [speakerOutlinePath addLineToPoint: CGPointMake(CGRectGetMinX(outerFrame) + 0.97895 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.90492 * CGRectGetHeight(outerFrame))];
-    [speakerOutlinePath addCurveToPoint: CGPointMake(CGRectGetMinX(outerFrame) + 0.97796 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.93726 * CGRectGetHeight(outerFrame)) controlPoint1: CGPointMake(CGRectGetMinX(outerFrame) + 0.97895 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.92150 * CGRectGetHeight(outerFrame)) controlPoint2: CGPointMake(CGRectGetMinX(outerFrame) + 0.97895 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.92979 * CGRectGetHeight(outerFrame))];
-    [speakerOutlinePath addLineToPoint: CGPointMake(CGRectGetMinX(outerFrame) + 0.97782 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.93871 * CGRectGetHeight(outerFrame))];
-    [speakerOutlinePath addCurveToPoint: CGPointMake(CGRectGetMinX(outerFrame) + 0.96945 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.95968 * CGRectGetHeight(outerFrame)) controlPoint1: CGPointMake(CGRectGetMinX(outerFrame) + 0.97640 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.94846 * CGRectGetHeight(outerFrame)) controlPoint2: CGPointMake(CGRectGetMinX(outerFrame) + 0.97334 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.95613 * CGRectGetHeight(outerFrame))];
-    [speakerOutlinePath addCurveToPoint: CGPointMake(CGRectGetMinX(outerFrame) + 0.95595 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.96250 * CGRectGetHeight(outerFrame)) controlPoint1: CGPointMake(CGRectGetMinX(outerFrame) + 0.96588 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.96250 * CGRectGetHeight(outerFrame)) controlPoint2: CGPointMake(CGRectGetMinX(outerFrame) + 0.96257 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.96250 * CGRectGetHeight(outerFrame))];
-    [speakerOutlinePath addLineToPoint: CGPointMake(CGRectGetMinX(outerFrame) + 0.04405 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.96250 * CGRectGetHeight(outerFrame))];
-    [speakerOutlinePath addCurveToPoint: CGPointMake(CGRectGetMinX(outerFrame) + 0.03113 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.96003 * CGRectGetHeight(outerFrame)) controlPoint1: CGPointMake(CGRectGetMinX(outerFrame) + 0.03743 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.96250 * CGRectGetHeight(outerFrame)) controlPoint2: CGPointMake(CGRectGetMinX(outerFrame) + 0.03412 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.96250 * CGRectGetHeight(outerFrame))];
-    [speakerOutlinePath addLineToPoint: CGPointMake(CGRectGetMinX(outerFrame) + 0.03055 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.95968 * CGRectGetHeight(outerFrame))];
-    [speakerOutlinePath addCurveToPoint: CGPointMake(CGRectGetMinX(outerFrame) + 0.02218 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.93871 * CGRectGetHeight(outerFrame)) controlPoint1: CGPointMake(CGRectGetMinX(outerFrame) + 0.02666 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.95613 * CGRectGetHeight(outerFrame)) controlPoint2: CGPointMake(CGRectGetMinX(outerFrame) + 0.02360 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.94846 * CGRectGetHeight(outerFrame))];
-    [speakerOutlinePath addCurveToPoint: CGPointMake(CGRectGetMinX(outerFrame) + 0.02105 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.90492 * CGRectGetHeight(outerFrame)) controlPoint1: CGPointMake(CGRectGetMinX(outerFrame) + 0.02105 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.92979 * CGRectGetHeight(outerFrame)) controlPoint2: CGPointMake(CGRectGetMinX(outerFrame) + 0.02105 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.92150 * CGRectGetHeight(outerFrame))];
-    [speakerOutlinePath addLineToPoint: CGPointMake(CGRectGetMinX(outerFrame) + 0.02105 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.08258 * CGRectGetHeight(outerFrame))];
-    [speakerOutlinePath addCurveToPoint: CGPointMake(CGRectGetMinX(outerFrame) + 0.02204 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.05024 * CGRectGetHeight(outerFrame)) controlPoint1: CGPointMake(CGRectGetMinX(outerFrame) + 0.02105 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.06600 * CGRectGetHeight(outerFrame)) controlPoint2: CGPointMake(CGRectGetMinX(outerFrame) + 0.02105 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.05771 * CGRectGetHeight(outerFrame))];
-    [speakerOutlinePath addLineToPoint: CGPointMake(CGRectGetMinX(outerFrame) + 0.02218 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.04879 * CGRectGetHeight(outerFrame))];
-    [speakerOutlinePath addCurveToPoint: CGPointMake(CGRectGetMinX(outerFrame) + 0.03055 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.02782 * CGRectGetHeight(outerFrame)) controlPoint1: CGPointMake(CGRectGetMinX(outerFrame) + 0.02360 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.03904 * CGRectGetHeight(outerFrame)) controlPoint2: CGPointMake(CGRectGetMinX(outerFrame) + 0.02666 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.03137 * CGRectGetHeight(outerFrame))];
-    [speakerOutlinePath addCurveToPoint: CGPointMake(CGRectGetMinX(outerFrame) + 0.04405 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.02500 * CGRectGetHeight(outerFrame)) controlPoint1: CGPointMake(CGRectGetMinX(outerFrame) + 0.03412 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.02500 * CGRectGetHeight(outerFrame)) controlPoint2: CGPointMake(CGRectGetMinX(outerFrame) + 0.03743 * CGRectGetWidth(outerFrame), CGRectGetMinY(outerFrame) + 0.02500 * CGRectGetHeight(outerFrame))];
-    [speakerOutlinePath closePath];
-    [UIColor.lightGrayColor setStroke];
-    speakerOutlinePath.lineWidth = 1;
-    [speakerOutlinePath stroke];
+    //// Rectangle Drawing
+    UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(CGRectGetMinX(outerFrame) + 2, CGRectGetMinY(outerFrame) + 2, floor((CGRectGetWidth(outerFrame) - 2) * 0.97500 + 0.5), floor((CGRectGetHeight(outerFrame) - 2) * 0.97059 + 0.5)) cornerRadius: 1];
+    [isSelectWithDeleteColor setStroke];
+    rectanglePath.lineWidth = 0.5;
+    [rectanglePath stroke];
 
 
     //// Group
@@ -165,7 +121,7 @@
         [bezierPath closePath];
         bezierPath.miterLimit = 4;
 
-        [expression setFill];
+        [isSelectWithDeleteColor setFill];
         [bezierPath fill];
 
 
@@ -189,7 +145,7 @@
         [bezier2Path closePath];
         bezier2Path.miterLimit = 4;
 
-        [expression setFill];
+        [isSelectWithDeleteColor setFill];
         [bezier2Path fill];
     }
 }
@@ -275,7 +231,7 @@
 
 + (UIImage*)imageOfSpeakerButtonWithSpeakerFrame: (CGRect)speakerFrame speakerIsSelected: (BOOL)speakerIsSelected;
 {
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(195, 80), NO, 0.0f);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(195, 70), NO, 0.0f);
     [JCStyleKit drawSpeakerButtonWithSpeakerFrame: speakerFrame speakerIsSelected: speakerIsSelected];
     UIImage* imageOfSpeakerButton = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
@@ -283,10 +239,10 @@
     return imageOfSpeakerButton;
 }
 
-+ (UIImage*)imageOfTrashButtonWithOuterFrame: (CGRect)outerFrame speakerIsSelected: (BOOL)speakerIsSelected;
++ (UIImage*)imageOfTrashButtonWithOuterFrame: (CGRect)outerFrame selectWithDeleteColor: (BOOL)selectWithDeleteColor;
 {
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(80, 70), NO, 0.0f);
-    [JCStyleKit drawTrashButtonWithOuterFrame: outerFrame speakerIsSelected: speakerIsSelected];
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(82, 70), NO, 0.0f);
+    [JCStyleKit drawTrashButtonWithOuterFrame: outerFrame selectWithDeleteColor: selectWithDeleteColor];
     UIImage* imageOfTrashButton = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 

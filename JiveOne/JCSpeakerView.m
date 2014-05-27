@@ -7,6 +7,11 @@
 //
 
 #import "JCSpeakerView.h"
+#import "JCStyleKit.h"
+
+@interface JCSpeakerView()
+@property BOOL isSelected;
+@end
 
 @implementation JCSpeakerView
 
@@ -15,17 +20,21 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        self.isSelected = NO;
     }
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
-    // Drawing code
+    [JCStyleKit drawSpeakerButtonWithSpeakerFrame:self.bounds speakerIsSelected:self.isSelected];
 }
-*/
+
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    self.isSelected = !self.isSelected;
+    [self setNeedsDisplay];
+}
+
 
 @end

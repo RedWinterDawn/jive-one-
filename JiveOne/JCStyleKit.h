@@ -19,11 +19,11 @@
 
 // Drawing Methods
 + (void)drawSpeakerButtonWithSpeakerFrame: (CGRect)speakerFrame speakerIsSelected: (BOOL)speakerIsSelected;
-+ (void)drawTrashButtonWithOuterFrame: (CGRect)outerFrame speakerIsSelected: (BOOL)speakerIsSelected;
++ (void)drawTrashButtonWithOuterFrame: (CGRect)outerFrame selectWithDeleteColor: (BOOL)selectWithDeleteColor;
 + (void)drawComposeIconWithFrame: (CGRect)frame;
 
 // Generated Images
 + (UIImage*)imageOfSpeakerButtonWithSpeakerFrame: (CGRect)speakerFrame speakerIsSelected: (BOOL)speakerIsSelected;
-+ (UIImage*)imageOfTrashButtonWithOuterFrame: (CGRect)outerFrame speakerIsSelected: (BOOL)speakerIsSelected;
++ (UIImage*)imageOfTrashButtonWithOuterFrame: (CGRect)outerFrame selectWithDeleteColor: (BOOL)selectWithDeleteColor;
 
 @end

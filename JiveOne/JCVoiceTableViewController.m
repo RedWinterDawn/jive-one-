@@ -208,7 +208,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BOOL isSelected = [self.selectedIndexPaths containsObject:indexPath];
-    return isSelected ? 170.0f : 60.0f;
+    return isSelected ? 180.0f : 60.0f;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
