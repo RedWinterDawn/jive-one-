@@ -102,7 +102,7 @@
         UIImage *initialsImage = [[JCPersonCell cachedPresenceImages] objectForKey:key];
         if (!initialsImage) {
             UIView * groupCount = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 28, 28)];
-            groupCount.backgroundColor = [UIColor colorWithRed:0.043 green:0.455 blue:0.808 alpha:.5];
+            groupCount.backgroundColor = [UIColor colorWithRed:0.240 green:0.242 blue:0.242 alpha:.2];
             
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 20)];
             label.textColor = [UIColor whiteColor];
