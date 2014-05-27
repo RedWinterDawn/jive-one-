@@ -11,14 +11,11 @@
 #import "JCMessagesViewController.h"
 #import "JCPeopleDetailCell.h"
 #import "Company.h"
+#import "Constants.h"
 
 
 @interface JCDirectoryDetailViewController ()
-#define NUMBER_OF_ROWS_IN_SECTION 3
-#define NUMBER_OF_SECTIONS 1
-#define ZERO 0
-#define kUINameRowHeight 66
-#define kUIRowHeight 50
+
 
 @property (nonatomic) NSManagedObjectContext* managedContext;
 

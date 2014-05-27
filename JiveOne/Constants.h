@@ -89,6 +89,13 @@
 //change to @"YesUseAWSPlaceholderURL" to toggle AWS Voicemail wav file
 #define UDdeviceToken @"deviceToken"
 
+//Used in the DirectoryDetailView Controller
+#define NUMBER_OF_ROWS_IN_SECTION 3
+#define NUMBER_OF_SECTIONS 1
+#define ZERO 0
+#define kUINameRowHeight 66
+#define kUIRowHeight 50
+
 typedef enum {
     JCPresenceTypeOffline = 0,
     JCPresenceTypeAvailable = 1,
