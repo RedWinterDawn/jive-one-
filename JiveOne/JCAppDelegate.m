@@ -618,24 +618,26 @@ int didNotify;
             NSRange rangeRooms = [key rangeOfString:@"permanentrooms"];
             if (rangeConversation.location != NSNotFound || rangeRooms.location != NSNotFound) {
                 NSMutableDictionary *convCopy = nil;
-                NSMutableDictionary *conversations = [_badges[key] mutableCopy];
-                if (conversations) {
-                    convCopy = [[conversations copy] mutableCopy];
-                    for (NSString *entry in conversations) {
-                        NSNumber *shown = conversations[entry];
-                        if (![shown boolValue]) {
-                            
-                            ConversationEntry *lastEntry = [ConversationEntry MR_findFirstByAttribute:@"entryId" withValue:entry];
-                            PersonEntities *person = [PersonEntities MR_findFirstByAttribute:@"entityId" withValue:lastEntry.entityId];
-                            NSString *alertMessage = [NSString stringWithFormat:@"%@: \"%@\"", person.firstName, lastEntry.message[@"raw"]];
-                            
-                            [self showLocalNotificationWithType:@"conversation" alertMessage:alertMessage];
-                            [convCopy setObject:[NSNumber numberWithBool:YES] forKey:entry];
-                            
-                            
+                if ([_badges[key] isKindOfClass:[NSDictionary class]]) {
+                    NSMutableDictionary *conversations = [_badges[key] mutableCopy];
+                    if (conversations) {
+                        convCopy = [[conversations copy] mutableCopy];
+                        for (NSString *entry in conversations) {
+                            NSNumber *shown = conversations[entry];
+                            if (![shown boolValue]) {
+                                
+                                ConversationEntry *lastEntry = [ConversationEntry MR_findFirstByAttribute:@"entryId" withValue:entry];
+                                PersonEntities *person = [PersonEntities MR_findFirstByAttribute:@"entityId" withValue:lastEntry.entityId];
+                                NSString *alertMessage = [NSString stringWithFormat:@"%@: \"%@\"", person.firstName, lastEntry.message[@"raw"]];
+                                
+                                [self showLocalNotificationWithType:@"conversation" alertMessage:alertMessage];
+                                [convCopy setObject:[NSNumber numberWithBool:YES] forKey:entry];
+                                
+                                
+                            }
                         }
+                        [_badges setObject:convCopy forKey:key];
                     }
-                    [_badges setObject:convCopy forKey:key];
                 }
                 
             }
