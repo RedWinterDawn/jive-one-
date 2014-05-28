@@ -435,6 +435,8 @@
 		9137919918FDB0EE00709AD3 /* JCGroupConversationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9137919718FDB0EE00709AD3 /* JCGroupConversationCell.xib */; };
 		9145E31F191D842500840D66 /* JCVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 9145E31E191D842500840D66 /* JCVersion.m */; };
 		9145E320191D881D00840D66 /* JCVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 9145E31E191D842500840D66 /* JCVersion.m */; };
+		9154947819366C54003DCED4 /* JCPlayPauseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9154947719366C54003DCED4 /* JCPlayPauseView.m */; };
+		9154947919366C54003DCED4 /* JCPlayPauseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9154947719366C54003DCED4 /* JCPlayPauseView.m */; };
 		916958FF18FEDD76006FDD60 /* JCConversationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 274493AF18D0DA9B002744CB /* JCConversationCell.xib */; };
 		9172ACF71917E8EE00481B01 /* JCPage1ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9172ACEF1917E8EE00481B01 /* JCPage1ViewController.m */; };
 		9172ACF81917E8EE00481B01 /* JCPage2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9172ACF11917E8EE00481B01 /* JCPage2ViewController.m */; };
@@ -935,6 +937,8 @@
 		9137919718FDB0EE00709AD3 /* JCGroupConversationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JCGroupConversationCell.xib; path = JiveOne/JCGroupConversationCell.xib; sourceTree = SOURCE_ROOT; };
 		9145E31D191D842500840D66 /* JCVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVersion.h; sourceTree = "<group>"; };
 		9145E31E191D842500840D66 /* JCVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVersion.m; sourceTree = "<group>"; };
+		9154947619366C54003DCED4 /* JCPlayPauseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPlayPauseView.h; sourceTree = "<group>"; };
+		9154947719366C54003DCED4 /* JCPlayPauseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPlayPauseView.m; sourceTree = "<group>"; };
 		9172ACEE1917E8EE00481B01 /* JCPage1ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPage1ViewController.h; sourceTree = "<group>"; };
 		9172ACEF1917E8EE00481B01 /* JCPage1ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPage1ViewController.m; sourceTree = "<group>"; };
 		9172ACF01917E8EE00481B01 /* JCPage2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPage2ViewController.h; sourceTree = "<group>"; };
@@ -2068,6 +2072,8 @@
 		91E3738219351E0C00534C7C /* VoiceMailIcons */ = {
 			isa = PBXGroup;
 			children = (
+				9154947619366C54003DCED4 /* JCPlayPauseView.h */,
+				9154947719366C54003DCED4 /* JCPlayPauseView.m */,
 				91DDB1971935008A00550F10 /* JCSpeakerView.h */,
 				91DDB1981935008A00550F10 /* JCSpeakerView.m */,
 				91DDB19B193500B500550F10 /* JCDeleteView.h */,
@@ -2661,6 +2667,7 @@
 				2727F398191AA92F00A41185 /* NotificationView.m in Sources */,
 				2727F399191AA92F00A41185 /* ContactGroup.m in Sources */,
 				2727F39A191AA92F00A41185 /* JCSocketDispatch.m in Sources */,
+				9154947919366C54003DCED4 /* JCPlayPauseView.m in Sources */,
 				91DDB18A1934E1E900550F10 /* JCStyleKit.m in Sources */,
 				2727F39B191AA92F00A41185 /* JCPage4ViewController.m in Sources */,
 				2727F39C191AA92F00A41185 /* NSString+JSMessagesView.m in Sources */,
@@ -2759,6 +2766,7 @@
 				279E4CAF192273E5002A556C /* MBContactCollectionViewFlowLayout.m in Sources */,
 				273CC25E1900B23B005A2857 /* JCVoiceCell.m in Sources */,
 				9172AD4C1918097B00481B01 /* JCContainerViewController.m in Sources */,
+				9154947819366C54003DCED4 /* JCPlayPauseView.m in Sources */,
 				2710E40F18CEC8C300152C91 /* ConversationEntry+Custom.m in Sources */,
 				9172ACF91917E8EE00481B01 /* JCPage3ViewController.m in Sources */,
 				279E4CB1192273E5002A556C /* MBContactCollectionViewPromptCell.m in Sources */,
