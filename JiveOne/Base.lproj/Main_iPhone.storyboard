@@ -720,9 +720,7 @@
                                 <color key="titleShadowColor" red="0.40000000600000002" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
                             <connections>
-                                <action selector="startNewConversation:" destination="Iav-LH-b6F" eventType="touchUpInside" id="36B-4B-odG"/>
-                                <action selector="startNewConversationWithNewSearch:" destination="Iav-LH-b6F" eventType="touchUpInside" id="tLf-tO-d8P"/>
-                                <segue destination="8Iv-FP-jtt" kind="modal" id="1Um-mK-ub2"/>
+                                <segue destination="9FZ-OF-pMd" kind="modal" id="z4p-6q-fZ9"/>
                             </connections>
                         </button>
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="rOk-sd-Q2j">
@@ -746,6 +744,53 @@
                 </label>
             </objects>
             <point key="canvasLocation" x="1012" y="944"/>
+        </scene>
+        <!--People Search View Controller-->
+        <scene sceneID="BjF-LD-HQ0">
+            <objects>
+                <viewController id="9FZ-OF-pMd" customClass="JCPeopleSearchViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5Dh-N4-7c0"/>
+                        <viewControllerLayoutGuide type="bottom" id="dwH-mG-HTe"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="MeX-n8-LN7">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="88" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="6vH-F5-Dps" customClass="JSMessageTableView">
+                                <rect key="frame" x="0.0" y="88" width="320" height="524"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="90" id="cGB-BQ-2vd" customClass="JCPersonCell">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="90"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cGB-BQ-2vd" id="02Z-gJ-y7D">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="89"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LXM-9r-ct4">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem title="Title" id="s1D-9C-EMy"/>
+                                </items>
+                            </navigationBar>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="1OZ-2y-ytP" customClass="JCSearchBar">
+                                <rect key="frame" x="0.0" y="44" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ihp-a8-Fsx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1517" y="1100"/>
         </scene>
         <!--Messages View Controller-->
         <scene sceneID="Z6h-mb-aMW">
@@ -792,7 +837,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XuZ-GW-bg4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1978" y="944"/>
+            <point key="canvasLocation" x="2101" y="499"/>
         </scene>
         <!--Conversation Participants Table View Controller - People in conversation-->
         <scene sceneID="h9o-pl-Mul">
@@ -804,7 +849,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="70" id="mx8-tQ-J4L" customClass="JCPersonCell">
-                                <rect key="frame" x="0.0" y="86" width="320" height="70"/>
+                                <rect key="frame" x="0.0" y="22" width="320" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mx8-tQ-J4L" id="P6S-4y-x8Y">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
@@ -823,7 +868,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QaV-7n-FlE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2433" y="944"/>
+            <point key="canvasLocation" x="2511" y="396"/>
         </scene>
         <!--Navigation Controller - Conversations-->
         <scene sceneID="7yR-ZU-bxo">
@@ -1062,62 +1107,6 @@
             </objects>
             <point key="canvasLocation" x="-948" y="1104"/>
         </scene>
-        <!--People Search View Controller - People-->
-        <scene sceneID="Wkh-cA-Kme">
-            <objects>
-                <viewController autoresizesArchivedViewToFullSize="NO" id="8Iv-FP-jtt" customClass="JCPeopleSearchViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="0ze-t2-tST"/>
-                        <viewControllerLayoutGuide type="bottom" id="KkW-mb-4Px"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Hvs-Gw-mbj">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="g1g-eb-eL1">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="changeMe" rowHeight="70" id="Bhu-cQ-TX0" customClass="JCPersonCell">
-                                        <rect key="frame" x="0.0" y="22" width="320" height="70"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Bhu-cQ-TX0" id="nez-jc-ZaJ">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="g1g-eb-eL1" firstAttribute="top" secondItem="Hvs-Gw-mbj" secondAttribute="top" id="1Nr-SS-LXS"/>
-                            <constraint firstItem="g1g-eb-eL1" firstAttribute="leading" secondItem="Hvs-Gw-mbj" secondAttribute="leading" id="b5F-5P-RrF"/>
-                            <constraint firstAttribute="bottom" secondItem="g1g-eb-eL1" secondAttribute="bottom" id="cmA-bS-ulF"/>
-                            <constraint firstAttribute="trailing" secondItem="g1g-eb-eL1" secondAttribute="trailing" id="yRg-fd-yyo"/>
-                        </constraints>
-                    </view>
-                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
-                    <navigationItem key="navigationItem" title="People" id="Beo-9b-7gc"/>
-                    <connections>
-                        <outlet property="searchDisplayController" destination="DBo-Lk-QsT" id="Rd1-tX-wak"/>
-                        <outlet property="tableView" destination="g1g-eb-eL1" id="Ig5-Ft-Dv4"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jyT-Ip-HMB" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="8hb-Uw-5xR">
-                    <connections>
-                        <outlet property="delegate" destination="8Iv-FP-jtt" id="fKZ-6Y-0y6"/>
-                        <outlet property="searchContentsController" destination="8Iv-FP-jtt" id="DW0-US-kwQ"/>
-                        <outlet property="searchResultsDataSource" destination="8Iv-FP-jtt" id="bTa-7U-Fv6"/>
-                        <outlet property="searchResultsDelegate" destination="8Iv-FP-jtt" id="CHw-85-AYt"/>
-                    </connections>
-                </searchDisplayController>
-            </objects>
-            <point key="canvasLocation" x="1481" y="1104"/>
-        </scene>
     </scenes>
     <resources>
         <image name="ES-voicemail-1.jpg" width="640" height="1136"/>
@@ -1140,6 +1129,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="SEu-ym-TIt"/>
-        <segue reference="4tJ-oe-047"/>
+        <segue reference="Nyn-nw-5LE"/>
     </inferredMetricsTieBreakers>
 </document>
