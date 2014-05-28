@@ -13,11 +13,13 @@
 #import "JCDirectoryDetailViewController.h"
 #import "JCPersonCell.h"
 #import "JCDirectoryGroupViewController.h"
+#import "JSMessagesViewController.h"
 #import "ContactGroup.h"
 #import "NotificationView.h"
 #import <QuartzCore/QuartzCore.h>
 #import "JCLog.h"
 #import "Constants.h"
+#import "JCMessagesViewController.h"
 
 
 
@@ -556,8 +558,8 @@ static NSString *CellIdentifier = @"DirectoryCell";
     }else{
         self.searchTableIsActive = NO;
     }
-    [self performSegueWithIdentifier:@"directoryDetailView" sender:indexPath];
-    
+   // [self performSegueWithIdentifier:@"JSMessagesViewController" sender:indexPath];
+    [self dismissView:nil];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -661,11 +663,17 @@ shouldReloadTableForSearchString:(NSString *)searchString
     
     if (person) {
         [segue.destinationViewController setPerson:person];
+        [segue.destinationViewController setMessageType:JCNewConversationWithEntity];
     }
 }
 
 - (IBAction)refreshDirectory:(id)sender {
     [self refreshCompanyDirectory];
+}
+- (IBAction)dismissView:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:^{
+        //dismiss People search popup
+    }];
 }
 
 #pragma mark - Update UI on Presence Change

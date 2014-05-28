@@ -18,6 +18,7 @@
 #import "JCAppDelegate.h"
 #import "TRVSMonitor.h"
 #import "JCConversationParticipantsTableViewController.h"
+#import "JCPeopleSearchViewController.h"
 
 @interface JCMessagesViewController ()
 {
@@ -156,7 +157,11 @@
         case JCNewConversation: {
             [self setHeaderTitle:NSLocalizedString(@"New Message", @"New Message") andSubtitle:nil] ;
             self.imageViewNewMessage.hidden = NO;
-            [self.contactPickerView becomeFirstResponder];
+            //[self.contactPickerView becomeFirstResponder];
+            JCPeopleSearchViewController* peopleSearchViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"JCPeopleSearchViewController"];
+            [self presentViewController:peopleSearchViewController animated:YES completion:^{
+                //Completed
+            }];
             break;
         }
         case JCNewConversationWithEntity: {
