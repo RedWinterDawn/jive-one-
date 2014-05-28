@@ -59,16 +59,6 @@
                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="55j-Qi-OwJ" userLabel="playPauseButton">
-                        <rect key="frame" x="13" y="86" width="42" height="22"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <state key="normal" image="voicemail_scrub_play.png">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <connections>
-                            <action selector="playPauseButtonTapped:" destination="O09-5V-FRi" eventType="touchUpInside" id="SFk-OA-PPZ"/>
-                        </connections>
-                    </button>
                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="o6o-BF-Pb3">
                         <rect key="frame" x="146" y="60" width="20" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -98,6 +88,11 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <view contentMode="scaleAspectFit" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wkE-AG-dbK" userLabel="PlayPauseView" customClass="JCPlayPauseView">
+                        <rect key="frame" x="19" y="82" width="30" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="EDq-sG-3YO" firstAttribute="leading" secondItem="k9i-98-w2e" secondAttribute="trailing" constant="5" id="4I8-oq-Co0"/>
@@ -113,7 +108,6 @@
                 <outlet property="creationTime" destination="nIe-cq-PrP" id="3i7-Mt-aHq"/>
                 <outlet property="detailLabel" destination="WOB-bN-zYU" id="ONn-7D-bzt"/>
                 <outlet property="duration" destination="XyY-49-Zkf" id="OzS-DH-8Ov"/>
-                <outlet property="playButton" destination="55j-Qi-OwJ" id="5yt-MV-tFo"/>
                 <outlet property="shortTime" destination="NZe-HX-VVJ" id="S9Q-zV-Ltr"/>
                 <outlet property="slider" destination="9LY-YY-Jqs" id="yAH-3O-Hd6"/>
                 <outlet property="speakerView" destination="cp3-bc-vEw" id="fvq-Zd-4jk"/>
@@ -126,6 +120,5 @@
     </objects>
     <resources>
         <image name="vmail.png" width="32" height="32"/>
-        <image name="voicemail_scrub_play.png" width="18" height="21"/>
     </resources>
 </document>
