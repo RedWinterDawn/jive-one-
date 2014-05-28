@@ -16,29 +16,15 @@ int main(int argc, char * argv[])
     int returnValue;
     
     @autoreleasepool {
-//        BOOL inTests = (NSClassFromString(@"SenTestCase") != nil
-//                        || NSClassFromString(@"XCTest") != nil);
-//        
-//        if (inTests) {
-//            //use a special empty delegate when we are inside the tests
-//            NSString *token = [[JCAuthenticationManager sharedInstance] getAuthenticationToken];
-//            if (!(token && token.length)) {
-//                token = [[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"];
-//                if (!(token && token.length)) {
-//                    NSString *testToken = kTestAuthKey;
-//                    NSDictionary *oauth_response = [NSDictionary dictionaryWithObjectsAndKeys:testToken, @"access_token", nil];
-//                    [[JCAuthenticationManager sharedInstance] didReceiveAuthenticationToken:oauth_response];                }
-//            }
-//            //returnValue = UIApplicationMain(argc, argv, nil, @"TestsAppDelegate");
-//        }
-        //else {
-            //use the normal delegate
+        @try {
             returnValue = UIApplicationMain(argc, argv, nil, NSStringFromClass([JCAppDelegate class]));
-        //}
-    
-    return returnValue;
+        }
+        @catch (NSException* exception) {
+            NSLog(@"Uncaught exception: %@", exception.description);
+            NSLog(@"Stack trace: %@", [exception callStackSymbols]);
+        }
     }
-    
+    return returnValue; 
     
 }
 
