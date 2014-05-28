@@ -237,17 +237,17 @@
 
 
     //// Subframes
-    CGRect group = CGRectMake(CGRectGetMinX(frame) + floor(CGRectGetWidth(frame) * 0.02703 + 0.5), CGRectGetMinY(frame) + floor(CGRectGetHeight(frame) * 0.02381 - 0.5) + 1, floor(CGRectGetWidth(frame) * 0.95946 + 0.5) - floor(CGRectGetWidth(frame) * 0.02703 + 0.5), floor(CGRectGetHeight(frame) * 0.97619 - 0.5) - floor(CGRectGetHeight(frame) * 0.02381 - 0.5));
+    CGRect group = CGRectMake(CGRectGetMinX(frame) + floor(CGRectGetWidth(frame) * 0.31683 + 0.5), CGRectGetMinY(frame) + floor(CGRectGetHeight(frame) * 0.22321 - 0.5) + 1, floor(CGRectGetWidth(frame) * 0.84158 + 0.5) - floor(CGRectGetWidth(frame) * 0.31683 + 0.5), floor(CGRectGetHeight(frame) * 0.76786 - 0.5) - floor(CGRectGetHeight(frame) * 0.22321 - 0.5));
 
 
     if (playPauseDisplaysPlay)
     {
         //// Bezier 2 Drawing
         UIBezierPath* bezier2Path = UIBezierPath.bezierPath;
-        [bezier2Path moveToPoint: CGPointMake(CGRectGetMinX(frame) + 0.95946 * CGRectGetWidth(frame), CGRectGetMinY(frame) + 0.50000 * CGRectGetHeight(frame))];
-        [bezier2Path addLineToPoint: CGPointMake(CGRectGetMinX(frame) + 0.02703 * CGRectGetWidth(frame), CGRectGetMinY(frame) + 0.97619 * CGRectGetHeight(frame))];
-        [bezier2Path addLineToPoint: CGPointMake(CGRectGetMinX(frame) + 0.02703 * CGRectGetWidth(frame), CGRectGetMinY(frame) + 0.02381 * CGRectGetHeight(frame))];
-        [bezier2Path addLineToPoint: CGPointMake(CGRectGetMinX(frame) + 0.95946 * CGRectGetWidth(frame), CGRectGetMinY(frame) + 0.50000 * CGRectGetHeight(frame))];
+        [bezier2Path moveToPoint: CGPointMake(CGRectGetMinX(frame) + 0.84011 * CGRectGetWidth(frame), CGRectGetMinY(frame) + 0.49769 * CGRectGetHeight(frame))];
+        [bezier2Path addLineToPoint: CGPointMake(CGRectGetMinX(frame) + 0.31928 * CGRectGetWidth(frame), CGRectGetMinY(frame) + 0.76873 * CGRectGetHeight(frame))];
+        [bezier2Path addLineToPoint: CGPointMake(CGRectGetMinX(frame) + 0.31928 * CGRectGetWidth(frame), CGRectGetMinY(frame) + 0.22664 * CGRectGetHeight(frame))];
+        [bezier2Path addLineToPoint: CGPointMake(CGRectGetMinX(frame) + 0.84011 * CGRectGetWidth(frame), CGRectGetMinY(frame) + 0.49769 * CGRectGetHeight(frame))];
         [bezier2Path closePath];
         bezier2Path.miterLimit = 4;
 
@@ -261,13 +261,13 @@
         //// Group
         {
             //// Rectangle Drawing
-            UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRect: CGRectMake(CGRectGetMinX(group) + floor(CGRectGetWidth(group) * 0.00000 + 0.5), CGRectGetMinY(group) + floor(CGRectGetHeight(group) * 0.00000 + 0.5), floor(CGRectGetWidth(group) * 0.42029 + 0.5) - floor(CGRectGetWidth(group) * 0.00000 + 0.5), floor(CGRectGetHeight(group) * 1.00000 + 0.5) - floor(CGRectGetHeight(group) * 0.00000 + 0.5))];
+            UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRect: CGRectMake(CGRectGetMinX(group) + floor(CGRectGetWidth(group) * 0.00000 + 0.5), CGRectGetMinY(group) + floor(CGRectGetHeight(group) * 0.00000 + 0.5), floor(CGRectGetWidth(group) * 0.41509 + 0.5) - floor(CGRectGetWidth(group) * 0.00000 + 0.5), floor(CGRectGetHeight(group) * 1.00000 + 0.5) - floor(CGRectGetHeight(group) * 0.00000 + 0.5))];
             [unSelectedButtonColor setFill];
             [rectanglePath fill];
 
 
             //// Rectangle 2 Drawing
-            UIBezierPath* rectangle2Path = [UIBezierPath bezierPathWithRect: CGRectMake(CGRectGetMinX(group) + floor(CGRectGetWidth(group) * 0.57971 + 0.5), CGRectGetMinY(group) + floor(CGRectGetHeight(group) * 0.00000 + 0.5), floor(CGRectGetWidth(group) * 1.00000 + 0.5) - floor(CGRectGetWidth(group) * 0.57971 + 0.5), floor(CGRectGetHeight(group) * 1.00000 + 0.5) - floor(CGRectGetHeight(group) * 0.00000 + 0.5))];
+            UIBezierPath* rectangle2Path = [UIBezierPath bezierPathWithRect: CGRectMake(CGRectGetMinX(group) + floor(CGRectGetWidth(group) * 0.58491 + 0.5), CGRectGetMinY(group) + floor(CGRectGetHeight(group) * 0.00000 + 0.5), floor(CGRectGetWidth(group) * 1.00000 + 0.5) - floor(CGRectGetWidth(group) * 0.58491 + 0.5), floor(CGRectGetHeight(group) * 1.00000 + 0.5) - floor(CGRectGetHeight(group) * 0.00000 + 0.5))];
             [unSelectedButtonColor setFill];
             [rectangle2Path fill];
         }
