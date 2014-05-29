@@ -23,6 +23,7 @@
 @property (nonatomic, strong) NSMutableArray *clientEntitiesArray;
 @property (nonatomic, strong) NSMutableArray *clientEntitiesSearchArray;
 @property (nonatomic, strong) IBOutlet UISegmentedControl *segControl;
+@property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 
 - (IBAction)segmentChanged:sender ;
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope;

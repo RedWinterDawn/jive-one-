@@ -788,8 +788,9 @@
                             <constraint firstAttribute="bottom" secondItem="6vH-F5-Dps" secondAttribute="bottom" id="zWq-Zw-MH6"/>
                         </constraints>
                     </view>
+                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
-                        <outlet property="navBar" destination="9kh-LB-LSX" id="Gp0-Oy-DlG"/>
+                        <outlet property="navigationBar" destination="dcb-7c-Vj1" id="oGv-I4-OoF"/>
                         <outlet property="tableView" destination="6vH-F5-Dps" id="BHg-mZ-w4J"/>
                     </connections>
                 </viewController>
