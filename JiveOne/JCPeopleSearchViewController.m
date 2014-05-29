@@ -199,7 +199,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
 
 -(void)handleScrollUp
 {
-    const float UPPER_THREASHOLD = -64;// top of the window
+    const float UPPER_THREASHOLD = 64;// top of the window
     self.deltaOffsetSinceLastDirectionChange = abs(self.scrollViewOffsetReference - self.scrollViewOffset);
     float frame_orgin_y = (self.searchBarView.frame.origin.y <= UPPER_THREASHOLD) ? UPPER_THREASHOLD : (self.searchBarY_Reference - self.deltaOffsetSinceLastDirectionChange);
     if (self.searchBarView.frame.origin.y != frame_orgin_y) {
@@ -209,7 +209,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
                                           frame_orgin_y,
                                           self.searchBarView.frame.size.width, self.searchBarView.frame.size.height);
     self.scrollDirectionIsUp = YES;
-    if (self.scrollViewOffset > -64) {
+    if (self.scrollViewOffset > 64) {
         float inset = (frame_orgin_y + 44) < 64 ? 64 : frame_orgin_y + 44;
         if (self.scrollView.contentInset.top != inset) NSLog(@"2.1 - Changed Inset from: %f to: %f", self.scrollView.contentInset.top , inset);
         self.scrollView.contentInset = UIEdgeInsetsMake(inset , 0, 0, 0);
@@ -296,6 +296,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
         [_searchBar layoutSubviews];
         self.scrollViewOffsetReference = -64;
         self.searchBarY_Reference = -64;
+        [self.view sendSubviewToBack:_searchBarView];
     }
     return _searchBar;
 }
