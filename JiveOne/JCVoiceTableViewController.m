@@ -168,9 +168,9 @@ static NSString *CellIdentifier = @"VoicemailCell";
 #pragma mark - New Voicemail
 - (void)didReceiveNewVoicemail:(NSNotification *)notification
 {
-    if (self.view.window) {
-        [(JCAppDelegate *)[UIApplication sharedApplication].delegate clearBadgeCountForVoicemail];
-    }
+//    if (self.view.window) {
+//        [(JCAppDelegate *)[UIApplication sharedApplication].delegate clearBadgeCountForVoicemail];
+//    }
     [self loadVoicemails];
 }
 
@@ -242,7 +242,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
     
     Voicemail *voicemail = self.voicemails[indexPath.row];
     [Voicemail markVoicemailForDeletion:voicemail.voicemailId managedContext:nil];
-    
+    [(JCAppDelegate *)[UIApplication sharedApplication].delegate decrementBadgeCountForVoicemail:voicemail.voicemailId];
     [self.voicemails removeObjectAtIndex:indexPath.row];
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     
@@ -397,6 +397,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
         [cell performSelectorOnMainThread:@selector(setPlayButtonState:) withObject:[UIImage imageNamed:@"voicemail_pause.png"] waitUntilDone:NO];
         [self startProgressTimerForVoicemail];
         
+        [(JCAppDelegate *)[UIApplication sharedApplication].delegate decrementBadgeCountForVoicemail:selectedCell.voicemail.voicemailId];
         if (![selectedCell.voicemail.read boolValue]) {
             [self markVoicemailAsRead];
         }

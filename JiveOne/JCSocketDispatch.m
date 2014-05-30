@@ -85,8 +85,8 @@
             }
             
             // First, get our current auth token
-            KeychainItemWrapper* _keychainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
-            NSString* authToken = [_keychainWrapper objectForKey:(__bridge id)(kSecAttrAccount)];
+            //KeychainItemWrapper* _keychainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
+            NSString* authToken = [[JCAuthenticationManager sharedInstance] getAuthenticationToken]; //[_keychainWrapper objectForKey:(__bridge id)(kSecAttrAccessible)];
             
             // From our response dictionary we'll get some info
             NSDictionary* response = (NSDictionary*)JSON;
@@ -196,8 +196,8 @@
 
 - (void)closeSocket
 {
-    NSLog(@"Did pull before closing the socket");
-    
+    NSLog(@"Did pull before closing the socket");    
+    [_webSocket send:self.json_poll];
     if ([subscriptionTimer isValid]) {
         [subscriptionTimer invalidate];
     }
@@ -235,7 +235,6 @@
     
     if (messageDictionary[@"cmd"]) {
         if ([messageDictionary[@"cmd"] isEqualToString:@"noMessage"] && startedInBackground) {
-            [_webSocket send:self.json_poll];
             [self closeSocket];
         }
     }
@@ -331,6 +330,11 @@
             // if we dont' have, then fetch it
             if (conversations.count == 0) {
                 [self RetrieveNewConversation:conversationId];
+            }
+            else
+            {
+                Conversation *conversation = [Conversation addConversation:body];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kNewConversation object:conversation];
             }
         }
         

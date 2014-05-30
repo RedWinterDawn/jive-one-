@@ -102,6 +102,9 @@
         NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexForName
                                                                                options:NSRegularExpressionCaseInsensitive
                                                                                  error:nil];
+        if ([Common stringIsNilOrEmpty:_voicemail.callerId]) {
+            return;
+        }
         NSArray *matches = [regex matchesInString:_voicemail.callerId
                                           options:0
                                             range:NSMakeRange(0, [_voicemail.callerId length])];

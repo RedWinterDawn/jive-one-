@@ -117,7 +117,9 @@
 //        vmail.callerId = dictionary[@"callerId"];
 //        vmail.lenght = [NSNumber numberWithInteger:[dictionary[@"length"] intValue]];
 //        vmail.origFile = dictionary[@"origFile"];
-        vmail.read = [NSNumber numberWithBool:[dictionary[@"read"] boolValue]];
+        if (dictionary[@"read"]) {
+            vmail.read = [NSNumber numberWithBool:[dictionary[@"read"] boolValue]];
+        }        
         vmail.file = dictionary[@"file"];
 
         
@@ -146,7 +148,7 @@
                 if ([kVoicemailURLOverRide  isEqual:@"YesUseAWSPlaceholderURL"]) {
                     vm.voicemail = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"https://s3-us-west-2.amazonaws.com/jive-mobile/voicemail/userId/dleonard/TestVoicemail2.wav"]];
                 }else{
-                    if (!vm.voicemail) {
+                    if (!vm.voicemail && vm.file) {
                         vm.voicemail = [NSData dataWithContentsOfURL:[NSURL URLWithString:vm.file]];
                         [context MR_saveToPersistentStoreAndWait];
                     }                    
