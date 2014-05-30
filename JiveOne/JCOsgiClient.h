@@ -43,6 +43,8 @@
                                       failure:(void (^)(NSError* err))failure;
 - (void) SubmitConversationWithName:(NSString *)groupName forEntities:(NSArray *)entities creator:(NSString *)creator isGroupConversation:(BOOL)isGroup success:(void (^)(id JSON))success
                             failure:(void (^)(NSError* err))failure;
+- (void) PatchConversationWithName:(NSString *)conversationId groupName:(NSString *)groupName forEntities:(NSArray *)entities creator:(NSString *)creator isGroupConversation:(BOOL)isGroup success:(void (^)(id JSON))success
+                            failure:(void (^)(NSError* err))failure;
 - (void)SubmitChatMessageForConversation:(NSString*)conversation message:(NSDictionary*)message withEntity:(NSString*)entity withTimestamp:(long long)timestamp withTempUrn:(NSString*)tempUrn success:(void (^)(id JSON))success
                                  failure:(void (^)(NSError* err))failure;
 - (void) DeleteConversation:(NSString*)conversation success:(void(^)(id JSON, AFHTTPRequestOperation *operation))success

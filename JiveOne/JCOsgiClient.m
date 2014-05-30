@@ -282,6 +282,28 @@
     }];
 }
 
+- (void) PatchConversationWithName:(NSString *)conversationId groupName:(NSString *)groupName forEntities:(NSArray *)entities creator:(NSString *)creator isGroupConversation:(BOOL)isGroup success:(void (^)(id JSON))success
+                           failure:(void (^)(NSError* err))failure
+{
+    [self setRequestAuthHeader];
+    
+    NSMutableDictionary * conversationDictionary = [[NSMutableDictionary alloc] initWithObjectsAndKeys:entities, @"entities", creator, @"creator", nil];
+    if (isGroup) {
+        [conversationDictionary setObject:@"groupconversations" forKey:@"type"];
+        [conversationDictionary setObject:groupName forKey:@"name"];
+    }
+    
+    NSString *url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], conversationId];
+    
+    [_manager PATCH:url parameters:conversationDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [Conversation addConversation:responseObject];
+        success(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+
+}
+
 - (void)SubmitChatMessageForConversation:(NSString*)conversation message:(NSDictionary*)message withEntity:(NSString*)entity withTimestamp:(long long)timestamp withTempUrn:(NSString*)tempUrn success:(void (^)(id JSON))success
                                  failure:(void (^)(NSError* err))failure
 {
