@@ -155,7 +155,9 @@
     NSString *refresh_token = token[@"refresh_token"];
     
     [_keychainWrapper setObject:(__bridge id)kSecAttrAccessibleAlways forKey:(__bridge id)kSecAttrAccount];
+        [_keychainWrapper setObject:(__bridge id)kSecAttrAccessibleAlways forKey:(__bridge id)kSecValueData];
     [_keychainWrapper setObject:[NSString stringWithFormat:@"%@", access_token] forKey:(__bridge id)(kSecAttrAccount)];
+    [_keychainWrapper setObject:[NSString stringWithFormat:@"%@", access_token] forKey:(__bridge id)(kSecValueData)];
     
     
     [[NSUserDefaults standardUserDefaults] setObject:access_token forKey:@"authToken"];
@@ -169,6 +171,16 @@
 - (NSString *)getAuthenticationToken
 {
     NSString *token = [_keychainWrapper objectForKey:(__bridge id)(kSecAttrAccount)];
+    NSString *bgToken = [_keychainWrapper objectForKey:(__bridge id)(kSecValueData)];
+    
+    if (![bgToken isEqualToString:token] && ![Common stringIsNilOrEmpty:token]) {
+        [_keychainWrapper setObject:[NSString stringWithFormat:@"%@", token] forKey:(__bridge id)(kSecValueData)];
+        return token;
+    }
+    
+    if ([Common stringIsNilOrEmpty:token]) {
+        token = [_keychainWrapper objectForKey:(__bridge id)(kSecValueData)];
+    }
     return token;
 }
 
