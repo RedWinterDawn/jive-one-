@@ -171,7 +171,7 @@ static NSString *GroupCellIdentifier = @"GroupChatCell";
         if (_currentConversationId && [_currentConversationId isEqualToString:conversation.conversationId]) {
             NSLog(@"Received Conversation that is currently selected. So don't update Back button");
         }
-        else
+        else if (_currentConversationId)
         {
             [self refreshConversations:nil];
             newMessagesCount++;
