@@ -214,6 +214,27 @@
     return coloredImage;
 }
 
++ (UIImage *)ExtractImageOn:(CGPoint)pointExtractedImg ofSize:(CGSize)sizeExtractedImg FromSpriteSheet:(UIImage*)imgSpriteSheet
+{
+    UIImage *ExtractedImage;
+    
+    CGRect rectExtractedImage;
+    
+    rectExtractedImage=CGRectMake(pointExtractedImg.x,pointExtractedImg.y,sizeExtractedImg.width,sizeExtractedImg.height);
+    
+    CGImageRef imgRefSpriteSheet=imgSpriteSheet.CGImage;
+    
+    CGImageRef imgRefExtracted=CGImageCreateWithImageInRect(imgRefSpriteSheet,rectExtractedImage);
+    
+    ExtractedImage=[UIImage imageWithCGImage:imgRefExtracted];
+    
+    CGImageRelease(imgRefExtracted);
+    
+    //CGImageRelease(imgRefSpriteSheet); I have commented it because we should not release the object that we don't own..So why do we release imgRefExtracted alone? bcuz it has name create in its method so the ownership comes to us so we have to release it.
+    
+    return ExtractedImage;
+}
+
 #pragma mark - Encoding Utils
 
 + (NSString*)encodeStringToBase64:(NSString*)plainString
