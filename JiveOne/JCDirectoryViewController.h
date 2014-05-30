@@ -11,6 +11,13 @@
 #import <AddressBook/AddressBook.h>
 #import "JCSearchBar.h"
 
+@class JCPeopleSearchViewController;
+@protocol PeopleSearchDelegate <NSObject>
+
+- (void)dismissedWithPerson:(PersonEntities *)person;
+- (void)dismissedByCanceling;
+
+@end
 
 @interface JCDirectoryViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ABPeoplePickerNavigationControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate>
 {
@@ -20,6 +27,7 @@
 
 - (IBAction)refreshDirectory:(id)sender;
 
+@property (nonatomic, assign) id<PeopleSearchDelegate> delegate;
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *clientEntitiesArray;
 @property (nonatomic, strong) NSMutableArray *clientEntitiesSearchArray;

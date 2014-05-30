@@ -18,6 +18,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "JCLog.h"
 #import "Constants.h"
+#import "JCAppDelegate.h"
 
 
 
@@ -92,6 +93,24 @@ static NSString *CellIdentifier = @"DirectoryCell";
             break;
         }
     }
+    
+    
+    if (_delegate) {
+        self.title = NSLocalizedString(@"To:", nil);
+        UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissViewController:)];
+        self.navigationItem.rightBarButtonItem = cancelButton;
+    }
+    
+}
+
+- (void)dismissViewController:(id)sender
+{
+    if (_delegate) {
+        [_delegate dismissedByCanceling];
+        [self dismissViewControllerAnimated:YES completion:^{
+            _delegate = nil;
+        }];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -102,6 +121,8 @@ static NSString *CellIdentifier = @"DirectoryCell";
     if (self.searchTableIsActive) {
         [self.searchDisplayController.searchBar resignFirstResponder];
     }
+    
+    [(JCAppDelegate *)[UIApplication sharedApplication].delegate refreshTabBadges:NO];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -560,7 +581,30 @@ static NSString *CellIdentifier = @"DirectoryCell";
     }else{
         self.searchTableIsActive = NO;
     }
-    [self performSegueWithIdentifier:@"directoryDetailView" sender:indexPath];
+    
+    if (_delegate && [_delegate respondsToSelector:@selector(dismissedWithPerson:)]) {
+        
+        PersonEntities *person;
+        
+        if (self.searchTableIsActive) {
+            NSString *entityId = self.clientEntitiesSearchArray[indexPath.row];
+            person = [self getPersonFromListByEntityId:entityId];
+        }
+        else {
+            person = self.clientEntitiesArray[indexPath.section][indexPath.row];
+        }
+        
+        if (person) {
+            [_delegate dismissedWithPerson:person];
+            [self dismissViewControllerAnimated:YES completion:^{
+                _delegate = nil;
+            }];
+        }
+        
+    }
+    else {
+        [self performSegueWithIdentifier:@"directoryDetailView" sender:indexPath];
+    }
     
 }
 
