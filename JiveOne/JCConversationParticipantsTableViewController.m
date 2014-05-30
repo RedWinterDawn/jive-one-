@@ -29,9 +29,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
 {
     [super viewDidLoad];
     [self.tableView registerNib:[UINib nibWithNibName:@"JCPersonCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
-    UISwipeGestureRecognizer *swipeLeftGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeGesture:)];
-    [self.tableView addGestureRecognizer:swipeLeftGesture];
-    swipeLeftGesture.direction = UISwipeGestureRecognizerDirectionRight;
+    
 
     [self loadPeopleInConversation];
     
@@ -61,20 +59,23 @@ static NSString *CellIdentifier = @"DirectoryCell";
         }
     }
 }
+- (IBAction)showPeopleSearch:(id)sender {
+    UINavigationController* peopleNavController = [self.storyboard instantiateViewControllerWithIdentifier:@"PeopleNavViewController"];
+    JCDirectoryViewController *directory = peopleNavController.childViewControllers[0];
+    directory.delegate = self;
+    [self presentViewController:peopleNavController animated:YES completion:^{
+        //Completed
+    }];
 
-
-
--(void)handleSwipeGesture:(UIGestureRecognizer *) sender
-{
-    NSUInteger touches = sender.numberOfTouches;
-    if (touches == 1 )
-    {
-        if (sender.state == UIGestureRecognizerStateEnded)
-        {
-            [self.navigationController popToRootViewControllerAnimated:YES];
-        }
-    }
 }
+
+- (void)dismissedWithPerson:(PersonEntities *)person
+{
+    [_peopleInConversation addObject:person];
+    [self.tableView reloadData];
+}
+
+
 
 - (void)didReceiveMemoryWarning
 {

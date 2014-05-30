@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "Conversation+Custom.h"
+#import "JCDirectoryViewController.h"
 
-@interface JCConversationParticipantsTableViewController : UITableViewController
+@interface JCConversationParticipantsTableViewController : UITableViewController <PeopleSearchDelegate>
 
 @property (nonatomic, strong) NSArray *entitiesArray;
 @property (nonatomic, strong) Conversation *conversation;
