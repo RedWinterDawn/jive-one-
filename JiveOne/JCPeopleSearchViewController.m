@@ -84,6 +84,10 @@ static NSString *CellIdentifier = @"DirectoryCell";
     [searchDisplayController.searchResultsTableView setDataSource:self];
     [self.tableView setContentInset:UIEdgeInsetsMake(108, 0, 0, 0)];
     
+    
+    
+    
+    
     for(UIView *view in [self.tableView subviews])
     {
         //NSLog([[view class] description]);
@@ -122,8 +126,14 @@ static NSString *CellIdentifier = @"DirectoryCell";
                         options:UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
                          [self.searchBarView setFrame:CGRectMake(0, 20, self.searchBarView.bounds.size.width, self.searchBarView.bounds.size.height)];
+                         [self.view insertSubview:self.navigationBar belowSubview:self.searchBarView];
+                         UIImage *SearchIconImage = [UIImage imageNamed:@"people-search.png"];
+                         UIImage *SearchIconImageWithRendering = [SearchIconImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                         [self.searchBar setImage:SearchIconImageWithRendering forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
+                         
                      }
                      completion:nil];
+    
     
     return YES;
 }
@@ -131,11 +141,16 @@ static NSString *CellIdentifier = @"DirectoryCell";
 - (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
 {
     self.doneAnimatingToolbarFromFirstResponderState = NO;
+    [self.view insertSubview:self.searchBarView belowSubview:self.navigationBar];
     [UIView animateWithDuration:0.2
                           delay:0
                         options:UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
                          [self.searchBarView setFrame:CGRectMake(0, 64, self.searchBarView.bounds.size.width, self.searchBarView.bounds.size.height)];
+                         
+                         UIImage *SearchIconImage = [UIImage imageNamed:@"people-search-nonfocus.png"];
+                         UIImage *SearchIconImageWithRendering = [SearchIconImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                         [self.searchBar setImage:SearchIconImageWithRendering forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
                          
                      }
                      completion:^(BOOL finished){
@@ -144,8 +159,6 @@ static NSString *CellIdentifier = @"DirectoryCell";
     [self.searchBar resignFirstResponder];
     return YES;
 }
-
-
 
 -(void)handleTapGesture{
     self.doneAnimatingToolbarFromFirstResponderState = NO;
@@ -286,6 +299,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
     if (!_searchBarView) {
         _searchBarView = [[UIView alloc]initWithFrame:CGRectMake(0, 65, 320, 44)];
     }
+    
     return _searchBarView;
 }
 
@@ -297,7 +311,8 @@ static NSString *CellIdentifier = @"DirectoryCell";
         [_searchBar layoutSubviews];
         self.scrollViewOffsetReference = -64;
         self.searchBarY_Reference = -64;
-        //[self.view sendSubviewToBack:_searchBarView];
+        [self.view insertSubview:self.navigationBar belowSubview:self.searchBarView];
+        
     }
     return _searchBar;
 }
@@ -474,7 +489,11 @@ static NSString *CellIdentifier = @"DirectoryCell";
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
-    return sections;
+    if (self.searchDisplayController.active) {
+        return nil;
+    } else {
+        return sections;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString*)title atIndex:(NSInteger)index
