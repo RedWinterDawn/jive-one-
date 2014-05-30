@@ -19,6 +19,7 @@
 #import "TRVSMonitor.h"
 #import "JCConversationParticipantsTableViewController.h"
 #import "JCPeopleSearchViewController.h"
+#import "JCDirectoryViewController.h"
 
 @interface JCMessagesViewController ()
 {
@@ -27,10 +28,14 @@
     NSString *subtitle;
     JCOsgiClient *osgiClient;
     NSManagedObjectContext *context;
+    BOOL addingPeople;
+    BOOL needsPatch;
+    int existingConversationEntities;
 }
 
 @property (nonatomic) NSArray *contacts;
 @property (nonatomic) NSMutableArray *selectedContacts;
+@property (nonatomic) NSMutableArray *addedContacts;
 @property (weak, nonatomic) IBOutlet MBContactPicker *contactPickerView;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contactPickerViewHeightConstraint;
 @property (nonatomic, strong) Conversation *conversation;
@@ -122,6 +127,59 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - PeopleSearchDelegate
+
+- (void)dismissedWithPerson:(PersonEntities *)person
+{
+    if (!self.addedContacts) {
+        self.addedContacts = [[NSMutableArray alloc] init];
+    }
+    
+    [self.addedContacts addObject:person];
+    
+    if (_messageType != JCExistingConversation) {
+        [self checkForConversationWithEntities:self.addedContacts];
+    }
+    
+    NSMutableArray *tempArray = [NSMutableArray arrayWithArray:_selectedContacts];
+    [tempArray addObjectsFromArray:_addedContacts];
+    
+    if (tempArray.count == 1) {
+        [self setHeaderTitle:person.firstLastName andSubtitle:person.email];
+    }
+    else {
+        
+        NSArray *nameArray = [tempArray valueForKeyPath:@"firstName"];
+        NSString *groupName = [self composeGroupName:nameArray];
+        [self setHeaderTitle:groupName andSubtitle:[NSString stringWithFormat:@"+ me"]];
+    }
+    
+    [self enableSendButtonBasedOnSelectedContacts];
+
+    
+    
+    
+}
+
+- (void)dismissedByCanceling
+{
+    if (addingPeople && _addedContacts.count == 0) {
+        [self.navigationController popToRootViewControllerAnimated:NO];
+    }
+    
+    addingPeople = NO;
+}
+
+- (IBAction)showPeopleSearch:(id)sender {
+    addingPeople = YES;
+    UINavigationController* peopleNavController = [self.storyboard instantiateViewControllerWithIdentifier:@"PeopleNavViewController"];
+    JCDirectoryViewController *directory = peopleNavController.childViewControllers[0];
+    directory.delegate = self;
+    [self presentViewController:peopleNavController animated:YES completion:^{
+        //Completed
+    }];
+}
+
 #pragma mark - View Type
 - (void) setupView
 {
@@ -142,7 +200,7 @@
     switch (_messageType) {
             
         case JCExistingConversation: {
-            
+            self.imageViewNewMessage.hidden = YES;
             [self.contactPickerView removeFromSuperview];
             [self subscribeToConversationNotification:YES];
             
@@ -150,7 +208,14 @@
                 [self.tableView setSeparatorInset:UIEdgeInsetsZero];
             }
             
-            [self setHeaderTitle:title andSubtitle:subtitle];
+            if (_selectedContacts.count == 1) {
+                [self setHeaderTitle:title andSubtitle:subtitle];
+            }
+            else {
+                NSArray *nameArray = [self.selectedContacts valueForKeyPath:@"firstName"];
+                NSString *groupName = [self composeGroupName:nameArray];
+                [self setHeaderTitle:groupName andSubtitle:[NSString stringWithFormat:@"+ me"]];
+            }
             
             break;
         }
@@ -158,10 +223,7 @@
             [self setHeaderTitle:NSLocalizedString(@"New Message", @"New Message") andSubtitle:nil] ;
             self.imageViewNewMessage.hidden = NO;
             //[self.contactPickerView becomeFirstResponder];
-            JCPeopleSearchViewController* peopleSearchViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"JCPeopleSearchViewController"];
-            [self presentViewController:peopleSearchViewController animated:YES completion:^{
-                //Completed
-            }];
+            [self showPeopleSearch:nil];
             break;
         }
         case JCNewConversationWithEntity: {
@@ -199,7 +261,7 @@
     
 }
 
--(void)handleSwipeGesture:(UIGestureRecognizer *) sender
+-(void)handleSwipeGesture:(UIGestureRecognizer *)sender
 {
     NSUInteger touches = sender.numberOfTouches;
     if (touches == 1 )
@@ -215,7 +277,10 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    [segue.destinationViewController setConversation:_conversation];
+    if ([segue.identifier isEqualToString:@"participantsSegue"]) {
+        JCConversationParticipantsTableViewController *conversationViewController = segue.destinationViewController;
+        [conversationViewController setConversation:_conversation];
+    }
 }
 
 - (void) setCustomHeader
@@ -300,10 +365,23 @@
                 
                 
             if (self.avatars.count == 0){
+                
+                if (!_selectedContacts) {
+                    _selectedContacts = [[NSMutableArray alloc] init];
+                }
+                else {
+                    [_selectedContacts removeAllObjects];
+                }
+                
                 for (NSString* entityId in conversationMembers) {
                     
                     PersonEntities *person = [PersonEntities MR_findFirstByAttribute:@"entityId" withValue:entityId];
                     if (person) {
+                        
+                        if (person != me) {
+                            [_selectedContacts addObject:person];
+                        }
+                             
                         [self.avatars setObject:person.picture forKey:person.firstLastName];
                         
                         if (person != me && ![_conversation.isGroup boolValue]) {
@@ -311,6 +389,9 @@
                             subtitle = person.email;
                         }
                     }
+                }
+                if (_selectedContacts) {
+                    existingConversationEntities = _selectedContacts.count;
                 }
             }
         }
@@ -513,9 +594,18 @@
         
         [(JCAppDelegate *)[UIApplication sharedApplication].delegate clearBadgeCountForConversation:_conversationId];
         
-        ConversationEntry *entry = (ConversationEntry *)notification.object;
-        if (![entry.entityId isEqualToString:me.entityId]) {
-            [JSMessageSoundEffect playMessageReceivedSound];
+        id conversationObject = notification.object;
+        
+        if ([conversationObject isKindOfClass:[ConversationEntry class]]) {
+            ConversationEntry *entry = (ConversationEntry *) conversationObject;
+            if (![entry.entityId isEqualToString:me.entityId]) {
+                [JSMessageSoundEffect playMessageReceivedSound];
+            }
+        }
+        else if ([conversationObject isKindOfClass:[Conversation class]]) {
+//            Conversation *conversation = (Conversation *) conversationObject;
+//            _conversation = conversation;
+            [self setupDataSources];
         }
     }
 }
@@ -526,7 +616,14 @@
     self.imageViewNewMessage.hidden = YES;
     
     // if conversation exists, then create entry for that conversation
-    if (_conversationId != nil && ![_conversationId isEqualToString:@""]) {
+    if (_addedContacts && _messageType != JCNewConversation) {
+        if (_addedContacts.count > 0) {
+            needsPatch = YES;
+        }
+    }
+    
+    
+    if (![Common stringIsNilOrEmpty:_conversationId] && !needsPatch) {
         
         __block ConversationEntry *entry = [self createEntryLocallyForConversation:_conversationId withMessage:message withTimestamp:[NSDate date] inContext:[self context]];
         
@@ -573,41 +670,66 @@
 
 - (void)createConversation:(NSString *)message
 {
-    BOOL isGroup = self.selectedContacts.count > 2;
+    if (needsPatch && _messageType == JCExistingConversation) {
+        [_selectedContacts addObjectsFromArray:_addedContacts];
+    }
+    else {
+        _selectedContacts = [NSMutableArray arrayWithArray:_addedContacts];
+    }
+    
+    
+    BOOL isGroup = self.selectedContacts.count >= 2;
     NSArray *nameArray = [self.selectedContacts valueForKeyPath:@"firstName"];
     NSString *groupName = isGroup? [self composeGroupName:nameArray] : @"";
     
     NSMutableArray *entityArray = [[NSMutableArray alloc] initWithArray:[self.selectedContacts valueForKeyPath:@"entityId"]];
     [entityArray addObject:me.entityId];
     
-    [[JCOsgiClient sharedClient] SubmitConversationWithName:groupName forEntities:entityArray creator:me.entityId  isGroupConversation:isGroup success:^(id JSON) {
-        // if conversation creation was successful, then subscribe for notifications to that conversationId
-        _conversationId = JSON[@"id"];
-        if (_conversationId) {
+    if (needsPatch) {
+        [[JCOsgiClient sharedClient] PatchConversationWithName:_conversationId groupName:groupName forEntities:entityArray creator:me.entityId isGroupConversation:isGroup success:^(id JSON) {
             
-            [self subscribeToConversationNotification:YES];
-            
-            // Add message to table so we provice user imediate feedback
-            //NSString *sender = [NSString stringWithFormat:@"%@ - %@", me.firstLastName, [NSDate date]];
-            //JSMessage *messageEntry = [[JSMessage alloc] initWithText:message sender:sender date:[NSDate date]];
-            //[self.messages addObject:messageEntry];
-            [self setupDataSources];            
-            [self.tableView reloadData];
-            
-            
-            [self hideContactPicker];
-            
-            // we can now add entries to the conversation recently created.
+            // success patching
+            [_addedContacts removeAllObjects];
             [self dispatchMessage:message];
-        }
+            
+        } failure:^(NSError *err) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"Could not patch your message at this time.", nil) delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            self.messageInputView.textView.text = message;
+            [alertView show];
+        }];
         
-    } failure:^(NSError *err) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"Could not send your message at this time. Please try again.", nil) delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-        
-        self.messageInputView.textView.text = message;
-        
-        [alertView show];
-    }];
+    }
+    else {
+    
+        [[JCOsgiClient sharedClient] SubmitConversationWithName:groupName forEntities:entityArray creator:me.entityId  isGroupConversation:isGroup success:^(id JSON) {
+            // if conversation creation was successful, then subscribe for notifications to that conversationId
+            _conversationId = JSON[@"id"];
+            if (_conversationId) {
+                
+                [self subscribeToConversationNotification:YES];
+                
+                // Add message to table so we provice user imediate feedback
+                //NSString *sender = [NSString stringWithFormat:@"%@ - %@", me.firstLastName, [NSDate date]];
+                //JSMessage *messageEntry = [[JSMessage alloc] initWithText:message sender:sender date:[NSDate date]];
+                //[self.messages addObject:messageEntry];
+                [self setupDataSources];            
+                [self.tableView reloadData];
+                
+                
+                [self hideContactPicker];
+                
+                // we can now add entries to the conversation recently created.
+                [self dispatchMessage:message];
+            }
+            
+        } failure:^(NSError *err) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"Could not send your message at this time. Please try again.", nil) delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            
+            self.messageInputView.textView.text = message;
+            
+            [alertView show];
+        }];
+    }
 }
 
 - (NSString *)composeGroupName:(NSArray *)names
@@ -705,14 +827,17 @@
     
     if (existingConversation) {
         _conversationId = existingConversation.conversationId;
+        self.imageViewNewMessage.hidden = YES;
         //conversationEntries = [NSMutableArray arrayWithArray:[ConversationEntry MR_findByAttribute:@"conversationId" withValue:_conversationId andOrderBy:@"lastModified" ascending:YES]];
         [self subscribeToConversationNotification:YES];
         [self setupDataSources];
         //[textView becomeFirstResponder];
     }
     else {
+        self.imageViewNewMessage.hidden = NO;
         [self subscribeToConversationNotification:NO];
         _conversationId = nil;
+        _selectedContacts = nil;
         [self.messages removeAllObjects];
         [self setupDataSources];
     }
@@ -852,8 +977,8 @@
 - (void)enableSendButtonBasedOnSelectedContacts
 {
     if (self.messageInputView.sendButton && _messageType == JCNewConversation) {
-        if (self.selectedContacts) {
-            if (self.selectedContacts.count > 0) {
+        if (self.selectedContacts || _addedContacts) {
+            if (self.selectedContacts.count > 0 || _addedContacts.count > 0) {
                 self.hasMininumContacts = YES;
             }
             else {
