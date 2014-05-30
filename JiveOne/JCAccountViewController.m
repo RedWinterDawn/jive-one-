@@ -13,9 +13,11 @@
 #import "PersonEntities.h"
 #import "Company.h"
 #import <AudioToolbox/AudioToolbox.h>
+#import "JCTermsAndConditonsVCViewController.h"
+#import <MessageUI/MessageUI.h>
+#import <MessageUI/MFMailComposeViewController.h>
 
-
-@interface JCAccountViewController ()
+@interface JCAccountViewController () <MFMailComposeViewControllerDelegate>
 {
     PersonEntities *me;
     NSMutableArray *presenceValues;
@@ -155,6 +157,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if(indexPath.section == 1){
         //launch action sheet
         UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"Select Presence option:" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
@@ -168,18 +171,74 @@
         [popup showFromTabBar:self.tabBarController.tabBar];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
+    else if(indexPath.section == 2){
+        //Eula or leave feedback
+        if([cell.textLabel.text isEqualToString:@"EULA / Terms of Service"]){
+            [Flurry logEvent:@"EULA button clicked"];
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+            
+            [self presentViewController:[storyboard instantiateViewControllerWithIdentifier:@"JCTermsAndConditonsVCViewControllerContainer"] animated:YES completion:nil];
+            
+        }
+        else if ([cell.textLabel.text isEqualToString:@"Leave Feedback"]){
+            //send email to mobileapps+ios@jive.com
+            [self leaveFeedbackPressed];
+            
+            
+        }
+    }
     else if (indexPath.section == 3) {
-        [self logoutButtonPress:nil];
+        [self logoutButtonPress];
     }
 }
 
-#pragma mark - Actions from UI
-- (IBAction)logoutButtonPress:(id)sender {
+#pragma mark - Table Actions
+- (void) logoutButtonPress{
     [[JCAuthenticationManager sharedInstance] logout:self];
     [self.tabBarController performSegueWithIdentifier:@"logoutSegue" sender:self.tabBarController];
     [Flurry logEvent:@"Log out"];
 }
 
+#pragma mark - Mail Delegate
+-(void) leaveFeedbackPressed{
+    
+    if ([MFMailComposeViewController canSendMail]) {
+        
+        MFMailComposeViewController *mailViewController = [[MFMailComposeViewController alloc] init];
+        mailViewController.mailComposeDelegate = self;
+        [mailViewController setToRecipients:[NSArray arrayWithObject:@"MobileApps+ios@jive.com"]];
+        [mailViewController setSubject:@"Feedback"];
+        
+        //get device specs
+        UIDevice *currentDevice = [UIDevice currentDevice];
+        NSString *model = [currentDevice model];
+        NSString *systemVersion = [currentDevice systemVersion];
+        NSString *appVersion = [[NSBundle mainBundle]
+                                objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
+        NSString *country = [[NSLocale currentLocale] localeIdentifier];
+        
+        NSString *bodyTemplate = [NSString stringWithFormat:@"<strong>Description of feedback:</strong> <br><br><br><br><br><hr><strong>Device Specs</strong><br>Model: %@ <br> System Version: %@ <br> App Version: %@ <br> Country: %@",
+         model, systemVersion, appVersion, country];
+        
+        
+        [mailViewController setMessageBody:bodyTemplate isHTML:YES];
+        
+        [self presentViewController:mailViewController animated:YES completion:nil];
+        
+    }
+    
+    else {
+        
+        NSLog(@"Device is unable to send email in its current state.");
+        
+    }
+}
+
+-(void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+}
 
 #pragma mark - UIActionSheet Delegate
 - (void)actionSheet:(UIActionSheet *)popup clickedButtonAtIndex:(NSInteger)buttonIndex {
