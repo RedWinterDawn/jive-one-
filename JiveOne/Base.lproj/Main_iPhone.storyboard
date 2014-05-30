@@ -616,7 +616,7 @@
         <!--Navigation Controller - People-->
         <scene sceneID="4Zu-Qh-4wk">
             <objects>
-                <navigationController definesPresentationContext="YES" id="vaI-vc-7Id" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="PeopleNavViewController" definesPresentationContext="YES" id="vaI-vc-7Id" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="People" image="nav-people.png" id="WUb-WZ-m0b"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="bje-51-esT">
                         <autoresizingMask key="autoresizingMask"/>
@@ -798,7 +798,7 @@
             </objects>
             <point key="canvasLocation" x="1818" y="955"/>
         </scene>
-        <!--Messages View Controller - back-->
+        <!--Messages View Controller - Message-->
         <scene sceneID="Z6h-mb-aMW">
             <objects>
                 <viewController id="xuv-bc-Gqj" customClass="JCMessagesViewController" sceneMemberID="viewController">
@@ -831,9 +831,11 @@
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
-                    <navigationItem key="navigationItem" title="back" id="n1O-hC-4V2">
-                        <barButtonItem key="rightBarButtonItem" title="Item" style="plain" id="7UI-Pq-8Dk">
-                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <navigationItem key="navigationItem" title="Message" id="n1O-hC-4V2">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="n8E-pC-jdl">
+                            <connections>
+                                <action selector="showPeopleSearch:" destination="xuv-bc-Gqj" id="kpC-sN-3nj"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -871,7 +873,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="People in conversation" id="hBA-4L-uaC">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="1ER-Mr-9lB"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="1ER-Mr-9lB">
+                            <connections>
+                                <action selector="showPeopleSearch:" destination="O6N-i7-BAq" id="VzN-nB-VZJ"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QaV-7n-FlE" userLabel="First Responder" sceneMemberID="firstResponder"/>

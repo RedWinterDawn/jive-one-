@@ -81,6 +81,9 @@
             if (convEntry.lastModified > conversation.lastModified) {
                 conversation.lastModified = convEntry.lastModified;
             }
+            if (![conversation.hasEntries boolValue]) {
+                conversation.hasEntries = [NSNumber numberWithBool:YES];
+            }
         }
         
         //Save conversation entry
@@ -114,6 +117,18 @@
         entry.type = dictionary[@"type"];
         entry.urn = dictionary[@"urn"];
         entry.entryId = dictionary[@"id"];
+        
+        Conversation *conversation = [Conversation MR_findFirstByAttribute:@"conversationId" withValue:entry.conversationId];
+        if (conversation) {
+            if (entry.lastModified > conversation.lastModified) {
+                conversation.lastModified = entry.lastModified;
+            }
+            if (![conversation.hasEntries boolValue]) {
+                conversation.hasEntries = [NSNumber numberWithBool:YES];
+            }
+        }
+        
+        
         
         //Save conversation entry
         [context MR_saveToPersistentStoreAndWait];

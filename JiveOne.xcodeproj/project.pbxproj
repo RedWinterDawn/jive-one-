@@ -354,6 +354,8 @@
 		27A01610192EF11C0073C824 /* voicemails.json in Resources */ = {isa = PBXBuildFile; fileRef = 27A0160F192EF11C0073C824 /* voicemails.json */; };
 		27A01612192EF1E80073C824 /* companies.json in Resources */ = {isa = PBXBuildFile; fileRef = 27A01611192EF1E80073C824 /* companies.json */; };
 		27A01615193514690073C824 /* JCConversationParticipantsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A01614193514690073C824 /* JCConversationParticipantsTableViewController.m */; };
+		27A016731938217E0073C824 /* sprite2.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A016721938217E0073C824 /* sprite2.png */; };
+		27A016741938217E0073C824 /* sprite2.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A016721938217E0073C824 /* sprite2.png */; };
 		27B8152618D93F1A00516BF6 /* NotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B8152518D93F1A00516BF6 /* NotificationView.m */; };
 		27B8153618D94E9C00516BF6 /* close_notification.png in Resources */ = {isa = PBXBuildFile; fileRef = 27B8153418D94E9C00516BF6 /* close_notification.png */; };
 		27B8153718D94E9C00516BF6 /* close_notification@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27B8153518D94E9C00516BF6 /* close_notification@2x.png */; };
@@ -747,6 +749,7 @@
 		27A01611192EF1E80073C824 /* companies.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = companies.json; sourceTree = "<group>"; };
 		27A01613193514690073C824 /* JCConversationParticipantsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCConversationParticipantsTableViewController.h; sourceTree = "<group>"; };
 		27A01614193514690073C824 /* JCConversationParticipantsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCConversationParticipantsTableViewController.m; sourceTree = "<group>"; };
+		27A016721938217E0073C824 /* sprite2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sprite2.png; sourceTree = "<group>"; };
 		27B8152418D93F1A00516BF6 /* NotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationView.h; sourceTree = "<group>"; };
 		27B8152518D93F1A00516BF6 /* NotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationView.m; sourceTree = "<group>"; };
 		27B8153418D94E9C00516BF6 /* close_notification.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close_notification.png; sourceTree = "<group>"; };
@@ -1370,6 +1373,7 @@
 		275158F618AD10A500FD8D3F /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				27A016721938217E0073C824 /* sprite2.png */,
 				270098B518F5EA7900B6BC2F /* UX Images */,
 				27C3715118EDE9A000F159EF /* first_message.png */,
 				9172AD53191847D800481B01 /* ES-voicemail-1.jpg */,
@@ -1628,16 +1632,11 @@
 		277F093C18FECE8700EEF0E3 /* Conversation */ = {
 			isa = PBXGroup;
 			children = (
+				27A01671193772450073C824 /* Cells */,
 				2751592118AD32E500FD8D3F /* JCConversationsViewController.h */,
 				2751592218AD32E500FD8D3F /* JCConversationsViewController.m */,
 				27C3715518EE29F400F159EF /* JCMessagesViewController.h */,
 				27C3715618EE29F400F159EF /* JCMessagesViewController.m */,
-				274493AF18D0DA9B002744CB /* JCConversationCell.xib */,
-				274493AC18D0D538002744CB /* JCConversationCell.h */,
-				274493AD18D0D538002744CB /* JCConversationCell.m */,
-				9137919518FDB0EE00709AD3 /* JCGroupConversationCell.h */,
-				9137919618FDB0EE00709AD3 /* JCGroupConversationCell.m */,
-				9137919718FDB0EE00709AD3 /* JCGroupConversationCell.xib */,
 				F5C8F16819351604007372A1 /* JCPeopleSearchViewController.h */,
 				F5C8F16919351604007372A1 /* JCPeopleSearchViewController.m */,
 				27A01613193514690073C824 /* JCConversationParticipantsTableViewController.h */,
@@ -1721,6 +1720,19 @@
 				27A01609192EBCA70073C824 /* libFlurry_5.0.0.a */,
 			);
 			path = Flurry;
+			sourceTree = "<group>";
+		};
+		27A01671193772450073C824 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				274493AF18D0DA9B002744CB /* JCConversationCell.xib */,
+				274493AC18D0D538002744CB /* JCConversationCell.h */,
+				274493AD18D0D538002744CB /* JCConversationCell.m */,
+				9137919518FDB0EE00709AD3 /* JCGroupConversationCell.h */,
+				9137919618FDB0EE00709AD3 /* JCGroupConversationCell.m */,
+				9137919718FDB0EE00709AD3 /* JCGroupConversationCell.xib */,
+			);
+			name = Cells;
 			sourceTree = "<group>";
 		};
 		27F1778B18FDEECE0073C6AD /* TestFlightSDK3.0.0 */ = {
@@ -2296,6 +2308,7 @@
 				2727F3ED191AA92F00A41185 /* input-bar-background.png in Resources */,
 				2727F3EE191AA92F00A41185 /* bubble-min@2x.png in Resources */,
 				91F6DFAC192A702F001C54FB /* Shared.xcconfig in Resources */,
+				27A016741938217E0073C824 /* sprite2.png in Resources */,
 				2727F3EF191AA92F00A41185 /* UserDefaults.plist in Resources */,
 				2727F3F0191AA92F00A41185 /* vm-delete.png in Resources */,
 				2727F3F1191AA92F00A41185 /* bubble-classic-square-blue@2x.png in Resources */,
@@ -2486,6 +2499,7 @@
 				91ADB9AF18D8BD4200DF41A3 /* voicemail_scrub_play@2x.png in Resources */,
 				270098C118F5EA9300B6BC2F /* conv-compose.png in Resources */,
 				275F4A5C18AD0FBC00D2F069 /* InfoPlist.strings in Resources */,
+				27A016731938217E0073C824 /* sprite2.png in Resources */,
 				27F1F2DE191C171300AEAFD7 /* UAInboxMessageListCell.xib in Resources */,
 				27F1F2F6191C171300AEAFD7 /* UAMapPresentationViewController.xib in Resources */,
 				2700988618F4714100B6BC2F /* bubble-classic-gray.png in Resources */,

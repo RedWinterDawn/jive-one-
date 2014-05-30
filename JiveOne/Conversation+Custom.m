@@ -94,8 +94,10 @@
         [context MR_saveToPersistentStoreAndWait];
         
         // Save/Update entries
+    if (dictionary[@"entries"]) {
         [ConversationEntry addConversationEntries:dictionary[@"entries"]];
     }
+}
     
     return conversation;
 }
