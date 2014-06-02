@@ -73,6 +73,11 @@ static NSString *CellIdentifier = @"DirectoryCell";
 {
     [_peopleInConversation addObject:person];
     [self.tableView reloadData];
+    
+    if (_delegate && [_delegate respondsToSelector:@selector(didAddPersonFromParticipantView:)]) {
+        [_delegate didAddPersonFromParticipantView:person];
+    }
+    
 }
 
 

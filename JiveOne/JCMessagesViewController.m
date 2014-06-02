@@ -17,7 +17,6 @@
 #import "Common.h"
 #import "JCAppDelegate.h"
 #import "TRVSMonitor.h"
-#import "JCConversationParticipantsTableViewController.h"
 #import "JCPeopleSearchViewController.h"
 #import "JCDirectoryViewController.h"
 
@@ -131,6 +130,30 @@
 
 - (void)dismissedWithPerson:(PersonEntities *)person
 {
+    [self addPersonFromPersonPicker:person];
+}
+
+- (void)dismissedByCanceling
+{
+    if (addingPeople && _addedContacts.count == 0) {
+        [self.navigationController popToRootViewControllerAnimated:NO];
+    }
+    
+    addingPeople = NO;
+}
+
+- (IBAction)showPeopleSearch:(id)sender {
+    addingPeople = YES;
+    UINavigationController* peopleNavController = [self.storyboard instantiateViewControllerWithIdentifier:@"PeopleNavViewController"];
+    JCDirectoryViewController *directory = peopleNavController.childViewControllers[0];
+    directory.delegate = self;
+    [self presentViewController:peopleNavController animated:YES completion:^{
+        //Completed
+    }];
+}
+
+- (void) addPersonFromPersonPicker:(PersonEntities *)person
+{
     if (!self.addedContacts) {
         self.addedContacts = [[NSMutableArray alloc] init];
     }
@@ -155,29 +178,13 @@
     }
     
     [self enableSendButtonBasedOnSelectedContacts];
-
-    
-    
-    
 }
 
-- (void)dismissedByCanceling
+#pragma mark - ConversationParticipantDelegate
+
+- (void)didAddPersonFromParticipantView:(PersonEntities *)person
 {
-    if (addingPeople && _addedContacts.count == 0) {
-        [self.navigationController popToRootViewControllerAnimated:NO];
-    }
-    
-    addingPeople = NO;
-}
-
-- (IBAction)showPeopleSearch:(id)sender {
-    addingPeople = YES;
-    UINavigationController* peopleNavController = [self.storyboard instantiateViewControllerWithIdentifier:@"PeopleNavViewController"];
-    JCDirectoryViewController *directory = peopleNavController.childViewControllers[0];
-    directory.delegate = self;
-    [self presentViewController:peopleNavController animated:YES completion:^{
-        //Completed
-    }];
+    [self addPersonFromPersonPicker:person];
 }
 
 #pragma mark - View Type
@@ -280,6 +287,7 @@
     if ([segue.identifier isEqualToString:@"participantsSegue"]) {
         JCConversationParticipantsTableViewController *conversationViewController = segue.destinationViewController;
         [conversationViewController setConversation:_conversation];
+        [conversationViewController setDelegate:self];
     }
 }
 
@@ -690,6 +698,7 @@
             
             // success patching
             [_addedContacts removeAllObjects];
+            needsPatch = NO;
             [self dispatchMessage:message];
             
         } failure:^(NSError *err) {

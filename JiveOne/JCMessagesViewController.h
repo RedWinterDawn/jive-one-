@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "JSMessagesViewController.h"
 #import "MBContactPicker/MBContactPicker.h"
+#import "JCConversationParticipantsTableViewController.h"
 #import "JCDirectoryViewController.h"
 #import "ContactGroup.h"
 #import "JCOsgiClient.h"
 
-@interface JCMessagesViewController : JSMessagesViewController <JSMessagesViewDataSource, JSMessagesViewDelegate, UITableViewDataSource, MBContactPickerDelegate, MBContactPickerDataSource, PeopleSearchDelegate>
+@interface JCMessagesViewController : JSMessagesViewController <JSMessagesViewDataSource, JSMessagesViewDelegate, UITableViewDataSource, MBContactPickerDelegate, MBContactPickerDataSource, PeopleSearchDelegate, ConversationParticipantDelegate>
 
 @property (strong, nonatomic) NSMutableArray *messages;
 @property (strong, nonatomic) NSMutableDictionary *avatars;
