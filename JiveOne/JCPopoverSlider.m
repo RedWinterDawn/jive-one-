@@ -9,6 +9,7 @@
 #import "JCPopoverSlider.h"
 @interface JCPopoverSlider()
 @property (strong, nonatomic) UIColor* JCBlue;
+@property (nonatomic) BOOL touchIsCurrentlyHappening;
 @end
 
 @implementation JCPopoverSlider
@@ -39,15 +40,8 @@
     UIImage *maxImage = [[UIImage imageNamed:@"slider_min.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 5)];
     [[JCPopoverSlider appearance] setMaximumTrackImage:maxImage forState:UIControlStateNormal];
     [[JCPopoverSlider appearance] setMinimumTrackImage:minImage forState:UIControlStateNormal];
-    
-    [[JCPopoverSlider appearance] setThumbImage: sliderImage([self formatSeconds:self.value]) forState:UIControlStateNormal];
-    [[JCPopoverSlider appearance] setThumbImage: justASliderBox() forState:UIControlStateHighlighted];
-    // overide setter for state???
-    
-    // Create the callbacks for touch, move, and release
-//    [self addTarget:self action:@selector(startDrag:) forControlEvents:UIControlEventTouchDown];
-//    [self addTarget:self action:@selector(updateThumb) forControlEvents:UIControlEventValueChanged];
-//    [self addTarget:self action:@selector(endDrag:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchUpOutside];
+    self.touchIsCurrentlyHappening = NO;
+    [self changeThumbImageToDisplayProgressThumb];
 }
 
 -(JCPopoverView*)popupView
@@ -60,21 +54,37 @@
     }
     return _popupView;
 }
-
-- (void)updateThumb{
-    NSLog(@"updateThumb JCPopoverSlider.m:65");
-
-    UIImage *customimg = justASliderBox();
-	[self setThumbImage: customimg forState: UIControlStateHighlighted];
+-(void)changeThumbImageToSimpleThumb
+{
+    if (self.touchIsCurrentlyHappening) {
+        [self setThumbImage: justASliderBox() forState:UIControlStateNormal];
+        [self setThumbImage: justASliderBox() forState:UIControlStateSelected];
+        [self setThumbImage: justASliderBox() forState:UIControlStateHighlighted];
+    }
 }
 
-- (void)updateThumbWithCurrentProgress{
-    NSLog(@"updateThumbWithCurrentProgress JCPopoverSlider.m:72");
-
-          UIImage *customimg = sliderImage([self formatSeconds:self.value]);
-    
-	[self setThumbImage: customimg forState: UIControlStateNormal];
+-(void)changeThumbImageToDisplayProgressThumb
+{
+    if (self.touchIsCurrentlyHappening == NO) {
+        [self setThumbImage: sliderImage([self formatSeconds:self.value]) forState:UIControlStateNormal];
+        [self setThumbImage: sliderImage([self formatSeconds:self.value]) forState:UIControlStateSelected];
+        [self setThumbImage: sliderImage([self formatSeconds:self.value]) forState:UIControlStateHighlighted];
+    }
 }
+
+
+//- (void)updateThumb{
+//    NSLog(@"updateThumb JCPopoverSlider.m:65");
+//
+//    UIImage *customimg = justASliderBox();
+//	[self setThumbImage: customimg forState: UIControlStateHighlighted];
+//}
+//
+//- (void)updateThumbWithCurrentProgress{
+//          UIImage *customimg = sliderImage([self formatSeconds:self.value]);
+//    NSLog(@"thumbRect: %f,%f, %f,%f", self.thumbRect.origin.x, self.thumbRect.origin.y, self.thumbRect.size.width, self.thumbRect.size.height);
+//	[self setThumbImage: customimg forState: UIControlStateNormal];
+//}
 
 -(void)fadePopupViewInAndOut:(BOOL)aFadeIn {
     [UIView beginAnimations:nil context:NULL];
@@ -88,11 +98,15 @@
 }
 
 -(void)positionAndUpdatePopupView {
-    NSLog(@"positionAndUpdatePopupView JCPopoverSlider.m:91");
 
     CGRect zeThumbRect = self.thumbRect;
+    NSLog(@"popupView: %f,%f, %f,%f", self.popupView.frame.origin.x, self.popupView.frame.origin.y, self.popupView.bounds.size.width, self.popupView.bounds.size.height);
+
     CGRect popupRect = CGRectOffset(zeThumbRect, -27, -floor(zeThumbRect.size.height * 3));
     self.popupView.frame = CGRectInset(popupRect, -10, -10);
+    if (self.popupView.frame.origin.y > -79) {
+        self.popupView.frame = CGRectMake(self.popupView.frame.origin.x, -79, self.popupView.bounds.size.width, self.popupView.bounds.size.height);
+    }
     self.popupView.value = self.value;
 }
 
@@ -109,9 +123,16 @@
 
 #pragma mark - Property accessors
 -(CGRect)thumbRect {
+//    NSLog(@"bounds: %f,%f", self.bounds.origin.x, self.bounds.origin.y);
+
     CGRect trackRect = [self trackRectForBounds:self.bounds];
     CGRect thumbR = [self thumbRectForBounds:self.bounds trackRect:trackRect value:self.value];
+    if (thumbR.origin.y > -9) {
+        thumbR = CGRectMake(thumbR.origin.x, -9, thumbR.size.width, thumbR.size.height);
+    }
+    
     return thumbR;
+    
 }
 
 -(UIColor*)JCBlue{
@@ -165,7 +186,7 @@ UIImage *sliderImage(NSString* text)
     UIImage* sliderImage = UIGraphicsGetImageFromCurrentImageContext();
     [sliderImage drawInRect:rect];
     UIGraphicsEndImageContext();
-    
+
     return sliderImage;
 }
 
@@ -198,22 +219,26 @@ UIImage *justASliderBox()
 #pragma mark - UIControl touch event tracking
 
 -(BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
-    NSLog(@"beginTrackingWithTouch JCPopoverSlider.m:201");
     [super beginTrackingWithTouch:touch withEvent:event];
-    // Fade in and update the popup view
-//    CGPoint touchPoint = [touch locationInView:self];
-    
-    // Check if the knob is touched. If so, show the popup view
+
+//    [self setThumbImage: justASliderBox() forState:UIControlStateHighlighted];
+//    [self setThumbImage: sliderImage([self formatSeconds:self.value]) forState:UIControlStateNormal];
+
+    self.touchIsCurrentlyHappening = YES;
+    [self changeThumbImageToSimpleThumb];
+
     [self positionAndUpdatePopupView];
     [self fadePopupViewInAndOut:YES];
-//    if(CGRectContainsPoint(CGRectInset(self.thumbRect, -12.0, -12.0), touchPoint)) {
-//    }
     
     return YES;
 }
 
 -(BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
-    NSLog(@"continueTrackingWithTouch JCPopoverSlider.m:216");
+    if (self.touchIsCurrentlyHappening == NO) {
+        self.touchIsCurrentlyHappening = YES;
+        [self changeThumbImageToSimpleThumb];
+    }
+    
     [super continueTrackingWithTouch:touch withEvent:event];
     // Update the popup view as slider knob is being moved
     [self positionAndUpdatePopupView];
@@ -222,10 +247,15 @@ UIImage *justASliderBox()
 
 -(void)cancelTrackingWithEvent:(UIEvent *)event {
     [super cancelTrackingWithEvent:event];
+    self.touchIsCurrentlyHappening = NO;
+    [self changeThumbImageToDisplayProgressThumb];
+
 }
 
 -(void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
     // Fade out the popup view
+    self.touchIsCurrentlyHappening = NO;
+    [self changeThumbImageToDisplayProgressThumb];
     [self fadePopupViewInAndOut:NO];
     [super endTrackingWithTouch:touch withEvent:event];
 }
