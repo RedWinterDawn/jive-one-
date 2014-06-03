@@ -110,8 +110,11 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    if (self.view.frame.size.height <= 560){
+        
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
+    }
     [Flurry logEvent:@"Login View"];
 }
 
