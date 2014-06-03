@@ -43,9 +43,6 @@
 	self.slider.minimumValue = 0.0;
     
     
-    //set initial image for playbutton
-    UIImage *playImage = [UIImage imageNamed:@"voicemail_scrub_play.png"];
-    [self setPlayButtonState:playImage];
     //test to see if we have already downloaded the voicemail .wav file
     if (self.voicemail.voicemail.length > 0) {
         // if the activityIndicator is visible
@@ -150,11 +147,6 @@
     if (self.delegate && [self.delegate respondsToSelector:@selector(voiceCellPlayTapped:)]) {
         [self.delegate voiceCellPlayTapped:self];
     }
-}
-
-- (void)setPlayButtonState:(UIImage *)image
-{
-    [self.playButton setImage:image forState:UIControlStateNormal];
 }
 
 - (IBAction)progressSliderMoved:(id)sender {

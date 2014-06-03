@@ -11,7 +11,6 @@
 #import "JCStyleKit.h"
 
 @interface JCPlayPauseView()
-@property (nonatomic) BOOL playPauseDisplaysPlay;
 @property (nonatomic) JCVoiceCell* parentCell;
 @end
 

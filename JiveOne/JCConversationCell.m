@@ -101,7 +101,7 @@
                 NSMutableDictionary *entries = [badges objectForKey:_conversation.conversationId];
                 if (entries.count != 0) {
                     _conversationUnseenMessages.hidden = NO;
-                    _conversationUnseenMessages.text = [NSString stringWithFormat:@"%i", entries.count];
+                    _conversationUnseenMessages.text = [NSString stringWithFormat:@"%lu", (unsigned long)entries.count];
                 }
                 else {
                     _conversationUnseenMessages.hidden = YES;

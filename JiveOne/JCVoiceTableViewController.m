@@ -438,11 +438,12 @@ static NSString *CellIdentifier = @"VoicemailCell";
 
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
     [self stopProgressTimerForVoicemail];
-    [selectedCell performSelectorOnMainThread:@selector(setPlayButtonState:) withObject:[UIImage imageNamed:@"voicemail_scrub_play.png"] waitUntilDone:NO];
+    [selectedCell.playPauseButton setPlayPauseDisplaysPlay:NO];
 }
 
 - (void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error {
     [self stopProgressTimerForVoicemail];
+    [selectedCell.playPauseButton setPlayPauseDisplaysPlay:NO];
 }
 
 - (void)setupSpeaker

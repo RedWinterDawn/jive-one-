@@ -96,6 +96,7 @@
                 <outlet property="creationTime" destination="nIe-cq-PrP" id="3i7-Mt-aHq"/>
                 <outlet property="detailLabel" destination="WOB-bN-zYU" id="ONn-7D-bzt"/>
                 <outlet property="duration" destination="XyY-49-Zkf" id="OzS-DH-8Ov"/>
+                <outlet property="playPauseButton" destination="wkE-AG-dbK" id="2tl-ck-AEl"/>
                 <outlet property="shortTime" destination="NZe-HX-VVJ" id="S9Q-zV-Ltr"/>
                 <outlet property="slider" destination="9LY-YY-Jqs" id="55z-g4-yUs"/>
                 <outlet property="speakerView" destination="cp3-bc-vEw" id="fvq-Zd-4jk"/>
