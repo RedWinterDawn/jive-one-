@@ -40,6 +40,8 @@
     UIImage *maxImage = [[UIImage imageNamed:@"slider_min.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 5)];
     [[JCPopoverSlider appearance] setMaximumTrackImage:maxImage forState:UIControlStateNormal];
     [[JCPopoverSlider appearance] setMinimumTrackImage:minImage forState:UIControlStateNormal];
+    [self addTarget:self action:@selector(updateThumb) forControlEvents:UIControlEventValueChanged];
+
     self.touchIsCurrentlyHappening = NO;
     [self changeThumbImageToDisplayProgressThumb];
 }
@@ -62,6 +64,19 @@
         [self setThumbImage: justASliderBox() forState:UIControlStateHighlighted];
     }
 }
+- (void)updateThumb{
+    //    NSLog(@"slider value = %f", sender.value);
+    //    UIImage *customimg = sliderImage([self formatSeconds:self.value]);
+    
+        UIImage *customimg = justASliderBox();
+ 	[self setThumbImage: customimg forState: UIControlStateHighlighted];
+}
+
+- (void)updateThumbWithCurrentProgress{
+    UIImage *customimg = sliderImage([self formatSeconds:self.value]);
+ 	[self setThumbImage: customimg forState: UIControlStateNormal];
+}
+
 
 -(void)changeThumbImageToDisplayProgressThumb
 {

@@ -97,6 +97,7 @@
                 <outlet property="detailLabel" destination="WOB-bN-zYU" id="ONn-7D-bzt"/>
                 <outlet property="duration" destination="XyY-49-Zkf" id="OzS-DH-8Ov"/>
                 <outlet property="shortTime" destination="NZe-HX-VVJ" id="S9Q-zV-Ltr"/>
+                <outlet property="slider" destination="9LY-YY-Jqs" id="55z-g4-yUs"/>
                 <outlet property="speakerView" destination="cp3-bc-vEw" id="fvq-Zd-4jk"/>
                 <outlet property="spinningWheel" destination="o6o-BF-Pb3" id="xaT-eY-sco"/>
                 <outlet property="titleLabel" destination="EDq-sG-3YO" id="yi6-wM-0DR"/>

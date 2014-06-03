@@ -62,8 +62,6 @@ static NSString *CellIdentifier = @"VoicemailCell";
     [refreshControl addTarget:self action:@selector(updateVoiceTable) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-
-    
     
 }
 
@@ -335,7 +333,6 @@ static NSString *CellIdentifier = @"VoicemailCell";
 
 - (void)voiceCellSliderMoved:(float)value
 {
-    NSLog(@"voiceCellSliderMoved JCVoiceTableViewController.m:338");
     player.currentTime = value;
     [self updateProgress:nil];
     [self startProgressTimerForVoicemail];
@@ -343,8 +340,6 @@ static NSString *CellIdentifier = @"VoicemailCell";
 
 - (void)voiceCellSliderTouched:(BOOL)touched
 {
-    NSLog(@"voiceCellSliderTouched JCVoiceTableViewController.m:346");
-
     [self stopProgressTimerForVoicemail];
 }
 
@@ -389,17 +384,12 @@ static NSString *CellIdentifier = @"VoicemailCell";
         //pause
         [player pause];
         
-        //update play button to play (because we're pausing it)
-        [cell performSelectorOnMainThread:@selector(setPlayButtonState:) withObject:[UIImage imageNamed:@"voicemail_scrub_play.png"] waitUntilDone:NO];
-        
         [self stopProgressTimerForVoicemail];
     }
     else {
         //play
         [player play];
         
-        //update play button to pause (because we're playing it)
-        [cell performSelectorOnMainThread:@selector(setPlayButtonState:) withObject:[UIImage imageNamed:@"voicemail_pause.png"] waitUntilDone:NO];
         [self startProgressTimerForVoicemail];
         
         [(JCAppDelegate *)[UIApplication sharedApplication].delegate decrementBadgeCountForVoicemail:selectedCell.voicemail.voicemailId];
