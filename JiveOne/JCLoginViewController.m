@@ -333,13 +333,14 @@
     //This animates the view when the keyboard appears and shifts it up in responce.
     [UIView animateKeyframesWithDuration:0.2 delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
         CGRect frame = self.loginViewContainer.frame;
-        CGRect logo = self.logo.frame;
+        CGRect usernameTextField = self.usernameTextField.frame;
         
         frame.origin.y = (frame.origin.y - kShiftKeyboardTHisMuch);
-        //logo.origin.y = (frame.origin.y + 20);
+        
+        usernameTextField.origin.y = (usernameTextField.origin.y - kShiftKeyboardTHisMuch);
         
         self.loginViewContainer.frame = frame;
-        self.logo.frame = logo;
+        self.usernameTextField.frame = usernameTextField;
     } completion:^(BOOL finished) {
         
     }];
@@ -351,9 +352,12 @@
     //This animates the view when the keyboard disappears and shifts it down in responce.
     [UIView animateKeyframesWithDuration:0.2 delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
         CGRect frame = self.loginViewContainer.frame;
+        CGRect usernameTextField = self.usernameTextField.frame;
         
         frame.origin.y = (frame.origin.y + kShiftKeyboardTHisMuch);
+        usernameTextField.origin.y = (usernameTextField.origin.y + kShiftKeyboardTHisMuch);
         self.loginViewContainer.frame = frame;
+        self.usernameTextField.frame = usernameTextField;
     } completion:^(BOOL finished) {
         
     }];

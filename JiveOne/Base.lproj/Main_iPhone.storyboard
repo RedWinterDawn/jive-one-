@@ -48,27 +48,13 @@
                                             <constraint firstAttribute="height" constant="525" id="vh1-eC-YnT"/>
                                         </constraints>
                                     </imageView>
-                                    <textField clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="email" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Tho-ch-vQR">
-                                        <rect key="frame" x="20" y="30" width="240" height="40"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
-                                        <accessibility key="accessibilityConfiguration" label="emailTextField"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="240" id="1LD-ns-ffR"/>
-                                            <constraint firstAttribute="height" constant="40" id="23I-gy-YdR"/>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="240" id="Fye-DJ-cKM"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no"/>
-                                    </textField>
                                     <textField clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="password" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="GZW-BX-qe0">
                                         <rect key="frame" x="20" y="80" width="240" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
                                         <accessibility key="accessibilityConfiguration" label="passwordTextField"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="240" id="P5E-bo-MTH"/>
-                                            <constraint firstAttribute="height" constant="40" id="u0T-nE-41z"/>
+                                            <constraint firstAttribute="height" constant="40" id="YeY-bl-8hZ"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
@@ -77,13 +63,12 @@
                                 <constraints>
                                     <constraint firstItem="BG2-EN-8KO" firstAttribute="top" secondItem="AVw-9n-3yN" secondAttribute="top" constant="-207" id="2JP-Ah-TbF"/>
                                     <constraint firstAttribute="width" constant="280" id="D56-ng-m1S"/>
-                                    <constraint firstItem="BG2-EN-8KO" firstAttribute="centerX" secondItem="Tho-ch-vQR" secondAttribute="centerX" id="QvZ-Ue-H3W"/>
-                                    <constraint firstItem="Tho-ch-vQR" firstAttribute="top" secondItem="AVw-9n-3yN" secondAttribute="top" constant="30" id="WkA-7r-3Jf"/>
-                                    <constraint firstItem="GZW-BX-qe0" firstAttribute="leading" secondItem="AVw-9n-3yN" secondAttribute="leading" constant="20" id="ZRp-rg-zgW"/>
-                                    <constraint firstItem="Tho-ch-vQR" firstAttribute="leading" secondItem="AVw-9n-3yN" secondAttribute="leading" constant="20" symbolic="YES" id="aIz-bL-Ii6"/>
-                                    <constraint firstAttribute="bottom" secondItem="GZW-BX-qe0" secondAttribute="bottom" constant="30" id="bFV-Wh-SEW"/>
+                                    <constraint firstItem="GZW-BX-qe0" firstAttribute="top" secondItem="AVw-9n-3yN" secondAttribute="top" constant="80" id="Gbx-lp-hAz"/>
+                                    <constraint firstAttribute="bottom" secondItem="GZW-BX-qe0" secondAttribute="bottom" constant="30" id="Kzf-mP-eSx"/>
+                                    <constraint firstAttribute="trailing" secondItem="GZW-BX-qe0" secondAttribute="trailing" constant="20" symbolic="YES" id="Mem-tq-ywh"/>
+                                    <constraint firstItem="GZW-BX-qe0" firstAttribute="centerX" secondItem="BG2-EN-8KO" secondAttribute="centerX" id="TSC-ey-UbN"/>
                                     <constraint firstItem="BG2-EN-8KO" firstAttribute="leading" secondItem="AVw-9n-3yN" secondAttribute="leading" constant="-25" id="kCO-lq-b3f"/>
-                                    <constraint firstItem="GZW-BX-qe0" firstAttribute="top" secondItem="Tho-ch-vQR" secondAttribute="bottom" constant="10" id="nvc-UM-5Np"/>
+                                    <constraint firstItem="GZW-BX-qe0" firstAttribute="leading" secondItem="AVw-9n-3yN" secondAttribute="leading" constant="20" symbolic="YES" id="vWU-Ek-RpE"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uq2-OG-5Nj">
@@ -167,6 +152,14 @@
                                     <constraint firstItem="n95-vt-iwu" firstAttribute="bottom" secondItem="hQg-62-q5W" secondAttribute="bottom" id="yMW-Uh-TJI"/>
                                 </constraints>
                             </view>
+                            <textField clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="email" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Tho-ch-vQR" userLabel="emailTextField">
+                                <rect key="frame" x="40" y="216" width="240" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
+                                <accessibility key="accessibilityConfiguration" label="emailTextField"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
