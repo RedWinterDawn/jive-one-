@@ -72,20 +72,6 @@
     }
 }
 
-
-//- (void)updateThumb{
-//    NSLog(@"updateThumb JCPopoverSlider.m:65");
-//
-//    UIImage *customimg = justASliderBox();
-//	[self setThumbImage: customimg forState: UIControlStateHighlighted];
-//}
-//
-//- (void)updateThumbWithCurrentProgress{
-//          UIImage *customimg = sliderImage([self formatSeconds:self.value]);
-//    NSLog(@"thumbRect: %f,%f, %f,%f", self.thumbRect.origin.x, self.thumbRect.origin.y, self.thumbRect.size.width, self.thumbRect.size.height);
-//	[self setThumbImage: customimg forState: UIControlStateNormal];
-//}
-
 -(void)fadePopupViewInAndOut:(BOOL)aFadeIn {
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:0.5];
@@ -100,7 +86,7 @@
 -(void)positionAndUpdatePopupView {
 
     CGRect zeThumbRect = self.thumbRect;
-    NSLog(@"popupView: %f,%f, %f,%f", self.popupView.frame.origin.x, self.popupView.frame.origin.y, self.popupView.bounds.size.width, self.popupView.bounds.size.height);
+//    NSLog(@"popupView: %f,%f, %f,%f", self.popupView.frame.origin.x, self.popupView.frame.origin.y, self.popupView.bounds.size.width, self.popupView.bounds.size.height);
 
     CGRect popupRect = CGRectOffset(zeThumbRect, -27, -floor(zeThumbRect.size.height * 3));
     self.popupView.frame = CGRectInset(popupRect, -10, -10);
@@ -220,10 +206,7 @@ UIImage *justASliderBox()
 
 -(BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
     [super beginTrackingWithTouch:touch withEvent:event];
-
-//    [self setThumbImage: justASliderBox() forState:UIControlStateHighlighted];
-//    [self setThumbImage: sliderImage([self formatSeconds:self.value]) forState:UIControlStateNormal];
-
+    
     self.touchIsCurrentlyHappening = YES;
     [self changeThumbImageToSimpleThumb];
 
