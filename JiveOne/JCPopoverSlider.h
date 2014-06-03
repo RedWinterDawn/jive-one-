@@ -9,6 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "JCPopoverView.h"
 
+@protocol JCPopoverSliderDelegate <NSObject>
+
+
+
+@end
+
+
 @interface JCPopoverSlider : UISlider
 
 @property (strong, nonatomic) JCPopoverView *popupView;

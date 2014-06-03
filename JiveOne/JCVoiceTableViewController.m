@@ -63,6 +63,8 @@ static NSString *CellIdentifier = @"VoicemailCell";
     self.refreshControl = refreshControl;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 
+    
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -333,6 +335,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
 
 - (void)voiceCellSliderMoved:(float)value
 {
+    NSLog(@"voiceCellSliderMoved JCVoiceTableViewController.m:338");
     player.currentTime = value;
     [self updateProgress:nil];
     [self startProgressTimerForVoicemail];
@@ -340,6 +343,8 @@ static NSString *CellIdentifier = @"VoicemailCell";
 
 - (void)voiceCellSliderTouched:(BOOL)touched
 {
+    NSLog(@"voiceCellSliderTouched JCVoiceTableViewController.m:346");
+
     [self stopProgressTimerForVoicemail];
 }
 

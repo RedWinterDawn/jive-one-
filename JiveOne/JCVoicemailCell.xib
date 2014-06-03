@@ -16,7 +16,6 @@
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="k9i-98-w2e" userLabel="userImage">
                         <rect key="frame" x="9" y="5" width="50" height="50"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="50" id="1oZ-eJ-VtG"/>
                             <constraint firstAttribute="width" constant="50" id="68V-7D-h0Y"/>
@@ -24,13 +23,11 @@
                     </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="(801) 349-7643" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EDq-sG-3YO" userLabel="callerid">
                         <rect key="frame" x="64" y="6" width="196" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="vmail.png" translatesAutoresizingMaskIntoConstraints="NO" id="hfg-rQ-aIp" userLabel="voicemailIcon">
                         <rect key="frame" x="292" y="20" width="15" height="57"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="tintColor" red="1" green="0.17194956410000001" blue="0.20760572229999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="21" id="LNt-10-UhZ"/>
@@ -38,7 +35,6 @@
                     </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="3/14/14" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NZe-HX-VVJ" userLabel="shortTime">
                         <rect key="frame" x="225" y="7" width="88" height="20"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="88" id="1Yd-f2-AIs"/>
                         </constraints>
@@ -48,49 +44,41 @@
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Today, 10:57 PM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nIe-cq-PrP" userLabel="creationTime">
                         <rect key="frame" x="64" y="54" width="170" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XyY-49-Zkf" userLabel="duration">
                         <rect key="frame" x="292" y="91" width="21" height="12"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="o6o-BF-Pb3">
                         <rect key="frame" x="146" y="60" width="20" height="20"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </activityIndicatorView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Utah" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WOB-bN-zYU" userLabel="phone_state">
                         <rect key="frame" x="69" y="28" width="196" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="9LY-YY-Jqs" userLabel="slider" customClass="JCPopoverSlider">
                         <rect key="frame" x="62" y="96" width="223" height="31"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <connections>
-                            <action selector="progressSliderMoved:" destination="O09-5V-FRi" eventType="touchUpInside" id="d2o-Q5-Q9T"/>
-                            <action selector="progressSliderTouched:" destination="O09-5V-FRi" eventType="touchDown" id="YCd-Mi-D7W"/>
+                            <action selector="progressSliderMoved:" destination="O09-5V-FRi" eventType="valueChanged" id="FmW-gU-bSy"/>
+                            <action selector="progressSliderTouched:" destination="O09-5V-FRi" eventType="touchDown" id="3IZ-v3-9VG"/>
                         </connections>
                     </slider>
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gRz-aK-J5Z" customClass="JCDeleteView">
                         <rect key="frame" x="206" y="120" width="51" height="46"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cp3-bc-vEw" customClass="JCSpeakerView">
                         <rect key="frame" x="90" y="120" width="113" height="46"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <view contentMode="scaleAspectFit" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wkE-AG-dbK" userLabel="PlayPauseView" customClass="JCPlayPauseView">
                         <rect key="frame" x="5" y="72" width="51" height="51"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                 </subviews>
@@ -109,7 +97,6 @@
                 <outlet property="detailLabel" destination="WOB-bN-zYU" id="ONn-7D-bzt"/>
                 <outlet property="duration" destination="XyY-49-Zkf" id="OzS-DH-8Ov"/>
                 <outlet property="shortTime" destination="NZe-HX-VVJ" id="S9Q-zV-Ltr"/>
-                <outlet property="slider" destination="9LY-YY-Jqs" id="yAH-3O-Hd6"/>
                 <outlet property="speakerView" destination="cp3-bc-vEw" id="fvq-Zd-4jk"/>
                 <outlet property="spinningWheel" destination="o6o-BF-Pb3" id="xaT-eY-sco"/>
                 <outlet property="titleLabel" destination="EDq-sG-3YO" id="yi6-wM-0DR"/>

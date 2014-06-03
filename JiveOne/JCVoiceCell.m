@@ -158,17 +158,25 @@
 }
 
 - (IBAction)progressSliderMoved:(id)sender {
+    NSLog(@"progressSliderMoved JCVoiceCell.m:161");
+
+    
     if (self.delegate && [self.delegate respondsToSelector:@selector(voiceCellSliderMoved:)]) {
         [self.delegate voiceCellSliderMoved:self.slider.value];
     }
 }
+
 - (void)setSliderValue:(float)value
 {
+    NSLog(@"setSliderValue JCVoiceCell.m:170");
+
     self.slider.value = value;
 }
 
 - (IBAction)progressSliderTouched:(id)sender
 {
+    NSLog(@"progressSliderTouched JCVoiceCell.m:177");
+
     if (self.delegate && [self.delegate respondsToSelector:@selector(voiceCellSliderTouched:)]) {
         [self.delegate voiceCellSliderTouched:YES];
     }
@@ -187,6 +195,7 @@
         [self.delegate voiceCellDeleteTapped:indexPath];
     }
 }
+
 - (void)setSpeakerButtonTint:(UIColor*)color
 {
     [_speakerButton.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
