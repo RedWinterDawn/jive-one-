@@ -239,7 +239,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
 
 #pragma mark - JCVoicemailCellDelegate
 -(void)voiceCellDeleteTapped:(NSIndexPath *)indexPath {
-    
+    NSLog(@"%ld", (long)indexPath.row);
     Voicemail *voicemail = self.voicemails[indexPath.row];
     [Voicemail markVoicemailForDeletion:voicemail.voicemailId managedContext:nil];
     [(JCAppDelegate *)[UIApplication sharedApplication].delegate decrementBadgeCountForVoicemail:voicemail.voicemailId];
