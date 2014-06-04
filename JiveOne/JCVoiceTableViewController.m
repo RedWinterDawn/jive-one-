@@ -239,7 +239,14 @@ static NSString *CellIdentifier = @"VoicemailCell";
 
 #pragma mark - JCVoicemailCellDelegate
 -(void)voiceCellDeleteTapped:(NSIndexPath *)indexPath {
-    NSLog(@"%ld", (long)indexPath.row);
+    
+    // if we are playing a voicemail and we delete the voicemail cell that is being played -> stop playing then delete.
+    if (player.isPlaying && (selectedCell.indexPath == indexPath)) {
+        //pause
+        [player pause];
+        
+        [self stopProgressTimerForVoicemail];
+    }
     Voicemail *voicemail = self.voicemails[indexPath.row];
     [Voicemail markVoicemailForDeletion:voicemail.voicemailId managedContext:nil];
     [(JCAppDelegate *)[UIApplication sharedApplication].delegate decrementBadgeCountForVoicemail:voicemail.voicemailId];

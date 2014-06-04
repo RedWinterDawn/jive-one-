@@ -9,7 +9,7 @@
 #import "JCPopoverSlider.h"
 @interface JCPopoverSlider()
 @property (strong, nonatomic) UIColor* JCBlue;
-@property (nonatomic) BOOL touchIsCurrentlyHappening;
+@property (atomic) BOOL touchIsCurrentlyHappening;
 @end
 
 @implementation JCPopoverSlider
