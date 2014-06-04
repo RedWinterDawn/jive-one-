@@ -392,13 +392,14 @@ static NSString *CellIdentifier = @"VoicemailCell";
         [player pause];
         
         [self stopProgressTimerForVoicemail];
+        [selectedCell.playPauseButton setPlayPauseDisplaysPlay:YES];
     }
     else {
         //play
         [player play];
         
         [self startProgressTimerForVoicemail];
-        
+        [selectedCell.playPauseButton setPlayPauseDisplaysPlay:NO];
         [(JCAppDelegate *)[UIApplication sharedApplication].delegate decrementBadgeCountForVoicemail:selectedCell.voicemail.voicemailId];
         if (![selectedCell.voicemail.read boolValue]) {
             [self markVoicemailAsRead];
@@ -429,7 +430,9 @@ static NSString *CellIdentifier = @"VoicemailCell";
 }
 
 - (void)updateProgress:(NSNotification*)notification {
-    
+    if (selectedCell.playPauseButton.playPauseDisplaysPlay == YES) {
+        [selectedCell.playPauseButton setPlayPauseDisplaysPlay:NO];
+    }
     selectedCell.duration.text = [self formatSeconds:player.duration];
     selectedCell.elapsed.text = [self formatSeconds:player.currentTime];
     [selectedCell setSliderValue:player.currentTime];
@@ -445,12 +448,12 @@ static NSString *CellIdentifier = @"VoicemailCell";
 
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
     [self stopProgressTimerForVoicemail];
-    [selectedCell.playPauseButton setPlayPauseDisplaysPlay:NO];
+    [selectedCell.playPauseButton setPlayPauseDisplaysPlay:YES];
 }
 
 - (void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error {
     [self stopProgressTimerForVoicemail];
-    [selectedCell.playPauseButton setPlayPauseDisplaysPlay:NO];
+    [selectedCell.playPauseButton setPlayPauseDisplaysPlay:YES];
 }
 
 - (void)setupSpeaker

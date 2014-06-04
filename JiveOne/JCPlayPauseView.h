@@ -10,5 +10,6 @@
 
 @interface JCPlayPauseView : UIView
 -(void)setPlayPauseDisplaysPlay:(BOOL)playPauseDisplaysPlay;
-@property (atomic) BOOL playPauseDisplaysPlay;
+@property (nonatomic) BOOL playPauseDisplaysPlay;
+
 @end
