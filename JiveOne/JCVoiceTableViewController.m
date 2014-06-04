@@ -219,6 +219,11 @@ static NSString *CellIdentifier = @"VoicemailCell";
     
     if (isSelected) {
         [self prepareAudioForIndexPath:indexPath];
+        selectedCell = (JCVoiceCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        NSLog(@"%f, %f",selectedCell.frame.origin.x,selectedCell.frame.origin.y);
+        if (selectedCell.frame.origin.y >= 300) {
+            [tableView setContentOffset:CGPointMake(0, 80)animated:YES];
+        }
     }
 }
 
