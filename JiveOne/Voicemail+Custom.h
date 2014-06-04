@@ -11,9 +11,9 @@
 @interface Voicemail (Custom)
 
 #pragma mark - CRUD for Voicemail
-+ (void)addVoicemails:(NSArray *)entryArray;
-+ (Voicemail *)addVoicemailEntry:(NSDictionary*)entry;
-+ (Voicemail *)addVoicemail:(NSDictionary*)dictionary withManagedContext:(NSManagedObjectContext *)context;
++ (void)addVoicemails:(NSArray *)entryArray completed:(void (^)(BOOL success))completed;
++ (Voicemail *)addVoicemailEntry:(NSDictionary*)entry sender:(id)sender;
++ (Voicemail *)addVoicemail:(NSDictionary*)dictionary withManagedContext:(NSManagedObjectContext *)context sender:(id)sender;
 + (Voicemail *)updateVoicemail:(Voicemail*)voicemail withDictionary:(NSDictionary*)dictionary managedContext:(NSManagedObjectContext *)context;
 + (Voicemail *)markVoicemailForDeletion:(NSString*)voicemailId managedContext:(NSManagedObjectContext*)context;
 + (BOOL)isVoicemailInDeletedList:(NSString*)voicemailId;

@@ -10,31 +10,34 @@
 
 @implementation Presence (Custom)
 
-static NSManagedObjectContext *_context;
 
-+ (void)addPresences:(NSArray*)presences
+
++ (void)addPresences:(NSArray*)presences completed:(void (^)(BOOL))completed
 {
-    for (NSDictionary *presence in presences) {
-        if ([presence isKindOfClass:[NSDictionary class]]) {
-            [self addPresence:presence];
+    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+        for (NSDictionary *presence in presences) {
+            if ([presence isKindOfClass:[NSDictionary class]]) {
+                [self addPresence:presence sender:self];
+            }
         }
-    }
+    } completion:^(BOOL success, NSError *error) {
+        completed(success);
+    }];
+    
+    
 }
 
-+ (Presence *)addPresence:(NSDictionary*)presence
++ (Presence *)addPresence:(NSDictionary*)presence sender:(id)sender
 {
-    return [self addPresence:presence withManagedContext:nil];
+    return [self addPresence:presence withManagedContext:nil sender:sender];
 }
 
 
-+ (Presence *)addPresence:(NSDictionary*)presence withManagedContext:(NSManagedObjectContext *)context
++ (Presence *)addPresence:(NSDictionary*)presence withManagedContext:(NSManagedObjectContext *)context sender:(id)sender
 {
     
-    if (context) {
-        _context = context;
-    }
-    else {
-        _context = [NSManagedObjectContext MR_contextForCurrentThread];
+    if (!context) {
+        context = [NSManagedObjectContext MR_contextForCurrentThread];
     }
     
     NSString *presenceId = presence[@"id"];
@@ -43,11 +46,11 @@ static NSManagedObjectContext *_context;
     
     if (result.count > 0) {
         pres = result[0];
-        return [self updatePresence:pres dictionary:presence withManagedContext:_context];
+        pres = [self updatePresence:pres dictionary:presence withManagedContext:context];
     }
     else
     {
-        pres = [Presence MR_createInContext:_context];
+        pres = [Presence MR_createInContext:context];
         pres.entityId = presence[@"entity"];
         pres.lastModified = presence[@"lastModified"];
         pres.createDate = presence[@"createDate"];
@@ -58,19 +61,23 @@ static NSManagedObjectContext *_context;
         // update presence for asscociated entity
         [[JCOmniPresence sharedInstance] entityByEntityId:pres.entityId].entityPresence = pres;
         
-        [_context MR_saveToPersistentStoreAndWait];
+        
+        
     }
     
-    return pres;
+    if (self != sender) {
+        [context MR_saveToPersistentStoreAndWait];
+        return pres;
+    }
+    else {
+        return nil;
+    }
 }
 
 + (Presence *)updatePresence:(Presence *)presence dictionary:(NSDictionary *)dictionary withManagedContext:(NSManagedObjectContext *)context
 {
-    if (context) {
-        _context = context;
-    }
-    else {
-        _context = [NSManagedObjectContext MR_contextForCurrentThread];
+    if (!context) {
+        context = [NSManagedObjectContext MR_contextForCurrentThread];
     }
     
     long lastModifiedFromEntity = [presence.lastModified integerValue];
@@ -87,8 +94,6 @@ static NSManagedObjectContext *_context;
         // update presence for asscociated entity
         if (presence.interactions) {
             [[JCOmniPresence sharedInstance] entityByEntityId:presence.entityId].entityPresence = presence;
-            
-            [_context MR_saveToPersistentStoreAndWait];
         }
     }
     

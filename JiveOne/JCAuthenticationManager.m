@@ -153,9 +153,10 @@
 {
     NSString *access_token = token[@"access_token"];
     NSString *refresh_token = token[@"refresh_token"];
+    NSString *username = token[@"username"];
     
     [_keychainWrapper setObject:(__bridge id)kSecAttrAccessibleAlways forKey:(__bridge id)kSecAttrAccount];
-        [_keychainWrapper setObject:(__bridge id)kSecAttrAccessibleAlways forKey:(__bridge id)kSecValueData];
+    [_keychainWrapper setObject:(__bridge id)kSecAttrAccessibleAlways forKey:(__bridge id)kSecValueData];
     [_keychainWrapper setObject:[NSString stringWithFormat:@"%@", access_token] forKey:(__bridge id)(kSecAttrAccount)];
     [_keychainWrapper setObject:[NSString stringWithFormat:@"%@", access_token] forKey:(__bridge id)(kSecValueData)];
     
@@ -163,6 +164,10 @@
     [[NSUserDefaults standardUserDefaults] setObject:access_token forKey:@"authToken"];
     if (refresh_token) {
         [[NSUserDefaults standardUserDefaults] setObject:refresh_token forKey:@"refreshToken"];
+    }
+    if (username) {
+        username = [username stringByReplacingOccurrencesOfString:@"." withString:@"_"];
+        [[NSUserDefaults standardUserDefaults] setObject:username forKey:@"username"];
     }
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kUserAuthenticated];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -195,8 +200,8 @@
     [self.keychainWrapper resetKeychainItem];
     
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"authToken"];
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"authToken"];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"refreshToken"];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"username"];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserAuthenticated];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserLoadedMinimumData];
     [[NSUserDefaults standardUserDefaults] synchronize];

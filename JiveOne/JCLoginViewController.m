@@ -244,7 +244,16 @@
 //        [self showHudWithTitle:@"One Moment Please" detail:@"Preparing for first use"];
 //    }
     
-    [self fetchEntities];
+    [self fetchMyEntity];
+}
+
+- (void)fetchMyEntity
+{
+    [self.client RetrieveMyEntitity:^(id JSON, id operation) {
+        [self fetchEntities];
+    } failure:^(NSError *err, id operation) {
+        [self errorInitializingApp:err];
+    }];
 }
 
 - (void)fetchEntities

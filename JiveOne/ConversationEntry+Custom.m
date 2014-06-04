@@ -18,22 +18,26 @@
 }
 
 #pragma mark - CRUD for ConversationEntry
-+ (void)addConversationEntries:(NSArray *)entryArray
++ (void)addConversationEntries:(NSArray *)entryArray completed:(void (^)(BOOL))completed
 {
-    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
-    for (NSDictionary *entry in entryArray) {
-        if ([entry isKindOfClass:[NSDictionary class]]) {
-            [self addConversationEntry:entry withManagedContext:context];
+    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+        for (NSDictionary *entry in entryArray) {
+            if ([entry isKindOfClass:[NSDictionary class]]) {
+                [self addConversationEntry:entry withManagedContext:localContext sender:self];
+            }
         }
-    }
+    } completion:^(BOOL success, NSError *error) {
+        completed(success);
+    }];
+    
 }
 
-+ (ConversationEntry *)addConversationEntry:(NSDictionary *)entry
++ (ConversationEntry *)addConversationEntry:(NSDictionary *)entry sender:(id)sender
 {
-    return [self addConversationEntry:entry withManagedContext:nil];
+    return [self addConversationEntry:entry withManagedContext:nil sender:sender];
 }
 
-+ (ConversationEntry *)addConversationEntry:(NSDictionary*)entry withManagedContext:(NSManagedObjectContext *)context
++ (ConversationEntry *)addConversationEntry:(NSDictionary*)entry withManagedContext:(NSManagedObjectContext *)context sender:(id)sender
 {
     if (!context) {
         context = [NSManagedObjectContext MR_contextForCurrentThread];
@@ -85,18 +89,19 @@
                 conversation.hasEntries = [NSNumber numberWithBool:YES];
             }
         }
-        
-        //Save conversation entry
-        [context MR_saveToPersistentStoreAndWait];
     }
-    return convEntry;
+    
+    if (sender != self) {
+        [context MR_saveToPersistentStoreAndWait];
+        return convEntry;
+    }
+    else {
+        return nil;
+    }
 }
 
 + (ConversationEntry *)updateConversationEntry:(ConversationEntry*)entry withDictionary:(NSDictionary*)dictionary managedContext:(NSManagedObjectContext *)context
 {
-    if (!context) {
-        context = [NSManagedObjectContext MR_contextForCurrentThread];
-    }
     
     // if last modified timestamps are the same, then there's no need to update anything.
     long long lastModifiedFromEntity = [entry.lastModified longLongValue];
@@ -107,7 +112,6 @@
         entry.conversationId = dictionary[@"conversation"];
         entry.entityId = dictionary[@"entity"];
         entry.lastModified = [NSNumber numberWithLongLong:[dictionary[@"lastModified"] longLongValue]];
-//        entry.createdDate = [NSNumber numberWithLongLong:[dictionary[@"createdDate"] longLongValue]];
         entry.call = dictionary[@"call"];
         entry.file = dictionary[@"file"];
         entry.message = dictionary[@"message"];
@@ -127,11 +131,6 @@
                 conversation.hasEntries = [NSNumber numberWithBool:YES];
             }
         }
-        
-        
-        
-        //Save conversation entry
-        [context MR_saveToPersistentStoreAndWait];
     }
     
     return entry;

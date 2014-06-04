@@ -20,25 +20,34 @@
 }
 
 #pragma mark - CRUD for Voicemail
-+ (void)addVoicemails:(NSArray *)entryArray
++ (void)addVoicemails:(NSArray *)entryArray completed:(void (^)(BOOL))completed
 {
-    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
-    for (NSDictionary *entry in entryArray) {
-        if ([entry isKindOfClass:[NSDictionary class]]) {
-            [self addVoicemail:entry withManagedContext:context];
+    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+        for (NSDictionary *entry in entryArray) {
+            if ([entry isKindOfClass:[NSDictionary class]]) {
+                [self addVoicemail:entry withManagedContext:localContext sender:self];
+            }
         }
-    }
+    } completion:^(BOOL success, NSError *error) {
+        completed(success);
+        [self fetchVoicemailInBackground];
+    }];
     
-    [self fetchVoicemailInBackground];
+    
+
 }
 
-+ (Voicemail *)addVoicemailEntry:(NSDictionary*)entry{
-    Voicemail *voicemail = [self addVoicemail:entry withManagedContext:nil];
-    [self fetchVoicemailInBackground];
++ (Voicemail *)addVoicemailEntry:(NSDictionary*)entry sender:(id)sender
+{
+    Voicemail *voicemail = [self addVoicemail:entry withManagedContext:nil sender:sender];
+    if (sender != self) {
+        [self fetchVoicemailInBackground];
+    }
+    
     return voicemail;
 }
 
-+ (Voicemail *)addVoicemail:(NSDictionary*)dictionary withManagedContext:(NSManagedObjectContext *)context
++ (Voicemail *)addVoicemail:(NSDictionary*)dictionary withManagedContext:(NSManagedObjectContext *)context sender:(id)sender
 {
     if (!context) {
         context = [NSManagedObjectContext MR_contextForCurrentThread];
@@ -87,7 +96,14 @@
         
         //get all voicemail messages through a queue
     }
-    return vmail;
+    
+    if (sender != self) {
+        [context MR_saveToPersistentStoreAndWait];
+        return vmail;
+    }
+    else {
+        return nil;
+    }
 }
 
 + (Voicemail *)updateVoicemail:(Voicemail*)vmail withDictionary:(NSDictionary*)dictionary managedContext:(NSManagedObjectContext *)context

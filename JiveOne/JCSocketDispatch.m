@@ -313,7 +313,7 @@
             [Conversation saveConversationEtag:[message[@"ETag"] integerValue] managedContext:nil];
             
             // regardless of having a conversation for this entry or not we need to save the entry.
-            ConversationEntry *entry = [ConversationEntry addConversationEntry:body];
+            ConversationEntry *entry = [ConversationEntry addConversationEntry:body sender:nil];
             // increment badge number for conversation ID
             [(JCAppDelegate *)[UIApplication sharedApplication].delegate incrementBadgeCountForConversation:conversationIdForEntry entryId:entry.entryId];
             // notify of new entry
@@ -333,7 +333,7 @@
             }
             else
             {
-                Conversation *conversation = [Conversation addConversation:body];
+                Conversation *conversation = [Conversation addConversation:body sender:nil  ];
                 [[NSNotificationCenter defaultCenter] postNotificationName:kNewConversation object:conversation];
             }
         }
@@ -341,7 +341,7 @@
     }
     else if ([type isEqualToString:kSocketPresence])
     {
-        Presence * presence = [Presence addPresence:body];
+        Presence * presence = [Presence addPresence:body sender:nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:kPresenceChanged object:presence];        
     }
     else if ([type isEqualToString:kSocketVoicemail]) {
@@ -355,7 +355,7 @@
         Voicemail *voicemail = nil;
         if (!voicemailHasBeenPreviouslyDeleted) {
             [Conversation saveConversationEtag:[message[@"ETag"] integerValue] managedContext:nil];
-            voicemail = [Voicemail addVoicemailEntry:body];
+            voicemail = [Voicemail addVoicemailEntry:body sender:nil];
         }        
         
         //there was no voicemail prior, and now we have one meaning it was successfullt added. Otherwise it was an update.

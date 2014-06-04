@@ -70,8 +70,9 @@
     [_manager GET:kOsgiEntityRoute parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *me = [responseObject objectForKey:@"me"];
         NSArray* entityArray = [responseObject objectForKey:@"entries"];
-        [PersonEntities addEntities:entityArray me:me];
-        success(responseObject);
+        [PersonEntities addEntities:entityArray me:me completed:^(BOOL succeeded) {
+            success(responseObject);
+        }];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failure(error);
     }];
@@ -86,7 +87,10 @@
     NSLog(@"%@", url);
     
     [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        success(responseObject, operation);
+        NSString *username = [[NSUserDefaults standardUserDefaults] stringForKey:@"username"];
+        username = [NSString stringWithFormat:@"entities:%@", username];
+        [PersonEntities addEntity:responseObject me:username sender:nil];
+        success(operation, responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failure(error, operation);
     }];
@@ -113,8 +117,10 @@
     
     [_manager GET:kOsgiConverationRoute parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         [Conversation saveConversationEtag:[responseObject[@"ETag"] integerValue] managedContext:nil];
-        [Conversation addConversations:responseObject[@"entries"]];
-        success(responseObject);
+        [Conversation addConversations:responseObject[@"entries"] completed:^(BOOL succeeded) {
+            success(responseObject);
+        }];
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@", operation.responseString);
         failure(error);
@@ -128,7 +134,7 @@
     NSString *url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], conversationId];//TODO: not attaching baseURL to route constant
     
     [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {        ;
-        success([Conversation addConversation:responseObject]);
+        success([Conversation addConversation:responseObject sender:nil]);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failure(error);
     }];
@@ -140,8 +146,10 @@
     
     [_manager GET:kOsgiPresenceRoute parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSArray *presences = responseObject[@"entries"];
-        [Presence addPresences:presences];
-        success(YES);
+        [Presence addPresences:presences completed:^(BOOL succeeded) {
+            success(succeeded);
+        }];
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failure(error);
     }];
@@ -275,7 +283,7 @@
     }
     
     [_manager POST:kOsgiConverationRoute parameters:conversationDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [Conversation addConversation:responseObject];
+        [Conversation addConversation:responseObject sender:nil];
         success(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failure(error);
@@ -296,7 +304,7 @@
     NSString *url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], conversationId];
     
     [_manager PATCH:url parameters:conversationDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [Conversation addConversation:responseObject];
+        [Conversation addConversation:responseObject sender:nil];
         success(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failure(error);
@@ -359,7 +367,7 @@
     
     [_manager PATCH:url parameters:iteractionsDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //NSLog(@"%@", responseObject);
-        [Presence addPresence:responseObject];
+        [Presence addPresence:responseObject sender:nil];
         success(YES);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@", error);
@@ -429,8 +437,9 @@
         [Voicemail saveVoicemailEtag:[responseObject[@"ETag"] integerValue] managedContext:nil];
         NSArray *entries = [responseObject objectForKey:@"entries"];
         //get all voicemail metadata, but not actual voicemail messages
-        [Voicemail addVoicemails:entries];
-        success(responseObject);
+        [Voicemail addVoicemails:entries completed:^(BOOL succeeded) {
+            success(responseObject);
+        }];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
@@ -473,7 +482,6 @@
 #pragma mark - CRUD for Conversation
 
 #pragma mark - CRUD for Presence
-
 
 #pragma mark - CRUD for Entities
 
