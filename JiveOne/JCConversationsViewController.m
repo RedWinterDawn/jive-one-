@@ -95,8 +95,11 @@ static NSString *GroupCellIdentifier = @"GroupChatCell";
 
 - (IBAction)startNewConversation:(id)sender {
     
-    
-    [self performSegueWithIdentifier:@"MessageSegue" sender:kNewConversation];
+    if ([sender isKindOfClass:[PersonEntities class]]){
+        [self performSegueWithIdentifier:@"MessageSegue" sender:sender];
+    }else{
+        [self performSegueWithIdentifier:@"MessageSegue" sender:kNewConversation];
+    }
 }
 
 - (IBAction)startNewConversationWithNewSearch:(id)sender {
@@ -342,7 +345,13 @@ static NSString *GroupCellIdentifier = @"GroupChatCell";
     else if ([sender isKindOfClass:[NSString class]]) {
         [segue.destinationViewController setMessageType:JCNewConversation];
         _currentConversationId = nil;
+    }else if([sender isKindOfClass:[PersonEntities class]]){
+        [segue.destinationViewController setMessageType:JCNewConversationWithEntity];
+        [segue.destinationViewController setPerson:sender];
+        _currentConversationId = nil;
+
     }
+        
     [segue.destinationViewController setHidesBottomBarWhenPushed:YES];
 }
 

@@ -127,7 +127,6 @@
 }
 
 #pragma mark - PeopleSearchDelegate
-
 - (void)dismissedWithPerson:(PersonEntities *)person
 {
     [self addPersonFromPersonPicker:person];

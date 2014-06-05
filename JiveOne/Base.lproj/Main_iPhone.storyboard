@@ -594,9 +594,6 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="Ndo-jy-8em"/>
-                    <connections>
-                        <segue destination="xuv-bc-Gqj" kind="push" identifier="StartMessageSegue" id="4tJ-oe-047"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3x1-kR-aGn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -678,10 +675,10 @@
             </objects>
             <point key="canvasLocation" x="1004" y="255"/>
         </scene>
-        <!--Conversations View Controller-->
+        <!--Conversations View Controller - Conversations-->
         <scene sceneID="P3y-pc-Fre">
             <objects>
-                <tableViewController id="Iav-LH-b6F" customClass="JCConversationsViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="JCConversationsViewController" id="Iav-LH-b6F" customClass="JCConversationsViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="8dN-n2-lai">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -697,8 +694,7 @@
                             </tableViewCell>
                         </prototypes>
                     </tableView>
-                    <navigationItem key="navigationItem" id="xnl-54-rzv">
-                        <nil key="title"/>
+                    <navigationItem key="navigationItem" title="Conversations" id="xnl-54-rzv">
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="rOk-sd-Q2j">
                             <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
@@ -719,7 +715,7 @@
                     <nil key="highlightedColor"/>
                 </label>
             </objects>
-            <point key="canvasLocation" x="1012" y="944"/>
+            <point key="canvasLocation" x="915" y="928"/>
         </scene>
         <!--People Search View Controller-->
         <scene sceneID="BjF-LD-HQ0">
@@ -790,7 +786,7 @@
         <!--Messages View Controller - Message-->
         <scene sceneID="Z6h-mb-aMW">
             <objects>
-                <viewController id="xuv-bc-Gqj" customClass="JCMessagesViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="JCMessagesViewController" id="xuv-bc-Gqj" customClass="JCMessagesViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="FXP-2F-4z3"/>
                         <viewControllerLayoutGuide type="bottom" id="NRK-NG-r9K"/>
@@ -876,7 +872,7 @@
         <!--Navigation Controller - Conversations-->
         <scene sceneID="7yR-ZU-bxo">
             <objects>
-                <navigationController definesPresentationContext="YES" id="6Dq-mE-F9w" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ConversationsNavigationController" definesPresentationContext="YES" id="6Dq-mE-F9w" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Conversations" image="nav-conv.png" id="K12-Hv-Z3c"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="lEx-Jd-cci">
                         <autoresizingMask key="autoresizingMask"/>
@@ -1149,6 +1145,5 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="PKy-V4-VLv"/>
-        <segue reference="Nyn-nw-5LE"/>
     </inferredMetricsTieBreakers>
 </document>

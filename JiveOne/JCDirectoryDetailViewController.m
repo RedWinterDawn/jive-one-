@@ -12,6 +12,7 @@
 #import "JCPeopleDetailCell.h"
 #import "Company.h"
 #import "Constants.h"
+#import "JCConversationsViewController.h"
 
 
 @interface JCDirectoryDetailViewController ()
@@ -169,26 +170,20 @@
 
 // This button created in case we need to call methods in conjunction with starting a chat from directory detail view
 - (IBAction)startChat:(id)sender {
-    [self performSegueWithIdentifier:@"StartMessageSegue" sender:nil];
+    if (self.person) {
+        //switch to tab 2
+        [self.tabBarController setSelectedIndex:2];
+        
+        //open messsagesVC
+        UINavigationController *conversationNav = self.tabBarController.viewControllers[2];
+        JCConversationsViewController *convVC = conversationNav.childViewControllers[0];
+        [convVC startNewConversation:self.person];
+    }
+
 }
 
-
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
-    if ([[segue identifier] isEqualToString:@"StartMessageSegue"]) {
-        if (self.person) {
-            [segue.destinationViewController setMessageType:JCNewConversationWithEntity];
-            [segue.destinationViewController setPerson:self.person];
-            
-       //  an attempt to change the title of the chat to the person's name - but this just updates the nav bar button
-       //  self.title = [[NSString alloc] initWithFormat:self.person.firstLastName];
 
-            
-        }
-    }
-    
-    
 }
 
 #pragma mark - delegate methods
