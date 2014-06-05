@@ -301,7 +301,7 @@
     CGRect titleFrame = CGRectMake(0, 2, 200, 24);
     UILabel *titleView = [[UILabel alloc] initWithFrame:titleFrame];
     titleView.backgroundColor = [UIColor clearColor];
-    titleView.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:24.0f];
+    titleView.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:20.0f];
     titleView.textAlignment = NSTextAlignmentCenter;
     titleView.textColor = [UIColor blackColor];
     titleView.text = @"";
@@ -311,11 +311,8 @@
     CGRect subtitleFrame = CGRectMake(0, 24, 200, 44-24);
     UILabel *subtitleView = [[UILabel alloc] initWithFrame:subtitleFrame];
     subtitleView.backgroundColor = [UIColor clearColor];
-    subtitleView.font = [UIFont boldSystemFontOfSize:13];
+    subtitleView.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:13.0f];
     subtitleView.textAlignment = NSTextAlignmentCenter;
-    subtitleView.textColor = [UIColor darkGrayColor];
-    subtitleView.shadowColor = [UIColor blackColor];
-    subtitleView.shadowOffset = CGSizeMake(0, -1);
     subtitleView.text = @"";
     subtitleView.adjustsFontSizeToFitWidth = YES;
     [_headerTitleSubtitleView addSubview:subtitleView];
