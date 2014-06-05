@@ -39,6 +39,9 @@
 @property float deltaSearchBarY_SinceLastDirectionChange;
 @property float searchBarY_Reference;
 @property float scrollViewOffset;
+@property (strong, nonatomic) NSString *star;
+@property (strong, nonatomic) UIFont *icomoonFont;
+@property (strong, nonatomic) UIColor *theRightShadeOfYellowForOurStar;
 
 
 @property (strong, nonatomic) JCSearchBar *searchBar;
@@ -59,8 +62,11 @@ static NSString *CellIdentifier = @"DirectoryCell";
 
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    NSString *star = @"\u2605";
-    sections = [NSArray arrayWithObjects:star, @"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
+    self.star = @"\ue600";
+    self.icomoonFont = [UIFont fontWithName:@"icomoon" size:18.0];
+    self.theRightShadeOfYellowForOurStar = [UIColor colorWithRed:255.0/255.0 green:212.0/255.0 blue:0.0/255.0 alpha:1.0];
+    
+    sections = [NSArray arrayWithObjects:self.star, @"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
     self.clientEntitiesArray = [[NSMutableArray alloc] init];
     self.clientEntitiesSearchArray = [[NSMutableArray alloc] init];
     self.doneAnimatingToolbarFromFirstResponderState = YES;
@@ -412,7 +418,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
     for (int i = 0; i < sections.count; i++) {
         NSString *section = sections[i];
         NSArray *sectionArray = nil;
-        if ([section isEqualToString:@"\u2605"]) {
+        if (section == self.star) {
             sectionArray = [PersonEntities MR_findByAttribute:@"isFavorite" withValue:[NSNumber numberWithBool:YES]];
         }
         else {
@@ -507,6 +513,10 @@ static NSString *CellIdentifier = @"DirectoryCell";
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         return @"Search Results";
     }else{
+        if(section==0){
+            
+            return self.star;
+        }
         return [sections objectAtIndex:section];
     }
 }
@@ -556,15 +566,12 @@ static NSString *CellIdentifier = @"DirectoryCell";
             
             
             NSMutableString *name = [[NSMutableString alloc]initWithString: cell.personNameLabel.text];
-            NSString *star = @"  ★";
-            NSString *nameAndStarAsAnNSString = [NSString stringWithString:[name stringByAppendingString:star]];
+            NSString *nameAndStarAsAnNSString = [NSString stringWithString:[name stringByAppendingString:[NSString stringWithFormat:@" %@",self.star]]];
             
-            
-            UIColor *theRightShadeOfYellowForOurStar = [UIColor colorWithRed:255.0/255.0 green:212.0/255.0 blue:0.0/255.0 alpha:1.0];
-            NSRange starLocation = [nameAndStarAsAnNSString rangeOfString:@"★"];
+            NSRange starLocation = [nameAndStarAsAnNSString rangeOfString:self.star];
             NSMutableAttributedString *personAttributedName = [[NSMutableAttributedString alloc]initWithString:nameAndStarAsAnNSString];
-            [personAttributedName setAttributes:@{NSForegroundColorAttributeName : theRightShadeOfYellowForOurStar} range:starLocation];
-            
+            [personAttributedName setAttributes:@{NSForegroundColorAttributeName : self.theRightShadeOfYellowForOurStar} range:starLocation];
+            cell.personNameLabel.font = self.icomoonFont;
             cell.personNameLabel.attributedText = personAttributedName;
         }
     }
