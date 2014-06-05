@@ -134,7 +134,7 @@
 
 - (void)dismissedByCanceling
 {
-    if (addingPeople && _addedContacts.count == 0) {
+    if (addingPeople && _addedContacts.count == 0 && _messageType == JCNewConversation) {
         [self.navigationController popToRootViewControllerAnimated:NO];
     }
     
@@ -301,11 +301,9 @@
     CGRect titleFrame = CGRectMake(0, 2, 200, 24);
     UILabel *titleView = [[UILabel alloc] initWithFrame:titleFrame];
     titleView.backgroundColor = [UIColor clearColor];
-    titleView.font = [UIFont boldSystemFontOfSize:20];
+    titleView.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:24.0f];
     titleView.textAlignment = NSTextAlignmentCenter;
-    titleView.textColor = [UIColor darkGrayColor];
-    titleView.shadowColor = [UIColor blackColor];
-    titleView.shadowOffset = CGSizeMake(0, -1);
+    titleView.textColor = [UIColor blackColor];
     titleView.text = @"";
     titleView.adjustsFontSizeToFitWidth = YES;
     [_headerTitleSubtitleView addSubview:titleView];

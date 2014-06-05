@@ -111,12 +111,13 @@ static NSString *CellIdentifier = @"DirectoryCell";
 
 - (void)dismissViewController:(id)sender
 {
-    if (_delegate) {
+    if (_delegate && [_delegate respondsToSelector:@selector(dismissedByCanceling)]) {
         [_delegate dismissedByCanceling];
-        [self dismissViewControllerAnimated:YES completion:^{
-            _delegate = nil;
-        }];
     }
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        _delegate = nil;
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated
