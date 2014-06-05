@@ -10,6 +10,8 @@
 
 @implementation JCPresenceSelectCell
 
+static int inset = 8;
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -29,6 +31,13 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)setFrame:(CGRect)frame
+{
+    frame.origin.x += inset;
+    frame.size.width -= 2 * inset;
+    [super setFrame:frame];
 }
 
 @end

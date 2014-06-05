@@ -7,12 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JCPresenceViewController.h"
+#import "JCPresenceView.h"
 
-@interface JCAccountViewController : UITableViewController <UIActionSheetDelegate>
+@interface JCAccountViewController : UITableViewController <UIActionSheetDelegate, JCPresenceDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *userNameDetail;
 @property (weak, nonatomic) IBOutlet UILabel *jivePhoneNumber;
 @property (weak, nonatomic) IBOutlet UILabel *jiveMessenger;
 @property (weak, nonatomic) IBOutlet UILabel *presenceDetail;
+@property (weak, nonatomic) IBOutlet JCPresenceView *presenceDetailView;
 
 @end

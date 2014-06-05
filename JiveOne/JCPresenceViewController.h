@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class JCPresenceViewController;
+@protocol JCPresenceDelegate <NSObject>
+
+- (void)didChangePresence:(JCPresenceType)presenceType;
+
+@end
+
 @interface JCPresenceViewController : UITableViewController
+
+@property (nonatomic, assign) id<JCPresenceDelegate> delegate;
+@property (nonatomic, strong) UIImage *bluredBackgroundImage;
 
 @end

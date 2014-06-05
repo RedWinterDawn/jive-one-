@@ -327,6 +327,10 @@
 		277A1F8018F88987009A41F7 /* JCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 277A1F7F18F88987009A41F7 /* JCLoginViewController.m */; };
 		277F094218FED58C00EEF0E3 /* JCStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 277F094118FED58C00EEF0E3 /* JCStatusViewController.m */; };
 		277F094B18FF4F5100EEF0E3 /* Voicemail.m in Sources */ = {isa = PBXBuildFile; fileRef = 277F094A18FF4F5100EEF0E3 /* Voicemail.m */; };
+		2784BA681940344000389F5F /* JCPresenceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2784BA671940344000389F5F /* JCPresenceViewController.m */; };
+		2784BA691940344000389F5F /* JCPresenceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2784BA671940344000389F5F /* JCPresenceViewController.m */; };
+		2784BA6C1940390100389F5F /* JCPresenceSelectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2784BA6B1940390100389F5F /* JCPresenceSelectCell.m */; };
+		2784BA6D1940390100389F5F /* JCPresenceSelectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2784BA6B1940390100389F5F /* JCPresenceSelectCell.m */; };
 		2787911318CF79DC004DE651 /* JCPresenceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2787911218CF79DC004DE651 /* JCPresenceView.m */; };
 		2788F143190EACD20099348D /* VoicemailETag.m in Sources */ = {isa = PBXBuildFile; fileRef = 2788F142190EACD20099348D /* VoicemailETag.m */; };
 		2788F146190EACD20099348D /* ConversationETag.m in Sources */ = {isa = PBXBuildFile; fileRef = 2788F145190EACD20099348D /* ConversationETag.m */; };
@@ -364,6 +368,7 @@
 		27C3715218EDE9A000F159EF /* first_message.png in Resources */ = {isa = PBXBuildFile; fileRef = 27C3715118EDE9A000F159EF /* first_message.png */; };
 		27C3715718EE29F400F159EF /* JCMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C3715618EE29F400F159EF /* JCMessagesViewController.m */; };
 		27CE639C191C1D1700E85FD5 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 27F1F303191C182A00AEAFD7 /* libsqlite3.dylib */; };
+		27DADE141940C13600F2C9B4 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DADE131940C13600F2C9B4 /* UIImage+ImageEffects.m */; };
 		27E9A35818E0A17A0017B65D /* Presence+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E9A35718E0A17A0017B65D /* Presence+Custom.m */; };
 		27EA1DFD1900A83D0075CAEE /* JCVoiceTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EA1DFC1900A83D0075CAEE /* JCVoiceTableViewController.m */; };
 		27EA5DB2190888AD008C7590 /* Draft_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27EA5DB1190888AD008C7590 /* Draft_iPhone.storyboard */; };
@@ -719,6 +724,10 @@
 		277F094118FED58C00EEF0E3 /* JCStatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCStatusViewController.m; sourceTree = "<group>"; };
 		277F094918FF4F5100EEF0E3 /* Voicemail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Voicemail.h; sourceTree = "<group>"; };
 		277F094A18FF4F5100EEF0E3 /* Voicemail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Voicemail.m; sourceTree = "<group>"; };
+		2784BA661940344000389F5F /* JCPresenceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPresenceViewController.h; sourceTree = "<group>"; };
+		2784BA671940344000389F5F /* JCPresenceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPresenceViewController.m; sourceTree = "<group>"; };
+		2784BA6A1940390100389F5F /* JCPresenceSelectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPresenceSelectCell.h; sourceTree = "<group>"; };
+		2784BA6B1940390100389F5F /* JCPresenceSelectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPresenceSelectCell.m; sourceTree = "<group>"; };
 		2787911118CF79DC004DE651 /* JCPresenceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPresenceView.h; sourceTree = "<group>"; };
 		2787911218CF79DC004DE651 /* JCPresenceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPresenceView.m; sourceTree = "<group>"; };
 		2788F141190EACD20099348D /* VoicemailETag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoicemailETag.h; sourceTree = "<group>"; };
@@ -760,6 +769,8 @@
 		27C3715118EDE9A000F159EF /* first_message.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first_message.png; sourceTree = "<group>"; };
 		27C3715518EE29F400F159EF /* JCMessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMessagesViewController.h; sourceTree = "<group>"; };
 		27C3715618EE29F400F159EF /* JCMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMessagesViewController.m; sourceTree = "<group>"; };
+		27DADE121940C13600F2C9B4 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		27DADE131940C13600F2C9B4 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		27E9A35618E0A17A0017B65D /* Presence+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Presence+Custom.h"; sourceTree = "<group>"; };
 		27E9A35718E0A17A0017B65D /* Presence+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Presence+Custom.m"; sourceTree = "<group>"; };
 		27EA1DFB1900A83D0075CAEE /* JCVoiceTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVoiceTableViewController.h; sourceTree = "<group>"; };
@@ -1668,6 +1679,10 @@
 			children = (
 				DD28DA5018AEC4F5003BFC44 /* JCAccountViewController.h */,
 				DD28DA5118AEC4F5003BFC44 /* JCAccountViewController.m */,
+				2784BA661940344000389F5F /* JCPresenceViewController.h */,
+				2784BA671940344000389F5F /* JCPresenceViewController.m */,
+				2784BA6A1940390100389F5F /* JCPresenceSelectCell.h */,
+				2784BA6B1940390100389F5F /* JCPresenceSelectCell.m */,
 			);
 			name = Account;
 			sourceTree = "<group>";
@@ -1692,6 +1707,8 @@
 				2762151D1912AA2500CFBCC8 /* NSDictionary+QueryString.m */,
 				2762151F1912AA7400CFBCC8 /* NSString+URLEncoding.h */,
 				276215201912AA7400CFBCC8 /* NSString+URLEncoding.m */,
+				27DADE121940C13600F2C9B4 /* UIImage+ImageEffects.h */,
+				27DADE131940C13600F2C9B4 /* UIImage+ImageEffects.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -2652,11 +2669,13 @@
 				2727F376191AA92F00A41185 /* JCMessagesViewController.m in Sources */,
 				2727F378191AA92F00A41185 /* JCDirectoryDetailViewController.m in Sources */,
 				2727F379191AA92F00A41185 /* OsgiData.xcdatamodel in Sources */,
+				2784BA6D1940390100389F5F /* JCPresenceSelectCell.m in Sources */,
 				2727F37A191AA92F00A41185 /* KeychainItemWrapper.m in Sources */,
 				2727F37B191AA92F00A41185 /* JCAuthenticationManager.m in Sources */,
 				2727F37C191AA92F00A41185 /* JSMessageTextView.m in Sources */,
 				2727F37E191AA92F00A41185 /* JCLoginViewController.m in Sources */,
 				2727F37F191AA92F00A41185 /* PersonEntities+Custom.m in Sources */,
+				2784BA691940344000389F5F /* JCPresenceViewController.m in Sources */,
 				279E4CAE192273E5002A556C /* MBContactCollectionViewEntryCell.m in Sources */,
 				2727F380191AA92F00A41185 /* JSMessageInputView.m in Sources */,
 				2727F383191AA92F00A41185 /* JCPageClass.m in Sources */,
@@ -2727,6 +2746,7 @@
 				27F1F2D8191C171300AEAFD7 /* UAInboxMessageViewController.m in Sources */,
 				919DD2A11922E3570039205E /* JCPopoverView.m in Sources */,
 				2700987B18F4714100B6BC2F /* JSDismissiveTextView.m in Sources */,
+				27DADE141940C13600F2C9B4 /* UIImage+ImageEffects.m in Sources */,
 				919DD29D1922E2C90039205E /* JCPopoverSlider.m in Sources */,
 				274493C818D0E98D002744CB /* Conversation.m in Sources */,
 				272B61DD18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */,
@@ -2755,6 +2775,7 @@
 				275F4A6218AD0FBC00D2F069 /* JCAppDelegate.m in Sources */,
 				DDEC37D6191029B800E166CC /* PersonEntities.m in Sources */,
 				2788F14A190EB1260099348D /* NSNull+IntValue.m in Sources */,
+				2784BA681940344000389F5F /* JCPresenceViewController.m in Sources */,
 				279E4CAB192273E5002A556C /* MBContactCollectionViewContactCell.m in Sources */,
 				27C3715718EE29F400F159EF /* JCMessagesViewController.m in Sources */,
 				27F1F2D7191C171300AEAFD7 /* UAInboxMessageListController.m in Sources */,
@@ -2764,6 +2785,7 @@
 				2751591118AD174F00FD8D3F /* KeychainItemWrapper.m in Sources */,
 				91DDB1991935008A00550F10 /* JCSpeakerView.m in Sources */,
 				2751591318AD174F00FD8D3F /* JCAuthenticationManager.m in Sources */,
+				2784BA6C1940390100389F5F /* JCPresenceSelectCell.m in Sources */,
 				2700988118F4714100B6BC2F /* JSMessageTextView.m in Sources */,
 				27F1F2E8191C171300AEAFD7 /* UAPushSettingsChannelInfoViewController.m in Sources */,
 				9145E31F191D842500840D66 /* JCVersion.m in Sources */,
