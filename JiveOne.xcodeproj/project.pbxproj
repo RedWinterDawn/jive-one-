@@ -279,7 +279,6 @@
 		2736698218BD441D0069B4B3 /* JCPersonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2736698118BD441D0069B4B3 /* JCPersonCell.m */; };
 		273CC25E1900B23B005A2857 /* JCVoiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 273CC25D1900B23B005A2857 /* JCVoiceCell.m */; };
 		273D24A0193CCB5C004D2B23 /* libFlurry_5.0.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27A01609192EBCA70073C824 /* libFlurry_5.0.0.a */; };
-		273D24A1193CCB66004D2B23 /* Flurry.h in Sources */ = {isa = PBXBuildFile; fileRef = 27A01608192EBCA70073C824 /* Flurry.h */; };
 		2741EB8118FC4C0200F2FE64 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2741EB8018FC4C0200F2FE64 /* CoreTelephony.framework */; };
 		27426AC918B5303D00011635 /* JCOsgiClientTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 27426AC818B5303D00011635 /* JCOsgiClientTest.m */; };
 		274493AE18D0D538002744CB /* JCConversationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 274493AD18D0D538002744CB /* JCConversationCell.m */; };
@@ -369,6 +368,8 @@
 		27C3715718EE29F400F159EF /* JCMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C3715618EE29F400F159EF /* JCMessagesViewController.m */; };
 		27CE639C191C1D1700E85FD5 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 27F1F303191C182A00AEAFD7 /* libsqlite3.dylib */; };
 		27DADE141940C13600F2C9B4 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DADE131940C13600F2C9B4 /* UIImage+ImageEffects.m */; };
+		27DADE1519411C3200F2C9B4 /* JCConversationParticipantsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A01614193514690073C824 /* JCConversationParticipantsTableViewController.m */; };
+		27DADE1619411D5C00F2C9B4 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DADE131940C13600F2C9B4 /* UIImage+ImageEffects.m */; };
 		27E9A35818E0A17A0017B65D /* Presence+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E9A35718E0A17A0017B65D /* Presence+Custom.m */; };
 		27EA1DFD1900A83D0075CAEE /* JCVoiceTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EA1DFC1900A83D0075CAEE /* JCVoiceTableViewController.m */; };
 		27EA5DB2190888AD008C7590 /* Draft_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27EA5DB1190888AD008C7590 /* Draft_iPhone.storyboard */; };
@@ -2630,7 +2631,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				9145E320191D881D00840D66 /* JCVersion.m in Sources */,
+				27DADE1619411D5C00F2C9B4 /* UIImage+ImageEffects.m in Sources */,
 				2727F353191AA92F00A41185 /* JCPeopleDetailCell.m in Sources */,
+				27DADE1519411C3200F2C9B4 /* JCConversationParticipantsTableViewController.m in Sources */,
 				2727F354191AA92F00A41185 /* JCGroupSelectorViewController.m in Sources */,
 				2727F355191AA92F00A41185 /* JCStatusViewController.m in Sources */,
 				2727F356191AA92F00A41185 /* Presence+Custom.m in Sources */,
@@ -2690,7 +2693,6 @@
 				279E4CB4192273E5002A556C /* MBContactModel.m in Sources */,
 				919DD29E1922E2C90039205E /* JCPopoverSlider.m in Sources */,
 				279E4CB0192273E5002A556C /* MBContactCollectionViewFlowLayout.m in Sources */,
-				273D24A1193CCB66004D2B23 /* Flurry.h in Sources */,
 				2727F386191AA92F00A41185 /* JCPresenceView.m in Sources */,
 				2727F387191AA92F00A41185 /* JSMessage.m in Sources */,
 				91F6DFA8192A6CCD001C54FB /* JCLog.m in Sources */,
