@@ -77,9 +77,13 @@ int didNotify;
     //Register for background fetches
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     
-    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithWhite:0.950 alpha:1.000]];
-    [[UINavigationBar appearance] setTintColor:[UIColor blackColor]];
-    [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor], NSForegroundColorAttributeName,nil]];
+    if ([[UINavigationBar class]respondsToSelector:@selector(appearance)]) {
+        [[UINavigationBar appearance] setTitleTextAttributes:@{
+                                                               UITextAttributeTextColor : [UIColor blackColor],
+                                                               UITextAttributeFont : [UIFont fontWithName:@"HelveticaNeue-Light" size:24.0f]
+                                                               
+                                                               }];
+    }
     
     //Start monitor for Reachability
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
