@@ -172,63 +172,12 @@
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if(indexPath.section == 1){
-        //launch action sheet
-//        UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
-//                                kPresenceAvailable,
-//                                kPresenceAway,
-//                                kPresenceDoNotDisturb,
-//                                kPresenceOffline,
-//                                nil];
-        //[popup showFromTabBar:self.tabBarController.tabBar];
-//        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        
-        
-//        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
-//                                                                 delegate:self
-//                                                        cancelButtonTitle:@"Cancel"
-//                                                   destructiveButtonTitle:nil
-//                                                        otherButtonTitles:nil];
-//        
-//        _actionSheet = popup   ;
-//        
-//        UIView *test1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, _actionSheet.frame.size.width, 44)];
-//        test1.backgroundColor = [UIColor blackColor];
-//        UIButton * testButton1 = [UIButton buttonWithType:UIButtonTypeCustom];
-//        [testButton1 addSubview:test1];
-//        
-//        [[[_actionSheet valueForKey:@"_buttons"] objectAtIndex:0] setTitle:@""];
-//        [[[_actionSheet valueForKey:@"_buttons"] objectAtIndex:0] addSubview:testButton1];
-//        [[[_actionSheet valueForKey:@"_buttons"] objectAtIndex:1] setImage:[UIImage imageNamed:@"email.png"] forState:UIControlStateNormal];
-//        [[[_actionSheet valueForKey:@"_buttons"] objectAtIndex:2] setImage:[UIImage imageNamed:@"facebook_black.png"] forState:UIControlStateNormal];
-//        //*********** Cancel
-//        [[[_actionSheet valueForKey:@"_buttons"] objectAtIndex:3] setImage:[UIImage imageNamed:@"cancel.png"] forState:UIControlStateNormal];
-        //[actionSheet showFromRect:button.frame inView:self.view animated:YES];
-//        UIDatePicker *pickerView = [[UIDatePicker alloc] init];
-//        pickerView.datePickerMode = UIDatePickerModeDateAndTime;
-//        [pickerView addTarget:self action:@selector(scheduleCampaign:) forControlEvents:UIControlEventValueChanged];
-//        
-//        CGRect pickerRect = pickerView.bounds;
-//        pickerRect.origin.y = 250;
-//        pickerRect.size.width = 300;
-//        pickerView.bounds = pickerRect;
-//        [pickerView setBackgroundColor:[UIColor clearColor]];
-//        
-//        UIToolbar* blurBackgroundToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, pickerView.bounds.size.width, pickerView.bounds.size.height)];
-//        
-//        [pickerView insertSubview:blurBackgroundToolbar atIndex:0];
-        
-        //[_actionSheet addSubview:pickerView];
-//        [_actionSheet showFromTabBar:self.tabBarController.tabBar];
-        
-//        JCPresenceViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"JCPresenceSelectionViewController"];
-//        [self presentViewController:vc animated:YES completion:^{
-//            //dd
-//        }];
         
         UIView *view = ((JCAppDelegate *)[UIApplication sharedApplication].delegate).window;
         UIImage *underlyingView = [Common imageFromView:view];
         underlyingView = [underlyingView applyBlurWithRadius:5 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] saturationDeltaFactor:1.3 maskImage:nil];
         [self performSegueWithIdentifier:@"PresenceSegue" sender:underlyingView];
+        
     }
     else if(indexPath.section == 2){
         //Eula or leave feedback
