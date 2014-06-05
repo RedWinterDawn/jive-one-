@@ -203,9 +203,11 @@
     
     //UIView *compositeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
     
-    NSArray *colorArray = [NSArray arrayWithObjects:[UIColor redColor],
-                           [UIColor purpleColor],
-                           [UIColor greenColor], nil];
+    NSArray *colorArray = [NSArray arrayWithObjects:
+                           [UIColor colorWithRed:0.847 green:0.871 blue:0.882 alpha:1] /*#d8dee1*/,
+                           [UIColor colorWithRed:0.624 green:0.82 blue:0.357 alpha:1] /*#9fd15b*/,
+                           [UIColor colorWithRed:0.251 green:0.757 blue:0.847 alpha:1] /*#40c1d8*/,
+                           [UIColor colorWithRed:0.282 green:0.298 blue:0.333 alpha:1] /*#484c55*/,nil];
     
     for (NSString* entity in self.conversation.entities) {
         PersonEntities *person = [PersonEntities MR_findFirstByAttribute:@"entityId" withValue:entity];
