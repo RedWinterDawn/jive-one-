@@ -269,7 +269,7 @@
         UIImage *initialsImage = [[JCConversationCell chachedInitialsImages] objectForKey:key];
         if (!initialsImage) {
             UIView * groupCount = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 28, 28)];
-            groupCount.backgroundColor = [UIColor colorWithRed:0.043 green:0.455 blue:0.808 alpha:.5];
+            groupCount.backgroundColor = [UIColor colorWithRed:0.847 green:0.871 blue:0.882 alpha:1] /*#d8dee1*/;
             
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 20)];
             label.textColor = [UIColor whiteColor];
