@@ -62,7 +62,8 @@ static NSString *CellIdentifier = @"DirectoryCell";
 
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.star = @"\ue600";
+//    self.star = @"\ue600";
+    self.star = @"\u2605";
     self.icomoonFont = [UIFont fontWithName:@"icomoon" size:18.0];
     self.theRightShadeOfYellowForOurStar = [UIColor colorWithRed:255.0/255.0 green:212.0/255.0 blue:0.0/255.0 alpha:1.0];
     
