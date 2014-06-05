@@ -211,8 +211,24 @@ static NSString *CellIdentifier = @"VoicemailCell";
     return isSelected ? 180.0f : 60.0f;
 }
 
+-(void)resetSlider
+{
+        [selectedCell setSliderValue:0];
+        [selectedCell.slider updateThumbWithCurrentProgress];
+}
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if ((player.currentTime > 0) && (selectedCell.indexPath == indexPath)) {
+        //pause
+        [player pause];
+        
+        [self stopProgressTimerForVoicemail];
+        [selectedCell.playPauseButton setPlayPauseDisplaysPlay:YES];
+//        [selectedCell setSliderValue:0];
+//        [selectedCell.slider updateThumbWithCurrentProgress];
+        [self performSelector:@selector(resetSlider) withObject:nil afterDelay:.5];
+    }
+    
     [self addOrRemoveSelectedIndexPath:indexPath];
     
     BOOL isSelected = [self.selectedIndexPaths containsObject:indexPath];
@@ -220,11 +236,11 @@ static NSString *CellIdentifier = @"VoicemailCell";
     if (isSelected) {
         [self prepareAudioForIndexPath:indexPath];
         selectedCell = (JCVoiceCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-        NSLog(@"%f, %f",selectedCell.frame.origin.x,selectedCell.frame.origin.y);
         if (selectedCell.frame.origin.y >= 300) {
             [tableView setContentOffset:CGPointMake(0, 80)animated:YES];
         }
     }
+    
 }
 
 // Override to support editing the table view.
