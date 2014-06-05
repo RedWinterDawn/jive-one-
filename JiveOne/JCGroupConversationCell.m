@@ -206,8 +206,7 @@
     NSArray *colorArray = [NSArray arrayWithObjects:
                            [UIColor colorWithRed:0.847 green:0.871 blue:0.882 alpha:1] /*#d8dee1*/,
                            [UIColor colorWithRed:0.624 green:0.82 blue:0.357 alpha:1] /*#9fd15b*/,
-                           [UIColor colorWithRed:0.251 green:0.757 blue:0.847 alpha:1] /*#40c1d8*/,
-                           [UIColor colorWithRed:0.282 green:0.298 blue:0.333 alpha:1] /*#484c55*/,nil];
+                           [UIColor colorWithRed:0.251 green:0.757 blue:0.847 alpha:1] /*#40c1d8*/,nil];
     
     for (NSString* entity in self.conversation.entities) {
         PersonEntities *person = [PersonEntities MR_findFirstByAttribute:@"entityId" withValue:entity];
@@ -240,7 +239,7 @@
             
             if (count == 3) {
                 UIView * groupCount = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 28, 28)];
-                groupCount.backgroundColor = [UIColor colorWithRed:0.043 green:0.455 blue:0.808 alpha:1];
+                groupCount.backgroundColor = [UIColor colorWithRed:0.282 green:0.298 blue:0.333 alpha:1] /*#484c55*/;
                 
                 UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 20)];
                 label.textColor = [UIColor whiteColor];
