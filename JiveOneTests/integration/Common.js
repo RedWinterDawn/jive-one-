@@ -22,38 +22,75 @@
 //     }
 // };
 
-function loginCheck(app) {
+function loginIfNeeded(app) {
 
         UIALogger.logDebug("test if we are logged out...");
         if (app.mainWindow().textFields()[0].name() == "emailTextField") {
-            var currentWindow = app.mainWindow();
-
-            //login
-            currentWindow.textFields()["emailTextField"].setValue("jivetesting21@gmail.com");
-            currentWindow.secureTextFields()["passwordTextField"].setValue("testing21");
-            app.keyboard().elements()["Go"].tap();
-
-            //wait for login
-            UIATarget.localTarget().pushTimeout(200);
-            currentWindow.navigationBar().name()["People"];
-            UIATarget.localTarget().popTimeout();
-
-            UIATarget.localTarget().delay(2);
+           login(app);
         }else{
-          UIALogger.logDebug("Not logged out");  
+          UIALogger.logDebug("Already logged in.");  
         }
-        // UIALogger.logDebug("end if");
- 
+}
 
+function logoutIfNeeded(app) {
+    UIALogger.logDebug("test if we are logged out...");
+    if (app.mainWindow().textFields()[0].name() == "emailTextField") {
+        //do nothing
+        UIALogger.logDebug("Already logged out.");  
+    }else{
+      logout(app)
+    }
+}
+
+function login(app) {
+    var currentWindow = app.mainWindow();
+    
+    //login
+    currentWindow.textFields()["emailTextField"].setValue("jivetesting21@gmail.com");
+    currentWindow.secureTextFields()["passwordTextField"].setValue("testing21");
+    app.keyboard().elements()["Go"].tap();
+    
+    //wait for login
+    UIATarget.localTarget().pushTimeout(200);
+    currentWindow.navigationBar().name()["People"];
+    UIATarget.localTarget().popTimeout();
+    
+    UIATarget.localTarget().delay(2);
 }
 
 function logout(app) {
+    app.mainWindow().tabBar().buttons()[3].tap();
+    target.logElementTree();
     
+    var recipient = app.mainWindow().tableViews()[0].cells()[0].name();
+    UIALogger.logDebug("logged in as:" + recipient);
+    if(recipient.contains("jivetesting21@gmail.com"))
+    {
+        recipient = "jivetesting11@gmail.com";
+    }else{
+        recipient = "jivetesting21@gmail.com";
+    }    
     
+    scrollDown(200);
+    var logoutButton = app.mainWindow().tableViews()[0].cells()["Sign Out"];
+    logDebug(logoutButton.name())
+    logoutButton.waitUntilVisible(10)
+   
+    app.mainWindow().tableViews()[0].cells()["Sign Out"].tap();
+    UIALogger.logDebug("will log in as: "+ recipient);
+
 }
 
 function logDebug(s){
     UIALogger.logDebug(s)
+}
+
+function scrollDown(pixels){
+
+    var y1 = 400;
+    var y2 = y1-pixels;
+
+    UIATarget.localTarget().flickFromTo({x:160, y:y1}, {x:160, y:y2});
 }
 
 // function assertEquals(expected, received, message) {
