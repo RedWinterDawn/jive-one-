@@ -8,3 +8,4 @@
 #include "Shared.xcconfig"
 
 LOGGER_TARGET=${DEBUG_LOGGER_TARGET}
+BUNDLE_IDENTIFIER="com.jive.jive"
