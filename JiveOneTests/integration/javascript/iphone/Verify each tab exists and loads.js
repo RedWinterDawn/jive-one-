@@ -1,4 +1,4 @@
-#import "Common.js"
+#import "../../../../../Pods/tuneup_js/tuneup.js"
 
 test("Verify each tab exists and loads", function(target, app){
 

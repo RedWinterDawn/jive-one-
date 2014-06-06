@@ -1,4 +1,4 @@
-#import "Common.js"
+#import "../../../../../Pods/tuneup_js/tuneup.js"
 
 test("Receive a chat", function(target, app){
 
@@ -14,9 +14,9 @@ test("Receive a chat", function(target, app){
 	var beforeCount = w.tableViews()[0].cells().length;
 
 	var uniqueMessage = "my message " + new Date().toString();
-	w.images()[0].textViews()[0].tap();
+	w.images()[1].textViews()[0].tap();
 	app.keyboard().typeString(uniqueMessage);
-	w.images()[0].buttons()["Send"].tap();
+	w.images()[1].buttons()["Send"].tap();
 
 	var afterCount = w.tableViews()[0].cells().length;
 
@@ -33,11 +33,11 @@ test("Receive a chat", function(target, app){
 	
 	var recipient = app.mainWindow().tableViews()[0].cells()[0].name();
 	UIALogger.logDebug("logged in as:" + recipient);
-	if(recipient.contains("jivetesting10@gmail.com"))
+	if(recipient.contains("jivetesting21@gmail.com"))
 	{
 		recipient = "jivetesting11@gmail.com";
 	}else{
-		recipient = "jivetesting10@gmail.com";
+		recipient = "jivetesting21@gmail.com";
 	}
 
 	app.mainWindow().navigationBar().buttons()["Logout"].tap();

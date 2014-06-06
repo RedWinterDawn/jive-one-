@@ -1,4 +1,4 @@
-#import "Common.js"
+#import "../../../../../Pods/tuneup_js/tuneup.js"
 
 test("Login Test", function(target, app, log){
 	var currentWindow = app.mainWindow();

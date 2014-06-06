@@ -22,3 +22,5 @@ Pods
 Podfile.lock
 Builds
 JiveOneTests/AutomatedTests/Results
+JiveOneTests/integration/tmp
+build

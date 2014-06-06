@@ -1,3 +1,5 @@
+#import "../Pods/tuneup_js/tuneup.js"
+
 function test(title, f, options) {
     if (options == null) {
         options = {
@@ -28,8 +30,8 @@ function loginCheck(app) {
             var currentWindow = app.mainWindow();
 
             //login
-            currentWindow.textFields()["emailTextField"].setValue("jivetesting10@gmail.com");
-            currentWindow.secureTextFields()["passwordTextField"].setValue("testing12");
+            currentWindow.textFields()["emailTextField"].setValue("jivetesting21@gmail.com");
+            currentWindow.secureTextFields()["passwordTextField"].setValue("testing21");
             app.keyboard().elements()["Go"].tap();
 
             //wait for login
