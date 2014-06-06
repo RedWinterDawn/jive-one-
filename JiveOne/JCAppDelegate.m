@@ -230,7 +230,7 @@ int didNotify;
 {
     JCLogInfo_();
     //if ([[JCSocketDispatch sharedInstance] socketState] == SR_CLOSED || [[JCSocketDispatch sharedInstance] socketState] == SR_CLOSING) {
-    [[JCSocketDispatch sharedInstance] requestSession:inBackground];
+    [[JCSocketDispatch sharedInstance] requestSession];
     //}
 }
 
@@ -340,7 +340,7 @@ int didNotify;
     JCLogInfo_();
     NSLog(@"APPDELEGATE - performFetchWithCompletionHandler");
     __block UIBackgroundFetchResult fetchResult = UIBackgroundFetchResultFailed;
-    if ([[JCSocketDispatch sharedInstance] socketState] != SR_OPEN) {
+    if ([JCSocketDispatch sharedInstance].webSocket.readyState != SR_OPEN) {
         //[[JCAuthenticationManager sharedInstance] checkForTokenValidity];
         __block UIBackgroundFetchResult fetchResult = UIBackgroundFetchResultFailed;
         
@@ -376,7 +376,7 @@ int didNotify;
         }
         @finally {
             if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground ) {
-                if ([[JCSocketDispatch sharedInstance] socketState] == SR_OPEN) {
+                if ([JCSocketDispatch sharedInstance].webSocket.readyState == SR_OPEN) {
                     [self stopSocket];
                 }
 

@@ -36,6 +36,7 @@
 - (IBAction)segmentChanged:sender ;
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope;
 - (IBAction)searchPeople:(id)sender;
+- (IBAction)showStatusView:(id)sender;
 
 
 @end

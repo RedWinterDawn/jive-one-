@@ -19,6 +19,7 @@
 #import "JCLog.h"
 #import "Constants.h"
 #import "JCAppDelegate.h"
+#import "JCStatusViewController.h"
 
 
 
@@ -668,6 +669,11 @@ static NSString *CellIdentifier = @"DirectoryCell";
     
 }
 
+//- (IBAction)showStatusView:(id)sender {
+//    JCStatusViewController *stvc = [self.storyboard instantiateViewControllerWithIdentifier:@"JCStatusViewController"];
+//    [self.navigationController pushViewController:stvc animated:YES];
+//}
+
 //called by UI delegate to begin constructing clientEntitesSearchArray
 -(BOOL)searchDisplayController:(UISearchDisplayController *)controller
 shouldReloadTableForSearchString:(NSString *)searchString
@@ -704,20 +710,22 @@ shouldReloadTableForSearchString:(NSString *)searchString
 // In a story board-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    if (![segue.identifier isEqualToString:@"StatusSegue"]) {       
     
-    NSIndexPath *indexPath = sender;
-    PersonEntities *person;
-    
-    if (self.searchTableIsActive) {
-        NSString *entityId = self.clientEntitiesSearchArray[indexPath.row];
-        person = [self getPersonFromListByEntityId:entityId];
-    }
-    else {
-        person = self.clientEntitiesArray[indexPath.section][indexPath.row];
-    }
-    
-    if (person) {
-        [segue.destinationViewController setPerson:person];
+        NSIndexPath *indexPath = sender;
+        PersonEntities *person;
+        
+        if (self.searchTableIsActive) {
+            NSString *entityId = self.clientEntitiesSearchArray[indexPath.row];
+            person = [self getPersonFromListByEntityId:entityId];
+        }
+        else {
+            person = self.clientEntitiesArray[indexPath.section][indexPath.row];
+        }
+        
+        if (person) {
+            [segue.destinationViewController setPerson:person];
+        }
     }
 }
 

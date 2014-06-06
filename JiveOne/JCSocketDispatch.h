@@ -14,21 +14,14 @@
 @interface JCSocketDispatch : NSObject <SRWebSocketDelegate>
 
 typedef void (^CompletionBlock) (BOOL success, NSError *error);
-
 @property (nonatomic, strong) SRWebSocket *webSocket;
-@property (nonatomic, strong) NSMutableDictionary *badges;
+@property (nonatomic) NSInteger subscriptionCount;
 @property (nonatomic, copy) CompletionBlock completionBlock;
 
-
-- (void)startPoolingFromSocketWithCompletion:(CompletionBlock)completed;
-
 + (instancetype)sharedInstance;
-
-- (void)requestSession:(BOOL)inBackground;
+- (void)startPoolingFromSocketWithCompletion:(CompletionBlock)completed;
+- (void)requestSession;
 - (void)closeSocket;
-
-- (SRReadyState)socketState;
-
 - (void)sendPoll;
 
 @end

@@ -51,17 +51,6 @@
     [self refresh:nil];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 - (IBAction)refresh:(id)sender {
     
     NSString *deviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:UDdeviceToken];
@@ -73,7 +62,11 @@
     }
     
     
-    SRReadyState state = [[JCSocketDispatch sharedInstance] socketState];
+    NSInteger count = [JCSocketDispatch sharedInstance].subscriptionCount;
+    _subscription2.text = [NSString stringWithFormat:@"Subscribed to %ld events", (long)count];
+    
+    
+    SRReadyState state = [JCSocketDispatch sharedInstance].webSocket.readyState;
     switch (state) {
         case SR_CLOSED:
             self.socketStatusLabel.text = @"Closed";
@@ -97,4 +90,26 @@
 - (IBAction)poll:(id)sender {
     [[JCSocketDispatch sharedInstance] sendPoll];
 }
+
+
+#pragma mark - UITableViewController Delegates
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 6;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [super tableView:tableView numberOfRowsInSection:section];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [super tableView:tableView cellForRowAtIndexPath:indexPath];
+}
+
+
+
+
+
 @end

@@ -18,7 +18,6 @@
 @interface JCSocketDispatch()
 
 {
-    NSTimer *subscriptionTimer;
     BOOL startedInBackground;
     BOOL didSignalToCloseSocket;
 }
@@ -30,8 +29,9 @@
 @property (strong, nonatomic) NSString* ws;
 @property (strong, nonatomic) NSString* pipedTokens;
 @property (strong, nonatomic) NSString *sessionToken;
-@property (strong, nonatomic) NSString *deviceToken;//used for sending a push notification to restore the session if lost
-@property (strong, nonatomic) NSTimer *timer;
+@property (strong, nonatomic) NSString *deviceToken; //used for sending a push notification to restore the session if lost
+@property (strong, nonatomic) NSTimer *socketSessionTimer;
+@property (strong, nonatomic) NSTimer *subscriptionTimer;
 
 @end
 
@@ -52,41 +52,36 @@
 
 
 
-
-/*
-     Request Session Posts information to the API. The returned values are used to stablish a connection to the socket.
- */
-
-- (SRReadyState)socketState
-{
-    return _webSocket.readyState;
-}
-
+#pragma mark - Public Methods
 - (void)sendPoll
 {
-    if ([self socketState] == SR_OPEN) {
+    if (_webSocket.readyState == SR_OPEN) {
         [_webSocket send:self.json_poll];
     }
 }
 
-
-- (void)requestSession:(BOOL)inBackground
+/**
+ *  Fires a request to the server where it retreives a session token used to connect to the websocket
+ *  if the user is authenticated.
+ *
+ */
+- (void)requestSession
 {
+    
     NSLog(@"Requestion Session For Socket");
-    startedInBackground = inBackground;
+    startedInBackground = [UIApplication sharedApplication].applicationState == (UIApplicationStateBackground|UIApplicationStateInactive);
     [self cleanup];
     
     if ([[JCAuthenticationManager sharedInstance] userAuthenticated] )  {
         
         [[JCOsgiClient sharedClient] RequestSocketSession:^(id JSON) {
             
-            if (_timer) {
-                [_timer invalidate];
+            if (_socketSessionTimer) {
+                [_socketSessionTimer invalidate];
             }
             
             // First, get our current auth token
-            //KeychainItemWrapper* _keychainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
-            NSString* authToken = [[JCAuthenticationManager sharedInstance] getAuthenticationToken]; //[_keychainWrapper objectForKey:(__bridge id)(kSecAttrAccessible)];
+            NSString* authToken = [[JCAuthenticationManager sharedInstance] getAuthenticationToken];
             
             // From our response dictionary we'll get some info
             NSDictionary* response = (NSDictionary*)JSON;
@@ -120,11 +115,11 @@
             
         } failure:^(NSError *err) {
             NSLog(@"Requestion Session For Socket : Failed");
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"com.jiveone.socketNotConnected" object:nil];
             
-            // if we fail to get a session, then try again in 15 seconds
-            if (![_timer isValid]) {
-                _timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(elapsedTime:) userInfo:nil repeats:YES];
+            // if we fail to get a session, then try again in 2 seconds
+            if (![_socketSessionTimer isValid]) {
+                _socketSessionTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(socketSessionTimerElapsed:) userInfo:nil repeats:YES];
+                [[NSRunLoop currentRunLoop] addTimer:_socketSessionTimer forMode:NSDefaultRunLoopMode];
             }
             
         }];
@@ -133,18 +128,16 @@
 
 - (void)timesUpforSubscription
 {
-    [subscriptionTimer invalidate];
-    [_webSocket close];
+    [_subscriptionTimer invalidate];
+    [_webSocket closeWithCode:500 reason:@"Did no subscribed to all events. Retrying"];
 }
 
 - (void)subscribeSession
 {
-//    NSDictionary* conversation1 = [NSDictionary dictionaryWithObjectsAndKeys:@"(conversations|permanentrooms|groupconversations|adhocrooms):*:entries", @"urn", nil];w
-//    NSDictionary* conversation2 = [NSDictionary dictionaryWithObjectsAndKeys:@"meta:(conversations|permanentrooms|groupconversations|adhocrooms):*:entities", @"urn", nil];
-//    NSDictionary* conversation3 = [NSDictionary dictionaryWithObjectsAndKeys:@"meta:(conversations|permanentrooms|groupconversations|adhocrooms):*:entities:*", @"urn", nil];
-    //[self initSession];
     
-    subscriptionTimer = [NSTimer timerWithTimeInterval:10 target:self selector:@selector(timesUpforSubscription) userInfo:nil repeats:NO];
+    _subscriptionTimer = [NSTimer timerWithTimeInterval:4 target:self selector:@selector(timesUpforSubscription) userInfo:nil repeats:NO];
+    [[NSRunLoop currentRunLoop] addTimer:_subscriptionTimer forMode:NSDefaultRunLoopMode];
+    
     NSLog(@"Subscribing to Socket Events");
     
     NSDictionary* presence = [NSDictionary dictionaryWithObjectsAndKeys:@"presence:entities:*", @"urn", nil];
@@ -162,25 +155,21 @@
     
     NSArray *subscriptionArray = [NSArray arrayWithObjects:voicemail, conversation, conversation4, presence, calls, nil];
     
-    int count = 1;
+    __block int count = 1;
     for (NSDictionary *subscription in subscriptionArray) {
         
         [[JCOsgiClient sharedClient] SubscribeToSocketEventsWithAuthToken:self.sessionToken subscriptions:subscription success:^(id JSON) {
             NSLog(@"Subscribing to Socket Events : Success");
-            
+            count ++;
+            if (count == subscriptionArray.count) {
+                [_subscriptionTimer invalidate];
+            }
+            _subscriptionCount = count;
         } failure:^(NSError *err) {
             NSLog(@"Subscribing to Socket Events : Failed");
             NSLog(@"%@", err);
         }];
-        
-        if (count == subscriptionArray.count) {
-            [subscriptionTimer invalidate];
-            break;
-        }
-        
-        count++;
     }
-//    [self initSession];
 }
 
 - (void)initSession
@@ -198,8 +187,8 @@
 {
     NSLog(@"Did pull before closing the socket");    
     [_webSocket send:self.json_poll];
-    if ([subscriptionTimer isValid]) {
-        [subscriptionTimer invalidate];
+    if ([_subscriptionTimer isValid]) {
+        [_subscriptionTimer invalidate];
     }
     
     didSignalToCloseSocket = YES;
@@ -209,7 +198,7 @@
 - (void)reconnect
 {
     if (startedInBackground || [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) {
-        [self requestSession:startedInBackground];
+        [self requestSession];
     }
 }
 
@@ -224,21 +213,28 @@
     [self subscribeSession];
 }
 
+
+/**
+ *  WebSocket Delegate, Receive events/messages from socket.
+ *
+ *  @param webSocket SRWebSocket
+ *  @param message   NSString
+ */
 - (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message{
     
-    NSLog(@"%@",message);
+    //NSLog(@"%@",message);
     
-    NSString *msgString = message;
-    
-    NSData *data = [msgString dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *data = [message dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *messageDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
     
+    // if the commend is 'noMessage', and the app state is in the background, then close the socket
     if (messageDictionary[@"cmd"]) {
         if ([messageDictionary[@"cmd"] isEqualToString:@"noMessage"] && startedInBackground) {
             [self closeSocket];
         }
     }
     
+    // send message for processing
     [self messageDispatcher:messageDictionary];
     
     // As soon as we're done processing the last received item, poll.
@@ -247,9 +243,9 @@
 
 - (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error
 {
+    
     NSLog(@"%@", [NSString stringWithFormat:@"Connection Failed: %@", [error description]]);
     // If connection fails, try to reconnect.
-    
     [self reconnect];
 }
 
@@ -262,15 +258,17 @@
            @"reason": reason,
            @"clean": @(wasClean)};
     
+    
+    //NSLog(@"Connection Closed : %@", userInfo);
+    
+    
     // If the socket was not closed on purpose (code 200), then try to reconnect
-    NSLog(@"Connection Closed : %@", userInfo);
-    
-    
     if (!didSignalToCloseSocket) {
         [self reconnect];
     }
     else {
-        [_timer invalidate];
+    // Otherwise invalidere the timer, and if app state is in background, then send completion block.
+        [_socketSessionTimer invalidate];
         if (startedInBackground) {
             self.completionBlock(YES, nil);
         }
@@ -396,7 +394,7 @@
 }
 
 #pragma mark - NSTimer
-- (void)elapsedTime:(NSNotification *)notification
+- (void)socketSessionTimerElapsed:(NSNotification *)notification
 {
     [self reconnect];
 }
@@ -405,13 +403,11 @@
 {
     _completionBlock = completed;
     @try {
-        [self requestSession:YES];
-        //completed(YES, nil);
+        [self requestSession];
     }
     @catch (NSException *exception) {
         didSignalToCloseSocket = YES;
         [self closeSocket];
-        //completed(NO, [NSError errorWithDomain:exception.reason code:exception.hash userInfo:exception.userInfo]);
     }
 }
 
