@@ -267,6 +267,7 @@
 		91ADB9AF18D8BD4200DF41A3 /* voicemail_scrub_play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91ADB99F18D8BD4200DF41A3 /* voicemail_scrub_play@2x.png */; };
 		91ADB9B018D8BD4200DF41A3 /* voicemail_speaker.png in Resources */ = {isa = PBXBuildFile; fileRef = 91ADB9A018D8BD4200DF41A3 /* voicemail_speaker.png */; };
 		91ADB9B118D8BD4200DF41A3 /* voicemail_speaker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91ADB9A118D8BD4200DF41A3 /* voicemail_speaker@2x.png */; };
+		91B4A53419427A9C00DC7459 /* JiveOneEnterprise-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 91B4A53319427A9C00DC7459 /* JiveOneEnterprise-Info.plist */; };
 		91B7CFC5192ABDF800927DDD /* JCSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B7CFC4192ABDF800927DDD /* JCSearchBar.m */; };
 		91B7CFCB192AD5B900927DDD /* search2.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7CFCA192AD5B900927DDD /* search2.png */; };
 		91B7CFCE192AD78B00927DDD /* searchGray2.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7CFCD192AD78B00927DDD /* searchGray2.png */; };
@@ -763,6 +764,7 @@
 		91ADB99F18D8BD4200DF41A3 /* voicemail_scrub_play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "voicemail_scrub_play@2x.png"; sourceTree = "<group>"; };
 		91ADB9A018D8BD4200DF41A3 /* voicemail_speaker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = voicemail_speaker.png; sourceTree = "<group>"; };
 		91ADB9A118D8BD4200DF41A3 /* voicemail_speaker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "voicemail_speaker@2x.png"; sourceTree = "<group>"; };
+		91B4A53319427A9C00DC7459 /* JiveOneEnterprise-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "JiveOneEnterprise-Info.plist"; sourceTree = "<group>"; };
 		91B7CFC3192ABDF800927DDD /* JCSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSearchBar.h; sourceTree = "<group>"; };
 		91B7CFC4192ABDF800927DDD /* JCSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSearchBar.m; sourceTree = "<group>"; };
 		91B7CFCA192AD5B900927DDD /* search2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search2.png; sourceTree = "<group>"; };
@@ -1858,6 +1860,7 @@
 			isa = PBXGroup;
 			children = (
 				275F4A5918AD0FBC00D2F069 /* JiveOne-Info.plist */,
+				91B4A53319427A9C00DC7459 /* JiveOneEnterprise-Info.plist */,
 				91F6DFAA192A702F001C54FB /* Shared.xcconfig */,
 				91F6DFB1192A706B001C54FB /* Debug.xcconfig */,
 				91F6DFB4192A7080001C54FB /* Enterprise.xcconfig */,
@@ -2101,6 +2104,7 @@
 				27F1F2DB191C171300AEAFD7 /* list-image-placeholder.png in Resources */,
 				2700988E18F4714100B6BC2F /* bubble-classic-square-blue.png in Resources */,
 				2700988318F4714100B6BC2F /* avatar-placeholder@2x.png in Resources */,
+				91B4A53419427A9C00DC7459 /* JiveOneEnterprise-Info.plist in Resources */,
 				F59AE2BD192F07BA00CAF0F3 /* iPadlaunch1Xnew.png in Resources */,
 				27F1F2F7191C171300AEAFD7 /* UAPushLocalization.bundle in Resources */,
 				2700989518F4714100B6BC2F /* bubble-min-tailless@2x.png in Resources */,
@@ -2550,7 +2554,7 @@
 					"\"${PODS_ROOT}/Headers/SDWebImage\"",
 					"\"${PODS_ROOT}/Headers/SocketRocket\"",
 				);
-				INFOPLIST_FILE = "JiveOne/JiveOne-Info.plist";
+				INFOPLIST_FILE = "JiveOneEnterprise-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2708,7 +2712,7 @@
 					"\"${PODS_ROOT}/Headers/SDWebImage\"",
 					"\"${PODS_ROOT}/Headers/SocketRocket\"",
 				);
-				INFOPLIST_FILE = "JiveOne/JiveOne-Info.plist";
+				INFOPLIST_FILE = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
