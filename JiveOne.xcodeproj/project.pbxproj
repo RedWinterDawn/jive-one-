@@ -2554,7 +2554,7 @@
 					"\"${PODS_ROOT}/Headers/SDWebImage\"",
 					"\"${PODS_ROOT}/Headers/SocketRocket\"",
 				);
-				INFOPLIST_FILE = "JiveOneEnterprise-Info.plist";
+				INFOPLIST_FILE = "JiveOne/JiveOneEnterprise-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
