@@ -14,9 +14,9 @@
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
-                     BlueprintIdentifier = "2727F350191AA92F00A41185"
-                     BuildableName = "JiveOneEnterprise.app"
-                     BlueprintName = "JiveOne Enterprise"
+                     BlueprintIdentifier = "275F4A4D18AD0FBC00D2F069"
+                     BuildableName = "JiveOne.app"
+                     BlueprintName = "JiveOne"
                      ReferencedContainer = "container:JiveOne.xcodeproj">
                   </BuildableReference>
                </EnvironmentBuildable>
@@ -26,10 +26,10 @@
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"
-            buildForRunning = "NO"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "NO">
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "275F4A4D18AD0FBC00D2F069"
@@ -50,9 +50,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2727F350191AA92F00A41185"
-            BuildableName = "JiveOneEnterprise.app"
-            BlueprintName = "JiveOne Enterprise"
+            BlueprintIdentifier = "275F4A4D18AD0FBC00D2F069"
+            BuildableName = "JiveOne.app"
+            BlueprintName = "JiveOne"
             ReferencedContainer = "container:JiveOne.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -69,9 +69,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2727F350191AA92F00A41185"
-            BuildableName = "JiveOneEnterprise.app"
-            BlueprintName = "JiveOne Enterprise"
+            BlueprintIdentifier = "275F4A4D18AD0FBC00D2F069"
+            BuildableName = "JiveOne.app"
+            BlueprintName = "JiveOne"
             ReferencedContainer = "container:JiveOne.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -87,9 +87,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2727F350191AA92F00A41185"
-            BuildableName = "JiveOneEnterprise.app"
-            BlueprintName = "JiveOne Enterprise"
+            BlueprintIdentifier = "275F4A4D18AD0FBC00D2F069"
+            BuildableName = "JiveOne.app"
+            BlueprintName = "JiveOne"
             ReferencedContainer = "container:JiveOne.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -109,9 +109,9 @@
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
-                     BlueprintIdentifier = "2727F350191AA92F00A41185"
-                     BuildableName = "JiveOneEnterprise.app"
-                     BlueprintName = "JiveOne Enterprise"
+                     BlueprintIdentifier = "275F4A4D18AD0FBC00D2F069"
+                     BuildableName = "JiveOne.app"
+                     BlueprintName = "JiveOne"
                      ReferencedContainer = "container:JiveOne.xcodeproj">
                   </BuildableReference>
                </EnvironmentBuildable>
