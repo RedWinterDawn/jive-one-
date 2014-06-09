@@ -838,12 +838,12 @@
             <objects>
                 <tableViewController storyboardIdentifier="JCConversationsViewController" id="Iav-LH-b6F" customClass="JCConversationsViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="8dN-n2-lai">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ChangeMeIfNeeded" rowHeight="70" id="8WE-I3-34Q">
-                                <rect key="frame" x="0.0" y="86" width="320" height="70"/>
+                                <rect key="frame" x="0.0" y="22" width="320" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8WE-I3-34Q" id="1IT-ow-LtN">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
@@ -937,7 +937,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ihp-a8-Fsx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1818" y="955"/>
+            <point key="canvasLocation" x="2404" y="928"/>
         </scene>
         <!--Messages View Controller - Message-->
         <scene sceneID="Z6h-mb-aMW">
@@ -986,19 +986,19 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XuZ-GW-bg4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2236" y="250"/>
+            <point key="canvasLocation" x="1507" y="928"/>
         </scene>
         <!--Conversation Participants Table View Controller - People in conversation-->
         <scene sceneID="h9o-pl-Mul">
             <objects>
                 <tableViewController id="O6N-i7-BAq" customClass="JCConversationParticipantsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" id="ctu-gq-7R2">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="70" id="mx8-tQ-J4L" customClass="JCPersonCell">
-                                <rect key="frame" x="0.0" y="86" width="320" height="70"/>
+                                <rect key="frame" x="0.0" y="22" width="320" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mx8-tQ-J4L" id="P6S-4y-x8Y">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
@@ -1021,15 +1021,16 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QaV-7n-FlE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2652" y="250"/>
+            <point key="canvasLocation" x="1923" y="928"/>
         </scene>
         <!--Navigation Controller - Conversations-->
         <scene sceneID="7yR-ZU-bxo">
             <objects>
                 <navigationController storyboardIdentifier="ConversationsNavigationController" definesPresentationContext="YES" id="6Dq-mE-F9w" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Conversations" image="nav-conv.png" id="K12-Hv-Z3c"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="lEx-Jd-cci">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="lEx-Jd-cci">
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.97254908084869385" green="0.97254908084869385" blue="0.97254908084869385" alpha="1" colorSpace="deviceRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="Iav-LH-b6F" kind="relationship" relationship="rootViewController" id="7sT-CS-HSW"/>
