@@ -1100,17 +1100,32 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="166"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="April Summers" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rfh-N6-UZm">
-                                                    <rect key="frame" x="20" y="20" width="280" height="21"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L9U-NE-MVL">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="166"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                </imageView>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <accessibility key="accessibilityConfiguration" label="My Info"/>
+                                    </tableViewCell>
+                                    <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="58" id="c8S-fc-kR3">
+                                        <rect key="frame" x="0.0" y="265" width="320" height="58"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="c8S-fc-kR3" id="6ie-Qz-TNd">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="58"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="April Summers" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pd4-gQ-CDE">
+                                                    <rect key="frame" x="20" y="17" width="280" height="21"/>
                                                     <accessibility key="accessibilityConfiguration" label="name"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Developer of Awesome" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fNs-97-wdL">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Developer of Awesome" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7sK-jD-yDH">
                                                     <rect key="frame" x="20" y="33" width="280" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Italic" family="Helvetica Neue" pointSize="15"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -1121,21 +1136,21 @@
                             </tableViewSection>
                             <tableViewSection id="ph9-z2-Qm6">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="56" id="0dI-3U-wKE" customClass="JCTableViewCellWithInset">
-                                        <rect key="frame" x="0.0" y="285" width="320" height="56"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="0dI-3U-wKE" customClass="JCTableViewCellWithInset">
+                                        <rect key="frame" x="0.0" y="343" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0dI-3U-wKE" id="oZH-yJ-u6j">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="56"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sgE-3U-Nxi">
-                                                    <rect key="frame" x="60" y="18" width="200" height="21"/>
+                                                    <rect key="frame" x="60" y="12" width="200" height="21"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="19"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dCn-sc-YRN" customClass="JCPresenceView">
-                                                    <rect key="frame" x="20" y="16" width="26" height="26"/>
+                                                    <rect key="frame" x="20" y="16" width="26" height="14"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
@@ -1153,9 +1168,10 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Status message" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hpf-li-3qK">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="  " placeholder="Status message" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hpf-li-3qK">
                                                     <rect key="frame" x="20" y="7" width="280" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-LightItalic" family="Helvetica Neue" pointSize="19"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
@@ -1240,8 +1256,10 @@
                         <outlet property="presenceAccessory" destination="CqU-6m-59a" id="HUQ-j6-JND"/>
                         <outlet property="presenceDetail" destination="sgE-3U-Nxi" id="lYc-TW-cvx"/>
                         <outlet property="presenceDetailView" destination="dCn-sc-YRN" id="2hE-b3-RBu"/>
+                        <outlet property="userImage" destination="L9U-NE-MVL" id="K61-do-tMv"/>
                         <outlet property="userMoodDetail" destination="Hpf-li-3qK" id="0L2-4s-eQC"/>
-                        <outlet property="userTitleDetail" destination="fNs-97-wdL" id="UIl-XM-rsH"/>
+                        <outlet property="userNameDetail" destination="pd4-gQ-CDE" id="Dk2-jb-9PV"/>
+                        <outlet property="userTitleDetail" destination="7sK-jD-yDH" id="OX5-mH-ydj"/>
                         <segue destination="9iF-Vr-Xsi" kind="modal" identifier="PresenceSegue" modalTransitionStyle="crossDissolve" id="PEX-cx-Ddv"/>
                     </connections>
                 </tableViewController>

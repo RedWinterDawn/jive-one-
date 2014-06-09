@@ -201,7 +201,7 @@
     if (section == 0) {
         return CGFLOAT_MIN;
     }
-    return 22;
+    return 14;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
