@@ -1122,7 +1122,7 @@
                             <tableViewSection id="ph9-z2-Qm6">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="56" id="0dI-3U-wKE" customClass="JCTableViewCellWithInset">
-                                        <rect key="frame" x="0.0" y="340" width="320" height="56"/>
+                                        <rect key="frame" x="0.0" y="285" width="320" height="56"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0dI-3U-wKE" id="oZH-yJ-u6j">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="56"/>
@@ -1147,7 +1147,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="44" id="0FM-5i-bKP" customClass="JCTableViewCellWithInset">
-                                        <rect key="frame" x="0.0" y="396" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="341" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0FM-5i-bKP" id="LuF-cV-i7Q">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1167,7 +1167,7 @@
                             <tableViewSection id="iqw-4v-MF1">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="Muc-Ko-5ap" rowHeight="44" style="IBUITableViewCellStyleDefault" id="KSU-OC-CZn" customClass="JCTableViewCellWithInset">
-                                        <rect key="frame" x="0.0" y="460" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="405" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KSU-OC-CZn" id="gpq-iI-QYD">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1184,7 +1184,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="WIS-3U-iqe" rowHeight="44" style="IBUITableViewCellStyleDefault" id="sva-xe-6hW" customClass="JCTableViewCellWithInset">
-                                        <rect key="frame" x="0.0" y="504" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="449" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sva-xe-6hW" id="6rb-8l-q9U">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1205,7 +1205,7 @@
                             <tableViewSection id="FIq-OK-lak">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="mFC-oP-zvy" rowHeight="44" style="IBUITableViewCellStyleDefault" id="qrj-of-6fI" customClass="JCTableViewCellWithInset">
-                                        <rect key="frame" x="0.0" y="568" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="513" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qrj-of-6fI" id="zMQ-oF-jqH">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1240,9 +1240,7 @@
                         <outlet property="presenceAccessory" destination="CqU-6m-59a" id="HUQ-j6-JND"/>
                         <outlet property="presenceDetail" destination="sgE-3U-Nxi" id="lYc-TW-cvx"/>
                         <outlet property="presenceDetailView" destination="dCn-sc-YRN" id="2hE-b3-RBu"/>
-                        <outlet property="userImage" destination="6M6-FI-Sp6" id="dex-O6-jQi"/>
                         <outlet property="userMoodDetail" destination="Hpf-li-3qK" id="0L2-4s-eQC"/>
-                        <outlet property="userNameDetail" destination="HPM-dQ-ekE" id="y5r-4V-tPF"/>
                         <outlet property="userTitleDetail" destination="fNs-97-wdL" id="UIl-XM-rsH"/>
                         <segue destination="9iF-Vr-Xsi" kind="modal" identifier="PresenceSegue" modalTransitionStyle="crossDissolve" id="PEX-cx-Ddv"/>
                     </connections>
