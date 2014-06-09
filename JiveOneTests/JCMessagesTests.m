@@ -243,7 +243,7 @@
     NSDictionary *entry = [NSDictionary dictionaryWithObjectsAndKeys:@"conversation1", @"conversation", @"entities:andrew", @"entity", @"conversations:7753:entries:7761", @"id", @"1398981121840", @"lastModified", @"raw", @"message", tempUrn, @"tempUrn", @"chat", @"type", @"conversations:7753:entries:7761", @"urn", [NSNumber numberWithLong:156],@"createdDate", nil];
     
     //method being tested
-    [ConversationEntry addConversationEntry:entry];
+    [ConversationEntry addConversationEntry:entry sender:nil];
    
     //retrived the message we sent up earlier, returned by the server, and then updated in core data by method above
     ConversationEntry *message = [ConversationEntry MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"tempUrn == %@", tempUrn]][0];

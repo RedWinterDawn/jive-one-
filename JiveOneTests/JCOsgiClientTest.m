@@ -52,6 +52,8 @@
 {
     NSString *expectedEmail = @"jivetesting13@gmail.com";
     NSString *expectedEntityId = @"entities:jivetesting13@gmail_com";
+    TRVSMonitor *monitor = [TRVSMonitor monitor];
+
     
     id mockClient = [OCMockObject niceMockForClass:[JCOsgiClient class]];
     [[mockClient expect] RetrieveClientEntitites:[OCMArg checkWithBlock:^BOOL(void (^successBlock)(AFHTTPRequestOperation *, id))
@@ -66,12 +68,15 @@
                                                      //because the method will add the json objects to core data and then populate JCVoicemailViewController.voicemails from core data, we need to make sure only our hard coded json object exists in core data
                                                      [PersonEntities MR_truncateAll];
                                                      //now add our hard coded json to core data
-                                                     [PersonEntities addEntities:dictionary[@"entries"] me:expectedEntityId];
+                                                     [PersonEntities addEntities:dictionary[@"entries"] me:expectedEntityId completed:^(BOOL success) {
+                                                         [monitor signal];
+                                                     }];
+                                                     
+                                                     [monitor wait];
                                                      
                                                      successBlock(nil, content);
-                                                     
-                                                     return YES;
 
+                                                     return YES;
                                                      
                                                  }] failure:OCMOCK_ANY];
   
@@ -142,6 +147,7 @@
 {
     
     id mockClient = [OCMockObject niceMockForClass:[JCOsgiClient class]];
+    TRVSMonitor *monitor = [TRVSMonitor monitor];
     
     [[mockClient expect] RetrieveConversations:[OCMArg checkWithBlock:^BOOL(void (^successBlock)(AFHTTPRequestOperation *, id))
                                                                {
@@ -156,8 +162,11 @@
                                                                    [ConversationEntry MR_truncateAll];
                                                                    [Conversation MR_truncateAll];
                                                                    
-                                                                   [Conversation addConversations:dictionary[@"entries"]];
+                                                                   [Conversation addConversations:dictionary[@"entries"] completed:^(BOOL success) {
+                                                                       [monitor signal];
+                                                                   }];
                                                                    
+                                                                   [monitor wait];
                                                                    successBlock(nil, content);
                                                                    
                                                                    return YES;
@@ -309,6 +318,7 @@
     
     NSString *expectedEntityId = @"entities:jivetesting13@gmail_com";
     id mockClient = [OCMockObject niceMockForClass:[JCOsgiClient class]];
+    TRVSMonitor *monitor = [TRVSMonitor monitor];
     
     [[mockClient expect] RetrieveClientEntitites:[OCMArg checkWithBlock:^BOOL(void (^successBlock)(AFHTTPRequestOperation *, id))
                                                 {
@@ -324,8 +334,11 @@
                                                     //because the method will add the json objects to core data and then populate JCVoicemailViewController.voicemails from core data, we need to make sure only our hard coded json object exists in core data
                                                     [PersonEntities MR_truncateAll];
                                                     //now add our hard coded json to core data
-                                                    [PersonEntities addEntities:dictionary[@"entries"] me:expectedEntityId];
+                                                    [PersonEntities addEntities:dictionary[@"entries"] me:expectedEntityId completed:^(BOOL success) {
+                                                        [monitor signal];
+                                                    }];
                                                     
+                                                    [monitor wait];
                                                     successBlock(nil, content);
                                                     
                                                     return YES;
@@ -366,6 +379,7 @@
 -(void)testShouldRetrieveVoicemail
 {
     id mockClient = [OCMockObject niceMockForClass:[JCOsgiClient class]];
+    TRVSMonitor *monitor = [TRVSMonitor monitor];
     
     [[mockClient expect] RetrieveVoicemailForEntity:nil success:[OCMArg checkWithBlock:^BOOL(void (^successBlock)(AFHTTPRequestOperation *, id))
                                                   {
@@ -380,8 +394,11 @@
                                                       //because the method will add the json objects to core data and then populate JCVoicemailViewController.voicemails from core data, we need to make sure only our hard coded json object exists in core data
                                                       [Voicemail MR_truncateAll];
                                                       //now add our hard coded json to core data
-                                                      [Voicemail addVoicemails:dictionary[@"entries"]];
+                                                      [Voicemail addVoicemails:dictionary[@"entries"] completed:^(BOOL success) {
+                                                          [monitor signal];
+                                                      }];
                                                       
+                                                      [monitor wait];
                                                       successBlock(nil, content);
                                                       
                                                       return YES;
