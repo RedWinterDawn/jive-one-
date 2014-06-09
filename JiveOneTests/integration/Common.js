@@ -19,7 +19,7 @@ function logoutIfNeeded(app) {
     }
 }
 
-function login(app) {
+function defaultLogin(app) {
     login(app, "jivetesting12@gmail.com", "testing12");
 }
 

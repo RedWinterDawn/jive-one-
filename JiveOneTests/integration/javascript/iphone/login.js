@@ -4,7 +4,7 @@ test("Login Test", function(target, app){
 	
 	logoutIfNeeded(app);
 	
-	login(app);
+	defaultLogin(app);
 	
 	var currentWindow = app.mainWindow();
 
