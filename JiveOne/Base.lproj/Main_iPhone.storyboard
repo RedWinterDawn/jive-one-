@@ -988,7 +988,7 @@
             </objects>
             <point key="canvasLocation" x="1507" y="928"/>
         </scene>
-        <!--Conversation Participants Table View Controller - People in conversation-->
+        <!--Conversation Participants Table View Controller - Participants-->
         <scene sceneID="h9o-pl-Mul">
             <objects>
                 <tableViewController id="O6N-i7-BAq" customClass="JCConversationParticipantsTableViewController" sceneMemberID="viewController">
@@ -1011,7 +1011,7 @@
                             <outlet property="delegate" destination="O6N-i7-BAq" id="R5e-Si-ot5"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="People in conversation" id="hBA-4L-uaC">
+                    <navigationItem key="navigationItem" title="Participants" id="hBA-4L-uaC">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="1ER-Mr-9lB">
                             <connections>
                                 <action selector="showPeopleSearch:" destination="O6N-i7-BAq" id="VzN-nB-VZJ"/>
