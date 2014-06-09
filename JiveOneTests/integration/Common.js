@@ -1,26 +1,3 @@
-// 
-// function test(title, f, options) {
-//     if (options == null) {
-//         options = {
-//             logTree: true
-//         };
-//     }
-//     target = UIATarget.localTarget();
-//     application = target.frontMostApp();
-//     UIALogger.logStart(title);
-// 
-//     try {
-//         //login check
-//         loginCheck(application);
-// 
-//         f(target, application);
-//         UIALogger.logPass(title);
-//     } catch (e) {
-//         UIALogger.logError(e);
-//         if (options.logTree) target.logElementTree();
-//         UIALogger.logFail(title);
-//     }
-// };
 
 function loginIfNeeded(app) {
 
@@ -43,11 +20,16 @@ function logoutIfNeeded(app) {
 }
 
 function login(app) {
+    login(app, "jivetesting12@gmail.com", "testing12");
+}
+
+function login(app, user, password) {
     var currentWindow = app.mainWindow();
+    logDebug("Logging in as " + user);
     
     //login
-    currentWindow.textFields()["emailTextField"].setValue("jivetesting21@gmail.com");
-    currentWindow.secureTextFields()["passwordTextField"].setValue("testing21");
+    currentWindow.textFields()["emailTextField"].setValue(user);
+    currentWindow.secureTextFields()["passwordTextField"].setValue(password);
     app.keyboard().elements()["Go"].tap();
     
     //wait for login
@@ -61,23 +43,13 @@ function login(app) {
 function logout(app) {
     app.mainWindow().tabBar().buttons()[3].tap();
     target.logElementTree();
-    
-    var recipient = app.mainWindow().tableViews()[0].cells()[0].name();
-    UIALogger.logDebug("logged in as:" + recipient);
-    if(recipient.contains("jivetesting21@gmail.com"))
-    {
-        recipient = "jivetesting11@gmail.com";
-    }else{
-        recipient = "jivetesting21@gmail.com";
-    }    
-    
+        
     scrollDown(200);
     var logoutButton = app.mainWindow().tableViews()[0].cells()["Sign Out"];
     logDebug(logoutButton.name());
     logoutButton.waitUntilVisible(10);
     UIATarget.localTarget().delay(2);
     app.mainWindow().tableViews()[0].cells()["Sign Out"].tap();
-    UIALogger.logDebug("will log in as: "+ recipient);
 
 }
 
@@ -92,30 +64,5 @@ function scrollDown(pixels){
 
     UIATarget.localTarget().flickFromTo({x:160, y:y1}, {x:160, y:y2});
 }
-
-// function assertEquals(expected, received, message) {
-//     if (received != expected) {
-//         if (!message) message = "Expected " + expected + " but received " + received;
-//         throw message;
-//     }
-// }
-// 
-// function assertTrue(expression, message) {
-//     if (!expression) {
-//         if (!message) message = "Assertion failed";
-//         throw message;
-//     }
-// }
-// 
-// function assertFalse(expression, message) {
-//     assertTrue(!expression, message);
-// }
-// 
-// function assertNotNull(thingie, message) {
-//     if (thingie == null || thingie.toString() == "[object UIAElementNil]") {
-//         if (message == null) message = "Expected not null object";
-//         throw message;
-//     }
-// }
 
 String.prototype.contains = function(it) { return this.indexOf(it) != -1; };

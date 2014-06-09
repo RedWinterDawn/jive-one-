@@ -16,7 +16,10 @@ test("Login screen", function(target, app) {
 });
 </pre>
 
-####Excersice and Validate
+####More information about iOS Automation testing
+https://developer.apple.com/library/mac/documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/UsingtheAutomationInstrument/UsingtheAutomationInstrument.html
+
+####Excercise and Validate
 
 <pre>
 test("Login screen", function(target, app) {
@@ -64,7 +67,7 @@ bundle install
 
 ####Broken bwoken?
 
-One other thing to note is that bwoken does not take kindly to killing a test part way through. Let the test complete and do not try to end the process or you it will hang and you won't be able to run more tests. The two fixes that i've found for this are <br><br>1) Restart (most reliable as will definitely kill any hanging processes) <br> 2) this script <pre>for proc in $(ps aux | grep -E "(bwoken|ScriptAgent)" | grep `whoami` | awk '{print $2}'); do for sig in 3 6 9; do kill -$sig $proc; done; done</pre>
+One other thing to note is that bwoken does not take kindly to killing a test part way through. Let the test complete and do not try to end the process or it will hang and you won't be able to run more tests. The two fixes that i've found for this are <br><br>1) Restart (most reliable as will definitely kill any hanging processes) <br> 2) this script <pre>for proc in $(ps aux | grep -E "(bwoken|ScriptAgent)" | grep `whoami` | awk '{print $2}'); do for sig in 3 6 9; do kill -$sig $proc; done; done</pre>
 
 ##More about tuneup.js
 

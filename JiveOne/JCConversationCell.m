@@ -99,7 +99,8 @@
         if (badges) {
             if ([badges objectForKey:_conversation.conversationId]) {
                 NSMutableDictionary *entries = [badges objectForKey:_conversation.conversationId];
-                if (entries.count != 0) {
+                NSLog(@"%@", _conversation.conversationId);
+                if ([entries isKindOfClass:[NSDictionary class]] && entries.count != 0) {
                     _conversationUnseenMessages.hidden = NO;
                     _conversationUnseenMessages.text = [NSString stringWithFormat:@"%lu", (unsigned long)entries.count];
                 }
