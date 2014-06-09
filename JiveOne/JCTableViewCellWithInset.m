@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCPresenceSelectCell.h"
+#import "JCTableViewCellWithInset.h"
 
-@implementation JCPresenceSelectCell
+@implementation JCTableViewCellWithInset
 
 static int inset = 8;
 

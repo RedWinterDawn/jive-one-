@@ -20,6 +20,7 @@
 #import "Common.h"
 #import "UIImage+ImageEffects.h"
 #import "JCAppDelegate.h"
+#import <PocketSVG/PocketSVG.h>
 
 @interface JCAccountViewController () <MFMailComposeViewControllerDelegate>
 {
@@ -34,7 +35,7 @@
 
 @implementation JCAccountViewController
 
-
+#define DEGREES_TO_RADIANS(angle) ((angle) / 180.0 * M_PI)
 
 - (void)viewDidLoad
 {
@@ -60,17 +61,27 @@
                                                                                UIRemoteNotificationTypeBadge |
                                                                                UIRemoteNotificationTypeSound)];
     }
+    
+    self.tableView.backgroundColor = [UIColor whiteColor];
+    self.tableView.separatorInset = UIEdgeInsetsMake(0, 20, 0, 20);
 }
 
 - (void) loadViews
 {
     self.userNameDetail.text = me.firstLastName;
+    self.userMoodDetail.text = @"I'm not in the mood today";
+    self.userTitleDetail.text = @"Developer of Awesome";
+    self.userImage.image = [UIImage imageNamed:@"boss.jpg"];
     
-    if (me.entityCompany) {
-        self.jivePhoneNumber.text = me.entityCompany.name;
-        self.jiveMessenger.text = me.email;
-        self.jivePhoneNumber.text = me.externalId;
-    }
+    CGPathRef backPathRef = [PocketSVG pathFromSVGFileNamed:@"back"];
+    CAShapeLayer *backShape = [CAShapeLayer layer];
+    backShape.path = backPathRef;
+    backShape.lineWidth = 3;
+    backShape.fillColor = [UIColor blackColor].CGColor;
+    
+    //CATransform3D current = backShape.transform;
+    //backShape.transform = CATransform3DRotate(current, DEGREES_TO_RADIANS(90), 0, 1, 0);
+    [self.presenceAccessory.layer addSublayer:backShape];
     
     [self.presenceDetail setText:[self getPresence:me.entityPresence.interactions[@"chat"][@"code"]]];
 }
@@ -165,7 +176,32 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [super tableView:tableView cellForRowAtIndexPath:indexPath];
+    UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
+    
+    if (indexPath.section != 0) {
+        cell.contentView.layer.borderWidth = 1.0f;
+        cell.contentView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    }
+
+    
+    return cell;
+}
+
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)];
+    headerView.backgroundColor = [UIColor whiteColor];
+    
+    return headerView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return CGFLOAT_MIN;
+    }
+    return 22;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

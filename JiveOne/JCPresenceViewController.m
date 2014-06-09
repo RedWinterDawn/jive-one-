@@ -7,7 +7,7 @@
 //
 
 #import "JCPresenceViewController.h"
-#import "JCPresenceSelectCell.h"
+#import "JCTableViewCellWithInset.h"
 #import "JCPresenceView.h"
 
 @interface JCPresenceViewController ()
@@ -90,7 +90,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    JCPresenceSelectCell *cell = (JCPresenceSelectCell *)[super tableView:tableView cellForRowAtIndexPath:indexPath];
+    JCTableViewCellWithInset *cell = (JCTableViewCellWithInset *)[super tableView:tableView cellForRowAtIndexPath:indexPath];
     if (indexPath.section == 0 && indexPath.row == 0) {
         CAShapeLayer *shape = [[CAShapeLayer alloc] init];
         shape.path = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, cell.bounds.size.width, cell.bounds.size.height) byRoundingCorners:UIRectCornerTopLeft|UIRectCornerTopRight cornerRadii:CGSizeMake(10, 10)].CGPath;

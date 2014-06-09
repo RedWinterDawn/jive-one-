@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JCPresenceSelectCell : UITableViewCell
+@interface JCTableViewCellWithInset : UITableViewCell
 
 @end
