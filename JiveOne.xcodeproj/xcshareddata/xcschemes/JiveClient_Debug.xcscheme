@@ -51,7 +51,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "bwoken test --integration-path=JiveOneTests/integration --skip-build">
+               scriptText = "cd &quot;${PROJECT_DIR}&quot;&#10;bwoken test --integration-path=JiveOneTests/integration --skip-build --focus CreateNewConversation | grep &quot;Error&quot; &gt; JiveOneTests/integration/tmp/ui_errors.txt&#10;&#10;filesize=$(stat -f &quot;%z&quot; JiveOneTests/integration/tmp/ui_errors.txt)&#10;&#10;if [ $filesize = &quot;0&quot; ]; then&#10;&#10;//remove all run files&#10;    rm -rf JiveOneTests/integration/tmp/results/Run*&#10;&#10;    echo&#10;    echo &quot;UIAutomation passed&quot;&#10;    echo&#10;&#10;else&#10;    echo&#10;    echo &quot;UIAutomation has errors:&quot;&#10;//log the error&#10;    cat JiveOneTests/integration/tmp/ui_errors.txt&#10;    echo&#10;    //kill $PPID&#10;    //exit 1&#10;fi">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
