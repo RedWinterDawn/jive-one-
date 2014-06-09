@@ -3,7 +3,7 @@ function loginIfNeeded(app) {
 
         UIALogger.logDebug("test if we are logged out...");
         if (app.mainWindow().textFields()[0].name() == "emailTextField") {
-           login(app);
+           defaultLogin(app);
         }else{
           UIALogger.logDebug("Already logged in.");  
         }
