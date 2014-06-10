@@ -129,7 +129,7 @@
 - (void)timesUpforSubscription
 {
     [_subscriptionTimer invalidate];
-    [_webSocket closeWithCode:500 reason:@"Did no subscribed to all events. Retrying"];
+    [_webSocket closeWithCode:500 reason:@"Did not subscribe to all events. Retrying"];
 }
 
 - (void)subscribeSession
