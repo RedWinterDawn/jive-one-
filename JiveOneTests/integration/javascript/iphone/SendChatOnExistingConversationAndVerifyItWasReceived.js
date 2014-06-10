@@ -1,4 +1,4 @@
-#import "../../../../../Pods/tuneup_js/tuneup.js"
+#import "../Common.js"
 
 test("Send chat on exisiting conversation and verify it was received", function(target, app){
 

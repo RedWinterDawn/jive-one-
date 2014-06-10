@@ -1,4 +1,4 @@
-#import "../../../../../Pods/tuneup_js/tuneup.js"
+#import "../Common.js"
 
 test("Login Test", function(target, app){
 	

@@ -6,7 +6,7 @@
 
 add to the beginning of your .js test file 
 <br> 
-<code>#import "../../../../../Pods/tuneup_js/tuneup.js"</code>
+<code>#import "../Common.js"</code>
 
 ####Declare a test
 

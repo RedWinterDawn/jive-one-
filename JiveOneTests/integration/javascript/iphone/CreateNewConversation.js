@@ -1,5 +1,5 @@
-#import "../../../../../Pods/tuneup_js/tuneup.js"
+#import "../Common.js"
 
 test("Create New Conversation", function(target, app) {
-  logDebug("test")
+  assertTrue(true)
 });

@@ -1,4 +1,4 @@
-
+#import "../../../../Pods/tuneup_js/tuneup.js"
 function loginIfNeeded(app) {
 
         UIALogger.logDebug("test if we are logged out...");
