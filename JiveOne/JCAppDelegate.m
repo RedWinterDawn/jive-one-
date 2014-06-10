@@ -756,7 +756,8 @@ int didNotify;
 - (UIStoryboard *)storyboard
 {
     if (!_storyboard) {
-        _storyboard = self.deviceIsIPhone ? [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] : [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
+//        _storyboard = self.deviceIsIPhone ? [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] : [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
+        _storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
     }
     return _storyboard;
 }
@@ -790,6 +791,7 @@ int didNotify;
 {
     [self.tabBarViewController performSegueWithIdentifier:@"logoutSegue" sender:self.tabBarViewController];
 }
+
 - (void)changeRootViewController:(JCRootViewControllerType)type
 {
     if (type == JCRootTabbarViewController) {
