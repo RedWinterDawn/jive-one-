@@ -212,14 +212,14 @@ static NSString *CellIdentifier = @"DirectoryCell";
     float frame_orgin_y = (-self.scrollViewOffset);
     if (self.scrollViewOffset <= -108) {
         if (self.searchBarView.frame.origin.y != frame_orgin_y) {
-            NSLog(@"1 - Changed sFrame from %f to %f based on SVOffSet:%f", self.searchBarView.frame.origin.y, frame_orgin_y, self.scrollViewOffset);
+//            NSLog(@"1 - Changed sFrame from %f to %f based on SVOffSet:%f", self.searchBarView.frame.origin.y, frame_orgin_y, self.scrollViewOffset);
         }
         self.searchBarView.frame = CGRectMake(self.searchBarView.frame.origin.x,
                                               frame_orgin_y + self.scrollViewOffset + 64,
                                               self.searchBarView.frame.size.width, self.searchBarView.frame.size.height);
         
         
-        if (self.scrollView.contentInset.top != 108) NSLog(@"1 - Set Inset To: %f from: %f", 108.00000, self.scrollView.contentInset.top);
+//        if (self.scrollView.contentInset.top != 108) NSLog(@"1 - Set Inset To: %f from: %f", 108.00000, self.scrollView.contentInset.top);
         self.scrollView.contentInset = UIEdgeInsetsMake(108 , 0, 0, 0);
     }
     
@@ -231,7 +231,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
     self.deltaOffsetSinceLastDirectionChange = abs(self.scrollViewOffsetReference - self.scrollViewOffset);
     float frame_orgin_y = (self.searchBarView.frame.origin.y <= UPPER_THREASHOLD) ? UPPER_THREASHOLD : (self.searchBarY_Reference - self.deltaOffsetSinceLastDirectionChange);
     if (self.searchBarView.frame.origin.y != frame_orgin_y) {
-        NSLog(@"2 - Changed sFrame from %f to %f", self.searchBarView.frame.origin.y, frame_orgin_y);
+//        NSLog(@"2 - Changed sFrame from %f to %f", self.searchBarView.frame.origin.y, frame_orgin_y);
     }
     self.searchBarView.frame = CGRectMake(self.searchBarView.frame.origin.x,
                                       frame_orgin_y,
@@ -239,7 +239,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
     self.scrollDirectionIsUp = YES;
     if (self.scrollViewOffset > -64) {
         float inset = (frame_orgin_y + 44) < 64 ? 64 : frame_orgin_y + 44;
-        if (self.scrollView.contentInset.top != inset) NSLog(@"2.1 - Changed Inset from: %f to: %f", self.scrollView.contentInset.top , inset);
+//        if (self.scrollView.contentInset.top != inset) NSLog(@"2.1 - Changed Inset from: %f to: %f", self.scrollView.contentInset.top , inset);
         self.scrollView.contentInset = UIEdgeInsetsMake(inset , 0, 0, 0);
     }
 
@@ -265,7 +265,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
     self.deltaOffsetSinceLastDirectionChange = (abs(self.scrollViewOffsetReference - self.scrollViewOffset));
     float frame_orgin_y = (self.searchBarView.frame.origin.y >= LOWER_THREASHOLD) ? LOWER_THREASHOLD : (self.searchBarY_Reference + self.deltaOffsetSinceLastDirectionChange);
     if (self.searchBarView.frame.origin.y != frame_orgin_y) {
-        NSLog(@"3 - Changed sFrame from %f to %f", self.searchBarView.frame.origin.y, frame_orgin_y);
+//        NSLog(@"3 - Changed sFrame from %f to %f", self.searchBarView.frame.origin.y, frame_orgin_y);
     }
     self.searchBarView.frame = CGRectMake(self.searchBarView.frame.origin.x,
                                       frame_orgin_y,
@@ -275,7 +275,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
     //set the inset - to control the position of the section headers.
     if (self.scrollViewOffset > 0) {
         float inset = (frame_orgin_y + 44) < 64 ? 64 : frame_orgin_y + 44;
-        if (self.scrollView.contentInset.top != inset) NSLog(@"3 - Changed Inset from: %f to: %f", self.scrollView.contentInset.top, inset);
+//        if (self.scrollView.contentInset.top != inset) NSLog(@"3 - Changed Inset from: %f to: %f", self.scrollView.contentInset.top, inset);
         self.scrollView.contentInset = UIEdgeInsetsMake(inset, 0, 0, 0);
     }
 }
@@ -364,7 +364,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
     if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined) {
         ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
             if (granted) {
-                NSLog(@"User granted permission to contacts");
+//                NSLog(@"User granted permission to contacts");
             } else {
                 // User denied access
                 // Display an alert telling user the contact could not be added
@@ -443,9 +443,9 @@ static NSString *CellIdentifier = @"DirectoryCell";
     
     if(noData)
     {
-        NSLog(@"NoData");
+        NSLog(@"NoData - for company Directory");
         NSArray *allPeople = [PersonEntities MR_findAll];
-        NSLog(@"All People Count = %lu", (unsigned long)allPeople.count);
+//        NSLog(@"All People Count = %lu", (unsigned long)allPeople.count);
         [self refreshCompanyDirectory];
     }
     
@@ -458,10 +458,10 @@ static NSString *CellIdentifier = @"DirectoryCell";
     [self.clientEntitiesArray removeAllObjects];
     if ([self.segControl selectedSegmentIndex] == 0) {
         [self loadCompanyDirectory];
-        NSLog(@"First segment!");
+//        NSLog(@"First segment!");
     } else {
         [self loadLocalDirectory];
-        NSLog(@"Second Segment!");
+//        NSLog(@"Second Segment!");
     }
     
 }
