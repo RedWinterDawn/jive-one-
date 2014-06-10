@@ -215,7 +215,7 @@ int didNotify;
 {
     JCLogInfo_();
     if (buttonIndex > 0) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-services://?action=download-manifest&url=https://jiveios.local/JiveOneEnterprise.plist"]];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-services://?action=download-manifest&url=https://jiveios.local/JiveOne.plist"]];
     }
 }
 - (void)applicationWillTerminate:(UIApplication *)application
