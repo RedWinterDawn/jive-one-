@@ -137,7 +137,7 @@
             [[JCPersonCell chachedInitialsImages] setObject:initialsImage forKey:key];
         }
         else {
-            NSLog(@"Cache hit for key: %@", key);
+//            NSLog(@"Cache hit for key: %@", key);
         }
         
         [self.personPicture setImage:initialsImage];
