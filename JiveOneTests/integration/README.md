@@ -12,7 +12,7 @@ add to the beginning of your .js test file
 
 <pre>
 test("Login screen", function(target, app) {
-  // do cool stuff in here
+  //add Instruments generated code here...
 });
 </pre>
 
