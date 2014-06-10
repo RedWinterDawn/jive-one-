@@ -311,9 +311,11 @@
     
     if (type != JCPresenceTypeNone) {
         [[JCOsgiClient sharedClient] UpdatePresence:type success:^(BOOL updated) {
-            NSLog(@"%i", updated);
+            NSLog(@"P%i", updated);
+            NSLog(@"Presence Updated");
         } failure:^(NSError *err) {
             NSLog(@"%@", err);
+            NSLog(@"Presence Update Error");
         }];
     }    
 }
