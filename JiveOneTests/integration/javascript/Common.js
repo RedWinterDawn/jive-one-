@@ -65,4 +65,8 @@ function scrollDown(pixels){
     UIATarget.localTarget().flickFromTo({x:160, y:y1}, {x:160, y:y2});
 }
 
+function delay(time){
+    this.target.delay(time);
+}
+
 String.prototype.contains = function(it) { return this.indexOf(it) != -1; };
