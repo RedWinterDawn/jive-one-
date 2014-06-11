@@ -1234,7 +1234,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Profile &amp; Settings" id="7BX-g7-cjd"/>
                     <connections>
-                        <outlet property="presenceAccessory" destination="CqU-6m-59a" id="HUQ-j6-JND"/>
+                        <outlet property="presenceAccessory" destination="JVr-j5-m9D" id="S2o-7f-t9t"/>
                         <outlet property="presenceDetail" destination="sgE-3U-Nxi" id="lYc-TW-cvx"/>
                         <outlet property="presenceDetailView" destination="dCn-sc-YRN" id="2hE-b3-RBu"/>
                         <outlet property="userImage" destination="L9U-NE-MVL" id="K61-do-tMv"/>

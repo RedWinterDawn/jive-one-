@@ -12,6 +12,7 @@
 #import "JCAccountViewController.h"
 #import "JCLoginViewController.h"
 #import "Common.h"
+#import "JCSocketDispatch.h"
 
 #if DEBUG
 @interface NSURLRequest(Private)
@@ -309,12 +310,19 @@
     NSLog(@"received Data %@",receivedData);
 }
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                    message:[NSString stringWithFormat:@"%@", error]
-                                                   delegate:nil
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
-    [alert show];
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+//                                                    message:[NSString stringWithFormat:@"%@", error]
+//                                                   delegate:nil
+//                                          cancelButtonTitle:@"OK"
+//                                          otherButtonTitles:nil];
+//    [alert show];
+    
+    NSLog(@"Error did occurr %@", error);
+    NSLog(@"URL: %@", connection.currentRequest.URL);
+    NSLog(@"BaseURL: %@", connection.currentRequest.URL.baseURL);
+    if ([[connection.currentRequest.URL description] isEqualToString:@"https://auth.jive.com/oauth2/verify"]) {
+        [self verifyToken];
+    }
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
@@ -325,7 +333,9 @@
         [self didReceiveAuthenticationToken:tokenData];
         [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenSucceeded object:nil];
         [webviewTimer invalidate];
-        
+        // if we received a new token, then close socket and restart
+        [[JCSocketDispatch sharedInstance] closeSocket];
+        [[JCSocketDispatch sharedInstance] requestSession];
     }
     else if ([tokenData objectForKey:@"valid"])
     {
