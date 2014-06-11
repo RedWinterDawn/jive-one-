@@ -13,10 +13,13 @@
 
 int main(int argc, char * argv[])
 {
+    BOOL doIt = YES;
 #if TARGET_IPHONE_SIMULATOR
-#else
-    LoggerStartForBuildUser();
+    doIt = NO;
 #endif
+    if (doIt) {
+        LoggerStartForBuildUser();
+    }
     int returnValue;
     
     @autoreleasepool {

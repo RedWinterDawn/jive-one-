@@ -36,12 +36,15 @@ int didNotify;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     //Setup NSLoggerTarget
+    BOOL doit = YES;
     #ifdef LOGGER_TARGET
         #if TARGET_IPHONE_SIMULATOR
-        #else
-            LoggerSetupBonjour(NULL, NULL, (CFStringRef)LOGGER_TARGET);
+            doit = NO;
         #endif
     #endif
+    if (doit) {
+        LoggerSetupBonjour(NULL, NULL, (CFStringRef)LOGGER_TARGET);
+    }
     
     //Create a sharedCache for AFNetworking
     NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:2 * 1024 * 1024
