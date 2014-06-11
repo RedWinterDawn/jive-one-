@@ -46,8 +46,10 @@
     //TODO:implement AFCompoundSerializer This is useful for supporting multiple potential types and structures of server responses with a single serializer. @dleonard00 3/14/14
     NSURL *baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kOsgiBaseURL, kOsgiURNScheme]];
     _manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
-    _manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    //_manager.requestSerializer = [AFJSONRequestSerializer serializer];
+//    _manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    _manager.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
+
+//    _manager.requestSerializer = [AFJSONRequestSerializer serializer];
     
     keyChainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
     localContext  = [NSManagedObjectContext MR_contextForCurrentThread];
