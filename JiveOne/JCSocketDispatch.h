@@ -9,7 +9,14 @@
 #import <Foundation/Foundation.h>
 #import <SocketRocket/SRWebSocket.h>
 
-
+/* The types of sessions we will register for. */
+typedef enum : uint8_t {
+	JCConversationSession = 0,
+	JCConversation4Session,
+	JCVoicemailSession,
+	JCPresenceSession,
+	JCCallsSession
+} JCSessionType;
 
 @interface JCSocketDispatch : NSObject <SRWebSocketDelegate>
 

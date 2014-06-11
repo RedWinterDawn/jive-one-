@@ -132,44 +132,76 @@
     [_webSocket closeWithCode:500 reason:@"Did not subscribe to all events. Retrying"];
 }
 
+
 - (void)subscribeSession
 {
+    NSLog(@"Subscribing to Socket Sessions");
     
-    _subscriptionTimer = [NSTimer timerWithTimeInterval:4 target:self selector:@selector(timesUpforSubscription) userInfo:nil repeats:NO];
-    [[NSRunLoop currentRunLoop] addTimer:_subscriptionTimer forMode:NSDefaultRunLoopMode];
-    
-    NSLog(@"Subscribing to Socket Events");
-    
-    NSDictionary* presence = [NSDictionary dictionaryWithObjectsAndKeys:@"presence:entities:*", @"urn", nil];
-    NSDictionary* calls = [NSDictionary dictionaryWithObjectsAndKeys:@"calls:#", @"urn", nil];
-    NSMutableDictionary* conversation = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"(conversations|permanentrooms|groupconversations|adhocrooms):*:entries:*", @"urn", nil];
-    NSMutableDictionary* conversation4 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"(conversations|permanentrooms|groupconversations|adhocrooms):*", @"urn", nil];
-    if ([Conversation getConversationEtag] != 0) {
-        [conversation setValue:[NSString stringWithFormat:@"%ld", (long)[Conversation getConversationEtag]] forKey:@"ETag"];
-        [conversation4 setValue:[NSString stringWithFormat:@"%ld", (long)[Conversation getConversationEtag]] forKey:@"ETag"];
+    for (uint8_t sessionType = JCConversationSession; sessionType <= JCCallsSession; sessionType++) {
+        [self subscribeToSessionOfType:sessionType];
     }
-    NSMutableDictionary* voicemail = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"voicemails:*", @"urn", nil];
-    if ([Voicemail getVoicemailEtag] != 0) {
-        [voicemail setValue:[NSString stringWithFormat:@"%ld", (long)[Voicemail getVoicemailEtag]] forKey:@"ETag"];
-    }
+}
+
+-(void)subscribeToSessionOfType:(JCSessionType)sessionType{
     
-    NSArray *subscriptionArray = [NSArray arrayWithObjects:voicemail, conversation, conversation4, presence, calls, nil];
-    
-    __block int count = 1;
-    for (NSDictionary *subscription in subscriptionArray) {
-        
-        [[JCOsgiClient sharedClient] SubscribeToSocketEventsWithAuthToken:self.sessionToken subscriptions:subscription success:^(id JSON) {
-            NSLog(@"Subscribing to Socket Events : Success");
-            count ++;
-            if (count == subscriptionArray.count) {
-                [_subscriptionTimer invalidate];
+    switch (sessionType) {
+        case JCConversationSession:{
+            NSLog(@"Subscribing to JCConversationSession");
+            NSMutableDictionary* conversation = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"(conversations|permanentrooms|groupconversations|adhocrooms):*:entries:*", @"urn", nil];
+                if ([Conversation getConversationEtag] != 0) {
+                    [conversation setValue:[NSString stringWithFormat:@"%ld", (long)[Conversation getConversationEtag]] forKey:@"ETag"];
+                }
+            [self subscribeToSocketUsingDictionary:conversation];
+
             }
-            _subscriptionCount = count;
-        } failure:^(NSError *err) {
-            NSLog(@"Subscribing to Socket Events : Failed");
-            NSLog(@"%@", err);
-        }];
+            
+        case JCConversation4Session:{
+            NSLog(@"Subscribing to JCConversation4Session");
+            NSMutableDictionary* conversation4 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"(conversations|permanentrooms|groupconversations|adhocrooms):*", @"urn", nil];
+                if ([Conversation getConversationEtag] != 0) {
+                    [conversation4 setValue:[NSString stringWithFormat:@"%ld", (long)[Conversation getConversationEtag]] forKey:@"ETag"];
+                }
+            [self subscribeToSocketUsingDictionary:conversation4];
+            }
+            
+        case JCVoicemailSession:{
+            NSLog(@"Subscribing to JCVoicemailSession");
+            NSMutableDictionary* voicemail = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"voicemails:*", @"urn", nil];
+                if ([Voicemail getVoicemailEtag] != 0) {
+                    [voicemail setValue:[NSString stringWithFormat:@"%ld", (long)[Voicemail getVoicemailEtag]] forKey:@"ETag"];
+                }
+            [self subscribeToSocketUsingDictionary:voicemail];
+            }
+    
+        case JCPresenceSession:{
+            NSLog(@"Subscribing to JCPresenceSession");
+            NSDictionary* presence = [NSDictionary dictionaryWithObjectsAndKeys:@"presence:entities:*", @"urn", nil];
+            [self subscribeToSocketUsingDictionary:presence];
+
+            }
+            
+        case JCCallsSession:{
+            NSLog(@"Subscribing to JCCallsSession");
+            NSDictionary* calls = [NSDictionary dictionaryWithObjectsAndKeys:@"calls:#", @"urn", nil];
+            [self subscribeToSocketUsingDictionary:calls];
+            
+            }
     }
+}
+
+
+- (void)subscribeToSocketUsingDictionary:(NSDictionary*)subscription
+{
+    [[JCOsgiClient sharedClient] SubscribeToSocketEventsWithAuthToken:self.sessionToken subscriptions:subscription success:^(id JSON) {
+        NSString* subscriptionIdentifier = [subscription allValues][0];
+        NSLog(@"Subscribing to events of type %@: Succeeded", subscriptionIdentifier);
+    } failure:^(NSError *err) {
+        NSString* subscriptionIdentifier = [subscription allValues][0];
+        NSLog(@"Subscribing to events of type %@: Failed", subscriptionIdentifier);
+        NSLog(@"%@", err);
+        [self performSelector:@selector(subscribeToSocketUsingDictionary:) withObject:subscription afterDelay:4.0 ];
+        NSLog(@"Will attempt subscription for %@ again in 4 seconds", subscriptionIdentifier);
+    }];
 }
 
 - (void)initSession
