@@ -170,9 +170,6 @@
         case JCPresenceTypeAvailable:
             return DEFAULT_AVAILABLE_COLOR;
             
-        case JCPresenceTypeAway:
-            return DEFAULT_AWAY_COLOR;
-            
         case JCPresenceTypeBusy:
             return DEFAULT_BUSY_COLOR;
             

@@ -98,9 +98,9 @@
 typedef enum {
     JCPresenceTypeOffline = 0,
     JCPresenceTypeAvailable = 1,
-    JCPresenceTypeBusy = 2,
+    JCPresenceTypeBusy = 9,
     JCPresenceTypeInvisible = 4,
-    JCPresenceTypeDoNotDisturb = 5,
+    JCPresenceTypeDoNotDisturb = 2,
     JCPresenceTypeAway = 7,  
     JCPresenceTypeNone = -1
 } JCPresenceType;

@@ -383,8 +383,6 @@ int didNotify;
             }
             
         }
-        
-        
     }
     
     return fetchResult;
@@ -413,16 +411,6 @@ int didNotify;
     
     [_badges setValue:conversationDictionary forKey:conversationId];
     
-//    if (![number boolValue]) {
-//        number = [NSNumber numberWithBool:NO];
-//        [_badges setObject:number forKey:conversationId];
-//    }
-//    NSInteger count = [number integerValue];
-//    count++;
-//    
-//    number = [NSNumber numberWithInteger:count];
-//    [_badges setObject:number forKey:conversationId];
-    
     [[NSUserDefaults standardUserDefaults] setObject:[_badges copy] forKey:@"badges"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [self refreshTabBadges:NO];
@@ -440,41 +428,11 @@ int didNotify;
     NSNumber *read = [NSNumber numberWithBool:NO];
     [_badges setObject:read forKey:voicemailId];
     
-//    NSNumber *number = [_badges objectForKey:voicemailId];
-//    if (![number boolValue]) {
-//        number = [NSNumber numberWithBool:NO];
-//        [_badges setObject:number forKey:voicemailId];
-//    }
-    
-    
     [[NSUserDefaults standardUserDefaults] setObject:[_badges copy] forKey:@"badges"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [self refreshTabBadges:NO];
 }
 
-//- (void) decrementBadgeCountForConversation:(NSString *)conversationId
-//{
-//    JCLogInfo_();
-//    NSMutableDictionary *_badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
-//    if (!_badges) {
-//        _badges = [[NSMutableDictionary alloc] init];
-//    }
-//    
-//    NSNumber *number = [_badges objectForKey:conversationId];
-//    NSInteger count = [number integerValue];
-//    if (count > 0) {
-//        count--;
-//    }
-//    
-//    
-//    number = [NSNumber numberWithInteger:count];
-//    [_badges setObject:number forKey:conversationId];
-//    
-//    [[NSUserDefaults standardUserDefaults] setObject:[_badges copy] forKey:@"badges"];
-//    [[NSUserDefaults standardUserDefaults] synchronize];
-//    [self refreshTabBadges:NO];
-//}
-//
 - (void) decrementBadgeCountForVoicemail:(NSString *)voicemailId;
 {
     JCLogInfo_();
@@ -628,78 +586,9 @@ int didNotify;
 
         }];
     
-//        for (NSString *key in _badges) {
-//                    }
-    
         [[NSUserDefaults standardUserDefaults] setObject:[_badges copy] forKey:@"badges"];
         [[NSUserDefaults standardUserDefaults] synchronize];
-    //}
-//        NSString *alertMessage = @"You have ";
-//        
-//        if (voicemailCount != 0 && conversationCount != 0) {
-//            alertMessage  = [alertMessage stringByAppendingString:[NSString stringWithFormat:@"%d new voicemail(s) and %d new conversation(s).", (int)voicemailCount, (int)conversationCount]];
-//            
-//            for (NSString* key in _badges) {
-//                //some house keeping.
-//                if (_badges[key]) {
-//                    NSNumber *currentCount = _badges[key];
-//                    currentCount = [NSNumber numberWithBool:YES];
-//                }
-//            }
-//        }
-//        else if (voicemailCount != 0) {
-//            alertMessage  = [alertMessage stringByAppendingString:[NSString stringWithFormat:@"%d new voicemail(s).", (int)voicemailCount]];
-//            
-//            for (NSString* key in _badges) {
-//                NSRange rangeVoicemail = [key rangeOfString:@"voicemails"];
-//                if (rangeVoicemail.location != NSNotFound) {
-//                    if (_badges[key]) {
-//                        NSNumber *currentCount = _badges[key];
-//                        if (currentCount.boolValue == YES) {
-//                            [_badges removeObjectForKey:key];
-//                            continue;
-//                        }
-//                    }
-//                }
-//            }
-//            
-//        }
-//        else if (conversationCount != 0) {
-//            
-//            if (conversationCount == 1) {
-//                // grab the last entry for the conversation and set in the snippet lable
-//                Conversation *lastModifiedConversation = [Conversation MR_findFirstOrderedByAttribute:@"lastModified" ascending:NO];
-//                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"conversationId ==[c] %@", lastModifiedConversation.conversationId];
-//                ConversationEntry *lastEntry = [ConversationEntry MR_findFirstWithPredicate:predicate sortedBy:@"lastModified" ascending:NO];
-//                PersonEntities *person = [PersonEntities MR_findFirstByAttribute:@"entityId" withValue:lastEntry.entityId];
-//                alertMessage = [NSString stringWithFormat:@"%@: \"%@\"", person.firstName, lastEntry.message[@"raw"]];
-//            }
-//            else {
-//                alertMessage  = [alertMessage stringByAppendingString:[NSString stringWithFormat:@"%d new conversation(s).", (int)conversationCount]];
-//            }
-//            
-//            for (NSString* key in _badges) {
-//                NSRange rangeConversation = [key rangeOfString:@"conversations"];
-//                NSRange rangeRooms = [key rangeOfString:@"permanentrooms"];
-//                if (rangeConversation.location != NSNotFound || rangeRooms.location != NSNotFound) {
-//                    if (_badges[key]) {
-//                        NSNumber *currentCount = _badges[key];
-//                        if (currentCount.boolValue == YES) {
-//                            [_badges removeObjectForKey:key];
-//                            continue;
-//                        }
-//                    }
-//                }
-//            }
-//
-//        }
-        
-        
-        
-        
-        
-       
-    //}
+
 }
 
 - (void) showLocalNotificationWithType:(NSString *)alertType alertMessage:(NSString *)alertMessage

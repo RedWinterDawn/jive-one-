@@ -296,17 +296,11 @@ static NSString *GroupCellIdentifier = @"GroupChatCell";
         case JCPresenceTypeAvailable:
             return kPresenceAvailable;
             break;
-        case JCPresenceTypeAway:
-            return kPresenceAway;
-            break;
         case JCPresenceTypeBusy:
             return kPresenceBusy;
             break;
         case JCPresenceTypeDoNotDisturb:
             return kPresenceDoNotDisturb;
-            break;
-        case JCPresenceTypeInvisible:
-            return kPresenceInvisible;
             break;
         case JCPresenceTypeOffline:
             return kPresenceOffline;

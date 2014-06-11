@@ -92,7 +92,8 @@
     //layer.masksToBounds = YES;
 
     [self.presenceAccessory.layer addSublayer:layer];
-    [self.presenceDetail setText:[self getPresence:me.entityPresence.interactions[@"chat"][@"code"]]];
+//    [self.presenceDetail setText:[self getPresence:me.entityPresence.interactions[@"chat"][@"code"]]];
+    //self.presenceDetailView.presenceType = (JCPresenceType) me.entityPresence.interactions[@"chat"][@"code"];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -103,6 +104,9 @@
         me = [[JCOmniPresence sharedInstance] me];
     }
     
+    [self.presenceDetail setText:[self getPresence:me.entityPresence.interactions[@"chat"][@"code"]]];
+    
+
 }
 
 - (void)updateAccountInformation
@@ -331,12 +335,12 @@
 
 - (NSString *)getPresence:(NSNumber *)presence
 {
+    JCPresenceType type = (JCPresenceType) [presence integerValue];    
+    self.presenceDetailView.presenceType = type;
+    
     switch ([presence integerValue]) {
         case JCPresenceTypeAvailable:
             return kPresenceAvailable;
-            break;
-        case JCPresenceTypeAway:
-            return kPresenceAway;
             break;
         case JCPresenceTypeBusy:
             return kPresenceBusy;
@@ -344,8 +348,6 @@
         case JCPresenceTypeDoNotDisturb:
             return kPresenceDoNotDisturb;
             break;
-        case JCPresenceTypeInvisible:
-            return kPresenceInvisible;
             break;
         case JCPresenceTypeOffline:
             return kPresenceOffline;
@@ -355,6 +357,8 @@
             return @"Unknown";
             break;
     }
+    
+    
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
