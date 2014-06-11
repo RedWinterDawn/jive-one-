@@ -8,11 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "JCAuthenticationManager.h"
-
+#import "NSLogger.h"
 #import "JCAppDelegate.h"
 
 int main(int argc, char * argv[])
 {
+#if TARGET_IPHONE_SIMULATOR
+#else
+    LoggerStartForBuildUser();
+#endif
     int returnValue;
     
     @autoreleasepool {

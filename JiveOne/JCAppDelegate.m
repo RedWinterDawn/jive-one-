@@ -35,6 +35,14 @@ int didNotify;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //Setup NSLoggerTarget
+    #ifdef LOGGER_TARGET
+        #if TARGET_IPHONE_SIMULATOR
+        #else
+            LoggerSetupBonjour(NULL, NULL, (CFStringRef)LOGGER_TARGET);
+        #endif
+    #endif
+    
     //Create a sharedCache for AFNetworking
     NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:2 * 1024 * 1024
                                                             diskCapacity:100 * 1024 * 1024
@@ -166,6 +174,7 @@ int didNotify;
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
+    
     JCLogInfo_();
     [Flurry logEvent:@"Resumed Session"];
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
