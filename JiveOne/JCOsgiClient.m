@@ -208,7 +208,7 @@
     JCLogInfo_();
     NSString *basicAuth = [@"Basic " stringByAppendingString:[Common encodeStringToBase64:[NSString stringWithFormat:@"%@:%@", kOAuthClientId, kOAuthClientSecret]]];
     NSString *authURL = @"https://auth.jive.com/oauth2/token";
-    NSString *dataString = [NSString stringWithFormat:@"client_id=%@&redirect_uri=%@&grant_type=password&username=%@&password=%@", kOAuthClientId, kURLSchemeCallback, username, password];
+    NSString *dataString = [NSString stringWithFormat:@"client_id=%@&redirect_uri=%@&grant_type=password&scope=email&username=%@&password=%@", kOAuthClientId, kURLSchemeCallback, username, password];
     
     NSDictionary *dataDictionary = [NSDictionary dictionaryWithQueryString:dataString];    
     
