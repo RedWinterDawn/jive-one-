@@ -14,7 +14,7 @@
 #import "NSNull+IntValue.h"
 #import "Common.h"
 #import "NSDictionary+QueryString.h"
-
+#import "JCLog.h"
 
 #if DEBUG
 @interface NSURLRequest(Private)
@@ -42,7 +42,7 @@
 
 -(void)initialize
 {
-    
+    JCLogInfo_();
     //TODO:implement AFCompoundSerializer This is useful for supporting multiple potential types and structures of server responses with a single serializer. @dleonard00 3/14/14
     NSURL *baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kOsgiBaseURL, kOsgiURNScheme]];
     _manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
@@ -67,6 +67,7 @@
 - (void) RetrieveClientEntitites:(void (^)(id JSON))success
                          failure:(void (^)(NSError *err))failure
 {
+    JCLogInfo_();
     [self setRequestAuthHeader];
     
     [_manager GET:kOsgiEntityRoute parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -83,6 +84,7 @@
 - (void) RetrieveMyEntitity:(void (^)(id JSON, id operation))success
                     failure:(void (^)(NSError *err, id operation))failure
 {
+    JCLogInfo_();
     [self setRequestAuthHeader];
    
     NSString * url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], kOsgiMyEntityRoute];//TODO: not attaching baseURL to route constant
@@ -101,6 +103,7 @@
 - (void) RetrieveMyCompany:(NSString*)company :(void (^)(id JSON))success
                               failure:(void (^)(NSError *err))failure
 {
+    JCLogInfo_();
     [self setRequestAuthHeader];
     
     NSString *url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], company];//TODO: not attaching baseURL to route constant
@@ -114,7 +117,7 @@
 - (void) RetrieveConversations:(void (^)(id JSON))success
                     failure:(void (^)(NSError *err))failure
 {
-    
+    JCLogInfo_();
     [self setRequestAuthHeader];
     
     [_manager GET:kOsgiConverationRoute parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -131,6 +134,7 @@
 
 - (void) RetrieveConversationsByConversationId:(NSString*)conversationId success:(void (^)(Conversation * conversation)) success failure:(void (^)(NSError *err))failure
 {
+    JCLogInfo_();
     [self setRequestAuthHeader];
     
     NSString *url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], conversationId];//TODO: not attaching baseURL to route constant
@@ -144,6 +148,7 @@
 
 - (void)RetrieveEntitiesPresence:(void (^)(BOOL updated))success failure:(void(^)(NSError *err))failure
 {
+    JCLogInfo_();
     [self setRequestAuthHeader];
     
     [_manager GET:kOsgiPresenceRoute parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -159,6 +164,7 @@
 
 - (void) RetrievePresenceForEntity:(NSString*)entity withPresendUrn:(NSString*)presenceUrn success:(void (^)(BOOL updated))success failure:(void(^)(NSError *err))failure
 {
+    JCLogInfo_();
     [self setRequestAuthHeader];
     NSString *url = nil;
     if (presenceUrn) {
@@ -177,6 +183,7 @@
 
 - (void) RequestSocketSession:(void (^)(id))success failure:(void (^)(NSError *))failure
 {
+    JCLogInfo_();
     [self setRequestAuthHeader];
     
     NSString *deviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:UDdeviceToken];
@@ -198,6 +205,7 @@
 - (void) OAuthLoginWithUsername:(NSString*)username password:(NSString*)password success:(void (^)(AFHTTPRequestOperation *operation, id JSON))success
                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *err))failure;
 {
+    JCLogInfo_();
     NSString *basicAuth = [@"Basic " stringByAppendingString:[Common encodeStringToBase64:[NSString stringWithFormat:@"%@:%@", kOAuthClientId, kOAuthClientSecret]]];
     NSString *authURL = @"https://auth.jive.com/oauth2/token";
     NSString *dataString = [NSString stringWithFormat:@"client_id=%@&redirect_uri=%@&grant_type=password&username=%@&password=%@", kOAuthClientId, kURLSchemeCallback, username, password];
@@ -219,6 +227,7 @@
 - (void) SubscribeToSocketEventsWithAuthToken:(NSString*)token subscriptions:(NSDictionary*)subscriptions success:(void (^)(id JSON))success
                                       failure:(void (^)(NSError* err))failure
 {
+    JCLogInfo_();
     
     [self setRequestAuthHeaderWithSocketSessionToken:token];
     
@@ -276,6 +285,7 @@
 - (void) SubmitConversationWithName:(NSString *)groupName forEntities:(NSArray *)entities creator:(NSString *)creator isGroupConversation:(BOOL)isGroup success:(void (^)(id JSON))success
                             failure:(void (^)(NSError* err))failure
 {
+    JCLogInfo_();
     [self setRequestAuthHeader];
     
     NSMutableDictionary * conversationDictionary = [[NSMutableDictionary alloc] initWithObjectsAndKeys:entities, @"entities", creator, @"creator", nil];
@@ -295,6 +305,7 @@
 - (void) PatchConversationWithName:(NSString *)conversationId groupName:(NSString *)groupName forEntities:(NSArray *)entities creator:(NSString *)creator isGroupConversation:(BOOL)isGroup success:(void (^)(id JSON))success
                            failure:(void (^)(NSError* err))failure
 {
+    JCLogInfo_();
     [self setRequestAuthHeader];
     
     NSMutableDictionary * conversationDictionary = [[NSMutableDictionary alloc] initWithObjectsAndKeys:entities, @"entities", creator, @"creator", nil];
@@ -317,6 +328,7 @@
 - (void)SubmitChatMessageForConversation:(NSString*)conversation message:(NSDictionary*)message withEntity:(NSString*)entity withTimestamp:(long long)timestamp withTempUrn:(NSString*)tempUrn success:(void (^)(id JSON))success
                                  failure:(void (^)(NSError* err))failure
 {
+    JCLogInfo_();
     [self setRequestAuthHeader];
     
     NSDictionary *conversationDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:entity, @"entity", conversation, @"conversation", message, @"message", [NSString stringWithFormat: @"%lld", timestamp], @"createdDate", tempUrn, @"tempUrn", nil];
@@ -337,6 +349,7 @@
 - (void) DeleteConversation:(NSString*)conversation success:(void(^)(id JSON, AFHTTPRequestOperation *operation))success
                                                              failure:(void (^)(NSError*err, AFHTTPRequestOperation *operation))failure
 {
+    JCLogInfo_();
     [self setRequestAuthHeader];
     
     NSString *urlWithConv = [NSString stringWithFormat:@"%@%@", [_manager baseURL], conversation];
@@ -353,6 +366,7 @@
 
 - (void) UpdatePresence:(JCPresenceType)presence success:(void (^)(BOOL updated))success failure:(void(^)(NSError *err))failure
 {
+    JCLogInfo_();
     NSString *presenceURN = [[JCOmniPresence sharedInstance] me].presence;
     
     NSDictionary *chatCodeDictonary = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:presence], @"code", nil];
@@ -381,6 +395,7 @@
 #pragma mark - Class Operations
 - (void)setRequestAuthHeaderWithSocketSessionToken:(NSString*)token
 {
+    JCLogInfo_();
     KeychainItemWrapper* _keychainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
     NSString *authtoken = [_keychainWrapper objectForKey:(__bridge id)(kSecAttrAccount)];
     
@@ -398,6 +413,7 @@
 
 - (void)setRequestAuthHeader
 {
+    JCLogInfo_();
     KeychainItemWrapper* _keychainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
     NSString *token = [_keychainWrapper objectForKey:(__bridge id)(kSecAttrAccount)];
     
@@ -413,7 +429,7 @@
 }
 
 - (void)clearCookies {
-    
+    JCLogInfo_();
     //This will delete ALL cookies. 
     NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
     
@@ -430,6 +446,7 @@
 - (void) RetrieveVoicemailForEntity:(PersonEntities*)entity success:(void (^)(id JSON))success
                             failure:(void (^)(NSError *err))failure
 {
+    JCLogInfo_();
     [self setRequestAuthHeader];
     NSString * url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], kOsgiVoicemailRoute];
     NSLog(@"%@", url);
@@ -453,6 +470,7 @@
 - (void) DeleteVoicemail:(Voicemail*)voicemail success:(void (^)(id JSON))success
                           failure:(void (^)(NSError *err))failure
 {
+    JCLogInfo_();
     [self setRequestAuthHeader];
     NSString *url = [NSString stringWithFormat:@"%@%@", self.manager.baseURL, voicemail.urn];
     
@@ -466,6 +484,7 @@
 - (void) UpdateVoicemailToRead:(Voicemail*)voicemail success:(void (^)(id JSON))success
                        failure:(void (^)(NSError *err))failure
 {
+    JCLogInfo_();
     [self setRequestAuthHeader];
     NSString *url = [NSString stringWithFormat:@"%@%@", self.manager.baseURL, voicemail.urn];
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
