@@ -73,16 +73,25 @@
     self.userTitleDetail.text = @"Developer of Awesome";
     self.userImage.image = [UIImage imageNamed:@"boss.jpg"];
     
-    CGPathRef backPathRef = [PocketSVG pathFromSVGFileNamed:@"back"];
-    CAShapeLayer *backShape = [CAShapeLayer layer];
-    backShape.path = backPathRef;
-    backShape.lineWidth = 3;
-    backShape.fillColor = [UIColor blackColor].CGColor;
+    CGPathRef pathRef = [PocketSVG pathFromSVGFileNamed:@"logout"];
     
-    //CATransform3D current = backShape.transform;
-    //backShape.transform = CATransform3DRotate(current, DEGREES_TO_RADIANS(90), 0, 1, 0);
-    [self.presenceAccessory.layer addSublayer:backShape];
+    CAShapeLayer *layer = [CAShapeLayer layer];
+    layer.path = pathRef;
     
+    layer.lineWidth = 1;
+    layer.strokeColor = [[UIColor blackColor] CGColor];
+    layer.fillColor = [[UIColor blackColor] CGColor];
+    layer.fillRule = kCAFillRuleNonZero;
+    
+    //layer.mask.bounds = self.presenceAccessory.layer.mask.bounds;
+    layer.bounds = self.presenceAccessory.layer.bounds;
+    CGRect frame = CGRectMake(layer.frame.origin.x, layer.frame.origin.y, 25, 25);
+    frame.size = CGSizeMake(25, 25);
+    [layer setFrame:frame];
+    //layer.frame = self.presenceAccessory.layer.frame;
+    //layer.masksToBounds = YES;
+
+    [self.presenceAccessory.layer addSublayer:layer];
     [self.presenceDetail setText:[self getPresence:me.entityPresence.interactions[@"chat"][@"code"]]];
 }
 
