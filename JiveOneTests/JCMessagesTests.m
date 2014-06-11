@@ -9,7 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "JCMessagesViewController.h"
 #import <OCMock/OCMock.h>
-#import "JCOsgiClient.h"
+#import "JCRESTClient.h"
 #import "ConversationEntry+Custom.h"
 
 @interface JCMessagesTests : XCTestCase
@@ -100,7 +100,7 @@
     //server shows that all messages are successfully sent
     __block NSUInteger counter= [ConversationEntry MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"failedToSend == YES"]].count;
     
-    id mockClient = [OCMockObject niceMockForClass:[JCOsgiClient class]];
+    id mockClient = [OCMockObject niceMockForClass:[JCRESTClient class]];
     [[mockClient expect] SubmitChatMessageForConversation:OCMOCK_ANY message:OCMOCK_ANY withEntity:[OCMArg any] withTimestamp:2000000 withTempUrn:[OCMArg any]
                                                   success:[OCMArg checkWithBlock:^BOOL(void (^successBlock)(AFHTTPRequestOperation *, id))
                                                            {
@@ -138,7 +138,7 @@
     //messages fail to send
     __block NSUInteger counter= [ConversationEntry MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"failedToSend == YES"]].count;
     NSUInteger assertCounter = counter;
-    id mockClient = [OCMockObject niceMockForClass:[JCOsgiClient class]];
+    id mockClient = [OCMockObject niceMockForClass:[JCRESTClient class]];
     [[mockClient expect] SubmitChatMessageForConversation:OCMOCK_ANY message:OCMOCK_ANY withEntity:[OCMArg any] withTimestamp:2000000 withTempUrn:[OCMArg any]
                                                   success:OCMOCK_ANY
                                                   failure:[OCMArg checkWithBlock:^BOOL(void (^failureBlock)(id))
@@ -173,7 +173,7 @@
     
     //setup mock server so that
     //messages for conversation1 send
-    id mockClient = [OCMockObject niceMockForClass:[JCOsgiClient class]];
+    id mockClient = [OCMockObject niceMockForClass:[JCRESTClient class]];
     
     //for conversation1 we want it to come back successfull
     __block NSUInteger counter1 = [ConversationEntry MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"failedToSend == YES AND conversationId == %@", @"conversation1"]].count;

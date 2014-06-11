@@ -10,7 +10,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "Conversation+Custom.h"
 #import "ConversationEntry+Custom.h"
-#import "JCOsgiClient.h"
+#import "JCRESTClient.h"
 #import "PersonEntities.h"
 #import "JCContactModel.h"
 #import "JSMessage.h"
@@ -25,7 +25,7 @@
     PersonEntities *me;
     NSString *title;
     NSString *subtitle;
-    JCOsgiClient *osgiClient;
+    JCRESTClient *osgiClient;
     NSManagedObjectContext *context;
     BOOL addingPeople;
     BOOL needsPatch;
@@ -629,7 +629,7 @@
         
         __block ConversationEntry *entry = [self createEntryLocallyForConversation:_conversationId withMessage:message withTimestamp:[NSDate date] inContext:[self context]];
         
-        [[JCOsgiClient sharedClient] SubmitChatMessageForConversation:_conversationId message:entry.message withEntity:entry.entityId withTimestamp:[entry.createdDate longLongValue] withTempUrn:entry.tempUrn success:^(id JSON) {
+        [[JCRESTClient sharedClient] SubmitChatMessageForConversation:_conversationId message:entry.message withEntity:entry.entityId withTimestamp:[entry.createdDate longLongValue] withTempUrn:entry.tempUrn success:^(id JSON) {
             // confirm to user message was sent
            [JSMessageSoundEffect playMessageSentSound];
         } failure:^(NSError *err) {
@@ -688,7 +688,7 @@
     [entityArray addObject:me.entityId];
     
     if (needsPatch) {
-        [[JCOsgiClient sharedClient] PatchConversationWithName:_conversationId groupName:groupName forEntities:entityArray creator:me.entityId isGroupConversation:isGroup success:^(id JSON) {
+        [[JCRESTClient sharedClient] PatchConversationWithName:_conversationId groupName:groupName forEntities:entityArray creator:me.entityId isGroupConversation:isGroup success:^(id JSON) {
             
             // success patching
             [_addedContacts removeAllObjects];
@@ -704,7 +704,7 @@
     }
     else {
     
-        [[JCOsgiClient sharedClient] SubmitConversationWithName:groupName forEntities:entityArray creator:me.entityId  isGroupConversation:isGroup success:^(id JSON) {
+        [[JCRESTClient sharedClient] SubmitConversationWithName:groupName forEntities:entityArray creator:me.entityId  isGroupConversation:isGroup success:^(id JSON) {
             // if conversation creation was successful, then subscribe for notifications to that conversationId
             _conversationId = JSON[@"id"];
             if (_conversationId) {
@@ -749,7 +749,7 @@
 
 
 //when connectvitity is restored this method is called. this method retrives a queue of unsent messages from user defaults and begins sending them.
-+(void) sendOfflineMessagesQueue:(JCOsgiClient*)osgiClient{
++(void) sendOfflineMessagesQueue:(JCRESTClient*)osgiClient{
     
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"failedToSend == YES"];
     NSArray *unsentMessags = [ConversationEntry MR_findAllWithPredicate:pred];

@@ -7,7 +7,7 @@
 //
 
 #import "JCAccountViewController.h"
-#import "JCOsgiClient.h"
+#import "JCRESTClient.h"
 #import "JCAuthenticationManager.h"
 #import "KeychainItemWrapper.h"
 #import "PersonEntities.h"
@@ -111,7 +111,7 @@
 
 - (void)updateAccountInformation
 {
-    [[JCOsgiClient sharedClient] RetrieveMyEntitity:^(id JSON, id operation) {
+    [[JCRESTClient sharedClient] RetrieveMyEntitity:^(id JSON, id operation) {
         
         NSDictionary *entity = (NSDictionary*)JSON;
         
@@ -140,7 +140,7 @@
 }
 
 -(void) retrieveCompany:(NSString*)companyURL{
-    [[JCOsgiClient sharedClient] RetrieveMyCompany:companyURL:^(id JSON) {
+    [[JCRESTClient sharedClient] RetrieveMyCompany:companyURL:^(id JSON) {
         
         NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
         Company *company = [Company MR_createInContext:localContext];
@@ -323,7 +323,7 @@
     self.presenceDetailView.presenceType = type;
     
     if (type != JCPresenceTypeNone) {
-        [[JCOsgiClient sharedClient] UpdatePresence:type success:^(BOOL updated) {
+        [[JCRESTClient sharedClient] UpdatePresence:type success:^(BOOL updated) {
             NSLog(@"P%i", updated);
             NSLog(@"Presence Updated");
         } failure:^(NSError *err) {

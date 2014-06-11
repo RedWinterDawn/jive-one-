@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "JCOsgiClient.h"
+#import "JCRESTClient.h"
 #import "TRVSMonitor.h"
 #import "JCAuthenticationManager.h"
 #import "JCDirectoryViewController.h"

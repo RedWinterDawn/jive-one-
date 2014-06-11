@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "JCOsgiClient.h"
+#import "JCRESTClient.h"
 #import "TRVSMonitor.h"
 #import "JCAuthenticationManager.h"
 #import <OCMock/OCMock.h>
@@ -55,7 +55,7 @@
     TRVSMonitor *monitor = [TRVSMonitor monitor];
 
     
-    id mockClient = [OCMockObject niceMockForClass:[JCOsgiClient class]];
+    id mockClient = [OCMockObject niceMockForClass:[JCRESTClient class]];
     [[mockClient expect] RetrieveClientEntitites:[OCMArg checkWithBlock:^BOOL(void (^successBlock)(AFHTTPRequestOperation *, id))
                                                  {
                                                      
@@ -97,7 +97,7 @@
     NSString *expectedCompanyName = @"Jive Communications, Inc.";
     
     
-    id mockClient = [OCMockObject niceMockForClass:[JCOsgiClient class]];
+    id mockClient = [OCMockObject niceMockForClass:[JCRESTClient class]];
 
     [[mockClient expect] RetrieveMyCompany:expectedCompanyId :[OCMArg checkWithBlock:^BOOL(void (^successBlock)(AFHTTPRequestOperation *, id))
                                                   {
@@ -146,7 +146,7 @@
 - (void)testShouldRetrieveConversations
 {
     
-    id mockClient = [OCMockObject niceMockForClass:[JCOsgiClient class]];
+    id mockClient = [OCMockObject niceMockForClass:[JCRESTClient class]];
     TRVSMonitor *monitor = [TRVSMonitor monitor];
     
     [[mockClient expect] RetrieveConversations:[OCMArg checkWithBlock:^BOOL(void (^successBlock)(AFHTTPRequestOperation *, id))
@@ -317,7 +317,7 @@
 {
     
     NSString *expectedEntityId = @"entities:jivetesting13@gmail_com";
-    id mockClient = [OCMockObject niceMockForClass:[JCOsgiClient class]];
+    id mockClient = [OCMockObject niceMockForClass:[JCRESTClient class]];
     TRVSMonitor *monitor = [TRVSMonitor monitor];
     
     [[mockClient expect] RetrieveClientEntitites:[OCMArg checkWithBlock:^BOOL(void (^successBlock)(AFHTTPRequestOperation *, id))
@@ -378,7 +378,7 @@
  */
 -(void)testShouldRetrieveVoicemail
 {
-    id mockClient = [OCMockObject niceMockForClass:[JCOsgiClient class]];
+    id mockClient = [OCMockObject niceMockForClass:[JCRESTClient class]];
     TRVSMonitor *monitor = [TRVSMonitor monitor];
     
     [[mockClient expect] RetrieveVoicemailForEntity:nil success:[OCMArg checkWithBlock:^BOOL(void (^successBlock)(AFHTTPRequestOperation *, id))

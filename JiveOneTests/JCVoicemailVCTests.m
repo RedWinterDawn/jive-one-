@@ -10,7 +10,7 @@
 #import <XCTest/XCTest.h>
 #import "JCVoiceTableViewController.h"
 #import "JCAuthenticationManager.h"
-#import "JCOsgiClient.h"
+#import "JCRESTClient.h"
 #import "TRVSMonitor.h"
 #import <OCMock/OCMock.h>
 #import "Voicemail+Custom.h"
@@ -57,7 +57,7 @@
 //test whether the UpdateTable method will save a json(mocked) from the api into from core data
 -(void)testUpdateTableSavesDataToCoreData{
     //mock the client
-    id clientMock = [OCMockObject niceMockForClass:[JCOsgiClient class]];
+    id clientMock = [OCMockObject niceMockForClass:[JCRESTClient class]];
     //when retriveVoicemailForEntity is called on client, return a JSON like the server would
     [[clientMock expect] RetrieveVoicemailForEntity:[OCMArg any]
                                             success:[OCMArg checkWithBlock:^BOOL(void (^successBlock)(AFHTTPRequestOperation *, id))

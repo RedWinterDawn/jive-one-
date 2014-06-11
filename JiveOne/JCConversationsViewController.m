@@ -7,7 +7,7 @@
 //
 
 #import "JCConversationsViewController.h"
-#import "JCOsgiClient.h"
+#import "JCRESTClient.h"
 #import "PersonEntities.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "JCMessagesViewController.h"
@@ -108,7 +108,7 @@ static NSString *GroupCellIdentifier = @"GroupChatCell";
 
 - (void)fetchLastConverstions
 {
-    [[JCOsgiClient sharedClient] RetrieveConversations:^(id JSON) {
+    [[JCRESTClient sharedClient] RetrieveConversations:^(id JSON) {
         
         [self loadDatasource];
         [self.refreshControl endRefreshing];
@@ -258,7 +258,7 @@ static NSString *GroupCellIdentifier = @"GroupChatCell";
         }
 }
 -(void)DeleteConversationFromServer:(NSString*)conversationId{
-    [[JCOsgiClient sharedClient] DeleteConversation:conversationId success:^(id JSON, AFHTTPRequestOperation* operation) {
+    [[JCRESTClient sharedClient] DeleteConversation:conversationId success:^(id JSON, AFHTTPRequestOperation* operation) {
         //Toast deleted successfully
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[[[UIApplication sharedApplication] windows] lastObject] animated:YES];
         hud.mode = MBProgressHUDModeText;

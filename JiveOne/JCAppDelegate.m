@@ -9,7 +9,7 @@
 #import "JCAppDelegate.h"
 #import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
 #import "JCSocketDispatch.h"
-#import "JCOsgiClient.h"
+#import "JCRESTClient.h"
 #import "PersonEntities.h"
 #import "NotificationView.h"
 #import "JCLoginViewController.h"
@@ -129,7 +129,7 @@ int didNotify;
         [self.window setRootViewController:self.tabBarViewController];
 //        [self.window setRootViewController:rootVC];
         [[JCAuthenticationManager sharedInstance] checkForTokenValidity];
-        [[JCOsgiClient sharedClient] RetrieveEntitiesPresence:^(BOOL updated) {
+        [[JCRESTClient sharedClient] RetrieveEntitiesPresence:^(BOOL updated) {
             //do nothing;
         } failure:^(NSError *err) {
             //do nothing;
@@ -172,7 +172,7 @@ int didNotify;
     //[[NotificationView sharedInstance] didChangeConnection:nil];
     if ([[JCAuthenticationManager sharedInstance] userAuthenticated] && [[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {
         [[JCAuthenticationManager sharedInstance] checkForTokenValidity];
-        [[JCOsgiClient sharedClient] RetrieveEntitiesPresence:^(BOOL updated) {
+        [[JCRESTClient sharedClient] RetrieveEntitiesPresence:^(BOOL updated) {
             //do nothing;
         } failure:^(NSError *err) {
             //do nothing;
@@ -616,7 +616,7 @@ int didNotify;
         case AFNetworkReachabilityStatusReachableViaWiFi:
             NSLog(@"WIFI");
             //send any chat messages in the queue
-            [JCMessagesViewController sendOfflineMessagesQueue:[JCOsgiClient sharedClient]];
+            [JCMessagesViewController sendOfflineMessagesQueue:[JCRESTClient sharedClient]];
             //try to initialize socket connections
             
             [self startSocket:!appIsActive];
@@ -624,7 +624,7 @@ int didNotify;
         case AFNetworkReachabilityStatusReachableViaWWAN:
             NSLog(@"3G");
             //send any chat messages in the queue
-            [JCMessagesViewController sendOfflineMessagesQueue:[JCOsgiClient sharedClient]];
+            [JCMessagesViewController sendOfflineMessagesQueue:[JCRESTClient sharedClient]];
             //try to initialize socket connections
             [self startSocket:!appIsActive];
             break;

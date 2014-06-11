@@ -7,7 +7,7 @@
 //
 
 #import "JCAuthenticationManager.h"
-#import "JCOsgiClient.h"
+#import "JCRESTClient.h"
 #import "JCAppDelegate.h"
 #import "JCAccountViewController.h"
 #import "JCLoginViewController.h"
@@ -65,7 +65,7 @@
     NSLog(@"AUTH PATH: %@", url_path);
 #endif
     
-    [[JCOsgiClient sharedClient] OAuthLoginWithUsername:username password:password success:^(AFHTTPRequestOperation *operation, id JSON) {
+    [[JCRESTClient sharedClient] OAuthLoginWithUsername:username password:password success:^(AFHTTPRequestOperation *operation, id JSON) {
         
         if (JSON[@"access_token"]) {
             
@@ -207,7 +207,7 @@
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserLoadedMinimumData];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    [[JCOsgiClient sharedClient] clearCookies];
+    [[JCRESTClient sharedClient] clearCookies];
     [[JCOmniPresence sharedInstance] truncateAllTablesAtLogout];
     
     JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;

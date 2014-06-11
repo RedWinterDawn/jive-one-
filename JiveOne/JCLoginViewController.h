@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JCOsgiClient.h"
+#import "JCRESTClient.h"
 
 @interface JCLoginViewController : UIViewController <UITextFieldDelegate>
 
@@ -17,7 +17,7 @@
 @property (nonatomic) BOOL seenTutorial;
 @property (nonatomic) BOOL doneLoadingContent;
 @property (nonatomic) BOOL userIsDoneWithTutorial;
-@property (nonatomic) JCOsgiClient *client;
+@property (nonatomic) JCRESTClient *client;
 @property (weak, nonatomic) IBOutlet UIView *loginViewContainer;
 @property (weak, nonatomic) IBOutlet UIView *logo;
 

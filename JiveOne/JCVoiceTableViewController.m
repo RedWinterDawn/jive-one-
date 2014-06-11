@@ -8,7 +8,7 @@
 
 #import "JCVoiceTableViewController.h"
 #import "JCVoiceCell.h"
-#import "JCOsgiClient.h"
+#import "JCRESTClient.h"
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "JCMessagesViewController.h"
 #import "JCAppDelegate.h"
@@ -24,7 +24,7 @@
     NSTimer *requestTimeout;
     
 }
-@property (weak, nonatomic) JCOsgiClient *osgiClient;
+@property (weak, nonatomic) JCRESTClient *osgiClient;
 @property (nonatomic) NSMutableArray *selectedIndexPaths;
 @property (nonatomic, retain) NSTimer *progressTimer;
 
@@ -34,15 +34,15 @@
 
 static NSString *CellIdentifier = @"VoicemailCell";
 
-- (void)osgiClient:(JCOsgiClient*)client
+- (void)osgiClient:(JCRESTClient*)client
 {
     _osgiClient = client;
 }
 
--(JCOsgiClient*)getOsgiClient
+-(JCRESTClient*)getOsgiClient
 {
     if(!_osgiClient){
-        _osgiClient = [JCOsgiClient sharedClient];
+        _osgiClient = [JCRESTClient sharedClient];
         
     }
     return _osgiClient;
@@ -284,7 +284,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
     
     if (deletedVoicemails.count > 0) {
         for (Voicemail *voice in deletedVoicemails) {
-            [[JCOsgiClient sharedClient] DeleteVoicemail:voice success:^(id JSON) {
+            [[JCRESTClient sharedClient] DeleteVoicemail:voice success:^(id JSON) {
                 [Voicemail deleteVoicemail:voice.voicemailId managedContext:nil];
             } failure:^(NSError *err) {
                 NSLog(@"%@", err);
@@ -343,7 +343,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
         if (success) {
             [selectedCell  performSelectorOnMainThread:@selector(styleCellForRead) withObject:nil waitUntilDone:NO];
             // now send update to server
-            [[JCOsgiClient sharedClient] UpdateVoicemailToRead:selectedCell.voicemail success:^(id JSON) {
+            [[JCRESTClient sharedClient] UpdateVoicemailToRead:selectedCell.voicemail success:^(id JSON) {
                 NSLog(@"Success Updating Read On Server");
             } failure:^(NSError *err) {
                 NSLog(@"Failed Updating Read On Server");

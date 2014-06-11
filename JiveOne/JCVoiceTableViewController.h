@@ -9,14 +9,14 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import "JCVoiceCell.h"
-#import "JCOsgiClient.h"
+#import "JCRESTClient.h"
 
 @interface JCVoiceTableViewController : UITableViewController <AVAudioPlayerDelegate, JCVoiceCellDelegate>
 
 @property (nonatomic) NSMutableArray *voicemails; // exposed for testing
 - (void)updateTable;
 - (void)loadVoicemails;
-- (void)osgiClient:(JCOsgiClient*)client;
+- (void)osgiClient:(JCRESTClient*)client;
 - (void)voiceCellDeleteTapped:(NSIndexPath *)indexPath;
 - (void)addOrRemoveSelectedIndexPath:(NSIndexPath *)indexPath;
 @end

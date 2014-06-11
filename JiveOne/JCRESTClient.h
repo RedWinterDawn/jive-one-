@@ -13,7 +13,7 @@
 #import "PersonEntities.h"
 #import "Voicemail.h"
 
-@interface JCOsgiClient : NSObject
+@interface JCRESTClient : NSObject
 
 @property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
 

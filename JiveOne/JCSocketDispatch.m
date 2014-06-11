@@ -7,7 +7,7 @@
 //
 
 #import "JCSocketDispatch.h"
-#import "JCOsgiClient.h"
+#import "JCRESTClient.h"
 #import "KeychainItemWrapper.h"
 #import "ConversationEntry+Custom.h"
 #import "Voicemail+Custom.h"
@@ -74,7 +74,7 @@
     
     if ([[JCAuthenticationManager sharedInstance] userAuthenticated] )  {
         
-        [[JCOsgiClient sharedClient] RequestSocketSession:^(id JSON) {
+        [[JCRESTClient sharedClient] RequestSocketSession:^(id JSON) {
             
             if (_socketSessionTimer) {
                 [_socketSessionTimer invalidate];
@@ -200,7 +200,7 @@
     NSString* subIdent = [subscription allValues][0];
     NSLog(@"About to subscribe events of type %@", subIdent);
     
-    [[JCOsgiClient sharedClient] SubscribeToSocketEventsWithAuthToken:self.sessionToken subscriptions:subscription success:^(id JSON) {
+    [[JCRESTClient sharedClient] SubscribeToSocketEventsWithAuthToken:self.sessionToken subscriptions:subscription success:^(id JSON) {
         NSString* subscriptionIdentifier = [subscription allValues][0];
         NSLog(@"Subscribing to events of type %@: Succeeded", subscriptionIdentifier);
     } failure:^(NSError *err) {
@@ -426,7 +426,7 @@
 
 - (void)RetrieveNewConversation:(NSString *)conversationId
 {
-    [[JCOsgiClient sharedClient] RetrieveConversationsByConversationId:conversationId success:^(Conversation *conversation) {
+    [[JCRESTClient sharedClient] RetrieveConversationsByConversationId:conversationId success:^(Conversation *conversation) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kNewConversation object:conversation];
     } failure:^(NSError *err) {
         NSLog(@"%@", err);

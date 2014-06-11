@@ -11,7 +11,7 @@
 #import "JCAppDelegate.h"
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import "Common.h"
-#import "JCOsgiClient.h"
+#import "JCRESTClient.h"
 #import "Company.h"
 #import <MBProgressHUD.h>
 
@@ -25,7 +25,7 @@
 
 @implementation JCLoginViewController
 
-- (void)setClient:(JCOsgiClient *)client
+- (void)setClient:(JCRESTClient *)client
 {
     _client = client;
 }
@@ -38,7 +38,7 @@
 {
     [super viewDidLoad];
     
-    [self setClient:[JCOsgiClient sharedClient]];
+    [self setClient:[JCRESTClient sharedClient]];
     
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"seenAppTutorial"]) {

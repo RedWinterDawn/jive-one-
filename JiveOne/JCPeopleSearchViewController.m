@@ -9,7 +9,7 @@
 #import "JCPeopleSearchViewController.h"
 #import "PersonEntities.h"
 #import "PersonMeta.h"
-#import "JCOsgiClient.h"
+#import "JCRESTClient.h"
 #import "JCDirectoryDetailViewController.h"
 #import "JCPersonCell.h"
 #import "JCDirectoryGroupViewController.h"
@@ -458,7 +458,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
 
 - (void)refreshCompanyDirectory
 {
-    [[JCOsgiClient sharedClient] RetrieveClientEntitites:^(id JSON) {
+    [[JCRESTClient sharedClient] RetrieveClientEntitites:^(id JSON) {
         [self loadCompanyDirectory];
         
     } failure:^(NSError *err) {

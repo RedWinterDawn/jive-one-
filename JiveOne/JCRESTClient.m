@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCOsgiClient.h"
+#import "JCRESTClient.h"
 #import "KeychainItemWrapper.h"
 #import "PersonEntities+Custom.h"
 #import "Voicemail+Custom.h"
@@ -22,7 +22,7 @@
 @end
 #endif
 
-@implementation JCOsgiClient
+@implementation JCRESTClient
 {
     KeychainItemWrapper *keyChainWrapper;
     NSManagedObjectContext *localContext;
@@ -30,8 +30,8 @@
 
 #pragma mark - class initialization
 
-+ (JCOsgiClient*)sharedClient {
-    static JCOsgiClient *_sharedClient = nil;
++ (JCRESTClient*)sharedClient {
+    static JCRESTClient *_sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _sharedClient = [[super alloc] init];
