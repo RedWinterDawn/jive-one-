@@ -13,13 +13,21 @@
 
 int main(int argc, char * argv[])
 {
-    BOOL doIt = YES;
-#if TARGET_IPHONE_SIMULATOR
-    doIt = NO;
+
+#ifdef CONFIGURATION_Debug
+    LoggerStartForBuildUser();
+    NSLog(@"%@",[[UIDevice currentDevice] name]);
 #endif
-    if (doIt) {
-        LoggerStartForBuildUser();
-    }
+    
+    
+#ifdef CONFIGURATION_Enterprise
+     if ([[[UIDevice currentDevice]name] isEqualToString:@"iPhone Simulator"]) {
+         LoggerStop(LoggerGetDefaultLogger());
+         NSLog(@"Logger Stop Message Sent");
+     }
+#endif
+
+
     int returnValue;
     
     @autoreleasepool {

@@ -17,7 +17,6 @@
 #import "ContactGroup.h"
 #import "NotificationView.h"
 #import <QuartzCore/QuartzCore.h>
-#import "JCLog.h"
 #import "Constants.h"
 #import "JCMessagesViewController.h"
 
