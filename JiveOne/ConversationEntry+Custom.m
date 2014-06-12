@@ -63,7 +63,7 @@
     }
     else {
         //gets called when app is new install, for old messages, and when server sends messages to me
-        NSLog(@"No id or tempUrn found for this entry in core data. This should only happen if the user logged out or on a new install.");
+        //NSLog(@"No id or tempUrn found for this entry in core data. This should only happen if the user logged out or on a new install.");
         convEntry = [ConversationEntry MR_createInContext:context];
         convEntry.conversationId = entry[@"conversation"];
         convEntry.entityId = entry[@"entity"];
