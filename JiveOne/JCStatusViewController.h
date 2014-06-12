@@ -21,7 +21,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *subscription4;
 @property (weak, nonatomic) IBOutlet UILabel *subscription5;
 
-@property (weak, nonatomic) IBOutlet UILabel *serverReachable;
+@property (weak, nonatomic) IBOutlet UILabel *servername;
+@property (weak, nonatomic) IBOutlet UILabel *reachability;
 
 
 

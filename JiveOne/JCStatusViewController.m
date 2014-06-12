@@ -23,6 +23,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveSocketEvent:) name:@"kSocketEvent" object:nil];
     
     self.lastSocketEventTextView.scrollsToTop = YES;
+    self.servername.text = kOsgiBaseURL;
 }
 
 - (void)viewDidDisappear:(BOOL)animated

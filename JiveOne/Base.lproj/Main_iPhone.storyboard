@@ -307,7 +307,22 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ms4-ac-tiJ">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Server name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ms4-ac-tiJ">
+                                                    <rect key="frame" x="20" y="11" width="280" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="RgK-ho-KOh">
+                                        <rect key="frame" x="0.0" y="304" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RgK-ho-KOh" id="D2b-QF-Y6d">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Reachable?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ieW-3c-gBL">
                                                     <rect key="frame" x="20" y="11" width="280" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
@@ -320,7 +335,7 @@
                             <tableViewSection headerTitle="Auth Token is Valid" id="4O4-nP-kSu">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="SbC-bx-6WO">
-                                        <rect key="frame" x="0.0" y="326" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="370" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SbC-bx-6WO" id="LS7-xT-zvB">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -339,7 +354,7 @@
                             <tableViewSection headerTitle="Device Token" id="hsJ-he-aek">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="HG5-Q5-HrO">
-                                        <rect key="frame" x="0.0" y="392" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="436" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HG5-Q5-HrO" id="sLy-B6-b8S">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -358,7 +373,7 @@
                             <tableViewSection headerTitle="Last Socket Event" id="el3-27-wyt">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="140" id="bT5-K9-OoC">
-                                        <rect key="frame" x="0.0" y="458" width="320" height="140"/>
+                                        <rect key="frame" x="0.0" y="502" width="320" height="140"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bT5-K9-OoC" id="EUx-56-BvU">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="139"/>
@@ -390,7 +405,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="lastSocketEventTextView" destination="Dqg-Zn-LxS" id="Riu-4i-VJR"/>
-                        <outlet property="serverReachable" destination="Ms4-ac-tiJ" id="EUj-Df-pgf"/>
+                        <outlet property="reachability" destination="ieW-3c-gBL" id="Jvk-X2-hst"/>
+                        <outlet property="servername" destination="Ms4-ac-tiJ" id="Ksp-Fy-lLy"/>
                         <outlet property="socketStatusLabel" destination="A4b-Ix-6yx" id="wzG-z1-SCe"/>
                         <outlet property="subscription2" destination="Z76-8y-Nke" id="hRl-JP-ggt"/>
                         <outlet property="subscription3" destination="l3G-xH-1aU" id="ct8-DX-M0W"/>
@@ -794,7 +810,7 @@
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" title="People" id="i9j-aS-UgH">
-                        <barButtonItem key="leftBarButtonItem" title="Item" id="fHv-4n-gLS">
+                        <barButtonItem key="leftBarButtonItem" title="Status" id="fHv-4n-gLS">
                             <connections>
                                 <action selector="showStatusView:" destination="eTh-sK-SbW" id="boA-yw-Qh1"/>
                                 <segue destination="0Iz-3u-LhE" kind="push" identifier="StatusSegue" id="fkT-K7-Yi5"/>
