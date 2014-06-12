@@ -43,9 +43,11 @@ int didNotify;
         #endif
     #endif
     if (doit) {
+        NSLog(@"LoggerTarget: %@",LOGGER_TARGET);
         LoggerSetupBonjour(NULL, NULL, (CFStringRef)LOGGER_TARGET);
     }
-    
+    NSLog(@"LoggerTarget:2 %@",LOGGER_TARGET);
+
     //Create a sharedCache for AFNetworking
     NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:2 * 1024 * 1024
                                                             diskCapacity:100 * 1024 * 1024
