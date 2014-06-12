@@ -69,7 +69,8 @@
 {
     
     NSLog(@"Requestion Session For Socket");
-    startedInBackground = [UIApplication sharedApplication].applicationState == (UIApplicationStateBackground|UIApplicationStateInactive);
+    startedInBackground = ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground ||
+                           [UIApplication sharedApplication].applicationState == UIApplicationStateInactive);
     [self cleanup];
     
     if ([[JCAuthenticationManager sharedInstance] userAuthenticated] )  {

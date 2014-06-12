@@ -296,7 +296,23 @@ int didNotify;
     NSMutableDictionary *_badges = nil;
     if (badgeDictionary) {
         _badges = [NSMutableDictionary dictionaryWithDictionary:badgeDictionary];
-        return _badges.count;
+        int count = 0;
+        for (NSString *key in _badges.allKeys)
+        {
+            NSRange rangeConversation = [key rangeOfString:@"conversations"];
+            NSRange rangeRooms = [key rangeOfString:@"permanentrooms"];
+            if (rangeConversation.location != NSNotFound || rangeRooms.location != NSNotFound) {
+            NSMutableDictionary *conversations = [_badges[key] mutableCopy];
+                if (conversations) {
+                    count += conversations.count;
+                }
+            }
+            else {
+                count++;
+            }
+        }
+        
+        return count;
     }
     else
     {
