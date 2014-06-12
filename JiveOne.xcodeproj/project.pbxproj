@@ -228,6 +228,7 @@
 		42A1D3B90E844E0DA4AB6197 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86ED89B2764949AC9BCC0C7B /* libPods.a */; };
 		9103271718F34BEC00437503 /* JCPeopleDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9103271518F34BEC00437503 /* JCPeopleDetailCell.m */; };
 		9103271818F34BEC00437503 /* JCPeopleDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9103271618F34BEC00437503 /* JCPeopleDetailCell.xib */; };
+		91059D371949F949002DE67C /* LoggerClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 91059D361949F949002DE67C /* LoggerClient.m */; };
 		911B3E9118E0E41D00105925 /* voicemail_pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 911B3E8F18E0E41D00105925 /* voicemail_pause.png */; };
 		911B3E9218E0E41D00105925 /* voicemail_pause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 911B3E9018E0E41D00105925 /* voicemail_pause@2x.png */; };
 		911BFDD518D9E9C300684964 /* vmail.png in Resources */ = {isa = PBXBuildFile; fileRef = 911BFDD418D9E9C300684964 /* vmail.png */; };
@@ -716,6 +717,9 @@
 		9103271418F34BEB00437503 /* JCPeopleDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPeopleDetailCell.h; sourceTree = "<group>"; };
 		9103271518F34BEC00437503 /* JCPeopleDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPeopleDetailCell.m; sourceTree = "<group>"; };
 		9103271618F34BEC00437503 /* JCPeopleDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCPeopleDetailCell.xib; sourceTree = "<group>"; };
+		91059D341949F8E6002DE67C /* LoggerCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoggerCommon.h; sourceTree = "<group>"; };
+		91059D351949F949002DE67C /* LoggerClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoggerClient.h; sourceTree = "<group>"; };
+		91059D361949F949002DE67C /* LoggerClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoggerClient.m; sourceTree = "<group>"; };
 		911B3E8F18E0E41D00105925 /* voicemail_pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = voicemail_pause.png; sourceTree = "<group>"; };
 		911B3E9018E0E41D00105925 /* voicemail_pause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "voicemail_pause@2x.png"; sourceTree = "<group>"; };
 		911BFDD418D9E9C300684964 /* vmail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vmail.png; sourceTree = "<group>"; };
@@ -1201,6 +1205,9 @@
 				274493CD18D13538002744CB /* Common.m */,
 				91F6DFA5192A6CCD001C54FB /* JCLog.h */,
 				91F6DFA6192A6CCD001C54FB /* JCLog.m */,
+				91059D341949F8E6002DE67C /* LoggerCommon.h */,
+				91059D351949F949002DE67C /* LoggerClient.h */,
+				91059D361949F949002DE67C /* LoggerClient.m */,
 			);
 			name = Application;
 			sourceTree = "<group>";
@@ -2215,6 +2222,7 @@
 				270152CB1901D86700F271CE /* JCContactModel.m in Sources */,
 				2700987818F4714100B6BC2F /* JSBubbleImageViewFactory.m in Sources */,
 				2710E40C18CE873000152C91 /* Conversation+Custom.m in Sources */,
+				91059D371949F949002DE67C /* LoggerClient.m in Sources */,
 				27F1F2E9191C171300AEAFD7 /* UAPushSettingsSoundsViewController.m in Sources */,
 				27F1F2E3191C171300AEAFD7 /* UAMapPresentationController.m in Sources */,
 				27F1F2E5191C171300AEAFD7 /* UAPushNotificationHandler.m in Sources */,

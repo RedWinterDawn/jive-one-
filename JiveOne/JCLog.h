@@ -25,6 +25,7 @@ void JCLogLevelSetConfiguration(JCLogLevel level);
 JCLogLevel JCLogLevelGetConfiguration();
 
 #import "LoggerClient.h"
+#import "LoggerCommon.h"
 
 #if !defined CONFIGURATION_Release
 #define JCLogging 1
