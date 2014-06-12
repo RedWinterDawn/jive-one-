@@ -27,6 +27,7 @@ int main(int argc, char * argv[])
      }
      else
      {
+         NSLog(@"Logger Start Message Sent");
          LoggerStartForBuildUser();
      }
 #endif
