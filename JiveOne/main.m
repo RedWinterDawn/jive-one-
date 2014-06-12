@@ -25,6 +25,10 @@ int main(int argc, char * argv[])
          LoggerStop(LoggerGetDefaultLogger());
          NSLog(@"Logger Stop Message Sent");
      }
+     else
+     {
+         LoggerStartForBuildUser();
+     }
 #endif
 
 
