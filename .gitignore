@@ -24,3 +24,6 @@ Builds
 JiveOneTests/AutomatedTests/Results
 JiveOneTests/integration/tmp
 build
+integration/tmp
+example.coffee
+example_vendor.js

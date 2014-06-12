@@ -326,7 +326,7 @@
 }
 
 - (void)SubmitChatMessageForConversation:(NSString*)conversation message:(NSDictionary*)message withEntity:(NSString*)entity withTimestamp:(long long)timestamp withTempUrn:(NSString*)tempUrn success:(void (^)(id JSON))success
-                                 failure:(void (^)(NSError* err))failure
+                                 failure:(void (^)(NSError* err, AFHTTPRequestOperation *operation))failure
 {
     JCLogInfo_();
     [self setRequestAuthHeader];
@@ -342,7 +342,7 @@
     [_manager POST:urlWithEntry parameters:conversationDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
         success(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failure(error);
+        failure(error, operation);
     }];
 }
 

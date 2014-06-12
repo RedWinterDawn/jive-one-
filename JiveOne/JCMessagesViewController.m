@@ -101,6 +101,7 @@
     [self setBackgroundColor:[UIColor colorWithRed:0.91 green:0.91 blue:0.91 alpha:1] /*#e8e8e8*/];
     
     [self setupView];
+    [JCMessagesViewController sendOfflineMessagesQueue:[JCOsgiClient sharedClient]];
 }
 
 - (NSManagedObjectContext *)context
@@ -632,7 +633,7 @@
         [[JCRESTClient sharedClient] SubmitChatMessageForConversation:_conversationId message:entry.message withEntity:entry.entityId withTimestamp:[entry.createdDate longLongValue] withTempUrn:entry.tempUrn success:^(id JSON) {
             // confirm to user message was sent
            [JSMessageSoundEffect playMessageSentSound];
-        } failure:^(NSError *err) {
+        } failure:^(NSError *err, AFHTTPRequestOperation *operation) {
             NSLog(@"%@", err);
             entry.failedToSend = [NSNumber numberWithBool:YES];
             [[self context] MR_saveToPersistentStoreAndWait];
@@ -663,6 +664,7 @@
     
     entry.message = messageDictionary;
     entry.createdDate = [NSNumber numberWithLongLong:[Common epochFromNSDate:timestamp]];
+//    entry.lastModified = [NSNumber numberWithLongLong:[Common epochFromNSDate:timestamp]];
     entry.tempUrn = [[NSUUID UUID] UUIDString];
     
     [currentContext MR_saveToPersistentStoreAndWait];
@@ -752,19 +754,28 @@
 +(void) sendOfflineMessagesQueue:(JCRESTClient*)osgiClient{
     
     NSPredicate *pred = [NSPredicate predicateWithFormat:@"failedToSend == YES"];
-    NSArray *unsentMessags = [ConversationEntry MR_findAllWithPredicate:pred];
+    NSMutableArray *unsentMessages = [NSMutableArray arrayWithArray:[ConversationEntry MR_findAllSortedBy:@"createdDate" ascending:YES withPredicate:pred]];
+    //TODO: refactor to send messages serially
     
-    for(ConversationEntry *conv in unsentMessags){
-        
+    if(unsentMessages.count>0){
+        ConversationEntry *conv = (ConversationEntry*)unsentMessages[0];
+        NSLog(@"Sending...%@", conv.message);
         [osgiClient SubmitChatMessageForConversation:conv.conversationId message:conv.message withEntity:conv.entityId withTimestamp:[conv.createdDate longLongValue] withTempUrn:conv.tempUrn success:^(id JSON) {
+            NSLog(@"Sent %@", conv.message);
             [JSMessageSoundEffect playMessageSentSound];
             conv.failedToSend = [NSNumber numberWithBool:NO];
             [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+            [unsentMessages removeObjectAtIndex:0];
+            if(unsentMessages.count>0){
+                [JCMessagesViewController sendOfflineMessagesQueue:osgiClient];
+            }
             NSLog(@"Posted message with tempUrn: %@", conv.tempUrn);
-        } failure:^(NSError *err) {
+        } failure:^(NSError *err, AFHTTPRequestOperation *operation) {
             NSLog(@"Failed to send message from offline queue: %@. With error:%@", conv.tempUrn,  err);
+            if(operation.response.statusCode >=500 && unsentMessages.count>0){
+                [JCMessagesViewController sendOfflineMessagesQueue:osgiClient];
+            }
         }];
-        
     }
 }
 
