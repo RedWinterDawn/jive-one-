@@ -34,7 +34,7 @@ int didNotify;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    //
+    
     NSLog(LOGGER_TARGET);
     
     //Create a sharedCache for AFNetworking
@@ -74,7 +74,6 @@ int didNotify;
         [[UINavigationBar appearance] setTitleTextAttributes:@{
                                                                UITextAttributeTextColor : [UIColor blackColor],
                                                                UITextAttributeFont : [UIFont fontWithName:@"HelveticaNeue-Light" size:24.0f]
-                                                               
                                                                }];
     }
     

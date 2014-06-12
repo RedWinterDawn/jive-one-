@@ -14,7 +14,8 @@
 #import "Presence+Custom.h"
 #import "JCAppDelegate.h"
 #import "JSMessageSoundEffect.h"
-
+#import "LoggerClient.h"
+#import "LoggerCommon.h"
 @interface JCSocketDispatch()
 
 {
@@ -55,6 +56,7 @@
 #pragma mark - Public Methods
 - (void)sendPoll
 {
+    LogMessage(@"socket", 0, @"sendPoll");
     if (_webSocket.readyState == SR_OPEN) {
         [_webSocket send:self.json_poll];
     }
@@ -67,8 +69,9 @@
  */
 - (void)requestSession
 {
+    LOG_Info();
+    LogMessage(@"socket", 4, @"Requesting Session For Socket -- this is a LogMessage()");
     
-    NSLog(@"Requestion Session For Socket");
     startedInBackground = ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground ||
                            [UIApplication sharedApplication].applicationState == UIApplicationStateInactive);
     [self cleanup];
@@ -129,6 +132,8 @@
 
 - (void)timesUpforSubscription
 {
+    LOG_Info();
+
     [_subscriptionTimer invalidate];
     [_webSocket closeWithCode:500 reason:@"Did not subscribe to all events. Retrying"];
 }
@@ -136,6 +141,8 @@
 
 - (void)subscribeSession
 {
+    LOG_Info();
+
     NSLog(@"Subscribing to Socket Sessions");
     int count = 0;
     for (uint8_t sessionType = JCConversationSession; sessionType <= JCCallsSession; sessionType++) {
@@ -147,7 +154,8 @@
 }
 
 -(void)subscribeToSessionOfType:(JCSessionType)sessionType{
-    
+    LOG_Info();
+
     switch (sessionType) {
         case JCConversationSession:{
 //            NSLog(@"Subscribing to JCConversationSession");
@@ -198,6 +206,8 @@
 
 - (void)subscribeToSocketUsingDictionary:(NSDictionary*)subscription
 {
+    LOG_Info();
+
     NSString* subIdent = [subscription allValues][0];
     NSLog(@"About to subscribe events of type %@", subIdent);
     
@@ -215,6 +225,8 @@
 
 - (void)initSession
 {
+    LOG_Info();
+
     // We have to make sure that the socket is in a initializable state.
     if (_webSocket == nil || _webSocket.readyState == SR_CLOSING || _webSocket.readyState == SR_CLOSED) {
         NSLog(@"Starting Socket");
@@ -226,7 +238,9 @@
 
 - (void)closeSocket
 {
-    NSLog(@"Did pull before closing the socket");    
+    LOG_Info();
+
+    NSLog(@"Did pull before closing the socket");
     [_webSocket send:self.json_poll];
     if ([_subscriptionTimer isValid]) {
         [_subscriptionTimer invalidate];
@@ -238,6 +252,8 @@
 
 - (void)reconnect
 {
+    LOG_Info();
+
     if (startedInBackground || [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) {
         [self requestSession];
     }
@@ -246,8 +262,10 @@
 #pragma mark - Websocket Delegates
 - (void)webSocketDidOpen:(SRWebSocket *)webSocket
 {
+    LOG_Info();
+
     NSLog(@"Socket Did Open");
-    
+    LogMarker(@"Socket Did Open");
     // Socket connected, send start command
     [_webSocket send:self.json_start];
     
@@ -262,7 +280,8 @@
  *  @param message   NSString
  */
 - (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message{
-    
+    LOG_Info();
+
     NSLog(@"%@",message);
     
     NSData *data = [message dataUsingEncoding:NSUTF8StringEncoding];
@@ -284,7 +303,8 @@
 
 - (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error
 {
-    
+    LOG_Info();
+
     NSLog(@"%@", [NSString stringWithFormat:@"Connection Failed: %@", [error description]]);
     // If connection fails, try to reconnect.
     [self reconnect];
@@ -293,6 +313,8 @@
 
 - (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean
 {
+    LOG_Info();
+
     reason = reason == nil? @"" : reason;
    NSDictionary *userInfo = @{
            @"code": @(code),
@@ -320,6 +342,8 @@
 
 - (void)cleanup
 {
+    LOG_Info();
+
     _cmd_start = nil;
     _cmd_poll = nil;
     _json_start = nil;
@@ -331,6 +355,8 @@
 
 - (void)messageDispatcher:(NSDictionary*)message
 {
+    LOG_Info();
+
     
     NSString *type = [self getMessageType:message];
     NSString *operation = nil;
@@ -410,6 +436,8 @@
 
 - (NSString *)getMessageType:(NSDictionary *)message
 {
+    LOG_Info();
+
     @try {
         NSDictionary *body = [[message objectForKey:@"data"] objectForKey:@"body"];
         
@@ -427,6 +455,8 @@
 
 - (void)RetrieveNewConversation:(NSString *)conversationId
 {
+    LOG_Info();
+
     [[JCRESTClient sharedClient] RetrieveConversationsByConversationId:conversationId success:^(Conversation *conversation) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kNewConversation object:conversation];
     } failure:^(NSError *err) {
@@ -437,12 +467,16 @@
 #pragma mark - NSTimer
 - (void)socketSessionTimerElapsed:(NSNotification *)notification
 {
+    LOG_Info();
+
     NSLog(@"SocketSesstionTimeElapsed: trying to reconnect");
     [self reconnect];
 }
 
 - (void)startPoolingFromSocketWithCompletion:(CompletionBlock)completed;
 {
+    LOG_Info();
+
     _completionBlock = completed;
     @try {
         [self requestSession];
