@@ -101,7 +101,7 @@
     [self setBackgroundColor:[UIColor colorWithRed:0.91 green:0.91 blue:0.91 alpha:1] /*#e8e8e8*/];
     
     [self setupView];
-    [JCMessagesViewController sendOfflineMessagesQueue:[JCOsgiClient sharedClient]];
+    [JCMessagesViewController sendOfflineMessagesQueue:[JCRESTClient sharedClient]];
 }
 
 - (NSManagedObjectContext *)context
