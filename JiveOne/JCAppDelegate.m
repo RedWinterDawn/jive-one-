@@ -34,6 +34,8 @@ int didNotify;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //
+    NSLog(LOGGER_TARGET);
     
     //Create a sharedCache for AFNetworking
     NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:2 * 1024 * 1024
