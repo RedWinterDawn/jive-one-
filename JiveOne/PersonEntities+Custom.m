@@ -114,8 +114,8 @@
 //        _context = [NSManagedObjectContext MR_contextForCurrentThread];
 //    }
     
-    long lastModifiedFromEntity = [entity.lastModified integerValue];
-    long lastModifiedFromDictionary = [dictionary[@"lastModified"] integerValue];
+    long long lastModifiedFromEntity = [entity.lastModified longLongValue];
+    long long lastModifiedFromDictionary = [dictionary[@"lastModified"] longLongValue];
     
     if (lastModifiedFromDictionary != lastModifiedFromEntity) {
         entity.lastModified = [dictionary objectForKey:@"lastModified"];
@@ -135,13 +135,17 @@
         entity.picture = [dictionary objectForKey:@"picture"];
         entity.email = [dictionary objectForKey:@"email"];
         
-        entity.entityMeta.entityId = dictionary[@"meta"][@"entity"];
-        entity.entityMeta.lastModified = dictionary[@"meta"][@"lastModified"];
-        entity.entityMeta.createDate = dictionary[@"meta"][@"createDate"];
-        entity.entityMeta.pinnedActivityOrder = dictionary[@"meta"][@"pinnedActivityOrder"];
-        entity.entityMeta.activityOrder = dictionary[@"meta"][@"activityOrder"];
-        entity.entityMeta.urn = dictionary[@"meta"][@"urn"];
-        entity.entityMeta.metaId = dictionary[@"meta"][@"id"];
+        if (dictionary[@"meta"] && [dictionary[@"meta"] isKindOfClass:[NSDictionary class]]) {
+            entity.entityMeta.entityId = dictionary[@"meta"][@"entity"];
+            entity.entityMeta.lastModified = dictionary[@"meta"][@"lastModified"];
+            entity.entityMeta.createDate = dictionary[@"meta"][@"createDate"];
+            entity.entityMeta.pinnedActivityOrder = dictionary[@"meta"][@"pinnedActivityOrder"];
+            entity.entityMeta.activityOrder = dictionary[@"meta"][@"activityOrder"];
+            entity.entityMeta.urn = dictionary[@"meta"][@"urn"];
+            entity.entityMeta.metaId = dictionary[@"meta"][@"id"];
+        }
+        
+        
         
         //NSLog(@"id:%@ - _id:%@", [dictionary objectForKey:@"id"], [dictionary objectForKey:@"_id"]);
         
