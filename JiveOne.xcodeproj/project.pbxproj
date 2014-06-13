@@ -90,7 +90,7 @@
 		2736698218BD441D0069B4B3 /* JCPersonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2736698118BD441D0069B4B3 /* JCPersonCell.m */; };
 		273CC25E1900B23B005A2857 /* JCVoiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 273CC25D1900B23B005A2857 /* JCVoiceCell.m */; };
 		2741EB8118FC4C0200F2FE64 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2741EB8018FC4C0200F2FE64 /* CoreTelephony.framework */; };
-		27426AC918B5303D00011635 /* JCOsgiClientTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 27426AC818B5303D00011635 /* JCOsgiClientTest.m */; };
+		27426AC918B5303D00011635 /* JCRestClientUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 27426AC818B5303D00011635 /* JCRestClientUnitTests.m */; };
 		274493AE18D0D538002744CB /* JCConversationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 274493AD18D0D538002744CB /* JCConversationCell.m */; };
 		274493B918D0E98C002744CB /* Presence.m in Sources */ = {isa = PBXBuildFile; fileRef = 274493B818D0E98C002744CB /* Presence.m */; };
 		274493BC18D0E98C002744CB /* Company.m in Sources */ = {isa = PBXBuildFile; fileRef = 274493BB18D0E98C002744CB /* Company.m */; };
@@ -144,6 +144,7 @@
 		2788F143190EACD20099348D /* VoicemailETag.m in Sources */ = {isa = PBXBuildFile; fileRef = 2788F142190EACD20099348D /* VoicemailETag.m */; };
 		2788F146190EACD20099348D /* ConversationETag.m in Sources */ = {isa = PBXBuildFile; fileRef = 2788F145190EACD20099348D /* ConversationETag.m */; };
 		2788F14A190EB1260099348D /* NSNull+IntValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2788F149190EB1260099348D /* NSNull+IntValue.m */; };
+		2798D513194A7E86005F194B /* JCRestClientLiveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2798D512194A7E86005F194B /* JCRestClientLiveTests.m */; };
 		279E4C6D19226FA3002A556C /* people-search-nofocus.png in Resources */ = {isa = PBXBuildFile; fileRef = 279E4C6C19226FA3002A556C /* people-search-nofocus.png */; };
 		279E4C7019226FAC002A556C /* people-search.png in Resources */ = {isa = PBXBuildFile; fileRef = 279E4C6F19226FAC002A556C /* people-search.png */; };
 		279E4CA9192273E5002A556C /* MBContactCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E4C9C192273E5002A556C /* MBContactCollectionView.m */; };
@@ -434,7 +435,7 @@
 		273CC25D1900B23B005A2857 /* JCVoiceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoiceCell.m; sourceTree = "<group>"; };
 		273D24A2193CCB73004D2B23 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		2741EB8018FC4C0200F2FE64 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
-		27426AC818B5303D00011635 /* JCOsgiClientTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCOsgiClientTest.m; sourceTree = "<group>"; };
+		27426AC818B5303D00011635 /* JCRestClientUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCRestClientUnitTests.m; sourceTree = "<group>"; };
 		274493AC18D0D538002744CB /* JCConversationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCConversationCell.h; sourceTree = "<group>"; };
 		274493AD18D0D538002744CB /* JCConversationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCConversationCell.m; sourceTree = "<group>"; };
 		274493AF18D0DA9B002744CB /* JCConversationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = JCConversationCell.xib; path = JiveOne/JCConversationCell.xib; sourceTree = SOURCE_ROOT; };
@@ -511,6 +512,7 @@
 		2788F145190EACD20099348D /* ConversationETag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationETag.m; sourceTree = "<group>"; };
 		2788F148190EB1260099348D /* NSNull+IntValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNull+IntValue.h"; sourceTree = "<group>"; };
 		2788F149190EB1260099348D /* NSNull+IntValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNull+IntValue.m"; sourceTree = "<group>"; };
+		2798D512194A7E86005F194B /* JCRestClientLiveTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCRestClientLiveTests.m; sourceTree = "<group>"; };
 		279E4C6C19226FA3002A556C /* people-search-nofocus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "people-search-nofocus.png"; sourceTree = "<group>"; };
 		279E4C6F19226FAC002A556C /* people-search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "people-search.png"; sourceTree = "<group>"; };
 		279E4C9B192273E5002A556C /* MBContactCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBContactCollectionView.h; sourceTree = "<group>"; };
@@ -1346,12 +1348,13 @@
 			children = (
 				DDA4B1EC190045040039EE3F /* JCMessagesTests.m */,
 				275F4A8218AD0FBC00D2F069 /* JiveOneTests.m */,
+				2798D512194A7E86005F194B /* JCRestClientLiveTests.m */,
 				F2FEF42A18C91BBE0080D8CC /* JCDirectoryGroupTests.m */,
 				F2CB896D18D1226D006A9438 /* JCStartChatMockTests.m */,
 				9135DE0118BC00FD0052E998 /* JCDirectoryDetailTests.m */,
 				DDFFB60018D2284E00372019 /* JCVoicemailVCTests.m */,
 				DD50802818C7D60B00750DB4 /* JCDirectoryTests.m */,
-				27426AC818B5303D00011635 /* JCOsgiClientTest.m */,
+				27426AC818B5303D00011635 /* JCRestClientUnitTests.m */,
 				275F4A7D18AD0FBC00D2F069 /* Supporting Files */,
 			);
 			path = JiveOneTests;
@@ -2330,11 +2333,12 @@
 				9135DE0218BC00FD0052E998 /* JCDirectoryDetailTests.m in Sources */,
 				272B61DE18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */,
 				275F4A8318AD0FBC00D2F069 /* JiveOneTests.m in Sources */,
+				2798D513194A7E86005F194B /* JCRestClientLiveTests.m in Sources */,
 				2751592018AD303500FD8D3F /* JCDirectoryViewController.m in Sources */,
 				DDA4B1ED190045040039EE3F /* JCMessagesTests.m in Sources */,
 				DDFFB60118D2284E00372019 /* JCVoicemailVCTests.m in Sources */,
 				DD50802918C7D60B00750DB4 /* JCDirectoryTests.m in Sources */,
-				27426AC918B5303D00011635 /* JCOsgiClientTest.m in Sources */,
+				27426AC918B5303D00011635 /* JCRestClientUnitTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

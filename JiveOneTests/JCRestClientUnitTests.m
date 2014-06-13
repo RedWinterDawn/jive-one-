@@ -18,13 +18,13 @@
 #import "Company.h"
 
 
-@interface JCOsgiClientTest : XCTestCase
+@interface JCRestClientUnitTests : XCTestCase
 
 @property (nonatomic, strong) JCLoginViewController *loginViewController;
 
 @end
 
-@implementation JCOsgiClientTest
+@implementation JCRestClientUnitTests
 {
     NSString *barName;
     NSString *barConversation;
@@ -46,6 +46,125 @@
     [[TRVSMonitor monitor] signal];
 }
 
+#pragma mark - helper methods
+
+- (JCRESTClient *)createUniqueClientInstance
+{
+    return [[JCRESTClient alloc] init];
+}
+
+- (JCRESTClient *)getSharedClient
+{
+    return [JCRESTClient sharedClient];
+}
+
+- (JCAuthenticationManager *)createUniqueAuthManagerInstance
+{
+    return [[JCAuthenticationManager alloc] init];
+}
+
+- (JCAuthenticationManager *)getSharedAuthManager
+{
+    return [JCAuthenticationManager sharedInstance];
+}
+
+#pragma mark - tests
+
+- (void)testSingletonSharedClientCreated {
+    XCTAssertNotNil([self createUniqueClientInstance]);
+}
+
+- (void)testSingletonUniqueClientInstanceCreated {
+    XCTAssertNotNil([self createUniqueClientInstance]);
+}
+
+- (void)testSingletonReturnsSameSharedClientTwice {
+    JCRESTClient *s1 = [self getSharedClient];
+    XCTAssertEqualObjects(s1, [self getSharedClient]);
+}
+
+- (void)testSingletonSharedClientSeparateFromUniqueInstance {
+    JCRESTClient *s1 = [self getSharedClient];
+    XCTAssertNotEqual(s1, [self createUniqueClientInstance]);
+}
+
+- (void)testSingletonReturnsSeparateUniqueInstances {
+    JCRESTClient *s1 = [self createUniqueClientInstance];
+    XCTAssertNotEqual(s1, [self createUniqueClientInstance]);
+}
+
+- (void)testSingletonSharedAuthManagerCreated {
+    XCTAssertNotNil([self createUniqueAuthManagerInstance]);
+}
+
+- (void)testSingletonUniqueAuthManagerInstanceCreated {
+    XCTAssertNotNil([self createUniqueAuthManagerInstance]);
+}
+
+- (void)testSingletonReturnsSameSharedAuthManagerTwice {
+    JCAuthenticationManager *s1 = [self getSharedAuthManager];
+    XCTAssertEqualObjects(s1, [self getSharedAuthManager]);
+}
+
+- (void)testSingletonSharedAuthManagerSeparateFromUniqueInstance {
+    JCAuthenticationManager *s1 = [self getSharedAuthManager];
+    XCTAssertNotEqual(s1, [self createUniqueAuthManagerInstance]);
+}
+
+- (void)testSingletonReturnsSeparateUniqueAuthManagerInstances {
+    JCAuthenticationManager *s1 = [self createUniqueAuthManagerInstance];
+    XCTAssertNotEqual(s1, [self createUniqueAuthManagerInstance]);
+}
+
+- (void)testShouldLogin
+{
+    NSString *username = @"jivetesting13@gmail.com";
+    NSString *password = @"testing12";
+    TRVSMonitor *monitor = [TRVSMonitor monitor];
+    __block NSDictionary *response = nil;
+    
+    id mockClient = [OCMockObject niceMockForClass:[JCRESTClient class]];
+    [[mockClient expect] OAuthLoginWithUsername:OCMOCK_ANY password:OCMOCK_ANY success:[OCMArg checkWithBlock:^BOOL(void (^successBlock)(AFHTTPRequestOperation *, id))
+                                                                                   {
+                                                                                       
+                                                                                       //created hardcoded json object as a return object from the server
+
+                                                                                       NSString *content = @"{\"access_token\":\"6a3d752f-93d6-47e2-9013-52e42ae3102e\",\"refresh_token\":\"9b33a76a-b2a5-47bb-a40b-74c3d7dd643a\",\"type\":\"bearer\",\"expires_in\":3600,\"username\":\"jivetesting13@gmail.com\"}";
+                                                                                       NSData *responseObject = [content dataUsingEncoding:NSUTF8StringEncoding];
+                                                                                       NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+                                                                                       XCTAssertNotNil(dictionary, @"Could not parse JSON object into NSDictionary");
+                                                                                       //because the method will add the json objects to core data and then populate JCVoicemailViewController.voicemails from core data, we need to make sure only our hard coded json object exists in core data
+                                                                                       response = dictionary;
+                                                                                       successBlock(nil, dictionary);
+                                                                                       
+                                                                                       return YES;
+                                                                                       
+                                                                                   }] failure:OCMOCK_ANY];
+    
+    
+    
+    JCAuthenticationManager *manager = [JCAuthenticationManager sharedInstance];
+    [manager setClient:mockClient];
+    [manager loginWithUsername:username password:password completed:^(BOOL success, NSError *error) {
+        [monitor signal];
+    }];
+    
+    [monitor wait];
+    
+    [mockClient verify];
+    
+    XCTAssertNotNil(response, @"Should have gotten a respose. Is OAuth Down?");
+    XCTAssertNotNil(response[@"access_token"]);
+    XCTAssertNotNil(response[@"expires_in"]);
+    XCTAssertNotNil(response[@"refresh_token"]);
+    XCTAssertNotNil(response[@"type"]);
+    XCTAssertNotNil(response[@"username"]);
+    
+    XCTAssertNotNil([[JCAuthenticationManager sharedInstance] getAuthenticationToken]);
+    
+    
+    
+}
 
 
 - (void)testShouldRetrieveMyEntity
