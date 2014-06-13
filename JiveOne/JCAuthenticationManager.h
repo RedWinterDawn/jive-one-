@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "KeychainItemWrapper.h"
+#import "JCRESTClient.h"
 
 @class JCAuthenticationManager;
 
@@ -18,6 +19,7 @@
 + (JCAuthenticationManager*)sharedInstance;
 
 - (void)loginWithUsername:(NSString *)username password:(NSString*)password completed:(void (^)(BOOL success, NSError *error)) completed;
+- (void)setClient:(JCRESTClient *)client;
 - (void)didReceiveAuthenticationToken:(NSDictionary *)token;
 - (BOOL)userAuthenticated;
 - (BOOL)userLoadedMininumData;

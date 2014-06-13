@@ -27,6 +27,7 @@
 
 @property (nonatomic) NSString *username;
 @property (nonatomic) NSString *password;
+@property (nonatomic, strong) JCRESTClient *client;
 
 @end
 
@@ -38,6 +39,11 @@
     NSTimer *webviewTimer;
 }
 
+- (void) setClient:(JCRESTClient *)client
+{
+    _client = client;
+}
+
 //static int MAX_LOGIN_ATTEMPTS = 2;
 
 + (JCAuthenticationManager *)sharedInstance
@@ -47,6 +53,7 @@
     dispatch_once(&onceToken, ^{
         sharedObject = [[JCAuthenticationManager alloc] init];
         sharedObject.keychainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
+        [sharedObject setClient:[JCRESTClient sharedClient]];
     });
     return sharedObject;
 }
@@ -65,7 +72,7 @@
     NSLog(@"AUTH PATH: %@", url_path);
 #endif
     
-    [[JCRESTClient sharedClient] OAuthLoginWithUsername:username password:password success:^(AFHTTPRequestOperation *operation, id JSON) {
+    [self.client OAuthLoginWithUsername:username password:password success:^(AFHTTPRequestOperation *operation, id JSON) {
         
         if (JSON[@"access_token"]) {
             
@@ -111,15 +118,6 @@
         completed(NO, error);
     }];
     
-//    if (!webview) {
-//        webview = [[UIWebView alloc] init];
-//    }
-//    
-//    // start the timeout timer
-//    webviewTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(timerElapsed:) userInfo:nil repeats:NO];
-//    
-//    webview.delegate = self;
-//    [webview loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
 - (BOOL)userAuthenticated {
@@ -215,68 +213,12 @@
     [delegate stopSocket];
     
     if(![viewController isKindOfClass:[JCLoginViewController class]]){
-//        [UIView transitionWithView:delegate.window
-//                          duration:0.5
-//                           options:UIViewAnimationOptionTransitionFlipFromLeft
-//                        animations:^{
-//                            [delegate changeRootViewController:JCRootLoginViewController];
-//                        }
-//                        completion:nil];
-        
         [delegate changeRootViewController:JCRootLoginViewController];
     }
 }
 
 
-//#pragma mark - UIWebview Delegates
-//- (BOOL)webView:(UIWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType {
-//    //    [indicator startAnimating];
-//    
-//#if DEBUG
-//    NSLog(@"%@", [request description]);
-//#endif
-//    
-//    if ([[[request URL] scheme] isEqualToString:@"jiveclient"]) {
-//        
-//        // Extract oauth_verifier from URL query
-//        NSString* verifier = nil;
-//        NSArray* urlParams = [[[request URL] query] componentsSeparatedByString:@"&"];
-//        for (NSString* param in urlParams) {
-//            NSArray* keyValue = [param componentsSeparatedByString:@"="];
-//            NSString* key = [keyValue objectAtIndex:0];
-//            if ([key isEqualToString:@"code"]) {
-//                verifier = [keyValue objectAtIndex:1];
-//                break;
-//            }
-//        }
-//        
-//        if (verifier)
-//        {
-//            NSString *data = [NSString stringWithFormat:@"code=%@&client_id=%@&client_secret=%@&redirect_uri=%@&grant_type=authorization_code", verifier, kOAuthClientId, kOAuthClientSecret, kURLSchemeCallback];
-//            [self requestOauthOperation:data type:0];
-//        }
-//    }
-//    return YES;
-//}
-//
-//- (void)webViewDidFinishLoad:(UIWebView *)webView
-//{
-//    if (loginAttempts < MAX_LOGIN_ATTEMPTS) {
-//        [webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.getElementById('username').value = '%@';document.getElementById('password').value = '%@';document.getElementById('go-button').click()", _username, _password]];
-//        loginAttempts++;
-//    }
-//    else {
-//        [webView stopLoading];
-//        loginAttempts = 0;
-//        [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenFailed object:nil];
-//    }
-//}
-//
-//- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
-//{
-//    NSLog(@"Did Fail Load With Error");
-//}
-//
+
 #pragma mark - NSURLConnectionDelegate
 - (void)requestOauthOperation:(NSString *)data type:(NSInteger)type
 {
@@ -310,13 +252,6 @@
     NSLog(@"received Data %@",receivedData);
 }
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
-//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-//                                                    message:[NSString stringWithFormat:@"%@", error]
-//                                                   delegate:nil
-//                                          cancelButtonTitle:@"OK"
-//                                          otherButtonTitles:nil];
-//    [alert show];
-    
     NSLog(@"Error did occurr %@", error);
     NSLog(@"URL: %@", connection.currentRequest.URL);
     NSLog(@"BaseURL: %@", connection.currentRequest.URL.baseURL);
