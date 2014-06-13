@@ -14,7 +14,7 @@
 @interface JCVoiceTableViewController : UITableViewController <AVAudioPlayerDelegate, JCVoiceCellDelegate>
 
 @property (nonatomic) NSMutableArray *voicemails; // exposed for testing
-- (void)updateTable;
+- (void)updateVoiceTable;
 - (void)loadVoicemails;
 - (void)osgiClient:(JCRESTClient*)client;
 - (void)voiceCellDeleteTapped:(NSIndexPath *)indexPath;

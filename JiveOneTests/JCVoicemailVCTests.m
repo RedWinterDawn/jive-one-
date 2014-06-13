@@ -58,6 +58,7 @@
 -(void)testUpdateTableSavesDataToCoreData{
     //mock the client
     id clientMock = [OCMockObject niceMockForClass:[JCRESTClient class]];
+    __block TRVSMonitor *monitor = [TRVSMonitor monitor];
     //when retriveVoicemailForEntity is called on client, return a JSON like the server would
     [[clientMock expect] RetrieveVoicemailForEntity:[OCMArg any]
                                             success:[OCMArg checkWithBlock:^BOOL(void (^successBlock)(AFHTTPRequestOperation *, id))
@@ -74,9 +75,10 @@
                                                          [Voicemail MR_truncateAll];
                                                          //now add our hard coded json to core data
                                                          [Voicemail addVoicemails:dictionary[@"entries"] completed:^(BOOL success) {
-                                                             //don't care;
+                                                             [monitor signal];
                                                          }];
                                                          
+                                                         [monitor wait];
                                                          successBlock(nil, jsonString);
                                                          
                                                          return YES;
@@ -87,7 +89,7 @@
     
     //voicemail view controller is setup in setup method
     //now call updateVoicemailData which will call RetrieveVoicemailForEntity (because it's mocked we'll get the json string made above)
-    [self.voicemailViewController updateTable];
+    [self.voicemailViewController updateVoiceTable];
     //ensure that Retrieve was called indirectly since we made a direct call to updateVoicemailData
     [clientMock verify];
     
