@@ -1,5 +1,4 @@
 #import "../Common.js"
-#import "../underscore.js"
 
 test("Send chat in new conversation and verify it was received", function(target, app){
 

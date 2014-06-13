@@ -141,5 +141,23 @@
    <ArchiveAction
       buildConfiguration = "Debug"
       revealArchiveInOrganizer = "YES">
+      <PostActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "&quot;${PRODUCT_DIR}/build/iphoneos/">
+               <EnvironmentBuildable>
+                  <BuildableReference
+                     BuildableIdentifier = "primary"
+                     BlueprintIdentifier = "275F4A4D18AD0FBC00D2F069"
+                     BuildableName = "JiveOne.app"
+                     BlueprintName = "JiveOne"
+                     ReferencedContainer = "container:JiveOne.xcodeproj">
+                  </BuildableReference>
+               </EnvironmentBuildable>
+            </ActionContent>
+         </ExecutionAction>
+      </PostActions>
    </ArchiveAction>
 </Scheme>

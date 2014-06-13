@@ -314,6 +314,7 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <accessibility key="accessibilityConfiguration" label="serverName"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="RgK-ho-KOh">
                                         <rect key="frame" x="0.0" y="304" width="320" height="44"/>
@@ -329,6 +330,7 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <accessibility key="accessibilityConfiguration" label="reachable"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -348,6 +350,7 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <accessibility key="accessibilityConfiguration" label="authtoken"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -367,6 +370,7 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <accessibility key="accessibilityConfiguration" label="deviceToken"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -387,6 +391,7 @@
                                                 </textView>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <accessibility key="accessibilityConfiguration" label="lastSocketEvent"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
