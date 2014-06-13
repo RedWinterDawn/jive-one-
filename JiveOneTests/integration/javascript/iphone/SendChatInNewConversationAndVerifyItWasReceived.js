@@ -14,9 +14,8 @@ test("Send chat in new conversation and verify it was received", function(target
 		logDebug("conversation with Jive Testing 10 exists. Will delete...");
 		cell.dragInsideWithOptions({startOffset:{x:0.75, y:0.5}, endOffset:{x:0.15, y:0.5}, duration:0.5});
 		cell.buttons()["Delete"].tap();
-		delay(2);
-}
-	//}
+		delay(4);
+}//}
 	
 	//create new conversation with Jive Testing 10
 	target.frontMostApp().navigationBar().rightButton().tap();
@@ -33,8 +32,12 @@ test("Send chat in new conversation and verify it was received", function(target
 	//enter message in message box
 	w.images()[1].textViews()[0].tap();
 	app.keyboard().typeString(uniqueMessage);
+	delay(1);
 	w.images()[1].buttons()["Send"].tap();
 	delay(2);
+	app.keyboard().typeString("2nd message");
+	w.images()[1].buttons()["Send"].tap();
+	delay(4);
 
 	var afterCount = w.tableViews()[1].cells().length;
 	logDebug("after: " + afterCount.toString());
