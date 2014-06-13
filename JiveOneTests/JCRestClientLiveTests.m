@@ -19,6 +19,7 @@
 {
     NSString *barName;
     NSString *barConversation;
+    int run;
 }
 
 - (void)setUp
@@ -38,6 +39,14 @@
             [monitor wait];
         }
     }
+    else {
+        if (run == 0) {
+            [[JCAuthenticationManager sharedInstance] logout:nil];
+            [self setUp];
+        }
+    }
+    
+    run++;
 }
 
 - (void)tearDown
