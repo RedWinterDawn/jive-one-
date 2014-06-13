@@ -5,7 +5,7 @@
 UIATarget.onAlert = function onAlert(alert) {
 	delay(1);
 	var title = alert.name();
-	UIALogger.logWarning("Alert where title '" + title + "' encountered.");
+	// UIALogger.logWarning("Alert where title '" + title + "' encountered.");
 	if (title == "Authentication Error" || title == "Invalid Parameters") {
 		logDebug("entering title if");
 		alert.buttons()["OK"].tap();
