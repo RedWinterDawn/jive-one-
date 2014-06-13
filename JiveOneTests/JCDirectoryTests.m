@@ -42,34 +42,34 @@
 }
 
 #pragma mark Integration Tests
-- (void)testLoadLocalDirectory {
-    
-    if(!self.JCDVC.segControl){
-        self.JCDVC.segControl = [[UISegmentedControl alloc] init];
-    }
-    [self.JCDVC.segControl setSelectedSegmentIndex:1];
-    
-    [self.JCDVC segmentChanged:nil];
-    
-    
-    XCTAssertNotNil(self.JCDVC.clientEntitiesArray, @"Client Entities Array from local contacts did not get instantiated");
-        XCTAssertTrue([self.JCDVC.clientEntitiesArray count] == 27, @"The array should have 27 arrays but instead has: %lu",(unsigned long)[self.JCDVC.clientEntitiesArray count] );
-    
-    int counter=1;
-    
-    for (NSMutableArray *oneOfTwentySixArrays in self.JCDVC.clientEntitiesArray) {
-        
-        XCTAssertNotNil(oneOfTwentySixArrays, @"The [%d]th array is nil", counter );
-        counter++;
-        
-        if (oneOfTwentySixArrays.count != 0) {
-            NSMutableDictionary *localDictionary = oneOfTwentySixArrays[0];
-            
-            XCTAssertNotNil([localDictionary objectForKey:@"firstName"], @"Dictionary does not contain firstName string");
-            XCTAssertNotNil([localDictionary objectForKey:@"lastName"], @"Dictionary does not contain lastName string");
-        }
-    }
-}
+//- (void)testLoadLocalDirectory {
+//    
+//    if(!self.JCDVC.segControl){
+//        self.JCDVC.segControl = [[UISegmentedControl alloc] init];
+//    }
+//    [self.JCDVC.segControl setSelectedSegmentIndex:1];
+//    
+//    [self.JCDVC segmentChanged:nil];
+//    
+//    
+//    XCTAssertNotNil(self.JCDVC.clientEntitiesArray, @"Client Entities Array from local contacts did not get instantiated");
+//        XCTAssertTrue([self.JCDVC.clientEntitiesArray count] == 27, @"The array should have 27 arrays but instead has: %lu",(unsigned long)[self.JCDVC.clientEntitiesArray count] );
+//    
+//    int counter=1;
+//    
+//    for (NSMutableArray *oneOfTwentySixArrays in self.JCDVC.clientEntitiesArray) {
+//        
+//        XCTAssertNotNil(oneOfTwentySixArrays, @"The [%d]th array is nil", counter );
+//        counter++;
+//        
+//        if (oneOfTwentySixArrays.count != 0) {
+//            NSMutableDictionary *localDictionary = oneOfTwentySixArrays[0];
+//            
+//            XCTAssertNotNil([localDictionary objectForKey:@"firstName"], @"Dictionary does not contain firstName string");
+//            XCTAssertNotNil([localDictionary objectForKey:@"lastName"], @"Dictionary does not contain lastName string");
+//        }
+//    }
+//}
 
 - (void)testLoadCompanyDirectory {
     
