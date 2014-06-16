@@ -17,7 +17,6 @@
 #import "LoggerClient.h"
 #import "LoggerCommon.h"
 @interface JCSocketDispatch()
-
 {
     BOOL startedInBackground;
     BOOL didSignalToCloseSocket;
@@ -33,6 +32,7 @@
 @property (strong, nonatomic) NSString *deviceToken; //used for sending a push notification to restore the session if lost
 @property (strong, nonatomic) NSTimer *socketSessionTimer;
 @property (strong, nonatomic) NSTimer *subscriptionTimer;
+@property BOOL socketIsOpen;
 
 @end
 
@@ -59,9 +59,9 @@
 - (void)sendPoll
 {
     LogMessage(@"socket", 4, @"sendPoll");
-    if (_webSocket.readyState == SR_OPEN) {
+    if (self.webSocket.readyState == SR_OPEN) {
         LogMessage(@"socket", 4, @"Websocket.readyState == SR_OPEN");
-        [_webSocket send:self.json_poll];
+        [self.webSocket send:self.json_poll];
     }
 }
 
@@ -113,7 +113,7 @@
             // Retrieve the ws parameter - this is the endpoint used to connect to our socket.
             self.ws = [response objectForKey:@"ws"];
             
-            LogMessage(@"socket", 4,@"Requestion Session For Socket : Success");
+            LogMessage(@"socket", 4,@"Request Session For Socket : Success");
             
             // If we have everyting we need, we can subscribe to events.
             if (self.ws && self.sessionToken) {
@@ -138,9 +138,10 @@
 - (void)timesUpforSubscription
 {
     LOG_Info();
-
-    [_subscriptionTimer invalidate];
-    [_webSocket closeWithCode:500 reason:@"Did not subscribe to all events. Retrying"];
+    if (self.socketIsOpen) {
+        [_subscriptionTimer invalidate];
+        [self.webSocket closeWithCode:500 reason:@"Did not subscribe to all events. Retrying"];
+    }
 }
 
 
@@ -233,11 +234,13 @@
     LOG_Info();
 
     // We have to make sure that the socket is in a initializable state.
-    if (_webSocket == nil || _webSocket.readyState == SR_CLOSING || _webSocket.readyState == SR_CLOSED) {
-        LogMessage(@"socket", 4,@"Starting Socket");
-        _webSocket = [[SRWebSocket alloc] initWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.ws]]];
-        _webSocket.delegate = self;
-        [_webSocket open];
+    if (self.webSocket == nil || self.webSocket.readyState == SR_CLOSING || self.webSocket.readyState == SR_CLOSED) {
+        if (!self.socketIsOpen) {
+            LogMessage(@"socket", 4,@"Starting Socket");
+            self.webSocket = [[SRWebSocket alloc] initWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.ws]]];
+            self.webSocket.delegate = self;
+            [self.webSocket open];
+        }
     }
 }
 
@@ -247,15 +250,14 @@
     LogMarker(@"Close Socket Attempt");
 
     LogMessage(@"socket", 4,@"Did pull before closing the socket");
-    [_webSocket send:self.json_poll];
+    [self.webSocket send:self.json_poll];
     if ([_subscriptionTimer isValid]) {
         [_subscriptionTimer invalidate];
     }
-    
-    didSignalToCloseSocket = YES;
-    LogMarker(@"Socket Close Attempt");
-
-    [_webSocket close];
+    if (self.socketIsOpen) {
+        didSignalToCloseSocket = YES;
+        [self.webSocket close];
+    }
 }
 
 - (void)reconnect
@@ -275,7 +277,8 @@
     LOG_Info();
     LogMarker(@"Socket Did Open");
     // Socket connected, send start command
-    [_webSocket send:self.json_start];
+    self.socketIsOpen = YES;
+    [self.webSocket send:self.json_start];
     
     [self subscribeSession];
 }
@@ -306,7 +309,7 @@
     [self messageDispatcher:messageDictionary];
     
     // As soon as we're done processing the last received item, poll.
-    [_webSocket send:self.json_poll];
+    [self.webSocket send:self.json_poll];
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error
@@ -315,6 +318,7 @@
     LogMarker(@"Websocket did Fail.");
     LogMessage(@"socket", 4,@"%@", [NSString stringWithFormat:@"Connection Failed: %@", [error description]]);
     // If connection fails, try to reconnect.
+    self.socketIsOpen = NO;
     [self reconnect];
 }
 
@@ -323,6 +327,7 @@
 {
     LOG_Info();
     LogMarker(@"WebSocket Did Close");
+    self.socketIsOpen = NO;
 
     reason = reason == nil? @"" : reason;
    NSDictionary *userInfo = @{
@@ -493,8 +498,10 @@
         [self requestSession];
     }
     @catch (NSException *exception) {
-        didSignalToCloseSocket = YES;
-        [self closeSocket];
+        if (self.socketIsOpen) {
+            didSignalToCloseSocket = YES;
+            [self closeSocket];
+        }
     }
 }
 
