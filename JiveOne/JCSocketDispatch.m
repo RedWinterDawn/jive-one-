@@ -125,9 +125,9 @@
             
             // if we fail to get a session, then try again in 2 seconds
             if (![_socketSessionTimer isValid]) {
-                LogMessage(@"socket", 4, @"Will attempt to create session again.");
+                LogMessage(@"socket", 4, @"Will attempt to create session again in 7 seconds.");
 
-                _socketSessionTimer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(socketSessionTimerElapsed:) userInfo:nil repeats:YES];
+                _socketSessionTimer = [NSTimer scheduledTimerWithTimeInterval:7.0 target:self selector:@selector(socketSessionTimerElapsed:) userInfo:nil repeats:YES];
                 [[NSRunLoop currentRunLoop] addTimer:_socketSessionTimer forMode:NSDefaultRunLoopMode];
             }
             
@@ -244,6 +244,7 @@
 - (void)closeSocket
 {
     LOG_Info();
+    LogMarker(@"Close Socket Attempt");
 
     LogMessage(@"socket", 4,@"Did pull before closing the socket");
     [_webSocket send:self.json_poll];
@@ -252,6 +253,8 @@
     }
     
     didSignalToCloseSocket = YES;
+    LogMarker(@"Socket Close Attempt");
+
     [_webSocket close];
 }
 
@@ -260,6 +263,8 @@
     LOG_Info();
 
     if (startedInBackground || [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) {
+        LogMarker(@"Reconnect Attempt");
+
         [self requestSession];
     }
 }
@@ -317,6 +322,7 @@
 - (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean
 {
     LOG_Info();
+    LogMarker(@"WebSocket Did Close");
 
     reason = reason == nil? @"" : reason;
    NSDictionary *userInfo = @{
