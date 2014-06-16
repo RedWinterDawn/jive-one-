@@ -69,4 +69,15 @@ function delay(time){
     this.target.delay(time);
 }
 
+function arrayContainsCellWithName(name, array){
+    var count = array.length;
+    for(i=0;i<count;i++){
+        var row = array[i].name();
+        if(row.contains(name)){
+            return true;
+        }
+    }
+    return false;
+}
+
 String.prototype.contains = function(it) { return this.indexOf(it) != -1; };
