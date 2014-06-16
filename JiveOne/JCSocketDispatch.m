@@ -239,6 +239,7 @@
             LogMessage(@"socket", 4,@"Starting Socket");
             self.webSocket = [[SRWebSocket alloc] initWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.ws]]];
             self.webSocket.delegate = self;
+            LogMarker(@"the one and only webSocket openCall has been called.");
             [self.webSocket open];
         }
     }
