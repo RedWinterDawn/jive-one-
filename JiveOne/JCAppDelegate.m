@@ -228,7 +228,7 @@ int didNotify;
 - (void)startSocket:(BOOL)inBackground
 {
     LOG_Info();
-    LogMessage(@"socket", 4, @"Calling startSession From AppDelegate");
+    LogMessage(@"socket", 4, @"Calling requestSession From AppDelegate");
 
     //if ([[JCSocketDispatch sharedInstance] socketState] == SR_CLOSED || [[JCSocketDispatch sharedInstance] socketState] == SR_CLOSING) {
     [[JCSocketDispatch sharedInstance] requestSession];

@@ -78,10 +78,13 @@
     [self cleanup];
     
     if ([[JCAuthenticationManager sharedInstance] userAuthenticated] )  {
-        
+        LogMessage(@"socket", 4, @"User appears to be authenticated");
+
         [[JCRESTClient sharedClient] RequestSocketSession:^(id JSON) {
             
             if (_socketSessionTimer) {
+                LogMessage(@"socket", 4, @"invalidate socketSessionTimer");
+
                 [_socketSessionTimer invalidate];
             }
             
