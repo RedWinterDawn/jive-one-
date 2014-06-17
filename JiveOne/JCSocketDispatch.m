@@ -31,7 +31,7 @@
 @property (strong, nonatomic) NSString *deviceToken; //used for sending a push notification to restore the session if lost
 @property (strong, nonatomic) NSTimer *socketSessionTimer;
 @property (strong, nonatomic) NSTimer *subscriptionTimer;
-@property BOOL socketIsOpen;
+@property (nonatomic) BOOL socketIsOpen;
 
 @end
 
@@ -48,7 +48,6 @@
     dispatch_once(&onceToken, ^{
         sharedObject = [[super alloc] init];
     });
-    
     return sharedObject;
 }
 
@@ -120,7 +119,7 @@
             
             // If we have everyting we need, we can subscribe to events.
             if (self.ws && self.sessionToken) {
-                LogMessage(@"socket", 4,@"Request Session For Socket : Success");
+                LogMessage(@"socket", 4,@"We have an endpoint and a sessionToken");
                 [self initSession];
             }
             
@@ -231,6 +230,9 @@
 - (void)initSession
 {
     LOG_Info();
+    LogMessage(@"socket", 4,@"WebSocket status is: %i",self.webSocket.readyState);
+    LogMessage(@"socket", 4,@"WebSocket socketIsOpen %i",self.socketIsOpen);
+
     // We have to make sure that the socket is in a initializable state.
     if (self.webSocket == nil || self.webSocket.readyState == SR_CLOSING || self.webSocket.readyState == SR_CLOSED) {
         if (!self.socketIsOpen) {
@@ -240,6 +242,11 @@
             LogMarker(@"Will attempt to open websocket");
             [self.webSocket open];
         }
+    }
+    else
+    {
+        LogMessage(@"socket", 4,@"Socket is not in initializable state.");
+
     }
 }
 
@@ -384,6 +391,7 @@
 {
     LOG_Info();
     [_webSocket setDelegate:NULL];
+    self.socketIsOpen = NO;
     _cmd_start = nil;
     _cmd_poll = nil;
     _json_start = nil;
@@ -503,6 +511,15 @@
         LogMessage(@"socket", 4,@"%@", err);
     }];
 }
+
+-(BOOL)socketIsOpen
+{
+    if (!_socketIsOpen) {
+        _socketIsOpen = NO;
+    }
+    return _socketIsOpen;
+}
+
 
 #pragma mark - NSTimer
 - (void)socketSessionTimerElapsed:(NSNotification *)notification
