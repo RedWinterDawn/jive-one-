@@ -67,7 +67,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
     self.icomoonFont = [UIFont fontWithName:@"icomoon" size:18.0];
     self.theRightShadeOfYellowForOurStar = [UIColor colorWithRed:255.0/255.0 green:212.0/255.0 blue:0.0/255.0 alpha:1.0];
     
-    sections = [NSArray arrayWithObjects:self.star, @"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
+    sections = [NSArray arrayWithObjects: @"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
     self.clientEntitiesArray = [[NSMutableArray alloc] init];
     self.clientEntitiesSearchArray = [[NSMutableArray alloc] init];
     self.doneAnimatingToolbarFromFirstResponderState = YES;
@@ -355,55 +355,55 @@ static NSString *CellIdentifier = @"DirectoryCell";
 
 #pragma mark - Load Directories
 
-- (void)loadLocalDirectory {
-    
-    
-    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
-    
-    if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined) {
-        ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
-            if (granted) {
-//                NSLog(@"User granted permission to contacts");
-            } else {
-                // User denied access
-                // Display an alert telling user the contact could not be added
-            }
-        });
-    }
-  
-
-    NSArray *allContacts = (__bridge_transfer NSArray *)ABAddressBookCopyArrayOfAllPeople(addressBook);
-    CFRelease(addressBook);
-    NSInteger sectionCount = [sections count];
-    NSInteger allContactsCount = [allContacts count];
-    for (int i = 0; i < sectionCount; i++) {
-        NSMutableArray *section = [[NSMutableArray alloc] init];
-        
-        for (int j = 0; j < allContactsCount; j++) {
-            NSString * firstName = (__bridge_transfer NSString *)(ABRecordCopyValue((__bridge ABRecordRef)(allContacts[j]), kABPersonFirstNameProperty));
-            
-            if ([firstName hasPrefix:sections[i]] || [firstName hasPrefix:[sections[i] lowercaseString]]) {
-                NSString * lastName = (__bridge_transfer NSString *)(ABRecordCopyValue((__bridge ABRecordRef)(allContacts[j]), kABPersonLastNameProperty));
-                NSString * email = (__bridge_transfer NSString *)(ABRecordCopyValue((__bridge ABRecordRef)(allContacts[j]), kABPersonEmailProperty));
-                NSString * phone = (__bridge_transfer NSString *)(ABRecordCopyValue((__bridge ABRecordRef)(allContacts[j]), kABPersonPhoneProperty));
-                
-                NSMutableDictionary *tempDictionary = [[NSMutableDictionary alloc] init];
-                [tempDictionary setObject:firstName forKey:@"firstName"];
-                [tempDictionary setObject:[self padNilPhoneNames:lastName] forKey:@"lastName"];
-                [tempDictionary setObject:[self padNilPhoneNames:[NSString stringWithFormat:@"%@ %@", firstName, lastName] ] forKey:@"firstLast"];
-                [tempDictionary setObject:email forKey:@"email"];
-                [tempDictionary setObject:phone forKey:@"phone"];
-            
-            [section addObject:tempDictionary];
-                
-            }
-        }
-        
-        [self.clientEntitiesArray addObject:section];
-    }
-    
-    [self.tableView reloadData];
-}
+//- (void)loadLocalDirectory {
+//    
+//    
+//    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+//    
+//    if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined) {
+//        ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
+//            if (granted) {
+////                NSLog(@"User granted permission to contacts");
+//            } else {
+//                // User denied access
+//                // Display an alert telling user the contact could not be added
+//            }
+//        });
+//    }
+//  
+//
+//    NSArray *allContacts = (__bridge_transfer NSArray *)ABAddressBookCopyArrayOfAllPeople(addressBook);
+//    CFRelease(addressBook);
+//    NSInteger sectionCount = [sections count];
+//    NSInteger allContactsCount = [allContacts count];
+//    for (int i = 0; i < sectionCount; i++) {
+//        NSMutableArray *section = [[NSMutableArray alloc] init];
+//        
+//        for (int j = 0; j < allContactsCount; j++) {
+//            NSString * firstName = (__bridge_transfer NSString *)(ABRecordCopyValue((__bridge ABRecordRef)(allContacts[j]), kABPersonFirstNameProperty));
+//            
+//            if ([firstName hasPrefix:sections[i]] || [firstName hasPrefix:[sections[i] lowercaseString]]) {
+//                NSString * lastName = (__bridge_transfer NSString *)(ABRecordCopyValue((__bridge ABRecordRef)(allContacts[j]), kABPersonLastNameProperty));
+//                NSString * email = (__bridge_transfer NSString *)(ABRecordCopyValue((__bridge ABRecordRef)(allContacts[j]), kABPersonEmailProperty));
+//                NSString * phone = (__bridge_transfer NSString *)(ABRecordCopyValue((__bridge ABRecordRef)(allContacts[j]), kABPersonPhoneProperty));
+//                
+//                NSMutableDictionary *tempDictionary = [[NSMutableDictionary alloc] init];
+//                [tempDictionary setObject:firstName forKey:@"firstName"];
+//                [tempDictionary setObject:[self padNilPhoneNames:lastName] forKey:@"lastName"];
+//                [tempDictionary setObject:[self padNilPhoneNames:[NSString stringWithFormat:@"%@ %@", firstName, lastName] ] forKey:@"firstLast"];
+//                [tempDictionary setObject:email forKey:@"email"];
+//                [tempDictionary setObject:phone forKey:@"phone"];
+//            
+//            [section addObject:tempDictionary];
+//                
+//            }
+//        }
+//        
+//        [self.clientEntitiesArray addObject:section];
+//    }
+//    
+//    [self.tableView reloadData];
+//}
 
 -(NSString*) padNilPhoneNames:(NSString*)string{
     if(!string)
@@ -443,7 +443,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
     if(noData)
     {
         NSLog(@"NoData - for company Directory");
-        NSArray *allPeople = [PersonEntities MR_findAll];
+//        NSArray *allPeople = [PersonEntities MR_findAll];
 //        NSLog(@"All People Count = %lu", (unsigned long)allPeople.count);
         [self refreshCompanyDirectory];
     }
@@ -452,18 +452,18 @@ static NSString *CellIdentifier = @"DirectoryCell";
     [self.tableView reloadData];
 }
 
-- (IBAction)segmentChanged:sender {
-    
-    [self.clientEntitiesArray removeAllObjects];
-    if ([self.segControl selectedSegmentIndex] == 0) {
-        [self loadCompanyDirectory];
-//        NSLog(@"First segment!");
-    } else {
-        [self loadLocalDirectory];
-//        NSLog(@"Second Segment!");
-    }
-    
-}
+//- (IBAction)segmentChanged:sender {
+//    
+//    [self.clientEntitiesArray removeAllObjects];
+//    if ([self.segControl selectedSegmentIndex] == 0) {
+//        [self loadCompanyDirectory];
+////        NSLog(@"First segment!");
+//    } else {
+//        [self loadLocalDirectory];
+////        NSLog(@"Second Segment!");
+//    }
+//    
+//}
 
 
 - (void)refreshCompanyDirectory
@@ -515,10 +515,10 @@ static NSString *CellIdentifier = @"DirectoryCell";
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         return @"Search Results";
     }else{
-        if(section==0){
-            
-            return self.star;
-        }
+//        if(section==0){
+//            
+//            return self.star;
+//        }
         return [sections objectAtIndex:section];
     }
 }

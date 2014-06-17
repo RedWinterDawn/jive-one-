@@ -214,6 +214,7 @@
     NSMutableAttributedString *attributedStarSelectedState = [[NSMutableAttributedString alloc]initWithString:@"★" attributes:@{NSForegroundColorAttributeName : StarColor}];
     [cell.favoriteButton setAttributedTitle:attributedStarSelectedState forState:UIControlStateNormal];
 
+    cell.favoriteButton.hidden = YES;
 }
 
 //TODO: Create Crud Method to getSpecific person from Coredata and update the their isFavorite attribute.
