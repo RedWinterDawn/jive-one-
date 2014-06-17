@@ -74,10 +74,10 @@ function arrayContainsCellWithName(name, array){
     for(i=0;i<count;i++){
         var row = array[i].name();
         if(row.contains(name)){
-            return true;
+            return i;
         }
     }
-    return false;
+    return -1;
 }
 
 String.prototype.contains = function(it) { return this.indexOf(it) != -1; };
