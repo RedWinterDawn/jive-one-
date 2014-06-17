@@ -15,19 +15,19 @@ delay(2);
 assertTrue(arrayContainsCellWithName(kFavoriteCell, app.mainWindow().tableViews()["Empty list"].visibleCells()), kFavoriteCell +" cell not visible");
 // Select ‘Jive Testing 17’!
 logDebug("select "+kFavoriteCell)
-target.frontMostApp().mainWindow().tableViews()["Empty list"].cells().firstWithNameRegex(kFavoriteCell).tap();
+// target.frontMostApp().mainWindow().tableViews()["Empty list"].cells().firstWithNameRegex(kFavoriteCell).tap();
 
-logDebug("tap that")
-delay(2);
-// Assert email, company information correct!
-assertEquals("Email, jivetesting17@gmail.com", app.mainWindow().tableViews()["Empty list"].cells()[1].name(), "Email information incorrect");//1
-assertEquals("Company, Integration Testing", app.mainWindow().tableViews()["Empty list"].cells()[2].name(), "Company information incorrect");//2
-// Toggle star on/off/on!
-target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()[kFavoriteCell].buttons()["★"].tap();//0
-// Tap ‘< People’ to go back to R list (and confirm star is shiny)!
-target.frontMostApp().navigationBar().leftButton().tap();
-// Select star index!
-target.frontMostApp().mainWindow().tableViews()["Empty list"].elements()["table index"].tapWithOptions({tapOffset:{x:0.67, y:0.01}});//star
+// logDebug("tap that")
+// delay(2);
+// // Assert email, company information correct!
+// assertEquals("Email, jivetesting17@gmail.com", app.mainWindow().tableViews()["Empty list"].cells()[1].name(), "Email information incorrect");//1
+// assertEquals("Company, Integration Testing", app.mainWindow().tableViews()["Empty list"].cells()[2].name(), "Company information incorrect");//2
+// // Toggle star on/off/on!
+// target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()[kFavoriteCell].buttons()["★"].tap();//0
+// // Tap ‘< People’ to go back to R list (and confirm star is shiny)!
+// target.frontMostApp().navigationBar().leftButton().tap();
+// // Select star index!
+// target.frontMostApp().mainWindow().tableViews()["Empty list"].elements()["table index"].tapWithOptions({tapOffset:{x:0.67, y:0.01}});//star
 // Confirm both starred entries are present and listed!
 
 // Select ‘More’ button!
