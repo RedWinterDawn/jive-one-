@@ -339,7 +339,7 @@
     
     
     LogMessage(@"socket", 4,@"Connection Closed : %@", userInfo);
-    
+    [self cleanup];
     
     // If the socket was not closed on purpose (code 200), then try to reconnect
     if (!didSignalToCloseSocket) {
@@ -362,7 +362,7 @@
 - (void)cleanup
 {
     LOG_Info();
-
+    [_webSocket setDelegate:NULL];
     _cmd_start = nil;
     _cmd_poll = nil;
     _json_start = nil;
