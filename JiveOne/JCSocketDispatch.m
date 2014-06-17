@@ -75,9 +75,6 @@
 //    startedInBackground = ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground ||
 //                           [UIApplication sharedApplication].applicationState == UIApplicationStateInactive);
     
-//    LogMessage(@"socket", 4, @"UIApplicationStateBackground : %d",[UIApplication sharedApplication].applicationState == UIApplicationStateBackground);
-//    LogMessage(@"socket", 4, @"UIApplicationStateInactive : %d",[UIApplication sharedApplication].applicationState == UIApplicationStateBackground);
-
     [self cleanup];
     
     if ([[JCAuthenticationManager sharedInstance] userAuthenticated] )  {
@@ -115,7 +112,7 @@
             
             // Retrieve the ws parameter - this is the endpoint used to connect to our socket.
             self.ws = [response objectForKey:@"ws"];
-            LogMessage(@"socket", 4, @"Session Token:%@", self.ws);
+            LogMessage(@"socket", 4, @"Socket Endpoint:%@", self.ws);
 
             
             // If we have everyting we need, we can subscribe to events.
@@ -231,14 +228,13 @@
 - (void)initSession
 {
     LOG_Info();
-
     // We have to make sure that the socket is in a initializable state.
     if (self.webSocket == nil || self.webSocket.readyState == SR_CLOSING || self.webSocket.readyState == SR_CLOSED) {
         if (!self.socketIsOpen) {
-            LogMessage(@"socket", 4,@"Starting Socket");
+            LogMessage(@"socket", 4,@"request");
             self.webSocket = [[SRWebSocket alloc] initWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.ws]]];
             self.webSocket.delegate = self;
-            LogMarker(@"the one and only webSocket openCall has been called.");
+            LogMarker(@"Will attempt to open websocket");
             [self.webSocket open];
         }
     }
@@ -279,6 +275,8 @@
 {
     LOG_Info();
     LogMarker(@"Socket Did Open");
+    LogMessage(@"socket", 4,@"WebSocket status should be 1 - it is: %i",self.webSocket.readyState);
+
     // Socket connected, send start command
     self.socketIsOpen = YES;
     [self.webSocket send:self.json_start];
@@ -305,6 +303,21 @@
     if (messageDictionary[@"cmd"]) {
         if ([messageDictionary[@"cmd"] isEqualToString:@"noMessage"] && self.startedInBackground) {
             [self closeSocket];
+        }
+    }
+    
+    //handle Invalid session token message error
+    if (messageDictionary[@"message"]) {
+        if ([messageDictionary[@"message"] isEqualToString:@"Invalid session token provided"]) {
+            LogMarker(@"Invalid session token provided");
+            if (self.socketIsOpen) {
+                didSignalToCloseSocket = YES;
+                LogMessage(@"socket", 4,@"Will close socket");
+
+                [self.webSocket close];
+            }
+            LogMessage(@"socket", 4,@"Will attempt reconnect");
+            [self reconnect];
         }
     }
     
@@ -505,6 +518,8 @@
         [self requestSession];
     }
     @catch (NSException *exception) {
+        LogMessage(@"socket", 4,@"Exception Failed to Pool from Socket: %@", exception);
+
         if (self.socketIsOpen) {
             didSignalToCloseSocket = YES;
             [self closeSocket];
