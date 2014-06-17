@@ -350,9 +350,13 @@
     else {
     // Otherwise invalidere the timer, and if app state is in background, then send completion block.
         [_socketSessionTimer invalidate];
-
-        if (self.startedInBackground) {
-            self.completionBlock(YES, nil);
+        if (startedInBackground && [UIApplication sharedApplication].applicationState != UIApplicationStateActive) { //add one more check
+            if (self.completionBlock) {
+                self.completionBlock(YES, nil);
+            }
+        }
+        else {
+            [self reconnect];
         }
     }
     
