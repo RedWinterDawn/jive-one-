@@ -116,6 +116,8 @@ int didNotify;
 
 - (void)didLogInSoCanRegisterForPushNotifications
 {
+    LOG_Info();
+
     //[UAPush shared].pushNotificationDelegate = self;
     // Request a custom set of notification types
     [[UAPush shared] registerForRemoteNotifications];
@@ -126,6 +128,8 @@ int didNotify;
 
 - (void)didLogOutSoUnRegisterForPushNotifications
 {
+    LOG_Info();
+
     [[UIApplication sharedApplication] unregisterForRemoteNotifications];
 }
 
@@ -154,7 +158,9 @@ int didNotify;
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
-{    
+{
+    LOG_Info();
+
     [Flurry logEvent:@"Resumed Session"];
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     //[[NotificationView sharedInstance] didChangeConnection:nil];
@@ -222,7 +228,8 @@ int didNotify;
 - (void)startSocket:(BOOL)inBackground
 {
     LOG_Info();
-    
+    LogMessage(@"socket", 4, @"Calling startSession From AppDelegate");
+
     //if ([[JCSocketDispatch sharedInstance] socketState] == SR_CLOSED || [[JCSocketDispatch sharedInstance] socketState] == SR_CLOSING) {
     [[JCSocketDispatch sharedInstance] requestSession];
     //}
@@ -230,6 +237,8 @@ int didNotify;
 
 - (void)stopSocket
 {
+    LogMessage(@"socket", 4, @"Calling stopSocket From AppDelegate");
+
     LOG_Info();
     
     [[JCSocketDispatch sharedInstance] closeSocket];

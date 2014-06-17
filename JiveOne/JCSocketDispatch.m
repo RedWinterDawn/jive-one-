@@ -253,6 +253,7 @@
     if (self.socketIsOpen) {
         didSignalToCloseSocket = YES;
         [self.webSocket close];
+        [self cleanup];
     }
 }
 
@@ -260,7 +261,7 @@
 {
     LOG_Info();
 
-    // This doesnt make sense to me - if the app started in the background or is active ... reconnect???
+    // This doesnt make sense to me (@doug) - if the app started in the background or is active ... reconnect???
     // any other state is only transitional to these two options
     //if (self.startedInBackground || [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) {
         LogMarker(@"Reconnect Attempt");
