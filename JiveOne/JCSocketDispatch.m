@@ -18,7 +18,6 @@
 #import "LoggerCommon.h"
 @interface JCSocketDispatch()
 {
-    BOOL startedInBackground;
     BOOL didSignalToCloseSocket;
 }
 
@@ -53,8 +52,6 @@
     return sharedObject;
 }
 
-
-
 #pragma mark - Public Methods
 - (void)sendPoll
 {
@@ -75,8 +72,12 @@
     LOG_Info();
     LogMessage(@"socket", 4, @"Requesting Session For Socket");
     
-    startedInBackground = ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground ||
-                           [UIApplication sharedApplication].applicationState == UIApplicationStateInactive);
+//    startedInBackground = ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground ||
+//                           [UIApplication sharedApplication].applicationState == UIApplicationStateInactive);
+    
+//    LogMessage(@"socket", 4, @"UIApplicationStateBackground : %d",[UIApplication sharedApplication].applicationState == UIApplicationStateBackground);
+//    LogMessage(@"socket", 4, @"UIApplicationStateInactive : %d",[UIApplication sharedApplication].applicationState == UIApplicationStateBackground);
+
     [self cleanup];
     
     if ([[JCAuthenticationManager sharedInstance] userAuthenticated] )  {
@@ -95,6 +96,8 @@
             
             // Retrive session token and pipe it together with our auth token
             self.sessionToken = [NSString stringWithFormat:@"%@",[response objectForKey:@"token"]];
+            LogMessage(@"socket", 4, @"Session Token:%@", self.sessionToken);
+
             self.pipedTokens = [NSString stringWithFormat:@"%@|%@", authToken, self.sessionToken];
             
             // Create dictionaries that will be converted to JSON objects to be posted to the socket.
@@ -112,11 +115,12 @@
             
             // Retrieve the ws parameter - this is the endpoint used to connect to our socket.
             self.ws = [response objectForKey:@"ws"];
-            
-            LogMessage(@"socket", 4,@"Request Session For Socket : Success");
+            LogMessage(@"socket", 4, @"Session Token:%@", self.ws);
+
             
             // If we have everyting we need, we can subscribe to events.
             if (self.ws && self.sessionToken) {
+                LogMessage(@"socket", 4,@"Request Session For Socket : Success");
                 [self initSession];
             }
             
@@ -164,7 +168,6 @@
 
     switch (sessionType) {
         case JCConversationSession:{
-//            LogMessage(@"socket", 4,@"Subscribing to JCConversationSession");
             NSMutableDictionary* conversation = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"(conversations|permanentrooms|groupconversations|adhocrooms):*:entries:*", @"urn", nil];
                 if ([Conversation getConversationEtag] != 0) {
                     [conversation setValue:[NSString stringWithFormat:@"%ld", (long)[Conversation getConversationEtag]] forKey:@"ETag"];
@@ -174,7 +177,6 @@
             }
             
         case JCConversation4Session:{
-//            LogMessage(@"socket", 4,@"Subscribing to JCConversation4Session");
             NSMutableDictionary* conversation4 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"(conversations|permanentrooms|groupconversations|adhocrooms):*", @"urn", nil];
                 if ([Conversation getConversationEtag] != 0) {
                     [conversation4 setValue:[NSString stringWithFormat:@"%ld", (long)[Conversation getConversationEtag]] forKey:@"ETag"];
@@ -184,7 +186,6 @@
             }
             
         case JCVoicemailSession:{
-//            LogMessage(@"socket", 4,@"Subscribing to JCVoicemailSession");
             NSMutableDictionary* voicemail = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"voicemails:*", @"urn", nil];
                 if ([Voicemail getVoicemailEtag] != 0) {
                     [voicemail setValue:[NSString stringWithFormat:@"%ld", (long)[Voicemail getVoicemailEtag]] forKey:@"ETag"];
@@ -194,14 +195,12 @@
             }
     
         case JCPresenceSession:{
-//            LogMessage(@"socket", 4,@"Subscribing to JCPresenceSession");
             NSDictionary* presence = [NSDictionary dictionaryWithObjectsAndKeys:@"presence:entities:*", @"urn", nil];
             [self subscribeToSocketUsingDictionary:presence];
             break;
             }
             
         case JCCallsSession:{
-//            LogMessage(@"socket", 4,@"Subscribing to JCCallsSession");
             NSDictionary* calls = [NSDictionary dictionaryWithObjectsAndKeys:@"calls:#", @"urn", nil];
             [self subscribeToSocketUsingDictionary:calls];
             break;
@@ -265,14 +264,17 @@
 {
     LOG_Info();
 
-    if (startedInBackground || [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) {
+    // This doesnt make sense to me - if the app started in the background or is active ... reconnect???
+    // any other state is only transitional to these two options
+    //if (self.startedInBackground || [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) {
         LogMarker(@"Reconnect Attempt");
 
         [self requestSession];
-    }
+    //}
 }
 
 #pragma mark - Websocket Delegates
+
 - (void)webSocketDidOpen:(SRWebSocket *)webSocket
 {
     LOG_Info();
@@ -301,7 +303,7 @@
     
     // if the commend is 'noMessage', and the app state is in the background, then close the socket
     if (messageDictionary[@"cmd"]) {
-        if ([messageDictionary[@"cmd"] isEqualToString:@"noMessage"] && startedInBackground) {
+        if ([messageDictionary[@"cmd"] isEqualToString:@"noMessage"] && self.startedInBackground) {
             [self closeSocket];
         }
     }
@@ -323,14 +325,13 @@
     [self reconnect];
 }
 
-
 - (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean
 {
     LOG_Info();
     LogMarker(@"WebSocket Did Close");
     self.socketIsOpen = NO;
 
-    reason = reason == nil? @"" : reason;
+    reason = reason == nil ? @"" : reason;
    NSDictionary *userInfo = @{
            @"code": @(code),
            @"reason": reason,
@@ -349,7 +350,8 @@
     else {
     // Otherwise invalidere the timer, and if app state is in background, then send completion block.
         [_socketSessionTimer invalidate];
-        if (startedInBackground) {
+
+        if (self.startedInBackground) {
             self.completionBlock(YES, nil);
         }
     }

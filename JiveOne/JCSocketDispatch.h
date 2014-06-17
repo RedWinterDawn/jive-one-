@@ -24,6 +24,7 @@ typedef void (^CompletionBlock) (BOOL success, NSError *error);
 @property (nonatomic, strong) SRWebSocket *webSocket;
 @property (nonatomic) NSInteger subscriptionCount;
 @property (nonatomic, copy) CompletionBlock completionBlock;
+@property BOOL startedInBackground;
 
 + (instancetype)sharedInstance;
 - (void)startPoolingFromSocketWithCompletion:(CompletionBlock)completed;

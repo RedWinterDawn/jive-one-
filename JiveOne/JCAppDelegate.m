@@ -35,8 +35,9 @@ int didNotify;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     LOG_Info();
-    
     NSLog(LOGGER_TARGET);
+    
+    [[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
     
     //Create a sharedCache for AFNetworking
     NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:2 * 1024 * 1024
@@ -103,10 +104,7 @@ int didNotify;
     
     [self refreshTabBadges:NO];    
     if ([[JCAuthenticationManager sharedInstance] userAuthenticated] && [[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {
-//        [self changeRootViewController:JCRootTabbarViewController];
-//        UIViewController *rootVC = [storyboard instantiateViewControllerWithIdentifier:@"UITabBarController"];
         [self.window setRootViewController:self.tabBarViewController];
-//        [self.window setRootViewController:rootVC];
         [[JCAuthenticationManager sharedInstance] checkForTokenValidity];
         [[JCRESTClient sharedClient] RetrieveEntitiesPresence:^(BOOL updated) {
             //do nothing;
@@ -115,8 +113,6 @@ int didNotify;
         }];
     }
     else {
-//        [self changeRootViewController:JCRootLoginViewController];
-//        UIViewController *rootVC = [storyboard instantiateViewControllerWithIdentifier:@"JCLoginViewController"];
         [self.window setRootViewController:self.loginViewController];
     }
     
@@ -138,6 +134,7 @@ int didNotify;
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     LOG_Info();
+
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     
@@ -319,7 +316,8 @@ int didNotify;
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     LOG_Info();
-    
+    [[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
+
     completionHandler([self BackgroundPerformFetchWithCompletionHandler]);
 }
 
@@ -327,7 +325,8 @@ int didNotify;
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     LOG_Info();
-    
+    [[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
+
     completionHandler([self BackgroundPerformFetchWithCompletionHandler]);
 }
 
@@ -335,14 +334,16 @@ int didNotify;
 - (void)receivedForegroundNotification:(NSDictionary *)notification fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     LOG_Info();
-    
+    [[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
+
     completionHandler([self BackgroundPerformFetchWithCompletionHandler]);
 }
 
 - (void)receivedBackgroundNotification:(NSDictionary *)notification fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     LOG_Info();
-    
+    [[JCSocketDispatch sharedInstance] setStartedInBackground:YES];
+
     completionHandler([self BackgroundPerformFetchWithCompletionHandler]);
 }
 
@@ -350,7 +351,8 @@ int didNotify;
 - (UIBackgroundFetchResult)BackgroundPerformFetchWithCompletionHandler
 {
     LOG_Info();
-    
+    [[JCSocketDispatch sharedInstance] setStartedInBackground:YES];
+
     NSLog(@"APPDELEGATE - performFetchWithCompletionHandler");
     __block UIBackgroundFetchResult fetchResult = UIBackgroundFetchResultFailed;
     if ([JCSocketDispatch sharedInstance].webSocket.readyState != SR_OPEN) {
@@ -721,6 +723,8 @@ int didNotify;
 - (void)changeRootViewController:(JCRootViewControllerType)type
 {
     LOG_Info();
+    [[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
+
     if (type == JCRootTabbarViewController) {
         
         [self.loginViewController goToApplication];
