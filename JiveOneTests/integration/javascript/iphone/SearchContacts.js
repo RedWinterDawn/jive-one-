@@ -2,8 +2,8 @@
 
 test("Search Contacts", function(target, app){
 
-	// logoutIfNeeded(app);
-	// login(app, "jivetesting10@gmail.com", "testing12");
+	logoutIfNeeded(app);
+	login(app, "jivetesting10@gmail.com", "testing12");
 
 	// Confirm landing on People page!
 	assertEquals(target.frontMostApp().mainWindow().navigationBar().name(), "People", "Should have loaded people view");
