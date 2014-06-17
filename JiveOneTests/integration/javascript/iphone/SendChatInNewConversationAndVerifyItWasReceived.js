@@ -14,7 +14,7 @@ test("Send chat in new conversation and verify it was received", function(target
 		logDebug("conversation with Jive Testing 10 exists. Will delete...");
 		cell.dragInsideWithOptions({startOffset:{x:0.75, y:0.5}, endOffset:{x:0.15, y:0.5}, duration:0.5});
 		cell.buttons()["Delete"].tap();
-		delay(4);
+		delay(4.5);
 }//}
 	
 	//create new conversation with Jive Testing 10
@@ -31,22 +31,20 @@ test("Send chat in new conversation and verify it was received", function(target
 	var uniqueMessage = "my message " + new Date().toString();
 	//enter message in message box
 	w.images()[1].textViews()[0].tap();
-	app.keyboard().typeString(uniqueMessage);
-	delay(1);
+	app.keyboard().typeString("first message");
 	w.images()[1].buttons()["Send"].tap();
-	delay(2);
-	app.keyboard().typeString("2nd message");
-	w.images()[1].buttons()["Send"].tap();
+	// w.tableViews()[0].cells()[1].waitUntilVisible(10);
 	delay(4);
-
+	app.keyboard().typeString(uniqueMessage);
+	w.images()[1].buttons()["Send"].tap();	
+	delay(1);
+	
+//get count of cells in table view now that we've posted both messages.
 	var afterCount = w.tableViews()[1].cells().length;
 	logDebug("after: " + afterCount.toString());
 
 	//verify the message shows in the feed
-	assertTrue((beforeCount+1)==afterCount, "There should have been "+(beforeCount+1)+" message(s) but there were "+ afterCount);
-
-	//give it 3 seconds to actually post the message
-	delay(3)
+	assertTrue((beforeCount+2)==afterCount, "There should have been "+(beforeCount+2)+" message(s) but there were "+ afterCount);
 
 	//verify that the recipient received the message by logging out of jivetesting11 and in as jivetestin12
 	//back button
