@@ -245,6 +245,7 @@
     }
     else
     {
+        if (self.webSocket.readyState == SR_OPEN) self.socketIsOpen = YES;
         LogMessage(@"socket", 4,@"Socket is not in initializable state.");
 
     }
