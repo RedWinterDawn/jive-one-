@@ -23,6 +23,8 @@
 - (void)changeRootViewController:(JCRootViewControllerType)type;
 - (void)startSocket:(BOOL)inBackground;
 - (void)stopSocket;
+- (void)didLogInSoCanRegisterForPushNotifications;
+- (void)didLogOutSoUnRegisterForPushNotifications;
 
 #pragma mark - Badge Updates
 - (void)incrementBadgeCountForConversation:(NSString *)conversationId entryId:(NSString *)entryId;

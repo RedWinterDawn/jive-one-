@@ -92,12 +92,7 @@ int didNotify;
     
     // Call takeOff (which creates the UAirship singleton)
     [UAirship takeOff:config];
-    //[UAPush shared].pushNotificationDelegate = self;
-    // Request a custom set of notification types
-    [[UAPush shared] registerForRemoteNotifications];
-    [UAPush shared].notificationTypes = (UIRemoteNotificationTypeBadge |
-                                         UIRemoteNotificationTypeSound |
-                                         UIRemoteNotificationTypeAlert);
+    
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
     
@@ -117,6 +112,21 @@ int didNotify;
     }
     
     return YES;
+}
+
+- (void)didLogInSoCanRegisterForPushNotifications
+{
+    //[UAPush shared].pushNotificationDelegate = self;
+    // Request a custom set of notification types
+    [[UAPush shared] registerForRemoteNotifications];
+    [UAPush shared].notificationTypes = (UIRemoteNotificationTypeBadge |
+                                         UIRemoteNotificationTypeSound |
+                                         UIRemoteNotificationTypeAlert);
+}
+
+- (void)didLogOutSoUnRegisterForPushNotifications
+{
+    [[UIApplication sharedApplication] unregisterForRemoteNotifications];
 }
 
 

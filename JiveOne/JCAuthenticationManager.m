@@ -170,6 +170,8 @@
     }
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kUserAuthenticated];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [(JCAppDelegate *)[UIApplication sharedApplication].delegate didLogInSoCanRegisterForPushNotifications];
 }
 
 - (NSString *)getAuthenticationToken
@@ -208,8 +210,9 @@
     [[JCRESTClient sharedClient] clearCookies];
     [[JCOmniPresence sharedInstance] truncateAllTablesAtLogout];
     
-    JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
     
+    JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
+    [delegate didLogOutSoUnRegisterForPushNotifications];
     [delegate stopSocket];
     
     if(![viewController isKindOfClass:[JCLoginViewController class]]){
