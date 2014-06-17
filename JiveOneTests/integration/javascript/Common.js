@@ -64,6 +64,13 @@ function scrollDown(pixels){
 
     UIATarget.localTarget().flickFromTo({x:160, y:y1}, {x:160, y:y2});
 }
+function scrollDownFromTo(start, end){
+
+    var y1 = start;
+    var y2 = end;
+
+    UIATarget.localTarget().flickFromTo({x:160, y:y1}, {x:160, y:y2});
+}
 
 function delay(time){
     this.target.delay(time);

@@ -37,9 +37,7 @@ target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()[kFavoriteC
 target.frontMostApp().navigationBar().leftButton().tap();
 delay(1);
 // Select star index!
-target.frontMostApp().mainWindow().tableViews()["Empty list"].elements()["table index"].tapWithOptions({tapOffset:{x:0.67, y:0.1}});//star
-// target.frontMostApp().mainWindow().tableViews()["Empty list"].logElementTree();
-// logDebug(arrayContainsCellWithName(kFavoriteCell+" ★", app.mainWindow().tableViews()["Empty list"].cells()).toString());
+target.frontMostApp().mainWindow().tableViews()["Empty list"].elements()["table index"].tapWithOptions({tapOffset:{x:0.67, y:0.1}});//star index
 // Confirm starred entry is present and listed!
 assertTrue(arrayContainsCellWithName(kFavoriteCell+" ★", app.mainWindow().tableViews()["Empty list"].cells())>-1, kFavoriteCell +" with ★ cell not visible");
 // Select ‘More’ button!
