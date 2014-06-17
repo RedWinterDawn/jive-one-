@@ -215,7 +215,7 @@
                 [self.tableView setSeparatorInset:UIEdgeInsetsZero];
             }
             
-            if (_selectedContacts.count == 1) {
+            if (_selectedContacts.count == 0 || _selectedContacts.count == 1) {
                 [self setHeaderTitle:title andSubtitle:subtitle];
             }
             else {
@@ -391,6 +391,10 @@
                             title = person.firstLastName;
                             subtitle = person.email;
                         }
+                        else {
+                            title = person.firstLastName;
+                            subtitle = person.email;
+                        }
                     }
                 }
                 if (_selectedContacts) {
@@ -426,20 +430,20 @@
     
     
     // datasource for contactPicker
-    if (!self.contacts) {
-        NSArray *array = [PersonEntities MR_findAll];
-        
-        NSMutableArray *contacts = [[NSMutableArray alloc] initWithCapacity:array.count];
-        for (PersonEntities *contact in array)
-        {
-            JCContactModel *model = [[JCContactModel alloc] init];
-            model.contactTitle = contact.firstLastName;
-            model.contactSubtitle = contact.email;
-            model.person = contact;
-            [contacts addObject:model];
-        }
-        self.contacts = contacts;
-    }
+//    if (!self.contacts) {
+//        NSArray *array = [PersonEntities MR_findAll];
+//        
+//        NSMutableArray *contacts = [[NSMutableArray alloc] initWithCapacity:array.count];
+//        for (PersonEntities *contact in array)
+//        {
+//            JCContactModel *model = [[JCContactModel alloc] init];
+//            model.contactTitle = contact.firstLastName;
+//            model.contactSubtitle = contact.email;
+//            model.person = contact;
+//            [contacts addObject:model];
+//        }
+//        self.contacts = contacts;
+//    }
 }
 
 

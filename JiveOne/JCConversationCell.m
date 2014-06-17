@@ -1,4 +1,4 @@
-//
+    //
 //  JCConversationTableViewCell.m
 //  JiveOne
 //
@@ -48,7 +48,11 @@
         }
         
         PersonEntities * person = [[JCOmniPresence sharedInstance] entityByEntityId:firstEntity];
-        
+
+        if (!firstEntity && !person) {
+            person = [[JCOmniPresence sharedInstance] me];
+            //self.conversationTitle.text = person.firstLastName;
+        }
 
         if (person) {
             _person = person;
@@ -81,7 +85,11 @@
         }
         else
         {
-            self.conversationTitle.text = NSLocalizedString(@"Unknown", nil);
+            
+//            else {
+                self.conversationTitle.text = NSLocalizedString(@"Unknown", nil);
+//            }
+            
         }
         
         // set the conversastion time label
