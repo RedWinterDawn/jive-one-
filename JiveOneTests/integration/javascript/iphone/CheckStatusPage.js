@@ -5,6 +5,10 @@ test("Check Status Page", function(target, app){
 
 //click status
 	// target.frontMostApp().navigationBar().tapWithOptions({tapOffset:{x:0.06, y:0.07}});
+	while(target.frontMostApp().navigationBar().buttons()["Status"].isNotNil()==false){
+		logDebug("is nil")
+		delay(1);
+	}
 	target.frontMostApp().navigationBar().buttons()["Status"].tap();
 	delay(3);
 	//confirm loading of status page
