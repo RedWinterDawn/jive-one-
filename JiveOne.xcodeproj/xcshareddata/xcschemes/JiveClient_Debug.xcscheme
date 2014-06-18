@@ -76,6 +76,9 @@
             </BuildableReference>
             <SkippedTests>
                <Test
+                  Identifier = "JCRestClientUnitTests/testShouldLogin">
+               </Test>
+               <Test
                   Identifier = "JiveOneTests/testLogout">
                </Test>
             </SkippedTests>

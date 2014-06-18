@@ -123,7 +123,7 @@
                 [self initSession];
             }
             
-        } failure:^(NSError *err) {
+        } failure:^(NSError *err, AFHTTPRequestOperation *operation) {
             LogMarker(@"Request Session For Socket : Failed");
             
             // if we fail to get a session, then try again in 2 seconds
@@ -218,7 +218,9 @@
     [[JCRESTClient sharedClient] SubscribeToSocketEventsWithAuthToken:self.sessionToken subscriptions:subscription success:^(id JSON) {
         NSString* subscriptionIdentifier = [subscription allValues][0];
         LogMessage(@"socket", 4,@"Subscribing to events of type %@: Succeeded", subscriptionIdentifier);
-    } failure:^(NSError *err) {
+    } failure:^(NSError *err, AFHTTPRequestOperation *operation) {
+        
+        
         NSString* subscriptionIdentifier = [subscription allValues][0];
         LogMessage(@"socket", 4,@"Subscribing to events of type %@: Failed", subscriptionIdentifier);
         LogMessage(@"socket", 4,@"%@", err);
@@ -257,7 +259,7 @@
     LogMarker(@"Close Socket Attempt");
 
     LogMessage(@"socket", 4,@"Did pull before closing the socket");
-    [self.webSocket send:self.json_poll];
+    [self sendPoll];
     if ([_subscriptionTimer isValid]) {
         [_subscriptionTimer invalidate];
     }
@@ -322,14 +324,15 @@
     if (messageDictionary[@"message"]) {
         if ([messageDictionary[@"message"] isEqualToString:@"Invalid session token provided"]) {
             LogMarker(@"Invalid session token provided");
-            if (self.socketIsOpen) {
-                didSignalToCloseSocket = YES;
-                LogMessage(@"socket", 4,@"Will close socket");
+            [self.webSocket closeWithCode:500 reason:@"Invalid Session Token Provided"];
+            //if (self.socketIsOpen) {
+                //didSignalToCloseSocket = YES;
+                //LogMessage(@"socket", 4,@"Will close socket");
 
-                [self.webSocket close];
-            }
-            LogMessage(@"socket", 4,@"Will attempt reconnect");
-            [self reconnect];
+                //[self.webSocket closeWithCode:2 reason:<#(NSString *)#>];
+            //}
+            //LogMessage(@"socket", 4,@"Will attempt reconnect");
+            //[self reconnect];
         }
     }
     
@@ -337,7 +340,7 @@
     [self messageDispatcher:messageDictionary];
     
     // As soon as we're done processing the last received item, poll.
-    [self.webSocket send:self.json_poll];
+    [self sendPoll];
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error

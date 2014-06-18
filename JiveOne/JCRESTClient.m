@@ -180,7 +180,7 @@
     }];
 }
 
-- (void) RequestSocketSession:(void (^)(id))success failure:(void (^)(NSError *))failure
+- (void) RequestSocketSession:(void (^)(id))success failure:(void (^)(NSError *error, AFHTTPRequestOperation *operation))failure
 {
     
     [self setRequestAuthHeader];
@@ -195,7 +195,7 @@
     [_manager POST:kOsgiSessionRoute parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         success(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failure(error);
+        failure(error, operation);
     }];
 }
 
@@ -224,7 +224,7 @@
 }
 
 - (void) SubscribeToSocketEventsWithAuthToken:(NSString*)token subscriptions:(NSDictionary*)subscriptions success:(void (^)(id JSON))success
-                                      failure:(void (^)(NSError* err))failure
+                                      failure:(void (^)(NSError* err, AFHTTPRequestOperation *operation))failure
 {
     
     
@@ -233,7 +233,7 @@
     [_manager POST:kOsgiSubscriptionRoute parameters:subscriptions success:^(AFHTTPRequestOperation *operation, id responseObject) {
         success(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failure(error);
+        failure(error, operation);
     }];
     
 //    NSURL *url = [NSURL URLWithString:@"https://my.jive.com/urn/subscriptions"];

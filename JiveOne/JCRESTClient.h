@@ -34,13 +34,13 @@
 - (void)RetrieveEntitiesPresence:(void (^)(BOOL updated))success failure:(void(^)(NSError *err))failure;
 - (void) RetrievePresenceForEntity:(NSString*)entity withPresendUrn:(NSString*)presenceUrn success:(void (^)(BOOL updated))success failure:(void(^)(NSError *err))failure;
 - (void) RequestSocketSession:(void (^)(id JSON))success
-                       failure:(void (^)(NSError *err))failure;
+                       failure:(void (^)(NSError *err, AFHTTPRequestOperation *operation))failure;
 
 #pragma mark - Submit Operations
 - (void) OAuthLoginWithUsername:(NSString*)username password:(NSString*)password success:(void (^)(AFHTTPRequestOperation *operation, id JSON))success
                       failure:(void (^)(AFHTTPRequestOperation *operation, NSError *err))failure;
 - (void) SubscribeToSocketEventsWithAuthToken:(NSString*)token subscriptions:(NSDictionary*)subscriptions success:(void (^)(id JSON))success
-                                      failure:(void (^)(NSError* err))failure;
+                                      failure:(void (^)(NSError* err, AFHTTPRequestOperation *operation))failure;
 - (void) SubmitConversationWithName:(NSString *)groupName forEntities:(NSArray *)entities creator:(NSString *)creator isGroupConversation:(BOOL)isGroup success:(void (^)(id JSON))success
                             failure:(void (^)(NSError* err))failure;
 - (void) PatchConversationWithName:(NSString *)conversationId groupName:(NSString *)groupName forEntities:(NSArray *)entities creator:(NSString *)creator isGroupConversation:(BOOL)isGroup success:(void (^)(id JSON))success
