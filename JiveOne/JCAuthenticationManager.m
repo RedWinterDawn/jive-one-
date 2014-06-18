@@ -187,6 +187,11 @@
     if ([Common stringIsNilOrEmpty:token]) {
         token = [_keychainWrapper objectForKey:(__bridge id)(kSecValueData)];
     }
+    
+    if ([Common stringIsNilOrEmpty:token]) {
+        token = [[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"];
+    }
+    
     return token;
 }
 

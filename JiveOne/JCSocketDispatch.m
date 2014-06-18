@@ -95,7 +95,7 @@
             
             // Retrive session token and pipe it together with our auth token
             self.sessionToken = [NSString stringWithFormat:@"%@",[response objectForKey:@"token"]];
-            LogMessage(@"socket", 4, @"Session Token:%@", self.sessionToken);
+            LogMessage(@"socket", 4, @"Auth Token: %@ Session Token:%@", authToken, self.sessionToken);
 
             self.pipedTokens = [NSString stringWithFormat:@"%@|%@", authToken, self.sessionToken];
             
@@ -235,13 +235,13 @@
 
     // We have to make sure that the socket is in a initializable state.
     if (self.webSocket == nil || self.webSocket.readyState == SR_CLOSING || self.webSocket.readyState == SR_CLOSED) {
-        if (!self.socketIsOpen) {
-            LogMessage(@"socket", 4,@"request");
+        //if (!self.socketIsOpen) {
+            LogMessage(@"socket", 4,@"Starting Socket");
             self.webSocket = [[SRWebSocket alloc] initWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.ws]]];
             self.webSocket.delegate = self;
             LogMarker(@"Will attempt to open websocket");
             [self.webSocket open];
-        }
+        //}
     }
     else
     {
@@ -375,7 +375,7 @@
     else {
     // Otherwise invalidere the timer, and if app state is in background, then send completion block.
         [_socketSessionTimer invalidate];
-        if (self.startedInBackground && [UIApplication sharedApplication].applicationState != UIApplicationStateActive) { //add one more check
+        if (_startedInBackground && [UIApplication sharedApplication].applicationState != UIApplicationStateActive) { //add one more check
             if (self.completionBlock) {
                 self.completionBlock(YES, nil);
             }
