@@ -71,6 +71,33 @@ curl -X POST  -H "X-Parse-Application-Id: pF8x8MNin5QJY3EVyXvQF21PBasJxAmoxA5eo1
 https://api.parse.com/1/push
 ```
 
+How to SSH to API Server and Tail the Output
+==========
+Make sure you have the appropriate .pem files in your .ssh folder as well as a 'config' file. The config file contents shuld be:
+```
+Host my.jive.com
+	IdentityFile ~/PATH/TO/FILE.pem
+	HostName 10.103.1.74
+	User root
+
+Host test.my.jive.com
+	IdentityFile ~/PATH/TO/FILE.pem
+	HostName 10.103.0.137
+	User root
+```
+In terminal, type the following command:
+```
+ssh my.jive.com
+```
+Accept the certificate and once you're in, to tail, type: 
+```
+tail -f/var/run/forever/*
+```
+Another useful command is to re-start the service. Type:
+```
+service jive_client restart
+```
+
 Some useful links:
 ==========
 
