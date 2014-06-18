@@ -44,10 +44,8 @@ function logout(app) {
     app.mainWindow().tabBar().buttons()[3].tap();
     target.logElementTree();
         
-    scrollDown(200);
-    var logoutButton = app.mainWindow().tableViews()[0].cells()["Sign Out"];
-    logDebug(logoutButton.name());
-    UIATarget.localTarget().delay(2);
+    // scrollDown(200);
+    // delay(2);
     app.mainWindow().tableViews()[0].cells()["Sign Out"].tap();
 
 }

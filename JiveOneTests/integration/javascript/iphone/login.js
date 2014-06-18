@@ -27,6 +27,7 @@ test("Login Test", function(target, app){
 	logoutIfNeeded(app);
 	
 	// Select e-mail address box on login screen and Confirm that keyboard is displayed
+	app.mainWindow().textFields()["emailTextField"].isNotNil(10);
 	app.mainWindow().textFields()["emailTextField"].tap();
 	delay(2);
 	assertTrue(app.mainWindow().textFields()["emailTextField"].hasKeyboardFocus());
@@ -60,9 +61,10 @@ test("Login Test", function(target, app){
 	// Click OK
 		//handled in function above
 	
-	
+	logDebug("good username, bad password")
 	// Select Password box
 	// Clear box
+	app.mainWindow().secureTextFields()["passwordTextField"].waitUntilVisible(10);
 	app.mainWindow().secureTextFields()["passwordTextField"].clear();
 	// Click 'Go' button
 	app.keyboard().elements()["Go"].tap();
