@@ -26,7 +26,7 @@
 @property (strong, nonatomic) NSString *json_start;
 @property (strong, nonatomic) NSString *json_poll;
 @property (strong, nonatomic) NSString* ws;
-@property (strong, nonatomic) NSString* pipedTokens;
+//@property (strong, nonatomic) NSString* pipedTokens;
 @property (strong, nonatomic) NSString *sessionToken;
 @property (strong, nonatomic) NSString *deviceToken; //used for sending a push notification to restore the session if lost
 @property (strong, nonatomic) NSTimer *socketSessionTimer;
@@ -94,10 +94,11 @@
             NSDictionary* response = (NSDictionary*)JSON;
             
             // Retrive session token and pipe it together with our auth token
-            self.sessionToken = [NSString stringWithFormat:@"%@",[response objectForKey:@"token"]];
+            _sessionToken = [NSString stringWithFormat:@"%@",[response objectForKey:@"token"]];
+            
             LogMessage(@"socket", 4, @"Auth Token: %@ Session Token:%@", authToken, self.sessionToken);
 
-            self.pipedTokens = [NSString stringWithFormat:@"%@|%@", authToken, self.sessionToken];
+            //self.pipedTokens = [NSString stringWithFormat:@"%@|%@", authToken, self.sessionToken];
             
             // Create dictionaries that will be converted to JSON objects to be posted to the socket.
             self.cmd_start = [NSDictionary dictionaryWithObjectsAndKeys:@"start", @"cmd", authToken, @"authToken", self.sessionToken, @"sessionToken", nil];
@@ -265,7 +266,8 @@
     }
     if (self.socketIsOpen) {
         didSignalToCloseSocket = YES;
-        [self.webSocket close];
+        [self.webSocket closeWithCode:200 reason:@"Because I want it."];
+        
         [self cleanup];
     }
 }
@@ -383,9 +385,9 @@
                 self.completionBlock(YES, nil);
             }
         }
-        else {
-            [self reconnect];
-        }
+//        else {
+//            [self reconnect];
+//        }
     }
     
     didSignalToCloseSocket = NO;
@@ -401,7 +403,7 @@
     _json_start = nil;
     _json_poll = nil;
     _ws = nil;
-    _pipedTokens = nil;
+    //_pipedTokens = nil;
     _sessionToken = nil;
 }
 
