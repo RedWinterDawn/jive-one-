@@ -78,7 +78,7 @@
     [self.JCDVC segmentChanged:nil];
     
     XCTAssertNotNil(self.JCDVC.clientEntitiesArray, @"Client Entities Array from company contacts did not get instantiated");
-    XCTAssertTrue([self.JCDVC.clientEntitiesArray count] == 27, @"The array should have 27 arrays but instead has: %lu",(unsigned long)[self.JCDVC.clientEntitiesArray count] );
+    XCTAssertTrue([self.JCDVC.clientEntitiesArray count] == 26, @"The array should have 27 arrays but instead has: %lu",(unsigned long)[self.JCDVC.clientEntitiesArray count] );
     int counter=1;
     for (NSMutableArray *oneOfTwentySixArrays in self.JCDVC.clientEntitiesArray) {
         

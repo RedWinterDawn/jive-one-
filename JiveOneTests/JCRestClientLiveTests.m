@@ -313,13 +313,8 @@
     __block NSDictionary* response;
     NSDictionary* vmail1;
     
-    NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
-    PersonEntities *me = [PersonEntities MR_createInContext:localContext];
-    NSString *userId = @"jivetesting10@gmail.com";
-    me.externalId = userId;
-    [localContext MR_saveToPersistentStoreAndWait];
     
-    [[JCRESTClient sharedClient] RetrieveVoicemailForEntity:me success:^(id JSON){
+    [[JCRESTClient sharedClient] RetrieveVoicemailForEntity:nil success:^(id JSON){
         response = JSON;
         [monitor signal];
     }failure:^(NSError *err) {

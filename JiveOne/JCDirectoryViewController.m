@@ -452,18 +452,19 @@ static NSString *CellIdentifier = @"DirectoryCell";
     [self.tableView reloadData];
 }
 
-//- (IBAction)segmentChanged:sender {
-//    
-//    [self.clientEntitiesArray removeAllObjects];
-//    if ([self.segControl selectedSegmentIndex] == 0) {
-//        [self loadCompanyDirectory];
-////        NSLog(@"First segment!");
-//    } else {
+- (IBAction)segmentChanged:sender {
+    
+    [self.clientEntitiesArray removeAllObjects];
+    if ([self.segControl selectedSegmentIndex] == 0) {
+        [self loadCompanyDirectory];
+//        NSLog(@"First segment!");
+    }
+//        else {
 //        [self loadLocalDirectory];
-////        NSLog(@"Second Segment!");
+//        NSLog(@"Second Segment!");
 //    }
-//    
-//}
+    
+}
 
 
 - (void)refreshCompanyDirectory
