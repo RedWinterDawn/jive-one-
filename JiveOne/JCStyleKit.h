@@ -22,22 +22,22 @@
 + (void)drawTrashButtonWithOuterFrame: (CGRect)outerFrame selectWithDeleteColor: (BOOL)selectWithDeleteColor;
 + (void)drawComposeIconWithFrame: (CGRect)frame;
 + (void)drawPlay_PauseWithFrame: (CGRect)frame playPauseDisplaysPlay: (BOOL)playPauseDisplaysPlay;
-+ (void)drawCanvas1;
-+ (void)drawCanvas3;
-+ (void)drawCanvas5;
-+ (void)drawCanvas2;
-+ (void)drawCanvas4;
-+ (void)drawCanvas6;
-+ (void)drawCanvas7;
-+ (void)drawCanvas8;
-+ (void)drawCanvas9;
-+ (void)drawCanvas10;
-+ (void)drawCanvas11;
-+ (void)drawCanvas12;
-+ (void)drawCanvas13;
-+ (void)drawCanvas14;
-+ (void)drawCanvas15;
-+ (void)drawCanvas16;
++ (void)drawCanvas1WithFrame: (CGRect)frame;
++ (void)drawCanvas3WithFrame: (CGRect)frame;
++ (void)drawCanvas5WithFrame: (CGRect)frame;
++ (void)drawCanvas2WithFrame: (CGRect)frame;
++ (void)drawCanvas4WithFrame: (CGRect)frame;
++ (void)drawCanvas6WithFrame: (CGRect)frame;
++ (void)drawCanvas7WithFrame: (CGRect)frame;
++ (void)drawCanvas8WithFrame: (CGRect)frame;
++ (void)drawCanvas9WithFrame: (CGRect)frame;
++ (void)drawCanvas10WithFrame: (CGRect)frame;
++ (void)drawCanvas11WithFrame: (CGRect)frame;
++ (void)drawCanvas12WithFrame: (CGRect)frame;
++ (void)drawCanvas13WithFrame: (CGRect)frame;
++ (void)drawCanvas14WithFrame: (CGRect)frame;
++ (void)drawCanvas15WithFrame: (CGRect)frame;
++ (void)drawCanvas16WithFrame2: (CGRect)frame2;
 
 // Generated Images
 + (UIImage*)imageOfSpeakerButtonWithSpeakerFrame: (CGRect)speakerFrame speakerIsSelected: (BOOL)speakerIsSelected;
