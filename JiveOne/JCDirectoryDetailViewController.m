@@ -171,13 +171,14 @@
 // This button created in case we need to call methods in conjunction with starting a chat from directory detail view
 - (IBAction)startChat:(id)sender {
     if (self.person) {
-        //switch to tab 2
-        [self.tabBarController setSelectedIndex:2];
-        
+       
         //open messsagesVC
         UINavigationController *conversationNav = self.tabBarController.viewControllers[2];
         JCConversationsViewController *convVC = conversationNav.childViewControllers[0];
         [convVC startNewConversation:self.person];
+        
+        //switch to tab 2
+        [self.tabBarController setSelectedIndex:2];
     }
 
 }

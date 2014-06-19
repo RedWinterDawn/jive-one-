@@ -21,6 +21,7 @@
 #import "UIImage+ImageEffects.h"
 #import "JCAppDelegate.h"
 #import <PocketSVG/PocketSVG.h>
+#import "JCStyleKit.h"
 
 @interface JCAccountViewController () <MFMailComposeViewControllerDelegate>
 {
@@ -72,28 +73,8 @@
     self.userMoodDetail.text = @"I'm not in the mood today";
     self.userTitleDetail.text = @"Developer of Awesome";
     self.userImage.image = [UIImage imageNamed:@"boss.jpg"];
-    
-    CGPathRef pathRef = [PocketSVG pathFromSVGFileNamed:@"logout"];
-    
-    CAShapeLayer *layer = [CAShapeLayer layer];
-    layer.path = pathRef;
-    
-    layer.lineWidth = 1;
-    layer.strokeColor = [[UIColor blackColor] CGColor];
-    layer.fillColor = [[UIColor blackColor] CGColor];
-    layer.fillRule = kCAFillRuleNonZero;
-    
-    //layer.mask.bounds = self.presenceAccessory.layer.mask.bounds;
-    layer.bounds = self.presenceAccessory.layer.bounds;
-    CGRect frame = CGRectMake(layer.frame.origin.x, layer.frame.origin.y, 25, 25);
-    frame.size = CGSizeMake(25, 25);
-    [layer setFrame:frame];
-    //layer.frame = self.presenceAccessory.layer.frame;
-    //layer.masksToBounds = YES;
 
-    [self.presenceAccessory.layer addSublayer:layer];
-//    [self.presenceDetail setText:[self getPresence:me.entityPresence.interactions[@"chat"][@"code"]]];
-    //self.presenceDetailView.presenceType = (JCPresenceType) me.entityPresence.interactions[@"chat"][@"code"];
+//    UIImage *logoutImage = [JCStyleKit ]
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -104,7 +85,7 @@
         me = [[JCOmniPresence sharedInstance] me];
     }
     
-    [self.presenceDetail setText:[self getPresence:me.entityPresence.interactions[@"chat"][@"code"]]];
+//    [self.presenceDetail setText:[self getPresence:me.entityPresence.interactions[@"chat"][@"code"]]];
     
 
 }
