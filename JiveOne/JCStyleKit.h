@@ -16,6 +16,19 @@
 // iOS Controls Customization Outlets
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* speakerButtonTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* trashButtonTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* canvas2Targets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* canvas4Targets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* canvas6Targets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* canvas7Targets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* canvas8Targets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* canvas9Targets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* canvas10Targets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* canvas11Targets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* canvas12Targets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* canvas13Targets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* canvas14Targets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* canvas15Targets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* canvas16Targets;
 
 // Drawing Methods
 + (void)drawSpeakerButtonWithSpeakerFrame: (CGRect)speakerFrame speakerIsSelected: (BOOL)speakerIsSelected;
@@ -37,10 +50,23 @@
 + (void)drawCanvas13WithFrame: (CGRect)frame;
 + (void)drawCanvas14WithFrame: (CGRect)frame;
 + (void)drawCanvas15WithFrame: (CGRect)frame;
-+ (void)drawCanvas16WithFrame2: (CGRect)frame2;
++ (void)drawCanvas16WithFrame: (CGRect)frame;
 
 // Generated Images
 + (UIImage*)imageOfSpeakerButtonWithSpeakerFrame: (CGRect)speakerFrame speakerIsSelected: (BOOL)speakerIsSelected;
 + (UIImage*)imageOfTrashButtonWithOuterFrame: (CGRect)outerFrame selectWithDeleteColor: (BOOL)selectWithDeleteColor;
++ (UIImage*)imageOfCanvas2WithFrame: (CGRect)frame;
++ (UIImage*)imageOfCanvas4WithFrame: (CGRect)frame;
++ (UIImage*)imageOfCanvas6WithFrame: (CGRect)frame;
++ (UIImage*)imageOfCanvas7WithFrame: (CGRect)frame;
++ (UIImage*)imageOfCanvas8WithFrame: (CGRect)frame;
++ (UIImage*)imageOfCanvas9WithFrame: (CGRect)frame;
++ (UIImage*)imageOfCanvas10WithFrame: (CGRect)frame;
++ (UIImage*)imageOfCanvas11WithFrame: (CGRect)frame;
++ (UIImage*)imageOfCanvas12WithFrame: (CGRect)frame;
++ (UIImage*)imageOfCanvas13WithFrame: (CGRect)frame;
++ (UIImage*)imageOfCanvas14WithFrame: (CGRect)frame;
++ (UIImage*)imageOfCanvas15WithFrame: (CGRect)frame;
++ (UIImage*)imageOfCanvas16WithFrame: (CGRect)frame;
 
 @end
