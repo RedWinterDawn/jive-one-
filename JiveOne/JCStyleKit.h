@@ -16,7 +16,7 @@
 // iOS Controls Customization Outlets
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* speakerButtonTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* trashButtonTargets;
-@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* canvas2Targets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* back_buttonTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* canvas4Targets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* canvas6Targets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* canvas7Targets;
@@ -29,6 +29,7 @@
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* canvas14Targets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* canvas15Targets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* canvas16Targets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* logoutTargets;
 
 // Drawing Methods
 + (void)drawSpeakerButtonWithSpeakerFrame: (CGRect)speakerFrame speakerIsSelected: (BOOL)speakerIsSelected;
@@ -38,7 +39,7 @@
 + (void)drawCanvas1WithFrame: (CGRect)frame;
 + (void)drawCanvas3WithFrame: (CGRect)frame;
 + (void)drawCanvas5WithFrame: (CGRect)frame;
-+ (void)drawCanvas2WithFrame: (CGRect)frame;
++ (void)drawBack_buttonWithFrame: (CGRect)frame;
 + (void)drawCanvas4WithFrame: (CGRect)frame;
 + (void)drawCanvas6WithFrame: (CGRect)frame;
 + (void)drawCanvas7WithFrame: (CGRect)frame;
@@ -51,11 +52,12 @@
 + (void)drawCanvas14WithFrame: (CGRect)frame;
 + (void)drawCanvas15WithFrame: (CGRect)frame;
 + (void)drawCanvas16WithFrame: (CGRect)frame;
++ (void)drawLogoutWithFrame: (CGRect)frame;
 
 // Generated Images
 + (UIImage*)imageOfSpeakerButtonWithSpeakerFrame: (CGRect)speakerFrame speakerIsSelected: (BOOL)speakerIsSelected;
 + (UIImage*)imageOfTrashButtonWithOuterFrame: (CGRect)outerFrame selectWithDeleteColor: (BOOL)selectWithDeleteColor;
-+ (UIImage*)imageOfCanvas2WithFrame: (CGRect)frame;
++ (UIImage*)imageOfBack_buttonWithFrame: (CGRect)frame;
 + (UIImage*)imageOfCanvas4WithFrame: (CGRect)frame;
 + (UIImage*)imageOfCanvas6WithFrame: (CGRect)frame;
 + (UIImage*)imageOfCanvas7WithFrame: (CGRect)frame;
@@ -68,5 +70,6 @@
 + (UIImage*)imageOfCanvas14WithFrame: (CGRect)frame;
 + (UIImage*)imageOfCanvas15WithFrame: (CGRect)frame;
 + (UIImage*)imageOfCanvas16WithFrame: (CGRect)frame;
++ (UIImage*)imageOfLogoutWithFrame: (CGRect)frame;
 
 @end
