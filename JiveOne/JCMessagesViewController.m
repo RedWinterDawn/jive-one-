@@ -691,7 +691,10 @@
     NSString *groupName = isGroup? [self composeGroupName:nameArray] : @"";
     
     NSMutableArray *entityArray = [[NSMutableArray alloc] initWithArray:[self.selectedContacts valueForKeyPath:@"entityId"]];
-    [entityArray addObject:me.entityId];
+    
+    if (![entityArray containsObject:me.entityId]) {
+        [entityArray addObject:me.entityId];
+    }
     
     if (needsPatch) {
         [[JCRESTClient sharedClient] PatchConversationWithName:_conversationId groupName:groupName forEntities:entityArray creator:me.entityId isGroupConversation:isGroup success:^(id JSON) {

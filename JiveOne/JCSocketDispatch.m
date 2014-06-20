@@ -396,7 +396,8 @@
 - (void)cleanup
 {
     LOG_Info();
-    [_webSocket setDelegate:NULL];
+    //[_webSocket setDelegate:NULL];
+    //_webSocket = nil;
     self.socketIsOpen = NO;
     _cmd_start = nil;
     _cmd_poll = nil;
