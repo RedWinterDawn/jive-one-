@@ -339,7 +339,7 @@
 
 - (void)keyboardDidShow:(NSNotification *)notification
 {
-    //This animates the view when the keyboard appears and shifts it up in responce.
+    //This animates the view when the keyboard appears and shifts it up in response.
     [UIView animateKeyframesWithDuration:0.2 delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
         CGRect frame = self.loginViewContainer.frame;
         CGRect usernameTextField = self.usernameTextField.frame;
