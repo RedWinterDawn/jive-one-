@@ -247,10 +247,11 @@
     [self fetchMyEntity];
 }
 
+// modified 06/20 - only loading my info (to be changed to new pbx servive) and voicemail. From fetching myEntitite, it will fetch voicemail and go into the application
 - (void)fetchMyEntity
 {
     [self.client RetrieveMyEntitity:^(id JSON, id operation) {
-        [self fetchEntities];
+        [self fetchVoicemails];
     } failure:^(NSError *err, id operation) {
         [self errorInitializingApp:err];
     }];
@@ -375,6 +376,7 @@
 - (void)goToApplication
 {
     [self performSegueWithIdentifier: @"LoginToTabBarSegue" sender: self];
+    [(JCAppDelegate *)[UIApplication sharedApplication].delegate changeRootViewController:JCRootTabbarViewController];
 }
 
 

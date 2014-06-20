@@ -9,6 +9,7 @@
 #import "Voicemail+Custom.h"
 #import "VoicemailETag.h"
 #import "Constants.h"
+#import "JCAppDelegate.h"
 
 @implementation Voicemail (Custom)
 
@@ -85,16 +86,20 @@
         vmail.urn = dictionary[@"urn"];
         vmail.voicemailId = dictionary[@"id"];
         vmail.deleted = [NSNumber numberWithBool:NO];
-        //Save conversation entry
-        @try {
-            [context MR_saveToPersistentStoreAndWait];
-        }
-        @catch (NSException *exception) {
-            NSLog(@"%@", exception);
-        }
+//        //Save conversation entry
+//        @try {
+//            [context MR_saveToPersistentStoreAndWait];
+//        }
+//        @catch (NSException *exception) {
+//            NSLog(@"%@", exception);
+//        }
         
         
         //get all voicemail messages through a queue
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [(JCAppDelegate *)[UIApplication sharedApplication].delegate incrementBadgeCountForVoicemail:vmail.voicemailId];
+        });
+        
     }
     
     if (sender != self) {
@@ -165,8 +170,11 @@
                     vm.voicemail = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"https://s3-us-west-2.amazonaws.com/jive-mobile/voicemail/userId/dleonard/TestVoicemail2.wav"]];
                 }else{
                     if (!vm.voicemail && vm.file) {
-                        vm.voicemail = [NSData dataWithContentsOfURL:[NSURL URLWithString:vm.file]];
-                        [context MR_saveToPersistentStoreAndWait];
+                        NSData *voiceData = [NSData dataWithContentsOfURL:[NSURL URLWithString:vm.file] ];
+                        if (voiceData) {
+                            vm.voicemail = voiceData;
+                            [context MR_saveToPersistentStoreAndWait];
+                        }
                     }                    
                 }
             }

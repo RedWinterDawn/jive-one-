@@ -63,6 +63,15 @@ static NSString *CellIdentifier = @"VoicemailCell";
     self.refreshControl = refreshControl;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
+    [Voicemail fetchVoicemailInBackground];
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [(JCAppDelegate *)[UIApplication sharedApplication].delegate refreshTabBadges:NO];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -70,8 +79,8 @@ static NSString *CellIdentifier = @"VoicemailCell";
     [super viewWillAppear:animated];
 //    [Flurry logEvent:@"Voicemail View"];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveNewVoicemail:) name:kNewVoicemail object:nil];
-    [(JCAppDelegate *)[UIApplication sharedApplication].delegate clearBadgeCountForVoicemail];
-    [self loadVoicemails];
+//    [(JCAppDelegate *)[UIApplication sharedApplication].delegate clearBadgeCountForVoicemail];
+        [self loadVoicemails];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
