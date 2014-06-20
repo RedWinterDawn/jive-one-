@@ -1079,7 +1079,7 @@
 
 + (UIImage*)imageOfBack_buttonWithFrame: (CGRect)frame;
 {
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(100, 100), NO, 0.0f);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(frame.size.width, frame.size.height), NO, 0.0f);
     [JCStyleKit drawBack_buttonWithFrame: frame];
     UIImage* imageOfBack_button = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
@@ -1209,7 +1209,7 @@
 
 + (UIImage*)imageOfLogoutWithFrame: (CGRect)frame;
 {
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(100, 100), NO, 0.0f);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(frame.size.width, frame.size.height), NO, 0.0f);
     [JCStyleKit drawLogoutWithFrame: frame];
     UIImage* imageOfLogout = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();

@@ -1201,6 +1201,10 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jMP-Ab-QB3">
+                                                    <rect key="frame" x="270" y="12" width="22" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1218,6 +1222,10 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VpI-Op-evT">
+                                                    <rect key="frame" x="270" y="12" width="22" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1241,6 +1249,10 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZBD-3B-LxB">
+                                                    <rect key="frame" x="270" y="12" width="22" height="22"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                             </subviews>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.75" colorSpace="calibratedRGB"/>
                                         </tableViewCellContentView>
@@ -1258,6 +1270,10 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Profile &amp; Settings" id="7BX-g7-cjd"/>
                     <connections>
+                        <outlet property="eulaImageView" destination="jMP-Ab-QB3" id="paY-SE-TLR"/>
+                        <outlet property="feedbackImageView" destination="VpI-Op-evT" id="QzA-W9-Lq5"/>
+                        <outlet property="logoutImageView" destination="ZBD-3B-LxB" id="8jO-sf-tHE"/>
+                        <outlet property="presenceAccessory" destination="CqU-6m-59a" id="xHg-Pq-hd8"/>
                         <outlet property="presenceDetail" destination="sgE-3U-Nxi" id="lYc-TW-cvx"/>
                         <outlet property="presenceDetailView" destination="dCn-sc-YRN" id="2hE-b3-RBu"/>
                         <outlet property="userImage" destination="L9U-NE-MVL" id="K61-do-tMv"/>

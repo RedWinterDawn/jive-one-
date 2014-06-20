@@ -18,6 +18,9 @@
 @property (weak, nonatomic) IBOutlet JCPresenceView *presenceDetailView;
 @property (weak, nonatomic) IBOutlet UIImageView *userImage;
 @property (weak, nonatomic) IBOutlet UITextField *userMoodDetail;
+@property (weak, nonatomic) IBOutlet UIImageView *logoutImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *eulaImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *feedbackImageView;
 
 @property (weak, nonatomic) IBOutlet UIView *presenceAccessory;
 @end
