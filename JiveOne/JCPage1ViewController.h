@@ -14,6 +14,8 @@
 @interface JCPage1ViewController : JCPageClass <UIScrollViewDelegate>
 @property (strong,nonatomic) UIAttachmentBehavior* attachment;
 @property (nonatomic) NSInteger index;
+@property (weak, nonatomic) IBOutlet UIImageView *voicemailImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *moreIconImageView;
 @end
 
 @protocol Page1Delegate <NSObject>

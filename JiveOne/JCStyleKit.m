@@ -26,6 +26,7 @@
     //// Color Declarations
     UIColor* unSelectedButtonColor = [UIColor colorWithRed: 0.282 green: 0.298 blue: 0.333 alpha: 1];
     UIColor* selectedButtonColor = [UIColor colorWithRed: 0.275 green: 0.396 blue: 0.843 alpha: 1];
+    UIColor* loginColor = [UIColor colorWithRed: 0.883 green: 0.883 blue: 0.883 alpha: 1];
 
     //// Variable Declarations
     UIColor* expression = speakerIsSelected ? selectedButtonColor : unSelectedButtonColor;
@@ -1089,7 +1090,7 @@
 
 + (UIImage*)imageOfCanvas4WithFrame: (CGRect)frame;
 {
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(100, 100), NO, 0.0f);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(frame.size.width, frame.size.height), NO, 0.0f);
     [JCStyleKit drawCanvas4WithFrame: frame];
     UIImage* imageOfCanvas4 = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
@@ -1099,7 +1100,7 @@
 
 + (UIImage*)imageOfCanvas6WithFrame: (CGRect)frame;
 {
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(100, 100), NO, 0.0f);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(frame.size.width, frame.size.height), NO, 0.0f);
     [JCStyleKit drawCanvas6WithFrame: frame];
     UIImage* imageOfCanvas6 = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
@@ -1109,7 +1110,7 @@
 
 + (UIImage*)imageOfCanvas7WithFrame: (CGRect)frame;
 {
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(100, 100), NO, 0.0f);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(frame.size.width, frame.size.height), NO, 0.0f);
     [JCStyleKit drawCanvas7WithFrame: frame];
     UIImage* imageOfCanvas7 = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
@@ -1119,7 +1120,7 @@
 
 + (UIImage*)imageOfCanvas8WithFrame: (CGRect)frame;
 {
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(100, 100), NO, 0.0f);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(frame.size.width, frame.size.height), NO, 0.0f);
     [JCStyleKit drawCanvas8WithFrame: frame];
     UIImage* imageOfCanvas8 = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
@@ -1129,7 +1130,7 @@
 
 + (UIImage*)imageOfCanvas9WithFrame: (CGRect)frame;
 {
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(100, 100), NO, 0.0f);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(frame.size.width, frame.size.height), NO, 0.0f);
     [JCStyleKit drawCanvas9WithFrame: frame];
     UIImage* imageOfCanvas9 = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
@@ -1139,7 +1140,7 @@
 
 + (UIImage*)imageOfCanvas10WithFrame: (CGRect)frame;
 {
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(100, 100), NO, 0.0f);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(frame.size.width, frame.size.height), NO, 0.0f);
     [JCStyleKit drawCanvas10WithFrame: frame];
     UIImage* imageOfCanvas10 = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
@@ -1149,7 +1150,7 @@
 
 + (UIImage*)imageOfCanvas11WithFrame: (CGRect)frame;
 {
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(100, 100), NO, 0.0f);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(frame.size.width, frame.size.height), NO, 0.0f);
     [JCStyleKit drawCanvas11WithFrame: frame];
     UIImage* imageOfCanvas11 = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
@@ -1159,7 +1160,7 @@
 
 + (UIImage*)imageOfCanvas12WithFrame: (CGRect)frame;
 {
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(100, 100), NO, 0.0f);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(frame.size.width, frame.size.height), NO, 0.0f);
     [JCStyleKit drawCanvas12WithFrame: frame];
     UIImage* imageOfCanvas12 = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
@@ -1169,7 +1170,7 @@
 
 + (UIImage*)imageOfCanvas13WithFrame: (CGRect)frame;
 {
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(100, 100), NO, 0.0f);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(frame.size.width, frame.size.height), NO, 0.0f);
     [JCStyleKit drawCanvas13WithFrame: frame];
     UIImage* imageOfCanvas13 = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
@@ -1179,7 +1180,7 @@
 
 + (UIImage*)imageOfCanvas14WithFrame: (CGRect)frame;
 {
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(100, 100), NO, 0.0f);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(frame.size.width, frame.size.height), NO, 0.0f);
     [JCStyleKit drawCanvas14WithFrame: frame];
     UIImage* imageOfCanvas14 = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
@@ -1189,7 +1190,7 @@
 
 + (UIImage*)imageOfCanvas15WithFrame: (CGRect)frame;
 {
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(100, 100), NO, 0.0f);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(frame.size.width, frame.size.height), NO, 0.0f);
     [JCStyleKit drawCanvas15WithFrame: frame];
     UIImage* imageOfCanvas15 = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
@@ -1199,7 +1200,7 @@
 
 + (UIImage*)imageOfCanvas16WithFrame: (CGRect)frame;
 {
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(100, 100), NO, 0.0f);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(frame.size.width, frame.size.height), NO, 0.0f);
     [JCStyleKit drawCanvas16WithFrame: frame];
     UIImage* imageOfCanvas16 = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();

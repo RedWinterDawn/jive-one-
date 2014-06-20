@@ -7,6 +7,7 @@
 //
 
 #import "JCPage1ViewController.h"
+#import "JCStyleKit.h"
 
 @interface JCPage1ViewController ()
 @property (strong,nonatomic) UIDynamicAnimator* animator;
@@ -28,7 +29,10 @@
 {
     [super viewDidLoad];
     
-    
+    self.voicemailImageView.image = [JCStyleKit imageOfCanvas16WithFrame:CGRectMake(0, 0, self.voicemailImageView.frame.size.width, self.voicemailImageView.frame.size.height)];
+    //self.voicemailImageView. = [UIColor whiteColor];
+    self.moreIconImageView.image = [JCStyleKit imageOfCanvas8WithFrame:CGRectMake(0, 0, self.moreIconImageView.frame.size.width, self.moreIconImageView.frame.size.height)];
+    self.moreIconImageView.tintColor = [UIColor whiteColor];
 
 //    UILabel *headingLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 240, 300, 30)];
 //    headingLabel.text = @"Welcome to JiveApp";
