@@ -215,6 +215,7 @@
     [[JCRESTClient sharedClient] clearCookies];
     [[JCOmniPresence sharedInstance] truncateAllTablesAtLogout];
     
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     
     JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
     [delegate didLogOutSoUnRegisterForPushNotifications];

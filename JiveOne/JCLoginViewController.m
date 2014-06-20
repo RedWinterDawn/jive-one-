@@ -288,7 +288,7 @@
         
         [localContext MR_saveToPersistentStoreAndWait];
         
-        [[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
+//        [[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
         
         if (fastConnection) {
             [self fetchPresence];
@@ -332,6 +332,7 @@
         if (self.userIsDoneWithTutorial) {
             [self goToApplication];
         }
+        [[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
         
     } failure:^(NSError *err) {
         [self errorInitializingApp:err];
@@ -376,7 +377,7 @@
 - (void)goToApplication
 {
     [self performSegueWithIdentifier: @"LoginToTabBarSegue" sender: self];
-    [(JCAppDelegate *)[UIApplication sharedApplication].delegate changeRootViewController:JCRootTabbarViewController];
+    //[(JCAppDelegate *)[UIApplication sharedApplication].delegate changeRootViewController:JCRootTabbarViewController];
 }
 
 
