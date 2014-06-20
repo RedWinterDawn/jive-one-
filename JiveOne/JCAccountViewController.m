@@ -70,9 +70,10 @@
 - (void) loadViews
 {
     self.userNameDetail.text = me.firstLastName;
-    self.userMoodDetail.text = @"I'm not in the mood today";
-    self.userTitleDetail.text = @"Developer of Awesome";
-    self.userImage.image = [UIImage imageNamed:@"boss.jpg"];
+//    self.userMoodDetail.text = @"I'm not in the mood today";
+//    self.userTitleDetail.text = @"Developer of Awesome";
+    self.userImage.image = [JCStyleKit imageOfCanvas15WithFrame:CGRectMake(77, 0, 166, self.userImage.frame.size.height)];
+    self.userImage.backgroundColor = [UIColor colorWithRed:.883 green:.883 blue:.883 alpha:1];
     
     NSLog(@"%@", NSStringFromCGPoint(self.logoutImageView.frame.origin));
     NSLog(@"%@", NSStringFromCGSize(self.logoutImageView.frame.size));
@@ -81,9 +82,10 @@
     UIImage *backButton = [JCStyleKit imageOfBack_buttonWithFrame:CGRectMake(0, 0, self.eulaImageView.frame.size.width, self.eulaImageView.frame.size.height)];
 
     UIImage *reverseButton = [UIImage imageWithCGImage:backButton.CGImage
-                                                  scale:backButton.scale
+                                                  scale:backButton.scale    
                                             orientation:UIImageOrientationUpMirrored];
     self.eulaImageView.image = reverseButton;
+    [self.eulaImageView setTintColor:[UIColor orangeColor]];
     self.feedbackImageView.image = reverseButton;
     self.logoutImageView.image = [JCStyleKit imageOfLogoutWithFrame:CGRectMake(0, 0, self.logoutImageView.frame.size.width, self.logoutImageView.frame.size.height)];
 }
@@ -171,7 +173,7 @@
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 4;
+    return 3;//TODO: change to 4 when brining back presence.
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -212,15 +214,16 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+//    if(indexPath.section == 1){
+//        
+//        UIView *view = ((JCAppDelegate *)[UIApplication sharedApplication].delegate).window;
+//        UIImage *underlyingView = [Common imageFromView:view];
+//        underlyingView = [underlyingView applyBlurWithRadius:5 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] saturationDeltaFactor:1.3 maskImage:nil];
+//        [self performSegueWithIdentifier:@"PresenceSegue" sender:underlyingView];
+//        
+//    }
+//    else
     if(indexPath.section == 1){
-        
-        UIView *view = ((JCAppDelegate *)[UIApplication sharedApplication].delegate).window;
-        UIImage *underlyingView = [Common imageFromView:view];
-        underlyingView = [underlyingView applyBlurWithRadius:5 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] saturationDeltaFactor:1.3 maskImage:nil];
-        [self performSegueWithIdentifier:@"PresenceSegue" sender:underlyingView];
-        
-    }
-    else if(indexPath.section == 2){
         //Eula or leave feedback
         if([cell.textLabel.text isEqualToString:@"EULA / Terms of Service"]){
             [Flurry logEvent:@"EULA button clicked"];
@@ -236,7 +239,7 @@
             
         }
     }
-    else if (indexPath.section == 3) {
+    else if (indexPath.section == 2) {
         [self logoutButtonPress];
     }
 }

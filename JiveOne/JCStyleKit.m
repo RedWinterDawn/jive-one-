@@ -1193,7 +1193,7 @@
 
 + (UIImage*)imageOfCanvas15WithFrame: (CGRect)frame;
 {
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(frame.size.width, frame.size.height), NO, 0.0f);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(320, 166), NO, 0.0f);
     [JCStyleKit drawCanvas15WithFrame: frame];
     UIImage* imageOfCanvas15 = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();

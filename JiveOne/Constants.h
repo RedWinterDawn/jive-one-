@@ -20,7 +20,7 @@
     #define kOsgiBaseURL @"https://test.my.jive.com/"
     //#define kOsgiBaseURL @"https://osgi.local.com:8000/"
 #else
-    #define kOsgiBaseURL @"https://my.jive.com/"
+    #define kOsgiBaseURL @"https://test.my.jive.com/"
 #endif
 
 
