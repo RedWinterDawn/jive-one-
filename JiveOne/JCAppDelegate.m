@@ -231,7 +231,7 @@ int didNotify;
     LogMessage(@"socket", 4, @"Calling requestSession From AppDelegate");
 
     //if ([[JCSocketDispatch sharedInstance] socketState] == SR_CLOSED || [[JCSocketDispatch sharedInstance] socketState] == SR_CLOSING) {
-    [[JCSocketDispatch sharedInstance] requestSession];
+    //[[JCSocketDispatch sharedInstance] requestSession];
     //}
 }
 
@@ -382,19 +382,32 @@ int didNotify;
             
             TRVSMonitor *monitor = [TRVSMonitor monitor];
             NSInteger previousCount = [self currentBadgeCount];
-            
-            [[JCSocketDispatch sharedInstance] startPoolingFromSocketWithCompletion:^(BOOL success, NSError *error) {
-                if (success) {
-                    NSLog(@"Success Done with Block");
-                    LogMessage(@"socket", 4, @"Success pooling from socket");
-                }
-                else {
-                    NSLog(@"Error Done With Block %@", error);
-                    LogMessage(@"socket", 4, @"Error pooling from socket");
 
-                }
+            
+// V5 only provides voicemail through REST. So re make a REST Call
+            [[JCRESTClient sharedClient] RetrieveVoicemailForEntity:nil success:^(id JSON) {
+                NSLog(@"Success Done with Block");
+                LogMessage(@"socket", 4, @"Successful Rest Call In Background");
+                [monitor signal];
+            } failure:^(NSError *err) {
+                NSLog(@"Error Done With Block %@", err);
+                LogMessage(@"socket", 4, @"Failed Rest Call In Background");
                 [monitor signal];
             }];
+            
+// No Socket for now.
+//            [[JCSocketDispatch sharedInstance] startPoolingFromSocketWithCompletion:^(BOOL success, NSError *error) {
+//                if (success) {
+//                    NSLog(@"Success Done with Block");
+//                    LogMessage(@"socket", 4, @"Success pooling from socket");
+//                }
+//                else {
+//                    NSLog(@"Error Done With Block %@", error);
+//                    LogMessage(@"socket", 4, @"Error pooling from socket");
+//
+//                }
+//                [monitor signal];
+//            }];
             
             [monitor waitWithTimeout:25];
             
@@ -563,7 +576,7 @@ int didNotify;
             }
             
 //            [tabController.viewControllers[2] tabBarItem].badgeValue = conversationCount == 0 ? nil : [NSString stringWithFormat:@"%i", conversationCount];//TODO: reenable for chat
-            [tabController.viewControllers[1] tabBarItem].badgeValue = voicemailCount == 0 ? nil : [NSString stringWithFormat:@"%i", voicemailCount];
+            [tabController.viewControllers[0] tabBarItem].badgeValue = voicemailCount == 0 ? nil : [NSString stringWithFormat:@"%i", voicemailCount];
             
             int appCount = conversationCount + voicemailCount;
             [UIApplication sharedApplication].applicationIconBadgeNumber = appCount;
@@ -746,8 +759,9 @@ int didNotify;
 
     if (type == JCRootTabbarViewController) {
         
-        [self.loginViewController goToApplication];
-//        [self.window setRootViewController:self.tabBarViewController];
+        //[self.loginViewController goToApplication];
+        self.tabBarViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+        [self.window setRootViewController:self.tabBarViewController];
         
     }
     else if (type == JCRootLoginViewController)

@@ -277,8 +277,8 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenSucceeded object:nil];
         [webviewTimer invalidate];
         // if we received a new token, then close socket and restart
-        [[JCSocketDispatch sharedInstance] closeSocket];
-        [[JCSocketDispatch sharedInstance] requestSession];
+        //[[JCSocketDispatch sharedInstance] closeSocket];
+        //[[JCSocketDispatch sharedInstance] requestSession];
     }
     else if ([tokenData objectForKey:@"valid"])
     {
