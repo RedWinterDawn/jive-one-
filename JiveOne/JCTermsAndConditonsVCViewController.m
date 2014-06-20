@@ -9,7 +9,7 @@
 #import "JCTermsAndConditonsVCViewController.h"
 
 @interface JCTermsAndConditonsVCViewController ()
-@property (weak, nonatomic) IBOutlet UIWebView *myWebview;
+@property (weak, nonatomic) IBOutlet UIWebView *webView;
 
 @end
 
@@ -29,9 +29,12 @@
     [super viewDidLoad];
 //    [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
     // Do any additional setup after loading the view.
-    NSURL *websiteUrl = [NSURL URLWithString:@"http://www.jive.com"];
+    NSURL *websiteUrl = [NSURL URLWithString:kEulaSite];
+
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:websiteUrl];
-    [self.myWebview loadRequest:urlRequest];
+    [[NSURLCache sharedURLCache] removeCachedResponseForRequest:urlRequest];
+    [self.webView loadRequest:urlRequest];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -52,6 +55,7 @@
 */
 - (IBAction)backButtonPressed:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+        [[NSURLCache sharedURLCache] removeAllCachedResponses];
 }
 
 @end
