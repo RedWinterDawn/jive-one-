@@ -61,7 +61,7 @@
 + (UIImage*)imageOfCanvas4WithFrame: (CGRect)frame;
 + (UIImage*)imageOfCanvas6WithFrame: (CGRect)frame;
 + (UIImage*)imageOfCanvas7WithFrame: (CGRect)frame;
-+ (UIImage*)imageOfCanvas8WithFrame: (CGRect)frame;
++ (UIImage*)imageOfCanvasMoreWithFrame: (CGRect)moreFrame moreIsLogin: (BOOL)moreIslogin;
 + (UIImage*)imageOfCanvas9WithFrame: (CGRect)frame;
 + (UIImage*)imageOfCanvas10WithFrame: (CGRect)frame;
 + (UIImage*)imageOfCanvas11WithFrame: (CGRect)frame;
