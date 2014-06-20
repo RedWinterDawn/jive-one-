@@ -73,8 +73,19 @@
     self.userMoodDetail.text = @"I'm not in the mood today";
     self.userTitleDetail.text = @"Developer of Awesome";
     self.userImage.image = [UIImage imageNamed:@"boss.jpg"];
+    
+    NSLog(@"%@", NSStringFromCGPoint(self.logoutImageView.frame.origin));
+    NSLog(@"%@", NSStringFromCGSize(self.logoutImageView.frame.size));
 
-//    UIImage *logoutImage = [JCStyleKit ]
+
+    UIImage *backButton = [JCStyleKit imageOfBack_buttonWithFrame:CGRectMake(0, 0, self.eulaImageView.frame.size.width, self.eulaImageView.frame.size.height)];
+
+    UIImage *reverseButton = [UIImage imageWithCGImage:backButton.CGImage
+                                                  scale:backButton.scale
+                                            orientation:UIImageOrientationUpMirrored];
+    self.eulaImageView.image = reverseButton;
+    self.feedbackImageView.image = reverseButton;
+    self.logoutImageView.image = [JCStyleKit imageOfLogoutWithFrame:CGRectMake(0, 0, self.logoutImageView.frame.size.width, self.logoutImageView.frame.size.height)];
 }
 
 - (void) viewWillAppear:(BOOL)animated
