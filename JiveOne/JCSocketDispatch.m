@@ -278,6 +278,10 @@
 
     // This doesnt make sense to me (@doug) - if the app started in the background or is active ... reconnect???
     // any other state is only transitional to these two options
+    
+    // This is redundant. We're already checking for background or active on SocketDidFail.
+    // These state checks are in place in order to avoid the socke tto try to reconnect at any other state but active, or
+    // if the startedBackgorund is true, it means it was received by a remote notification while the app was in the background. Any other state should not try to reconnect the socket. 
     //if (self.startedInBackground || [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) {
         LogMarker(@"Reconnect Attempt");
 
@@ -396,7 +400,8 @@
 - (void)cleanup
 {
     LOG_Info();
-    [_webSocket setDelegate:NULL];
+    //[_webSocket setDelegate:NULL];
+    //_webSocket = nil;
     self.socketIsOpen = NO;
     _cmd_start = nil;
     _cmd_poll = nil;
