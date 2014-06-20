@@ -10,5 +10,7 @@
 
 @interface JCContainerViewController : UIViewController <UIPageViewControllerDataSource>
 - (IBAction)dismissButtonPressed:(id)sender;
+@property (nonatomic, strong) UIImage *bluredBackgroundImage;
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 
 @end

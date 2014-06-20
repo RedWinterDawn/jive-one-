@@ -8,15 +8,54 @@
         <!--Page4 View Controller-->
         <scene sceneID="YOn-53-1Um">
             <objects>
-                <viewController storyboardIdentifier="JCPage4ViewController" id="BJ5-Dg-VP1" customClass="JCPage4ViewController" sceneMemberID="viewController">
-                    <imageView key="view" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="63H-3j-i4R">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    </imageView>
-                </viewController>
+                <viewController storyboardIdentifier="JCPage4ViewController" id="BJ5-Dg-VP1" customClass="JCPage4ViewController" sceneMemberID="viewController"/>
+                <view contentMode="scaleToFill" id="pUf-J5-rdN">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Voicemail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fep-9b-jXI">
+                            <rect key="frame" x="61" y="269" width="197" height="30"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="More" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j02-wN-PHL">
+                            <rect key="frame" x="61" y="269" width="197" height="30"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Everything else" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rBK-cq-hrc">
+                            <rect key="frame" x="47" y="274" width="226" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="View voicemails, touch to " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dxS-9w-0IH">
+                            <rect key="frame" x="47" y="274" width="226" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="expand for more options." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cK2-Eg-kyQ">
+                            <rect key="frame" x="47" y="274" width="226" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="nav-more.png" translatesAutoresizingMaskIntoConstraints="NO" id="BIh-gc-AGL">
+                            <rect key="frame" x="140" y="269" width="39" height="30"/>
+                        </imageView>
+                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="vmail.png" translatesAutoresizingMaskIntoConstraints="NO" id="oLI-fu-H7J">
+                            <rect key="frame" x="109" y="365" width="46" height="41"/>
+                            <color key="backgroundColor" red="0.967574139" green="0.1594937293" blue="0.1336503215" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="0.97632610900000005" green="1" blue="0.99328926200000001" alpha="1" colorSpace="calibratedRGB"/>
+                        </imageView>
+                    </subviews>
+                </view>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wtd-bQ-Ty4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1978" y="-484"/>
+            <point key="canvasLocation" x="1411" y="-536"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="yum-B5-f91">
@@ -32,9 +71,6 @@
                         <subviews>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="iPhone2Xnew.png" translatesAutoresizingMaskIntoConstraints="NO" id="e8O-2j-1gU">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="656"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="656" id="BF0-AY-5NG"/>
-                                </constraints>
                             </imageView>
                             <view clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AVw-9n-3yN">
                                 <rect key="frame" x="20" y="197" width="280" height="150"/>
@@ -141,24 +177,31 @@
                                     <constraint firstItem="n95-vt-iwu" firstAttribute="bottom" secondItem="hQg-62-q5W" secondAttribute="bottom" id="yMW-Uh-TJI"/>
                                 </constraints>
                             </view>
-                            <textField clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="email" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Tho-ch-vQR" userLabel="emailTextField">
+                            <textField clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="email" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Tho-ch-vQR" userLabel="emailTextField">
                                 <rect key="frame" x="40" y="216" width="240" height="40"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
                                 <accessibility key="accessibilityConfiguration" label="emailTextField"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="33l-JE-wDz"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="e8O-2j-1gU" firstAttribute="leading" secondItem="ECf-jH-nSb" secondAttribute="leading" id="FPB-Yf-wff"/>
+                            <constraint firstItem="e8O-2j-1gU" firstAttribute="centerX" secondItem="uq2-OG-5Nj" secondAttribute="centerX" id="5EH-VN-D4u"/>
+                            <constraint firstItem="Tho-ch-vQR" firstAttribute="centerX" secondItem="AVw-9n-3yN" secondAttribute="centerX" id="GST-Bg-xfb"/>
                             <constraint firstItem="uq2-OG-5Nj" firstAttribute="leading" secondItem="ECf-jH-nSb" secondAttribute="leading" constant="84" id="I7D-DT-Xxa"/>
                             <constraint firstItem="AVw-9n-3yN" firstAttribute="top" secondItem="ECf-jH-nSb" secondAttribute="top" constant="197" id="OTJ-iG-0Re"/>
-                            <constraint firstItem="e8O-2j-1gU" firstAttribute="leading" secondItem="SFI-xL-Fri" secondAttribute="leading" id="eAQ-zt-fU3"/>
+                            <constraint firstItem="Tho-ch-vQR" firstAttribute="top" secondItem="uq2-OG-5Nj" secondAttribute="bottom" constant="52" id="blD-hk-nfq"/>
+                            <constraint firstAttribute="bottom" secondItem="e8O-2j-1gU" secondAttribute="bottom" constant="-88" id="bu6-Wq-V5w"/>
                             <constraint firstItem="AVw-9n-3yN" firstAttribute="leading" secondItem="ECf-jH-nSb" secondAttribute="leading" constant="20" id="gHC-eQ-HfA"/>
-                            <constraint firstAttribute="bottom" secondItem="e8O-2j-1gU" secondAttribute="bottom" constant="-88" id="mTs-TG-s1l"/>
+                            <constraint firstItem="e8O-2j-1gU" firstAttribute="top" secondItem="ECf-jH-nSb" secondAttribute="top" id="pP0-mG-JTk"/>
+                            <constraint firstItem="e8O-2j-1gU" firstAttribute="trailing" secondItem="SFI-xL-Fri" secondAttribute="trailing" id="tS8-Pg-DFX"/>
                             <constraint firstItem="uq2-OG-5Nj" firstAttribute="top" secondItem="ECf-jH-nSb" secondAttribute="top" constant="20" id="uv6-zg-lCZ"/>
-                            <constraint firstItem="e8O-2j-1gU" firstAttribute="trailing" secondItem="SFI-xL-Fri" secondAttribute="trailing" id="xDD-X0-vZ1"/>
+                            <constraint firstItem="e8O-2j-1gU" firstAttribute="leading" secondItem="SFI-xL-Fri" secondAttribute="leading" id="vwf-FA-J0p"/>
+                            <constraint firstItem="Tho-ch-vQR" firstAttribute="leading" secondItem="ECf-jH-nSb" secondAttribute="leading" constant="40" id="y02-vM-9Dy"/>
                             <constraint firstAttribute="bottom" secondItem="SFI-xL-Fri" secondAttribute="bottom" id="y8x-dG-fCE"/>
                         </constraints>
                     </view>
@@ -423,7 +466,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bq5-db-eFa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="112" y="-476"/>
+            <point key="canvasLocation" x="1983" y="-374"/>
         </scene>
         <!--Page View Controller - JCPage1ViewController-->
         <scene sceneID="ZtT-Cx-ctV">
@@ -431,7 +474,7 @@
                 <pageViewController storyboardIdentifier="JCPageViewController" autoresizesArchivedViewToFullSize="NO" title="JCPage1ViewController" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="R8Y-OS-UTf" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="du5-UC-Fyt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="474" y="-484"/>
+            <point key="canvasLocation" x="-176" y="-536"/>
         </scene>
         <!--Container View Controller-->
         <scene sceneID="W4k-dG-q3a">
@@ -445,13 +488,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" image="iPhone2Xnew.png" translatesAutoresizingMaskIntoConstraints="NO" id="GHa-6Z-vXb">
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="iPhone2Xnew.png" translatesAutoresizingMaskIntoConstraints="NO" id="2VU-gk-QW0">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="656"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gtQ-uO-uxm">
-                                <rect key="frame" x="210" y="514" width="90" height="34"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gtQ-uO-uxm">
+                                <rect key="frame" x="191" y="513" width="129" height="55"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="90" id="9Ct-2G-fnc"/>
+                                    <constraint firstAttribute="width" constant="129" id="dWJ-J3-o2L"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Dismiss">
@@ -465,19 +508,24 @@
                         </subviews>
                         <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="gtQ-uO-uxm" firstAttribute="top" relation="lessThanOrEqual" secondItem="uob-yX-DO5" secondAttribute="bottom" priority="750" constant="514" id="5hR-OS-VFg"/>
-                            <constraint firstAttribute="bottom" secondItem="gtQ-uO-uxm" secondAttribute="bottom" constant="20" symbolic="YES" id="pSZ-Nj-VeJ"/>
-                            <constraint firstAttribute="trailing" secondItem="gtQ-uO-uxm" secondAttribute="trailing" constant="20" symbolic="YES" id="pwC-7P-5nu"/>
+                            <constraint firstItem="2VU-gk-QW0" firstAttribute="top" secondItem="9R9-Fg-9O1" secondAttribute="top" id="4Dp-eI-WvZ"/>
+                            <constraint firstAttribute="trailing" secondItem="gtQ-uO-uxm" secondAttribute="trailing" id="7Ov-Qf-T40"/>
+                            <constraint firstItem="gtQ-uO-uxm" firstAttribute="top" secondItem="uob-yX-DO5" secondAttribute="bottom" constant="493" id="CTb-AM-g1A"/>
+                            <constraint firstItem="2VU-gk-QW0" firstAttribute="leading" secondItem="9R9-Fg-9O1" secondAttribute="leading" id="IEO-5W-Q5Z"/>
+                            <constraint firstItem="2VU-gk-QW0" firstAttribute="trailing" secondItem="gtQ-uO-uxm" secondAttribute="trailing" id="X7x-DZ-ShT"/>
+                            <constraint firstAttribute="bottom" secondItem="gtQ-uO-uxm" secondAttribute="bottom" id="m9V-2P-ybL"/>
+                            <constraint firstAttribute="bottom" secondItem="2VU-gk-QW0" secondAttribute="bottom" constant="-88" id="vBP-I9-DR9"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="bq9-7d-CLc"/>
                     <connections>
+                        <outlet property="backgroundImageView" destination="2VU-gk-QW0" id="3Bp-ZS-h5M"/>
                         <segue destination="8YX-ce-x5E" kind="modal" identifier="TutorialToTabBarSegue" modalTransitionStyle="crossDissolve" id="SEu-ym-TIt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h46-yP-dwC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-940" y="-306"/>
+            <point key="canvasLocation" x="-921" y="-476"/>
         </scene>
         <!--Page2 View Controller-->
         <scene sceneID="72L-8n-cy9">
@@ -497,15 +545,12 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="presenceView.png" translatesAutoresizingMaskIntoConstraints="NO" id="Rw0-O1-QwR">
-                                <rect key="frame" x="40" y="56" width="240" height="456"/>
-                            </imageView>
                         </subviews>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zyW-hB-dec" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1232" y="-484"/>
+            <point key="canvasLocation" x="582" y="-536"/>
         </scene>
         <!--Page3 View Controller-->
         <scene sceneID="n1A-5c-52t">
@@ -518,93 +563,11 @@
                     <view key="view" contentMode="scaleToFill" id="9g5-Ku-aDj">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gh6-5M-l1D" customClass="UIImageView">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <subviews>
-                                    <imageView opaque="NO" multipleTouchEnabled="YES" alpha="0.79999999999999982" contentMode="scaleToFill" fixedFrame="YES" image="iPhone2XnewBlurSmall.png" translatesAutoresizingMaskIntoConstraints="NO" id="wfW-cU-b1d">
-                                        <rect key="frame" x="0.0" y="-11" width="320" height="590"/>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.75" colorSpace="calibratedRGB"/>
-                                    </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Voicemail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QFS-s0-Dav">
-                                        <rect key="frame" x="74" y="143" width="197" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="People" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nkR-HB-Z8j">
-                                        <rect key="frame" x="74" y="36" width="197" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="More" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZTd-VF-Tik">
-                                        <rect key="frame" x="74" y="385" width="197" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Conversations" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b2F-Gg-72U">
-                                        <rect key="frame" x="74" y="274" width="197" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Company directory" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H55-Kn-V6i">
-                                        <rect key="frame" x="74" y="74" width="226" height="17"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Lists current chats with others" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G2v-lO-Iiu">
-                                        <rect key="frame" x="74" y="312" width="232" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Everything else" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TQJ-U4-QoG">
-                                        <rect key="frame" x="74" y="423" width="226" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="View voicemails, touch to " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tRC-ae-Ce1">
-                                        <rect key="frame" x="74" y="181" width="226" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="expand for more options." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IIi-Dp-zeS">
-                                        <rect key="frame" x="74" y="195" width="226" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="nav-people.png" translatesAutoresizingMaskIntoConstraints="NO" id="G0w-b6-a1h">
-                                        <rect key="frame" x="20" y="36" width="46" height="42"/>
-                                    </imageView>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="nav-conv.png" translatesAutoresizingMaskIntoConstraints="NO" id="lcG-Mn-k1d">
-                                        <rect key="frame" x="20" y="274" width="46" height="36"/>
-                                    </imageView>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="nav-more.png" translatesAutoresizingMaskIntoConstraints="NO" id="CgX-JT-TeX">
-                                        <rect key="frame" x="24" y="385" width="39" height="30"/>
-                                    </imageView>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="vmail.png" translatesAutoresizingMaskIntoConstraints="NO" id="aJY-nI-0Fr">
-                                        <rect key="frame" x="20" y="137" width="46" height="41"/>
-                                        <color key="tintColor" red="0.97632610899290173" green="1" blue="0.99328926195871969" alpha="1" colorSpace="calibratedRGB"/>
-                                    </imageView>
-                                </subviews>
-                                <color key="backgroundColor" red="0.41242288381776171" green="0.42617984693877553" blue="0.40578707203028713" alpha="0.90000000000000002" colorSpace="calibratedRGB"/>
-                                <accessibility key="accessibilityConfiguration">
-                                    <accessibilityTraits key="traits" none="YES" image="YES"/>
-                                </accessibility>
-                            </view>
-                        </subviews>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GlY-f6-z4h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1614" y="-484"/>
+            <point key="canvasLocation" x="964" y="-536"/>
         </scene>
         <!--Page1 View Controller-->
         <scene sceneID="BEY-al-vFu">
@@ -618,12 +581,52 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ES-voicemail-1.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Jh0-wK-RLZ">
-                                <rect key="frame" x="40" y="52" width="240" height="456"/>
-                            </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Check Mail of the Voice Type" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n5W-c4-Pce">
                                 <rect key="frame" x="20" y="20" width="280" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="vmail.png" translatesAutoresizingMaskIntoConstraints="NO" id="aJY-nI-0Fr">
+                                <rect key="frame" x="20" y="83" width="61" height="55"/>
+                                <color key="tintColor" red="0.97632610899290173" green="1" blue="0.99328926195871969" alpha="1" colorSpace="calibratedRGB"/>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="More" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZTd-VF-Tik">
+                                <rect key="frame" x="76" y="235" width="197" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Your profile and exstra" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TQJ-U4-QoG">
+                                <rect key="frame" x="76" y="273" width="224" height="31"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="options." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OkI-i2-6y4">
+                                <rect key="frame" x="78" y="292" width="224" height="31"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="View voicemails, touch to " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tRC-ae-Ce1">
+                                <rect key="frame" x="76" y="129" width="226" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="expand for more options." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IIi-Dp-zeS">
+                                <rect key="frame" x="76" y="149" width="226" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="nav-more.png" translatesAutoresizingMaskIntoConstraints="NO" id="CgX-JT-TeX">
+                                <rect key="frame" x="20" y="219" width="61" height="46"/>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Voicemail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QFS-s0-Dav">
+                                <rect key="frame" x="78" y="83" width="197" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -632,7 +635,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CWy-mT-UHy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="856" y="-484"/>
+            <point key="canvasLocation" x="206" y="-536"/>
         </scene>
         <!--Directory Detail View Controller-->
         <scene sceneID="WkT-56-JQg">
@@ -756,7 +759,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3x1-kR-aGn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1507" y="255"/>
+            <point key="canvasLocation" x="1750" y="255"/>
         </scene>
         <!--Navigation Controller - People-->
         <scene sceneID="4Zu-Qh-4wk">
@@ -1443,7 +1446,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ES-voicemail-1.jpg" width="640" height="1136"/>
         <image name="avatar.png" width="100" height="100"/>
         <image name="first_message.png" width="265" height="154"/>
         <image name="iPhone2Xnew.png" width="640" height="1136"/>
@@ -1453,7 +1455,6 @@
         <image name="nav-more.png" width="44" height="44"/>
         <image name="nav-people.png" width="44" height="44"/>
         <image name="people-start-conv.png" width="44" height="44"/>
-        <image name="presenceView.png" width="640" height="1136"/>
         <image name="vmail.png" width="32" height="32"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -1462,6 +1463,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="PKy-V4-VLv"/>
+        <segue reference="SEu-ym-TIt"/>
     </inferredMetricsTieBreakers>
 </document>

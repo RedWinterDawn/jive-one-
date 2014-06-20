@@ -12,6 +12,8 @@
 #import "JCPage2ViewController.h"
 #import "JCPage3ViewController.h"
 #import "JCPage4ViewController.h"
+#import "Common.h"
+#import "UIImage+ImageEffects.h"
 
 
 @interface JCContainerViewController ()
@@ -36,6 +38,11 @@
     return self;
 }
 
+- (void)setBackgroundImage:(UIImage *)backgroundImage
+{
+    _bluredBackgroundImage = backgroundImage;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -55,8 +62,17 @@
     [self.view addSubview:_pageViewController.view];
     [self.pageViewController didMoveToParentViewController:self];
     
+    //[self setSeparatorInset:UIEdgeInsetsZero];
+    //[self setContentInset:UIEdgeInsetsMake(self.view.frame.size.height, 0, 0, 0)];
+    
+    //addding blurred background img
+    self.view.backgroundColor = [UIColor clearColor];
+    UIImage *bgImage = [UIImage imageNamed:@"iphone2Xnew.png"];
+    bgImage = [bgImage applyBlurWithRadius:6.0 tintColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.6] saturationDeltaFactor:.9 maskImage:nil];
+    self.backgroundImageView.image = bgImage;
+    
     //never show the intro again...
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"seenAppTutorial"];
+    //[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"seenAppTutorial"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
