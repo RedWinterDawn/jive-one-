@@ -26,7 +26,7 @@
     //// Color Declarations
     UIColor* unSelectedButtonColor = [UIColor colorWithRed: 0.282 green: 0.298 blue: 0.333 alpha: 1];
     UIColor* selectedButtonColor = [UIColor colorWithRed: 0.275 green: 0.396 blue: 0.843 alpha: 1];
-    UIColor* loginColor = [UIColor colorWithRed: 0.883 green: 0.883 blue: 0.883 alpha: 1];
+   
 
     //// Variable Declarations
     UIColor* expression = speakerIsSelected ? selectedButtonColor : unSelectedButtonColor;
@@ -642,14 +642,17 @@
     [bezierPath fill];
 }
 
-+ (void)drawCanvas8WithFrame: (CGRect)frame;
++ (void)drawCanvasMoreWithFrame: (CGRect)moreFrame moreIsLogin: (BOOL)moreIsLogin;
 {
     //// Color Declarations
     UIColor* unSelectedButtonColor = [UIColor colorWithRed: 0.282 green: 0.298 blue: 0.333 alpha: 1];
+    UIColor* loginColor = [UIColor colorWithRed: 0.883 green: 0.883 blue: 0.883 alpha: 1];
 
-
+    //// Variable Declarations
+    UIColor* expression = moreIsLogin ? unSelectedButtonColor : loginColor;
+    
     //// Subframes
-    CGRect group = CGRectMake(CGRectGetMinX(frame) + floor(CGRectGetWidth(frame) * 0.10050 + 0.45) + 0.05, CGRectGetMinY(frame) + floor(CGRectGetHeight(frame) * 0.39830 - 0.37) + 0.87, floor(CGRectGetWidth(frame) * 0.89950 - 0.45) - floor(CGRectGetWidth(frame) * 0.10050 + 0.45) + 0.9, floor(CGRectGetHeight(frame) * 0.60130 + 0.33) - floor(CGRectGetHeight(frame) * 0.39830 - 0.37) - 0.7);
+    CGRect group = CGRectMake(CGRectGetMinX(moreFrame) + floor(CGRectGetWidth(moreFrame) * 0.10050 + 0.45) + 0.05, CGRectGetMinY(moreFrame) + floor(CGRectGetHeight(moreFrame) * 0.39830 - 0.37) + 0.87, floor(CGRectGetWidth(moreFrame) * 0.89950 - 0.45) - floor(CGRectGetWidth(moreFrame) * 0.10050 + 0.45) + 0.9, floor(CGRectGetHeight(moreFrame) * 0.60130 + 0.33) - floor(CGRectGetHeight(moreFrame) * 0.39830 - 0.37) - 0.7);
 
 
     //// Group
@@ -664,7 +667,7 @@
         [bezierPath closePath];
         bezierPath.miterLimit = 4;
 
-        [unSelectedButtonColor setFill];
+        [expression setFill];
         [bezierPath fill];
 
 
@@ -678,7 +681,7 @@
         [bezier2Path closePath];
         bezier2Path.miterLimit = 4;
 
-        [unSelectedButtonColor setFill];
+        [expression setFill];
         [bezier2Path fill];
 
 
@@ -692,7 +695,7 @@
         [bezier3Path closePath];
         bezier3Path.miterLimit = 4;
 
-        [unSelectedButtonColor setFill];
+        [expression setFill];
         [bezier3Path fill];
     }
 }
@@ -1118,14 +1121,14 @@
     return imageOfCanvas7;
 }
 
-+ (UIImage*)imageOfCanvas8WithFrame: (CGRect)frame;
++ (UIImage*)imageOfCanvasMoreWithFrame: (CGRect)moreFrame moreIsLogin: (BOOL)moreIslogin;
 {
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(frame.size.width, frame.size.height), NO, 0.0f);
-    [JCStyleKit drawCanvas8WithFrame: frame];
-    UIImage* imageOfCanvas8 = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(moreFrame.size.width, moreFrame.size.height), NO, 0.0f);
+    [JCStyleKit drawCanvasMoreWithFrame: moreFrame moreIsLogin: moreIslogin];
+    UIImage* imageOfCanvasMore = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
-    return imageOfCanvas8;
+    return imageOfCanvasMore;
 }
 
 + (UIImage*)imageOfCanvas9WithFrame: (CGRect)frame;

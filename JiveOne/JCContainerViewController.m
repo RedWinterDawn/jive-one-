@@ -56,7 +56,7 @@
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     
     // Change the size of page view controller
-    self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 30);
+    self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - 40);
     
     [self addChildViewController:_pageViewController];
     [self.view addSubview:_pageViewController.view];
@@ -68,7 +68,7 @@
     //addding blurred background img
     self.view.backgroundColor = [UIColor clearColor];
     UIImage *bgImage = [UIImage imageNamed:@"iphone2Xnew.png"];
-    bgImage = [bgImage applyBlurWithRadius:6.0 tintColor:[[UIColor lightGrayColor] colorWithAlphaComponent:0.6] saturationDeltaFactor:.9 maskImage:nil];
+    bgImage = [bgImage applyBlurWithRadius:15.0 tintColor:[[UIColor darkGrayColor] colorWithAlphaComponent:.3] saturationDeltaFactor:.88 maskImage:nil];
     self.backgroundImageView.image = bgImage;
     
     //never show the intro again...

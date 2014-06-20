@@ -43,7 +43,7 @@
 + (void)drawCanvas4WithFrame: (CGRect)frame;
 + (void)drawCanvas6WithFrame: (CGRect)frame;
 + (void)drawCanvas7WithFrame: (CGRect)frame;
-+ (void)drawCanvas8WithFrame: (CGRect)frame;
++ (void)drawCanvasMoreWithFrame: (CGRect)moreFrame moreIsLogin: (BOOL)moreIsLogin;
 + (void)drawCanvas9WithFrame: (CGRect)frame;
 + (void)drawCanvas10WithFrame: (CGRect)frame;
 + (void)drawCanvas11WithFrame: (CGRect)frame;
