@@ -1251,7 +1251,7 @@
             </objects>
             <point key="canvasLocation" x="474" y="1625"/>
         </scene>
-        <!--Account View Controller - Profile & Settings-->
+        <!--Account View Controller - Account-->
         <scene sceneID="dfQ-T1-fgJ">
             <objects>
                 <tableViewController storyboardIdentifier=" " id="xfW-W8-tPR" customClass="JCAccountViewController" sceneMemberID="viewController">
@@ -1355,7 +1355,7 @@
                             <outlet property="delegate" destination="xfW-W8-tPR" id="qpG-Oa-9dI"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Profile &amp; Settings" id="7BX-g7-cjd"/>
+                    <navigationItem key="navigationItem" title="Account" id="7BX-g7-cjd"/>
                     <connections>
                         <outlet property="userImage" destination="L9U-NE-MVL" id="K61-do-tMv"/>
                         <outlet property="userNameDetail" destination="pd4-gQ-CDE" id="Dk2-jb-9PV"/>
