@@ -11,6 +11,8 @@ pod 'JSQSystemSoundPlayer', '~> 1.4.0'
 pod 'OCMock', '~> 2.2.3'
 pod 'Facebook-iOS-SDK', '~> 3.13'
 pod 'NSLogger', '~> 1.2'
-pod 'tuneup_js'
 pod 'NSLogger', '~> 1.2'
 pod 'PocketSVG', '~> 0.6'
+target 'JiveOneTests', :exclusive => true do
+	pod 'KIF', '~> 3.0'
+end
