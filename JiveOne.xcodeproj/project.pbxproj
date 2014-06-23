@@ -277,7 +277,6 @@
 		91B7CFC5192ABDF800927DDD /* JCSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B7CFC4192ABDF800927DDD /* JCSearchBar.m */; };
 		91B7CFCB192AD5B900927DDD /* search2.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7CFCA192AD5B900927DDD /* search2.png */; };
 		91B7CFCE192AD78B00927DDD /* searchGray2.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7CFCD192AD78B00927DDD /* searchGray2.png */; };
-		91DDB1891934E1E900550F10 /* JCStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DDB1881934E1E900550F10 /* JCStyleKit.m */; };
 		91DDB1991935008A00550F10 /* JCSpeakerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DDB1981935008A00550F10 /* JCSpeakerView.m */; };
 		91DDB19D193500B500550F10 /* JCDeleteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DDB19C193500B500550F10 /* JCDeleteView.m */; };
 		91F6DFAB192A702F001C54FB /* Shared.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 91F6DFAA192A702F001C54FB /* Shared.xcconfig */; };
@@ -312,6 +311,7 @@
 		F59AE2C7192F07BA00CAF0F3 /* iPhone2XnewBlur.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2BB192F07BA00CAF0F3 /* iPhone2XnewBlur.png */; };
 		F59AE2C9192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2BC192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png */; };
 		F59AE2CC192F0B0D00CAF0F3 /* iPadLaunch2Xnew.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2CB192F0B0D00CAF0F3 /* iPadLaunch2Xnew.png */; };
+		F5BE1CC91958D98C00C1045E /* JCStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = F5BE1CC81958D98C00C1045E /* JCStyleKit.m */; };
 		F5C8F16A19351604007372A1 /* JCPeopleSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C8F16919351604007372A1 /* JCPeopleSearchViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -775,8 +775,6 @@
 		91B7CFC4192ABDF800927DDD /* JCSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSearchBar.m; sourceTree = "<group>"; };
 		91B7CFCA192AD5B900927DDD /* search2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search2.png; sourceTree = "<group>"; };
 		91B7CFCD192AD78B00927DDD /* searchGray2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = searchGray2.png; sourceTree = "<group>"; };
-		91DDB1871934E1E900550F10 /* JCStyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCStyleKit.h; sourceTree = "<group>"; };
-		91DDB1881934E1E900550F10 /* JCStyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCStyleKit.m; sourceTree = "<group>"; };
 		91DDB1971935008A00550F10 /* JCSpeakerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSpeakerView.h; sourceTree = "<group>"; };
 		91DDB1981935008A00550F10 /* JCSpeakerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSpeakerView.m; sourceTree = "<group>"; };
 		91DDB19B193500B500550F10 /* JCDeleteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDeleteView.h; sourceTree = "<group>"; };
@@ -824,6 +822,8 @@
 		F59AE2BB192F07BA00CAF0F3 /* iPhone2XnewBlur.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhone2XnewBlur.png; sourceTree = "<group>"; };
 		F59AE2BC192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhone2XnewBlurSmall.png; sourceTree = "<group>"; };
 		F59AE2CB192F0B0D00CAF0F3 /* iPadLaunch2Xnew.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPadLaunch2Xnew.png; sourceTree = "<group>"; };
+		F5BE1CC71958D98C00C1045E /* JCStyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCStyleKit.h; sourceTree = "<group>"; };
+		F5BE1CC81958D98C00C1045E /* JCStyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCStyleKit.m; sourceTree = "<group>"; };
 		F5C8F16819351604007372A1 /* JCPeopleSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPeopleSearchViewController.h; sourceTree = "<group>"; };
 		F5C8F16919351604007372A1 /* JCPeopleSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPeopleSearchViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1843,8 +1843,8 @@
 		91DDB1821934DED700550F10 /* StyleKit */ = {
 			isa = PBXGroup;
 			children = (
-				91DDB1871934E1E900550F10 /* JCStyleKit.h */,
-				91DDB1881934E1E900550F10 /* JCStyleKit.m */,
+				F5BE1CC71958D98C00C1045E /* JCStyleKit.h */,
+				F5BE1CC81958D98C00C1045E /* JCStyleKit.m */,
 			);
 			name = StyleKit;
 			sourceTree = "<group>";
@@ -2258,6 +2258,7 @@
 				F2459BB218C67FC000AF56CF /* JCGroupSelectorViewController.m in Sources */,
 				277F094218FED58C00EEF0E3 /* JCStatusViewController.m in Sources */,
 				27F1F2DA191C171300AEAFD7 /* UAInboxUI.m in Sources */,
+				F5BE1CC91958D98C00C1045E /* JCStyleKit.m in Sources */,
 				27E9A35818E0A17A0017B65D /* Presence+Custom.m in Sources */,
 				27F1F2EB191C171300AEAFD7 /* UAPushSettingsTokenViewController.m in Sources */,
 				279E4CA9192273E5002A556C /* MBContactCollectionView.m in Sources */,
@@ -2331,7 +2332,6 @@
 				2700987D18F4714100B6BC2F /* JSMessageInputView.m in Sources */,
 				27F1F2D9191C171300AEAFD7 /* UAInboxNavUI.m in Sources */,
 				9172AD521918362800481B01 /* JCPageClass.m in Sources */,
-				91DDB1891934E1E900550F10 /* JCStyleKit.m in Sources */,
 				2736698218BD441D0069B4B3 /* JCPersonCell.m in Sources */,
 				2788F143190EACD20099348D /* VoicemailETag.m in Sources */,
 				27F1F2EA191C171300AEAFD7 /* UAPushSettingsTagsViewController.m in Sources */,
