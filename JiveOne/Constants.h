@@ -24,7 +24,7 @@
 #endif
 
 
-#define kOsgiAuthURL @"https://auth.jive.com/oauth2/grant?client_id=%@&response_type=code&redirect_uri=%@"
+#define kOsgiAuthURL @"https://auth.jive.com/oauth2/v2/grant?client_id=%@&response_type=token&scope=%@&redirect_uri=%@"
 #define kOsgiAPIScheme @"api/"
 #define kOsgiURNScheme @"urn/"
 #define kOsgiAuthRoute @"auth/login?redirectUrl="
@@ -36,7 +36,9 @@
 #define kOsgiPresenceRoute @"presence"
 #define kOsgiVoicemailRoute @"voicemails"
 #define kVersionURL @"http://jiveios.local/LatestVersion"
-#define kEulaSite @"http://tengentllc.com/legal.html"
+#define kEulaSite @"http://jive.com/downloads/mobile-end-user-license-agreement/"
+#define kScopeProfile @"pbx.v1.profile"
+#define kScopeVoicemail @"vm.v1.msgs.meta.read"
 
 #pragma mark - Temporary Voicemail Constants
 #define kAWSVoicemailRoute @"voicemail/userId/"

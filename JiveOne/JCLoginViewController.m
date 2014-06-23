@@ -158,11 +158,11 @@
                 }
                 else {
                     [self alertStatus:@"Authentication Error" message:error.localizedDescription];
-                     NSLog(@"Authentication error: %@", error);
+                    NSLog(@"Authentication error: %@", error);
                     [self hideHud];
                 }
             }
-            
+
         }];
     }
     else

@@ -1,0 +1,45 @@
+//if internal-checkout-error on build, run this:
+//rm -rf /Library/Server/Xcode/Data/BotRuns/Cache/
+
+//create tmp folder and ui_errors.txt in place for later
+cd "${PROJECT_DIR}"
+sudo chown -R Administrator .
+cd "${PROJECT_DIR}/JiveOneTests/integration"
+sudo -H -u Administrator mkdir "tmp"
+cd "${PROJECT_DIR}/JiveOneTests/integration/tmp"
+sudo -H -u Administrator touch "ui_errors.txt"
+sudo -H -u Administrator chmod 777 "${PROJECT_DIR}/JiveOneTests/integration/tmp/ui_errors.txt"
+//create build folder and subfolders so that bwoken can place temp files there
+cd "${PROJECT_DIR}/JiveOneTests"
+sudo -H -u Administrator mkdir "build"
+cd "${PROJECT_DIR}/JiveOneTests/build"
+sudo -H -u Administrator mkdir "iphoneos"
+
+cd "${PROJECT_DIR}"
+pwd
+echo "Creating build for bwoken. Will run tests as user: "
+sudo -u Administrator whoami
+
+sudo -u Administrator bwoken test --integration-path=JiveOneTests/integration --scheme="JiveClient_Debug" | awk '/Error/ || /Fail/{ print > "JiveOneTests/integration/tmp/ui_errors.txt"} 1'
+
+filesize=$(stat -f "%z" JiveOneTests/integration/tmp/ui_errors.txt)
+
+if [ $filesize = "0" ]; then
+
+//remove all run files
+    rm -rf JiveOneTests/integration/tmp/results/Run*
+
+    echo
+    echo "UIAutomation has finished"
+    echo
+
+else
+    echo
+    echo "UIAutomation has errors:"
+//log the error
+    cat JiveOneTests/integration/tmp/ui_errors.txt
+    echo
+//    kill $PPID
+//    exit 1
+fi
+sudo chown -R _teamsserver .
