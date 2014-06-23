@@ -1340,9 +1340,8 @@
 		275F4A7C18AD0FBC00D2F069 /* JiveOneTests */ = {
 			isa = PBXGroup;
 			children = (
-				275F4A8218AD0FBC00D2F069 /* JiveOneTests.m */,
-				DDFFB60018D2284E00372019 /* JCVoicemailVCTests.m */,
-				27426AC818B5303D00011635 /* JCRestClientUnitTests.m */,
+				DDED87DF195885850011DB55 /* IntegrationTests */,
+				DDED87DE1958857C0011DB55 /* UnitTests */,
 				275F4A7D18AD0FBC00D2F069 /* Supporting Files */,
 			);
 			path = JiveOneTests;
@@ -1891,6 +1890,23 @@
 				9172ACF51917E8EE00481B01 /* JCPage4ViewController.m */,
 			);
 			name = AppTutorial;
+			sourceTree = "<group>";
+		};
+		DDED87DE1958857C0011DB55 /* UnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				275F4A8218AD0FBC00D2F069 /* JiveOneTests.m */,
+				DDFFB60018D2284E00372019 /* JCVoicemailVCTests.m */,
+				27426AC818B5303D00011635 /* JCRestClientUnitTests.m */,
+			);
+			name = UnitTests;
+			sourceTree = "<group>";
+		};
+		DDED87DF195885850011DB55 /* IntegrationTests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = IntegrationTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
