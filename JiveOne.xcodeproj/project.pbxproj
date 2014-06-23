@@ -298,6 +298,8 @@
 		DDCE1E9718F3565F003A6615 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E9618F3565F003A6615 /* SystemConfiguration.framework */; };
 		DDEC37D01910126900E166CC /* ConversationEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = DDEC37CF1910126900E166CC /* ConversationEntry.m */; };
 		DDEC37D6191029B800E166CC /* PersonEntities.m in Sources */ = {isa = PBXBuildFile; fileRef = DDEC37D5191029B800E166CC /* PersonEntities.m */; };
+		DDED87E119588CC50011DB55 /* JCLoginTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = DDED87E019588CC50011DB55 /* JCLoginTestCase.m */; };
+		DDED87E319588DA80011DB55 /* KIFUITestActor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = DDED87E219588DA80011DB55 /* KIFUITestActor+Additions.m */; };
 		DDFFB60118D2284E00372019 /* JCVoicemailVCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DDFFB60018D2284E00372019 /* JCVoicemailVCTests.m */; };
 		F202433D18B2CF4A006DB2EF /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F202433C18B2CF4A006DB2EF /* README.md */; };
 		F2459BB218C67FC000AF56CF /* JCGroupSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2459BB118C67FC000AF56CF /* JCGroupSelectorViewController.m */; };
@@ -807,6 +809,9 @@
 		DDEC37CF1910126900E166CC /* ConversationEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationEntry.m; sourceTree = "<group>"; };
 		DDEC37D4191029B800E166CC /* PersonEntities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonEntities.h; sourceTree = "<group>"; };
 		DDEC37D5191029B800E166CC /* PersonEntities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonEntities.m; sourceTree = "<group>"; };
+		DDED87E019588CC50011DB55 /* JCLoginTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JCLoginTestCase.m; path = kif/JCLoginTestCase.m; sourceTree = "<group>"; };
+		DDED87E219588DA80011DB55 /* KIFUITestActor+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "KIFUITestActor+Additions.m"; path = "kif/KIFUITestActor+Additions.m"; sourceTree = "<group>"; };
+		DDED87E419588E690011DB55 /* KIFUITestActor+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "KIFUITestActor+Additions.h"; path = "kif/KIFUITestActor+Additions.h"; sourceTree = "<group>"; };
 		DDFFB60018D2284E00372019 /* JCVoicemailVCTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoicemailVCTests.m; sourceTree = "<group>"; };
 		F202433C18B2CF4A006DB2EF /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		F2459BB018C67FC000AF56CF /* JCGroupSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCGroupSelectorViewController.h; sourceTree = "<group>"; };
@@ -1905,8 +1910,19 @@
 		DDED87DF195885850011DB55 /* IntegrationTests */ = {
 			isa = PBXGroup;
 			children = (
+				DDED87E719588ECD0011DB55 /* Supporting Files */,
+				DDED87E019588CC50011DB55 /* JCLoginTestCase.m */,
 			);
 			name = IntegrationTests;
+			sourceTree = "<group>";
+		};
+		DDED87E719588ECD0011DB55 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DDED87E419588E690011DB55 /* KIFUITestActor+Additions.h */,
+				DDED87E219588DA80011DB55 /* KIFUITestActor+Additions.m */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2360,12 +2376,14 @@
 			files = (
 				2751591218AD174F00FD8D3F /* KeychainItemWrapper.m in Sources */,
 				2751591418AD174F00FD8D3F /* JCAuthenticationManager.m in Sources */,
+				DDED87E119588CC50011DB55 /* JCLoginTestCase.m in Sources */,
 				2751590C18AD16F300FD8D3F /* JCRESTClient.m in Sources */,
 				2762C45918B4177D00885918 /* JCOmniPresence.m in Sources */,
 				2751591818AD300B00FD8D3F /* OsgiData.xcdatamodel in Sources */,
 				2751592618AD32E500FD8D3F /* JCConversationsViewController.m in Sources */,
 				272B61DE18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */,
 				275F4A8318AD0FBC00D2F069 /* JiveOneTests.m in Sources */,
+				DDED87E319588DA80011DB55 /* KIFUITestActor+Additions.m in Sources */,
 				2751592018AD303500FD8D3F /* JCDirectoryViewController.m in Sources */,
 				DDFFB60118D2284E00372019 /* JCVoicemailVCTests.m in Sources */,
 				27426AC918B5303D00011635 /* JCRestClientUnitTests.m in Sources */,
