@@ -587,6 +587,12 @@
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CWy-mT-UHy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="ILG-ME-9bC" customClass="JCStyleKit">
+                    <connections>
+                        <outletCollection property="moreIconLoginTargets" destination="6Mq-Pk-Xcc" id="CKn-xp-zOJ"/>
+                        <outletCollection property="voicemailLoginTargets" destination="sJe-YS-8AV" id="lWs-5J-xTV"/>
+                    </connections>
+                </customObject>
                 <customObject id="IHm-7L-gnl" customClass="JCStyleKit">
                     <connections>
                         <outletCollection property="voicemailLoginTargets" destination="sJe-YS-8AV" id="pJZ-eG-ZVY"/>
@@ -1181,6 +1187,11 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SGo-xb-CFz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="cfI-rT-nq9" customClass="JCStyleKit">
+                    <connections>
+                        <outletCollection property="defaultAvatarLoginTargets" destination="L9U-NE-MVL" id="SfN-ee-ggL"/>
+                    </connections>
+                </customObject>
             </objects>
             <point key="canvasLocation" x="1012" y="2341"/>
         </scene>
