@@ -34,14 +34,14 @@ function login(app, user, password) {
     
     //wait for login
     UIATarget.localTarget().pushTimeout(200);
-    currentWindow.navigationBar().name()["People"];
+    currentWindow.navigationBar().name()["Voicemail"];
     UIATarget.localTarget().popTimeout();
     
     UIATarget.localTarget().delay(2);
 }
 
 function logout(app) {
-    app.mainWindow().tabBar().buttons()[3].tap();
+    app.mainWindow().tabBar().buttons()[1].tap();
     target.logElementTree();
         
     // scrollDown(200);

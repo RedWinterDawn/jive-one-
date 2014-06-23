@@ -10,11 +10,11 @@
 #import <KIF/KIF.h>
 #import "KIFUITestActor+Additions.h"
 
-@interface ITLoginTestCase : KIFTestCase
+@interface ITTermsAndConditions : KIFTestCase
 
 @end
 
-@implementation ITLoginTestCase
+@implementation ITTermsAndConditions
 
 - (void)setUp
 {
@@ -28,9 +28,12 @@
     [super tearDown];
 }
 
-- (void)testExample
+- (void)testTermsAndConditionsLinkFromMoreTabAppears
 {
-    XCTAssert(1==1, @"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+    
+}
+- (void)testTermsAndConditionsLinkFromLoginAppears{
+    
 }
 
 @end

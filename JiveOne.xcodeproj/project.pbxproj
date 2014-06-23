@@ -248,6 +248,7 @@
 		9172ACF71917E8EE00481B01 /* JCPage1ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9172ACEF1917E8EE00481B01 /* JCPage1ViewController.m */; };
 		9172ACF81917E8EE00481B01 /* JCPage2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9172ACF11917E8EE00481B01 /* JCPage2ViewController.m */; };
 		9172ACF91917E8EE00481B01 /* JCPage3ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9172ACF31917E8EE00481B01 /* JCPage3ViewController.m */; };
+		9172ACFA1917E8EE00481B01 /* JCPage4ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9172ACF51917E8EE00481B01 /* JCPage4ViewController.m */; };
 		9172AD4C1918097B00481B01 /* JCContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9172AD4B1918097B00481B01 /* JCContainerViewController.m */; };
 		9172AD521918362800481B01 /* JCPageClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 9172AD511918362800481B01 /* JCPageClass.m */; };
 		9172AD54191847D800481B01 /* ES-voicemail-1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9172AD53191847D800481B01 /* ES-voicemail-1.jpg */; };
@@ -301,7 +302,7 @@
 		DDCE1E9718F3565F003A6615 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E9618F3565F003A6615 /* SystemConfiguration.framework */; };
 		DDEC37D01910126900E166CC /* ConversationEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = DDEC37CF1910126900E166CC /* ConversationEntry.m */; };
 		DDEC37D6191029B800E166CC /* PersonEntities.m in Sources */ = {isa = PBXBuildFile; fileRef = DDEC37D5191029B800E166CC /* PersonEntities.m */; };
-		DDED87E119588CC50011DB55 /* ITLoginTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = DDED87E019588CC50011DB55 /* ITLoginTestCase.m */; };
+		DDED87E119588CC50011DB55 /* ITTermsAndConditions.m in Sources */ = {isa = PBXBuildFile; fileRef = DDED87E019588CC50011DB55 /* ITTermsAndConditions.m */; };
 		DDED87E319588DA80011DB55 /* KIFUITestActor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = DDED87E219588DA80011DB55 /* KIFUITestActor+Additions.m */; };
 		DDFFB60118D2284E00372019 /* UTVoicemailVCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DDFFB60018D2284E00372019 /* UTVoicemailVCTests.m */; };
 		F202433D18B2CF4A006DB2EF /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F202433C18B2CF4A006DB2EF /* README.md */; };
@@ -748,6 +749,8 @@
 		9172ACF11917E8EE00481B01 /* JCPage2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPage2ViewController.m; sourceTree = "<group>"; };
 		9172ACF21917E8EE00481B01 /* JCPage3ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPage3ViewController.h; sourceTree = "<group>"; };
 		9172ACF31917E8EE00481B01 /* JCPage3ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPage3ViewController.m; sourceTree = "<group>"; };
+		9172ACF41917E8EE00481B01 /* JCPage4ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPage4ViewController.h; sourceTree = "<group>"; };
+		9172ACF51917E8EE00481B01 /* JCPage4ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPage4ViewController.m; sourceTree = "<group>"; };
 		9172AD4A1918097B00481B01 /* JCContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCContainerViewController.h; sourceTree = "<group>"; };
 		9172AD4B1918097B00481B01 /* JCContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCContainerViewController.m; sourceTree = "<group>"; };
 		9172AD501918362800481B01 /* JCPageClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPageClass.h; sourceTree = "<group>"; };
@@ -820,7 +823,7 @@
 		DDEC37CF1910126900E166CC /* ConversationEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationEntry.m; sourceTree = "<group>"; };
 		DDEC37D4191029B800E166CC /* PersonEntities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonEntities.h; sourceTree = "<group>"; };
 		DDEC37D5191029B800E166CC /* PersonEntities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonEntities.m; sourceTree = "<group>"; };
-		DDED87E019588CC50011DB55 /* ITLoginTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ITLoginTestCase.m; path = kif/ITLoginTestCase.m; sourceTree = "<group>"; };
+		DDED87E019588CC50011DB55 /* ITTermsAndConditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ITTermsAndConditions.m; path = kif/ITTermsAndConditions.m; sourceTree = "<group>"; };
 		DDED87E219588DA80011DB55 /* KIFUITestActor+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "KIFUITestActor+Additions.m"; path = "kif/KIFUITestActor+Additions.m"; sourceTree = "<group>"; };
 		DDED87E419588E690011DB55 /* KIFUITestActor+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "KIFUITestActor+Additions.h"; path = "kif/KIFUITestActor+Additions.h"; sourceTree = "<group>"; };
 		DDFFB60018D2284E00372019 /* UTVoicemailVCTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UTVoicemailVCTests.m; sourceTree = "<group>"; };
@@ -1939,6 +1942,8 @@
 				9172ACF11917E8EE00481B01 /* JCPage2ViewController.m */,
 				9172ACF21917E8EE00481B01 /* JCPage3ViewController.h */,
 				9172ACF31917E8EE00481B01 /* JCPage3ViewController.m */,
+				9172ACF41917E8EE00481B01 /* JCPage4ViewController.h */,
+				9172ACF51917E8EE00481B01 /* JCPage4ViewController.m */,
 			);
 			name = AppTutorial;
 			sourceTree = "<group>";
@@ -1957,7 +1962,7 @@
 			isa = PBXGroup;
 			children = (
 				DDED87E719588ECD0011DB55 /* Supporting Files */,
-				DDED87E019588CC50011DB55 /* ITLoginTestCase.m */,
+				DDED87E019588CC50011DB55 /* ITTermsAndConditions.m */,
 			);
 			name = IntegrationTests;
 			sourceTree = "<group>";
@@ -2417,6 +2422,7 @@
 				274493C518D0E98D002744CB /* ContactGroup.m in Sources */,
 				27F1F2D5191C171300AEAFD7 /* UAInboxAlertHandler.m in Sources */,
 				275E809618AED884009AD776 /* JCSocketDispatch.m in Sources */,
+				9172ACFA1917E8EE00481B01 /* JCPage4ViewController.m in Sources */,
 				2700987418F4714100B6BC2F /* NSString+JSMessagesView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2427,7 +2433,7 @@
 			files = (
 				2751591218AD174F00FD8D3F /* KeychainItemWrapper.m in Sources */,
 				2751591418AD174F00FD8D3F /* JCAuthenticationManager.m in Sources */,
-				DDED87E119588CC50011DB55 /* ITLoginTestCase.m in Sources */,
+				DDED87E119588CC50011DB55 /* ITTermsAndConditions.m in Sources */,
 				2751590C18AD16F300FD8D3F /* JCRESTClient.m in Sources */,
 				2762C45918B4177D00885918 /* JCOmniPresence.m in Sources */,
 				2751591818AD300B00FD8D3F /* OsgiData.xcdatamodel in Sources */,

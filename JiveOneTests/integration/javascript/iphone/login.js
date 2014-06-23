@@ -79,10 +79,7 @@ test("Login Test", function(target, app){
 	
 	// Confirm landing page is the ‘People’ user list
 	var title =  app.mainWindow().navigationBar().name()	
-	assertEquals("People", title, "Should have loaded 'People' tab");
-	var count = app.mainWindow().tableViews()[0].cells().length;
-	logDebug("the count was " +  count);
-	assertTrue(count>0, "contacts should have loaded");
+	assertEquals("Voicemail", title, "Should have loaded 'Voicemail' tab");
 	
 });
 
