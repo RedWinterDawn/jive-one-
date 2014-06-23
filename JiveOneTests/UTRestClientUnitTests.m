@@ -18,13 +18,13 @@
 #import "Company.h"
 
 
-@interface JCRestClientUnitTests : XCTestCase
+@interface UTRestClientUnitTests : XCTestCase
 
 @property (nonatomic, strong) JCLoginViewController *loginViewController;
 
 @end
 
-@implementation JCRestClientUnitTests
+@implementation UTRestClientUnitTests
 {
     NSString *barName;
     NSString *barConversation;

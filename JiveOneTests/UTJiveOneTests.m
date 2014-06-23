@@ -12,11 +12,11 @@
 #import "JCAuthenticationManager.h"
 #import "JCDirectoryViewController.h"
 
-@interface JiveOneTests : XCTestCase
+@interface UTJiveOneTests : XCTestCase
 
 @end
 
-@implementation JiveOneTests
+@implementation UTJiveOneTests
 
 - (void)setUp
 {

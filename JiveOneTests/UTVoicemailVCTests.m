@@ -15,12 +15,12 @@
 #import <OCMock/OCMock.h>
 #import "Voicemail+Custom.h"
 
-@interface JCVoicemailVCTests : XCTestCase
+@interface UTVoicemailVCTests : XCTestCase
 @property (nonatomic, strong) JCVoiceTableViewController *voicemailViewController;
 
 @end
 
-@implementation JCVoicemailVCTests
+@implementation UTVoicemailVCTests
 
 - (void)setUp
 {

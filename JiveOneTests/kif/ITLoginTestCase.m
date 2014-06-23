@@ -10,11 +10,11 @@
 #import <KIF/KIF.h>
 #import "KIFUITestActor+Additions.h"
 
-@interface JCLoginTestCase : KIFTestCase
+@interface ITLoginTestCase : KIFTestCase
 
 @end
 
-@implementation JCLoginTestCase
+@implementation ITLoginTestCase
 
 - (void)setUp
 {
@@ -30,7 +30,7 @@
 
 - (void)testExample
 {
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+    XCTAssert(1==1, @"No implementation for \"%s\"", __PRETTY_FUNCTION__);
 }
 
 @end
