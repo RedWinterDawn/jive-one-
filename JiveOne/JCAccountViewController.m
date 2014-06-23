@@ -72,22 +72,22 @@
     self.userNameDetail.text = me.firstLastName;
 //    self.userMoodDetail.text = @"I'm not in the mood today";
 //    self.userTitleDetail.text = @"Developer of Awesome";
-    self.userImage.image = [JCStyleKit imageOfCanvas15WithFrame:CGRectMake(77, 0, 166, self.userImage.frame.size.height)];
+//    self.userImage.image = [JCStyleKit imageOfCanvas15WithFrame:CGRectMake(77, 0, 166, self.userImage.frame.size.height)];
     self.userImage.backgroundColor = [UIColor colorWithRed:.883 green:.883 blue:.883 alpha:1];
     
     NSLog(@"%@", NSStringFromCGPoint(self.logoutImageView.frame.origin));
     NSLog(@"%@", NSStringFromCGSize(self.logoutImageView.frame.size));
 
 
-    UIImage *backButton = [JCStyleKit imageOfBack_buttonWithFrame:CGRectMake(0, 0, self.eulaImageView.frame.size.width, self.eulaImageView.frame.size.height)];
-
-    UIImage *reverseButton = [UIImage imageWithCGImage:backButton.CGImage
-                                                  scale:backButton.scale    
-                                            orientation:UIImageOrientationUpMirrored];
-    self.eulaImageView.image = reverseButton;
-    [self.eulaImageView setTintColor:[UIColor orangeColor]];
-    self.feedbackImageView.image = reverseButton;
-    self.logoutImageView.image = [JCStyleKit imageOfLogoutWithFrame:CGRectMake(0, 0, self.logoutImageView.frame.size.width, self.logoutImageView.frame.size.height)];
+//    UIImage *backButton = [JCStyleKit imageOfBack_buttonWithFrame:CGRectMake(0, 0, self.eulaImageView.frame.size.width, self.eulaImageView.frame.size.height)];
+//
+//    UIImage *reverseButton = [UIImage imageWithCGImage:backButton.CGImage
+//                                                  scale:backButton.scale    
+//                                            orientation:UIImageOrientationUpMirrored];
+//    self.eulaImageView.image = reverseButton;
+//    [self.eulaImageView setTintColor:[UIColor orangeColor]];
+//    self.feedbackImageView.image = reverseButton;
+//    self.logoutImageView.image = [JCStyleKit imageOfLogoutWithFrame:CGRectMake(0, 0, self.logoutImageView.frame.size.width, self.logoutImageView.frame.size.height)];
 }
 
 - (void) viewWillAppear:(BOOL)animated

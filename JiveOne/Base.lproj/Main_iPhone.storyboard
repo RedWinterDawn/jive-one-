@@ -5,58 +5,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--Page4 View Controller-->
-        <scene sceneID="YOn-53-1Um">
-            <objects>
-                <viewController storyboardIdentifier="JCPage4ViewController" id="BJ5-Dg-VP1" customClass="JCPage4ViewController" sceneMemberID="viewController"/>
-                <view contentMode="scaleToFill" id="pUf-J5-rdN">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <subviews>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Voicemail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fep-9b-jXI">
-                            <rect key="frame" x="61" y="269" width="197" height="30"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="More" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j02-wN-PHL">
-                            <rect key="frame" x="61" y="269" width="197" height="30"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Everything else" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rBK-cq-hrc">
-                            <rect key="frame" x="47" y="274" width="226" height="21"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="View voicemails, touch to " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dxS-9w-0IH">
-                            <rect key="frame" x="47" y="274" width="226" height="21"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="expand for more options." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cK2-Eg-kyQ">
-                            <rect key="frame" x="47" y="274" width="226" height="21"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="nav-more.png" translatesAutoresizingMaskIntoConstraints="NO" id="BIh-gc-AGL">
-                            <rect key="frame" x="140" y="269" width="39" height="30"/>
-                        </imageView>
-                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="vmail.png" translatesAutoresizingMaskIntoConstraints="NO" id="oLI-fu-H7J">
-                            <rect key="frame" x="109" y="365" width="46" height="41"/>
-                            <color key="backgroundColor" red="0.967574139" green="0.1594937293" blue="0.1336503215" alpha="1" colorSpace="calibratedRGB"/>
-                            <color key="tintColor" red="0.97632610900000005" green="1" blue="0.99328926200000001" alpha="1" colorSpace="calibratedRGB"/>
-                        </imageView>
-                    </subviews>
-                </view>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wtd-bQ-Ty4" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1411" y="-536"/>
-        </scene>
         <!--Login View Controller-->
         <scene sceneID="yum-B5-f91">
             <objects>
@@ -215,6 +163,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KCP-nN-szi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="tcN-gZ-i3v" customClass="JCStyleKit"/>
             </objects>
             <point key="canvasLocation" x="-1535" y="547"/>
         </scene>
@@ -621,22 +570,24 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8hZ-WJ-g3u">
-                                <rect key="frame" x="37" y="121" width="40" height="40"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sJe-YS-8AV">
+                                <rect key="frame" x="20" y="116" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qny-TL-nVq">
-                                <rect key="frame" x="37" y="288" width="40" height="40"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Mq-Pk-Xcc">
+                                <rect key="frame" x="20" y="283" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
                     </view>
-                    <connections>
-                        <outlet property="moreIconImageView" destination="qny-TL-nVq" id="Xd4-ct-xA2"/>
-                        <outlet property="voicemailImageView" destination="8hZ-WJ-g3u" id="oqn-jY-dpt"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CWy-mT-UHy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="IHm-7L-gnl" customClass="JCStyleKit">
+                    <connections>
+                        <outletCollection property="voicemailLoginTargets" destination="sJe-YS-8AV" id="pJZ-eG-ZVY"/>
+                        <outletCollection property="moreIconLoginTargets" destination="6Mq-Pk-Xcc" id="chc-t6-RVL"/>
+                    </connections>
+                </customObject>
             </objects>
             <point key="canvasLocation" x="206" y="-536"/>
         </scene>
@@ -1161,19 +1112,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jMP-Ab-QB3">
-                                                    <rect key="frame" x="270" y="12" width="22" height="22"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="22" id="N2F-3v-M3j"/>
-                                                    </constraints>
-                                                </imageView>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstItem="jMP-Ab-QB3" firstAttribute="top" secondItem="gpq-iI-QYD" secondAttribute="top" constant="12" id="4zM-RD-fLD"/>
-                                                <constraint firstAttribute="bottom" secondItem="jMP-Ab-QB3" secondAttribute="bottom" constant="10" id="OjH-yV-izA"/>
-                                                <constraint firstAttribute="trailing" secondItem="jMP-Ab-QB3" secondAttribute="trailing" constant="28" id="jwr-7Q-dvQ"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="WIS-3U-iqe" rowHeight="44" style="IBUITableViewCellStyleDefault" id="sva-xe-6hW" customClass="JCTableViewCellWithInset">
@@ -1190,19 +1129,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VpI-Op-evT">
-                                                    <rect key="frame" x="270" y="12" width="22" height="22"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="22" id="ZJD-rr-4Mj"/>
-                                                    </constraints>
-                                                </imageView>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="VpI-Op-evT" secondAttribute="trailing" constant="28" id="3vs-TC-7Ar"/>
-                                                <constraint firstAttribute="bottom" secondItem="VpI-Op-evT" secondAttribute="bottom" constant="10" id="fIA-hq-fxj"/>
-                                                <constraint firstItem="VpI-Op-evT" firstAttribute="top" secondItem="6rb-8l-q9U" secondAttribute="top" constant="12" id="isk-Ua-Gsm"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -1225,20 +1152,8 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZBD-3B-LxB">
-                                                    <rect key="frame" x="270" y="12" width="22" height="22"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="22" id="fVA-Ox-lu8"/>
-                                                    </constraints>
-                                                </imageView>
                                             </subviews>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.75" colorSpace="calibratedRGB"/>
-                                            <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="ZBD-3B-LxB" secondAttribute="bottom" constant="10" id="MSp-NZ-rtj"/>
-                                                <constraint firstItem="ZBD-3B-LxB" firstAttribute="top" secondItem="zMQ-oF-jqH" secondAttribute="top" constant="12" id="qX2-3M-Wjs"/>
-                                                <constraint firstAttribute="trailing" secondItem="ZBD-3B-LxB" secondAttribute="trailing" constant="28" id="yAg-YL-hQk"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                         <accessibility key="accessibilityConfiguration" label="Sign Out">
                                             <bool key="isElement" value="YES"/>
@@ -1254,9 +1169,6 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Profile &amp; Settings" id="7BX-g7-cjd"/>
                     <connections>
-                        <outlet property="eulaImageView" destination="jMP-Ab-QB3" id="paY-SE-TLR"/>
-                        <outlet property="feedbackImageView" destination="VpI-Op-evT" id="QzA-W9-Lq5"/>
-                        <outlet property="logoutImageView" destination="ZBD-3B-LxB" id="8jO-sf-tHE"/>
                         <outlet property="userImage" destination="L9U-NE-MVL" id="K61-do-tMv"/>
                         <outlet property="userNameDetail" destination="pd4-gQ-CDE" id="Dk2-jb-9PV"/>
                         <outlet property="userTitleDetail" destination="7sK-jD-yDH" id="OX5-mH-ydj"/>

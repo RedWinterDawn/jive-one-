@@ -11,7 +11,6 @@
 #import "JCPage1ViewController.h"
 #import "JCPage2ViewController.h"
 #import "JCPage3ViewController.h"
-#import "JCPage4ViewController.h"
 #import "Common.h"
 #import "UIImage+ImageEffects.h"
 
@@ -22,7 +21,6 @@
 @property (strong, nonatomic) JCPage1ViewController *page1;
 @property (strong, nonatomic) JCPage2ViewController *page2;
 @property (strong, nonatomic) JCPage3ViewController *page3;
-@property (strong, nonatomic) JCPage4ViewController *page4;
 @property (nonatomic) NSArray* pages;
 @property (nonatomic) NSInteger* currentIndex;
 @end
@@ -86,7 +84,7 @@
 -(NSArray *)pages
 {
     if (!_pages) {
-        _pages =@[self.page1, self.page2, self.page3, self.page4];
+        _pages =@[self.page1, self.page2, self.page3];
     }
     return _pages;
 }
@@ -118,21 +116,11 @@
     }
     return _page3;
 }
--(JCPage4ViewController*)page4
-{
-    if (!_page4) {
-        _page4 = [self.storyboard instantiateViewControllerWithIdentifier:@"JCPage4ViewController"];
-    }
-    return _page4;
-}
 
 
 
 - (JCPageClass *)viewControllerAtIndex:(NSUInteger)index
 {
-//    if (([self.pageTitles count] == 0) || (index >= [self.pageTitles count])) {
-//        return nil;
-//    }
     
     // Create a new view controller and pass suitable data.
     JCPageClass *pageContentViewController;
@@ -147,10 +135,6 @@
             break;
         case 2:
             pageContentViewController = (JCPageClass *)self.page3;
-
-            break;
-        case 3:
-            pageContentViewController = (JCPageClass *)self.page4;
             
             break;
     }
@@ -190,7 +174,7 @@
 
 - (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController
 {
-    return 4;
+    return 3;
 }
 
 - (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController

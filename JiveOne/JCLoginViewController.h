@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "JCRESTClient.h"
+#import "JCIconViews.h"
+#import "JCStyleKit.h"
 
 @interface JCLoginViewController : UIViewController <UITextFieldDelegate>
 

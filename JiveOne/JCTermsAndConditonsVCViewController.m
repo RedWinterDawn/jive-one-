@@ -7,6 +7,7 @@
 //
 
 #import "JCTermsAndConditonsVCViewController.h"
+#import "JCStyleKit.h"
 
 @interface JCTermsAndConditonsVCViewController ()
 @property (weak, nonatomic) IBOutlet UIWebView *webView;

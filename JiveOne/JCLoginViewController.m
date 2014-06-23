@@ -14,12 +14,14 @@
 #import "JCRESTClient.h"
 #import "Company.h"
 #import <MBProgressHUD.h>
+#import "JCStyleKit.h"
 
 @interface JCLoginViewController ()
 {
     BOOL fastConnection;
     MBProgressHUD *hud;
 }
+
 
 @end
 
@@ -94,7 +96,7 @@
     _loginStatusLabel.font = [UIFont fontWithName:boldFontName size:16.0f];
     // Do any additional setup after loading the view.
     fastConnection = [Common IsConnectionFast];
-    
+//    self.moreiconimageview.image= [JCStyleKit imageOfMoreIconLoginWithFrame:CGRectMake(0, 0, self.moreiconimageview.frame.size.width, self.moreiconimageview.frame.size.height)];
     
 }
 

@@ -8,7 +8,7 @@
 
 #import "JCPage1ViewController.h"
 #import "JCStyleKit.h"
-
+#import "JCIconViews.h"
 @interface JCPage1ViewController ()
 @property (strong,nonatomic) UIDynamicAnimator* animator;
 @property (strong, nonatomic) UILabel* headingLabel2;
@@ -29,10 +29,11 @@
 {
     [super viewDidLoad];
     
-    self.voicemailImageView.image = [JCStyleKit imageOfCanvas16WithFrame:CGRectMake(0, 0, self.voicemailImageView.frame.size.width, self.voicemailImageView.frame.size.height)];
+    //self.voicemailImageView.image = [JCStyleKit imageOfVoicemailIconWithFrame:CGRectMake(0, 0, 100, 100)];
+    //self.voicemailImageView.image = [JCStyleKit imageOfCanvas16WithFrame:CGRectMake(0, 0, self.voicemailImageView.frame.size.width, self.voicemailImageView.frame.size.height)];
     //self.voicemailImageView. = [UIColor whiteColor];
-    self.moreIconImageView.image = [JCStyleKit imageOfCanvasMoreWithFrame:CGRectMake(0, 0, self.moreIconImageView.frame.size.width, self.moreIconImageView.frame.size.height) moreIsLogin:YES];
-    self.moreIconImageView.tintColor = [UIColor whiteColor];
+    //self.moreIconImageView.image = [JCStyleKit imageOfCanvasMoreWithFrame:CGRectMake(0, 0, self.moreIconImageView.frame.size.width, self.moreIconImageView.frame.size.height) moreIsLogin:YES];
+    //self.moreIconImageView.tintColor = [UIColor whiteColor];
 
 //    UILabel *headingLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 240, 300, 30)];
 //    headingLabel.text = @"Welcome to JiveApp";
