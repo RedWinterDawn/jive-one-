@@ -1116,14 +1116,14 @@
                                                     <rect key="frame" x="270" y="5" width="40" height="40"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="40" id="SBD-zx-7pA"/>
+                                                        <constraint firstAttribute="width" constant="40" id="ajl-VM-Ixf"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="8Qs-dd-vPG" secondAttribute="trailing" constant="10" id="V9w-xD-sSn"/>
-                                                <constraint firstAttribute="bottom" secondItem="8Qs-dd-vPG" secondAttribute="bottom" constant="-1" id="iId-Bc-6AE"/>
-                                                <constraint firstItem="8Qs-dd-vPG" firstAttribute="top" secondItem="gpq-iI-QYD" secondAttribute="top" constant="5" id="moO-BA-jdx"/>
+                                                <constraint firstAttribute="trailing" secondItem="8Qs-dd-vPG" secondAttribute="trailing" constant="10" id="BBg-GW-E9Y"/>
+                                                <constraint firstAttribute="bottom" secondItem="8Qs-dd-vPG" secondAttribute="bottom" constant="-1" id="dOe-z2-DPc"/>
+                                                <constraint firstItem="8Qs-dd-vPG" firstAttribute="top" secondItem="gpq-iI-QYD" secondAttribute="top" constant="5" id="sNj-1d-C7G"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1203,8 +1203,8 @@
                 <customObject id="cfI-rT-nq9" customClass="JCStyleKit">
                     <connections>
                         <outletCollection property="defaultAvatarIconTargets" destination="L9U-NE-MVL" id="7cl-8f-XID"/>
-                        <outletCollection property="back_buttonTargets" destination="8Qs-dd-vPG" id="wkU-rO-lMg"/>
                         <outletCollection property="logoutIconTargets" destination="OLC-kP-xwP" id="1WF-IT-p5A"/>
+                        <outletCollection property="back_buttonTargets" destination="OLC-kP-xwP" id="4hv-4m-djD"/>
                     </connections>
                 </customObject>
             </objects>

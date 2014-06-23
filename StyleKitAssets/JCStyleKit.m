@@ -702,17 +702,17 @@ static UIImage* _imageOfLogoutIcon = nil;
 
     //// Back_Button Drawing
     UIBezierPath* back_ButtonPath = UIBezierPath.bezierPath;
-    [back_ButtonPath moveToPoint: CGPointMake(CGRectGetMinX(back_ButtonFrame) + 0.40800 * CGRectGetWidth(back_ButtonFrame), CGRectGetMinY(back_ButtonFrame) + 0.51500 * CGRectGetHeight(back_ButtonFrame))];
-    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMinX(back_ButtonFrame) + 0.41800 * CGRectGetWidth(back_ButtonFrame), CGRectGetMinY(back_ButtonFrame) + 0.50500 * CGRectGetHeight(back_ButtonFrame))];
-    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMinX(back_ButtonFrame) + 0.52100 * CGRectGetWidth(back_ButtonFrame), CGRectGetMinY(back_ButtonFrame) + 0.40300 * CGRectGetHeight(back_ButtonFrame))];
-    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMinX(back_ButtonFrame) + 0.79700 * CGRectGetWidth(back_ButtonFrame), CGRectGetMinY(back_ButtonFrame) + 0.13000 * CGRectGetHeight(back_ButtonFrame))];
-    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMinX(back_ButtonFrame) + 0.63000 * CGRectGetWidth(back_ButtonFrame), CGRectGetMinY(back_ButtonFrame) + 0.11700 * CGRectGetHeight(back_ButtonFrame))];
-    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMinX(back_ButtonFrame) + 0.34100 * CGRectGetWidth(back_ButtonFrame), CGRectGetMinY(back_ButtonFrame) + 0.40300 * CGRectGetHeight(back_ButtonFrame))];
-    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMinX(back_ButtonFrame) + 0.23800 * CGRectGetWidth(back_ButtonFrame), CGRectGetMinY(back_ButtonFrame) + 0.50500 * CGRectGetHeight(back_ButtonFrame))];
-    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMinX(back_ButtonFrame) + 0.22800 * CGRectGetWidth(back_ButtonFrame), CGRectGetMinY(back_ButtonFrame) + 0.51500 * CGRectGetHeight(back_ButtonFrame))];
-    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMinX(back_ButtonFrame) + 0.62500 * CGRectGetWidth(back_ButtonFrame), CGRectGetMinY(back_ButtonFrame) + 0.91700 * CGRectGetHeight(back_ButtonFrame))];
-    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMinX(back_ButtonFrame) + 0.79400 * CGRectGetWidth(back_ButtonFrame), CGRectGetMinY(back_ButtonFrame) + 0.90500 * CGRectGetHeight(back_ButtonFrame))];
-    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMinX(back_ButtonFrame) + 0.40800 * CGRectGetWidth(back_ButtonFrame), CGRectGetMinY(back_ButtonFrame) + 0.51500 * CGRectGetHeight(back_ButtonFrame))];
+    [back_ButtonPath moveToPoint: CGPointMake(CGRectGetMinX(back_ButtonFrame) + 0.39800 * CGRectGetWidth(back_ButtonFrame), CGRectGetMinY(back_ButtonFrame) + 0.51500 * CGRectGetHeight(back_ButtonFrame))];
+    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMinX(back_ButtonFrame) + 0.40800 * CGRectGetWidth(back_ButtonFrame), CGRectGetMinY(back_ButtonFrame) + 0.50500 * CGRectGetHeight(back_ButtonFrame))];
+    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMinX(back_ButtonFrame) + 0.51100 * CGRectGetWidth(back_ButtonFrame), CGRectGetMinY(back_ButtonFrame) + 0.40300 * CGRectGetHeight(back_ButtonFrame))];
+    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMinX(back_ButtonFrame) + 0.78700 * CGRectGetWidth(back_ButtonFrame), CGRectGetMinY(back_ButtonFrame) + 0.13000 * CGRectGetHeight(back_ButtonFrame))];
+    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMinX(back_ButtonFrame) + 0.62000 * CGRectGetWidth(back_ButtonFrame), CGRectGetMinY(back_ButtonFrame) + 0.11700 * CGRectGetHeight(back_ButtonFrame))];
+    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMinX(back_ButtonFrame) + 0.33100 * CGRectGetWidth(back_ButtonFrame), CGRectGetMinY(back_ButtonFrame) + 0.40300 * CGRectGetHeight(back_ButtonFrame))];
+    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMinX(back_ButtonFrame) + 0.22800 * CGRectGetWidth(back_ButtonFrame), CGRectGetMinY(back_ButtonFrame) + 0.50500 * CGRectGetHeight(back_ButtonFrame))];
+    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMinX(back_ButtonFrame) + 0.21800 * CGRectGetWidth(back_ButtonFrame), CGRectGetMinY(back_ButtonFrame) + 0.51500 * CGRectGetHeight(back_ButtonFrame))];
+    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMinX(back_ButtonFrame) + 0.61500 * CGRectGetWidth(back_ButtonFrame), CGRectGetMinY(back_ButtonFrame) + 0.91700 * CGRectGetHeight(back_ButtonFrame))];
+    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMinX(back_ButtonFrame) + 0.78400 * CGRectGetWidth(back_ButtonFrame), CGRectGetMinY(back_ButtonFrame) + 0.90500 * CGRectGetHeight(back_ButtonFrame))];
+    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMinX(back_ButtonFrame) + 0.39800 * CGRectGetWidth(back_ButtonFrame), CGRectGetMinY(back_ButtonFrame) + 0.51500 * CGRectGetHeight(back_ButtonFrame))];
     [back_ButtonPath closePath];
     back_ButtonPath.miterLimit = 4;
 
