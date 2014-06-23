@@ -14,74 +14,77 @@
 @interface JCStyleKit : NSObject
 
 // iOS Controls Customization Outlets
-@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* moreIconLoginTargets;
-@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* voicemailLoginTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* moreLoginTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* defaultAvatarLoginTargets;
-@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* voicemailIconTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* voicemailLoginTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* speakerButtonTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* contactsIconTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* trashButtonTargets;
-@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* addIconTargets;
-@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* canvas5Targets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* back_buttonTargets;
-@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* directoryIconTargets;
-@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* locationIconTargets;
-@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* chatIconTargets;
-@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* scrubberIconTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* canvas6Targets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* messageIconTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* moreIconTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* canvas9Targets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* searchIconTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* starIconTargets;
-@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* trashIconTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* canvas12Targets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* typingIconTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* undoIconTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* defaultAvatarIconTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* voicemailIconTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* logoutIconTargets;
 
 // Colors
-+ (UIColor*)unSelectedColor;
-+ (UIColor*)selectedColor;
++ (UIColor*)unSelectedButtonColor;
++ (UIColor*)selectedButtonColor;
 + (UIColor*)deleteColor;
 + (UIColor*)loginColor;
 
 // Drawing Methods
-+ (void)drawMoreIconLogin;
-+ (void)drawVoicemailLogin;
++ (void)drawMoreLogin;
 + (void)drawDefaultAvatarLogin;
-+ (void)drawVoicemailIcon;
++ (void)drawVoicemailLogin;
++ (void)drawSpeakerButtonWithSpeakerFrame: (CGRect)speakerFrame speakerIsSelected: (BOOL)speakerIsSelected;
 + (void)drawComposeIconWithFrame: (CGRect)frame;
-+ (void)drawSpeakerButtonWithSpeakerFrame: (CGRect)speakerFrame;
-+ (void)drawPlay_PauseWithFrame: (CGRect)frame playPauseDisplaysPlay: (BOOL)playPauseDisplaysPlay;
++ (void)drawContactsIcon;
 + (void)drawTrashButtonWithOuterFrame: (CGRect)outerFrame selectWithDeleteColor: (BOOL)selectWithDeleteColor;
-+ (void)drawAddIconWithAddFrame: (CGRect)addFrame;
-+ (void)drawCanvas5WithFrame: (CGRect)frame;
-+ (void)drawBack_buttonWithFrame: (CGRect)frame;
-+ (void)drawDirectoryIconWithFrame: (CGRect)frame;
-+ (void)drawLocationIconWithFrame: (CGRect)frame;
-+ (void)drawChatIconWithFrame: (CGRect)frame;
-+ (void)drawScrubberIconWithFrame: (CGRect)frame;
-+ (void)drawSearchIconWithFrame: (CGRect)frame;
-+ (void)drawStarIconWithFrame: (CGRect)frame;
-+ (void)drawTrashIconWithFrame: (CGRect)frame;
-+ (void)drawTypingIconWithFrame: (CGRect)frame;
-+ (void)drawUndoIconWithFrame: (CGRect)frame;
-+ (void)drawLogoutIconWithFrame: (CGRect)frame;
++ (void)drawPlay_PauseWithFrame: (CGRect)frame playPauseDisplaysPlay: (BOOL)playPauseDisplaysPlay;
++ (void)drawAddIcon;
++ (void)drawCanvas3WithFrame: (CGRect)frame;
++ (void)drawEmailIcon;
++ (void)drawBack_buttonWithBack_ButtonFrame: (CGRect)back_ButtonFrame;
++ (void)drawCanvas6WithFrame: (CGRect)frame;
++ (void)drawMessageIcon;
++ (void)drawMoreIcon;
++ (void)drawCanvas9WithFrame: (CGRect)frame;
++ (void)drawSearchIcon;
++ (void)drawStarIcon;
++ (void)drawCanvas12WithFrame: (CGRect)frame;
++ (void)drawTypingIcon;
++ (void)drawUndoIcon;
++ (void)drawDefaultAvatarIcon;
++ (void)drawVoicemailIcon;
++ (void)drawLogoutIcon;
 
 // Generated Images
-+ (UIImage*)imageOfMoreIconLogin;
-+ (UIImage*)imageOfVoicemailLogin;
++ (UIImage*)imageOfMoreLogin;
 + (UIImage*)imageOfDefaultAvatarLogin;
-+ (UIImage*)imageOfVoicemailIcon;
-+ (UIImage*)imageOfSpeakerButtonWithSpeakerFrame: (CGRect)speakerFrame;
++ (UIImage*)imageOfVoicemailLogin;
++ (UIImage*)imageOfSpeakerButtonWithSpeakerFrame: (CGRect)speakerFrame speakerIsSelected: (BOOL)speakerIsSelected;
++ (UIImage*)imageOfContactsIcon;
 + (UIImage*)imageOfTrashButtonWithOuterFrame: (CGRect)outerFrame selectWithDeleteColor: (BOOL)selectWithDeleteColor;
-+ (UIImage*)imageOfAddIconWithAddFrame: (CGRect)addFrame;
-+ (UIImage*)imageOfCanvas5WithFrame: (CGRect)frame;
-+ (UIImage*)imageOfBack_buttonWithFrame: (CGRect)frame;
-+ (UIImage*)imageOfDirectoryIconWithFrame: (CGRect)frame;
-+ (UIImage*)imageOfLocationIconWithFrame: (CGRect)frame;
-+ (UIImage*)imageOfChatIconWithFrame: (CGRect)frame;
-+ (UIImage*)imageOfScrubberIconWithFrame: (CGRect)frame;
-+ (UIImage*)imageOfSearchIconWithFrame: (CGRect)frame;
-+ (UIImage*)imageOfStarIconWithFrame: (CGRect)frame;
-+ (UIImage*)imageOfTrashIconWithFrame: (CGRect)frame;
-+ (UIImage*)imageOfTypingIconWithFrame: (CGRect)frame;
-+ (UIImage*)imageOfUndoIconWithFrame: (CGRect)frame;
-+ (UIImage*)imageOfLogoutIconWithFrame: (CGRect)frame;
++ (UIImage*)imageOfBack_buttonWithBack_ButtonFrame: (CGRect)back_ButtonFrame;
++ (UIImage*)imageOfCanvas6WithFrame: (CGRect)frame;
++ (UIImage*)imageOfMessageIcon;
++ (UIImage*)imageOfMoreIcon;
++ (UIImage*)imageOfCanvas9WithFrame: (CGRect)frame;
++ (UIImage*)imageOfSearchIcon;
++ (UIImage*)imageOfStarIcon;
++ (UIImage*)imageOfCanvas12WithFrame: (CGRect)frame;
++ (UIImage*)imageOfTypingIcon;
++ (UIImage*)imageOfUndoIcon;
++ (UIImage*)imageOfDefaultAvatarIcon;
++ (UIImage*)imageOfVoicemailIcon;
++ (UIImage*)imageOfLogoutIcon;
 
 @end

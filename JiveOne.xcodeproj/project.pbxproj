@@ -311,8 +311,8 @@
 		F59AE2C7192F07BA00CAF0F3 /* iPhone2XnewBlur.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2BB192F07BA00CAF0F3 /* iPhone2XnewBlur.png */; };
 		F59AE2C9192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2BC192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png */; };
 		F59AE2CC192F0B0D00CAF0F3 /* iPadLaunch2Xnew.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2CB192F0B0D00CAF0F3 /* iPadLaunch2Xnew.png */; };
-		F5BE1CC91958D98C00C1045E /* JCStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = F5BE1CC81958D98C00C1045E /* JCStyleKit.m */; };
 		F5C8F16A19351604007372A1 /* JCPeopleSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F5C8F16919351604007372A1 /* JCPeopleSearchViewController.m */; };
+		F5DB70781958F0A90006D023 /* JCStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = F5DB70771958F0A90006D023 /* JCStyleKit.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -822,10 +822,10 @@
 		F59AE2BB192F07BA00CAF0F3 /* iPhone2XnewBlur.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhone2XnewBlur.png; sourceTree = "<group>"; };
 		F59AE2BC192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhone2XnewBlurSmall.png; sourceTree = "<group>"; };
 		F59AE2CB192F0B0D00CAF0F3 /* iPadLaunch2Xnew.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPadLaunch2Xnew.png; sourceTree = "<group>"; };
-		F5BE1CC71958D98C00C1045E /* JCStyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCStyleKit.h; sourceTree = "<group>"; };
-		F5BE1CC81958D98C00C1045E /* JCStyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCStyleKit.m; sourceTree = "<group>"; };
 		F5C8F16819351604007372A1 /* JCPeopleSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPeopleSearchViewController.h; sourceTree = "<group>"; };
 		F5C8F16919351604007372A1 /* JCPeopleSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPeopleSearchViewController.m; sourceTree = "<group>"; };
+		F5DB70761958F0A90006D023 /* JCStyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCStyleKit.h; sourceTree = "<group>"; };
+		F5DB70771958F0A90006D023 /* JCStyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCStyleKit.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1843,11 +1843,12 @@
 		91DDB1821934DED700550F10 /* StyleKit */ = {
 			isa = PBXGroup;
 			children = (
-				F5BE1CC71958D98C00C1045E /* JCStyleKit.h */,
-				F5BE1CC81958D98C00C1045E /* JCStyleKit.m */,
+				F5DB70761958F0A90006D023 /* JCStyleKit.h */,
+				F5DB70771958F0A90006D023 /* JCStyleKit.m */,
 			);
 			name = StyleKit;
-			sourceTree = "<group>";
+			path = "/Users/pleonard/Desktop/jive/iOS-JiveOne/JiveOne";
+			sourceTree = "<absolute>";
 		};
 		91E3738219351E0C00534C7C /* VoiceMailIcons */ = {
 			isa = PBXGroup;
@@ -2258,7 +2259,7 @@
 				F2459BB218C67FC000AF56CF /* JCGroupSelectorViewController.m in Sources */,
 				277F094218FED58C00EEF0E3 /* JCStatusViewController.m in Sources */,
 				27F1F2DA191C171300AEAFD7 /* UAInboxUI.m in Sources */,
-				F5BE1CC91958D98C00C1045E /* JCStyleKit.m in Sources */,
+				F5DB70781958F0A90006D023 /* JCStyleKit.m in Sources */,
 				27E9A35818E0A17A0017B65D /* Presence+Custom.m in Sources */,
 				27F1F2EB191C171300AEAFD7 /* UAPushSettingsTokenViewController.m in Sources */,
 				279E4CA9192273E5002A556C /* MBContactCollectionView.m in Sources */,
