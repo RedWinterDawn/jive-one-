@@ -230,6 +230,7 @@
 		9103271718F34BEC00437503 /* JCPeopleDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9103271518F34BEC00437503 /* JCPeopleDetailCell.m */; };
 		9103271818F34BEC00437503 /* JCPeopleDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9103271618F34BEC00437503 /* JCPeopleDetailCell.xib */; };
 		910709F71959D43E0041E1CF /* JCStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 910709F61959D43E0041E1CF /* JCStyleKit.m */; };
+		910709FE1959D60B0041E1CF /* JCLogoutIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 910709FD1959D60B0041E1CF /* JCLogoutIcon.m */; };
 		911B3E9118E0E41D00105925 /* voicemail_pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 911B3E8F18E0E41D00105925 /* voicemail_pause.png */; };
 		911B3E9218E0E41D00105925 /* voicemail_pause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 911B3E9018E0E41D00105925 /* voicemail_pause@2x.png */; };
 		911BFDD518D9E9C300684964 /* vmail.png in Resources */ = {isa = PBXBuildFile; fileRef = 911BFDD418D9E9C300684964 /* vmail.png */; };
@@ -254,6 +255,9 @@
 		9172AD58191849F500481B01 /* unnamed.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9172AD57191849F500481B01 /* unnamed.jpg */; };
 		9172AD5C19192A1500481B01 /* UserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9172AD5B19192A1500481B01 /* UserDefaults.plist */; };
 		91743AA0191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91743A9F191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m */; };
+		91869D871959E5CF007743CE /* JCTOSButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91869D861959E5CF007743CE /* JCTOSButtonView.m */; };
+		91915732195A2DC0004BDE26 /* JCLeaveFeedbackButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 91915731195A2DC0004BDE26 /* JCLeaveFeedbackButton.m */; };
+		91915735195A30F6004BDE26 /* JCLogOutButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 91915734195A30F6004BDE26 /* JCLogOutButton.m */; };
 		919C448F18DA479F00F6566A /* thumb1.png in Resources */ = {isa = PBXBuildFile; fileRef = 919C448E18DA479F00F6566A /* thumb1.png */; };
 		919DD29D1922E2C90039205E /* JCPopoverSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 919DD29C1922E2C90039205E /* JCPopoverSlider.m */; };
 		919DD2A11922E3570039205E /* JCPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 919DD2A01922E3570039205E /* JCPopoverView.m */; };
@@ -716,6 +720,8 @@
 		91059D341949F8E6002DE67C /* LoggerCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoggerCommon.h; sourceTree = "<group>"; };
 		910709F51959D43E0041E1CF /* JCStyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JCStyleKit.h; path = StyleKitAssets/JCStyleKit.h; sourceTree = SOURCE_ROOT; };
 		910709F61959D43E0041E1CF /* JCStyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JCStyleKit.m; path = StyleKitAssets/JCStyleKit.m; sourceTree = SOURCE_ROOT; };
+		910709FC1959D60B0041E1CF /* JCLogoutIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCLogoutIcon.h; sourceTree = "<group>"; };
+		910709FD1959D60B0041E1CF /* JCLogoutIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCLogoutIcon.m; sourceTree = "<group>"; };
 		911B3E8F18E0E41D00105925 /* voicemail_pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = voicemail_pause.png; sourceTree = "<group>"; };
 		911B3E9018E0E41D00105925 /* voicemail_pause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "voicemail_pause@2x.png"; sourceTree = "<group>"; };
 		911BFDD418D9E9C300684964 /* vmail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vmail.png; sourceTree = "<group>"; };
@@ -750,6 +756,12 @@
 		9172AD5B19192A1500481B01 /* UserDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserDefaults.plist; sourceTree = "<group>"; };
 		91743A9E191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTermsAndConditonsVCViewController.h; sourceTree = "<group>"; };
 		91743A9F191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTermsAndConditonsVCViewController.m; sourceTree = "<group>"; };
+		91869D851959E5CF007743CE /* JCTOSButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTOSButtonView.h; sourceTree = SOURCE_ROOT; };
+		91869D861959E5CF007743CE /* JCTOSButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTOSButtonView.m; sourceTree = SOURCE_ROOT; };
+		91915730195A2DC0004BDE26 /* JCLeaveFeedbackButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JCLeaveFeedbackButton.h; path = JiveOne/JCLeaveFeedbackButton.h; sourceTree = SOURCE_ROOT; };
+		91915731195A2DC0004BDE26 /* JCLeaveFeedbackButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JCLeaveFeedbackButton.m; path = JiveOne/JCLeaveFeedbackButton.m; sourceTree = SOURCE_ROOT; };
+		91915733195A30F6004BDE26 /* JCLogOutButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCLogOutButton.h; sourceTree = SOURCE_ROOT; };
+		91915734195A30F6004BDE26 /* JCLogOutButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCLogOutButton.m; sourceTree = SOURCE_ROOT; };
 		919C448E18DA479F00F6566A /* thumb1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumb1.png; sourceTree = "<group>"; };
 		919DD29B1922E2C90039205E /* JCPopoverSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPopoverSlider.h; sourceTree = "<group>"; };
 		919DD29C1922E2C90039205E /* JCPopoverSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPopoverSlider.m; sourceTree = "<group>"; };
@@ -1423,6 +1435,7 @@
 		277F093E18FECEB800EEF0E3 /* Account */ = {
 			isa = PBXGroup;
 			children = (
+				910709F81959D5B90041E1CF /* AccountIcons */,
 				DD28DA5018AEC4F5003BFC44 /* JCAccountViewController.h */,
 				DD28DA5118AEC4F5003BFC44 /* JCAccountViewController.m */,
 				2784BA661940344000389F5F /* JCPresenceViewController.h */,
@@ -1816,6 +1829,35 @@
 			path = Shared;
 			sourceTree = "<group>";
 		};
+		910709F81959D5B90041E1CF /* AccountIcons */ = {
+			isa = PBXGroup;
+			children = (
+				910709FC1959D60B0041E1CF /* JCLogoutIcon.h */,
+				910709FD1959D60B0041E1CF /* JCLogoutIcon.m */,
+			);
+			name = AccountIcons;
+			sourceTree = "<group>";
+		};
+		91869D831959E597007743CE /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Icons;
+			sourceTree = "<group>";
+		};
+		91869D841959E5A2007743CE /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				91869D851959E5CF007743CE /* JCTOSButtonView.h */,
+				91869D861959E5CF007743CE /* JCTOSButtonView.m */,
+				91915730195A2DC0004BDE26 /* JCLeaveFeedbackButton.h */,
+				91915731195A2DC0004BDE26 /* JCLeaveFeedbackButton.m */,
+				91915733195A30F6004BDE26 /* JCLogOutButton.h */,
+				91915734195A30F6004BDE26 /* JCLogOutButton.m */,
+			);
+			name = Buttons;
+			sourceTree = "<group>";
+		};
 		919DD29A1922E2770039205E /* JCPopoverSlider */ = {
 			isa = PBXGroup;
 			children = (
@@ -1843,6 +1885,8 @@
 		91DDB1821934DED700550F10 /* StyleKit */ = {
 			isa = PBXGroup;
 			children = (
+				91869D841959E5A2007743CE /* Buttons */,
+				91869D831959E597007743CE /* Icons */,
 				910709F51959D43E0041E1CF /* JCStyleKit.h */,
 				910709F61959D43E0041E1CF /* JCStyleKit.m */,
 			);
@@ -2267,6 +2311,8 @@
 				27F1F2E6191C171300AEAFD7 /* UAPushSettingsAddTagViewController.m in Sources */,
 				270152CB1901D86700F271CE /* JCContactModel.m in Sources */,
 				2700987818F4714100B6BC2F /* JSBubbleImageViewFactory.m in Sources */,
+				910709FE1959D60B0041E1CF /* JCLogoutIcon.m in Sources */,
+				91915735195A30F6004BDE26 /* JCLogOutButton.m in Sources */,
 				2710E40C18CE873000152C91 /* Conversation+Custom.m in Sources */,
 				27F1F2E9191C171300AEAFD7 /* UAPushSettingsSoundsViewController.m in Sources */,
 				27F1F2E3191C171300AEAFD7 /* UAMapPresentationController.m in Sources */,
@@ -2333,6 +2379,7 @@
 				27F1F2D9191C171300AEAFD7 /* UAInboxNavUI.m in Sources */,
 				9172AD521918362800481B01 /* JCPageClass.m in Sources */,
 				2736698218BD441D0069B4B3 /* JCPersonCell.m in Sources */,
+				91915732195A2DC0004BDE26 /* JCLeaveFeedbackButton.m in Sources */,
 				2788F143190EACD20099348D /* VoicemailETag.m in Sources */,
 				27F1F2EA191C171300AEAFD7 /* UAPushSettingsTagsViewController.m in Sources */,
 				2787911318CF79DC004DE651 /* JCPresenceView.m in Sources */,
@@ -2347,6 +2394,7 @@
 				910709F71959D43E0041E1CF /* JCStyleKit.m in Sources */,
 				9172AD4C1918097B00481B01 /* JCContainerViewController.m in Sources */,
 				9154947819366C54003DCED4 /* JCPlayPauseView.m in Sources */,
+				91869D871959E5CF007743CE /* JCTOSButtonView.m in Sources */,
 				2710E40F18CEC8C300152C91 /* ConversationEntry+Custom.m in Sources */,
 				9172ACF91917E8EE00481B01 /* JCPage3ViewController.m in Sources */,
 				279E4CB1192273E5002A556C /* MBContactCollectionViewPromptCell.m in Sources */,

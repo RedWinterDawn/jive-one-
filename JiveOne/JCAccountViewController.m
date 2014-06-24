@@ -64,7 +64,8 @@
     }
     
     self.tableView.backgroundColor = [UIColor whiteColor];
-    self.tableView.separatorInset = UIEdgeInsetsMake(0, 20, 0, 20);
+//    self.tableView.separatorInset = UIEdgeInsetsMake(0, 20, 0, 20);
+
 }
 
 - (void) loadViews
@@ -93,7 +94,7 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [Flurry logEvent:@"More View"];
+    [Flurry logEvent:@"Account View"];
     if (!me) {
         me = [[JCOmniPresence sharedInstance] me];
     }
@@ -185,10 +186,10 @@
 {
     UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
     
-    if (indexPath.section != 0) {
-        cell.contentView.layer.borderWidth = 1.0f;
-        cell.contentView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    }
+//    if (indexPath.section != 0) {
+//        cell.contentView.layer.borderWidth = 1.0f;
+//        cell.contentView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+//    }
 
     
     return cell;
@@ -225,14 +226,15 @@
 //    else
     if(indexPath.section == 1){
         //Eula or leave feedback
-        if([cell.textLabel.text isEqualToString:@"EULA / Terms of Service"]){
-            [Flurry logEvent:@"EULA button clicked"];
+        
+        if([cell.reuseIdentifier isEqualToString:@"TermsOfService"]){
+            [Flurry logEvent:@"TermsOfService button clicked"];
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
             
             [self presentViewController:[storyboard instantiateViewControllerWithIdentifier:@"JCTermsAndConditonsVCViewControllerContainer"] animated:YES completion:nil];
             
         }
-        else if ([cell.textLabel.text isEqualToString:@"Leave Feedback"]){
+        else if ([cell.reuseIdentifier isEqualToString:@"LeaveFeedback"]){
             //send email to mobileapps+ios@jive.com
             [self leaveFeedbackPressed];
             
@@ -240,7 +242,9 @@
         }
     }
     else if (indexPath.section == 2) {
+        if([cell.reuseIdentifier isEqualToString:@"LogOut"]){
         [self logoutButtonPress];
+        }
     }
 }
 
