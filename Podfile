@@ -13,6 +13,3 @@ pod 'Facebook-iOS-SDK', '~> 3.13'
 pod 'NSLogger', '~> 1.2'
 pod 'NSLogger', '~> 1.2'
 pod 'PocketSVG', '~> 0.6'
-target 'JiveOneTests', :exclusive => true do
-	pod 'KIF', '~> 3.0'
-end
