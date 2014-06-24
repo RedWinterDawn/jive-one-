@@ -1033,7 +1033,7 @@
         <scene sceneID="Sds-P7-Vc1">
             <objects>
                 <navigationController title="Voicemail" definesPresentationContext="YES" id="XFb-KJ-zT0" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Voicemail" image="vmail.png" id="Q9Q-II-fDb"/>
+                    <tabBarItem key="tabBarItem" title="Item" id="U22-Ky-jzN"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="wn2-pa-han">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1042,6 +1042,11 @@
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="amS-A9-i5z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="Sz5-JX-mhf" customClass="JCStyleKit">
+                    <connections>
+                        <outletCollection property="voicemailIconTargets" destination="U22-Ky-jzN" id="Mbf-98-DYZ"/>
+                    </connections>
+                </customObject>
             </objects>
             <point key="canvasLocation" x="474" y="1625"/>
         </scene>
@@ -1301,11 +1306,11 @@
             </objects>
             <point key="canvasLocation" x="1557" y="2351"/>
         </scene>
-        <!--Navigation Controller - Account-->
+        <!--Navigation Controller - Item-->
         <scene sceneID="iH8-Ew-IaF">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4mQ-Xv-N0n" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Account" image="nav-more.png" id="k9B-uW-1kv"/>
+                    <tabBarItem key="tabBarItem" title="Item" id="d5L-6j-UcE"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="CDo-hA-kaH">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1317,6 +1322,11 @@
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WQq-6j-LIb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="OBZ-eQ-rlg" customClass="JCStyleKit">
+                    <connections>
+                        <outletCollection property="moreIconTargets" destination="d5L-6j-UcE" id="Fvo-66-Lvv"/>
+                    </connections>
+                </customObject>
             </objects>
             <point key="canvasLocation" x="484" y="2341"/>
         </scene>
@@ -1346,10 +1356,8 @@
         <image name="iPhone2XnewBlurSmall.png" width="320" height="480"/>
         <image name="loginlogo" width="376" height="380"/>
         <image name="nav-conv.png" width="30" height="30"/>
-        <image name="nav-more.png" width="44" height="44"/>
         <image name="nav-people.png" width="44" height="44"/>
         <image name="people-start-conv.png" width="44" height="44"/>
-        <image name="vmail.png" width="32" height="32"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

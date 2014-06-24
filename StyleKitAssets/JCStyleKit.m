@@ -23,11 +23,11 @@ static UIColor* _loginColor = nil;
 static UIImage* _imageOfMoreLogin = nil;
 static UIImage* _imageOfDefaultAvatarLogin = nil;
 static UIImage* _imageOfVoicemailLogin = nil;
+static UIImage* _imageOfVoicemailIcon = nil;
 static UIImage* _imageOfContactsIcon = nil;
 static UIImage* _imageOfMessageIcon = nil;
 static UIImage* _imageOfMoreIcon = nil;
 static UIImage* _imageOfDefaultAvatarIcon = nil;
-static UIImage* _imageOfVoicemailIcon = nil;
 
 #pragma mark Initialization
 
@@ -310,6 +310,43 @@ static UIImage* _imageOfVoicemailIcon = nil;
         [UIColor.blackColor setFill];
         [bezier3Path fill];
     }
+}
+
++ (void)drawVoicemailIcon;
+{
+
+    //// voicemailBezier Drawing
+    UIBezierPath* voicemailBezierPath = UIBezierPath.bezierPath;
+    [voicemailBezierPath moveToPoint: CGPointMake(34.24, 20)];
+    [voicemailBezierPath addCurveToPoint: CGPointMake(26.48, 28.22) controlPoint1: CGPointMake(29.93, 20) controlPoint2: CGPointMake(26.48, 23.84)];
+    [voicemailBezierPath addCurveToPoint: CGPointMake(27.29, 32.1) controlPoint1: CGPointMake(26.48, 29.5) controlPoint2: CGPointMake(26.79, 30.28)];
+    [voicemailBezierPath addLineToPoint: CGPointMake(20.83, 32.1)];
+    [voicemailBezierPath addCurveToPoint: CGPointMake(21.64, 28.22) controlPoint1: CGPointMake(21.37, 30.28) controlPoint2: CGPointMake(21.64, 29.5)];
+    [voicemailBezierPath addCurveToPoint: CGPointMake(13.88, 20.14) controlPoint1: CGPointMake(21.64, 23.84) controlPoint2: CGPointMake(18.14, 20.14)];
+    [voicemailBezierPath addCurveToPoint: CGPointMake(6.12, 27.99) controlPoint1: CGPointMake(9.61, 20.14) controlPoint2: CGPointMake(6.12, 23.61)];
+    [voicemailBezierPath addCurveToPoint: CGPointMake(14.19, 35.85) controlPoint1: CGPointMake(6.12, 32.38) controlPoint2: CGPointMake(9.88, 35.85)];
+    [voicemailBezierPath addCurveToPoint: CGPointMake(14.59, 35.8) controlPoint1: CGPointMake(14.23, 35.85) controlPoint2: CGPointMake(14.59, 35.8)];
+    [voicemailBezierPath addLineToPoint: CGPointMake(14.59, 35.76)];
+    [voicemailBezierPath addLineToPoint: CGPointMake(34.24, 35.76)];
+    [voicemailBezierPath addCurveToPoint: CGPointMake(42, 27.9) controlPoint1: CGPointMake(38.55, 35.76) controlPoint2: CGPointMake(42, 32.24)];
+    [voicemailBezierPath addCurveToPoint: CGPointMake(34.24, 20) controlPoint1: CGPointMake(42, 23.56) controlPoint2: CGPointMake(38.55, 20)];
+    [voicemailBezierPath closePath];
+    [voicemailBezierPath moveToPoint: CGPointMake(10.51, 27.9)];
+    [voicemailBezierPath addCurveToPoint: CGPointMake(13.88, 24.48) controlPoint1: CGPointMake(10.51, 25.98) controlPoint2: CGPointMake(12.04, 24.48)];
+    [voicemailBezierPath addCurveToPoint: CGPointMake(17.24, 27.9) controlPoint1: CGPointMake(15.71, 24.48) controlPoint2: CGPointMake(17.24, 26.03)];
+    [voicemailBezierPath addCurveToPoint: CGPointMake(13.88, 31.33) controlPoint1: CGPointMake(17.24, 29.82) controlPoint2: CGPointMake(15.71, 31.33)];
+    [voicemailBezierPath addCurveToPoint: CGPointMake(10.51, 27.9) controlPoint1: CGPointMake(12.04, 31.33) controlPoint2: CGPointMake(10.51, 29.82)];
+    [voicemailBezierPath closePath];
+    [voicemailBezierPath moveToPoint: CGPointMake(34.24, 31.37)];
+    [voicemailBezierPath addCurveToPoint: CGPointMake(30.88, 27.95) controlPoint1: CGPointMake(32.36, 31.37) controlPoint2: CGPointMake(30.88, 29.82)];
+    [voicemailBezierPath addCurveToPoint: CGPointMake(34.24, 24.52) controlPoint1: CGPointMake(30.88, 26.03) controlPoint2: CGPointMake(32.4, 24.52)];
+    [voicemailBezierPath addCurveToPoint: CGPointMake(37.6, 27.95) controlPoint1: CGPointMake(36.08, 24.52) controlPoint2: CGPointMake(37.6, 26.08)];
+    [voicemailBezierPath addCurveToPoint: CGPointMake(34.24, 31.37) controlPoint1: CGPointMake(37.65, 29.82) controlPoint2: CGPointMake(36.12, 31.37)];
+    [voicemailBezierPath closePath];
+    voicemailBezierPath.miterLimit = 4;
+
+    [JCStyleKit.unSelectedButtonColor setFill];
+    [voicemailBezierPath fill];
 }
 
 + (void)drawLogoutIconWithFrame: (CGRect)frame;
@@ -948,11 +985,11 @@ static UIImage* _imageOfVoicemailIcon = nil;
     {
         //// Bezier Drawing
         UIBezierPath* bezierPath = UIBezierPath.bezierPath;
-        [bezierPath moveToPoint: CGPointMake(27.29, 42.79)];
-        [bezierPath addCurveToPoint: CGPointMake(27.29, 57.07) controlPoint1: CGPointMake(31.24, 46.73) controlPoint2: CGPointMake(31.24, 53.13)];
-        [bezierPath addCurveToPoint: CGPointMake(13.01, 57.07) controlPoint1: CGPointMake(23.35, 61.02) controlPoint2: CGPointMake(16.95, 61.02)];
-        [bezierPath addCurveToPoint: CGPointMake(13.01, 42.79) controlPoint1: CGPointMake(9.06, 53.13) controlPoint2: CGPointMake(9.06, 46.73)];
-        [bezierPath addCurveToPoint: CGPointMake(27.29, 42.79) controlPoint1: CGPointMake(16.95, 38.84) controlPoint2: CGPointMake(23.35, 38.84)];
+        [bezierPath moveToPoint: CGPointMake(10.22, 18.89)];
+        [bezierPath addCurveToPoint: CGPointMake(10.22, 23.21) controlPoint1: CGPointMake(11.4, 20.08) controlPoint2: CGPointMake(11.4, 22.02)];
+        [bezierPath addCurveToPoint: CGPointMake(5.94, 23.21) controlPoint1: CGPointMake(9.04, 24.4) controlPoint2: CGPointMake(7.12, 24.4)];
+        [bezierPath addCurveToPoint: CGPointMake(5.94, 18.89) controlPoint1: CGPointMake(4.75, 22.02) controlPoint2: CGPointMake(4.75, 20.08)];
+        [bezierPath addCurveToPoint: CGPointMake(10.22, 18.89) controlPoint1: CGPointMake(7.12, 17.7) controlPoint2: CGPointMake(9.04, 17.7)];
         [bezierPath closePath];
         bezierPath.miterLimit = 4;
 
@@ -962,11 +999,11 @@ static UIImage* _imageOfVoicemailIcon = nil;
 
         //// Bezier 2 Drawing
         UIBezierPath* bezier2Path = UIBezierPath.bezierPath;
-        [bezier2Path moveToPoint: CGPointMake(57.09, 42.89)];
-        [bezier2Path addCurveToPoint: CGPointMake(57.09, 57.17) controlPoint1: CGPointMake(61.04, 46.83) controlPoint2: CGPointMake(61.04, 53.23)];
-        [bezier2Path addCurveToPoint: CGPointMake(42.81, 57.17) controlPoint1: CGPointMake(53.15, 61.12) controlPoint2: CGPointMake(46.75, 61.12)];
-        [bezier2Path addCurveToPoint: CGPointMake(42.81, 42.89) controlPoint1: CGPointMake(38.86, 53.23) controlPoint2: CGPointMake(38.86, 46.83)];
-        [bezier2Path addCurveToPoint: CGPointMake(57.09, 42.89) controlPoint1: CGPointMake(46.75, 38.94) controlPoint2: CGPointMake(53.15, 38.94)];
+        [bezier2Path moveToPoint: CGPointMake(19.15, 18.92)];
+        [bezier2Path addCurveToPoint: CGPointMake(19.15, 23.24) controlPoint1: CGPointMake(20.33, 20.11) controlPoint2: CGPointMake(20.33, 22.05)];
+        [bezier2Path addCurveToPoint: CGPointMake(14.87, 23.24) controlPoint1: CGPointMake(17.97, 24.43) controlPoint2: CGPointMake(16.05, 24.43)];
+        [bezier2Path addCurveToPoint: CGPointMake(14.87, 18.92) controlPoint1: CGPointMake(13.69, 22.05) controlPoint2: CGPointMake(13.69, 20.11)];
+        [bezier2Path addCurveToPoint: CGPointMake(19.15, 18.92) controlPoint1: CGPointMake(16.05, 17.73) controlPoint2: CGPointMake(17.97, 17.73)];
         [bezier2Path closePath];
         bezier2Path.miterLimit = 4;
 
@@ -976,11 +1013,11 @@ static UIImage* _imageOfVoicemailIcon = nil;
 
         //// Bezier 3 Drawing
         UIBezierPath* bezier3Path = UIBezierPath.bezierPath;
-        [bezier3Path moveToPoint: CGPointMake(86.99, 42.79)];
-        [bezier3Path addCurveToPoint: CGPointMake(86.99, 57.07) controlPoint1: CGPointMake(90.94, 46.73) controlPoint2: CGPointMake(90.94, 53.13)];
-        [bezier3Path addCurveToPoint: CGPointMake(72.71, 57.07) controlPoint1: CGPointMake(83.05, 61.02) controlPoint2: CGPointMake(76.65, 61.02)];
-        [bezier3Path addCurveToPoint: CGPointMake(72.71, 42.79) controlPoint1: CGPointMake(68.76, 53.13) controlPoint2: CGPointMake(68.76, 46.73)];
-        [bezier3Path addCurveToPoint: CGPointMake(86.99, 42.79) controlPoint1: CGPointMake(76.65, 38.84) controlPoint2: CGPointMake(83.05, 38.84)];
+        [bezier3Path moveToPoint: CGPointMake(28.11, 18.89)];
+        [bezier3Path addCurveToPoint: CGPointMake(28.11, 23.21) controlPoint1: CGPointMake(29.3, 20.08) controlPoint2: CGPointMake(29.3, 22.02)];
+        [bezier3Path addCurveToPoint: CGPointMake(23.83, 23.21) controlPoint1: CGPointMake(26.93, 24.4) controlPoint2: CGPointMake(25.01, 24.4)];
+        [bezier3Path addCurveToPoint: CGPointMake(23.83, 18.89) controlPoint1: CGPointMake(22.65, 22.02) controlPoint2: CGPointMake(22.65, 20.08)];
+        [bezier3Path addCurveToPoint: CGPointMake(28.11, 18.89) controlPoint1: CGPointMake(25.01, 17.7) controlPoint2: CGPointMake(26.93, 17.7)];
         [bezier3Path closePath];
         bezier3Path.miterLimit = 4;
 
@@ -1208,77 +1245,40 @@ static UIImage* _imageOfVoicemailIcon = nil;
 
     //// defaultAvatarBezier Drawing
     UIBezierPath* defaultAvatarBezierPath = UIBezierPath.bezierPath;
-    [defaultAvatarBezierPath moveToPoint: CGPointMake(236.94, 127.78)];
-    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(231.61, 117.85) controlPoint1: CGPointMake(237.16, 124.06) controlPoint2: CGPointMake(234.5, 120.51)];
-    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(215.16, 107.57) controlPoint1: CGPointMake(226.94, 113.6) controlPoint2: CGPointMake(221.16, 110.41)];
-    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(187.82, 98) controlPoint1: CGPointMake(206.49, 103.67) controlPoint2: CGPointMake(197.38, 100.48)];
-    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(184.71, 95.52) controlPoint1: CGPointMake(186.27, 97.64) controlPoint2: CGPointMake(185.6, 96.58)];
-    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(182.93, 84.17) controlPoint1: CGPointMake(182.27, 92.15) controlPoint2: CGPointMake(181.82, 87.9)];
-    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(184.04, 81.69) controlPoint1: CGPointMake(183.15, 83.29) controlPoint2: CGPointMake(183.38, 82.4)];
-    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(203.16, 51.56) controlPoint1: CGPointMake(193.82, 73.36) controlPoint2: CGPointMake(200.71, 62.72)];
-    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(200.49, 29.75) controlPoint1: CGPointMake(204.71, 44.29) controlPoint2: CGPointMake(204.05, 36.67)];
-    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(186.49, 16.11) controlPoint1: CGPointMake(197.6, 24.26) controlPoint2: CGPointMake(192.71, 19.47)];
-    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(158.04, 11.32) controlPoint1: CGPointMake(178.26, 11.85) controlPoint2: CGPointMake(168.04, 10.26)];
-    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(140.93, 16.28) controlPoint1: CGPointMake(152.04, 11.85) controlPoint2: CGPointMake(146.04, 13.62)];
-    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(127.15, 29.93) controlPoint1: CGPointMake(134.7, 19.47) controlPoint2: CGPointMake(130.03, 24.44)];
-    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(125.14, 53.86) controlPoint1: CGPointMake(123.37, 37.55) controlPoint2: CGPointMake(123.14, 45.88)];
-    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(143.37, 82.05) controlPoint1: CGPointMake(127.81, 64.32) controlPoint2: CGPointMake(134.26, 74.25)];
-    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(139.59, 97.29) controlPoint1: CGPointMake(146.26, 87.01) controlPoint2: CGPointMake(144.7, 93.57)];
-    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(136.26, 98.53) controlPoint1: CGPointMake(138.7, 98) controlPoint2: CGPointMake(137.37, 98.18)];
-    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(110.03, 108.63) controlPoint1: CGPointMake(127.15, 101.19) controlPoint2: CGPointMake(118.25, 104.56)];
-    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(95.81, 117.68) controlPoint1: CGPointMake(104.92, 111.12) controlPoint2: CGPointMake(100.03, 113.95)];
-    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(90.69, 124.59) controlPoint1: CGPointMake(93.58, 119.62) controlPoint2: CGPointMake(91.58, 121.93)];
-    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(90.03, 131.32) controlPoint1: CGPointMake(89.81, 126.72) controlPoint2: CGPointMake(90.25, 129.2)];
-    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(92.92, 138.59) controlPoint1: CGPointMake(89.81, 133.98) controlPoint2: CGPointMake(90.92, 136.46)];
-    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(104.47, 144.97) controlPoint1: CGPointMake(95.81, 141.61) controlPoint2: CGPointMake(100.25, 143.56)];
-    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(127.37, 149.4) controlPoint1: CGPointMake(111.81, 147.28) controlPoint2: CGPointMake(119.59, 148.52)];
-    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(162.71, 151) controlPoint1: CGPointMake(139.15, 150.65) controlPoint2: CGPointMake(150.93, 151)];
-    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(204.05, 148.87) controlPoint1: CGPointMake(176.49, 151) controlPoint2: CGPointMake(190.27, 150.65)];
-    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(225.83, 143.73) controlPoint1: CGPointMake(211.6, 147.81) controlPoint2: CGPointMake(218.94, 146.39)];
-    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(235.83, 135.93) controlPoint1: CGPointMake(230.05, 141.96) controlPoint2: CGPointMake(234.05, 139.48)];
-    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(236.94, 127.78) controlPoint1: CGPointMake(237.39, 133.27) controlPoint2: CGPointMake(236.94, 130.62)];
+    [defaultAvatarBezierPath moveToPoint: CGPointMake(222.95, 127.78)];
+    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(218.38, 117.85) controlPoint1: CGPointMake(223.14, 124.06) controlPoint2: CGPointMake(220.85, 120.51)];
+    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(204.28, 107.57) controlPoint1: CGPointMake(214.38, 113.6) controlPoint2: CGPointMake(209.42, 110.41)];
+    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(180.85, 98) controlPoint1: CGPointMake(196.85, 103.67) controlPoint2: CGPointMake(189.04, 100.48)];
+    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(178.18, 95.52) controlPoint1: CGPointMake(179.51, 97.64) controlPoint2: CGPointMake(178.94, 96.58)];
+    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(176.66, 84.17) controlPoint1: CGPointMake(176.08, 92.15) controlPoint2: CGPointMake(175.7, 87.9)];
+    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(177.61, 81.69) controlPoint1: CGPointMake(176.85, 83.29) controlPoint2: CGPointMake(177.04, 82.4)];
+    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(193.99, 51.56) controlPoint1: CGPointMake(185.99, 73.36) controlPoint2: CGPointMake(191.9, 62.72)];
+    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(191.71, 29.75) controlPoint1: CGPointMake(195.33, 44.29) controlPoint2: CGPointMake(194.75, 36.67)];
+    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(179.7, 16.11) controlPoint1: CGPointMake(189.23, 24.26) controlPoint2: CGPointMake(185.04, 19.47)];
+    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(155.32, 11.32) controlPoint1: CGPointMake(172.66, 11.85) controlPoint2: CGPointMake(163.89, 10.26)];
+    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(140.65, 16.28) controlPoint1: CGPointMake(150.18, 11.85) controlPoint2: CGPointMake(145.03, 13.62)];
+    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(128.84, 29.93) controlPoint1: CGPointMake(135.32, 19.47) controlPoint2: CGPointMake(131.32, 24.44)];
+    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(127.12, 53.86) controlPoint1: CGPointMake(125.6, 37.55) controlPoint2: CGPointMake(125.41, 45.88)];
+    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(142.75, 82.05) controlPoint1: CGPointMake(129.41, 64.32) controlPoint2: CGPointMake(134.94, 74.25)];
+    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(139.51, 97.29) controlPoint1: CGPointMake(145.22, 87.01) controlPoint2: CGPointMake(143.89, 93.57)];
+    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(136.65, 98.53) controlPoint1: CGPointMake(138.75, 98) controlPoint2: CGPointMake(137.6, 98.18)];
+    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(114.17, 108.63) controlPoint1: CGPointMake(128.84, 101.19) controlPoint2: CGPointMake(121.22, 104.56)];
+    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(101.98, 117.68) controlPoint1: CGPointMake(109.79, 111.12) controlPoint2: CGPointMake(105.6, 113.95)];
+    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(97.6, 124.59) controlPoint1: CGPointMake(100.07, 119.62) controlPoint2: CGPointMake(98.36, 121.93)];
+    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(97.02, 131.32) controlPoint1: CGPointMake(96.83, 126.72) controlPoint2: CGPointMake(97.21, 129.2)];
+    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(99.5, 138.59) controlPoint1: CGPointMake(96.83, 133.98) controlPoint2: CGPointMake(97.79, 136.46)];
+    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(109.41, 144.97) controlPoint1: CGPointMake(101.98, 141.61) controlPoint2: CGPointMake(105.79, 143.56)];
+    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(129.03, 149.4) controlPoint1: CGPointMake(115.69, 147.28) controlPoint2: CGPointMake(122.36, 148.52)];
+    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(159.32, 151) controlPoint1: CGPointMake(139.13, 150.65) controlPoint2: CGPointMake(149.22, 151)];
+    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(194.75, 148.87) controlPoint1: CGPointMake(171.13, 151) controlPoint2: CGPointMake(182.94, 150.65)];
+    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(213.42, 143.73) controlPoint1: CGPointMake(201.23, 147.81) controlPoint2: CGPointMake(207.52, 146.39)];
+    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(222, 135.93) controlPoint1: CGPointMake(217.04, 141.96) controlPoint2: CGPointMake(220.47, 139.48)];
+    [defaultAvatarBezierPath addCurveToPoint: CGPointMake(222.95, 127.78) controlPoint1: CGPointMake(223.33, 133.27) controlPoint2: CGPointMake(222.95, 130.62)];
     [defaultAvatarBezierPath closePath];
     defaultAvatarBezierPath.miterLimit = 4;
 
     [JCStyleKit.unSelectedButtonColor setFill];
     [defaultAvatarBezierPath fill];
-}
-
-+ (void)drawVoicemailIcon;
-{
-
-    //// voicemailBezier Drawing
-    UIBezierPath* voicemailBezierPath = UIBezierPath.bezierPath;
-    [voicemailBezierPath moveToPoint: CGPointMake(72.82, 30.15)];
-    [voicemailBezierPath addCurveToPoint: CGPointMake(55.52, 48.15) controlPoint1: CGPointMake(63.22, 30.15) controlPoint2: CGPointMake(55.52, 38.55)];
-    [voicemailBezierPath addCurveToPoint: CGPointMake(57.32, 56.65) controlPoint1: CGPointMake(55.52, 50.95) controlPoint2: CGPointMake(56.22, 52.65)];
-    [voicemailBezierPath addLineToPoint: CGPointMake(42.92, 56.65)];
-    [voicemailBezierPath addCurveToPoint: CGPointMake(44.72, 48.15) controlPoint1: CGPointMake(44.12, 52.65) controlPoint2: CGPointMake(44.72, 50.95)];
-    [voicemailBezierPath addCurveToPoint: CGPointMake(27.42, 30.45) controlPoint1: CGPointMake(44.72, 38.55) controlPoint2: CGPointMake(36.92, 30.45)];
-    [voicemailBezierPath addCurveToPoint: CGPointMake(10.12, 47.65) controlPoint1: CGPointMake(17.92, 30.45) controlPoint2: CGPointMake(10.12, 38.05)];
-    [voicemailBezierPath addCurveToPoint: CGPointMake(28.12, 64.85) controlPoint1: CGPointMake(10.12, 57.25) controlPoint2: CGPointMake(18.52, 64.85)];
-    [voicemailBezierPath addCurveToPoint: CGPointMake(29.02, 64.75) controlPoint1: CGPointMake(28.22, 64.85) controlPoint2: CGPointMake(29.02, 64.75)];
-    [voicemailBezierPath addLineToPoint: CGPointMake(29.02, 64.65)];
-    [voicemailBezierPath addLineToPoint: CGPointMake(72.82, 64.65)];
-    [voicemailBezierPath addCurveToPoint: CGPointMake(90.12, 47.45) controlPoint1: CGPointMake(82.42, 64.65) controlPoint2: CGPointMake(90.12, 56.95)];
-    [voicemailBezierPath addCurveToPoint: CGPointMake(72.82, 30.15) controlPoint1: CGPointMake(90.12, 37.95) controlPoint2: CGPointMake(82.42, 30.15)];
-    [voicemailBezierPath closePath];
-    [voicemailBezierPath moveToPoint: CGPointMake(19.92, 47.45)];
-    [voicemailBezierPath addCurveToPoint: CGPointMake(27.42, 39.95) controlPoint1: CGPointMake(19.92, 43.25) controlPoint2: CGPointMake(23.32, 39.95)];
-    [voicemailBezierPath addCurveToPoint: CGPointMake(34.92, 47.45) controlPoint1: CGPointMake(31.52, 39.95) controlPoint2: CGPointMake(34.92, 43.35)];
-    [voicemailBezierPath addCurveToPoint: CGPointMake(27.42, 54.95) controlPoint1: CGPointMake(34.92, 51.65) controlPoint2: CGPointMake(31.52, 54.95)];
-    [voicemailBezierPath addCurveToPoint: CGPointMake(19.92, 47.45) controlPoint1: CGPointMake(23.32, 54.95) controlPoint2: CGPointMake(19.92, 51.65)];
-    [voicemailBezierPath closePath];
-    [voicemailBezierPath moveToPoint: CGPointMake(72.82, 55.05)];
-    [voicemailBezierPath addCurveToPoint: CGPointMake(65.32, 47.55) controlPoint1: CGPointMake(68.62, 55.05) controlPoint2: CGPointMake(65.32, 51.65)];
-    [voicemailBezierPath addCurveToPoint: CGPointMake(72.82, 40.05) controlPoint1: CGPointMake(65.32, 43.35) controlPoint2: CGPointMake(68.72, 40.05)];
-    [voicemailBezierPath addCurveToPoint: CGPointMake(80.32, 47.55) controlPoint1: CGPointMake(76.92, 40.05) controlPoint2: CGPointMake(80.32, 43.45)];
-    [voicemailBezierPath addCurveToPoint: CGPointMake(72.82, 55.05) controlPoint1: CGPointMake(80.42, 51.65) controlPoint2: CGPointMake(77.02, 55.05)];
-    [voicemailBezierPath closePath];
-    voicemailBezierPath.miterLimit = 4;
-
-    [JCStyleKit.unSelectedButtonColor setFill];
-    [voicemailBezierPath fill];
 }
 
 #pragma mark Generated Images
@@ -1330,6 +1330,19 @@ static UIImage* _imageOfVoicemailIcon = nil;
     UIGraphicsEndImageContext();
 
     return imageOfSpeakerButton;
+}
+
++ (UIImage*)imageOfVoicemailIcon;
+{
+    if (_imageOfVoicemailIcon)
+        return _imageOfVoicemailIcon;
+
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(50, 50), NO, 0.0f);
+    [JCStyleKit drawVoicemailIcon];
+    _imageOfVoicemailIcon = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return _imageOfVoicemailIcon;
 }
 
 + (UIImage*)imageOfLogoutIconWithFrame: (CGRect)frame;
@@ -1423,7 +1436,7 @@ static UIImage* _imageOfVoicemailIcon = nil;
     if (_imageOfMoreIcon)
         return _imageOfMoreIcon;
 
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(100, 100), NO, 0.0f);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(35, 35), NO, 0.0f);
     [JCStyleKit drawMoreIcon];
     _imageOfMoreIcon = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
@@ -1504,19 +1517,6 @@ static UIImage* _imageOfVoicemailIcon = nil;
     return _imageOfDefaultAvatarIcon;
 }
 
-+ (UIImage*)imageOfVoicemailIcon;
-{
-    if (_imageOfVoicemailIcon)
-        return _imageOfVoicemailIcon;
-
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(100, 100), NO, 0.0f);
-    [JCStyleKit drawVoicemailIcon];
-    _imageOfVoicemailIcon = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-
-    return _imageOfVoicemailIcon;
-}
-
 #pragma mark Customization Infrastructure
 
 - (void)setMoreLoginTargets: (NSArray*)moreLoginTargets
@@ -1541,6 +1541,14 @@ static UIImage* _imageOfVoicemailIcon = nil;
 
     for (id target in self.voicemailLoginTargets)
         [target setImage: JCStyleKit.imageOfVoicemailLogin];
+}
+
+- (void)setVoicemailIconTargets: (NSArray*)voicemailIconTargets
+{
+    _voicemailIconTargets = voicemailIconTargets;
+
+    for (id target in self.voicemailIconTargets)
+        [target setImage: JCStyleKit.imageOfVoicemailIcon];
 }
 
 - (void)setContactsIconTargets: (NSArray*)contactsIconTargets
@@ -1573,14 +1581,6 @@ static UIImage* _imageOfVoicemailIcon = nil;
 
     for (id target in self.defaultAvatarIconTargets)
         [target setImage: JCStyleKit.imageOfDefaultAvatarIcon];
-}
-
-- (void)setVoicemailIconTargets: (NSArray*)voicemailIconTargets
-{
-    _voicemailIconTargets = voicemailIconTargets;
-
-    for (id target in self.voicemailIconTargets)
-        [target setImage: JCStyleKit.imageOfVoicemailIcon];
 }
 
 

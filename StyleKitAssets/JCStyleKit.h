@@ -18,6 +18,7 @@
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* defaultAvatarLoginTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* voicemailLoginTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* speakerButtonTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* voicemailIconTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* logoutIconTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* logOutButtonTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* leaveFeedback_ButtonTargets;
@@ -34,7 +35,6 @@
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* typingIconTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* undoIconTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* defaultAvatarIconTargets;
-@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* voicemailIconTargets;
 
 // Colors
 + (UIColor*)unSelectedButtonColor;
@@ -48,6 +48,7 @@
 + (void)drawVoicemailLogin;
 + (void)drawSpeakerButtonWithSpeakerFrame: (CGRect)speakerFrame speakerIsSelected: (BOOL)speakerIsSelected;
 + (void)drawComposeIconWithFrame: (CGRect)frame;
++ (void)drawVoicemailIcon;
 + (void)drawLogoutIconWithFrame: (CGRect)frame;
 + (void)drawLogOutButtonWithFrame: (CGRect)frame;
 + (void)drawTOS_ButtonWithFrame: (CGRect)frame;
@@ -69,13 +70,13 @@
 + (void)drawTypingIconWithFrame: (CGRect)frame;
 + (void)drawUndoIconWithFrame: (CGRect)frame;
 + (void)drawDefaultAvatarIcon;
-+ (void)drawVoicemailIcon;
 
 // Generated Images
 + (UIImage*)imageOfMoreLogin;
 + (UIImage*)imageOfDefaultAvatarLogin;
 + (UIImage*)imageOfVoicemailLogin;
 + (UIImage*)imageOfSpeakerButtonWithSpeakerFrame: (CGRect)speakerFrame speakerIsSelected: (BOOL)speakerIsSelected;
++ (UIImage*)imageOfVoicemailIcon;
 + (UIImage*)imageOfLogoutIconWithFrame: (CGRect)frame;
 + (UIImage*)imageOfLogOutButtonWithFrame: (CGRect)frame;
 + (UIImage*)imageOfLeaveFeedback_ButtonWithFrame: (CGRect)frame;
@@ -92,6 +93,5 @@
 + (UIImage*)imageOfTypingIconWithFrame: (CGRect)frame;
 + (UIImage*)imageOfUndoIconWithFrame: (CGRect)frame;
 + (UIImage*)imageOfDefaultAvatarIcon;
-+ (UIImage*)imageOfVoicemailIcon;
 
 @end
