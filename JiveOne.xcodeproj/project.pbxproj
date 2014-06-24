@@ -229,7 +229,7 @@
 		5AB400AC56E648339BCA5DEC /* libPods-JiveOneTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CC093DDEE92F4DF7A7C9D21C /* libPods-JiveOneTests.a */; };
 		9103271718F34BEC00437503 /* JCPeopleDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9103271518F34BEC00437503 /* JCPeopleDetailCell.m */; };
 		9103271818F34BEC00437503 /* JCPeopleDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9103271618F34BEC00437503 /* JCPeopleDetailCell.xib */; };
-		910709F41959D39C0041E1CF /* JCStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 910709F31959D39C0041E1CF /* JCStyleKit.m */; };
+		910709F71959D43E0041E1CF /* JCStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 910709F61959D43E0041E1CF /* JCStyleKit.m */; };
 		911B3E9118E0E41D00105925 /* voicemail_pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 911B3E8F18E0E41D00105925 /* voicemail_pause.png */; };
 		911B3E9218E0E41D00105925 /* voicemail_pause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 911B3E9018E0E41D00105925 /* voicemail_pause@2x.png */; };
 		911BFDD518D9E9C300684964 /* vmail.png in Resources */ = {isa = PBXBuildFile; fileRef = 911BFDD418D9E9C300684964 /* vmail.png */; };
@@ -714,8 +714,8 @@
 		9103271518F34BEC00437503 /* JCPeopleDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPeopleDetailCell.m; sourceTree = "<group>"; };
 		9103271618F34BEC00437503 /* JCPeopleDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCPeopleDetailCell.xib; sourceTree = "<group>"; };
 		91059D341949F8E6002DE67C /* LoggerCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoggerCommon.h; sourceTree = "<group>"; };
-		910709F21959D39C0041E1CF /* JCStyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JCStyleKit.h; path = JiveOne/JCStyleKit.h; sourceTree = SOURCE_ROOT; };
-		910709F31959D39C0041E1CF /* JCStyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JCStyleKit.m; path = JiveOne/JCStyleKit.m; sourceTree = SOURCE_ROOT; };
+		910709F51959D43E0041E1CF /* JCStyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JCStyleKit.h; path = StyleKitAssets/JCStyleKit.h; sourceTree = SOURCE_ROOT; };
+		910709F61959D43E0041E1CF /* JCStyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JCStyleKit.m; path = StyleKitAssets/JCStyleKit.m; sourceTree = SOURCE_ROOT; };
 		911B3E8F18E0E41D00105925 /* voicemail_pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = voicemail_pause.png; sourceTree = "<group>"; };
 		911B3E9018E0E41D00105925 /* voicemail_pause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "voicemail_pause@2x.png"; sourceTree = "<group>"; };
 		911BFDD418D9E9C300684964 /* vmail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vmail.png; sourceTree = "<group>"; };
@@ -1843,8 +1843,8 @@
 		91DDB1821934DED700550F10 /* StyleKit */ = {
 			isa = PBXGroup;
 			children = (
-				910709F21959D39C0041E1CF /* JCStyleKit.h */,
-				910709F31959D39C0041E1CF /* JCStyleKit.m */,
+				910709F51959D43E0041E1CF /* JCStyleKit.h */,
+				910709F61959D43E0041E1CF /* JCStyleKit.m */,
 			);
 			name = StyleKit;
 			path = "/Users/pleonard/Desktop/jive/iOS-JiveOne/JiveOne";
@@ -2344,7 +2344,7 @@
 				2751590B18AD16F300FD8D3F /* JCRESTClient.m in Sources */,
 				279E4CAF192273E5002A556C /* MBContactCollectionViewFlowLayout.m in Sources */,
 				273CC25E1900B23B005A2857 /* JCVoiceCell.m in Sources */,
-				910709F41959D39C0041E1CF /* JCStyleKit.m in Sources */,
+				910709F71959D43E0041E1CF /* JCStyleKit.m in Sources */,
 				9172AD4C1918097B00481B01 /* JCContainerViewController.m in Sources */,
 				9154947819366C54003DCED4 /* JCPlayPauseView.m in Sources */,
 				2710E40F18CEC8C300152C91 /* ConversationEntry+Custom.m in Sources */,
