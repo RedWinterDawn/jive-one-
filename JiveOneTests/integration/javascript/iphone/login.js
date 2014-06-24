@@ -77,7 +77,7 @@ test("Login Test", function(target, app){
 	defaultLogin(app);
 		
 	
-	// Confirm landing page is the ‘People’ user list
+	// Confirm landing page is the 'Voicemail' user list
 	var title =  app.mainWindow().navigationBar().name()	
 	assertEquals("Voicemail", title, "Should have loaded 'Voicemail' tab");
 	
