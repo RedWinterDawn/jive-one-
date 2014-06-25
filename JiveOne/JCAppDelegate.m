@@ -229,9 +229,9 @@ int didNotify;
     LOG_Info();
     LogMessage(@"socket", 4, @"Calling requestSession From AppDelegate");
 
-    //if ([[JCSocketDispatch sharedInstance] socketState] == SR_CLOSED || [[JCSocketDispatch sharedInstance] socketState] == SR_CLOSING) {
-    //[[JCSocketDispatch sharedInstance] requestSession];
-    //}
+    if ([JCSocketDispatch sharedInstance].webSocket.readyState != SR_OPEN) {
+        [[JCSocketDispatch sharedInstance] requestSession];
+    }
 }
 
 - (void)stopSocket

@@ -8,6 +8,7 @@
 
 #import "JCSocketDispatch.h"
 #import "JCRESTClient.h"
+#import "JCContactsClient.h"
 #import "KeychainItemWrapper.h"
 #import "ConversationEntry+Custom.h"
 #import "Voicemail+Custom.h"
@@ -16,6 +17,7 @@
 #import "JSMessageSoundEffect.h"
 #import "LoggerClient.h"
 #import "LoggerCommon.h"
+#import "Lines+Custom.h"
 @interface JCSocketDispatch()
 {
     BOOL didSignalToCloseSocket;
@@ -31,6 +33,7 @@
 @property (strong, nonatomic) NSString *deviceToken; //used for sending a push notification to restore the session if lost
 @property (strong, nonatomic) NSTimer *socketSessionTimer;
 @property (strong, nonatomic) NSTimer *subscriptionTimer;
+@property (strong, nonatomic) NSString *subscriptionURL;
 @property (nonatomic) BOOL socketIsOpen;
 
 @end
@@ -94,32 +97,33 @@
             NSDictionary* response = (NSDictionary*)JSON;
             
             // Retrive session token and pipe it together with our auth token
-            _sessionToken = [NSString stringWithFormat:@"%@",[response objectForKey:@"token"]];
+//            _sessionToken = [NSString stringWithFormat:@"%@",[response objectForKey:@"token"]];
             
-            LogMessage(@"socket", 4, @"Auth Token: %@ Session Token:%@", authToken, self.sessionToken);
+//            LogMessage(@"socket", 4, @"Auth Token: %@ Session Token:%@", authToken, self.sessionToken);
 
             //self.pipedTokens = [NSString stringWithFormat:@"%@|%@", authToken, self.sessionToken];
             
             // Create dictionaries that will be converted to JSON objects to be posted to the socket.
-            self.cmd_start = [NSDictionary dictionaryWithObjectsAndKeys:@"start", @"cmd", authToken, @"authToken", self.sessionToken, @"sessionToken", nil];
-            self.cmd_poll  = [NSDictionary dictionaryWithObjectsAndKeys:@"poll", @"cmd", authToken, @"authToken", self.sessionToken, @"sessionToken", nil];
+//            self.cmd_start = [NSDictionary dictionaryWithObjectsAndKeys:@"start", @"cmd", authToken, @"authToken", self.sessionToken, @"sessionToken", nil];
+//            self.cmd_poll  = [NSDictionary dictionaryWithObjectsAndKeys:@"poll", @"cmd", authToken, @"authToken", self.sessionToken, @"sessionToken", nil];
             
-            NSError* error;
+//            NSError* error;
             // json start creation
-            NSData* jsonData = [NSJSONSerialization dataWithJSONObject:self.cmd_start options:NSJSONWritingPrettyPrinted error:&error];
-            self.json_start = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+//            NSData* jsonData = [NSJSONSerialization dataWithJSONObject:self.cmd_start options:NSJSONWritingPrettyPrinted error:&error];
+//            self.json_start = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
             // json poll creation
-            jsonData = [NSJSONSerialization dataWithJSONObject:self.cmd_poll options:NSJSONWritingPrettyPrinted error:&error];
-            self.json_poll = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+//            jsonData = [NSJSONSerialization dataWithJSONObject:self.cmd_poll options:NSJSONWritingPrettyPrinted error:&error];
+//            self.json_poll = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
             
             
             // Retrieve the ws parameter - this is the endpoint used to connect to our socket.
             self.ws = [response objectForKey:@"ws"];
+            self.subscriptionURL = response[@"subscriptions"];
             LogMessage(@"socket", 4, @"Socket Endpoint:%@", self.ws);
 
             
             // If we have everyting we need, we can subscribe to events.
-            if (self.ws && self.sessionToken) {
+            if (self.ws && self.subscriptionURL) {
                 LogMessage(@"socket", 4,@"We have an endpoint and a sessionToken");
                 [self initSession];
             }
@@ -145,6 +149,20 @@
     if (self.socketIsOpen) {
         [_subscriptionTimer invalidate];
         [self.webSocket closeWithCode:500 reason:@"Did not subscribe to all events. Retrying"];
+    }
+}
+
+- (void)subscribeToJasmine
+{
+    NSArray *lines = [Lines MR_findAll];
+    
+    for (Lines *line in lines) {
+        NSDictionary *data = @{@"id" : line.jrn,
+                               @"entity" : line.jrn};
+                               //@"type" : @"dialog"};
+                               
+        
+        [[JCContactsClient sharedClient] SubscribeToSocketEvents:self.subscriptionURL dataDictionary:data];
     }
 }
 
@@ -299,9 +317,10 @@
 
     // Socket connected, send start command
     self.socketIsOpen = YES;
-    [self.webSocket send:self.json_start];
+    //[self.webSocket send:@"{\"type\": \"dialog\"}"];
     
-    [self subscribeSession];
+    //[self subscribeSession];
+    [self subscribeToJasmine];
 }
 
 
@@ -315,6 +334,8 @@
     LOG_Info();
 
     LogMessage(@"socket", 4,@"WebSocket didRecieveMessage: %@",message);
+    
+    NSLog(@"%@", message);
     
     NSData *data = [message dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *messageDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
