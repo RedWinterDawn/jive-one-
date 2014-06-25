@@ -610,40 +610,40 @@ static NSString *CellIdentifier = @"DirectoryCell";
  
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (tableView == self.searchDisplayController.searchResultsTableView) {
-        self.searchTableIsActive = YES;
-        
-    }else{
-        self.searchTableIsActive = NO;
-    }
-    
-    if (_delegate && [_delegate respondsToSelector:@selector(dismissedWithPerson:)]) {
-        
-        PersonEntities *person;
-        
-        if (self.searchTableIsActive) {
-            NSString *entityId = self.clientEntitiesSearchArray[indexPath.row];
-            person = [self getPersonFromListByEntityId:entityId];
-        }
-        else {
-            person = self.clientEntitiesArray[indexPath.section][indexPath.row];
-        }
-        
-        if (person) {
-            [_delegate dismissedWithPerson:person];
-            [self dismissViewControllerAnimated:YES completion:^{
-                _delegate = nil;
-            }];
-        }
-        
-    }
-    else {
-        [self performSegueWithIdentifier:@"directoryDetailView" sender:indexPath];
-    }
-    
-}
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    if (tableView == self.searchDisplayController.searchResultsTableView) {
+//        self.searchTableIsActive = YES;
+//        
+//    }else{
+//        self.searchTableIsActive = NO;
+//    }
+//    
+//    if (_delegate && [_delegate respondsToSelector:@selector(dismissedWithPerson:)]) {
+//        
+//        PersonEntities *person;
+//        
+//        if (self.searchTableIsActive) {
+//            NSString *entityId = self.clientEntitiesSearchArray[indexPath.row];
+//            person = [self getPersonFromListByEntityId:entityId];
+//        }
+//        else {
+//            person = self.clientEntitiesArray[indexPath.section][indexPath.row];
+//        }
+//        
+//        if (person) {
+//            [_delegate dismissedWithPerson:person];
+//            [self dismissViewControllerAnimated:YES completion:^{
+//                _delegate = nil;
+//            }];
+//        }
+//        
+//    }
+//    else {
+//        [self performSegueWithIdentifier:@"directoryDetailView" sender:indexPath];
+//    }
+//    
+//}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
