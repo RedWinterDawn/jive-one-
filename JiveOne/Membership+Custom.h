@@ -10,4 +10,5 @@
 
 @interface Membership (Custom)
 
++ (void)addMemberships:(NSDictionary*)membership completed:(void (^)(BOOL suceeded))completed;
 @end

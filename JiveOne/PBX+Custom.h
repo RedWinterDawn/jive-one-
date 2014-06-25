@@ -8,6 +8,11 @@
 
 #import "PBX.h"
 
+
 @interface PBX (Custom)
+
++ (void)addPBXs:(NSArray *)pbxs completed:(void (^)(BOOL success))completed;;
++ (PBX *)addPBX:(NSDictionary *)pbx withManagedContext:(NSManagedObjectContext *)context sender:(id)sender;
+
 
 @end
