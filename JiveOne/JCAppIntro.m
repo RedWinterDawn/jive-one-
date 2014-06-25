@@ -20,7 +20,6 @@
 @property (strong, nonatomic) UIImageView *arrowDownLeft;
 @property (strong, nonatomic) UIImageView *arrowDownRight;
 @property (strong, nonatomic) UIImageView *wordmark;
-@property (strong, nonatomic) UIImageView *unicorn;
 @property (strong, nonatomic) UILabel *lastLabel;
 @property (strong, nonatomic) UILabel *firstLabel;
 
@@ -55,12 +54,13 @@
 
 - (void)placeViews
 {
-    
+    //Add voicemailCell to center of page1
     self.voicemailCell = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"VoicemailCell.png"]];
     self.voicemailCell.center = self.view.center;
     self.voicemailCell.frame = CGRectMake(21, 100, 278, 157);
     [self.scrollView addSubview:self.voicemailCell];
 
+    //TODO: Remove this
     self.wordmark = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main-logo.png"]];
     self.wordmark.center = self.view.center;
     self.wordmark.frame = CGRectOffset(
@@ -70,7 +70,7 @@
                                        );
     [self.scrollView addSubview:self.wordmark];
     
-    //make our arrows
+    //add arrowUpLeft to page2
     self.arrowUpLeft = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfUpLeft]];
     self.arrowUpLeft.center = self.view.center;
     self.arrowUpLeft.frame = CGRectOffset(
@@ -78,9 +78,9 @@
                                       self.view.frame.size.width + 50,
                                       100
                                       );
-//    self.arrowUpLeft.alpha = 0.0f;
     [self.scrollView addSubview:self.arrowUpLeft];
-    
+
+    //add arrowUpRight to page2
     self.arrowUpRight = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfUpRight]];
     self.arrowUpRight.center = self.view.center;
     self.arrowUpRight.frame = CGRectOffset(
@@ -88,10 +88,9 @@
                                       self.view.frame.size.width - 50,
                                       100
                                       );
-//    self.arrowUpRight.alpha = 0.0f;
     [self.scrollView addSubview:self.arrowUpRight];
     
-    
+    //add arrowDownRight to page2
     self.arrowDownRight = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfDownRight]];
     self.arrowDownRight.center = self.view.center;
     self.arrowDownRight.frame = CGRectOffset(
@@ -99,10 +98,9 @@
                                       self.view.frame.size.width - 50,
                                       -200
                                       );
-//    self.arrowDownRight.alpha = 0.0f;
     [self.scrollView addSubview:self.arrowDownRight];
     
-    
+    //add arrowDownLeft to page2
     self.arrowDownLeft = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfDownLeft]];
     self.arrowDownLeft.center = self.view.center;
     self.arrowDownLeft.frame = CGRectOffset(
@@ -110,22 +108,9 @@
                                       self.view.frame.size.width + 50,
                                       -200
                                       );
-//    self.arrowDownLeft.alpha = 0.0f;
     [self.scrollView addSubview:self.arrowDownLeft];
     
-    
-    // put a unicorn in the middle of page two, hidden
-    self.unicorn = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfUpLeft]];
-    self.unicorn.center = self.view.center;
-    self.unicorn.frame = CGRectOffset(
-                                      self.unicorn.frame,
-                                      self.view.frame.size.width,
-                                      -100
-                                      );
-    self.unicorn.alpha = 0.0f;
-    [self.scrollView addSubview:self.unicorn];
-    
-    
+    //add firstLable to center of page1
     self.firstLabel = [[UILabel alloc] init];
     self.firstLabel.text = @"Introducing The Jive Voicemail App";
     [self.firstLabel sizeToFit];
@@ -208,26 +193,15 @@
     IFTTTFrameAnimation *voicemailCellFrameAnimation = [IFTTTFrameAnimation animationWithView:self.voicemailCell];
     [self.animator addAnimation:voicemailCellFrameAnimation];
     
-    CGFloat ds = 50;
+    CGFloat ds = 0;
     
     // move down and to the right, and shrink between pages 2 and 3
     [voicemailCellFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:self.voicemailCell.frame]];
 
     [voicemailCellFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2)
                                                                        andFrame:CGRectOffset(self.voicemailCell.frame, timeForPage(2), 0)]];
+    // Animate the arrows ontop of voicemailcell in page2
     
-    // now, we animate the unicorn
-    IFTTTFrameAnimation *unicornFrameAnimation = [IFTTTFrameAnimation animationWithView:self.unicorn];
-    [self.animator addAnimation:unicornFrameAnimation];
-
-    // move down and to the right, and shrink between pages 2 and 3
-    [unicornFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:self.unicorn.frame]];
-    [unicornFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3)
-                                                                       andFrame:CGRectOffset(CGRectInset(self.unicorn.frame, ds, ds), timeForPage(2), dy)]];
-    
-    // Animate the arrows in
-    
-    // now, we animate the unicorn
     IFTTTFrameAnimation *arrowUpLeftFrameAnimation = [IFTTTFrameAnimation animationWithView:self.arrowUpLeft];
     [self.animator addAnimation:arrowUpLeftFrameAnimation];
     
@@ -265,15 +239,15 @@
     
     
     
-    // fade the unicorn in on page 2 and out on page 4
-    IFTTTAlphaAnimation *unicornAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.unicorn];
-    [self.animator addAnimation:unicornAlphaAnimation];
-    
-    [unicornAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:0.0f]];
-    [unicornAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f]];
-    [unicornAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:1.0f]];
-    [unicornAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
-    
+//    // fade the unicorn in on page 2 and out on page 4
+//    IFTTTAlphaAnimation *unicornAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.unicorn];
+//    [self.animator addAnimation:unicornAlphaAnimation];
+//    
+//    [unicornAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:0.0f]];
+//    [unicornAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f]];
+//    [unicornAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:1.0f]];
+//    [unicornAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
+//    
     // Fade out the label by dragging on the last page
     IFTTTAlphaAnimation *labelAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.lastLabel];
     [labelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:1.0f]];
