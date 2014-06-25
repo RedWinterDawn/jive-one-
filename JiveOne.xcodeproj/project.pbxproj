@@ -309,6 +309,8 @@
 		F258589218BD3A420020AF34 /* JCDirectoryGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F258589118BD3A420020AF34 /* JCDirectoryGroupViewController.m */; };
 		F266162618B42AA0000B770A /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266162418B42AA0000B770A /* AddressBook.framework */; };
 		F266162718B42AA0000B770A /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266162518B42AA0000B770A /* AddressBookUI.framework */; };
+		F5623952195A432300E985CA /* Screen Shot 2014-06-24 at 5.36.19 PM.png in Resources */ = {isa = PBXBuildFile; fileRef = F5623951195A432300E985CA /* Screen Shot 2014-06-24 at 5.36.19 PM.png */; };
+		F5623954195A478500E985CA /* Screen Shot 2014-06-24 at 5.55.23 PM.png in Resources */ = {isa = PBXBuildFile; fileRef = F5623953195A478500E985CA /* Screen Shot 2014-06-24 at 5.55.23 PM.png */; };
 		F59AE2BD192F07BA00CAF0F3 /* iPadlaunch1Xnew.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2B6192F07BA00CAF0F3 /* iPadlaunch1Xnew.png */; };
 		F59AE2C1192F07BA00CAF0F3 /* iPadLaunch2XnewBlur.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2B8192F07BA00CAF0F3 /* iPadLaunch2XnewBlur.png */; };
 		F59AE2C3192F07BA00CAF0F3 /* iPhone1Xnew.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2B9192F07BA00CAF0F3 /* iPhone1Xnew.png */; };
@@ -829,6 +831,8 @@
 		F258589118BD3A420020AF34 /* JCDirectoryGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDirectoryGroupViewController.m; sourceTree = "<group>"; };
 		F266162418B42AA0000B770A /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		F266162518B42AA0000B770A /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		F5623951195A432300E985CA /* Screen Shot 2014-06-24 at 5.36.19 PM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screen Shot 2014-06-24 at 5.36.19 PM.png"; sourceTree = "<group>"; };
+		F5623953195A478500E985CA /* Screen Shot 2014-06-24 at 5.55.23 PM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screen Shot 2014-06-24 at 5.55.23 PM.png"; sourceTree = "<group>"; };
 		F59AE2B6192F07BA00CAF0F3 /* iPadlaunch1Xnew.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPadlaunch1Xnew.png; sourceTree = "<group>"; };
 		F59AE2B8192F07BA00CAF0F3 /* iPadLaunch2XnewBlur.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPadLaunch2XnewBlur.png; sourceTree = "<group>"; };
 		F59AE2B9192F07BA00CAF0F3 /* iPhone1Xnew.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhone1Xnew.png; sourceTree = "<group>"; };
@@ -1151,6 +1155,8 @@
 		275158F618AD10A500FD8D3F /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				F5623953195A478500E985CA /* Screen Shot 2014-06-24 at 5.55.23 PM.png */,
+				F5623951195A432300E985CA /* Screen Shot 2014-06-24 at 5.36.19 PM.png */,
 				27A016721938217E0073C824 /* sprite2.png */,
 				270098B518F5EA7900B6BC2F /* UX Images */,
 				27C3715118EDE9A000F159EF /* first_message.png */,
@@ -2111,6 +2117,7 @@
 				911B3E9118E0E41D00105925 /* voicemail_pause.png in Resources */,
 				27F1F2FD191C171300AEAFD7 /* UAPushSettingsTagsViewController.xib in Resources */,
 				27F1F2E0191C171300AEAFD7 /* UAInboxMessageViewController.xib in Resources */,
+				F5623952195A432300E985CA /* Screen Shot 2014-06-24 at 5.36.19 PM.png in Resources */,
 				275158FD18AD10BB00FD8D3F /* Default.png in Resources */,
 				27F1F2FA191C171300AEAFD7 /* UAPushSettingsAliasView.xib in Resources */,
 				27F1F2FE191C171300AEAFD7 /* UAPushSettingsTokenView.xib in Resources */,
@@ -2152,6 +2159,7 @@
 				27F1F2F5191C171300AEAFD7 /* UALocationSettingsViewController.xib in Resources */,
 				2700988D18F4714100B6BC2F /* bubble-classic-typing@2x.png in Resources */,
 				279E4C7019226FAC002A556C /* people-search.png in Resources */,
+				F5623954195A478500E985CA /* Screen Shot 2014-06-24 at 5.55.23 PM.png in Resources */,
 				275F4A7018AD0FBC00D2F069 /* Images.xcassets in Resources */,
 				275F4A6518AD0FBC00D2F069 /* Main_iPhone.storyboard in Resources */,
 				270098C718F5EA9300B6BC2F /* nav-people.png in Resources */,
