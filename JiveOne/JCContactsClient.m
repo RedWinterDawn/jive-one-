@@ -113,7 +113,7 @@
         NSArray *contactArray = (NSArray *)responseObject;
         if (contactArray) {
             [Lines addLines:contactArray pbxId:line.pbxId completed:^(BOOL succeeded) {
-                completed(succeeded, responseObject, operation, nil);
+                completed(YES, responseObject, operation, nil);
             }];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
