@@ -15,6 +15,10 @@
 @interface JCAppIntro ()
 
 @property (strong, nonatomic) UIImageView *voicemailCell;
+@property (strong, nonatomic) UIImageView *arrowUpLeft;
+@property (strong, nonatomic) UIImageView *arrowUpRight;
+@property (strong, nonatomic) UIImageView *arrowDownLeft;
+@property (strong, nonatomic) UIImageView *arrowDownRight;
 @property (strong, nonatomic) UIImageView *wordmark;
 @property (strong, nonatomic) UIImageView *unicorn;
 @property (strong, nonatomic) UILabel *lastLabel;
@@ -65,6 +69,50 @@
                                        -100
                                        );
     [self.scrollView addSubview:self.wordmark];
+    
+    //make our arrows
+    self.arrowUpLeft = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfUpLeft]];
+    self.arrowUpLeft.center = self.view.center;
+    self.arrowUpLeft.frame = CGRectOffset(
+                                      self.arrowUpLeft.frame,
+                                      self.view.frame.size.width + 50,
+                                      100
+                                      );
+//    self.arrowUpLeft.alpha = 0.0f;
+    [self.scrollView addSubview:self.arrowUpLeft];
+    
+    self.arrowUpRight = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfUpRight]];
+    self.arrowUpRight.center = self.view.center;
+    self.arrowUpRight.frame = CGRectOffset(
+                                      self.arrowUpRight.frame,
+                                      self.view.frame.size.width - 50,
+                                      100
+                                      );
+//    self.arrowUpRight.alpha = 0.0f;
+    [self.scrollView addSubview:self.arrowUpRight];
+    
+    
+    self.arrowDownRight = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfDownRight]];
+    self.arrowDownRight.center = self.view.center;
+    self.arrowDownRight.frame = CGRectOffset(
+                                      self.arrowDownRight.frame,
+                                      self.view.frame.size.width - 50,
+                                      -200
+                                      );
+//    self.arrowDownRight.alpha = 0.0f;
+    [self.scrollView addSubview:self.arrowDownRight];
+    
+    
+    self.arrowDownLeft = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfDownLeft]];
+    self.arrowDownLeft.center = self.view.center;
+    self.arrowDownLeft.frame = CGRectOffset(
+                                      self.arrowDownLeft.frame,
+                                      self.view.frame.size.width + 50,
+                                      -200
+                                      );
+//    self.arrowDownLeft.alpha = 0.0f;
+    [self.scrollView addSubview:self.arrowDownLeft];
+    
     
     // put a unicorn in the middle of page two, hidden
     self.unicorn = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfUpLeft]];
@@ -176,6 +224,47 @@
     [unicornFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:self.unicorn.frame]];
     [unicornFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3)
                                                                        andFrame:CGRectOffset(CGRectInset(self.unicorn.frame, ds, ds), timeForPage(2), dy)]];
+    
+    // Animate the arrows in
+    
+    // now, we animate the unicorn
+    IFTTTFrameAnimation *arrowUpLeftFrameAnimation = [IFTTTFrameAnimation animationWithView:self.arrowUpLeft];
+    [self.animator addAnimation:arrowUpLeftFrameAnimation];
+    
+    // move down and to the right, and shrink between pages 2 and 3
+    [arrowUpLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:self.arrowUpLeft.frame]];
+    [arrowUpLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3)
+                                                                       andFrame:CGRectOffset(CGRectInset(self.arrowUpLeft.frame, ds, ds), timeForPage(2), dy)]];
+    // now, we animate the arrowUpRight
+    IFTTTFrameAnimation *arrowUpRightFrameAnimation = [IFTTTFrameAnimation animationWithView:self.arrowUpRight];
+    [self.animator addAnimation:arrowUpRightFrameAnimation];
+    
+    // move down and to the right, and shrink between pages 2 and 3
+    [arrowUpRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:self.arrowUpRight.frame]];
+    [arrowUpRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3)
+                                                                       andFrame:CGRectOffset(CGRectInset(self.arrowUpRight.frame, ds, ds), timeForPage(2), dy)]];
+    // now, we animate the arrowDownRight
+    IFTTTFrameAnimation *arrowDownRightFrameAnimation = [IFTTTFrameAnimation animationWithView:self.arrowDownRight];
+    [self.animator addAnimation:arrowDownRightFrameAnimation];
+    
+    // move down and to the right, and shrink between pages 2 and 3
+    [arrowDownRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:self.arrowDownRight.frame]];
+    [arrowDownRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3)
+                                                                       andFrame:CGRectOffset(CGRectInset(self.arrowDownRight.frame, ds, ds), timeForPage(2), dy)]];
+    // now, we animate the arrowDownLeft
+    IFTTTFrameAnimation *arrowDownLeftFrameAnimation = [IFTTTFrameAnimation animationWithView:self.arrowDownLeft];
+    [self.animator addAnimation:arrowDownLeftFrameAnimation];
+    
+    // move down and to the right, and shrink between pages 2 and 3
+    [arrowDownLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:self.arrowDownLeft.frame]];
+    [arrowDownLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3)
+                                                                       andFrame:CGRectOffset(CGRectInset(self.arrowDownLeft.frame, ds, ds), timeForPage(2), dy)]];
+    
+    
+    
+    
+    
+    
     // fade the unicorn in on page 2 and out on page 4
     IFTTTAlphaAnimation *unicornAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.unicorn];
     [self.animator addAnimation:unicornAlphaAnimation];
