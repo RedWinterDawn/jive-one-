@@ -7,6 +7,7 @@
 //
 
 #import "JCAppIntro.h"
+#import "JCStyleKit.h"
 
 #define NUMBER_OF_PAGES 4
 #define timeForPage(page) (NSInteger)(self.view.frame.size.width * (page - 1))
@@ -35,7 +36,8 @@
     [super viewDidLoad];
     self.scrollView.contentSize = CGSizeMake(NUMBER_OF_PAGES * CGRectGetWidth(self.view.frame),
                                              CGRectGetHeight(self.view.frame));
-    
+    NSLog(@"### Content Size: %@", NSStringFromCGSize(self.scrollView.contentSize));
+
     self.scrollView.pagingEnabled = YES;
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.animator = [IFTTTAnimator new];
@@ -49,7 +51,8 @@
 - (void)placeViews
 {
     // put a unicorn in the middle of page two, hidden
-    self.unicorn = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"boss.jpg"]];
+//    self.unicorn = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"boss.jpg"]];//ArrowUpRight.png //boss.jpg
+    self.unicorn = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfUpLeft]];
     self.unicorn.center = self.view.center;
     self.unicorn.frame = CGRectOffset(
                                       self.unicorn.frame,
@@ -58,6 +61,9 @@
                                       );
     self.unicorn.alpha = 0.0f;
     [self.scrollView addSubview:self.unicorn];
+//    NSLog(@"##### - %f,%f",self.unicorn.frame.origin.x, self.unicorn.frame.origin.y);
+    NSLog(@"### - %@", NSStringFromCGRect(self.unicorn.frame));
+    NSLog(@"should be close to: {{242, -30.5}, {476, 429}}");
     
     // put a logo on top of it
     self.wordmark = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main-logo.png"]];
