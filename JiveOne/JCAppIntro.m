@@ -14,6 +14,7 @@
 
 @interface JCAppIntro ()
 
+@property (strong, nonatomic) UIImageView *voicemailCell;
 @property (strong, nonatomic) UIImageView *wordmark;
 @property (strong, nonatomic) UIImageView *unicorn;
 @property (strong, nonatomic) UILabel *lastLabel;
@@ -50,22 +51,12 @@
 
 - (void)placeViews
 {
-    // put a unicorn in the middle of page two, hidden
-//    self.unicorn = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"boss.jpg"]];//ArrowUpRight.png //boss.jpg
-    self.unicorn = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfUpLeft]];
-    self.unicorn.center = self.view.center;
-    self.unicorn.frame = CGRectOffset(
-                                      self.unicorn.frame,
-                                      self.view.frame.size.width,
-                                      -100
-                                      );
-    self.unicorn.alpha = 0.0f;
-    [self.scrollView addSubview:self.unicorn];
-//    NSLog(@"##### - %f,%f",self.unicorn.frame.origin.x, self.unicorn.frame.origin.y);
-    NSLog(@"### - %@", NSStringFromCGRect(self.unicorn.frame));
-    NSLog(@"should be close to: {{242, -30.5}, {476, 429}}");
     
-    // put a logo on top of it
+    self.voicemailCell = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"VoicemailCell.png"]];
+    self.voicemailCell.center = self.view.center;
+    self.voicemailCell.frame = CGRectMake(21, 100, 278, 157);
+    [self.scrollView addSubview:self.voicemailCell];
+
     self.wordmark = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main-logo.png"]];
     self.wordmark.center = self.view.center;
     self.wordmark.frame = CGRectOffset(
@@ -75,10 +66,27 @@
                                        );
     [self.scrollView addSubview:self.wordmark];
     
+    // put a unicorn in the middle of page two, hidden
+    self.unicorn = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfUpLeft]];
+    self.unicorn.center = self.view.center;
+    self.unicorn.frame = CGRectOffset(
+                                      self.unicorn.frame,
+                                      self.view.frame.size.width,
+                                      -100
+                                      );
+    self.unicorn.alpha = 0.0f;
+    [self.scrollView addSubview:self.unicorn];
+    
+    
     self.firstLabel = [[UILabel alloc] init];
     self.firstLabel.text = @"Introducing The Jive Voicemail App";
     [self.firstLabel sizeToFit];
     self.firstLabel.center = self.view.center;
+    self.wordmark.frame = CGRectOffset(
+                                       self.firstLabel.frame,
+                                       self.view.frame.size.width,
+                                       100
+                                       );
     [self.scrollView addSubview:self.firstLabel];
     
     UILabel *secondPageText = [[UILabel alloc] init];
@@ -148,12 +156,22 @@
                                               [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAngle:(CGFloat)(2 * M_PI)],
                                               ]];
     
-    // now, we animate the unicorn
-    IFTTTFrameAnimation *unicornFrameAnimation = [IFTTTFrameAnimation animationWithView:self.unicorn];
-    [self.animator addAnimation:unicornFrameAnimation];
+    // now, we animate the voicemailCell
+    IFTTTFrameAnimation *voicemailCellFrameAnimation = [IFTTTFrameAnimation animationWithView:self.voicemailCell];
+    [self.animator addAnimation:voicemailCellFrameAnimation];
     
     CGFloat ds = 50;
     
+    // move down and to the right, and shrink between pages 2 and 3
+    [voicemailCellFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:self.voicemailCell.frame]];
+
+    [voicemailCellFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2)
+                                                                       andFrame:CGRectOffset(self.voicemailCell.frame, timeForPage(2), 0)]];
+    
+    // now, we animate the unicorn
+    IFTTTFrameAnimation *unicornFrameAnimation = [IFTTTFrameAnimation animationWithView:self.unicorn];
+    [self.animator addAnimation:unicornFrameAnimation];
+
     // move down and to the right, and shrink between pages 2 and 3
     [unicornFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:self.unicorn.frame]];
     [unicornFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3)
