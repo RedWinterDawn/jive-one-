@@ -20,7 +20,6 @@
 #import "Common.h"
 #import "UIImage+ImageEffects.h"
 #import "JCAppDelegate.h"
-#import <PocketSVG/PocketSVG.h>
 #import "JCStyleKit.h"
 
 @interface JCAccountViewController () <MFMailComposeViewControllerDelegate>
