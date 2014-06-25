@@ -20,6 +20,10 @@
 #import "JCAppDelegate.h"
 #import "JCStatusViewController.h"
 
+#import "Membership+Custom.h"
+#import "PBX+Custom.h"
+#import "Lines+Custom.h"
+
 
 
 @interface JCDirectoryViewController ()
@@ -420,25 +424,45 @@ static NSString *CellIdentifier = @"DirectoryCell";
     for (int i = 0; i < sections.count; i++) {
         NSString *section = sections[i];
         NSArray *sectionArray = nil;
-        if (section == self.star) {
-            sectionArray = [PersonEntities MR_findByAttribute:@"isFavorite" withValue:[NSNumber numberWithBool:YES]];
-        }
-        else {
-            // retrieve entities where first name starts with letter of alphabet
-            NSPredicate *pred = [NSPredicate predicateWithFormat:@"(firstLastName BEGINSWITH[c] %@)", section];
-            sectionArray = [PersonEntities MR_findAllWithPredicate:pred];
-        }
+        // retrieve entities where first name starts with letter of alphabet
+        NSPredicate *pred = [NSPredicate predicateWithFormat:@"(displayName BEGINSWITH[c] %@)", section];
+        sectionArray = [Lines MR_findAllWithPredicate:pred];
         
+
         // sort array with bases on firstLastName property
-        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"firstLastName" ascending:YES];
+        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"displayName" ascending:YES];
         NSArray *sortedArray= [sectionArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]];
-        
+
         if (noData) {
             noData = sortedArray.count == 0;
         }
         
         [self.clientEntitiesArray addObject:sortedArray];
+    
     }
+//    Original Company Loading
+//    for (int i = 0; i < sections.count; i++) {
+//        NSString *section = sections[i];
+//        NSArray *sectionArray = nil;
+//        if (section == self.star) {
+//            sectionArray = [PersonEntities MR_findByAttribute:@"isFavorite" withValue:[NSNumber numberWithBool:YES]];
+//        }
+//        else {
+//            // retrieve entities where first name starts with letter of alphabet
+//            NSPredicate *pred = [NSPredicate predicateWithFormat:@"(firstLastName BEGINSWITH[c] %@)", section];
+//            sectionArray = [PersonEntities MR_findAllWithPredicate:pred];
+//        }
+//        
+//        // sort array with bases on firstLastName property
+//        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"firstLastName" ascending:YES];
+//        NSArray *sortedArray= [sectionArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]];
+//        
+//        if (noData) {
+//            noData = sortedArray.count == 0;
+//        }
+//        
+//        [self.clientEntitiesArray addObject:sortedArray];
+//    }
     
     if(noData)
     {
@@ -544,11 +568,13 @@ static NSString *CellIdentifier = @"DirectoryCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     JCPersonCell *cell;
-    PersonEntities *person;
+    //PersonEntities *person;
+    Lines *line;
     if(tableView == self.tableView){//redundant, but easier than rearranging all the if statements below.
         //only instantiate the cell this way, if it is not part of the searchResutls Table view.
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-        person = self.clientEntitiesArray[indexPath.section][indexPath.row];
+        //person = self.clientEntitiesArray[indexPath.section][indexPath.row];
+        line = self.clientEntitiesArray[indexPath.section][indexPath.row];
     }
     else{
 
@@ -556,27 +582,28 @@ static NSString *CellIdentifier = @"DirectoryCell";
             cell = [[JCPersonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
         
-        NSString *entityId = self.clientEntitiesSearchArray[indexPath.row];
-        person = [self getPersonFromListByEntityId:entityId];
+        NSString *lineId = self.clientEntitiesSearchArray[indexPath.row];
+        line = [self getLineFromListByLineId:lineId];
+        //[self getPersonFromListByEntityId:entityId];
     }
     
-    if (person) {
+    if (line) {
     
-        cell.person = person;
+        cell.person = line;
         
         //check to see if the person is a favorite
-        if ([person.isFavorite boolValue]) {
-            
-            
-            NSMutableString *name = [[NSMutableString alloc]initWithString: cell.personNameLabel.text];
-            NSString *nameAndStarAsAnNSString = [NSString stringWithString:[name stringByAppendingString:[NSString stringWithFormat:@" %@",self.star]]];
-            
-            NSRange starLocation = [nameAndStarAsAnNSString rangeOfString:self.star];
-            NSMutableAttributedString *personAttributedName = [[NSMutableAttributedString alloc]initWithString:nameAndStarAsAnNSString];
-            [personAttributedName setAttributes:@{NSForegroundColorAttributeName : self.theRightShadeOfYellowForOurStar} range:starLocation];
-            cell.personNameLabel.font = self.icomoonFont;
-            cell.personNameLabel.attributedText = personAttributedName;
-        }
+//        if ([person.isFavorite boolValue]) {
+//            
+//            
+//            NSMutableString *name = [[NSMutableString alloc]initWithString: cell.personNameLabel.text];
+//            NSString *nameAndStarAsAnNSString = [NSString stringWithString:[name stringByAppendingString:[NSString stringWithFormat:@" %@",self.star]]];
+//            
+//            NSRange starLocation = [nameAndStarAsAnNSString rangeOfString:self.star];
+//            NSMutableAttributedString *personAttributedName = [[NSMutableAttributedString alloc]initWithString:nameAndStarAsAnNSString];
+//            [personAttributedName setAttributes:@{NSForegroundColorAttributeName : self.theRightShadeOfYellowForOurStar} range:starLocation];
+//            cell.personNameLabel.font = self.icomoonFont;
+//            cell.personNameLabel.attributedText = personAttributedName;
+//        }
     }
 
     return cell;
@@ -633,15 +660,14 @@ static NSString *CellIdentifier = @"DirectoryCell";
     NSPredicate *pred;
     
     if ([searchTerms count] == 1) {
-        pred = [NSPredicate predicateWithFormat:@"(firstName contains[cd] %@) OR (lastName contains[cd] %@) OR (email contains[cd] %@)"
+        //pred = [NSPredicate predicateWithFormat:@"(firstName contains[cd] %@) OR (lastName contains[cd] %@) OR (email contains[cd] %@)"
+        pred = [NSPredicate predicateWithFormat:@"(displayName contains[cd] %@) OR (externsionNumber contains[cd] %@)"
                                   //OR (phoneNumber contains[cd] %@)", searchText
-                                  , searchText, searchText, searchText];;
+                                  , searchText, searchText];;
     } else {
         NSMutableArray *subPredicates = [[NSMutableArray alloc] init];
         for (NSString *term in searchTerms) {
-            NSPredicate *p = [NSPredicate predicateWithFormat:@"(firstName contains[cd] %@) OR (lastName contains[cd] %@) OR (email contains[cd] %@)"
-                              //OR (phoneNumber contains[cd] %@)", term
-                              , term, term, term];;
+            NSPredicate *p = [NSPredicate predicateWithFormat:@"(displayName contains[cd] %@) OR (externsionNumber contains[cd] %@)", term, term]; // OR (email contains[cd] %@)" OR (phoneNumber contains[cd] %@)", term
             [subPredicates addObject:p];
         }
         pred = [NSCompoundPredicate andPredicateWithSubpredicates:subPredicates];
@@ -658,7 +684,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
         
         NSArray *sectionArray = self.clientEntitiesArray[i];
         NSArray *results = [sectionArray filteredArrayUsingPredicate:pred];
-        results = [results valueForKeyPath:@"entityId"];
+        results = [results valueForKeyPath:@"lineId"];
         [self.clientEntitiesSearchArray addObjectsFromArray:results];
     }
 }
@@ -684,6 +710,20 @@ shouldReloadTableForSearchString:(NSString *)searchString
                                                      selectedScopeButtonIndex]]];
     
     return YES;
+}
+
+- (Lines *)getLineFromListByLineId:(NSString *)lineId
+{
+    for (NSArray *section in self.clientEntitiesArray) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"lineId ==[c] %@", lineId];
+        NSArray *result = [section filteredArrayUsingPredicate:predicate];
+        
+        if (result.count > 0) {
+            Lines *line = result[0];
+            return line;
+        }
+    }
+    return nil;
 }
 
 

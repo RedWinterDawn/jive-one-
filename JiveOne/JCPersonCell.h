@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "JCPresenceView.h"
+#import "Lines+Custom.h"
 @interface JCPersonCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *personNameLabel;
@@ -15,5 +16,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *personPicture;
 @property (weak, nonatomic) IBOutlet JCPresenceView *personPresenceView;
 @property (nonatomic) PersonEntities *person;
+@property (nonatomic) Lines *line;
 @end
 

@@ -26,6 +26,7 @@
     return self;
 }
 
+
 - (void)setPerson:(PersonEntities *)person
 {
     //[self removeObservers];
@@ -40,8 +41,21 @@
         [self setPersonImage];
         //[self.personPicture setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];
         
-        [person addObserver:self forKeyPath:kPresenceKeyPathForClientEntity options:NSKeyValueObservingOptionNew context:NULL];
-    }   
+        //[person addObserver:self forKeyPath:kPresenceKeyPathForClientEntity options:NSKeyValueObservingOptionNew context:NULL];
+    }
+    else if ([person isKindOfClass:[Lines class]])
+    {
+        Lines *line = (Lines *)person;
+        self.personNameLabel.text = line.displayName;
+        self.personDetailLabel.text = line.externsionNumber;
+        self.personPresenceView.presenceType = JCPresenceTypeAvailable;// (JCPresenceType)[_person.entityPresence.interactions[@"chat"][@"code"] integerValue];
+        
+        // Set person's image based on whether they actually have one or not
+        //[self setPersonImage];
+        //[self.personPicture setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];
+        
+        //[person addObserver:self forKeyPath:kPresenceKeyPathForClientEntity options:NSKeyValueObservingOptionNew context:NULL];
+    }
 }
 
 - (void)prepareForReuse

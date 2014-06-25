@@ -191,8 +191,9 @@
         params = [NSDictionary dictionaryWithObject:deviceToken forKey:UDdeviceToken];
     }
     
+    NSString *sessionURL = @"http://199.87.123.26/session";
     
-    [_manager POST:kOsgiSessionRoute parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [_manager POST:sessionURL parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         success(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failure(error, operation);
@@ -424,7 +425,8 @@
     
     _manager.requestSerializer = [AFJSONRequestSerializer serializer];
     [_manager.requestSerializer clearAuthorizationHeader];
-    [_manager.requestSerializer setValue:token forHTTPHeaderField:@"Auth"];
+    [_manager.requestSerializer setValue:token forHTTPHeaderField:@"Authorization"];
+    [_manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
 }
 
 - (void)clearCookies {
