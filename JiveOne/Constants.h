@@ -13,7 +13,7 @@
 #define kURLSchemeCallback @"jiveclient://token"
 
 
-#pragma mark - OSGI Routes
+#pragma mark - Theo's Revenge Routes
 
 
 #if DEBUG
@@ -39,6 +39,11 @@
 #define kEulaSite @"http://jive.com/downloads/mobile-end-user-license-agreement/"
 #define kScopeProfile @"contacts.v1.profile.read"
 #define kScopeVoicemail @"vm.v1.msgs.meta.read"
+
+#pragma mark - V5 services
+#define kVoicemailService @"10.20.26.141:8890" //@"api.jive.com/voicemail"
+#define kGetMailbox @"/voicemail/v1/mailbox"
+
 
 #pragma mark - Temporary Voicemail Constants
 #define kAWSVoicemailRoute @"voicemail/userId/"
