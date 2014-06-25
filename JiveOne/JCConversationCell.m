@@ -165,7 +165,7 @@
     }
 }
 -(void)recurseAndReplaceSubViewIfDeleteConfirmationControl:(NSArray*)subviews{
-    NSString *delete_button_name = @"vm-delete.png";
+   // NSString *delete_button_name = @"";
     for (UIView *subview in subviews)
     {
         //handles ios6 and earlier
@@ -175,18 +175,18 @@
             UIView *backgroundCoverDefaultControl = [[UIView alloc] initWithFrame:CGRectMake(0,0, 64, 33)];
             [backgroundCoverDefaultControl setBackgroundColor:[UIColor whiteColor]];//assuming your view has a white BG
             [[subview.subviews objectAtIndex:0] addSubview:backgroundCoverDefaultControl];
-            UIImage *deleteImage = [UIImage imageNamed:delete_button_name];
-            UIImageView *deleteBtn = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0,deleteImage.size.width, deleteImage.size.height)];
-            [deleteBtn setImage:[UIImage imageNamed:delete_button_name]];
-            [[subview.subviews objectAtIndex:0] addSubview:deleteBtn];
+//            UIImage *deleteImage = [UIImage imageNamed:delete_button_name];
+//            UIImageView *deleteBtn = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0,deleteImage.size.width, deleteImage.size.height)];
+//            [deleteBtn setImage:[UIImage imageNamed:delete_button_name]];
+//            [[subview.subviews objectAtIndex:0] addSubview:deleteBtn];
         }
         //the rest handles ios7
         if ([NSStringFromClass([subview class]) isEqualToString:@"UITableViewCellDeleteConfirmationButton"])
         {
-            UIButton *deleteButton = (UIButton *)subview;
-            [deleteButton setImage:[UIImage imageNamed:delete_button_name] forState:UIControlStateNormal];
-            [deleteButton setTitle:@"" forState:UIControlStateNormal];
-            [deleteButton setBackgroundColor:[UIColor redColor]];
+//            UIButton *deleteButton = (UIButton *)subview;
+//            [deleteButton setImage:[UIImage imageNamed:delete_button_name] forState:UIControlStateNormal];
+//            [deleteButton setTitle:@"" forState:UIControlStateNormal];
+//            [deleteButton setBackgroundColor:[UIColor redColor]];
             for(UIView* view in subview.subviews){
                 if([view isKindOfClass:[UILabel class]]){
                     [view removeFromSuperview];
