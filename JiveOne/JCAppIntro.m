@@ -17,8 +17,7 @@
 @property (strong, nonatomic) UIImageView *unicorn;
 @property (strong, nonatomic) UILabel *lastLabel;
 @property (strong, nonatomic) UILabel *firstLabel;
-//@property (nonatomic, strong) IFTTTAnimator *animator;
-//@property (nonatomic, strong) UIScrollView *scrollView;
+
 @end
 
 @implementation JCAppIntro
