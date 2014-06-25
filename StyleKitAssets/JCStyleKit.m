@@ -20,10 +20,12 @@ static UIColor* _selectedButtonColor = nil;
 static UIColor* _deleteColor = nil;
 static UIColor* _loginColor = nil;
 
-static UIImage* _imageOfUpRight = nil;
-static UIImage* _imageOfUpLeft = nil;
-static UIImage* _imageOfDownRight = nil;
-static UIImage* _imageOfDownLeft = nil;
+static UIImage* _iMG_0004 = nil;
+
+static UIImage* _imageOfBottomLeft = nil;
+static UIImage* _imageOfBottomRight = nil;
+static UIImage* _imageOfTopLeft = nil;
+static UIImage* _imageOfTopRight = nil;
 static UIImage* _imageOfMoreLogin = nil;
 static UIImage* _imageOfDefaultAvatarLogin = nil;
 static UIImage* _imageOfVoicemailLogin = nil;
@@ -51,6 +53,10 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
 + (UIColor*)selectedButtonColor { return _selectedButtonColor; }
 + (UIColor*)deleteColor { return _deleteColor; }
 + (UIColor*)loginColor { return _loginColor; }
+
+#pragma mark Images
+
++ (UIImage*)iMG_0004 { return _iMG_0004 ?: (_iMG_0004 = [UIImage imageNamed: @"iMG_0004"]); }
 
 #pragma mark Drawing Methods
 
@@ -96,84 +102,106 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
     [@"Leave Feedback" drawInRect: textRect withAttributes: textFontAttributes];
 }
 
-+ (void)drawUpRight;
++ (void)drawBottomLeft;
 {
 
-    //// Bezier Drawing
-    UIBezierPath* bezierPath = UIBezierPath.bezierPath;
-    [bezierPath moveToPoint: CGPointMake(55, 112)];
-    [bezierPath addCurveToPoint: CGPointMake(52, 58) controlPoint1: CGPointMake(55, 112) controlPoint2: CGPointMake(36.68, 100.91)];
-    [bezierPath addCurveToPoint: CGPointMake(65, 19) controlPoint1: CGPointMake(67.32, 15.09) controlPoint2: CGPointMake(65, 19)];
-    [bezierPath addLineToPoint: CGPointMake(62, 18)];
-    [bezierPath addLineToPoint: CGPointMake(71, 6)];
-    [bezierPath addLineToPoint: CGPointMake(70, 21)];
-    [bezierPath addLineToPoint: CGPointMake(67, 20)];
-    [bezierPath addCurveToPoint: CGPointMake(52, 62) controlPoint1: CGPointMake(67, 20) controlPoint2: CGPointMake(65.13, 21.24)];
-    [bezierPath addCurveToPoint: CGPointMake(57, 111) controlPoint1: CGPointMake(38.87, 102.76) controlPoint2: CGPointMake(57, 111)];
-    [bezierPath addLineToPoint: CGPointMake(55, 112)];
-    [bezierPath closePath];
-    [JCStyleKit.selectedButtonColor setFill];
-    [bezierPath fill];
+    //// Bezier 3 Drawing
+    UIBezierPath* bezier3Path = UIBezierPath.bezierPath;
+    [bezier3Path moveToPoint: CGPointMake(70, 3)];
+    [bezier3Path addCurveToPoint: CGPointMake(3, 88) controlPoint1: CGPointMake(58, 65) controlPoint2: CGPointMake(19, 81)];
+    [bezier3Path moveToPoint: CGPointMake(52, 22)];
+    [bezier3Path addLineToPoint: CGPointMake(70, 3)];
+    [bezier3Path addLineToPoint: CGPointMake(76, 29)];
+    bezier3Path.lineCapStyle = kCGLineCapRound;
+
+    bezier3Path.lineJoinStyle = kCGLineJoinRound;
+
+    [JCStyleKit.selectedButtonColor setStroke];
+    bezier3Path.lineWidth = 4;
+    [bezier3Path stroke];
 }
 
-+ (void)drawUpLeft;
++ (void)drawBottomRight;
 {
 
-    //// upLeftArrow Drawing
-    UIBezierPath* upLeftArrowPath = UIBezierPath.bezierPath;
-    [upLeftArrowPath moveToPoint: CGPointMake(66, 115)];
-    [upLeftArrowPath addCurveToPoint: CGPointMake(69, 61) controlPoint1: CGPointMake(66, 115) controlPoint2: CGPointMake(84.32, 103.91)];
-    [upLeftArrowPath addCurveToPoint: CGPointMake(56, 22) controlPoint1: CGPointMake(53.68, 18.09) controlPoint2: CGPointMake(56, 22)];
-    [upLeftArrowPath addLineToPoint: CGPointMake(59, 21)];
-    [upLeftArrowPath addLineToPoint: CGPointMake(50, 9)];
-    [upLeftArrowPath addLineToPoint: CGPointMake(51, 24)];
-    [upLeftArrowPath addLineToPoint: CGPointMake(54, 23)];
-    [upLeftArrowPath addCurveToPoint: CGPointMake(69, 65) controlPoint1: CGPointMake(54, 23) controlPoint2: CGPointMake(55.87, 24.24)];
-    [upLeftArrowPath addCurveToPoint: CGPointMake(64, 114) controlPoint1: CGPointMake(82.13, 105.76) controlPoint2: CGPointMake(64, 114)];
-    [upLeftArrowPath addLineToPoint: CGPointMake(66, 115)];
-    [upLeftArrowPath closePath];
-    [JCStyleKit.selectedButtonColor setFill];
-    [upLeftArrowPath fill];
+    //// Group
+    {
+        //// Bezier Drawing
+        UIBezierPath* bezierPath = UIBezierPath.bezierPath;
+        [bezierPath moveToPoint: CGPointMake(7.8, 3)];
+        [bezierPath addCurveToPoint: CGPointMake(15, 59) controlPoint1: CGPointMake(17, 35) controlPoint2: CGPointMake(15, 43)];
+        [bezierPath moveToPoint: CGPointMake(22, 21)];
+        [bezierPath addLineToPoint: CGPointMake(7.8, 3)];
+        [bezierPath addLineToPoint: CGPointMake(4, 24)];
+        bezierPath.lineCapStyle = kCGLineCapRound;
+
+        bezierPath.lineJoinStyle = kCGLineJoinRound;
+
+        [JCStyleKit.selectedButtonColor setStroke];
+        bezierPath.lineWidth = 4;
+        [bezierPath stroke];
+    }
 }
 
-+ (void)drawDownRight;
++ (void)drawTopLeft;
 {
+    //// General Declarations
+    CGContextRef context = UIGraphicsGetCurrentContext();
 
-    //// Bezier Drawing
-    UIBezierPath* bezierPath = UIBezierPath.bezierPath;
-    [bezierPath moveToPoint: CGPointMake(59, 9)];
-    [bezierPath addCurveToPoint: CGPointMake(56, 63) controlPoint1: CGPointMake(59, 9) controlPoint2: CGPointMake(40.68, 20.09)];
-    [bezierPath addCurveToPoint: CGPointMake(69, 102) controlPoint1: CGPointMake(71.32, 105.91) controlPoint2: CGPointMake(69, 102)];
-    [bezierPath addLineToPoint: CGPointMake(66, 103)];
-    [bezierPath addLineToPoint: CGPointMake(75, 115)];
-    [bezierPath addLineToPoint: CGPointMake(74, 100)];
-    [bezierPath addLineToPoint: CGPointMake(71, 101)];
-    [bezierPath addCurveToPoint: CGPointMake(56, 59) controlPoint1: CGPointMake(71, 101) controlPoint2: CGPointMake(69.13, 99.76)];
-    [bezierPath addCurveToPoint: CGPointMake(61, 10) controlPoint1: CGPointMake(42.87, 18.24) controlPoint2: CGPointMake(61, 10)];
-    [bezierPath addLineToPoint: CGPointMake(59, 9)];
-    [bezierPath closePath];
-    [JCStyleKit.selectedButtonColor setFill];
-    [bezierPath fill];
+    //// Group
+    {
+        CGContextSaveGState(context);
+        CGContextTranslateCTM(context, 33.5, 27);
+        CGContextRotateCTM(context, 3.78 * M_PI / 180);
+
+
+
+        //// Bezier 3 Drawing
+        UIBezierPath* bezier3Path = UIBezierPath.bezierPath;
+        [bezier3Path moveToPoint: CGPointMake(-13.5, 52)];
+        [bezier3Path addCurveToPoint: CGPointMake(0.31, -18.06) controlPoint1: CGPointMake(-19.5, 32) controlPoint2: CGPointMake(-14.47, -1.13)];
+        [bezier3Path moveToPoint: CGPointMake(-27.5, 33)];
+        [bezier3Path addLineToPoint: CGPointMake(-13.5, 53)];
+        [bezier3Path addLineToPoint: CGPointMake(-4.5, 29)];
+        bezier3Path.lineCapStyle = kCGLineCapRound;
+
+        bezier3Path.lineJoinStyle = kCGLineJoinRound;
+
+        [JCStyleKit.selectedButtonColor setStroke];
+        bezier3Path.lineWidth = 4;
+        [bezier3Path stroke];
+
+
+
+        CGContextRestoreGState(context);
+    }
 }
 
-+ (void)drawDownLeft;
++ (void)drawTopRight;
 {
+    //// General Declarations
+    CGContextRef context = UIGraphicsGetCurrentContext();
 
     //// Bezier Drawing
+    CGContextSaveGState(context);
+    CGContextTranslateCTM(context, 43.16, 68.95);
+    CGContextRotateCTM(context, -15.83 * M_PI / 180);
+
     UIBezierPath* bezierPath = UIBezierPath.bezierPath;
-    [bezierPath moveToPoint: CGPointMake(66, 9)];
-    [bezierPath addCurveToPoint: CGPointMake(69, 63) controlPoint1: CGPointMake(66, 9) controlPoint2: CGPointMake(84.32, 20.09)];
-    [bezierPath addCurveToPoint: CGPointMake(56, 102) controlPoint1: CGPointMake(53.68, 105.91) controlPoint2: CGPointMake(56, 102)];
-    [bezierPath addLineToPoint: CGPointMake(59, 103)];
-    [bezierPath addLineToPoint: CGPointMake(50, 115)];
-    [bezierPath addLineToPoint: CGPointMake(51, 100)];
-    [bezierPath addLineToPoint: CGPointMake(54, 101)];
-    [bezierPath addCurveToPoint: CGPointMake(69, 59) controlPoint1: CGPointMake(54, 101) controlPoint2: CGPointMake(55.87, 99.76)];
-    [bezierPath addCurveToPoint: CGPointMake(64, 10) controlPoint1: CGPointMake(82.13, 18.24) controlPoint2: CGPointMake(64, 10)];
-    [bezierPath addLineToPoint: CGPointMake(66, 9)];
-    [bezierPath closePath];
-    [JCStyleKit.selectedButtonColor setFill];
-    [bezierPath fill];
+    [bezierPath moveToPoint: CGPointMake(-56, 52.5)];
+    [bezierPath addCurveToPoint: CGPointMake(57, -52.5) controlPoint1: CGPointMake(-37, 40.5) controlPoint2: CGPointMake(39, 10.5)];
+    [bezierPath moveToPoint: CGPointMake(-30, 48.5)];
+    [bezierPath addLineToPoint: CGPointMake(-57, 52.5)];
+    [bezierPath addLineToPoint: CGPointMake(-40, 29.5)];
+    bezierPath.lineCapStyle = kCGLineCapRound;
+
+    bezierPath.lineJoinStyle = kCGLineJoinRound;
+
+    [JCStyleKit.selectedButtonColor setStroke];
+    bezierPath.lineWidth = 4;
+    [bezierPath stroke];
+
+    CGContextRestoreGState(context);
 }
 
 + (void)drawMoreLogin;
@@ -1377,56 +1405,56 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
     return imageOfLeaveFeedback_Button;
 }
 
-+ (UIImage*)imageOfUpRight;
++ (UIImage*)imageOfBottomLeft;
 {
-    if (_imageOfUpRight)
-        return _imageOfUpRight;
+    if (_imageOfBottomLeft)
+        return _imageOfBottomLeft;
 
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(123, 125), NO, 0.0f);
-    [JCStyleKit drawUpRight];
-    _imageOfUpRight = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(80, 91), NO, 0.0f);
+    [JCStyleKit drawBottomLeft];
+    _imageOfBottomLeft = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
-    return _imageOfUpRight;
+    return _imageOfBottomLeft;
 }
 
-+ (UIImage*)imageOfUpLeft;
++ (UIImage*)imageOfBottomRight;
 {
-    if (_imageOfUpLeft)
-        return _imageOfUpLeft;
+    if (_imageOfBottomRight)
+        return _imageOfBottomRight;
 
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(123, 125), NO, 0.0f);
-    [JCStyleKit drawUpLeft];
-    _imageOfUpLeft = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(25, 62), NO, 0.0f);
+    [JCStyleKit drawBottomRight];
+    _imageOfBottomRight = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
-    return _imageOfUpLeft;
+    return _imageOfBottomRight;
 }
 
-+ (UIImage*)imageOfDownRight;
++ (UIImage*)imageOfTopLeft;
 {
-    if (_imageOfDownRight)
-        return _imageOfDownRight;
+    if (_imageOfTopLeft)
+        return _imageOfTopLeft;
 
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(123, 125), NO, 0.0f);
-    [JCStyleKit drawDownRight];
-    _imageOfDownRight = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(39, 82), NO, 0.0f);
+    [JCStyleKit drawTopLeft];
+    _imageOfTopLeft = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
-    return _imageOfDownRight;
+    return _imageOfTopLeft;
 }
 
-+ (UIImage*)imageOfDownLeft;
++ (UIImage*)imageOfTopRight;
 {
-    if (_imageOfDownLeft)
-        return _imageOfDownLeft;
+    if (_imageOfTopRight)
+        return _imageOfTopRight;
 
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(123, 125), NO, 0.0f);
-    [JCStyleKit drawDownLeft];
-    _imageOfDownLeft = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(86, 141), NO, 0.0f);
+    [JCStyleKit drawTopRight];
+    _imageOfTopRight = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
-    return _imageOfDownLeft;
+    return _imageOfTopRight;
 }
 
 + (UIImage*)imageOfMoreLogin;
@@ -1655,36 +1683,36 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
 
 #pragma mark Customization Infrastructure
 
-- (void)setUpRightTargets: (NSArray*)upRightTargets
+- (void)setBottomLeftTargets: (NSArray*)bottomLeftTargets
 {
-    _upRightTargets = upRightTargets;
+    _bottomLeftTargets = bottomLeftTargets;
 
-    for (id target in self.upRightTargets)
-        [target setImage: JCStyleKit.imageOfUpRight];
+    for (id target in self.bottomLeftTargets)
+        [target setImage: JCStyleKit.imageOfBottomLeft];
 }
 
-- (void)setUpLeftTargets: (NSArray*)upLeftTargets
+- (void)setBottomRightTargets: (NSArray*)bottomRightTargets
 {
-    _upLeftTargets = upLeftTargets;
+    _bottomRightTargets = bottomRightTargets;
 
-    for (id target in self.upLeftTargets)
-        [target setImage: JCStyleKit.imageOfUpLeft];
+    for (id target in self.bottomRightTargets)
+        [target setImage: JCStyleKit.imageOfBottomRight];
 }
 
-- (void)setDownRightTargets: (NSArray*)downRightTargets
+- (void)setTopLeftTargets: (NSArray*)topLeftTargets
 {
-    _downRightTargets = downRightTargets;
+    _topLeftTargets = topLeftTargets;
 
-    for (id target in self.downRightTargets)
-        [target setImage: JCStyleKit.imageOfDownRight];
+    for (id target in self.topLeftTargets)
+        [target setImage: JCStyleKit.imageOfTopLeft];
 }
 
-- (void)setDownLeftTargets: (NSArray*)downLeftTargets
+- (void)setTopRightTargets: (NSArray*)topRightTargets
 {
-    _downLeftTargets = downLeftTargets;
+    _topRightTargets = topRightTargets;
 
-    for (id target in self.downLeftTargets)
-        [target setImage: JCStyleKit.imageOfDownLeft];
+    for (id target in self.topRightTargets)
+        [target setImage: JCStyleKit.imageOfTopRight];
 }
 
 - (void)setMoreLoginTargets: (NSArray*)moreLoginTargets

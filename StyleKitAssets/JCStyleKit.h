@@ -16,10 +16,10 @@
 
 // iOS Controls Customization Outlets
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* leaveFeedback_ButtonTargets;
-@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* upRightTargets;
-@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* upLeftTargets;
-@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* downRightTargets;
-@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* downLeftTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* bottomLeftTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* bottomRightTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* topLeftTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* topRightTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* moreLoginTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* defaultAvatarLoginTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* voicemailLoginTargets;
@@ -47,12 +47,15 @@
 + (UIColor*)deleteColor;
 + (UIColor*)loginColor;
 
+// Images
++ (UIImage*)iMG_0004;
+
 // Drawing Methods
 + (void)drawLeaveFeedback_ButtonWithFrame: (CGRect)frame;
-+ (void)drawUpRight;
-+ (void)drawUpLeft;
-+ (void)drawDownRight;
-+ (void)drawDownLeft;
++ (void)drawBottomLeft;
++ (void)drawBottomRight;
++ (void)drawTopLeft;
++ (void)drawTopRight;
 + (void)drawMoreLogin;
 + (void)drawDefaultAvatarLogin;
 + (void)drawVoicemailLogin;
@@ -82,10 +85,10 @@
 
 // Generated Images
 + (UIImage*)imageOfLeaveFeedback_ButtonWithFrame: (CGRect)frame;
-+ (UIImage*)imageOfUpRight;
-+ (UIImage*)imageOfUpLeft;
-+ (UIImage*)imageOfDownRight;
-+ (UIImage*)imageOfDownLeft;
++ (UIImage*)imageOfBottomLeft;
++ (UIImage*)imageOfBottomRight;
++ (UIImage*)imageOfTopLeft;
++ (UIImage*)imageOfTopRight;
 + (UIImage*)imageOfMoreLogin;
 + (UIImage*)imageOfDefaultAvatarLogin;
 + (UIImage*)imageOfVoicemailLogin;
