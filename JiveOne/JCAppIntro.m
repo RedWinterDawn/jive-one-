@@ -39,6 +39,7 @@
     self.scrollView.pagingEnabled = YES;
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.animator = [IFTTTAnimator new];
+    [self.scrollView addSubview:self.dismissButton];
 
     [self placeViews];
     [self configureAnimation];
@@ -89,13 +90,16 @@
     [self.scrollView addSubview:thirdPageText];
     
     UILabel *fourthPageText = [[UILabel alloc] init];
-    fourthPageText.text = @"Or you can logout of the app";
+    fourthPageText.text = @"Dismiss";
     [fourthPageText sizeToFit];
     fourthPageText.center = self.view.center;
     fourthPageText.frame = CGRectOffset(fourthPageText.frame, timeForPage(4), 0);
     [self.scrollView addSubview:fourthPageText];
-    
+
     self.lastLabel = fourthPageText;
+    
+    
+    self.dismissButton.frame = CGRectOffset(self.dismissButton.frame, timeForPage(4), 0);
 }
 
 - (void)configureAnimation
@@ -169,11 +173,24 @@
 - (void)animatedScrollViewControllerDidScrollToEnd:(IFTTTAnimatedScrollViewController *)animatedScrollViewController
 {
     NSLog(@"Scrolled to end of scrollview!");
+    NSLog(@"%f,%f",self.dismissButton.frame.origin.x,self.dismissButton.frame.origin.y);
 }
 
 - (void)animatedScrollViewControllerDidEndDraggingAtEnd:(IFTTTAnimatedScrollViewController *)animatedScrollViewController
 {
     NSLog(@"Ended dragging at end of scrollview!");
 }
+
+- (IBAction)dismissButtonWasPressed:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"AppTutorialDismissed" object:nil];
+    }];
+    //Register for PushNotifications
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert |
+                                                                           UIRemoteNotificationTypeBadge |
+                                                                           UIRemoteNotificationTypeSound)];
+}
+
+
 
 @end

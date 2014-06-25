@@ -87,7 +87,6 @@
                         <outlet property="logo" destination="uq2-OG-5Nj" id="19z-YM-pcM"/>
                         <outlet property="passwordTextField" destination="GZW-BX-qe0" id="McQ-Ao-Xqa"/>
                         <outlet property="usernameTextField" destination="Tho-ch-vQR" id="NY5-OJ-rkG"/>
-                        <segue destination="0GY-Sf-KwF" kind="modal" identifier="AppTutorialSegueOLD" modalTransitionStyle="crossDissolve" id="rnB-Wd-ic6"/>
                         <segue destination="8YX-ce-x5E" kind="modal" identifier="LoginToTabBarSegue" modalTransitionStyle="crossDissolve" id="PKy-V4-VLv"/>
                         <segue destination="Yyy-YN-Ji0" kind="modal" identifier="AppTutorialSegue" modalTransitionStyle="crossDissolve" id="T1T-6r-sA2"/>
                     </connections>
@@ -356,50 +355,28 @@
                     <view key="view" contentMode="scaleToFill" id="bxh-sI-kCL">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="gtQ-uO-uxm">
+                                <rect key="frame" x="234" y="527" width="66" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="Dismiss">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="dismissButtonWasPressed:" destination="Yyy-YN-Ji0" eventType="touchUpInside" id="uBD-ot-1mj"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="dismissButton" destination="gtQ-uO-uxm" id="M1a-hX-JqY"/>
                         <segue destination="8YX-ce-x5E" kind="modal" identifier="TutorialToTabBarSegue" modalTransitionStyle="crossDissolve" id="dIf-i9-QYA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a9K-Lc-Eq7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1542" y="-451"/>
-        </scene>
-        <!--Container View Controller-->
-        <scene sceneID="W4k-dG-q3a">
-            <objects>
-                <viewController storyboardIdentifier="JCContainerViewController" id="0GY-Sf-KwF" customClass="JCContainerViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="9R9-Fg-9O1">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="iPhone2Xnew.png" id="2VU-gk-QW0">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="656"/>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="gtQ-uO-uxm">
-                                <rect key="frame" x="191" y="513" width="129" height="55"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" title="Dismiss">
-                                    <color key="titleColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="dismissButtonPressed:" destination="0GY-Sf-KwF" eventType="touchUpInside" id="lRj-eD-GYf"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="bq9-7d-CLc"/>
-                    <connections>
-                        <outlet property="backgroundImageView" destination="2VU-gk-QW0" id="3Bp-ZS-h5M"/>
-                        <segue destination="8YX-ce-x5E" kind="modal" identifier="TutorialToTabBarSegueOLD" modalTransitionStyle="crossDissolve" id="SEu-ym-TIt"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="h46-yP-dwC" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-921" y="-476"/>
         </scene>
         <!--Page2 View Controller-->
         <scene sceneID="72L-8n-cy9">

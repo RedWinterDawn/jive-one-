@@ -388,9 +388,9 @@
 {
     NSLog(@"errorInitializingApp: %@",err);
     [self hideHud];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Server Unavailable", nil) message: NSLocalizedString(@"We could not connect to the server at this time. Please try again", nil) delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+    //UIAlertView *alert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Server Unavailable", nil) message: NSLocalizedString(@"We could not connect to the server at this time. Please try again", nil) delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
     
-    [alert show];
+    //[alert show];
     [[JCAuthenticationManager sharedInstance] logout:self];
 }
 

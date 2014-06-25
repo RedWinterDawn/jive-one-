@@ -231,11 +231,6 @@
 		9145E31F191D842500840D66 /* JCVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 9145E31E191D842500840D66 /* JCVersion.m */; };
 		9154947819366C54003DCED4 /* JCPlayPauseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9154947719366C54003DCED4 /* JCPlayPauseView.m */; };
 		916958FF18FEDD76006FDD60 /* JCConversationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 274493AF18D0DA9B002744CB /* JCConversationCell.xib */; };
-		9172ACF71917E8EE00481B01 /* JCPage1ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9172ACEF1917E8EE00481B01 /* JCPage1ViewController.m */; };
-		9172ACF81917E8EE00481B01 /* JCPage2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9172ACF11917E8EE00481B01 /* JCPage2ViewController.m */; };
-		9172ACF91917E8EE00481B01 /* JCPage3ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9172ACF31917E8EE00481B01 /* JCPage3ViewController.m */; };
-		9172AD4C1918097B00481B01 /* JCContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9172AD4B1918097B00481B01 /* JCContainerViewController.m */; };
-		9172AD521918362800481B01 /* JCPageClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 9172AD511918362800481B01 /* JCPageClass.m */; };
 		9172AD5C19192A1500481B01 /* UserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9172AD5B19192A1500481B01 /* UserDefaults.plist */; };
 		91743AA0191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91743A9F191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m */; };
 		91869D871959E5CF007743CE /* JCTOSButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91869D861959E5CF007743CE /* JCTOSButtonView.m */; };
@@ -693,16 +688,6 @@
 		9145E31E191D842500840D66 /* JCVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVersion.m; sourceTree = "<group>"; };
 		9154947619366C54003DCED4 /* JCPlayPauseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPlayPauseView.h; sourceTree = "<group>"; };
 		9154947719366C54003DCED4 /* JCPlayPauseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPlayPauseView.m; sourceTree = "<group>"; };
-		9172ACEE1917E8EE00481B01 /* JCPage1ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPage1ViewController.h; sourceTree = "<group>"; };
-		9172ACEF1917E8EE00481B01 /* JCPage1ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPage1ViewController.m; sourceTree = "<group>"; };
-		9172ACF01917E8EE00481B01 /* JCPage2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPage2ViewController.h; sourceTree = "<group>"; };
-		9172ACF11917E8EE00481B01 /* JCPage2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPage2ViewController.m; sourceTree = "<group>"; };
-		9172ACF21917E8EE00481B01 /* JCPage3ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPage3ViewController.h; sourceTree = "<group>"; };
-		9172ACF31917E8EE00481B01 /* JCPage3ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPage3ViewController.m; sourceTree = "<group>"; };
-		9172AD4A1918097B00481B01 /* JCContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCContainerViewController.h; sourceTree = "<group>"; };
-		9172AD4B1918097B00481B01 /* JCContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCContainerViewController.m; sourceTree = "<group>"; };
-		9172AD501918362800481B01 /* JCPageClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPageClass.h; sourceTree = "<group>"; };
-		9172AD511918362800481B01 /* JCPageClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPageClass.m; sourceTree = "<group>"; };
 		9172AD5B19192A1500481B01 /* UserDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserDefaults.plist; sourceTree = "<group>"; };
 		91743A9E191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTermsAndConditonsVCViewController.h; sourceTree = "<group>"; };
 		91743A9F191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTermsAndConditonsVCViewController.m; sourceTree = "<group>"; };
@@ -1824,16 +1809,6 @@
 			children = (
 				91915736195B209D004BDE26 /* JCAppIntro.h */,
 				91915737195B209D004BDE26 /* JCAppIntro.m */,
-				9172AD4A1918097B00481B01 /* JCContainerViewController.h */,
-				9172AD4B1918097B00481B01 /* JCContainerViewController.m */,
-				9172AD501918362800481B01 /* JCPageClass.h */,
-				9172AD511918362800481B01 /* JCPageClass.m */,
-				9172ACEE1917E8EE00481B01 /* JCPage1ViewController.h */,
-				9172ACEF1917E8EE00481B01 /* JCPage1ViewController.m */,
-				9172ACF01917E8EE00481B01 /* JCPage2ViewController.h */,
-				9172ACF11917E8EE00481B01 /* JCPage2ViewController.m */,
-				9172ACF21917E8EE00481B01 /* JCPage3ViewController.h */,
-				9172ACF31917E8EE00481B01 /* JCPage3ViewController.m */,
 			);
 			name = AppTutorial;
 			sourceTree = "<group>";
@@ -2213,7 +2188,6 @@
 				27F1F2D6191C171300AEAFD7 /* UAInboxMessageListCell.m in Sources */,
 				27EA1DFD1900A83D0075CAEE /* JCVoiceTableViewController.m in Sources */,
 				2700987718F4714100B6BC2F /* JSAvatarImageFactory.m in Sources */,
-				9172ACF81917E8EE00481B01 /* JCPage2ViewController.m in Sources */,
 				27F1F2E2191C171300AEAFD7 /* UALocationSettingsViewController.m in Sources */,
 				913786F7194A22E200002DD3 /* LoggerClient.m in Sources */,
 				DD28DA5218AEC4F5003BFC44 /* JCAccountViewController.m in Sources */,
@@ -2243,7 +2217,6 @@
 				270152C61901D1FF00F271CE /* PersonEntities+Custom.m in Sources */,
 				2700987D18F4714100B6BC2F /* JSMessageInputView.m in Sources */,
 				27F1F2D9191C171300AEAFD7 /* UAInboxNavUI.m in Sources */,
-				9172AD521918362800481B01 /* JCPageClass.m in Sources */,
 				2736698218BD441D0069B4B3 /* JCPersonCell.m in Sources */,
 				91915732195A2DC0004BDE26 /* JCLeaveFeedbackButton.m in Sources */,
 				2788F143190EACD20099348D /* VoicemailETag.m in Sources */,
@@ -2258,15 +2231,12 @@
 				279E4CAF192273E5002A556C /* MBContactCollectionViewFlowLayout.m in Sources */,
 				273CC25E1900B23B005A2857 /* JCVoiceCell.m in Sources */,
 				910709F71959D43E0041E1CF /* JCStyleKit.m in Sources */,
-				9172AD4C1918097B00481B01 /* JCContainerViewController.m in Sources */,
 				9154947819366C54003DCED4 /* JCPlayPauseView.m in Sources */,
 				91869D871959E5CF007743CE /* JCTOSButtonView.m in Sources */,
 				2710E40F18CEC8C300152C91 /* ConversationEntry+Custom.m in Sources */,
-				9172ACF91917E8EE00481B01 /* JCPage3ViewController.m in Sources */,
 				279E4CB1192273E5002A556C /* MBContactCollectionViewPromptCell.m in Sources */,
 				277F094B18FF4F5100EEF0E3 /* Voicemail.m in Sources */,
 				2751591F18AD303500FD8D3F /* JCDirectoryViewController.m in Sources */,
-				9172ACF71917E8EE00481B01 /* JCPage1ViewController.m in Sources */,
 				DD3BD9F418DCB1740080318E /* Voicemail+Custom.m in Sources */,
 				F258589218BD3A420020AF34 /* JCDirectoryGroupViewController.m in Sources */,
 				2700987A18F4714100B6BC2F /* JSBubbleView.m in Sources */,

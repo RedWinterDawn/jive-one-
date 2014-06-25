@@ -10,4 +10,5 @@
 
 @interface JCAppIntro : IFTTTAnimatedScrollViewController <IFTTTAnimatedScrollViewControllerDelegate>
 
+@property (weak, nonatomic) IBOutlet UIButton *dismissButton;
 @end
