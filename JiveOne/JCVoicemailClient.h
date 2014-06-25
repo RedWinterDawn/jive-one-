@@ -10,4 +10,8 @@
 
 @interface JCVoicemailClient : NSObject
 
+@property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
+
++ (instancetype)sharedClient;
+
 @end

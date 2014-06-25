@@ -13,12 +13,12 @@
     KeychainItemWrapper *keyChainWrapper;
     NSManagedObjectContext *localContext;
 }
-@end
+
 
 #pragma mark - class methods
 
 + (JCVoicemailClient*)sharedClient {
-    static JCContactsClient *_sharedClient = nil;
+    static JCVoicemailClient *_sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _sharedClient = [[super alloc] init];
@@ -76,4 +76,4 @@
     }
     
 }
-
+@end
