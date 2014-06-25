@@ -8,6 +8,7 @@
 
 #import "JCAuthenticationManager.h"
 #import "JCRESTClient.h"
+#import "JCContactsClient.h"
 #import "JCAppDelegate.h"
 #import "JCAccountViewController.h"
 #import "JCLoginViewController.h"
@@ -62,7 +63,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 - (void)loginWithUsername:(NSString *)username password:(NSString*)password completed:(CompletionBlock)completed
 {
     _completionBlock = completed;
-    NSString *url_path = [NSString stringWithFormat:kOsgiAuthURL, kOAuthClientId, kScopeVoicemail, kURLSchemeCallback];
+    NSString *url_path = [NSString stringWithFormat:kOsgiAuthURL, kOAuthClientId, kScopeProfile, kURLSchemeCallback];
     NSURL *url = [NSURL URLWithString:url_path];
     
     _username = [username stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];;
@@ -78,7 +79,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     }
     
     // start the timeout timer
-    webviewTimer = [NSTimer scheduledTimerWithTimeInterval:20.0 target:self selector:@selector(timerElapsed:) userInfo:nil repeats:NO];
+//    webviewTimer = [NSTimer scheduledTimerWithTimeInterval:20.0 target:self selector:@selector(timerElapsed:) userInfo:nil repeats:NO];
     
     webview.delegate = self;
     [webview loadRequest:[NSURLRequest requestWithURL:url]];
@@ -177,7 +178,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
         [[NSUserDefaults standardUserDefaults] setObject:refresh_token forKey:@"refreshToken"];
     }
     if (username) {
-        username = [username stringByReplacingOccurrencesOfString:@"." withString:@"_"];
+//        username = [username stringByReplacingOccurrencesOfString:@"." withString:@"_"];
         [[NSUserDefaults standardUserDefaults] setObject:username forKey:@"username"];
     }
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kUserAuthenticated];
@@ -212,36 +213,66 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     //Rolling back to hack
     //[self verifyToken];
     
-       [[JCRESTClient sharedClient] RetrieveMyEntitity:^(id JSON, id operation) {
+    [[JCContactsClient sharedClient] RetrieveMyInformation:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+        if (suceeded) {
             JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
             if (![delegate.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenSucceeded object:JSON];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenSucceeded object:responseObject];
             }
-        } failure:^(NSError *err, id operation) {
-            NSLog(@"%@", err);
+        }
+        else {
+            NSLog(@"%@", error);
             
-            AFHTTPRequestOperation *AFOperation = (AFHTTPRequestOperation *)operation;
-            NSInteger status = AFOperation.response.statusCode;
-    
+            NSInteger status = operation.response.statusCode;
+            
             if ((status >= 400 && status <= 417) || status == 200) {
-//                if ([self userAuthenticated]) {
-//                    [self refreshToken];
-//                }
-//                else
-//                {
-                    JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
-                    if (![delegate.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
-                        [delegate changeRootViewController:JCRootLoginViewController];
-                    }
-                    else {
-                        [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenFailed object:nil];
-                    }
-//                }
+                //                if ([self userAuthenticated]) {
+                //                    [self refreshToken];
+                //                }
+                //                else
+                //                {
+                JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
+                if (![delegate.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
+                    [delegate changeRootViewController:JCRootLoginViewController];
+                }
+                else {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenFailed object:nil];
+                }
+                //                }
             }
             else {
-                NSLog(@"%@", AFOperation.response);
+                NSLog(@"%@", operation.response);
             }
-        }];
+        }
+    }];
+    
+//       [[JCRESTClient sharedClient] RetrieveMyEntitity:^(id JSON, id operation) {
+//           
+//        } failure:^(NSError *err, id operation) {
+//            NSLog(@"%@", err);
+//            
+//            AFHTTPRequestOperation *AFOperation = (AFHTTPRequestOperation *)operation;
+//            NSInteger status = AFOperation.response.statusCode;
+//    
+//            if ((status >= 400 && status <= 417) || status == 200) {
+////                if ([self userAuthenticated]) {
+////                    [self refreshToken];
+////                }
+////                else
+////                {
+//                    JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
+//                    if (![delegate.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
+//                        [delegate changeRootViewController:JCRootLoginViewController];
+//                    }
+//                    else {
+//                        [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenFailed object:nil];
+//                    }
+////                }
+//            }
+//            else {
+//                NSLog(@"%@", AFOperation.response);
+//            }
+//        }];
 
 
 }
@@ -315,7 +346,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
         {
             if ([tokenData objectForKey:@"access_token"]) {
                 [self didReceiveAuthenticationToken:tokenData];
-                [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenSucceeded object:nil];
+                //[[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenSucceeded object:nil];
                 [webviewTimer invalidate];
                 [self sendCompletionBlock:YES errorMessage:nil];
                 
@@ -413,7 +444,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     NSDictionary *tokenData = [NSJSONSerialization JSONObjectWithData:receivedData options:kNilOptions error:&error];
     if ([tokenData objectForKey:@"access_token"]) {
         [self didReceiveAuthenticationToken:tokenData];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenSucceeded object:nil];
+        //[[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenSucceeded object:nil];
         [webviewTimer invalidate];
         
     }

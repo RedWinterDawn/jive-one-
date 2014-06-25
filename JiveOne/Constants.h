@@ -37,7 +37,7 @@
 #define kOsgiVoicemailRoute @"voicemails"
 #define kVersionURL @"http://jiveios.local/LatestVersion"
 #define kEulaSite @"http://jive.com/downloads/mobile-end-user-license-agreement/"
-#define kScopeProfile @"pbx.v1.profile"
+#define kScopeProfile @"contacts.v1.profile.read"
 #define kScopeVoicemail @"vm.v1.msgs.meta.read"
 
 #pragma mark - Temporary Voicemail Constants

@@ -15,6 +15,7 @@
 #import "Company.h"
 #import <MBProgressHUD.h>
 #import "JCStyleKit.h"
+#import "JCContactsClient.h"
 
 @interface JCLoginViewController ()
 {
@@ -246,8 +247,32 @@
 //        [self showHudWithTitle:@"One Moment Please" detail:@"Preparing for first use"];
 //    }
     
-    [self fetchMyEntity];
+//    [self fetchMyEntity];
+    [self fetchMyContact];
 }
+
+
+- (void)fetchMyContact
+{
+    [[JCContactsClient sharedClient] RetrieveMyInformation:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+        if (suceeded) {
+            [self fetchContacts];
+        }
+    }];
+}
+
+- (void)fetchContacts
+{
+    [[JCContactsClient sharedClient] RetrieveContacts:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+        if (suceeded) {
+            _doneLoadingContent = YES;
+            [[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
+            [self goToApplication];
+        }
+    }];
+}
+
+
 
 // modified 06/20 - only loading my info (to be changed to new pbx servive) and voicemail. From fetching myEntitite, it will fetch voicemail and go into the application
 - (void)fetchMyEntity
