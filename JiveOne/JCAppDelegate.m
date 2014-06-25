@@ -17,7 +17,6 @@
 #import "TRVSMonitor.h"
 #import "JCMessagesViewController.h"
 #import "TestFlight.h"
-#import "JCContainerViewController.h"
 #import "JCVersion.h"
 #import "LoggerClient.h"
 
