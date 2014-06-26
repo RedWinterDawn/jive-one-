@@ -242,13 +242,13 @@
         [Flurry logEvent:@"First Login"];
         [self performSegueWithIdentifier: @"AppTutorialSegue" sender: self];
     }
-//    else
-//    {
-//        [self showHudWithTitle:@"One Moment Please" detail:@"Preparing for first use"];
-//    }
+    else
+    {
+        [self showHudWithTitle:@"One Moment Please" detail:@"Preparing for first use"];
+    }
     
-//    [self fetchMyEntity];
-    [self fetchMyContact];
+    [self fetchMyEntity];
+    //[self fetchMyContact];
 }
 
 
