@@ -7,8 +7,10 @@
 //
 
 #import "IFTTTJazzHands.h"
+#import "UIImage+ImageEffects.h"
 
 @interface JCAppIntro : IFTTTAnimatedScrollViewController <IFTTTAnimatedScrollViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *dismissButton;
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 @end

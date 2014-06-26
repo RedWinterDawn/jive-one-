@@ -107,6 +107,7 @@ int didNotify;
         }];
     }
     else {
+        //TODO:********
         [self.window setRootViewController:self.loginViewController];
     }
     

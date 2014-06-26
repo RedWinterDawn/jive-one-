@@ -11,6 +11,15 @@
 
 #define NUMBER_OF_PAGES 4
 #define timeForPage(page) (NSInteger)(self.view.frame.size.width * (page - 1))
+#define kTopLeft_x -110
+#define kTopLeft_y -55
+#define kTopRight_x 5
+#define kTopRight_y -70
+#define kBottomLeft_x -15
+#define kBottomLeft_y 125
+#define kBottomRight_x 70
+#define kBottomRight_y 95
+
 
 @interface JCAppIntro ()
 
@@ -45,7 +54,13 @@
     self.scrollView.pagingEnabled = YES;
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.animator = [IFTTTAnimator new];
-    [self.scrollView addSubview:self.dismissButton];
+//    [self.scrollView addSubview:self.dismissButton];
+//    //addding blurred background img
+//    self.view.backgroundColor = [UIColor clearColor];
+//    UIImage *bgImage = [UIImage imageNamed:@"iphone2Xnew.png"];
+//    bgImage = [bgImage applyBlurWithRadius:15.0 tintColor:[[UIColor darkGrayColor] colorWithAlphaComponent:.3] saturationDeltaFactor:.88 maskImage:nil];
+//    self.backgroundImageView.image = bgImage;
+
 
     [self placeViews];
     [self configureAnimation];
@@ -57,7 +72,15 @@
     //Add voicemailCell to center of page1
     self.voicemailCell = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"VoicemailCell.png"]];
     self.voicemailCell.center = self.view.center;
-    self.voicemailCell.frame = CGRectMake(21, 200, 278, 157);
+    float voicemailCell_w = 278;
+    float voicemailCell_h = 157;
+    float voicemailCell_x = ((timeForPage(1))+(self.view.frame.size.width/2)-(voicemailCell_w/2));
+    float voicemailCell_y = ((timeForPage(1))+(self.view.frame.size.height/2)-(voicemailCell_h/2));
+//    NSLog(@"voicemail Cell Location %f, %f", voicemailCell_x, voicemailCell_y);
+//    NSLog(@"**** - %@",NSStringFromCGRect(self.voicemailCell.frame));
+//    NSLog(@"**** - %@",NSStringFromCGRect(self.view.frame));
+
+    self.voicemailCell.frame = CGRectMake(voicemailCell_x, voicemailCell_y, voicemailCell_w, voicemailCell_h);
     [self.scrollView addSubview:self.voicemailCell];
 
     //TODO: Remove this
@@ -68,59 +91,57 @@
                                        self.view.frame.size.width,
                                        -10
                                        );
-    [self.scrollView addSubview:self.wordmark];
-    
-    //add bottomRight to page2
-    self.bottomRight = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfBottomRight]];
-    self.bottomRight.center = self.view.center;
-    self.bottomRight.frame = CGRectOffset(
-                                      self.bottomRight.frame,
-                                      self.view.frame.size.width + 70,
-                                      90
-                                      );
-    [self.scrollView addSubview:self.bottomRight];
-
-    //add bottomLeft to page2
-    self.bottomLeft = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfBottomLeft]];
-    self.bottomLeft.center = self.view.center;
-    self.bottomLeft.frame = CGRectOffset(
-                                      self.bottomLeft.frame,
-                                      self.view.frame.size.width - 50,
-                                      110
-                                      );
-    [self.scrollView addSubview:self.bottomLeft];
+    //[self.scrollView addSubview:self.wordmark];
     
     //add topLeft to page2
     self.topLeft = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfTopLeft]];
     self.topLeft.center = self.view.center;
     self.topLeft.frame = CGRectOffset(
                                       self.topLeft.frame,
-                                      self.view.frame.size.width - 0,
-                                      -55
+                                      kTopLeft_x,
+                                      kTopLeft_y
                                       );
+    //[self.topLeft setAlpha:0.0];
     [self.scrollView addSubview:self.topLeft];
+    NSLog(@"----%@",NSStringFromCGRect(self.topLeft.frame));
     
     //add topRight to page2
     self.topRight = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfTopRight]];
     self.topRight.center = self.view.center;
     self.topRight.frame = CGRectOffset(
-                                      self.topRight.frame,
-                                      self.view.frame.size.width -10,
-                                      -90
-                                      );
+                                       self.topRight.frame,
+                                       kTopRight_x,
+                                       kTopRight_y
+                                       );
     [self.scrollView addSubview:self.topRight];
     
-    //add firstLable to center of page1
-    self.firstLabel = [[UILabel alloc] init];
-    self.firstLabel.text = @"Introducing The Jive Voicemail App";
-    [self.firstLabel sizeToFit];
-    self.firstLabel.center = self.view.center;
-    self.wordmark.frame = CGRectOffset(
-                                       self.firstLabel.frame,
-                                       self.view.frame.size.width,
-                                       100
-                                       );
-    [self.scrollView addSubview:self.firstLabel];
+    //add bottomLeft to page2
+    self.bottomLeft = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfBottomLeft]];
+    self.bottomLeft.center = self.view.center;
+    self.bottomLeft.frame = CGRectOffset(
+                                         self.bottomLeft.frame,
+                                         kBottomLeft_x,
+                                         kBottomLeft_y
+                                         );
+    [self.scrollView addSubview:self.bottomLeft];
+    
+    //add bottomRight to page2
+    self.bottomRight = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfBottomRight]];
+    self.bottomRight.center = self.view.center;
+    self.bottomRight.frame = CGRectOffset(
+                                      self.bottomRight.frame,
+                                      kBottomRight_x,
+                                      kBottomRight_y
+                                      );
+    [self.scrollView addSubview:self.bottomRight];
+    
+    
+    UILabel *firstPageText = [[UILabel alloc] init];
+    firstPageText.text = @"Introducing The Jive Voicemail App";
+    [firstPageText sizeToFit];
+    firstPageText.center = self.view.center;
+    firstPageText.frame = CGRectOffset(firstPageText.frame, timeForPage(1), -180);
+    [self.scrollView addSubview:firstPageText];
     
     UILabel *secondPageText = [[UILabel alloc] init];
     secondPageText.text = @"It's really cool... have a look inside!";
@@ -152,6 +173,7 @@
 - (void)configureAnimation
 {
     CGFloat dy = 240;
+    CGFloat upDy = -300;
     
     // apply a 3D zoom animation to the first label
     IFTTTTransform3DAnimation * labelTransform = [IFTTTTransform3DAnimation animationWithView:self.firstLabel];
@@ -203,6 +225,46 @@
                                                                        andFrame:CGRectOffset(self.voicemailCell.frame, timeForPage(2), 0)]];
     // Animate the arrows ontop of voicemailcell in page2
     
+    // now, we animate the topLeft
+    IFTTTFrameAnimation *topLeftFrameAnimation = [IFTTTFrameAnimation animationWithView:self.topLeft];
+    [self.animator addAnimation:topLeftFrameAnimation];
+    
+    // move down and to the right, and shrink between pages 2 and 3
+    CGRect topLeftStartFrame = CGRectOffset(self.topLeft.frame, -(self.topLeft.frame.origin.x + self.topLeft.frame.size.width), 0);
+
+    [topLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:topLeftStartFrame]];
+    [topLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2)
+                                                                       andFrame:CGRectOffset(self.topLeft.frame, timeForPage(2), 0)]];
+    [topLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3)
+                                                                       andFrame:CGRectOffset(self.topLeft.frame, timeForPage(2), upDy)]];
+    
+    // now, we animate the topRight
+    IFTTTFrameAnimation *topRightFrameAnimation = [IFTTTFrameAnimation animationWithView:self.topRight];
+    [self.animator addAnimation:topRightFrameAnimation];
+    
+    // move down and to the right, and shrink between pages 2 and 3
+    CGRect topRightStartFrame = CGRectOffset(self.topRight.frame, (self.view.frame.size.width - self.topRight.frame.size.width), 0);
+    CGRect topRightFrame2 = CGRectOffset(self.topRight.frame, (self.view.frame.size.width + kTopRight_x), 0);
+
+//    CGRect topRightStartFrame = CGRectOffset(self.topRight.frame, (self.view.frame.size.width), 0);
+
+    [topRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:topRightStartFrame]];
+    [topRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:topRightFrame2]];
+    [topRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3)
+                                                                        andFrame:CGRectOffset(CGRectInset(self.topRight.frame, ds, ds), timeForPage(2), upDy)]];
+
+    // now, we animate the bottomLeft
+    IFTTTFrameAnimation *bottomLeftFrameAnimation = [IFTTTFrameAnimation animationWithView:self.bottomLeft];
+    [self.animator addAnimation:bottomLeftFrameAnimation];
+    
+    // move down and to the right, and shrink between pages 2 and 3
+    CGRect bottomLeftStartFrame = CGRectOffset(self.bottomLeft.frame, -(self.bottomLeft.frame.origin.x + self.bottomLeft.frame.size.width), 0);
+    
+    [bottomLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:bottomLeftStartFrame]];
+    [bottomLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:self.bottomLeft.frame]];
+    [bottomLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3)
+                                                                          andFrame:CGRectOffset(CGRectInset(self.bottomLeft.frame, ds, ds), timeForPage(2), dy)]];
+    
     IFTTTFrameAnimation *bottomRightFrameAnimation = [IFTTTFrameAnimation animationWithView:self.bottomRight];
     [self.animator addAnimation:bottomRightFrameAnimation];
     
@@ -210,35 +272,40 @@
     [bottomRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:self.bottomRight.frame]];
     [bottomRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3)
                                                                        andFrame:CGRectOffset(CGRectInset(self.bottomRight.frame, ds, ds), timeForPage(2), dy)]];
-    // now, we animate the bottomLeft
-    IFTTTFrameAnimation *bottomLeftFrameAnimation = [IFTTTFrameAnimation animationWithView:self.bottomLeft];
-    [self.animator addAnimation:bottomLeftFrameAnimation];
-    
-    // move down and to the right, and shrink between pages 2 and 3
-    [bottomLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:self.bottomLeft.frame]];
-    [bottomLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3)
-                                                                       andFrame:CGRectOffset(CGRectInset(self.bottomLeft.frame, ds, ds), timeForPage(2), dy)]];
-    // now, we animate the topLeft
-    IFTTTFrameAnimation *topLeftFrameAnimation = [IFTTTFrameAnimation animationWithView:self.topLeft];
-    [self.animator addAnimation:topLeftFrameAnimation];
-    
-    // move down and to the right, and shrink between pages 2 and 3
-    [topLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:self.topLeft.frame]];
-    [topLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3)
-                                                                       andFrame:CGRectOffset(CGRectInset(self.topLeft.frame, ds, ds), timeForPage(2), dy)]];
-    // now, we animate the topRight
-    IFTTTFrameAnimation *topRightFrameAnimation = [IFTTTFrameAnimation animationWithView:self.topRight];
-    [self.animator addAnimation:topRightFrameAnimation];
-    
-    // move down and to the right, and shrink between pages 2 and 3
-    [topRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:self.topRight.frame]];
-    [topRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3)
-                                                                       andFrame:CGRectOffset(CGRectInset(self.topRight.frame, ds, ds), timeForPage(2), dy)]];
     
     
+     //fade the topLeftArrow in on page 2 and out on page 4
+        IFTTTAlphaAnimation *topLeftAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.topLeft];
+        [self.animator addAnimation:topLeftAlphaAnimation];
     
+    [topLeftAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:0.0f]];
+    [topLeftAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f]];
+    [topLeftAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:1.0f]];
+    [topLeftAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
     
+    IFTTTAlphaAnimation *topRightAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.topRight];
+    [self.animator addAnimation:topRightAlphaAnimation];
     
+    [topRightAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:0.0f]];
+    [topRightAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f]];
+    [topRightAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:1.0f]];
+    [topRightAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
+    
+    IFTTTAlphaAnimation *bottomLeftAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.bottomLeft];
+    [self.animator addAnimation:bottomLeftAlphaAnimation];
+    
+    [bottomLeftAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:0.0f]];
+    [bottomLeftAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f]];
+    [bottomLeftAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:1.0f]];
+    [bottomLeftAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
+    
+    IFTTTAlphaAnimation *bottomRightAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.bottomRight];
+    [self.animator addAnimation:bottomRightAlphaAnimation];
+    
+    [bottomRightAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:0.0f]];
+    [bottomRightAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f]];
+    [bottomRightAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:1.0f]];
+    [bottomRightAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
     
 //    // fade the unicorn in on page 2 and out on page 4
 //    IFTTTAlphaAnimation *unicornAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.unicorn];

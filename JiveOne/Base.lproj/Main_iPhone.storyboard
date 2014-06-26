@@ -22,7 +22,7 @@
                                     <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="iPhone2XnewBlurSmall.png" id="BG2-EN-8KO">
                                         <rect key="frame" x="-25" y="-207" width="330" height="525"/>
                                     </imageView>
-                                    <textField clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="password" minimumFontSize="17" clearButtonMode="whileEditing" id="GZW-BX-qe0">
+                                    <textField clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="testing12" placeholder="password" minimumFontSize="17" clearButtonMode="whileEditing" id="GZW-BX-qe0">
                                         <rect key="frame" x="20" y="80" width="240" height="40"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
                                         <accessibility key="accessibilityConfiguration" label="passwordTextField"/>
@@ -72,7 +72,7 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
-                            <textField clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="email" minimumFontSize="17" clearButtonMode="whileEditing" id="Tho-ch-vQR" userLabel="emailTextField">
+                            <textField clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="jivetesting12@gmail.com" placeholder="email" minimumFontSize="17" clearButtonMode="whileEditing" id="Tho-ch-vQR" userLabel="emailTextField">
                                 <rect key="frame" x="40" y="216" width="240" height="40"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
                                 <accessibility key="accessibilityConfiguration" label="emailTextField"/>
@@ -1318,6 +1318,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="dIf-i9-QYA"/>
+        <segue reference="PKy-V4-VLv"/>
     </inferredMetricsTieBreakers>
 </document>
