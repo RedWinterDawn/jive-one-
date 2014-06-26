@@ -42,8 +42,9 @@
 
 #pragma mark - V5 services
 #define kVoicemailService @"10.20.26.141:8890" //@"api.jive.com/voicemail"
-#define kGetMailbox @"/voicemail/v1/mailbox"
+#define kMailboxPath @"/voicemail/v1/mailbox/"
 
+#define kVoicemailJrn @"jrn"
 
 #pragma mark - Temporary Voicemail Constants
 #define kAWSVoicemailRoute @"voicemail/userId/"
@@ -64,7 +65,7 @@
 #pragma mark - OAuth Credentials
 #define kOAuthClientSecret @"enXabnU5KuVm4XRSWGkU"
 #define kOAuthClientId @"f62d7f80-3749-11e3-9b37-542696d7c505"
-#define kTestAuthKey @"f1c7adf0-786e-404e-a107-2921fc040d4a";
+#define kTestAuthKey @"f1c7adf0-786e-404e-a107-2921fc040d4a"
 
 #pragma mark - Presence Constants
 #define kPresenceAvailable @"Available"

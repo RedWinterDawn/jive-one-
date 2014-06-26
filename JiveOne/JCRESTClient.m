@@ -473,7 +473,7 @@
 {
     
     [self setRequestAuthHeader];
-    NSString *url = [NSString stringWithFormat:@"%@%@", self.manager.baseURL, voicemail.urn];
+    NSString *url = [NSString stringWithFormat:@"%@%@", self.manager.baseURL, voicemail.jrn];
     
     [_manager DELETE:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         success(responseObject);
@@ -487,7 +487,7 @@
 {
     
     [self setRequestAuthHeader];
-    NSString *url = [NSString stringWithFormat:@"%@%@", self.manager.baseURL, voicemail.urn];
+    NSString *url = [NSString stringWithFormat:@"%@%@", self.manager.baseURL, voicemail.jrn];
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     [params setObject:@"true" forKey:@"read"];
     [self.manager PATCH:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {

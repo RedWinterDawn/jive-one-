@@ -103,25 +103,18 @@
     </entity>
     <entity name="Voicemail" representedClassName="Voicemail" syncable="YES">
         <attribute name="callerId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="callerName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="callerNumber" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="createdDate" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="deleted" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="extensionName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="extensionNumber" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="file" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="folderId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="lastModified" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="lenght" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="lineId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="duration" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="jrn" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mailboxId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="messageId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="origFile" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="pbxId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="read" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="urn" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="timeStamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="transcription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="transcriptionPercent" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url_changeStatus" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url_download" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url_self" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="voicemail" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="voicemailId" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="VoicemailETag" representedClassName="VoicemailETag" syncable="YES">
         <attribute name="etag" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -132,13 +125,13 @@
         <element name="Conversation" positionX="0" positionY="0" width="128" height="180"/>
         <element name="ConversationEntry" positionX="0" positionY="0" width="128" height="268"/>
         <element name="ConversationETag" positionX="18" positionY="162" width="128" height="60"/>
+        <element name="Lines" positionX="27" positionY="171" width="128" height="150"/>
+        <element name="Membership" positionX="9" positionY="153" width="128" height="88"/>
+        <element name="PBX" positionX="18" positionY="162" width="128" height="73"/>
         <element name="PersonEntities" positionX="0" positionY="0" width="128" height="360"/>
         <element name="PersonMeta" positionX="0" positionY="0" width="128" height="150"/>
         <element name="Presence" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="Voicemail" positionX="0" positionY="0" width="128" height="345"/>
+        <element name="Voicemail" positionX="0" positionY="0" width="128" height="238"/>
         <element name="VoicemailETag" positionX="9" positionY="153" width="128" height="58"/>
-        <element name="Membership" positionX="9" positionY="153" width="128" height="88"/>
-        <element name="PBX" positionX="18" positionY="162" width="128" height="73"/>
-        <element name="Lines" positionX="27" positionY="171" width="128" height="150"/>
     </elements>
 </model>

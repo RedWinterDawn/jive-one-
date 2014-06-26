@@ -16,8 +16,9 @@
 
 + (NSArray *)RetrieveVoicemailById:(NSString *)conversationId
 {
-    NSArray *conversations = [super MR_findByAttribute:@"conversationId" withValue:conversationId andOrderBy:@"lastModified" ascending:YES];
-    return conversations;
+    NSLog(@"Voicemail+Custom.retrieveVoicemailById");
+    NSArray *voicemails = [super MR_findByAttribute:@"jrn" withValue:conversationId andOrderBy:@"lastModified" ascending:YES];
+    return voicemails;
 }
 
 #pragma mark - CRUD for Voicemail
@@ -34,8 +35,6 @@
         [self fetchVoicemailInBackground];
     }];
     
-    
-
 }
 
 + (Voicemail *)addVoicemailEntry:(NSDictionary*)entry sender:(id)sender
@@ -57,7 +56,7 @@
     
     Voicemail *vmail;
     //find object in core data with same urn as voicemail entry in json
-    NSArray *result = [Voicemail MR_findByAttribute:@"urn" withValue:dictionary[@"urn"]];
+    NSArray *result = [Voicemail MR_findByAttribute:@"jrn" withValue:dictionary[@"jrn"]];
     
     // if there are results, we're updating, else we're creating
     if (result.count > 0) {
@@ -67,24 +66,19 @@
     else {
         //create and save
         vmail = [Voicemail MR_createInContext:context];
-        vmail.callerName = dictionary[@"callerName"];
-        vmail.callerNumber = dictionary[@"callerNumber"];
-        vmail.lastModified = [NSNumber numberWithLongLong:[dictionary[@"lastModified"] longLongValue]];
-        vmail.pbxId = dictionary[@"pbxId"];
-        vmail.lineId = dictionary[@"lineId"];
+
+
         vmail.mailboxId = dictionary[@"mailboxId"];
-        vmail.folderId = dictionary[@"folderId"];
-        vmail.messageId = dictionary[@"messageId"];
-        vmail.extensionNumber = dictionary[@"extensionNumber"];
-        vmail.extensionName = dictionary[@"extensionName"];
-        vmail.callerId = dictionary[@"callerId"];
-        vmail.lenght = [NSNumber numberWithInteger:[dictionary[@"length"] intValue]];
-        vmail.origFile = dictionary[@"origFile"];
+        vmail.timeStamp = dictionary[@"timeStamp"];
+        vmail.duration = [NSNumber numberWithInteger:[dictionary[@"duration"] intValue]];
         vmail.read = [NSNumber numberWithBool:[dictionary[@"read"] boolValue]];
-        vmail.file = dictionary[@"file"];
-        vmail.createdDate = [NSNumber numberWithLongLong:[dictionary[@"createdDate"] longLongValue]];
-        vmail.urn = dictionary[@"urn"];
-        vmail.voicemailId = dictionary[@"id"];
+        vmail.transcription = dictionary[@"transcription"];
+        vmail.transcriptionPercent = dictionary[@"transcriptionPercent"];
+        vmail.callerId = dictionary[@"callerId"];
+        vmail.jrn = dictionary[@"jrn"];
+        vmail.url_self = [dictionary[@"urls"] objectForKey:@"self"];
+        vmail.url_download = [dictionary[@"urls"] objectForKey:@"self_download"];
+        vmail.url_changeStatus = [dictionary[@"urls"] objectForKey:@"self_changeStatus"];
         vmail.deleted = [NSNumber numberWithBool:NO];
 //        //Save conversation entry
 //        @try {
@@ -97,7 +91,7 @@
         
         //get all voicemail messages through a queue
         dispatch_async(dispatch_get_main_queue(), ^{
-            [(JCAppDelegate *)[UIApplication sharedApplication].delegate incrementBadgeCountForVoicemail:vmail.voicemailId];
+            [(JCAppDelegate *)[UIApplication sharedApplication].delegate incrementBadgeCountForVoicemail:vmail.jrn];
         });
         
     }
@@ -118,16 +112,16 @@
     }
     
     // if last modified timestamps are the same, then there's no need to update anything.
-    long long lastModifiedFromEntity = [vmail.lastModified longLongValue];
-    long long lastModifiedFromDictionary = [dictionary[@"lastModified"] longLongValue];
+//    long long lastModifiedFromEntity = [vmail.lastModified longLongValue];
+//    long long lastModifiedFromDictionary = [dictionary[@"lastModified"] longLongValue];
     
-    if (lastModifiedFromDictionary > lastModifiedFromEntity) {
-        
+//    if (lastModifiedFromDictionary > lastModifiedFromEntity) {
+    
         //update the commented fields once the model coming in the socket is the same as the model from GET
         
 //        vmail.callerName = dictionary[@"callerName"];
 //        vmail.callerNumber = dictionary[@"callerNumber"];
-        vmail.lastModified = [NSNumber numberWithLongLong:[dictionary[@"lastModified"] longLongValue]];
+//        vmail.lastModified = [NSNumber numberWithLongLong:[dictionary[@"lastModified"] longLongValue]];
 //        vmail.pbxId = dictionary[@"pbxId"];
 //        vmail.lineId = dictionary[@"lineId"];
 //        vmail.mailboxId = dictionary[@"mailboxId"];
@@ -140,8 +134,7 @@
 //        vmail.origFile = dictionary[@"origFile"];
         if (dictionary[@"read"]) {
             vmail.read = [NSNumber numberWithBool:[dictionary[@"read"] boolValue]];
-        }        
-        vmail.file = dictionary[@"file"];
+        }
 
         
         //Save conversation dictionary
@@ -151,7 +144,7 @@
         @catch (NSException *exception) {
             NSLog(@"%@", exception);
         }
-    }
+    
     
     return vmail;
 }
@@ -159,7 +152,7 @@
 + (void)fetchVoicemailInBackground
 {
     NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"voicemail == nil"];
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"jrn == nil"];
     
     dispatch_queue_t queue = dispatch_queue_create("load voicemails", NULL);
     dispatch_async(queue, ^{
@@ -169,8 +162,8 @@
                 if ([kVoicemailURLOverRide  isEqual:@"YesUseAWSPlaceholderURL"]) {
                     vm.voicemail = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"https://s3-us-west-2.amazonaws.com/jive-mobile/voicemail/userId/dleonard/TestVoicemail2.wav"]];
                 }else{
-                    if (!vm.voicemail && vm.file) {
-                        NSData *voiceData = [NSData dataWithContentsOfURL:[NSURL URLWithString:vm.file] ];
+                    if (!vm.voicemail) {
+                        NSData *voiceData = [NSData dataWithContentsOfURL:[NSURL URLWithString:vm.url_download] ];
                         if (voiceData) {
                             vm.voicemail = voiceData;
                             [context MR_saveToPersistentStoreAndWait];
@@ -191,7 +184,7 @@
         context = [NSManagedObjectContext MR_contextForCurrentThread];
     }
     
-    Voicemail *voicemail = [Voicemail MR_findFirstByAttribute:@"voicemailId" withValue:voicemailId];
+    Voicemail *voicemail = [Voicemail MR_findFirstByAttribute:@"jrn" withValue:voicemailId];
     
     if (voicemail) {
         voicemail.deleted = [NSNumber numberWithBool:YES];
@@ -222,7 +215,7 @@
     }
     
     //delete from Core data
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"voicemailId == %@", voicemailId];
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"jrn == %@", voicemailId];
     BOOL deleted = [Voicemail MR_deleteAllMatchingPredicate:pred];
     if (deleted) {
         [context MR_saveToPersistentStoreAndWait];

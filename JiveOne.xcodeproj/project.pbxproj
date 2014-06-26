@@ -130,7 +130,6 @@
 		2762C45918B4177D00885918 /* JCOmniPresence.m in Sources */ = {isa = PBXBuildFile; fileRef = 2762C45718B4177D00885918 /* JCOmniPresence.m */; };
 		277A1F8018F88987009A41F7 /* JCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 277A1F7F18F88987009A41F7 /* JCLoginViewController.m */; };
 		277F094218FED58C00EEF0E3 /* JCStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 277F094118FED58C00EEF0E3 /* JCStatusViewController.m */; };
-		277F094B18FF4F5100EEF0E3 /* Voicemail.m in Sources */ = {isa = PBXBuildFile; fileRef = 277F094A18FF4F5100EEF0E3 /* Voicemail.m */; };
 		2784BA681940344000389F5F /* JCPresenceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2784BA671940344000389F5F /* JCPresenceViewController.m */; };
 		2784BA6C1940390100389F5F /* JCTableViewCellWithInset.m in Sources */ = {isa = PBXBuildFile; fileRef = 2784BA6B1940390100389F5F /* JCTableViewCellWithInset.m */; };
 		2787911318CF79DC004DE651 /* JCPresenceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2787911218CF79DC004DE651 /* JCPresenceView.m */; };
@@ -261,6 +260,7 @@
 		DD28DA5218AEC4F5003BFC44 /* JCAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD28DA5118AEC4F5003BFC44 /* JCAccountViewController.m */; };
 		DD3BD9F418DCB1740080318E /* Voicemail+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = DD3BD9F318DCB1740080318E /* Voicemail+Custom.m */; };
 		DD54A056195B894E001A34F3 /* JCVoicemailClient.m in Sources */ = {isa = PBXBuildFile; fileRef = DD54A055195B894E001A34F3 /* JCVoicemailClient.m */; };
+		DD54A05C195C9033001A34F3 /* Voicemail.m in Sources */ = {isa = PBXBuildFile; fileRef = DD54A05B195C9033001A34F3 /* Voicemail.m */; };
 		DD577D531940DC6C008DAB46 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD577D521940DC6C008DAB46 /* icomoon.ttf */; };
 		DDCE1E8718F3561D003A6615 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E8618F3561D003A6615 /* AudioToolbox.framework */; };
 		DDCE1E8918F35623003A6615 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E8818F35623003A6615 /* CFNetwork.framework */; };
@@ -461,8 +461,6 @@
 		277A1F7F18F88987009A41F7 /* JCLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCLoginViewController.m; sourceTree = "<group>"; };
 		277F094018FED58C00EEF0E3 /* JCStatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCStatusViewController.h; sourceTree = "<group>"; };
 		277F094118FED58C00EEF0E3 /* JCStatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCStatusViewController.m; sourceTree = "<group>"; };
-		277F094918FF4F5100EEF0E3 /* Voicemail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Voicemail.h; sourceTree = "<group>"; };
-		277F094A18FF4F5100EEF0E3 /* Voicemail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Voicemail.m; sourceTree = "<group>"; };
 		2784BA661940344000389F5F /* JCPresenceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPresenceViewController.h; sourceTree = "<group>"; };
 		2784BA671940344000389F5F /* JCPresenceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPresenceViewController.m; sourceTree = "<group>"; };
 		2784BA6A1940390100389F5F /* JCTableViewCellWithInset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTableViewCellWithInset.h; sourceTree = "<group>"; };
@@ -746,6 +744,8 @@
 		DD3BD9F318DCB1740080318E /* Voicemail+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Voicemail+Custom.m"; sourceTree = "<group>"; };
 		DD54A054195B894E001A34F3 /* JCVoicemailClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVoicemailClient.h; sourceTree = "<group>"; };
 		DD54A055195B894E001A34F3 /* JCVoicemailClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoicemailClient.m; sourceTree = "<group>"; };
+		DD54A05A195C9033001A34F3 /* Voicemail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Voicemail.h; sourceTree = "<group>"; };
+		DD54A05B195C9033001A34F3 /* Voicemail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Voicemail.m; sourceTree = "<group>"; };
 		DD577D521940DC6C008DAB46 /* icomoon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = icomoon.ttf; path = ../icomoon.ttf; sourceTree = "<group>"; };
 		DDCE1E8418F355FE003A6615 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		DDCE1E8618F3561D003A6615 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -1026,6 +1026,8 @@
 		270152C71901D77A00F271CE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				DD54A05A195C9033001A34F3 /* Voicemail.h */,
+				DD54A05B195C9033001A34F3 /* Voicemail.m */,
 				DDEC37D4191029B800E166CC /* PersonEntities.h */,
 				DDEC37D5191029B800E166CC /* PersonEntities.m */,
 				274493C918D0E98D002744CB /* PersonMeta.h */,
@@ -1036,8 +1038,6 @@
 				274493C418D0E98D002744CB /* ContactGroup.m */,
 				274493C618D0E98D002744CB /* Conversation.h */,
 				274493C718D0E98D002744CB /* Conversation.m */,
-				277F094918FF4F5100EEF0E3 /* Voicemail.h */,
-				277F094A18FF4F5100EEF0E3 /* Voicemail.m */,
 				27997578195A1AC7001425CC /* Lines.h */,
 				27997579195A1AC7001425CC /* Lines.m */,
 				279975F0195B1BCD001425CC /* Membership.h */,
@@ -2252,6 +2252,7 @@
 				2700987C18F4714100B6BC2F /* JSMessage.m in Sources */,
 				276215211912AA7400CFBCC8 /* NSString+URLEncoding.m in Sources */,
 				91B7CFC5192ABDF800927DDD /* JCSearchBar.m in Sources */,
+				DD54A05C195C9033001A34F3 /* Voicemail.m in Sources */,
 				27F1F2D4191C171300AEAFD7 /* UADateUtils.m in Sources */,
 				9137919818FDB0EE00709AD3 /* JCGroupConversationCell.m in Sources */,
 				2751590B18AD16F300FD8D3F /* JCRESTClient.m in Sources */,
@@ -2262,7 +2263,6 @@
 				91869D871959E5CF007743CE /* JCTOSButtonView.m in Sources */,
 				2710E40F18CEC8C300152C91 /* ConversationEntry+Custom.m in Sources */,
 				279E4CB1192273E5002A556C /* MBContactCollectionViewPromptCell.m in Sources */,
-				277F094B18FF4F5100EEF0E3 /* Voicemail.m in Sources */,
 				2751591F18AD303500FD8D3F /* JCDirectoryViewController.m in Sources */,
 				DD3BD9F418DCB1740080318E /* Voicemail+Custom.m in Sources */,
 				F258589218BD3A420020AF34 /* JCDirectoryGroupViewController.m in Sources */,

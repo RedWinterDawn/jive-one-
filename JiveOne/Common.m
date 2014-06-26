@@ -55,6 +55,10 @@
     return [formatter stringFromDate:date];
 }
 
++(NSString *) shortDateFromTimestampDate:(NSDate *)date{
+    return [NSString stringWithFormat:@"%@", date];
+}
+
 +(NSDate *)NSDateFromTimestap:(NSNumber *)timestamp
 {
     NSTimeInterval timeInterval = [timestamp longLongValue]/1000;

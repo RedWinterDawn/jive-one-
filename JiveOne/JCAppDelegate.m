@@ -470,7 +470,7 @@ int didNotify;
     [self refreshTabBadges:NO];
 }
 
-- (void)incrementBadgeCountForVoicemail:(NSString *)voicemailId
+- (void)incrementBadgeCountForVoicemail:(NSString *)jrn
 {
     LOG_Info();
     
@@ -479,9 +479,9 @@ int didNotify;
         _badges = [[NSMutableDictionary alloc] init];
     }
     
-    // new conversation
+    // new voicemail
     NSNumber *read = [NSNumber numberWithBool:NO];
-    [_badges setObject:read forKey:voicemailId];
+    [_badges setObject:read forKey:jrn];
     
     [[NSUserDefaults standardUserDefaults] setObject:[_badges copy] forKey:@"badges"];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -633,9 +633,9 @@ int didNotify;
                 NSNumber *notified = _badges[key];
                 if (![notified boolValue]) {
                     notified = [NSNumber numberWithBool:YES];
-                    Voicemail *lastEntry = [Voicemail MR_findFirstByAttribute:@"voicemailId" withValue:key];
+                    Voicemail *lastEntry = [Voicemail MR_findFirstByAttribute:kVoicemailJrn withValue:key];
                     if (lastEntry) {
-                        NSString *alertMessage = lastEntry.callerNumber ? [NSString stringWithFormat:@"New voicemail from %@", lastEntry.callerName]  : @"Unknown";
+                        NSString *alertMessage = lastEntry.callerId ? [NSString stringWithFormat:@"New voicemail from %@", lastEntry.mailboxId]  : @"Unknown";
                         [self showLocalNotificationWithType:@"voicemail" alertMessage:alertMessage];
                     }
                 }

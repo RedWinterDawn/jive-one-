@@ -507,7 +507,7 @@
         if (voicemails.count == 0 && voicemail && [operation isEqualToString:@"posted"]) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kNewVoicemail object:voicemail];
             [JSMessageSoundEffect playSMSReceived];
-            [(JCAppDelegate *)[UIApplication sharedApplication].delegate incrementBadgeCountForVoicemail:voicemail.voicemailId];
+            [(JCAppDelegate *)[UIApplication sharedApplication].delegate incrementBadgeCountForVoicemail:voicemail.jrn];
         }
     }
     

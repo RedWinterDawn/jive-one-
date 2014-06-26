@@ -24,18 +24,18 @@
 
     //[self.userImage setImage:[UIImage imageNamed:@"avatar.png"]];
     
-    if (voicemail.callerName) {
-        self.titleLabel.text = voicemail.callerName;
-        self.detailLabel.text = voicemail.callerNumber;
+    if (voicemail.transcription) {
+        self.titleLabel.text = voicemail.callerId;
+        self.detailLabel.text = voicemail.transcription;
     }
     else {
-        self.titleLabel.text = voicemail.callerNumber;
+        self.titleLabel.text = voicemail.callerId;
     }
     
     [self doubleCheckNamesAndNumbers];
     
-    self.shortTime.text = [Common shortDateFromTimestamp:voicemail.createdDate];
-    self.creationTime.text = [Common longDateFromTimestamp:voicemail.createdDate];
+    self.shortTime.text = [Common shortDateFromTimestamp:voicemail.timeStamp];
+    self.creationTime.text = [Common longDateFromTimestamp:voicemail.timeStamp];
     self.elapsed.text = @"0:00";
     self.duration.text = @"0:00";
     self.elapsed.adjustsFontSizeToFitWidth = YES;
@@ -80,7 +80,7 @@
     if ([keyPath isEqualToString:kVoicemailKeyPathForVoicemal]) {
         Voicemail *voicemail = (Voicemail *)object;
         
-        if (voicemail && voicemail.voicemailId != nil && voicemail.urn != nil && voicemail.file != nil) {
+        if (voicemail && voicemail.jrn != nil && voicemail.url_self != nil) {
             _voicemail = voicemail;
             
             //[self performSelectorOnMainThread:@selector(setupAudioPlayer) withObject:nil waitUntilDone:NO];

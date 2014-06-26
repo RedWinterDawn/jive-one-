@@ -7,6 +7,7 @@
 //
 
 #import "JCVoicemailClient.h"
+#import "Membership+Custom.h"
 
 @implementation JCVoicemailClient
 {
@@ -15,7 +16,7 @@
 }
 
 
-#pragma mark - class methods
+#pragma mark - init methods
 
 + (JCVoicemailClient*)sharedClient {
     static JCVoicemailClient *_sharedClient = nil;
@@ -34,7 +35,6 @@
     NSURL *baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kVoicemailService, kOsgiURNScheme]];
     _manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
     _manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    //_manager.requestSerializer = [AFJSONRequestSerializer serializer];
     
     keyChainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
     localContext  = [NSManagedObjectContext MR_contextForCurrentThread];
@@ -74,6 +74,39 @@
     for (NSHTTPCookie *cookie in [cookieJar cookies]) {
         [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
     }
+    
+}
+
+#pragma mark - Rest Calls
+-(void)getMailbox:(NSString*)mailboxId :(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
+{
+    NSString* url = [NSString stringWithFormat:@"%@%@%@", kVoicemailService, kMailboxPath, mailboxId];
+    [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        [Membership addMemberships:responseObject completed:^(BOOL suceeded) {
+            //TODO: parse mailbox
+            completed(YES, responseObject, operation, nil);
+        }];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        completed(NO, nil, operation, error);
+    }];
+    
+}
+
+-(void)downloadVoicemailEntry:(NSString*)entryId fromMailbox:(NSString*)mailboxId :(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
+{
+    NSString* url = [NSString stringWithFormat:@"%@%@%@/voicemail/%@/listen", kVoicemailService, kMailboxPath, mailboxId, entryId];
+    [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        [Membership addMemberships:responseObject completed:^(BOOL suceeded) {
+            //TODO: handle file
+            completed(YES, responseObject, operation, nil);
+        }];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        completed(NO, nil, operation, error);
+    }];
     
 }
 @end

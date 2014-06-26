@@ -278,8 +278,8 @@ static NSString *CellIdentifier = @"VoicemailCell";
         [self stopProgressTimerForVoicemail];
     }
     Voicemail *voicemail = self.voicemails[indexPath.row];
-    [Voicemail markVoicemailForDeletion:voicemail.voicemailId managedContext:nil];
-    [(JCAppDelegate *)[UIApplication sharedApplication].delegate decrementBadgeCountForVoicemail:voicemail.voicemailId];
+    [Voicemail markVoicemailForDeletion:voicemail.jrn managedContext:nil];
+    [(JCAppDelegate *)[UIApplication sharedApplication].delegate decrementBadgeCountForVoicemail:voicemail.jrn];
     [self.voicemails removeObjectAtIndex:indexPath.row];
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     
@@ -294,7 +294,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
     if (deletedVoicemails.count > 0) {
         for (Voicemail *voice in deletedVoicemails) {
             [[JCRESTClient sharedClient] DeleteVoicemail:voice success:^(id JSON) {
-                [Voicemail deleteVoicemail:voice.voicemailId managedContext:nil];
+                [Voicemail deleteVoicemail:voice.jrn managedContext:nil];
             } failure:^(NSError *err) {
                 NSLog(@"%@", err);
             }];
@@ -430,7 +430,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
         
         [self startProgressTimerForVoicemail];
         [selectedCell.playPauseButton setPlayPauseDisplaysPlay:NO];
-        [(JCAppDelegate *)[UIApplication sharedApplication].delegate decrementBadgeCountForVoicemail:selectedCell.voicemail.voicemailId];
+        [(JCAppDelegate *)[UIApplication sharedApplication].delegate decrementBadgeCountForVoicemail:selectedCell.voicemail.jrn];
         if (![selectedCell.voicemail.read boolValue]) {
             [self markVoicemailAsRead];
         }
