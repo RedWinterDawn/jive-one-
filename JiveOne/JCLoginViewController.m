@@ -34,15 +34,6 @@
 
 @implementation JCLoginViewController
 
-+ (id)sharedInstance {
-    static JCLoginViewController *sharedInstance = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedInstance = [[self alloc] init];
-    });
-    return sharedInstance;
-}
-
 - (id)init {
     if (self = [super init]) {
     }
@@ -191,7 +182,7 @@
         self.coverImageView.image = coverImage;
 
         JCAppIntro* appIntroSingleton = [JCAppIntro sharedInstance];
-        [appIntroSingleton.backgroundImageView setImage:coverImage];
+        appIntroSingleton.backgroundImageView = [[UIImageView alloc] initWithImage:coverImage];
         
 //        backView.image = [self screenshot];
         
@@ -297,7 +288,8 @@
 {
     if (!self.seenTutorial) {
         [Flurry logEvent:@"First Login"];
-        [self performSegueWithIdentifier: @"AppTutorialSegue" sender: self];
+        [self hideHud];
+        [self performSegueWithIdentifier: @"AppTutorialSegue" sender:self];
     }
     else
     {

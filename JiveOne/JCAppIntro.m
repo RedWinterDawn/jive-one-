@@ -8,6 +8,7 @@
 
 #import "JCAppIntro.h"
 #import "JCStyleKit.h"
+#import "JCLoginViewController.h"
 
 #define NUMBER_OF_PAGES 4
 #define timeForPage(page) (NSInteger)(self.view.frame.size.width * (page - 1))
@@ -85,6 +86,14 @@
     
     [self placeViews];
     [self configureAnimation];
+    [UIView animateWithDuration:1.0 animations:^{
+        [self.voicemailCell setAlpha:1.0];
+        [self.firstLabel setAlpha:1.0];
+
+    } completion: ^(BOOL finished){
+        if(finished) {
+        }
+    }];
     
 }
 
@@ -92,12 +101,14 @@
 {
     
     //******************************************************
-    //Add a background img for each page
+    //Add a static background img for view
     //******************************************************
     UIImage *bgImage = [UIImage imageNamed:@"iPhone2Xnew.png"];
     bgImage = [bgImage applyBlurWithRadius:15.0 tintColor:[[UIColor darkGrayColor] colorWithAlphaComponent:.3] saturationDeltaFactor:.88 maskImage:nil];
     self.backgroundImg = [[UIImageView alloc] initWithImage:bgImage];
-    [self.backgroundImageView setImage:self.backgroundImg.image];
+    
+    JCAppIntro* appIntroSingleton = [JCAppIntro sharedInstance];
+    [self.backgroundImageView setImage:appIntroSingleton.backgroundImageView.image];
     
     //******************************************************
     //Add voicemailCell to center of page1
@@ -108,7 +119,7 @@
     float voicemailCell_h = 157;
     float voicemailCell_x = ((timeForPage(1))+(self.view.frame.size.width/2)-(voicemailCell_w/2));
     float voicemailCell_y = ((timeForPage(1))+(self.view.frame.size.height/2)-(voicemailCell_h/2));
-
+    [self.voicemailCell setAlpha:0.0];
     self.voicemailCell.frame = CGRectMake(voicemailCell_x, voicemailCell_y, voicemailCell_w, voicemailCell_h);
     [self.scrollView addSubview:self.voicemailCell];
 
@@ -178,7 +189,9 @@
     firstPageText.textColor = [UIColor whiteColor];
     [firstPageText sizeToFit];
     firstPageText.center = self.view.center;
+    [firstPageText setAlpha:0.0];
     firstPageText.frame = CGRectOffset(firstPageText.frame, timeForPage(1), -180);
+    self.firstLabel = firstPageText;
     [self.scrollView addSubview:firstPageText];
     
     UILabel *playPauseText = [[UILabel alloc] init];
@@ -278,21 +291,21 @@
     CGFloat upDy = -300;
     
     // apply a 3D zoom animation to the first label
-    IFTTTTransform3DAnimation * labelTransform = [IFTTTTransform3DAnimation animationWithView:self.firstLabel];
-    IFTTTTransform3D *tt1 = [IFTTTTransform3D transformWithM34:0.03f];
-    IFTTTTransform3D *tt2 = [IFTTTTransform3D transformWithM34:0.3f];
-    tt2.rotate = (IFTTTTransform3DRotate){ -(CGFloat)(M_PI), 1, 0, 0 };
-    tt2.translate = (IFTTTTransform3DTranslate){ 0, 0, 50 };
-    tt2.scale = (IFTTTTransform3DScale){ 1.f, 2.f, 1.f };
-    [labelTransform addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(0)
-                                                                andAlpha:1.0f]];
-    [labelTransform addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1)
-                                                          andTransform3D:tt1]];
-    [labelTransform addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1.5)
-                                                          andTransform3D:tt2]];
-    [labelTransform addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1.5) + 1
-                                                                andAlpha:0.0f]];
-    [self.animator addAnimation:labelTransform];
+//    IFTTTTransform3DAnimation * labelTransform = [IFTTTTransform3DAnimation animationWithView:self.firstLabel];
+//    IFTTTTransform3D *tt1 = [IFTTTTransform3D transformWithM34:0.03f];
+//    IFTTTTransform3D *tt2 = [IFTTTTransform3D transformWithM34:0.3f];
+//    tt2.rotate = (IFTTTTransform3DRotate){ -(CGFloat)(M_PI), 1, 0, 0 };
+//    tt2.translate = (IFTTTTransform3DTranslate){ 0, 0, 50 };
+//    tt2.scale = (IFTTTTransform3DScale){ 1.f, 2.f, 1.f };
+//    [labelTransform addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(0)
+//                                                                andAlpha:1.0f]];
+//    [labelTransform addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1)
+//                                                          andTransform3D:tt1]];
+//    [labelTransform addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1.5)
+//                                                          andTransform3D:tt2]];
+//    [labelTransform addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1.5) + 1
+//                                                                andAlpha:0.0f]];
+//    [self.animator addAnimation:labelTransform];
     //******************************************************
     // let's animate the wordmark
     //******************************************************
@@ -310,18 +323,6 @@
     [self.animator addAnimation:wordmarkRotationAnimation];
     [wordmarkRotationAnimation addKeyFrames:@[[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAngle:0.0f],
                                               [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAngle:(CGFloat)(2 * M_PI)],]];
-    
-    //******************************************************
-    //Anamate Background to stay in background
-    //******************************************************
-//    IFTTTFrameAnimation *backgroundImgFrameAnimation = [IFTTTFrameAnimation animationWithView:self.backgroundImg];
-//    [self.animator addAnimation:backgroundImgFrameAnimation];
-//    
-//    // keep centered regardless of anamations
-//    [backgroundImgFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:self.backgroundImg.frame]];
-//    [backgroundImgFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.backgroundImg.frame, timeForPage(2), 0)]];
-//    [backgroundImgFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(self.backgroundImg.frame, timeForPage(3), 0)]];
-//    [backgroundImgFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andFrame:CGRectOffset(self.backgroundImg.frame, timeForPage(4), 0)]];
     
     //******************************************************
     // now, we animate the voicemailCell
@@ -446,6 +447,9 @@
                                                                            UIRemoteNotificationTypeSound)];
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    NSLog(@"%@",[sender attributeValueClassName]);
+}
 
 
 @end

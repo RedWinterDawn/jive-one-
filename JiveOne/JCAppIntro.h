@@ -12,8 +12,9 @@
 @interface JCAppIntro : IFTTTAnimatedScrollViewController <IFTTTAnimatedScrollViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *dismissButton;
-@property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
+@property (strong, nonatomic) IBOutlet UIImageView *backgroundImageView;
 
 + (id) sharedInstance;
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender;
 
 @end
