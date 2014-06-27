@@ -775,7 +775,7 @@
         <scene sceneID="Sds-P7-Vc1">
             <objects>
                 <navigationController title="Voicemail" definesPresentationContext="YES" id="XFb-KJ-zT0" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="U22-Ky-jzN"/>
+                    <tabBarItem key="tabBarItem" title="Voicemail" id="U22-Ky-jzN"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="wn2-pa-han">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1029,11 +1029,11 @@
             </objects>
             <point key="canvasLocation" x="1557" y="2351"/>
         </scene>
-        <!--Navigation Controller - Item-->
+        <!--Navigation Controller - Account-->
         <scene sceneID="iH8-Ew-IaF">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4mQ-Xv-N0n" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="d5L-6j-UcE"/>
+                <navigationController title="Account" automaticallyAdjustsScrollViewInsets="NO" id="4mQ-Xv-N0n" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Account" id="d5L-6j-UcE"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="CDo-hA-kaH">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
