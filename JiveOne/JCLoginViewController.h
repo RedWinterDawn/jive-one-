@@ -27,8 +27,4 @@
 + (id) sharedInstance;
 - (void)goToApplication;
 - (IBAction)termsAndConditionsButton:(id)sender;
-- (void)fetchEntities;
-- (void)fetchCompany;
-- (void)fetchPresence;
-- (void)fetchConversations;
 @end
