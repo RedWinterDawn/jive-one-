@@ -54,7 +54,7 @@
     self.scrollView.pagingEnabled = YES;
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.animator = [IFTTTAnimator new];
-//    [self.scrollView addSubview:self.dismissButton];
+    [self.scrollView addSubview:self.dismissButton];
 //    //addding blurred background img
 //    self.view.backgroundColor = [UIColor clearColor];
 //    UIImage *bgImage = [UIImage imageNamed:@"iphone2Xnew.png"];
@@ -233,10 +233,8 @@
     CGRect topLeftStartFrame = CGRectOffset(self.topLeft.frame, -(self.topLeft.frame.origin.x + self.topLeft.frame.size.width), 0);
 
     [topLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:topLeftStartFrame]];
-    [topLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2)
-                                                                       andFrame:CGRectOffset(self.topLeft.frame, timeForPage(2), 0)]];
-    [topLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3)
-                                                                       andFrame:CGRectOffset(self.topLeft.frame, timeForPage(2), upDy)]];
+    [topLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.topLeft.frame, timeForPage(2), 0)]];
+    [topLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(self.topLeft.frame, timeForPage(2), upDy)]];
     
     // now, we animate the topRight
     IFTTTFrameAnimation *topRightFrameAnimation = [IFTTTFrameAnimation animationWithView:self.topRight];
@@ -250,8 +248,7 @@
 
     [topRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:topRightStartFrame]];
     [topRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:topRightFrame2]];
-    [topRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3)
-                                                                        andFrame:CGRectOffset(CGRectInset(self.topRight.frame, ds, ds), timeForPage(2), upDy)]];
+    [topRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.topRight.frame, ds, ds), timeForPage(2), upDy)]];
 
     // now, we animate the bottomLeft
     IFTTTFrameAnimation *bottomLeftFrameAnimation = [IFTTTFrameAnimation animationWithView:self.bottomLeft];
@@ -261,17 +258,19 @@
     CGRect bottomLeftStartFrame = CGRectOffset(self.bottomLeft.frame, -(self.bottomLeft.frame.origin.x + self.bottomLeft.frame.size.width), 0);
     
     [bottomLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:bottomLeftStartFrame]];
-    [bottomLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:self.bottomLeft.frame]];
-    [bottomLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3)
-                                                                          andFrame:CGRectOffset(CGRectInset(self.bottomLeft.frame, ds, ds), timeForPage(2), dy)]];
+    [bottomLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.bottomLeft.frame, timeForPage(2), 0)]];
+    [bottomLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.bottomLeft.frame, ds, ds), timeForPage(2), dy)]];
     
     IFTTTFrameAnimation *bottomRightFrameAnimation = [IFTTTFrameAnimation animationWithView:self.bottomRight];
     [self.animator addAnimation:bottomRightFrameAnimation];
     
     // move down and to the right, and shrink between pages 2 and 3
-    [bottomRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:self.bottomRight.frame]];
-    [bottomRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3)
-                                                                       andFrame:CGRectOffset(CGRectInset(self.bottomRight.frame, ds, ds), timeForPage(2), dy)]];
+    CGRect bottomRightStartFrame = CGRectOffset(self.bottomRight.frame, (self.view.frame.size.width - self.bottomRight.frame.size.width), 0);
+    
+    [bottomRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:bottomRightStartFrame]];
+    [bottomRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.bottomRight.frame, timeForPage(2), 0)]];
+    [bottomRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.bottomRight.frame, ds, ds), timeForPage(2), dy)]];
+    
     
     
      //fade the topLeftArrow in on page 2 and out on page 4
