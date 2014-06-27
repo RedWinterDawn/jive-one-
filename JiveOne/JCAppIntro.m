@@ -21,6 +21,8 @@
 #define kBottomRight_y 95
 
 
+
+
 @interface JCAppIntro ()
 
 @property (strong, nonatomic) UIImageView *voicemailCell;
@@ -28,6 +30,10 @@
 @property (strong, nonatomic) UIImageView *bottomLeft;
 @property (strong, nonatomic) UIImageView *topRight;
 @property (strong, nonatomic) UIImageView *topLeft;
+@property (strong, nonatomic) UILabel *bottomRightLabel;
+@property (strong, nonatomic) UILabel *bottomLeftLabel;
+@property (strong, nonatomic) UILabel *topRightLabel;
+@property (strong, nonatomic) UILabel *topLeftLabel;
 @property (strong, nonatomic) UIImageView *wordmark;
 @property (strong, nonatomic) UILabel *lastLabel;
 @property (strong, nonatomic) UILabel *firstLabel;
@@ -135,6 +141,11 @@
     [self.bottomRight setAlpha:0.0];
     [self.scrollView addSubview:self.bottomRight];
     
+#define kTopLeft_x_Offset -80
+#define kTopRight_x_Offset 50
+#define kBottomLeft_x_Offset 130
+#define kBottomRight_x_Offset 75
+
     
     UILabel *firstPageText = [[UILabel alloc] init];
     firstPageText.text = @"Introducing The Jive Voicemail App";
@@ -143,12 +154,48 @@
     firstPageText.frame = CGRectOffset(firstPageText.frame, timeForPage(1), -180);
     [self.scrollView addSubview:firstPageText];
     
-    UILabel *secondPageText = [[UILabel alloc] init];
-    secondPageText.text = @"It's really cool... have a look inside!";
-    [secondPageText sizeToFit];
-    secondPageText.center = self.view.center;
-    secondPageText.frame = CGRectOffset(secondPageText.frame, timeForPage(2), 180);
-    [self.scrollView addSubview:secondPageText];
+    UILabel *playPauseText = [[UILabel alloc] init];
+    playPauseText.text = @"Play/Pause";
+    [playPauseText sizeToFit];
+    [playPauseText setTextColor:[UIColor colorWithRed:0.090 green:0.435 blue:0.954 alpha:1.000]];
+    playPauseText.center = self.view.center;
+    [playPauseText setFont:[UIFont fontWithName:@"MarkerFelt-Wide" size:16]];
+    playPauseText.frame = CGRectOffset(playPauseText.frame, timeForPage(2) + kTopLeft_x_Offset, -110);
+    [self.scrollView addSubview:playPauseText];
+    self.topLeftLabel = playPauseText;
+    
+    UILabel *scrubberText = [[UILabel alloc] init];
+    scrubberText.text = @"Span voicemail segments";
+    [scrubberText sizeToFit];
+    [scrubberText setTextColor:[UIColor colorWithRed:0.090 green:0.435 blue:0.954 alpha:1.000]];
+    scrubberText.center = self.view.center;
+    [scrubberText setFont:[UIFont fontWithName:@"MarkerFelt-Wide" size:16]];
+    scrubberText.frame = CGRectOffset(scrubberText.frame, timeForPage(2) + kTopRight_x_Offset, -160);
+    [self.scrollView addSubview:scrubberText];
+    self.topRightLabel = scrubberText;
+    
+    UILabel *speakerText = [[UILabel alloc] init];
+    speakerText.text = @"Listen to your message using Jive's patented Sonar Technology.";
+    [speakerText sizeToFit];
+    [speakerText setTextColor:[UIColor colorWithRed:0.090 green:0.435 blue:0.954 alpha:1.000]];
+    speakerText.center = self.view.center;
+    [speakerText setFont:[UIFont fontWithName:@"MarkerFelt-Wide" size:16]];
+    speakerText.frame = CGRectMake(speakerText.frame.origin.x, speakerText.frame.origin.y, 200, 50);
+    [speakerText setNumberOfLines:0];
+    [speakerText setLineBreakMode:NSLineBreakByWordWrapping];
+    speakerText.frame = CGRectOffset(speakerText.frame, timeForPage(2) + kBottomLeft_x_Offset, 190);
+    [self.scrollView addSubview:speakerText];
+    self.bottomLeftLabel = speakerText;
+    
+    UILabel *deleteText = [[UILabel alloc] init];
+    deleteText.text = @"Expunge";
+    [deleteText sizeToFit];
+    [deleteText setTextColor:[UIColor colorWithRed:0.090 green:0.435 blue:0.954 alpha:1.000]];
+    deleteText.center = self.view.center;
+    [deleteText setFont:[UIFont fontWithName:@"MarkerFelt-Wide" size:16]];
+    deleteText.frame = CGRectOffset(deleteText.frame, timeForPage(2) + kBottomRight_x_Offset, 140);
+    [self.scrollView addSubview:deleteText];
+    self.bottomRightLabel = deleteText;
     
     UILabel *thirdPageText = [[UILabel alloc] init];
     thirdPageText.text = @"You can check your voicemail";
@@ -165,7 +212,6 @@
     [self.scrollView addSubview:fourthPageText];
 
     self.lastLabel = fourthPageText;
-    
     
     self.dismissButton.frame = CGRectOffset(self.dismissButton.frame, timeForPage(4), 0);
 }
