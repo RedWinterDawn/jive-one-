@@ -69,7 +69,11 @@
 
 - (void) loadViews
 {
-    self.userNameDetail.text = me.firstLastName;
+//    self.userNameDetail.text = me.firstLastName;
+    NSString * jiveId = [[NSUserDefaults standardUserDefaults] objectForKey:User_Name];
+
+    self.userNameDetail.text = jiveId;
+
 //    self.userMoodDetail.text = @"I'm not in the mood today";
 //    self.userTitleDetail.text = @"Developer of Awesome";
 //    self.userImage.image = [JCStyleKit imageOfCanvas15WithFrame:CGRectMake(77, 0, 166, self.userImage.frame.size.height)];
