@@ -22,7 +22,7 @@
 {
     _voicemail = voicemail;
 
-    [self.userImage setImage:[UIImage imageNamed:@"avatar.png"]];
+    //[self.userImage setImage:[UIImage imageNamed:@"avatar.png"]];
     
     if (voicemail.callerName) {
         self.titleLabel.text = voicemail.callerName;
