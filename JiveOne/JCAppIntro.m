@@ -76,9 +76,6 @@
     float voicemailCell_h = 157;
     float voicemailCell_x = ((timeForPage(1))+(self.view.frame.size.width/2)-(voicemailCell_w/2));
     float voicemailCell_y = ((timeForPage(1))+(self.view.frame.size.height/2)-(voicemailCell_h/2));
-//    NSLog(@"voicemail Cell Location %f, %f", voicemailCell_x, voicemailCell_y);
-//    NSLog(@"**** - %@",NSStringFromCGRect(self.voicemailCell.frame));
-//    NSLog(@"**** - %@",NSStringFromCGRect(self.view.frame));
 
     self.voicemailCell.frame = CGRectMake(voicemailCell_x, voicemailCell_y, voicemailCell_w, voicemailCell_h);
     [self.scrollView addSubview:self.voicemailCell];
@@ -101,7 +98,7 @@
                                       kTopLeft_x,
                                       kTopLeft_y
                                       );
-    //[self.topLeft setAlpha:0.0];
+    [self.topLeft setAlpha:0.0];
     [self.scrollView addSubview:self.topLeft];
     NSLog(@"----%@",NSStringFromCGRect(self.topLeft.frame));
     
@@ -113,6 +110,7 @@
                                        kTopRight_x,
                                        kTopRight_y
                                        );
+    [self.topRight setAlpha:0.0];
     [self.scrollView addSubview:self.topRight];
     
     //add bottomLeft to page2
@@ -123,6 +121,7 @@
                                          kBottomLeft_x,
                                          kBottomLeft_y
                                          );
+    [self.bottomLeft setAlpha:0.0];
     [self.scrollView addSubview:self.bottomLeft];
     
     //add bottomRight to page2
@@ -133,6 +132,7 @@
                                       kBottomRight_x,
                                       kBottomRight_y
                                       );
+    [self.bottomRight setAlpha:0.0];
     [self.scrollView addSubview:self.bottomRight];
     
     
@@ -234,7 +234,7 @@
 
     [topLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:topLeftStartFrame]];
     [topLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.topLeft.frame, timeForPage(2), 0)]];
-    [topLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(self.topLeft.frame, timeForPage(2), upDy)]];
+    [topLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(self.topLeft.frame, timeForPage(3), upDy)]];
     
     // now, we animate the topRight
     IFTTTFrameAnimation *topRightFrameAnimation = [IFTTTFrameAnimation animationWithView:self.topRight];
@@ -248,7 +248,7 @@
 
     [topRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:topRightStartFrame]];
     [topRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:topRightFrame2]];
-    [topRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.topRight.frame, ds, ds), timeForPage(2), upDy)]];
+    [topRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.topRight.frame, ds, ds), timeForPage(3), upDy)]];
 
     // now, we animate the bottomLeft
     IFTTTFrameAnimation *bottomLeftFrameAnimation = [IFTTTFrameAnimation animationWithView:self.bottomLeft];
@@ -259,7 +259,7 @@
     
     [bottomLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:bottomLeftStartFrame]];
     [bottomLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.bottomLeft.frame, timeForPage(2), 0)]];
-    [bottomLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.bottomLeft.frame, ds, ds), timeForPage(2), dy)]];
+    [bottomLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.bottomLeft.frame, ds, ds), timeForPage(3), dy)]];
     
     IFTTTFrameAnimation *bottomRightFrameAnimation = [IFTTTFrameAnimation animationWithView:self.bottomRight];
     [self.animator addAnimation:bottomRightFrameAnimation];
@@ -269,7 +269,7 @@
     
     [bottomRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:bottomRightStartFrame]];
     [bottomRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.bottomRight.frame, timeForPage(2), 0)]];
-    [bottomRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.bottomRight.frame, ds, ds), timeForPage(2), dy)]];
+    [bottomRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.bottomRight.frame, ds, ds), timeForPage(3), dy)]];
     
     
     
