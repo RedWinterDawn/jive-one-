@@ -373,7 +373,7 @@
                     <connections>
                         <outlet property="backgroundImageView" destination="n6g-pE-ELr" id="laD-1f-XXb"/>
                         <outlet property="dismissButton" destination="gtQ-uO-uxm" id="M1a-hX-JqY"/>
-                        <segue destination="8YX-ce-x5E" kind="modal" identifier="TutorialToTabBarSegue" modalTransitionStyle="crossDissolve" id="dIf-i9-QYA"/>
+                        <segue destination="8YX-ce-x5E" kind="modal" identifier="TutorialToTabBarSegue" modalTransitionStyle="crossDissolve" animates="NO" id="dIf-i9-QYA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a9K-Lc-Eq7" userLabel="First Responder" sceneMemberID="firstResponder"/>
