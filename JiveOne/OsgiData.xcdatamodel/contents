@@ -109,6 +109,7 @@
     </entity>
     <entity name="Voicemail" representedClassName="Voicemail" syncable="YES">
         <attribute name="callerId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="callerIdNumber" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="deleted" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="duration" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="jrn" optional="YES" attributeType="String" syncable="YES"/>
@@ -138,7 +139,7 @@
         <element name="PersonEntities" positionX="0" positionY="0" width="128" height="360"/>
         <element name="PersonMeta" positionX="0" positionY="0" width="128" height="150"/>
         <element name="Presence" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="Voicemail" positionX="0" positionY="0" width="128" height="240"/>
+        <element name="Voicemail" positionX="0" positionY="0" width="128" height="255"/>
         <element name="VoicemailETag" positionX="9" positionY="153" width="128" height="58"/>
     </elements>
 </model>

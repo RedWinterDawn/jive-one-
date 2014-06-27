@@ -24,5 +24,6 @@
 @dynamic url_download;
 @dynamic url_self;
 @dynamic voicemail;
+@dynamic callerIdNumber;
 
 @end

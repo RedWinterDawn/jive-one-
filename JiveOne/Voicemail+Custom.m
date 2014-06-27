@@ -84,12 +84,12 @@
             vmail = [dictionary objectForKey:@"transcriptionPercent"];
         }
         vmail.callerId = dictionary[@"callerId"];
+        vmail.callerIdNumber = dictionary[@"callerIdNumber"];
         vmail.jrn = dictionary[@"jrn"];
         vmail.url_self = [dictionary[@"urls"] objectForKey:@"self"];
         vmail.url_download = [dictionary[@"urls"] objectForKey:@"self_download"];
         vmail.url_changeStatus = [dictionary[@"urls"] objectForKey:@"self_changeStatus"];
         vmail.deleted = [NSNumber numberWithBool:NO];
-//        //Save conversation entry
 //        @try {
 //            [context MR_saveToPersistentStoreAndWait];
 //        }

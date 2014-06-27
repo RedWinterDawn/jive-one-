@@ -113,4 +113,61 @@
     }];
     
 }
+
+//update voicemail to read
+-(void)updateVoicemailToRead:(Voicemail*)voicemail :(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed{
+    
+
+    [self setRequestAuthHeader];
+    NSString *url = [NSString stringWithFormat:@"%@?verify=%@", voicemail.url_changeStatus, [[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"]];//TODO: remove when voicemail accepts auth through headers
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [params setObject:@"true" forKey:@"read"];
+    [self.manager PUT:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        completed(YES, responseObject, operation, nil);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@", error);
+        completed(NO, nil, nil, error);
+  }];
+    
+}
+
+//JCRest implementations
+//- (void) RetrieveVoicemailForEntity:(PersonEntities*)entity success:(void (^)(id JSON))success
+//                            failure:(void (^)(NSError *err))failure
+//{
+//
+//    [self setRequestAuthHeader];
+//    NSString * url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], kOsgiVoicemailRoute];
+//    NSLog(@"%@", url);
+//
+//    [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//
+//        [Voicemail saveVoicemailEtag:[responseObject[@"ETag"] integerValue] managedContext:nil];
+//        NSArray *entries = [responseObject objectForKey:@"entries"];
+//        //get all voicemail metadata, but not actual voicemail messages
+//        [Voicemail addVoicemails:entries completed:^(BOOL succeeded) {
+//            success(responseObject);
+//        }];
+//
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        NSLog(@"%@",error);
+//        failure(error);
+//     }];
+//
+//}
+//
+//- (void) DeleteVoicemail:(Voicemail*)voicemail success:(void (^)(id JSON))success
+//                          failure:(void (^)(NSError *err))failure
+//{
+//
+//    [self setRequestAuthHeader];
+//    NSString *url = [NSString stringWithFormat:@"%@%@", self.manager.baseURL, voicemail.jrn];
+//
+//    [_manager DELETE:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        success(responseObject);
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        failure(error);
+//    }];
+//}
+
 @end

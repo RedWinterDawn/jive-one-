@@ -348,17 +348,21 @@ static NSString *CellIdentifier = @"VoicemailCell";
         context = [NSManagedObjectContext MR_contextForCurrentThread];
     }
     // save to local storage
-//    [context MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
-//        if (success) {
-//            [selectedCell  performSelectorOnMainThread:@selector(styleCellForRead) withObject:nil waitUntilDone:NO];
-//            // now send update to server
-//            [[JCRESTClient sharedClient] UpdateVoicemailToRead:selectedCell.voicemail success:^(id JSON) {
-//                NSLog(@"Success Updating Read On Server");
-//            } failure:^(NSError *err) {
-//                NSLog(@"Failed Updating Read On Server");
-//            }];
-//        }
-//    }];
+    [context MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
+        if (success) {
+            [selectedCell  performSelectorOnMainThread:@selector(styleCellForRead) withObject:nil waitUntilDone:NO];
+            // now send update to server
+            [[JCVoicemailClient sharedClient] updateVoicemailToRead:selectedCell.voicemail :^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+                if(suceeded){
+                      NSLog(@"Success Updating Read On Server");
+                }else{
+                    NSString*errorMessage = @"Failed Updating Read On Server";
+                    NSLog(@"%@", errorMessage);
+                    [Flurry logError:@"Voicmail-11" message:errorMessage error:error];
+                }
+            }];
+        }
+    }];
 }
 
 

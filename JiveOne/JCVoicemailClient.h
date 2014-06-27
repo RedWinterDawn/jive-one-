@@ -15,4 +15,5 @@
 + (instancetype)sharedClient;
 -(void)getVoicemails :(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed;
 -(void)downloadVoicemailEntry:(NSString*)entryId fromMailbox:(NSString*)mailboxId :(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed;
+-(void)updateVoicemailToRead:(Voicemail*)voicemail :(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed;
 @end

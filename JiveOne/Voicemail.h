@@ -25,5 +25,6 @@
 @property (nonatomic, retain) NSString * url_download;
 @property (nonatomic, retain) NSString * url_self;
 @property (nonatomic, retain) NSData * voicemail;
+@property (nonatomic, retain) NSString * callerIdNumber;
 
 @end
