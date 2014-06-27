@@ -161,23 +161,19 @@
 + (void)fetchVoicemailInBackground
 {
     NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"jrn == nil"];
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"voicemail == nil"];
     
     dispatch_queue_t queue = dispatch_queue_create("load voicemails", NULL);
     dispatch_async(queue, ^{
         NSArray *voicemails = [Voicemail MR_findAllWithPredicate:pred inContext:context];
         for (Voicemail *vm in voicemails) {
             @try {
-                if ([kVoicemailURLOverRide  isEqual:@"YesUseAWSPlaceholderURL"]) {
-                    vm.voicemail = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"https://s3-us-west-2.amazonaws.com/jive-mobile/voicemail/userId/dleonard/TestVoicemail2.wav"]];
-                }else{
-                    if (!vm.voicemail) {
-                        NSData *voiceData = [NSData dataWithContentsOfURL:[NSURL URLWithString:vm.url_download] ];
-                        if (voiceData) {
-                            vm.voicemail = voiceData;
-                            [context MR_saveToPersistentStoreAndWait];
-                        }
-                    }                    
+                if (!vm.voicemail) {
+                    NSData *voiceData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@?verify=%@", vm.url_download, [[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"]]]];
+                    if (voiceData) {
+                        vm.voicemail = voiceData;
+                        [context MR_saveToPersistentStoreAndWait];
+                    }
                 }
             }
             @catch (NSException *exception) {
