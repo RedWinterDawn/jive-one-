@@ -8,6 +8,7 @@
 
 #import "Mailbox.h"
 
-@interface Mailbox_Custom : Mailbox
+@interface Mailbox (Custom)
++ (void)addMailboxes:(NSDictionary*)mailbox completed:(void (^)(BOOL suceeded))completed;
 
 @end

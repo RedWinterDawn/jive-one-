@@ -457,13 +457,13 @@ static NSString *CellIdentifier = @"DirectoryCell";
 
 - (void)refreshCompanyDirectory
 {
-    [[JCRESTClient sharedClient] RetrieveClientEntitites:^(id JSON) {
-        [self loadCompanyDirectory];
-        
-    } failure:^(NSError *err) {
-        NSLog(@"%@",[err description]);
-    }];
-    
+//    [[JCRESTClient sharedClient] RetrieveClientEntitites:^(id JSON) {
+//        [self loadCompanyDirectory];
+//        
+//    } failure:^(NSError *err) {
+//        NSLog(@"%@",[err description]);
+//    }];
+//    
 }
 
 

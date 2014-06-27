@@ -22,19 +22,19 @@
 
 
 #pragma mark - Retrieve Operations
-- (void) RetrieveClientEntitites:(void (^)(id JSON))success
-                            failure:(void (^)(NSError *err))failure;
-- (void) RetrieveMyEntitity:(void (^)(id JSON, id operation))success
-                    failure:(void (^)(NSError *err, id operation))failure;
-- (void) RetrieveMyCompany:(NSString*)company :(void (^)(id JSON))success
-                    failure:(void (^)(NSError *err))failure;
-- (void) RetrieveConversations:(void (^)(id JSON))success
-                       failure:(void (^)(NSError *err))failure;
-- (void) RetrieveConversationsByConversationId:(NSString*)conversationId success:(void (^)(Conversation * conversation)) success failure:(void (^)(NSError *err))failure;
-- (void)RetrieveEntitiesPresence:(void (^)(BOOL updated))success failure:(void(^)(NSError *err))failure;
-- (void) RetrievePresenceForEntity:(NSString*)entity withPresendUrn:(NSString*)presenceUrn success:(void (^)(BOOL updated))success failure:(void(^)(NSError *err))failure;
-- (void) RequestSocketSession:(void (^)(id JSON))success
-                       failure:(void (^)(NSError *err, AFHTTPRequestOperation *operation))failure;
+//- (void) RetrieveClientEntitites:(void (^)(id JSON))success
+//                            failure:(void (^)(NSError *err))failure;
+//- (void) RetrieveMyEntitity:(void (^)(id JSON, id operation))success
+//                    failure:(void (^)(NSError *err, id operation))failure;
+//- (void) RetrieveMyCompany:(NSString*)company :(void (^)(id JSON))success
+//                    failure:(void (^)(NSError *err))failure;
+//- (void) RetrieveConversations:(void (^)(id JSON))success
+//                       failure:(void (^)(NSError *err))failure;
+//- (void) RetrieveConversationsByConversationId:(NSString*)conversationId success:(void (^)(Conversation * conversation)) success failure:(void (^)(NSError *err))failure;
+//- (void)RetrieveEntitiesPresence:(void (^)(BOOL updated))success failure:(void(^)(NSError *err))failure;
+//- (void) RetrievePresenceForEntity:(NSString*)entity withPresendUrn:(NSString*)presenceUrn success:(void (^)(BOOL updated))success failure:(void(^)(NSError *err))failure;
+//- (void) RequestSocketSession:(void (^)(id JSON))success
+//                       failure:(void (^)(NSError *err, AFHTTPRequestOperation *operation))failure;
 
 #pragma mark - Submit Operations
 - (void) OAuthLoginWithUsername:(NSString*)username password:(NSString*)password success:(void (^)(AFHTTPRequestOperation *operation, id JSON))success
@@ -51,15 +51,15 @@
                     failure:(void (^)(NSError*err, AFHTTPRequestOperation *operation))failure;
 
 #pragma mark - Voicemail
-- (void) RetrieveVoicemailForEntity:(PersonEntities*)entity success:(void (^)(id JSON))success
-                            failure:(void (^)(NSError *err))failure;
-
-
-- (void) DeleteVoicemail:(Voicemail*)voicemail success:(void (^)(id JSON))success
-                 failure:(void (^)(NSError *err))failure;
-
-- (void) UpdateVoicemailToRead:(Voicemail*)voicemail success:(void (^)(id JSON))success
-                       failure:(void (^)(NSError *err))failure;
+//- (void) RetrieveVoicemailForEntity:(PersonEntities*)entity success:(void (^)(id JSON))success
+//                            failure:(void (^)(NSError *err))failure;
+//
+//
+//- (void) DeleteVoicemail:(Voicemail*)voicemail success:(void (^)(id JSON))success
+//                 failure:(void (^)(NSError *err))failure;
+//
+//- (void) UpdateVoicemailToRead:(Voicemail*)voicemail success:(void (^)(id JSON))success
+//                       failure:(void (^)(NSError *err))failure;
 
 #pragma mark - Update Oparations
 

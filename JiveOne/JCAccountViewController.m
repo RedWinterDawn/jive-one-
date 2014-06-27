@@ -105,56 +105,56 @@
 
 - (void)updateAccountInformation
 {
-    [[JCRESTClient sharedClient] RetrieveMyEntitity:^(id JSON, id operation) {
-        
-        NSDictionary *entity = (NSDictionary*)JSON;
-        
-        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
-        me.presence = entity[@"presence"];
-        me.email = entity[@"email"];
-        me.externalId = entity[@"externalId"];
-        me.resourceGroupName = entity[@"company"];
-        me.location = entity[@"location"];
-        me.firstLastName = entity[@"name"][@"firstLast"];
-        me.groups = entity[@"groups"];
-        me.urn = entity[@"urn"];
-        me.id = entity[@"id"];
-        me.picture = entity[@"picture"];
-
-        [localContext MR_saveToPersistentStoreAndWait];
-        
-        //TODO: using company id, query to get PBX?
-        [self retrieveCompany:[JSON objectForKey:@"company"]];
-        
-        [self loadViews];
-        
-    } failure:^(NSError *err, id operation) {
-        NSLog(@"%@", err);
-    }];
+//    [[JCRESTClient sharedClient] RetrieveMyEntitity:^(id JSON, id operation) {
+//        
+//        NSDictionary *entity = (NSDictionary*)JSON;
+//        
+//        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
+//        me.presence = entity[@"presence"];
+//        me.email = entity[@"email"];
+//        me.externalId = entity[@"externalId"];
+//        me.resourceGroupName = entity[@"company"];
+//        me.location = entity[@"location"];
+//        me.firstLastName = entity[@"name"][@"firstLast"];
+//        me.groups = entity[@"groups"];
+//        me.urn = entity[@"urn"];
+//        me.id = entity[@"id"];
+//        me.picture = entity[@"picture"];
+//
+//        [localContext MR_saveToPersistentStoreAndWait];
+//        
+//        //TODO: using company id, query to get PBX?
+//        [self retrieveCompany:[JSON objectForKey:@"company"]];
+//        
+//        [self loadViews];
+//        
+//    } failure:^(NSError *err, id operation) {
+//        NSLog(@"%@", err);
+//    }];
 }
 
 -(void) retrieveCompany:(NSString*)companyURL{
-    [[JCRESTClient sharedClient] RetrieveMyCompany:companyURL:^(id JSON) {
-        
-        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
-        Company *company = [Company MR_createInContext:localContext];
-        company.lastModified = JSON[@"lastModified"];
-        company.pbxId = JSON[@"pbxId"];
-        company.timezone = JSON[@"timezone"];
-        company.name = JSON[@"name"];
-        company.urn = JSON[@"urn"];
-        company.companyId = JSON[@"id"];
-        
-        me.entityCompany = company;
-        
-        [localContext MR_saveToPersistentStoreAndWait];
-        
-        [self performSelectorOnMainThread:@selector(loadViews) withObject:nil waitUntilDone:YES];
-        
-    } failure:^(NSError *err) {
-        NSLog(@"%@", err);
-    }];
-    
+//    [[JCRESTClient sharedClient] RetrieveMyCompany:companyURL:^(id JSON) {
+//        
+//        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
+//        Company *company = [Company MR_createInContext:localContext];
+//        company.lastModified = JSON[@"lastModified"];
+//        company.pbxId = JSON[@"pbxId"];
+//        company.timezone = JSON[@"timezone"];
+//        company.name = JSON[@"name"];
+//        company.urn = JSON[@"urn"];
+//        company.companyId = JSON[@"id"];
+//        
+//        me.entityCompany = company;
+//        
+//        [localContext MR_saveToPersistentStoreAndWait];
+//        
+//        [self performSelectorOnMainThread:@selector(loadViews) withObject:nil waitUntilDone:YES];
+//        
+//    } failure:^(NSError *err) {
+//        NSLog(@"%@", err);
+//    }];
+//    
 }
 
 - (void)didReceiveMemoryWarning
@@ -262,7 +262,7 @@
         
         MFMailComposeViewController *mailViewController = [[MFMailComposeViewController alloc] init];
         mailViewController.mailComposeDelegate = self;
-        [mailViewController setToRecipients:[NSArray arrayWithObject:@"MobileApps+ios@jive.com"]];
+        [mailViewController setToRecipients:[NSArray arrayWithObject:kFeedbackEmail]];
         [mailViewController setSubject:@"Feedback"];
         
         //get device specs

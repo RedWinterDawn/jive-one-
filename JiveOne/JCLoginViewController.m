@@ -16,6 +16,9 @@
 #import <MBProgressHUD.h>
 #import "JCStyleKit.h"
 #import "JCContactsClient.h"
+#import "JCVoicemailClient.h"
+#import "JCJifClient.h"
+#import "Mailbox+Custom.h"
 
 @interface JCLoginViewController ()
 {
@@ -253,11 +256,43 @@
         [self showHudWithTitle:@"One Moment Please" detail:@"Preparing for first use"];
     }
     
-    [self fetchMyEntity];
+//    [self fetchMyEntity];
+    [self fetchMyMailboxes];
     //[self fetchMyContact];
 }
 
+#pragma mark - Fetch initial data
+//voicemail
+-(void)fetchMyMailboxes{
+    NSString * jiveId = [[NSUserDefaults standardUserDefaults] objectForKey:User_Name];
+    [[JCJifClient sharedClient] getMailboxReferencesForUser:jiveId :^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+        if(suceeded){
+            [self fetchVoicemailsMetadata];
+           
+        }
+    }];
+}
 
+- (void)fetchVoicemailsMetadata
+{
+    
+    [[JCVoicemailClient sharedClient] getVoicemails:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+        if(suceeded){
+            [self hideHud];
+            if (self.userIsDoneWithTutorial) {
+                [self goToApplication];
+            }
+        }
+        
+    }];
+    
+    [[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
+    
+    
+}
+
+
+//Contacts
 - (void)fetchMyContact
 {
     [[JCContactsClient sharedClient] RetrieveMyInformation:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
@@ -281,96 +316,83 @@
 
 
 // modified 06/20 - only loading my info (to be changed to new pbx servive) and voicemail. From fetching myEntitite, it will fetch voicemail and go into the application
-- (void)fetchMyEntity
-{
-    [self.client RetrieveMyEntitity:^(id JSON, id operation) {
-        [self fetchVoicemails];
-    } failure:^(NSError *err, id operation) {
-        [self errorInitializingApp:err];
-    }];
-}
+//- (void)fetchMyEntity
+//{
+//    [self.client RetrieveMyEntitity:^(id JSON, id operation) {
+//        [self fetchVoicemails];
+//    } failure:^(NSError *err, id operation) {
+//        [self errorInitializingApp:err];
+//    }];
+//}
 
-- (void)fetchEntities
-{
-    [self.client RetrieveClientEntitites:^(id JSON) {
-        [self fetchCompany];
-    } failure:^(NSError *err) {
-        [self errorInitializingApp:err];
-    }];
-}
+//- (void)fetchEntities
+//{
+//    [self.client RetrieveClientEntitites:^(id JSON) {
+//        [self fetchCompany];
+//    } failure:^(NSError *err) {
+//        [self errorInitializingApp:err];
+//    }];
+//}
 
-- (void)fetchCompany
-{
-    NSString* company = [[JCOmniPresence sharedInstance] me].resourceGroupName;
-    [self.client RetrieveMyCompany:company:^(id JSON) {
-        
-        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
-        Company *company = [Company MR_createInContext:localContext];
-        company.lastModified = JSON[@"lastModified"];
-        company.pbxId = JSON[@"pbxId"];
-        company.timezone = JSON[@"timezone"];
-        company.name = JSON[@"name"];
-        company.urn = JSON[@"urn"];
-        company.companyId = JSON[@"id"];
-        
-        //[[JCOmniPresence sharedInstance] me].entityCompany = company;
-        NSArray *clientEntities = [PersonEntities MR_findAll];
-        for (PersonEntities *entity in clientEntities) {
-            entity.entityCompany = company;
-        }
-        
-        [localContext MR_saveToPersistentStoreAndWait];
-        
-//        [[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
-        
-        if (fastConnection) {
-            [self fetchPresence];
-        }
-        else {
-            [self hideHud];
-            if (self.doneLoadingContent && self.userIsDoneWithTutorial) {
-                [self goToApplication];
-            }
-         }
-        
-    } failure:^(NSError *err) {
-        NSLog(@"fetchCompany error: %@", err);
-        [self errorInitializingApp:err];
-    }];
-}
+//- (void)fetchCompany
+//{
+//    NSString* company = [[JCOmniPresence sharedInstance] me].resourceGroupName;
+//    [self.client RetrieveMyCompany:company:^(id JSON) {
+//        
+//        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
+//        Company *company = [Company MR_createInContext:localContext];
+//        company.lastModified = JSON[@"lastModified"];
+//        company.pbxId = JSON[@"pbxId"];
+//        company.timezone = JSON[@"timezone"];
+//        company.name = JSON[@"name"];
+//        company.urn = JSON[@"urn"];
+//        company.companyId = JSON[@"id"];
+//        
+//        //[[JCOmniPresence sharedInstance] me].entityCompany = company;
+//        NSArray *clientEntities = [PersonEntities MR_findAll];
+//        for (PersonEntities *entity in clientEntities) {
+//            entity.entityCompany = company;
+//        }
+//        
+//        [localContext MR_saveToPersistentStoreAndWait];
+//        
+////        [[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
+//        
+//        if (fastConnection) {
+//            [self fetchPresence];
+//        }
+//        else {
+//            [self hideHud];
+//            if (self.doneLoadingContent && self.userIsDoneWithTutorial) {
+//                [self goToApplication];
+//            }
+//         }
+//        
+//    } failure:^(NSError *err) {
+//        NSLog(@"fetchCompany error: %@", err);
+//        [self errorInitializingApp:err];
+//    }];
+//}
 
-- (void)fetchPresence
-{
-    [self.client RetrieveEntitiesPresence:^(BOOL updated) {
-        [self fetchConversations];
-    } failure:^(NSError *err) {
-        [self errorInitializingApp:err];
-    }];
-}
+//- (void)fetchPresence
+//{
+//    [self.client RetrieveEntitiesPresence:^(BOOL updated) {
+//        [self fetchConversations];
+//    } failure:^(NSError *err) {
+//        [self errorInitializingApp:err];
+//    }];
+//}
+//
+//- (void)fetchConversations
+//{
+//    [self.client RetrieveConversations:^(id JSON) {
+//        [self fetchVoicemails];
+//    } failure:^(NSError *err) {
+//        [self errorInitializingApp:err];
+//    }];
+//}
 
-- (void)fetchConversations
-{
-    [self.client RetrieveConversations:^(id JSON) {
-        [self fetchVoicemails];
-    } failure:^(NSError *err) {
-        [self errorInitializingApp:err];
-    }];
-}
-
-- (void)fetchVoicemails
-{
-    [self.client RetrieveVoicemailForEntity:nil success:^(id JSON) {
-        
-        [self hideHud];
-        if (self.userIsDoneWithTutorial) {
-            [self goToApplication];
-        }
-        [[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
-        
-    } failure:^(NSError *err) {
-        [self errorInitializingApp:err];
-    }];
-}
+#pragma mark - ShowHide logic
 
 - (void)keyboardDidShow:(NSNotification *)notification
 {
@@ -425,7 +447,7 @@
     [[JCAuthenticationManager sharedInstance] logout:self];
 }
 
-#pragma mark - HUD Operations
+#pragma -mark HUD Operations
 - (void)showHudWithTitle:(NSString*)title detail:(NSString*)detail
 {
     if (!hud) {

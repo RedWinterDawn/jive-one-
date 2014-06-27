@@ -7,7 +7,8 @@
 //
 
 #import "JCVoicemailClient.h"
-#import "Membership+Custom.h"
+#import "Voicemail+Custom.h"
+#import "Mailbox+Custom.h"
 
 @implementation JCVoicemailClient
 {
@@ -32,7 +33,7 @@
 {
     
     //TODO:implement AFCompoundSerializer This is useful for supporting multiple potential types and structures of server responses with a single serializer. @dleonard00 3/14/14
-    NSURL *baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kVoicemailService, kOsgiURNScheme]];
+    NSURL *baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kVoicemailService, kMailboxPath]];
     _manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
     _manager.responseSerializer = [AFJSONResponseSerializer serializer];
     
@@ -78,31 +79,34 @@
 }
 
 #pragma mark - Rest Calls
--(void)getMailbox:(NSString*)mailboxId :(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
+//get mailbox info and voicemails
+-(void)getVoicemails :(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
 {
-    NSString* url = [NSString stringWithFormat:@"%@%@%@", kVoicemailService, kMailboxPath, mailboxId];
-    [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSArray* mailboxes = [Mailbox MR_findAll];
+    for(int i =0;i<mailboxes.count; i++){
+
+        NSString* url = [NSString stringWithFormat:@"%@?verify=%@", ((Mailbox*)mailboxes[i]).url_self_mailbox, [[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"]];//TODO: make sure the baseUrl is not used here.
         
-        [Membership addMemberships:responseObject completed:^(BOOL suceeded) {
-            //TODO: parse mailbox
-            completed(YES, responseObject, operation, nil);
+        [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            
+            [Voicemail addVoicemails:responseObject completed:^(BOOL suceeded) {
+                completed(YES, responseObject, operation, nil);
+            }];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            completed(NO, nil, operation, error);
         }];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        completed(NO, nil, operation, error);
-    }];
+    }
     
 }
 
+//download actual voicemail
 -(void)downloadVoicemailEntry:(NSString*)entryId fromMailbox:(NSString*)mailboxId :(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
 {
-    NSString* url = [NSString stringWithFormat:@"%@%@%@/voicemail/%@/listen", kVoicemailService, kMailboxPath, mailboxId, entryId];
+    NSString* url = [NSString stringWithFormat:@"%@/voicemail/%@/listen", mailboxId, entryId];
     [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-        [Membership addMemberships:responseObject completed:^(BOOL suceeded) {
-            //TODO: handle file
-            completed(YES, responseObject, operation, nil);
-        }];
+        [Voicemail fetchVoicemailInBackground];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         completed(NO, nil, operation, error);

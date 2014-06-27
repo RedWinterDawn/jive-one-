@@ -30,5 +30,4 @@
 - (void)fetchCompany;
 - (void)fetchPresence;
 - (void)fetchConversations;
-- (void)fetchVoicemails;
 @end

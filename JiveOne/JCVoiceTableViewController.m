@@ -118,15 +118,15 @@ static NSString *CellIdentifier = @"VoicemailCell";
     requestTimeout = [NSTimer timerWithTimeInterval:20 target:self selector:@selector(requestDidTimedOut) userInfo:nil repeats:NO];
     [[NSRunLoop currentRunLoop] addTimer:requestTimeout forMode:NSRunLoopCommonModes];
     
-    [[self getOsgiClient] RetrieveVoicemailForEntity:nil success:^(id JSON) {
-        if ([requestTimeout isValid]) {
-            [requestTimeout invalidate];
-        }
-        [self.refreshControl endRefreshing];
-        [self loadVoicemails];
-    } failure:^(NSError *err) {
-        [self requestDidTimedOut];
-    }];
+//    [[self getOsgiClient] RetrieveVoicemailForEntity:nil success:^(id JSON) {
+//        if ([requestTimeout isValid]) {
+//            [requestTimeout invalidate];
+//        }
+//        [self.refreshControl endRefreshing];
+//        [self loadVoicemails];
+//    } failure:^(NSError *err) {
+//        [self requestDidTimedOut];
+//    }];
 }
 
 - (void)requestDidTimedOut
@@ -288,18 +288,18 @@ static NSString *CellIdentifier = @"VoicemailCell";
 
 - (void)deleteVoicemailsInBackground
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"deleted ==[c] %@", [NSNumber numberWithBool:YES]];
-    NSArray *deletedVoicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAllWithPredicate:predicate]];
-    
-    if (deletedVoicemails.count > 0) {
-        for (Voicemail *voice in deletedVoicemails) {
-            [[JCRESTClient sharedClient] DeleteVoicemail:voice success:^(id JSON) {
-                [Voicemail deleteVoicemail:voice.jrn managedContext:nil];
-            } failure:^(NSError *err) {
-                NSLog(@"%@", err);
-            }];
-        }
-    }
+//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"deleted ==[c] %@", [NSNumber numberWithBool:YES]];
+//    NSArray *deletedVoicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAllWithPredicate:predicate]];
+//    
+//    if (deletedVoicemails.count > 0) {
+//        for (Voicemail *voice in deletedVoicemails) {
+//            [[JCRESTClient sharedClient] DeleteVoicemail:voice success:^(id JSON) {
+//                [Voicemail deleteVoicemail:voice.jrn managedContext:nil];
+//            } failure:^(NSError *err) {
+//                NSLog(@"%@", err);
+//            }];
+//        }
+//    }
 }
 
 - (void)addOrRemoveSelectedIndexPath:(NSIndexPath *)indexPath
@@ -348,17 +348,17 @@ static NSString *CellIdentifier = @"VoicemailCell";
         context = [NSManagedObjectContext MR_contextForCurrentThread];
     }
     // save to local storage
-    [context MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
-        if (success) {
-            [selectedCell  performSelectorOnMainThread:@selector(styleCellForRead) withObject:nil waitUntilDone:NO];
-            // now send update to server
-            [[JCRESTClient sharedClient] UpdateVoicemailToRead:selectedCell.voicemail success:^(id JSON) {
-                NSLog(@"Success Updating Read On Server");
-            } failure:^(NSError *err) {
-                NSLog(@"Failed Updating Read On Server");
-            }];
-        }
-    }];
+//    [context MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
+//        if (success) {
+//            [selectedCell  performSelectorOnMainThread:@selector(styleCellForRead) withObject:nil waitUntilDone:NO];
+//            // now send update to server
+//            [[JCRESTClient sharedClient] UpdateVoicemailToRead:selectedCell.voicemail success:^(id JSON) {
+//                NSLog(@"Success Updating Read On Server");
+//            } failure:^(NSError *err) {
+//                NSLog(@"Failed Updating Read On Server");
+//            }];
+//        }
+//    }];
 }
 
 

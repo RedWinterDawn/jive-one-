@@ -100,11 +100,11 @@ int didNotify;
     if ([[JCAuthenticationManager sharedInstance] userAuthenticated] && [[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {
         [self.window setRootViewController:self.tabBarViewController];
         [[JCAuthenticationManager sharedInstance] checkForTokenValidity];
-        [[JCRESTClient sharedClient] RetrieveEntitiesPresence:^(BOOL updated) {
-            //do nothing;
-        } failure:^(NSError *err) {
-            //do nothing;
-        }];
+//        [[JCRESTClient sharedClient] RetrieveEntitiesPresence:^(BOOL updated) {
+//            //do nothing;
+//        } failure:^(NSError *err) {
+//            //do nothing;
+//        }];
     }
     else {
         //TODO:********
@@ -166,11 +166,11 @@ int didNotify;
     //[[NotificationView sharedInstance] didChangeConnection:nil];
     if ([[JCAuthenticationManager sharedInstance] userAuthenticated] && [[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {
         [[JCAuthenticationManager sharedInstance] checkForTokenValidity];
-        [[JCRESTClient sharedClient] RetrieveEntitiesPresence:^(BOOL updated) {
-            //do nothing;
-        } failure:^(NSError *err) {
-            //do nothing;
-        }];
+//        [[JCRESTClient sharedClient] RetrieveEntitiesPresence:^(BOOL updated) {
+//            //do nothing;
+//        } failure:^(NSError *err) {
+//            //do nothing;
+//        }];
         LogMessage(@"socket", 4, @"Will Call requestSession");
         [self startSocket:NO];
     }
@@ -385,15 +385,15 @@ int didNotify;
 
             
 // V5 only provides voicemail through REST. So re make a REST Call
-            [[JCRESTClient sharedClient] RetrieveVoicemailForEntity:nil success:^(id JSON) {
-                NSLog(@"Success Done with Block");
-                LogMessage(@"socket", 4, @"Successful Rest Call In Background");
-                [monitor signal];
-            } failure:^(NSError *err) {
-                NSLog(@"Error Done With Block %@", err);
-                LogMessage(@"socket", 4, @"Failed Rest Call In Background");
-                [monitor signal];
-            }];
+//            [[JCRESTClient sharedClient] RetrieveVoicemailForEntity:nil success:^(id JSON) {
+//                NSLog(@"Success Done with Block");
+//                LogMessage(@"socket", 4, @"Successful Rest Call In Background");
+//                [monitor signal];
+//            } failure:^(NSError *err) {
+//                NSLog(@"Error Done With Block %@", err);
+//                LogMessage(@"socket", 4, @"Failed Rest Call In Background");
+//                [monitor signal];
+//            }];
             
 // No Socket for now.
 //            [[JCSocketDispatch sharedInstance] startPoolingFromSocketWithCompletion:^(BOOL success, NSError *error) {
@@ -633,7 +633,7 @@ int didNotify;
                 NSNumber *notified = _badges[key];
                 if (![notified boolValue]) {
                     notified = [NSNumber numberWithBool:YES];
-                    Voicemail *lastEntry = [Voicemail MR_findFirstByAttribute:kVoicemailJrn withValue:key];
+                    Voicemail *lastEntry = [Voicemail MR_findFirstByAttribute:@"jrn" withValue:key];
                     if (lastEntry) {
                         NSString *alertMessage = lastEntry.callerId ? [NSString stringWithFormat:@"New voicemail from %@", lastEntry.mailboxId]  : @"Unknown";
                         [self showLocalNotificationWithType:@"voicemail" alertMessage:alertMessage];

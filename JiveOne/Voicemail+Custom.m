@@ -10,6 +10,7 @@
 #import "VoicemailETag.h"
 #import "Constants.h"
 #import "JCAppDelegate.h"
+#import "Common.h"
 
 @implementation Voicemail (Custom)
 
@@ -22,12 +23,12 @@
 }
 
 #pragma mark - CRUD for Voicemail
-+ (void)addVoicemails:(NSArray *)entryArray completed:(void (^)(BOOL))completed
++ (void)addVoicemails:(NSDictionary *)responseObject completed:(void (^)(BOOL))completed
 {
     [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-        for (NSDictionary *entry in entryArray) {
-            if ([entry isKindOfClass:[NSDictionary class]]) {
-                [self addVoicemail:entry withManagedContext:localContext sender:self];
+        for (NSDictionary *voicemail in [responseObject objectForKey:@"voicemails"]) {
+            if ([voicemail isKindOfClass:[NSDictionary class]]) {
+                [self addVoicemail:voicemail withManagedContext:localContext sender:self];
             }
         }
     } completion:^(BOOL success, NSError *error) {
@@ -69,11 +70,19 @@
 
 
         vmail.mailboxId = dictionary[@"mailboxId"];
-        vmail.timeStamp = dictionary[@"timeStamp"];
+        vmail.timeStamp = [NSNumber numberWithLongLong:[dictionary[@"timeStamp"] longLongValue]];
         vmail.duration = [NSNumber numberWithInteger:[dictionary[@"duration"] intValue]];
         vmail.read = [NSNumber numberWithBool:[dictionary[@"read"] boolValue]];
-        vmail.transcription = dictionary[@"transcription"];
-        vmail.transcriptionPercent = dictionary[@"transcriptionPercent"];
+        if ([[dictionary objectForKey:@"transcription"] isKindOfClass:[NSNull class]]) {
+            vmail.transcription = nil;
+        } else {
+            vmail = [dictionary objectForKey:@"transcription"];
+        }
+        if ([[dictionary objectForKey:@"transcriptionPercent"] isKindOfClass:[NSNull class]]) {
+            vmail.transcriptionPercent = nil;
+        } else {
+            vmail = [dictionary objectForKey:@"transcriptionPercent"];
+        }
         vmail.callerId = dictionary[@"callerId"];
         vmail.jrn = dictionary[@"jrn"];
         vmail.url_self = [dictionary[@"urls"] objectForKey:@"self"];

@@ -53,6 +53,12 @@
         <attribute name="pbxId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="Mailbox" representedClassName="Mailbox" syncable="YES">
+        <attribute name="extensionName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="extensionNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="jrn" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url_self_mailbox" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Membership" representedClassName="Membership" syncable="YES">
         <attribute name="jiveId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="membershipId" optional="YES" attributeType="String" syncable="YES"/>
@@ -108,7 +114,7 @@
         <attribute name="jrn" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mailboxId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="read" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="timeStamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="timeStamp" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="transcription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="transcriptionPercent" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url_changeStatus" optional="YES" attributeType="String" syncable="YES"/>
@@ -125,13 +131,14 @@
         <element name="Conversation" positionX="0" positionY="0" width="128" height="180"/>
         <element name="ConversationEntry" positionX="0" positionY="0" width="128" height="268"/>
         <element name="ConversationETag" positionX="18" positionY="162" width="128" height="60"/>
-        <element name="Lines" positionX="27" positionY="171" width="128" height="150"/>
+        <element name="Lines" positionX="27" positionY="171" width="128" height="148"/>
+        <element name="Mailbox" positionX="27" positionY="162" width="128" height="103"/>
         <element name="Membership" positionX="9" positionY="153" width="128" height="88"/>
         <element name="PBX" positionX="18" positionY="162" width="128" height="73"/>
         <element name="PersonEntities" positionX="0" positionY="0" width="128" height="360"/>
         <element name="PersonMeta" positionX="0" positionY="0" width="128" height="150"/>
         <element name="Presence" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="Voicemail" positionX="0" positionY="0" width="128" height="238"/>
+        <element name="Voicemail" positionX="0" positionY="0" width="128" height="240"/>
         <element name="VoicemailETag" positionX="9" positionY="153" width="128" height="58"/>
     </elements>
 </model>

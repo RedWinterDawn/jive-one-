@@ -9,5 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @interface JCJifClient : NSObject
+@property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
++ (instancetype)sharedClient;
+
+//rest calls
+-(void)getMailboxReferencesForUser:(NSString*)jiveId :(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed;
 
 @end

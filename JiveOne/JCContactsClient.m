@@ -33,7 +33,7 @@
 {
     
     //TODO:implement AFCompoundSerializer This is useful for supporting multiple potential types and structures of server responses with a single serializer. @dleonard00 3/14/14
-    NSURL *baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kOsgiBaseURL, kOsgiURNScheme]];
+    NSURL *baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@", kContactsService]];
     _manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
     _manager.responseSerializer = [AFJSONResponseSerializer serializer];
     //_manager.requestSerializer = [AFJSONRequestSerializer serializer];
@@ -86,7 +86,7 @@
     [self setRequestAuthHeader];
     
 //    NSString * url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], kOsgiMyEntityRoute];//TODO: not attaching baseURL to route constant
-    NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
+    NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:User_Name];
     NSString *url = [NSString stringWithFormat:@"https://api.jive.com/contacts/jiveuser/info/jiveid/%@", username];
     
     NSLog(@"%@", url);

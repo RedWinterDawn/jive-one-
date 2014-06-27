@@ -12,45 +12,21 @@
 #pragma mark - URL Scheme Auth Callback 
 #define kURLSchemeCallback @"jiveclient://token"
 
-
-#pragma mark - Theo's Revenge Routes
-
-
-#if DEBUG
-    #define kOsgiBaseURL @"https://test.my.jive.com/"
-    //#define kOsgiBaseURL @"https://osgi.local.com:8000/"
-#else
-    #define kOsgiBaseURL @"https://test.my.jive.com/"
-#endif
-
-
-#define kOsgiAuthURL @"https://auth.jive.com/oauth2/v2/grant?client_id=%@&response_type=token&scope=%@&redirect_uri=%@"
-#define kOsgiAPIScheme @"api/"
-#define kOsgiURNScheme @"urn/"
-#define kOsgiAuthRoute @"auth/login?redirectUrl="
-#define kOsgiEntityRoute @"entities"
-#define kOsgiMyEntityRoute @"entities:me"
-#define kOsgiConverationRoute @"conversations"
-#define kOsgiSessionRoute @"sessions"
-#define kOsgiSubscriptionRoute @"subscriptions"
-#define kOsgiPresenceRoute @"presence"
-#define kOsgiVoicemailRoute @"voicemails"
-#define kVersionURL @"http://jiveios.local/LatestVersion"
+#pragma mark - Miscellaneous
 #define kEulaSite @"http://jive.com/downloads/mobile-end-user-license-agreement/"
-#define kScopeProfile @"contacts.v1.profile.read"
-#define kScopeVoicemail @"vm.v1.msgs.meta.read"
+#define kVersionURL @"http://jiveios.local/LatestVersion"
+#define kFeedbackEmail @"MobileApps+ios@jive.com"
 
 #pragma mark - V5 services
-#define kVoicemailService @"10.20.26.141:8890" //@"api.jive.com/voicemail"
-#define kMailboxPath @"/voicemail/v1/mailbox/"
+#define kVoicemailService @"http://10.20.26.141:8890/" //@"api.jive.com/voicemail"
+#define kMailboxPath @"voicemail/v1/mailbox/"
+#define kJifService @"http://10.20.26.36:5554/" //@"api.jive.com/jif"
+#define kContactsService @"https://api.jive.com/contacts/"
+#define kJiveUserInfo @"/jiveuser/info/jiveid/"
 
-#define kVoicemailJrn @"jrn"
-
-#pragma mark - Temporary Voicemail Constants
-#define kAWSVoicemailRoute @"voicemail/userId/"
-#define kAWSBaseURL @"https://s3-us-west-2.amazonaws.com/jive-mobile/"
 
 #pragma mark - Authentication Manager
+#define kOsgiAuthURL @"https://auth.jive.com/oauth2/v2/grant?client_id=%@&response_type=token&scope=%@&redirect_uri=%@"
 #define kAuthenticationFromTokenSucceeded @"keyauthenticationfortokensucceeded"
 #define kAuthenticationFromTokenFailed @"keyauthenticationfortokenfailed"
 #define kAuthenticationFromTokenFailedWithTimeout @"keyauthenticationfortokenfailedwithtimeout"
@@ -66,6 +42,10 @@
 #define kOAuthClientSecret @"enXabnU5KuVm4XRSWGkU"
 #define kOAuthClientId @"f62d7f80-3749-11e3-9b37-542696d7c505"
 #define kTestAuthKey @"f1c7adf0-786e-404e-a107-2921fc040d4a"
+#pragma -mark Scopes
+#define kScopeProfile @"contacts.v1.profile.read"
+#define kScopeVoicemail @"vm.v1.msgs.meta.read"
+
 
 #pragma mark - Presence Constants
 #define kPresenceAvailable @"Available"
@@ -100,6 +80,9 @@
 #pragma mark - Debug Helpers
 #define kVoicemailURLOverRide @"NoDontUseAWSPlaceholderURL"
 //change to @"YesUseAWSPlaceholderURL" to toggle AWS Voicemail wav file
+
+#pragma mark - NSUserDefaults
+#define User_Name @"username"
 #define UDdeviceToken @"deviceToken"
 
 

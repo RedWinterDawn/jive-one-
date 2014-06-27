@@ -108,22 +108,22 @@ static NSString *GroupCellIdentifier = @"GroupChatCell";
 
 - (void)fetchLastConverstions
 {
-    [[JCRESTClient sharedClient] RetrieveConversations:^(id JSON) {
-        
-        [self loadDatasource];
-        [self.refreshControl endRefreshing];
-
-        
-    } failure:^(NSError *err) {
-        NSLog(@"%@",[err description]);
-        [self.refreshControl endRefreshing];
-        [self loadDatasource];
-        if(!self.alertShowing){
-            self.alertShowing = YES;
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection Problem" message:@"Could not load new conversation data. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alert show];
-        }
-    }];
+//    [[JCRESTClient sharedClient] RetrieveConversations:^(id JSON) {
+//        
+//        [self loadDatasource];
+//        [self.refreshControl endRefreshing];
+//
+//        
+//    } failure:^(NSError *err) {
+//        NSLog(@"%@",[err description]);
+//        [self.refreshControl endRefreshing];
+//        [self loadDatasource];
+//        if(!self.alertShowing){
+//            self.alertShowing = YES;
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection Problem" message:@"Could not load new conversation data. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//            [alert show];
+//        }
+//    }];
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex

@@ -104,58 +104,58 @@
 {
     
     
-    NSURL *imageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kOsgiBaseURL, self.person.picture]];
-    NSRange range = [[imageUrl description] rangeOfString:@"avatar"];
-    if (range.location == NSNotFound) {
-        [self.personPicture setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"avatar.png"]];
-    }
-    else {
-        
-        NSString *firstInitial = @"";
-        NSString *secondInitial = @"";
-        
-        if (self.person.firstName && [self.person.firstName length] > 0) {
-            firstInitial = [self.person.firstName substringToIndex:1];
-        }
-        else {
-            [self.personPicture setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"avatar.png"]];
-            return;
-        }
-        
-        if (self.person.lastName && [self.person.lastName length] > 0) {
-            secondInitial = [self.person.lastName substringToIndex:1];
-        }
-        else {
-            [self.personPicture setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"avatar.png"]];
-            return;
-        }
-        
-        NSString *key = [NSString stringWithFormat:@"%@%@", firstInitial, secondInitial];
-        
-        UIImage *initialsImage = [[JCPersonCell chachedInitialsImages] objectForKey:key];
-        if (!initialsImage) {
-            UIView * groupCount = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 28, 28)];
-            groupCount.backgroundColor = [UIColor colorWithRed:0.847 green:0.871 blue:0.882 alpha:1] /*#d8dee1*/;
-            
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 20)];
-            label.textColor = [UIColor whiteColor];           
-            
-            label.text = [NSString stringWithFormat:@"%@%@", firstInitial, secondInitial];
-            [label sizeToFit];
-            label.font = [UIFont boldSystemFontOfSize:12.0f];
-            label.center = groupCount.center;
-            label.bounds = CGRectInset(label.frame, 2.5f, 0);
-            [groupCount addSubview:label];
-            
-            initialsImage = [Common imageFromView:groupCount];
-            [[JCPersonCell chachedInitialsImages] setObject:initialsImage forKey:key];
-        }
-        else {
-//            NSLog(@"Cache hit for key: %@", key);
-        }
-        
-        [self.personPicture setImage:initialsImage];
-    }
+//    NSURL *imageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kOsgiBaseURL, self.person.picture]];
+//    NSRange range = [[imageUrl description] rangeOfString:@"avatar"];
+//    if (range.location == NSNotFound) {
+//        [self.personPicture setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"avatar.png"]];
+//    }
+//    else {
+//        
+//        NSString *firstInitial = @"";
+//        NSString *secondInitial = @"";
+//        
+//        if (self.person.firstName && [self.person.firstName length] > 0) {
+//            firstInitial = [self.person.firstName substringToIndex:1];
+//        }
+//        else {
+//            [self.personPicture setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"avatar.png"]];
+//            return;
+//        }
+//        
+//        if (self.person.lastName && [self.person.lastName length] > 0) {
+//            secondInitial = [self.person.lastName substringToIndex:1];
+//        }
+//        else {
+//            [self.personPicture setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"avatar.png"]];
+//            return;
+//        }
+//        
+//        NSString *key = [NSString stringWithFormat:@"%@%@", firstInitial, secondInitial];
+//        
+//        UIImage *initialsImage = [[JCPersonCell chachedInitialsImages] objectForKey:key];
+//        if (!initialsImage) {
+//            UIView * groupCount = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 28, 28)];
+//            groupCount.backgroundColor = [UIColor colorWithRed:0.847 green:0.871 blue:0.882 alpha:1] /*#d8dee1*/;
+//            
+//            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 20)];
+//            label.textColor = [UIColor whiteColor];           
+//            
+//            label.text = [NSString stringWithFormat:@"%@%@", firstInitial, secondInitial];
+//            [label sizeToFit];
+//            label.font = [UIFont boldSystemFontOfSize:12.0f];
+//            label.center = groupCount.center;
+//            label.bounds = CGRectInset(label.frame, 2.5f, 0);
+//            [groupCount addSubview:label];
+//            
+//            initialsImage = [Common imageFromView:groupCount];
+//            [[JCPersonCell chachedInitialsImages] setObject:initialsImage forKey:key];
+//        }
+//        else {
+////            NSLog(@"Cache hit for key: %@", key);
+//        }
+//        
+//        [self.personPicture setImage:initialsImage];
+//    }
 }
 
 /**
