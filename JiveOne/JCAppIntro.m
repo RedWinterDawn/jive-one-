@@ -73,6 +73,7 @@
     self.scrollView.showsHorizontalScrollIndicator = NO;
     self.animator = [IFTTTAnimator new];
     [self.scrollView addSubview:self.dismissButton];
+    
     [self placeViews];
     [self configureAnimation];
     
@@ -87,9 +88,7 @@
     UIImage *bgImage = [UIImage imageNamed:@"iPhone2Xnew.png"];
     bgImage = [bgImage applyBlurWithRadius:15.0 tintColor:[[UIColor darkGrayColor] colorWithAlphaComponent:.3] saturationDeltaFactor:.88 maskImage:nil];
     self.backgroundImg = [[UIImageView alloc] initWithImage:bgImage];
-    self.backgroundImg.center = self.view.center;
-    self.backgroundImg.frame = self.view.frame;
-    [self.scrollView addSubview:self.backgroundImg];
+    [self.backgroundImageView setImage:self.backgroundImg.image];
     
     //******************************************************
     //Add voicemailCell to center of page1
@@ -308,14 +307,14 @@
     //******************************************************
     //Anamate Background to stay in background
     //******************************************************
-    IFTTTFrameAnimation *backgroundImgFrameAnimation = [IFTTTFrameAnimation animationWithView:self.backgroundImg];
-    [self.animator addAnimation:backgroundImgFrameAnimation];
-    
-    // keep centered regardless of anamations
-    [backgroundImgFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:self.backgroundImg.frame]];
-    [backgroundImgFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.backgroundImg.frame, timeForPage(2), 0)]];
-    [backgroundImgFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(self.backgroundImg.frame, timeForPage(3), 0)]];
-    [backgroundImgFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andFrame:CGRectOffset(self.backgroundImg.frame, timeForPage(4), 0)]];
+//    IFTTTFrameAnimation *backgroundImgFrameAnimation = [IFTTTFrameAnimation animationWithView:self.backgroundImg];
+//    [self.animator addAnimation:backgroundImgFrameAnimation];
+//    
+//    // keep centered regardless of anamations
+//    [backgroundImgFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:self.backgroundImg.frame]];
+//    [backgroundImgFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.backgroundImg.frame, timeForPage(2), 0)]];
+//    [backgroundImgFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(self.backgroundImg.frame, timeForPage(3), 0)]];
+//    [backgroundImgFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andFrame:CGRectOffset(self.backgroundImg.frame, timeForPage(4), 0)]];
     
     //******************************************************
     // now, we animate the voicemailCell
