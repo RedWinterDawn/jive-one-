@@ -25,8 +25,9 @@
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* voicemailLoginTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* playLoginTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* speakerLoginTargets;
-@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* canvas2Targets;
-@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* canvas4Targets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* trashLoginTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* scrubberLoginTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* voicemailCellTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* speakerButtonTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* voicemailIconTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* logoutIconTargets;
@@ -63,8 +64,9 @@
 + (void)drawVoicemailLogin;
 + (void)drawPlayLoginWithPlayPauseDisplaysPlay: (BOOL)playPauseDisplaysPlay;
 + (void)drawSpeakerLogin;
-+ (void)drawCanvas2;
-+ (void)drawCanvas4;
++ (void)drawTrashLogin;
++ (void)drawScrubberLogin;
++ (void)drawVoicemailCell;
 + (void)drawSpeakerButtonWithSpeakerFrame: (CGRect)speakerFrame speakerIsSelected: (BOOL)speakerIsSelected;
 + (void)drawComposeIconWithFrame: (CGRect)frame;
 + (void)drawVoicemailIcon;
@@ -100,8 +102,9 @@
 + (UIImage*)imageOfVoicemailLogin;
 + (UIImage*)imageOfPlayLoginWithPlayPauseDisplaysPlay: (BOOL)playPauseDisplaysPlay;
 + (UIImage*)imageOfSpeakerLogin;
-+ (UIImage*)imageOfCanvas2;
-+ (UIImage*)imageOfCanvas4;
++ (UIImage*)imageOfTrashLogin;
++ (UIImage*)imageOfScrubberLogin;
++ (UIImage*)imageOfVoicemailCell;
 + (UIImage*)imageOfSpeakerButtonWithSpeakerFrame: (CGRect)speakerFrame speakerIsSelected: (BOOL)speakerIsSelected;
 + (UIImage*)imageOfVoicemailIcon;
 + (UIImage*)imageOfLogoutIconWithFrame: (CGRect)frame;

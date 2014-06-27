@@ -25,16 +25,21 @@
 
 
 @interface JCAppIntro ()
+@property (strong, nonatomic) UIImageView *backgroundImg;
 
 @property (strong, nonatomic) UIImageView *voicemailCell;
 @property (strong, nonatomic) UIImageView *vmPlay;
 @property (strong, nonatomic) UIImageView *vmScrubber;
 @property (strong, nonatomic) UIImageView *vmIcon;
-@property (strong, nonatomic) UIImageView *vmContactName;
-@property (strong, nonatomic) UIImageView *vmDate;
 @property (strong, nonatomic) UIImageView *vmTrash;
 @property (strong, nonatomic) UIImageView *vmSpeaker;
-@property (strong, nonatomic) UIImageView *vmTime;
+@property (strong, nonatomic) UILabel *vmTimeLabel;
+@property (strong, nonatomic) UILabel *vmTimeLabel2;
+@property (strong, nonatomic) UILabel *callerIdLabel;
+@property (strong, nonatomic) UILabel *vmDateLabel;
+@property (strong, nonatomic) UILabel *vmDateTimeLabel;
+@property (strong, nonatomic) UILabel *vmExtLabel;
+
 @property (strong, nonatomic) UIImageView *bottomRight;
 @property (strong, nonatomic) UIImageView *bottomLeft;
 @property (strong, nonatomic) UIImageView *topRight;
@@ -46,7 +51,7 @@
 @property (strong, nonatomic) UILabel *thridPageLabel1;
 @property (strong, nonatomic) UILabel *thridPageLabel2;
 @property (strong, nonatomic) UILabel *thridPageLabel3;
-@property (strong, nonatomic) UIImageView *backgroundImg;
+
 @property (strong, nonatomic) UIImageView *wordmark;
 @property (strong, nonatomic) UILabel *lastLabel;
 @property (strong, nonatomic) UILabel *firstLabel;
@@ -113,10 +118,10 @@
     //******************************************************
     //Add voicemailCell to center of page1
     //******************************************************
-    self.voicemailCell = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"VoicemailCell.png"]];
-    self.voicemailCell.center = self.view.center;
     float voicemailCell_w = 278;
     float voicemailCell_h = 157;
+    self.voicemailCell = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfVoicemailCell]];
+    self.voicemailCell.center = self.view.center;
     float voicemailCell_x = ((timeForPage(1))+(self.view.frame.size.width/2)-(voicemailCell_w/2));
     float voicemailCell_y = ((timeForPage(1))+(self.view.frame.size.height/2)-(voicemailCell_h/2));
     [self.voicemailCell setAlpha:0.0];
@@ -129,9 +134,78 @@
     self.vmPlay = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfPlayLoginWithPlayPauseDisplaysPlay:true]];
     self.vmPlay.center = self.voicemailCell.center;
     self.vmPlay.frame = CGRectMake(0, 0, 50, 50);
-    self.vmPlay.frame = CGRectOffset(self.vmPlay.frame, 0, 90);
+    self.vmPlay.frame = CGRectOffset(self.vmPlay.frame, 5, 60);
     [self.voicemailCell addSubview:self.vmPlay];
+    
+    self.vmIcon = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfVoicemailIcon]];
+    self.vmIcon.center = self.voicemailCell.center;
+    self.vmIcon.frame = CGRectMake(0, 0, 25, 25);
+    self.vmIcon.frame = CGRectOffset(self.vmIcon.frame, self.voicemailCell.frame.size.width -27, 29);
+    [self.voicemailCell addSubview:self.vmIcon];
+    
+    self.vmScrubber = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfScrubberLogin]];
+    self.vmScrubber.center = self.voicemailCell.center;
+    self.vmScrubber.frame = CGRectOffset(self.vmScrubber.frame, -20, -210);
+    [self.voicemailCell addSubview:self.vmScrubber];
+    
+    self.vmTrash = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfTrashLogin]];
+    self.vmTrash.center = self.voicemailCell.center;
+    self.vmTrash.frame = CGRectOffset(self.vmTrash.frame, timeForPage(1) + 30, -170);
+    [self.voicemailCell addSubview:self.vmTrash];
+    
+    self.vmSpeaker = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfSpeakerLogin]];
+    self.vmSpeaker.center = self.voicemailCell.center;
+    self.vmSpeaker.frame = CGRectOffset(self.vmSpeaker.frame, timeForPage(1) - 45, -170);
+    [self.voicemailCell addSubview:self.vmSpeaker];
+    
+    
+    UILabel *callerIdLabel = [[UILabel alloc] init];
+    callerIdLabel.text = @"Troy Sheilds";
+    [callerIdLabel sizeToFit];
+    [callerIdLabel setTextColor:[UIColor blackColor]];
+    callerIdLabel.center = self.voicemailCell.center;
+    [callerIdLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14]];
+    callerIdLabel.frame = CGRectOffset(self.voicemailCell.frame, timeForPage(1) + 32, -269);
+    [self.voicemailCell addSubview:callerIdLabel];
 
+    UILabel *vmDateLabel = [[UILabel alloc] init];
+    vmDateLabel.text = @"May 22";
+    [vmDateLabel sizeToFit];
+    [vmDateLabel setTextColor:[UIColor lightGrayColor]];
+    vmDateLabel.center = self.voicemailCell.center;
+    [vmDateLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12]];
+    vmDateLabel.frame = CGRectOffset(self.voicemailCell.frame, timeForPage(1) + self.voicemailCell.frame.size.width - 68 , -268);
+    [self.voicemailCell addSubview:vmDateLabel];
+    
+    UILabel *vmDateTimeLabel = [[UILabel alloc] init];
+    vmDateTimeLabel.text = @"2014 08:15 PM";
+    [vmDateTimeLabel sizeToFit];
+    [vmDateTimeLabel setTextColor:[UIColor lightGrayColor]];
+    vmDateTimeLabel.center = self.voicemailCell.center;
+    [vmDateTimeLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12]];
+    vmDateTimeLabel.frame = CGRectOffset(self.voicemailCell.frame, timeForPage(1) + 64, -227);
+    [self.voicemailCell addSubview:vmDateTimeLabel];
+    
+    
+    UILabel *vmTimeLabel2 = [[UILabel alloc] init];
+    vmTimeLabel2.text = @"0:05";
+    [vmTimeLabel2 sizeToFit];
+    [vmTimeLabel2 setTextColor:[UIColor blackColor]];
+    vmTimeLabel2.center = self.voicemailCell.center;
+    [vmTimeLabel2 setFont:[UIFont fontWithName:@"AppleSDGothicNeo-Bold" size:8]];
+    vmTimeLabel2.frame = CGRectOffset(self.voicemailCell.frame, timeForPage(1) + self.voicemailCell.frame.size.width - 44, -199);
+    [self.voicemailCell addSubview:vmTimeLabel2];
+    
+    
+    UILabel *vmExtLabel = [[UILabel alloc] init];
+    vmExtLabel.text = @"7718";
+    [vmExtLabel sizeToFit];
+    [vmExtLabel setTextColor:[UIColor blackColor]];
+    vmExtLabel.center = self.voicemailCell.center;
+    [vmExtLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12]];
+    vmExtLabel.frame = CGRectOffset(self.voicemailCell.frame, timeForPage(1) + 39, -249);
+    [self.voicemailCell addSubview:vmExtLabel];
+   
     
     //TODO: Remove this
     self.wordmark = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main-logo.png"]];
@@ -237,14 +311,6 @@
     [self.scrollView addSubview:deleteText];
     self.bottomRightLabel = deleteText;
     
-    UILabel *thirdPageText = [[UILabel alloc] init];
-    thirdPageText.text = @"You can check your voicemail";
-    thirdPageText.textColor = [UIColor whiteColor];
-    [thirdPageText sizeToFit];
-    thirdPageText.center = self.view.center;
-    thirdPageText.frame = CGRectOffset(thirdPageText.frame, timeForPage(3), 100);
-    [self.scrollView addSubview:thirdPageText];
-    
     UILabel *leaveFeedbackLabel = [[UILabel alloc] init];
     leaveFeedbackLabel.text = @"Send us feedback!";
     leaveFeedbackLabel.textColor = [UIColor whiteColor];
@@ -336,6 +402,7 @@
     // move down and to the right, and shrink between pages 2 and 3
     [voicemailCellFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:self.voicemailCell.frame]];
     [voicemailCellFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.voicemailCell.frame, timeForPage(2), 0)]];
+    
     
     //******************************************************
     // now, we animate the topLeft
