@@ -34,6 +34,10 @@
 @property (strong, nonatomic) UILabel *bottomLeftLabel;
 @property (strong, nonatomic) UILabel *topRightLabel;
 @property (strong, nonatomic) UILabel *topLeftLabel;
+@property (strong, nonatomic) UILabel *thridPageLabel1;
+@property (strong, nonatomic) UILabel *thridPageLabel2;
+@property (strong, nonatomic) UILabel *thridPageLabel3;
+
 @property (strong, nonatomic) UIImageView *wordmark;
 @property (strong, nonatomic) UILabel *lastLabel;
 @property (strong, nonatomic) UILabel *firstLabel;
@@ -201,8 +205,32 @@
     thirdPageText.text = @"You can check your voicemail";
     [thirdPageText sizeToFit];
     thirdPageText.center = self.view.center;
-    thirdPageText.frame = CGRectOffset(thirdPageText.frame, timeForPage(3), -100);
+    thirdPageText.frame = CGRectOffset(thirdPageText.frame, timeForPage(3), 100);
     [self.scrollView addSubview:thirdPageText];
+    
+    UILabel *leaveFeedbackLabel = [[UILabel alloc] init];
+    leaveFeedbackLabel.text = @"Send us feedback!";
+    [leaveFeedbackLabel sizeToFit];
+    leaveFeedbackLabel.center = self.view.center;
+    leaveFeedbackLabel.frame = CGRectOffset(leaveFeedbackLabel.frame, timeForPage(3), -190);
+    [self.scrollView addSubview:leaveFeedbackLabel];
+    self.thridPageLabel1 = leaveFeedbackLabel;
+    
+    UILabel *leaveFeedbackLabel2 = [[UILabel alloc] init];
+    leaveFeedbackLabel2.text = @"We want to hear from you!";
+    [leaveFeedbackLabel2 sizeToFit];
+    leaveFeedbackLabel2.center = self.view.center;
+    leaveFeedbackLabel2.frame = CGRectOffset(leaveFeedbackLabel2.frame, timeForPage(3), -150);
+    [self.scrollView addSubview:leaveFeedbackLabel2];
+    self.thridPageLabel1 = leaveFeedbackLabel2;
+    
+    UILabel *emailLabel = [[UILabel alloc] init];
+    emailLabel.text = @"MobileApps+ios@jive.com";
+    [emailLabel sizeToFit];
+    emailLabel.center = self.view.center;
+    emailLabel.frame = CGRectOffset(emailLabel.frame, timeForPage(3), -100);
+    [self.scrollView addSubview:emailLabel];
+    self.thridPageLabel1 = emailLabel;
     
     UILabel *fourthPageText = [[UILabel alloc] init];
     fourthPageText.text = @"Dismiss";
