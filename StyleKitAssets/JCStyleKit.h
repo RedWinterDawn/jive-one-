@@ -54,6 +54,7 @@
 + (UIColor*)loginColor;
 
 // Drawing Methods
++ (void)drawTOS_ButtonWithFrame: (CGRect)frame;
 + (void)drawLeaveFeedback_ButtonWithFrame: (CGRect)frame;
 + (void)drawBottomLeft;
 + (void)drawBottomRight;
@@ -72,7 +73,6 @@
 + (void)drawVoicemailIcon;
 + (void)drawLogoutIconWithFrame: (CGRect)frame;
 + (void)drawLogOutButtonWithFrame: (CGRect)frame;
-+ (void)drawTOS_ButtonWithFrame: (CGRect)frame;
 + (void)drawContactsIcon;
 + (void)drawAddIcon;
 + (void)drawTrashButtonWithOuterFrame: (CGRect)outerFrame selectWithDeleteColor: (BOOL)selectWithDeleteColor;

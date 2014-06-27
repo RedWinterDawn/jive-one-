@@ -45,7 +45,7 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
     _unSelectedButtonColor = [UIColor colorWithRed: 0.282 green: 0.298 blue: 0.333 alpha: 1];
     _selectedButtonColor = [UIColor colorWithRed: 0.275 green: 0.396 blue: 0.843 alpha: 1];
     _deleteColor = [UIColor colorWithRed: 0.949 green: 0.302 blue: 0.216 alpha: 1];
-    _loginColor = [UIColor colorWithRed: 0.982 green: 0.985 blue: 1 alpha: 1];
+    _loginColor = [UIColor colorWithRed: 1 green: 1 blue: 1 alpha: 1];
 
 }
 
@@ -58,6 +58,50 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
 
 #pragma mark Drawing Methods
 
++ (void)drawTOS_ButtonWithFrame: (CGRect)frame;
+{
+    //// Color Declarations
+    UIColor* color = [UIColor colorWithRed: 0.772 green: 0.772 blue: 0.772 alpha: 1];
+
+    //// Rectangle Drawing
+    UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(CGRectGetMinX(frame) + floor(CGRectGetWidth(frame) * 0.06719) + 0.5, CGRectGetMinY(frame) + floor(CGRectGetHeight(frame) * 0.10000) + 0.5, floor(CGRectGetWidth(frame) * 0.93906) - floor(CGRectGetWidth(frame) * 0.06719), floor(CGRectGetHeight(frame) * 0.90000) - floor(CGRectGetHeight(frame) * 0.10000)) cornerRadius: 1];
+    [JCStyleKit.loginColor setFill];
+    [rectanglePath fill];
+    [color setStroke];
+    rectanglePath.lineWidth = 1;
+    [rectanglePath stroke];
+
+
+    //// Text Drawing
+    CGRect textRect = CGRectMake(CGRectGetMinX(frame) + floor((CGRectGetWidth(frame) - 218) * 0.39216 + 0.5), CGRectGetMinY(frame) + floor((CGRectGetHeight(frame) - 21) * 0.50000 + 0.5), 218, 21);
+    NSMutableParagraphStyle* textStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
+    textStyle.alignment = NSTextAlignmentLeft;
+
+    NSDictionary* textFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"HelveticaNeue-Light" size: UIFont.labelFontSize], NSForegroundColorAttributeName: UIColor.blackColor, NSParagraphStyleAttributeName: textStyle};
+
+    [@"End User License Agreement" drawInRect: textRect withAttributes: textFontAttributes];
+
+
+    //// Back_Button Drawing
+    UIBezierPath* back_ButtonPath = UIBezierPath.bezierPath;
+    [back_ButtonPath moveToPoint: CGPointMake(CGRectGetMaxX(frame) - 43.16, CGRectGetMinY(frame) + 27.53)];
+    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 43.34, CGRectGetMinY(frame) + 27.7)];
+    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 45.15, CGRectGetMinY(frame) + 29.35)];
+    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 50, CGRectGetMinY(frame) + 33.79)];
+    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 47.07, CGRectGetMinY(frame) + 34)];
+    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 41.99, CGRectGetMinY(frame) + 29.35)];
+    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 40.18, CGRectGetMinY(frame) + 27.7)];
+    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 40, CGRectGetMinY(frame) + 27.53)];
+    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 46.98, CGRectGetMinY(frame) + 21)];
+    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 49.95, CGRectGetMinY(frame) + 21.2)];
+    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 43.16, CGRectGetMinY(frame) + 27.53)];
+    [back_ButtonPath closePath];
+    back_ButtonPath.miterLimit = 4;
+
+    [JCStyleKit.unSelectedButtonColor setFill];
+    [back_ButtonPath fill];
+}
+
 + (void)drawLeaveFeedback_ButtonWithFrame: (CGRect)frame;
 {
     //// Color Declarations
@@ -65,6 +109,8 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
 
     //// Rectangle Drawing
     UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(CGRectGetMinX(frame) + floor(CGRectGetWidth(frame) * 0.06406) + 0.5, CGRectGetMinY(frame) + floor(CGRectGetHeight(frame) * 0.10000) + 0.5, floor(CGRectGetWidth(frame) * 0.93594) - floor(CGRectGetWidth(frame) * 0.06406), floor(CGRectGetHeight(frame) * 0.90000) - floor(CGRectGetHeight(frame) * 0.10000)) cornerRadius: 1];
+    [JCStyleKit.loginColor setFill];
+    [rectanglePath fill];
     [color setStroke];
     rectanglePath.lineWidth = 1;
     [rectanglePath stroke];
@@ -769,6 +815,8 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
 
     //// Rectangle Drawing
     UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(CGRectGetMinX(frame) + floor(CGRectGetWidth(frame) * 0.06406) + 0.5, CGRectGetMinY(frame) + floor(CGRectGetHeight(frame) * 0.10000) + 0.5, floor(CGRectGetWidth(frame) * 0.93594) - floor(CGRectGetWidth(frame) * 0.06406), floor(CGRectGetHeight(frame) * 0.90000) - floor(CGRectGetHeight(frame) * 0.10000)) cornerRadius: 1];
+    [JCStyleKit.loginColor setFill];
+    [rectanglePath fill];
     [color setStroke];
     rectanglePath.lineWidth = 1;
     [rectanglePath stroke];
@@ -815,48 +863,6 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
     [UIColor.darkGrayColor setStroke];
     logoutBezierPath.lineWidth = 0;
     [logoutBezierPath stroke];
-}
-
-+ (void)drawTOS_ButtonWithFrame: (CGRect)frame;
-{
-    //// Color Declarations
-    UIColor* color = [UIColor colorWithRed: 0.772 green: 0.772 blue: 0.772 alpha: 1];
-
-    //// Rectangle Drawing
-    UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(CGRectGetMinX(frame) + floor(CGRectGetWidth(frame) * 0.06719) + 0.5, CGRectGetMinY(frame) + floor(CGRectGetHeight(frame) * 0.10000) + 0.5, floor(CGRectGetWidth(frame) * 0.93906) - floor(CGRectGetWidth(frame) * 0.06719), floor(CGRectGetHeight(frame) * 0.90000) - floor(CGRectGetHeight(frame) * 0.10000)) cornerRadius: 1];
-    [color setStroke];
-    rectanglePath.lineWidth = 1;
-    [rectanglePath stroke];
-
-
-    //// Text Drawing
-    CGRect textRect = CGRectMake(CGRectGetMinX(frame) + floor((CGRectGetWidth(frame) - 218) * 0.39216 + 0.5), CGRectGetMinY(frame) + floor((CGRectGetHeight(frame) - 21) * 0.50000 + 0.5), 218, 21);
-    NSMutableParagraphStyle* textStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
-    textStyle.alignment = NSTextAlignmentLeft;
-
-    NSDictionary* textFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"HelveticaNeue-Light" size: UIFont.labelFontSize], NSForegroundColorAttributeName: UIColor.blackColor, NSParagraphStyleAttributeName: textStyle};
-
-    [@"End User License Agreement" drawInRect: textRect withAttributes: textFontAttributes];
-
-
-    //// Back_Button Drawing
-    UIBezierPath* back_ButtonPath = UIBezierPath.bezierPath;
-    [back_ButtonPath moveToPoint: CGPointMake(CGRectGetMaxX(frame) - 43.16, CGRectGetMinY(frame) + 27.53)];
-    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 43.34, CGRectGetMinY(frame) + 27.7)];
-    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 45.15, CGRectGetMinY(frame) + 29.35)];
-    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 50, CGRectGetMinY(frame) + 33.79)];
-    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 47.07, CGRectGetMinY(frame) + 34)];
-    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 41.99, CGRectGetMinY(frame) + 29.35)];
-    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 40.18, CGRectGetMinY(frame) + 27.7)];
-    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 40, CGRectGetMinY(frame) + 27.53)];
-    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 46.98, CGRectGetMinY(frame) + 21)];
-    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 49.95, CGRectGetMinY(frame) + 21.2)];
-    [back_ButtonPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 43.16, CGRectGetMinY(frame) + 27.53)];
-    [back_ButtonPath closePath];
-    back_ButtonPath.miterLimit = 4;
-
-    [JCStyleKit.unSelectedButtonColor setFill];
-    [back_ButtonPath fill];
 }
 
 + (void)drawContactsIcon;
