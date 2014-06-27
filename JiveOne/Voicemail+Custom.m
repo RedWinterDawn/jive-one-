@@ -119,32 +119,13 @@
     if (!context) {
         context = [NSManagedObjectContext MR_contextForCurrentThread];
     }
-    
-    // if last modified timestamps are the same, then there's no need to update anything.
-//    long long lastModifiedFromEntity = [vmail.lastModified longLongValue];
-//    long long lastModifiedFromDictionary = [dictionary[@"lastModified"] longLongValue];
-    
-//    if (lastModifiedFromDictionary > lastModifiedFromEntity) {
-    
-        //update the commented fields once the model coming in the socket is the same as the model from GET
-        
-//        vmail.callerName = dictionary[@"callerName"];
-//        vmail.callerNumber = dictionary[@"callerNumber"];
-//        vmail.lastModified = [NSNumber numberWithLongLong:[dictionary[@"lastModified"] longLongValue]];
-//        vmail.pbxId = dictionary[@"pbxId"];
-//        vmail.lineId = dictionary[@"lineId"];
-//        vmail.mailboxId = dictionary[@"mailboxId"];
-//        vmail.folderId = dictionary[@"folderId"];
-//        vmail.messageId = dictionary[@"messageId"];
-//        vmail.extensionNumber = dictionary[@"extensionNumber"];
-//        vmail.extensionName = dictionary[@"extensionName"];
-//        vmail.callerId = dictionary[@"callerId"];
-//        vmail.lenght = [NSNumber numberWithInteger:[dictionary[@"length"] intValue]];
-//        vmail.origFile = dictionary[@"origFile"];
+
         if (dictionary[@"read"]) {
             vmail.read = [NSNumber numberWithBool:[dictionary[@"read"] boolValue]];
         }
-
+    //TODO: things that can change
+    //current folder
+    //flag?
         
         //Save conversation dictionary
         @try {

@@ -12,7 +12,7 @@
 
 #pragma mark - CRUD for Voicemail
 + (void)addVoicemails:(NSArray *)entryArray completed:(void (^)(BOOL success))completed;
-+ (Voicemail *)addVoicemailEntry:(NSDictionary*)entry sender:(id)sender;
++ (Voicemail *)addVoicemailEntry:(NSDictionary*)entry sender:(id)sender;//Used for sockets
 + (Voicemail *)addVoicemail:(NSDictionary*)dictionary withManagedContext:(NSManagedObjectContext *)context sender:(id)sender;
 + (Voicemail *)updateVoicemail:(Voicemail*)voicemail withDictionary:(NSDictionary*)dictionary managedContext:(NSManagedObjectContext *)context;
 + (Voicemail *)markVoicemailForDeletion:(NSString*)voicemailId managedContext:(NSManagedObjectContext*)context;

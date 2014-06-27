@@ -8,10 +8,11 @@
 
 #import "JCVoiceTableViewController.h"
 #import "JCVoiceCell.h"
-#import "JCRESTClient.h"
+#import "JCVoicemailClient.h"
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "JCMessagesViewController.h"
 #import "JCAppDelegate.h"
+#import "Voicemail+Custom.h"
 
 @interface JCVoiceTableViewController ()
 {
@@ -64,7 +65,6 @@ static NSString *CellIdentifier = @"VoicemailCell";
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     [Voicemail fetchVoicemailInBackground];
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -117,16 +117,16 @@ static NSString *CellIdentifier = @"VoicemailCell";
     
     requestTimeout = [NSTimer timerWithTimeInterval:20 target:self selector:@selector(requestDidTimedOut) userInfo:nil repeats:NO];
     [[NSRunLoop currentRunLoop] addTimer:requestTimeout forMode:NSRunLoopCommonModes];
-    
-//    [[self getOsgiClient] RetrieveVoicemailForEntity:nil success:^(id JSON) {
-//        if ([requestTimeout isValid]) {
-//            [requestTimeout invalidate];
-//        }
-//        [self.refreshControl endRefreshing];
-//        [self loadVoicemails];
-//    } failure:^(NSError *err) {
-//        [self requestDidTimedOut];
-//    }];
+ 
+    [[JCVoicemailClient sharedClient] getVoicemails:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+        if(suceeded){
+            if ([requestTimeout isValid]) {
+                [requestTimeout invalidate];
+            }
+            [self.refreshControl endRefreshing];
+            [self loadVoicemails];
+        }
+    }];
 }
 
 - (void)requestDidTimedOut
