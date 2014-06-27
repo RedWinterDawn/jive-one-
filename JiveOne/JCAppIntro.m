@@ -82,7 +82,6 @@
     [super viewDidLoad];
     self.scrollView.contentSize = CGSizeMake(NUMBER_OF_PAGES * CGRectGetWidth(self.view.frame),
                                              CGRectGetHeight(self.view.frame));
-    NSLog(@"### Content Size: %@", NSStringFromCGSize(self.scrollView.contentSize));
 
     self.scrollView.pagingEnabled = YES;
     self.scrollView.showsHorizontalScrollIndicator = NO;
@@ -348,7 +347,7 @@
 
     self.lastLabel = fourthPageText;
     
-    self.dismissButton.frame = CGRectOffset(self.dismissButton.frame, timeForPage(4), 0);
+    self.dismissButton.frame = CGRectOffset(self.dismissButton.frame, timeForPage(1), 0);
 }
 
 - (void)configureAnimation

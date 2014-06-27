@@ -62,7 +62,7 @@
                                                                                UIRemoteNotificationTypeSound)];
     }
     
-    self.tableView.backgroundColor = [UIColor whiteColor];
+//    self.tableView.backgroundColor = [UIColor whiteColor];
 //    self.tableView.separatorInset = UIEdgeInsetsMake(0, 20, 0, 20);
 
 }
@@ -77,10 +77,8 @@
 //    self.userMoodDetail.text = @"I'm not in the mood today";
 //    self.userTitleDetail.text = @"Developer of Awesome";
 //    self.userImage.image = [JCStyleKit imageOfCanvas15WithFrame:CGRectMake(77, 0, 166, self.userImage.frame.size.height)];
-    self.userImage.backgroundColor = [UIColor colorWithRed:.883 green:.883 blue:.883 alpha:1];
+//    self.userImage.backgroundColor = [UIColor colorWithRed:.883 green:.883 blue:.883 alpha:1];
     
-    NSLog(@"%@", NSStringFromCGPoint(self.logoutImageView.frame.origin));
-    NSLog(@"%@", NSStringFromCGSize(self.logoutImageView.frame.size));
 
 
 //    UIImage *backButton = [JCStyleKit imageOfBack_buttonWithFrame:CGRectMake(0, 0, self.eulaImageView.frame.size.width, self.eulaImageView.frame.size.height)];
@@ -198,14 +196,14 @@
     return cell;
 }
 
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)];
-    headerView.backgroundColor = [UIColor whiteColor];
-    
-    return headerView;
-}
+//
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//    //UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)];
+////    headerView.backgroundColor = [UIColor whiteColor];
+//    
+//    return headerView;
+//}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
@@ -227,28 +225,27 @@
 //        
 //    }
 //    else
-    if(indexPath.section == 1){
+
         //Eula or leave feedback
         
-        if([cell.reuseIdentifier isEqualToString:@"TermsOfService"]){
+        if([cell.reuseIdentifier isEqualToString:@"TermsOfService"])
+        {
             [Flurry logEvent:@"TermsOfService button clicked"];
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
             
             [self presentViewController:[storyboard instantiateViewControllerWithIdentifier:@"JCTermsAndConditonsVCViewControllerContainer"] animated:YES completion:nil];
-            
         }
-        else if ([cell.reuseIdentifier isEqualToString:@"LeaveFeedback"]){
+        else if ([cell.reuseIdentifier isEqualToString:@"LeaveFeedback"])
+        {
             //send email to mobileapps+ios@jive.com
             [self leaveFeedbackPressed];
             
             
         }
-    }
-    else if (indexPath.section == 2) {
-        if([cell.reuseIdentifier isEqualToString:@"LogOut"]){
+        else if ([cell.reuseIdentifier isEqualToString:@"LogOut"])
+        {
         [self logoutButtonPress];
         }
-    }
 }
 
 

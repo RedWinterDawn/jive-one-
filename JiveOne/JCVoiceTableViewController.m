@@ -65,8 +65,9 @@ static NSString *CellIdentifier = @"VoicemailCell";
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main-logo.png"]];
-    
+    imageView.contentMode = UIViewContentModeCenter;
     self.tableView.backgroundView = imageView;
+    
     [Voicemail fetchVoicemailInBackground];
 }
 
