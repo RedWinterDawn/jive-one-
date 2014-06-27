@@ -27,6 +27,9 @@ static UIImage* _imageOfTopRight = nil;
 static UIImage* _imageOfMoreLogin = nil;
 static UIImage* _imageOfDefaultAvatarLogin = nil;
 static UIImage* _imageOfVoicemailLogin = nil;
+static UIImage* _imageOfSpeakerLogin = nil;
+static UIImage* _imageOfCanvas2 = nil;
+static UIImage* _imageOfCanvas4 = nil;
 static UIImage* _imageOfVoicemailIcon = nil;
 static UIImage* _imageOfContactsIcon = nil;
 static UIImage* _imageOfMessageIcon = nil;
@@ -341,6 +344,76 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
 
     [JCStyleKit.loginColor setFill];
     [voicemailBezierPath fill];
+}
+
++ (void)drawPlayLoginWithPlayPauseDisplaysPlay: (BOOL)playPauseDisplaysPlay;
+{
+
+    if (playPauseDisplaysPlay)
+    {
+        //// Bezier 2 Drawing
+        UIBezierPath* bezier2Path = UIBezierPath.bezierPath;
+        [bezier2Path moveToPoint: CGPointMake(78.85, 49.74)];
+        [bezier2Path addLineToPoint: CGPointMake(26.25, 80.1)];
+        [bezier2Path addLineToPoint: CGPointMake(26.25, 19.38)];
+        [bezier2Path addLineToPoint: CGPointMake(78.85, 49.74)];
+        [bezier2Path closePath];
+        bezier2Path.miterLimit = 4;
+
+        [JCStyleKit.loginColor setFill];
+        [bezier2Path fill];
+    }
+}
+
++ (void)drawSpeakerLogin;
+{
+
+    //// SpeakerGroup
+    {
+        //// SpeakerBezier Drawing
+        UIBezierPath* speakerBezierPath = UIBezierPath.bezierPath;
+        [speakerBezierPath moveToPoint: CGPointMake(34.13, 42.09)];
+        [speakerBezierPath addLineToPoint: CGPointMake(42.88, 42.09)];
+        [speakerBezierPath addLineToPoint: CGPointMake(56.01, 31)];
+        [speakerBezierPath addLineToPoint: CGPointMake(56.01, 68.5)];
+        [speakerBezierPath addLineToPoint: CGPointMake(42.88, 55.3)];
+        [speakerBezierPath addLineToPoint: CGPointMake(34.13, 55.3)];
+        [speakerBezierPath addCurveToPoint: CGPointMake(29.75, 50.86) controlPoint1: CGPointMake(31.66, 55.3) controlPoint2: CGPointMake(29.75, 53.39)];
+        [speakerBezierPath addLineToPoint: CGPointMake(29.75, 46.42)];
+        [speakerBezierPath addCurveToPoint: CGPointMake(34.13, 42.09) controlPoint1: CGPointMake(29.75, 44.1) controlPoint2: CGPointMake(31.77, 42.09)];
+        [speakerBezierPath addLineToPoint: CGPointMake(34.13, 42.09)];
+        [speakerBezierPath closePath];
+        [speakerBezierPath moveToPoint: CGPointMake(75.65, 48.75)];
+        [speakerBezierPath addCurveToPoint: CGPointMake(70.04, 60.68) controlPoint1: CGPointMake(75.65, 53.61) controlPoint2: CGPointMake(73.41, 57.83)];
+        [speakerBezierPath addLineToPoint: CGPointMake(66.9, 57.51)];
+        [speakerBezierPath addCurveToPoint: CGPointMake(71.27, 48.64) controlPoint1: CGPointMake(69.59, 55.51) controlPoint2: CGPointMake(71.27, 52.34)];
+        [speakerBezierPath addCurveToPoint: CGPointMake(66.9, 39.77) controlPoint1: CGPointMake(71.27, 44.94) controlPoint2: CGPointMake(69.59, 41.77)];
+        [speakerBezierPath addLineToPoint: CGPointMake(70.04, 36.6)];
+        [speakerBezierPath addCurveToPoint: CGPointMake(75.65, 48.75) controlPoint1: CGPointMake(73.52, 39.56) controlPoint2: CGPointMake(75.65, 43.89)];
+        [speakerBezierPath addLineToPoint: CGPointMake(75.65, 48.75)];
+        [speakerBezierPath closePath];
+        [speakerBezierPath moveToPoint: CGPointMake(66.9, 48.75)];
+        [speakerBezierPath addCurveToPoint: CGPointMake(62.41, 55.08) controlPoint1: CGPointMake(66.9, 51.7) controlPoint2: CGPointMake(64.99, 54.24)];
+        [speakerBezierPath addLineToPoint: CGPointMake(60.39, 50.96)];
+        [speakerBezierPath addCurveToPoint: CGPointMake(62.63, 48.75) controlPoint1: CGPointMake(61.62, 50.96) controlPoint2: CGPointMake(62.63, 50.01)];
+        [speakerBezierPath addCurveToPoint: CGPointMake(60.39, 46.53) controlPoint1: CGPointMake(62.63, 47.58) controlPoint2: CGPointMake(61.62, 46.53)];
+        [speakerBezierPath addLineToPoint: CGPointMake(62.41, 42.41)];
+        [speakerBezierPath addCurveToPoint: CGPointMake(66.9, 48.75) controlPoint1: CGPointMake(65.1, 43.25) controlPoint2: CGPointMake(66.9, 45.79)];
+        [speakerBezierPath addLineToPoint: CGPointMake(66.9, 48.75)];
+        [speakerBezierPath closePath];
+        speakerBezierPath.miterLimit = 4;
+
+        [JCStyleKit.loginColor setFill];
+        [speakerBezierPath fill];
+    }
+}
+
++ (void)drawCanvas2;
+{
+}
+
++ (void)drawCanvas4;
+{
 }
 
 + (void)drawSpeakerButtonWithSpeakerFrame: (CGRect)speakerFrame speakerIsSelected: (BOOL)speakerIsSelected;
@@ -1509,6 +1582,55 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
     return _imageOfVoicemailLogin;
 }
 
++ (UIImage*)imageOfPlayLoginWithPlayPauseDisplaysPlay: (BOOL)playPauseDisplaysPlay;
+{
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(100, 100), NO, 0.0f);
+    [JCStyleKit drawPlayLoginWithPlayPauseDisplaysPlay: playPauseDisplaysPlay];
+    UIImage* imageOfPlayLogin = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return imageOfPlayLogin;
+}
+
++ (UIImage*)imageOfSpeakerLogin;
+{
+    if (_imageOfSpeakerLogin)
+        return _imageOfSpeakerLogin;
+
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(100, 100), NO, 0.0f);
+    [JCStyleKit drawSpeakerLogin];
+    _imageOfSpeakerLogin = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return _imageOfSpeakerLogin;
+}
+
++ (UIImage*)imageOfCanvas2;
+{
+    if (_imageOfCanvas2)
+        return _imageOfCanvas2;
+
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(100, 100), NO, 0.0f);
+    [JCStyleKit drawCanvas2];
+    _imageOfCanvas2 = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return _imageOfCanvas2;
+}
+
++ (UIImage*)imageOfCanvas4;
+{
+    if (_imageOfCanvas4)
+        return _imageOfCanvas4;
+
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(100, 100), NO, 0.0f);
+    [JCStyleKit drawCanvas4];
+    _imageOfCanvas4 = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return _imageOfCanvas4;
+}
+
 + (UIImage*)imageOfSpeakerButtonWithSpeakerFrame: (CGRect)speakerFrame speakerIsSelected: (BOOL)speakerIsSelected;
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(195, 70), NO, 0.0f);
@@ -1573,6 +1695,16 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
     UIGraphicsEndImageContext();
 
     return imageOfTrashButton;
+}
+
++ (UIImage*)imageOfPlay_PauseWithFrame: (CGRect)frame playPauseDisplaysPlay: (BOOL)playPauseDisplaysPlay;
+{
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(101, 112), NO, 0.0f);
+    [JCStyleKit drawPlay_PauseWithFrame: frame playPauseDisplaysPlay: playPauseDisplaysPlay];
+    UIImage* imageOfPlay_Pause = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return imageOfPlay_Pause;
 }
 
 + (UIImage*)imageOfBack_buttonWithBack_ButtonFrame: (CGRect)back_ButtonFrame;
@@ -1750,6 +1882,30 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
 
     for (id target in self.voicemailLoginTargets)
         [target setImage: JCStyleKit.imageOfVoicemailLogin];
+}
+
+- (void)setSpeakerLoginTargets: (NSArray*)speakerLoginTargets
+{
+    _speakerLoginTargets = speakerLoginTargets;
+
+    for (id target in self.speakerLoginTargets)
+        [target setImage: JCStyleKit.imageOfSpeakerLogin];
+}
+
+- (void)setCanvas2Targets: (NSArray*)canvas2Targets
+{
+    _canvas2Targets = canvas2Targets;
+
+    for (id target in self.canvas2Targets)
+        [target setImage: JCStyleKit.imageOfCanvas2];
+}
+
+- (void)setCanvas4Targets: (NSArray*)canvas4Targets
+{
+    _canvas4Targets = canvas4Targets;
+
+    for (id target in self.canvas4Targets)
+        [target setImage: JCStyleKit.imageOfCanvas4];
 }
 
 - (void)setVoicemailIconTargets: (NSArray*)voicemailIconTargets
