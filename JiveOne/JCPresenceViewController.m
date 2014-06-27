@@ -60,7 +60,8 @@
     self.view.backgroundColor = [UIColor clearColor];
     UIImageView *backView = [[UIImageView alloc] initWithFrame:self.view.frame];
     backView.image = _bluredBackgroundImage;
-    backView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];    self.tableView.backgroundView = backView;
+    backView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
+    self.tableView.backgroundView = backView;
 
 
 }

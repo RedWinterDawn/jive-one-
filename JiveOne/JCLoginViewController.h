@@ -22,8 +22,9 @@
 @property (nonatomic) JCRESTClient *client;
 @property (weak, nonatomic) IBOutlet UIView *loginViewContainer;
 @property (weak, nonatomic) IBOutlet UIView *logo;
+@property (weak, nonatomic) IBOutlet UIImageView *coverImageView;
 
-
++ (id) sharedInstance;
 - (void)goToApplication;
 - (IBAction)termsAndConditionsButton:(id)sender;
 - (void)fetchEntities;

@@ -19,6 +19,9 @@
 #import "JCVoicemailClient.h"
 #import "JCJifClient.h"
 #import "Mailbox+Custom.h"
+#import "JCAppIntro.h"
+#import "UIImage+ImageEffects.h"
+
 
 @interface JCLoginViewController ()
 {
@@ -30,6 +33,22 @@
 @end
 
 @implementation JCLoginViewController
+
++ (id)sharedInstance {
+    static JCLoginViewController *sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[self alloc] init];
+    });
+    return sharedInstance;
+}
+
+- (id)init {
+    if (self = [super init]) {
+    }
+    return self;
+}
+
 
 - (void)setClient:(JCRESTClient *)client
 {
@@ -149,12 +168,41 @@
     }
 }
 
+- (UIImage *) screenshot {
+    UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, NO, [UIScreen mainScreen].scale);
+    
+    [self.view drawViewHierarchyInRect:self.view.bounds afterScreenUpdates:YES];
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
+
 - (void)validateFields
 {
     self.loginStatusLabel.text = @"";
     if([self.usernameTextField.text length] != 0 && [self.passwordTextField.text length] != 0)
     {
-        [self showHudWithTitle:@"One Moment Please" detail:@"Logging In"];
+        
+//        UIImageView *backView = [[UIImageView alloc] initWithFrame:self.view.frame];
+        UIImage *coverImage = [self screenshot];
+        coverImage = [coverImage applyBlurWithRadius:15.0 tintColor:[[UIColor darkGrayColor] colorWithAlphaComponent:.3] saturationDeltaFactor:.88 maskImage:nil];
+        [self.coverImageView setAlpha:0.0];
+        self.coverImageView.image = coverImage;
+
+        JCAppIntro* appIntroSingleton = [JCAppIntro sharedInstance];
+        [appIntroSingleton.backgroundImageView setImage:coverImage];
+        
+//        backView.image = [self screenshot];
+        
+        [UIView animateWithDuration:1.0 animations:^{
+            [self.coverImageView setAlpha:1.0];
+        } completion: ^(BOOL finished){
+            if(finished) {
+            }
+            [self showHudWithTitle:@"One Moment Please" detail:@"Logging In"];
+        }];
+        
         [[JCAuthenticationManager sharedInstance] loginWithUsername:self.usernameTextField.text password:self.passwordTextField.text completed:^(BOOL success, NSError *error) {
             self.doneLoadingContent = NO;
             if (success) {

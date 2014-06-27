@@ -14,4 +14,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *dismissButton;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 
++ (id) sharedInstance;
+
 @end

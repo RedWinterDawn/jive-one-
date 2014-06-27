@@ -54,6 +54,15 @@
 
 @implementation JCAppIntro
 
++ (id)sharedInstance {
+    static JCAppIntro *sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[self alloc] init];
+    });
+    return sharedInstance;
+}
+
 - (id)init
 {
     if ((self = [super init])) {
@@ -112,8 +121,6 @@
     self.vmPlay.frame = CGRectOffset(self.vmPlay.frame, 0, 90);
     [self.voicemailCell addSubview:self.vmPlay];
 
-    
-    
     
     //TODO: Remove this
     self.wordmark = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main-logo.png"]];
