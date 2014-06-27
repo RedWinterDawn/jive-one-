@@ -402,6 +402,17 @@
     [voicemailCellFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:self.voicemailCell.frame]];
     [voicemailCellFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.voicemailCell.frame, timeForPage(2), 0)]];
     
+    //******************************************************
+    // now, we animate the dismissButton
+    //******************************************************
+    IFTTTFrameAnimation *dismissButtonFrameAnimation = [IFTTTFrameAnimation animationWithView:self.dismissButton];
+    [self.animator addAnimation:dismissButtonFrameAnimation];
+        
+    // move down and to the right, and shrink between pages 2 and 3
+    [dismissButtonFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:self.dismissButton.frame]];
+    [dismissButtonFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.dismissButton.frame, timeForPage(2), 0)]];
+    [dismissButtonFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(self.dismissButton.frame, timeForPage(3), 0)]];
+    [dismissButtonFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andFrame:CGRectOffset(self.dismissButton.frame, timeForPage(4), 0)]];
     
     //******************************************************
     // now, we animate the topLeft
