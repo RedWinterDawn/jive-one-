@@ -50,16 +50,17 @@ describe(@"Voicemail VC", ^{
         
         beforeEach(^{ // Occurs before each enclosed "it"
             //add voicemail programtically for user
-//            TRVSMonitor *monitor = [TRVSMonitor monitor];
-//            NSURLRequest *request = [NSURLRequest alloc] initWithURL:@"http://10.20.26.141:8880/voicemails/mailbox/0146de22-4cf6-65b5-3be8-006300620001/folders/INBOX";
-//            [request setValue:@"@msg0000.WAV" forKey:@"file"];
-//            [request setValue:@"msg0000.txt" forKey:@"metadata"];
-////            
-////            [[JCAuthenticationManager sharedInstance] loginWithUsername:username password:password completed:^(BOOL success, NSError *error) {
-////                [monitor signal];
-////            }];
-//            
-//            [monitor wait];
+            TRVSMonitor *monitor = [TRVSMonitor monitor];
+            NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"voicemails" ofType:@"json"];
+            NSString *content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+            NSData *responseObject = [content dataUsingEncoding:NSUTF8StringEncoding];
+            NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+            
+            [Voicemail addVoicemails:dictionary completed:^(BOOL success) {
+                [monitor signal];
+            }];
+            [monitor wait];
+            
         });
         
         afterEach(^{ // Occurs after each enclosed "it"

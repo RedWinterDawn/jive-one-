@@ -57,7 +57,7 @@
     
     Voicemail *vmail;
     //find object in core data with same urn as voicemail entry in json
-    NSArray *result = [Voicemail MR_findByAttribute:@"jrn" withValue:dictionary[@"jrn"]];
+    NSArray *result = [Voicemail MR_findByAttribute:@"jrn" withValue:dictionary[@"jrn"] inContext:context];
     
     // if there are results, we're updating, else we're creating
     if (result.count > 0) {
