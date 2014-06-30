@@ -17,6 +17,7 @@
 - (void)updateVoiceTable;
 - (void)loadVoicemails;
 - (void)setClient:(JCVoicemailClient*)client;
+- (void)voiceCellPlayTapped:(JCVoiceCell *)cell; //exposed for testing
 - (void)voiceCellDeleteTapped:(NSIndexPath *)indexPath;
 - (void)addOrRemoveSelectedIndexPath:(NSIndexPath *)indexPath;
 @end

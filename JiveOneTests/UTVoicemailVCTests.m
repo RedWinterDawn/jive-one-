@@ -144,50 +144,58 @@
 SPEC_BEGIN(VoicemailKiwiTest)
 __block JCVoiceTableViewController* voicemailViewController;
 
-context(@"a state the component is in", ^{
-    beforeAll(^{ // Occurs once
-        NSString *token = [[JCAuthenticationManager sharedInstance] getAuthenticationToken];
-        if ([Common stringIsNilOrEmpty:token]) {
-            if ([Common stringIsNilOrEmpty:[[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"]]) {
-                NSString *username = @"jivetesting12@gmail.com";
-                NSString *password = @"testing12";
-                TRVSMonitor *monitor = [TRVSMonitor monitor];
-                
-                [[JCAuthenticationManager sharedInstance] loginWithUsername:username password:password completed:^(BOOL success, NSError *error) {
-                    [monitor signal];
-                }];
-                
-                [monitor wait];
-            }
-        }
-        
-       voicemailViewController = [[UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"JCVoiceTableViewController"];
-    });
-    
-    afterAll(^{ // Occurs once
-    });
-    
-    beforeEach(^{ // Occurs before each enclosed "it"
-    });
-    
-    afterEach(^{ // Occurs after each enclosed "it"
-    });
-});
 
-
-describe(@"markVoicemailAsRead", ^{
-        it(@"should mark a voicemail as read when play button is pressed on unread voicemail", ^{
-        NSLog(@"test");
-    });
-});
 
 describe(@"Voicemail VC", ^{
-    it(@"loads voicemails into view upon instantiation", ^{
-        [voicemailViewController loadVoicemails];
-        XCTAssertNotNil(voicemailViewController.voicemails, @"array not loaded");
-
+    context(@"after being instantiated and authenticated", ^{
+        beforeAll(^{ // Occurs once
+            NSString *token = [[JCAuthenticationManager sharedInstance] getAuthenticationToken];
+            if ([Common stringIsNilOrEmpty:token]) {
+                if ([Common stringIsNilOrEmpty:[[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"]]) {
+                    NSString *username = @"jivetesting12@gmail.com";
+                    NSString *password = @"testing12";
+                    TRVSMonitor *monitor = [TRVSMonitor monitor];
+                    
+                    [[JCAuthenticationManager sharedInstance] loginWithUsername:username password:password completed:^(BOOL success, NSError *error) {
+                        [monitor signal];
+                    }];
+                    
+                    [monitor wait];
+                }
+            }
+            
+            voicemailViewController = [[UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"JCVoiceTableViewController"];
+        });
+        
+        afterAll(^{ // Occurs once
+        });
+        
+        beforeEach(^{ // Occurs before each enclosed "it"
+            //add voicemail programtically for user
+        });
+        
+        afterEach(^{ // Occurs after each enclosed "it"
+        });
+        
+        //TESTS Begin
+        it(@"loads voicemails into view upon instantiation", ^{//instantiation calls loadVoicemails via viewDidLoad
+            [voicemailViewController loadVoicemails];
+            [[voicemailViewController.voicemails should] beNonNil];
+        });
+        
+        
+        it(@"should mark a voicemail as read when play button is pressed on unread voicemail", ^{
+            NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
+            JCVoiceCell *cell = (JCVoiceCell*)[voicemailViewController.tableView cellForRowAtIndexPath:indexpath];
+            [[cell.voicemail.read shouldNot] beYes];
+            [voicemailViewController voiceCellPlayTapped:cell];
+            
+            [[expectFutureValue(theValue([cell.voicemail.read boolValue])) shouldEventuallyBeforeTimingOutAfter(20.0)] beYes];
+        });
+        
     });
 });
+
 
 SPEC_END
 
