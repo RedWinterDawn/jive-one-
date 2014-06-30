@@ -70,7 +70,7 @@
 - (void) loadViews
 {
 //    self.userNameDetail.text = me.firstLastName;
-    NSString * jiveId = [[NSUserDefaults standardUserDefaults] objectForKey:User_Name];
+    NSString * jiveId = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
 
     self.userNameDetail.text = jiveId;
 
