@@ -110,6 +110,7 @@
     [self placeOffsetsForStoryBoardViewItems];
     [self placeViews];
     [self configureAnimation];
+    self.delegate = self;
     [UIView animateWithDuration:1.0 animations:^{
         [self.voicemailCell setAlpha:1.0];
         [self.firstLabel setAlpha:1.0];
@@ -123,7 +124,7 @@
 }
 
 -(void)placeOffsetsForStoryBoardViewItems{
-//    self.scrollView addSubview:self.s
+//    [self.scrollView addSubview:self.pageControlDots];
     [self.scrollView addSubview:self.dismissButton];
     self.dismissButton.frame = CGRectOffset(self.dismissButton.frame, timeForPage(3), 0);
 }
@@ -649,6 +650,30 @@
 - (void)animatedScrollViewControllerDidEndDraggingAtEnd:(IFTTTAnimatedScrollViewController *)animatedScrollViewController
 {
     NSLog(@"Ended dragging at end of scrollview!");
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [super scrollViewDidScroll:scrollView];
+    NSLog(@"OFFSET2:%f", scrollView.contentOffset.x);
+    
+    if (scrollView.contentOffset.x < 160)
+    {
+        [self.pageControlDots setCurrentPage:0];
+        NSLog(@"page1");
+    }
+    if(scrollView.contentOffset.x > 160 && scrollView.contentOffset.x < 480)
+    {
+        [self.pageControlDots setCurrentPage:1];
+
+        NSLog(@"page2");
+    }
+    if(scrollView.contentOffset.x > 480)
+    {
+        [self.pageControlDots setCurrentPage:2];
+
+        NSLog(@"page3");
+    }
+
 }
 
 - (IBAction)dismissButtonWasPressed:(id)sender {

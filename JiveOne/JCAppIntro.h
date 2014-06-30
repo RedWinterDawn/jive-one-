@@ -13,6 +13,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *dismissButton;
 @property (strong, nonatomic) IBOutlet UIImageView *backgroundImageView;
+@property (weak, nonatomic) IBOutlet UIPageControl *pageControlDots;
 
 + (id) sharedInstance;
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender;

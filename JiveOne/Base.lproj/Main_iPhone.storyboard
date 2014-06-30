@@ -348,14 +348,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" id="deT-GF-i3y">
-                                <rect key="frame" x="139" y="467" width="39" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </pageControl>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="n6g-pE-ELr">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" id="deT-GF-i3y">
+                                <rect key="frame" x="148" y="519" width="39" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </pageControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="gtQ-uO-uxm">
                                 <rect key="frame" x="234" y="527" width="66" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -368,10 +368,12 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                     </view>
                     <connections>
                         <outlet property="backgroundImageView" destination="n6g-pE-ELr" id="laD-1f-XXb"/>
                         <outlet property="dismissButton" destination="gtQ-uO-uxm" id="M1a-hX-JqY"/>
+                        <outlet property="pageControlDots" destination="deT-GF-i3y" id="Bst-LA-HDq"/>
                         <segue destination="8YX-ce-x5E" kind="modal" identifier="TutorialToTabBarSegue" modalTransitionStyle="crossDissolve" animates="NO" id="dIf-i9-QYA"/>
                     </connections>
                 </viewController>
