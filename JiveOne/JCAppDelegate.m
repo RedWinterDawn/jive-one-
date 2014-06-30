@@ -10,6 +10,7 @@
 #import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
 #import "JCSocketDispatch.h"
 #import "JCRESTClient.h"
+#import "JCVoicemailClient.h"
 #import "PersonEntities.h"
 #import "NotificationView.h"
 #import "JCLoginViewController.h"
@@ -385,16 +386,20 @@ int didNotify;
 
             
 // V5 only provides voicemail through REST. So re make a REST Call
-//            [[JCRESTClient sharedClient] RetrieveVoicemailForEntity:nil success:^(id JSON) {
-//                NSLog(@"Success Done with Block");
-//                LogMessage(@"socket", 4, @"Successful Rest Call In Background");
-//                [monitor signal];
-//            } failure:^(NSError *err) {
-//                NSLog(@"Error Done With Block %@", err);
-//                LogMessage(@"socket", 4, @"Failed Rest Call In Background");
-//                [monitor signal];
-//            }];
             
+            [[JCVoicemailClient sharedClient] getVoicemails:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+                if (suceeded) {
+                    NSLog(@"Success Done with Block");
+                    LogMessage(@"socket", 4, @"Successful Rest Call In Background");
+                    
+                }
+                else {
+                    NSLog(@"Error Done With Block %@", error);
+                    LogMessage(@"socket", 4, @"Failed Rest Call In Background");
+                }
+                
+                [monitor signal];
+            }];            
 // No Socket for now.
 //            [[JCSocketDispatch sharedInstance] startPoolingFromSocketWithCompletion:^(BOOL success, NSError *error) {
 //                if (success) {
