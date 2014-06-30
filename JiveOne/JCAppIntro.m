@@ -180,17 +180,17 @@
     //******************************************************
     //Add VoicemailIconWhite to page 1
     //******************************************************
-    float voicemailIconWhite_w = 150;
-    float voicemailIconWhite_h = 150;
-    CGRect voiceMailIconLogoFrame = CGRectMake(300, 300, voicemailIconWhite_w, voicemailIconWhite_h);
-    self.voicemailIconWhite = [[JCVoicemailIcon alloc]initWithFrame:voiceMailIconLogoFrame];
-    self.voicemailIconWhite.backgroundColor = [UIColor clearColor];
-    self.voicemailIconWhite.center = self.view.center;
-    float voicemailIconWhite_x = ((timeForPage(1))+(self.view.frame.size.width/2)-(voicemailIconWhite_w/2));
-    float voicemailIconWhite_y = 420;
-//    [self.voicemailIconWhite setAlpha:0.0];
-    self.voicemailIconWhite.frame = CGRectMake(voicemailIconWhite_x, voicemailIconWhite_y, voicemailIconWhite_w, voicemailIconWhite_h);
-//    [self.scrollView addSubview:self.voicemailIconWhite];
+//    float voicemailIconWhite_w = 150;
+//    float voicemailIconWhite_h = 150;
+//    CGRect voiceMailIconLogoFrame = CGRectMake(300, 300, voicemailIconWhite_w, voicemailIconWhite_h);
+//    self.voicemailIconWhite = [[JCVoicemailIcon alloc]initWithFrame:voiceMailIconLogoFrame];
+//    self.voicemailIconWhite.backgroundColor = [UIColor clearColor];
+//    self.voicemailIconWhite.center = self.view.center;
+//    float voicemailIconWhite_x = ((timeForPage(1))+(self.view.frame.size.width/2)-(voicemailIconWhite_w/2));
+//    float voicemailIconWhite_y = 420;
+////    [self.voicemailIconWhite setAlpha:0.0];
+//    self.voicemailIconWhite.frame = CGRectMake(voicemailIconWhite_x, voicemailIconWhite_y, voicemailIconWhite_w, voicemailIconWhite_h);
+////    [self.scrollView addSubview:self.voicemailIconWhite];
     
     //******************************************************
     //Add individual Images to the voicemailCell
@@ -272,10 +272,10 @@
    
     
     //TODO: Remove this
-    self.wordmark = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main-logo.png"]];
-    self.wordmark.center = self.view.center;
-    self.wordmark.frame = CGRectOffset(self.wordmark.frame, self.view.frame.size.width, -10);
-    //[self.scrollView addSubview:self.wordmark];
+//    self.wordmark = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main-logo.png"]];
+//    self.wordmark.center = self.view.center;
+//    self.wordmark.frame = CGRectOffset(self.wordmark.frame, self.view.frame.size.width, -10);
+//    //[self.scrollView addSubview:self.wordmark];
     
     //******************************************************
     //add topLeft to page2
@@ -283,8 +283,6 @@
     self.topLeft = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfTopLeft]];
     self.topLeft.center = self.view.center;
     self.topLeft.frame = CGRectOffset(self.topLeft.frame, kTopLeft_x, kTopLeft_y);
-    NSLog(@"TL%@",NSStringFromCGRect(self.topLeft.frame));
-
     [self.topLeft setAlpha:0.0];
     [self.scrollView addSubview:self.topLeft];
     
@@ -321,13 +319,17 @@
     //This is where we add all the text the the labels of the tutorials
     //******************************************************
     UILabel *firstPageText = [[UILabel alloc] init];
-    firstPageText.text = @"The Jive Voicemail App";
+    firstPageText.text = @"The Jive Voicemail App lets you consume and manage all of your voicemail messages.";
     [firstPageText setFont:[UIFont fontWithName:@"Alpine Script" size:kFontSize]];
     firstPageText.textColor = [UIColor whiteColor];
-    [firstPageText sizeToFit];
+    [firstPageText setNumberOfLines:0];
+    [firstPageText setLineBreakMode:NSLineBreakByWordWrapping];
+    firstPageText.frame = CGRectMake(firstPageText.frame.origin.x, firstPageText.frame.origin.y, 250, 100);
+//    [firstPageText sizeToFit];
+    
     firstPageText.center = self.view.center;
     [firstPageText setAlpha:0.0];
-    firstPageText.frame = CGRectOffset(firstPageText.frame, timeForPage(1), 120);
+    firstPageText.frame = CGRectOffset(firstPageText.frame, timeForPage(1), 140);
     self.firstLabel = firstPageText;
     [self.scrollView addSubview:firstPageText];
     
