@@ -356,7 +356,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
         if (success) {
             [selectedCell  performSelectorOnMainThread:@selector(styleCellForRead) withObject:nil waitUntilDone:NO];
             // now send update to server
-            [[JCVoicemailClient sharedClient] updateVoicemailToRead:selectedCell.voicemail :^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+            [[JCVoicemailClient sharedClient] updateVoicemailToRead:selectedCell.voicemail completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
                 if(suceeded){
                       NSLog(@"Success Updating Read On Server");
                 }else{

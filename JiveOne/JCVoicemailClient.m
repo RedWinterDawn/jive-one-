@@ -32,7 +32,6 @@
 -(void)initialize
 {
     
-    //TODO:implement AFCompoundSerializer This is useful for supporting multiple potential types and structures of server responses with a single serializer. @dleonard00 3/14/14
     NSURL *baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kVoicemailService, kMailboxPath]];
     _manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
     _manager.responseSerializer = [AFJSONResponseSerializer serializer];
@@ -83,12 +82,13 @@
 -(void)getVoicemails :(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
 {
     NSArray* mailboxes = [Mailbox MR_findAll];
-    for(int i =0;i<mailboxes.count; i++){
+    
+    [mailboxes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 
-        NSString* url = [NSString stringWithFormat:@"%@?verify=%@", ((Mailbox*)mailboxes[i]).url_self_mailbox, [[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"]];//TODO: make sure the baseUrl is not used here.
+        Mailbox *mailbox = (Mailbox *)obj;
+        NSString* url = [NSString stringWithFormat:@"%@?verify=%@", mailbox.url_self_mailbox, [[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"]];
         
         [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            
             [Voicemail addVoicemails:responseObject completed:^(BOOL suceeded) {
                 completed(YES, responseObject, operation, nil);
             }];
@@ -96,14 +96,14 @@
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             completed(NO, nil, operation, error);
         }];
-    }
-    
+    }];
 }
 
 //download actual voicemail
--(void)downloadVoicemailEntry:(NSString*)entryId fromMailbox:(NSString*)mailboxId :(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
+-(void)downloadVoicemailEntry:(NSString*)entryId fromMailbox:(NSString*)mailboxId completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
 {
     NSString* url = [NSString stringWithFormat:@"%@/voicemail/%@/listen", mailboxId, entryId];
+         
     [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         [Voicemail fetchVoicemailInBackground];
@@ -115,13 +115,14 @@
 }
 
 //update voicemail to read
--(void)updateVoicemailToRead:(Voicemail*)voicemail :(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed{
+-(void)updateVoicemailToRead:(Voicemail*)voicemail completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed{
     
-
     [self setRequestAuthHeader];
+    
     NSString *url = [NSString stringWithFormat:@"%@?verify=%@", voicemail.url_changeStatus, [[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"]];//TODO: remove when voicemail accepts auth through headers
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     [params setObject:@"true" forKey:@"read"];
+    
     [self.manager PUT:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         completed(YES, responseObject, operation, nil);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
