@@ -128,7 +128,7 @@
     [self.scrollView addSubview:self.voicemailCell];
 
     //******************************************************
-    //Add individual Imgs to the voicemailCell
+    //Add individual Images to the voicemailCell
     //******************************************************
     self.vmPlay = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfPlayLoginWithPlayPauseDisplaysPlay:true]];
     self.vmPlay.center = self.voicemailCell.center;
@@ -276,7 +276,9 @@
     playPauseText.center = self.view.center;
     [playPauseText setFont:[UIFont fontWithName:@"MarkerFelt-Wide" size:16]];
     playPauseText.frame = CGRectOffset(playPauseText.frame, timeForPage(1) + kTopLeft_x_Offset, -110);
-    [self.scrollView addSubview:playPauseText];
+    
+    UIImageView *playPauseImageView = [[UIImageView alloc]initWithImage:[JCStyleKit imageOfPlayPauseTextWithFrame:playPauseText.frame]];
+    [self.scrollView addSubview:playPauseImageView];
     self.topLeftLabel = playPauseText;
     
     UILabel *scrubberText = [[UILabel alloc] init];
