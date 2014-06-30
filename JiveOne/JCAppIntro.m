@@ -11,7 +11,7 @@
 #import "JCLoginViewController.h"
 #import "JCStyleKitIcons.h"
 
-#define NUMBER_OF_PAGES 4
+#define NUMBER_OF_PAGES 3
 #define timeForPage(page) (NSInteger)(self.view.frame.size.width * (page - 1))
 
 //Arrows
@@ -641,37 +641,20 @@
 
 #pragma mark - IFTTTAnimatedScrollViewControllerDelegate
 
-- (void)animatedScrollViewControllerDidScrollToEnd:(IFTTTAnimatedScrollViewController *)animatedScrollViewController
-{
-    NSLog(@"Scrolled to end of scrollview!");
-    NSLog(@"%f,%f",self.dismissButton.frame.origin.x,self.dismissButton.frame.origin.y);
-}
-
-- (void)animatedScrollViewControllerDidEndDraggingAtEnd:(IFTTTAnimatedScrollViewController *)animatedScrollViewController
-{
-    NSLog(@"Ended dragging at end of scrollview!");
-}
-
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     [super scrollViewDidScroll:scrollView];
-    NSLog(@"OFFSET2:%f", scrollView.contentOffset.x);
     
-    if (scrollView.contentOffset.x < 160)
+    if (self.pageControlDots.currentPage != 0 && scrollView.contentOffset.x < 160)
     {
         [self.pageControlDots setCurrentPage:0];
-        NSLog(@"page1");
     }
-    if(scrollView.contentOffset.x > 160 && scrollView.contentOffset.x < 480)
+    if(self.pageControlDots.currentPage != 1 && scrollView.contentOffset.x > 160 && scrollView.contentOffset.x < 480)
     {
         [self.pageControlDots setCurrentPage:1];
-
-        NSLog(@"page2");
     }
-    if(scrollView.contentOffset.x > 480)
+    if(self.pageControlDots.currentPage != 2 && scrollView.contentOffset.x > 480)
     {
         [self.pageControlDots setCurrentPage:2];
-
-        NSLog(@"page3");
     }
 
 }
