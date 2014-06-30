@@ -25,6 +25,8 @@ typedef void (^CompletionBlock) (BOOL success, NSError *error);
 - (BOOL)userAuthenticated;
 - (BOOL)userLoadedMininumData;
 - (void)setUserLoadedMinimumData:(BOOL)loaded;
+- (void)setRememberMe:(BOOL)remember;
+- (BOOL)getRememberMe;
 - (void)checkForTokenValidity;
 - (void)logout:(UIViewController *)viewController;
 - (NSString *)getAuthenticationToken;

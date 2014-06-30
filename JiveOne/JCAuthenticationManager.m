@@ -188,6 +188,22 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     [(JCAppDelegate *)[UIApplication sharedApplication].delegate didLogInSoCanRegisterForPushNotifications];
 }
 
+- (void)setRememberMe:(BOOL)remember
+{
+    if (remember) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kRememberMe];
+    }
+    else {
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kRememberMe];
+    }
+    
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (BOOL)getRememberMe {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kRememberMe];
+}
+
 - (NSString *)getAuthenticationToken
 {
     NSString *token = [_keychainWrapper objectForKey:(__bridge id)(kSecAttrAccount)];
@@ -250,34 +266,6 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
     }];
     
-    
-//       [[JCRESTClient sharedClient] RetrieveMyEntitity:^(id JSON, id operation) {
-//           
-//        } failure:^(NSError *err, id operation) {
-//            NSLog(@"%@", err);
-//            
-//            AFHTTPRequestOperation *AFOperation = (AFHTTPRequestOperation *)operation;
-//            NSInteger status = AFOperation.response.statusCode;
-//    
-//            if ((status >= 400 && status <= 417) || status == 200) {
-////                if ([self userAuthenticated]) {
-////                    [self refreshToken];
-////                }
-////                else
-////                {
-//                    JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
-//                    if (![delegate.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
-//                        [delegate changeRootViewController:JCRootLoginViewController];
-//                    }
-//                    else {
-//                        [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenFailed object:nil];
-//                    }
-////                }
-//            }
-//            else {
-//                NSLog(@"%@", AFOperation.response);
-//            }
-//        }];
 
 
 }
@@ -289,10 +277,14 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"authToken"];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"refreshToken"];
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kUserName];
+    
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserAuthenticated];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserLoadedMinimumData];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    if (![self getRememberMe]) {
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kUserName];
+    }
     
     [[JCRESTClient sharedClient] clearCookies];
     [[JCOmniPresence sharedInstance] truncateAllTablesAtLogout];

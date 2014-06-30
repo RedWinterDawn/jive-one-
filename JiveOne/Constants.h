@@ -84,6 +84,7 @@
 #pragma mark - NSUserDefaults
 #define kUserName @"username"
 #define UDdeviceToken @"deviceToken"
+#define kRememberMe @"keyrememberme"
 
 
 

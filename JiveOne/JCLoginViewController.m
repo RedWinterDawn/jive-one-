@@ -93,11 +93,11 @@
     self.passwordTextField.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:0.7].CGColor;
     self.passwordTextField.layer.borderWidth = 1.0f;
     
-#if DEBUG
-    self.usernameTextField.text = @"jivetesting12@gmail.com";
-    self.passwordTextField.text = @"testing12";
-    [self.passwordTextField becomeFirstResponder];
-#endif
+//#if DEBUG
+//    self.usernameTextField.text = @"jivetesting12@gmail.com";
+//    self.passwordTextField.text = @"testing12";
+//    [self.passwordTextField becomeFirstResponder];
+//#endif
     
     // @Pete Adding rounded corners for the elements on login screen
     self.passwordTextField.layer.cornerRadius = 5;
@@ -137,6 +137,14 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
     }
+    
+    
+    if ([[JCAuthenticationManager sharedInstance] getRememberMe]) {
+        NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
+        self.usernameTextField.text = username;
+        self.rememberMeSwitch.on = YES;
+    }
+    
     [Flurry logEvent:@"Login View"];
 }
 
@@ -513,6 +521,12 @@
 
 - (IBAction)termsAndConditionsButton:(id)sender {
     [self performSegueWithIdentifier: @"TCSegue" sender: self];
+}
+
+- (IBAction)rememberMe:(id)sender {
+    
+    [[JCAuthenticationManager sharedInstance] setRememberMe:((UISwitch *)sender).on];
+    
 }
 
 @end
