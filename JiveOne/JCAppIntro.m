@@ -218,9 +218,10 @@
     self.topLeft = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfTopLeft]];
     self.topLeft.center = self.view.center;
     self.topLeft.frame = CGRectOffset(self.topLeft.frame, kTopLeft_x, kTopLeft_y);
+    NSLog(@"TL%@",NSStringFromCGRect(self.topLeft.frame));
+
     [self.topLeft setAlpha:0.0];
     [self.scrollView addSubview:self.topLeft];
-    NSLog(@"----%@",NSStringFromCGRect(self.topLeft.frame));
     
     //******************************************************
     //add topRight to page2
@@ -265,6 +266,7 @@
     [firstPageText setAlpha:0.0];
     firstPageText.frame = CGRectOffset(firstPageText.frame, timeForPage(1), -180);
     self.firstLabel = firstPageText;
+    [self.firstLabel setAlpha:0.0];
     [self.scrollView addSubview:firstPageText];
     
     UILabel *playPauseText = [[UILabel alloc] init];
@@ -273,7 +275,7 @@
     [playPauseText setTextColor:blueTextColor];
     playPauseText.center = self.view.center;
     [playPauseText setFont:[UIFont fontWithName:@"MarkerFelt-Wide" size:16]];
-    playPauseText.frame = CGRectOffset(playPauseText.frame, timeForPage(2) + kTopLeft_x_Offset, -110);
+    playPauseText.frame = CGRectOffset(playPauseText.frame, timeForPage(1) + kTopLeft_x_Offset, -110);
     [self.scrollView addSubview:playPauseText];
     self.topLeftLabel = playPauseText;
     
@@ -283,7 +285,7 @@
     [scrubberText setTextColor:blueTextColor];
     scrubberText.center = self.view.center;
     [scrubberText setFont:[UIFont fontWithName:@"MarkerFelt-Wide" size:16]];
-    scrubberText.frame = CGRectOffset(scrubberText.frame, timeForPage(2) + kTopRight_x_Offset, -160);
+    scrubberText.frame = CGRectOffset(scrubberText.frame, timeForPage(1) + kTopRight_x_Offset, -160);
     [self.scrollView addSubview:scrubberText];
     self.topRightLabel = scrubberText;
     
@@ -296,7 +298,7 @@
     speakerText.frame = CGRectMake(speakerText.frame.origin.x, speakerText.frame.origin.y, 200, 50);
     [speakerText setNumberOfLines:0];
     [speakerText setLineBreakMode:NSLineBreakByWordWrapping];
-    speakerText.frame = CGRectOffset(speakerText.frame, timeForPage(2) + kBottomLeft_x_Offset, 190);
+    speakerText.frame = CGRectOffset(speakerText.frame, timeForPage(1) + kBottomLeft_x_Offset, 190);
     [self.scrollView addSubview:speakerText];
     self.bottomLeftLabel = speakerText;
     
@@ -306,7 +308,7 @@
     [deleteText setTextColor:blueTextColor];
     deleteText.center = self.view.center;
     [deleteText setFont:[UIFont fontWithName:@"MarkerFelt-Wide" size:16]];
-    deleteText.frame = CGRectOffset(deleteText.frame, timeForPage(2) + kBottomRight_x_Offset, 140);
+    deleteText.frame = CGRectOffset(deleteText.frame, timeForPage(1) + kBottomRight_x_Offset, 140);
     [self.scrollView addSubview:deleteText];
     self.bottomRightLabel = deleteText;
     
@@ -425,6 +427,19 @@
     [topLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:topLeftStartFrame]];
     [topLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.topLeft.frame, timeForPage(2), 0)]];
     [topLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(self.topLeft.frame, timeForPage(3), upDy)]];
+ 
+
+    //******************************************************
+    // now, we animate the topLeft
+    //******************************************************
+    IFTTTFrameAnimation *topLeftLabelAnimation = [IFTTTFrameAnimation animationWithView:self.topLeftLabel];
+    [self.animator addAnimation:topLeftLabelAnimation];
+    
+    CGRect topLeftLabelStartFrame = CGRectOffset(self.topLeftLabel.frame, -(self.topLeftLabel.frame.origin.x + self.topLeftLabel.frame.size.width), 0);
+    [topLeftLabelAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:topLeftLabelStartFrame]];
+    [topLeftLabelAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.topLeftLabel.frame, timeForPage(2), 0)]];
+    [topLeftLabelAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(self.topLeftLabel.frame, timeForPage(3), upDy)]];
+
     
     //******************************************************
     // now, we animate the topRight
@@ -438,6 +453,17 @@
     [topRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.topRight.frame, ds, ds), timeForPage(3), upDy)]];
 
     //******************************************************
+    // now, we animate the topRightLabel
+    //******************************************************
+    IFTTTFrameAnimation *topRightLabelAnimation = [IFTTTFrameAnimation animationWithView:self.topRightLabel];
+    [self.animator addAnimation:topRightLabelAnimation];
+    CGRect topRightLabelStartFrame = CGRectOffset(self.topRightLabel.frame, (self.view.frame.size.width - self.topRightLabel.frame.origin.x), 0);
+    CGRect topRightLabelFrame2 = CGRectOffset(self.topRightLabel.frame, (self.view.frame.size.width + kTopRight_x), 0);
+    [topRightLabelAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:topRightLabelStartFrame]];
+    [topRightLabelAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:topRightLabelFrame2]];
+    [topRightLabelAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.topRightLabel.frame, ds, ds), timeForPage(3), upDy)]];
+
+    //******************************************************
     // now, we animate the bottomLeft
     //******************************************************
     IFTTTFrameAnimation *bottomLeftFrameAnimation = [IFTTTFrameAnimation animationWithView:self.bottomLeft];
@@ -448,15 +474,42 @@
     [bottomLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:bottomLeftStartFrame]];
     [bottomLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.bottomLeft.frame, timeForPage(2), 0)]];
     [bottomLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.bottomLeft.frame, ds, ds), timeForPage(3), dy)]];
+    
+    //******************************************************
+    // now, we animate the bottomLeft
+    //******************************************************
+    IFTTTFrameAnimation *bottomLeftLabelAnimation = [IFTTTFrameAnimation animationWithView:self.bottomLeftLabel];
+    [self.animator addAnimation:bottomLeftLabelAnimation];
+    
+    // move down and to the right, and shrink between pages 2 and 3
+    CGRect bottomLeftLabelStartFrame = CGRectOffset(self.bottomLeftLabel.frame, -(self.bottomLeftLabel.frame.origin.x + self.bottomLeftLabel.frame.size.width), 0);
+    [bottomLeftLabelAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:bottomLeftLabelStartFrame]];
+    [bottomLeftLabelAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.bottomLeftLabel.frame, timeForPage(2), 0)]];
+    [bottomLeftLabelAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.bottomLeftLabel.frame, ds, ds), timeForPage(3), dy)]];
+    
+    //******************************************************
+    // now, we animate the bottomRight
+    //******************************************************
     IFTTTFrameAnimation *bottomRightFrameAnimation = [IFTTTFrameAnimation animationWithView:self.bottomRight];
     [self.animator addAnimation:bottomRightFrameAnimation];
-    
-    // anamate on to the screen then animate off page 3
+
     CGRect bottomRightStartFrame = CGRectOffset(self.bottomRight.frame, (self.view.frame.size.width - self.bottomRight.frame.size.width), 0);
     [bottomRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:bottomRightStartFrame]];
     [bottomRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.bottomRight.frame, timeForPage(2), 0)]];
     [bottomRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.bottomRight.frame, ds, ds), timeForPage(3), dy)]];
     
+    //******************************************************
+    // now, we animate the bottomRightLabel
+    //******************************************************
+    IFTTTFrameAnimation *bottomRightLabelFrameAnimation = [IFTTTFrameAnimation animationWithView:self.bottomRightLabel];
+    [self.animator addAnimation:bottomRightLabelFrameAnimation];
+
+    CGRect bottomRightLabelStartFrame = CGRectOffset(self.bottomRightLabel.frame, (self.view.frame.size.width - self.bottomRightLabel.frame.size.width), 0);
+    [bottomRightLabelFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:bottomRightLabelStartFrame]];
+    [bottomRightLabelFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.bottomRightLabel.frame, timeForPage(2), 0)]];
+    [bottomRightLabelFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.bottomRightLabel.frame, ds, ds), timeForPage(3), dy)]];
+    
+
     //******************************************************
     //fade all the Arrows in on page 2 and out on page 4
     //******************************************************
