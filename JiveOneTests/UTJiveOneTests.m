@@ -11,6 +11,7 @@
 #import "TRVSMonitor.h"
 #import "JCAuthenticationManager.h"
 #import "JCDirectoryViewController.h"
+#import "Kiwi.h"
 
 @interface UTJiveOneTests : XCTestCase
 
@@ -48,41 +49,6 @@
 }
 
 
-//- (void)testRetrieveAccountInformation {
-//    __block NSDictionary *json;
-//    
-//    TRVSMonitor *monitor = [TRVSMonitor monitor];
-//    
-//    JCOsgiClient *client = [JCOsgiClient sharedClient];
-//    
-//    [client RetrieveMyEntitity:^(id JSON, id operation) {
-//        json = JSON;
-//        [monitor signal];
-//        
-//    } failure:^(NSError *err, id operation) {
-//        XCTFail(@"Retrieve My Company method has failed");
-//    }];
-//    
-//    [monitor waitWithTimeout:5];
-//    
-//    NSString *name = [[json objectForKey:@"name"] objectForKey:@"firstLast"];
-//    NSString *companyUrl = [json objectForKey:@"company"];
-//    XCTAssertEqualObjects(name, @"Jive Testing 13", @"Wrong name");
-//    
-//    [client RetrieveMyCompany:companyUrl:^(id JSON) {
-//        json = JSON;
-//        [monitor signal];
-//    } failure:^(NSError *err) {
-//        NSLog(@"%@", err);
-//    }];
-//    
-//    [monitor waitWithTimeout:5];
-//    
-//     XCTAssertEqualObjects([json objectForKey:@"name"], @"Jive Communications, Inc.", @"Company name doesn't match");
-//}
-
-
-
 - (void)testLogout {
     
     [[JCAuthenticationManager sharedInstance] logout:nil];
@@ -97,4 +63,20 @@
 }
 
 @end
+
+SPEC_BEGIN(MathSpec)
+
+describe(@"Math", ^{
+    it(@"is pretty cool", ^{
+        NSUInteger a = 17;
+        NSUInteger b = 26;
+        [[theValue(a + b) should] equal:theValue(43)];
+    });
+});
+
+SPEC_END
+
+
+
+
 

@@ -25,7 +25,7 @@
     NSTimer *requestTimeout;
     
 }
-@property (weak, nonatomic) JCRESTClient *osgiClient;
+@property (weak, nonatomic) JCVoicemailClient *client;
 @property (nonatomic) NSMutableArray *selectedIndexPaths;
 @property (nonatomic, retain) NSTimer *progressTimer;
 
@@ -35,18 +35,18 @@
 
 static NSString *CellIdentifier = @"VoicemailCell";
 
-- (void)osgiClient:(JCRESTClient*)client
+- (void)setClient:(JCVoicemailClient*)client
 {
-    _osgiClient = client;
+    _client = client;
 }
 
--(JCRESTClient*)getOsgiClient
+-(JCVoicemailClient*)getClient
 {
-    if(!_osgiClient){
-        _osgiClient = [JCRESTClient sharedClient];
+    if(!_client){
+        _client = [JCVoicemailClient sharedClient];
         
     }
-    return _osgiClient;
+    return _client;
 }
 
 - (void)viewDidLoad

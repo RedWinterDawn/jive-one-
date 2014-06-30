@@ -86,7 +86,7 @@
     [self setRequestAuthHeader];
     
 //    NSString * url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], kOsgiMyEntityRoute];//TODO: not attaching baseURL to route constant
-    NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:User_Name];
+    NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
     NSString *url = [NSString stringWithFormat:@"https://api.jive.com/contacts/jiveuser/info/jiveid/%@", username];
     
     NSLog(@"%@", url);

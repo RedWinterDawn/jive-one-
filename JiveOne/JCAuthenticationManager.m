@@ -179,7 +179,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     }
     if (username) {
 //        username = [username stringByReplacingOccurrencesOfString:@"." withString:@"_"];
-        [[NSUserDefaults standardUserDefaults] setObject:username forKey:User_Name];
+        [[NSUserDefaults standardUserDefaults] setObject:username forKey:kUserName];
     }
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kUserAuthenticated];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -284,7 +284,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"authToken"];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"refreshToken"];
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:User_Name];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kUserName];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserAuthenticated];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kUserLoadedMinimumData];
     [[NSUserDefaults standardUserDefaults] synchronize];

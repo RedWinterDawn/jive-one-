@@ -304,7 +304,7 @@
 #pragma mark - Fetch initial data
 //voicemail
 -(void)fetchMyMailboxes{
-    NSString * jiveId = [[NSUserDefaults standardUserDefaults] objectForKey:User_Name];
+    NSString * jiveId = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
     [[JCJifClient sharedClient] getMailboxReferencesForUser:jiveId :^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
         if(suceeded){
             [self fetchVoicemailsMetadata];

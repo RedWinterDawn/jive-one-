@@ -13,3 +13,6 @@ pod 'Facebook-iOS-SDK', '~> 3.13'
 pod 'NSLogger', '~> 1.2'
 pod 'JazzHands', '~> 0.1'
 pod 'tuneup_js'
+target :JiveOneTests, :exclusive => true do
+   pod 'Kiwi/XCTest'
+end
