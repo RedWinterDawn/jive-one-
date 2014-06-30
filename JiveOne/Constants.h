@@ -82,7 +82,7 @@
 //change to @"YesUseAWSPlaceholderURL" to toggle AWS Voicemail wav file
 
 #pragma mark - NSUserDefaults
-#define User_Name @"username"
+#define kUserName @"username"
 #define UDdeviceToken @"deviceToken"
 
 
