@@ -153,6 +153,12 @@
     float voicemailCell_y = ((timeForPage(1))+(self.view.frame.size.height/2)-(voicemailCell_h/2));
     [self.voicemailCell setAlpha:0.0];
     self.voicemailCell.frame = CGRectMake(voicemailCell_x, voicemailCell_y, voicemailCell_w, voicemailCell_h);
+    CALayer *shadowLayervoicemailCell = self.voicemailCell.layer;
+    shadowLayervoicemailCell.shadowOffset = CGSizeZero;
+    shadowLayervoicemailCell.shadowColor = [[UIColor blackColor] CGColor];
+    shadowLayervoicemailCell.shadowRadius = 3.0f;
+    shadowLayervoicemailCell.shadowOpacity = 0.50f;
+    shadowLayervoicemailCell.shadowPath = [self awesomeShadow:shadowLayervoicemailCell.bounds];
     [self.scrollView addSubview:self.voicemailCell];
     
     //******************************************************
@@ -637,6 +643,23 @@
     [labelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:1.0f]];
     [labelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4.35f) andAlpha:0.0f]];
     [self.animator addAnimation:labelAlphaAnimation];
+}
+//awesomeShadow for the voicemail veiw that gives us depth
+- (CGPathRef)awesomeShadow:(CGRect)rect
+{
+    CGSize size = rect.size;
+    size.height  = size.height - 2.0f;
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    
+    [path moveToPoint:CGPointMake(5, 10.0f)];//top left corner of shadow
+    [path addLineToPoint:CGPointMake(size.width, 10.0f)]; //top right corner of shadow
+    [path addLineToPoint:CGPointMake(size.width, size.height - 1.0f)];//bottom right the size.height + 10 is the determinate of how far down the corners are
+    
+    [path addCurveToPoint:CGPointMake(2.0f, size.height - 1.0f) //bottom left
+            controlPoint1:CGPointMake(size.width - 15.0f, size.height - 8.0f) // curve controll
+            controlPoint2:CGPointMake(15.0f, size.height - 8.0f)]; // curve controll
+    
+    return path.CGPath;
 }
 
 #pragma mark - IFTTTAnimatedScrollViewControllerDelegate
