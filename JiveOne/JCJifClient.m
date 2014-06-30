@@ -30,8 +30,7 @@
 
 -(void)initialize
 {
-    
-    //TODO:implement AFCompoundSerializer This is useful for supporting multiple potential types and structures of server responses with a single serializer. @dleonard00 3/14/14
+
     NSURL *baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@", kJifService]];
     _manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
     _manager.responseSerializer = [AFJSONResponseSerializer serializer];

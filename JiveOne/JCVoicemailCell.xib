@@ -14,15 +14,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="321" height="179"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="k9i-98-w2e" userLabel="userImage">
-                        <rect key="frame" x="9" y="5" width="50" height="50"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="50" id="1oZ-eJ-VtG"/>
-                            <constraint firstAttribute="width" constant="50" id="68V-7D-h0Y"/>
-                        </constraints>
-                    </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="(801) 349-7643" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EDq-sG-3YO" userLabel="callerid">
-                        <rect key="frame" x="64" y="6" width="196" height="21"/>
+                        <rect key="frame" x="20" y="7" width="196" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -43,7 +36,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Today, 10:57 PM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nIe-cq-PrP" userLabel="creationTime">
-                        <rect key="frame" x="64" y="54" width="170" height="21"/>
+                        <rect key="frame" x="20" y="55" width="170" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -57,7 +50,7 @@
                         <rect key="frame" x="146" y="60" width="20" height="20"/>
                     </activityIndicatorView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Utah" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WOB-bN-zYU" userLabel="phone_state">
-                        <rect key="frame" x="69" y="28" width="196" height="21"/>
+                        <rect key="frame" x="20" y="31" width="196" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
@@ -83,12 +76,9 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="EDq-sG-3YO" firstAttribute="leading" secondItem="k9i-98-w2e" secondAttribute="trailing" constant="5" id="4I8-oq-Co0"/>
-                    <constraint firstItem="k9i-98-w2e" firstAttribute="leading" secondItem="Mm7-dv-qCm" secondAttribute="leading" constant="9" id="66K-hl-vlo"/>
-                    <constraint firstItem="WOB-bN-zYU" firstAttribute="leading" secondItem="Mm7-dv-qCm" secondAttribute="leading" constant="69" id="HAV-Qh-50j"/>
-                    <constraint firstItem="EDq-sG-3YO" firstAttribute="leading" secondItem="Mm7-dv-qCm" secondAttribute="leading" constant="64" id="PdU-dh-FVU"/>
+                    <constraint firstItem="WOB-bN-zYU" firstAttribute="leading" secondItem="Mm7-dv-qCm" secondAttribute="leading" constant="20" id="HAV-Qh-50j"/>
+                    <constraint firstItem="EDq-sG-3YO" firstAttribute="leading" secondItem="Mm7-dv-qCm" secondAttribute="leading" constant="20" id="PdU-dh-FVU"/>
                     <constraint firstAttribute="trailing" secondItem="hfg-rQ-aIp" secondAttribute="trailing" constant="7" id="awH-ou-uUN"/>
-                    <constraint firstItem="k9i-98-w2e" firstAttribute="top" secondItem="Mm7-dv-qCm" secondAttribute="top" constant="5" id="jVM-rY-2cu"/>
                     <constraint firstAttribute="trailing" secondItem="NZe-HX-VVJ" secondAttribute="trailing" constant="7" id="v5C-gV-dnZ"/>
                 </constraints>
             </tableViewCellContentView>
@@ -102,7 +92,6 @@
                 <outlet property="speakerView" destination="cp3-bc-vEw" id="fvq-Zd-4jk"/>
                 <outlet property="spinningWheel" destination="o6o-BF-Pb3" id="xaT-eY-sco"/>
                 <outlet property="titleLabel" destination="EDq-sG-3YO" id="yi6-wM-0DR"/>
-                <outlet property="userImage" destination="k9i-98-w2e" id="wNj-BW-VOo"/>
                 <outlet property="voicemailIcon" destination="hfg-rQ-aIp" id="td1-ia-XG8"/>
             </connections>
         </tableViewCell>
