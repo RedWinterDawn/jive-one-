@@ -18,7 +18,6 @@
 {
     NSData *soundData;
     AVAudioPlayer *player;
-    JCVoiceCell *selectedCell;
     NSManagedObjectContext *context;
     BOOL useSpeaker;
     MBProgressHUD *hud;
@@ -230,17 +229,17 @@ static NSString *CellIdentifier = @"VoicemailCell";
 
 -(void)resetSlider
 {
-        [selectedCell setSliderValue:0];
-        [selectedCell.slider updateThumbWithCurrentProgress];
+        [self.selectedCell setSliderValue:0];
+        [self.selectedCell.slider updateThumbWithCurrentProgress];
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ((player.currentTime > 0) && (selectedCell.indexPath == indexPath)) {
+    if ((player.currentTime > 0) && (self.selectedCell.indexPath == indexPath)) {
         //pause
         [player pause];
         
         [self stopProgressTimerForVoicemail];
-        [selectedCell.playPauseButton setPlayPauseDisplaysPlay:YES];
+        [self.selectedCell.playPauseButton setPlayPauseDisplaysPlay:YES];
 //        [selectedCell setSliderValue:0];
 //        [selectedCell.slider updateThumbWithCurrentProgress];
         [self performSelector:@selector(resetSlider) withObject:nil afterDelay:.5];
@@ -252,8 +251,8 @@ static NSString *CellIdentifier = @"VoicemailCell";
     
     if (isSelected) {
         [self prepareAudioForIndexPath:indexPath];
-        selectedCell = (JCVoiceCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-        if (selectedCell.frame.origin.y >= 300) {
+        self.selectedCell = (JCVoiceCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        if (self.selectedCell.frame.origin.y >= 300) {
             [tableView setContentOffset:CGPointMake(0, 80)animated:YES];
         }
     }
@@ -279,7 +278,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
 -(void)voiceCellDeleteTapped:(NSIndexPath *)indexPath {
     
     // if we are playing a voicemail and we delete the voicemail cell that is being played -> stop playing then delete.
-    if (player.isPlaying && (selectedCell.indexPath == indexPath)) {
+    if (player.isPlaying && (self.selectedCell.indexPath == indexPath)) {
         //pause
         [player pause];
         
@@ -354,7 +353,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
 
 - (void)markVoicemailAsRead
 {
-    selectedCell.voicemail.read = [NSNumber numberWithBool:YES];
+    self.selectedCell.voicemail.read = [NSNumber numberWithBool:YES];
     
     if (!context) {
         context = [NSManagedObjectContext MR_contextForCurrentThread];
@@ -362,9 +361,9 @@ static NSString *CellIdentifier = @"VoicemailCell";
     // save to local storage
     [context MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
         if (success) {
-            [selectedCell  performSelectorOnMainThread:@selector(styleCellForRead) withObject:nil waitUntilDone:NO];
+            [self.selectedCell  performSelectorOnMainThread:@selector(styleCellForRead) withObject:nil waitUntilDone:NO];
             // now send update to server
-            [[JCVoicemailClient sharedClient] updateVoicemailToRead:selectedCell.voicemail completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+            [[JCVoicemailClient sharedClient] updateVoicemailToRead:self.selectedCell.voicemail completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
                 if(suceeded){
                       NSLog(@"Success Updating Read On Server");
                 }else{
@@ -399,7 +398,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
 - (void)voicecellSpeakerTouched:(BOOL)touched
 {
     useSpeaker = !useSpeaker;
-    [selectedCell.speakerButton setSelected:useSpeaker];
+    [self.selectedCell.speakerButton setSelected:useSpeaker];
     [self setupSpeaker];
 }
 
@@ -417,10 +416,10 @@ static NSString *CellIdentifier = @"VoicemailCell";
     if (player && player.isPlaying) {
         [player stop];
     }
-    selectedCell = (JCVoiceCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    self.selectedCell = (JCVoiceCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     
     NSError *error;
-    player = [[AVAudioPlayer alloc] initWithData:selectedCell.voicemail.voicemail fileTypeHint:AVFileTypeWAVE error:&error];
+    player = [[AVAudioPlayer alloc] initWithData:self.selectedCell.voicemail.voicemail fileTypeHint:AVFileTypeWAVE error:&error];
     if (player) {
         [self setupSpeaker];
         player.delegate = self;
@@ -438,16 +437,16 @@ static NSString *CellIdentifier = @"VoicemailCell";
         [player pause];
         
         [self stopProgressTimerForVoicemail];
-        [selectedCell.playPauseButton setPlayPauseDisplaysPlay:YES];
+        [self.selectedCell.playPauseButton setPlayPauseDisplaysPlay:YES];
     }
     else {
         //play
         [player play];
         
         [self startProgressTimerForVoicemail];
-        [selectedCell.playPauseButton setPlayPauseDisplaysPlay:NO];
-        [(JCAppDelegate *)[UIApplication sharedApplication].delegate decrementBadgeCountForVoicemail:selectedCell.voicemail.jrn];
-        if (![selectedCell.voicemail.read boolValue]) {
+        [self.selectedCell.playPauseButton setPlayPauseDisplaysPlay:NO];
+        [(JCAppDelegate *)[UIApplication sharedApplication].delegate decrementBadgeCountForVoicemail:self.selectedCell.voicemail.jrn];
+        if (![self.selectedCell.voicemail.read boolValue]) {
             [self markVoicemailAsRead];
         }
     }
@@ -455,8 +454,8 @@ static NSString *CellIdentifier = @"VoicemailCell";
 
 - (void)updateViewForPlayerInfo
 {
-	selectedCell.duration.text = [NSString stringWithFormat:@"%d:%02d", (int)player.duration / 60, (int)player.duration % 60, nil];
-	selectedCell.slider.maximumValue = player.duration;
+	self.selectedCell.duration.text = [NSString stringWithFormat:@"%d:%02d", (int)player.duration / 60, (int)player.duration % 60, nil];
+	self.selectedCell.slider.maximumValue = player.duration;
 }
 
 - (void)startProgressTimerForVoicemail {
@@ -476,13 +475,13 @@ static NSString *CellIdentifier = @"VoicemailCell";
 }
 
 - (void)updateProgress:(NSNotification*)notification {
-    if (selectedCell.playPauseButton.playPauseDisplaysPlay == YES) {
-        [selectedCell.playPauseButton setPlayPauseDisplaysPlay:NO];
+    if (self.selectedCell.playPauseButton.playPauseDisplaysPlay == YES) {
+        [self.selectedCell.playPauseButton setPlayPauseDisplaysPlay:NO];
     }
-    selectedCell.duration.text = [self formatSeconds:player.duration];
-    selectedCell.elapsed.text = [self formatSeconds:player.currentTime];
-    [selectedCell setSliderValue:player.currentTime];
-    [selectedCell.slider updateThumbWithCurrentProgress];
+    self.selectedCell.duration.text = [self formatSeconds:player.duration];
+    self.selectedCell.elapsed.text = [self formatSeconds:player.currentTime];
+    [self.selectedCell setSliderValue:player.currentTime];
+    [self.selectedCell.slider updateThumbWithCurrentProgress];
 }
 
 /** Time formatting helper fn: N seconds => M:SS */
@@ -494,12 +493,12 @@ static NSString *CellIdentifier = @"VoicemailCell";
 
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
     [self stopProgressTimerForVoicemail];
-    [selectedCell.playPauseButton setPlayPauseDisplaysPlay:YES];
+    [self.selectedCell.playPauseButton setPlayPauseDisplaysPlay:YES];
 }
 
 - (void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error {
     [self stopProgressTimerForVoicemail];
-    [selectedCell.playPauseButton setPlayPauseDisplaysPlay:YES];
+    [self.selectedCell.playPauseButton setPlayPauseDisplaysPlay:YES];
 }
 
 - (void)setupSpeaker
@@ -519,10 +518,10 @@ static NSString *CellIdentifier = @"VoicemailCell";
         
         if (!error) {
             if (useSpeaker) {
-                [selectedCell.speakerView setIsSelected:YES];
+                [self.selectedCell.speakerView setIsSelected:YES];
             }
             else {
-                [selectedCell.speakerView setIsSelected:NO];
+                [self.selectedCell.speakerView setIsSelected:NO];
 
             }
         }

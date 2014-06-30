@@ -188,9 +188,10 @@ describe(@"Voicemail VC", ^{
             NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
             JCVoiceCell *cell = (JCVoiceCell*)[voicemailViewController.tableView cellForRowAtIndexPath:indexpath];
             [[cell.voicemail.read shouldNot] beYes];
+            voicemailViewController.selectedCell = cell;
             [voicemailViewController voiceCellPlayTapped:cell];
             
-            [[expectFutureValue(theValue([cell.voicemail.read boolValue])) shouldEventuallyBeforeTimingOutAfter(20.0)] beYes];
+            [[expectFutureValue(theValue([cell.voicemail.read boolValue])) shouldEventually] beYes];
         });
         
     });
