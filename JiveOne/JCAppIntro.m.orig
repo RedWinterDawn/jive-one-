@@ -39,9 +39,6 @@
 #define kBottomRight_y_Offset 150
 
 #define kFontSize 24
-//Buttons
-#define kgetStartedButton_x timeForPage(3)
-#define kgetStartedButton_y 200
 
 //Fonts
 #define kIntroFont @"Alpine Script"
@@ -131,8 +128,8 @@
 
 -(void)placeOffsetsForStoryBoardViewItems{
 //    [self.scrollView addSubview:self.pageControlDots];
-//    [self.scrollView addSubview:self.dismissButton];
-//    self.dismissButton.frame = CGRectOffset(self.dismissButton.frame, timeForPage(3), 0);
+    [self.scrollView addSubview:self.dismissButton];
+    self.dismissButton.frame = CGRectOffset(self.dismissButton.frame, timeForPage(3), 0);
 }
 
 - (void)placeViews
@@ -182,6 +179,21 @@
     [self.jiveLogoWhite setAlpha:0.0];
     self.jiveLogoWhite.frame = CGRectMake(jiveLogoWhite_x, jiveLogoWhite_y, jiveLogoWhite_w, jiveLogoWhite_h);
     [self.scrollView addSubview:self.jiveLogoWhite];
+    
+    //******************************************************
+    //Add VoicemailIconWhite to page 1
+    //******************************************************
+//    float voicemailIconWhite_w = 150;
+//    float voicemailIconWhite_h = 150;
+//    CGRect voiceMailIconLogoFrame = CGRectMake(300, 300, voicemailIconWhite_w, voicemailIconWhite_h);
+//    self.voicemailIconWhite = [[JCVoicemailIcon alloc]initWithFrame:voiceMailIconLogoFrame];
+//    self.voicemailIconWhite.backgroundColor = [UIColor clearColor];
+//    self.voicemailIconWhite.center = self.view.center;
+//    float voicemailIconWhite_x = ((timeForPage(1))+(self.view.frame.size.width/2)-(voicemailIconWhite_w/2));
+//    float voicemailIconWhite_y = 420;
+////    [self.voicemailIconWhite setAlpha:0.0];
+//    self.voicemailIconWhite.frame = CGRectMake(voicemailIconWhite_x, voicemailIconWhite_y, voicemailIconWhite_w, voicemailIconWhite_h);
+////    [self.scrollView addSubview:self.voicemailIconWhite];
     
     //******************************************************
     //Add individual Images to the voicemailCell
@@ -304,23 +316,19 @@
     [self.bottomRight setAlpha:0.0];
     [self.scrollView addSubview:self.bottomRight];
     
-    //******************************************************
-    //add Get Started button to page3
-    //******************************************************
-//    JCGetStartedButton *gft = [[JCGetStartedButton alloc]initWithFrame:self.getStartedButton.imageView.frame];
-//    self.getStartedButton.imageView.image = ((UIImage*)gft);
-    [self.getStartedButton setBackgroundImage:[JCStyleKit imageOfGetStartedButtonWithFrame:self.getStartedButton.frame] forState:UIControlStateNormal];
-    self.getStartedButton.center = self.view.center;
-self.getStartedButton.frame = CGRectOffset(self.getStartedButton.frame, kgetStartedButton_x, kgetStartedButton_y);
-    [self.getStartedButton setAlpha:1.0];
-    [self.scrollView addSubview:self.getStartedButton];
+
 
     //******************************************************
     //This is where we add all the text the the labels of the tutorials
     //******************************************************
     UILabel *firstPageText = [[UILabel alloc] init];
+<<<<<<< Updated upstream
     firstPageText.text = @"The Jive Voicemail App lets you consume and manage all of your voicemail messages.";
-    [firstPageText setFont:[UIFont fontWithName:kIntroFont size:kFontSize]];
+    [firstPageText setFont:[UIFont fontWithName:@"Alpine Script" size:kFontSize]];
+=======
+    firstPageText.text = @"The Jive Voicemail App";
+    [firstPageText setFont:[UIFont fontWithName: kIntroFont size:kFontSize]];
+>>>>>>> Stashed changes
     firstPageText.textColor = [UIColor whiteColor];
     [firstPageText setNumberOfLines:0];
     [firstPageText setLineBreakMode:NSLineBreakByWordWrapping];
@@ -335,7 +343,7 @@ self.getStartedButton.frame = CGRectOffset(self.getStartedButton.frame, kgetStar
     
     UILabel *playPauseText = [[UILabel alloc] init];
     playPauseText.text = @"Play/Pause";
-    [playPauseText setFont:[UIFont fontWithName:kIntroFont size:kFontSize]];
+    [playPauseText setFont:[UIFont fontWithName:@"Alpine Script" size:kFontSize]];
     [playPauseText sizeToFit];
     [playPauseText setTextColor:labelTextColor];
     playPauseText.center = self.view.center;
@@ -350,7 +358,7 @@ self.getStartedButton.frame = CGRectOffset(self.getStartedButton.frame, kgetStar
     
     UILabel *scrubberText = [[UILabel alloc] init];
     scrubberText.text = @"Span voicemail segments";
-    [scrubberText setFont:[UIFont fontWithName:kIntroFont size:kFontSize]];
+    [scrubberText setFont:[UIFont fontWithName:@"Alpine Script" size:kFontSize]];
     [scrubberText sizeToFit];
     [scrubberText setTextColor:labelTextColor];
     scrubberText.center = self.view.center;
@@ -363,7 +371,7 @@ self.getStartedButton.frame = CGRectOffset(self.getStartedButton.frame, kgetStar
     
     UILabel *speakerText = [[UILabel alloc] init];
     speakerText.text = @"Speaker On/Off";
-    [speakerText setFont:[UIFont fontWithName:kIntroFont size:kFontSize]];
+    [speakerText setFont:[UIFont fontWithName:@"Alpine Script" size:kFontSize]];
     [speakerText sizeToFit];
     [speakerText setTextColor:labelTextColor];
     speakerText.center = self.view.center;
@@ -380,7 +388,7 @@ self.getStartedButton.frame = CGRectOffset(self.getStartedButton.frame, kgetStar
     
     UILabel *deleteText = [[UILabel alloc] init];
     deleteText.text = @"Delete";
-    [deleteText setFont:[UIFont fontWithName:kIntroFont size:kFontSize]];
+    [deleteText setFont:[UIFont fontWithName:@"Alpine Script" size:kFontSize]];
     [deleteText sizeToFit];
     [deleteText setTextColor:labelTextColor];
     deleteText.center = self.view.center;
@@ -391,10 +399,8 @@ self.getStartedButton.frame = CGRectOffset(self.getStartedButton.frame, kgetStar
     
     UILabel *leaveFeedbackLabel = [[UILabel alloc] init];
     leaveFeedbackLabel.text = @"Send us feedback!";
-    [leaveFeedbackLabel setFont:[UIFont fontWithName:kIntroFont size:kFontSize]];
-    leaveFeedbackLabel.shadowColor = [UIColor darkGrayColor];
+    [leaveFeedbackLabel setFont:[UIFont fontWithName:@"Alpine Script" size:kFontSize]];
     leaveFeedbackLabel.textColor = [UIColor whiteColor];
-    leaveFeedbackLabel.shadowOffset = CGSizeMake(0, 1);
     [leaveFeedbackLabel sizeToFit];
     leaveFeedbackLabel.center = self.view.center;
     leaveFeedbackLabel.frame = CGRectOffset(leaveFeedbackLabel.frame, timeForPage(3), -100);
@@ -403,10 +409,8 @@ self.getStartedButton.frame = CGRectOffset(self.getStartedButton.frame, kgetStar
     
     UILabel *leaveFeedbackLabel2 = [[UILabel alloc] init];
     leaveFeedbackLabel2.text = @"We want to hear from you!";
-    [leaveFeedbackLabel2 setFont:[UIFont fontWithName:kIntroFont size:kFontSize]];
+    [leaveFeedbackLabel2 setFont:[UIFont fontWithName:@"Alpine Script" size:kFontSize]];
     leaveFeedbackLabel2.textColor = [UIColor whiteColor];
-    leaveFeedbackLabel2.shadowColor = [UIColor darkGrayColor];
-    leaveFeedbackLabel2.shadowOffset = CGSizeMake(0, 1);
     [leaveFeedbackLabel2 sizeToFit];
     leaveFeedbackLabel2.center = self.view.center;
     leaveFeedbackLabel2.frame = CGRectOffset(leaveFeedbackLabel2.frame, timeForPage(3), -50);
@@ -415,10 +419,8 @@ self.getStartedButton.frame = CGRectOffset(self.getStartedButton.frame, kgetStar
     
     UILabel *emailLabel = [[UILabel alloc] init];
     emailLabel.text = @"MobileApps+ios@jive.com";
-    [emailLabel setFont:[UIFont fontWithName:kIntroFont size:kFontSize]];
+    [emailLabel setFont:[UIFont fontWithName:@"Alpine Script" size:kFontSize]];
     emailLabel.textColor = [UIColor whiteColor];
-    emailLabel.shadowColor = [UIColor darkGrayColor];
-    emailLabel.shadowOffset = CGSizeMake(0, 1);
     [emailLabel sizeToFit];
     emailLabel.center = self.view.center;
     emailLabel.frame = CGRectOffset(emailLabel.frame, timeForPage(3), 0);
@@ -712,7 +714,8 @@ self.getStartedButton.frame = CGRectOffset(self.getStartedButton.frame, kgetStar
     }
 
 }
-- (IBAction)getStartedButtonWasPressed:(id)sender {
+
+- (IBAction)dismissButtonWasPressed:(id)sender {
     [self dismissViewControllerAnimated:NO completion:^{
         [[NSNotificationCenter defaultCenter] postNotificationName:@"AppTutorialDismissed" object:nil];
     }];

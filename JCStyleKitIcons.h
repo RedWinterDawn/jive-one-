@@ -9,3 +9,4 @@
 #import "JCJiveLogoWhite.h"
 #import "JCJiveLogoBlack.h"
 #import "JCVoicemailIcon.h"
+#import "JCGetStartedButton.h"

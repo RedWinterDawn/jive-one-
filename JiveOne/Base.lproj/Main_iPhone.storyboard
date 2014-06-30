@@ -371,14 +371,14 @@
                                 <rect key="frame" x="148" y="519" width="39" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </pageControl>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="gtQ-uO-uxm">
-                                <rect key="frame" x="234" y="527" width="66" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" title="Dismiss">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="DzV-Lr-0Zz">
+                                <rect key="frame" x="31" y="457" width="260" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="dismissButtonWasPressed:" destination="Yyy-YN-Ji0" eventType="touchUpInside" id="uBD-ot-1mj"/>
+                                    <action selector="getStartedButtonWasPressed:" destination="Yyy-YN-Ji0" eventType="touchUpInside" id="c80-6A-CrH"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -387,7 +387,7 @@
                     </view>
                     <connections>
                         <outlet property="backgroundImageView" destination="n6g-pE-ELr" id="laD-1f-XXb"/>
-                        <outlet property="dismissButton" destination="gtQ-uO-uxm" id="M1a-hX-JqY"/>
+                        <outlet property="getStartedButton" destination="DzV-Lr-0Zz" id="cMF-yb-gIo"/>
                         <outlet property="pageControlDots" destination="deT-GF-i3y" id="Bst-LA-HDq"/>
                         <segue destination="8YX-ce-x5E" kind="modal" identifier="TutorialToTabBarSegue" modalTransitionStyle="crossDissolve" animates="NO" id="dIf-i9-QYA"/>
                     </connections>

@@ -52,6 +52,7 @@
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* speakerTextTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* jiveLogoBlackTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* jiveLogoWhiteTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* getStartedButtonTargets;
 
 // Colors
 + (UIColor*)unSelectedButtonColor;
@@ -103,6 +104,7 @@
 + (void)drawSpeakerTextWithFrame: (CGRect)frame;
 + (void)drawJiveLogoBlackWithFrame: (CGRect)frame;
 + (void)drawJiveLogoWhiteWithFrame: (CGRect)frame;
++ (void)drawGetStartedButtonWithFrame: (CGRect)frame;
 
 // Generated Images
 + (UIImage*)imageOfLeaveFeedback_ButtonWithFrame: (CGRect)frame;
@@ -142,5 +144,6 @@
 + (UIImage*)imageOfSpeakerTextWithFrame: (CGRect)frame;
 + (UIImage*)imageOfJiveLogoBlackWithFrame: (CGRect)frame;
 + (UIImage*)imageOfJiveLogoWhiteWithFrame: (CGRect)frame;
++ (UIImage*)imageOfGetStartedButtonWithFrame: (CGRect)frame;
 
 @end

@@ -1682,7 +1682,7 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
     NSMutableParagraphStyle* textStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
     textStyle.alignment = NSTextAlignmentCenter;
 
-    NSDictionary* textFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Alpine_Script" size: 30], NSForegroundColorAttributeName: UIColor.blackColor, NSParagraphStyleAttributeName: textStyle};
+    NSDictionary* textFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Helvetica" size: 30], NSForegroundColorAttributeName: UIColor.blackColor, NSParagraphStyleAttributeName: textStyle};
 
     [@"Play/Pause" drawInRect: textRect withAttributes: textFontAttributes];
 }
@@ -1695,7 +1695,7 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
     NSMutableParagraphStyle* textStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
     textStyle.alignment = NSTextAlignmentCenter;
 
-    NSDictionary* textFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Alpine_Script" size: 30], NSForegroundColorAttributeName: UIColor.blackColor, NSParagraphStyleAttributeName: textStyle};
+    NSDictionary* textFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Helvetica" size: 30], NSForegroundColorAttributeName: UIColor.blackColor, NSParagraphStyleAttributeName: textStyle};
 
     [@"Span voicemail segments" drawInRect: textRect withAttributes: textFontAttributes];
 }
@@ -1708,7 +1708,7 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
     NSMutableParagraphStyle* textStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
     textStyle.alignment = NSTextAlignmentCenter;
 
-    NSDictionary* textFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Alpine_Script" size: 30], NSForegroundColorAttributeName: UIColor.blackColor, NSParagraphStyleAttributeName: textStyle};
+    NSDictionary* textFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Helvetica" size: 30], NSForegroundColorAttributeName: UIColor.blackColor, NSParagraphStyleAttributeName: textStyle};
 
     [@"Delete" drawInRect: textRect withAttributes: textFontAttributes];
 }
@@ -1721,7 +1721,7 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
     NSMutableParagraphStyle* textStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
     textStyle.alignment = NSTextAlignmentCenter;
 
-    NSDictionary* textFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Alpine_Script" size: 30], NSForegroundColorAttributeName: UIColor.blackColor, NSParagraphStyleAttributeName: textStyle};
+    NSDictionary* textFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Helvetica" size: 30], NSForegroundColorAttributeName: UIColor.blackColor, NSParagraphStyleAttributeName: textStyle};
 
     [@"Speaker On/Off" drawInRect: textRect withAttributes: textFontAttributes];
 }
@@ -1987,6 +1987,30 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
 
         [white setFill];
         [bezier4Path fill];
+    }
+}
+
++ (void)drawGetStartedButtonWithFrame: (CGRect)frame;
+{
+    //// Color Declarations
+    UIColor* iOSBlue = [UIColor colorWithRed: 0.09 green: 0.529 blue: 0.961 alpha: 1];
+
+    //// Rectangle Drawing
+    UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRect: CGRectMake(CGRectGetMinX(frame), CGRectGetMinY(frame), 265, 50)];
+    [iOSBlue setFill];
+    [rectanglePath fill];
+
+
+    //// Text Drawing
+    CGRect textRect = CGRectMake(CGRectGetMinX(frame), CGRectGetMinY(frame), 265, 50);
+    {
+        NSString* textContent = @"Get Started";
+        NSMutableParagraphStyle* textStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
+        textStyle.alignment = NSTextAlignmentCenter;
+
+        NSDictionary* textFontAttributes = @{NSFontAttributeName: [UIFont systemFontOfSize: UIFont.buttonFontSize], NSForegroundColorAttributeName: UIColor.whiteColor, NSParagraphStyleAttributeName: textStyle};
+
+        [textContent drawInRect: CGRectOffset(textRect, 0, (CGRectGetHeight(textRect) - [textContent boundingRectWithSize: textRect.size options: NSStringDrawingUsesLineFragmentOrigin attributes: textFontAttributes context: nil].size.height) / 2) withAttributes: textFontAttributes];
     }
 }
 
@@ -2408,6 +2432,16 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
     UIGraphicsEndImageContext();
 
     return imageOfJiveLogoWhite;
+}
+
++ (UIImage*)imageOfGetStartedButtonWithFrame: (CGRect)frame;
+{
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(265, 50), NO, 0.0f);
+    [JCStyleKit drawGetStartedButtonWithFrame: frame];
+    UIImage* imageOfGetStartedButton = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return imageOfGetStartedButton;
 }
 
 #pragma mark Customization Infrastructure
