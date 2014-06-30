@@ -14,6 +14,7 @@
 #import "JCLoginViewController.h"
 #import "Common.h"
 #import "JCSocketDispatch.h"
+#import "JCJifClient.h"
 
 #if DEBUG
 @interface NSURLRequest(Private)
@@ -212,8 +213,8 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 {
     //Rolling back to hack
     //[self verifyToken];
-    
-    [[JCContactsClient sharedClient] RetrieveMyInformation:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+    NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
+    [[JCJifClient sharedClient] getMailboxReferencesForUser:username :^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
         if (suceeded) {
             JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
             if (![delegate.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
@@ -226,6 +227,8 @@ static int MAX_LOGIN_ATTEMPTS = 2;
             NSInteger status = operation.response.statusCode;
             
             if ((status >= 400 && status <= 417) || status == 200) {
+                // Since we're not keeping the user logged in with a verifyToken,
+                // this code has been commentend. This will change, however, so leave it here.
                 //                if ([self userAuthenticated]) {
                 //                    [self refreshToken];
                 //                }
@@ -244,7 +247,9 @@ static int MAX_LOGIN_ATTEMPTS = 2;
                 NSLog(@"%@", operation.response);
             }
         }
+
     }];
+    
     
 //       [[JCRESTClient sharedClient] RetrieveMyEntitity:^(id JSON, id operation) {
 //           
