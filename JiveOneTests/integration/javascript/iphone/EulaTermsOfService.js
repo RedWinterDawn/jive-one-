@@ -4,7 +4,8 @@ test("Eula & Terms of Service", function(target, app){
 	loginIfNeeded(app);
 
 	target.frontMostApp().tabBar().buttons()["Account"].tap();
-target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["EULA / Terms of Service"].tap();
+target.frontMostApp().logElementTree();
+target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["End User License Agreement"].tap();
 delay(6);
 target.frontMostApp().mainWindow().logElementTree();
 assertTrue(target.frontMostApp().mainWindow().scrollViews()[0].webViews()[0].links()[0].name().contains("877-548-3007"), "Jive phone number link not found");

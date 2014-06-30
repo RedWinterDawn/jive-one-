@@ -1,6 +1,7 @@
 #import "../Common.js"
 
 test("Verify each tab exists and loads", function(target, app){
+	loginIfNeeded(app);
 
 	var mainWindow = app.mainWindow();
 
@@ -11,7 +12,7 @@ test("Verify each tab exists and loads", function(target, app){
 
 //assert all the buttons exist
 	// assertEquals("People", people.name(), "The name should be 'People'");
-	assertEquals("Voicemail", voicemail.name(), "The name should be 'People'");
+	assertEquals("Voicemail", voicemail.name(), "The name should be 'Voicemail'");
 	// assertEquals("Conversations", conversations.name(), "The name should be 'People'");
 	assertEquals("Account", more.name(), "The name should be 'Account'");
 

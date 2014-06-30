@@ -64,7 +64,7 @@ test("Login Test", function(target, app){
 	logDebug("good username, bad password")
 	// Select Password box
 	// Clear box
-	app.mainWindow().secureTextFields()["passwordTextField"].waitUntilVisible(10);
+	app.mainWindow().secureTextFields()["passwordTextField"].waitUntilVisible(60);
 	app.mainWindow().secureTextFields()["passwordTextField"].clear();
 	// Click 'Go' button
 	app.keyboard().elements()["Go"].tap();

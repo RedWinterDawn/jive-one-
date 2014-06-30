@@ -838,6 +838,9 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="55"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" red="0.94389748090000003" green="0.94389748090000003" blue="0.94389748090000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <accessibility key="accessibilityConfiguration" label="Leave Feedback">
+                                                        <bool key="isElement" value="YES"/>
+                                                    </accessibility>
                                                 </view>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -849,10 +852,13 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" id="OMb-fB-hUx" customClass="JCTOSButtonView">
+                                                <view contentMode="scaleToFill" id="OMb-fB-hUx" userLabel="End User License Agreement" customClass="JCTOSButtonView">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="55"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" red="0.94389748090000003" green="0.94389748090000003" blue="0.94389748090000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <accessibility key="accessibilityConfiguration" label="End User License Agreement">
+                                                        <bool key="isElement" value="YES"/>
+                                                    </accessibility>
                                                 </view>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -872,6 +878,9 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="55"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" red="0.94389748090000003" green="0.94389748090000003" blue="0.94389748090000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <accessibility key="accessibilityConfiguration" label="Sign Out">
+                                                        <bool key="isElement" value="YES"/>
+                                                    </accessibility>
                                                 </view>
                                             </subviews>
                                         </tableViewCellContentView>
