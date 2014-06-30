@@ -426,20 +426,20 @@
     //******************************************************
     // let's animate the wordmark
     //******************************************************
-    IFTTTFrameAnimation *wordmarkFrameAnimation = [IFTTTFrameAnimation animationWithView:self.wordmark];
-    [self.animator addAnimation:wordmarkFrameAnimation];
-    
-    [wordmarkFrameAnimation addKeyFrames:@[
-                                           [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:CGRectOffset(self.wordmark.frame, 200, 0)],
-                                           [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:self.wordmark.frame],
-                                           [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(self.wordmark.frame, self.view.frame.size.width, dy)],
-                                           [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andFrame:CGRectOffset(self.wordmark.frame, 0, dy)],
-                                           ]];
-    // Rotate a full circle from page 2 to 3
-    IFTTTAngleAnimation *wordmarkRotationAnimation = [IFTTTAngleAnimation animationWithView:self.wordmark];
-    [self.animator addAnimation:wordmarkRotationAnimation];
-    [wordmarkRotationAnimation addKeyFrames:@[[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAngle:0.0f],
-                                              [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAngle:(CGFloat)(2 * M_PI)],]];
+//    IFTTTFrameAnimation *wordmarkFrameAnimation = [IFTTTFrameAnimation animationWithView:self.wordmark];
+//    [self.animator addAnimation:wordmarkFrameAnimation];
+//    
+//    [wordmarkFrameAnimation addKeyFrames:@[
+//                                           [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:CGRectOffset(self.wordmark.frame, 200, 0)],
+//                                           [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:self.wordmark.frame],
+//                                           [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(self.wordmark.frame, self.view.frame.size.width, dy)],
+//                                           [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andFrame:CGRectOffset(self.wordmark.frame, 0, dy)],
+//                                           ]];
+//    // Rotate a full circle from page 2 to 3
+//    IFTTTAngleAnimation *wordmarkRotationAnimation = [IFTTTAngleAnimation animationWithView:self.wordmark];
+//    [self.animator addAnimation:wordmarkRotationAnimation];
+//    [wordmarkRotationAnimation addKeyFrames:@[[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAngle:0.0f],
+//                                              [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAngle:(CGFloat)(2 * M_PI)],]];
     
     //******************************************************
     // now, we animate the voicemailCell
@@ -456,6 +456,26 @@
     
     
     //******************************************************
+    // now, we animate the JiveLogoWhite
+    //******************************************************
+    IFTTTFrameAnimation *jiveLogoWhiteFrameAnimation = [IFTTTFrameAnimation animationWithView:self.jiveLogoWhite];
+    [self.animator addAnimation:jiveLogoWhiteFrameAnimation];
+    
+    [jiveLogoWhiteFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:CGRectOffset(self.jiveLogoWhite.frame, timeForPage(1), 0)]];
+    [jiveLogoWhiteFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.jiveLogoWhite.frame, timeForPage(2), upDy)]];
+    
+    
+    //******************************************************
+    // now, we animate the firstLabel
+    //******************************************************
+    IFTTTFrameAnimation *firstLabelFrameAnimation = [IFTTTFrameAnimation animationWithView:self.firstLabel];
+    [self.animator addAnimation:firstLabelFrameAnimation];
+    
+    [firstLabelFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:CGRectOffset(self.firstLabel.frame, timeForPage(1), 0)]];
+    [firstLabelFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.firstLabel.frame, timeForPage(2), dy)]];
+    
+    
+    //******************************************************
     // now, we animate the topLeft
     //******************************************************
     IFTTTFrameAnimation *topLeftFrameAnimation = [IFTTTFrameAnimation animationWithView:self.topLeft];
@@ -469,7 +489,7 @@
  
 
     //******************************************************
-    // now, we animate the topLeft
+    // now, we animate the topLeftFrame
     //******************************************************
     IFTTTFrameAnimation *topLeftLabelAnimation = [IFTTTFrameAnimation animationWithView:self.topLeftLabel];
     [self.animator addAnimation:topLeftLabelAnimation];
