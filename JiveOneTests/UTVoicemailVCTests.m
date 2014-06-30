@@ -82,6 +82,25 @@ describe(@"Voicemail VC", ^{
             [[expectFutureValue(theValue([cell.voicemail.read boolValue])) shouldEventually] beYes];
         });
         
+        it(@"should mark email for deletion when deleted", ^{
+            
+            NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
+            JCVoiceCell *cell = (JCVoiceCell*)[voicemailViewController.tableView cellForRowAtIndexPath:indexpath];
+            
+            [voicemailViewController voiceCellDeleteTapped:indexpath];
+            [[cell.voicemail.deleted should] beYes];
+            
+        });
+        
+        it(@"should delete marked voicemails in background", ^{
+           
+            NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
+            JCVoiceCell *cell = (JCVoiceCell*)[voicemailViewController.tableView cellForRowAtIndexPath:indexpath];
+            [voicemailViewController voiceCellDeleteTapped:indexpath];
+            [[expectFutureValue(theValue(cell.voicemail)) shouldEventuallyBeforeTimingOutAfter(5.0)] beNil];
+              
+        });
+        
     });
 });
 
