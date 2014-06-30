@@ -251,6 +251,7 @@
 		91B7CFC5192ABDF800927DDD /* JCSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B7CFC4192ABDF800927DDD /* JCSearchBar.m */; };
 		91B7CFCB192AD5B900927DDD /* search2.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7CFCA192AD5B900927DDD /* search2.png */; };
 		91B7CFCE192AD78B00927DDD /* searchGray2.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7CFCD192AD78B00927DDD /* searchGray2.png */; };
+		91CAE6751961C4FD004A28FD /* Alpine Script.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 91CAE6741961C4FD004A28FD /* Alpine Script.ttf */; };
 		91DDB1991935008A00550F10 /* JCSpeakerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DDB1981935008A00550F10 /* JCSpeakerView.m */; };
 		91DDB19D193500B500550F10 /* JCDeleteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DDB19C193500B500550F10 /* JCDeleteView.m */; };
 		91F6DFAB192A702F001C54FB /* Shared.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 91F6DFAA192A702F001C54FB /* Shared.xcconfig */; };
@@ -731,6 +732,7 @@
 		91B7CFC4192ABDF800927DDD /* JCSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSearchBar.m; sourceTree = "<group>"; };
 		91B7CFCA192AD5B900927DDD /* search2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search2.png; sourceTree = "<group>"; };
 		91B7CFCD192AD78B00927DDD /* searchGray2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = searchGray2.png; sourceTree = "<group>"; };
+		91CAE6741961C4FD004A28FD /* Alpine Script.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Alpine Script.ttf"; path = "../Alpine Script.ttf"; sourceTree = "<group>"; };
 		91DDB1971935008A00550F10 /* JCSpeakerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSpeakerView.h; sourceTree = "<group>"; };
 		91DDB1981935008A00550F10 /* JCSpeakerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSpeakerView.m; sourceTree = "<group>"; };
 		91DDB19B193500B500550F10 /* JCDeleteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDeleteView.h; sourceTree = "<group>"; };
@@ -1279,7 +1281,7 @@
 		275F4A5818AD0FBC00D2F069 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				DD577D521940DC6C008DAB46 /* icomoon.ttf */,
+				91CAE6761961CDE9004A28FD /* Fonts */,
 				271EBDAE1910525E00421BA9 /* GTalkNotify.aiff */,
 				275158F618AD10A500FD8D3F /* Images */,
 				275F4A5A18AD0FBC00D2F069 /* InfoPlist.strings */,
@@ -1801,6 +1803,15 @@
 			name = SearchBar;
 			sourceTree = "<group>";
 		};
+		91CAE6761961CDE9004A28FD /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				91CAE6741961C4FD004A28FD /* Alpine Script.ttf */,
+				DD577D521940DC6C008DAB46 /* icomoon.ttf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
 		91DDB1821934DED700550F10 /* StyleKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -1966,6 +1977,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91CAE6751961C4FD004A28FD /* Alpine Script.ttf in Resources */,
 				2700988718F4714100B6BC2F /* bubble-classic-gray@2x.png in Resources */,
 				2700989A18F4714100B6BC2F /* bubble-stroked.png in Resources */,
 				270098A918F4714100B6BC2F /* button-photo@2x.png in Resources */,

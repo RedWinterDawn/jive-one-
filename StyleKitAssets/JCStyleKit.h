@@ -50,6 +50,8 @@
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* scrubberTextTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* deleteTextTargets;
 @property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* speakerTextTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* jiveLogoBlackTargets;
+@property(strong, nonatomic) IBOutletCollection(NSObject) NSArray* jiveLogoWhiteTargets;
 
 // Colors
 + (UIColor*)unSelectedButtonColor;
@@ -98,6 +100,8 @@
 + (void)drawScrubberTextWithFrame: (CGRect)frame;
 + (void)drawDeleteTextWithFrame: (CGRect)frame;
 + (void)drawSpeakerTextWithFrame: (CGRect)frame;
++ (void)drawJiveLogoBlackWithFrame: (CGRect)frame;
++ (void)drawJiveLogoWhiteWithFrame: (CGRect)frame;
 
 // Generated Images
 + (UIImage*)imageOfLeaveFeedback_ButtonWithFrame: (CGRect)frame;
@@ -135,5 +139,7 @@
 + (UIImage*)imageOfScrubberTextWithFrame: (CGRect)frame;
 + (UIImage*)imageOfDeleteTextWithFrame: (CGRect)frame;
 + (UIImage*)imageOfSpeakerTextWithFrame: (CGRect)frame;
++ (UIImage*)imageOfJiveLogoBlackWithFrame: (CGRect)frame;
++ (UIImage*)imageOfJiveLogoWhiteWithFrame: (CGRect)frame;
 
 @end

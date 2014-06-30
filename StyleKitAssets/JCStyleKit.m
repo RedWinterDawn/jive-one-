@@ -152,7 +152,7 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
     CGContextRef context = UIGraphicsGetCurrentContext();
 
     //// Color Declarations
-    UIColor* iOSBlue = [UIColor colorWithRed: 0.09 green: 0.529 blue: 0.961 alpha: 1];
+    UIColor* black = [UIColor colorWithRed: 0.151 green: 0.151 blue: 0.151 alpha: 1];
 
     //// Bezier 3 Drawing
     CGContextSaveGState(context);
@@ -169,7 +169,7 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
 
     bezier3Path.lineJoinStyle = kCGLineJoinRound;
 
-    [iOSBlue setStroke];
+    [black setStroke];
     bezier3Path.lineWidth = 4;
     [bezier3Path stroke];
 
@@ -178,25 +178,38 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
 
 + (void)drawBottomRight;
 {
+    //// General Declarations
+    CGContextRef context = UIGraphicsGetCurrentContext();
+
     //// Color Declarations
-    UIColor* iOSBlue = [UIColor colorWithRed: 0.09 green: 0.529 blue: 0.961 alpha: 1];
+    UIColor* black = [UIColor colorWithRed: 0.151 green: 0.151 blue: 0.151 alpha: 1];
 
     //// Group
     {
+        CGContextSaveGState(context);
+        CGContextTranslateCTM(context, 13, 31);
+        CGContextRotateCTM(context, -7.4 * M_PI / 180);
+
+
+
         //// Bezier Drawing
         UIBezierPath* bezierPath = UIBezierPath.bezierPath;
-        [bezierPath moveToPoint: CGPointMake(7.8, 3)];
-        [bezierPath addCurveToPoint: CGPointMake(15, 59) controlPoint1: CGPointMake(17, 35) controlPoint2: CGPointMake(15, 43)];
-        [bezierPath moveToPoint: CGPointMake(22, 21)];
-        [bezierPath addLineToPoint: CGPointMake(7.8, 3)];
-        [bezierPath addLineToPoint: CGPointMake(4, 24)];
+        [bezierPath moveToPoint: CGPointMake(-5.2, -28)];
+        [bezierPath addCurveToPoint: CGPointMake(2, 33) controlPoint1: CGPointMake(4, 6.86) controlPoint2: CGPointMake(2, 15.57)];
+        [bezierPath moveToPoint: CGPointMake(9, -8.39)];
+        [bezierPath addLineToPoint: CGPointMake(-5.2, -28)];
+        [bezierPath addLineToPoint: CGPointMake(-9, -5.12)];
         bezierPath.lineCapStyle = kCGLineCapRound;
 
         bezierPath.lineJoinStyle = kCGLineJoinRound;
 
-        [iOSBlue setStroke];
+        [black setStroke];
         bezierPath.lineWidth = 4;
         [bezierPath stroke];
+
+
+
+        CGContextRestoreGState(context);
     }
 }
 
@@ -206,7 +219,7 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
     CGContextRef context = UIGraphicsGetCurrentContext();
 
     //// Color Declarations
-    UIColor* iOSBlue = [UIColor colorWithRed: 0.09 green: 0.529 blue: 0.961 alpha: 1];
+    UIColor* black = [UIColor colorWithRed: 0.151 green: 0.151 blue: 0.151 alpha: 1];
 
     //// Group
     {
@@ -227,7 +240,7 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
 
         bezier3Path.lineJoinStyle = kCGLineJoinRound;
 
-        [iOSBlue setStroke];
+        [black setStroke];
         bezier3Path.lineWidth = 4;
         [bezier3Path stroke];
 
@@ -243,7 +256,7 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
     CGContextRef context = UIGraphicsGetCurrentContext();
 
     //// Color Declarations
-    UIColor* iOSBlue = [UIColor colorWithRed: 0.09 green: 0.529 blue: 0.961 alpha: 1];
+    UIColor* black = [UIColor colorWithRed: 0.151 green: 0.151 blue: 0.151 alpha: 1];
 
     //// Bezier Drawing
     CGContextSaveGState(context);
@@ -251,16 +264,16 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
     CGContextRotateCTM(context, -3.46 * M_PI / 180);
 
     UIBezierPath* bezierPath = UIBezierPath.bezierPath;
-    [bezierPath moveToPoint: CGPointMake(-56, 52.5)];
-    [bezierPath addCurveToPoint: CGPointMake(57, -52.5) controlPoint1: CGPointMake(-37, 40.5) controlPoint2: CGPointMake(39, 10.5)];
-    [bezierPath moveToPoint: CGPointMake(-30, 48.5)];
-    [bezierPath addLineToPoint: CGPointMake(-57, 52.5)];
-    [bezierPath addLineToPoint: CGPointMake(-40, 29.5)];
+    [bezierPath moveToPoint: CGPointMake(-56, 74.58)];
+    [bezierPath addCurveToPoint: CGPointMake(57, -52.5) controlPoint1: CGPointMake(-37, 60.06) controlPoint2: CGPointMake(42.46, 42.48)];
+    [bezierPath moveToPoint: CGPointMake(-26.47, 72.38)];
+    [bezierPath addLineToPoint: CGPointMake(-57, 74.58)];
+    [bezierPath addLineToPoint: CGPointMake(-38.24, 51.63)];
     bezierPath.lineCapStyle = kCGLineCapRound;
 
     bezierPath.lineJoinStyle = kCGLineJoinRound;
 
-    [iOSBlue setStroke];
+    [black setStroke];
     bezierPath.lineWidth = 4;
     [bezierPath stroke];
 
@@ -868,7 +881,7 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
 + (void)drawContactsIcon;
 {
     //// Color Declarations
-    UIColor* color2 = [UIColor colorWithRed: 0.151 green: 0.151 blue: 0.151 alpha: 1];
+    UIColor* black = [UIColor colorWithRed: 0.151 green: 0.151 blue: 0.151 alpha: 1];
 
     //// contactsGroup
     {
@@ -886,7 +899,7 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
         [bezierPath closePath];
         bezierPath.miterLimit = 4;
 
-        [color2 setFill];
+        [black setFill];
         [bezierPath fill];
 
 
@@ -904,7 +917,7 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
         [bezier2Path closePath];
         bezier2Path.miterLimit = 4;
 
-        [color2 setFill];
+        [black setFill];
         [bezier2Path fill];
 
 
@@ -922,7 +935,7 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
         [bezier3Path closePath];
         bezier3Path.miterLimit = 4;
 
-        [color2 setFill];
+        [black setFill];
         [bezier3Path fill];
 
 
@@ -988,7 +1001,7 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
         [bezier5Path closePath];
         bezier5Path.miterLimit = 4;
 
-        [color2 setFill];
+        [black setFill];
         [bezier5Path fill];
     }
 }
@@ -1674,6 +1687,270 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
     [@"Speaker On/Off" drawInRect: textRect withAttributes: textFontAttributes];
 }
 
++ (void)drawJiveLogoBlackWithFrame: (CGRect)frame;
+{
+    //// Color Declarations
+    UIColor* black = [UIColor colorWithRed: 0.151 green: 0.151 blue: 0.151 alpha: 1];
+
+
+    //// Subframes
+    CGRect group = CGRectMake(CGRectGetMinX(frame), CGRectGetMinY(frame), floor((CGRectGetWidth(frame)) * 0.97339 + 0.48) + 0.02, floor((CGRectGetHeight(frame)) * 0.97792 + 0.5));
+
+
+    //// Group
+    {
+        //// Bezier Drawing
+        UIBezierPath* bezierPath = UIBezierPath.bezierPath;
+        [bezierPath moveToPoint: CGPointMake(CGRectGetMinX(group) + 0.35032 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.99988 * CGRectGetHeight(group))];
+        [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.28423 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.95488 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.32532 * CGRectGetWidth(group), CGRectGetMinY(group) + 1.00192 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.29382 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.97806 * CGRectGetHeight(group))];
+        [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.29861 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.87683 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.27362 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.92898 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.27875 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.89489 * CGRectGetHeight(group))];
+        [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.31026 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.84785 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.30820 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.86831 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.31026 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.85978 * CGRectGetHeight(group))];
+        [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.31026 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.14807 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.30991 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.61471 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.30991 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.38156 * CGRectGetHeight(group))];
+        [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.29930 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.12250 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.31026 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.13750 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.30717 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.13000 * CGRectGetHeight(group))];
+        [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.32601 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.00457 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.26197 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.08603 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.27738 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.02434 * CGRectGetHeight(group))];
+        [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.41231 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.03422 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.36025 * CGRectGetWidth(group), CGRectGetMinY(group) + -0.00941 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.39792 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.01104 * CGRectGetHeight(group))];
+        [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.40101 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.12455 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.43080 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.06456 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.42669 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.09864 * CGRectGetHeight(group))];
+        [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.39107 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.14875 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.39381 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.13205 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.39107 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.13886 * CGRectGetHeight(group))];
+        [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.39073 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.57278 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.39107 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.29021 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.39073 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.43132 * CGRectGetHeight(group))];
+        [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.39107 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.85910 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.39073 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.66822 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.39073 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.76366 * CGRectGetHeight(group))];
+        [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.39621 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.87035 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.39107 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.86285 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.39347 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.86762 * CGRectGetHeight(group))];
+        [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.42189 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.94125 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.41710 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.88978 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.42703 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.91364 * CGRectGetHeight(group))];
+        [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.36642 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.99920 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.41607 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.97124 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.39484 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.98931 * CGRectGetHeight(group))];
+        [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.35032 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.99988 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.36162 * CGRectGetWidth(group), CGRectGetMinY(group) + 1.00056 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.35580 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.99954 * CGRectGetHeight(group))];
+        [bezierPath closePath];
+        bezierPath.miterLimit = 4;
+
+        [black setFill];
+        [bezierPath fill];
+
+
+        //// Bezier 2 Drawing
+        UIBezierPath* bezier2Path = UIBezierPath.bezierPath;
+        [bezier2Path moveToPoint: CGPointMake(CGRectGetMinX(group) + 0.99995 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.12284 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.99926 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.19170 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.99995 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.14670 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 1.00029 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.16920 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.98693 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.20022 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.99926 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.19477 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.99173 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.19954 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.84961 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.22169 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.94139 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.20772 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.89550 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.21419 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.84276 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.23022 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.84687 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.22203 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.84276 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.22715 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.84276 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.37474 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.84242 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.27828 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.84276 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.32634 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.85509 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.38326 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.84276 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.38428 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.84756 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.38462 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.96467 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.36417 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.89173 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.37679 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.92803 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.37065 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.98111 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.37781 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.98077 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.36111 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.98111 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.36111 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.98145 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.42587 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.98111 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.39383 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.98043 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.40985 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.97049 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.43950 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.98180 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.43439 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.97837 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.43814 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.87701 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.45382 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.93933 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.44428 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.90817 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.44905 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.85064 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.45859 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.86810 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.45518 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.85920 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.45586 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.84379 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.46916 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.84756 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.45961 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.84379 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.46541 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.84310 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.60959 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.84310 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.51586 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.84345 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.56289 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.85543 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.61914 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.84310 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.61914 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.84687 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.62084 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.97632 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.59868 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.89584 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.61198 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.93625 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.60516 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.99995 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.59698 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.98317 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.59766 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.99036 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.59766 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.99995 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.65015 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.99995 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.61505 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.99995 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.63277 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.97289 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.68015 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.99995 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.67708 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.99995 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.67640 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.82222 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.70367 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.92255 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.68731 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.87255 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.69583 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.76400 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.71253 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.80338 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.70674 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.78455 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.70946 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.76400 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.65084 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.76400 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.69072 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.76400 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.67095 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.76434 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.17602 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.76434 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.49268 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.76434 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.33452 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.77872 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.15863 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.76434 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.16477 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.76742 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.16034 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.98625 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.12387 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.84790 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.14739 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.91707 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.13546 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.99995 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.12284 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.99036 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.12353 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.99447 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.12319 * CGRectGetHeight(group))];
+        [bezier2Path closePath];
+        bezier2Path.miterLimit = 4;
+
+        [black setFill];
+        [bezier2Path fill];
+
+
+        //// Bezier 3 Drawing
+        UIBezierPath* bezier3Path = UIBezierPath.bezierPath;
+        [bezier3Path moveToPoint: CGPointMake(CGRectGetMinX(group) + 0.57874 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.56596 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.58456 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.53290 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.58079 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.55505 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.58250 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.54415 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.62599 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.27350 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.59860 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.44632 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.61230 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.36008 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.63969 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.19068 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.63044 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.24589 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.63455 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.21794 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.64791 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.18079 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.64038 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.18693 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.64449 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.18147 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.72325 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.16852 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.67222 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.17602 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.69722 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.17261 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.70476 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.26089 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.71674 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.20022 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.71058 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.23056 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.67565 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.41667 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.69482 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.31270 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.68592 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.36486 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.65099 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.53631 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.66777 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.45655 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.65887 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.49643 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.62805 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.65629 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.64312 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.57619 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.63558 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.61641 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.61401 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.72651 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.62360 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.67981 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.61914 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.70333 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.59962 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.73980 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.61264 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.73401 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.60853 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.73878 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.55202 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.74730 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.58353 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.74151 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.56778 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.74389 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.53764 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.73810 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.54312 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.74900 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.53935 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.74560 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.52429 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.67061 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.53319 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.71560 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.52908 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.69310 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.50819 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.59800 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.51915 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.64641 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.51333 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.62220 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.48490 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.48756 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.50032 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.56119 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.49278 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.52438 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.45991 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.36929 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.47669 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.44802 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.46813 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.40883 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.43696 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.25953 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.45237 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.33281 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.44450 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.29634 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.42806 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.21556 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.43388 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.24521 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.43114 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.23090 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.50511 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.20363 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.45408 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.21147 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.47943 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.20704 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.51299 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.21147 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.50751 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.20329 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.51230 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.20840 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.53079 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.31679 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.51915 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.24658 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.52497 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.28169 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.55579 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.46541 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.53901 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.36622 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.54757 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.41598 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.57086 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.55608 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.56093 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.49575 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.56572 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.52608 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.57360 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.56596 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.57154 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.55949 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.57257 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.56255 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.57874 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.56596 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.57531 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.56562 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.57702 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.56596 * CGRectGetHeight(group))];
+        [bezier3Path closePath];
+        bezier3Path.miterLimit = 4;
+
+        [black setFill];
+        [bezier3Path fill];
+
+
+        //// Bezier 4 Drawing
+        UIBezierPath* bezier4Path = UIBezierPath.bezierPath;
+        [bezier4Path moveToPoint: CGPointMake(CGRectGetMinX(group) + 0.00000 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.78888 * CGRectGetHeight(group))];
+        [bezier4Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.06267 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.72958 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.02055 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.76946 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.04109 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.74969 * CGRectGetHeight(group))];
+        [bezier4Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.10513 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.74185 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.07500 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.73980 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.08869 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.74457 * CGRectGetHeight(group))];
+        [bezier4Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.15684 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.68560 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.13253 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.73742 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.15616 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.71390 * CGRectGetHeight(group))];
+        [bezier4Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.15787 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.53597 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.15787 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.63584 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.15787 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.58573 * CGRectGetHeight(group))];
+        [bezier4Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.15753 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.26873 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.15787 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.44700 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.15787 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.35770 * CGRectGetHeight(group))];
+        [bezier4Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.16814 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.25510 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.15753 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.26055 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.15992 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.25646 * CGRectGetHeight(group))];
+        [bezier4Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.22910 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.24521 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.18835 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.25203 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.20889 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.24862 * CGRectGetHeight(group))];
+        [bezier4Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.23937 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.25714 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.23937 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.24351 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.23937 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.24964 * CGRectGetHeight(group))];
+        [bezier4Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.23937 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.56324 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.23937 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.35906 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.23937 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.46132 * CGRectGetHeight(group))];
+        [bezier4Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.23937 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.66481 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.23937 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.59698 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.24006 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.63107 * CGRectGetHeight(group))];
+        [bezier4Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.09931 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.82433 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.23800 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.74628 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.18355 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.81206 * CGRectGetHeight(group))];
+        [bezier4Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.00000 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.78888 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.06301 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.82979 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.01952 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.81445 * CGRectGetHeight(group))];
+        [bezier4Path closePath];
+        bezier4Path.miterLimit = 4;
+
+        [black setFill];
+        [bezier4Path fill];
+    }
+}
+
++ (void)drawJiveLogoWhiteWithFrame: (CGRect)frame;
+{
+    //// Color Declarations
+    UIColor* white = [UIColor colorWithRed: 1 green: 1 blue: 1 alpha: 1];
+
+
+    //// Subframes
+    CGRect group = CGRectMake(CGRectGetMinX(frame), CGRectGetMinY(frame), floor((CGRectGetWidth(frame)) * 0.97339 + 0.48) + 0.02, floor((CGRectGetHeight(frame)) * 0.97792 + 0.5));
+
+
+    //// Group
+    {
+        //// Bezier Drawing
+        UIBezierPath* bezierPath = UIBezierPath.bezierPath;
+        [bezierPath moveToPoint: CGPointMake(CGRectGetMinX(group) + 0.35032 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.99988 * CGRectGetHeight(group))];
+        [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.28423 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.95488 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.32532 * CGRectGetWidth(group), CGRectGetMinY(group) + 1.00192 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.29382 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.97806 * CGRectGetHeight(group))];
+        [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.29861 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.87683 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.27362 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.92898 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.27875 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.89489 * CGRectGetHeight(group))];
+        [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.31026 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.84785 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.30820 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.86831 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.31026 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.85978 * CGRectGetHeight(group))];
+        [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.31026 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.14807 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.30991 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.61471 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.30991 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.38156 * CGRectGetHeight(group))];
+        [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.29930 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.12250 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.31026 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.13750 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.30717 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.13000 * CGRectGetHeight(group))];
+        [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.32601 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.00457 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.26197 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.08603 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.27738 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.02434 * CGRectGetHeight(group))];
+        [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.41231 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.03422 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.36025 * CGRectGetWidth(group), CGRectGetMinY(group) + -0.00941 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.39792 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.01104 * CGRectGetHeight(group))];
+        [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.40101 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.12455 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.43080 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.06456 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.42669 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.09864 * CGRectGetHeight(group))];
+        [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.39107 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.14875 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.39381 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.13205 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.39107 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.13886 * CGRectGetHeight(group))];
+        [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.39073 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.57278 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.39107 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.29021 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.39073 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.43132 * CGRectGetHeight(group))];
+        [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.39107 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.85910 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.39073 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.66822 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.39073 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.76366 * CGRectGetHeight(group))];
+        [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.39621 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.87035 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.39107 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.86285 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.39347 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.86762 * CGRectGetHeight(group))];
+        [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.42189 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.94125 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.41710 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.88978 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.42703 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.91364 * CGRectGetHeight(group))];
+        [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.36642 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.99920 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.41607 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.97124 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.39484 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.98931 * CGRectGetHeight(group))];
+        [bezierPath addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.35032 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.99988 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.36162 * CGRectGetWidth(group), CGRectGetMinY(group) + 1.00056 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.35580 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.99954 * CGRectGetHeight(group))];
+        [bezierPath closePath];
+        bezierPath.miterLimit = 4;
+
+        [white setFill];
+        [bezierPath fill];
+
+
+        //// Bezier 2 Drawing
+        UIBezierPath* bezier2Path = UIBezierPath.bezierPath;
+        [bezier2Path moveToPoint: CGPointMake(CGRectGetMinX(group) + 0.99995 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.12284 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.99926 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.19170 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.99995 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.14670 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 1.00029 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.16920 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.98693 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.20022 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.99926 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.19477 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.99173 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.19954 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.84961 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.22169 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.94139 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.20772 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.89550 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.21419 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.84276 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.23022 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.84687 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.22203 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.84276 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.22715 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.84276 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.37474 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.84242 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.27828 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.84276 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.32634 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.85509 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.38326 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.84276 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.38428 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.84756 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.38462 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.96467 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.36417 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.89173 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.37679 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.92803 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.37065 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.98111 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.37781 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.98077 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.36111 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.98111 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.36111 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.98145 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.42587 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.98111 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.39383 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.98043 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.40985 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.97049 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.43950 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.98180 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.43439 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.97837 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.43814 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.87701 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.45382 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.93933 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.44428 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.90817 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.44905 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.85064 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.45859 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.86810 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.45518 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.85920 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.45586 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.84379 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.46916 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.84756 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.45961 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.84379 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.46541 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.84310 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.60959 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.84310 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.51586 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.84345 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.56289 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.85543 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.61914 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.84310 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.61914 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.84687 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.62084 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.97632 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.59868 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.89584 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.61198 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.93625 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.60516 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.99995 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.59698 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.98317 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.59766 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.99036 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.59766 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.99995 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.65015 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.99995 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.61505 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.99995 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.63277 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.97289 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.68015 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.99995 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.67708 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.99995 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.67640 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.82222 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.70367 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.92255 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.68731 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.87255 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.69583 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.76400 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.71253 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.80338 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.70674 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.78455 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.70946 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.76400 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.65084 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.76400 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.69072 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.76400 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.67095 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.76434 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.17602 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.76434 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.49268 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.76434 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.33452 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.77872 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.15863 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.76434 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.16477 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.76742 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.16034 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.98625 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.12387 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.84790 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.14739 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.91707 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.13546 * CGRectGetHeight(group))];
+        [bezier2Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.99995 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.12284 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.99036 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.12353 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.99447 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.12319 * CGRectGetHeight(group))];
+        [bezier2Path closePath];
+        bezier2Path.miterLimit = 4;
+
+        [white setFill];
+        [bezier2Path fill];
+
+
+        //// Bezier 3 Drawing
+        UIBezierPath* bezier3Path = UIBezierPath.bezierPath;
+        [bezier3Path moveToPoint: CGPointMake(CGRectGetMinX(group) + 0.57874 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.56596 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.58456 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.53290 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.58079 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.55505 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.58250 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.54415 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.62599 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.27350 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.59860 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.44632 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.61230 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.36008 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.63969 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.19068 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.63044 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.24589 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.63455 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.21794 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.64791 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.18079 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.64038 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.18693 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.64449 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.18147 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.72325 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.16852 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.67222 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.17602 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.69722 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.17261 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.70476 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.26089 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.71674 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.20022 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.71058 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.23056 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.67565 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.41667 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.69482 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.31270 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.68592 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.36486 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.65099 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.53631 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.66777 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.45655 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.65887 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.49643 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.62805 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.65629 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.64312 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.57619 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.63558 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.61641 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.61401 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.72651 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.62360 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.67981 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.61914 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.70333 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.59962 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.73980 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.61264 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.73401 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.60853 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.73878 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.55202 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.74730 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.58353 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.74151 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.56778 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.74389 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.53764 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.73810 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.54312 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.74900 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.53935 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.74560 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.52429 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.67061 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.53319 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.71560 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.52908 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.69310 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.50819 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.59800 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.51915 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.64641 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.51333 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.62220 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.48490 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.48756 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.50032 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.56119 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.49278 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.52438 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.45991 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.36929 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.47669 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.44802 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.46813 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.40883 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.43696 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.25953 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.45237 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.33281 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.44450 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.29634 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.42806 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.21556 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.43388 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.24521 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.43114 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.23090 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.50511 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.20363 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.45408 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.21147 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.47943 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.20704 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.51299 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.21147 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.50751 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.20329 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.51230 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.20840 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.53079 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.31679 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.51915 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.24658 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.52497 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.28169 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.55579 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.46541 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.53901 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.36622 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.54757 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.41598 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.57086 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.55608 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.56093 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.49575 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.56572 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.52608 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.57360 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.56596 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.57154 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.55949 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.57257 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.56255 * CGRectGetHeight(group))];
+        [bezier3Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.57874 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.56596 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.57531 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.56562 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.57702 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.56596 * CGRectGetHeight(group))];
+        [bezier3Path closePath];
+        bezier3Path.miterLimit = 4;
+
+        [white setFill];
+        [bezier3Path fill];
+
+
+        //// Bezier 4 Drawing
+        UIBezierPath* bezier4Path = UIBezierPath.bezierPath;
+        [bezier4Path moveToPoint: CGPointMake(CGRectGetMinX(group) + 0.00000 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.78888 * CGRectGetHeight(group))];
+        [bezier4Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.06267 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.72958 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.02055 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.76946 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.04109 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.74969 * CGRectGetHeight(group))];
+        [bezier4Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.10513 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.74185 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.07500 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.73980 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.08869 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.74457 * CGRectGetHeight(group))];
+        [bezier4Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.15684 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.68560 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.13253 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.73742 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.15616 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.71390 * CGRectGetHeight(group))];
+        [bezier4Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.15787 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.53597 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.15787 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.63584 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.15787 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.58573 * CGRectGetHeight(group))];
+        [bezier4Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.15753 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.26873 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.15787 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.44700 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.15787 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.35770 * CGRectGetHeight(group))];
+        [bezier4Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.16814 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.25510 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.15753 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.26055 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.15992 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.25646 * CGRectGetHeight(group))];
+        [bezier4Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.22910 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.24521 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.18835 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.25203 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.20889 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.24862 * CGRectGetHeight(group))];
+        [bezier4Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.23937 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.25714 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.23937 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.24351 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.23937 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.24964 * CGRectGetHeight(group))];
+        [bezier4Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.23937 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.56324 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.23937 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.35906 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.23937 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.46132 * CGRectGetHeight(group))];
+        [bezier4Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.23937 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.66481 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.23937 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.59698 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.24006 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.63107 * CGRectGetHeight(group))];
+        [bezier4Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.09931 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.82433 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.23800 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.74628 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.18355 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.81206 * CGRectGetHeight(group))];
+        [bezier4Path addCurveToPoint: CGPointMake(CGRectGetMinX(group) + 0.00000 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.78888 * CGRectGetHeight(group)) controlPoint1: CGPointMake(CGRectGetMinX(group) + 0.06301 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.82979 * CGRectGetHeight(group)) controlPoint2: CGPointMake(CGRectGetMinX(group) + 0.01952 * CGRectGetWidth(group), CGRectGetMinY(group) + 0.81445 * CGRectGetHeight(group))];
+        [bezier4Path closePath];
+        bezier4Path.miterLimit = 4;
+
+        [white setFill];
+        [bezier4Path fill];
+    }
+}
+
 #pragma mark Generated Images
 
 + (UIImage*)imageOfLeaveFeedback_ButtonWithFrame: (CGRect)frame;
@@ -1704,7 +1981,7 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
     if (_imageOfBottomRight)
         return _imageOfBottomRight;
 
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(25, 62), NO, 0.0f);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(33, 67), NO, 0.0f);
     [JCStyleKit drawBottomRight];
     _imageOfBottomRight = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
@@ -1730,7 +2007,7 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
     if (_imageOfTopRight)
         return _imageOfTopRight;
 
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(118, 120), NO, 0.0f);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(117, 145), NO, 0.0f);
     [JCStyleKit drawTopRight];
     _imageOfTopRight = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
@@ -2072,6 +2349,26 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
     UIGraphicsEndImageContext();
 
     return imageOfSpeakerText;
+}
+
++ (UIImage*)imageOfJiveLogoBlackWithFrame: (CGRect)frame;
+{
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(300, 300), NO, 0.0f);
+    [JCStyleKit drawJiveLogoBlackWithFrame: frame];
+    UIImage* imageOfJiveLogoBlack = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return imageOfJiveLogoBlack;
+}
+
++ (UIImage*)imageOfJiveLogoWhiteWithFrame: (CGRect)frame;
+{
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(300, 300), NO, 0.0f);
+    [JCStyleKit drawJiveLogoWhiteWithFrame: frame];
+    UIImage* imageOfJiveLogoWhite = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return imageOfJiveLogoWhite;
 }
 
 #pragma mark Customization Infrastructure

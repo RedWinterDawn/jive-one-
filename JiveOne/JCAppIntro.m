@@ -12,16 +12,32 @@
 
 #define NUMBER_OF_PAGES 4
 #define timeForPage(page) (NSInteger)(self.view.frame.size.width * (page - 1))
+
+//Arrows
 #define kTopLeft_x -110
 #define kTopLeft_y -55
 #define kTopRight_x 5
 #define kTopRight_y -70
 #define kBottomLeft_x -15
-#define kBottomLeft_y 125
-#define kBottomRight_x 70
+#define kBottomLeft_y 115
+#define kBottomRight_x 65
 #define kBottomRight_y 95
-#define blueTextColor [UIColor colorWithRed:0.070 green:0.675 blue:0.999 alpha:1.000]
+#define labelTextColor [UIColor whiteColor]
 
+//Labels
+#define kTopLeft_x_Offset -80
+#define kTopLeft_y_Offset -110
+
+#define kTopRight_x_Offset 45
+#define kTopRight_y_Offset -160
+
+#define kBottomLeft_x_Offset -75
+#define kBottomLeft_y_Offset 190
+
+#define kBottomRight_x_Offset 75
+#define kBottomRight_y_Offset 150
+
+#define kFontSize 24
 
 
 @interface JCAppIntro ()
@@ -250,10 +266,7 @@
     [self.bottomRight setAlpha:0.0];
     [self.scrollView addSubview:self.bottomRight];
     
-#define kTopLeft_x_Offset -80
-#define kTopRight_x_Offset 50
-#define kBottomLeft_x_Offset 130
-#define kBottomRight_x_Offset 75
+
 
     //******************************************************
     //This is where we add all the text the the labels of the tutorials
@@ -271,46 +284,57 @@
     
     UILabel *playPauseText = [[UILabel alloc] init];
     playPauseText.text = @"Play/Pause";
+    [playPauseText setFont:[UIFont fontWithName:@"Alpine Script" size:kFontSize]];
     [playPauseText sizeToFit];
-    [playPauseText setTextColor:blueTextColor];
+    [playPauseText setTextColor:labelTextColor];
     playPauseText.center = self.view.center;
-    [playPauseText setFont:[UIFont fontWithName:@"MarkerFelt-Wide" size:16]];
-    playPauseText.frame = CGRectOffset(playPauseText.frame, timeForPage(1) + kTopLeft_x_Offset, -110);
+    playPauseText.frame = CGRectOffset(playPauseText.frame, timeForPage(1) + kTopLeft_x_Offset, kTopLeft_y_Offset);
+    [playPauseText setAlpha:0.0];
+    self.topLeftLabel = playPauseText;
+    [self.scrollView addSubview:self.topLeftLabel];
     
-//    UIImageView *playPauseImageView = [[UIImageView alloc]initWithImage:[JCStyleKit imageOfPlayPauseTextWithFrame:playPauseText.frame]];
-//    [self.scrollView addSubview:playPauseImageView];
-//    self.topLeftLabel = playPauseText;
+    CGRect ppFrame = CGRectMake(100, 100, 125, 39);
+    UIImageView *playPauseImageView = [[UIImageView alloc]initWithImage:[JCStyleKit imageOfPlayPauseTextWithFrame:ppFrame]];
+    [self.scrollView addSubview:playPauseImageView];
     
     UILabel *scrubberText = [[UILabel alloc] init];
     scrubberText.text = @"Span voicemail segments";
+    [scrubberText setFont:[UIFont fontWithName:@"Alpine Script" size:kFontSize]];
     [scrubberText sizeToFit];
-    [scrubberText setTextColor:blueTextColor];
+    [scrubberText setTextColor:labelTextColor];
     scrubberText.center = self.view.center;
-    [scrubberText setFont:[UIFont fontWithName:@"MarkerFelt-Wide" size:16]];
-    scrubberText.frame = CGRectOffset(scrubberText.frame, timeForPage(1) + kTopRight_x_Offset, -160);
+    scrubberText.frame = CGRectOffset(scrubberText.frame, timeForPage(1) + kTopRight_x_Offset, kTopRight_y_Offset);
+    [scrubberText setAlpha:0.0];
     [self.scrollView addSubview:scrubberText];
     self.topRightLabel = scrubberText;
+    NSLog(@"ScrT%@",NSStringFromCGRect(scrubberText.frame));
+
     
     UILabel *speakerText = [[UILabel alloc] init];
-    speakerText.text = @"Listen to your message using Jive's patented Sonar Technology.";
+    speakerText.text = @"Speaker On/Off";
+    [speakerText setFont:[UIFont fontWithName:@"Alpine Script" size:kFontSize]];
     [speakerText sizeToFit];
-    [speakerText setTextColor:blueTextColor];
+    [speakerText setTextColor:labelTextColor];
     speakerText.center = self.view.center;
-    [speakerText setFont:[UIFont fontWithName:@"MarkerFelt-Wide" size:16]];
-    speakerText.frame = CGRectMake(speakerText.frame.origin.x, speakerText.frame.origin.y, 200, 50);
-    [speakerText setNumberOfLines:0];
-    [speakerText setLineBreakMode:NSLineBreakByWordWrapping];
-    speakerText.frame = CGRectOffset(speakerText.frame, timeForPage(1) + kBottomLeft_x_Offset, 190);
+//    speakerText.frame = CGRectMake(speakerText.frame.origin.x, speakerText.frame.origin.y, 200, 50);
+//    [speakerText setNumberOfLines:0];
+//    [speakerText setLineBreakMode:NSLineBreakByWordWrapping];
+    speakerText.frame = CGRectOffset(speakerText.frame, timeForPage(1) + kBottomLeft_x_Offset, kBottomLeft_y_Offset);
+    [speakerText setAlpha:0.0];
+
+//    NSLog(@"ST%@",NSStringFromCGRect(speakerText.frame));
+
     [self.scrollView addSubview:speakerText];
     self.bottomLeftLabel = speakerText;
     
     UILabel *deleteText = [[UILabel alloc] init];
-    deleteText.text = @"Expunge";
+    deleteText.text = @"Delete";
+    [deleteText setFont:[UIFont fontWithName:@"Alpine Script" size:kFontSize]];
     [deleteText sizeToFit];
-    [deleteText setTextColor:blueTextColor];
+    [deleteText setTextColor:labelTextColor];
     deleteText.center = self.view.center;
-    [deleteText setFont:[UIFont fontWithName:@"MarkerFelt-Wide" size:16]];
-    deleteText.frame = CGRectOffset(deleteText.frame, timeForPage(1) + kBottomRight_x_Offset, 140);
+    deleteText.frame = CGRectOffset(deleteText.frame, timeForPage(1) + kBottomRight_x_Offset, kBottomRight_y_Offset);
+    [deleteText setAlpha:0.0];
     [self.scrollView addSubview:deleteText];
     self.bottomRightLabel = deleteText;
     
@@ -546,6 +570,41 @@
     [bottomRightAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f]];
     [bottomRightAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:1.0f]];
     [bottomRightAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
+    
+    //******************************************************
+    //fade all the Label in on page 2 and out on page 4
+    //******************************************************
+    IFTTTAlphaAnimation *topLeftLabelAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.topLeftLabel];
+    [self.animator addAnimation:topLeftLabelAlphaAnimation];
+    
+    [topLeftLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:0.0f]];
+    [topLeftLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f]];
+    [topLeftLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:1.0f]];
+    [topLeftLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
+    
+    IFTTTAlphaAnimation *topRightLabelAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.topRightLabel];
+    [self.animator addAnimation:topRightLabelAlphaAnimation];
+    
+    [topRightLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:0.0f]];
+    [topRightLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f]];
+    [topRightLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:1.0f]];
+    [topRightLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
+    
+    IFTTTAlphaAnimation *bottomLeftLabelAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.bottomLeftLabel];
+    [self.animator addAnimation:bottomLeftLabelAlphaAnimation];
+    
+    [bottomLeftLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:0.0f]];
+    [bottomLeftLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f]];
+    [bottomLeftLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:1.0f]];
+    [bottomLeftLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
+    
+    IFTTTAlphaAnimation *bottomRightLabelAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.bottomRightLabel];
+    [self.animator addAnimation:bottomRightLabelAlphaAnimation];
+    
+    [bottomRightLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:0.0f]];
+    [bottomRightLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f]];
+    [bottomRightLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:1.0f]];
+    [bottomRightLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
     
     //******************************************************
     // Fade out the label by dragging on the last page
