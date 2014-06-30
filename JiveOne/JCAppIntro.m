@@ -123,7 +123,7 @@
 }
 
 -(void)placeOffsetsForStoryBoardViewItems{
-//    self.scrollView addSubview:<#(UIView *)#>
+//    self.scrollView addSubview:self.s
     [self.scrollView addSubview:self.dismissButton];
     self.dismissButton.frame = CGRectOffset(self.dismissButton.frame, timeForPage(3), 0);
 }

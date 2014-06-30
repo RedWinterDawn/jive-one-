@@ -23,8 +23,6 @@
 @property (weak, nonatomic) IBOutlet UIView *loginViewContainer;
 @property (weak, nonatomic) IBOutlet UIView *logo;
 @property (weak, nonatomic) IBOutlet UIImageView *coverImageView;
-
-@property (weak, nonatomic) IBOutlet UIPageControl *pageControlDots;
 - (void)goToApplication;
 - (IBAction)termsAndConditionsButton:(id)sender;
 @end
