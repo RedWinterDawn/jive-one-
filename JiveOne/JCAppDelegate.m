@@ -189,7 +189,8 @@ int didNotify;
     didNotify = 0;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(alertUserToUpdate:) name:@"AppIsOutdated" object:nil];
     [[JCVersion sharedClient] getVersion];
-
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"kApplicationDidBecomeActive" object:nil];
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
@@ -633,14 +634,14 @@ int didNotify;
                 
             }
             
-            NSRange rangeVoicemail = [key rangeOfString:@"voicemails"];
+            NSRange rangeVoicemail = [key rangeOfString:@"jrn"];
             if (rangeVoicemail.location != NSNotFound ) {
                 NSNumber *notified = _badges[key];
                 if (![notified boolValue]) {
                     notified = [NSNumber numberWithBool:YES];
                     Voicemail *lastEntry = [Voicemail MR_findFirstByAttribute:@"jrn" withValue:key];
                     if (lastEntry) {
-                        NSString *alertMessage = lastEntry.callerId ? [NSString stringWithFormat:@"New voicemail from %@", lastEntry.mailboxId]  : @"Unknown";
+                        NSString *alertMessage = lastEntry.callerId ? [NSString stringWithFormat:@"New voicemail from %@", lastEntry.callerIdNumber]  : @"Unknown";
                         [self showLocalNotificationWithType:@"voicemail" alertMessage:alertMessage];
                     }
                 }

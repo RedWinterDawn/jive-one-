@@ -157,18 +157,19 @@
 //
 //}
 //
-//- (void) DeleteVoicemail:(Voicemail*)voicemail success:(void (^)(id JSON))success
-//                          failure:(void (^)(NSError *err))failure
-//{
-//
-//    [self setRequestAuthHeader];
-//    NSString *url = [NSString stringWithFormat:@"%@%@", self.manager.baseURL, voicemail.jrn];
-//
-//    [_manager DELETE:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        success(responseObject);
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        failure(error);
-//    }];
-//}
+- (void)deleteVoicemail:(NSString *)url completed:(void (^)(BOOL succeeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
+{
+
+    [self setRequestAuthHeader];
+    
+    url = [NSString stringWithFormat:@"%@?verify=%@",  url, [[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"]];//TODO: remove when voicemail accepts auth through headers
+
+    [_manager DELETE:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        completed(YES, responseObject, operation, nil);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        completed(NO, nil, operation, error);
+    }];
+    
+}
 
 @end

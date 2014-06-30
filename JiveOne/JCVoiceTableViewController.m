@@ -68,6 +68,8 @@ static NSString *CellIdentifier = @"VoicemailCell";
     imageView.contentMode = UIViewContentModeCenter;
     self.tableView.backgroundView = imageView;
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadVoicemails) name:@"kApplicationDidBecomeActive" object:nil];
+    
     [Voicemail fetchVoicemailInBackground];
 }
 
@@ -86,6 +88,8 @@ static NSString *CellIdentifier = @"VoicemailCell";
 //    [(JCAppDelegate *)[UIApplication sharedApplication].delegate clearBadgeCountForVoicemail];
         [self loadVoicemails];
 }
+
+
 
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -292,18 +296,21 @@ static NSString *CellIdentifier = @"VoicemailCell";
 
 - (void)deleteVoicemailsInBackground
 {
-//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"deleted ==[c] %@", [NSNumber numberWithBool:YES]];
-//    NSArray *deletedVoicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAllWithPredicate:predicate]];
-//    
-//    if (deletedVoicemails.count > 0) {
-//        for (Voicemail *voice in deletedVoicemails) {
-//            [[JCRESTClient sharedClient] DeleteVoicemail:voice success:^(id JSON) {
-//                [Voicemail deleteVoicemail:voice.jrn managedContext:nil];
-//            } failure:^(NSError *err) {
-//                NSLog(@"%@", err);
-//            }];
-//        }
-//    }
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"deleted ==[c] %@", [NSNumber numberWithBool:YES]];
+    NSArray *deletedVoicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAllWithPredicate:predicate]];
+    
+    if (deletedVoicemails.count > 0) {
+        for (Voicemail *voice in deletedVoicemails) {
+            [[JCVoicemailClient sharedClient] deleteVoicemail:voice.url_self completed:^(BOOL succeeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+                if (succeeded) {
+                    [Voicemail deleteVoicemail:voice.jrn managedContext:nil];
+                }
+                else {
+                    NSLog(@"Error Deleting Voicemail: %@", error);
+                }
+            }];
+        }
+    }
 }
 
 - (void)addOrRemoveSelectedIndexPath:(NSIndexPath *)indexPath
@@ -316,7 +323,8 @@ static NSString *CellIdentifier = @"VoicemailCell";
     
     if (containsIndexPath) {
         [self.selectedIndexPaths removeObject:indexPath];
-    }else{
+    }
+    else {
         [self.selectedIndexPaths addObject:indexPath];
     }
     
