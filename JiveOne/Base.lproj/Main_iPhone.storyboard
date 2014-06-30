@@ -31,13 +31,8 @@
                                     </textField>
                                 </subviews>
                             </view>
-                            <view contentMode="scaleToFill" id="uq2-OG-5Nj">
+                            <view contentMode="scaleToFill" id="uq2-OG-5Nj" customClass="JCJiveLogoBlack">
                                 <rect key="frame" x="84" y="20" width="152" height="144"/>
-                                <subviews>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="loginlogo" id="e66-ar-CXX">
-                                        <rect key="frame" x="0.0" y="0.0" width="152" height="144"/>
-                                    </imageView>
-                                </subviews>
                             </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" id="SFI-xL-Fri">
                                 <rect key="frame" x="0.0" y="523" width="320" height="45"/>
@@ -1088,7 +1083,6 @@
         <image name="first_message.png" width="265" height="154"/>
         <image name="iPhone2Xnew.png" width="640" height="1136"/>
         <image name="iPhone2XnewBlurSmall.png" width="320" height="480"/>
-        <image name="loginlogo" width="376" height="380"/>
         <image name="nav-conv.png" width="30" height="30"/>
         <image name="nav-people.png" width="44" height="44"/>
         <image name="people-start-conv.png" width="44" height="44"/>

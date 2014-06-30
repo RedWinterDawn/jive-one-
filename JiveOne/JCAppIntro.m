@@ -9,6 +9,7 @@
 #import "JCAppIntro.h"
 #import "JCStyleKit.h"
 #import "JCLoginViewController.h"
+#import "JCStyleKitIcons.h"
 
 #define NUMBER_OF_PAGES 4
 #define timeForPage(page) (NSInteger)(self.view.frame.size.width * (page - 1))
@@ -60,6 +61,9 @@
 @property (strong, nonatomic) UIImageView *bottomLeft;
 @property (strong, nonatomic) UIImageView *topRight;
 @property (strong, nonatomic) UIImageView *topLeft;
+@property (strong, nonatomic) JCJiveLogoWhite *jiveLogoWhite;
+@property (strong, nonatomic) JCVoicemailIcon *voicemailIconWhite;
+
 @property (strong, nonatomic) UILabel *bottomRightLabel;
 @property (strong, nonatomic) UILabel *bottomLeftLabel;
 @property (strong, nonatomic) UILabel *topRightLabel;
@@ -71,7 +75,7 @@
 @property (strong, nonatomic) UIImageView *wordmark;
 @property (strong, nonatomic) UILabel *lastLabel;
 @property (strong, nonatomic) UILabel *firstLabel;
-
+//@property (strong, nonatomic) UIButton *nextButton;
 @end
 
 @implementation JCAppIntro
@@ -98,23 +102,33 @@
     [super viewDidLoad];
     self.scrollView.contentSize = CGSizeMake(NUMBER_OF_PAGES * CGRectGetWidth(self.view.frame),
                                              CGRectGetHeight(self.view.frame));
-
     self.scrollView.pagingEnabled = YES;
     self.scrollView.showsHorizontalScrollIndicator = NO;
-    self.animator = [IFTTTAnimator new];
-    [self.scrollView addSubview:self.dismissButton];
     
+    self.animator = [IFTTTAnimator new];
+
+    [self placeOffsetsForStoryBoardViewItems];
     [self placeViews];
     [self configureAnimation];
     [UIView animateWithDuration:1.0 animations:^{
         [self.voicemailCell setAlpha:1.0];
         [self.firstLabel setAlpha:1.0];
-
+        [self.jiveLogoWhite setAlpha:1.0];
+        [self.voicemailCell setAlpha:1.0];
     } completion: ^(BOOL finished){
         if(finished) {
         }
     }];
     
+}
+
+-(void)placeOffsetsForStoryBoardViewItems{
+    [self.scrollView addSubview:self.nextButtonPage1];
+    self.nextButtonPage1.frame = CGRectOffset(self.nextButtonPage1.frame, timeForPage(1), 0);
+    [self.scrollView addSubview:self.nextButtonPage2];
+    self.nextButtonPage2.frame = CGRectOffset(self.nextButtonPage2.frame, timeForPage(2), 0);
+    [self.scrollView addSubview:self.dismissButton];
+    self.dismissButton.frame = CGRectOffset(self.dismissButton.frame, timeForPage(3), 0);
 }
 
 - (void)placeViews
@@ -142,7 +156,38 @@
     [self.voicemailCell setAlpha:0.0];
     self.voicemailCell.frame = CGRectMake(voicemailCell_x, voicemailCell_y, voicemailCell_w, voicemailCell_h);
     [self.scrollView addSubview:self.voicemailCell];
-
+    
+    //******************************************************
+    //Add JiveLogoWhite to page 1
+    //******************************************************
+    float jiveLogoWhite_w = 150;
+    float jiveLogoWhite_h = 150;
+    CGRect jiveLogoFrame = CGRectMake(300, 300, jiveLogoWhite_w, jiveLogoWhite_h);
+    self.jiveLogoWhite = [[JCJiveLogoWhite alloc]initWithFrame:jiveLogoFrame];
+    self.jiveLogoWhite.backgroundColor = [UIColor clearColor];
+    self.jiveLogoWhite.center = self.view.center;
+//    UIImageView *jiveLogoWhite = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfJiveLogoWhiteWithFrame:(jiveLogoFrame)]];
+    float jiveLogoWhite_x = ((timeForPage(1))+(self.view.frame.size.width/2)-(jiveLogoWhite_w/2));
+    float jiveLogoWhite_y = 20;
+    [self.jiveLogoWhite setAlpha:0.0];
+    self.jiveLogoWhite.frame = CGRectMake(jiveLogoWhite_x, jiveLogoWhite_y, jiveLogoWhite_w, jiveLogoWhite_h);
+    [self.scrollView addSubview:self.jiveLogoWhite];
+    
+    //******************************************************
+    //Add VoicemailIconWhite to page 1
+    //******************************************************
+    float voicemailIconWhite_w = 150;
+    float voicemailIconWhite_h = 150;
+    CGRect voiceMailIconLogoFrame = CGRectMake(300, 300, voicemailIconWhite_w, voicemailIconWhite_h);
+    self.voicemailIconWhite = [[JCVoicemailIcon alloc]initWithFrame:voiceMailIconLogoFrame];
+    self.voicemailIconWhite.backgroundColor = [UIColor clearColor];
+    self.voicemailIconWhite.center = self.view.center;
+    float voicemailIconWhite_x = ((timeForPage(1))+(self.view.frame.size.width/2)-(voicemailIconWhite_w/2));
+    float voicemailIconWhite_y = 420;
+//    [self.voicemailIconWhite setAlpha:0.0];
+    self.voicemailIconWhite.frame = CGRectMake(voicemailIconWhite_x, voicemailIconWhite_y, voicemailIconWhite_w, voicemailIconWhite_h);
+//    [self.scrollView addSubview:self.voicemailIconWhite];
+    
     //******************************************************
     //Add individual Images to the voicemailCell
     //******************************************************
@@ -272,14 +317,14 @@
     //This is where we add all the text the the labels of the tutorials
     //******************************************************
     UILabel *firstPageText = [[UILabel alloc] init];
-    firstPageText.text = @"Introducing The Jive Voicemail App";
+    firstPageText.text = @"The Jive Voicemail App";
+    [firstPageText setFont:[UIFont fontWithName:@"Alpine Script" size:kFontSize]];
     firstPageText.textColor = [UIColor whiteColor];
     [firstPageText sizeToFit];
     firstPageText.center = self.view.center;
     [firstPageText setAlpha:0.0];
-    firstPageText.frame = CGRectOffset(firstPageText.frame, timeForPage(1), -180);
+    firstPageText.frame = CGRectOffset(firstPageText.frame, timeForPage(1), 120);
     self.firstLabel = firstPageText;
-    [self.firstLabel setAlpha:0.0];
     [self.scrollView addSubview:firstPageText];
     
     UILabel *playPauseText = [[UILabel alloc] init];
@@ -365,17 +410,6 @@
     [self.scrollView addSubview:emailLabel];
     self.thridPageLabel1 = emailLabel;
     
-    UILabel *fourthPageText = [[UILabel alloc] init];
-    fourthPageText.text = @"Dismiss";
-    fourthPageText.textColor = [UIColor whiteColor];
-    [fourthPageText sizeToFit];
-    fourthPageText.center = self.view.center;
-    fourthPageText.frame = CGRectOffset(fourthPageText.frame, timeForPage(4), 0);
-    [self.scrollView addSubview:fourthPageText];
-
-    self.lastLabel = fourthPageText;
-    
-    self.dismissButton.frame = CGRectOffset(self.dismissButton.frame, timeForPage(1), 0);
 }
 
 - (void)configureAnimation
@@ -383,22 +417,6 @@
     CGFloat dy = 240;
     CGFloat upDy = -300;
     
-    // apply a 3D zoom animation to the first label
-//    IFTTTTransform3DAnimation * labelTransform = [IFTTTTransform3DAnimation animationWithView:self.firstLabel];
-//    IFTTTTransform3D *tt1 = [IFTTTTransform3D transformWithM34:0.03f];
-//    IFTTTTransform3D *tt2 = [IFTTTTransform3D transformWithM34:0.3f];
-//    tt2.rotate = (IFTTTTransform3DRotate){ -(CGFloat)(M_PI), 1, 0, 0 };
-//    tt2.translate = (IFTTTTransform3DTranslate){ 0, 0, 50 };
-//    tt2.scale = (IFTTTTransform3DScale){ 1.f, 2.f, 1.f };
-//    [labelTransform addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(0)
-//                                                                andAlpha:1.0f]];
-//    [labelTransform addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1)
-//                                                          andTransform3D:tt1]];
-//    [labelTransform addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1.5)
-//                                                          andTransform3D:tt2]];
-//    [labelTransform addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1.5) + 1
-//                                                                andAlpha:0.0f]];
-//    [self.animator addAnimation:labelTransform];
     //******************************************************
     // let's animate the wordmark
     //******************************************************
@@ -430,17 +448,6 @@
     [voicemailCellFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:self.voicemailCell.frame]];
     [voicemailCellFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.voicemailCell.frame, timeForPage(2), 0)]];
     
-    //******************************************************
-    // now, we animate the dismissButton
-    //******************************************************
-    IFTTTFrameAnimation *dismissButtonFrameAnimation = [IFTTTFrameAnimation animationWithView:self.dismissButton];
-    [self.animator addAnimation:dismissButtonFrameAnimation];
-        
-    // move down and to the right, and shrink between pages 2 and 3
-    [dismissButtonFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:self.dismissButton.frame]];
-    [dismissButtonFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.dismissButton.frame, timeForPage(2), 0)]];
-    [dismissButtonFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(self.dismissButton.frame, timeForPage(3), 0)]];
-    [dismissButtonFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andFrame:CGRectOffset(self.dismissButton.frame, timeForPage(4), 0)]];
     
     //******************************************************
     // now, we animate the topLeft
@@ -535,12 +542,31 @@
     [bottomRightLabelFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.bottomRightLabel.frame, timeForPage(2), 0)]];
     [bottomRightLabelFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.bottomRightLabel.frame, ds, ds), timeForPage(3), dy)]];
     
+    
+    //*************************************************************
+    //fade JiveLogo & Voicemail Icon in on page 1 and out on page 2
+    //*************************************************************
+    IFTTTAlphaAnimation *jiveLogoWhiteAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.voicemailIconWhite];
+    [self.animator addAnimation:jiveLogoWhiteAlphaAnimation];
+    
+    [jiveLogoWhiteAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:1.0f]];
+    [jiveLogoWhiteAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f]];
+    [jiveLogoWhiteAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:0.0f]];
+    [jiveLogoWhiteAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
+
+    IFTTTAlphaAnimation *voicemailIconWhiteAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.voicemailIconWhite];
+    [self.animator addAnimation:voicemailIconWhiteAlphaAnimation];
+    
+    [voicemailIconWhiteAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:1.0f]];
+    [voicemailIconWhiteAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f]];
+    [voicemailIconWhiteAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:0.0f]];
+    [voicemailIconWhiteAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
 
     //******************************************************
     //fade all the Arrows in on page 2 and out on page 4
     //******************************************************
-        IFTTTAlphaAnimation *topLeftAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.topLeft];
-        [self.animator addAnimation:topLeftAlphaAnimation];
+    IFTTTAlphaAnimation *topLeftAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.topLeft];
+    [self.animator addAnimation:topLeftAlphaAnimation];
     
     [topLeftAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:0.0f]];
     [topLeftAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f]];

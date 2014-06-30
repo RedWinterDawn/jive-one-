@@ -77,6 +77,7 @@
 + (void)drawSpeakerButtonWithSpeakerFrame: (CGRect)speakerFrame speakerIsSelected: (BOOL)speakerIsSelected;
 + (void)drawComposeIconWithFrame: (CGRect)frame;
 + (void)drawVoicemailIcon;
++ (void)drawVoicemailIconWhiteWithFrame: (CGRect)frame;
 + (void)drawLogoutIconWithFrame: (CGRect)frame;
 + (void)drawLogOutButtonWithFrame: (CGRect)frame;
 + (void)drawContactsIcon;
