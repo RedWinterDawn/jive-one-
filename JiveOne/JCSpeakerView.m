@@ -28,10 +28,10 @@
     return self;
 }
 
-//- (void)drawRect:(CGRect)rect
-//{
-//   [JCStyleKit drawSpeakerButtonWithSpeakerFrame:self.bounds speakerIsSelected:self.isSelected];
-//}
+- (void)drawRect:(CGRect)rect
+{
+   [JCStyleKit drawSpeakerButtonWithSpeakerFrame:self.bounds speakerIsSelected:self.isSelected];
+}
 
 -(void)setIsSelected:(BOOL)isSelected
 {
