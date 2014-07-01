@@ -1,0 +1,17 @@
+;
+; Message Information file
+;
+[message]
+origmailbox=0143fda6-3320-6833-d0a5-006300620001
+context=outgoing
+macrocontext=
+exten=1005
+rdnis=unknown
+priority=5
+callerchan=SIP/0142bab713c8363e6a006300620001-000001d9
+callerid=Lindsay Shields
+origdate=Mon Mar 31 22:29:35 UTC 2014
+origtime=1396304980
+category=
+flag=
+duration=25

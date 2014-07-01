@@ -98,6 +98,14 @@ Another useful command is to re-start the service. Type:
 service jive_client restart
 ```
 
+Upload a test voicemail
+====
+cd to a directory where msg0000.wav and msg0000.txt exists (such as /Assets).
+<br>
+then
+<br>
+curl -v -F file=@msg0000.WAV -F metadata=@msg0000.txt http://10.20.26.141:8880/voicemails/mailbox/0146de22-4cf6-65b5-3be8-006300620001/folders/INBOX
+
 Some useful links:
 ==========
 
