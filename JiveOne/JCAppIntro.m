@@ -113,7 +113,6 @@
     
     self.animator = [IFTTTAnimator new];
 
-    [self placeOffsetsForStoryBoardViewItems];
     [self placeViews];
     [self configureAnimation];
     self.delegate = self;
@@ -129,11 +128,6 @@
     
 }
 
--(void)placeOffsetsForStoryBoardViewItems{
-//    [self.scrollView addSubview:self.pageControlDots];
-//    [self.scrollView addSubview:self.dismissButton];
-//    self.dismissButton.frame = CGRectOffset(self.dismissButton.frame, timeForPage(3), 0);
-}
 
 - (void)placeViews
 {
@@ -262,12 +256,6 @@
     [self.voicemailCell addSubview:vmExtLabel];
    
     
-    //TODO: Remove this
-//    self.wordmark = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main-logo.png"]];
-//    self.wordmark.center = self.view.center;
-//    self.wordmark.frame = CGRectOffset(self.wordmark.frame, self.view.frame.size.width, -10);
-//    //[self.scrollView addSubview:self.wordmark];
-    
     //******************************************************
     //add topLeft to page2
     //******************************************************
@@ -367,14 +355,8 @@ self.getStartedButton.frame = CGRectOffset(self.getStartedButton.frame, kgetStar
     [speakerText sizeToFit];
     [speakerText setTextColor:labelTextColor];
     speakerText.center = self.view.center;
-//    speakerText.frame = CGRectMake(speakerText.frame.origin.x, speakerText.frame.origin.y, 200, 50);
-//    [speakerText setNumberOfLines:0];
-//    [speakerText setLineBreakMode:NSLineBreakByWordWrapping];
     speakerText.frame = CGRectOffset(speakerText.frame, timeForPage(1) + kBottomLeft_x_Offset, kBottomLeft_y_Offset);
     [speakerText setAlpha:0.0];
-
-//    NSLog(@"ST%@",NSStringFromCGRect(speakerText.frame));
-
     [self.scrollView addSubview:speakerText];
     self.bottomLeftLabel = speakerText;
     
@@ -431,24 +413,6 @@ self.getStartedButton.frame = CGRectOffset(self.getStartedButton.frame, kgetStar
 {
     CGFloat dy = 240;
     CGFloat upDy = -300;
-    
-    //******************************************************
-    // let's animate the wordmark
-    //******************************************************
-//    IFTTTFrameAnimation *wordmarkFrameAnimation = [IFTTTFrameAnimation animationWithView:self.wordmark];
-//    [self.animator addAnimation:wordmarkFrameAnimation];
-//    
-//    [wordmarkFrameAnimation addKeyFrames:@[
-//                                           [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:CGRectOffset(self.wordmark.frame, 200, 0)],
-//                                           [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:self.wordmark.frame],
-//                                           [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(self.wordmark.frame, self.view.frame.size.width, dy)],
-//                                           [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andFrame:CGRectOffset(self.wordmark.frame, 0, dy)],
-//                                           ]];
-//    // Rotate a full circle from page 2 to 3
-//    IFTTTAngleAnimation *wordmarkRotationAnimation = [IFTTTAngleAnimation animationWithView:self.wordmark];
-//    [self.animator addAnimation:wordmarkRotationAnimation];
-//    [wordmarkRotationAnimation addKeyFrames:@[[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAngle:0.0f],
-//                                              [IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAngle:(CGFloat)(2 * M_PI)],]];
     
     //******************************************************
     // now, we animate the voicemailCell
