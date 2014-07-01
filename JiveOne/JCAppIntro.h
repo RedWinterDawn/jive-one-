@@ -8,15 +8,13 @@
 
 #import "IFTTTJazzHands.h"
 #import "UIImage+ImageEffects.h"
+#import "JCStyleKitIcons.h"
 
 @interface JCAppIntro : IFTTTAnimatedScrollViewController <IFTTTAnimatedScrollViewControllerDelegate>
 
-@property (weak, nonatomic) IBOutlet UIButton *dismissButton;
 @property (strong, nonatomic) IBOutlet UIImageView *backgroundImageView;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControlDots;
-@property (weak, nonatomic) IBOutlet UIButton *getStartedButton;
+@property (weak, nonatomic) IBOutlet JCGetStartedButton *getStartedButton;
 
 + (id) sharedInstance;
-- (void)getStartedButtonWasPressed;
-
 @end

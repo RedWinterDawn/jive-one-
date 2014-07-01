@@ -368,33 +368,37 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" id="deT-GF-i3y">
-                                <rect key="frame" x="148" y="519" width="39" height="37"/>
+                                <rect key="frame" x="141" y="519" width="39" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </pageControl>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="DzV-Lr-0Zz">
-                                <rect key="frame" x="31" y="457" width="260" height="50"/>
+                            <view contentMode="scaleToFill" id="ytc-8F-wc6" customClass="JCGetStartedButton">
+                                <rect key="frame" x="28" y="476" width="265" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
+                                <gestureRecognizers/>
                                 <connections>
-                                    <action selector="getStartedButtonWasPressed:" destination="Yyy-YN-Ji0" eventType="touchUpInside" id="c80-6A-CrH"/>
+                                    <outletCollection property="gestureRecognizers" destination="cTn-pe-n8G" appends="YES" id="6sk-Ht-bNt"/>
                                 </connections>
-                            </button>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                     </view>
                     <connections>
                         <outlet property="backgroundImageView" destination="n6g-pE-ELr" id="laD-1f-XXb"/>
-                        <outlet property="getStartedButton" destination="DzV-Lr-0Zz" id="cMF-yb-gIo"/>
+                        <outlet property="getStartedButton" destination="ytc-8F-wc6" id="opu-L6-KYD"/>
                         <outlet property="pageControlDots" destination="deT-GF-i3y" id="Bst-LA-HDq"/>
                         <segue destination="8YX-ce-x5E" kind="modal" identifier="TutorialToTabBarSegue" modalTransitionStyle="crossDissolve" animates="NO" id="dIf-i9-QYA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a9K-Lc-Eq7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="cTn-pe-n8G">
+                    <connections>
+                        <action selector="getStartedButtonWasTapped:" destination="Yyy-YN-Ji0" id="6uE-ai-5Xc"/>
+                        <outlet property="delegate" destination="Yyy-YN-Ji0" id="1lB-y4-NxM"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-886" y="-127"/>
+            <point key="canvasLocation" x="-980" y="-145"/>
         </scene>
         <!--Directory Detail View Controller-->
         <scene sceneID="WkT-56-JQg">
@@ -1114,6 +1118,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="PKy-V4-VLv"/>
+        <segue reference="dIf-i9-QYA"/>
     </inferredMetricsTieBreakers>
 </document>

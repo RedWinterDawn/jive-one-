@@ -9,7 +9,6 @@
 #import "JCAppIntro.h"
 #import "JCStyleKit.h"
 #import "JCLoginViewController.h"
-#import "JCStyleKitIcons.h"
 
 #define NUMBER_OF_PAGES 3
 #define timeForPage(page) (NSInteger)(self.view.frame.size.width * (page - 1))
@@ -81,7 +80,6 @@
 @property (strong, nonatomic) UIImageView *wordmark;
 @property (strong, nonatomic) UILabel *lastLabel;
 @property (strong, nonatomic) UILabel *firstLabel;
-//@property (strong, nonatomic) UIButton *nextButton;
 @end
 
 @implementation JCAppIntro
@@ -297,9 +295,9 @@
     //******************************************************
 //    JCGetStartedButton *gft = [[JCGetStartedButton alloc]initWithFrame:self.getStartedButton.imageView.frame];
 //    self.getStartedButton.imageView.image = ((UIImage*)gft);
-    [self.getStartedButton setBackgroundImage:[JCStyleKit imageOfGetStartedButtonWithFrame:self.getStartedButton.frame] forState:UIControlStateNormal];
+//    [self.getStartedButton setBackgroundImage:[JCStyleKit imageOfGetStartedButtonWithFrame:self.getStartedButton.frame] forState:UIControlStateNormal];
     self.getStartedButton.center = self.view.center;
-self.getStartedButton.frame = CGRectOffset(self.getStartedButton.frame, kgetStartedButton_x, kgetStartedButton_y);
+    self.getStartedButton.frame = CGRectOffset(self.getStartedButton.frame, kgetStartedButton_x, kgetStartedButton_y);
     [self.getStartedButton setAlpha:1.0];
     [self.scrollView addSubview:self.getStartedButton];
 
@@ -371,39 +369,39 @@ self.getStartedButton.frame = CGRectOffset(self.getStartedButton.frame, kgetStar
     [self.scrollView addSubview:deleteText];
     self.bottomRightLabel = deleteText;
     
-    UILabel *leaveFeedbackLabel = [[UILabel alloc] init];
-    leaveFeedbackLabel.text = @"Send us feedback!";
-    [leaveFeedbackLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:kFontSize]];
+//    UILabel *leaveFeedbackLabel = [[UILabel alloc] init];
+//    leaveFeedbackLabel.text = @"Send us feedback!";
+//    [leaveFeedbackLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:kFontSize]];
 //    leaveFeedbackLabel.shadowColor = [UIColor darkGrayColor];
-    leaveFeedbackLabel.textColor = [UIColor whiteColor];
-    leaveFeedbackLabel.shadowOffset = CGSizeMake(0, 1);
-    [leaveFeedbackLabel sizeToFit];
-    leaveFeedbackLabel.center = self.view.center;
-    leaveFeedbackLabel.frame = CGRectOffset(leaveFeedbackLabel.frame, timeForPage(3), -50);
+//    leaveFeedbackLabel.textColor = [UIColor whiteColor];
+//    leaveFeedbackLabel.shadowOffset = CGSizeMake(0, 1);
+//    [leaveFeedbackLabel sizeToFit];
+//    leaveFeedbackLabel.center = self.view.center;
+//    leaveFeedbackLabel.frame = CGRectOffset(leaveFeedbackLabel.frame, timeForPage(3), -50);
 //    [self.scrollView addSubview:leaveFeedbackLabel];
 //    self.thridPageLabel1 = leaveFeedbackLabel;
     
     UILabel *leaveFeedbackLabel2 = [[UILabel alloc] init];
     leaveFeedbackLabel2.text = @"Send us feedback!";
-    [leaveFeedbackLabel2 setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:kFontSize]];
+    [leaveFeedbackLabel2 setFont:[UIFont fontWithName:kIntroFont size:kFontSize]];
     leaveFeedbackLabel2.textColor = [UIColor whiteColor];
     leaveFeedbackLabel2.shadowColor = [UIColor darkGrayColor];
     leaveFeedbackLabel2.shadowOffset = CGSizeMake(0, 1);
     [leaveFeedbackLabel2 sizeToFit];
     leaveFeedbackLabel2.center = self.view.center;
-    leaveFeedbackLabel2.frame = CGRectOffset(leaveFeedbackLabel2.frame, timeForPage(3), -13);
+    leaveFeedbackLabel2.frame = CGRectOffset(leaveFeedbackLabel2.frame, timeForPage(3), -55);
     [self.scrollView addSubview:leaveFeedbackLabel2];
     self.thridPageLabel1 = leaveFeedbackLabel2;
     
     UILabel *emailLabel = [[UILabel alloc] init];
     emailLabel.text = @"MobileApps+ios@jive.com";
-    [emailLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:kFontSize]];
+    [emailLabel setFont:[UIFont fontWithName:kIntroFont size:kFontSize]];
     emailLabel.textColor = [UIColor whiteColor];
     emailLabel.shadowColor = [UIColor darkGrayColor];
     emailLabel.shadowOffset = CGSizeMake(0, 1);
     [emailLabel sizeToFit];
     emailLabel.center = self.view.center;
-    emailLabel.frame = CGRectOffset(emailLabel.frame, timeForPage(3), 13);
+    emailLabel.frame = CGRectOffset(emailLabel.frame, timeForPage(3), -30);
     [self.scrollView addSubview:emailLabel];
     self.thridPageLabel1 = emailLabel;
     
@@ -676,10 +674,10 @@ self.getStartedButton.frame = CGRectOffset(self.getStartedButton.frame, kgetStar
     }
 
 }
-- (IBAction)getStartedButtonWasPressed:(id)sender {
-    [self dismissViewControllerAnimated:NO completion:^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"AppTutorialDismissed" object:nil];
-    }];
+
+- (IBAction)getStartedButtonWasTapped:(id)sender {    [self dismissViewControllerAnimated:NO completion:^{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"AppTutorialDismissed" object:nil];
+}];
     //Register for PushNotifications
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert |
                                                                            UIRemoteNotificationTypeBadge |
