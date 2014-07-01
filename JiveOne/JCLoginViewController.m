@@ -21,6 +21,7 @@
 #import "Mailbox+Custom.h"
 #import "JCAppIntro.h"
 #import "UIImage+ImageEffects.h"
+#import "UITextField+ELFixSecureTextFieldFont.h"
 
 
 @interface JCLoginViewController ()
@@ -53,7 +54,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [self.passwordTextField fixSecureTextFieldFont];
     [self setClient:[JCRESTClient sharedClient]];
     
     

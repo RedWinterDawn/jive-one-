@@ -13,6 +13,7 @@ pod 'Facebook-iOS-SDK', '~> 3.13'
 pod 'NSLogger', '~> 1.2'
 pod 'JazzHands', '~> 0.1'
 pod 'tuneup_js'
+pod 'ELFixSecureTextFieldFont', :git => 'https://github.com/elegion/ELFixSecureTextFieldFont.git'
 target :JiveOneTests, :exclusive => true do
    pod 'Kiwi/XCTest'
 end
