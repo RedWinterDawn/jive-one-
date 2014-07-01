@@ -182,17 +182,12 @@
     self.loginStatusLabel.text = @"";
     if([self.usernameTextField.text length] != 0 && [self.passwordTextField.text length] != 0)
     {
-        
-//        UIImageView *backView = [[UIImageView alloc] initWithFrame:self.view.frame];
         UIImage *coverImage = [self screenshot];
         coverImage = [coverImage applyBlurWithRadius:15.0 tintColor:[[UIColor darkGrayColor] colorWithAlphaComponent:.3] saturationDeltaFactor:.88 maskImage:nil];
         [self.coverImageView setAlpha:0.0];
         self.coverImageView.image = coverImage;
-
         JCAppIntro* appIntroSingleton = [JCAppIntro sharedInstance];
         appIntroSingleton.backgroundImageView = [[UIImageView alloc] initWithImage:coverImage];
-        
-//        backView.image = [self screenshot];
         
         [UIView animateWithDuration:1.0 animations:^{
             [self.coverImageView setAlpha:1.0];
