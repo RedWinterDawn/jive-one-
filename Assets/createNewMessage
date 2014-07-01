@@ -1,0 +1,6 @@
+#!/bin/bash
+# to make this file executable run:
+# chmod +x path/to/this/file
+# now you can simply double click the file to throw up a new message.
+
+curl -v -F file=@msg0000.WAV -F metadata=@msg0000.txt http://10.20.26.141:8880/voicemails/mailbox/0146de22-4cf6-65b5-3be8-006300620001/folders/INBOX
