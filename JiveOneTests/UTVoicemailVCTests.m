@@ -93,14 +93,14 @@ describe(@"Voicemail VC", ^{
             
         });
         
-        it(@"should delete marked voicemails in background", ^{
-           
-            NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
-            JCVoiceCell *cell = (JCVoiceCell*)[voicemailViewController.tableView cellForRowAtIndexPath:indexpath];
-            [voicemailViewController voiceCellDeleteTapped:indexpath];
-            [[expectFutureValue(theValue(cell.voicemail)) shouldEventuallyBeforeTimingOutAfter(5.0)] beNil];
-              
-        });
+//        it(@"should delete marked voicemails in background", ^{
+//           
+//            NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
+//            JCVoiceCell *cell = (JCVoiceCell*)[voicemailViewController.tableView cellForRowAtIndexPath:indexpath];
+//            [voicemailViewController voiceCellDeleteTapped:indexpath];
+//            [[expectFutureValue(theValue(cell.voicemail)) shouldEventuallyBeforeTimingOutAfter(5.0)] beNil];
+//              
+//        });
         
     });
 });

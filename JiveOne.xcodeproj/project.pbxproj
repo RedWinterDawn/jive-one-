@@ -269,8 +269,6 @@
 		DD54A062195D05C9001A34F3 /* Mailbox.m in Sources */ = {isa = PBXBuildFile; fileRef = DD54A061195D05C9001A34F3 /* Mailbox.m */; };
 		DD54A065195D0663001A34F3 /* Mailbox+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = DD54A064195D0663001A34F3 /* Mailbox+Custom.m */; };
 		DD577D531940DC6C008DAB46 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD577D521940DC6C008DAB46 /* icomoon.ttf */; };
-		DDA8228019620329006772B3 /* msg0000.txt in Resources */ = {isa = PBXBuildFile; fileRef = DDA8227E19620329006772B3 /* msg0000.txt */; };
-		DDA8228119620329006772B3 /* msg0000.WAV in Resources */ = {isa = PBXBuildFile; fileRef = DDA8227F19620329006772B3 /* msg0000.WAV */; };
 		DDCE1E8718F3561D003A6615 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E8618F3561D003A6615 /* AudioToolbox.framework */; };
 		DDCE1E8918F35623003A6615 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E8818F35623003A6615 /* CFNetwork.framework */; };
 		DDCE1E8B18F3562D003A6615 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E8A18F3562D003A6615 /* CoreLocation.framework */; };
@@ -769,8 +767,6 @@
 		DD54A063195D0663001A34F3 /* Mailbox+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Mailbox+Custom.h"; sourceTree = "<group>"; };
 		DD54A064195D0663001A34F3 /* Mailbox+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Mailbox+Custom.m"; sourceTree = "<group>"; };
 		DD577D521940DC6C008DAB46 /* icomoon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = icomoon.ttf; path = ../icomoon.ttf; sourceTree = "<group>"; };
-		DDA8227E19620329006772B3 /* msg0000.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = msg0000.txt; sourceTree = "<group>"; };
-		DDA8227F19620329006772B3 /* msg0000.WAV */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = msg0000.WAV; sourceTree = "<group>"; };
 		DDCE1E8418F355FE003A6615 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		DDCE1E8618F3561D003A6615 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		DDCE1E8818F35623003A6615 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -1316,8 +1312,6 @@
 		275F4A7D18AD0FBC00D2F069 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				DDA8227E19620329006772B3 /* msg0000.txt */,
-				DDA8227F19620329006772B3 /* msg0000.WAV */,
 				275F4A7E18AD0FBC00D2F069 /* JiveOneTests-Info.plist */,
 				275F4A7F18AD0FBC00D2F069 /* InfoPlist.strings */,
 				27A0160B192EEA830073C824 /* conversation.json */,
@@ -2117,13 +2111,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DDA8228019620329006772B3 /* msg0000.txt in Resources */,
 				27A0160C192EEA830073C824 /* conversation.json in Resources */,
 				27A0160E192EEF6F0073C824 /* entities.json in Resources */,
 				27A01612192EF1E80073C824 /* companies.json in Resources */,
 				275F4A8118AD0FBC00D2F069 /* InfoPlist.strings in Resources */,
 				27A86A9119461ED500332965 /* boss.jpg in Resources */,
-				DDA8228119620329006772B3 /* msg0000.WAV in Resources */,
 				27A01610192EF11C0073C824 /* voicemails.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
