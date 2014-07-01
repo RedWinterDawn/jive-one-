@@ -373,37 +373,37 @@ self.getStartedButton.frame = CGRectOffset(self.getStartedButton.frame, kgetStar
     
     UILabel *leaveFeedbackLabel = [[UILabel alloc] init];
     leaveFeedbackLabel.text = @"Send us feedback!";
-    [leaveFeedbackLabel setFont:[UIFont fontWithName:kIntroFont size:kFontSize]];
-    leaveFeedbackLabel.shadowColor = [UIColor darkGrayColor];
+    [leaveFeedbackLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:kFontSize]];
+//    leaveFeedbackLabel.shadowColor = [UIColor darkGrayColor];
     leaveFeedbackLabel.textColor = [UIColor whiteColor];
     leaveFeedbackLabel.shadowOffset = CGSizeMake(0, 1);
     [leaveFeedbackLabel sizeToFit];
     leaveFeedbackLabel.center = self.view.center;
-    leaveFeedbackLabel.frame = CGRectOffset(leaveFeedbackLabel.frame, timeForPage(3), -100);
-    [self.scrollView addSubview:leaveFeedbackLabel];
-    self.thridPageLabel1 = leaveFeedbackLabel;
+    leaveFeedbackLabel.frame = CGRectOffset(leaveFeedbackLabel.frame, timeForPage(3), -50);
+//    [self.scrollView addSubview:leaveFeedbackLabel];
+//    self.thridPageLabel1 = leaveFeedbackLabel;
     
     UILabel *leaveFeedbackLabel2 = [[UILabel alloc] init];
-    leaveFeedbackLabel2.text = @"We want to hear from you!";
-    [leaveFeedbackLabel2 setFont:[UIFont fontWithName:kIntroFont size:kFontSize]];
+    leaveFeedbackLabel2.text = @"Send us feedback!";
+    [leaveFeedbackLabel2 setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:kFontSize]];
     leaveFeedbackLabel2.textColor = [UIColor whiteColor];
     leaveFeedbackLabel2.shadowColor = [UIColor darkGrayColor];
     leaveFeedbackLabel2.shadowOffset = CGSizeMake(0, 1);
     [leaveFeedbackLabel2 sizeToFit];
     leaveFeedbackLabel2.center = self.view.center;
-    leaveFeedbackLabel2.frame = CGRectOffset(leaveFeedbackLabel2.frame, timeForPage(3), -50);
+    leaveFeedbackLabel2.frame = CGRectOffset(leaveFeedbackLabel2.frame, timeForPage(3), -13);
     [self.scrollView addSubview:leaveFeedbackLabel2];
     self.thridPageLabel1 = leaveFeedbackLabel2;
     
     UILabel *emailLabel = [[UILabel alloc] init];
     emailLabel.text = @"MobileApps+ios@jive.com";
-    [emailLabel setFont:[UIFont fontWithName:kIntroFont size:kFontSize]];
+    [emailLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:kFontSize]];
     emailLabel.textColor = [UIColor whiteColor];
     emailLabel.shadowColor = [UIColor darkGrayColor];
     emailLabel.shadowOffset = CGSizeMake(0, 1);
     [emailLabel sizeToFit];
     emailLabel.center = self.view.center;
-    emailLabel.frame = CGRectOffset(emailLabel.frame, timeForPage(3), 0);
+    emailLabel.frame = CGRectOffset(emailLabel.frame, timeForPage(3), 13);
     [self.scrollView addSubview:emailLabel];
     self.thridPageLabel1 = emailLabel;
     
