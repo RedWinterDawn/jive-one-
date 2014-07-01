@@ -307,7 +307,8 @@
     UILabel *firstPageText = [[UILabel alloc] init];
     firstPageText.text = @"The Jive Voicemail App lets you consume and manage all of your voicemail messages.";
     [firstPageText setFont:[UIFont fontWithName:kIntroFont size:kFontSize]];
-    firstPageText.textColor = [UIColor whiteColor];
+    [firstPageText setTextColor:labelTextColor];
+    firstPageText.shadowColor = [UIColor darkGrayColor];
     [firstPageText setNumberOfLines:0];
     [firstPageText setLineBreakMode:NSLineBreakByWordWrapping];
     firstPageText.frame = CGRectMake(firstPageText.frame.origin.x, firstPageText.frame.origin.y, 250, 100);
@@ -324,6 +325,7 @@
     [playPauseText setFont:[UIFont fontWithName:kIntroFont size:kFontSize]];
     [playPauseText sizeToFit];
     [playPauseText setTextColor:labelTextColor];
+    playPauseText.shadowColor = [UIColor darkGrayColor];
     playPauseText.center = self.view.center;
     playPauseText.frame = CGRectOffset(playPauseText.frame, timeForPage(1) + kTopLeft_x_Offset, kTopLeft_y_Offset);
     [playPauseText setAlpha:0.0];
@@ -339,6 +341,7 @@
     [scrubberText setFont:[UIFont fontWithName:kIntroFont size:kFontSize]];
     [scrubberText sizeToFit];
     [scrubberText setTextColor:labelTextColor];
+    scrubberText.shadowColor = [UIColor darkGrayColor];
     scrubberText.center = self.view.center;
     scrubberText.frame = CGRectOffset(scrubberText.frame, timeForPage(1) + kTopRight_x_Offset, kTopRight_y_Offset);
     [scrubberText setAlpha:0.0];
@@ -352,6 +355,7 @@
     [speakerText setFont:[UIFont fontWithName:kIntroFont size:kFontSize]];
     [speakerText sizeToFit];
     [speakerText setTextColor:labelTextColor];
+    speakerText.shadowColor = [UIColor darkGrayColor];
     speakerText.center = self.view.center;
     speakerText.frame = CGRectOffset(speakerText.frame, timeForPage(1) + kBottomLeft_x_Offset, kBottomLeft_y_Offset);
     [speakerText setAlpha:0.0];
@@ -363,6 +367,7 @@
     [deleteText setFont:[UIFont fontWithName:kIntroFont size:kFontSize]];
     [deleteText sizeToFit];
     [deleteText setTextColor:labelTextColor];
+    deleteText.shadowColor = [UIColor darkGrayColor];
     deleteText.center = self.view.center;
     deleteText.frame = CGRectOffset(deleteText.frame, timeForPage(1) + kBottomRight_x_Offset, kBottomRight_y_Offset);
     [deleteText setAlpha:0.0];

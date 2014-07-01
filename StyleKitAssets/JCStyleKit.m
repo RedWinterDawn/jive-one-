@@ -1992,8 +1992,17 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
 
 + (void)drawGetStartedButtonWithFrame: (CGRect)frame;
 {
+    //// General Declarations
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef context = UIGraphicsGetCurrentContext();
+
     //// Color Declarations
     UIColor* iOSBlue = [UIColor colorWithRed: 0.09 green: 0.529 blue: 0.961 alpha: 1];
+    UIColor* gradientColor2 = [UIColor colorWithRed: 0.09 green: 0.608 blue: 0.961 alpha: 1];
+
+    //// Gradient Declarations
+    CGFloat gradientLocations[] = {0, 1};
+    CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)@[(id)gradientColor2.CGColor, (id)iOSBlue.CGColor], gradientLocations);
 
     //// Rectangle Drawing
     UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRect: CGRectMake(CGRectGetMinX(frame), CGRectGetMinY(frame), 265, 50)];
@@ -2003,6 +2012,14 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
 
     //// Text Drawing
     CGRect textRect = CGRectMake(CGRectGetMinX(frame), CGRectGetMinY(frame), 265, 50);
+    UIBezierPath* textPath = [UIBezierPath bezierPathWithRect: textRect];
+    CGContextSaveGState(context);
+    [textPath addClip];
+    CGContextDrawLinearGradient(context, gradient,
+        CGPointMake(CGRectGetMidX(textRect), CGRectGetMinY(textRect)),
+        CGPointMake(CGRectGetMidX(textRect), CGRectGetMaxY(textRect)),
+        0);
+    CGContextRestoreGState(context);
     {
         NSString* textContent = @"Get Started";
         NSMutableParagraphStyle* textStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
@@ -2012,6 +2029,11 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
 
         [textContent drawInRect: CGRectOffset(textRect, 0, (CGRectGetHeight(textRect) - [textContent boundingRectWithSize: textRect.size options: NSStringDrawingUsesLineFragmentOrigin attributes: textFontAttributes context: nil].size.height) / 2) withAttributes: textFontAttributes];
     }
+
+
+    //// Cleanup
+    CGGradientRelease(gradient);
+    CGColorSpaceRelease(colorSpace);
 }
 
 #pragma mark Generated Images
