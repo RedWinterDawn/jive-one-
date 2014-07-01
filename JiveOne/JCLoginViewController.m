@@ -208,11 +208,19 @@
                     [self alertStatus:@"Authentication Error" message:error.userInfo[@"error"]];
                     NSLog(@"Authentication error: %@", error);
                     [self hideHud];
+                    [UIView animateWithDuration:0.50 animations:^{
+                        [self.coverImageView setAlpha:0.0];
+                    } completion: ^(BOOL finished){
+                    }];
                 }
                 else {
                     [self alertStatus:@"Authentication Error" message:error.localizedDescription];
                     NSLog(@"Authentication error: %@", error);
                     [self hideHud];
+                    [UIView animateWithDuration:0.50 animations:^{
+                        [self.coverImageView setAlpha:0.0];
+                    } completion: ^(BOOL finished){
+                    }];
                 }
             }
 
