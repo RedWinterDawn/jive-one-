@@ -237,6 +237,7 @@
 		9145E31F191D842500840D66 /* JCVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 9145E31E191D842500840D66 /* JCVersion.m */; };
 		914B3985195B727100334579 /* VoicemailCell.png in Resources */ = {isa = PBXBuildFile; fileRef = 914B3984195B727100334579 /* VoicemailCell.png */; };
 		9154947819366C54003DCED4 /* JCPlayPauseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9154947719366C54003DCED4 /* JCPlayPauseView.m */; };
+		91634C2F19630A3B0079A823 /* JCGetStartedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 91634C2E19630A3B0079A823 /* JCGetStartedButton.m */; };
 		916958FF18FEDD76006FDD60 /* JCConversationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 274493AF18D0DA9B002744CB /* JCConversationCell.xib */; };
 		9172AD5C19192A1500481B01 /* UserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9172AD5B19192A1500481B01 /* UserDefaults.plist */; };
 		91743AA0191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91743A9F191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m */; };
@@ -285,7 +286,6 @@
 		F258589218BD3A420020AF34 /* JCDirectoryGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F258589118BD3A420020AF34 /* JCDirectoryGroupViewController.m */; };
 		F266162618B42AA0000B770A /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266162418B42AA0000B770A /* AddressBook.framework */; };
 		F266162718B42AA0000B770A /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266162518B42AA0000B770A /* AddressBookUI.framework */; };
-		F5265E1019621ED2001D5205 /* JCGetStartedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F5265E0F19621ED2001D5205 /* JCGetStartedButton.m */; };
 		F59AE2BD192F07BA00CAF0F3 /* iPadlaunch1Xnew.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2B6192F07BA00CAF0F3 /* iPadlaunch1Xnew.png */; };
 		F59AE2C3192F07BA00CAF0F3 /* iPhone1Xnew.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2B9192F07BA00CAF0F3 /* iPhone1Xnew.png */; };
 		F59AE2C5192F07BA00CAF0F3 /* iPhone2Xnew.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2BA192F07BA00CAF0F3 /* iPhone2Xnew.png */; };
@@ -716,6 +716,8 @@
 		914B3984195B727100334579 /* VoicemailCell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VoicemailCell.png; sourceTree = "<group>"; };
 		9154947619366C54003DCED4 /* JCPlayPauseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPlayPauseView.h; sourceTree = "<group>"; };
 		9154947719366C54003DCED4 /* JCPlayPauseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPlayPauseView.m; sourceTree = "<group>"; };
+		91634C2D19630A3B0079A823 /* JCGetStartedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCGetStartedButton.h; sourceTree = SOURCE_ROOT; };
+		91634C2E19630A3B0079A823 /* JCGetStartedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCGetStartedButton.m; sourceTree = SOURCE_ROOT; };
 		9172AD5B19192A1500481B01 /* UserDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserDefaults.plist; sourceTree = "<group>"; };
 		91743A9E191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTermsAndConditonsVCViewController.h; sourceTree = "<group>"; };
 		91743A9F191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTermsAndConditonsVCViewController.m; sourceTree = "<group>"; };
@@ -789,8 +791,6 @@
 		F258589118BD3A420020AF34 /* JCDirectoryGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDirectoryGroupViewController.m; sourceTree = "<group>"; };
 		F266162418B42AA0000B770A /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		F266162518B42AA0000B770A /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
-		F5265E0E19621ED2001D5205 /* JCGetStartedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JCGetStartedButton.h; path = JiveOne/JCGetStartedButton.h; sourceTree = "<group>"; };
-		F5265E0F19621ED2001D5205 /* JCGetStartedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JCGetStartedButton.m; path = JiveOne/JCGetStartedButton.m; sourceTree = "<group>"; };
 		F59AE2B6192F07BA00CAF0F3 /* iPadlaunch1Xnew.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPadlaunch1Xnew.png; sourceTree = "<group>"; };
 		F59AE2B9192F07BA00CAF0F3 /* iPhone1Xnew.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhone1Xnew.png; sourceTree = "<group>"; };
 		F59AE2BA192F07BA00CAF0F3 /* iPhone2Xnew.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhone2Xnew.png; sourceTree = "<group>"; };
@@ -1829,8 +1829,8 @@
 				91CAE6791961D485004A28FD /* JCJiveLogoWhite.m */,
 				91CAE67F1961EA6A004A28FD /* JCJiveLogoBlack.h */,
 				91CAE6801961EA6A004A28FD /* JCJiveLogoBlack.m */,
-				F5265E0E19621ED2001D5205 /* JCGetStartedButton.h */,
-				F5265E0F19621ED2001D5205 /* JCGetStartedButton.m */,
+				91634C2D19630A3B0079A823 /* JCGetStartedButton.h */,
+				91634C2E19630A3B0079A823 /* JCGetStartedButton.m */,
 			);
 			name = ImageClasses;
 			sourceTree = "<group>";
@@ -2300,7 +2300,7 @@
 				9154947819366C54003DCED4 /* JCPlayPauseView.m in Sources */,
 				91869D871959E5CF007743CE /* JCTOSButtonView.m in Sources */,
 				2710E40F18CEC8C300152C91 /* ConversationEntry+Custom.m in Sources */,
-				F5265E1019621ED2001D5205 /* JCGetStartedButton.m in Sources */,
+				91634C2F19630A3B0079A823 /* JCGetStartedButton.m in Sources */,
 				279E4CB1192273E5002A556C /* MBContactCollectionViewPromptCell.m in Sources */,
 				2751591F18AD303500FD8D3F /* JCDirectoryViewController.m in Sources */,
 				DD3BD9F418DCB1740080318E /* Voicemail+Custom.m in Sources */,

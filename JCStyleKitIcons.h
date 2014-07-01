@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
+#import "JCGetStartedButton.h"
 #import "JCJiveLogoWhite.h"
 #import "JCJiveLogoBlack.h"
 #import "JCVoicemailIcon.h"
-#import "JCGetStartedButton.h"
