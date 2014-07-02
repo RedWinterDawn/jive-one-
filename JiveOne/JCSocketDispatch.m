@@ -507,11 +507,6 @@
         if (voicemails.count == 0 && voicemail && [operation isEqualToString:@"posted"]) {
             [[NSNotificationCenter defaultCenter] postNotificationName:kNewVoicemail object:voicemail];
             [JSMessageSoundEffect playSMSReceived];
-            
-            if ([voicemail.jrn length] < 1){
-                NSLog(@"Houston we have a problem3.");
-            }
-            NSLog(@"Length is3:%lu",(unsigned long)[voicemail.jrn length]);
             [(JCAppDelegate *)[UIApplication sharedApplication].delegate incrementBadgeCountForVoicemail:voicemail.jrn];
         }
     }
