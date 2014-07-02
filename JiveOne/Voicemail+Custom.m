@@ -91,21 +91,16 @@
         }
 
         vmail.jrn = dictionary[@"jrn"];
+        __block NSString * jrn = vmail.jrn;
+            
         vmail.url_self = [dictionary[@"urls"] objectForKey:@"self"];
         vmail.url_download = [dictionary[@"urls"] objectForKey:@"self_download"];
         vmail.url_changeStatus = [dictionary[@"urls"] objectForKey:@"self_changeStatus"];
         vmail.deleted = [NSNumber numberWithBool:NO];
-//        @try {
-//            [context MR_saveToPersistentStoreAndWait];
-//        }
-//        @catch (NSException *exception) {
-//            NSLog(@"%@", exception);
-//        }
-        
         
         //get all voicemail messages through a queue
         dispatch_async(dispatch_get_main_queue(), ^{
-            [(JCAppDelegate *)[UIApplication sharedApplication].delegate incrementBadgeCountForVoicemail:vmail.jrn];
+            [(JCAppDelegate *)[UIApplication sharedApplication].delegate incrementBadgeCountForVoicemail:jrn];
         });
         
     }
