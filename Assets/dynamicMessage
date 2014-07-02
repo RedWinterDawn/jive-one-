@@ -1,0 +1,33 @@
+#!/bin/bash
+# to make this file executable run:
+# chmod +x path/to/this/file
+# now you can simply double click the file to throw up a new message.
+# if you are having issues make sure you are executing this file from its parent directory
+# simply run ./dynamicMessage
+
+
+# Dates
+date1=$(date +%s)
+date2=$(date -u)
+
+# Arrays
+names=("Doug Leonard" "Daniel Leonard" "Colton Shields" "Troy Shields" "Daniel George" "Eduardo Gueiros" "Theo Zourouvillys" "John Pope" "Mike Sharp" "Loren M. Ipsum" "Hubby" "BYU Honor Code Office")
+
+# Seed random generator
+RANDOM=$(date +%s)
+selectedName=${names[$RANDOM % ${#names[@]} ]}
+
+#cat "$selectedName"
+file=msg0001.txt
+# if file exists - then delete it.
+[[ -f "$file" ]] && rm -f "$file"
+
+#cd /Users/Doug/Documents/workspace/iOS-JiveOne/Assets
+cat template.txt | sed -e "s/fullname/$selectedName/g" >> letsSee.txt
+cat letsSee.txt | sed -e "s/utcdate/$date2/g" >> letsSee2.txt
+cat letsSee2.txt | sed -e "s/dateinseconds/$date1/g" >> msg0001.txt
+rm letsSee.txt
+rm letsSee2.txt
+
+
+curl -v -F file=@msg0000.WAV -F metadata=@msg0001.txt http://10.20.26.141:8880/voicemails/mailbox/0146de22-4cf6-65b5-3be8-006300620001/folders/INBOX
