@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1552" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
@@ -14,30 +14,21 @@
                 <rect key="frame" x="0.0" y="0.0" width="321" height="179"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="(801) 349-7643" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EDq-sG-3YO" userLabel="callerid">
-                        <rect key="frame" x="20" y="7" width="196" height="21"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(801) 349-7643" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EDq-sG-3YO" userLabel="callerid">
+                        <rect key="frame" x="20" y="7" width="169" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="169" id="Tit-ec-UfZ"/>
+                            <constraint firstAttribute="height" constant="21" id="gge-G1-SFZ"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="vmail.png" translatesAutoresizingMaskIntoConstraints="NO" id="hfg-rQ-aIp" userLabel="voicemailIcon">
-                        <rect key="frame" x="292" y="20" width="15" height="57"/>
-                        <color key="tintColor" red="1" green="0.17194956410000001" blue="0.20760572229999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Today, 10:57 PM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nIe-cq-PrP" userLabel="creationTime">
+                        <rect key="frame" x="168" y="7" width="140" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="21" id="LNt-10-UhZ"/>
+                            <constraint firstAttribute="width" constant="140" id="hgU-gd-DLF"/>
                         </constraints>
-                    </imageView>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="3/14/14" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NZe-HX-VVJ" userLabel="shortTime">
-                        <rect key="frame" x="225" y="7" width="88" height="20"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="88" id="1Yd-f2-AIs"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Today, 10:57 PM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nIe-cq-PrP" userLabel="creationTime">
-                        <rect key="frame" x="20" y="55" width="170" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -49,8 +40,8 @@
                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="o6o-BF-Pb3">
                         <rect key="frame" x="146" y="60" width="20" height="20"/>
                     </activityIndicatorView>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Utah" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WOB-bN-zYU" userLabel="phone_state">
-                        <rect key="frame" x="20" y="31" width="196" height="21"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Jive Communications Inc." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WOB-bN-zYU" userLabel="UserExtention">
+                        <rect key="frame" x="20" y="31" width="293" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
@@ -76,27 +67,25 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="WOB-bN-zYU" firstAttribute="leading" secondItem="Mm7-dv-qCm" secondAttribute="leading" constant="20" id="HAV-Qh-50j"/>
+                    <constraint firstItem="WOB-bN-zYU" firstAttribute="top" secondItem="EDq-sG-3YO" secondAttribute="bottom" constant="3" id="6XT-v8-KTt"/>
+                    <constraint firstItem="EDq-sG-3YO" firstAttribute="top" secondItem="nIe-cq-PrP" secondAttribute="top" id="EvO-sE-G0E"/>
+                    <constraint firstItem="EDq-sG-3YO" firstAttribute="top" secondItem="Mm7-dv-qCm" secondAttribute="top" constant="7" id="KOE-p9-ZcF"/>
+                    <constraint firstAttribute="trailing" secondItem="nIe-cq-PrP" secondAttribute="trailing" constant="13" id="Mrl-HB-Odf"/>
                     <constraint firstItem="EDq-sG-3YO" firstAttribute="leading" secondItem="Mm7-dv-qCm" secondAttribute="leading" constant="20" id="PdU-dh-FVU"/>
-                    <constraint firstAttribute="trailing" secondItem="hfg-rQ-aIp" secondAttribute="trailing" constant="7" id="awH-ou-uUN"/>
-                    <constraint firstAttribute="trailing" secondItem="NZe-HX-VVJ" secondAttribute="trailing" constant="7" id="v5C-gV-dnZ"/>
+                    <constraint firstItem="EDq-sG-3YO" firstAttribute="bottom" secondItem="nIe-cq-PrP" secondAttribute="bottom" id="mvh-nF-d6y"/>
+                    <constraint firstItem="EDq-sG-3YO" firstAttribute="leading" secondItem="WOB-bN-zYU" secondAttribute="leading" id="uGT-xC-dhQ"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="creationTime" destination="nIe-cq-PrP" id="3i7-Mt-aHq"/>
-                <outlet property="detailLabel" destination="WOB-bN-zYU" id="ONn-7D-bzt"/>
+                <outlet property="detailLabel" destination="WOB-bN-zYU" id="HUl-xr-ceT"/>
                 <outlet property="duration" destination="XyY-49-Zkf" id="OzS-DH-8Ov"/>
                 <outlet property="playPauseButton" destination="wkE-AG-dbK" id="2tl-ck-AEl"/>
-                <outlet property="shortTime" destination="NZe-HX-VVJ" id="S9Q-zV-Ltr"/>
                 <outlet property="slider" destination="9LY-YY-Jqs" id="55z-g4-yUs"/>
                 <outlet property="speakerView" destination="cp3-bc-vEw" id="fvq-Zd-4jk"/>
                 <outlet property="spinningWheel" destination="o6o-BF-Pb3" id="xaT-eY-sco"/>
                 <outlet property="titleLabel" destination="EDq-sG-3YO" id="yi6-wM-0DR"/>
-                <outlet property="voicemailIcon" destination="hfg-rQ-aIp" id="td1-ia-XG8"/>
             </connections>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="vmail.png" width="32" height="32"/>
-    </resources>
 </document>

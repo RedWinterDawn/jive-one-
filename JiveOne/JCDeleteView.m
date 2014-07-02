@@ -48,8 +48,15 @@
         }
         [self.parentCell.delegate voiceCellDeleteTapped:self.parentCell.indexPath];
     }
+    [self performSelector:@selector(toggleIsSelected) withObject:self afterDelay:0.5];
 }
 
+- (void)toggleIsSelected
+{
+    self.isSelected = !self.isSelected;
+    [self setNeedsDisplay];
+
+}
 - (void)sendDeleteMessage
 {
     

@@ -10,8 +10,8 @@
 date1=$(date +%s)
 date2=$(date -u)
 
-# Arrays
-names=("Doug Leonard" "Daniel Leonard" "Colton Shields" "Troy Shields" "Daniel George" "Eduardo Gueiros" "Theo Zourouvillys" "John Pope" "Mike Sharp" "Loren M. Ipsum" "Hubby" "BYU Honor Code Office")
+# Arrays 
+names=("Doug Leonard" "Daniel Leonard" "Colton Shields" "Troy Shields" "Daniel George" "Eduardo Gueiros" "Theo Zourouvillys" "John Pope" "Mike Sharp" "Loren M. Ipsum" "Hubby" "BYU Honor Code Office" "801-900-9652" "915-614-9965" "214-787-1616" "727-915-6347")
 
 # Seed random generator
 RANDOM=$(date +%s)

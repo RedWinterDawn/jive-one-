@@ -240,11 +240,8 @@ static NSString *CellIdentifier = @"VoicemailCell";
         
         [self stopProgressTimerForVoicemail];
         [self.selectedCell.playPauseButton setPlayPauseDisplaysPlay:YES];
-//        [selectedCell setSliderValue:0];
-//        [selectedCell.slider updateThumbWithCurrentProgress];
         [self performSelector:@selector(resetSlider) withObject:nil afterDelay:.5];
     }
-    
     [self addOrRemoveSelectedIndexPath:indexPath];
     
     BOOL isSelected = [self.selectedIndexPaths containsObject:indexPath];
@@ -252,6 +249,8 @@ static NSString *CellIdentifier = @"VoicemailCell";
     if (isSelected) {
         [self prepareAudioForIndexPath:indexPath];
         self.selectedCell = (JCVoiceCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        
+        //TODO: this is buggy - @doug
         if (self.selectedCell.frame.origin.y >= 300) {
             [tableView setContentOffset:CGPointMake(0, 80)animated:YES];
         }
