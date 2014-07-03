@@ -45,6 +45,9 @@
 //Fonts
 #define kIntroFont @"Alpine Script"
 
+#define kDy 240
+#define kUpDy -300
+#define kDs  0
 
 @interface JCAppIntro ()
 @property (strong, nonatomic) UIImageView *backgroundImg;
@@ -111,10 +114,12 @@
     self.scrollView.showsHorizontalScrollIndicator = NO;
     
     self.animator = [IFTTTAnimator new];
-
-    [self placeViews];
-    [self configureAnimation];
     self.delegate = self;
+    [self setupBackground];
+    [self setupPage1];
+    [self setupPage2];
+    [self setupPage3];
+    [self setupPage4];
     [UIView animateWithDuration:1.0 animations:^{
         [self.voicemailCell setAlpha:1.0];
         [self.firstLabel setAlpha:1.0];
@@ -127,8 +132,8 @@
     
 }
 
-
-- (void)placeViews
+#pragma mark - setup
+- (void)setupBackground
 {
     
     //******************************************************
@@ -140,7 +145,11 @@
     
     JCAppIntro* appIntroSingleton = [JCAppIntro sharedInstance];
     [self.backgroundImageView setImage:appIntroSingleton.backgroundImageView.image];
-    
+}
+
+#pragma mark - page1
+- (void)setupPage1
+{
     //******************************************************
     //Add voicemailCell to center of page1
     //******************************************************
@@ -169,7 +178,7 @@
     self.jiveLogoWhite = [[JCJiveLogoWhite alloc]initWithFrame:jiveLogoFrame];
     self.jiveLogoWhite.backgroundColor = [UIColor clearColor];
     self.jiveLogoWhite.center = self.view.center;
-//    UIImageView *jiveLogoWhite = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfJiveLogoWhiteWithFrame:(jiveLogoFrame)]];
+    //    UIImageView *jiveLogoWhite = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfJiveLogoWhiteWithFrame:(jiveLogoFrame)]];
     float jiveLogoWhite_x = ((timeForPage(1))+(self.view.frame.size.width/2)-(jiveLogoWhite_w/2));
     float jiveLogoWhite_y = 20;
     [self.jiveLogoWhite setAlpha:0.0];
@@ -215,7 +224,7 @@
     [callerIdLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14]];
     callerIdLabel.frame = CGRectOffset(self.voicemailCell.frame, timeForPage(1) + 32, -269);
     [self.voicemailCell addSubview:callerIdLabel];
-
+    
     UILabel *vmDateLabel = [[UILabel alloc] init];
     vmDateLabel.text = @"May 22";
     [vmDateLabel sizeToFit];
@@ -255,53 +264,6 @@
     [self.voicemailCell addSubview:vmExtLabel];
     
     //******************************************************
-    //add topLeft to page2
-    //******************************************************
-    self.topLeft = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfTopLeft]];
-    self.topLeft.center = self.view.center;
-    self.topLeft.frame = CGRectOffset(self.topLeft.frame, kTopLeft_x, kTopLeft_y);
-    [self.topLeft setAlpha:0.0];
-    [self.scrollView addSubview:self.topLeft];
-    
-    //******************************************************
-    //add topRight to page2
-    //******************************************************
-    self.topRight = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfTopRight]];
-    self.topRight.center = self.view.center;
-    self.topRight.frame = CGRectOffset( self.topRight.frame, kTopRight_x, kTopRight_y );
-    [self.topRight setAlpha:0.0];
-    [self.scrollView addSubview:self.topRight];
-    
-    //******************************************************
-    //add bottomLeft to page2
-    //******************************************************
-    self.bottomLeft = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfBottomLeft]];
-    self.bottomLeft.center = self.view.center;
-    self.bottomLeft.frame = CGRectOffset( self.bottomLeft.frame, kBottomLeft_x, kBottomLeft_y );
-    [self.bottomLeft setAlpha:0.0];
-    [self.scrollView addSubview:self.bottomLeft];
-    
-    //******************************************************
-    //add bottomRight to page2
-    //******************************************************
-    self.bottomRight = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfBottomRight]];
-    self.bottomRight.center = self.view.center;
-    self.bottomRight.frame = CGRectOffset(self.bottomRight.frame, kBottomRight_x, kBottomRight_y);
-    [self.bottomRight setAlpha:0.0];
-    [self.scrollView addSubview:self.bottomRight];
-    
-    //******************************************************
-    //add Get Started button to page3
-    //******************************************************
-//    JCGetStartedButton *gft = [[JCGetStartedButton alloc]initWithFrame:self.getStartedButton.imageView.frame];
-//    self.getStartedButton.imageView.image = ((UIImage*)gft);
-//    [self.getStartedButton setBackgroundImage:[JCStyleKit imageOfGetStartedButtonWithFrame:self.getStartedButton.frame] forState:UIControlStateNormal];
-    self.getStartedButton.center = self.view.center;
-    self.getStartedButton.frame = CGRectOffset(self.getStartedButton.frame, kgetStartedButton_x, kgetStartedButton_y);
-    [self.getStartedButton setAlpha:1.0];
-    [self.scrollView addSubview:self.getStartedButton];
-
-    //******************************************************
     //This is where we add all the text the the labels of the tutorials
     //******************************************************
     UILabel *firstPageText = [[UILabel alloc] init];
@@ -313,7 +275,7 @@
     [firstPageText setNumberOfLines:0];
     [firstPageText setLineBreakMode:NSLineBreakByWordWrapping];
     firstPageText.frame = CGRectMake(firstPageText.frame.origin.x, firstPageText.frame.origin.y, 250, 100);
-//    [firstPageText sizeToFit];
+    //    [firstPageText sizeToFit];
     
     firstPageText.center = self.view.center;
     [firstPageText setAlpha:0.0];
@@ -351,7 +313,7 @@
     [self.scrollView addSubview:scrubberText];
     self.topRightLabel = scrubberText;
     NSLog(@"ScrT%@",NSStringFromCGRect(scrubberText.frame));
-
+    
     
     UILabel *speakerText = [[UILabel alloc] init];
     speakerText.text = @"Speaker On/Off";
@@ -379,17 +341,111 @@
     [self.scrollView addSubview:deleteText];
     self.bottomRightLabel = deleteText;
     
-//    UILabel *leaveFeedbackLabel = [[UILabel alloc] init];
-//    leaveFeedbackLabel.text = @"Send us feedback!";
-//    [leaveFeedbackLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:kFontSize]];
-//    leaveFeedbackLabel.shadowColor = [UIColor darkGrayColor];
-//    leaveFeedbackLabel.textColor = [UIColor whiteColor];
-//    leaveFeedbackLabel.shadowOffset = CGSizeMake(0, 1);
-//    [leaveFeedbackLabel sizeToFit];
-//    leaveFeedbackLabel.center = self.view.center;
-//    leaveFeedbackLabel.frame = CGRectOffset(leaveFeedbackLabel.frame, timeForPage(3), -50);
-//    [self.scrollView addSubview:leaveFeedbackLabel];
-//    self.thridPageLabel1 = leaveFeedbackLabel;
+    //******************************************************
+    // now, we animate the voicemailCell
+    //******************************************************
+    IFTTTFrameAnimation *voicemailCellFrameAnimation = [IFTTTFrameAnimation animationWithView:self.voicemailCell];
+    [self.animator addAnimation:voicemailCellFrameAnimation];
+    
+    // the higher this number is the more the objects shrink
+    
+    
+    // move down and to the right, and shrink between pages 2 and 3
+    [voicemailCellFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:self.voicemailCell.frame]];
+    [voicemailCellFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.voicemailCell.frame, timeForPage(2), 0)]];
+    
+    
+    //******************************************************
+    // now, we animate the JiveLogoWhite
+    //******************************************************
+    IFTTTFrameAnimation *jiveLogoWhiteFrameAnimation = [IFTTTFrameAnimation animationWithView:self.jiveLogoWhite];
+    [self.animator addAnimation:jiveLogoWhiteFrameAnimation];
+    
+    [jiveLogoWhiteFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:CGRectOffset(self.jiveLogoWhite.frame, timeForPage(1), 0)]];
+    [jiveLogoWhiteFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.jiveLogoWhite.frame, timeForPage(2), kUpDy)]];
+    
+    
+    //******************************************************
+    // now, we animate the firstLabel
+    //******************************************************
+    IFTTTFrameAnimation *firstLabelFrameAnimation = [IFTTTFrameAnimation animationWithView:self.firstLabel];
+    [self.animator addAnimation:firstLabelFrameAnimation];
+    
+    [firstLabelFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:CGRectOffset(self.firstLabel.frame, timeForPage(1), 0)]];
+    [firstLabelFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.firstLabel.frame, timeForPage(2), kDy)]];
+    
+    
+    //*************************************************************
+    //fade JiveLogo & Voicemail Icon in on page 1 and out on page 2
+    //*************************************************************
+    IFTTTAlphaAnimation *jiveLogoWhiteAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.voicemailIconWhite];
+    [self.animator addAnimation:jiveLogoWhiteAlphaAnimation];
+    
+    [jiveLogoWhiteAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:1.0f]];
+    [jiveLogoWhiteAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f]];
+    [jiveLogoWhiteAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:0.0f]];
+    [jiveLogoWhiteAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
+    
+    IFTTTAlphaAnimation *voicemailIconWhiteAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.voicemailIconWhite];
+    [self.animator addAnimation:voicemailIconWhiteAlphaAnimation];
+    
+    [voicemailIconWhiteAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:1.0f]];
+    [voicemailIconWhiteAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f]];
+    [voicemailIconWhiteAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:0.0f]];
+    [voicemailIconWhiteAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
+}
+
+#pragma mark - page2
+
+- (void)setupPage2
+{
+    //******************************************************
+    //add topLeft to page2
+    //******************************************************
+    self.topLeft = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfTopLeft]];
+    self.topLeft.center = self.view.center;
+    self.topLeft.frame = CGRectOffset(self.topLeft.frame, kTopLeft_x, kTopLeft_y);
+    [self.topLeft setAlpha:0.0];
+    [self.scrollView addSubview:self.topLeft];
+    
+    //******************************************************
+    //add topRight to page2
+    //******************************************************
+    self.topRight = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfTopRight]];
+    self.topRight.center = self.view.center;
+    self.topRight.frame = CGRectOffset( self.topRight.frame, kTopRight_x, kTopRight_y );
+    [self.topRight setAlpha:0.0];
+    [self.scrollView addSubview:self.topRight];
+    
+    //******************************************************
+    //add bottomLeft to page2
+    //******************************************************
+    self.bottomLeft = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfBottomLeft]];
+    self.bottomLeft.center = self.view.center;
+    self.bottomLeft.frame = CGRectOffset( self.bottomLeft.frame, kBottomLeft_x, kBottomLeft_y );
+    [self.bottomLeft setAlpha:0.0];
+    [self.scrollView addSubview:self.bottomLeft];
+    
+    //******************************************************
+    //add bottomRight to page2
+    //******************************************************
+    self.bottomRight = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfBottomRight]];
+    self.bottomRight.center = self.view.center;
+    self.bottomRight.frame = CGRectOffset(self.bottomRight.frame, kBottomRight_x, kBottomRight_y);
+    [self.bottomRight setAlpha:0.0];
+    [self.scrollView addSubview:self.bottomRight];
+    
+    //    UILabel *leaveFeedbackLabel = [[UILabel alloc] init];
+    //    leaveFeedbackLabel.text = @"Send us feedback!";
+    //    [leaveFeedbackLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:kFontSize]];
+    //    leaveFeedbackLabel.shadowColor = [UIColor darkGrayColor];
+    //    leaveFeedbackLabel.textColor = [UIColor whiteColor];
+    //    leaveFeedbackLabel.shadowOffset = CGSizeMake(0, 1);
+    //    [leaveFeedbackLabel sizeToFit];
+    //    leaveFeedbackLabel.center = self.view.center;
+    //    leaveFeedbackLabel.frame = CGRectOffset(leaveFeedbackLabel.frame, timeForPage(3), -50);
+    //    [self.scrollView addSubview:leaveFeedbackLabel];
+    //    self.thridPageLabel1 = leaveFeedbackLabel;
     
     UILabel *leaveFeedbackLabel2 = [[UILabel alloc] init];
     leaveFeedbackLabel2.text = @"Send us feedback!";
@@ -413,60 +469,7 @@
     emailLabel.center = self.view.center;
     emailLabel.frame = CGRectOffset(emailLabel.frame, timeForPage(3), -30);
     [self.scrollView addSubview:emailLabel];
-    self.thridPageLabel1 = emailLabel;
-    
-    UILabel *comingSoon = [[UILabel alloc] init];
-    comingSoon.text = @"Coming soon!";
-    [comingSoon setFont:[UIFont fontWithName:kIntroFont size:40]];
-    comingSoon.textColor = [UIColor whiteColor];
-    comingSoon.shadowColor = [UIColor darkGrayColor];
-    comingSoon.shadowOffset = CGSizeMake(0, 1);
-    [comingSoon sizeToFit];
-    comingSoon.center = self.view.center;
-    comingSoon.frame = CGRectOffset(comingSoon.frame, timeForPage(4), -55);
-    [self.scrollView addSubview:comingSoon];
-    self.thridPageLabel1 = comingSoon;
-    
-}
-
-- (void)configureAnimation
-{
-    CGFloat dy = 240;
-    CGFloat upDy = -300;
-    
-    //******************************************************
-    // now, we animate the voicemailCell
-    //******************************************************
-    IFTTTFrameAnimation *voicemailCellFrameAnimation = [IFTTTFrameAnimation animationWithView:self.voicemailCell];
-    [self.animator addAnimation:voicemailCellFrameAnimation];
-    
-    // the higher this number is the more the objects shrink
-    CGFloat ds = 0;
-    
-    // move down and to the right, and shrink between pages 2 and 3
-    [voicemailCellFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:self.voicemailCell.frame]];
-    [voicemailCellFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.voicemailCell.frame, timeForPage(2), 0)]];
-    
-    
-    //******************************************************
-    // now, we animate the JiveLogoWhite
-    //******************************************************
-    IFTTTFrameAnimation *jiveLogoWhiteFrameAnimation = [IFTTTFrameAnimation animationWithView:self.jiveLogoWhite];
-    [self.animator addAnimation:jiveLogoWhiteFrameAnimation];
-    
-    [jiveLogoWhiteFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:CGRectOffset(self.jiveLogoWhite.frame, timeForPage(1), 0)]];
-    [jiveLogoWhiteFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.jiveLogoWhite.frame, timeForPage(2), upDy)]];
-    
-    
-    //******************************************************
-    // now, we animate the firstLabel
-    //******************************************************
-    IFTTTFrameAnimation *firstLabelFrameAnimation = [IFTTTFrameAnimation animationWithView:self.firstLabel];
-    [self.animator addAnimation:firstLabelFrameAnimation];
-    
-    [firstLabelFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:CGRectOffset(self.firstLabel.frame, timeForPage(1), 0)]];
-    [firstLabelFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.firstLabel.frame, timeForPage(2), dy)]];
-    
+    self.thridPageLabel1 = emailLabel; 
     
     //******************************************************
     // now, we animate the topLeft
@@ -478,9 +481,9 @@
     CGRect topLeftStartFrame = CGRectOffset(self.topLeft.frame, -(self.topLeft.frame.origin.x + self.topLeft.frame.size.width), 0);
     [topLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:topLeftStartFrame]];
     [topLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.topLeft.frame, timeForPage(2), 0)]];
-    [topLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(self.topLeft.frame, timeForPage(3), upDy)]];
- 
-
+    [topLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(self.topLeft.frame, timeForPage(3), kUpDy)]];
+    
+    
     //******************************************************
     // now, we animate the topLeftFrame
     //******************************************************
@@ -490,8 +493,8 @@
     CGRect topLeftLabelStartFrame = CGRectOffset(self.topLeftLabel.frame, -(self.topLeftLabel.frame.origin.x + self.topLeftLabel.frame.size.width), 0);
     [topLeftLabelAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:topLeftLabelStartFrame]];
     [topLeftLabelAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.topLeftLabel.frame, timeForPage(2), 0)]];
-    [topLeftLabelAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(self.topLeftLabel.frame, timeForPage(3), upDy)]];
-
+    [topLeftLabelAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(self.topLeftLabel.frame, timeForPage(3), kUpDy)]];
+    
     
     //******************************************************
     // now, we animate the topRight
@@ -502,8 +505,8 @@
     CGRect topRightFrame2 = CGRectOffset(self.topRight.frame, (self.view.frame.size.width + kTopRight_x), 0);
     [topRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:topRightStartFrame]];
     [topRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:topRightFrame2]];
-    [topRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.topRight.frame, ds, ds), timeForPage(3), upDy)]];
-
+    [topRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.topRight.frame,kDs,kDs), timeForPage(3), kUpDy)]];
+    
     //******************************************************
     // now, we animate the topRightLabel
     //******************************************************
@@ -513,8 +516,8 @@
     CGRect topRightLabelFrame2 = CGRectOffset(self.topRightLabel.frame, (self.view.frame.size.width + kTopRight_x), 0);
     [topRightLabelAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:topRightLabelStartFrame]];
     [topRightLabelAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:topRightLabelFrame2]];
-    [topRightLabelAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.topRightLabel.frame, ds, ds), timeForPage(3), upDy)]];
-
+    [topRightLabelAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.topRightLabel.frame,kDs,kDs), timeForPage(3), kUpDy)]];
+    
     //******************************************************
     // now, we animate the bottomLeft
     //******************************************************
@@ -525,7 +528,7 @@
     CGRect bottomLeftStartFrame = CGRectOffset(self.bottomLeft.frame, -(self.bottomLeft.frame.origin.x + self.bottomLeft.frame.size.width), 0);
     [bottomLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:bottomLeftStartFrame]];
     [bottomLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.bottomLeft.frame, timeForPage(2), 0)]];
-    [bottomLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.bottomLeft.frame, ds, ds), timeForPage(3), dy)]];
+    [bottomLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.bottomLeft.frame,kDs,kDs), timeForPage(3), kDy)]];
     
     //******************************************************
     // now, we animate the bottomLeft
@@ -537,50 +540,30 @@
     CGRect bottomLeftLabelStartFrame = CGRectOffset(self.bottomLeftLabel.frame, -(self.bottomLeftLabel.frame.origin.x + self.bottomLeftLabel.frame.size.width), 0);
     [bottomLeftLabelAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:bottomLeftLabelStartFrame]];
     [bottomLeftLabelAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.bottomLeftLabel.frame, timeForPage(2), 0)]];
-    [bottomLeftLabelAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.bottomLeftLabel.frame, ds, ds), timeForPage(3), dy)]];
+    [bottomLeftLabelAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.bottomLeftLabel.frame,kDs,kDs), timeForPage(3), kDy)]];
     
     //******************************************************
     // now, we animate the bottomRight
     //******************************************************
     IFTTTFrameAnimation *bottomRightFrameAnimation = [IFTTTFrameAnimation animationWithView:self.bottomRight];
     [self.animator addAnimation:bottomRightFrameAnimation];
-
+    
     CGRect bottomRightStartFrame = CGRectOffset(self.bottomRight.frame, (self.view.frame.size.width - self.bottomRight.frame.size.width), 0);
     [bottomRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:bottomRightStartFrame]];
     [bottomRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.bottomRight.frame, timeForPage(2), 0)]];
-    [bottomRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.bottomRight.frame, ds, ds), timeForPage(3), dy)]];
+    [bottomRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.bottomRight.frame,kDs,kDs), timeForPage(3), kDy)]];
     
     //******************************************************
     // now, we animate the bottomRightLabel
     //******************************************************
     IFTTTFrameAnimation *bottomRightLabelFrameAnimation = [IFTTTFrameAnimation animationWithView:self.bottomRightLabel];
     [self.animator addAnimation:bottomRightLabelFrameAnimation];
-
+    
     CGRect bottomRightLabelStartFrame = CGRectOffset(self.bottomRightLabel.frame, (self.view.frame.size.width - self.bottomRightLabel.frame.size.width), 0);
     [bottomRightLabelFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:bottomRightLabelStartFrame]];
     [bottomRightLabelFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.bottomRightLabel.frame, timeForPage(2), 0)]];
-    [bottomRightLabelFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.bottomRightLabel.frame, ds, ds), timeForPage(3), dy)]];
+    [bottomRightLabelFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.bottomRightLabel.frame,kDs,kDs), timeForPage(3), kDy)]];
     
-    
-    //*************************************************************
-    //fade JiveLogo & Voicemail Icon in on page 1 and out on page 2
-    //*************************************************************
-    IFTTTAlphaAnimation *jiveLogoWhiteAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.voicemailIconWhite];
-    [self.animator addAnimation:jiveLogoWhiteAlphaAnimation];
-    
-    [jiveLogoWhiteAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:1.0f]];
-    [jiveLogoWhiteAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f]];
-    [jiveLogoWhiteAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:0.0f]];
-    [jiveLogoWhiteAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
-
-    IFTTTAlphaAnimation *voicemailIconWhiteAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.voicemailIconWhite];
-    [self.animator addAnimation:voicemailIconWhiteAlphaAnimation];
-    
-    [voicemailIconWhiteAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:1.0f]];
-    [voicemailIconWhiteAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f]];
-    [voicemailIconWhiteAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:0.0f]];
-    [voicemailIconWhiteAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
-
     //******************************************************
     //fade all the Arrows in on page 2 and out on page 4
     //******************************************************
@@ -650,8 +633,39 @@
     [bottomRightLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f]];
     [bottomRightLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:1.0f]];
     [bottomRightLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
-    
+}
+
+
+#pragma mark - page3
+    - (void)setupPage3
+    {
     //******************************************************
+    //add Get Started button to page3
+    //******************************************************
+//    JCGetStartedButton *gft = [[JCGetStartedButton alloc]initWithFrame:self.getStartedButton.imageView.frame];
+//    self.getStartedButton.imageView.image = ((UIImage*)gft);
+//    [self.getStartedButton setBackgroundImage:[JCStyleKit imageOfGetStartedButtonWithFrame:self.getStartedButton.frame] forState:UIControlStateNormal];
+    self.getStartedButton.center = self.view.center;
+    self.getStartedButton.frame = CGRectOffset(self.getStartedButton.frame, kgetStartedButton_x, kgetStartedButton_y);
+    [self.getStartedButton setAlpha:1.0];
+    [self.scrollView addSubview:self.getStartedButton];
+    }
+#pragma mark - page4
+        - (void)setupPage4
+        {
+    UILabel *comingSoon = [[UILabel alloc] init];
+    comingSoon.text = @"Coming soon!";
+    [comingSoon setFont:[UIFont fontWithName:kIntroFont size:40]];
+    comingSoon.textColor = [UIColor whiteColor];
+    comingSoon.shadowColor = [UIColor darkGrayColor];
+    comingSoon.shadowOffset = CGSizeMake(0, 1);
+    [comingSoon sizeToFit];
+    comingSoon.center = self.view.center;
+    comingSoon.frame = CGRectOffset(comingSoon.frame, timeForPage(4), -55);
+    [self.scrollView addSubview:comingSoon];
+    self.thridPageLabel1 = comingSoon;
+
+     //******************************************************
     // Fade out the label by dragging on the last page
     //******************************************************
     IFTTTAlphaAnimation *labelAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.lastLabel];
@@ -659,6 +673,8 @@
     [labelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4.35f) andAlpha:0.0f]];
     [self.animator addAnimation:labelAlphaAnimation];
 }
+#pragma mark - convience methods
+
 //awesomeShadow for the voicemail veiw that gives us depth
 - (CGPathRef)awesomeShadow:(CGRect)rect
 {
