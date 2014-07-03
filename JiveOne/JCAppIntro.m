@@ -10,7 +10,7 @@
 #import "JCStyleKit.h"
 #import "JCLoginViewController.h"
 
-#define NUMBER_OF_PAGES 3
+#define NUMBER_OF_PAGES 4
 #define timeForPage(page) (NSInteger)(self.view.frame.size.width * (page - 1))
 
 //Arrows
@@ -61,6 +61,7 @@
 @property (strong, nonatomic) UILabel *vmDateLabel;
 @property (strong, nonatomic) UILabel *vmDateTimeLabel;
 @property (strong, nonatomic) UILabel *vmExtLabel;
+@property (strong, nonatomic) UILabel *comingSoon;
 
 @property (strong, nonatomic) UIImageView *bottomRight;
 @property (strong, nonatomic) UIImageView *bottomLeft;
@@ -252,7 +253,6 @@
     [vmExtLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12]];
     vmExtLabel.frame = CGRectOffset(self.voicemailCell.frame, timeForPage(1) + 39, -249);
     [self.voicemailCell addSubview:vmExtLabel];
-   
     
     //******************************************************
     //add topLeft to page2
@@ -309,6 +309,7 @@
     [firstPageText setFont:[UIFont fontWithName:kIntroFont size:kFontSize]];
     [firstPageText setTextColor:labelTextColor];
     firstPageText.shadowColor = [UIColor darkGrayColor];
+    firstPageText.shadowOffset = CGSizeMake(0, 1);
     [firstPageText setNumberOfLines:0];
     [firstPageText setLineBreakMode:NSLineBreakByWordWrapping];
     firstPageText.frame = CGRectMake(firstPageText.frame.origin.x, firstPageText.frame.origin.y, 250, 100);
@@ -326,6 +327,7 @@
     [playPauseText sizeToFit];
     [playPauseText setTextColor:labelTextColor];
     playPauseText.shadowColor = [UIColor darkGrayColor];
+    playPauseText.shadowOffset = CGSizeMake(0, 1);
     playPauseText.center = self.view.center;
     playPauseText.frame = CGRectOffset(playPauseText.frame, timeForPage(1) + kTopLeft_x_Offset, kTopLeft_y_Offset);
     [playPauseText setAlpha:0.0];
@@ -342,6 +344,7 @@
     [scrubberText sizeToFit];
     [scrubberText setTextColor:labelTextColor];
     scrubberText.shadowColor = [UIColor darkGrayColor];
+    scrubberText.shadowOffset = CGSizeMake(0, 1);
     scrubberText.center = self.view.center;
     scrubberText.frame = CGRectOffset(scrubberText.frame, timeForPage(1) + kTopRight_x_Offset, kTopRight_y_Offset);
     [scrubberText setAlpha:0.0];
@@ -356,6 +359,7 @@
     [speakerText sizeToFit];
     [speakerText setTextColor:labelTextColor];
     speakerText.shadowColor = [UIColor darkGrayColor];
+    speakerText.shadowOffset = CGSizeMake(0, 1);
     speakerText.center = self.view.center;
     speakerText.frame = CGRectOffset(speakerText.frame, timeForPage(1) + kBottomLeft_x_Offset, kBottomLeft_y_Offset);
     [speakerText setAlpha:0.0];
@@ -368,6 +372,7 @@
     [deleteText sizeToFit];
     [deleteText setTextColor:labelTextColor];
     deleteText.shadowColor = [UIColor darkGrayColor];
+    deleteText.shadowOffset = CGSizeMake(0, 1);
     deleteText.center = self.view.center;
     deleteText.frame = CGRectOffset(deleteText.frame, timeForPage(1) + kBottomRight_x_Offset, kBottomRight_y_Offset);
     [deleteText setAlpha:0.0];
@@ -409,6 +414,18 @@
     emailLabel.frame = CGRectOffset(emailLabel.frame, timeForPage(3), -30);
     [self.scrollView addSubview:emailLabel];
     self.thridPageLabel1 = emailLabel;
+    
+    UILabel *comingSoon = [[UILabel alloc] init];
+    comingSoon.text = @"Coming soon!";
+    [comingSoon setFont:[UIFont fontWithName:kIntroFont size:40]];
+    comingSoon.textColor = [UIColor whiteColor];
+    comingSoon.shadowColor = [UIColor darkGrayColor];
+    comingSoon.shadowOffset = CGSizeMake(0, 1);
+    [comingSoon sizeToFit];
+    comingSoon.center = self.view.center;
+    comingSoon.frame = CGRectOffset(comingSoon.frame, timeForPage(4), -55);
+    [self.scrollView addSubview:comingSoon];
+    self.thridPageLabel1 = comingSoon;
     
 }
 
