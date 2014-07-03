@@ -20,7 +20,7 @@
 #pragma mark - V5 services
 #define kVoicemailService @"http://10.20.26.141:8890/" //@"api.jive.com/voicemail"
 #define kMailboxPath @"voicemail/v1/mailbox/"
-#define kJifService @"http://10.20.26.36:5554/" //@"api.jive.com/jif"
+#define kJifService @"http://10.20.26.36:5554/v1/" //@"api.jive.com/jif"
 #define kContactsService @"https://api.jive.com/contacts/"
 #define kJiveUserInfo @"/jiveuser/info/jiveid/"
 

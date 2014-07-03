@@ -32,7 +32,7 @@
 -(void)initialize
 {
     
-    NSURL *baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kVoicemailService, kMailboxPath]];
+    NSURL *baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@", kVoicemailService]];
     _manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
     _manager.responseSerializer = [AFJSONResponseSerializer serializer];
     
@@ -81,12 +81,21 @@
 //get mailbox info and voicemails
 -(void)getVoicemails :(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
 {
+    [self setRequestAuthHeader];
+    
     NSArray* mailboxes = [Mailbox MR_findAll];
     
     [mailboxes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 
         Mailbox *mailbox = (Mailbox *)obj;
         NSString* url = [NSString stringWithFormat:@"%@?verify=%@", mailbox.url_self_mailbox, [[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"]];
+        
+        if ([url rangeOfString:@"api.jive.com"].location != NSNotFound) {
+            NSArray *urlSplit = [url componentsSeparatedByString:@".com/"];
+            url = urlSplit[1];
+        }
+        
+        
         
         [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
             [Voicemail addVoicemails:responseObject completed:^(BOOL suceeded) {

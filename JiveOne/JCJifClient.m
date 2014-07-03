@@ -7,6 +7,7 @@
 //
 
 #import "JCJifClient.h"
+#import "PBX+Custom.h"
 #import "Mailbox+Custom.h"
 
 @implementation JCJifClient
@@ -28,7 +29,7 @@
     return _sharedClient;
 }
 
--(void)initialize
+- (void)initialize
 {
 
     NSURL *baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@", kJifService]];
@@ -77,13 +78,13 @@
 }
 
 #pragma mark - Rest Calls
--(void)getMailboxReferencesForUser:(NSString*)jiveId :(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
+- (void)getMailboxReferencesForUser:(NSString*)jiveId completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
 {
     [self setRequestAuthHeader];
-    NSString* url = [NSString stringWithFormat:@"jiveId/%@", jiveId];
+    NSString* url = [NSString stringWithFormat:@"user/jiveId/%@", jiveId];
     [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //parse list of mailbox references
-        [Mailbox addMailboxes:responseObject  completed:^(BOOL suceeded) {
+        [PBX addPBXs:responseObject[@"userPbxs"] completed:^(BOOL success) {
             completed(YES, responseObject, operation, nil);
         }];
         
@@ -91,6 +92,24 @@
         completed(NO, nil, operation, error);
     }];
     
+}
+
+- (void)getPbxInformationFromUrl:(NSString *)url completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
+{
+    [self setRequestAuthHeader];
+    
+    if ([url rangeOfString:@"api.jive.com"].location != NSNotFound) {
+        NSArray *urlSplit = [url componentsSeparatedByString:@".com/jif/v1/"];
+        url = urlSplit[1];
+    }
+    
+    [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //parse list of mailbox references
+        [PBX addPBX:responseObject withManagedContext:nil sender:nil];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        completed(NO, nil, operation, error);
+    }];
 }
 
 @end

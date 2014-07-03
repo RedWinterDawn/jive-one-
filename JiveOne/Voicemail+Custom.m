@@ -68,7 +68,7 @@
         //create and save
         vmail = [Voicemail MR_createInContext:context];
 
-
+        vmail.voicemailId = dictionary[@"id"];
         vmail.mailboxId = dictionary[@"mailboxId"];
         vmail.timeStamp = [NSNumber numberWithLongLong:[dictionary[@"timeStamp"] longLongValue]];
         vmail.duration = [NSNumber numberWithInteger:[dictionary[@"duration"] intValue]];

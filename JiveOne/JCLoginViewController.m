@@ -20,6 +20,7 @@
 #import "JCJifClient.h"
 #import "Mailbox+Custom.h"
 #import "JCAppIntro.h"
+#import "Mailbox+Custom.h"
 #import "UIImage+ImageEffects.h"
 #import "UITextField+ELFixSecureTextFieldFont.h"
 
@@ -317,10 +318,9 @@
 //voicemail
 -(void)fetchMyMailboxes{
     NSString * jiveId = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
-    [[JCJifClient sharedClient] getMailboxReferencesForUser:jiveId :^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+    [[JCJifClient sharedClient] getMailboxReferencesForUser:jiveId completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
         if(suceeded){
             [self fetchVoicemailsMetadata];
-           
         }
     }];
 }
@@ -334,13 +334,23 @@
             if (self.userIsDoneWithTutorial) {
                 [self goToApplication];
             }
+            [self fetchPBXInformation];
         }
         
     }];
     
     [[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
+}
+
+- (void)fetchPBXInformation
+{
+    NSArray *mailboxes = [Mailbox MR_findAll];
     
-    
+    for (Mailbox *box in mailboxes) {
+        [[JCJifClient sharedClient] getPbxInformationFromUrl:box.url_pbx completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+            //cool, we're done!
+        }];
+    }
 }
 
 

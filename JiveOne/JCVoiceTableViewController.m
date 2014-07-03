@@ -59,7 +59,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
     
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc]
                                         init];
-    [refreshControl addTarget:self action:@selector(updateVoiceTable) forControlEvents:UIControlEventValueChanged];
+    [refreshControl addTarget:self action:@selector(updateVoiceTable:) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
@@ -116,7 +116,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
     [self.tableView reloadData];
 }
 
-- (void)updateVoiceTable
+- (void)updateVoiceTable:(id)sender
 {
     if (requestTimeout && [requestTimeout isValid]) {
         [requestTimeout invalidate];

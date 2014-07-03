@@ -10,34 +10,39 @@
 
 @implementation Mailbox (Custom)
 
-+ (void)addMailboxes:(NSDictionary*)responseObject completed:(void (^)(BOOL suceeded))completed
++ (void)addMailboxes:(NSArray*)mailboxes pbxUrl:(NSString *)pbxUrl completed:(void (^)(BOOL suceeded))completed
 {
     
     [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-        
-        for(NSDictionary *pbx in responseObject[@"pbxs"])
+
+        for (NSDictionary *mailboxExtension in mailboxes)
         {
-            for (NSDictionary *mailboxExtension in pbx[@"extensions"])
-            {
-                
-                NSString *jrn = mailboxExtension[@"jrn"];
-                
-                Mailbox *newBox = [Mailbox MR_findFirstByAttribute:@"jrn" withValue:jrn];
-                
-                if (!newBox) {
-                    newBox = [Mailbox MR_createInContext:localContext];
-                    newBox.extensionName = mailboxExtension[@"extensionName"];
-                    newBox.extensionNumber= mailboxExtension[@"extensionNumber"];
-                    newBox.jrn = mailboxExtension[@"jrn"];
-                    newBox.url_self_mailbox = [mailboxExtension[@"urls"] objectForKey:@"self_mailbox"];
-                }
-            }
+            [self addMailbox:mailboxExtension pbxUrl:pbxUrl withManagedContext:localContext sender:self];
         }
+        
         
     } completion:^(BOOL success, NSError *error) {
         completed(success);
     }];
 
+}
+
++ (Mailbox *)addMailbox:(NSDictionary *)mailboxExtension pbxUrl:(NSString *)pbxUrl withManagedContext:(NSManagedObjectContext *)context sender:(id)sender
+{
+    NSString *jrn = mailboxExtension[@"jrn"];
+    
+    Mailbox *newBox = [Mailbox MR_findFirstByAttribute:@"jrn" withValue:jrn];
+    
+    if (!newBox) {
+        newBox = [Mailbox MR_createInContext:context];
+        newBox.extensionName = mailboxExtension[@"extensionName"];
+        newBox.extensionNumber = mailboxExtension[@"extensionNumber"];
+        newBox.jrn = mailboxExtension[@"self_mailbox"];
+        newBox.url_self_mailbox = mailboxExtension[@"self_mailbox"];
+        newBox.url_pbx = pbxUrl;
+    }
+    
+    return newBox;
 }
 
 @end

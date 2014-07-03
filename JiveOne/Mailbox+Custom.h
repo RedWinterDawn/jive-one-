@@ -9,6 +9,7 @@
 #import "Mailbox.h"
 
 @interface Mailbox (Custom)
-+ (void)addMailboxes:(NSDictionary*)mailbox completed:(void (^)(BOOL suceeded))completed;
++ (void)addMailboxes:(NSDictionary*)mailbox pbxUrl:(NSString *)pbxUrl completed:(void (^)(BOOL suceeded))completed;
++ (Mailbox *)addMailbox:(NSDictionary *)mailbox pbxUrl:(NSString *)pbxUrl withManagedContext:(NSManagedObjectContext *)context sender:(id)sender;
 
 @end

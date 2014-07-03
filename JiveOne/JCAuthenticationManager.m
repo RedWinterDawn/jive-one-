@@ -230,7 +230,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     //Rolling back to hack
     //[self verifyToken];
     NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
-    [[JCJifClient sharedClient] getMailboxReferencesForUser:username :^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+    [[JCJifClient sharedClient] getMailboxReferencesForUser:username completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
         if (suceeded) {
             JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
             if (![delegate.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {

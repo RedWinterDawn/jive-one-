@@ -8,6 +8,7 @@
 
 #import "PBX+Custom.h"
 #import "Lines+Custom.h"
+#import "Mailbox+Custom.h"
 
 @implementation PBX (Custom)
 
@@ -29,31 +30,44 @@
         context = [NSManagedObjectContext MR_contextForCurrentThread];
     }
     
-    NSString *pbxId = pbx[@"id"];
-    PBX *c_pbx = [PBX MR_findFirstByAttribute:@"pbxId" withValue:pbxId];
+    NSString *self_url = pbx[@"self_pbx"] ? pbx[@"self_pbx"] : pbx[@"self"] ? pbx[@"self"] : @"";
+    PBX *c_pbx = [PBX MR_findFirstByAttribute:@"selfUrl" withValue:self_url inContext:context];
+    
     if (c_pbx) {
         [self updatePBX:c_pbx new_pbx:pbx];
     }
     else {
         
         c_pbx = [PBX MR_createInContext:context];
-        c_pbx.pbxId = pbxId;
-        c_pbx.name = pbx[@"name"];
+        c_pbx.pbxId = pbx[@"jrn"] ? pbx[@"jrn"] : @"";
+        c_pbx.name = pbx[@"name"] ? pbx[@"name"] : @"";
+        c_pbx.jrn = pbx[@"jrn"] ? pbx[@"jrn"] : @"";
+        c_pbx.v5 = pbx[@"v5"] ? [NSNumber numberWithBool:[pbx[@"v5"] boolValue]] : false;
+        c_pbx.selfUrl = self_url;
     }
     
-    NSArray *lines = pbx[@"lines"];
-    if (lines && lines.count > 0) {
-        for (NSDictionary *line in lines) {
-            [Lines addLine:line pbxId:pbxId withManagedContext:context sender:nil];
+    NSArray *mailboxes = pbx[@"extensions"];
+    if (mailboxes && mailboxes.count > 0) {
+        for (NSDictionary *mailbox in mailboxes) {
+            [Mailbox addMailbox:mailbox pbxUrl:self_url withManagedContext:context sender:nil];
         }
     }
     
-    return c_pbx;
+    if (sender != self) {
+        [context MR_saveToPersistentStoreAndWait];
+        return c_pbx;
+    }
+    else {
+        return nil;
+    }
 }
 
 + (void)updatePBX:(PBX *)pbx new_pbx:(NSDictionary *)new_pbx
 {
-    pbx.name = new_pbx[@"name"];
+    pbx.pbxId = new_pbx[@"jrn"] ? new_pbx[@"jrn"] : @"";
+    pbx.name = new_pbx[@"name"] ? new_pbx[@"name"] : @"";
+    pbx.jrn = new_pbx[@"jrn"] ? new_pbx[@"jrn"] : @"";
+    pbx.v5 = new_pbx[@"v5"] ? [NSNumber numberWithBool:[new_pbx[@"v5"] boolValue]] : false;
 }
 
 @end
