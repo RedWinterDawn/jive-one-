@@ -147,12 +147,41 @@
     [self.backgroundImageView setImage:appIntroSingleton.backgroundImageView.image];
 }
 
+-(UIImageView*)createImageViewUsingDictionary:(NSDictionary*)argumentDict {
+    
+    
+    UIImageView* imageView = [argumentDict valueForKey:@"imageView"];
+    imageView.center = self.view.center;
+    int x =(int)[argumentDict valueForKey:@"x"];
+    int y =(int)[argumentDict valueForKey:@"y"];
+    int w =(int)[argumentDict valueForKey:@"w"];
+    int h =(int)[argumentDict valueForKey:@"h"];
+    int a =(int)[argumentDict valueForKey:@"a"];
+    
+   
+    
+    [imageView setAlpha:((CGFloat)a)];
+    imageView.frame = CGRectMake(x, y, w, h);
+    
+    return imageView;
+}
+
 #pragma mark - page1
 - (void)setupPage1
 {
     //******************************************************
     //Add voicemailCell to center of page1
     //******************************************************
+    
+    self.voicemailCell = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfVoicemailCell]];
+    NSDictionary *d = @{@"x": @100,//((timeForPage(1))+(self.view.frame.size.width/2)-(self.voicemailCell.frame.size.width/2)),
+                        @"y": @100,//((timeForPage(1))+(self.view.frame.size.height/2)-(self.voicemailCell.frame.size.height/2)),
+                        @"w": @278,
+                        @"h": @157,
+                        @"a": @0,
+                        @"imageView": self.voicemailCell};
+    self.voicemailCell = [self createImageViewUsingDictionary:d];
+    
     float voicemailCell_w = 278;
     float voicemailCell_h = 157;
     self.voicemailCell = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfVoicemailCell]];
@@ -161,6 +190,8 @@
     float voicemailCell_y = ((timeForPage(1))+(self.view.frame.size.height/2)-(voicemailCell_h/2));
     [self.voicemailCell setAlpha:0.0];
     self.voicemailCell.frame = CGRectMake(voicemailCell_x, voicemailCell_y, voicemailCell_w, voicemailCell_h);
+    
+    
     CALayer *shadowLayervoicemailCell = self.voicemailCell.layer;
     shadowLayervoicemailCell.shadowOffset = CGSizeZero;
     shadowLayervoicemailCell.shadowColor = [[UIColor blackColor] CGColor];
@@ -168,22 +199,6 @@
     shadowLayervoicemailCell.shadowOpacity = 0.50f;
     shadowLayervoicemailCell.shadowPath = [self awesomeShadow:shadowLayervoicemailCell.bounds];
     [self.scrollView addSubview:self.voicemailCell];
-    
-    //******************************************************
-    //Add JiveLogoWhite to page 1
-    //******************************************************
-    float jiveLogoWhite_w = 150;
-    float jiveLogoWhite_h = 150;
-    CGRect jiveLogoFrame = CGRectMake(300, 300, jiveLogoWhite_w, jiveLogoWhite_h);
-    self.jiveLogoWhite = [[JCJiveLogoWhite alloc]initWithFrame:jiveLogoFrame];
-    self.jiveLogoWhite.backgroundColor = [UIColor clearColor];
-    self.jiveLogoWhite.center = self.view.center;
-    //    UIImageView *jiveLogoWhite = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfJiveLogoWhiteWithFrame:(jiveLogoFrame)]];
-    float jiveLogoWhite_x = ((timeForPage(1))+(self.view.frame.size.width/2)-(jiveLogoWhite_w/2));
-    float jiveLogoWhite_y = 20;
-    [self.jiveLogoWhite setAlpha:0.0];
-    self.jiveLogoWhite.frame = CGRectMake(jiveLogoWhite_x, jiveLogoWhite_y, jiveLogoWhite_w, jiveLogoWhite_h);
-    [self.scrollView addSubview:self.jiveLogoWhite];
     
     //******************************************************
     //Add individual Images to the voicemailCell
@@ -214,6 +229,23 @@
     self.vmSpeaker.center = self.voicemailCell.center;
     self.vmSpeaker.frame = CGRectOffset(self.vmSpeaker.frame, timeForPage(1) - 45, -170);
     [self.voicemailCell addSubview:self.vmSpeaker];
+    
+    //******************************************************
+    //Add JiveLogoWhite to page 1
+    //******************************************************
+    float jiveLogoWhite_w = 150;
+    float jiveLogoWhite_h = 150;
+    CGRect jiveLogoFrame = CGRectMake(300, 300, jiveLogoWhite_w, jiveLogoWhite_h);
+    self.jiveLogoWhite = [[JCJiveLogoWhite alloc]initWithFrame:jiveLogoFrame];
+    self.jiveLogoWhite.backgroundColor = [UIColor clearColor];
+    self.jiveLogoWhite.center = self.view.center;
+    //    UIImageView *jiveLogoWhite = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfJiveLogoWhiteWithFrame:(jiveLogoFrame)]];
+    float jiveLogoWhite_x = ((timeForPage(1))+(self.view.frame.size.width/2)-(jiveLogoWhite_w/2));
+    float jiveLogoWhite_y = 20;
+    [self.jiveLogoWhite setAlpha:0.0];
+    self.jiveLogoWhite.frame = CGRectMake(jiveLogoWhite_x, jiveLogoWhite_y, jiveLogoWhite_w, jiveLogoWhite_h);
+    [self.scrollView addSubview:self.jiveLogoWhite];
+    
     
     
     UILabel *callerIdLabel = [[UILabel alloc] init];
