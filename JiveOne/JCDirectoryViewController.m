@@ -23,6 +23,8 @@
 #import "Membership+Custom.h"
 #import "PBX+Custom.h"
 #import "Lines+Custom.h"
+#import "Lines+Custom.h"
+#import "JasmineSocket.h"
 
 
 
@@ -46,6 +48,7 @@
 @property (strong, nonatomic) NSString *star;
 @property (strong, nonatomic) UIFont *icomoonFont;
 @property (strong, nonatomic) UIColor *theRightShadeOfYellowForOurStar;
+@property (strong, nonatomic) NSManagedObjectContext *context;
 
 
 @property (strong, nonatomic) JCSearchBar *searchBar;
@@ -111,6 +114,12 @@ static NSString *CellIdentifier = @"DirectoryCell";
         UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissViewController:)];
         self.navigationItem.rightBarButtonItem = cancelButton;
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(subscribeLines:) name:@"socketDidOpen" object:nil];
+    [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(eventForLine:) name:@"eventForLine" object:nil];
+
+    
+    [[JasmineSocket sharedInstance] initSocket];
     
 }
 
@@ -786,6 +795,71 @@ shouldReloadTableForSearchString:(NSString *)searchString
         [indexPaths addObject:indexPath];
     }
 }
+
+#pragma mark - Socket Events Subscription
+- (void) subscribeLines:(NSNotification *)notification
+{
+    for (NSArray * letterArray in self.clientEntitiesArray)
+    {
+        for (Lines *line in letterArray) {
+            [[JasmineSocket sharedInstance] postSubscriptionsToSocketWithId:line.jrn entity:line.jrn type:@"dialog"];
+        }
+    }
+    
+}
+
+- (void) eventForLine:(NSNotification *)notification
+{
+    NSDictionary *message = (NSDictionary *)notification.object;
+    
+    NSString *type = message[@"type"];
+    NSString *subId = message[@"subId"];
+    NSString *entity = message[@"entity"];
+    
+    NSString *dataId;
+    NSString *participant;
+    NSString *direction;
+    NSString *state;
+    NSString *remote;
+    NSString *display;
+    NSString *selfUrl;
+    
+    if (!self.context) {
+        _context = [NSManagedObjectContext MR_contextForCurrentThread];
+    }
+    
+    if (![message[@"data"] isKindOfClass:[NSNull class]]) {
+        dataId = message[@"data"][@"id"];
+        participant = message[@"data"][@"participant"];
+        direction = message[@"data"][@"direction"];
+        state = message[@"data"][@"state"];
+        remote = message[@"data"][@"remote"];
+        display = message[@"data"][@"display"];
+        selfUrl = message[@"data"][@"self"];
+    }
+    
+    
+    // right now we only care about withdraws and confirmeds
+    if ([type isEqualToString:@"withdraw"] || [state isEqualToString:@"confirmed"]) {
+        Lines *line = [Lines MR_findFirstByAttribute:@"jrn" withValue:subId inContext:self.context];
+        BOOL changed = NO;
+        if (line) {
+            if (state && [state isEqualToString:@"confirmed"]) {
+                line.state = [NSNumber numberWithInt:(int) JCPresenceTypeDoNotDisturb];
+                changed = YES;
+            }
+            else if (type && [type isEqualToString:@"withdraw"]) {
+                line.state = [NSNumber numberWithInt:(int) JCPresenceTypeAvailable];
+                changed = YES;
+            }
+            
+            if (changed) {
+                [self.context MR_saveToPersistentStoreAndWait];
+            }            
+        }
+    }
+}
+
 
 @end
 

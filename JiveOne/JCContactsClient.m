@@ -134,5 +134,25 @@
     }];
 }
 
+- (void) RequestSocketSession:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
+{
+    
+    [self setRequestAuthHeader];
+    
+    NSString *deviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:UDdeviceToken];
+    NSDictionary *params = nil;
+    if (deviceToken) {
+        params = [NSDictionary dictionaryWithObject:deviceToken forKey:UDdeviceToken];
+    }
+    
+    NSString *sessionURL = @"http://199.87.123.26/session";
+    
+    [_manager POST:sessionURL parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        completed(YES, responseObject, operation, nil);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        completed(NO, nil, operation, error);
+    }];
+}
+
 
 @end
