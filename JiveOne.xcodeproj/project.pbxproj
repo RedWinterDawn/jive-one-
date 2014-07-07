@@ -1156,8 +1156,7 @@
 				277F093D18FECEA800EEF0E3 /* Voicemail */,
 				277F093F18FECECA00EEF0E3 /* Login */,
 				91F87CF4190EE16B00152FDB /* AppTutorial */,
-				277F094018FED58C00EEF0E3 /* JCStatusViewController.h */,
-				277F094118FED58C00EEF0E3 /* JCStatusViewController.m */,
+				91743F351965B7EA003CD5E4 /* Status */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1784,6 +1783,15 @@
 				910709FD1959D60B0041E1CF /* JCLogoutIcon.m */,
 			);
 			name = AccountIcons;
+			sourceTree = "<group>";
+		};
+		91743F351965B7EA003CD5E4 /* Status */ = {
+			isa = PBXGroup;
+			children = (
+				277F094018FED58C00EEF0E3 /* JCStatusViewController.h */,
+				277F094118FED58C00EEF0E3 /* JCStatusViewController.m */,
+			);
+			name = Status;
 			sourceTree = "<group>";
 		};
 		919DD29A1922E2770039205E /* JCPopoverSlider */ = {
