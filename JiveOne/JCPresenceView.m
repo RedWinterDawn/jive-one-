@@ -13,7 +13,8 @@
 #define DEFAULT_AWAY_COLOR              [UIColor colorWithRed:233.0/255.0 green:195.0/255.0 blue:0.0/255.0 alpha:1]
 #define DEFAULT_BUSY_COLOR              [UIColor colorWithRed:233.0/255.0 green:195.0/255.0 blue:0.0/255.0 alpha:1]
 #define DEFAULT_DO_NOT_DISTURB_COLOR    [UIColor colorWithRed:233.0/255.0 green:0.0/255.0 blue:19.0/255.0 alpha:1]
-#define DEFAULT_COLOR                   [UIColor colorWithRed:186.0/255.0 green:186.0/255.0 blue:186.0/255.0 alpha:1]
+#define DEFAULT_OFFLINE_COLOR           [UIColor colorWithRed:186.0/255.0 green:186.0/255.0 blue:186.0/255.0 alpha:1]
+#define DEFAULT_COLOR                   [UIColor colorWithRed:129.0/255.0 green:205.0/255.0 blue:0.0/255.0 alpha:1]
 
 #define DEFAULT_LINE_WIDTH              3
 

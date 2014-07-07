@@ -51,6 +51,7 @@
         <attribute name="jrn" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lineId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pbxId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Mailbox" representedClassName="Mailbox" syncable="YES">
@@ -142,7 +143,7 @@
         <element name="Conversation" positionX="0" positionY="0" width="128" height="180"/>
         <element name="ConversationEntry" positionX="0" positionY="0" width="128" height="268"/>
         <element name="ConversationETag" positionX="18" positionY="162" width="128" height="60"/>
-        <element name="Lines" positionX="27" positionY="171" width="128" height="148"/>
+        <element name="Lines" positionX="27" positionY="171" width="128" height="165"/>
         <element name="Mailbox" positionX="27" positionY="162" width="128" height="148"/>
         <element name="Membership" positionX="9" positionY="153" width="128" height="88"/>
         <element name="PBX" positionX="18" positionY="162" width="128" height="133"/>

@@ -56,6 +56,7 @@
         c_line.externsionNumber = line[@"extensionNumber"];
         c_line.jrn = lineJrn;
         c_line.lineId = lineId;
+        c_line.state = [NSNumber numberWithInt:(int)JCPresenceTypeAvailable];
     }
     
     return c_line;

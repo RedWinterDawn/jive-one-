@@ -46,15 +46,16 @@
     else if ([person isKindOfClass:[Lines class]])
     {
         Lines *line = (Lines *)person;
+        _line = line;
         self.personNameLabel.text = line.displayName;
         self.personDetailLabel.text = line.externsionNumber;
-        self.personPresenceView.presenceType = JCPresenceTypeAvailable;// (JCPresenceType)[_person.entityPresence.interactions[@"chat"][@"code"] integerValue];
+        self.personPresenceView.presenceType = (JCPresenceType) [line.state integerValue]; //JCPresenceTypeAvailable;// (JCPresenceType)[_person.entityPresence.interactions[@"chat"][@"code"] integerValue];
         
         // Set person's image based on whether they actually have one or not
         //[self setPersonImage];
         //[self.personPicture setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];
         
-        //[person addObserver:self forKeyPath:kPresenceKeyPathForClientEntity options:NSKeyValueObservingOptionNew context:NULL];
+        [line addObserver:self forKeyPath:kPresenceKeyPathForLineEntity options:NSKeyValueObservingOptionNew context:NULL];
     }
 }
 
@@ -66,8 +67,8 @@
 
 - (void)removeObservers
 {
-    if (_person)
-        [_person removeObserver:self forKeyPath:kPresenceKeyPathForClientEntity];
+    if (_line)
+        [_line removeObserver:self forKeyPath:kPresenceKeyPathForLineEntity];
 }
 
 - (void)dealloc
@@ -77,9 +78,10 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if ([keyPath isEqualToString:kPresenceKeyPathForClientEntity]) {
-        PersonEntities *person = (PersonEntities *)object;
-        self.personPresenceView.presenceType = [self extractPresenceType:person];
+    if ([keyPath isEqualToString:kPresenceKeyPathForLineEntity]) {
+        //PersonEntities *person = (PersonEntities *)object;
+        Lines *line = (Lines *)object;
+        self.personPresenceView.presenceType = (JCPresenceType)[line.state integerValue];
     }
 }
 

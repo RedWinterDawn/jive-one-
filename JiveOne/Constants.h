@@ -57,6 +57,7 @@
 
 #pragma mark - KVO Constants
 #define kPresenceKeyPathForClientEntity @"entityPresence"
+#define kPresenceKeyPathForLineEntity @"state"
 #define kLastMofiedKeyPathForConversation @"lastModified"
 #define kVoicemailKeyPathForVoicemal @"voicemail"
 
