@@ -2,7 +2,7 @@
 //  Lines.h
 //  JiveOne
 //
-//  Created by Eduardo Gueiros on 6/24/14.
+//  Created by Eduardo Gueiros on 7/7/14.
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
@@ -12,12 +12,13 @@
 
 @interface Lines : NSManagedObject
 
-@property (nonatomic, retain) NSString * lineId;
-@property (nonatomic, retain) NSString * jrn;
-@property (nonatomic, retain) NSString * externsionNumber;
-@property (nonatomic, retain) NSString * userName;
-@property (nonatomic, retain) id groups;
 @property (nonatomic, retain) NSString * displayName;
+@property (nonatomic, retain) NSString * externsionNumber;
+@property (nonatomic, retain) id groups;
+@property (nonatomic, retain) NSString * jrn;
+@property (nonatomic, retain) NSString * lineId;
 @property (nonatomic, retain) NSString * pbxId;
+@property (nonatomic, retain) NSString * userName;
+@property (nonatomic, retain) NSNumber * state;
 
 @end
