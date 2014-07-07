@@ -7,7 +7,7 @@
 //
 
 #import "JCStatusViewController.h"
-#import "JCSocketDispatch.h"
+//#import "JCSocketDispatch.h"
 
 @interface JCStatusViewController ()
 
@@ -63,33 +63,33 @@
     }
     
     
-    NSInteger count = [JCSocketDispatch sharedInstance].subscriptionCount;
-    _subscription2.text = [NSString stringWithFormat:@"Subscribed to %ld events", (long)count];
+    //NSInteger count = [JCSocketDispatch sharedInstance].subscriptionCount;
+    //_subscription2.text = [NSString stringWithFormat:@"Subscribed to %ld events", (long)count];
     
     
-    SRReadyState state = [JCSocketDispatch sharedInstance].webSocket.readyState;
-    switch (state) {
-        case SR_CLOSED:
-            self.socketStatusLabel.text = @"Closed";
-            self.socketStatusLabel.textColor = [UIColor redColor];
-            break;
-        case SR_CLOSING:
-            self.socketStatusLabel.text = @"Closing";
-            break;
-        case SR_CONNECTING:
-            self.socketStatusLabel.text = @"Connecting";
-            break;
-        case SR_OPEN:
-            self.socketStatusLabel.text = @"Open";
-            break;
-            
-        default:
-            break;
-    }
+//    SRReadyState state = [JCSocketDispatch sharedInstance].webSocket.readyState;
+//    switch (state) {
+//        case SR_CLOSED:
+//            self.socketStatusLabel.text = @"Closed";
+//            self.socketStatusLabel.textColor = [UIColor redColor];
+//            break;
+//        case SR_CLOSING:
+//            self.socketStatusLabel.text = @"Closing";
+//            break;
+//        case SR_CONNECTING:
+//            self.socketStatusLabel.text = @"Connecting";
+//            break;
+//        case SR_OPEN:
+//            self.socketStatusLabel.text = @"Open";
+//            break;
+//            
+//        default:
+//            break;
+//    }
 }
 
 - (IBAction)poll:(id)sender {
-    [[JCSocketDispatch sharedInstance] sendPoll];
+    //[[JCSocketDispatch sharedInstance] sendPoll];
 }
 
 

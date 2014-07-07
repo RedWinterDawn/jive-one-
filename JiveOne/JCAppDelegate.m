@@ -8,7 +8,7 @@
 
 #import "JCAppDelegate.h"
 #import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
-#import "JCSocketDispatch.h"
+#import "JasmineSocket.h"
 #import "JCRESTClient.h"
 #import "JCVoicemailClient.h"
 #import "PersonEntities.h"
@@ -37,7 +37,7 @@ int didNotify;
     LOG_Info();
     NSLog(LOGGER_TARGET);
     
-    [[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
+//    [[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
     
     //Create a sharedCache for AFNetworking
     NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:2 * 1024 * 1024
@@ -243,7 +243,7 @@ int didNotify;
 
     LOG_Info();
     
-    [[JCSocketDispatch sharedInstance] closeSocket];
+//    [[JCSocketDispatch sharedInstance] closeSocket];
 }
 
 #pragma mark - PushNotifications
@@ -337,7 +337,7 @@ int didNotify;
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     LOG_Info();
-    [[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
+//    [[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
 
     completionHandler([self BackgroundPerformFetchWithCompletionHandler]);
 }
@@ -346,7 +346,7 @@ int didNotify;
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     LOG_Info();
-    [[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
+//    [[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
 
     completionHandler([self BackgroundPerformFetchWithCompletionHandler]);
 }
@@ -355,7 +355,7 @@ int didNotify;
 - (void)receivedForegroundNotification:(NSDictionary *)notification fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     LOG_Info();
-    [[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
+//    [[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
 
     completionHandler([self BackgroundPerformFetchWithCompletionHandler]);
 }
@@ -363,7 +363,7 @@ int didNotify;
 - (void)receivedBackgroundNotification:(NSDictionary *)notification fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     LOG_Info();
-    [[JCSocketDispatch sharedInstance] setStartedInBackground:YES];
+//    [[JCSocketDispatch sharedInstance] setStartedInBackground:YES];
 
     completionHandler([self BackgroundPerformFetchWithCompletionHandler]);
 }
@@ -372,11 +372,11 @@ int didNotify;
 - (UIBackgroundFetchResult)BackgroundPerformFetchWithCompletionHandler
 {
     LOG_Info();
-    [[JCSocketDispatch sharedInstance] setStartedInBackground:YES];
+//    [[JCSocketDispatch sharedInstance] setStartedInBackground:YES];
 
     NSLog(@"APPDELEGATE - performFetchWithCompletionHandler");
     __block UIBackgroundFetchResult fetchResult = UIBackgroundFetchResultFailed;
-    if ([JCSocketDispatch sharedInstance].webSocket.readyState != SR_OPEN) {
+    if ([JasmineSocket sharedInstance].socket.readyState != PSWebSocketReadyStateOpen) {
         //[[JCAuthenticationManager sharedInstance] checkForTokenValidity];
         __block UIBackgroundFetchResult fetchResult = UIBackgroundFetchResultFailed;
         
@@ -432,7 +432,7 @@ int didNotify;
         }
         @finally {
             if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground ) {
-                if ([JCSocketDispatch sharedInstance].webSocket.readyState == SR_OPEN) {
+                if ([JasmineSocket sharedInstance].socket.readyState == PSWebSocketReadyStateOpen) {
                     LogMessage(@"socket", 4, @"Will Call closeSocket");
 
                     [self stopSocket];
@@ -761,7 +761,7 @@ int didNotify;
 - (void)changeRootViewController:(JCRootViewControllerType)type
 {
     LOG_Info();
-    [[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
+    //[[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
 
     if (type == JCRootTabbarViewController) {
         
