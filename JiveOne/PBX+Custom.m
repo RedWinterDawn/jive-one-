@@ -9,6 +9,7 @@
 #import "PBX+Custom.h"
 #import "Lines+Custom.h"
 #import "Mailbox+Custom.h"
+#import "Common.h"
 
 @implementation PBX (Custom)
 
@@ -31,6 +32,12 @@
     }
     
     NSString *self_url = pbx[@"self_pbx"] ? pbx[@"self_pbx"] : pbx[@"self"] ? pbx[@"self"] : @"";
+    if ([Common stringIsNilOrEmpty:self_url]) {
+        if (pbx[@"id"]) {
+            self_url = [NSString stringWithFormat:@"https://api.jive.com/jif/v1/pbx/id/%@", pbx[@"id"]];
+        }
+    }
+    
     PBX *c_pbx = [PBX MR_findFirstByAttribute:@"selfUrl" withValue:self_url inContext:context];
     
     if (c_pbx) {
@@ -53,6 +60,13 @@
         }
     }
     
+    NSArray *lines = pbx[@"lines"];
+    if (lines && lines.count > 0) {
+        for (NSDictionary *line in lines) {
+            [Lines addLine:line pbxId:pbx[@"id"] withManagedContext:context sender:nil];
+        }
+    }
+    
     if (sender != self) {
         [context MR_saveToPersistentStoreAndWait];
         return c_pbx;
@@ -64,9 +78,9 @@
 
 + (void)updatePBX:(PBX *)pbx new_pbx:(NSDictionary *)new_pbx
 {
-    pbx.pbxId = new_pbx[@"jrn"] ? new_pbx[@"jrn"] : @"";
+    pbx.pbxId = new_pbx[@"jrn"] ? new_pbx[@"jrn"] : new_pbx[@"id"] ;
     pbx.name = new_pbx[@"name"] ? new_pbx[@"name"] : @"";
-    pbx.jrn = new_pbx[@"jrn"] ? new_pbx[@"jrn"] : @"";
+    pbx.jrn = new_pbx[@"jrn"] ? new_pbx[@"jrn"] : new_pbx[@"id"];
     pbx.v5 = new_pbx[@"v5"] ? [NSNumber numberWithBool:[new_pbx[@"v5"] boolValue]] : false;
 }
 

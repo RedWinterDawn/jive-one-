@@ -310,8 +310,8 @@
     }
     
 //    [self fetchMyEntity];
-    [self fetchMyMailboxes];
-    //[self fetchMyContact];
+    //[self fetchMyMailboxes];
+    [self fetchMyContact];
 }
 
 #pragma mark - Fetch initial data
