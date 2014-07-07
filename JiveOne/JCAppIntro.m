@@ -151,7 +151,7 @@
     
     
     UIImageView* imageView = [argumentDict valueForKey:@"imageView"];
-    imageView.center = self.view.center;
+    imageView = imageView;
     int x =(int)[argumentDict valueForKey:@"x"];
     int y =(int)[argumentDict valueForKey:@"y"];
     int w =(int)[argumentDict valueForKey:@"w"];
@@ -161,7 +161,8 @@
    
     
     [imageView setAlpha:((CGFloat)a)];
-    imageView.frame = CGRectMake(x, y, w, h);
+    [imageView setFrame:CGRectMake(x, y, w, h)];
+    
     
     return imageView;
 }
@@ -174,22 +175,23 @@
     //******************************************************
     
     self.voicemailCell = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfVoicemailCell]];
-    NSDictionary *d = @{@"x": @100,//((timeForPage(1))+(self.view.frame.size.width/2)-(self.voicemailCell.frame.size.width/2)),
-                        @"y": @100,//((timeForPage(1))+(self.view.frame.size.height/2)-(self.voicemailCell.frame.size.height/2)),
-                        @"w": @278,
-                        @"h": @157,
+    //self.voicemailCell.center = self.view.center;
+    NSDictionary *d = @{@"x": @1,//((timeForPage(1))+(self.view.frame.size.width/2)-(self.voicemailCell.frame.size.width/2)),
+                        @"y": @12,//((timeForPage(1))+(self.view.frame.size.height/2)-(self.voicemailCell.frame.size.height/2)),
+                        @"w": @18,
+                        @"h": @11,
                         @"a": @0,
                         @"imageView": self.voicemailCell};
     self.voicemailCell = [self createImageViewUsingDictionary:d];
     
-    float voicemailCell_w = 278;
-    float voicemailCell_h = 157;
-    self.voicemailCell = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfVoicemailCell]];
-    self.voicemailCell.center = self.view.center;
-    float voicemailCell_x = ((timeForPage(1))+(self.view.frame.size.width/2)-(voicemailCell_w/2));
-    float voicemailCell_y = ((timeForPage(1))+(self.view.frame.size.height/2)-(voicemailCell_h/2));
-    [self.voicemailCell setAlpha:0.0];
-    self.voicemailCell.frame = CGRectMake(voicemailCell_x, voicemailCell_y, voicemailCell_w, voicemailCell_h);
+//    float voicemailCell_w = 278;
+//    float voicemailCell_h = 157;
+//    self.voicemailCell = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfVoicemailCell]];
+//    self.voicemailCell.center = self.view.center;
+//    float voicemailCell_x = ((timeForPage(1))+(self.view.frame.size.width/2)-(voicemailCell_w/2));
+//    float voicemailCell_y = ((timeForPage(1))+(self.view.frame.size.height/2)-(voicemailCell_h/2));
+//    [self.voicemailCell setAlpha:0.0];
+//    self.voicemailCell.frame = CGRectMake(voicemailCell_x, voicemailCell_y, voicemailCell_w, voicemailCell_h);
     
     
     CALayer *shadowLayervoicemailCell = self.voicemailCell.layer;
@@ -207,6 +209,7 @@
     self.vmPlay.center = self.voicemailCell.center;
     self.vmPlay.frame = CGRectMake(0, 0, 50, 50);
     self.vmPlay.frame = CGRectOffset(self.vmPlay.frame, 5, 60);
+    
     [self.voicemailCell addSubview:self.vmPlay];
     
     self.vmIcon = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfVoicemailIcon]];
