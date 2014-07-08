@@ -147,8 +147,8 @@
     [self.backgroundImageView setImage:appIntroSingleton.backgroundImageView.image];
 }
 
+//This is the main utility function that puts an img in a certain place on the page along with how wide and high it is
 -(UIImageView*)createImageViewUsingDictionary:(NSDictionary*)argumentDict {
-    
     
     UIImageView* imageView = [argumentDict valueForKey:@"imageView"];
     imageView = imageView;
@@ -158,11 +158,8 @@
     int h =(int)[argumentDict valueForKey:@"h"];
     int a =(int)[argumentDict valueForKey:@"a"];
     
-   
-    
     [imageView setAlpha:((CGFloat)a)];
     [imageView setFrame:CGRectMake(x, y, w, h)];
-    
     
     return imageView;
 }
@@ -385,7 +382,7 @@
     // the higher this number is the more the objects shrink
     
     
-    // move down and to the right, and shrink between pages 2 and 3
+    // pages 2 and 3
     [voicemailCellFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:self.voicemailCell.frame]];
     [voicemailCellFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.voicemailCell.frame, timeForPage(2), 0)]];
     
@@ -509,6 +506,7 @@
     //******************************************************
     // now, we animate the topLeft
     //******************************************************
+    
     IFTTTFrameAnimation *topLeftFrameAnimation = [IFTTTFrameAnimation animationWithView:self.topLeft];
     [self.animator addAnimation:topLeftFrameAnimation];
     
@@ -661,6 +659,9 @@
     [bottomLeftLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:1.0f]];
     [bottomLeftLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
     
+// Attempting to refactor anamations
+    //    IFTTTAlphaAnimation *bottomRightLabelAlphaAnimation = JCAnimation[bottomRightLabelAlphaAnimation, self.bottomRightLabel,0.0f,1.0f,1.0f,0.0f];
+    
     IFTTTAlphaAnimation *bottomRightLabelAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.bottomRightLabel];
     [self.animator addAnimation:bottomRightLabelAlphaAnimation];
     
@@ -670,7 +671,14 @@
     [bottomRightLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
 }
 
-
+//-(void)JCAnimation [ElementToBeAnamated,ElementToBeAnamatedView,alpha1,alpha2,alpha3,alpha4]{
+//    IFTTTAlphaAnimation *ElementToBeAnamated = [IFTTTAlphaAnimation animationWithView:ElementToBeAnamatedView];
+//    [self.animator addAnimation:ElementToBeAnamated];
+//    [ElementToBeAnamated addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:alpha1]];
+//    [ElementToBeAnamated addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:alpha2]];
+//    [ElementToBeAnamated addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:alpha3]];
+//    [ElementToBeAnamated addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:alpha4]];
+//}
 #pragma mark - page3
     - (void)setupPage3
     {
