@@ -651,34 +651,54 @@
     [topRightLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:1.0f]];
     [topRightLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
     
-    IFTTTAlphaAnimation *bottomLeftLabelAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.bottomLeftLabel];
-    [self.animator addAnimation:bottomLeftLabelAlphaAnimation];
-    
-    [bottomLeftLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:0.0f]];
-    [bottomLeftLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f]];
-    [bottomLeftLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:1.0f]];
-    [bottomLeftLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
+//    IFTTTAlphaAnimation *bottomLeftLabelAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.bottomLeftLabel];
+//    [self.animator addAnimation:bottomLeftLabelAlphaAnimation];
+//    
+//    [bottomLeftLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:0.0f]];
+//    [bottomLeftLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f]];
+//    [bottomLeftLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:1.0f]];
+//    [bottomLeftLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
     
 // Attempting to refactor anamations
     //    IFTTTAlphaAnimation *bottomRightLabelAlphaAnimation = JCAnimation[bottomRightLabelAlphaAnimation, self.bottomRightLabel,0.0f,1.0f,1.0f,0.0f];
     
-    IFTTTAlphaAnimation *bottomRightLabelAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.bottomRightLabel];
-    [self.animator addAnimation:bottomRightLabelAlphaAnimation];
+//    IFTTTAlphaAnimation *bottomRightLabelAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.bottomRightLabel];
+//    [self.animator addAnimation:bottomRightLabelAlphaAnimation];
+//    
+//    [bottomRightLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:0.0f]];
+//    [bottomRightLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f]];
+//    [bottomRightLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:1.0f]];
+//    [bottomRightLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
+    [self createAnimationWithDictionary:@{@"Label":self.bottomLeftLabel,
+                                          @"KeyFrame1":@[@1,@0],
+                                          @"KeyFrame2":@[@2,@1],
+                                          @"KeyFrame3":@[@3,@1],
+                                          @"KeyFrame4":@[@4,@0]
+                                          }];
     
-    [bottomRightLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:0.0f]];
-    [bottomRightLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f]];
-    [bottomRightLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:1.0f]];
-    [bottomRightLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
+    [self createAnimationWithDictionary:@{@"Label":self.bottomRightLabel,
+                                          @"KeyFrame1":@[@1,@0],
+                                          @"KeyFrame2":@[@2,@1],
+                                          @"KeyFrame3":@[@3,@1],
+                                          @"KeyFrame4":@[@4,@0]
+                                          }];
+    
+    
 }
 
-//-(void)JCAnimation [ElementToBeAnamated,ElementToBeAnamatedView,alpha1,alpha2,alpha3,alpha4]{
-//    IFTTTAlphaAnimation *ElementToBeAnamated = [IFTTTAlphaAnimation animationWithView:ElementToBeAnamatedView];
-//    [self.animator addAnimation:ElementToBeAnamated];
-//    [ElementToBeAnamated addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:alpha1]];
-//    [ElementToBeAnamated addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:alpha2]];
-//    [ElementToBeAnamated addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:alpha3]];
-//    [ElementToBeAnamated addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:alpha4]];
-//}
+- (IFTTTAlphaAnimation *)createAnimationWithDictionary:(NSDictionary* )dict{
+    IFTTTAlphaAnimation *labelAlphaAnimation = [IFTTTAlphaAnimation animationWithView:[dict objectForKey:@"Label"]];
+    for (IFTTTAnimationKeyFrame *kf in dict) {
+        if([[dict objectForKey:kf] isKindOfClass:[NSArray class]]){
+            int page = ((int)[dict objectForKey:kf][0]);
+            int alpha = ((int)[dict objectForKey:kf][1]);
+            [labelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(page) andAlpha:alpha]];
+        }
+    }
+    [self.animator addAnimation:labelAlphaAnimation];
+    return labelAlphaAnimation;
+}
+
 #pragma mark - page3
     - (void)setupPage3
     {
