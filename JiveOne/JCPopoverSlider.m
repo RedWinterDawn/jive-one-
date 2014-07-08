@@ -144,7 +144,7 @@
 }
 
 #pragma mark - ThumbImages
-UIImage *sliderImage(NSString* text)
+UIImage* sliderImage(NSString* text)
 {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(35, 17), FALSE, [[UIScreen mainScreen]scale]);
     CGContextRef context = UIGraphicsGetCurrentContext();
