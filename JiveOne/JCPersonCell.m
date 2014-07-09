@@ -47,17 +47,37 @@
 - (void)configureFavoriteStatus
 {
     UIColor *StarColor;
+    UIColor *StarColor1;
     
-    if (self.person.isFavorite || self.line.isFavorite) {
-        StarColor = [UIColor colorWithRed:255.0/255.0 green:212.0/255.0 blue:0.0/255.0 alpha:1.0];
-    }else
-    {
-        StarColor = [UIColor colorWithRed:208.0/255.0 green:208.0/255.0 blue:208.0/255.0 alpha:1.0];
+    //    if ([self.line.isFavorite  isEqual: @1]) {
+    StarColor = [UIColor colorWithRed:255.0/255.0 green:212.0/255.0 blue:0.0/255.0 alpha:1.0];
+    NSMutableAttributedString *attributedStarSelectedState = [[NSMutableAttributedString alloc]initWithString:@"★" attributes:@{NSForegroundColorAttributeName : StarColor}];
+    [self.favoriteBut setAttributedTitle:attributedStarSelectedState forState:UIControlStateSelected];
+    //    }else
+    //    {
+    StarColor1 = [UIColor colorWithRed:208.0/255.0 green:208.0/255.0 blue:208.0/255.0 alpha:1.0];
+    //    }
+    
+    NSMutableAttributedString *attributedStarSelectedState1 = [[NSMutableAttributedString alloc]initWithString:@"★" attributes:@{NSForegroundColorAttributeName : StarColor1}];
+    [self.favoriteBut setAttributedTitle:attributedStarSelectedState1 forState:UIControlStateNormal];
+    if ([self.line.isFavorite  isEqual: @1]) {
+
+        [self.favoriteBut setSelected:YES];
+    }else{
+        [self.favoriteBut setSelected:NO];
     }
-    
-    NSMutableAttributedString *attributedStarSelectedState = [[NSMutableAttributedString alloc]initWithString:@"★" attributes:@{NSForegroundColorAttributeName : StarColor, NSFontAttributeName:[UIFont systemFontOfSize:22.0f]}];
-    
-    [self.favoriteBut setAttributedTitle:attributedStarSelectedState forState:UIControlStateNormal];
+//    UIColor *StarColor;
+//    
+//    if (self.person.isFavorite || self.line.isFavorite) {
+//        StarColor = [UIColor colorWithRed:255.0/255.0 green:212.0/255.0 blue:0.0/255.0 alpha:1.0];
+//    }else
+//    {
+//        StarColor = [UIColor colorWithRed:208.0/255.0 green:208.0/255.0 blue:208.0/255.0 alpha:1.0];
+//    }
+//    
+//    NSMutableAttributedString *attributedStarSelectedState = [[NSMutableAttributedString alloc]initWithString:@"★" attributes:@{NSForegroundColorAttributeName : StarColor, NSFontAttributeName:[UIFont systemFontOfSize:22.0f]}];
+//    
+//    [self.favoriteBut setAttributedTitle:attributedStarSelectedState forState:UIControlStateNormal];
 }
 
 - (void)setPerson:(PersonEntities *)person
@@ -248,18 +268,20 @@
 
 - (void) updateFavoriteIcon:(JCPersonCell *)cell
 {
-    UIColor *StarColor;
-    
-    if (self.line.isFavorite.boolValue == YES) {
-        StarColor = [UIColor colorWithRed:255.0/255.0 green:212.0/255.0 blue:0.0/255.0 alpha:1.0];
-        
-    }else
-    {
-        StarColor = [UIColor colorWithRed:208.0/255.0 green:208.0/255.0 blue:208.0/255.0 alpha:1.0];
-    }
-    
-    NSMutableAttributedString *attributedStarSelectedState = [[NSMutableAttributedString alloc]initWithString:@"★" attributes:@{NSForegroundColorAttributeName : StarColor}];
-    [self.favoriteBut setAttributedTitle:attributedStarSelectedState forState:UIControlStateNormal];
+//    UIColor *StarColor;
+//    UIColor *StarColor1;
+//
+////    if ([self.line.isFavorite  isEqual: @1]) {
+//        StarColor = [UIColor colorWithRed:255.0/255.0 green:212.0/255.0 blue:0.0/255.0 alpha:1.0];
+//        NSMutableAttributedString *attributedStarSelectedState = [[NSMutableAttributedString alloc]initWithString:@"★" attributes:@{NSForegroundColorAttributeName : StarColor}];
+//        [self.favoriteBut setAttributedTitle:attributedStarSelectedState forState:UIControlStateNormal];
+////    }else
+////    {
+//        StarColor1 = [UIColor colorWithRed:208.0/255.0 green:208.0/255.0 blue:208.0/255.0 alpha:1.0];
+////    }
+//    
+//    NSMutableAttributedString *attributedStarSelectedState1 = [[NSMutableAttributedString alloc]initWithString:@"★" attributes:@{NSForegroundColorAttributeName : StarColor1}];
+//    [self.favoriteBut setAttributedTitle:attributedStarSelectedState1 forState:UIControlStateSelected];
     
 //    self.favoriteBut.hidden = YES;
 }

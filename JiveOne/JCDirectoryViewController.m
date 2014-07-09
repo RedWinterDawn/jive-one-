@@ -69,10 +69,10 @@ static NSString *CellIdentifier = @"DirectoryCell";
     self.tableView.dataSource = self;
 //    self.star = @"\ue600";
     self.star = @"\u2605";
-    self.icomoonFont = [UIFont fontWithName:@"icomoon" size:18.0];
+    //self.icomoonFont = [UIFont fontWithName:@"icomoon" size:18.0];
     self.theRightShadeOfYellowForOurStar = [UIColor colorWithRed:255.0/255.0 green:212.0/255.0 blue:0.0/255.0 alpha:1.0];
     
-    sections = [NSArray arrayWithObjects: @"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
+    sections = [NSArray arrayWithObjects:self.star, @"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
     self.clientEntitiesArray = [[NSMutableArray alloc] init];
     self.clientEntitiesSearchArray = [[NSMutableArray alloc] init];
     self.doneAnimatingToolbarFromFirstResponderState = YES;
