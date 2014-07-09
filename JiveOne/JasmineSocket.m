@@ -10,6 +10,11 @@
 #import "JCContactsClient.h"
 
 @implementation JasmineSocket
+{
+	NSTimer *breakSocketTimer;
+}
+
+static NSInteger SocketCloseCode = 1001;
 
 + (JasmineSocket *)sharedInstance
 {
@@ -26,10 +31,15 @@
     if (_socket.readyState != PSWebSocketReadyStateOpen) {
         [self requestSession];
     }
+	
+//	breakSocketTimer = [NSTimer timerWithTimeInterval:5 target:self selector:@selector(closeSocketWithoutReason) userInfo:nil repeats:NO];
+//	[[NSRunLoop currentRunLoop] addTimer:breakSocketTimer forMode:NSDefaultRunLoopMode];
 }
 
 - (void) requestSession
 {
+	[self cleanup];
+	
     [[JCContactsClient sharedClient] RequestSocketSession:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
         if (suceeded) {
             _webSocketUrl = responseObject[@"ws"];
@@ -54,6 +64,46 @@
     [self.socket open];
 }
 
+- (void)restartSocket
+{
+	/*
+	 * Chech to see if we can skip the a network request to get a new session
+	 */
+	if (self.subscriptionUrl && self.webSocketUrl && self.selfUrl) {
+		[self startSocketWithURL];
+	}
+	else {
+		[self requestSession];
+	}
+}
+
+- (void) closeSocketWithReason:(NSString *)reason
+{
+	if (self.socket) {
+		[self.socket closeWithCode:SocketCloseCode reason:reason];
+	}
+}
+
+- (void) cleanup
+{
+	_completionBlock = nil;
+	_socket = nil;
+	_subscriptionUrl = nil;
+	_webSocketUrl = nil;
+	_selfUrl = nil;
+}
+
+#pragma mark - for testing
+- (void)closeSocketWithoutReason
+{
+	if (self.socket) {
+		[self.socket closeWithCode:0 reason:nil];
+	}
+		
+}
+
+
+
 #pragma mark - PSWebSocketDelegate
 
 - (void)webSocketDidOpen:(PSWebSocket *)webSocket {
@@ -71,9 +121,31 @@
 }
 - (void)webSocket:(PSWebSocket *)webSocket didFailWithError:(NSError *)error {
     NSLog(@"The websocket handshake/connection failed with an error: %@", error);
+	[self restartSocket];
 }
+
 - (void)webSocket:(PSWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean {
     NSLog(@"The websocket closed with code: %@, reason: %@, wasClean: %@", @(code), reason, (wasClean) ? @"YES" : @"NO");
+	
+	
+	/*
+	 * If we have a completion block, it means 
+	 * this connection was started by the background fetch process or background 
+	 * remote notification. If that's the case then once we're done, we don't want to 
+	 * restart the socket automatically.
+	 */
+	if (self.completionBlock) {
+		self.completionBlock(YES, nil);
+		code = SocketCloseCode;
+	}
+	
+	
+	/*
+	 * If this was not closed on purpose, try to connect again
+	 */
+	if (code != SocketCloseCode) {
+		[self restartSocket];
+	}
 }
 
 #pragma mark - Subscriptions
@@ -92,6 +164,23 @@
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"eventForLine" object:message];
 }
+
+#pragma mark - Background socket connection
+- (void)startPoolingFromSocketWithCompletion:(CompletionBlock)completed;
+{
+    //LOG_Info();
+	
+    _completionBlock = completed;
+    @try {
+        [self requestSession];
+    }
+    @catch (NSException *exception) {
+        //LogMessage(@"socket", 4,@"Exception Failed to Pool from Socket: %@", exception);
+		
+       
+    }
+}
+
 
 
 @end

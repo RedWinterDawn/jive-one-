@@ -13,11 +13,16 @@
 
 + (JasmineSocket *)sharedInstance;
 
-- (void)initSocket;
-- (void)postSubscriptionsToSocketWithId:(NSString *)ident entity:(NSString *)entity type:(NSString *)type;
+typedef void (^CompletionBlock) (BOOL success, NSError *error);
+@property (nonatomic, copy) CompletionBlock completionBlock;
 @property (nonatomic, strong) PSWebSocket *socket;
 @property (nonatomic, strong) NSString *subscriptionUrl;
 @property (nonatomic, strong) NSString *webSocketUrl;
 @property (nonatomic, strong) NSString *selfUrl;
+
+- (void)initSocket;
+- (void)postSubscriptionsToSocketWithId:(NSString *)ident entity:(NSString *)entity type:(NSString *)type;
+- (void)startPoolingFromSocketWithCompletion:(CompletionBlock)completed;
+
 
 @end
