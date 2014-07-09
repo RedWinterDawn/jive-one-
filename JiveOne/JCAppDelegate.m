@@ -50,23 +50,35 @@ int didNotify;
     NSDictionary *defaultPreferences = [NSDictionary dictionaryWithContentsOfFile:defaultPrefsFile];
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultPreferences];
     
+    //check if we are using a iphone or ipad
+    self.deviceIsIPhone = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? NO : YES;
+    
+    /*
+     * FLURRY
+     */
     //note: iOS only allows one crash reporting tool per app; if using another, set to: NO
     [Flurry setCrashReportingEnabled:YES];
     
     // Replace YOUR_API_KEY with the api key in the downloaded package
     [Flurry startSession:@"JCMVPQDYJZNCZVCJQ59P"];
     
-    //check if we are using a iphone or ipad
-    self.deviceIsIPhone = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? NO : YES;
-    
+    /*
+     * TESTFLIGHT
+     */
     // start of your application:didFinishLaunchingWithOptions // ...
     [TestFlight takeOff:@"a48098ef-e65e-40b9-8609-e995adc426ac"];
     
+    /*
+     * AFNETWORKING
+     */
 #if DEBUG
     [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelError];
     [[AFNetworkActivityLogger sharedLogger] startLogging];
 #endif
     
+    /*
+     * MAGICALRECORD
+     */
     [MagicalRecord setupCoreDataStackWithStoreNamed:@"MyJiveDatabase.sqlite"];
     
     //Register for background fetches
@@ -101,11 +113,6 @@ int didNotify;
     if ([[JCAuthenticationManager sharedInstance] userAuthenticated] && [[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {
         [self.window setRootViewController:self.tabBarViewController];
         [[JCAuthenticationManager sharedInstance] checkForTokenValidity];
-//        [[JCRESTClient sharedClient] RetrieveEntitiesPresence:^(BOOL updated) {
-//            //do nothing;
-//        } failure:^(NSError *err) {
-//            //do nothing;
-//        }];
     }
     else {
         //TODO:********
@@ -276,13 +283,6 @@ int didNotify;
 	NSLog(@"APPDELEGATE - Failed to get token, error: %@", error);
 }
 
-//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo//never gets called
-//{
-//    
-////    [PFPush handlePush:userInfo];
-//    NSLog(@"APPDELEGATE - didReceiveRemoteNotification:fetchCompletionHandler");
-//}
-
 
 - (NSInteger)currentBadgeCount
 {
@@ -314,22 +314,6 @@ int didNotify;
     {
         return 0;
     }
-    
-//    _badges.count;
-//    NSInteger count = 0;
-//    if (_badges) {
-//        
-//        [_badges enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-//            NSNumber *number = [_badges objectForKey:key];
-//            count = count + [number integerValue];
-//        }];
-//        for (NSString *key in _badges)
-//        {
-//            
-//        }
-//    }
-    
-//    return count;
 }
 
 

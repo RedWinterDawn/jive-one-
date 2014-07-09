@@ -9,7 +9,6 @@
 #import "JCDirectoryViewController.h"
 #import "PersonEntities.h"
 #import "PersonMeta.h"
-#import "JCRESTClient.h"
 #import "JCDirectoryDetailViewController.h"
 #import "JCDirectoryGroupViewController.h"
 #import "ContactGroup.h"
@@ -341,82 +340,6 @@ static NSString *CellIdentifier = @"DirectoryCell";
 
 
 
-#pragma mark -ABPeoplePickerDelegate methods
-- (void)peoplePickerNavigationControllerDidCancel:
-(ABPeoplePickerNavigationController *)peoplePicker
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-
-- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
-      shouldContinueAfterSelectingPerson:(ABRecordRef)person {
-    
-    [self dismissViewControllerAnimated:NO completion:nil];
-    return NO;
-}
-
-- (BOOL)peoplePickerNavigationController:
-(ABPeoplePickerNavigationController *)peoplePicker
-      shouldContinueAfterSelectingPerson:(ABRecordRef)person
-                                property:(ABPropertyID)property
-                              identifier:(ABMultiValueIdentifier)identifier
-{
-    return NO;
-}
-
-#pragma mark - Load Directories
-
-//- (void)loadLocalDirectory {
-//    
-//    
-//    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
-//    
-//    if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined) {
-//        ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
-//            if (granted) {
-////                NSLog(@"User granted permission to contacts");
-//            } else {
-//                // User denied access
-//                // Display an alert telling user the contact could not be added
-//            }
-//        });
-//    }
-//  
-//
-//    NSArray *allContacts = (__bridge_transfer NSArray *)ABAddressBookCopyArrayOfAllPeople(addressBook);
-//    CFRelease(addressBook);
-//    NSInteger sectionCount = [sections count];
-//    NSInteger allContactsCount = [allContacts count];
-//    for (int i = 0; i < sectionCount; i++) {
-//        NSMutableArray *section = [[NSMutableArray alloc] init];
-//        
-//        for (int j = 0; j < allContactsCount; j++) {
-//            NSString * firstName = (__bridge_transfer NSString *)(ABRecordCopyValue((__bridge ABRecordRef)(allContacts[j]), kABPersonFirstNameProperty));
-//            
-//            if ([firstName hasPrefix:sections[i]] || [firstName hasPrefix:[sections[i] lowercaseString]]) {
-//                NSString * lastName = (__bridge_transfer NSString *)(ABRecordCopyValue((__bridge ABRecordRef)(allContacts[j]), kABPersonLastNameProperty));
-//                NSString * email = (__bridge_transfer NSString *)(ABRecordCopyValue((__bridge ABRecordRef)(allContacts[j]), kABPersonEmailProperty));
-//                NSString * phone = (__bridge_transfer NSString *)(ABRecordCopyValue((__bridge ABRecordRef)(allContacts[j]), kABPersonPhoneProperty));
-//                
-//                NSMutableDictionary *tempDictionary = [[NSMutableDictionary alloc] init];
-//                [tempDictionary setObject:firstName forKey:@"firstName"];
-//                [tempDictionary setObject:[self padNilPhoneNames:lastName] forKey:@"lastName"];
-//                [tempDictionary setObject:[self padNilPhoneNames:[NSString stringWithFormat:@"%@ %@", firstName, lastName] ] forKey:@"firstLast"];
-//                [tempDictionary setObject:email forKey:@"email"];
-//                [tempDictionary setObject:phone forKey:@"phone"];
-//            
-//            [section addObject:tempDictionary];
-//                
-//            }
-//        }
-//        
-//        [self.clientEntitiesArray addObject:section];
-//    }
-//    
-//    [self.tableView reloadData];
-//}
-
 -(NSString*) padNilPhoneNames:(NSString*)string{
     if(!string)
         return @"";
@@ -448,29 +371,6 @@ static NSString *CellIdentifier = @"DirectoryCell";
         [self.clientEntitiesArray addObject:sortedArray];
     
     }
-//    Original Company Loading
-//    for (int i = 0; i < sections.count; i++) {
-//        NSString *section = sections[i];
-//        NSArray *sectionArray = nil;
-//        if (section == self.star) {
-//            sectionArray = [PersonEntities MR_findByAttribute:@"isFavorite" withValue:[NSNumber numberWithBool:YES]];
-//        }
-//        else {
-//            // retrieve entities where first name starts with letter of alphabet
-//            NSPredicate *pred = [NSPredicate predicateWithFormat:@"(firstLastName BEGINSWITH[c] %@)", section];
-//            sectionArray = [PersonEntities MR_findAllWithPredicate:pred];
-//        }
-//        
-//        // sort array with bases on firstLastName property
-//        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"firstLastName" ascending:YES];
-//        NSArray *sortedArray= [sectionArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]];
-//        
-//        if (noData) {
-//            noData = sortedArray.count == 0;
-//        }
-//        
-//        [self.clientEntitiesArray addObject:sortedArray];
-//    }
     
     if(noData)
     {
