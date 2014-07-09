@@ -1,5 +1,5 @@
 //
-//  ContactGroup.h
+//  LineGroup.h
 //  JiveOne
 //
 //  Created by Eduardo Gueiros on 7/9/14.
@@ -10,9 +10,9 @@
 #import <CoreData/CoreData.h>
 
 
-@interface ContactGroup : NSManagedObject
+@interface LineGroup : NSManagedObject
 
 @property (nonatomic, retain) NSString * groupId;
-@property (nonatomic, retain) NSString * groupName;
+@property (nonatomic, retain) NSString * lineId;
 
 @end

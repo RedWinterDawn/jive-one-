@@ -1,17 +1,17 @@
 //
-//  ContactGroup.m
+//  LineGroup.m
 //  JiveOne
 //
 //  Created by Eduardo Gueiros on 7/9/14.
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "ContactGroup.h"
+#import "LineGroup.h"
 
 
-@implementation ContactGroup
+@implementation LineGroup
 
 @dynamic groupId;
-@dynamic groupName;
+@dynamic lineId;
 
 @end
