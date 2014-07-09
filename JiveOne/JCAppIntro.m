@@ -376,15 +376,25 @@
     //******************************************************
     // now, we animate the voicemailCell
     //******************************************************
-    IFTTTFrameAnimation *voicemailCellFrameAnimation = [IFTTTFrameAnimation animationWithView:self.voicemailCell];
-    [self.animator addAnimation:voicemailCellFrameAnimation];
+//    IFTTTFrameAnimation *voicemailCellFrameAnimation = [IFTTTFrameAnimation animationWithView:self.voicemailCell];
+//    [self.animator addAnimation:voicemailCellFrameAnimation];
+//    
+//    
+//    // pages 2 and 3
+//    [voicemailCellFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:self.voicemailCell.frame]];
+//    [voicemailCellFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.voicemailCell.frame, timeForPage(2), 0)]];
+//    
+    [self createTransparencyAnimationWithDictionary:@{@"Label":self.voicemailCell,
+                                                      @"KeyFrame1":@[@1,@1],
+                                                      @"KeyFrame2":@[@2,@1],
+                                                      @"KeyFrame3":@[@3,@0],
+                                                      @"KeyFrame4":@[@4,@0]
+                                                      }];
     
-    // the higher this number is the more the objects shrink
-    
-    
-    // pages 2 and 3
-    [voicemailCellFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:self.voicemailCell.frame]];
-    [voicemailCellFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.voicemailCell.frame, timeForPage(2), 0)]];
+    [self createFrameAnimationWithDictionaryOfKeyFramesAndTime:@{@"Label":self.voicemailCell,
+                                                                 @"KeyFrame1":@[@1,@1,@0],
+                                                                 @"KeyFrame2":@[@2,@2,@0]
+                                                                 }];
     
     
     //******************************************************
@@ -467,17 +477,6 @@
     [self.bottomRight setAlpha:0.0];
     [self.scrollView addSubview:self.bottomRight];
     
-    //    UILabel *leaveFeedbackLabel = [[UILabel alloc] init];
-    //    leaveFeedbackLabel.text = @"Send us feedback!";
-    //    [leaveFeedbackLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:kFontSize]];
-    //    leaveFeedbackLabel.shadowColor = [UIColor darkGrayColor];
-    //    leaveFeedbackLabel.textColor = [UIColor whiteColor];
-    //    leaveFeedbackLabel.shadowOffset = CGSizeMake(0, 1);
-    //    [leaveFeedbackLabel sizeToFit];
-    //    leaveFeedbackLabel.center = self.view.center;
-    //    leaveFeedbackLabel.frame = CGRectOffset(leaveFeedbackLabel.frame, timeForPage(3), -50);
-    //    [self.scrollView addSubview:leaveFeedbackLabel];
-    //    self.thridPageLabel1 = leaveFeedbackLabel;
     
     UILabel *leaveFeedbackLabel2 = [[UILabel alloc] init];
     leaveFeedbackLabel2.text = @"Send us feedback!";
@@ -503,246 +502,152 @@
     [self.scrollView addSubview:emailLabel];
     self.thridPageLabel1 = emailLabel; 
     
-    //******************************************************
-    // now, we animate the topLeft
-    //******************************************************
+    #pragma mark - topLeftAnamations
+    //*****************************************************************************
+    // now we animate the topLeft, topLeftLabel and add tranparency
+    //*****************************************************************************
+    [self createTransparencyAnimationWithDictionary:@{@"Label":self.topLeft,
+                                                      @"KeyFrame1":@[@1,@0],
+                                                      @"KeyFrame2":@[@2,@1],
+                                                      @"KeyFrame3":@[@3,@1],
+                                                      @"KeyFrame4":@[@4,@0]
+                                                      }];
     
-    IFTTTFrameAnimation *topLeftFrameAnimation = [IFTTTFrameAnimation animationWithView:self.topLeft];
-    [self.animator addAnimation:topLeftFrameAnimation];
-    
-    // move down and to the right, and shrink between pages 2 and 3
-    CGRect topLeftStartFrame = CGRectOffset(self.topLeft.frame, -(self.topLeft.frame.origin.x + self.topLeft.frame.size.width), 0);
-    [topLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:topLeftStartFrame]];
-    [topLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.topLeft.frame, timeForPage(2), 0)]];
-    [topLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(self.topLeft.frame, timeForPage(3), kUpDy)]];
-    
-    
-    //******************************************************
-    // now, we animate the topLeftFrame
-    //******************************************************
-    IFTTTFrameAnimation *topLeftLabelAnimation = [IFTTTFrameAnimation animationWithView:self.topLeftLabel];
-    [self.animator addAnimation:topLeftLabelAnimation];
-    
-    CGRect topLeftLabelStartFrame = CGRectOffset(self.topLeftLabel.frame, -(self.topLeftLabel.frame.origin.x + self.topLeftLabel.frame.size.width), 0);
-    [topLeftLabelAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:topLeftLabelStartFrame]];
-    [topLeftLabelAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.topLeftLabel.frame, timeForPage(2), 0)]];
-    [topLeftLabelAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(self.topLeftLabel.frame, timeForPage(3), kUpDy)]];
-    
-    
-    //******************************************************
-    // now, we animate the topRight
-    //******************************************************
-    IFTTTFrameAnimation *topRightFrameAnimation = [IFTTTFrameAnimation animationWithView:self.topRight];
-    [self.animator addAnimation:topRightFrameAnimation];
-    CGRect topRightStartFrame = CGRectOffset(self.topRight.frame, (self.view.frame.size.width - self.topRight.frame.size.width), 0);
-    CGRect topRightFrame2 = CGRectOffset(self.topRight.frame, (self.view.frame.size.width + kTopRight_x), 0);
-    [topRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:topRightStartFrame]];
-    [topRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:topRightFrame2]];
-    [topRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.topRight.frame,kDs,kDs), timeForPage(3), kUpDy)]];
-    
-    //******************************************************
-    // now, we animate the topRightLabel
-    //******************************************************
-    IFTTTFrameAnimation *topRightLabelAnimation = [IFTTTFrameAnimation animationWithView:self.topRightLabel];
-    [self.animator addAnimation:topRightLabelAnimation];
-    CGRect topRightLabelStartFrame = CGRectOffset(self.topRightLabel.frame, (self.view.frame.size.width - self.topRightLabel.frame.origin.x), 0);
-    CGRect topRightLabelFrame2 = CGRectOffset(self.topRightLabel.frame, (self.view.frame.size.width + kTopRight_x), 0);
-    [topRightLabelAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:topRightLabelStartFrame]];
-    [topRightLabelAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:topRightLabelFrame2]];
-    [topRightLabelAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.topRightLabel.frame,kDs,kDs), timeForPage(3), kUpDy)]];
-    
-    //******************************************************
-    // now, we animate the bottomLeft
-    //******************************************************
-    IFTTTFrameAnimation *bottomLeftFrameAnimation = [IFTTTFrameAnimation animationWithView:self.bottomLeft];
-    [self.animator addAnimation:bottomLeftFrameAnimation];
-    
-    // move down and to the right, and shrink between pages 2 and 3
-    CGRect bottomLeftStartFrame = CGRectOffset(self.bottomLeft.frame, -(self.bottomLeft.frame.origin.x + self.bottomLeft.frame.size.width), 0);
-    [bottomLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:bottomLeftStartFrame]];
-    [bottomLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.bottomLeft.frame, timeForPage(2), 0)]];
-    [bottomLeftFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.bottomLeft.frame,kDs,kDs), timeForPage(3), kDy)]];
-    
-    //******************************************************
-    // now, we animate the bottomLeft
-    //******************************************************
-    IFTTTFrameAnimation *bottomLeftLabelAnimation = [IFTTTFrameAnimation animationWithView:self.bottomLeftLabel];
-    [self.animator addAnimation:bottomLeftLabelAnimation];
-    
-    // move down and to the right, and shrink between pages 2 and 3
-    CGRect bottomLeftLabelStartFrame = CGRectOffset(self.bottomLeftLabel.frame, -(self.bottomLeftLabel.frame.origin.x + self.bottomLeftLabel.frame.size.width), 0);
-    [bottomLeftLabelAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:bottomLeftLabelStartFrame]];
-    [bottomLeftLabelAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.bottomLeftLabel.frame, timeForPage(2), 0)]];
-    [bottomLeftLabelAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.bottomLeftLabel.frame,kDs,kDs), timeForPage(3), kDy)]];
-    
-    //******************************************************
-    // now, we animate the bottomRight
-    //******************************************************
-    IFTTTFrameAnimation *bottomRightFrameAnimation = [IFTTTFrameAnimation animationWithView:self.bottomRight];
-    [self.animator addAnimation:bottomRightFrameAnimation];
-    
-    CGRect bottomRightStartFrame = CGRectOffset(self.bottomRight.frame, (self.view.frame.size.width - self.bottomRight.frame.size.width), 0);
-    [bottomRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:bottomRightStartFrame]];
-    [bottomRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.bottomRight.frame, timeForPage(2), 0)]];
-    [bottomRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.bottomRight.frame,kDs,kDs), timeForPage(3), kDy)]];
-    
-    
-    //******************************************************
-    // now, we animate the bottomRightLabel
-    //******************************************************
-    
-    //    [self createAnimationWithDictionary:@{@"Label":self.bottomRightLabel,
-    //                                          @"KeyFrame1":@[@1,@0],
-    //                                          @"KeyFrame2":@[@2,@1],
-    //                                          @"KeyFrame3":@[@3,@1],
-    //                                          @"KeyFrame4":@[@4,@0]
-    //                                          }];
-    
-//    - (IFTTTAlphaAnimation *)createAnimationWithDictionary:(NSDictionary* )dict{
-//        IFTTTAlphaAnimation *labelAlphaAnimation = [IFTTTAlphaAnimation animationWithView:[dict objectForKey:@"Label"]];
-//        for (IFTTTAnimationKeyFrame *kf in dict) {
-//            if([[dict objectForKey:kf] isKindOfClass:[NSArray class]]){
-//                int page = ((int)[dict objectForKey:kf][0]);
-//                int alpha = ((int)[dict objectForKey:kf][1]);
-//                [labelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(page) andAlpha:alpha]];
-//            }
-//        }
-//        [self.animator addAnimation:labelAlphaAnimation];
-//        return labelAlphaAnimation;
-//    }
-    
-
-    
-    
-
-    
-    
-   
-    //******************************************************
-    //fade all the Arrows in on page 2 and out on page 4
-    //******************************************************
-    IFTTTAlphaAnimation *topLeftAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.topLeft];
-    [self.animator addAnimation:topLeftAlphaAnimation];
-    
-    [topLeftAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:0.0f]];
-    [topLeftAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f]];
-    [topLeftAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:1.0f]];
-    [topLeftAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
-    
-    IFTTTAlphaAnimation *topRightAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.topRight];
-    [self.animator addAnimation:topRightAlphaAnimation];
-    
-    [topRightAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:0.0f]];
-    [topRightAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f]];
-    [topRightAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:1.0f]];
-    [topRightAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
-    
-    IFTTTAlphaAnimation *bottomLeftAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.bottomLeft];
-    [self.animator addAnimation:bottomLeftAlphaAnimation];
-    
-    [bottomLeftAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:0.0f]];
-    [bottomLeftAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f]];
-    [bottomLeftAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:1.0f]];
-    [bottomLeftAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
-    
-    IFTTTAlphaAnimation *bottomRightAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.bottomRight];
-    [self.animator addAnimation:bottomRightAlphaAnimation];
-    
-    [bottomRightAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:0.0f]];
-    [bottomRightAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f]];
-    [bottomRightAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:1.0f]];
-    [bottomRightAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
-    
-    //******************************************************
-    //fade all the Label in on page 2 and out on page 4
-    //******************************************************
-    IFTTTAlphaAnimation *topLeftLabelAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.topLeftLabel];
-    [self.animator addAnimation:topLeftLabelAlphaAnimation];
-    
-    [topLeftLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:0.0f]];
-    [topLeftLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f]];
-    [topLeftLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:1.0f]];
-    [topLeftLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
-    
-    IFTTTAlphaAnimation *topRightLabelAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.topRightLabel];
-    [self.animator addAnimation:topRightLabelAlphaAnimation];
-    
-    [topRightLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:0.0f]];
-    [topRightLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f]];
-    [topRightLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:1.0f]];
-    [topRightLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
-    
-//    IFTTTAlphaAnimation *bottomLeftLabelAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.bottomLeftLabel];
-//    [self.animator addAnimation:bottomLeftLabelAlphaAnimation];
-//    
-//    [bottomLeftLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:0.0f]];
-//    [bottomLeftLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f]];
-//    [bottomLeftLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:1.0f]];
-//    [bottomLeftLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
-    
-// Attempting to refactor anamations
-    //    IFTTTAlphaAnimation *bottomRightLabelAlphaAnimation = JCAnimation[bottomRightLabelAlphaAnimation, self.bottomRightLabel,0.0f,1.0f,1.0f,0.0f];
-    
-//    IFTTTAlphaAnimation *bottomRightLabelAlphaAnimation = [IFTTTAlphaAnimation animationWithView:self.bottomRightLabel];
-//    [self.animator addAnimation:bottomRightLabelAlphaAnimation];
-//    
-//    [bottomRightLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andAlpha:0.0f]];
-//    [bottomRightLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andAlpha:1.0f]];
-//    [bottomRightLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andAlpha:1.0f]];
-//    [bottomRightLabelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(4) andAlpha:0.0f]];
-    [self createAnimationWithDictionary:@{@"Label":self.bottomLeftLabel,
-                                          @"KeyFrame1":@[@1,@0],
-                                          @"KeyFrame2":@[@2,@1],
-                                          @"KeyFrame3":@[@3,@1],
-                                          @"KeyFrame4":@[@4,@0]
-                                          }];
-    
-    [self createAnimationWithDictionary:@{@"Label":self.bottomRightLabel,
-                                          @"KeyFrame1":@[@1,@0],
-                                          @"KeyFrame2":@[@2,@1],
-                                          @"KeyFrame3":@[@3,@1],
-                                          @"KeyFrame4":@[@4,@0]
-                                          }];
-    
-    //    IFTTTFrameAnimation *bottomRightLabelFrameAnimation = [IFTTTFrameAnimation animationWithView:self.bottomRightLabel];
-    //    [self.animator addAnimation:bottomRightLabelFrameAnimation];
-    //
-    //    CGRect bottomRightLabelStartFrame = CGRectOffset(self.bottomRightLabel.frame, (self.view.frame.size.width - self.bottomRightLabel.frame.size.width), 0);
-    //    [bottomRightLabelFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:bottomRightLabelStartFrame]];
-    //    [bottomRightLabelFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.bottomRightLabel.frame, timeForPage(2), 0)]];
-    //    [bottomRightLabelFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.bottomRightLabel.frame,kDs,kDs), timeForPage(3), kDy)]];
-    //
-    
-    self.bottomRightLabel.frame = CGRectOffset(self.bottomRightLabel.frame, (self.view.frame.size.width - self.bottomRightLabel.frame.size.width), 0);
-    [self createFrameAnimationWithDictionaryOfKeyFramesAndTime:@{@"Label":self.bottomRightLabel,
-                                                                 @"KeyFrame1":@[@1,@0],
-                                                                 @"KeyFrame2":@[@2,@0],
-                                                                 @"KeyFrame3":@[@3,@(kDy)]
+    [self createFrameAnimationWithDictionaryOfKeyFramesAndTime:@{@"Label":self.topLeft,
+                                                                 @"KeyFrame1":@[@1,@(0),@0],
+                                                                 @"KeyFrame2":@[@2,@2,@0],
+                                                                 @"KeyFrame3":@[@3,@3,@(-300)]
                                                                  }];
     
+    [self createTransparencyAnimationWithDictionary:@{@"Label":self.topLeftLabel,
+                                                      @"KeyFrame1":@[@1,@0],
+                                                      @"KeyFrame2":@[@2,@1],
+                                                      @"KeyFrame3":@[@3,@1],
+                                                      @"KeyFrame4":@[@4,@0]
+                                                      }];
+    
+    [self createFrameAnimationWithDictionaryOfKeyFramesAndTime:@{@"Label":self.topLeftLabel,
+                                                                 @"KeyFrame1":@[@1,@(0),@0],
+                                                                 @"KeyFrame2":@[@2,@2,@0],
+                                                                 @"KeyFrame3":@[@3,@3,@(-300)]
+                                                                 }];
+    
+    #pragma mark - topRightAnamations
+    //*****************************************************************************
+    // now we animate the topRight, topRightLabel and add tranparency
+    //*****************************************************************************
+    [self createTransparencyAnimationWithDictionary:@{@"Label":self.topRight,
+                                                      @"KeyFrame1":@[@1,@0],
+                                                      @"KeyFrame2":@[@2,@1],
+                                                      @"KeyFrame3":@[@3,@1],
+                                                      @"KeyFrame4":@[@4,@0]
+                                                      }];
+    
+    [self createFrameAnimationWithDictionaryOfKeyFramesAndTime:@{@"Label":self.topRight,
+                                                                 @"KeyFrame1":@[@1,@2,@0],
+                                                                 @"KeyFrame2":@[@2,@2,@0],
+                                                                 @"KeyFrame3":@[@3,@3,@(-300)]
+                                                                 }];
+    
+    [self createTransparencyAnimationWithDictionary:@{@"Label":self.topRightLabel,
+                                                      @"KeyFrame1":@[@1,@0],
+                                                      @"KeyFrame2":@[@2,@1],
+                                                      @"KeyFrame3":@[@3,@1],
+                                                      @"KeyFrame4":@[@4,@0]
+                                                      }];
+    
+    [self createFrameAnimationWithDictionaryOfKeyFramesAndTime:@{@"Label":self.topRightLabel,
+                                                                 @"KeyFrame1":@[@1,@2,@0],
+                                                                 @"KeyFrame2":@[@2,@2,@0],
+                                                                 @"KeyFrame3":@[@3,@3,@(-300)]
+                                                                 }];
+    #pragma mark - bottomLeftAnamations
+    //*****************************************************************************
+    // now we animate the bottomLeft, bottomLeftLabel and add tranparency
+    //*****************************************************************************
+    [self createTransparencyAnimationWithDictionary:@{@"Label":self.bottomLeftLabel,
+                                                      @"KeyFrame1":@[@1,@0],
+                                                      @"KeyFrame2":@[@2,@1],
+                                                      @"KeyFrame3":@[@3,@1],
+                                                      @"KeyFrame4":@[@4,@0]
+                                                      }];
+    
+    [self createFrameAnimationWithDictionaryOfKeyFramesAndTime:@{@"Label":self.bottomLeftLabel,
+                                                                 @"KeyFrame1":@[@1,@(0),@0],
+                                                                 @"KeyFrame2":@[@2,@2,@0],
+                                                                 @"KeyFrame3":@[@3,@3,@240]
+                                                                 }];
+    
+    [self createTransparencyAnimationWithDictionary:@{@"Label":self.bottomLeft,
+                                                      @"KeyFrame1":@[@1,@0],
+                                                      @"KeyFrame2":@[@2,@1],
+                                                      @"KeyFrame3":@[@3,@1],
+                                                      @"KeyFrame4":@[@4,@0]
+                                                      }];
+    
+    [self createFrameAnimationWithDictionaryOfKeyFramesAndTime:@{@"Label":self.bottomLeft,
+                                                                 @"KeyFrame1":@[@1,@(0),@0],
+                                                                 @"KeyFrame2":@[@2,@2,@0],
+                                                                 @"KeyFrame3":@[@3,@3,@240]
+                                                                 }];
+    #pragma mark - bottomRightAnamations
+    //*****************************************************************************
+    // now we animate the bottomRight, bottomRightLabel and add tranparency
+    //*****************************************************************************
+    [self createTransparencyAnimationWithDictionary:@{@"Label":self.bottomRight,
+                                                      @"KeyFrame1":@[@1,@0],
+                                                      @"KeyFrame2":@[@2,@1],
+                                                      @"KeyFrame3":@[@3,@1],
+                                                      @"KeyFrame4":@[@4,@0]
+                                                      }];
+    
+    [self createFrameAnimationWithDictionaryOfKeyFramesAndTime:@{@"Label":self.bottomRight,
+                                                                 @"KeyFrame1":@[@1,@2,@0],
+                                                                 @"KeyFrame2":@[@2,@2,@0],
+                                                                 @"KeyFrame3":@[@3,@3,@240]
+                                                                 }];
+ 
+    [self createTransparencyAnimationWithDictionary:@{@"Label":self.bottomRightLabel,
+                                                      @"KeyFrame1":@[@1,@0],
+                                                      @"KeyFrame2":@[@2,@1],
+                                                      @"KeyFrame3":@[@3,@1],
+                                                      @"KeyFrame4":@[@4,@0]
+                                                      }];
+    
+    [self createFrameAnimationWithDictionaryOfKeyFramesAndTime:@{@"Label":self.bottomRightLabel,
+                                                                 @"KeyFrame1":@[@1,@2,@0],
+                                                                 @"KeyFrame2":@[@2,@2,@0],
+                                                                 @"KeyFrame3":@[@3,@3,@240]
+                                                                 }];
 }
-//TODO:Fixthis 
+
+// This is the animation method that adds Key Frames in which the item will be animated to as the time events are fired. It takes a Dictinary which is composed of a Key and array with 3 variables
+// the first one is the page the second is the X offset and the third is the Y offset
 - (IFTTTFrameAnimation *)createFrameAnimationWithDictionaryOfKeyFramesAndTime:(NSDictionary* )anotherDict{
     IFTTTFrameAnimation *frameAnimation = [IFTTTFrameAnimation animationWithView:[anotherDict objectForKey:@"Label"]];
+    CGRect frame = ((UILabel *)[anotherDict objectForKey:@"Label"]).frame;
     for (IFTTTFrameAnimation *kfa in anotherDict) {
         if([[anotherDict objectForKey:kfa] isKindOfClass:[NSArray class]]){
-            int page = ((int)[anotherDict objectForKey:kfa][0]);
-            int offset = ((int)[anotherDict objectForKey:kfa][1]);
-            CGRect frame = ((UILabel *)[anotherDict objectForKey:@"Label"]).frame;
-            [frameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(page) andFrame:CGRectOffset(frame, timeForPage(page), offset)]];
+            NSLog(@"((*****))%d",[[anotherDict objectForKey:kfa][0] intValue]);
+            NSLog(@"-#-#-#-#-#-%d",[[anotherDict objectForKey:kfa][1] intValue]);
+            int page = [[anotherDict objectForKey:kfa][0] intValue];
+            int offset_x = [[anotherDict objectForKey:kfa][1] intValue];
+            int offset_y = [[anotherDict objectForKey:kfa][2] intValue];
+            
+            [frameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(page) andFrame:CGRectOffset(frame, timeForPage(offset_x), offset_y)]];
         }
     }
     [self.animator addAnimation:frameAnimation];
     return frameAnimation;
 }
            
-
-- (IFTTTAlphaAnimation *)createAnimationWithDictionary:(NSDictionary* )dict{
+//This Method handles the transparnce of the object passed in.
+- (IFTTTAlphaAnimation *)createTransparencyAnimationWithDictionary:(NSDictionary* )dict{
     IFTTTAlphaAnimation *labelAlphaAnimation = [IFTTTAlphaAnimation animationWithView:[dict objectForKey:@"Label"]];
     for (IFTTTAnimationKeyFrame *kf in dict) {
         if([[dict objectForKey:kf] isKindOfClass:[NSArray class]]){
-            int page = ((int)[dict objectForKey:kf][0]);
-            int alpha = ((int)[dict objectForKey:kf][1]);
+            int page = [[dict objectForKey:kf][0] intValue];
+            int alpha = [[dict objectForKey:kf][1] intValue];
             [labelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(page) andAlpha:alpha]];
         }
     }
@@ -795,14 +700,12 @@
     CGSize size = rect.size;
     size.height  = size.height - 2.0f;
     UIBezierPath *path = [UIBezierPath bezierPath];
-    
-    [path moveToPoint:CGPointMake(5, 10.0f)];//top left corner of shadow
-    [path addLineToPoint:CGPointMake(size.width, 10.0f)]; //top right corner of shadow
-    [path addLineToPoint:CGPointMake(size.width, size.height - 1.0f)];//bottom right the size.height + 10 is the determinate of how far down the corners are
-    
-    [path addCurveToPoint:CGPointMake(2.0f, size.height - 1.0f) //bottom left
+    [path moveToPoint:CGPointMake(5, 10.0f)];                           //top left corner of shadow
+    [path addLineToPoint:CGPointMake(size.width, 10.0f)];               //top right corner of shadow
+    [path addLineToPoint:CGPointMake(size.width, size.height - 1.0f)];  //bottom right the size.height + 10 is the determinate of how far down the corners are
+    [path addCurveToPoint:CGPointMake(2.0f, size.height - 1.0f)         //bottom left
             controlPoint1:CGPointMake(size.width - 15.0f, size.height - 8.0f) // curve control
-            controlPoint2:CGPointMake(15.0f, size.height - 8.0f)]; // curve control
+            controlPoint2:CGPointMake(15.0f, size.height - 8.0f)];      // curve control
     
     return path.CGPath;
 }
