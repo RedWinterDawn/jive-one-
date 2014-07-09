@@ -586,17 +586,38 @@
     [bottomRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.bottomRight.frame, timeForPage(2), 0)]];
     [bottomRightFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.bottomRight.frame,kDs,kDs), timeForPage(3), kDy)]];
     
+    
     //******************************************************
     // now, we animate the bottomRightLabel
     //******************************************************
-    IFTTTFrameAnimation *bottomRightLabelFrameAnimation = [IFTTTFrameAnimation animationWithView:self.bottomRightLabel];
-    [self.animator addAnimation:bottomRightLabelFrameAnimation];
     
-    CGRect bottomRightLabelStartFrame = CGRectOffset(self.bottomRightLabel.frame, (self.view.frame.size.width - self.bottomRightLabel.frame.size.width), 0);
-    [bottomRightLabelFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:bottomRightLabelStartFrame]];
-    [bottomRightLabelFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.bottomRightLabel.frame, timeForPage(2), 0)]];
-    [bottomRightLabelFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.bottomRightLabel.frame,kDs,kDs), timeForPage(3), kDy)]];
+    //    [self createAnimationWithDictionary:@{@"Label":self.bottomRightLabel,
+    //                                          @"KeyFrame1":@[@1,@0],
+    //                                          @"KeyFrame2":@[@2,@1],
+    //                                          @"KeyFrame3":@[@3,@1],
+    //                                          @"KeyFrame4":@[@4,@0]
+    //                                          }];
     
+//    - (IFTTTAlphaAnimation *)createAnimationWithDictionary:(NSDictionary* )dict{
+//        IFTTTAlphaAnimation *labelAlphaAnimation = [IFTTTAlphaAnimation animationWithView:[dict objectForKey:@"Label"]];
+//        for (IFTTTAnimationKeyFrame *kf in dict) {
+//            if([[dict objectForKey:kf] isKindOfClass:[NSArray class]]){
+//                int page = ((int)[dict objectForKey:kf][0]);
+//                int alpha = ((int)[dict objectForKey:kf][1]);
+//                [labelAlphaAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(page) andAlpha:alpha]];
+//            }
+//        }
+//        [self.animator addAnimation:labelAlphaAnimation];
+//        return labelAlphaAnimation;
+//    }
+    
+
+    
+    
+
+    
+    
+   
     //******************************************************
     //fade all the Arrows in on page 2 and out on page 4
     //******************************************************
@@ -683,8 +704,38 @@
                                           @"KeyFrame4":@[@4,@0]
                                           }];
     
+    //    IFTTTFrameAnimation *bottomRightLabelFrameAnimation = [IFTTTFrameAnimation animationWithView:self.bottomRightLabel];
+    //    [self.animator addAnimation:bottomRightLabelFrameAnimation];
+    //
+    //    CGRect bottomRightLabelStartFrame = CGRectOffset(self.bottomRightLabel.frame, (self.view.frame.size.width - self.bottomRightLabel.frame.size.width), 0);
+    //    [bottomRightLabelFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:bottomRightLabelStartFrame]];
+    //    [bottomRightLabelFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.bottomRightLabel.frame, timeForPage(2), 0)]];
+    //    [bottomRightLabelFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(3) andFrame:CGRectOffset(CGRectInset(self.bottomRightLabel.frame,kDs,kDs), timeForPage(3), kDy)]];
+    //
+    
+    self.bottomRightLabel.frame = CGRectOffset(self.bottomRightLabel.frame, (self.view.frame.size.width - self.bottomRightLabel.frame.size.width), 0);
+    [self createFrameAnimationWithDictionaryOfKeyFramesAndTime:@{@"Label":self.bottomRightLabel,
+                                                                 @"KeyFrame1":@[@1,@0],
+                                                                 @"KeyFrame2":@[@2,@0],
+                                                                 @"KeyFrame3":@[@3,@(kDy)]
+                                                                 }];
     
 }
+//TODO:Fixthis 
+- (IFTTTFrameAnimation *)createFrameAnimationWithDictionaryOfKeyFramesAndTime:(NSDictionary* )anotherDict{
+    IFTTTFrameAnimation *frameAnimation = [IFTTTFrameAnimation animationWithView:[anotherDict objectForKey:@"Label"]];
+    for (IFTTTFrameAnimation *kfa in anotherDict) {
+        if([[anotherDict objectForKey:kfa] isKindOfClass:[NSArray class]]){
+            int page = ((int)[anotherDict objectForKey:kfa][0]);
+            int offset = ((int)[anotherDict objectForKey:kfa][1]);
+            CGRect frame = ((UILabel *)[anotherDict objectForKey:@"Label"]).frame;
+            [frameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(page) andFrame:CGRectOffset(frame, timeForPage(page), offset)]];
+        }
+    }
+    [self.animator addAnimation:frameAnimation];
+    return frameAnimation;
+}
+           
 
 - (IFTTTAlphaAnimation *)createAnimationWithDictionary:(NSDictionary* )dict{
     IFTTTAlphaAnimation *labelAlphaAnimation = [IFTTTAlphaAnimation animationWithView:[dict objectForKey:@"Label"]];
