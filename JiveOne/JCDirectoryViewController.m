@@ -660,7 +660,7 @@ shouldReloadTableForSearchString:(NSString *)searchString
 // In a story board-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if (![segue.identifier isEqualToString:@"StatusSegue"]) {       
+    if (![segue.identifier isEqualToString:@"StatusSegue"] && ![segue.identifier isEqualToString:@"GroupSegue"]) {
     
         NSIndexPath *indexPath = sender;
         PersonEntities *person;

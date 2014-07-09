@@ -10,6 +10,8 @@
 #import "JCPresenceView.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "Common.h"
+#import "LineGroup.h"
+#import "ContactGroup.h"
 
 //NSString *const kCustomCellPersonPresenceTypeKeyPath = @"entityPresence";
 @interface JCPersonCell ()
@@ -83,7 +85,7 @@
         [self.personNameLabel setNumberOfLines:0];
         self.personNameLabel.text = line.displayName;
         [self.personNameLabel sizeToFit];
-        [self configureFavoriteStatus];
+        //[self configureFavoriteStatus];
         self.personDetailLabel.text = line.externsionNumber;
         self.personPresenceView.presenceType = (JCPresenceType) [line.state integerValue]; //JCPresenceTypeAvailable;// (JCPresenceType)[_person.entityPresence.interactions[@"chat"][@"code"] integerValue];
         
@@ -91,6 +93,7 @@
         //[self setPersonImage];
         //[self.personPicture setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];
         
+		[self updateFavoriteIcon:self];
         [line addObserver:self forKeyPath:kPresenceKeyPathForLineEntity options:NSKeyValueObservingOptionNew context:NULL];
     }
 }
@@ -214,11 +217,31 @@
 
 - (IBAction)toggleFavoriteStatus:(id)sender {
     
-    self.line.isFavorite = @(!self.line.isFavorite.boolValue);
-    
-    //if (_managedContext) {
-        [_managedContext MR_saveToPersistentStoreAndWait];
-    //}
+	_managedContext = [self managedContext];
+	
+    self.line.isFavorite = [NSNumber numberWithBool:![self.line.isFavorite boolValue]];
+	
+	ContactGroup *group = [ContactGroup MR_findFirstByAttribute:@"groupName" withValue:@"Favorites"];
+	if (!group) {
+		group = [ContactGroup MR_createInContext:_managedContext];
+		group.groupId = [[NSUUID UUID] UUIDString];
+		group.groupName = @"Favorites";
+	}
+	
+	// create relationship
+	NSPredicate *pred = [NSPredicate predicateWithFormat:@"(groupId == %@) AND (lineId == %@)", group.groupId, self.line.jrn];
+	LineGroup *lg = [LineGroup MR_findFirstWithPredicate:pred];
+	if (!lg && [self.line.isFavorite boolValue]) {
+		lg = [LineGroup MR_createInContext:_managedContext];
+		lg.lineId = self.line.jrn;
+		lg.groupId = group.groupId;
+	}
+	else  if (lg && ![self.line.isFavorite boolValue])
+	{
+		[lg MR_deleteEntity];
+	}	
+
+    [_managedContext MR_saveToPersistentStoreAndWait];
     
     [self updateFavoriteIcon:self];
 }

@@ -258,7 +258,7 @@
             entities = [[NSMutableArray alloc] initWithObjects:self.person.entityId, nil];
         }
         else if (self.messageType == JCNewConversationWithGroup) {
-            entities = [NSMutableArray arrayWithArray:self.contactGroup.clientEntities];
+            //entities = [NSMutableArray arrayWithArray:self.contactGroup.clientEntities];
         }
         
         [self checkForConversationWithEntities:entities];

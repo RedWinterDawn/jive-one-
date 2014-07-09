@@ -8,6 +8,7 @@
 
 #import "JCDirectoryGroupViewController.h"
 #import "JCGroupSelectorViewController.h"
+#import "Lines+Custom.h"
 
 @interface JCDirectoryGroupViewController ()
 {
@@ -90,10 +91,11 @@
         
     } else {
         
+		
         ContactGroup *group = self.testArray[indexPath.row];
         cell.textLabel.text = group.groupName;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.detailTextLabel.text = [(NSArray*)group.clientEntities componentsJoinedByString:@","];
+        //cell.detailTextLabel.text = [(NSArray*)group.clientEntities componentsJoinedByString:@","];
     }
     
     return cell;

@@ -9,6 +9,7 @@
 #import "JCGroupSelectorViewController.h"
 #import "JCPersonCell.h"
 #import "ContactGroup.h"
+#import "LineGroup.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
 @interface JCGroupSelectorViewController ()
@@ -46,11 +47,11 @@
     
     self.sections = [NSArray arrayWithObjects:@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
     self.companyContactsArray = [[NSMutableArray alloc] init];
-    [self loadCompanyDirectory];
+    [self loadGroupMembers];
     
     if (_groupEdit) {
         self.title = _groupEdit.groupName;
-        existingEntities = (NSArray *)_groupEdit.clientEntities;
+        //existingEntities = (NSArray *)_groupEdit.clientEntities;
     }
 }
 
@@ -59,16 +60,27 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)loadCompanyDirectory {
-    
+- (void)loadGroupMembers {
+	
+	// retrieve entities where first name starts with letter of alphabet
+	NSArray *lineGroups = [LineGroup MR_findByAttribute:@"groupId" withValue:self.groupEdit.groupId];
+	NSMutableArray *lineList = [NSMutableArray array];
+	
+	for (LineGroup *lg in lineGroups) {
+		Lines *line = [Lines MR_findFirstByAttribute:@"jrn" withValue:lg.lineId];
+		if (line) {
+			[lineList addObject:line];
+		}
+	}
+	
     for (NSString *section in self.sections) {
-        
-        // retrieve entities where first name starts with letter of alphabet
-        NSPredicate *pred = [NSPredicate predicateWithFormat:@"(firstLastName BEGINSWITH[c] %@)", section];
-        NSArray *sectionArray = [PersonEntities MR_findAllWithPredicate:pred];
+		
+		
+        NSPredicate *pred = [NSPredicate predicateWithFormat:@"(displayName BEGINSWITH[c] %@)", section];
+        NSArray *sectionArray = [lineList filteredArrayUsingPredicate:pred];
         
         // sort array with bases on firstLastName property
-        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"firstLastName" ascending:YES];
+        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"displayName" ascending:YES];
         NSArray *sortedArray = [sectionArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]];
         
         [self.companyContactsArray addObject:sortedArray];
@@ -76,6 +88,8 @@
     
     [self.tableView reloadData];
 }
+
+
 
 #pragma mark - Table view data source
 
@@ -119,15 +133,15 @@
     
     if (section.count != 0) {
 //        NSLog(@"Section: %ld Row: %ld", indexPath.section, (long)indexPath.row);
-        PersonEntities *person = section[indexPath.row];
-        cell.person = person;
-        cell.personPresenceView.hidden = YES;
-        if(existingEntities)
-        {
-            if ([existingEntities containsObject:person.entityId]) {
-                [itemChecked addObject:indexPath];
-            }
-        }
+        Lines *line = section[indexPath.row];
+        cell.person = line;
+        cell.favoriteBut.hidden = YES;
+//        if(existingEntities)
+//        {
+//            if ([existingEntities containsObject:person.entityId]) {
+//                [itemChecked addObject:indexPath];
+//            }
+//        }
         
         // Created an insitance variable "itemChecked" as an array to store the index path of each cell checked.
         if ([itemChecked containsObject:indexPath]) {
@@ -143,19 +157,19 @@
     return 60;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    
-    // Created an insitance variable "itemChecked" as an array to store the index path of each cell checked.
-    if (cell.accessoryType == UITableViewCellAccessoryNone) {
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        [itemChecked addObject:indexPath];
-    } else if ((cell.accessoryType = UITableViewCellAccessoryCheckmark)) {
-        cell.accessoryType = UITableViewCellAccessoryNone;
-        [itemChecked removeObject:indexPath];
-    }
-}
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+//    
+//    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+//    
+//    // Created an insitance variable "itemChecked" as an array to store the index path of each cell checked.
+//    if (cell.accessoryType == UITableViewCellAccessoryNone) {
+//        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+//        [itemChecked addObject:indexPath];
+//    } else if ((cell.accessoryType = UITableViewCellAccessoryCheckmark)) {
+//        cell.accessoryType = UITableViewCellAccessoryNone;
+//        [itemChecked removeObject:indexPath];
+//    }
+//}
 
 // Done button action at top right of group groupCreator modal
 - (IBAction)saveGroupDoneButton:(id)sender {
@@ -220,7 +234,7 @@
             [selectedEntities addObject:entityId];
         }
         
-        group.clientEntities = selectedEntities;
+        //group.clientEntities = selectedEntities;
         
     } else {
         
@@ -230,7 +244,7 @@
             NSString *entityId = ((PersonEntities *)self.companyContactsArray[indexPath.section][indexPath.row]).entityId;
             [selectedEntities addObject:entityId];
         }
-        _groupEdit.clientEntities = selectedEntities;
+        //_groupEdit.clientEntities = selectedEntities;
     }
     
     [localContext MR_saveToPersistentStoreAndWait];
