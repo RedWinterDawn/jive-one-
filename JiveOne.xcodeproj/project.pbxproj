@@ -1100,12 +1100,6 @@
 		2743985218D0CFAA00ABCD69 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				9103271418F34BEB00437503 /* JCPeopleDetailCell.h */,
-				9103271518F34BEC00437503 /* JCPeopleDetailCell.m */,
-				9103271618F34BEC00437503 /* JCPeopleDetailCell.xib */,
-				2736698018BD441D0069B4B3 /* JCPersonCell.h */,
-				2736698118BD441D0069B4B3 /* JCPersonCell.m */,
-				279E602318C8C59900C5CC9F /* JCPersonCell.xib */,
 				2787911118CF79DC004DE651 /* JCPresenceView.h */,
 				2787911218CF79DC004DE651 /* JCPresenceView.m */,
 				27B8152418D93F1A00516BF6 /* NotificationView.h */,
@@ -1208,14 +1202,6 @@
 			name = Data;
 			sourceTree = "<group>";
 		};
-		2751592918AD332A00FD8D3F /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				2743985218D0CFAA00ABCD69 /* Views */,
-			);
-			name = Models;
-			sourceTree = "<group>";
-		};
 		275F4A4518AD0FBC00D2F069 = {
 			isa = PBXGroup;
 			children = (
@@ -1275,7 +1261,7 @@
 				2751590818AD16E200FD8D3F /* Clients */,
 				2751590318AD113C00FD8D3F /* Controllers */,
 				2751591518AD2FF700FD8D3F /* Data */,
-				2751592918AD332A00FD8D3F /* Models */,
+				2743985218D0CFAA00ABCD69 /* Views */,
 				275F4A6318AD0FBC00D2F069 /* Main_iPhone.storyboard */,
 				275F4A6618AD0FBC00D2F069 /* Main_iPad.storyboard */,
 				27EA5DB1190888AD008C7590 /* Draft_iPhone.storyboard */,
@@ -1338,6 +1324,8 @@
 			isa = PBXGroup;
 			children = (
 				91B7CFC2192ABBEF00927DDD /* SearchBar */,
+				919004CE196D9C9C00BEB11C /* PeopleDetailCell */,
+				919004CD196D9C8500BEB11C /* PersonCell */,
 				2751591D18AD303500FD8D3F /* JCDirectoryViewController.h */,
 				2751591E18AD303500FD8D3F /* JCDirectoryViewController.m */,
 				91260EDB18B2965900704670 /* JCDirectoryDetailViewController.h */,
@@ -1793,6 +1781,26 @@
 				277F094118FED58C00EEF0E3 /* JCStatusViewController.m */,
 			);
 			name = Status;
+			sourceTree = "<group>";
+		};
+		919004CD196D9C8500BEB11C /* PersonCell */ = {
+			isa = PBXGroup;
+			children = (
+				2736698018BD441D0069B4B3 /* JCPersonCell.h */,
+				2736698118BD441D0069B4B3 /* JCPersonCell.m */,
+				279E602318C8C59900C5CC9F /* JCPersonCell.xib */,
+			);
+			name = PersonCell;
+			sourceTree = "<group>";
+		};
+		919004CE196D9C9C00BEB11C /* PeopleDetailCell */ = {
+			isa = PBXGroup;
+			children = (
+				9103271418F34BEB00437503 /* JCPeopleDetailCell.h */,
+				9103271518F34BEC00437503 /* JCPeopleDetailCell.m */,
+				9103271618F34BEC00437503 /* JCPeopleDetailCell.xib */,
+			);
+			name = PeopleDetailCell;
 			sourceTree = "<group>";
 		};
 		919DD29A1922E2770039205E /* JCPopoverSlider */ = {
