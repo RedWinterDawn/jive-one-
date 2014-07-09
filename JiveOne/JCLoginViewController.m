@@ -310,7 +310,7 @@
     }
     
 //    [self fetchMyEntity];
-    //[self fetchMyMailboxes];
+    [self fetchMyMailboxes];
     [self fetchMyContact];
 }
 
@@ -348,7 +348,7 @@
     
     for (Mailbox *box in mailboxes) {
         [[JCJifClient sharedClient] getPbxInformationFromUrl:box.url_pbx completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-            //cool, we're done!
+            //[self fetchMyContact];
         }];
     }
 }

@@ -81,7 +81,9 @@
 		270152CB1901D86700F271CE /* JCContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 270152CA1901D86700F271CE /* JCContactModel.m */; };
 		2710E40C18CE873000152C91 /* Conversation+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 2710E40B18CE873000152C91 /* Conversation+Custom.m */; };
 		2710E40F18CEC8C300152C91 /* ConversationEntry+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 2710E40E18CEC8C300152C91 /* ConversationEntry+Custom.m */; };
+		2712676E196D988A001D9A0F /* Lines.m in Sources */ = {isa = PBXBuildFile; fileRef = 2712676D196D988A001D9A0F /* Lines.m */; };
 		271EBDAF1910525E00421BA9 /* GTalkNotify.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 271EBDAE1910525E00421BA9 /* GTalkNotify.aiff */; };
+		2723A292196C61790053D8AB /* Voicemail.m in Sources */ = {isa = PBXBuildFile; fileRef = 2723A291196C61790053D8AB /* Voicemail.m */; };
 		272580F0192120500027887C /* people-start-conv.png in Resources */ = {isa = PBXBuildFile; fileRef = 272580EF192120500027887C /* people-start-conv.png */; };
 		272B61DD18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */; };
 		272B61DE18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */; };
@@ -98,7 +100,6 @@
 		274493CE18D13538002744CB /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 274493CD18D13538002744CB /* Common.m */; };
 		274543FD1965C29F007AF259 /* Mailbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 274543FC1965C29F007AF259 /* Mailbox.m */; };
 		274544001965C2A0007AF259 /* PBX.m in Sources */ = {isa = PBXBuildFile; fileRef = 274543FF1965C2A0007AF259 /* PBX.m */; };
-		274544031965C2A0007AF259 /* Voicemail.m in Sources */ = {isa = PBXBuildFile; fileRef = 274544021965C2A0007AF259 /* Voicemail.m */; };
 		275158FC18AD10BB00FD8D3F /* main-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 275158F718AD10BA00FD8D3F /* main-logo.png */; };
 		2751590B18AD16F300FD8D3F /* JCRESTClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751590A18AD16F300FD8D3F /* JCRESTClient.m */; };
 		2751590C18AD16F300FD8D3F /* JCRESTClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751590A18AD16F300FD8D3F /* JCRESTClient.m */; };
@@ -399,7 +400,11 @@
 		2710E40B18CE873000152C91 /* Conversation+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Conversation+Custom.m"; sourceTree = "<group>"; };
 		2710E40D18CEC8C300152C91 /* ConversationEntry+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConversationEntry+Custom.h"; sourceTree = "<group>"; };
 		2710E40E18CEC8C300152C91 /* ConversationEntry+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ConversationEntry+Custom.m"; sourceTree = "<group>"; };
+		2712676C196D988A001D9A0F /* Lines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lines.h; sourceTree = "<group>"; };
+		2712676D196D988A001D9A0F /* Lines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lines.m; sourceTree = "<group>"; };
 		271EBDAE1910525E00421BA9 /* GTalkNotify.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = GTalkNotify.aiff; sourceTree = "<group>"; };
+		2723A290196C61790053D8AB /* Voicemail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Voicemail.h; sourceTree = "<group>"; };
+		2723A291196C61790053D8AB /* Voicemail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Voicemail.m; sourceTree = "<group>"; };
 		272580EF192120500027887C /* people-start-conv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "people-start-conv.png"; sourceTree = "<group>"; };
 		272B61DB18B2A4DD00EB8ED5 /* TRVSMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRVSMonitor.h; sourceTree = "<group>"; };
 		272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRVSMonitor.m; sourceTree = "<group>"; };
@@ -429,8 +434,6 @@
 		274543FC1965C29F007AF259 /* Mailbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mailbox.m; sourceTree = "<group>"; };
 		274543FE1965C2A0007AF259 /* PBX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBX.h; sourceTree = "<group>"; };
 		274543FF1965C2A0007AF259 /* PBX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBX.m; sourceTree = "<group>"; };
-		274544011965C2A0007AF259 /* Voicemail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Voicemail.h; sourceTree = "<group>"; };
-		274544021965C2A0007AF259 /* Voicemail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Voicemail.m; sourceTree = "<group>"; };
 		275158F718AD10BA00FD8D3F /* main-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "main-logo.png"; sourceTree = "<group>"; };
 		2751590218AD10E500FD8D3F /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		2751590918AD16F300FD8D3F /* JCRESTClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCRESTClient.h; sourceTree = "<group>"; };
@@ -1046,6 +1049,8 @@
 		270152C71901D77A00F271CE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				2712676C196D988A001D9A0F /* Lines.h */,
+				2712676D196D988A001D9A0F /* Lines.m */,
 				DDEC37D4191029B800E166CC /* PersonEntities.h */,
 				DDEC37D5191029B800E166CC /* PersonEntities.m */,
 				274493C918D0E98D002744CB /* PersonMeta.h */,
@@ -1061,10 +1066,10 @@
 				919004CF196DA9BB00BEB11C /* Lines.h */,
 				919004D0196DA9BB00BEB11C /* Lines.m */,
 				2751591618AD300B00FD8D3F /* OsgiData.xcdatamodel */,
+				2723A290196C61790053D8AB /* Voicemail.h */,
+				2723A291196C61790053D8AB /* Voicemail.m */,
 				274543FB1965C29F007AF259 /* Mailbox.h */,
 				274543FE1965C2A0007AF259 /* PBX.h */,
-				274544011965C2A0007AF259 /* Voicemail.h */,
-				274544021965C2A0007AF259 /* Voicemail.m */,
 				274543FF1965C2A0007AF259 /* PBX.m */,
 				274543FC1965C29F007AF259 /* Mailbox.m */,
 				DDEC37CE1910126900E166CC /* ConversationEntry.h */,
@@ -2238,7 +2243,7 @@
 				27A01615193514690073C824 /* JCConversationParticipantsTableViewController.m in Sources */,
 				2788F146190EACD20099348D /* ConversationETag.m in Sources */,
 				2700987E18F4714100B6BC2F /* JSMessageSoundEffect.m in Sources */,
-				274544031965C2A0007AF259 /* Voicemail.m in Sources */,
+				2723A292196C61790053D8AB /* Voicemail.m in Sources */,
 				275F4A5E18AD0FBC00D2F069 /* main.m in Sources */,
 				274493CE18D13538002744CB /* Common.m in Sources */,
 				27F1F2D8191C171300AEAFD7 /* UAInboxMessageViewController.m in Sources */,
@@ -2264,7 +2269,7 @@
 				27F1F2D6191C171300AEAFD7 /* UAInboxMessageListCell.m in Sources */,
 				27EA1DFD1900A83D0075CAEE /* JCVoiceTableViewController.m in Sources */,
 				2700987718F4714100B6BC2F /* JSAvatarImageFactory.m in Sources */,
-				919004D1196DA9BB00BEB11C /* Lines.m in Sources */,
+				2712676E196D988A001D9A0F /* Lines.m in Sources */,
 				27F1F2E2191C171300AEAFD7 /* UALocationSettingsViewController.m in Sources */,
 				913786F7194A22E200002DD3 /* LoggerClient.m in Sources */,
 				DD54A05F195CE271001A34F3 /* JCJifClient.m in Sources */,

@@ -88,7 +88,8 @@
     [mailboxes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 
         Mailbox *mailbox = (Mailbox *)obj;
-        NSString* url = [NSString stringWithFormat:@"%@?verify=%@", mailbox.url_self_mailbox, [[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"]];
+        NSArray *urlSlit = [mailbox.url_self_mailbox componentsSeparatedByString:@"mailbox/id/"];
+        NSString* url = [NSString stringWithFormat:@"%@mailbox/id/014575fe-6ef6-953f-b3a4-000100620002", urlSlit[0]];
         
         if ([url rangeOfString:@"api.jive.com"].location != NSNotFound) {
             NSArray *urlSplit = [url componentsSeparatedByString:@".com/"];
@@ -98,7 +99,7 @@
         
         
         [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            [Voicemail addVoicemails:responseObject completed:^(BOOL suceeded) {
+            [Voicemail addVoicemails:responseObject mailboxUrl:mailbox.url_self_mailbox completed:^(BOOL suceeded) {
                 completed(YES, responseObject, operation, nil);
             }];
             

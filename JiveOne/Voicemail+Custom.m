@@ -23,12 +23,12 @@
 }
 
 #pragma mark - CRUD for Voicemail
-+ (void)addVoicemails:(NSDictionary *)responseObject completed:(void (^)(BOOL))completed
++ (void)addVoicemails:(NSDictionary *)responseObject mailboxUrl:(NSString *)mailboxUrl completed:(void (^)(BOOL))completed
 {
     [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
         for (NSDictionary *voicemail in [responseObject objectForKey:@"voicemails"]) {
             if ([voicemail isKindOfClass:[NSDictionary class]]) {
-                [self addVoicemail:voicemail withManagedContext:localContext sender:self];
+                [self addVoicemail:voicemail mailboxUrl:mailboxUrl withManagedContext:localContext sender:self];
             }
         }
     } completion:^(BOOL success, NSError *error) {
@@ -38,9 +38,9 @@
     
 }
 
-+ (Voicemail *)addVoicemailEntry:(NSDictionary*)entry sender:(id)sender
++ (Voicemail *)addVoicemailEntry:(NSDictionary*)entry mailboxUrl:(NSString *)mailboxUrl sender:(id)sender
 {
-    Voicemail *voicemail = [self addVoicemail:entry withManagedContext:nil sender:sender];
+    Voicemail *voicemail = [self addVoicemail:entry mailboxUrl:mailboxUrl withManagedContext:nil sender:sender];
     if (sender != self) {
         [self fetchVoicemailInBackground];
     }
@@ -48,7 +48,7 @@
     return voicemail;
 }
 
-+ (Voicemail *)addVoicemail:(NSDictionary*)dictionary withManagedContext:(NSManagedObjectContext *)context sender:(id)sender
++ (Voicemail *)addVoicemail:(NSDictionary*)dictionary mailboxUrl:(NSString *)mailboxUrl withManagedContext:(NSManagedObjectContext *)context sender:(id)sender
 {
     if (!context) {
         context = [NSManagedObjectContext MR_contextForCurrentThread];
@@ -97,6 +97,7 @@
         vmail.url_download = [dictionary[@"urls"] objectForKey:@"self_download"];
         vmail.url_changeStatus = [dictionary[@"urls"] objectForKey:@"self_changeStatus"];
         vmail.deleted = [NSNumber numberWithBool:NO];
+        vmail.url_mailbox = mailboxUrl;
         
         //get all voicemail messages through a queue
         dispatch_async(dispatch_get_main_queue(), ^{

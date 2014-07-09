@@ -8,6 +8,9 @@
 
 #import "JCVoiceCell.h"
 #import "Common.h"
+#import "PBX+Custom.h"
+#import "Mailbox+Custom.h"
+#import "Common.h"
 
 @implementation JCVoiceCell
 
@@ -30,6 +33,26 @@
     }
     else {
         self.titleLabel.text = voicemail.callerId;
+        NSString *detailText = voicemail.callerIdNumber;
+        
+        Mailbox *mailbox = [Mailbox MR_findFirstByAttribute:@"url_self_mailbox" withValue:self.voicemail.url_mailbox];
+        if (mailbox) {
+            PBX *pbx = [PBX MR_findFirstByAttribute:@"selfUrl" withValue:mailbox.url_pbx];
+            if (pbx) {
+                if ([Common stringIsNilOrEmpty:pbx.name]) {
+                    detailText = [NSString stringWithFormat:@"%@ on %@", mailbox.extensionNumber, pbx.name];
+                }
+                else {
+                    detailText = [NSString stringWithFormat:@"%@", mailbox.extensionNumber];
+                }
+            }
+            else {
+                detailText = [NSString stringWithFormat:@"%@", mailbox.extensionNumber];
+            }
+        }
+        
+        
+        self.detailLabel.text = detailText;
     }
     
     [self doubleCheckNamesAndNumbers];
