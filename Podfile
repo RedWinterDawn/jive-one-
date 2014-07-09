@@ -15,5 +15,5 @@ pod 'JazzHands', '~> 0.1'
 pod 'tuneup_js'
 pod 'ELFixSecureTextFieldFont', :git => 'https://github.com/elegion/ELFixSecureTextFieldFont.git'
 target :JiveOneTests, :exclusive => true do
-   pod 'Kiwi/XCTest'
+   pod 'Kiwi', '~> 2.3'
 end
