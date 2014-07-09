@@ -406,18 +406,18 @@
             <objects>
                 <tableViewController id="PiD-ab-JdW" customClass="JCDirectoryDetailViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" sectionIndexMinimumDisplayRowCount="2" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="bSS-b5-Dcv">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <color key="separatorColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <color key="sectionIndexColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <imageView key="tableHeaderView" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar.png" id="4jI-E9-cvD">
-                            <rect key="frame" x="0.0" y="64" width="320" height="170"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="170"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ChangeMeIfNeeded" id="abC-vf-C8e" customClass="JCDirDetailCell">
-                                <rect key="frame" x="0.0" y="289" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="225" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="abC-vf-C8e" id="Cbb-Rt-b5r">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -425,7 +425,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DirectoryDetailChatCell" textLabel="Opf-zp-s5x" detailTextLabel="xk7-98-RAj" style="IBUITableViewCellStyleSubtitle" id="lRe-Gi-WOc">
-                                <rect key="frame" x="0.0" y="333" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="269" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lRe-Gi-WOc" id="zY2-Ui-cfZ">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -457,7 +457,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DirectoryDetailMobileCell" textLabel="dcl-1h-hQe" detailTextLabel="O7A-VN-CSM" style="IBUITableViewCellStyleSubtitle" id="ZOF-Gi-SFz">
-                                <rect key="frame" x="0.0" y="377" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="313" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZOF-Gi-SFz" id="nzZ-Ut-sSQ">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -481,7 +481,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DirectoryDetailEmailCell" textLabel="B2B-7m-dHw" detailTextLabel="ygm-Db-m7z" style="IBUITableViewCellStyleSubtitle" id="lEo-32-n9a">
-                                <rect key="frame" x="0.0" y="421" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="357" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lEo-32-n9a" id="v8j-NW-AxL">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -544,7 +544,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" id="mbq-mY-MdJ">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" id="mbq-mY-MdJ">
                                 <rect key="frame" x="0.0" y="-25" width="320" height="568"/>
                                 <color key="backgroundColor" red="0.89752072699999996" green="0.89752072699999996" blue="0.89752072699999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -552,7 +552,7 @@
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="changeMe" rowHeight="70" id="tbc-wU-e7l" customClass="JCPersonCell">
                                         <rect key="frame" x="0.0" y="86" width="320" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tbc-wU-e7l" id="fLk-nc-yLQ">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" tableViewCell="tbc-wU-e7l" id="fLk-nc-yLQ">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
@@ -574,7 +574,6 @@
                     <connections>
                         <outlet property="searchDisplayController" destination="DBo-Lk-QsT" id="tws-pf-7QF"/>
                         <outlet property="tableView" destination="mbq-mY-MdJ" id="hv1-OR-HQw"/>
-                        <segue destination="PiD-ab-JdW" kind="push" identifier="directoryDetailView" id="wrS-Xm-g1u"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U3j-C6-zfv" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -12,7 +12,9 @@
 #import "Common.h"
 
 //NSString *const kCustomCellPersonPresenceTypeKeyPath = @"entityPresence";
-
+@interface JCPersonCell ()
+@property (nonatomic) NSManagedObjectContext* managedContext;
+@end
 @implementation JCPersonCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -26,6 +28,35 @@
     return self;
 }
 
+- (NSManagedObjectContext*)managedContext
+{
+    if (!_managedContext) {
+        _managedContext = [NSManagedObjectContext MR_contextForCurrentThread];
+    }
+    return _managedContext;
+}
+
+- (void)awakeFromNib
+{
+    // Initialization code
+    [self bringSubviewToFront:self.favoriteBut];
+}
+
+- (void)configureFavoriteStatus
+{
+    UIColor *StarColor;
+    
+    if (self.person.isFavorite || self.line.isFavorite) {
+        StarColor = [UIColor colorWithRed:255.0/255.0 green:212.0/255.0 blue:0.0/255.0 alpha:1.0];
+    }else
+    {
+        StarColor = [UIColor colorWithRed:208.0/255.0 green:208.0/255.0 blue:208.0/255.0 alpha:1.0];
+    }
+    
+    NSMutableAttributedString *attributedStarSelectedState = [[NSMutableAttributedString alloc]initWithString:@"★" attributes:@{NSForegroundColorAttributeName : StarColor, NSFontAttributeName:[UIFont systemFontOfSize:22.0f]}];
+    
+    [self.favoriteBut setAttributedTitle:attributedStarSelectedState forState:UIControlStateNormal];
+}
 
 - (void)setPerson:(PersonEntities *)person
 {
@@ -33,7 +64,9 @@
     if ([person isKindOfClass:[PersonEntities class]]) {
         _person = person;
                 
+        [self.personNameLabel setNumberOfLines:0];
         self.personNameLabel.text = person.firstLastName;
+        [self.personNameLabel sizeToFit];
         self.personDetailLabel.text = person.email;
         self.personPresenceView.presenceType = (JCPresenceType)[_person.entityPresence.interactions[@"chat"][@"code"] integerValue];
         
@@ -47,7 +80,10 @@
     {
         Lines *line = (Lines *)person;
         _line = line;
+        [self.personNameLabel setNumberOfLines:0];
         self.personNameLabel.text = line.displayName;
+        [self.personNameLabel sizeToFit];
+        [self configureFavoriteStatus];
         self.personDetailLabel.text = line.externsionNumber;
         self.personPresenceView.presenceType = (JCPresenceType) [line.state integerValue]; //JCPresenceTypeAvailable;// (JCPresenceType)[_person.entityPresence.interactions[@"chat"][@"code"] integerValue];
         
@@ -174,6 +210,35 @@
       cachedPresenceImages = [NSMutableDictionary new];
   });
   return cachedPresenceImages;
+}
+
+- (IBAction)toggleFavoriteStatus:(id)sender {
+    
+    self.line.isFavorite = @(!self.line.isFavorite.boolValue);
+    
+    //if (_managedContext) {
+        [_managedContext MR_saveToPersistentStoreAndWait];
+    //}
+    
+    [self updateFavoriteIcon:self];
+}
+
+- (void) updateFavoriteIcon:(JCPersonCell *)cell
+{
+    UIColor *StarColor;
+    
+    if (self.line.isFavorite.boolValue == YES) {
+        StarColor = [UIColor colorWithRed:255.0/255.0 green:212.0/255.0 blue:0.0/255.0 alpha:1.0];
+        
+    }else
+    {
+        StarColor = [UIColor colorWithRed:208.0/255.0 green:208.0/255.0 blue:208.0/255.0 alpha:1.0];
+    }
+    
+    NSMutableAttributedString *attributedStarSelectedState = [[NSMutableAttributedString alloc]initWithString:@"★" attributes:@{NSForegroundColorAttributeName : StarColor}];
+    [self.favoriteBut setAttributedTitle:attributedStarSelectedState forState:UIControlStateNormal];
+    
+//    self.favoriteBut.hidden = YES;
 }
 
 

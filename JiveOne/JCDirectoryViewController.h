@@ -10,6 +10,8 @@
 #import <AddressBookUI/AddressBookUI.h>
 #import <AddressBook/AddressBook.h>
 #import "JCSearchBar.h"
+#import "JCPersonCell.h"
+
 
 @class JCPeopleSearchViewController;
 @protocol PeopleSearchDelegate <NSObject>
@@ -19,13 +21,11 @@
 
 @end
 
-@interface JCDirectoryViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ABPeoplePickerNavigationControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate>
+@interface JCDirectoryViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, ABPeoplePickerNavigationControllerDelegate, UISearchBarDelegate, UISearchDisplayDelegate, JCPersonCellDelegate>
 {
     NSMutableArray *localContacts;
     NSArray *sections;
 }
-
-- (IBAction)refreshDirectory:(id)sender;
 
 @property (nonatomic, assign) id<PeopleSearchDelegate> delegate;
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
@@ -33,6 +33,7 @@
 @property (nonatomic, strong) NSMutableArray *clientEntitiesSearchArray;
 @property (nonatomic, strong) IBOutlet UISegmentedControl *segControl;
 
+- (IBAction)refreshDirectory:(id)sender;
 - (IBAction)segmentChanged:sender ;
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope;
 - (IBAction)searchPeople:(id)sender;

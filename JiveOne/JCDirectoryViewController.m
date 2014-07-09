@@ -11,7 +11,6 @@
 #import "PersonMeta.h"
 #import "JCRESTClient.h"
 #import "JCDirectoryDetailViewController.h"
-#import "JCPersonCell.h"
 #import "JCDirectoryGroupViewController.h"
 #import "ContactGroup.h"
 #import "NotificationView.h"
@@ -599,7 +598,8 @@ static NSString *CellIdentifier = @"DirectoryCell";
     if (line) {
     
         cell.person = line;
-        
+        [cell.personNameLabel sizeToFit];
+        [cell.personNameLabel setNumberOfLines:1];
         //check to see if the person is a favorite
 //        if ([person.isFavorite boolValue]) {
 //            
@@ -614,6 +614,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
 //            cell.personNameLabel.attributedText = personAttributedName;
 //        }
     }
+    ((JCPersonCell *)cell).delegate = self;
 
     return cell;
  
@@ -859,7 +860,6 @@ shouldReloadTableForSearchString:(NSString *)searchString
         }
     }
 }
-
 
 @end
 

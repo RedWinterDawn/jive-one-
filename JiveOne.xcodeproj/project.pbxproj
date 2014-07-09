@@ -126,7 +126,6 @@
 		275F4A7918AD0FBC00D2F069 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275F4A5518AD0FBC00D2F069 /* UIKit.framework */; };
 		275F4A8118AD0FBC00D2F069 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 275F4A7F18AD0FBC00D2F069 /* InfoPlist.strings */; };
 		275F4A8318AD0FBC00D2F069 /* UTJiveOneTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 275F4A8218AD0FBC00D2F069 /* UTJiveOneTests.m */; };
-		276041A1196B0331003B450C /* Lines.m in Sources */ = {isa = PBXBuildFile; fileRef = 276041A0196B0331003B450C /* Lines.m */; };
 		2762151E1912AA2500CFBCC8 /* NSDictionary+QueryString.m in Sources */ = {isa = PBXBuildFile; fileRef = 2762151D1912AA2500CFBCC8 /* NSDictionary+QueryString.m */; };
 		276215211912AA7400CFBCC8 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 276215201912AA7400CFBCC8 /* NSString+URLEncoding.m */; };
 		2762C45818B4177D00885918 /* JCOmniPresence.m in Sources */ = {isa = PBXBuildFile; fileRef = 2762C45718B4177D00885918 /* JCOmniPresence.m */; };
@@ -245,6 +244,7 @@
 		9172AD5C19192A1500481B01 /* UserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9172AD5B19192A1500481B01 /* UserDefaults.plist */; };
 		91743AA0191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91743A9F191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m */; };
 		91869D871959E5CF007743CE /* JCTOSButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91869D861959E5CF007743CE /* JCTOSButtonView.m */; };
+		919004D1196DA9BB00BEB11C /* Lines.m in Sources */ = {isa = PBXBuildFile; fileRef = 919004D0196DA9BB00BEB11C /* Lines.m */; };
 		91915732195A2DC0004BDE26 /* JCLeaveFeedbackButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 91915731195A2DC0004BDE26 /* JCLeaveFeedbackButton.m */; };
 		91915735195A30F6004BDE26 /* JCLogOutButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 91915734195A30F6004BDE26 /* JCLogOutButton.m */; };
 		91915738195B209D004BDE26 /* JCAppIntro.m in Sources */ = {isa = PBXBuildFile; fileRef = 91915737195B209D004BDE26 /* JCAppIntro.m */; };
@@ -462,8 +462,6 @@
 		275F4A7E18AD0FBC00D2F069 /* JiveOneTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "JiveOneTests-Info.plist"; sourceTree = "<group>"; };
 		275F4A8018AD0FBC00D2F069 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		275F4A8218AD0FBC00D2F069 /* UTJiveOneTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UTJiveOneTests.m; sourceTree = "<group>"; };
-		2760419F196B0331003B450C /* Lines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lines.h; sourceTree = "<group>"; };
-		276041A0196B0331003B450C /* Lines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lines.m; sourceTree = "<group>"; };
 		2762151C1912AA2500CFBCC8 /* NSDictionary+QueryString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+QueryString.h"; sourceTree = "<group>"; };
 		2762151D1912AA2500CFBCC8 /* NSDictionary+QueryString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+QueryString.m"; sourceTree = "<group>"; };
 		2762151F1912AA7400CFBCC8 /* NSString+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncoding.h"; sourceTree = "<group>"; };
@@ -727,6 +725,8 @@
 		91743A9E191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTermsAndConditonsVCViewController.h; sourceTree = "<group>"; };
 		91743A9F191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTermsAndConditonsVCViewController.m; sourceTree = "<group>"; };
 		91869D861959E5CF007743CE /* JCTOSButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTOSButtonView.m; sourceTree = SOURCE_ROOT; };
+		919004CF196DA9BB00BEB11C /* Lines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lines.h; sourceTree = "<group>"; };
+		919004D0196DA9BB00BEB11C /* Lines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lines.m; sourceTree = "<group>"; };
 		91915731195A2DC0004BDE26 /* JCLeaveFeedbackButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JCLeaveFeedbackButton.m; path = JiveOne/JCLeaveFeedbackButton.m; sourceTree = SOURCE_ROOT; };
 		91915734195A30F6004BDE26 /* JCLogOutButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCLogOutButton.m; sourceTree = SOURCE_ROOT; };
 		91915736195B209D004BDE26 /* JCAppIntro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAppIntro.h; sourceTree = "<group>"; };
@@ -1058,9 +1058,9 @@
 				274493C718D0E98D002744CB /* Conversation.m */,
 				279975F0195B1BCD001425CC /* Membership.h */,
 				279975F1195B1BCD001425CC /* Membership.m */,
+				919004CF196DA9BB00BEB11C /* Lines.h */,
+				919004D0196DA9BB00BEB11C /* Lines.m */,
 				2751591618AD300B00FD8D3F /* OsgiData.xcdatamodel */,
-				2760419F196B0331003B450C /* Lines.h */,
-				276041A0196B0331003B450C /* Lines.m */,
 				274543FB1965C29F007AF259 /* Mailbox.h */,
 				274543FE1965C2A0007AF259 /* PBX.h */,
 				274544011965C2A0007AF259 /* Voicemail.h */,
@@ -2264,7 +2264,7 @@
 				27F1F2D6191C171300AEAFD7 /* UAInboxMessageListCell.m in Sources */,
 				27EA1DFD1900A83D0075CAEE /* JCVoiceTableViewController.m in Sources */,
 				2700987718F4714100B6BC2F /* JSAvatarImageFactory.m in Sources */,
-				276041A1196B0331003B450C /* Lines.m in Sources */,
+				919004D1196DA9BB00BEB11C /* Lines.m in Sources */,
 				27F1F2E2191C171300AEAFD7 /* UALocationSettingsViewController.m in Sources */,
 				913786F7194A22E200002DD3 /* LoggerClient.m in Sources */,
 				DD54A05F195CE271001A34F3 /* JCJifClient.m in Sources */,

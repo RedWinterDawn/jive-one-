@@ -9,10 +9,21 @@
 #import <UIKit/UIKit.h>
 #import "JCPresenceView.h"
 #import "Lines+Custom.h"
+
+@class JCPersonCell;
+
+@protocol JCPersonCellDelegate <NSObject>
+-(void)toggleFavoriteStatus:(JCPersonCell *)cell;
+@end
+
 @interface JCPersonCell : UITableViewCell
+
+@property (weak,nonatomic) id<JCPersonCellDelegate> delegate;
+
 
 @property (weak, nonatomic) IBOutlet UILabel *personNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *personDetailLabel;
+@property (strong, nonatomic) IBOutlet UIButton *favoriteBut;
 @property (weak, nonatomic) IBOutlet UIImageView *personPicture;
 @property (weak, nonatomic) IBOutlet JCPresenceView *personPresenceView;
 @property (nonatomic) PersonEntities *person;
