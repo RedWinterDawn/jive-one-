@@ -20,7 +20,8 @@
 #import "Common.h"
 #import "UIImage+ImageEffects.h"
 #import "JCAppDelegate.h"
-#import "JCStyleKit.h"
+#import "Lines+Custom.h"
+//#import "JCStyleKit.h"
 
 @interface JCAccountViewController () <MFMailComposeViewControllerDelegate>
 {
@@ -30,6 +31,9 @@
 }
 
 @property (nonatomic, strong) UIActionSheet *actionSheet;
+@property (nonatomic, strong) Lines *selectedLine;
+@property (weak, nonatomic) IBOutlet UILabel *selectedLineLabel;
+@property (nonatomic, strong) NSManagedObjectContext *managedContext;
 
 @end
 
@@ -53,6 +57,8 @@
             [self retrieveCompany:me.resourceGroupName];
         }
     }
+	
+	_managedContext = [NSManagedObjectContext MR_contextForCurrentThread];
     
     [self loadViews];
     if(![[NSUserDefaults standardUserDefaults] objectForKey:UDdeviceToken]){
@@ -71,8 +77,16 @@
 {
 //    self.userNameDetail.text = me.firstLastName;
     NSString * jiveId = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
-
     self.userNameDetail.text = jiveId;
+	
+	_selectedLine = [Lines MR_findFirstByAttribute:@"inUse" withValue:[NSNumber numberWithBool:YES] inContext:self.managedContext];
+	if (_selectedLine) {
+		self.selectedLineLabel.text = self.selectedLine.externsionNumber;
+	}
+	else {
+		self.selectedLineLabel.text = @"No line selected";
+	}
+	
 
 //    self.userMoodDetail.text = @"I'm not in the mood today";
 //    self.userTitleDetail.text = @"Developer of Awesome";
@@ -172,6 +186,12 @@
     [self presenceTypeChanged:presenceType];
 }
 
+#pragma makr - Line Selector Delegate
+- (void)didChangeLine:(Lines *)selectedLine
+{
+	[self selectedLineChanged:selectedLine];
+}
+
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -216,14 +236,14 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-//    if(indexPath.section == 1){
-//        
-//        UIView *view = ((JCAppDelegate *)[UIApplication sharedApplication].delegate).window;
-//        UIImage *underlyingView = [Common imageFromView:view];
-//        underlyingView = [underlyingView applyBlurWithRadius:5 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] saturationDeltaFactor:1.3 maskImage:nil];
-//        [self performSegueWithIdentifier:@"PresenceSegue" sender:underlyingView];
-//        
-//    }
+    if(indexPath.section == 1 && indexPath.row == 2) {
+        
+        UIView *view = ((JCAppDelegate *)[UIApplication sharedApplication].delegate).window;
+        UIImage *underlyingView = [Common imageFromView:view];
+        underlyingView = [underlyingView applyBlurWithRadius:5 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] saturationDeltaFactor:1.3 maskImage:nil];
+        [self performSegueWithIdentifier:@"PresenceSegue" sender:underlyingView];
+        
+    }
 //    else
 
         //Eula or leave feedback
@@ -244,7 +264,7 @@
         }
         else if ([cell.reuseIdentifier isEqualToString:@"LogOut"])
         {
-        [self logoutButtonPress];
+			[self logoutButtonPress];
         }
 }
 
@@ -297,6 +317,28 @@
 }
 
 #pragma mark - UIActionSheet Delegate
+- (void)selectedLineChanged:(Lines *)line
+{
+	line = [Lines MR_findFirstByAttribute:@"lineId" withValue:line.lineId inContext:self.managedContext];
+	
+	Lines *previousLine;
+	if (_selectedLine) {
+		previousLine = self.selectedLine;
+	}
+	_selectedLine = line;
+	
+	self.selectedLineLabel.text = self.selectedLine.externsionNumber;
+	
+	line.inUse = [NSNumber numberWithBool:YES];
+	if (previousLine) {
+		previousLine.inUse = [NSNumber numberWithBool:NO];
+	}
+	
+	[self.managedContext MR_saveToPersistentStoreAndWait];
+
+}
+
+
 - (void) presenceTypeChanged:(JCPresenceType)type
 {
     NSString *state;

@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "JCPresenceViewController.h"
 #import "JCPresenceView.h"
+#import "JCLineSelectorViewController.h"
 
-@interface JCAccountViewController : UITableViewController <UIActionSheetDelegate, JCPresenceDelegate>
+@interface JCAccountViewController : UITableViewController <UIActionSheetDelegate, JCPresenceDelegate, JCLineSelectorDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *userNameDetail;
 @property (weak, nonatomic) IBOutlet UILabel *userTitleDetail;
