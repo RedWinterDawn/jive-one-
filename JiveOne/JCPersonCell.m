@@ -56,9 +56,26 @@
             self.personNameLabel.text = line.displayName;
             [self.personNameLabel sizeToFit];
             [self configureFavoriteStatus];
-            self.personDetailLabel.text = line.externsionNumber;
-            self.personPresenceView.presenceType = (JCPresenceType) [line.state integerValue];
-            [line addObserver:self forKeyPath:kPresenceKeyPathForLineEntity options:NSKeyValueObservingOptionNew context:NULL];
+            NSString * detailText = line.externsionNumber;
+			PBX *pbx = [PBX MR_findFirstByAttribute:@"pbxId" withValue:line.pbxId];
+			if (pbx) {
+				NSString *name = pbx.name;
+				if (![Common stringIsNilOrEmpty:name]) {
+					detailText = [NSString stringWithFormat:@"%@ on %@", line.externsionNumber, name];
+				}
+				else {
+					detailText = [NSString stringWithFormat:@"%@", line.externsionNumber];
+				}
+			}
+			else {
+				detailText = [NSString stringWithFormat:@"%@", line.externsionNumber];
+			}		
+			self.personDetailLabel.text = detailText;
+			
+			
+			self.personPresenceView.presenceType = (JCPresenceType) [line.state integerValue];
+			[line addObserver:self forKeyPath:kPresenceKeyPathForLineEntity options:NSKeyValueObservingOptionNew context:NULL];
+			
         }
     
 }
@@ -78,45 +95,6 @@
         [self.favoriteBut setSelected:YES];
     }else{
         [self.favoriteBut setSelected:NO];
-    }
-    else if ([person isKindOfClass:[Lines class]])
-    {
-        Lines *line = (Lines *)person;
-        _line = line;
-        [self.personNameLabel setNumberOfLines:0];
-        self.personNameLabel.text = line.displayName;
-        [self.personNameLabel sizeToFit];
-        //[self configureFavoriteStatus];
-		
-		NSString * detailText = line.externsionNumber;
-		PBX *pbx = [PBX MR_findFirstByAttribute:@"pbxId" withValue:line.pbxId];
-		if (pbx) {
-			NSString *name = pbx.name;
-			if (![Common stringIsNilOrEmpty:name]) {
-				detailText = [NSString stringWithFormat:@"%@ on %@", line.externsionNumber, name];
-			}
-			else {
-				detailText = [NSString stringWithFormat:@"%@", line.externsionNumber];
-			}
-		}
-		else {
-			detailText = [NSString stringWithFormat:@"%@", line.externsionNumber];
-		}
-        
-        
-        self.personDetailLabel.text = detailText;
-		
-		
-        self.personPresenceView.presenceType = (JCPresenceType) [line.state integerValue]; //JCPresenceTypeAvailable;// (JCPresenceType)[_person.entityPresence.interactions[@"chat"][@"code"] integerValue];
-        
-        // Set person's image based on whether they actually have one or not
-        //[self setPersonImage];
-        //[self.personPicture setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];
-        
-		[self updateFavoriteIcon:self];
-        [line addObserver:self forKeyPath:kPresenceKeyPathForLineEntity options:NSKeyValueObservingOptionNew context:NULL];
-
-        
     }
 }
 
@@ -197,12 +175,12 @@
     }
     NSLog(@"self.line.isFavorite:%@",self.line.isFavorite);
     
-    [self groupRelationshipStuff];
+    [self createGroupRelationship];
     [_managedContext MR_saveToPersistentStoreAndWait];
     [self updateTableViewCell:self];
 }
 
-- (void)groupRelationshipStuff
+- (void)createGroupRelationship
 {
 	ContactGroup *group = [ContactGroup MR_findFirstByAttribute:@"groupName" withValue:@"Favorites"];
 	if (!group) {
