@@ -2,7 +2,7 @@
 //  Lines.m
 //  JiveOne
 //
-//  Created by Doug on 7/9/14.
+//  Created by Eduardo Gueiros on 7/10/14.
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
@@ -14,11 +14,12 @@
 @dynamic displayName;
 @dynamic externsionNumber;
 @dynamic groups;
+@dynamic isFavorite;
 @dynamic jrn;
 @dynamic lineId;
 @dynamic pbxId;
 @dynamic state;
 @dynamic userName;
-@dynamic isFavorite;
+@dynamic inUse;
 
 @end
