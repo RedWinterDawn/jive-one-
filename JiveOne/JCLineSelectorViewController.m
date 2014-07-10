@@ -7,31 +7,62 @@
 //
 
 #import "JCLineSelectorViewController.h"
+#import "JCTableViewCellWithInset.h"
 
 @interface JCLineSelectorViewController ()
+
+@property (strong, nonatomic) NSArray *pbxList;
+@property (strong, nonatomic) NSArray *lineList;
 
 @end
 
 @implementation JCLineSelectorViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (void)setBackgroundImage:(UIImage *)backgroundImage
 {
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+    _bluredBackgroundImage = backgroundImage;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	
+	[self setupView];
+	[self loadLists];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [UIView animateWithDuration:0.5 animations:^{
+            [self.tableView setContentInset:UIEdgeInsetsMake(240, 0, 0, 0)];
+        } completion:^(BOOL finished) {
+            //completed.
+        }];
+    });
+}
+
+- (void)setupView
+{
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self.tableView setSeparatorInset:UIEdgeInsetsZero];
+    [self.tableView setContentInset:UIEdgeInsetsMake(self.view.frame.size.height, 0, 0, 0)];
+    
+    
+    self.view.backgroundColor = [UIColor clearColor];
+    UIImageView *backView = [[UIImageView alloc] initWithFrame:self.view.frame];
+    backView.image = _bluredBackgroundImage;
+    backView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.6];
+    self.tableView.backgroundView = backView;
+	
+	
+}
+
+- (void)loadLists
+{
+	_pbxList = [PBX MR_findAllSortedBy:@"name" ascending:YES];
+	_lineList = [Lines MR_findByAttribute:@"userName" withValue:@"egueiros"];
+//	for (PBX *pbx in _pbxList) {
+//		NSArray *lines = [Lines MR_findByAttribute:@"pbxId" withValue:pbx.pbxId andOrderBy:@"displayName" ascending:YES];
+//		[_lineList setObject:lines forKey:pbx.name];
+//	}
 }
 
 - (void)didReceiveMemoryWarning
@@ -44,76 +75,96 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 2;
 }
+
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+//	NSString *key = self.lineList.allKeys[section];
+//	return ((NSArray *) self.lineList[key]).count;
+	if (section == 0) {
+		return self.lineList.count;
+	}
+	
+	return 1;
 }
 
-/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    JCTableViewCellWithInset *cell = [tableView dequeueReusableCellWithIdentifier:@"LineCell"];
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        CAShapeLayer *shape = [[CAShapeLayer alloc] init];
+        shape.path = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, cell.bounds.size.width, cell.bounds.size.height) byRoundingCorners:UIRectCornerTopLeft|UIRectCornerTopRight cornerRadii:CGSizeMake(10, 10)].CGPath;
+        cell.layer.mask = shape;
+        cell.layer.masksToBounds = YES;
+    }
+    else if (indexPath.section == 0 && indexPath.row == (self.lineList.count - 1)) {
+        CAShapeLayer *shape = [[CAShapeLayer alloc] init];
+        shape.path = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, cell.bounds.size.width, cell.bounds.size.height) byRoundingCorners:UIRectCornerBottomLeft|UIRectCornerBottomRight cornerRadii:CGSizeMake(10, 10)].CGPath;
+        cell.layer.mask = shape;
+        cell.layer.masksToBounds = YES;
+    }
+    else if (indexPath.section == 1)
+    {
+        cell.layer.cornerRadius = 10;
+        cell.layer.masksToBounds = YES;
+    }
+	
+	if (indexPath.section != 1) {
+		Lines *line = self.lineList[indexPath.row];
+		cell.textLabel.text = [NSString stringWithFormat:@"%@/%@", line.externsionNumber, line.displayName];
+		cell.textLabel.textColor = [UIColor lightGrayColor];
+		cell.detailTextLabel.textColor = [UIColor lightGrayColor];
+	}
+	else {
+		cell.textLabel.text = @"Cancel";
+		cell.textLabel.center = cell.center;
+		cell.backgroundColor = [UIColor whiteColor];
+	}
     
-    // Configure the cell...
-    
+	cell.detailTextLabel.hidden = YES;
     return cell;
+	
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+    NSLog(@"index:section:%ld", (long)indexPath.section);
+    NSLog(@"index:section:%ld", (long)indexPath.row);
+    if (indexPath.section == 0) {
+        [self changeLine:indexPath.row];
+    }
+    if (indexPath.section == 1 && indexPath.row == 0) {
+        [self dismissView];
+    }
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)changeLine:(NSInteger)row
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+	Lines *line = self.lineList[row];
+	
+	if (line &&_delegate && [_delegate respondsToSelector:@selector(didChangeLine:)]) {
+		[_delegate didChangeLine:line];
+	}
+	
+	[self dismissView];
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+- (void)dismissView
 {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [UIView animateWithDuration:0.5 animations:^{
+			
+            [self.tableView setContentInset:UIEdgeInsetsMake(700, 0, -700, 0)];
+            
+        } completion:^(BOOL finished) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }];
+    });
+	
 }
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

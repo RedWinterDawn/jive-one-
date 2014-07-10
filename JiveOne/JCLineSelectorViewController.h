@@ -7,7 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PBX+Custom.h"
+#import "Lines+Custom.h"
+
+@class JCLineSelectorViewController;
+@protocol JCLineSelectorDelegate <NSObject>
+
+- (void)didChangeLine:(Lines *)selectedLine;
+
+@end
 
 @interface JCLineSelectorViewController : UITableViewController
+
+@property (nonatomic, assign) id<JCLineSelectorDelegate> delegate;
+@property (nonatomic, strong) UIImage *bluredBackgroundImage;
 
 @end

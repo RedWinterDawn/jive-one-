@@ -12,6 +12,7 @@
 #import "Common.h"
 #import "LineGroup.h"
 #import "ContactGroup.h"
+#import "PBX+Custom.h"
 
 //NSString *const kCustomCellPersonPresenceTypeKeyPath = @"entityPresence";
 @interface JCPersonCell ()
@@ -77,6 +78,45 @@
         [self.favoriteBut setSelected:YES];
     }else{
         [self.favoriteBut setSelected:NO];
+    }
+    else if ([person isKindOfClass:[Lines class]])
+    {
+        Lines *line = (Lines *)person;
+        _line = line;
+        [self.personNameLabel setNumberOfLines:0];
+        self.personNameLabel.text = line.displayName;
+        [self.personNameLabel sizeToFit];
+        //[self configureFavoriteStatus];
+		
+		NSString * detailText = line.externsionNumber;
+		PBX *pbx = [PBX MR_findFirstByAttribute:@"pbxId" withValue:line.pbxId];
+		if (pbx) {
+			NSString *name = pbx.name;
+			if (![Common stringIsNilOrEmpty:name]) {
+				detailText = [NSString stringWithFormat:@"%@ on %@", line.externsionNumber, name];
+			}
+			else {
+				detailText = [NSString stringWithFormat:@"%@", line.externsionNumber];
+			}
+		}
+		else {
+			detailText = [NSString stringWithFormat:@"%@", line.externsionNumber];
+		}
+        
+        
+        self.personDetailLabel.text = detailText;
+		
+		
+        self.personPresenceView.presenceType = (JCPresenceType) [line.state integerValue]; //JCPresenceTypeAvailable;// (JCPresenceType)[_person.entityPresence.interactions[@"chat"][@"code"] integerValue];
+        
+        // Set person's image based on whether they actually have one or not
+        //[self setPersonImage];
+        //[self.personPicture setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];
+        
+		[self updateFavoriteIcon:self];
+        [line addObserver:self forKeyPath:kPresenceKeyPathForLineEntity options:NSKeyValueObservingOptionNew context:NULL];
+
+        
     }
 }
 

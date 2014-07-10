@@ -40,4 +40,13 @@ static int inset = 8;
     [super setFrame:frame];
 }
 
+- (void)layoutSubviews {
+	[super layoutSubviews];
+	self.textLabel.frame = CGRectMake(0, self.textLabel.frame.origin.y, self.frame.size.width, self.textLabel.frame.size.height);
+    self.detailTextLabel.frame = CGRectMake(0, self.detailTextLabel.frame.origin.y, self.frame.size.width, self.detailTextLabel.frame.size.height);
+
+	self.detailTextLabel.textAlignment = NSTextAlignmentRight;
+	self.textLabel.textAlignment = NSTextAlignmentCenter;
+}
+
 @end
