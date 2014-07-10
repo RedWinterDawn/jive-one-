@@ -31,7 +31,7 @@
                 c_member.membershipId = membershipId;
             }        
             
-            [PBX addPBX:pbx withManagedContext:localContext sender:nil];
+            [PBX addPBX:pbx userName:jiveId withManagedContext:localContext sender:nil];
         }
 
         

@@ -10,7 +10,7 @@
 
 @interface Lines (Custom)
 
-+ (void)addLines:(NSArray *)lines pbxId:(NSString *)pbxId completed:(void (^)(BOOL success))completed;;
-+ (Lines *)addLine:(NSDictionary *)line pbxId:(NSString *)pbxId withManagedContext:(NSManagedObjectContext *)context sender:(id)sender;
++ (void)addLines:(NSArray *)lines pbxId:(NSString *)pbxId userName:(NSString *)userName completed:(void (^)(BOOL success))completed;;
++ (Lines *)addLine:(NSDictionary *)line pbxId:(NSString *)pbxId userName:(NSString *)userName withManagedContext:(NSManagedObjectContext *)context sender:(id)sender;
 
 @end

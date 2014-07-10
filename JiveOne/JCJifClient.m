@@ -84,7 +84,7 @@
     NSString* url = [NSString stringWithFormat:@"user/jiveId/%@", jiveId];
     [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //parse list of mailbox references
-        [PBX addPBXs:responseObject[@"userPbxs"] completed:^(BOOL success) {
+        [PBX addPBXs:responseObject[@"userPbxs"] userName:nil completed:^(BOOL success) {
             completed(YES, responseObject, operation, nil);
         }];
         
@@ -105,7 +105,7 @@
     
     [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //parse list of mailbox references
-        [PBX addPBX:responseObject withManagedContext:nil sender:nil];
+        [PBX addPBX:responseObject userName:nil withManagedContext:nil sender:nil];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         completed(NO, nil, operation, error);

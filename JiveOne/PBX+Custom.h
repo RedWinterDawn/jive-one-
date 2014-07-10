@@ -11,8 +11,8 @@
 
 @interface PBX (Custom)
 
-+ (void)addPBXs:(NSArray *)pbxs completed:(void (^)(BOOL success))completed;;
-+ (PBX *)addPBX:(NSDictionary *)pbx withManagedContext:(NSManagedObjectContext *)context sender:(id)sender;
++ (void)addPBXs:(NSArray *)pbxs userName:(NSString *)userName  completed:(void (^)(BOOL success))completed;;
++ (PBX *)addPBX:(NSDictionary *)pbx userName:(NSString *)userName  withManagedContext:(NSManagedObjectContext *)context sender:(id)sender;
 
 
 @end

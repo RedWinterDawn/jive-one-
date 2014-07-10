@@ -13,19 +13,19 @@
 
 @implementation PBX (Custom)
 
-+ (void)addPBXs:(NSArray *)pbxs completed:(void (^)(BOOL success))completed
++ (void)addPBXs:(NSArray *)pbxs userName:(NSString *)userName completed:(void (^)(BOOL success))completed
 {
     [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
         for (NSDictionary *pbx in pbxs) {
             if ([pbx isKindOfClass:[NSDictionary class]]) {
-                [self addPBX:pbx withManagedContext:localContext sender:self];
+                [self addPBX:pbx userName:userName withManagedContext:localContext sender:self];
             }
         }
     } completion:^(BOOL success, NSError *error) {
         completed(success);
     }];
 }
-+ (PBX *)addPBX:(NSDictionary *)pbx withManagedContext:(NSManagedObjectContext *)context sender:(id)sender
++ (PBX *)addPBX:(NSDictionary *)pbx userName:(NSString *)userName withManagedContext:(NSManagedObjectContext *)context sender:(id)sender
 {
     if (!context) {
         context = [NSManagedObjectContext MR_contextForCurrentThread];
@@ -46,7 +46,7 @@
     else {
         
         c_pbx = [PBX MR_createInContext:context];
-        c_pbx.pbxId = pbx[@"jrn"] ? pbx[@"jrn"] : @"";
+        c_pbx.pbxId = pbx[@"id"] ? pbx[@"id"] : @"";
         c_pbx.name = pbx[@"name"] ? pbx[@"name"] : @"";
         c_pbx.jrn = pbx[@"jrn"] ? pbx[@"jrn"] : @"";
         c_pbx.v5 = pbx[@"v5"] ? [NSNumber numberWithBool:[pbx[@"v5"] boolValue]] : false;
@@ -63,7 +63,7 @@
     NSArray *lines = pbx[@"lines"];
     if (lines && lines.count > 0) {
         for (NSDictionary *line in lines) {
-            [Lines addLine:line pbxId:pbx[@"id"] withManagedContext:context sender:nil];
+            [Lines addLine:line pbxId:c_pbx.pbxId userName:userName withManagedContext:context sender:nil];
         }
     }
     

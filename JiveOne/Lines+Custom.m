@@ -12,12 +12,12 @@
 
 @implementation Lines (Custom)
 
-+ (void)addLines:(NSArray *)lines pbxId:(NSString *)pbxId completed:(void (^)(BOOL success))completed
++ (void)addLines:(NSArray *)lines pbxId:(NSString *)pbxId userName:(NSString *)userName completed:(void (^)(BOOL success))completed
 {
     [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
         for (NSDictionary *line in lines) {
             if ([line isKindOfClass:[NSDictionary class]]) {
-                [self addLine:line pbxId:pbxId withManagedContext:localContext sender:self];
+                [self addLine:line pbxId:pbxId userName:userName withManagedContext:localContext sender:self];
             }
         }
     } completion:^(BOOL success, NSError *error) {
@@ -26,7 +26,7 @@
 }
 
 
-+ (Lines *)addLine:(NSDictionary *)line pbxId:(NSString *)pbxId withManagedContext:(NSManagedObjectContext *)context sender:(id)sender
++ (Lines *)addLine:(NSDictionary *)line pbxId:(NSString *)pbxId userName:(NSString *)userName withManagedContext:(NSManagedObjectContext *)context sender:(id)sender
 {
     if (!context) {
         context = [NSManagedObjectContext MR_contextForCurrentThread];
@@ -53,7 +53,7 @@
         c_line = [Lines MR_createInContext:context];
         c_line.pbxId = pbxId;
         c_line.displayName = line[@"displayName"] ? line[@"displayName"] : line[@"userName"];
-        c_line.userName = line[@"userName"] ? line[@"userName"] : line[@"displayName"];
+        c_line.userName = userName;
         c_line.groups = line[@"groups"];
         c_line.externsionNumber = line[@"extensionNumber"];
         c_line.jrn = lineJrn;
