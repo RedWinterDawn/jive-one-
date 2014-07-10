@@ -112,7 +112,7 @@ int didNotify;
     [self refreshTabBadges:NO];    
     if ([[JCAuthenticationManager sharedInstance] userAuthenticated] && [[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {
         [self.window setRootViewController:self.tabBarViewController];
-        [[JCAuthenticationManager sharedInstance] checkForTokenValidity];
+        //[[JCAuthenticationManager sharedInstance] checkForTokenValidity];
     }
     else {
         //TODO:********
@@ -173,7 +173,7 @@ int didNotify;
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     //[[NotificationView sharedInstance] didChangeConnection:nil];
     if ([[JCAuthenticationManager sharedInstance] userAuthenticated] && [[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {
-        [[JCAuthenticationManager sharedInstance] checkForTokenValidity];
+        //[[JCAuthenticationManager sharedInstance] checkForTokenValidity];
 //        [[JCRESTClient sharedClient] RetrieveEntitiesPresence:^(BOOL updated) {
 //            //do nothing;
 //        } failure:^(NSError *err) {

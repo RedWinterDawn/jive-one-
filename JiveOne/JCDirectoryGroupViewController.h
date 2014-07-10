@@ -20,6 +20,7 @@
 
 //These are for populating the GroupSelectorViewController with people from ClientEntities that you need to select to create a contact group
 @property (nonatomic, weak) NSNumber *contactGroup;
-@property (nonatomic, strong) NSMutableArray *testArray;
+@property (nonatomic, strong) NSMutableArray *groupArray;
+@property (nonatomic, strong) NSMutableArray *pbxArray;
 
 @end

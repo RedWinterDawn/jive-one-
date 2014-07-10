@@ -106,13 +106,14 @@
 {
     [self setRequestAuthHeader];
     
-    Lines *line = [Lines MR_findFirst];
+	NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
+    Lines *line = [Lines MR_findFirstByAttribute:@"userName" withValue:username];
     NSString *url = [NSString stringWithFormat:@"https://api.jive.com/contacts/%@/line/id/%@", line.pbxId, line.lineId];
     
     [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSArray *contactArray = (NSArray *)responseObject;
         if (contactArray) {
-            [Lines addLines:contactArray pbxId:line.pbxId completed:^(BOOL succeeded) {
+            [Lines addLines:contactArray pbxId:line.pbxId userName:nil completed:^(BOOL succeeded) {
                 completed(YES, responseObject, operation, nil);
             }];
         }

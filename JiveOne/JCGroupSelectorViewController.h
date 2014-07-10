@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PersonEntities.h"
 #import "ContactGroup.h"
+#import "PBX+Custom.h"
 
 @interface JCGroupSelectorViewController : UITableViewController <UIAlertViewDelegate>
 
@@ -16,5 +17,6 @@
 @property (nonatomic, strong) NSArray *sections;
 @property (nonatomic, strong) NSMutableArray *contactGroupArray;
 @property (nonatomic, strong) ContactGroup *groupEdit;
+@property (nonatomic, strong) PBX *pbxEdit;
 
 @end

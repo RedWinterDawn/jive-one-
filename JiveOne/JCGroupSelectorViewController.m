@@ -39,6 +39,13 @@
     }
 }
 
+- (void)setPbxEdit:(PBX *)pbxEdit
+{
+	if (_pbxEdit != pbxEdit) {
+        _pbxEdit = pbxEdit;
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -51,8 +58,10 @@
     
     if (_groupEdit) {
         self.title = _groupEdit.groupName;
-        //existingEntities = (NSArray *)_groupEdit.clientEntities;
     }
+	else if (_pbxEdit) {
+		self.title = self.pbxEdit.name;
+	}
 }
 
 - (void)didReceiveMemoryWarning {
@@ -66,12 +75,18 @@
 	NSArray *lineGroups = [LineGroup MR_findByAttribute:@"groupId" withValue:self.groupEdit.groupId];
 	NSMutableArray *lineList = [NSMutableArray array];
 	
-	for (LineGroup *lg in lineGroups) {
-		Lines *line = [Lines MR_findFirstByAttribute:@"jrn" withValue:lg.lineId];
-		if (line) {
-			[lineList addObject:line];
+	if (self.groupEdit) {
+		for (LineGroup *lg in lineGroups) {
+			Lines *line = [Lines MR_findFirstByAttribute:@"jrn" withValue:lg.lineId];
+			if (line) {
+				[lineList addObject:line];
+			}
 		}
 	}
+	else if (self.pbxEdit) {
+		lineList = [NSMutableArray arrayWithArray:[Lines MR_findByAttribute:@"pbxId" withValue:self.pbxEdit.pbxId]];
+	}
+	
 	
     for (NSString *section in self.sections) {
 		
