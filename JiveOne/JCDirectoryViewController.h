@@ -21,7 +21,7 @@
 
 @end
 
-@interface JCDirectoryViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchDisplayDelegate>
+@interface JCDirectoryViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchDisplayDelegate, JCPersonCellDelegate>
 {
     NSMutableArray *localContacts;
     NSArray *sections;

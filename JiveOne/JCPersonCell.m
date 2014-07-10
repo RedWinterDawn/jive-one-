@@ -139,6 +139,11 @@
     return cachedPresenceImages;
 }
 
+-(void)updateTableViewCell:(JCPersonCell*)cell
+{
+    [self.delegate updateTableViewCell:cell];
+}
+
 - (IBAction)toggleFavoriteStatus:(id)sender {
     
 	_managedContext = [self managedContext];
@@ -154,6 +159,7 @@
     
     [self groupRelationshipStuff];
     [_managedContext MR_saveToPersistentStoreAndWait];
+    [self updateTableViewCell:self];
 }
 
 - (void)groupRelationshipStuff

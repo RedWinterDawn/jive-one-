@@ -347,27 +347,61 @@ static NSString *CellIdentifier = @"DirectoryCell";
         return string;
 }
 
+-(void)updateTableViewCell:(JCPersonCell*)cell{
+    NSArray* clientArrayCopy = [self.clientEntitiesArray copy];
+    for (NSMutableArray *sortedArr in clientArrayCopy) {
+        if ([clientArrayCopy[0] isEqual:sortedArr]) {
+            continue;
+        }
+        for (Lines *line in sortedArr) {
+            if ([line.displayName isEqualToString:cell.personNameLabel.text]) {
+                //assuming this is set here
+                [self.tableView beginUpdates];
+                if ([self.clientEntitiesArray[0] indexOfObject:line] == NSNotFound){// change from isFavorite = NO to isFavorite = YES
+                    [self.clientEntitiesArray[0] addObject:line];
+                    NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:([self.clientEntitiesArray[0] count] -1) inSection:0];
+                    NSLog(@"new %lu,%lu",(unsigned long)0, (unsigned long)([self.clientEntitiesArray[0] count] -1));
+                    [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+
+                }else{ // change from isFavorite = YES to isFavorite = NO
+                    NSIndexPath *oldIndexPath = [NSIndexPath indexPathForRow:[self.clientEntitiesArray[0] indexOfObject:line] inSection:0];
+                    NSLog(@"old %lu,%lu",(unsigned long)0, (unsigned long)([self.clientEntitiesArray[0] count] -1));
+                    NSLog(@"favorite:%@", line.isFavorite);
+                    
+                    [self.clientEntitiesArray[0] removeObject:line];
+                    [self.tableView deleteRowsAtIndexPaths:@[oldIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+                }
+                [self.tableView endUpdates];
+            }
+        }
+    }
+}
+
 - (void)loadCompanyDirectory {
-    
     [self.clientEntitiesArray removeAllObjects];
     BOOL noData = YES;
     
     for (int i = 0; i < sections.count; i++) {
         NSString *section = sections[i];
         NSArray *sectionArray = nil;
+        if (i == 0) {
+            // handle favorites
+            NSPredicate *favoritePredicate = [NSPredicate predicateWithFormat:@"isFavorite == %@", [NSNumber numberWithBool:YES]];
+            sectionArray = [Lines MR_findAllWithPredicate:favoritePredicate];
+        }else{
         // retrieve entities where first name starts with letter of alphabet
         NSPredicate *pred = [NSPredicate predicateWithFormat:@"(displayName BEGINSWITH[c] %@)", section];
         sectionArray = [Lines MR_findAllWithPredicate:pred];
+        }
         
 
         // sort array with bases on firstLastName property
         NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"displayName" ascending:YES];
-        NSArray *sortedArray= [sectionArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]];
-
+        NSMutableArray *sortedArray= [[NSMutableArray alloc]initWithArray:[sectionArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]]];
+        
         if (noData) {
             noData = sortedArray.count == 0;
         }
-        
         [self.clientEntitiesArray addObject:sortedArray];
     
     }
@@ -448,10 +482,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
     if (tableView == self.searchDisplayController.searchResultsTableView) {
         return @"Search Results";
     }else{
-//        if(section==0){
-//            
-//            return self.star;
-//        }
+
         return [sections objectAtIndex:section];
     }
 }
@@ -500,21 +531,8 @@ static NSString *CellIdentifier = @"DirectoryCell";
         cell.person = line;
         [cell.personNameLabel sizeToFit];
         [cell.personNameLabel setNumberOfLines:1];
-        //check to see if the person is a favorite
-//        if ([person.isFavorite boolValue]) {
-//            
-//            
-//            NSMutableString *name = [[NSMutableString alloc]initWithString: cell.personNameLabel.text];
-//            NSString *nameAndStarAsAnNSString = [NSString stringWithString:[name stringByAppendingString:[NSString stringWithFormat:@" %@",self.star]]];
-//            
-//            NSRange starLocation = [nameAndStarAsAnNSString rangeOfString:self.star];
-//            NSMutableAttributedString *personAttributedName = [[NSMutableAttributedString alloc]initWithString:nameAndStarAsAnNSString];
-//            [personAttributedName setAttributes:@{NSForegroundColorAttributeName : self.theRightShadeOfYellowForOurStar} range:starLocation];
-//            cell.personNameLabel.font = self.icomoonFont;
-//            cell.personNameLabel.attributedText = personAttributedName;
-//        }
+        ((JCPersonCell *)cell).delegate = self;
     }
-    ((JCPersonCell *)cell).delegate = self;
 
     return cell;
  

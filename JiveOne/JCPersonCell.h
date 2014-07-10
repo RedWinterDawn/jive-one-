@@ -13,7 +13,7 @@
 @class JCPersonCell;
 
 @protocol JCPersonCellDelegate <NSObject>
--(void)toggleFavoriteStatus:(JCPersonCell *)cell;
+-(void)updateTableViewCell:(JCPersonCell*)cell;
 @end
 
 @interface JCPersonCell : UITableViewCell
