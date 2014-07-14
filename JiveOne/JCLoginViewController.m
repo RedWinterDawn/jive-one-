@@ -23,6 +23,8 @@
 #import "Mailbox+Custom.h"
 #import "UIImage+ImageEffects.h"
 #import "UITextField+ELFixSecureTextFieldFont.h"
+#import "Lines+Custom.h"
+#import "JCLineSelectorViewController.h"
 
 
 @interface JCLoginViewController ()
@@ -287,7 +289,16 @@
         }
         else
         {
-            [self goToApplication];
+			Lines *line = [Lines MR_findFirstByAttribute:@"inUse" withValue:[NSNumber numberWithBool:YES]];
+			
+			if (line) {
+				[self goToApplication];
+			}
+			else {
+				[self performSegueWithIdentifier:@"SelectLineLoginSegue" sender:self];
+			}
+			
+            
         }
     }
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"seenAppTutorial"]) {
@@ -509,6 +520,12 @@
     [[JCAuthenticationManager sharedInstance] logout:self];
 }
 
+#pragma mark - Line selection update
+- (void)didChangeLine:(Lines *)selectedLine
+{
+	[self checkIfLoadingHasFinished:nil];
+}
+
 #pragma -mark HUD Operations
 - (void)showHudWithTitle:(NSString*)title detail:(NSString*)detail
 {
@@ -541,6 +558,20 @@
     
     [[JCAuthenticationManager sharedInstance] setRememberMe:((UISwitch *)sender).on];
     
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+	if ([segue.identifier isEqualToString:@"SelectLineLoginSegue"]) {
+		UIView *view = ((JCAppDelegate *)[UIApplication sharedApplication].delegate).window;
+        UIImage *underlyingView = [Common imageFromView:view];
+        underlyingView = [underlyingView applyBlurWithRadius:5 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] saturationDeltaFactor:1.3 maskImage:nil];
+		
+		
+		[segue.destinationViewController setBluredBackgroundImage:underlyingView];
+		[segue.destinationViewController setDelegate:self];
+		[segue.destinationViewController setHidesBottomBarWhenPushed:YES];
+	}
 }
 
 @end

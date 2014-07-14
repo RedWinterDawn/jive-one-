@@ -104,6 +104,7 @@
                         <outlet property="usernameTextField" destination="Tho-ch-vQR" id="NY5-OJ-rkG"/>
                         <segue destination="8YX-ce-x5E" kind="modal" identifier="LoginToTabBarSegue" modalTransitionStyle="crossDissolve" id="PKy-V4-VLv"/>
                         <segue destination="Yyy-YN-Ji0" kind="modal" identifier="AppTutorialSegue" modalTransitionStyle="crossDissolve" animates="NO" id="T1T-6r-sA2"/>
+                        <segue destination="9iF-Vr-Xsi" kind="modal" identifier="SelectLineLoginSegue" modalTransitionStyle="crossDissolve" id="fR3-m2-fB7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KCP-nN-szi" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1324,5 +1325,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="PKy-V4-VLv"/>
+        <segue reference="fR3-m2-fB7"/>
     </inferredMetricsTieBreakers>
 </document>
