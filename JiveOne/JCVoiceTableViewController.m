@@ -250,9 +250,14 @@ static NSString *CellIdentifier = @"VoicemailCell";
         [self prepareAudioForIndexPath:indexPath];
         self.selectedCell = (JCVoiceCell *)[self.tableView cellForRowAtIndexPath:indexPath];
         
-        //TODO: this is buggy - @doug
-        if (self.selectedCell.frame.origin.y >= 300) {
-            [tableView setContentOffset:CGPointMake(0, 80)animated:YES];
+        CGPoint positionRelativeToWindow = [self.selectedCell.contentView convertPoint:self.selectedCell.contentView.frame.origin toView:[UIApplication sharedApplication].keyWindow];
+        NSLog(@"PositionRelativeToWindow%@", NSStringFromCGPoint(positionRelativeToWindow));
+        if (positionRelativeToWindow.y > 338) {
+            NSLog(@"SelectedCellFrame:%@", NSStringFromCGRect(self.selectedCell.frame));
+            CGPoint currentContentOffset = self.tableView.contentOffset;
+            int amountToOffsetWithExpandedCell = currentContentOffset.y + (positionRelativeToWindow.y - 338);
+            NSLog(@"amountToOffsetWithExpandedCell:%d",amountToOffsetWithExpandedCell);
+            [tableView setContentOffset:CGPointMake(0, amountToOffsetWithExpandedCell)animated:YES];
         }
     }
     
