@@ -96,8 +96,8 @@
     self.passwordTextField.layer.borderWidth = 1.0f;
     
 #if DEBUG
-    self.usernameTextField.text = @"egueiros";
-    self.passwordTextField.text = @"jiveTeam2014";
+    self.usernameTextField.text = @"jivetesting12@gmail.com";
+    self.passwordTextField.text = @"testing12";
     [self.passwordTextField becomeFirstResponder];
 #endif
     
