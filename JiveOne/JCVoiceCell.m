@@ -9,7 +9,7 @@
 #import "JCVoiceCell.h"
 #import "Common.h"
 #import "PBX+Custom.h"
-#import "Mailbox+Custom.h"
+#import "Lines+Custom.h"
 #import "Common.h"
 
 @implementation JCVoiceCell
@@ -35,19 +35,19 @@
         self.titleLabel.text = voicemail.callerId;
         NSString *detailText = voicemail.callerIdNumber;
         
-        Mailbox *mailbox = [Mailbox MR_findFirstByAttribute:@"url_self_mailbox" withValue:self.voicemail.url_mailbox];
+        Lines *mailbox = [Lines MR_findFirstByAttribute:@"mailboxUrl" withValue:self.voicemail.mailboxUrl];
         if (mailbox) {
-            PBX *pbx = [PBX MR_findFirstByAttribute:@"selfUrl" withValue:mailbox.url_pbx];
+            PBX *pbx = [PBX MR_findFirstByAttribute:@"pbxId" withValue:mailbox.pbxId];
             if (pbx) {
                 if ([Common stringIsNilOrEmpty:pbx.name]) {
-                    detailText = [NSString stringWithFormat:@"%@ on %@", mailbox.extensionNumber, pbx.name];
+                    detailText = [NSString stringWithFormat:@"%@ on %@", mailbox.externsionNumber, pbx.name];
                 }
                 else {
-                    detailText = [NSString stringWithFormat:@"%@", mailbox.extensionNumber];
+                    detailText = [NSString stringWithFormat:@"%@", mailbox.externsionNumber];
                 }
             }
             else {
-                detailText = [NSString stringWithFormat:@"%@", mailbox.extensionNumber];
+                detailText = [NSString stringWithFormat:@"%@", mailbox.externsionNumber];
             }
         }
         

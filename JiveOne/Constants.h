@@ -16,11 +16,11 @@
 #define kEulaSite @"http://jive.com/downloads/mobile-end-user-license-agreement/"
 #define kVersionURL @"http://jiveios.local/LatestVersion"
 #define kFeedbackEmail @"MobileApps+ios@jive.com"
-
+//https://api.jive.com/voicemail/v1/mailbox/id/0144096f-17a0-b3a5-b5e8-000100620002/voicemail/id/6882/liste
 #pragma mark - V5 services
 #define kVoicemailService @"http://10.20.26.141:8890/" //@"api.jive.com/voicemail"
 #define kMailboxPath @"voicemail/v1/mailbox/"
-#define kJifService @"http://10.20.26.36:5554/v1/" //@"api.jive.com/jif"
+#define kJifService @"https://api.jive.com/jif/v1/" //@"api.jive.com/jif"
 #define kContactsService @"https://api.jive.com/contacts/"
 #define kJiveUserInfo @"/jiveuser/info/jiveid/"
 

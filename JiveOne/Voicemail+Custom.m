@@ -69,7 +69,7 @@
         vmail = [Voicemail MR_createInContext:context];
 
         vmail.voicemailId = dictionary[@"id"];
-        vmail.mailboxId = dictionary[@"mailboxId"];
+        //vmail.mailboxId = dictionary[@"mailboxId"];
         vmail.timeStamp = [NSNumber numberWithLongLong:[dictionary[@"timeStamp"] longLongValue]];
         vmail.duration = [NSNumber numberWithInteger:[dictionary[@"duration"] intValue]];
         vmail.read = [NSNumber numberWithBool:[dictionary[@"read"] boolValue]];
@@ -97,7 +97,7 @@
         vmail.url_download = [dictionary[@"urls"] objectForKey:@"self_download"];
         vmail.url_changeStatus = [dictionary[@"urls"] objectForKey:@"self_changeStatus"];
         vmail.deleted = [NSNumber numberWithBool:NO];
-        vmail.url_mailbox = mailboxUrl;
+        vmail.mailboxUrl = mailboxUrl;
         
         //get all voicemail messages through a queue
         dispatch_async(dispatch_get_main_queue(), ^{

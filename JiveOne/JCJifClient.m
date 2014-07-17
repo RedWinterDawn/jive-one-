@@ -8,7 +8,6 @@
 
 #import "JCJifClient.h"
 #import "PBX+Custom.h"
-#import "Mailbox+Custom.h"
 
 @implementation JCJifClient
 {

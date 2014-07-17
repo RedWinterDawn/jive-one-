@@ -8,7 +8,7 @@
 
 #import "JCVoicemailClient.h"
 #import "Voicemail+Custom.h"
-#import "Mailbox+Custom.h"
+#import "Lines+Custom.h"
 
 @implementation JCVoicemailClient
 {
@@ -82,39 +82,46 @@
 -(void)getVoicemails :(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
 {
     [self setRequestAuthHeader];
+	
+	NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
     
-    NSArray* mailboxes = [Mailbox MR_findAll];
+    NSArray* lines = [Lines MR_findAll];
     
-    [mailboxes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    [lines enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 
-        Mailbox *mailbox = (Mailbox *)obj;
-        NSArray *urlSlit = [mailbox.url_self_mailbox componentsSeparatedByString:@"mailbox/id/"];
-        NSString* url = [NSString stringWithFormat:@"%@mailbox/id/014575fe-6ef6-953f-b3a4-000100620002", urlSlit[0]];
+        Lines *line = (Lines *)obj;
+//        NSArray *urlSlit = [mailbox.mailboxUrl componentsSeparatedByString:@"mailbox/id/"];
+//        NSString* url = [NSString stringWithFormat:@"%@mailbox/id/014575fe-6ef6-953f-b3a4-000100620002", urlSlit[0]];
+//        
+//        if ([url rangeOfString:@"api.jive.com"].location != NSNotFound) {
+//            NSArray *urlSplit = [url componentsSeparatedByString:@".com/"];
+//            url = urlSplit[1];
+//        }
         
-        if ([url rangeOfString:@"api.jive.com"].location != NSNotFound) {
-            NSArray *urlSplit = [url componentsSeparatedByString:@".com/"];
-            url = urlSplit[1];
-        }
         
         
-        
-        [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            [Voicemail addVoicemails:responseObject mailboxUrl:mailbox.url_self_mailbox completed:^(BOOL suceeded) {
-                completed(YES, responseObject, operation, nil);
+        [_manager GET:line.mailboxUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [Voicemail addVoicemails:responseObject mailboxUrl:line.mailboxUrl completed:^(BOOL suceeded) {
+                if ((lines.count -1) == idx) {
+					completed(YES, responseObject, operation, nil);
+				}
             }];
+			
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            completed(NO, nil, operation, error);
+            if ((lines.count -1) == idx) {
+				completed(NO, nil, operation, error);
+			}
         }];
     }];
 }
 
 //download actual voicemail
--(void)downloadVoicemailEntry:(NSString*)entryId fromMailbox:(NSString*)mailboxId completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
+-(void)downloadVoicemailEntry:(Voicemail*)voicemail completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
 {
-    NSString* url = [NSString stringWithFormat:@"%@/voicemail/%@/listen", mailboxId, entryId];
+    [self setRequestAuthHeader];
          
-    [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [_manager GET:voicemail.url_download parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         [Voicemail fetchVoicemailInBackground];
         

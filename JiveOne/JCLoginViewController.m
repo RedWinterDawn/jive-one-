@@ -18,9 +18,7 @@
 #import "JCContactsClient.h"
 #import "JCVoicemailClient.h"
 #import "JCJifClient.h"
-#import "Mailbox+Custom.h"
 #import "JCAppIntro.h"
-#import "Mailbox+Custom.h"
 #import "UIImage+ImageEffects.h"
 #import "UITextField+ELFixSecureTextFieldFont.h"
 #import "Lines+Custom.h"
@@ -289,14 +287,14 @@
         }
         else
         {
-			Lines *line = [Lines MR_findFirstByAttribute:@"inUse" withValue:[NSNumber numberWithBool:YES]];
+//			Lines *line = [Lines MR_findFirstByAttribute:@"inUse" withValue:[NSNumber numberWithBool:YES]];
 			
-			if (line) {
+//			if (line) {
 				[self goToApplication];
-			}
-			else {
-				[self performSegueWithIdentifier:@"SelectLineLoginSegue" sender:self];
-			}
+//			}
+//			else {
+//				[self performSegueWithIdentifier:@"SelectLineLoginSegue" sender:self];
+//			} 
 			
             
         }
@@ -321,8 +319,9 @@
     }
     
 //    [self fetchMyEntity];
-    [self fetchMyMailboxes];
-    [self fetchMyContact];
+ 
+//    [self fetchMyContact];
+	[self fetchMyMailboxes];
 }
 
 #pragma mark - Fetch initial data
@@ -340,13 +339,9 @@
 {
     
     [[JCVoicemailClient sharedClient] getVoicemails:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-        if(suceeded){
-            [self hideHud];
-            if (self.userIsDoneWithTutorial) {
-                [self goToApplication];
-            }
-            [self fetchPBXInformation];
-        }
+
+            [self fetchMyContact];
+
         
     }];
     
@@ -355,10 +350,13 @@
 
 - (void)fetchPBXInformation
 {
-    NSArray *mailboxes = [Mailbox MR_findAll];
+    NSArray *mailboxes = [Lines MR_findAll];
     
-    for (Mailbox *box in mailboxes) {
-        [[JCJifClient sharedClient] getPbxInformationFromUrl:box.url_pbx completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+    for (Lines *box in mailboxes) {
+		
+		PBX *pbx = [PBX MR_findFirstByAttribute:@"pbxId" withValue:box.pbxId];
+		
+        [[JCJifClient sharedClient] getPbxInformationFromUrl:pbx.selfUrl completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
             //[self fetchMyContact];
         }];
     }
@@ -379,9 +377,9 @@
 {
     [[JCContactsClient sharedClient] RetrieveContacts:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
         if (suceeded) {
-            _doneLoadingContent = YES;
+//            _doneLoadingContent = YES;
             [[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
-            [self goToApplication];
+            //[self fetchMyMailboxes];
         }
     }];
 }

@@ -2,7 +2,7 @@
 //  Voicemail.h
 //  JiveOne
 //
-//  Created by Eduardo Gueiros on 7/8/14.
+//  Created by Eduardo Gueiros on 7/16/14.
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
@@ -17,7 +17,7 @@
 @property (nonatomic, retain) NSNumber * deleted;
 @property (nonatomic, retain) NSNumber * duration;
 @property (nonatomic, retain) NSString * jrn;
-@property (nonatomic, retain) NSString * mailboxId;
+@property (nonatomic, retain) NSString * mailboxUrl;
 @property (nonatomic, retain) NSNumber * read;
 @property (nonatomic, retain) NSNumber * timeStamp;
 @property (nonatomic, retain) NSString * transcription;
@@ -28,6 +28,5 @@
 @property (nonatomic, retain) NSString * url_self;
 @property (nonatomic, retain) NSData * voicemail;
 @property (nonatomic, retain) NSNumber * voicemailId;
-@property (nonatomic, retain) NSString * url_mailbox;
 
 @end

@@ -9,6 +9,7 @@
 #import "Lines+Custom.h"
 #import "ContactGroup.h"
 #import "LineGroup.h"
+#import "Common.h"
 
 @implementation Lines (Custom)
 
@@ -33,31 +34,35 @@
     }
     
     NSString *lineId = line[@"id"];
-    NSString *lineJrn;
+    NSString *lineJrn = line[@"jrn"];
     if ([lineId rangeOfString:@"jrn"].location == NSNotFound) {
         lineJrn = [NSString stringWithFormat:@"jrn:line::jive:%@:%@", pbxId, lineId];
     }
     else {
-     //jrn:line::jive:0127d974-f9f3-0704-2dee-000100420001:0144931b-c692-f9fa-943a-000100620005
-        lineJrn = lineId;
-        NSArray *jrnExploded = [lineJrn componentsSeparatedByString:@":"];
-        lineId = jrnExploded[jrnExploded.count - 1];
-    }
+		if (lineId) {
+			lineJrn = lineId;
+		}
+		
+		NSArray *jrnExploded = [lineJrn componentsSeparatedByString:@":"];
+		lineId = jrnExploded[jrnExploded.count - 1];
+	}
     
     Lines *c_line = [Lines MR_findFirstByAttribute:@"jrn" withValue:lineJrn inContext:context];
     if (c_line) {
-        [self updateLine:c_line new_line:line];
+        [self updateLine:c_line pbxId:pbxId userName:userName new_line:line];
     }
     else {
         
         c_line = [Lines MR_createInContext:context];
         c_line.pbxId = pbxId;
-        c_line.displayName = line[@"displayName"] ? line[@"displayName"] : line[@"userName"];
+        c_line.displayName = line[@"lineName"] ? line[@"lineName"] : line[@"displayName"] ? line[@"displayName"] : @"";
         c_line.userName = userName;
         c_line.groups = line[@"groups"];
-        c_line.externsionNumber = line[@"extensionNumber"];
+        c_line.externsionNumber = line[@"extensionNumber"] ? line[@"extensionNumber"] : line[@"lineNumber"] ? line[@"lineNumber"] : @"";
         c_line.jrn = lineJrn;
         c_line.lineId = lineId;
+		c_line.mailboxUrl = line[@"self_mailbox"];
+		c_line.mailboxJrn = line[@"mailbox_jrn"];
         c_line.state = [NSNumber numberWithInt:(int)JCPresenceTypeAvailable];
 		
 		if (line[@"groups"]) {
@@ -92,10 +97,16 @@
     return c_line;
 }
 
-+ (void)updateLine:(Lines *)line new_line:(NSDictionary *)new_line
++ (void)updateLine:(Lines *)line pbxId:(NSString *)pbxId userName:(NSString *)userName new_line:(NSDictionary *)new_line
 {
-    line.userName = new_line[@"userName"];
-    line.displayName = new_line[@"displayName"];
+    if ([Common stringIsNilOrEmpty:line.userName] && ![Common stringIsNilOrEmpty:userName]) {
+		line.userName = userName;
+	}
+	
+	if ([Common stringIsNilOrEmpty:line.userName]) {
+		line.displayName = new_line[@"displayName"];
+	}
+	
     line.groups = new_line[@"groups"];
 }
 

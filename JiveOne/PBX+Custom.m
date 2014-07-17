@@ -1,4 +1,4 @@
-//
+ //
 //  PBX+Custom.m
 //  JiveOne
 //
@@ -8,7 +8,6 @@
 
 #import "PBX+Custom.h"
 #import "Lines+Custom.h"
-#import "Mailbox+Custom.h"
 #import "Common.h"
 
 @implementation PBX (Custom)
@@ -32,13 +31,21 @@
     }
     
     NSString *self_url = pbx[@"self_pbx"] ? pbx[@"self_pbx"] : pbx[@"self"] ? pbx[@"self"] : @"";
+	NSString *pbxId = pbx[@"id"] ? pbx[@"id"] : nil;
     if ([Common stringIsNilOrEmpty:self_url]) {
         if (pbx[@"id"]) {
             self_url = [NSString stringWithFormat:@"https://api.jive.com/jif/v1/pbx/id/%@", pbx[@"id"]];
         }
     }
+	
+	if (!pbxId)
+	{
+		//https://api.jive.com/jif/v1/pbx/id/01471162-f384-24f5-9351-000100420005
+		NSArray *pbxArray = [self_url componentsSeparatedByString:@"jif/v1/pbx/id/"];
+		pbxId = pbxArray[1];
+	}
     
-    PBX *c_pbx = [PBX MR_findFirstByAttribute:@"selfUrl" withValue:self_url inContext:context];
+    PBX *c_pbx = [PBX MR_findFirstByAttribute:@"pbxId" withValue:pbxId inContext:context];
     
     if (c_pbx) {
         [self updatePBX:c_pbx new_pbx:pbx];
@@ -46,19 +53,19 @@
     else {
         
         c_pbx = [PBX MR_createInContext:context];
-        c_pbx.pbxId = pbx[@"id"] ? pbx[@"id"] : @"";
+        c_pbx.pbxId = pbx[@"id"] ? pbx[@"id"] : pbxId;
         c_pbx.name = pbx[@"name"] ? pbx[@"name"] : @"";
         c_pbx.jrn = pbx[@"jrn"] ? pbx[@"jrn"] : @"";
         c_pbx.v5 = pbx[@"v5"] ? [NSNumber numberWithBool:[pbx[@"v5"] boolValue]] : false;
         c_pbx.selfUrl = self_url;
     }
     
-    NSArray *mailboxes = pbx[@"extensions"];
-    if (mailboxes && mailboxes.count > 0) {
-        for (NSDictionary *mailbox in mailboxes) {
-            [Mailbox addMailbox:mailbox pbxUrl:self_url withManagedContext:context sender:nil];
-        }
-    }
+//    NSArray *mailboxes = pbx[@"extensions"];
+//    if (mailboxes && mailboxes.count > 0) {
+//        for (NSDictionary *mailbox in mailboxes) {
+//            [Mailbox addMailbox:mailbox pbxUrl:self_url withManagedContext:context sender:nil];
+//        }
+//    }
     
     NSArray *lines = pbx[@"lines"];
     if (lines && lines.count > 0) {
