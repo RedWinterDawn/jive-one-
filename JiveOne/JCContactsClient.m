@@ -85,7 +85,6 @@
 {
     [self setRequestAuthHeader];
     
-//    NSString * url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], kOsgiMyEntityRoute];//TODO: not attaching baseURL to route constant
     NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
     NSString *url = [NSString stringWithFormat:@"https://api.jive.com/contacts/jiveuser/info/jiveid/%@", username];
     
@@ -106,20 +105,33 @@
 {
     [self setRequestAuthHeader];
     
-	NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
-    Lines *line = [Lines MR_findFirstByAttribute:@"userName" withValue:username];
-    NSString *url = [NSString stringWithFormat:@"https://api.jive.com/contacts/%@/line/id/%@", line.pbxId, line.lineId];
-    
-    [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSArray *contactArray = (NSArray *)responseObject;
-        if (contactArray) {
-            [Lines addLines:contactArray pbxId:line.pbxId userName:nil completed:^(BOOL succeeded) {
-                completed(YES, responseObject, operation, nil);
-            }];
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        completed(NO, nil, operation, error);
-    }];
+	NSArray *pbxs = [PBX MR_findAll];
+	
+	for (PBX *pbx in pbxs) {
+		
+		NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
+		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(pbxId == %@) AND (userName == %@)", pbx.pbxId, username];
+		
+		Lines *line = [Lines MR_findFirstWithPredicate:predicate];
+		
+		if (line) {
+			NSString *url = [NSString stringWithFormat:@"https://api.jive.com/contacts/%@/line/id/%@", line.pbxId, line.lineId];
+			
+			[_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+				NSArray *contactArray = (NSArray *)responseObject;
+				if (contactArray) {
+					[Lines addLines:contactArray pbxId:line.pbxId userName:nil completed:^(BOOL succeeded) {
+						completed(YES, responseObject, operation, nil);
+					}];
+				}
+			} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+				completed(NO, nil, operation, error);
+			}];
+		}
+		
+	}
+	
+	
     
 }
 

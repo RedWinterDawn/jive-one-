@@ -86,6 +86,7 @@
 	NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
     
     NSArray* lines = [Lines MR_findAll];
+	__block BOOL succeededGettingAtLeastOne = NO;
     
     [lines enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 
@@ -101,6 +102,7 @@
 //		if (line.mailboxUrl) {
 			[_manager GET:line.mailboxUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 				[Voicemail addVoicemails:responseObject mailboxUrl:line.mailboxUrl completed:^(BOOL suceeded) {
+					succeededGettingAtLeastOne = YES;
 					if ((lines.count -1) == idx) {
 						completed(YES, responseObject, operation, nil);
 					}
@@ -109,7 +111,12 @@
 				
 			} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 				if ((lines.count -1) == idx) {
-					completed(NO, nil, operation, error);
+					if (succeededGettingAtLeastOne) {
+						completed(YES, nil, operation, error);
+					}
+					else {
+						completed(NO, nil, operation, error);
+					}
 				}
 			}];
 //		}       
@@ -136,7 +143,7 @@
     
     [self setRequestAuthHeader];
     
-    NSString *url = [NSString stringWithFormat:@"%@?verify=%@", voicemail.url_changeStatus, [[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"]];//TODO: remove when voicemail accepts auth through headers
+    NSString *url = [NSString stringWithFormat:@"%@", voicemail.url_changeStatus];
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     [params setObject:@"true" forKey:@"read"];
     
@@ -179,7 +186,7 @@
 
     [self setRequestAuthHeader];
     
-    url = [NSString stringWithFormat:@"%@?verify=%@",  url, [[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"]];//TODO: remove when voicemail accepts auth through headers
+    //url = [NSString stringWithFormat:@"%@?verify=%@",  url, [[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"]];//TODO: remove when voicemail accepts auth through headers
 
     [_manager DELETE:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         completed(YES, responseObject, operation, nil);

@@ -332,6 +332,9 @@
         if(suceeded){
             [self fetchVoicemailsMetadata];
         }
+		else {
+			[self errorInitializingApp:error];
+		}
     }];
 }
 
@@ -339,13 +342,50 @@
 {
     
     [[JCVoicemailClient sharedClient] getVoicemails:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-
-            [self fetchMyContact];
-
+        if(suceeded) {
+            [[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
+			[self fetchMyContact];
+        }
+		else {
+			[self errorInitializingApp:error];
+		}
         
     }];
     
-    [[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
+    
+}
+
+
+//Contacts
+- (void)fetchMyContact
+{
+    [[JCContactsClient sharedClient] RetrieveMyInformation:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+        if (suceeded) {
+            [self fetchContacts];
+        }
+		else {
+			[self errorInitializingApp:error];
+		}
+    }];
+}
+
+- (void)fetchContacts
+{
+    [[JCContactsClient sharedClient] RetrieveContacts:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+        if (suceeded) {
+            _doneLoadingContent = YES;
+            
+            //[self fetchMyMailboxes];
+			[self hideHud];
+            if (self.userIsDoneWithTutorial) {
+                [self goToApplication];
+            }
+            [self fetchPBXInformation];
+        }
+		else {
+			[self errorInitializingApp:error];
+		}
+    }];
 }
 
 - (void)fetchPBXInformation
@@ -360,28 +400,6 @@
             //[self fetchMyContact];
         }];
     }
-}
-
-
-//Contacts
-- (void)fetchMyContact
-{
-    [[JCContactsClient sharedClient] RetrieveMyInformation:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-        if (suceeded) {
-            [self fetchContacts];
-        }
-    }];
-}
-
-- (void)fetchContacts
-{
-    [[JCContactsClient sharedClient] RetrieveContacts:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-        if (suceeded) {
-//            _doneLoadingContent = YES;
-            [[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
-            //[self fetchMyMailboxes];
-        }
-    }];
 }
 
 

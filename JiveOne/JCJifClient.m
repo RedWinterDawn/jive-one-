@@ -97,10 +97,10 @@
 {
     [self setRequestAuthHeader];
     
-    if ([url rangeOfString:@"api.jive.com"].location != NSNotFound) {
-        NSArray *urlSplit = [url componentsSeparatedByString:@".com/jif/v1/"];
-        url = urlSplit[1];
-    }
+//    if ([url rangeOfString:@"api.jive.com"].location != NSNotFound) {
+//        NSArray *urlSplit = [url componentsSeparatedByString:@".com/jif/v1/"];
+//        url = urlSplit[1];
+//    }
     
     [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //parse list of mailbox references
