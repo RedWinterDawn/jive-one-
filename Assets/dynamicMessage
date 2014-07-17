@@ -30,4 +30,5 @@ rm letsSee.txt
 rm letsSee2.txt
 
 
-curl -v -F file=@msg0000.WAV -F metadata=@msg0001.txt http://10.20.26.141:8880/voicemails/mailbox/0146de22-4cf6-65b5-3be8-006300620001/folders/INBOX
+curl -v -F file=@msg0000.WAV -F metadata=@msg0001.txt http://localhost:8880/voicemails/mailbox/014744ef-0d4e-d0ba-8bf5-000100620002/folders/INBOX
+
