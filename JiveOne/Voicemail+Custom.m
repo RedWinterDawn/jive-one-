@@ -93,9 +93,9 @@
         vmail.jrn = dictionary[@"jrn"];
         __block NSString * jrn = vmail.jrn;
             
-        vmail.url_self = [dictionary[@"urls"] objectForKey:@"self"];
-        vmail.url_download = [dictionary[@"urls"] objectForKey:@"self_download"];
-        vmail.url_changeStatus = [dictionary[@"urls"] objectForKey:@"self_changeStatus"];
+        vmail.url_self = dictionary[@"self"];
+	    vmail.url_download = dictionary[@"self_download"];
+		vmail.url_changeStatus = dictionary[@"self_changeStatus"] ;
         vmail.deleted = [NSNumber numberWithBool:NO];
         vmail.mailboxUrl = mailboxUrl;
         
@@ -151,7 +151,18 @@
         for (Voicemail *vm in voicemails) {
             @try {
                 if (!vm.voicemail) {
-                    NSData *voiceData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@?verify=%@", vm.url_download, [[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"]]]];
+					
+					NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+					request.URL = [NSURL URLWithString:vm.url_download];
+					request.HTTPMethod = @"GET";
+					[request setValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"] forHTTPHeaderField:@"Authorization"];
+					
+					NSURLResponse *response;
+					NSError *error;
+					
+					NSData *voiceData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+					
+                    //NSData *voiceData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@?verify=%@", vm.url_download, ]]];
                     if (voiceData) {
                         vm.voicemail = voiceData;
                         [context MR_saveToPersistentStoreAndWait];

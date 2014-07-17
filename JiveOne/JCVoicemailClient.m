@@ -98,21 +98,21 @@
 //            url = urlSplit[1];
 //        }
         
-        
-        
-        [_manager GET:line.mailboxUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            [Voicemail addVoicemails:responseObject mailboxUrl:line.mailboxUrl completed:^(BOOL suceeded) {
-                if ((lines.count -1) == idx) {
-					completed(YES, responseObject, operation, nil);
+//		if (line.mailboxUrl) {
+			[_manager GET:line.mailboxUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+				[Voicemail addVoicemails:responseObject mailboxUrl:line.mailboxUrl completed:^(BOOL suceeded) {
+					if ((lines.count -1) == idx) {
+						completed(YES, responseObject, operation, nil);
+					}
+				}];
+				
+				
+			} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+				if ((lines.count -1) == idx) {
+					completed(NO, nil, operation, error);
 				}
-            }];
-			
-            
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            if ((lines.count -1) == idx) {
-				completed(NO, nil, operation, error);
-			}
-        }];
+			}];
+//		}       
     }];
 }
 
