@@ -29,6 +29,8 @@
     self.callerIdLabel.text = voicemail.callerId;
     if (![voicemail.callerId isEqualToString:voicemail.callerIdNumber]) {
         self.callerNumberLabel.text = voicemail.callerIdNumber;
+    }else{
+        self.callerNumberLabel.text = @"";
     }
     
     if (voicemail.transcription) {
