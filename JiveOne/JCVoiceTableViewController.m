@@ -479,7 +479,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
 }
 
 - (void)updateProgress:(NSNotification*)notification {
-    if (self.selectedCell.playPauseButton.playPauseDisplaysPlay == YES) {
+    if (self.selectedCell.playPauseButton.playPauseDisplaysPlay == YES && player.isPlaying) {
         [self.selectedCell.playPauseButton setPlayPauseDisplaysPlay:NO];
     }
     self.selectedCell.duration.text = [self formatSeconds:player.duration];
