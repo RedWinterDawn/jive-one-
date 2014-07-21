@@ -14,8 +14,8 @@
 #define timeForPage(page) (NSInteger)(self.view.frame.size.width * (page - 1))
 
 //Arrows
-#define kTopLeft_x -110
-#define kTopLeft_y -55
+#define kTopLeft_x -130
+#define kTopLeft_y -65
 #define kTopRight_x 5
 #define kTopRight_y -70
 #define kBottomLeft_x -15
@@ -25,8 +25,8 @@
 #define labelTextColor [UIColor whiteColor]
 
 //Labels
-#define kTopLeft_x_Offset -80
-#define kTopLeft_y_Offset -110
+#define kTopLeft_x_Offset -110
+#define kTopLeft_y_Offset -130
 
 #define kTopRight_x_Offset 45
 #define kTopRight_y_Offset -160
@@ -204,30 +204,29 @@
     //******************************************************
     self.vmPlay = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfPlayLoginWithPlayPauseDisplaysPlay:true]];
     self.vmPlay.center = self.voicemailCell.center;
-    self.vmPlay.frame = CGRectMake(0, 0, 50, 50);
-    self.vmPlay.frame = CGRectOffset(self.vmPlay.frame, 5, 60);
-    
+    self.vmPlay.frame = CGRectMake(0, 0, 25, 25);
+    self.vmPlay.frame = CGRectOffset(self.vmPlay.frame, 10, 75);
     [self.voicemailCell addSubview:self.vmPlay];
     
-    self.vmIcon = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfVoicemailIcon]];
-    self.vmIcon.center = self.voicemailCell.center;
-    self.vmIcon.frame = CGRectMake(0, 0, 25, 25);
-    self.vmIcon.frame = CGRectOffset(self.vmIcon.frame, self.voicemailCell.frame.size.width -27, 29);
-    [self.voicemailCell addSubview:self.vmIcon];
+//    self.vmIcon = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfVoicemailIcon]];
+//    self.vmIcon.center = self.voicemailCell.center;
+//    self.vmIcon.frame = CGRectMake(0, 0, 25, 25);
+//    self.vmIcon.frame = CGRectOffset(self.vmIcon.frame, self.voicemailCell.frame.size.width -27, 29);
+//    [self.voicemailCell addSubview:self.vmIcon];
     
     self.vmScrubber = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfScrubberLogin]];
     self.vmScrubber.center = self.voicemailCell.center;
-    self.vmScrubber.frame = CGRectOffset(self.vmScrubber.frame, -20, -210);
+    self.vmScrubber.frame = CGRectOffset(self.vmScrubber.frame, -20, -205);
     [self.voicemailCell addSubview:self.vmScrubber];
     
     self.vmTrash = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfTrashLogin]];
     self.vmTrash.center = self.voicemailCell.center;
-    self.vmTrash.frame = CGRectOffset(self.vmTrash.frame, timeForPage(1) + 30, -170);
+    self.vmTrash.frame = CGRectOffset(self.vmTrash.frame, timeForPage(1) + 30, -160);
     [self.voicemailCell addSubview:self.vmTrash];
     
     self.vmSpeaker = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfSpeakerLogin]];
     self.vmSpeaker.center = self.voicemailCell.center;
-    self.vmSpeaker.frame = CGRectOffset(self.vmSpeaker.frame, timeForPage(1) - 45, -170);
+    self.vmSpeaker.frame = CGRectOffset(self.vmSpeaker.frame, timeForPage(1) - 45, -160);
     [self.voicemailCell addSubview:self.vmSpeaker];
     
     //******************************************************
@@ -254,7 +253,7 @@
     [callerIdLabel setTextColor:[UIColor blackColor]];
     callerIdLabel.center = self.voicemailCell.center;
     [callerIdLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14]];
-    callerIdLabel.frame = CGRectOffset(self.voicemailCell.frame, timeForPage(1) + 32, -269);
+    callerIdLabel.frame = CGRectOffset(self.voicemailCell.frame, timeForPage(1) + 2, -270);
     [self.voicemailCell addSubview:callerIdLabel];
     
     UILabel *vmDateLabel = [[UILabel alloc] init];
@@ -266,23 +265,23 @@
     vmDateLabel.frame = CGRectOffset(self.voicemailCell.frame, timeForPage(1) + self.voicemailCell.frame.size.width - 68 , -268);
     [self.voicemailCell addSubview:vmDateLabel];
     
-    UILabel *vmDateTimeLabel = [[UILabel alloc] init];
-    vmDateTimeLabel.text = @"2014 08:15 PM";
-    [vmDateTimeLabel sizeToFit];
-    [vmDateTimeLabel setTextColor:[UIColor lightGrayColor]];
-    vmDateTimeLabel.center = self.voicemailCell.center;
-    [vmDateTimeLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12]];
-    vmDateTimeLabel.frame = CGRectOffset(self.voicemailCell.frame, timeForPage(1) + 64, -227);
-    [self.voicemailCell addSubview:vmDateTimeLabel];
-    
+//    UILabel *vmDateTimeLabel = [[UILabel alloc] init];
+//    vmDateTimeLabel.text = @"2014 08:15 PM";
+//    [vmDateTimeLabel sizeToFit];
+//    [vmDateTimeLabel setTextColor:[UIColor lightGrayColor]];
+//    vmDateTimeLabel.center = self.voicemailCell.center;
+//    [vmDateTimeLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12]];
+//    vmDateTimeLabel.frame = CGRectOffset(self.voicemailCell.frame, timeForPage(1) + 64, -227);
+//    [self.voicemailCell addSubview:vmDateTimeLabel];
+//    
     
     UILabel *vmTimeLabel2 = [[UILabel alloc] init];
     vmTimeLabel2.text = @"0:05";
     [vmTimeLabel2 sizeToFit];
     [vmTimeLabel2 setTextColor:[UIColor blackColor]];
     vmTimeLabel2.center = self.voicemailCell.center;
-    [vmTimeLabel2 setFont:[UIFont fontWithName:@"AppleSDGothicNeo-Bold" size:8]];
-    vmTimeLabel2.frame = CGRectOffset(self.voicemailCell.frame, timeForPage(1) + self.voicemailCell.frame.size.width - 44, -199);
+    [vmTimeLabel2 setFont:[UIFont fontWithName:@"AppleSDGothicNeo-Bold" size:7]];
+    vmTimeLabel2.frame = CGRectOffset(self.voicemailCell.frame, timeForPage(1) + self.voicemailCell.frame.size.width - 44, -193);
     [self.voicemailCell addSubview:vmTimeLabel2];
     
     
@@ -292,7 +291,7 @@
     [vmExtLabel setTextColor:[UIColor blackColor]];
     vmExtLabel.center = self.voicemailCell.center;
     [vmExtLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12]];
-    vmExtLabel.frame = CGRectOffset(self.voicemailCell.frame, timeForPage(1) + 39, -249);
+    vmExtLabel.frame = CGRectOffset(self.voicemailCell.frame, timeForPage(1) + 232, -249);
     [self.voicemailCell addSubview:vmExtLabel];
     
     //******************************************************
@@ -376,14 +375,6 @@
     //******************************************************
     // now, we animate the voicemailCell
     //******************************************************
-//    IFTTTFrameAnimation *voicemailCellFrameAnimation = [IFTTTFrameAnimation animationWithView:self.voicemailCell];
-//    [self.animator addAnimation:voicemailCellFrameAnimation];
-//    
-//    
-//    // pages 2 and 3
-//    [voicemailCellFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(1) andFrame:self.voicemailCell.frame]];
-//    [voicemailCellFrameAnimation addKeyFrame:[IFTTTAnimationKeyFrame keyFrameWithTime:timeForPage(2) andFrame:CGRectOffset(self.voicemailCell.frame, timeForPage(2), 0)]];
-//    
     [self createTransparencyAnimationWithDictionary:@{@"Label":self.voicemailCell,
                                                       @"KeyFrame1":@[@1,@1],
                                                       @"KeyFrame2":@[@2,@1],
@@ -396,9 +387,8 @@
                                                                  @"KeyFrame2":@[@2,@2,@0]
                                                                  }];
     
-    
     //******************************************************
-    // now, we animate the JiveLogoWhite
+    // animate the JiveLogoWhite
     //******************************************************
     IFTTTFrameAnimation *jiveLogoWhiteFrameAnimation = [IFTTTFrameAnimation animationWithView:self.jiveLogoWhite];
     [self.animator addAnimation:jiveLogoWhiteFrameAnimation];
@@ -408,7 +398,7 @@
     
     
     //******************************************************
-    // now, we animate the firstLabel
+    // animate the firstLabel
     //******************************************************
     IFTTTFrameAnimation *firstLabelFrameAnimation = [IFTTTFrameAnimation animationWithView:self.firstLabel];
     [self.animator addAnimation:firstLabelFrameAnimation];
