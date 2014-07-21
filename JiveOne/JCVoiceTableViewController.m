@@ -70,6 +70,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadVoicemails) name:@"kApplicationDidBecomeActive" object:nil];
     
     [Voicemail fetchVoicemailInBackground];
+    [self loadVoicemails];
 }
 
 - (void)viewDidAppear:(BOOL)animated

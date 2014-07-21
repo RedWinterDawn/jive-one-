@@ -56,7 +56,7 @@ describe(@"Voicemail VC", ^{
             NSData *responseObject = [content dataUsingEncoding:NSUTF8StringEncoding];
             NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
             
-            [Voicemail addVoicemails:dictionary completed:^(BOOL success) {
+            [Voicemail addVoicemails:dictionary mailboxUrl:@"" completed:^(BOOL success) {
                 [monitor signal];
             }];
             [monitor wait];
@@ -89,7 +89,9 @@ describe(@"Voicemail VC", ^{
             JCVoiceCell *cell = (JCVoiceCell*)[voicemailViewController.tableView cellForRowAtIndexPath:indexpath];
             
             [voicemailViewController voiceCellDeleteTapped:indexpath];
-            [[cell.voicemail.deleted should] beYes];
+            //wait for async task
+            [[expectFutureValue(theValue(cell.voicemail.deleted)) shouldEventually] beYes];
+//            [[cell.voicemail.deleted should] beYes];
             
         });
         
