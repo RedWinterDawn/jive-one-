@@ -15,18 +15,18 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bob Seger" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EDq-sG-3YO" userLabel="callerId">
-                        <rect key="frame" x="20" y="7" width="169" height="21"/>
+                        <rect key="frame" x="20" y="7" width="220" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="169" id="Tit-ec-UfZ"/>
+                            <constraint firstAttribute="width" constant="220" id="Tit-ec-UfZ"/>
                             <constraint firstAttribute="height" constant="21" id="gge-G1-SFZ"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Today, 10:57 PM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nIe-cq-PrP" userLabel="creationTime">
-                        <rect key="frame" x="168" y="7" width="140" height="21"/>
+                        <rect key="frame" x="241" y="7" width="67" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="140" id="hgU-gd-DLF"/>
+                            <constraint firstAttribute="width" constant="67" id="hgU-gd-DLF"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -82,7 +82,7 @@
                     <constraint firstItem="WOB-bN-zYU" firstAttribute="top" secondItem="EDq-sG-3YO" secondAttribute="bottom" constant="3" id="6XT-v8-KTt"/>
                     <constraint firstItem="XyY-49-Zkf" firstAttribute="leading" secondItem="9LY-YY-Jqs" secondAttribute="trailing" constant="9" id="9pZ-lt-MQW"/>
                     <constraint firstItem="9LY-YY-Jqs" firstAttribute="leading" secondItem="wkE-AG-dbK" secondAttribute="trailing" constant="8" symbolic="YES" id="Ddy-9t-gho"/>
-                    <constraint firstItem="81M-93-yDY" firstAttribute="trailing" secondItem="EDq-sG-3YO" secondAttribute="trailing" id="Dvz-Tq-wDq"/>
+                    <constraint firstItem="81M-93-yDY" firstAttribute="trailing" secondItem="EDq-sG-3YO" secondAttribute="trailing" constant="-51" id="Dvz-Tq-wDq"/>
                     <constraint firstItem="9LY-YY-Jqs" firstAttribute="top" secondItem="o6o-BF-Pb3" secondAttribute="bottom" constant="16" id="ETV-w8-igy"/>
                     <constraint firstItem="EDq-sG-3YO" firstAttribute="top" secondItem="nIe-cq-PrP" secondAttribute="top" id="EvO-sE-G0E"/>
                     <constraint firstItem="WOB-bN-zYU" firstAttribute="trailing" secondItem="XyY-49-Zkf" secondAttribute="trailing" id="IfT-Zs-RvE"/>
@@ -98,7 +98,7 @@
                     <constraint firstItem="EDq-sG-3YO" firstAttribute="bottom" secondItem="nIe-cq-PrP" secondAttribute="bottom" id="mvh-nF-d6y"/>
                     <constraint firstItem="WOB-bN-zYU" firstAttribute="top" secondItem="81M-93-yDY" secondAttribute="top" id="njn-V5-bmo"/>
                     <constraint firstItem="wkE-AG-dbK" firstAttribute="top" secondItem="81M-93-yDY" secondAttribute="bottom" constant="20" id="ssz-cJ-Udk"/>
-                    <constraint firstItem="WOB-bN-zYU" firstAttribute="leading" secondItem="nIe-cq-PrP" secondAttribute="leading" id="xSZ-fJ-Ib6"/>
+                    <constraint firstItem="WOB-bN-zYU" firstAttribute="leading" secondItem="nIe-cq-PrP" secondAttribute="leading" constant="-73" id="xSZ-fJ-Ib6"/>
                     <constraint firstAttribute="trailing" secondItem="WOB-bN-zYU" secondAttribute="trailing" constant="8" id="xqF-dx-VBU"/>
                     <constraint firstItem="81M-93-yDY" firstAttribute="leading" secondItem="EDq-sG-3YO" secondAttribute="leading" id="zPi-Nk-U89"/>
                 </constraints>
