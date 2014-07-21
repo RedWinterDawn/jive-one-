@@ -26,15 +26,18 @@
     _voicemail = voicemail;
 
     //[self.userImage setImage:[UIImage imageNamed:@"avatar.png"]];
+    self.callerIdLabel.text = voicemail.callerId;
+    
     
     if (voicemail.transcription) {
-        self.titleLabel.text = voicemail.callerId;
-        self.detailLabel.text = voicemail.transcription;
+       
+        self.extensionLabel.text = voicemail.transcription;
     }
     else {
-        self.titleLabel.text = voicemail.callerId;
-        NSString *detailText = voicemail.callerIdNumber;
+        self.callerNumberLabel.text = voicemail.callerIdNumber;
         
+        //set extension label with mailbox extension
+        NSString *detailText = voicemail.callerIdNumber;
         Lines *mailbox = [Lines MR_findFirstByAttribute:@"mailboxUrl" withValue:self.voicemail.mailboxUrl];
         if (mailbox) {
             PBX *pbx = [PBX MR_findFirstByAttribute:@"pbxId" withValue:mailbox.pbxId];
@@ -50,9 +53,7 @@
                 detailText = [NSString stringWithFormat:@"%@", mailbox.externsionNumber];
             }
         }
-        
-        
-        self.detailLabel.text = detailText;
+        self.extensionLabel.text = detailText;
     }
     
     [self doubleCheckNamesAndNumbers];
@@ -64,7 +65,6 @@
     self.elapsed.adjustsFontSizeToFitWidth = YES;
 	self.duration.adjustsFontSizeToFitWidth = YES;
 	self.slider.minimumValue = 0.0;
-    
     
     //test to see if we have already downloaded the voicemail .wav file
     if (self.voicemail.voicemail.length > 0) {
@@ -86,14 +86,14 @@
     if(![self.voicemail.read boolValue]){
 //        self.shortTime.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
         self.creationTime.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
-        self.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16];
-        self.detailLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
+        self.callerIdLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16];
+        self.extensionLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
         //self.voicemailIcon.image = [Common tintedImageWithColor:[UIColor redColor] image:self.voicemailIcon.image];
     }else{
 //        self.shortTime.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
         self.creationTime.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
-        self.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
-        self.detailLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
+        self.callerIdLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
+        self.extensionLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
         //self.voicemailIcon.image = [Common tintedImageWithColor:[UIColor blackColor] image:self.voicemailIcon.image];
     }
 }
@@ -117,7 +117,7 @@
 
 - (void)doubleCheckNamesAndNumbers
 {
-    if ([Common stringIsNilOrEmpty:self.titleLabel.text] || [self.titleLabel.text isEqualToString:@"Unknown"]) {
+    if ([Common stringIsNilOrEmpty:self.callerIdLabel.text] || [self.callerIdLabel.text isEqualToString:@"Unknown"]) {
         NSString *regexForName = @"\".+?\"";
         NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexForName
                                                                                options:NSRegularExpressionCaseInsensitive
@@ -132,11 +132,11 @@
         if (matches.count > 0) {
             NSString *callerName = [_voicemail.callerId substringWithRange:[matches[0] range]];
             callerName = [callerName stringByReplacingOccurrencesOfString:@"\"" withString:@""];
-            self.titleLabel.text = callerName;
+            self.callerIdLabel.text = callerName;
         }
     }
     
-    if ([Common stringIsNilOrEmpty:self.detailLabel.text] || [self.detailLabel.text isEqualToString:@"Unknown"]) {
+    if ([Common stringIsNilOrEmpty:self.extensionLabel.text] || [self.extensionLabel.text isEqualToString:@"Unknown"]) {
         NSString *regexForNumber = @"<.+?>";
         NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexForNumber
                                                           options:NSRegularExpressionCaseInsensitive
@@ -149,7 +149,7 @@
             NSString *callerNumber = [_voicemail.callerId substringWithRange:[matches[0] range]];
             callerNumber = [callerNumber stringByReplacingOccurrencesOfString:@"<" withString:@""];
             callerNumber = [callerNumber stringByReplacingOccurrencesOfString:@">" withString:@""];
-            self.detailLabel.text = callerNumber;
+            self.extensionLabel.text = callerNumber;
         }
     }
 }
