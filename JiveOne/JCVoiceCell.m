@@ -27,15 +27,14 @@
 
     //[self.userImage setImage:[UIImage imageNamed:@"avatar.png"]];
     self.callerIdLabel.text = voicemail.callerId;
-    
+    if (![voicemail.callerId isEqualToString:voicemail.callerIdNumber]) {
+        self.callerNumberLabel.text = voicemail.callerIdNumber;
+    }
     
     if (voicemail.transcription) {
-       
         self.extensionLabel.text = voicemail.transcription;
     }
     else {
-        self.callerNumberLabel.text = voicemail.callerIdNumber;
-        
         //set extension label with mailbox extension
         NSString *detailText = voicemail.callerIdNumber;
         Lines *mailbox = [Lines MR_findFirstByAttribute:@"mailboxUrl" withValue:self.voicemail.mailboxUrl];
@@ -59,7 +58,7 @@
     [self doubleCheckNamesAndNumbers];
     
     self.shortTime.text = [Common shortDateFromTimestamp:voicemail.timeStamp];
-    self.creationTime.text = [Common longDateFromTimestamp:voicemail.timeStamp];
+    self.creationTime.text = [Common shortDateFromTimestamp:voicemail.timeStamp];
     self.elapsed.text = @"0:00";
     self.duration.text = @"0:00";
     self.elapsed.adjustsFontSizeToFitWidth = YES;
