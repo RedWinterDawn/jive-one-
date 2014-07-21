@@ -25,7 +25,7 @@ __block JCVoiceTableViewController* voicemailViewController;
 
 
 describe(@"Voicemail VC", ^{
-    context(@"after being instantiated and authenticated", ^{
+    context(@"", ^{//after being instantiated and authenticated
         beforeAll(^{ // Occurs once
             NSString *token = [[JCAuthenticationManager sharedInstance] getAuthenticationToken];
             if ([Common stringIsNilOrEmpty:token]) {
@@ -43,6 +43,7 @@ describe(@"Voicemail VC", ^{
             }
             
             voicemailViewController = [[UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"JCVoiceTableViewController"];
+            [voicemailViewController loadVoicemails];
         });
         
         afterAll(^{ // Occurs once
@@ -67,11 +68,27 @@ describe(@"Voicemail VC", ^{
         });
         
         //TESTS Begin
-        it(@"loads voicemails into view upon instantiation", ^{//instantiation calls loadVoicemails via viewDidLoad
-            [voicemailViewController loadVoicemails];
+        it(@"loads voicemails array into view upon instantiation", ^{//instantiation calls loadVoicemails via viewDidLoad
             [[voicemailViewController.voicemails should] beNonNil];
         });
         
+        it(@"voicemail objects should have non nil attributes", ^{
+            Voicemail *first = voicemailViewController.voicemails[0];
+            [[first.callerId shouldNot] beNil];
+//            [[first.callerIdNumber shouldNot] beNil];
+            [[first.duration shouldNot] beNil];
+            [[first.jrn shouldNot] beNil];
+            [[first.mailboxUrl shouldNot] beNil];
+            [[first.timeStamp shouldNot] beNil];
+//            [[first.transcription shouldNot] beNil];
+//            [[first.transcriptionPercent shouldNot] beNil];
+            [[first.url_changeStatus shouldNot] beNil];
+            [[first.url_download shouldNot] beNil];
+//            [[first.url_pbx shouldNot] beNil];
+            [[first.url_self shouldNot] beNil];
+//            [[first.voicemailId shouldNot] beNil];
+//            [[first.voicemail shouldNot] beNil];
+        });
         
         it(@"should mark a voicemail as read when play button is pressed on unread voicemail", ^{
             NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:0];

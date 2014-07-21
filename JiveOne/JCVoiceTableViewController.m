@@ -305,14 +305,19 @@ static NSString *CellIdentifier = @"VoicemailCell";
     
     if (deletedVoicemails.count > 0) {
         for (Voicemail *voice in deletedVoicemails) {
-            [[JCVoicemailClient sharedClient] deleteVoicemail:voice.url_self completed:^(BOOL succeeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-                if (succeeded) {
-                    [Voicemail deleteVoicemail:voice.jrn managedContext:nil];
-                }
-                else {
-                    NSLog(@"Error Deleting Voicemail: %@", error);
-                }
-            }];
+            if(voice.url_self){
+                [[JCVoicemailClient sharedClient] deleteVoicemail:voice.url_self completed:^(BOOL succeeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+                    if (succeeded) {
+                        [Voicemail deleteVoicemail:voice.jrn managedContext:nil];
+                    }
+                    else {
+                        NSLog(@"Error Deleting Voicemail: %@", error);
+                    }
+                }];
+            }
+            else{
+                [Flurry logError:@"Voicemail Service" message:@"url_self is nil to delete" error:nil];
+            }
         }
     }
 }

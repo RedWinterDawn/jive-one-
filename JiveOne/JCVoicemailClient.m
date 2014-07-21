@@ -9,6 +9,7 @@
 #import "JCVoicemailClient.h"
 #import "Voicemail+Custom.h"
 #import "Lines+Custom.h"
+#import "Common.h"
 
 @implementation JCVoicemailClient
 {
@@ -50,16 +51,13 @@
 
 - (void)setRequestAuthHeader
 {
-    
-    KeychainItemWrapper* _keychainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
-    NSString *token = [_keychainWrapper objectForKey:(__bridge id)(kSecAttrAccount)];
+//    
+//    KeychainItemWrapper* _keychainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
+//    NSString *token = [_keychainWrapper objectForKey:(__bridge id)(kSecAttrAccount)];
+    NSString *token = [[JCAuthenticationManager sharedInstance] getAuthenticationToken];
     
     [self clearCookies];
-    
-    if (!token) {
-        token = (NSString*)[[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"];
-    }
-    
+        
     _manager.requestSerializer = [AFJSONRequestSerializer serializer];
     [_manager.requestSerializer clearAuthorizationHeader];
     [_manager.requestSerializer setValue:token forHTTPHeaderField:@"Authorization"];
