@@ -26,7 +26,7 @@
     _voicemail = voicemail;
 
     //[self.userImage setImage:[UIImage imageNamed:@"avatar.png"]];
-    self.callerIdLabel.text = voicemail.callerId;
+    self.callerIdLabel.text = [voicemail.callerId stringByReplacingOccurrencesOfString:@"\"" withString:@""];
     if (![voicemail.callerId isEqualToString:voicemail.callerIdNumber]) {
         self.callerNumberLabel.text = voicemail.callerIdNumber;
     }else{
