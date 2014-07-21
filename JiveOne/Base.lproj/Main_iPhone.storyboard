@@ -17,34 +17,35 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="656"/>
                             </imageView>
                             <view clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="AVw-9n-3yN">
-                                <rect key="frame" x="20" y="187" width="280" height="160"/>
+                                <rect key="frame" x="20" y="191" width="280" height="156"/>
                                 <subviews>
                                     <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="iPhone2XnewBlurSmall.png" id="BG2-EN-8KO">
                                         <rect key="frame" x="-25" y="0.0" width="330" height="525"/>
                                     </imageView>
                                     <textField clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="password" minimumFontSize="17" clearButtonMode="whileEditing" id="GZW-BX-qe0">
-                                        <rect key="frame" x="20" y="65" width="240" height="40"/>
+                                        <rect key="frame" x="20" y="72" width="240" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
                                         <accessibility key="accessibilityConfiguration" label="passwordTextField"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
                                     <textField clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="email" minimumFontSize="17" clearButtonMode="whileEditing" id="Tho-ch-vQR" userLabel="emailTextField">
-                                        <rect key="frame" x="20" y="15" width="240" height="40"/>
+                                        <rect key="frame" x="20" y="21" width="240" height="40"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
                                         <accessibility key="accessibilityConfiguration" label="emailTextField"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress"/>
                                     </textField>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="OcL-uK-wvb">
-                                        <rect key="frame" x="20" y="117" width="51" height="31"/>
+                                        <rect key="frame" x="20" y="119" width="51" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <connections>
                                             <action selector="rememberMe:" destination="hBc-AN-e9c" eventType="valueChanged" id="miT-TJ-DfZ"/>
                                         </connections>
                                     </switch>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remember me" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8YK-8M-331">
-                                        <rect key="frame" x="82" y="122" width="223" height="21"/>
+                                        <rect key="frame" x="82" y="123" width="223" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
