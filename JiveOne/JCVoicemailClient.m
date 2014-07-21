@@ -85,7 +85,8 @@
 	
 	NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
     
-    NSArray* lines = [Lines MR_findAll];
+	NSPredicate *linesWithUrlNotNil = [NSPredicate predicateWithFormat:@"mailboxUrl != nil"];
+    NSArray* lines = [Lines MR_findAllWithPredicate:linesWithUrlNotNil];
 	__block BOOL succeededGettingAtLeastOne = NO;
     
     [lines enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -99,7 +100,7 @@
 //            url = urlSplit[1];
 //        }
         
-//		if (line.mailboxUrl) {
+		if (line.mailboxUrl) {
 			[_manager GET:line.mailboxUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 				[Voicemail addVoicemails:responseObject mailboxUrl:line.mailboxUrl completed:^(BOOL suceeded) {
 					succeededGettingAtLeastOne = YES;
@@ -119,7 +120,7 @@
 					}
 				}
 			}];
-//		}       
+		}       
     }];
 }
 
