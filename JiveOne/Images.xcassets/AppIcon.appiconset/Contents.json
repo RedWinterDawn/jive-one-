@@ -1,9 +1,8 @@
 {
   "images" : [
     {
-      "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "jive_icon-Small@2x.png",
+      "size" : "29x29",
       "scale" : "2x"
     },
     {
@@ -19,15 +18,13 @@
       "scale" : "2x"
     },
     {
-      "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "jive_icon-Small.png",
+      "size" : "29x29",
       "scale" : "1x"
     },
     {
-      "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "jive_icon-Small@2x-1.png",
+      "size" : "29x29",
       "scale" : "2x"
     },
     {
