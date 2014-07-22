@@ -50,11 +50,11 @@
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinningWheel;
 @property (strong, nonatomic) NSIndexPath *indexPath;
 - (IBAction)playPauseButtonTapped:(id)sender;
-- (void)setPlayButtonState:(UIImage *)image;
+//- (void)setPlayButtonState:(UIImage *)image;
 - (IBAction)progressSliderMoved:(id)sender;
 - (IBAction)progressSliderTouched:(id)sender;
 - (IBAction)speakerTouched:(id)sender;
 - (void)setSliderValue:(float)position;
 - (void)styleCellForRead;
-- (void)setupButtons;
+//- (void)setupButtons;
 @end

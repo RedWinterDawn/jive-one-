@@ -15,7 +15,7 @@
 
 @property (nonatomic) NSMutableArray *voicemails; // exposed for testing
 @property (nonatomic) JCVoiceCell *selectedCell;//exposed for testing
-- (void)updateVoiceTable;
+- (void)updateVoiceTable:(id)sender;
 - (void)loadVoicemails;
 - (void)setClient:(JCVoicemailClient*)client;
 - (void)voiceCellPlayTapped:(JCVoiceCell *)cell; //exposed for testing

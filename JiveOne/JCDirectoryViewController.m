@@ -755,7 +755,7 @@ shouldReloadTableForSearchString:(NSString *)searchString
     
     NSString *type = message[@"type"];
     NSString *subId = message[@"subId"];
-    NSString *entity = message[@"entity"];
+//    NSString *entity = message[@"entity"];
     
     NSString *dataId;
     NSString *participant;

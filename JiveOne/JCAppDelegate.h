@@ -29,7 +29,7 @@
 #pragma mark - Badge Updates
 - (void)incrementBadgeCountForConversation:(NSString *)conversationId entryId:(NSString *)entryId;
 - (void)incrementBadgeCountForVoicemail:(NSString *)voicemailId;
-- (void)decrementBadgeCountForConversation:(NSString *)conversationId;
+//- (void)decrementBadgeCountForConversation:(NSString *)conversationId;
 - (void)decrementBadgeCountForVoicemail:(NSString *)voicemailId;
 - (void)clearBadgeCountForVoicemail;
 - (void)clearBadgeCountForConversation:(NSString *)conversationId;
