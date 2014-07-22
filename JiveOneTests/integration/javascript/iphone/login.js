@@ -41,7 +41,7 @@ test("Login Test", function(target, app){
 	target.frontMostApp().mainWindow().textFields()["emailTextField"].setValue("ljksdfa");
 	// Select Password box
 	// Enter random password text
-	app.mainWindow().secureTextFields()["passwordTextField"].setValue("ljksdfa");
+	app.mainWindow().textFields()["passwordTextField"].setValue("ljksdfa");
 	// Click 'Go' button
 	app.keyboard().elements()["Go"].tap();
 	// Confirm presence of “Authentication Error” dialog
@@ -54,9 +54,11 @@ test("Login Test", function(target, app){
 	app.mainWindow().textFields()["emailTextField"].setValue("jivetesting12@gmail.com");
 	// Select Password box
 	// Enter an invalid password
-	app.mainWindow().secureTextFields()["passwordTextField"].setValue("ljksdfa");
+	app.mainWindow().textFields()["passwordTextField"].setValue("ljksdfa");
+	delay(2);
 	// Click 'Go' button
 	app.keyboard().elements()["Go"].tap();
+	delay(2);
 	// Confirm presence of "Authentication Error" dialog
 	// Click OK
 		//handled in function above
@@ -64,8 +66,9 @@ test("Login Test", function(target, app){
 	logDebug("good username, bad password")
 	// Select Password box
 	// Clear box
-	app.mainWindow().secureTextFields()["passwordTextField"].waitUntilVisible(60);
-	app.mainWindow().secureTextFields()["passwordTextField"].clear();
+	app.mainWindow().textFields()["passwordTextField"].waitUntilVisible(60);
+	app.mainWindow().textFields()["passwordTextField"].clear();
+	delay(2);
 	// Click 'Go' button
 	app.keyboard().elements()["Go"].tap();
 	// Confirm presence of 'Invalid parameters' error dialog
@@ -74,6 +77,7 @@ test("Login Test", function(target, app){
 	
 	// Select Password box	
 	// Enter a valid password, consisting of mixed-case alpha, numeric and special chars.  This will exercise the alpha, shift, and #+= screens and buttons. and Click ‘Go’ button
+	logDebug("good username, good password");
 	defaultLogin(app);
 		
 	

@@ -25,11 +25,11 @@ function defaultLogin(app) {
 
 function login(app, user, password) {
     var currentWindow = app.mainWindow();
-    logDebug("Logging in as " + user);
+    logDebug("Logging in as " + user + "with password: " + password);
     
     //login
     currentWindow.textFields()["emailTextField"].setValue(user);
-    currentWindow.secureTextFields()["passwordTextField"].setValue(password);
+    currentWindow.textFields()["passwordTextField"].setValue(password);
     app.keyboard().elements()["Go"].tap();
     
     //wait for login
@@ -41,7 +41,7 @@ function login(app, user, password) {
 }
 
 function logout(app) {
-    app.mainWindow().tabBar().buttons()[1].tap();
+    app.mainWindow().tabBar().buttons()[2].tap();
     target.logElementTree();
         
     // scrollDown(200);
