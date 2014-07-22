@@ -345,7 +345,7 @@
 			[self fetchMyContact];
         }
 		else {
-			[self errorInitializingApp:error];
+			//may be one of the mailboxes failed or it's v4;
 		}
         
     }];
