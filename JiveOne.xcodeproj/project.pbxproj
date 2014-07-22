@@ -2438,7 +2438,7 @@
 					"\"${PODS_ROOT}/Headers/SocketRocket\"",
 				);
 				INFOPLIST_FILE = "JiveOne/JiveOne-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/JiveOne/TestFlightSDK3.0.0",
@@ -2512,7 +2512,7 @@
 					"\"${PODS_ROOT}/Headers/SocketRocket\"",
 				);
 				INFOPLIST_FILE = "JiveOne/JiveOneEnterprise-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/JiveOne/TestFlightSDK3.0.0",
@@ -2670,7 +2670,7 @@
 					"\"${PODS_ROOT}/Headers/SocketRocket\"",
 				);
 				INFOPLIST_FILE = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/JiveOne/TestFlightSDK3.0.0",
