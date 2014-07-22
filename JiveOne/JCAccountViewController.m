@@ -7,7 +7,6 @@
 //
 
 #import "JCAccountViewController.h"
-#import "JCRESTClient.h"
 #import "JCAuthenticationManager.h"
 #import "KeychainItemWrapper.h"
 #import "PersonEntities.h"
@@ -362,15 +361,15 @@
     [self.presenceDetail setText:state];
     self.presenceDetailView.presenceType = type;
     
-    if (type != JCPresenceTypeNone) {
-        [[JCRESTClient sharedClient] UpdatePresence:type success:^(BOOL updated) {
-            NSLog(@"P%i", updated);
-            NSLog(@"Presence Updated");
-        } failure:^(NSError *err) {
-            NSLog(@"%@", err);
-            NSLog(@"Presence Update Error");
-        }];
-    }    
+//    if (type != JCPresenceTypeNone) {
+//        [[JCRESTClient sharedClient] UpdatePresence:type success:^(BOOL updated) {
+//            NSLog(@"P%i", updated);
+//            NSLog(@"Presence Updated");
+//        } failure:^(NSError *err) {
+//            NSLog(@"%@", err);
+//            NSLog(@"Presence Update Error");
+//        }];
+//    }    
 }
 
 - (NSString *)getPresence:(NSNumber *)presence

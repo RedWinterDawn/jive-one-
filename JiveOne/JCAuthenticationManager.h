@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "KeychainItemWrapper.h"
-#import "JCRESTClient.h"
 
 @class JCAuthenticationManager;
 
@@ -20,7 +19,7 @@ typedef void (^CompletionBlock) (BOOL success, NSError *error);
 
 - (void)loginWithUsername:(NSString *)username password:(NSString*)password completed:(CompletionBlock)completed;
 
-- (void)setClient:(JCRESTClient *)client;
+
 - (void)didReceiveAuthenticationToken:(NSDictionary *)token;
 - (BOOL)userAuthenticated;
 - (BOOL)userLoadedMininumData;

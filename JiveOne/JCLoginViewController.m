@@ -11,7 +11,6 @@
 #import "JCAppDelegate.h"
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import "Common.h"
-#import "JCRESTClient.h"
 #import "Company.h"
 #import <MBProgressHUD.h>
 #import "JCStyleKit.h"
@@ -43,10 +42,10 @@
 }
 
 
-- (void)setClient:(JCRESTClient *)client
-{
-    _client = client;
-}
+//- (void)setClient:(JCRESTClient *)client
+//{
+//    _client = client;
+//}
 //@peter This hadles when you touch anywhere else on the screen the key board is dismissed.
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     [self.view endEditing:YES];
@@ -56,7 +55,7 @@
 {
     [super viewDidLoad];
     [self.passwordTextField fixSecureTextFieldFont];
-    [self setClient:[JCRESTClient sharedClient]];
+    //[self setClient:[JCRESTClient sharedClient]];
     
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"seenAppTutorial"]) {

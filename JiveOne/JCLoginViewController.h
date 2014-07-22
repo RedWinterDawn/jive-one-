@@ -20,7 +20,6 @@
 @property (nonatomic) BOOL seenTutorial;
 @property (nonatomic) BOOL doneLoadingContent;
 @property (nonatomic) BOOL userIsDoneWithTutorial;
-@property (nonatomic) JCRESTClient *client;
 @property (weak, nonatomic) IBOutlet UIView *loginViewContainer;
 @property (weak, nonatomic) IBOutlet UIView *logo;
 @property (weak, nonatomic) IBOutlet UIImageView *coverImageView;

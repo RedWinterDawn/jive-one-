@@ -81,8 +81,6 @@
 {
     [self setRequestAuthHeader];
 	
-	NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
-    
 	NSPredicate *linesWithUrlNotNil = [NSPredicate predicateWithFormat:@"mailboxUrl != nil"];
     NSArray* lines = [Lines MR_findAllWithPredicate:linesWithUrlNotNil];
 	__block BOOL succeededGettingAtLeastOne = NO;

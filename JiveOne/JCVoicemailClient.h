@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Voicemail+Custom.h"
 
 @interface JCVoicemailClient : NSObject
 
@@ -17,4 +18,5 @@
 - (void)downloadVoicemailEntry:(Voicemail*)voicemail completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed;
 - (void)updateVoicemailToRead:(Voicemail*)voicemail completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed;
 - (void)deleteVoicemail:(NSString *)url completed:(void (^)(BOOL succeeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed;
+- (void)clearCookies;
 @end

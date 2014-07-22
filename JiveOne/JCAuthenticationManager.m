@@ -7,7 +7,6 @@
 //
 
 #import "JCAuthenticationManager.h"
-#import "JCRESTClient.h"
 #import "JCContactsClient.h"
 #import "JCAppDelegate.h"
 #import "JCAccountViewController.h"
@@ -15,6 +14,7 @@
 #import "Common.h"
 #import "JCSocketDispatch.h"
 #import "JCJifClient.h"
+#import "JCVoicemailClient.h"
 
 #if DEBUG
 @interface NSURLRequest(Private)
@@ -29,7 +29,7 @@
 
 @property (nonatomic) NSString *username;
 @property (nonatomic) NSString *password;
-@property (nonatomic, strong) JCRESTClient *client;
+//@property (nonatomic, strong) JCRESTClient *client;
 
 @end
 
@@ -41,10 +41,10 @@
     NSTimer *webviewTimer;
 }
 
-- (void) setClient:(JCRESTClient *)client
-{
-    _client = client;
-}
+//- (void) setClient:(JCRESTClient *)client
+//{
+//    _client = client;
+//}
 
 static int MAX_LOGIN_ATTEMPTS = 2;
 
@@ -55,7 +55,6 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     dispatch_once(&onceToken, ^{
         sharedObject = [[JCAuthenticationManager alloc] init];
         sharedObject.keychainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
-        [sharedObject setClient:[JCRESTClient sharedClient]];
     });
     return sharedObject;
 }
@@ -286,7 +285,8 @@ static int MAX_LOGIN_ATTEMPTS = 2;
         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kUserName];
     }
     
-    [[JCRESTClient sharedClient] clearCookies];
+    [[JCVoicemailClient sharedClient] clearCookies];
+	[[JCContactsClient sharedClient] clearCookies];
     [[JCOmniPresence sharedInstance] truncateAllTablesAtLogout];
     
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
