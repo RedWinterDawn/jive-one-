@@ -112,6 +112,8 @@
 		275F4A5C18AD0FBC00D2F069 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 275F4A5A18AD0FBC00D2F069 /* InfoPlist.strings */; };
 		275F4A5E18AD0FBC00D2F069 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 275F4A5D18AD0FBC00D2F069 /* main.m */; };
 		275F4A6218AD0FBC00D2F069 /* JCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 275F4A6118AD0FBC00D2F069 /* JCAppDelegate.m */; };
+		275F4A6518AD0FBC00D2F069 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 275F4A6318AD0FBC00D2F069 /* Main_iPhone.storyboard */; };
+		275F4A6818AD0FBC00D2F069 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 275F4A6618AD0FBC00D2F069 /* Main_iPad.storyboard */; };
 		275F4A7018AD0FBC00D2F069 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 275F4A6F18AD0FBC00D2F069 /* Images.xcassets */; };
 		275F4A7718AD0FBC00D2F069 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275F4A7618AD0FBC00D2F069 /* XCTest.framework */; };
 		275F4A7818AD0FBC00D2F069 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275F4A5118AD0FBC00D2F069 /* Foundation.framework */; };
@@ -234,6 +236,9 @@
 		91634C2F19630A3B0079A823 /* JCGetStartedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 91634C2E19630A3B0079A823 /* JCGetStartedButton.m */; };
 		9172AD5C19192A1500481B01 /* UserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9172AD5B19192A1500481B01 /* UserDefaults.plist */; };
 		91743AA0191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91743A9F191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m */; };
+		91869D871959E5CF007743CE /* JCTOSButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91869D861959E5CF007743CE /* JCTOSButtonView.m */; };
+		91915732195A2DC0004BDE26 /* JCLeaveFeedbackButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 91915731195A2DC0004BDE26 /* JCLeaveFeedbackButton.m */; };
+		91915735195A30F6004BDE26 /* JCLogOutButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 91915734195A30F6004BDE26 /* JCLogOutButton.m */; };
 		91915738195B209D004BDE26 /* JCAppIntro.m in Sources */ = {isa = PBXBuildFile; fileRef = 91915737195B209D004BDE26 /* JCAppIntro.m */; };
 		919DD29D1922E2C90039205E /* JCPopoverSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 919DD29C1922E2C90039205E /* JCPopoverSlider.m */; };
 		919DD2A11922E3570039205E /* JCPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 919DD2A01922E3570039205E /* JCPopoverView.m */; };
@@ -700,6 +705,9 @@
 		9172AD5B19192A1500481B01 /* UserDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserDefaults.plist; sourceTree = "<group>"; };
 		91743A9E191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTermsAndConditonsVCViewController.h; sourceTree = "<group>"; };
 		91743A9F191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTermsAndConditonsVCViewController.m; sourceTree = "<group>"; };
+		91869D861959E5CF007743CE /* JCTOSButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTOSButtonView.m; sourceTree = SOURCE_ROOT; };
+		91915731195A2DC0004BDE26 /* JCLeaveFeedbackButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JCLeaveFeedbackButton.m; path = JiveOne/JCLeaveFeedbackButton.m; sourceTree = SOURCE_ROOT; };
+		91915734195A30F6004BDE26 /* JCLogOutButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCLogOutButton.m; sourceTree = SOURCE_ROOT; };
 		91915736195B209D004BDE26 /* JCAppIntro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAppIntro.h; sourceTree = "<group>"; };
 		91915737195B209D004BDE26 /* JCAppIntro.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAppIntro.m; sourceTree = "<group>"; };
 		919DD29B1922E2C90039205E /* JCPopoverSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPopoverSlider.h; sourceTree = "<group>"; };
@@ -1996,6 +2004,7 @@
 				2700989B18F4714100B6BC2F /* bubble-stroked@2x.png in Resources */,
 				270098A318F4714100B6BC2F /* input-field-cover@2x.png in Resources */,
 				27F1779418FDEECE0073C6AD /* release_notes.md in Resources */,
+				275F4A6818AD0FBC00D2F069 /* Main_iPad.storyboard in Resources */,
 				2700988518F4714100B6BC2F /* bubble-classic-blue@2x.png in Resources */,
 				272580F0192120500027887C /* people-start-conv.png in Resources */,
 				27B8153618D94E9C00516BF6 /* close_notification.png in Resources */,
@@ -2011,6 +2020,7 @@
 				2700988D18F4714100B6BC2F /* bubble-classic-typing@2x.png in Resources */,
 				279E4C7019226FAC002A556C /* people-search.png in Resources */,
 				275F4A7018AD0FBC00D2F069 /* Images.xcassets in Resources */,
+				275F4A6518AD0FBC00D2F069 /* Main_iPhone.storyboard in Resources */,
 				270098C718F5EA9300B6BC2F /* nav-people.png in Resources */,
 				27F1F2F9191C171300AEAFD7 /* UAPushSettingsAddTagViewController.xib in Resources */,
 				279E602418C8C59900C5CC9F /* JCPersonCell.xib in Resources */,
@@ -2156,6 +2166,7 @@
 				2700987818F4714100B6BC2F /* JSBubbleImageViewFactory.m in Sources */,
 				27F64D5919772CCE00F772AA /* PBX.m in Sources */,
 				910709FE1959D60B0041E1CF /* JCLogoutIcon.m in Sources */,
+				91915735195A30F6004BDE26 /* JCLogOutButton.m in Sources */,
 				2710E40C18CE873000152C91 /* Conversation+Custom.m in Sources */,
 				27F1F2E9191C171300AEAFD7 /* UAPushSettingsSoundsViewController.m in Sources */,
 				27F1F2E3191C171300AEAFD7 /* UAMapPresentationController.m in Sources */,
@@ -2241,6 +2252,7 @@
 				273CC25E1900B23B005A2857 /* JCVoiceCell.m in Sources */,
 				2799755F1959CD38001425CC /* JCStyleKit.m in Sources */,
 				9154947819366C54003DCED4 /* JCPlayPauseView.m in Sources */,
+				91869D871959E5CF007743CE /* JCTOSButtonView.m in Sources */,
 				2710E40F18CEC8C300152C91 /* ConversationEntry+Custom.m in Sources */,
 				91634C2F19630A3B0079A823 /* JCGetStartedButton.m in Sources */,
 				279E4CB1192273E5002A556C /* MBContactCollectionViewPromptCell.m in Sources */,
