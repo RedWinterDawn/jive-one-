@@ -249,7 +249,7 @@ int didNotify;
 
     LOG_Info();
     
-//    [[JCSocketDispatch sharedInstance] closeSocket];
+    [[JasmineSocket sharedInstance] closeSocketWithReason:@"Entering background"];
 }
 
 #pragma mark - PushNotifications

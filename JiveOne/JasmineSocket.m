@@ -28,10 +28,12 @@ static NSInteger SocketCloseCode = 1001;
 
 - (void)initSocket
 {
-    if (_socket.readyState != PSWebSocketReadyStateOpen) {
-        [self requestSession];
-    }
-	
+	if ([self.socket respondsToSelector:@selector(readyState)]) {
+		if (_socket.readyState != PSWebSocketReadyStateOpen) {
+			[self requestSession];
+		}
+	}
+    
 //	breakSocketTimer = [NSTimer timerWithTimeInterval:5 target:self selector:@selector(closeSocketWithoutReason) userInfo:nil repeats:NO];
 //	[[NSRunLoop currentRunLoop] addTimer:breakSocketTimer forMode:NSDefaultRunLoopMode];
 }

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <PSWebSocket.h>
+#import <PocketSocket/PSWebSocket.h>
 
 @interface JasmineSocket : NSObject <PSWebSocketDelegate>
 
@@ -23,6 +23,7 @@ typedef void (^CompletionBlock) (BOOL success, NSError *error);
 - (void)initSocket;
 - (void)postSubscriptionsToSocketWithId:(NSString *)ident entity:(NSString *)entity type:(NSString *)type;
 - (void)startPoolingFromSocketWithCompletion:(CompletionBlock)completed;
-
+- (void) closeSocketWithReason:(NSString *)reason;
+- (void)restartSocket;
 
 @end
