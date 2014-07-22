@@ -62,6 +62,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
 {
     [super viewDidLoad];
     self.previousOffset = 0;
+    [self initDataStructures];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"JCPersonCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
 
@@ -129,9 +130,11 @@ static NSString *CellIdentifier = @"DirectoryCell";
         self.clientEntitiesSearchArray = [NSMutableArray new];
     }
 
+    if (!self.sections) {
+        self.star = @"\u2605";
+        self.sections = [NSArray arrayWithObjects:self.star, @"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
+    }
     
-    self.star = @"\u2605";
-    self.sections = [NSArray arrayWithObjects:self.star, @"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
 }
 
 
