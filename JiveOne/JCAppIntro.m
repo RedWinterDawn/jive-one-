@@ -15,27 +15,27 @@
 
 //Arrows
 #define kTopLeft_x -130
-#define kTopLeft_y -65
+#define kTopLeft_y -85
 #define kTopRight_x 5
-#define kTopRight_y -70
+#define kTopRight_y -90
 #define kBottomLeft_x -15
-#define kBottomLeft_y 115
-#define kBottomRight_x 65
-#define kBottomRight_y 95
+#define kBottomLeft_y 95
+#define kBottomRight_x 75
+#define kBottomRight_y 75
 #define labelTextColor [UIColor whiteColor]
 
 //Labels
 #define kTopLeft_x_Offset -110
-#define kTopLeft_y_Offset -130
+#define kTopLeft_y_Offset -150
 
 #define kTopRight_x_Offset 45
-#define kTopRight_y_Offset -160
+#define kTopRight_y_Offset -180
 
 #define kBottomLeft_x_Offset -75
-#define kBottomLeft_y_Offset 190
+#define kBottomLeft_y_Offset 160
 
-#define kBottomRight_x_Offset 75
-#define kBottomRight_y_Offset 150
+#define kBottomRight_x_Offset 105
+#define kBottomRight_y_Offset 130
 
 #define kFontSize 24
 //Buttons
@@ -172,11 +172,11 @@
     //******************************************************
     
     self.voicemailCell = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfVoicemailCell]];
-    //self.voicemailCell.center = self.view.center;
-    NSDictionary *d = @{@"x": @1,//((timeForPage(1))+(self.view.frame.size.width/2)-(self.voicemailCell.frame.size.width/2)),
-                        @"y": @12,//((timeForPage(1))+(self.view.frame.size.height/2)-(self.voicemailCell.frame.size.height/2)),
+    self.voicemailCell.center = self.view.center;
+    NSDictionary *d = @{@"x": @1,
+                        @"y": @11,
                         @"w": @18,
-                        @"h": @11,
+                        @"h": @9,
                         @"a": @0,
                         @"imageView": self.voicemailCell};
     self.voicemailCell = [self createImageViewUsingDictionary:d];
@@ -191,22 +191,22 @@
 //    self.voicemailCell.frame = CGRectMake(voicemailCell_x, voicemailCell_y, voicemailCell_w, voicemailCell_h);
     
     
-    CALayer *shadowLayervoicemailCell = self.voicemailCell.layer;
-    shadowLayervoicemailCell.shadowOffset = CGSizeZero;
-    shadowLayervoicemailCell.shadowColor = [[UIColor blackColor] CGColor];
-    shadowLayervoicemailCell.shadowRadius = 3.0f;
-    shadowLayervoicemailCell.shadowOpacity = 0.50f;
-    shadowLayervoicemailCell.shadowPath = [self awesomeShadow:shadowLayervoicemailCell.bounds];
+//    CALayer *shadowLayervoicemailCell = self.voicemailCell.layer;
+//    shadowLayervoicemailCell.shadowOffset = CGSizeZero;
+//    shadowLayervoicemailCell.shadowColor = [[UIColor blackColor] CGColor];
+//    shadowLayervoicemailCell.shadowRadius = 3.0f;
+//    shadowLayervoicemailCell.shadowOpacity = 0.50f;
+//    shadowLayervoicemailCell.shadowPath = [self awesomeShadow:shadowLayervoicemailCell.bounds];
     [self.scrollView addSubview:self.voicemailCell];
     
     //******************************************************
     //Add individual Images to the voicemailCell
     //******************************************************
-    self.vmPlay = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfPlayLoginWithPlayPauseDisplaysPlay:true]];
-    self.vmPlay.center = self.voicemailCell.center;
-    self.vmPlay.frame = CGRectMake(0, 0, 25, 25);
-    self.vmPlay.frame = CGRectOffset(self.vmPlay.frame, 10, 75);
-    [self.voicemailCell addSubview:self.vmPlay];
+//    self.vmPlay = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfPlayLoginWithPlayPauseDisplaysPlay:true]];
+//    self.vmPlay.center = self.voicemailCell.center;
+//    self.vmPlay.frame = CGRectMake(0, 0, 25, 25);
+//    self.vmPlay.frame = CGRectOffset(self.vmPlay.frame, 10, 75);
+//    [self.voicemailCell addSubview:self.vmPlay];
     
 //    self.vmIcon = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfVoicemailIcon]];
 //    self.vmIcon.center = self.voicemailCell.center;
@@ -214,20 +214,20 @@
 //    self.vmIcon.frame = CGRectOffset(self.vmIcon.frame, self.voicemailCell.frame.size.width -27, 29);
 //    [self.voicemailCell addSubview:self.vmIcon];
     
-    self.vmScrubber = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfScrubberLogin]];
-    self.vmScrubber.center = self.voicemailCell.center;
-    self.vmScrubber.frame = CGRectOffset(self.vmScrubber.frame, -20, -205);
-    [self.voicemailCell addSubview:self.vmScrubber];
+//    self.vmScrubber = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfScrubberLogin]];
+//    self.vmScrubber.center = self.voicemailCell.center;
+//    self.vmScrubber.frame = CGRectOffset(self.vmScrubber.frame, -20, -205);
+//    [self.voicemailCell addSubview:self.vmScrubber];
     
-    self.vmTrash = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfTrashLogin]];
-    self.vmTrash.center = self.voicemailCell.center;
-    self.vmTrash.frame = CGRectOffset(self.vmTrash.frame, timeForPage(1) + 30, -160);
-    [self.voicemailCell addSubview:self.vmTrash];
+//    self.vmTrash = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfTrashLogin]];
+//    self.vmTrash.center = self.voicemailCell.center;
+//    self.vmTrash.frame = CGRectOffset(self.vmTrash.frame, timeForPage(1) + 30, -160);
+//    [self.voicemailCell addSubview:self.vmTrash];
     
-    self.vmSpeaker = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfSpeakerLogin]];
-    self.vmSpeaker.center = self.voicemailCell.center;
-    self.vmSpeaker.frame = CGRectOffset(self.vmSpeaker.frame, timeForPage(1) - 45, -160);
-    [self.voicemailCell addSubview:self.vmSpeaker];
+//    self.vmSpeaker = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfSpeakerLogin]];
+//    self.vmSpeaker.center = self.voicemailCell.center;
+//    self.vmSpeaker.frame = CGRectOffset(self.vmSpeaker.frame, timeForPage(1) - 45, -160);
+//    [self.voicemailCell addSubview:self.vmSpeaker];
     
     //******************************************************
     //Add JiveLogoWhite to page 1
@@ -247,52 +247,43 @@
     
     
     
-    UILabel *callerIdLabel = [[UILabel alloc] init];
-    callerIdLabel.text = @"Troy Sheilds";
-    [callerIdLabel sizeToFit];
-    [callerIdLabel setTextColor:[UIColor blackColor]];
-    callerIdLabel.center = self.voicemailCell.center;
-    [callerIdLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14]];
-    callerIdLabel.frame = CGRectOffset(self.voicemailCell.frame, timeForPage(1) + 2, -270);
-    [self.voicemailCell addSubview:callerIdLabel];
+//    UILabel *callerIdLabel = [[UILabel alloc] init];
+//    callerIdLabel.text = @"Troy Sheilds";
+//    [callerIdLabel sizeToFit];
+//    [callerIdLabel setTextColor:[UIColor blackColor]];
+//    callerIdLabel.center = self.voicemailCell.center;
+//    [callerIdLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:14]];
+//    callerIdLabel.frame = CGRectOffset(self.voicemailCell.frame, timeForPage(1) + 2, -270);
+//    [self.voicemailCell addSubview:callerIdLabel];
     
-    UILabel *vmDateLabel = [[UILabel alloc] init];
-    vmDateLabel.text = @"May 22";
-    [vmDateLabel sizeToFit];
-    [vmDateLabel setTextColor:[UIColor lightGrayColor]];
-    vmDateLabel.center = self.voicemailCell.center;
-    [vmDateLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12]];
-    vmDateLabel.frame = CGRectOffset(self.voicemailCell.frame, timeForPage(1) + self.voicemailCell.frame.size.width - 68 , -268);
-    [self.voicemailCell addSubview:vmDateLabel];
+//    UILabel *vmDateLabel = [[UILabel alloc] init];
+//    vmDateLabel.text = @"May 22";
+//    [vmDateLabel sizeToFit];
+//    [vmDateLabel setTextColor:[UIColor lightGrayColor]];
+//    vmDateLabel.center = self.voicemailCell.center;
+//    [vmDateLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12]];
+//    vmDateLabel.frame = CGRectOffset(self.voicemailCell.frame, timeForPage(1) + self.voicemailCell.frame.size.width - 68 , -268);
+//    [self.voicemailCell addSubview:vmDateLabel];
     
-//    UILabel *vmDateTimeLabel = [[UILabel alloc] init];
-//    vmDateTimeLabel.text = @"2014 08:15 PM";
-//    [vmDateTimeLabel sizeToFit];
-//    [vmDateTimeLabel setTextColor:[UIColor lightGrayColor]];
-//    vmDateTimeLabel.center = self.voicemailCell.center;
-//    [vmDateTimeLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12]];
-//    vmDateTimeLabel.frame = CGRectOffset(self.voicemailCell.frame, timeForPage(1) + 64, -227);
-//    [self.voicemailCell addSubview:vmDateTimeLabel];
+    
+//    UILabel *vmTimeLabel2 = [[UILabel alloc] init];
+//    vmTimeLabel2.text = @"0:05";
+//    [vmTimeLabel2 sizeToFit];
+//    [vmTimeLabel2 setTextColor:[UIColor blackColor]];
+//    vmTimeLabel2.center = self.voicemailCell.center;
+//    [vmTimeLabel2 setFont:[UIFont fontWithName:@"AppleSDGothicNeo-Bold" size:7]];
+//    vmTimeLabel2.frame = CGRectOffset(self.voicemailCell.frame, timeForPage(1) + self.voicemailCell.frame.size.width - 44, -193);
+//    [self.voicemailCell addSubview:vmTimeLabel2];
 //    
-    
-    UILabel *vmTimeLabel2 = [[UILabel alloc] init];
-    vmTimeLabel2.text = @"0:05";
-    [vmTimeLabel2 sizeToFit];
-    [vmTimeLabel2 setTextColor:[UIColor blackColor]];
-    vmTimeLabel2.center = self.voicemailCell.center;
-    [vmTimeLabel2 setFont:[UIFont fontWithName:@"AppleSDGothicNeo-Bold" size:7]];
-    vmTimeLabel2.frame = CGRectOffset(self.voicemailCell.frame, timeForPage(1) + self.voicemailCell.frame.size.width - 44, -193);
-    [self.voicemailCell addSubview:vmTimeLabel2];
-    
-    
-    UILabel *vmExtLabel = [[UILabel alloc] init];
-    vmExtLabel.text = @"7718";
-    [vmExtLabel sizeToFit];
-    [vmExtLabel setTextColor:[UIColor blackColor]];
-    vmExtLabel.center = self.voicemailCell.center;
-    [vmExtLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12]];
-    vmExtLabel.frame = CGRectOffset(self.voicemailCell.frame, timeForPage(1) + 232, -249);
-    [self.voicemailCell addSubview:vmExtLabel];
+//    
+//    UILabel *vmExtLabel = [[UILabel alloc] init];
+//    vmExtLabel.text = @"7718";
+//    [vmExtLabel sizeToFit];
+//    [vmExtLabel setTextColor:[UIColor blackColor]];
+//    vmExtLabel.center = self.voicemailCell.center;
+//    [vmExtLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:12]];
+//    vmExtLabel.frame = CGRectOffset(self.voicemailCell.frame, timeForPage(1) + 232, -249);
+//    [self.voicemailCell addSubview:vmExtLabel];
     
     //******************************************************
     //This is where we add all the text the the labels of the tutorials

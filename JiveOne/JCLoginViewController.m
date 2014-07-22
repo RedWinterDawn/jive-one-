@@ -127,18 +127,17 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kAuthenticationFromTokenFailed object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kAuthenticationFromTokenFailedWithTimeout object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kAuthenticationFromTokenSucceeded object:nil];
-    
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kAuthenticationFromTokenFailed object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kAuthenticationFromTokenSucceeded object:nil];
     
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    if (self.view.frame.size.height <= 560){
-        
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
-    }
+//    if (self.view.frame.size.height <= 560){
+//        
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
+//    }
     
     
     if ([[JCAuthenticationManager sharedInstance] getRememberMe]) {
@@ -486,36 +485,36 @@
 - (void)keyboardDidShow:(NSNotification *)notification
 {
     //This animates the view when the keyboard appears and shifts it up in response.
-    [UIView animateKeyframesWithDuration:0.2 delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
-        CGRect frame = self.loginViewContainer.frame;
-        CGRect usernameTextField = self.usernameTextField.frame;
-        
-        frame.origin.y = (frame.origin.y - kShiftKeyboardTHisMuch);
-        
-        usernameTextField.origin.y = (usernameTextField.origin.y - kShiftKeyboardTHisMuch);
-        
-        self.loginViewContainer.frame = frame;
-        self.usernameTextField.frame = usernameTextField;
-    } completion:^(BOOL finished) {
-        
-    }];
+//    [UIView animateKeyframesWithDuration:0.2 delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
+//        CGRect frame = self.loginViewContainer.frame;
+//        CGRect usernameTextField = self.usernameTextField.frame;
+//        
+//        frame.origin.y = (frame.origin.y - kShiftKeyboardTHisMuch);
+//        
+//        usernameTextField.origin.y = (usernameTextField.origin.y - kShiftKeyboardTHisMuch);
+//        
+//        self.loginViewContainer.frame = frame;
+//        self.usernameTextField.frame = usernameTextField;
+//    } completion:^(BOOL finished) {
+//        
+//    }];
     
 }
 
 - (void)keyboardDidHide:(NSNotification *)notification
 {
     //This animates the view when the keyboard disappears and shifts it down in responce.
-    [UIView animateKeyframesWithDuration:0.2 delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
-        CGRect frame = self.loginViewContainer.frame;
-        CGRect usernameTextField = self.usernameTextField.frame;
-        
-        frame.origin.y = (frame.origin.y + kShiftKeyboardTHisMuch);
-        usernameTextField.origin.y = (usernameTextField.origin.y + kShiftKeyboardTHisMuch);
-        self.loginViewContainer.frame = frame;
-        self.usernameTextField.frame = usernameTextField;
-    } completion:^(BOOL finished) {
-        
-    }];
+//    [UIView animateKeyframesWithDuration:0.2 delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
+//        CGRect frame = self.loginViewContainer.frame;
+//        CGRect usernameTextField = self.usernameTextField.frame;
+//        
+//        frame.origin.y = (frame.origin.y + kShiftKeyboardTHisMuch);
+//        usernameTextField.origin.y = (usernameTextField.origin.y + kShiftKeyboardTHisMuch);
+//        self.loginViewContainer.frame = frame;
+//        self.usernameTextField.frame = usernameTextField;
+//    } completion:^(BOOL finished) {
+//        
+//    }];
 }
 
 - (void)goToApplication
