@@ -10,32 +10,33 @@
 #import "JCStyleKit.h"
 #import "JCLoginViewController.h"
 
-#define NUMBER_OF_PAGES 4
+#define NUMBER_OF_PAGES 3
 #define timeForPage(page) (NSInteger)(self.view.frame.size.width * (page - 1))
-
+#define kVoicemailCell_x 0
+#define kVoicemailCell_y -100
 //Arrows
-#define kTopLeft_x -130
-#define kTopLeft_y -85
-#define kTopRight_x 5
-#define kTopRight_y -90
-#define kBottomLeft_x -15
-#define kBottomLeft_y 95
+#define kTopLeft_x -100
+#define kTopLeft_y 40
+#define kTopRight_x 45
+#define kTopRight_y 5
+#define kBottomLeft_x -25
+#define kBottomLeft_y 260
 #define kBottomRight_x 75
-#define kBottomRight_y 75
+#define kBottomRight_y 243
 #define labelTextColor [UIColor whiteColor]
 
 //Labels
-#define kTopLeft_x_Offset -110
-#define kTopLeft_y_Offset -150
-
-#define kTopRight_x_Offset 45
-#define kTopRight_y_Offset -180
-
-#define kBottomLeft_x_Offset -75
-#define kBottomLeft_y_Offset 160
-
-#define kBottomRight_x_Offset 105
-#define kBottomRight_y_Offset 130
+//#define kTopLeft_x_Offset -110
+//#define kTopLeft_y_Offset -150
+//
+//#define kTopRight_x_Offset 45
+//#define kTopRight_y_Offset -180
+//
+//#define kBottomLeft_x_Offset -75
+//#define kBottomLeft_y_Offset 160
+//
+//#define kBottomRight_x_Offset 105
+//#define kBottomRight_y_Offset 130
 
 #define kFontSize 24
 //Buttons
@@ -53,18 +54,18 @@
 @property (strong, nonatomic) UIImageView *backgroundImg;
 
 @property (strong, nonatomic) UIImageView *voicemailCell;
-@property (strong, nonatomic) UIImageView *vmPlay;
-@property (strong, nonatomic) UIImageView *vmScrubber;
-@property (strong, nonatomic) UIImageView *vmIcon;
-@property (strong, nonatomic) UIImageView *vmTrash;
-@property (strong, nonatomic) UIImageView *vmSpeaker;
-@property (strong, nonatomic) UILabel *vmTimeLabel;
-@property (strong, nonatomic) UILabel *vmTimeLabel2;
-@property (strong, nonatomic) UILabel *callerIdLabel;
-@property (strong, nonatomic) UILabel *vmDateLabel;
-@property (strong, nonatomic) UILabel *vmDateTimeLabel;
-@property (strong, nonatomic) UILabel *vmExtLabel;
-@property (strong, nonatomic) UILabel *comingSoon;
+//@property (strong, nonatomic) UIImageView *vmPlay;
+//@property (strong, nonatomic) UIImageView *vmScrubber;
+//@property (strong, nonatomic) UIImageView *vmIcon;
+//@property (strong, nonatomic) UIImageView *vmTrash;
+//@property (strong, nonatomic) UIImageView *vmSpeaker;
+//@property (strong, nonatomic) UILabel *vmTimeLabel;
+//@property (strong, nonatomic) UILabel *vmTimeLabel2;
+//@property (strong, nonatomic) UILabel *callerIdLabel;
+//@property (strong, nonatomic) UILabel *vmDateLabel;
+//@property (strong, nonatomic) UILabel *vmDateTimeLabel;
+//@property (strong, nonatomic) UILabel *vmExtLabel;
+//@property (strong, nonatomic) UILabel *comingSoon;
 
 @property (strong, nonatomic) UIImageView *bottomRight;
 @property (strong, nonatomic) UIImageView *bottomLeft;
@@ -73,10 +74,10 @@
 @property (strong, nonatomic) JCJiveLogoWhite *jiveLogoWhite;
 @property (strong, nonatomic) JCVoicemailIcon *voicemailIconWhite;
 
-@property (strong, nonatomic) UILabel *bottomRightLabel;
-@property (strong, nonatomic) UILabel *bottomLeftLabel;
-@property (strong, nonatomic) UILabel *topRightLabel;
-@property (strong, nonatomic) UILabel *topLeftLabel;
+//@property (strong, nonatomic) UILabel *bottomRightLabel;
+//@property (strong, nonatomic) UILabel *bottomLeftLabel;
+//@property (strong, nonatomic) UILabel *topRightLabel;
+//@property (strong, nonatomic) UILabel *topLeftLabel;
 @property (strong, nonatomic) UILabel *thridPageLabel1;
 @property (strong, nonatomic) UILabel *thridPageLabel2;
 @property (strong, nonatomic) UILabel *thridPageLabel3;
@@ -171,24 +172,24 @@
     //Add voicemailCell to center of page1
     //******************************************************
     
-    self.voicemailCell = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfVoicemailCell]];
-    self.voicemailCell.center = self.view.center;
-    NSDictionary *d = @{@"x": @1,
-                        @"y": @11,
-                        @"w": @18,
-                        @"h": @9,
-                        @"a": @0,
-                        @"imageView": self.voicemailCell};
-    self.voicemailCell = [self createImageViewUsingDictionary:d];
-    
-//    float voicemailCell_w = 278;
-//    float voicemailCell_h = 157;
 //    self.voicemailCell = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfVoicemailCell]];
 //    self.voicemailCell.center = self.view.center;
-//    float voicemailCell_x = ((timeForPage(1))+(self.view.frame.size.width/2)-(voicemailCell_w/2));
-//    float voicemailCell_y = ((timeForPage(1))+(self.view.frame.size.height/2)-(voicemailCell_h/2));
-//    [self.voicemailCell setAlpha:0.0];
-//    self.voicemailCell.frame = CGRectMake(voicemailCell_x, voicemailCell_y, voicemailCell_w, voicemailCell_h);
+//    NSDictionary *d = @{@"x": @1,
+//                        @"y": @11,
+//                        @"w": @18,
+//                        @"h": @9,
+//                        @"a": @0,
+//                        @"imageView": self.voicemailCell};
+//    self.voicemailCell = [self createImageViewUsingDictionary:d];
+    
+    float voicemailCell_w = 278;
+    float voicemailCell_h = 157;
+    self.voicemailCell = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfVoicemailCell]];
+    self.voicemailCell.center = self.view.center;
+    float voicemailCell_x = ((timeForPage(1))+(self.view.frame.size.width/2)-(voicemailCell_w/2));
+    float voicemailCell_y = (((timeForPage(1))+(self.view.frame.size.height/2)-(voicemailCell_h/2)+10));
+    [self.voicemailCell setAlpha:0.0];
+    self.voicemailCell.frame = CGRectMake(voicemailCell_x, voicemailCell_y, voicemailCell_w, voicemailCell_h);
     
     
 //    CALayer *shadowLayervoicemailCell = self.voicemailCell.layer;
@@ -288,7 +289,7 @@
     //******************************************************
     //This is where we add all the text the the labels of the tutorials
     //******************************************************
-    UILabel *firstPageText = [[UILabel alloc] init];
+     UILabel *firstPageText = [[UILabel alloc] init];
     firstPageText.text = @"The Jive Voicemail App lets you consume and manage all of your voicemail messages.";
     [firstPageText setFont:[UIFont fontWithName:kIntroFont size:kFontSize]];
     [firstPageText setTextColor:labelTextColor];
@@ -305,63 +306,63 @@
     self.firstLabel = firstPageText;
     [self.scrollView addSubview:firstPageText];
     
-    UILabel *playPauseText = [[UILabel alloc] init];
-    playPauseText.text = @"Play/Pause";
-    [playPauseText setFont:[UIFont fontWithName:kIntroFont size:kFontSize]];
-    [playPauseText sizeToFit];
-    [playPauseText setTextColor:labelTextColor];
-    playPauseText.shadowColor = [UIColor darkGrayColor];
-    playPauseText.shadowOffset = CGSizeMake(0, 1);
-    playPauseText.center = self.view.center;
-    playPauseText.frame = CGRectOffset(playPauseText.frame, timeForPage(1) + kTopLeft_x_Offset, kTopLeft_y_Offset);
-    [playPauseText setAlpha:0.0];
-    self.topLeftLabel = playPauseText;
-    [self.scrollView addSubview:self.topLeftLabel];
-    
-    CGRect ppFrame = CGRectMake(100, 100, 125, 39);
-    UIImageView *playPauseImageView = [[UIImageView alloc]initWithImage:[JCStyleKit imageOfPlayPauseTextWithFrame:ppFrame]];
-    [self.scrollView addSubview:playPauseImageView];
-    
-    UILabel *scrubberText = [[UILabel alloc] init];
-    scrubberText.text = @"Span voicemail segments";
-    [scrubberText setFont:[UIFont fontWithName:kIntroFont size:kFontSize]];
-    [scrubberText sizeToFit];
-    [scrubberText setTextColor:labelTextColor];
-    scrubberText.shadowColor = [UIColor darkGrayColor];
-    scrubberText.shadowOffset = CGSizeMake(0, 1);
-    scrubberText.center = self.view.center;
-    scrubberText.frame = CGRectOffset(scrubberText.frame, timeForPage(1) + kTopRight_x_Offset, kTopRight_y_Offset);
-    [scrubberText setAlpha:0.0];
-    [self.scrollView addSubview:scrubberText];
-    self.topRightLabel = scrubberText;
-    NSLog(@"ScrT%@",NSStringFromCGRect(scrubberText.frame));
-    
-    
-    UILabel *speakerText = [[UILabel alloc] init];
-    speakerText.text = @"Speaker On/Off";
-    [speakerText setFont:[UIFont fontWithName:kIntroFont size:kFontSize]];
-    [speakerText sizeToFit];
-    [speakerText setTextColor:labelTextColor];
-    speakerText.shadowColor = [UIColor darkGrayColor];
-    speakerText.shadowOffset = CGSizeMake(0, 1);
-    speakerText.center = self.view.center;
-    speakerText.frame = CGRectOffset(speakerText.frame, timeForPage(1) + kBottomLeft_x_Offset, kBottomLeft_y_Offset);
-    [speakerText setAlpha:0.0];
-    [self.scrollView addSubview:speakerText];
-    self.bottomLeftLabel = speakerText;
-    
-    UILabel *deleteText = [[UILabel alloc] init];
-    deleteText.text = @"Delete";
-    [deleteText setFont:[UIFont fontWithName:kIntroFont size:kFontSize]];
-    [deleteText sizeToFit];
-    [deleteText setTextColor:labelTextColor];
-    deleteText.shadowColor = [UIColor darkGrayColor];
-    deleteText.shadowOffset = CGSizeMake(0, 1);
-    deleteText.center = self.view.center;
-    deleteText.frame = CGRectOffset(deleteText.frame, timeForPage(1) + kBottomRight_x_Offset, kBottomRight_y_Offset);
-    [deleteText setAlpha:0.0];
-    [self.scrollView addSubview:deleteText];
-    self.bottomRightLabel = deleteText;
+//    UILabel *playPauseText = [[UILabel alloc] init];
+//    playPauseText.text = @"Play/Pause";
+//    [playPauseText setFont:[UIFont fontWithName:kIntroFont size:kFontSize]];
+//    [playPauseText sizeToFit];
+//    [playPauseText setTextColor:labelTextColor];
+//    playPauseText.shadowColor = [UIColor darkGrayColor];
+//    playPauseText.shadowOffset = CGSizeMake(0, 1);
+//    playPauseText.center = self.view.center;
+//    playPauseText.frame = CGRectOffset(playPauseText.frame, timeForPage(1) + kTopLeft_x_Offset, kTopLeft_y_Offset);
+//    [playPauseText setAlpha:0.0];
+//    self.topLeftLabel = playPauseText;
+//    [self.scrollView addSubview:self.topLeftLabel];
+//    
+//    CGRect ppFrame = CGRectMake(100, 100, 125, 39);
+//    UIImageView *playPauseImageView = [[UIImageView alloc]initWithImage:[JCStyleKit imageOfPlayPauseTextWithFrame:ppFrame]];
+//    [self.scrollView addSubview:playPauseImageView];
+//    
+//    UILabel *scrubberText = [[UILabel alloc] init];
+//    scrubberText.text = @"Span voicemail segments";
+//    [scrubberText setFont:[UIFont fontWithName:kIntroFont size:kFontSize]];
+//    [scrubberText sizeToFit];
+//    [scrubberText setTextColor:labelTextColor];
+//    scrubberText.shadowColor = [UIColor darkGrayColor];
+//    scrubberText.shadowOffset = CGSizeMake(0, 1);
+//    scrubberText.center = self.view.center;
+//    scrubberText.frame = CGRectOffset(scrubberText.frame, timeForPage(1) + kTopRight_x_Offset, kTopRight_y_Offset);
+//    [scrubberText setAlpha:0.0];
+//    [self.scrollView addSubview:scrubberText];
+//    self.topRightLabel = scrubberText;
+//    NSLog(@"ScrT%@",NSStringFromCGRect(scrubberText.frame));
+//    
+//    
+//    UILabel *speakerText = [[UILabel alloc] init];
+//    speakerText.text = @"Speaker On/Off";
+//    [speakerText setFont:[UIFont fontWithName:kIntroFont size:kFontSize]];
+//    [speakerText sizeToFit];
+//    [speakerText setTextColor:labelTextColor];
+//    speakerText.shadowColor = [UIColor darkGrayColor];
+//    speakerText.shadowOffset = CGSizeMake(0, 1);
+//    speakerText.center = self.view.center;
+//    speakerText.frame = CGRectOffset(speakerText.frame, timeForPage(1) + kBottomLeft_x_Offset, kBottomLeft_y_Offset);
+//    [speakerText setAlpha:0.0];
+//    [self.scrollView addSubview:speakerText];
+//    self.bottomLeftLabel = speakerText;
+//    
+//    UILabel *deleteText = [[UILabel alloc] init];
+//    deleteText.text = @"Delete";
+//    [deleteText setFont:[UIFont fontWithName:kIntroFont size:kFontSize]];
+//    [deleteText sizeToFit];
+//    [deleteText setTextColor:labelTextColor];
+//    deleteText.shadowColor = [UIColor darkGrayColor];
+//    deleteText.shadowOffset = CGSizeMake(0, 1);
+//    deleteText.center = self.view.center;
+//    deleteText.frame = CGRectOffset(deleteText.frame, timeForPage(1) + kBottomRight_x_Offset, kBottomRight_y_Offset);
+//    [deleteText setAlpha:0.0];
+//    [self.scrollView addSubview:deleteText];
+//    self.bottomRightLabel = deleteText;
     
     //******************************************************
     // now, we animate the voicemailCell
@@ -427,7 +428,8 @@
     //******************************************************
     self.topLeft = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfTopLeft]];
     self.topLeft.center = self.view.center;
-    self.topLeft.frame = CGRectOffset(self.topLeft.frame, kTopLeft_x, kTopLeft_y);
+    
+    self.topLeft.frame = CGRectOffset(self.topLeft.frame, (kVoicemailCell_x + kTopLeft_x), (kVoicemailCell_y + kTopLeft_y));
     [self.topLeft setAlpha:0.0];
     [self.scrollView addSubview:self.topLeft];
     
@@ -436,7 +438,7 @@
     //******************************************************
     self.topRight = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfTopRight]];
     self.topRight.center = self.view.center;
-    self.topRight.frame = CGRectOffset( self.topRight.frame, kTopRight_x, kTopRight_y );
+    self.topRight.frame = CGRectOffset( self.topRight.frame, (kVoicemailCell_x + kTopRight_x), (kVoicemailCell_y + kTopRight_y));
     [self.topRight setAlpha:0.0];
     [self.scrollView addSubview:self.topRight];
     
@@ -445,7 +447,7 @@
     //******************************************************
     self.bottomLeft = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfBottomLeft]];
     self.bottomLeft.center = self.view.center;
-    self.bottomLeft.frame = CGRectOffset( self.bottomLeft.frame, kBottomLeft_x, kBottomLeft_y );
+    self.bottomLeft.frame = CGRectOffset( self.bottomLeft.frame, (kVoicemailCell_x + kBottomLeft_x), (kVoicemailCell_y + kBottomLeft_y) );
     [self.bottomLeft setAlpha:0.0];
     [self.scrollView addSubview:self.bottomLeft];
     
@@ -454,7 +456,7 @@
     //******************************************************
     self.bottomRight = [[UIImageView alloc] initWithImage:[JCStyleKit imageOfBottomRight]];
     self.bottomRight.center = self.view.center;
-    self.bottomRight.frame = CGRectOffset(self.bottomRight.frame, kBottomRight_x, kBottomRight_y);
+    self.bottomRight.frame = CGRectOffset(self.bottomRight.frame, (kVoicemailCell_x + kBottomRight_x), (kVoicemailCell_y + kBottomRight_y));
     [self.bottomRight setAlpha:0.0];
     [self.scrollView addSubview:self.bottomRight];
     
@@ -500,19 +502,19 @@
                                                                  @"KeyFrame3":@[@3,@3,@(-300)]
                                                                  }];
     
-    [self createTransparencyAnimationWithDictionary:@{@"Label":self.topLeftLabel,
-                                                      @"KeyFrame1":@[@1,@0],
-                                                      @"KeyFrame2":@[@2,@1],
-                                                      @"KeyFrame3":@[@3,@1],
-                                                      @"KeyFrame4":@[@4,@0]
-                                                      }];
-    
-    [self createFrameAnimationWithDictionaryOfKeyFramesAndTime:@{@"Label":self.topLeftLabel,
-                                                                 @"KeyFrame1":@[@1,@(0),@0],
-                                                                 @"KeyFrame2":@[@2,@2,@0],
-                                                                 @"KeyFrame3":@[@3,@3,@(-300)]
-                                                                 }];
-    
+//    [self createTransparencyAnimationWithDictionary:@{@"Label":self.topLeftLabel,
+//                                                      @"KeyFrame1":@[@1,@0],
+//                                                      @"KeyFrame2":@[@2,@1],
+//                                                      @"KeyFrame3":@[@3,@1],
+//                                                      @"KeyFrame4":@[@4,@0]
+//                                                      }];
+//    
+//    [self createFrameAnimationWithDictionaryOfKeyFramesAndTime:@{@"Label":self.topLeftLabel,
+//                                                                 @"KeyFrame1":@[@1,@(0),@0],
+//                                                                 @"KeyFrame2":@[@2,@2,@0],
+//                                                                 @"KeyFrame3":@[@3,@3,@(-300)]
+//                                                                 }];
+//    
     #pragma mark - topRightAnamations
     //*****************************************************************************
     // now we animate the topRight, topRightLabel and add tranparency
@@ -530,34 +532,23 @@
                                                                  @"KeyFrame3":@[@3,@3,@(-300)]
                                                                  }];
     
-    [self createTransparencyAnimationWithDictionary:@{@"Label":self.topRightLabel,
-                                                      @"KeyFrame1":@[@1,@0],
-                                                      @"KeyFrame2":@[@2,@1],
-                                                      @"KeyFrame3":@[@3,@1],
-                                                      @"KeyFrame4":@[@4,@0]
-                                                      }];
-    
-    [self createFrameAnimationWithDictionaryOfKeyFramesAndTime:@{@"Label":self.topRightLabel,
-                                                                 @"KeyFrame1":@[@1,@2,@0],
-                                                                 @"KeyFrame2":@[@2,@2,@0],
-                                                                 @"KeyFrame3":@[@3,@3,@(-300)]
-                                                                 }];
+//    [self createTransparencyAnimationWithDictionary:@{@"Label":self.topRightLabel,
+//                                                      @"KeyFrame1":@[@1,@0],
+//                                                      @"KeyFrame2":@[@2,@1],
+//                                                      @"KeyFrame3":@[@3,@1],
+//                                                      @"KeyFrame4":@[@4,@0]
+//                                                      }];
+//    
+//    [self createFrameAnimationWithDictionaryOfKeyFramesAndTime:@{@"Label":self.topRightLabel,
+//                                                                 @"KeyFrame1":@[@1,@2,@0],
+//                                                                 @"KeyFrame2":@[@2,@2,@0],
+//                                                                 @"KeyFrame3":@[@3,@3,@(-300)]
+//                                                                 }];
     #pragma mark - bottomLeftAnamations
     //*****************************************************************************
     // now we animate the bottomLeft, bottomLeftLabel and add tranparency
     //*****************************************************************************
-    [self createTransparencyAnimationWithDictionary:@{@"Label":self.bottomLeftLabel,
-                                                      @"KeyFrame1":@[@1,@0],
-                                                      @"KeyFrame2":@[@2,@1],
-                                                      @"KeyFrame3":@[@3,@1],
-                                                      @"KeyFrame4":@[@4,@0]
-                                                      }];
     
-    [self createFrameAnimationWithDictionaryOfKeyFramesAndTime:@{@"Label":self.bottomLeftLabel,
-                                                                 @"KeyFrame1":@[@1,@(0),@0],
-                                                                 @"KeyFrame2":@[@2,@2,@0],
-                                                                 @"KeyFrame3":@[@3,@3,@240]
-                                                                 }];
     
     [self createTransparencyAnimationWithDictionary:@{@"Label":self.bottomLeft,
                                                       @"KeyFrame1":@[@1,@0],
@@ -571,6 +562,18 @@
                                                                  @"KeyFrame2":@[@2,@2,@0],
                                                                  @"KeyFrame3":@[@3,@3,@240]
                                                                  }];
+//    [self createTransparencyAnimationWithDictionary:@{@"Label":self.bottomLeftLabel,
+//                                                      @"KeyFrame1":@[@1,@0],
+//                                                      @"KeyFrame2":@[@2,@1],
+//                                                      @"KeyFrame3":@[@3,@1],
+//                                                      @"KeyFrame4":@[@4,@0]
+//                                                      }];
+//    
+//    [self createFrameAnimationWithDictionaryOfKeyFramesAndTime:@{@"Label":self.bottomLeftLabel,
+//                                                                 @"KeyFrame1":@[@1,@(0),@0],
+//                                                                 @"KeyFrame2":@[@2,@2,@0],
+//                                                                 @"KeyFrame3":@[@3,@3,@240]
+//                                                                 }];
     #pragma mark - bottomRightAnamations
     //*****************************************************************************
     // now we animate the bottomRight, bottomRightLabel and add tranparency
@@ -588,18 +591,18 @@
                                                                  @"KeyFrame3":@[@3,@3,@240]
                                                                  }];
  
-    [self createTransparencyAnimationWithDictionary:@{@"Label":self.bottomRightLabel,
-                                                      @"KeyFrame1":@[@1,@0],
-                                                      @"KeyFrame2":@[@2,@1],
-                                                      @"KeyFrame3":@[@3,@1],
-                                                      @"KeyFrame4":@[@4,@0]
-                                                      }];
-    
-    [self createFrameAnimationWithDictionaryOfKeyFramesAndTime:@{@"Label":self.bottomRightLabel,
-                                                                 @"KeyFrame1":@[@1,@2,@0],
-                                                                 @"KeyFrame2":@[@2,@2,@0],
-                                                                 @"KeyFrame3":@[@3,@3,@240]
-                                                                 }];
+//    [self createTransparencyAnimationWithDictionary:@{@"Label":self.bottomRightLabel,
+//                                                      @"KeyFrame1":@[@1,@0],
+//                                                      @"KeyFrame2":@[@2,@1],
+//                                                      @"KeyFrame3":@[@3,@1],
+//                                                      @"KeyFrame4":@[@4,@0]
+//                                                      }];
+//    
+//    [self createFrameAnimationWithDictionaryOfKeyFramesAndTime:@{@"Label":self.bottomRightLabel,
+//                                                                 @"KeyFrame1":@[@1,@2,@0],
+//                                                                 @"KeyFrame2":@[@2,@2,@0],
+//                                                                 @"KeyFrame3":@[@3,@3,@240]
+//                                                                 }];
 }
 
 // This is the animation method that adds Key Frames in which the item will be animated to as the time events are fired. It takes a Dictinary which is composed of a Key and array with 3 variables
@@ -653,17 +656,17 @@
 #pragma mark - page4
         - (void)setupPage4
         {
-    UILabel *comingSoon = [[UILabel alloc] init];
-    comingSoon.text = @"Coming soon!";
-    [comingSoon setFont:[UIFont fontWithName:kIntroFont size:40]];
-    comingSoon.textColor = [UIColor whiteColor];
-    comingSoon.shadowColor = [UIColor darkGrayColor];
-    comingSoon.shadowOffset = CGSizeMake(0, 1);
-    [comingSoon sizeToFit];
-    comingSoon.center = self.view.center;
-    comingSoon.frame = CGRectOffset(comingSoon.frame, timeForPage(4), -55);
-    [self.scrollView addSubview:comingSoon];
-    self.thridPageLabel1 = comingSoon;
+//    UILabel *comingSoon = [[UILabel alloc] init];
+//    comingSoon.text = @"Coming soon!";
+//    [comingSoon setFont:[UIFont fontWithName:kIntroFont size:40]];
+//    comingSoon.textColor = [UIColor whiteColor];
+//    comingSoon.shadowColor = [UIColor darkGrayColor];
+//    comingSoon.shadowOffset = CGSizeMake(0, 1);
+//    [comingSoon sizeToFit];
+//    comingSoon.center = self.view.center;
+//    comingSoon.frame = CGRectOffset(comingSoon.frame, timeForPage(4), -55);
+//    [self.scrollView addSubview:comingSoon];
+//    self.thridPageLabel1 = comingSoon;
 
      //******************************************************
     // Fade out the label by dragging on the last page
