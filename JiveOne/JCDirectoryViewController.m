@@ -72,9 +72,8 @@ static NSString *CellIdentifier = @"DirectoryCell";
     //self.icomoonFont = [UIFont fontWithName:@"icomoon" size:18.0];
     self.theRightShadeOfYellowForOurStar = [UIColor colorWithRed:255.0/255.0 green:212.0/255.0 blue:0.0/255.0 alpha:1.0];
     
-    sections = [NSArray arrayWithObjects:self.star, @"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
-    self.clientEntitiesArray = [[NSMutableArray alloc] init];
-    self.clientEntitiesSearchArray = [[NSMutableArray alloc] init];
+  
+
     self.doneAnimatingToolbarFromFirstResponderState = YES;
     [self.searchBarView addSubview:self.searchBar];
     [self.searchBar setShowsCancelButton:YES];
@@ -120,6 +119,21 @@ static NSString *CellIdentifier = @"DirectoryCell";
     [[JasmineSocket sharedInstance] initSocket];
     
 }
+
+-(void) initDataStructures{
+    if (!self.clientEntitiesArray) {
+        self.clientEntitiesArray = [NSMutableArray new];
+    }
+    
+    if (!self.clientEntitiesSearchArray) {
+        self.clientEntitiesSearchArray = [NSMutableArray new];
+    }
+    if (!self.sections) {
+        self.sections = [NSArray new];
+    }
+    self.sections = [NSArray arrayWithObjects:self.star, @"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
+}
+
 
 - (void)dismissViewController:(id)sender
 {
@@ -377,12 +391,17 @@ static NSString *CellIdentifier = @"DirectoryCell";
     }
 }
 
+
+
 - (void)loadCompanyDirectory {
+    
+    [self initDataStructures];
+    
     [self.clientEntitiesArray removeAllObjects];
     BOOL noData = YES;
     
-    for (int i = 0; i < sections.count; i++) {
-        NSString *section = sections[i];
+    for (int i = 0; i < self.sections.count; i++) {
+        NSString *section = self.sections[i];
         NSArray *sectionArray = nil;
         if (i == 0) {
             // handle favorites
@@ -457,7 +476,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
 {
     // Return the number of sections.
     if (tableView == self.tableView) {
-        return sections.count;
+        return self.sections.count;
     }
     else {
         return 1;
@@ -469,7 +488,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
     if (self.searchDisplayController.active) {
         return nil;
     } else {
-    return sections;
+    return self.sections;
     }
 }
 
@@ -483,7 +502,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
         return @"Search Results";
     }else{
 
-        return [sections objectAtIndex:section];
+        return [self.sections objectAtIndex:section];
     }
 }
 

@@ -91,11 +91,11 @@
 
 @end
 
-SPEC_BEGIN(DirecotryVC)
+SPEC_BEGIN(DirectoryVCTests)
 __block JCDirectoryViewController* directoryVC;
 
 describe(@"DirectoryVC", ^{
-    context(@"after being instantiated and authenticated", ^{
+    context(@"context", ^{
         beforeAll(^{ // Occurs once
             NSString *token = [[JCAuthenticationManager sharedInstance] getAuthenticationToken];
             if ([Common stringIsNilOrEmpty:token]) {
@@ -113,9 +113,23 @@ describe(@"DirectoryVC", ^{
             }
             
             directoryVC = [[UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] instantiateViewControllerWithIdentifier:@"JCDirectoryViewController"];
+            [directoryVC loadCompanyDirectory];
         });
-        it(@"", ^{
-            //TODO: test goes here
+        it(@"clientEntitiesArray is filled upon load", ^{
+            [[directoryVC.clientEntitiesArray shouldNot] beEmpty];
+        });
+        
+        it(@"after favoriting a person, isFavorite == true", ^{
+            NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
+            JCPersonCell *firstCell = (JCPersonCell*)[directoryVC.tableView cellForRowAtIndexPath:indexpath];
+            [[firstCell shouldNot] beNil];
+            BOOL isFavoriteStart = firstCell.line.isFavorite;
+            [firstCell toggleFavoriteStatus:nil];
+            
+            if(isFavoriteStart == [firstCell.line.isFavorite boolValue]){
+                 XCTFail(@"toggleFavoriteStatus should have changed isFavorite from what it was");
+            }
+                  
         });
     });
 });

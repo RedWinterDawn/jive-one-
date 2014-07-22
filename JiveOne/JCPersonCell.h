@@ -18,6 +18,8 @@
 
 @interface JCPersonCell : UITableViewCell
 
+- (IBAction)toggleFavoriteStatus:(id)sender;
+
 @property (weak,nonatomic) id<JCPersonCellDelegate> delegate;
 
 
