@@ -128,9 +128,9 @@ static NSString *CellIdentifier = @"DirectoryCell";
     if (!self.clientEntitiesSearchArray) {
         self.clientEntitiesSearchArray = [NSMutableArray new];
     }
-    if (!self.sections) {
-        self.sections = [NSArray new];
-    }
+
+    
+    self.star = @"\u2605";
     self.sections = [NSArray arrayWithObjects:self.star, @"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", nil];
 }
 
