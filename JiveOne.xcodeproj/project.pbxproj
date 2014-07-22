@@ -85,6 +85,7 @@
 		2710E40F18CEC8C300152C91 /* ConversationEntry+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 2710E40E18CEC8C300152C91 /* ConversationEntry+Custom.m */; };
 		271EBDAF1910525E00421BA9 /* GTalkNotify.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 271EBDAE1910525E00421BA9 /* GTalkNotify.aiff */; };
 		272580F0192120500027887C /* people-start-conv.png in Resources */ = {isa = PBXBuildFile; fileRef = 272580EF192120500027887C /* people-start-conv.png */; };
+		2727003F197DE7A100A2D7AF /* JCContactsClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2799757C195A1FC4001425CC /* JCContactsClient.m */; };
 		272B61DD18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */; };
 		272B61DE18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */; };
 		2736698218BD441D0069B4B3 /* JCPersonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2736698118BD441D0069B4B3 /* JCPersonCell.m */; };
@@ -2343,6 +2344,7 @@
 				2751591218AD174F00FD8D3F /* KeychainItemWrapper.m in Sources */,
 				2751591418AD174F00FD8D3F /* JCAuthenticationManager.m in Sources */,
 				2751590C18AD16F300FD8D3F /* JCRESTClient.m in Sources */,
+				2727003F197DE7A100A2D7AF /* JCContactsClient.m in Sources */,
 				2762C45918B4177D00885918 /* JCOmniPresence.m in Sources */,
 				2751591818AD300B00FD8D3F /* OsgiData.xcdatamodel in Sources */,
 				2751592618AD32E500FD8D3F /* JCConversationsViewController.m in Sources */,

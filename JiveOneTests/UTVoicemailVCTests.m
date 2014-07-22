@@ -17,6 +17,87 @@
 #import "Kiwi.h"
 #import "Common.h"
 
+
+@interface UTVoicemailVCTests : XCTestCase
+
+@end
+
+@implementation UTVoicemailVCTests
+
+- (JCVoicemailClient *)createUniqueClientInstance
+{
+	return [[JCVoicemailClient alloc] init];
+}
+
+- (JCVoicemailClient *)getSharedClient
+{
+	return [JCVoicemailClient sharedClient];
+}
+
+- (JCAuthenticationManager *)createUniqueAuthManagerInstance
+{
+	return [[JCAuthenticationManager alloc] init];
+}
+
+- (JCAuthenticationManager *)getSharedAuthManager
+{
+	return [JCAuthenticationManager sharedInstance];
+}
+
+#pragma mark - tests
+
+- (void)testSingletonSharedClientCreated {
+	XCTAssertNotNil([self createUniqueClientInstance]);
+}
+
+- (void)testSingletonUniqueClientInstanceCreated {
+	XCTAssertNotNil([self createUniqueClientInstance]);
+}
+
+- (void)testSingletonReturnsSameSharedClientTwice {
+	JCVoicemailClient *s1 = [self getSharedClient];
+	XCTAssertEqualObjects(s1, [self getSharedClient]);
+}
+
+- (void)testSingletonSharedClientSeparateFromUniqueInstance {
+	JCVoicemailClient *s1 = [self getSharedClient];
+	XCTAssertNotEqual(s1, [self createUniqueClientInstance]);
+}
+
+- (void)testSingletonReturnsSeparateUniqueInstances {
+	JCVoicemailClient *s1 = [self createUniqueClientInstance];
+	XCTAssertNotEqual(s1, [self createUniqueClientInstance]);
+}
+
+- (void)testSingletonSharedAuthManagerCreated {
+	XCTAssertNotNil([self createUniqueAuthManagerInstance]);
+}
+
+- (void)testSingletonUniqueAuthManagerInstanceCreated {
+	XCTAssertNotNil([self createUniqueAuthManagerInstance]);
+}
+
+- (void)testSingletonReturnsSameSharedAuthManagerTwice {
+	JCAuthenticationManager *s1 = [self getSharedAuthManager];
+	XCTAssertEqualObjects(s1, [self getSharedAuthManager]);
+}
+
+- (void)testSingletonSharedAuthManagerSeparateFromUniqueInstance {
+	JCAuthenticationManager *s1 = [self getSharedAuthManager];
+	XCTAssertNotEqual(s1, [self createUniqueAuthManagerInstance]);
+}
+
+- (void)testSingletonReturnsSeparateUniqueAuthManagerInstances {
+	JCAuthenticationManager *s1 = [self createUniqueAuthManagerInstance];
+	XCTAssertNotEqual(s1, [self createUniqueAuthManagerInstance]);
+}
+
+
+@end
+
+
+
+
 //Kiwi
 //test whether the UpdateTable method will save a json(mocked) from the api into from core data
 SPEC_BEGIN(VoicemailTests)
@@ -26,6 +107,9 @@ __block JCVoiceTableViewController* voicemailViewController;
 
 describe(@"Voicemail VC", ^{
     context(@"", ^{//after being instantiated and authenticated
+		
+		
+		
         beforeAll(^{ // Occurs once
             NSString *token = [[JCAuthenticationManager sharedInstance] getAuthenticationToken];
             if ([Common stringIsNilOrEmpty:token]) {
@@ -66,6 +150,12 @@ describe(@"Voicemail VC", ^{
         
         afterEach(^{ // Occurs after each enclosed "it"
         });
+		
+#pragma mark - helper methods
+		
+		
+		
+		
         
         //TESTS Begin
         it(@"loads voicemails array into view upon instantiation", ^{//instantiation calls loadVoicemails via viewDidLoad
@@ -125,5 +215,9 @@ describe(@"Voicemail VC", ^{
 });
 
 
+
+
 SPEC_END
+
+
 

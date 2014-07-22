@@ -12,6 +12,84 @@
 #import "TRVSMonitor.h"
 #import "JCAuthenticationManager.h"
 #import "JCDirectoryViewController.h"
+#import "JCContactsClient.h"
+
+@interface UTDirectoryVCTests : XCTestCase
+
+@end
+
+@implementation UTDirectoryVCTests
+
+- (JCContactsClient *)createUniqueClientInstance
+{
+	return [[JCContactsClient alloc] init];
+}
+
+- (JCContactsClient *)getSharedClient
+{
+	return [JCContactsClient sharedClient];
+}
+
+- (JCAuthenticationManager *)createUniqueAuthManagerInstance
+{
+	return [[JCAuthenticationManager alloc] init];
+}
+
+- (JCAuthenticationManager *)getSharedAuthManager
+{
+	return [JCAuthenticationManager sharedInstance];
+}
+
+#pragma mark - tests
+
+- (void)testSingletonSharedClientCreated {
+	XCTAssertNotNil([self createUniqueClientInstance]);
+}
+
+- (void)testSingletonUniqueClientInstanceCreated {
+	XCTAssertNotNil([self createUniqueClientInstance]);
+}
+
+- (void)testSingletonReturnsSameSharedClientTwice {
+	JCContactsClient *s1 = [self getSharedClient];
+	XCTAssertEqualObjects(s1, [self getSharedClient]);
+}
+
+- (void)testSingletonSharedClientSeparateFromUniqueInstance {
+	JCContactsClient *s1 = [self getSharedClient];
+	XCTAssertNotEqual(s1, [self createUniqueClientInstance]);
+}
+
+- (void)testSingletonReturnsSeparateUniqueInstances {
+	JCContactsClient *s1 = [self createUniqueClientInstance];
+	XCTAssertNotEqual(s1, [self createUniqueClientInstance]);
+}
+
+- (void)testSingletonSharedAuthManagerCreated {
+	XCTAssertNotNil([self createUniqueAuthManagerInstance]);
+}
+
+- (void)testSingletonUniqueAuthManagerInstanceCreated {
+	XCTAssertNotNil([self createUniqueAuthManagerInstance]);
+}
+
+- (void)testSingletonReturnsSameSharedAuthManagerTwice {
+	JCAuthenticationManager *s1 = [self getSharedAuthManager];
+	XCTAssertEqualObjects(s1, [self getSharedAuthManager]);
+}
+
+- (void)testSingletonSharedAuthManagerSeparateFromUniqueInstance {
+	JCAuthenticationManager *s1 = [self getSharedAuthManager];
+	XCTAssertNotEqual(s1, [self createUniqueAuthManagerInstance]);
+}
+
+- (void)testSingletonReturnsSeparateUniqueAuthManagerInstances {
+	JCAuthenticationManager *s1 = [self createUniqueAuthManagerInstance];
+	XCTAssertNotEqual(s1, [self createUniqueAuthManagerInstance]);
+}
+
+
+@end
 
 SPEC_BEGIN(DirecotryVC)
 __block JCDirectoryViewController* directoryVC;
