@@ -16,7 +16,7 @@
 
 +(NSString *) shortDateFromTimestamp:(NSNumber *)timestamp
 {
-    NSTimeInterval timeInterval = [timestamp longLongValue]/1000;
+    NSTimeInterval timeInterval = [timestamp longLongValue];// Depending of how the service give us the unix timestamp, we might need to devide it by 1000: /1000;
     NSDate *date = [[NSDate alloc]initWithTimeIntervalSince1970: timeInterval];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.timeZone = [NSTimeZone defaultTimeZone];
