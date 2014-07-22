@@ -46,38 +46,37 @@
 }
 
 
-- (void)setPerson:(PersonEntities *)person
+-(void)setLine:(Lines *)line
 {
-    if ([person isKindOfClass:[Lines class]])
-        {
-            Lines *line = (Lines *)person;
-            _line = line;
-            [self.personNameLabel setNumberOfLines:0];
-            self.personNameLabel.text = line.displayName;
-            [self.personNameLabel sizeToFit];
-            [self configureFavoriteStatus];
-            NSString * detailText = line.externsionNumber;
-			PBX *pbx = [PBX MR_findFirstByAttribute:@"pbxId" withValue:line.pbxId];
-			if (pbx) {
-				NSString *name = pbx.name;
-				if (![Common stringIsNilOrEmpty:name]) {
-					detailText = [NSString stringWithFormat:@"%@ on %@", line.externsionNumber, name];
-				}
-				else {
-					detailText = [NSString stringWithFormat:@"%@", line.externsionNumber];
-				}
+	if ([line isKindOfClass:[Lines class]])
+	{
+		_line = line;
+		[self.personNameLabel setNumberOfLines:0];
+		self.personNameLabel.text = line.displayName;
+		[self.personNameLabel sizeToFit];
+		[self configureFavoriteStatus];
+		NSString * detailText = line.externsionNumber;
+		PBX *pbx = [PBX MR_findFirstByAttribute:@"pbxId" withValue:line.pbxId];
+		if (pbx) {
+			NSString *name = pbx.name;
+			if (![Common stringIsNilOrEmpty:name]) {
+				detailText = [NSString stringWithFormat:@"%@ on %@", line.externsionNumber, name];
 			}
 			else {
 				detailText = [NSString stringWithFormat:@"%@", line.externsionNumber];
-			}		
-			self.personDetailLabel.text = detailText;
-			
-			
-			self.personPresenceView.presenceType = (JCPresenceType) [line.state integerValue];
-			[line addObserver:self forKeyPath:kPresenceKeyPathForLineEntity options:NSKeyValueObservingOptionNew context:NULL];
-			
-        }
-    
+			}
+		}
+		else {
+			detailText = [NSString stringWithFormat:@"%@", line.externsionNumber];
+		}
+		self.personDetailLabel.text = detailText;
+		
+		
+		self.personPresenceView.presenceType = (JCPresenceType) [line.state integerValue];
+		[line addObserver:self forKeyPath:kPresenceKeyPathForLineEntity options:NSKeyValueObservingOptionNew context:NULL];
+		
+	}
+
 }
 
 - (void)configureFavoriteStatus

@@ -550,7 +550,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
     
     if (line) {
     
-        cell.person = line;
+        cell.line = line;
         [cell.personNameLabel sizeToFit];
         [cell.personNameLabel setNumberOfLines:1];
         ((JCPersonCell *)cell).delegate = self;

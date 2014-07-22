@@ -149,7 +149,7 @@
     if (section.count != 0) {
 //        NSLog(@"Section: %ld Row: %ld", indexPath.section, (long)indexPath.row);
         Lines *line = section[indexPath.row];
-        cell.person = line;
+        cell.line = line;
         cell.favoriteBut.hidden = YES;
 //        if(existingEntities)
 //        {

@@ -528,11 +528,11 @@ static NSString *CellIdentifier = @"DirectoryCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     JCPersonCell *cell;
-    PersonEntities *person;
+    Lines *line;
     if(tableView == self.tableView){//redundant, but easier than rearranging all the if statements below.
         //only instantiate the cell this way, if it is not part of the searchResutls Table view.
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-        person = self.clientEntitiesArray[indexPath.section][indexPath.row];
+        line = self.clientEntitiesArray[indexPath.section][indexPath.row];
     }
     else{
         
@@ -541,15 +541,15 @@ static NSString *CellIdentifier = @"DirectoryCell";
         }
         
         NSString *entityId = self.clientEntitiesSearchArray[indexPath.row];
-        person = [self getPersonFromListByEntityId:entityId];
+        line = [self getPersonFromListByEntityId:entityId];
     }
     
-    if (person) {
+    if (line) {
         
-        cell.person = person;
+        cell.line = line;
         
         //check to see if the person is a favorite
-        if ([person.isFavorite boolValue]) {
+        if ([line.isFavorite boolValue]) {
             
             
             NSMutableString *name = [[NSMutableString alloc]initWithString: cell.personNameLabel.text];
@@ -646,7 +646,7 @@ shouldReloadTableForSearchString:(NSString *)searchString
 }
 
 
-- (PersonEntities *)getPersonFromListByEntityId:(NSString *)entityId
+- (Lines *)getPersonFromListByEntityId:(NSString *)entityId
 {
     for (NSArray *section in self.clientEntitiesArray) {
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"entityId ==[c] %@", entityId];

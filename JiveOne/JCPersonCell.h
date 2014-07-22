@@ -28,7 +28,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *favoriteBut;
 @property (weak, nonatomic) IBOutlet UIImageView *personPicture;
 @property (weak, nonatomic) IBOutlet JCPresenceView *personPresenceView;
-@property (nonatomic) PersonEntities *person;
 @property (nonatomic) Lines *line;
 @end
 

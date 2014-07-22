@@ -109,7 +109,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
 {
     JCPersonCell *cell = [[JCPersonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     
-    cell.person = _peopleInConversation[indexPath.row];
+    //cell.person = _peopleInConversation[indexPath.row];
     
     return cell;
 }
