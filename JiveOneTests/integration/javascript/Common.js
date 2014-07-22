@@ -25,11 +25,12 @@ function defaultLogin(app) {
 
 function login(app, user, password) {
     var currentWindow = app.mainWindow();
-    logDebug("Logging in as " + user + "with password: " + password);
+    logDebug("Logging in as " + user + " with password: " + password);
     
     //login
     currentWindow.textFields()["emailTextField"].setValue(user);
     currentWindow.textFields()["passwordTextField"].setValue(password);
+    app.keyboard().typeString(password);
     app.keyboard().elements()["Go"].tap();
     
     //wait for login

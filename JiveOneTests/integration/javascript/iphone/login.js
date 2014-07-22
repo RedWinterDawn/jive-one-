@@ -71,6 +71,7 @@ test("Login Test", function(target, app){
 	delay(2);
 	// Click 'Go' button
 	app.keyboard().elements()["Go"].tap();
+	delay(6);
 	// Confirm presence of 'Invalid parameters' error dialog
 	// Click OK
 		//handled in function above	
