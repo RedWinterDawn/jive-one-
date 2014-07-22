@@ -557,8 +557,11 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ijh-wk-NAn">
-                                            <rect key="frame" x="257" y="7" width="28" height="24"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ijh-wk-NAn">
+                                            <rect key="frame" x="253" y="4" width="34" height="35"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="34" id="bFh-BL-tMQ"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                             <state key="normal" image="people-start-conv.png"/>
                                             <connections>
@@ -573,6 +576,11 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Ijh-wk-NAn" firstAttribute="bottom" secondItem="uJs-60-V1n" secondAttribute="bottom" id="8lA-iI-8PZ"/>
+                                        <constraint firstItem="Ijh-wk-NAn" firstAttribute="top" secondItem="hax-Es-478" secondAttribute="top" id="Nt6-ux-Sug"/>
+                                        <constraint firstAttribute="trailing" secondItem="Ijh-wk-NAn" secondAttribute="trailing" constant="33" id="tlx-7A-DbB"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DirectoryDetailMobileCell" textLabel="vcQ-zH-MFo" detailTextLabel="9o3-r9-fdm" style="IBUITableViewCellStyleSubtitle" id="npD-PQ-nqK">
@@ -631,6 +639,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="1Dx-j0-tAx"/>
+                    <size key="freeformSize" width="320" height="568"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p0l-oT-Syh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
