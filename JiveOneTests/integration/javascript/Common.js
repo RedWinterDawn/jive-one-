@@ -74,6 +74,7 @@ function delay(time){
     this.target.delay(time);
 }
 
+//searches an array and determines if the name of the cell (first param) is found. if true, will return index of cell in array. if not present, returns -1.
 function arrayContainsCellWithName(name, array){
     var count = array.length;
     for(i=0;i<count;i++){
@@ -83,6 +84,29 @@ function arrayContainsCellWithName(name, array){
         }
     }
     return -1;
+}
+
+//pass in the entire array of elements from a tableView. second parameter is a string of the group name. Will return count of cells for that group
+function countCellsInGroup(elementsArray, countTrigger){
+    var cellsCount = -1;
+    var countIt = false;
+    
+    for (var i = 0; i < elementsArray.length; i++) {
+        if(countIt){
+            //cells that are part of the star group
+            cellsCount++;
+        }
+        if(elementsArray[i].toString().contains("UIATableGroup")){
+            if(elementsArray[i].staticTexts()[0].name().contains(countTrigger)){
+                countIt = true;
+            }else{
+                countIt = false;
+            }
+        }
+        
+    };
+    logDebug("found "+ cellsCount + " cells for group with title "+ countTrigger)
+    return cellsCount;
 }
 
 String.prototype.contains = function(it) { return this.indexOf(it) != -1; };
