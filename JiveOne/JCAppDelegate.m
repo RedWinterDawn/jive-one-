@@ -239,10 +239,11 @@ int didNotify;
 {
     LOG_Info();
     LogMessage(@"socket", 4, @"Calling requestSession From AppDelegate");
-
-    if ([JasmineSocket sharedInstance].socket.readyState != SR_OPEN) {
-        [[JasmineSocket sharedInstance] restartSocket];
-    }
+	if ([[JCAuthenticationManager sharedInstance] userAuthenticated] && [[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {
+		if ([JasmineSocket sharedInstance].socket.readyState != SR_OPEN) {
+			[[JasmineSocket sharedInstance] restartSocket];
+		}
+	}
 }
 
 - (void)stopSocket

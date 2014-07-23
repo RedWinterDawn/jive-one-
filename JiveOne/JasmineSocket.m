@@ -8,6 +8,7 @@
 
 #import "JasmineSocket.h"
 #import "JCContactsClient.h"
+#import "Common.h"
 
 @implementation JasmineSocket
 {
@@ -15,6 +16,7 @@
 }
 
 static NSInteger SocketCloseCode = 1001;
+static BOOL closedSocketOnPurpose;
 
 + (JasmineSocket *)sharedInstance
 {
@@ -82,7 +84,8 @@ static NSInteger SocketCloseCode = 1001;
 - (void) closeSocketWithReason:(NSString *)reason
 {
 	if (self.socket) {
-		[self.socket closeWithCode:SocketCloseCode reason:reason];
+		closedSocketOnPurpose = YES;
+		[self.socket closeWithCode:1001 reason:reason];
 	}
 }
 
@@ -146,21 +149,27 @@ static NSInteger SocketCloseCode = 1001;
 	/*
 	 * If this was not closed on purpose, try to connect again
 	 */
-	if (code != SocketCloseCode) {
+	if (!closedSocketOnPurpose) {
 		[self restartSocket];
 	}
+	
+	closedSocketOnPurpose = NO;
 }
 
 #pragma mark - Subscriptions
 - (void)postSubscriptionsToSocketWithId:(NSString *)ident entity:(NSString *)entity type:(NSString *)type
 {
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:@{@"id": ident, @"entity": entity}];
+	if (![Common stringIsNilOrEmpty:ident] && ![Common stringIsNilOrEmpty:entity]) {
+		
+		NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:@{@"id": ident, @"entity": entity}];
+		
+		if (type) {
+			[params setObject:type forKey:@"type"];
+		}
+		
+		[[JCContactsClient sharedClient] SubscribeToSocketEvents:self.subscriptionUrl dataDictionary:params];
+	}
     
-    if (type) {
-        [params setObject:type forKey:@"type"];
-    }
-    
-    [[JCContactsClient sharedClient] SubscribeToSocketEvents:self.subscriptionUrl dataDictionary:params];
 }
 
 - (void) processMessage:(NSDictionary *)message
