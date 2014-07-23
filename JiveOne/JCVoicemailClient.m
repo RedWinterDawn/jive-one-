@@ -100,9 +100,9 @@
 			[_manager GET:line.mailboxUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 				[Voicemail addVoicemails:responseObject mailboxUrl:line.mailboxUrl completed:^(BOOL suceeded) {
 					succeededGettingAtLeastOne = YES;
-					if ((lines.count -1) == idx) {
+//					if ((lines.count -1) == idx) {
 						completed(YES, responseObject, operation, nil);
-					}
+//					}
 				}];
 				
 				

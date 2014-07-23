@@ -30,6 +30,7 @@
     MBProgressHUD *hud;
 }
 
+@property (nonatomic, strong) NSError *errorOccurred;
 
 @end
 
@@ -281,7 +282,13 @@
     {
         NSLog (@"Successfully received the AppTutorialDismissed notification!");
         if (!self.doneLoadingContent) {
-            [self showHudWithTitle:@"One Moment Please" detail:@"Preparing for first use"];
+			if (self.errorOccurred) {
+				[self errorInitializingApp:self.errorOccurred];
+			}
+			else {
+	            [self showHudWithTitle:@"One Moment Please" detail:@"Preparing for first use"];
+			}
+
         }
         else
         {
@@ -328,6 +335,7 @@
             [self fetchVoicemailsMetadata];
         }
 		else {
+			self.errorOccurred = error;
 			[self errorInitializingApp:error];
 		}
     }];
@@ -359,6 +367,7 @@
             [self fetchContacts];
         }
 		else {
+			self.errorOccurred = error;
 			[self errorInitializingApp:error];
 		}
     }];
@@ -376,6 +385,7 @@
             [self fetchPBXInformation];
         }
 		else {
+			self.errorOccurred = error;
 			[self errorInitializingApp:error];
 		}
     }];
