@@ -746,13 +746,16 @@ shouldReloadTableForSearchString:(NSString *)searchString
 #pragma mark - Socket Events Subscription
 - (void) subscribeLines:(NSNotification *)notification
 {
-    for (NSArray * letterArray in self.clientEntitiesArray)
-    {
-        for (Lines *line in letterArray) {
-            [[JasmineSocket sharedInstance] postSubscriptionsToSocketWithId:line.jrn entity:line.jrn type:@"dialog"];
-        }
-    }
-    
+	__block NSArray *copyOfArray = [self.clientEntitiesArray copy];
+	
+	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+		for (NSArray * letterArray in copyOfArray)
+		{
+			for (Lines *line in letterArray) {
+				[[JasmineSocket sharedInstance] postSubscriptionsToSocketWithId:line.jrn entity:line.jrn type:@"dialog"];
+			}
+		}
+	});   
 }
 
 - (void) eventForLine:(NSNotification *)notification
