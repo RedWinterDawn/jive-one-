@@ -132,7 +132,7 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
 
 
     //// Text Drawing
-    CGRect textRect = CGRectMake(-5, 114, 156, 22);
+    CGRect textRect = CGRectMake(-5, 114, 156, 34);
     CGContextSaveGState(context);
     CGContextSetShadowWithColor(context, textShadowOffset, textShadowBlurRadius, [textShadow CGColor]);
     NSMutableParagraphStyle* textStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
@@ -187,7 +187,7 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
 
 
     //// Text Drawing
-    CGRect textRect = CGRectMake(-5, 70, 84, 22);
+    CGRect textRect = CGRectMake(-5, 70, 84, 28);
     CGContextSaveGState(context);
     CGContextSetShadowWithColor(context, textShadowOffset, textShadowBlurRadius, [textShadow CGColor]);
     NSMutableParagraphStyle* textStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
@@ -242,7 +242,7 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
 
 
     //// Text Drawing
-    CGRect textRect = CGRectMake(9, -3, 114, 22);
+    CGRect textRect = CGRectMake(9, -3, 114, 31);
     CGContextSaveGState(context);
     CGContextSetShadowWithColor(context, textShadowOffset, textShadowBlurRadius, [textShadow CGColor]);
     NSMutableParagraphStyle* textStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
@@ -290,7 +290,7 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
 
 
     //// Text 2 Drawing
-    CGRect text2Rect = CGRectMake(9, 13, 234, 22);
+    CGRect text2Rect = CGRectMake(9, 13, 234, 31);
     CGContextSaveGState(context);
     CGContextSetShadowWithColor(context, textShadowOffset, textShadowBlurRadius, [textShadow CGColor]);
     NSMutableParagraphStyle* text2Style = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
@@ -2058,7 +2058,7 @@ static UIImage* _imageOfDefaultAvatarIcon = nil;
     if (_imageOfTopRight)
         return _imageOfTopRight;
 
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(230, 184), NO, 0.0f);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(235, 184), NO, 0.0f);
     [JCStyleKit drawTopRight];
     _imageOfTopRight = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
