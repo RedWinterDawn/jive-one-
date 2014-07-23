@@ -315,10 +315,7 @@
     {
         [self showHudWithTitle:@"One Moment Please" detail:@"Preparing for first use"];
     }
-    
-//    [self fetchMyEntity];
- 
-//    [self fetchMyContact];
+
 	[self fetchMyMailboxes];
 }
 
@@ -342,15 +339,15 @@
     [[JCVoicemailClient sharedClient] getVoicemails:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
         if(suceeded) {
             [[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
-			[self fetchMyContact];
         }
 		else {
-			//may be one of the mailboxes failed or it's v4;
+			//may be one of the mailboxes failed or it's v4; in any case, we don't want the app to fail here.
 		}
-        
+		
+		[self fetchMyContact];
     }];
-    
-    
+	
+	
 }
 
 
@@ -372,8 +369,6 @@
     [[JCContactsClient sharedClient] RetrieveContacts:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
         if (suceeded) {
             _doneLoadingContent = YES;
-            
-            //[self fetchMyMailboxes];
 			[self hideHud];
             if (self.userIsDoneWithTutorial) {
                 [self goToApplication];
@@ -528,9 +523,9 @@
 {
     NSLog(@"errorInitializingApp: %@",err);
     [self hideHud];
-    //UIAlertView *alert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Server Unavailable", nil) message: NSLocalizedString(@"We could not connect to the server at this time. Please try again", nil) delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Server Unavailable", nil) message: NSLocalizedString(@"We could not connect to the server at this time. Please try again", nil) delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
     
-    //[alert show];
+    [alert show];
     [[JCAuthenticationManager sharedInstance] logout:self];
 }
 
@@ -555,7 +550,7 @@
 
 - (void)hideHud
 {
-    self.doneLoadingContent = YES;
+//    self.doneLoadingContent = YES;
     if (hud) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [hud removeFromSuperview];
