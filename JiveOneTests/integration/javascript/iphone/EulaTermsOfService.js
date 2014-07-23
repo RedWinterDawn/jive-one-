@@ -5,7 +5,7 @@ test("Eula & Terms of Service", function(target, app){
 
 	target.frontMostApp().tabBar().buttons()["Account"].tap();
 target.frontMostApp().logElementTree();
-delay(15);
+delay(5);
 UIATarget.localTarget().pushTimeout(200);
 target.frontMostApp().mainWindow().tableViews()["Empty list"].cells()["End User License Agreement"].tap();
 UIATarget.localTarget().popTimeout();
