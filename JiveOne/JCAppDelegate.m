@@ -8,6 +8,7 @@
 
 #import "JCAppDelegate.h"
 #import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
+#import "AFNetworkActivityIndicatorManager.h"
 #import "JasmineSocket.h"
 #import "JCRESTClient.h"
 #import "JCVoicemailClient.h"
@@ -70,6 +71,7 @@ int didNotify;
     /*
      * AFNETWORKING
      */
+	[AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
 #if DEBUG
     [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelError];
     [[AFNetworkActivityLogger sharedLogger] startLogging];
