@@ -33,7 +33,7 @@
     NSURL *websiteUrl = [NSURL URLWithString:kEulaSite];
 
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:websiteUrl];
-    [[NSURLCache sharedURLCache] removeCachedResponseForRequest:urlRequest];
+//    [[NSURLCache sharedURLCache] removeCachedResponseForRequest:urlRequest];
     [self.webView loadRequest:urlRequest];
     
 }
