@@ -270,7 +270,7 @@
 -(BOOL)userIsDoneWithTutorial
 {
     if (!_userIsDoneWithTutorial) {
-        _userIsDoneWithTutorial = NO;
+        _userIsDoneWithTutorial = YES;
     }
     return _userIsDoneWithTutorial;
 }
@@ -278,6 +278,7 @@
 - (void)checkIfLoadingHasFinished:(NSNotification *)notification
 {
     self.userIsDoneWithTutorial = YES;
+    
     if ([[notification name] isEqualToString:@"AppTutorialDismissed"])
     {
         NSLog (@"Successfully received the AppTutorialDismissed notification!");
@@ -308,7 +309,6 @@
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AppTutorialDismissed" object:nil];
     }
     
-
 }
 
 - (void)tokenValidityPassed:(NSNotification*)notification
