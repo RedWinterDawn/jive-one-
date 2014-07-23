@@ -29,7 +29,7 @@ static NSInteger SocketCloseCode = 1001;
 - (void)initSocket
 {
 	if ([self.socket respondsToSelector:@selector(readyState)]) {
-		if (_socket.readyState != PSWebSocketReadyStateOpen) {
+		if (_socket.readyState != SR_OPEN) {
 			[self requestSession];
 		}
 	}
@@ -59,7 +59,7 @@ static NSInteger SocketCloseCode = 1001;
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.webSocketUrl]];
     
     // create the socket and assign delegate
-    self.socket = [PSWebSocket clientSocketWithRequest:request];
+    self.socket = [[SRWebSocket alloc] initWithURLRequest:request];
     self.socket.delegate = self;
     
     // open socket
@@ -108,11 +108,12 @@ static NSInteger SocketCloseCode = 1001;
 
 #pragma mark - PSWebSocketDelegate
 
-- (void)webSocketDidOpen:(PSWebSocket *)webSocket {
+
+- (void)webSocketDidOpen:(SRWebSocket *)webSocket {
     NSLog(@"The websocket handshake completed and is now open!");
     [[NSNotificationCenter defaultCenter] postNotificationName:@"socketDidOpen" object:nil];
 }
-- (void)webSocket:(PSWebSocket *)webSocket didReceiveMessage:(id)message {
+- (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message {
     NSLog(@"The websocket received a message: %@", message);
     
     NSData *data = [message dataUsingEncoding:NSUTF8StringEncoding];
@@ -121,12 +122,12 @@ static NSInteger SocketCloseCode = 1001;
     [self processMessage:messageDictionary];
     
 }
-- (void)webSocket:(PSWebSocket *)webSocket didFailWithError:(NSError *)error {
+- (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error {
     NSLog(@"The websocket handshake/connection failed with an error: %@", error);
 	[self restartSocket];
 }
 
-- (void)webSocket:(PSWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean {
+- (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean {
     NSLog(@"The websocket closed with code: %@, reason: %@, wasClean: %@", @(code), reason, (wasClean) ? @"YES" : @"NO");
 	
 	

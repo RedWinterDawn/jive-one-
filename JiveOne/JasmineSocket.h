@@ -7,15 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <PocketSocket/PSWebSocket.h>
+#import <SocketRocket/SRWebSocket.h>
 
-@interface JasmineSocket : NSObject <PSWebSocketDelegate>
+@interface JasmineSocket : NSObject <SRWebSocketDelegate>
 
 + (JasmineSocket *)sharedInstance;
 
 typedef void (^CompletionBlock) (BOOL success, NSError *error);
 @property (nonatomic, copy) CompletionBlock completionBlock;
-@property (nonatomic, strong) PSWebSocket *socket;
+@property (nonatomic, strong) SRWebSocket *socket;
 @property (nonatomic, strong) NSString *subscriptionUrl;
 @property (nonatomic, strong) NSString *webSocketUrl;
 @property (nonatomic, strong) NSString *selfUrl;

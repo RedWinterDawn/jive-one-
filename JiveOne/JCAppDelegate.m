@@ -240,9 +240,9 @@ int didNotify;
     LOG_Info();
     LogMessage(@"socket", 4, @"Calling requestSession From AppDelegate");
 
-//    if ([JCSocketDispatch sharedInstance].webSocket.readyState != SR_OPEN) {
-//        [[JCSocketDispatch sharedInstance] requestSession];
-//    }
+    if ([JasmineSocket sharedInstance].socket.readyState != SR_OPEN) {
+        [[JasmineSocket sharedInstance] restartSocket];
+    }
 }
 
 - (void)stopSocket
@@ -361,7 +361,7 @@ int didNotify;
 
     NSLog(@"APPDELEGATE - performFetchWithCompletionHandler");
     __block UIBackgroundFetchResult fetchResult = UIBackgroundFetchResultFailed;
-    if ([JasmineSocket sharedInstance].socket.readyState != PSWebSocketReadyStateOpen) {
+    if ([JasmineSocket sharedInstance].socket.readyState != SR_OPEN) {
         //[[JCAuthenticationManager sharedInstance] checkForTokenValidity];
         __block UIBackgroundFetchResult fetchResult = UIBackgroundFetchResultFailed;
         
@@ -417,7 +417,7 @@ int didNotify;
         }
         @finally {
             if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground ) {
-                if ([JasmineSocket sharedInstance].socket.readyState == PSWebSocketReadyStateOpen) {
+                if ([JasmineSocket sharedInstance].socket.readyState == SR_OPEN) {
                     LogMessage(@"socket", 4, @"Will Call closeSocket");
 
                     [self stopSocket];

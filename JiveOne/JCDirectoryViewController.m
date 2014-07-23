@@ -63,7 +63,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
     [super viewDidLoad];
     self.previousOffset = 0;
     [self initDataStructures];
-    
+    [self loadCompanyDirectory];
     [self.tableView registerNib:[UINib nibWithNibName:@"JCPersonCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
 
     self.tableView.delegate = self;
@@ -117,7 +117,13 @@ static NSString *CellIdentifier = @"DirectoryCell";
     [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(eventForLine:) name:@"eventForLine" object:nil];
 
     
-    [[JasmineSocket sharedInstance] initSocket];
+	if ([JasmineSocket sharedInstance].socket.readyState == SR_OPEN) {
+		[self subscribeLines:nil];
+	}
+	else {
+		[[JasmineSocket sharedInstance] initSocket];
+	}
+    
     
 }
 
