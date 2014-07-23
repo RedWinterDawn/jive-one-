@@ -24,10 +24,14 @@
 #import "JCLineSelectorViewController.h"
 
 
+
+
 @interface JCLoginViewController ()
 {
     BOOL fastConnection;
     MBProgressHUD *hud;
+	BOOL alreadyMakingMyContactRequest;
+	BOOL alreadyMakingContactsRequest;
 }
 
 @property (nonatomic, strong) NSError *errorOccurred;
@@ -130,6 +134,12 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kAuthenticationFromTokenFailed object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kAuthenticationFromTokenSucceeded object:nil];
     
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+	[super viewWillDisappear:animated];
+	alreadyMakingContactsRequest = NO;
+	alreadyMakingMyContactRequest = NO;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -362,33 +372,40 @@
 //Contacts
 - (void)fetchMyContact
 {
-    [[JCContactsClient sharedClient] RetrieveMyInformation:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-        if (suceeded) {
-            [self fetchContacts];
-        }
-		else {
-			self.errorOccurred = error;
-			[self errorInitializingApp:error];
-		}
-    }];
+	if (!alreadyMakingMyContactRequest) {
+		alreadyMakingMyContactRequest = YES;
+		[[JCContactsClient sharedClient] RetrieveMyInformation:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+			if (suceeded) {
+				[self fetchContacts];
+			}
+			else {
+				self.errorOccurred = error;
+				[self errorInitializingApp:error];
+			}
+		}];
+	}
 }
 
 - (void)fetchContacts
 {
-    [[JCContactsClient sharedClient] RetrieveContacts:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-        if (suceeded) {
-            _doneLoadingContent = YES;
-			[self hideHud];
-            if (self.userIsDoneWithTutorial) {
-                [self goToApplication];
-            }
-            [self fetchPBXInformation];
-        }
-		else {
-			self.errorOccurred = error;
-			[self errorInitializingApp:error];
-		}
-    }];
+	if (!alreadyMakingContactsRequest) {
+		alreadyMakingContactsRequest = YES;
+		[[JCContactsClient sharedClient] RetrieveContacts:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+			if (suceeded) {
+				_doneLoadingContent = YES;
+				[self hideHud];
+				if (self.userIsDoneWithTutorial) {
+					[self goToApplication];
+				}
+				[self fetchPBXInformation];
+			}
+			else {
+				self.errorOccurred = error;
+				[self errorInitializingApp:error];
+			}
+		}];
+	}
+    
 }
 
 - (void)fetchPBXInformation
@@ -523,6 +540,8 @@
 
 - (void)goToApplication
 {
+	alreadyMakingMyContactRequest = NO;
+	alreadyMakingContactsRequest = NO;
     [self performSegueWithIdentifier: @"LoginToTabBarSegue" sender: self];
     //[(JCAppDelegate *)[UIApplication sharedApplication].delegate changeRootViewController:JCRootTabbarViewController];
 }

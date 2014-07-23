@@ -75,7 +75,7 @@
     }
     
     if (sender != self) {
-        [context MR_saveToPersistentStoreAndWait];
+        //[context MR_saveToPersistentStoreAndWait];
         return c_pbx;
     }
     else {

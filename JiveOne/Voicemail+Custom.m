@@ -129,12 +129,12 @@
     //flag?
         
         //Save conversation dictionary
-        @try {
-            [context MR_saveToPersistentStoreAndWait];
-        }
-        @catch (NSException *exception) {
-            NSLog(@"%@", exception);
-        }
+//        @try {
+//            [context MR_saveToPersistentStoreAndWait];
+//        }
+//        @catch (NSException *exception) {
+//            NSLog(@"%@", exception);
+//        }
     
     
     return vmail;

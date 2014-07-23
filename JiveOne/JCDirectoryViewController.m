@@ -47,6 +47,7 @@
 @property (strong, nonatomic) UIFont *icomoonFont;
 @property (strong, nonatomic) UIColor *theRightShadeOfYellowForOurStar;
 @property (strong, nonatomic) NSManagedObjectContext *context;
+@property (nonatomic) BOOL subscribedToPresence;
 
 
 @property (strong, nonatomic) JCSearchBar *searchBar;
@@ -63,8 +64,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
     [super viewDidLoad];
     self.previousOffset = 0;
     [self initDataStructures];
-    [self loadCompanyDirectory];
-    [self.tableView registerNib:[UINib nibWithNibName:@"JCPersonCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
+	[self.tableView registerNib:[UINib nibWithNibName:@"JCPersonCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
 
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -160,6 +160,12 @@ static NSString *CellIdentifier = @"DirectoryCell";
     [super viewWillAppear:animated];
     personMap = [[NSMutableDictionary alloc] init];
     [self loadCompanyDirectory];
+	if (!self.subscribedToPresence) {
+		self.subscribedToPresence = YES;
+		[self subscribeLines:nil];
+		
+	}
+	
     if (self.searchTableIsActive) {
         [self.searchDisplayController.searchBar resignFirstResponder];
     }
@@ -791,23 +797,21 @@ shouldReloadTableForSearchString:(NSString *)searchString
     
     // right now we only care about withdraws and confirmeds
     if ([type isEqualToString:@"withdraw"] || [state isEqualToString:@"confirmed"]) {
-        Lines *line = [Lines MR_findFirstByAttribute:@"jrn" withValue:subId inContext:self.context];
-        BOOL changed = NO;
-        if (line) {
-            if (state && [state isEqualToString:@"confirmed"]) {
-                line.state = [NSNumber numberWithInt:(int) JCPresenceTypeDoNotDisturb];
-                changed = YES;
-            }
-            else if (type && [type isEqualToString:@"withdraw"]) {
-                line.state = [NSNumber numberWithInt:(int) JCPresenceTypeAvailable];
-                changed = YES;
-            }
-            
-            if (changed) {
-                [self.context MR_saveToPersistentStoreAndWait];
-            }            
-        }
-    }
+		
+		[MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+			Lines *line = [Lines MR_findFirstByAttribute:@"jrn" withValue:subId inContext:localContext];
+			
+			if (line) {
+				if (state && [state isEqualToString:@"confirmed"]) {
+					line.state = [NSNumber numberWithInt:(int) JCPresenceTypeDoNotDisturb];
+				}
+				else if (type && [type isEqualToString:@"withdraw"]) {
+					line.state = [NSNumber numberWithInt:(int) JCPresenceTypeAvailable];
+				}
+			}
+
+		}];
+	}
 }
 
 @end
