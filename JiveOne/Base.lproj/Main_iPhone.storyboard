@@ -116,9 +116,38 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" scalesPageToFit="YES" id="hBg-Sb-m4h">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="570"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="526"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </webView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="SWO-ZU-qEf">
+                                <rect key="frame" x="0.0" y="526" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem title="Back" id="sjX-6Z-z1D">
+                                        <connections>
+                                            <action selector="goBack" destination="hBg-Sb-m4h" id="f2j-LM-GOg"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="eOH-Xj-gXV"/>
+                                    <barButtonItem title="Forward" id="WMI-1C-4hK">
+                                        <connections>
+                                            <action selector="goForward" destination="hBg-Sb-m4h" id="Hd7-9l-PDL"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="ibY-sr-htb"/>
+                                    <barButtonItem systemItem="refresh" id="1y5-d9-ytR">
+                                        <connections>
+                                            <action selector="reload" destination="hBg-Sb-m4h" id="Php-cj-oUU"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="OS9-QE-B0a"/>
+                                    <barButtonItem systemItem="action" id="7e3-V1-jvm">
+                                        <connections>
+                                            <action selector="OpenLinkInBrowser:" destination="b1a-gb-jxo" id="CXW-In-BLN"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -130,6 +159,11 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="actionButton" destination="7e3-V1-jvm" id="ZAY-bz-7en"/>
+                        <outlet property="backButton" destination="sjX-6Z-z1D" id="F3O-ti-gNF"/>
+                        <outlet property="forwardButton" destination="WMI-1C-4hK" id="JQB-fM-1lC"/>
+                        <outlet property="refreshButton" destination="1y5-d9-ytR" id="JMZ-Qy-ybh"/>
+                        <outlet property="toolbar" destination="SWO-ZU-qEf" id="vlP-ij-zer"/>
                         <outlet property="webView" destination="hBg-Sb-m4h" id="E8L-Zm-ZB0"/>
                     </connections>
                 </viewController>

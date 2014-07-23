@@ -14,6 +14,8 @@
 #define DATE_COMPONENTS (NSYearCalendarUnit| NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekCalendarUnit |  NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSWeekdayCalendarUnit | NSWeekdayOrdinalCalendarUnit)
 #define CURRENT_CALENDAR [NSCalendar currentCalendar]
 
+static inline double radians (double degrees) { return degrees * M_PI/180; }
+
 +(NSString *) shortDateFromTimestamp:(NSNumber *)timestamp
 {
     NSTimeInterval timeInterval = [timestamp longLongValue];// Depending of how the service give us the unix timestamp, we might need to devide it by 1000: /1000;
@@ -237,6 +239,29 @@
     //CGImageRelease(imgRefSpriteSheet); I have commented it because we should not release the object that we don't own..So why do we release imgRefExtracted alone? bcuz it has name create in its method so the ownership comes to us so we have to release it.
     
     return ExtractedImage;
+}
+
++ (UIImage *) rotateImage:(UIImage *)src orientation:(UIImageOrientation)orientation
+{
+    UIGraphicsBeginImageContext(src.size);
+	
+    CGContextRef context = UIGraphicsGetCurrentContext();
+	
+    if (orientation == UIImageOrientationRight) {
+        CGContextRotateCTM (context, radians(90));
+    } else if (orientation == UIImageOrientationLeft) {
+        CGContextRotateCTM (context, radians(-90));
+    } else if (orientation == UIImageOrientationDown) {
+        // NOTHING
+    } else if (orientation == UIImageOrientationUp) {
+        CGContextRotateCTM (context, radians(90));
+    }
+	
+    [src drawAtPoint:CGPointMake(0, 0)];
+	
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
 }
 
 #pragma mark - Encoding Utils

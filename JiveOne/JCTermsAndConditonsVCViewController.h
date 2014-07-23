@@ -7,5 +7,5 @@
 //
 
 #import <UIKit/UIKit.h>
-@interface JCTermsAndConditonsVCViewController : UIViewController
+@interface JCTermsAndConditonsVCViewController : UIViewController <UIWebViewDelegate, UIActionSheetDelegate>
 @end
