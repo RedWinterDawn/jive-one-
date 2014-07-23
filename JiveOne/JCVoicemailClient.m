@@ -96,7 +96,7 @@
 //            url = urlSplit[1];
 //        }
         
-		if (line.mailboxUrl) {
+		if (line.mailboxUrl && ![Common stringIsNilOrEmpty:line.mailboxUrl]) {
 			[_manager GET:line.mailboxUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 				[Voicemail addVoicemails:responseObject mailboxUrl:line.mailboxUrl completed:^(BOOL suceeded) {
 					succeededGettingAtLeastOne = YES;
@@ -124,15 +124,16 @@
 -(void)downloadVoicemailEntry:(Voicemail*)voicemail completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
 {
     [self setRequestAuthHeader];
-         
-    [_manager GET:voicemail.url_download parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        [Voicemail fetchVoicemailInBackground];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        completed(NO, nil, operation, error);
-    }];
     
+	if (![Common stringIsNilOrEmpty:voicemail.url_changeStatus]) {
+		[_manager GET:voicemail.url_download parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+			
+			[Voicemail fetchVoicemailInBackground];
+			
+		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+			completed(NO, nil, operation, error);
+		}];
+	}
 }
 
 //update voicemail to read
@@ -143,14 +144,15 @@
     NSString *url = [NSString stringWithFormat:@"%@", voicemail.url_changeStatus];
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     [params setObject:@"true" forKey:@"read"];
-    
-    [self.manager PUT:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        completed(YES, responseObject, operation, nil);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@", error);
-        completed(NO, nil, nil, error);
-  }];
-    
+	
+	if (![Common stringIsNilOrEmpty:url]) {
+		[self.manager PUT:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+			completed(YES, responseObject, operation, nil);
+		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+			NSLog(@"%@", error);
+			completed(NO, nil, nil, error);
+		}];
+	}
 }
 
 //JCRest implementations

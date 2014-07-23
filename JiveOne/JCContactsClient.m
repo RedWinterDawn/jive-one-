@@ -10,6 +10,7 @@
 #import "PBX+Custom.h"
 #import "Lines+Custom.h"
 #import "Membership+Custom.h"
+#import "Common.h"
 
 @implementation JCContactsClient
 {
@@ -139,12 +140,14 @@
 {
     [self setRequestAuthHeader];
     
-    [_manager POST:subscriptionURL parameters:dataDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Success");
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@", error);
-        // boo!
-    }];
+	if (![Common stringIsNilOrEmpty:subscriptionURL]) {
+		[_manager POST:subscriptionURL parameters:dataDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
+			NSLog(@"Success");
+		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+			NSLog(@"%@", error);
+			// boo!
+		}];
+	}   
 }
 
 - (void) RequestSocketSession:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed

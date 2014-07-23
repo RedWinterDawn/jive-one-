@@ -8,6 +8,7 @@
 
 #import "JCJifClient.h"
 #import "PBX+Custom.h"
+#import "Common.h"
 
 @implementation JCJifClient
 {
@@ -81,6 +82,7 @@
 {
     [self setRequestAuthHeader];
     NSString* url = [NSString stringWithFormat:@"user/jiveId/%@", jiveId];
+	
     [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //parse list of mailbox references
         [PBX addPBXs:responseObject[@"userPbxs"] userName:nil completed:^(BOOL success) {
@@ -101,14 +103,17 @@
 //        NSArray *urlSplit = [url componentsSeparatedByString:@".com/jif/v1/"];
 //        url = urlSplit[1];
 //    }
-    
-    [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        //parse list of mailbox references
-        [PBX addPBX:responseObject userName:nil withManagedContext:nil sender:nil];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        completed(NO, nil, operation, error);
-    }];
+	
+	if (![Common stringIsNilOrEmpty:url]) {
+		[_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+			//parse list of mailbox references
+			[PBX addPBX:responseObject userName:nil withManagedContext:nil sender:nil];
+			
+		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+			completed(NO, nil, operation, error);
+		}];
+	}
+
 }
 
 @end
