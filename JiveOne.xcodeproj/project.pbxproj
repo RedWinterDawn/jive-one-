@@ -2459,7 +2459,7 @@
 					"$(PROJECT_DIR)/JiveOne/Flurry",
 				);
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-licucore",
@@ -2533,7 +2533,7 @@
 					"$(PROJECT_DIR)/JiveOne/Flurry",
 				);
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-licucore",
@@ -2691,7 +2691,7 @@
 					"$(PROJECT_DIR)/JiveOne/Flurry",
 				);
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-licucore",
