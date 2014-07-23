@@ -44,11 +44,11 @@ open terminal
 <code>cd</code>
  to "iOS-JiveOne" 
 <br>
-<code> bwoken test —integration-path=JiveOneTests/integration —-skip-build </code>
+<code> bwoken test -—integration-path=JiveOneTests/integration --scheme=JiveClient_Debug —-skip-build </code>
 <br>
 or to run a single test i.e. "login.js"
 <br>
-<code> bwoken test —integration-path=JiveOneTests/integration —-skip-build  --focus login</code>
+<code> bwoken test -—integration-path=JiveOneTests/integration --scheme=JiveClient_Debug  —-skip-build  --focus login</code>
 <br>
 View all optional parameters by typing 
 <code>bwoken test -h</code>
