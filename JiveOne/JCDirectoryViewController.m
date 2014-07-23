@@ -757,26 +757,26 @@ shouldReloadTableForSearchString:(NSString *)searchString
     NSString *subId = message[@"subId"];
 //    NSString *entity = message[@"entity"];
     
-    NSString *dataId;
-    NSString *participant;
-    NSString *direction;
+//    NSString *dataId;
+//    NSString *participant;
+//    NSString *direction;
     NSString *state;
-    NSString *remote;
-    NSString *display;
-    NSString *selfUrl;
+//    NSString *remote;
+//    NSString *display;
+//    NSString *selfUrl;
     
     if (!self.context) {
         _context = [NSManagedObjectContext MR_contextForCurrentThread];
     }
     
     if (![message[@"data"] isKindOfClass:[NSNull class]]) {
-        dataId = message[@"data"][@"id"];
-        participant = message[@"data"][@"participant"];
-        direction = message[@"data"][@"direction"];
+//        dataId = message[@"data"][@"id"];
+//        participant = message[@"data"][@"participant"];
+//        direction = message[@"data"][@"direction"];
         state = message[@"data"][@"state"];
-        remote = message[@"data"][@"remote"];
-        display = message[@"data"][@"display"];
-        selfUrl = message[@"data"][@"self"];
+//        remote = message[@"data"][@"remote"];
+//        display = message[@"data"][@"display"];
+//        selfUrl = message[@"data"][@"self"];
     }
     
     

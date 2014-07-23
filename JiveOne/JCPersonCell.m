@@ -56,6 +56,7 @@
 		[self.personNameLabel sizeToFit];
 		[self configureFavoriteStatus];
 		NSString * detailText = line.externsionNumber;
+
 		PBX *pbx = [PBX MR_findFirstByAttribute:@"pbxId" withValue:line.pbxId];
 		if (pbx) {
 			NSString *name = pbx.name;
@@ -66,11 +67,8 @@
 				detailText = [NSString stringWithFormat:@"%@", line.externsionNumber];
 			}
 		}
-		else {
-			detailText = [NSString stringWithFormat:@"%@", line.externsionNumber];
-		}
-		self.personDetailLabel.text = detailText;
 		
+		self.personDetailLabel.text = detailText;
 		
 		self.personPresenceView.presenceType = (JCPresenceType) [line.state integerValue];
 		[line addObserver:self forKeyPath:kPresenceKeyPathForLineEntity options:NSKeyValueObservingOptionNew context:NULL];

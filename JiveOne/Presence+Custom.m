@@ -76,9 +76,6 @@
 
 + (Presence *)updatePresence:(Presence *)presence dictionary:(NSDictionary *)dictionary withManagedContext:(NSManagedObjectContext *)context
 {
-    if (!context) {
-        context = [NSManagedObjectContext MR_contextForCurrentThread];
-    }
     
     long lastModifiedFromEntity = [presence.lastModified integerValue];
     long lastModifiedFromDictionary = [dictionary[@"lastModified"] integerValue];
