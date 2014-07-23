@@ -278,7 +278,7 @@
 - (void)checkIfLoadingHasFinished:(NSNotification *)notification
 {
     self.userIsDoneWithTutorial = YES;
-    
+    [[NSUserDefaults standardUserDefaults] setBool:self.userIsDoneWithTutorial forKey:@"seenAppTutorial"];
     if ([[notification name] isEqualToString:@"AppTutorialDismissed"])
     {
         NSLog (@"Successfully received the AppTutorialDismissed notification!");
@@ -320,7 +320,7 @@
     }
     else
     {
-        [self showHudWithTitle:@"One Moment Please" detail:@"Preparing for first use"];
+        [self showHudWithTitle:@"One Moment Please" detail:@"Loading data"];
     }
 
 	[self fetchMyMailboxes];
