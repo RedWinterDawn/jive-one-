@@ -106,9 +106,7 @@ __block JCVoiceTableViewController* voicemailViewController;
 
 
 describe(@"Voicemail VC", ^{
-    context(@"", ^{//after being instantiated and authenticated
-		
-		
+    context(@"", ^{//after being instantiated and authenticated	
 		
         beforeAll(^{ // Occurs once
             NSString *token = [[JCAuthenticationManager sharedInstance] getAuthenticationToken];

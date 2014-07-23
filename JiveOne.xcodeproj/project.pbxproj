@@ -91,7 +91,6 @@
 		2736698218BD441D0069B4B3 /* JCPersonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2736698118BD441D0069B4B3 /* JCPersonCell.m */; };
 		273CC25E1900B23B005A2857 /* JCVoiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 273CC25D1900B23B005A2857 /* JCVoiceCell.m */; };
 		2741EB8118FC4C0200F2FE64 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2741EB8018FC4C0200F2FE64 /* CoreTelephony.framework */; };
-		27426AC918B5303D00011635 /* UTRestClientUnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 27426AC818B5303D00011635 /* UTRestClientUnitTests.m */; };
 		274493B918D0E98C002744CB /* Presence.m in Sources */ = {isa = PBXBuildFile; fileRef = 274493B818D0E98C002744CB /* Presence.m */; };
 		274493BC18D0E98C002744CB /* Company.m in Sources */ = {isa = PBXBuildFile; fileRef = 274493BB18D0E98C002744CB /* Company.m */; };
 		274493C818D0E98D002744CB /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 274493C718D0E98D002744CB /* Conversation.m */; };
@@ -404,7 +403,6 @@
 		273CC25D1900B23B005A2857 /* JCVoiceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoiceCell.m; sourceTree = "<group>"; };
 		273D24A2193CCB73004D2B23 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		2741EB8018FC4C0200F2FE64 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
-		27426AC818B5303D00011635 /* UTRestClientUnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UTRestClientUnitTests.m; sourceTree = "<group>"; };
 		274493B718D0E98C002744CB /* Presence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Presence.h; sourceTree = "<group>"; };
 		274493B818D0E98C002744CB /* Presence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Presence.m; sourceTree = "<group>"; };
 		274493BA18D0E98C002744CB /* Company.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Company.h; sourceTree = "<group>"; };
@@ -1847,7 +1845,6 @@
 			children = (
 				275F4A8218AD0FBC00D2F069 /* UTJiveOneTests.m */,
 				DDFFB60018D2284E00372019 /* UTVoicemailVCTests.m */,
-				27426AC818B5303D00011635 /* UTRestClientUnitTests.m */,
 				DDCADB6C197D75D800483D98 /* UTDirectoryVCTests.m */,
 			);
 			name = UnitTests;
@@ -2284,7 +2281,6 @@
 				DDCADB6D197D75D800483D98 /* UTDirectoryVCTests.m in Sources */,
 				2751592018AD303500FD8D3F /* JCDirectoryViewController.m in Sources */,
 				DDFFB60118D2284E00372019 /* UTVoicemailVCTests.m in Sources */,
-				27426AC918B5303D00011635 /* UTRestClientUnitTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
