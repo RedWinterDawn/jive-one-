@@ -84,6 +84,7 @@
 		2710E40C18CE873000152C91 /* Conversation+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 2710E40B18CE873000152C91 /* Conversation+Custom.m */; };
 		2710E40F18CEC8C300152C91 /* ConversationEntry+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 2710E40E18CEC8C300152C91 /* ConversationEntry+Custom.m */; };
 		271EBDAF1910525E00421BA9 /* GTalkNotify.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 271EBDAE1910525E00421BA9 /* GTalkNotify.aiff */; };
+		271F4622198082EB00455BFB /* Default~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 271F4621198082EB00455BFB /* Default~iphone.png */; };
 		272580F0192120500027887C /* people-start-conv.png in Resources */ = {isa = PBXBuildFile; fileRef = 272580EF192120500027887C /* people-start-conv.png */; };
 		2727003F197DE7A100A2D7AF /* JCContactsClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2799757C195A1FC4001425CC /* JCContactsClient.m */; };
 		272B61DD18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */; };
@@ -280,8 +281,8 @@
 		F266162618B42AA0000B770A /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266162418B42AA0000B770A /* AddressBook.framework */; };
 		F266162718B42AA0000B770A /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266162518B42AA0000B770A /* AddressBookUI.framework */; };
 		F59AE2BD192F07BA00CAF0F3 /* iPadlaunch1Xnew.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2B6192F07BA00CAF0F3 /* iPadlaunch1Xnew.png */; };
-		F59AE2C3192F07BA00CAF0F3 /* iPhone1Xnew.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2B9192F07BA00CAF0F3 /* iPhone1Xnew.png */; };
-		F59AE2C5192F07BA00CAF0F3 /* iPhone2Xnew.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2BA192F07BA00CAF0F3 /* iPhone2Xnew.png */; };
+		F59AE2C3192F07BA00CAF0F3 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2B9192F07BA00CAF0F3 /* Default.png */; };
+		F59AE2C5192F07BA00CAF0F3 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2BA192F07BA00CAF0F3 /* Default-568h@2x.png */; };
 		F59AE2C9192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2BC192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png */; };
 		F59AE2CC192F0B0D00CAF0F3 /* iPadLaunch2Xnew.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2CB192F0B0D00CAF0F3 /* iPadLaunch2Xnew.png */; };
 /* End PBXBuildFile section */
@@ -395,6 +396,7 @@
 		2710E40D18CEC8C300152C91 /* ConversationEntry+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConversationEntry+Custom.h"; sourceTree = "<group>"; };
 		2710E40E18CEC8C300152C91 /* ConversationEntry+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ConversationEntry+Custom.m"; sourceTree = "<group>"; };
 		271EBDAE1910525E00421BA9 /* GTalkNotify.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = GTalkNotify.aiff; sourceTree = "<group>"; };
+		271F4621198082EB00455BFB /* Default~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default~iphone.png"; sourceTree = "<group>"; };
 		272580EF192120500027887C /* people-start-conv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "people-start-conv.png"; sourceTree = "<group>"; };
 		272B61DB18B2A4DD00EB8ED5 /* TRVSMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRVSMonitor.h; sourceTree = "<group>"; };
 		272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRVSMonitor.m; sourceTree = "<group>"; };
@@ -771,8 +773,8 @@
 		F266162418B42AA0000B770A /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		F266162518B42AA0000B770A /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		F59AE2B6192F07BA00CAF0F3 /* iPadlaunch1Xnew.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPadlaunch1Xnew.png; sourceTree = "<group>"; };
-		F59AE2B9192F07BA00CAF0F3 /* iPhone1Xnew.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhone1Xnew.png; sourceTree = "<group>"; };
-		F59AE2BA192F07BA00CAF0F3 /* iPhone2Xnew.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhone2Xnew.png; sourceTree = "<group>"; };
+		F59AE2B9192F07BA00CAF0F3 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		F59AE2BA192F07BA00CAF0F3 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		F59AE2BC192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhone2XnewBlurSmall.png; sourceTree = "<group>"; };
 		F59AE2CB192F0B0D00CAF0F3 /* iPadLaunch2Xnew.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPadLaunch2Xnew.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1088,14 +1090,15 @@
 		275158F618AD10A500FD8D3F /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				271F4621198082EB00455BFB /* Default~iphone.png */,
 				270098B518F5EA7900B6BC2F /* UX Images */,
 				27C3715118EDE9A000F159EF /* first_message.png */,
 				27B8153418D94E9C00516BF6 /* close_notification.png */,
 				27B8153518D94E9C00516BF6 /* close_notification@2x.png */,
 				F59AE2B6192F07BA00CAF0F3 /* iPadlaunch1Xnew.png */,
 				F59AE2CB192F0B0D00CAF0F3 /* iPadLaunch2Xnew.png */,
-				F59AE2B9192F07BA00CAF0F3 /* iPhone1Xnew.png */,
-				F59AE2BA192F07BA00CAF0F3 /* iPhone2Xnew.png */,
+				F59AE2B9192F07BA00CAF0F3 /* Default.png */,
+				F59AE2BA192F07BA00CAF0F3 /* Default-568h@2x.png */,
 				F59AE2BC192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png */,
 				275158F718AD10BA00FD8D3F /* main-logo.png */,
 			);
@@ -1996,7 +1999,7 @@
 				27C3715218EDE9A000F159EF /* first_message.png in Resources */,
 				270098C818F5EA9300B6BC2F /* avatar.png in Resources */,
 				91F6DFAB192A702F001C54FB /* Shared.xcconfig in Resources */,
-				F59AE2C5192F07BA00CAF0F3 /* iPhone2Xnew.png in Resources */,
+				F59AE2C5192F07BA00CAF0F3 /* Default-568h@2x.png in Resources */,
 				2700989918F4714100B6BC2F /* bubble-stroked-tailless@2x.png in Resources */,
 				270098A418F4714100B6BC2F /* send-button-pressed.png in Resources */,
 				270098C318F5EA9300B6BC2F /* nav-conv.png in Resources */,
@@ -2015,6 +2018,7 @@
 				2700989718F4714100B6BC2F /* bubble-min@2x.png in Resources */,
 				9172AD5C19192A1500481B01 /* UserDefaults.plist in Resources */,
 				2700988F18F4714100B6BC2F /* bubble-classic-square-blue@2x.png in Resources */,
+				271F4622198082EB00455BFB /* Default~iphone.png in Resources */,
 				2700989618F4714100B6BC2F /* bubble-min.png in Resources */,
 				27F1F2F5191C171300AEAFD7 /* UALocationSettingsViewController.xib in Resources */,
 				2700988D18F4714100B6BC2F /* bubble-classic-typing@2x.png in Resources */,
@@ -2030,7 +2034,7 @@
 				2700989818F4714100B6BC2F /* bubble-stroked-tailless.png in Resources */,
 				27F1F2DF191C171300AEAFD7 /* UAInboxMessageListController.xib in Resources */,
 				270098B418F5E4EA00B6BC2F /* conv-bubble.png in Resources */,
-				F59AE2C3192F07BA00CAF0F3 /* iPhone1Xnew.png in Resources */,
+				F59AE2C3192F07BA00CAF0F3 /* Default.png in Resources */,
 				2700988418F4714100B6BC2F /* bubble-classic-blue.png in Resources */,
 				270098A718F4714100B6BC2F /* send-button@2x.png in Resources */,
 				270098AD18F4714100B6BC2F /* message-sent.aiff in Resources */,
@@ -2420,7 +2424,6 @@
 			baseConfigurationReference = 8B150D3FF8864E2786E514D9 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -2450,7 +2453,7 @@
 					"\"${PODS_ROOT}/Headers/SDWebImage\"",
 					"\"${PODS_ROOT}/Headers/SocketRocket\"",
 				);
-				INFOPLIST_FILE = "JiveOne/JiveOne-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/JiveOne/JiveOne-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2459,7 +2462,7 @@
 					"$(PROJECT_DIR)/JiveOne/Flurry",
 				);
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-licucore",
@@ -2494,7 +2497,6 @@
 			baseConfigurationReference = 8B150D3FF8864E2786E514D9 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: JIVE COMMUNICATIONS, INC";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: JIVE COMMUNICATIONS, INC";
@@ -2524,7 +2526,7 @@
 					"\"${PODS_ROOT}/Headers/SDWebImage\"",
 					"\"${PODS_ROOT}/Headers/SocketRocket\"",
 				);
-				INFOPLIST_FILE = "JiveOne/JiveOneEnterprise-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/JiveOne/JiveOne-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2533,7 +2535,7 @@
 					"$(PROJECT_DIR)/JiveOne/Flurry",
 				);
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-licucore",
@@ -2652,7 +2654,6 @@
 			baseConfigurationReference = 8B150D3FF8864E2786E514D9 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Jive Communications, Inc (5NE3JJD5L3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jive Communications, Inc (5NE3JJD5L3)";
@@ -2682,7 +2683,7 @@
 					"\"${PODS_ROOT}/Headers/SDWebImage\"",
 					"\"${PODS_ROOT}/Headers/SocketRocket\"",
 				);
-				INFOPLIST_FILE = "";
+				INFOPLIST_FILE = "$(SRCROOT)/JiveOne/JiveOne-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2691,7 +2692,7 @@
 					"$(PROJECT_DIR)/JiveOne/Flurry",
 				);
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-licucore",
