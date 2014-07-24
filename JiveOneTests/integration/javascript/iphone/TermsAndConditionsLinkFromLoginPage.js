@@ -6,12 +6,12 @@ test("Terms and Conditions link from login page", function(target, app){
 	target.frontMostApp().logElementTree();
 	//Touch Terms and Conditions link at bottom of page
 	target.frontMostApp().mainWindow().buttons()["Terms and Conditions."].tap();
-	delay(4);
+	delay(2);
 	 //Select the Menu
 	target.frontMostApp().mainWindow().scrollViews()[0].webViews()[0].buttons()[""].tap();
 	assertTrue(target.frontMostApp().mainWindow().scrollViews()[0].webViews()[0].links()["ENTERPRISE"],"ENTERPRISE tab not found");
 	target.frontMostApp().mainWindow().scrollViews()[0].webViews()[0].links()["GOVERNMENT"].tap();
-	delay(3);
+	delay(2);
 	target.frontMostApp().logElementTree();
 	//Test all the navagation buttons on the bottom of screen
 	target.frontMostApp().toolbar().buttons()["Back"].tap();
