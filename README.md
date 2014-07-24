@@ -33,6 +33,10 @@ Then go to testflightapp.com on your device through safari.
 Login and launch the app.
 Install provisioning profile.
 
+Testing login
+username: jivetesting12@gmail.com
+password: testing12
+
 TESTING AND USING OCMOCK
 ==============
 Check out: http://en.wikipedia.org/wiki/Mock_object for a detailed explination of Mock objects and why we use them.
@@ -66,6 +70,41 @@ curl -X POST -u "PBJUc1sXQTaAk1YwnWzlKQ:P0-eJ93JR1Ov7OmltF5XDw"
 	}'
 https://go.urbanairship.com/api/push/
 ```
+
+How to SSH to API Server and Tail the Output
+==========
+Make sure you have the appropriate .pem files in your .ssh folder as well as a 'config' file. The config file contents shuld be:
+```
+Host my.jive.com
+	IdentityFile ~/PATH/TO/FILE.pem
+	HostName 10.103.1.74
+	User root
+
+Host test.my.jive.com
+	IdentityFile ~/PATH/TO/FILE.pem
+	HostName 10.103.0.137
+	User root
+```
+In terminal, type the following command:
+```
+ssh my.jive.com
+```
+Accept the certificate and once you're in, to tail, type: 
+```
+tail -f/var/run/forever/*
+```
+Another useful command is to re-start the service. Type:
+```
+service jive_client restart
+```
+
+Upload a test voicemail
+====
+cd to a directory where msg0000.wav and msg0000.txt exists (such as /Assets).
+<br>
+then
+<br>
+curl -v -F file=@msg0000.WAV -F metadata=@msg0000.txt http://10.20.26.141:8880/voicemails/mailbox/0146de22-4cf6-65b5-3be8-006300620001/folders/INBOX
 
 Some useful links:
 ==========

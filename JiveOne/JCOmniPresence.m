@@ -15,6 +15,11 @@
 #import "Voicemail.h"
 #import "Presence.h"
 #import "Company.h"
+#import "Membership+Custom.h"
+#import "PBX+Custom.h"
+#import "LineGroup.h"
+#import "Lines.h"
+
 
 @implementation JCOmniPresence
 
@@ -55,6 +60,12 @@
     [Conversation MR_truncateAllInContext:localContext];
     [Voicemail MR_truncateAllInContext:localContext];
     [PersonEntities MR_truncateAllInContext:localContext];
+	[Voicemail MR_truncateAllInContext:localContext];
+	[Membership MR_truncateAllInContext:localContext];
+	[PBX MR_truncateAllInContext:localContext];
+	[LineGroup MR_truncateAllInContext:localContext];
+	[Lines MR_truncateAllInContext:localContext];
+	
     [localContext MR_saveToPersistentStoreAndWait];
 }
 

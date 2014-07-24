@@ -13,7 +13,8 @@
 #define DEFAULT_AWAY_COLOR              [UIColor colorWithRed:233.0/255.0 green:195.0/255.0 blue:0.0/255.0 alpha:1]
 #define DEFAULT_BUSY_COLOR              [UIColor colorWithRed:233.0/255.0 green:195.0/255.0 blue:0.0/255.0 alpha:1]
 #define DEFAULT_DO_NOT_DISTURB_COLOR    [UIColor colorWithRed:233.0/255.0 green:0.0/255.0 blue:19.0/255.0 alpha:1]
-#define DEFAULT_COLOR                   [UIColor colorWithRed:186.0/255.0 green:186.0/255.0 blue:186.0/255.0 alpha:1]
+#define DEFAULT_OFFLINE_COLOR           [UIColor colorWithRed:186.0/255.0 green:186.0/255.0 blue:186.0/255.0 alpha:1]
+#define DEFAULT_COLOR                   [UIColor colorWithRed:129.0/255.0 green:205.0/255.0 blue:0.0/255.0 alpha:1]
 
 #define DEFAULT_LINE_WIDTH              3
 
@@ -145,8 +146,11 @@
         
         CGContextSaveGState(context);
         //CGContextSetLineWidth(context, _lineWidth);
-        CGContextSetFillColorWithColor(context, CGColorCreateCopyWithAlpha([self colorFromType:type].CGColor, 1.0));
-        CGContextSetStrokeColorWithColor(context, [self colorFromType:type].CGColor);
+        UIColor *color = [self colorFromType:type];
+        CGColorRef colorRef = CGColorCreateCopyWithAlpha(color.CGColor, 1.0);
+        CGContextSetFillColorWithColor(context, colorRef);
+        CFRelease(colorRef);
+        CGContextSetStrokeColorWithColor(context, color.CGColor);
         CGContextFillEllipseInRect(context, frame);
         CGContextStrokeEllipseInRect(context, frame);
         CGContextRestoreGState(context);
@@ -166,9 +170,6 @@
     switch (type) {
         case JCPresenceTypeAvailable:
             return DEFAULT_AVAILABLE_COLOR;
-            
-        case JCPresenceTypeAway:
-            return DEFAULT_AWAY_COLOR;
             
         case JCPresenceTypeBusy:
             return DEFAULT_BUSY_COLOR;

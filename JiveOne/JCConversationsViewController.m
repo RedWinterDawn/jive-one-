@@ -7,13 +7,14 @@
 //
 
 #import "JCConversationsViewController.h"
-#import "JCOsgiClient.h"
+#import "JCRESTClient.h"
 #import "PersonEntities.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "JCMessagesViewController.h"
 #import "ConversationEntry.h"
 #import "JCConversationCell.h"
 #import "JCGroupConversationCell.h"
+#import <MBProgressHUD/MBProgressHUD.h>
 @interface JCConversationsViewController ()
 {
     //NSMutableArray *entries;
@@ -23,6 +24,7 @@
     int newMessagesCount;
 }
 
+@property (nonatomic) BOOL alertShowing;
 @property (nonatomic) NSString *currentConversationId;
 
 @end
@@ -55,6 +57,7 @@ static NSString *GroupCellIdentifier = @"GroupChatCell";
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [Flurry logEvent:@"Conversation View"];
     [super viewWillAppear:animated];
     [self loadDatasource];
     
@@ -82,8 +85,6 @@ static NSString *GroupCellIdentifier = @"GroupChatCell";
 - (void)updateTable
 {
     [self fetchLastConverstions];
-    [self.tableView reloadData];
-    [self.refreshControl endRefreshing];
 }
 
 - (void) loadDatasource
@@ -94,23 +95,40 @@ static NSString *GroupCellIdentifier = @"GroupChatCell";
 
 - (IBAction)startNewConversation:(id)sender {
     
-    
+    if ([sender isKindOfClass:[PersonEntities class]]){
+        [self performSegueWithIdentifier:@"MessageSegue" sender:sender];
+    }else{
+        [self performSegueWithIdentifier:@"MessageSegue" sender:kNewConversation];
+    }
+}
+
+- (IBAction)startNewConversationWithNewSearch:(id)sender {
     [self performSegueWithIdentifier:@"MessageSegue" sender:kNewConversation];
 }
 
-
 - (void)fetchLastConverstions
 {
-    [[JCOsgiClient sharedClient] RetrieveConversations:^(id JSON) {
-        
-        [self loadDatasource];
-        
-    } failure:^(NSError *err) {
-        NSLog(@"%@",[err description]);
-        [self loadDatasource];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection Problem" message:@"Could not load new conversation data. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
-    }];
+//    [[JCRESTClient sharedClient] RetrieveConversations:^(id JSON) {
+//        
+//        [self loadDatasource];
+//        [self.refreshControl endRefreshing];
+//
+//        
+//    } failure:^(NSError *err) {
+//        NSLog(@"%@",[err description]);
+//        [self.refreshControl endRefreshing];
+//        [self loadDatasource];
+//        if(!self.alertShowing){
+//            self.alertShowing = YES;
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connection Problem" message:@"Could not load new conversation data. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//            [alert show];
+//        }
+//    }];
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    self.alertShowing = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -154,21 +172,25 @@ static NSString *GroupCellIdentifier = @"GroupChatCell";
     if (!self.view.window) {
         Conversation *conversation = (Conversation *)notification.object;
         if (_currentConversationId && [_currentConversationId isEqualToString:conversation.conversationId]) {
-            NSLog(@"Received Conversation that is currently selected. So don't update Back button");
         }
-        else
+        else if (_currentConversationId)
         {
+            [self refreshConversations:nil];
             newMessagesCount++;
             // set a different back button for the navigation controller
             UIBarButtonItem *myBackButton = [[UIBarButtonItem alloc]init];
-            myBackButton.title = [NSString stringWithFormat:@"Messages (%i)", newMessagesCount];
+            myBackButton.title = [NSString stringWithFormat:@"(%i)", newMessagesCount];
             self.navigationItem.backBarButtonItem = myBackButton;
-
+            [JSMessageSoundEffect playSMSReceived];
         }
+    }
+    else
+    {
+        [JSMessageSoundEffect playSMSReceived];
     }
     
     [self loadDatasource];
-    [self refreshConversations:nil];
+    //[self refreshConversations:nil];
 }
 
 #pragma mark - Table view data source
@@ -224,12 +246,43 @@ static NSString *GroupCellIdentifier = @"GroupChatCell";
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
         Conversation *conv = conversations[indexPath.row];
+        NSString* conversationId = conv.conversationId;
         [conversations removeObjectAtIndex:indexPath.row];
         [conv MR_deleteEntity];
         [localContext MR_saveToPersistentStoreAndWait];
         
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }
+        
+        //remove conversation from server
+        [self DeleteConversationFromServer:conversationId];
+        }
+}
+-(void)DeleteConversationFromServer:(NSString*)conversationId{
+    [[JCRESTClient sharedClient] DeleteConversation:conversationId success:^(id JSON, AFHTTPRequestOperation* operation) {
+        //Toast deleted successfully
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[[[UIApplication sharedApplication] windows] lastObject] animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.detailsLabelText = @"Successfully deleted Conversation";
+        hud.userInteractionEnabled=NO;//does not block User interaction
+        [hud hide:YES afterDelay:3];
+        [hud show:YES];
+    } failure:^(NSError *err, AFHTTPRequestOperation *operation) {
+        
+        //if 401 alert user that they do not have permission to delete
+        if(operation.response.statusCode==401){
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[[[UIApplication sharedApplication] windows] lastObject] animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.detailsLabelText = @"You do not have permission to delete this conversation";
+            hud.userInteractionEnabled=NO;//does not block User interaction
+            [hud hide:YES afterDelay:3];
+            [hud show:YES];
+            
+        }else{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Connectivity Problem" message:@"Could not reach server. Please try again later" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    }];
+
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -243,17 +296,11 @@ static NSString *GroupCellIdentifier = @"GroupChatCell";
         case JCPresenceTypeAvailable:
             return kPresenceAvailable;
             break;
-        case JCPresenceTypeAway:
-            return kPresenceAway;
-            break;
         case JCPresenceTypeBusy:
             return kPresenceBusy;
             break;
         case JCPresenceTypeDoNotDisturb:
             return kPresenceDoNotDisturb;
-            break;
-        case JCPresenceTypeInvisible:
-            return kPresenceInvisible;
             break;
         case JCPresenceTypeOffline:
             return kPresenceOffline;
@@ -291,7 +338,13 @@ static NSString *GroupCellIdentifier = @"GroupChatCell";
     else if ([sender isKindOfClass:[NSString class]]) {
         [segue.destinationViewController setMessageType:JCNewConversation];
         _currentConversationId = nil;
+    }else if([sender isKindOfClass:[PersonEntities class]]){
+        [segue.destinationViewController setMessageType:JCNewConversationWithEntity];
+        [segue.destinationViewController setPerson:sender];
+        _currentConversationId = nil;
+
     }
+        
     [segue.destinationViewController setHidesBottomBarWhenPushed:YES];
 }
 

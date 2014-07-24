@@ -1,4 +1,4 @@
-//
+		//
 //  JCAccountViewController.h
 //  JiveOne
 //
@@ -7,12 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JCPresenceViewController.h"
+#import "JCPresenceView.h"
+#import "JCLineSelectorViewController.h"
 
-@interface JCAccountViewController : UITableViewController <UIActionSheetDelegate>
+@interface JCAccountViewController : UITableViewController <UIActionSheetDelegate, JCPresenceDelegate, JCLineSelectorDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *userNameDetail;
-@property (weak, nonatomic) IBOutlet UILabel *jivePhoneNumber;
-@property (weak, nonatomic) IBOutlet UILabel *jiveMessenger;
+@property (weak, nonatomic) IBOutlet UILabel *userTitleDetail;
 @property (weak, nonatomic) IBOutlet UILabel *presenceDetail;
+@property (weak, nonatomic) IBOutlet JCPresenceView *presenceDetailView;
+@property (weak, nonatomic) IBOutlet UIImageView *userImage;
+@property (weak, nonatomic) IBOutlet UITextField *userMoodDetail;
+@property (weak, nonatomic) IBOutlet UIImageView *logoutImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *eulaImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *feedbackImageView;
 
+@property (weak, nonatomic) IBOutlet UIView *presenceAccessory;
 @end

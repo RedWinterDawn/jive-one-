@@ -11,14 +11,13 @@
 #import "JCMessagesViewController.h"
 #import "JCPeopleDetailCell.h"
 #import "Company.h"
+#import "Constants.h"
+#import "JCConversationsViewController.h"
 
 
 @interface JCDirectoryDetailViewController ()
-#define NUMBER_OF_ROWS_IN_SECTION 3
-#define NUMBER_OF_SECTIONS 1
-#define ZERO 0
-#define kUINameRowHeight 66
-#define kUIRowHeight 50
+
+
 
 @property (nonatomic) NSManagedObjectContext* managedContext;
 
@@ -112,7 +111,7 @@
             if(!self.ABPerson){
                 cell.detailTextLabel.text = self.person.email;
             } else {
-                cell.detailTextLabel.text = @"";//[self.ABPerson objectForKey:@"email"];
+                cell.detailTextLabel.text = @""; //[self.ABPerson objectForKey:@"email"];
             }
 
             break;
@@ -152,7 +151,7 @@
     {
         case 0:
         {
-            result = kUINameRowHeight;
+            result = kUINameRowHeight-44;
             break;
         }
         case 1:
@@ -171,26 +170,21 @@
 
 // This button created in case we need to call methods in conjunction with starting a chat from directory detail view
 - (IBAction)startChat:(id)sender {
-    [self performSegueWithIdentifier:@"StartMessageSegue" sender:nil];
+    if (self.person) {
+       
+        //open messsagesVC
+        UINavigationController *conversationNav = self.tabBarController.viewControllers[2];
+        JCConversationsViewController *convVC = conversationNav.childViewControllers[0];
+        [convVC startNewConversation:self.person];
+        
+        //switch to tab 2
+        [self.tabBarController setSelectedIndex:2];
+    }
+
 }
 
-
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
-    if ([[segue identifier] isEqualToString:@"StartMessageSegue"]) {
-        if (self.person) {
-            [segue.destinationViewController setMessageType:JCNewConversationWithEntity];
-            [segue.destinationViewController setPerson:self.person];
-            
-       //  an attempt to change the title of the chat to the person's name - but this just updates the nav bar button
-       //  self.title = [[NSString alloc] initWithFormat:self.person.firstLastName];
 
-            
-        }
-    }
-    
-    
 }
 
 #pragma mark - delegate methods
@@ -221,6 +215,7 @@
     NSMutableAttributedString *attributedStarSelectedState = [[NSMutableAttributedString alloc]initWithString:@"★" attributes:@{NSForegroundColorAttributeName : StarColor}];
     [cell.favoriteButton setAttributedTitle:attributedStarSelectedState forState:UIControlStateNormal];
 
+    cell.favoriteButton.hidden = YES;
 }
 
 //TODO: Create Crud Method to getSpecific person from Coredata and update the their isFavorite attribute.

@@ -12,35 +12,21 @@
 #pragma mark - URL Scheme Auth Callback 
 #define kURLSchemeCallback @"jiveclient://token"
 
+#pragma mark - Miscellaneous
+#define kEulaSite @"http://jive.com/downloads/mobile-end-user-license-agreement/"
+#define kVersionURL @"http://jiveios.local/LatestVersion"
+#define kFeedbackEmail @"MobileApps+ios@jive.com"
+//https://api.jive.com/voicemail/v1/mailbox/id/0144096f-17a0-b3a5-b5e8-000100620002/voicemail/id/6882/liste
+#pragma mark - V5 services
+#define kVoicemailService @"http://10.20.26.141:8890/" //@"api.jive.com/voicemail"
+#define kMailboxPath @"voicemail/v1/mailbox/"
+#define kJifService @"https://api.jive.com/jif/v1/" //@"api.jive.com/jif"
+#define kContactsService @"https://api.jive.com/contacts/"
+#define kJiveUserInfo @"/jiveuser/info/jiveid/"
 
-#pragma mark - OSGI Routes
-
-
-#if DEBUG
-    #define kOsgiBaseURL @"https://test.my.jive.com/"
-    //#define kOsgiBaseURL @"https://osgi.local.com:8000/"
-#else
-    #define kOsgiBaseURL @"https://my.jive.com/"
-#endif
-
-
-#define kOsgiAuthURL @"https://auth.jive.com/oauth2/grant?client_id=%@&response_type=code&redirect_uri=%@"
-#define kOsgiAPIScheme @"api/"
-#define kOsgiURNScheme @"urn/"
-#define kOsgiAuthRoute @"auth/login?redirectUrl="
-#define kOsgiEntityRoute @"entities"
-#define kOsgiMyEntityRoute @"entities:me"
-#define kOsgiConverationRoute @"conversations"
-#define kOsgiSessionRoute @"sessions"
-#define kOsgiSubscriptionRoute @"subscriptions"
-#define kOsgiPresenceRoute @"presence"
-#define kOsgiVoicemailRoute @"voicemails"
-
-#pragma mark - Temporary Voicemail Constants
-#define kAWSVoicemailRoute @"voicemail/userId/"
-#define kAWSBaseURL @"https://s3-us-west-2.amazonaws.com/jive-mobile/"
 
 #pragma mark - Authentication Manager
+#define kOsgiAuthURL @"https://auth.jive.com/oauth2/v2/grant?client_id=%@&response_type=token&scope=%@&redirect_uri=%@"
 #define kAuthenticationFromTokenSucceeded @"keyauthenticationfortokensucceeded"
 #define kAuthenticationFromTokenFailed @"keyauthenticationfortokenfailed"
 #define kAuthenticationFromTokenFailedWithTimeout @"keyauthenticationfortokenfailedwithtimeout"
@@ -55,7 +41,11 @@
 #pragma mark - OAuth Credentials
 #define kOAuthClientSecret @"enXabnU5KuVm4XRSWGkU"
 #define kOAuthClientId @"f62d7f80-3749-11e3-9b37-542696d7c505"
-#define kTestAuthKey @"9eff6cb6-817a-4699-b663-2fd370749a05";
+#define kTestAuthKey @"f1c7adf0-786e-404e-a107-2921fc040d4a"
+#pragma -mark Scopes
+#define kScopeProfile @"contacts.v1.profile.read"
+#define kScopeVoicemail @"vm.v1.msgs.meta.read"
+
 
 #pragma mark - Presence Constants
 #define kPresenceAvailable @"Available"
@@ -67,6 +57,7 @@
 
 #pragma mark - KVO Constants
 #define kPresenceKeyPathForClientEntity @"entityPresence"
+#define kPresenceKeyPathForLineEntity @"state"
 #define kLastMofiedKeyPathForConversation @"lastModified"
 #define kVoicemailKeyPathForVoicemal @"voicemail"
 
@@ -78,17 +69,32 @@
 
 #pragma mark - UIConstants
 #define kShiftNameLabelThisMuch 5.0
+#define kShiftKeyboardTHisMuch 90
+//Applied to the People view
+#define kUINameRowHeight 100
+#define kUIRowHeight 50
+//Used in the DirectoryDetailView Controller
+#define NUMBER_OF_ROWS_IN_SECTION 3
+#define NUMBER_OF_SECTIONS 1
+#define ZERO 0
 
 #pragma mark - Debug Helpers
 #define kVoicemailURLOverRide @"NoDontUseAWSPlaceholderURL"
 //change to @"YesUseAWSPlaceholderURL" to toggle AWS Voicemail wav file
 
+#pragma mark - NSUserDefaults
+#define kUserName @"username"
+#define UDdeviceToken @"deviceToken"
+#define kRememberMe @"keyrememberme"
+
+
+
 typedef enum {
     JCPresenceTypeOffline = 0,
     JCPresenceTypeAvailable = 1,
-    JCPresenceTypeBusy = 2,
+    JCPresenceTypeBusy = 9,
     JCPresenceTypeInvisible = 4,
-    JCPresenceTypeDoNotDisturb = 5,
+    JCPresenceTypeDoNotDisturb = 2,
     JCPresenceTypeAway = 7,  
     JCPresenceTypeNone = -1
 } JCPresenceType;

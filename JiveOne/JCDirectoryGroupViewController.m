@@ -8,6 +8,8 @@
 
 #import "JCDirectoryGroupViewController.h"
 #import "JCGroupSelectorViewController.h"
+#import "Lines+Custom.h"
+#import "PBX+Custom.h"
 
 @interface JCDirectoryGroupViewController ()
 {
@@ -36,7 +38,8 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.testArray = [[NSMutableArray alloc] initWithArray:[ContactGroup MR_findAllSortedBy:@"groupName" ascending:YES]];
+    self.groupArray = [[NSMutableArray alloc] initWithArray:[ContactGroup MR_findAllSortedBy:@"groupName" ascending:YES]];
+	self.pbxArray = [[NSMutableArray alloc] initWithArray:[PBX MR_findAllSortedBy:@"name" ascending:YES]];
     [self.tableView reloadData];
 }
 
@@ -61,15 +64,31 @@
         
     } else if (section == 1){
         
-        return 1;
+        return self.pbxArray.count;
         
     } else {
         
-        return self.testArray.count;
+        return self.groupArray.count;
     }
     
     // Return the number of rows in the section.
     
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+	switch (section) {
+		case 1:
+			return @"Organization";
+			break;
+		
+		case 2:
+			return @"Groups";
+			break;
+		default:
+			return @"";
+			break;
+	}
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -85,15 +104,17 @@
     // The purpose of making this blank cell is to make "All Contacts" stand out as a pseudo title
     } else if (indexPath.section == 1){
         
-        cell.textLabel.text = @"";
-        cell.detailTextLabel.text = @"";
+		PBX *pbx = self.pbxArray[indexPath.row];
+        cell.textLabel.text = pbx.name;
+		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
     } else {
         
-        ContactGroup *group = self.testArray[indexPath.row];
+		
+        ContactGroup *group = self.groupArray[indexPath.row];
         cell.textLabel.text = group.groupName;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.detailTextLabel.text = [(NSArray*)group.clientEntities componentsJoinedByString:@","];
+        //cell.detailTextLabel.text = [(NSArray*)group.clientEntities componentsJoinedByString:@","];
     }
     
     return cell;
@@ -106,8 +127,13 @@
     
     if (indexPath.section == 0 && indexPath.row == 0) {
         [self.navigationController popToRootViewControllerAnimated:YES];
-    } else if (indexPath.section == 2) {
-        ContactGroup *group = self.testArray[indexPath.row];
+    }
+	else if (indexPath.section == 1) {
+		PBX *pbx = self.pbxArray[indexPath.row];
+		[self performSegueWithIdentifier:@"groupContactSegue" sender:pbx];
+	}
+	else if (indexPath.section == 2) {
+        ContactGroup *group = self.groupArray[indexPath.row];
         [self performSegueWithIdentifier:@"groupContactSegue" sender:group];
     }
     
@@ -130,8 +156,8 @@
         // Delete the row from the data source - using MagicalRecord to edit CoreData - all the contact groupe are shown in the third section of the table, hence "indexPath.section == 2"
         if (indexPath.section == 2) {
             
-            ContactGroup *group = self.testArray[indexPath.row];
-            [self.testArray removeObjectAtIndex:indexPath.row];
+            ContactGroup *group = self.groupArray[indexPath.row];
+            [self.groupArray removeObjectAtIndex:indexPath.row];
             [group MR_deleteInContext:localContext];
             [localContext MR_saveToPersistentStoreAndWait];
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -144,12 +170,14 @@
 
 // We pass information from the current ViewControllerl to the selector view
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
+    JCGroupSelectorViewController *groupSelectorVC = (JCGroupSelectorViewController *)[[segue destinationViewController] visibleViewController];
     if ([sender isKindOfClass:[ContactGroup class]]) {
-        JCGroupSelectorViewController *groupSelectorVC = (JCGroupSelectorViewController *)[[segue destinationViewController] visibleViewController];
-        [groupSelectorVC setGroupEdit:sender];
         
+        [groupSelectorVC setGroupEdit:sender];
     }
+	else if ([sender isKindOfClass:[PBX class]]) {
+		[groupSelectorVC setPbxEdit:sender];
+	}
     
 }
 

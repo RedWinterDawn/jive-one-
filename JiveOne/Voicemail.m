@@ -2,7 +2,7 @@
 //  Voicemail.m
 //  JiveOne
 //
-//  Created by Eduardo Gueiros on 4/16/14.
+//  Created by Eduardo Gueiros on 7/16/14.
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
@@ -12,24 +12,20 @@
 @implementation Voicemail
 
 @dynamic callerId;
-@dynamic createdDate;
-@dynamic lenght;
-@dynamic extensionNumber;
-@dynamic origFile;
-@dynamic lastModified;
-@dynamic messageId;
-@dynamic read;
-@dynamic urn;
-@dynamic voicemail;
-@dynamic file;
-@dynamic voicemailId;
-@dynamic callerNumber;
-@dynamic callerName;
-@dynamic pbxId;
-@dynamic lineId;
-@dynamic mailboxId;
-@dynamic folderId;
-@dynamic extensionName;
+@dynamic callerIdNumber;
 @dynamic deleted;
+@dynamic duration;
+@dynamic jrn;
+@dynamic mailboxUrl;
+@dynamic read;
+@dynamic timeStamp;
+@dynamic transcription;
+@dynamic transcriptionPercent;
+@dynamic url_changeStatus;
+@dynamic url_download;
+@dynamic url_pbx;
+@dynamic url_self;
+@dynamic voicemail;
+@dynamic voicemailId;
 
 @end

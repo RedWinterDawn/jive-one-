@@ -37,7 +37,7 @@
     _placeHolderTextColor = [UIColor lightGrayColor];
     
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    self.scrollIndicatorInsets = UIEdgeInsetsMake(10.0f, 0.0f, 10.0f, 8.0f);
+    //self.scrollIndicatorInsets = UIEdgeInsetsMake(10.0f, 0.0f, 10.0f, 8.0f);
     self.contentInset = UIEdgeInsetsZero;
     self.scrollEnabled = YES;
     self.scrollsToTop = NO;
@@ -49,6 +49,28 @@
     self.keyboardType = UIKeyboardTypeDefault;
     self.returnKeyType = UIReturnKeyDefault;
     self.textAlignment = NSTextAlignmentLeft;
+
+    UIEdgeInsets insets = self.contentInset;
+    insets.top = insets.top - 5;
+    self.contentInset = insets;
+    //    /**
+//     Bug Fix For iOS 7 Where The Cursor of the Textbox shows at the bottom of the view 
+//     */
+//    CGRect line = [self caretRectForPosition:
+//                   self.selectedTextRange.start];
+//    CGFloat overflow = line.origin.y + line.size.height
+//    - ( self.contentOffset.y + self.bounds.size.height
+//       - self.contentInset.bottom - self.contentInset.top );
+//    if ( overflow > 0 ) {
+//        // We are at the bottom of the visible text and introduced a line feed, scroll down (iOS 7 does not do it)
+//        // Scroll caret to visible area
+//        CGPoint offset = self.contentOffset;
+//        offset.y += overflow + 7; // leave 7 pixels margin
+//        // Cannot animate with setContentOffset:animated: or caret will not appear
+//        [UIView animateWithDuration:.2 animations:^{
+//            [self setContentOffset:offset];
+//        }];
+//    }
     
     [self addTextViewNotificationObservers];
 }
@@ -157,7 +179,7 @@
     
     if ([self.text length] == 0 && self.placeHolder) {
         CGRect placeHolderRect = CGRectMake(10.0f,
-                                            3.0f,
+                                            6.5f,
                                             rect.size.width,
                                             rect.size.height);
         

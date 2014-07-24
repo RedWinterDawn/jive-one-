@@ -7,33 +7,48 @@
 //
 
 #import "Voicemail+Custom.h"
+#import "VoicemailETag.h"
 #import "Constants.h"
+#import "JCAppDelegate.h"
+#import "Common.h"
 
 @implementation Voicemail (Custom)
 
 
 + (NSArray *)RetrieveVoicemailById:(NSString *)conversationId
 {
-    NSArray *conversations = [super MR_findByAttribute:@"conversationId" withValue:conversationId andOrderBy:@"lastModified" ascending:YES];
-    return conversations;
+    NSLog(@"Voicemail+Custom.retrieveVoicemailById");
+    NSArray *voicemails = [super MR_findByAttribute:@"jrn" withValue:conversationId andOrderBy:@"lastModified" ascending:YES];
+    return voicemails;
 }
 
 #pragma mark - CRUD for Voicemail
-+ (void)addVoicemails:(NSArray *)entryArray
++ (void)addVoicemails:(NSDictionary *)responseObject mailboxUrl:(NSString *)mailboxUrl completed:(void (^)(BOOL))completed
 {
-    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
-    for (NSDictionary *entry in entryArray) {
-        if ([entry isKindOfClass:[NSDictionary class]]) {
-            [self addVoicemail:entry withManagedContext:context];
+    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+        for (NSDictionary *voicemail in [responseObject objectForKey:@"voicemails"]) {
+            if ([voicemail isKindOfClass:[NSDictionary class]]) {
+                [self addVoicemail:voicemail mailboxUrl:mailboxUrl withManagedContext:localContext sender:self];
+            }
         }
+    } completion:^(BOOL success, NSError *error) {
+        completed(success);
+        [self fetchVoicemailInBackground];
+    }];
+    
+}
+
++ (Voicemail *)addVoicemailEntry:(NSDictionary*)entry mailboxUrl:(NSString *)mailboxUrl sender:(id)sender
+{
+    Voicemail *voicemail = [self addVoicemail:entry mailboxUrl:mailboxUrl withManagedContext:nil sender:sender];
+    if (sender != self) {
+        [self fetchVoicemailInBackground];
     }
+    
+    return voicemail;
 }
 
-+ (Voicemail *)addVoicemailEntry:(NSDictionary*)entry{
-    return [self addVoicemail:entry withManagedContext:nil];
-}
-
-+ (Voicemail *)addVoicemail:(NSDictionary*)dictionary withManagedContext:(NSManagedObjectContext *)context
++ (Voicemail *)addVoicemail:(NSDictionary*)dictionary mailboxUrl:(NSString *)mailboxUrl withManagedContext:(NSManagedObjectContext *)context sender:(id)sender
 {
     if (!context) {
         context = [NSManagedObjectContext MR_contextForCurrentThread];
@@ -42,7 +57,7 @@
     
     Voicemail *vmail;
     //find object in core data with same urn as voicemail entry in json
-    NSArray *result = [Voicemail MR_findByAttribute:@"urn" withValue:dictionary[@"urn"]];
+    NSArray *result = [Voicemail MR_findByAttribute:@"jrn" withValue:dictionary[@"jrn"] inContext:context];
     
     // if there are results, we're updating, else we're creating
     if (result.count > 0) {
@@ -52,34 +67,52 @@
     else {
         //create and save
         vmail = [Voicemail MR_createInContext:context];
-        vmail.callerName = dictionary[@"callerName"];
-        vmail.callerNumber = dictionary[@"callerNumber"];
-        vmail.lastModified = [NSNumber numberWithLongLong:[dictionary[@"lastModified"] longLongValue]];
-        vmail.pbxId = dictionary[@"pbxId"];
-        vmail.lineId = dictionary[@"lineId"];
-        vmail.mailboxId = dictionary[@"mailboxId"];
-        vmail.folderId = dictionary[@"folderId"];
-        vmail.messageId = dictionary[@"messageId"];
-        vmail.extensionNumber = dictionary[@"extensionNumber"];
-        vmail.extensionName = dictionary[@"extensionName"];
-        vmail.callerId = dictionary[@"callerId"];
-        vmail.lenght = [NSNumber numberWithInteger:[dictionary[@"length"] intValue]];
-        vmail.origFile = dictionary[@"origFile"];
-        vmail.read = [NSNumber numberWithBool:[dictionary[@"read"] boolValue]];
-        vmail.file = dictionary[@"file"];
-        vmail.createdDate = [NSNumber numberWithLongLong:[dictionary[@"createdDate"] longLongValue]];
-        vmail.urn = dictionary[@"urn"];
+
         vmail.voicemailId = dictionary[@"id"];
+        //vmail.mailboxId = dictionary[@"mailboxId"];
+        vmail.timeStamp = [NSNumber numberWithLongLong:[dictionary[@"timeStamp"] longLongValue]];
+        vmail.duration = [NSNumber numberWithInteger:[dictionary[@"duration"] intValue]];
+        vmail.read = [NSNumber numberWithBool:[dictionary[@"read"] boolValue]];
+        if ([[dictionary objectForKey:@"transcription"] isKindOfClass:[NSNull class]]) {
+            vmail.transcription = nil;
+        } else {
+            vmail.transcription = [dictionary objectForKey:@"transcription"];
+        }
+        if ([[dictionary objectForKey:@"transcriptionPercent"] isKindOfClass:[NSNull class]]) {
+            vmail.transcriptionPercent = nil;
+        } else {
+            vmail.transcriptionPercent = [dictionary objectForKey:@"transcriptionPercent"];
+        }
+        vmail.callerId = dictionary[@"callerId"];
+        if ([[dictionary objectForKey:@"callerIdNumber"] isKindOfClass:[NSNull class]]) {
+            vmail.callerIdNumber = nil;
+        } else {
+            vmail.callerIdNumber = [dictionary objectForKey:@"callerIdNumber"];
+        }
+
+        vmail.jrn = dictionary[@"jrn"];
+        __block NSString * jrn = vmail.jrn;
+            
+        vmail.url_self = dictionary[@"self"];
+	    vmail.url_download = dictionary[@"self_download"];
+		vmail.url_changeStatus = dictionary[@"self_changeStatus"] ;
         vmail.deleted = [NSNumber numberWithBool:NO];
-        //Save conversation entry
-        @try {
-            [context MR_saveToPersistentStoreAndWait];
-        }
-        @catch (NSException *exception) {
-            NSLog(@"%@", exception);
-        }
+        vmail.mailboxUrl = mailboxUrl;
+        
+        //get all voicemail messages through a queue
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [(JCAppDelegate *)[UIApplication sharedApplication].delegate incrementBadgeCountForVoicemail:jrn];
+        });
+        
     }
-    return vmail;
+    
+    if (sender != self) {
+        [context MR_saveToPersistentStoreAndWait];
+        return vmail;
+    }
+    else {
+        return nil;
+    }
 }
 
 + (Voicemail *)updateVoicemail:(Voicemail*)vmail withDictionary:(NSDictionary*)dictionary managedContext:(NSManagedObjectContext *)context
@@ -87,40 +120,22 @@
     if (!context) {
         context = [NSManagedObjectContext MR_contextForCurrentThread];
     }
-    
-    // if last modified timestamps are the same, then there's no need to update anything.
-    long lastModifiedFromEntity = [vmail.lastModified integerValue];
-    long lastModifiedFromDictionary = [dictionary[@"lastModified"] integerValue];
-    
-    if (lastModifiedFromDictionary > lastModifiedFromEntity) {
-        
-        //update the commented fields once the model coming in the socket is the same as the model from GET
-        
-//        vmail.callerName = dictionary[@"callerName"];
-//        vmail.callerNumber = dictionary[@"callerNumber"];
-        vmail.lastModified = [NSNumber numberWithLongLong:[dictionary[@"lastModified"] longLongValue]];
-//        vmail.pbxId = dictionary[@"pbxId"];
-//        vmail.lineId = dictionary[@"lineId"];
-//        vmail.mailboxId = dictionary[@"mailboxId"];
-//        vmail.folderId = dictionary[@"folderId"];
-//        vmail.messageId = dictionary[@"messageId"];
-//        vmail.extensionNumber = dictionary[@"extensionNumber"];
-//        vmail.extensionName = dictionary[@"extensionName"];
-//        vmail.callerId = dictionary[@"callerId"];
-//        vmail.lenght = [NSNumber numberWithInteger:[dictionary[@"length"] intValue]];
-//        vmail.origFile = dictionary[@"origFile"];
-        vmail.read = [NSNumber numberWithBool:[dictionary[@"read"] boolValue]];
-        vmail.file = dictionary[@"file"];
 
+        if (dictionary[@"read"]) {
+            vmail.read = [NSNumber numberWithBool:[dictionary[@"read"] boolValue]];
+        }
+    //TODO: things that can change
+    //current folder
+    //flag?
         
         //Save conversation dictionary
-        @try {
-            [context MR_saveToPersistentStoreAndWait];
-        }
-        @catch (NSException *exception) {
-            NSLog(@"%@", exception);
-        }
-    }
+//        @try {
+//            [context MR_saveToPersistentStoreAndWait];
+//        }
+//        @catch (NSException *exception) {
+//            NSLog(@"%@", exception);
+//        }
+    
     
     return vmail;
 }
@@ -135,11 +150,23 @@
         NSArray *voicemails = [Voicemail MR_findAllWithPredicate:pred inContext:context];
         for (Voicemail *vm in voicemails) {
             @try {
-                if ([kVoicemailURLOverRide  isEqual:@"YesUseAWSPlaceholderURL"]) {
-                    vm.voicemail = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"https://s3-us-west-2.amazonaws.com/jive-mobile/voicemail/userId/dleonard/TestVoicemail2.wav"]];
-                }else{
-                    vm.voicemail = [NSData dataWithContentsOfURL:[NSURL URLWithString:vm.file]];
-                    [context MR_saveToPersistentStoreAndWait];
+                if (!vm.voicemail) {
+					
+					NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+					request.URL = [NSURL URLWithString:vm.url_download];
+					request.HTTPMethod = @"GET";
+					[request setValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"] forHTTPHeaderField:@"Authorization"];
+					
+					NSURLResponse *response;
+					NSError *error;
+					
+					NSData *voiceData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+					
+                    //NSData *voiceData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@?verify=%@", vm.url_download, ]]];
+                    if (voiceData) {
+                        vm.voicemail = voiceData;
+                        [context MR_saveToPersistentStoreAndWait];
+                    }
                 }
             }
             @catch (NSException *exception) {
@@ -155,7 +182,7 @@
         context = [NSManagedObjectContext MR_contextForCurrentThread];
     }
     
-    Voicemail *voicemail = [Voicemail MR_findFirstByAttribute:@"voicemailId" withValue:voicemailId];
+    Voicemail *voicemail = [Voicemail MR_findFirstByAttribute:@"jrn" withValue:voicemailId];
     
     if (voicemail) {
         voicemail.deleted = [NSNumber numberWithBool:YES];
@@ -186,7 +213,7 @@
     }
     
     //delete from Core data
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"voicemailId == %@", voicemailId];
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"jrn == %@", voicemailId];
     BOOL deleted = [Voicemail MR_deleteAllMatchingPredicate:pred];
     if (deleted) {
         [context MR_saveToPersistentStoreAndWait];
@@ -207,6 +234,34 @@
     }
     
     return NO;
+}
+
++ (void)saveVoicemailEtag:(NSInteger)etag managedContext:(NSManagedObjectContext*)context;
+{
+    if (!context) {
+        context = [NSManagedObjectContext MR_contextForCurrentThread];
+    }
+    
+    VoicemailETag *currentETag = [VoicemailETag MR_findFirst];
+    if (!currentETag) {
+        currentETag = [VoicemailETag MR_createEntity];
+    }
+    
+    //if (etag > [currentETag.etag integerValue]) {
+        currentETag.etag = [NSNumber numberWithInteger:etag];
+        [context MR_saveToPersistentStoreAndWait];
+    //}
+}
+
++ (NSInteger)getVoicemailEtag
+{
+    VoicemailETag *currentETag = [VoicemailETag MR_findFirst];
+    if (currentETag) {
+        return [currentETag.etag integerValue];
+    }
+    else {
+        return 0;
+    }
 }
 
 

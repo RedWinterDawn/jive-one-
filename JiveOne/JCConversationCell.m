@@ -1,4 +1,4 @@
-//
+    //
 //  JCConversationTableViewCell.m
 //  JiveOne
 //
@@ -48,7 +48,11 @@
         }
         
         PersonEntities * person = [[JCOmniPresence sharedInstance] entityByEntityId:firstEntity];
-        
+
+        if (!firstEntity && !person) {
+            person = [[JCOmniPresence sharedInstance] me];
+            //self.conversationTitle.text = person.firstLastName;
+        }
 
         if (person) {
             _person = person;
@@ -63,7 +67,7 @@
                 // name label origin to the right.
                 self.presenceView.hidden = YES;
                 
-                [self createComposedImageForGroup];
+                //[self createComposedImageForGroup];
             }
             else {
                 self.conversationTitle.text = person.firstLastName;
@@ -74,14 +78,18 @@
                 
                 self.presenceView.hidden = NO;
                 
-                UIImageView *singleImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-                [singleImage setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];
-                [self.conversationThumbnailView addSubview:singleImage];
+//                [singleImage setImageWithURL:[NSURL URLWithString:person.picture] placeholderImage:[UIImage imageNamed:@"avatar.png"]];
+//                [self.conversationThumbnailView addSubview:singleImage];
+                [self setPersonImage];
             }
         }
         else
         {
-            self.conversationTitle.text = NSLocalizedString(@"Unknown", nil);
+            
+//            else {
+                self.conversationTitle.text = NSLocalizedString(@"Unknown", nil);
+//            }
+            
         }
         
         // set the conversastion time label
@@ -98,10 +106,11 @@
         NSMutableDictionary *badges = (NSMutableDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"];
         if (badges) {
             if ([badges objectForKey:_conversation.conversationId]) {
-                NSNumber *number = [badges objectForKey:_conversation.conversationId];
-                if (number.integerValue != 0) {
+                NSMutableDictionary *entries = [badges objectForKey:_conversation.conversationId];
+                NSLog(@"%@", _conversation.conversationId);
+                if ([entries isKindOfClass:[NSDictionary class]] && entries.count != 0) {
                     _conversationUnseenMessages.hidden = NO;
-                    _conversationUnseenMessages.text = number.stringValue;
+                    _conversationUnseenMessages.text = [NSString stringWithFormat:@"%lu", (unsigned long)entries.count];
                 }
                 else {
                     _conversationUnseenMessages.hidden = YES;
@@ -156,7 +165,7 @@
     }
 }
 -(void)recurseAndReplaceSubViewIfDeleteConfirmationControl:(NSArray*)subviews{
-    NSString *delete_button_name = @"vm-delete.png";
+   // NSString *delete_button_name = @"";
     for (UIView *subview in subviews)
     {
         //handles ios6 and earlier
@@ -166,18 +175,18 @@
             UIView *backgroundCoverDefaultControl = [[UIView alloc] initWithFrame:CGRectMake(0,0, 64, 33)];
             [backgroundCoverDefaultControl setBackgroundColor:[UIColor whiteColor]];//assuming your view has a white BG
             [[subview.subviews objectAtIndex:0] addSubview:backgroundCoverDefaultControl];
-            UIImage *deleteImage = [UIImage imageNamed:delete_button_name];
-            UIImageView *deleteBtn = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0,deleteImage.size.width, deleteImage.size.height)];
-            [deleteBtn setImage:[UIImage imageNamed:delete_button_name]];
-            [[subview.subviews objectAtIndex:0] addSubview:deleteBtn];
+//            UIImage *deleteImage = [UIImage imageNamed:delete_button_name];
+//            UIImageView *deleteBtn = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0,deleteImage.size.width, deleteImage.size.height)];
+//            [deleteBtn setImage:[UIImage imageNamed:delete_button_name]];
+//            [[subview.subviews objectAtIndex:0] addSubview:deleteBtn];
         }
         //the rest handles ios7
         if ([NSStringFromClass([subview class]) isEqualToString:@"UITableViewCellDeleteConfirmationButton"])
         {
-            UIButton *deleteButton = (UIButton *)subview;
-            [deleteButton setImage:[UIImage imageNamed:delete_button_name] forState:UIControlStateNormal];
-            [deleteButton setTitle:@"" forState:UIControlStateNormal];
-            [deleteButton setBackgroundColor:[UIColor redColor]];
+//            UIButton *deleteButton = (UIButton *)subview;
+//            [deleteButton setImage:[UIImage imageNamed:delete_button_name] forState:UIControlStateNormal];
+//            [deleteButton setTitle:@"" forState:UIControlStateNormal];
+//            [deleteButton setBackgroundColor:[UIColor redColor]];
             for(UIView* view in subview.subviews){
                 if([view isKindOfClass:[UILabel class]]){
                     [view removeFromSuperview];
@@ -232,73 +241,81 @@
 
 
 
-- (void)createComposedImageForGroup
+- (void)setPersonImage
 {
-    NSArray *entities = (NSArray *)self.conversation.entities;
-    //int entitiesCount = entities.count;
-    int count = 0;
-    
-    //UIView *compositeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-    
-    for (NSString* entity in self.conversation.entities) {
-        PersonEntities *person = [PersonEntities MR_findFirstByAttribute:@"entityId" withValue:entity];
-        if (person) {
-            NSURL *imageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", @"https://my.jive.com", person.picture]];
-            
-            UIImageView * iv = [[UIImageView alloc] init];
-            CGRect frame;
-            switch (count) {
-                case 0:
-                    frame = CGRectMake(0, 0, 25, 25);
-                    imageUrl = [NSURL URLWithString:@"http://png-3.findicons.com/files/icons/1072/face_avatars/300/i02.png"];
-                    break;
-                case 1:
-                    frame = CGRectMake(25, 0, 25, 25);
-                    imageUrl = [NSURL URLWithString:@"http://png-5.findicons.com/files/icons/1072/face_avatars/300/n02.png"];
-                    break;
-                case 2:
-                    frame = CGRectMake(0, 25, 25, 25);
-                    imageUrl = [NSURL URLWithString:@"http://png-1.findicons.com/files/icons/1072/face_avatars/300/g01.png"];
-                    break;
-                case 3:
-                    frame = CGRectMake(25, 25, 25, 25);
-                    break;
-                    
-                default:
-                    break;
-            }
-            iv.frame = frame;
-            
-            if (count == 3) {
-                UIView * groupCount = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
-                groupCount.backgroundColor = [UIColor colorWithRed:0.043 green:0.455 blue:0.808 alpha:1];
-                
-                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 20)];
-                label.textColor = [UIColor whiteColor];
-                label.text = [NSString stringWithFormat:@"+%u", (int)(entities.count - 4)];
-                [label sizeToFit];
-                label.font = [UIFont boldSystemFontOfSize:12.0f];
-                label.center = groupCount.center;
-                label.bounds = CGRectInset(label.frame, 2, 0);
-                [groupCount addSubview:label];
-                
-                UIImage *countImage = [Common imageFromView:groupCount];
-                [iv setImage:countImage];
-            }
-            else {
-                [iv setImageWithURL:imageUrl];
-            }
-            
-            iv.bounds = CGRectInset(iv.frame, 2, 2);
-            
-            [self.conversationThumbnailView addSubview:iv];
-            
-            count++;
-            if (count > 3) {
-                break;
-            }
-        }
-    }
+    UIImageView *singleImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+//    NSURL *imageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kOsgiBaseURL, self.person.picture]];
+//    NSRange range = [[imageUrl description] rangeOfString:@"avatar"];
+//    if (range.location == NSNotFound) {
+//        [singleImage setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"avatar.png"]];
+//        [self.conversationThumbnailView addSubview:singleImage];
+//    }
+//    else {
+//        
+//        NSString *firstInitial = @"";
+//        NSString *secondInitial = @"";
+//        
+//        if (self.person.firstName && [self.person.firstName length] > 0) {
+//            firstInitial = [self.person.firstName substringToIndex:1];
+//        }
+//        else {
+//            [singleImage setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"avatar.png"]];
+//            [self.conversationThumbnailView addSubview:singleImage];
+//            return;
+//        }
+//        
+//        if (self.person.lastName && [self.person.lastName length] > 0) {
+//            secondInitial = [self.person.lastName substringToIndex:1];
+//        }
+//        else {
+//            [singleImage setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"avatar.png"]];
+//            [self.conversationThumbnailView addSubview:singleImage];
+//            return;
+//        }
+//        
+//        NSString *key = [NSString stringWithFormat:@"%@%@", firstInitial, secondInitial];
+//        
+//        UIImage *initialsImage = [[JCConversationCell chachedInitialsImages] objectForKey:key];
+//        if (!initialsImage) {
+//            UIView * groupCount = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 28, 28)];
+//            groupCount.backgroundColor = [UIColor colorWithRed:0.847 green:0.871 blue:0.882 alpha:1] /*#d8dee1*/;
+//            
+//            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 20)];
+//            label.textColor = [UIColor whiteColor];
+//            
+//            label.text = [NSString stringWithFormat:@"%@%@", firstInitial, secondInitial];
+//            [label sizeToFit];
+//            label.font = [UIFont boldSystemFontOfSize:12.0f];
+//            label.center = groupCount.center;
+//            label.bounds = CGRectInset(label.frame, 2.5f, 0);
+//            [groupCount addSubview:label];
+//            
+//            initialsImage = [Common imageFromView:groupCount];
+//            [[JCConversationCell chachedInitialsImages] setObject:initialsImage forKey:key];
+//        }
+//        else {
+////            NSLog(@"Cache hit for key: %@", key);
+//        }
+//        
+//        [singleImage setImage:initialsImage];
+//        [self.conversationThumbnailView addSubview:singleImage];
+//    }
+}
+
+/**
+ * Image Cache
+ *
+ * As images are created, the are added to the image cache. We have a static
+ * mutable array that is shared by all instaces of the initialsImage. We use the
+ * dispatch once to ensure that it is only ever instanced once.
+ */
++ (NSMutableDictionary *)chachedInitialsImages {
+    static NSMutableDictionary *cachedPresenceImages = nil;
+    static dispatch_once_t oncePredicate;
+    dispatch_once(&oncePredicate, ^{
+        cachedPresenceImages = [NSMutableDictionary new];
+    });
+    return cachedPresenceImages;
 }
 
 @end

@@ -7,25 +7,30 @@
 //
 
 #import "Conversation+Custom.h"
+#import "ConversationETag.h"
 #import "ConversationEntry+Custom.h"
 
 @implementation Conversation (Custom)
 
 #pragma mark - CRUD for Conversation
-+ (void)addConversations:(NSArray *)conversationArray
++ (void)addConversations:(NSArray *)conversationArray completed:(void (^)(BOOL))completed
 {
-    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
-    for (NSDictionary *conversation in conversationArray) {
-        [self addConversation:conversation withManagedContext:context];
-    }
+    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+        for (NSDictionary *conversation in conversationArray) {
+            [self addConversation:conversation withManagedContext:localContext sender:self];
+        }
+    } completion:^(BOOL success, NSError *error) {
+        completed(success);
+    }];
+    
 }
 
-+ (Conversation *)addConversation:(NSDictionary*)conversation
++ (Conversation *)addConversation:(NSDictionary*)conversation sender:(id)sender
 {
-    return [self addConversation:conversation withManagedContext:nil];
+    return [self addConversation:conversation withManagedContext:nil sender:sender];
 }
 
-+ (Conversation *)addConversation:(NSDictionary *)conversation withManagedContext:(NSManagedObjectContext *)context
++ (Conversation *)addConversation:(NSDictionary *)conversation withManagedContext:(NSManagedObjectContext *)context sender:(id)sender
 {
     if (!context) {
         context = [NSManagedObjectContext MR_contextForCurrentThread];
@@ -57,14 +62,21 @@
         conv.entities = conversation[@"entities"];
         //}
         
-        // Save conversation
-        [context MR_saveToPersistentStoreAndWait];
-        
-        [ConversationEntry addConversationEntries:conversation[@"entries"]];
+        [ConversationEntry addConversationEntries:conversation[@"entries"] completed:^(BOOL success) {
+            // don't care;
+        }];
         
         //}
     }
-    return conv;
+    
+    // Save conversation
+    if (sender != self) {
+        [context MR_saveToPersistentStoreAndWait];
+        return conv;
+    }
+    else {
+        return nil;
+    }
 }
 
 + (Conversation *)updateConversation:(Conversation*)conversation withDictinonary:(NSDictionary*)dictionary managedContext:(NSManagedObjectContext *)context
@@ -93,10 +105,42 @@
         [context MR_saveToPersistentStoreAndWait];
         
         // Save/Update entries
-        [ConversationEntry addConversationEntries:dictionary[@"entries"]];
+        if (dictionary[@"entries"]) {
+            [ConversationEntry addConversationEntries:dictionary[@"entries"] completed:^(BOOL success) {
+                // don't care;
+            }];
+        }
     }
     
     return conversation;
+}
+
++ (void)saveConversationEtag:(NSInteger)etag managedContext:(NSManagedObjectContext*)context
+{
+    if (!context) {
+        context = [NSManagedObjectContext MR_contextForCurrentThread];
+    }
+    
+    ConversationETag *currentETag = [ConversationETag MR_findFirst];
+    if (!currentETag) {
+        currentETag = [ConversationETag MR_createEntity];
+    }
+    
+    //if (etag > [currentETag.etag integerValue]) {
+        currentETag.etag = [NSNumber numberWithInteger:etag];
+        [context MR_saveToPersistentStoreAndWait];
+    //}
+}
+
++ (NSInteger)getConversationEtag
+{
+    ConversationETag *currentETag = [ConversationETag MR_findFirst];
+    if (currentETag) {
+        return [currentETag.etag integerValue];
+    }
+    else {
+        return 0;
+    }
 }
 
 

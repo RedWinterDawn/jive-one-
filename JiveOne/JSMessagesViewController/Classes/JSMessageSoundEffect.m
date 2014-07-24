@@ -17,6 +17,7 @@
 
 static NSString * const kJSMessageReceived = @"message-received";
 static NSString * const kJSMessageSent = @"message-sent";
+static NSString * const kJSSMSReceived = @"GTalkNotify";
 
 @implementation JSMessageSoundEffect
 
@@ -41,6 +42,12 @@ static NSString * const kJSMessageSent = @"message-sent";
 + (void)playMessageSentAlert
 {
     [[JSQSystemSoundPlayer sharedPlayer] playAlertSoundWithName:kJSMessageSent
+                                                      extension:kJSQSystemSoundTypeAIFF];
+}
+
++ (void)playSMSReceived
+{
+    [[JSQSystemSoundPlayer sharedPlayer] playAlertSoundWithName:kJSSMSReceived
                                                       extension:kJSQSystemSoundTypeAIFF];
 }
 

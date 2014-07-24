@@ -2,7 +2,7 @@
 //  ConversationEntry.m
 //  JiveOne
 //
-//  Created by Eduardo Gueiros on 3/12/14.
+//  Created by Daniel George on 4/29/14.
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
@@ -22,7 +22,9 @@
 @dynamic mentions;
 @dynamic message;
 @dynamic tags;
+@dynamic tempUrn;
 @dynamic type;
 @dynamic urn;
+@dynamic failedToSend;
 
 @end

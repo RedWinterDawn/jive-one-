@@ -16,4 +16,5 @@
 @property (nonatomic) NSUInteger lineWidth;
 @property (nonatomic) UIColor *baseColor;
 
+
 @end

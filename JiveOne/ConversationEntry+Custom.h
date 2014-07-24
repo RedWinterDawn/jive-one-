@@ -13,9 +13,9 @@
 + (NSArray *)RetrieveConversationEntryById:(NSString *)conversationId;
 
 #pragma mark - CRUD for ConversationEntry
-+ (void)addConversationEntries:(NSArray *)entryArray;
-+ (ConversationEntry *)addConversationEntry:(NSDictionary*)entry;
-+ (ConversationEntry *)addConversationEntry:(NSDictionary*)entry withManagedContext:(NSManagedObjectContext *)context;
++ (void)addConversationEntries:(NSArray *)entryArray completed:(void (^)(BOOL success))completed;
++ (ConversationEntry *)addConversationEntry:(NSDictionary*)entry sender:(id)sender;
++ (ConversationEntry *)addConversationEntry:(NSDictionary*)entry withManagedContext:(NSManagedObjectContext *)context sender:(id)sender;
 + (ConversationEntry *)updateConversationEntry:(ConversationEntry*)entry withDictionary:(NSDictionary*)dictionary managedContext:(NSManagedObjectContext *)context;
 
 @end

@@ -1,4 +1,4 @@
-//
+ //
 //  main.m
 //  JiveOne
 //
@@ -8,37 +8,53 @@
 
 #import <UIKit/UIKit.h>
 #import "JCAuthenticationManager.h"
-
+#import "NSLogger.h"
 #import "JCAppDelegate.h"
 
 int main(int argc, char * argv[])
 {
+
+#ifdef CONFIGURATION_Debug
+    LoggerStartForBuildUser();
+    NSLog(@"%@",[[UIDevice currentDevice] name]);
+    
+    #define LOG_GENERAL(...) LogMessageF(__FILE__,__LINE__,__FUNCTION__,[[NSString stringWithUTF8String:__FILE__] lastPathComponent],1,__VA_ARGS__)
+#else
+    
+#define LOG_GENERAL(...)    do{}while(0)
+#endif
+    
+    
+#ifdef CONFIGURATION_Enterprise
+     if ([[[UIDevice currentDevice]name] isEqualToString:@"iPhone Simulator"]) {
+         LoggerStop(LoggerGetDefaultLogger());
+         NSLog(@"Logger Stop Message Sent");
+     }
+     else
+     {
+         NSLog(@"Logger Start Message Sent");
+         LoggerStartForBuildUser();
+     }
+    
+    #define LOG_GENERAL(...) LogMessageF(__FILE__,__LINE__,__FUNCTION__,[[NSString stringWithUTF8String:__FILE__] lastPathComponent],1,__VA_ARGS__)
+#else
+    
+    //#define LOG_GENERAL(...)    do{}while(0)
+#endif
+
+
     int returnValue;
     
     @autoreleasepool {
-        BOOL inTests = (NSClassFromString(@"SenTestCase") != nil
-                        || NSClassFromString(@"XCTest") != nil);
-        
-        if (inTests) {
-            //use a special empty delegate when we are inside the tests
-            NSString *token = [[JCAuthenticationManager sharedInstance] getAuthenticationToken];
-            if (!(token && token.length)) {
-                token = [[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"];
-                if (!(token && token.length)) {
-                    NSString *testToken = kTestAuthKey;
-                    NSDictionary *oauth_response = [NSDictionary dictionaryWithObjectsAndKeys:testToken, @"access_token", nil];
-                    [[JCAuthenticationManager sharedInstance] didReceiveAuthenticationToken:oauth_response];                }
-            }
-            //returnValue = UIApplicationMain(argc, argv, nil, @"TestsAppDelegate");
-        }
-        //else {
-            //use the normal delegate
+        @try {
             returnValue = UIApplicationMain(argc, argv, nil, NSStringFromClass([JCAppDelegate class]));
-        //}
-    
-    return returnValue;
+        }
+        @catch (NSException* exception) {
+            NSLog(@"Uncaught exception: %@", exception.description);
+            NSLog(@"Stack trace: %@", [exception callStackSymbols]);
+        }
     }
-    
+    return returnValue; 
     
 }
 

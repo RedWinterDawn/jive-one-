@@ -1,6 +1,5 @@
 #import "KeychainItemWrapper.h"
 #import <Security/Security.h>
-
 /*
  
  These are the default constants and their respective types,
@@ -44,6 +43,7 @@
 
 - (id)initWithIdentifier: (NSString *)identifier accessGroup:(NSString *) accessGroup;
 {
+    
     if (self = [super init])
     {
         // Begin Keychain search setup. The genericPasswordQuery leverages the special user

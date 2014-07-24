@@ -14,9 +14,11 @@
 #define DATE_COMPONENTS (NSYearCalendarUnit| NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekCalendarUnit |  NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit | NSWeekdayCalendarUnit | NSWeekdayOrdinalCalendarUnit)
 #define CURRENT_CALENDAR [NSCalendar currentCalendar]
 
+static inline double radians (double degrees) { return degrees * M_PI/180; }
+
 +(NSString *) shortDateFromTimestamp:(NSNumber *)timestamp
 {
-    NSTimeInterval timeInterval = [timestamp longLongValue]/1000;
+    NSTimeInterval timeInterval = [timestamp longLongValue];// Depending of how the service give us the unix timestamp, we might need to devide it by 1000: /1000;
     NSDate *date = [[NSDate alloc]initWithTimeIntervalSince1970: timeInterval];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.timeZone = [NSTimeZone defaultTimeZone];
@@ -49,10 +51,14 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.timeZone = [NSTimeZone defaultTimeZone];
 
-    [formatter setDateFormat:@"MM/dd/yyyy hh:mm a"];
+    [formatter setDateFormat:@"M/dd/yyyy hh:mm a"];//TODO: check this works in october
     NSTimeZone *timezone = [NSTimeZone defaultTimeZone];
     formatter.timeZone = timezone;
     return [formatter stringFromDate:date];
+}
+
++(NSString *) shortDateFromTimestampDate:(NSDate *)date{
+    return [NSString stringWithFormat:@"%@", date];
 }
 
 +(NSDate *)NSDateFromTimestap:(NSNumber *)timestamp
@@ -79,6 +85,12 @@
 + (BOOL) isLaterThanDate: (NSDate *) aDate
 {
 	return ([[NSDate date] compare:aDate] == NSOrderedDescending);
+}
+
++ (long long) epochFromNSDate:(NSDate *)date {
+    
+    long long tes = [@(floor([date timeIntervalSince1970] * 1000)) longLongValue];
+    return tes;
 }
 
 #pragma mark Retrieving Intervals
@@ -208,7 +220,51 @@
     return coloredImage;
 }
 
-#pragma mark - Encryption Utils
++ (UIImage *)ExtractImageOn:(CGPoint)pointExtractedImg ofSize:(CGSize)sizeExtractedImg FromSpriteSheet:(UIImage*)imgSpriteSheet
+{
+    UIImage *ExtractedImage;
+    
+    CGRect rectExtractedImage;
+    
+    rectExtractedImage=CGRectMake(pointExtractedImg.x,pointExtractedImg.y,sizeExtractedImg.width,sizeExtractedImg.height);
+    
+    CGImageRef imgRefSpriteSheet=imgSpriteSheet.CGImage;
+    
+    CGImageRef imgRefExtracted=CGImageCreateWithImageInRect(imgRefSpriteSheet,rectExtractedImage);
+    
+    ExtractedImage=[UIImage imageWithCGImage:imgRefExtracted];
+    
+    CGImageRelease(imgRefExtracted);
+    
+    //CGImageRelease(imgRefSpriteSheet); I have commented it because we should not release the object that we don't own..So why do we release imgRefExtracted alone? bcuz it has name create in its method so the ownership comes to us so we have to release it.
+    
+    return ExtractedImage;
+}
+
++ (UIImage *) rotateImage:(UIImage *)src orientation:(UIImageOrientation)orientation
+{
+    UIGraphicsBeginImageContext(src.size);
+	
+    CGContextRef context = UIGraphicsGetCurrentContext();
+	
+    if (orientation == UIImageOrientationRight) {
+        CGContextRotateCTM (context, radians(90));
+    } else if (orientation == UIImageOrientationLeft) {
+        CGContextRotateCTM (context, radians(-90));
+    } else if (orientation == UIImageOrientationDown) {
+        // NOTHING
+    } else if (orientation == UIImageOrientationUp) {
+        CGContextRotateCTM (context, radians(90));
+    }
+	
+    [src drawAtPoint:CGPointMake(0, 0)];
+	
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
+
+#pragma mark - Encoding Utils
 
 + (NSString*)encodeStringToBase64:(NSString*)plainString
 {

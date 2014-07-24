@@ -1,0 +1,198 @@
+//
+//  JCVoicemailClient.m
+//  JiveOne
+//
+//  Created by Daniel George on 6/25/14.
+//  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
+//
+
+#import "JCVoicemailClient.h"
+#import "Voicemail+Custom.h"
+#import "Lines+Custom.h"
+#import "Common.h"
+
+@implementation JCVoicemailClient
+{
+    KeychainItemWrapper *keyChainWrapper;
+    NSManagedObjectContext *localContext;
+}
+
+
+#pragma mark - init methods
+
++ (JCVoicemailClient*)sharedClient {
+    static JCVoicemailClient *_sharedClient = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _sharedClient = [[super alloc] init];
+        [_sharedClient initialize];
+    });
+    return _sharedClient;
+}
+
+-(void)initialize
+{
+    
+    NSURL *baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@", kVoicemailService]];
+    _manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
+    _manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    keyChainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
+    localContext  = [NSManagedObjectContext MR_contextForCurrentThread];
+    
+    NSLog(@"About to go into debug mode for server certificate");
+#if DEBUG
+    NSLog(@"Debug mode active");
+    _manager.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
+    _manager.securityPolicy.allowInvalidCertificates = YES;
+#endif
+}
+
+
+- (void)setRequestAuthHeader
+{
+//    
+//    KeychainItemWrapper* _keychainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
+//    NSString *token = [_keychainWrapper objectForKey:(__bridge id)(kSecAttrAccount)];
+    NSString *token = [[JCAuthenticationManager sharedInstance] getAuthenticationToken];
+    
+    [self clearCookies];
+        
+    _manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [_manager.requestSerializer clearAuthorizationHeader];
+    [_manager.requestSerializer setValue:token forHTTPHeaderField:@"Authorization"];
+    [_manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+}
+
+- (void)clearCookies {
+    
+    //This will delete ALL cookies.
+    NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    
+    for (NSHTTPCookie *cookie in [cookieJar cookies]) {
+        [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
+    }
+    
+}
+
+#pragma mark - Rest Calls
+//get mailbox info and voicemails
+-(void)getVoicemails :(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
+{
+    [self setRequestAuthHeader];
+	
+	NSPredicate *linesWithUrlNotNil = [NSPredicate predicateWithFormat:@"mailboxUrl != nil"];
+    NSArray* lines = [Lines MR_findAllWithPredicate:linesWithUrlNotNil];
+	__block BOOL succeededGettingAtLeastOne = NO;
+    
+    [lines enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+
+        Lines *line = (Lines *)obj;
+//        NSArray *urlSlit = [mailbox.mailboxUrl componentsSeparatedByString:@"mailbox/id/"];
+//        NSString* url = [NSString stringWithFormat:@"%@mailbox/id/014575fe-6ef6-953f-b3a4-000100620002", urlSlit[0]];
+//        
+//        if ([url rangeOfString:@"api.jive.com"].location != NSNotFound) {
+//            NSArray *urlSplit = [url componentsSeparatedByString:@".com/"];
+//            url = urlSplit[1];
+//        }
+        
+		if (line.mailboxUrl && ![Common stringIsNilOrEmpty:line.mailboxUrl]) {
+			[_manager GET:line.mailboxUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+				[Voicemail addVoicemails:responseObject mailboxUrl:line.mailboxUrl completed:^(BOOL suceeded) {
+					succeededGettingAtLeastOne = YES;
+//					if ((lines.count -1) == idx) {
+						completed(YES, responseObject, operation, nil);
+//					}
+				}];
+				
+				
+			} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+				if ((lines.count -1) == idx) {
+					if (succeededGettingAtLeastOne) {
+						completed(YES, nil, operation, error);
+					}
+					else {
+						completed(NO, nil, operation, error);
+					}
+				}
+			}];
+		}       
+    }];
+}
+
+//download actual voicemail
+-(void)downloadVoicemailEntry:(Voicemail*)voicemail completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
+{
+    [self setRequestAuthHeader];
+    
+	if (![Common stringIsNilOrEmpty:voicemail.url_changeStatus]) {
+		[_manager GET:voicemail.url_download parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+			
+			[Voicemail fetchVoicemailInBackground];
+			
+		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+			completed(NO, nil, operation, error);
+		}];
+	}
+}
+
+//update voicemail to read
+-(void)updateVoicemailToRead:(Voicemail*)voicemail completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed{
+    
+    [self setRequestAuthHeader];
+    
+    NSString *url = [NSString stringWithFormat:@"%@", voicemail.url_changeStatus];
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [params setObject:@"true" forKey:@"read"];
+	
+	if (![Common stringIsNilOrEmpty:url]) {
+		[self.manager PUT:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+			completed(YES, responseObject, operation, nil);
+		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+			NSLog(@"%@", error);
+			completed(NO, nil, nil, error);
+		}];
+	}
+}
+
+//JCRest implementations
+//- (void) RetrieveVoicemailForEntity:(PersonEntities*)entity success:(void (^)(id JSON))success
+//                            failure:(void (^)(NSError *err))failure
+//{
+//
+//    [self setRequestAuthHeader];
+//    NSString * url = [NSString stringWithFormat:@"%@%@", [_manager baseURL], kOsgiVoicemailRoute];
+//    NSLog(@"%@", url);
+//
+//    [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//
+//        [Voicemail saveVoicemailEtag:[responseObject[@"ETag"] integerValue] managedContext:nil];
+//        NSArray *entries = [responseObject objectForKey:@"entries"];
+//        //get all voicemail metadata, but not actual voicemail messages
+//        [Voicemail addVoicemails:entries completed:^(BOOL succeeded) {
+//            success(responseObject);
+//        }];
+//
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        NSLog(@"%@",error);
+//        failure(error);
+//     }];
+//
+//}
+//
+- (void)deleteVoicemail:(NSString *)url completed:(void (^)(BOOL succeeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
+{
+
+    [self setRequestAuthHeader];
+    
+    //url = [NSString stringWithFormat:@"%@?verify=%@",  url, [[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"]];//TODO: remove when voicemail accepts auth through headers
+
+    [_manager DELETE:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        completed(YES, responseObject, operation, nil);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        completed(NO, nil, operation, error);
+    }];
+    
+}
+
+@end

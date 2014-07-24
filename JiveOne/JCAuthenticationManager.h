@@ -12,16 +12,20 @@
 @class JCAuthenticationManager;
 
 @interface JCAuthenticationManager : NSObject <UIWebViewDelegate>
-
+typedef void (^CompletionBlock) (BOOL success, NSError *error);
 @property (strong, nonatomic) KeychainItemWrapper *keychainWrapper;
-
+@property (nonatomic, copy) CompletionBlock completionBlock;
 + (JCAuthenticationManager*)sharedInstance;
 
-- (void)loginWithUsername:(NSString *)username password:(NSString*)password;
+- (void)loginWithUsername:(NSString *)username password:(NSString*)password completed:(CompletionBlock)completed;
+
+
 - (void)didReceiveAuthenticationToken:(NSDictionary *)token;
 - (BOOL)userAuthenticated;
 - (BOOL)userLoadedMininumData;
 - (void)setUserLoadedMinimumData:(BOOL)loaded;
+- (void)setRememberMe:(BOOL)remember;
+- (BOOL)getRememberMe;
 - (void)checkForTokenValidity;
 - (void)logout:(UIViewController *)viewController;
 - (NSString *)getAuthenticationToken;

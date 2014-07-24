@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "JSMessagesViewController.h"
-#import <MBContactPicker/MBContactPicker.h>
+#import "MBContactPicker/MBContactPicker.h"
+#import "JCConversationParticipantsTableViewController.h"
+#import "JCDirectoryViewController.h"
 #import "ContactGroup.h"
-#import "JCOsgiClient.h"
+#import "JCRESTClient.h"
 
-@interface JCMessagesViewController : JSMessagesViewController <JSMessagesViewDataSource, JSMessagesViewDelegate, UITableViewDataSource, MBContactPickerDelegate, MBContactPickerDataSource>
+@interface JCMessagesViewController : JSMessagesViewController <JSMessagesViewDataSource, JSMessagesViewDelegate, UITableViewDataSource, MBContactPickerDelegate, MBContactPickerDataSource, PeopleSearchDelegate, ConversationParticipantDelegate>
 
 @property (strong, nonatomic) NSMutableArray *messages;
 @property (strong, nonatomic) NSMutableDictionary *avatars;
@@ -21,8 +23,9 @@
 @property (nonatomic) NSString *conversationId;
 @property (nonatomic) ContactGroup *contactGroup;
 @property (nonatomic) JCMessageType messageType;
+@property (weak, nonatomic) IBOutlet UIImageView *imageViewNewMessage;
 
 
-+(void) sendOfflineMessagesQueue:(JCOsgiClient*)osgiClient;
++(void) sendOfflineMessagesQueue:(JCRESTClient*)osgiClient;
 
 @end

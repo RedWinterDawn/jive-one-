@@ -19,4 +19,5 @@
     #import "JCOmniPresence.h"
     #import "NotificationView.h"
     #import "JCAuthenticationManager.h"
+    #import "Flurry.h"
 #endif

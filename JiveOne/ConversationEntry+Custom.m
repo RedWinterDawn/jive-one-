@@ -18,22 +18,26 @@
 }
 
 #pragma mark - CRUD for ConversationEntry
-+ (void)addConversationEntries:(NSArray *)entryArray
++ (void)addConversationEntries:(NSArray *)entryArray completed:(void (^)(BOOL))completed
 {
-    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
-    for (NSDictionary *entry in entryArray) {
-        if ([entry isKindOfClass:[NSDictionary class]]) {
-            [self addConversationEntry:entry withManagedContext:context];
+    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+        for (NSDictionary *entry in entryArray) {
+            if ([entry isKindOfClass:[NSDictionary class]]) {
+                [self addConversationEntry:entry withManagedContext:localContext sender:self];
+            }
         }
-    }
+    } completion:^(BOOL success, NSError *error) {
+        completed(success);
+    }];
+    
 }
 
-+ (ConversationEntry *)addConversationEntry:(NSDictionary *)entry
++ (ConversationEntry *)addConversationEntry:(NSDictionary *)entry sender:(id)sender
 {
-    return [self addConversationEntry:entry withManagedContext:nil];
+    return [self addConversationEntry:entry withManagedContext:nil sender:sender];
 }
 
-+ (ConversationEntry *)addConversationEntry:(NSDictionary*)entry withManagedContext:(NSManagedObjectContext *)context
++ (ConversationEntry *)addConversationEntry:(NSDictionary*)entry withManagedContext:(NSManagedObjectContext *)context sender:(id)sender
 {
     if (!context) {
         context = [NSManagedObjectContext MR_contextForCurrentThread];
@@ -41,19 +45,30 @@
     
     ConversationEntry *convEntry;
     NSString *entryId =  entry[@"id"];
-    NSArray *result = [ConversationEntry MR_findByAttribute:@"entryId" withValue:entryId];
+    NSArray *resultsForId = [ConversationEntry MR_findByAttribute:@"entryId" withValue:entryId];
+    
+    NSString *entryTempUrn = entry[@"tempUrn"];
+    NSArray *resultsForTempUrn = [ConversationEntry MR_findByAttribute:@"tempUrn" withValue:entryTempUrn];
     
     // if there are results, we're updating, else we're creating
-    if (result.count > 0) {
-        convEntry = result[0];
+    if (resultsForId.count > 0) {
+        //two ways this gets called. 1) pull down refresh fetches all messages, including ones you already have. 2) socket sends you a message you already have, because you did a pull down referesh
+        convEntry = resultsForId[0];
+        [self updateConversationEntry:convEntry withDictionary:entry managedContext:context];
+    }
+    else if(resultsForTempUrn.count > 0 && entryTempUrn){
+        //only gets called when you send the message and the server sends back a confirmation that it was sent, plus all new metadata.
+        convEntry = resultsForTempUrn[0];
         [self updateConversationEntry:convEntry withDictionary:entry managedContext:context];
     }
     else {
+        //gets called when app is new install, for old messages, and when server sends messages to me
+        //NSLog(@"No id or tempUrn found for this entry in core data. This should only happen if the user logged out or on a new install.");
         convEntry = [ConversationEntry MR_createInContext:context];
         convEntry.conversationId = entry[@"conversation"];
         convEntry.entityId = entry[@"entity"];
         convEntry.lastModified = [NSNumber numberWithLongLong:[entry[@"lastModified"] longLongValue]];
-        convEntry.createdDate = [NSNumber numberWithLongLong:[entry[@"createDate"] longLongValue]];
+        convEntry.createdDate = [NSNumber numberWithLongLong:[entry[@"createdDate"] longLongValue]];
         convEntry.call = entry[@"call"];
         convEntry.file = entry[@"file"];
         convEntry.message = entry[@"message"];
@@ -70,30 +85,33 @@
             if (convEntry.lastModified > conversation.lastModified) {
                 conversation.lastModified = convEntry.lastModified;
             }
+            if (![conversation.hasEntries boolValue]) {
+                conversation.hasEntries = [NSNumber numberWithBool:YES];
+            }
         }
-        
-        //Save conversation entry
-        [context MR_saveToPersistentStoreAndWait];
     }
-    return convEntry;
+    
+    if (sender != self) {
+        [context MR_saveToPersistentStoreAndWait];
+        return convEntry;
+    }
+    else {
+        return nil;
+    }
 }
 
 + (ConversationEntry *)updateConversationEntry:(ConversationEntry*)entry withDictionary:(NSDictionary*)dictionary managedContext:(NSManagedObjectContext *)context
 {
-    if (!context) {
-        context = [NSManagedObjectContext MR_contextForCurrentThread];
-    }
     
     // if last modified timestamps are the same, then there's no need to update anything.
-    long lastModifiedFromEntity = [entry.lastModified integerValue];
-    long lastModifiedFromDictionary = [dictionary[@"lastModified"] integerValue];
+    long long lastModifiedFromEntity = [entry.lastModified longLongValue];
+    long long lastModifiedFromDictionary = [dictionary[@"lastModified"] longLongValue];
     
     if (lastModifiedFromDictionary > lastModifiedFromEntity) {
         
         entry.conversationId = dictionary[@"conversation"];
         entry.entityId = dictionary[@"entity"];
         entry.lastModified = [NSNumber numberWithLongLong:[dictionary[@"lastModified"] longLongValue]];
-        entry.createdDate = [NSNumber numberWithLongLong:[dictionary[@"createDate"] longLongValue]];
         entry.call = dictionary[@"call"];
         entry.file = dictionary[@"file"];
         entry.message = dictionary[@"message"];
@@ -104,8 +122,15 @@
         entry.urn = dictionary[@"urn"];
         entry.entryId = dictionary[@"id"];
         
-        //Save conversation entry
-        [context MR_saveToPersistentStoreAndWait];
+        Conversation *conversation = [Conversation MR_findFirstByAttribute:@"conversationId" withValue:entry.conversationId];
+        if (conversation) {
+            if (entry.lastModified > conversation.lastModified) {
+                conversation.lastModified = entry.lastModified;
+            }
+            if (![conversation.hasEntries boolValue]) {
+                conversation.hasEntries = [NSNumber numberWithBool:YES];
+            }
+        }
     }
     
     return entry;

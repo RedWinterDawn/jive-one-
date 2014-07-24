@@ -177,6 +177,8 @@
  */
 @property (copy, nonatomic) NSString *sender;
 
+@property (nonatomic) BOOL hasMininumContacts;
+
 #pragma mark - Messages view controller
 
 /**

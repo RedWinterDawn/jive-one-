@@ -1,0 +1,47 @@
+{
+    "voicemailCount": {
+        "total": 2,
+        "deleted": 1,
+        "Old": 1,
+        "INBOX": 1
+    },
+    "urls": {
+        "self": "http://jive.api.com/voicemail/voicemail/v1/mailbox/014575fe-6ef6-953f-b3a4-000100620002"
+    },
+    "voicemails": [
+                   {
+                   "id": 19,
+                   "mailboxId": "014575fe-6ef6-953f-b3a4-000100620002",
+                   "timeStamp": 1379615883,
+                   "duration": 2,
+                   "read": false,
+                   "transcription": null,
+                   "transcriptionPercent": null,
+                   "callerId": "\"benny booboo\" ",
+                   "callerIdNumber": "1001",
+                   "jrn": "jrn:voicemail::jive:014575fe-6ef6-953f-b3a4-000100620002:voicemail/19",
+                   "urls": {
+                   "self": "http://10.20.26.141:8890/voicemail/v1/mailbox/014575fe-6ef6-953f-b3a4-000100620002/voicemail/308e4ea775874295be7b782b9977e8c4.ulaw",
+                   "self_download": "http://10.20.26.141:8890/voicemail/v1/mailbox/014575fe-6ef6-953f-b3a4-000100620002/voicemail/308e4ea775874295be7b782b9977e8c4.ulaw/listen",
+                   "self_changeStatus": "http://10.20.26.141:8890/voicemail/v1/mailbox/014575fe-6ef6-953f-b3a4-000100620002/voicemail/308e4ea775874295be7b782b9977e8c4.ulaw/status?read=true"
+                   }
+                   },
+                   {
+                   "id": 20,
+                   "mailboxId": "014575fe-6ef6-953f-b3a4-000100620002",
+                   "timeStamp": 1387602202,
+                   "duration": 1,
+                   "read": false,
+                   "transcription": null,
+                   "transcriptionPercent": null,
+                   "callerId": "\"mini me 2\" ",
+                   "callerIdNumber": "1010",
+                   "jrn": "jrn:voicemail::jive:014575fe-6ef6-953f-b3a4-000100620002:voicemail/20",
+                   "urls": {
+                   "self": "http://10.20.26.141:8890/voicemail/v1/mailbox/014575fe-6ef6-953f-b3a4-000100620002/voicemail/a2d62ce416f041a19bec49e79103736c.ulaw",
+                   "self_download": "http://10.20.26.141:8890/voicemail/v1/mailbox/014575fe-6ef6-953f-b3a4-000100620002/voicemail/a2d62ce416f041a19bec49e79103736c.ulaw/listen",
+                   "self_changeStatus": "http://10.20.26.141:8890/voicemail/v1/mailbox/014575fe-6ef6-953f-b3a4-000100620002/voicemail/a2d62ce416f041a19bec49e79103736c.ulaw/status?read=true"
+                   }
+                   }
+                   ]
+}

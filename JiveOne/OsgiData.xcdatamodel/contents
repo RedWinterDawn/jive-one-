@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13C64" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13E28" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Company" representedClassName="Company" syncable="YES">
         <attribute name="companyId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="createDate" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -10,7 +10,7 @@
         <attribute name="urn" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="ContactGroup" representedClassName="ContactGroup" syncable="YES">
-        <attribute name="clientEntities" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="groupId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="groupName" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Conversation" representedClassName="Conversation" syncable="YES">
@@ -31,16 +31,50 @@
         <attribute name="deliveryDate" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="entityId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="entryId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="failedToSend" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="file" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="lastModified" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="mentions" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="message" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="tags" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="tempUrn" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="urn" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="ConversationETag" representedClassName="ConversationETag" syncable="YES">
+        <attribute name="etag" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="LineGroup" representedClassName="LineGroup" syncable="YES">
+        <attribute name="groupId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lineId" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Lines" representedClassName="Lines" syncable="YES">
+        <attribute name="displayName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="externsionNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="groups" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="inUse" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isFavorite" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="jrn" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lineId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mailboxJrn" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mailboxUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pbxId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Membership" representedClassName="Membership" syncable="YES">
+        <attribute name="jiveId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="membershipId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pbxId" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="PBX" representedClassName="PBX" syncable="YES">
+        <attribute name="jrn" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pbxId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="selfUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="v5" optional="YES" attributeType="Boolean" syncable="YES"/>
+    </entity>
     <entity name="PersonEntities" representedClassName="PersonEntities" syncable="YES">
-        <attribute name="createDate" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="entityId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="externalId" optional="YES" attributeType="String" syncable="YES"/>
@@ -81,34 +115,39 @@
     </entity>
     <entity name="Voicemail" representedClassName="Voicemail" syncable="YES">
         <attribute name="callerId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="callerName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="callerNumber" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="createdDate" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="callerIdNumber" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="deleted" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="extensionName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="extensionNumber" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="file" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="folderId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="lastModified" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="lenght" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="lineId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="mailboxId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="messageId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="origFile" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="pbxId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="duration" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="jrn" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mailboxUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="read" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="urn" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="timeStamp" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="transcription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="transcriptionPercent" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url_changeStatus" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url_download" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url_pbx" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url_self" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="voicemail" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="voicemailId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="voicemailId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="VoicemailETag" representedClassName="VoicemailETag" syncable="YES">
+        <attribute name="etag" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="PersonEntities" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Company" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="ContactGroup" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Conversation" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="ConversationEntry" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="PersonMeta" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Presence" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Voicemail" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Company" positionX="0" positionY="0" width="128" height="150"/>
+        <element name="ContactGroup" positionX="0" positionY="0" width="128" height="73"/>
+        <element name="Conversation" positionX="0" positionY="0" width="128" height="180"/>
+        <element name="ConversationEntry" positionX="0" positionY="0" width="128" height="268"/>
+        <element name="ConversationETag" positionX="18" positionY="162" width="128" height="60"/>
+        <element name="LineGroup" positionX="18" positionY="153" width="128" height="75"/>
+        <element name="Lines" positionX="27" positionY="171" width="128" height="223"/>
+        <element name="Membership" positionX="9" positionY="153" width="128" height="88"/>
+        <element name="PBX" positionX="18" positionY="162" width="128" height="120"/>
+        <element name="PersonEntities" positionX="0" positionY="0" width="128" height="360"/>
+        <element name="PersonMeta" positionX="0" positionY="0" width="128" height="150"/>
+        <element name="Presence" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="Voicemail" positionX="0" positionY="0" width="128" height="283"/>
+        <element name="VoicemailETag" positionX="9" positionY="153" width="128" height="58"/>
     </elements>
 </model>

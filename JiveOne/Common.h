@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
-
+#import "JCStyleKit.h"
+#import "LoggerCommon.h"
 
 #define D_MINUTE	60
 #define D_HOUR		3600
@@ -25,6 +26,7 @@
 + (BOOL) isEqualToDateIgnoringTime: (NSDate *) aDate;
 + (BOOL) isEarlierThanDate: (NSDate *) aDate;
 + (BOOL) isLaterThanDate: (NSDate *) aDate;
++ (long long) epochFromNSDate:(NSDate *)date;
 // Retrieving intervals
 + (NSInteger) minutesAfterDate: (NSDate *) aDate;
 + (NSInteger) minutesBeforeDate: (NSDate *) aDate;
@@ -41,7 +43,8 @@
 + (UIImage *)mergeImage:(UIImage*)first withImage:(UIImage*)second;
 + (UIImage *) imageFromView:(UIView *)view;
 + (UIImage *)tintedImageWithColor:(UIColor *)tintColor image:(UIImage *)image;
-
++ (UIImage *)ExtractImageOn:(CGPoint)pointExtractedImg ofSize:(CGSize)sizeExtractedImg FromSpriteSheet:(UIImage*)imgSpriteSheet;
++ (UIImage *)rotateImage:(UIImage *)src orientation:(UIImageOrientation)orientation;
 #pragma mark - Encryption Utils
 
 + (NSString*)encodeStringToBase64:(NSString*)plainString;

@@ -8,38 +8,65 @@
 
 #import "JCVoiceCell.h"
 #import "Common.h"
+#import "PBX+Custom.h"
+#import "Lines+Custom.h"
+#import "Common.h"
 
 @implementation JCVoiceCell
+
+
+- (void)awakeFromNib
+{
+    // Initialization code
+}
 
 
 - (void)setVoicemail:(Voicemail *)voicemail
 {
     _voicemail = voicemail;
 
-    [self.userImage setImage:[UIImage imageNamed:@"avatar.png"]];
+    //[self.userImage setImage:[UIImage imageNamed:@"avatar.png"]];
+    self.callerIdLabel.text = [voicemail.callerId stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+    if (![voicemail.callerId isEqualToString:voicemail.callerIdNumber]) {
+        self.callerNumberLabel.text = voicemail.callerIdNumber;
+    }else{
+        self.callerNumberLabel.text = @"";
+    }
     
-    if (voicemail.callerName) {
-        self.titleLabel.text = voicemail.callerName;
-        self.detailLabel.text = voicemail.callerNumber;
+    if (voicemail.transcription) {
+        self.extensionLabel.text = voicemail.transcription;
     }
     else {
-        self.titleLabel.text = voicemail.callerNumber;
+        //set extension label with mailbox extension
+        NSString *detailText = voicemail.callerIdNumber;
+        Lines *mailbox = [Lines MR_findFirstByAttribute:@"mailboxUrl" withValue:self.voicemail.mailboxUrl];
+        if (mailbox) {
+            PBX *pbx = [PBX MR_findFirstByAttribute:@"pbxId" withValue:mailbox.pbxId];
+            if (pbx) {
+                if ([Common stringIsNilOrEmpty:pbx.name]) {
+                    detailText = [NSString stringWithFormat:@"%@ on %@", mailbox.externsionNumber, pbx.name];
+                }
+                else {
+                    detailText = [NSString stringWithFormat:@"%@", mailbox.externsionNumber];
+                }
+            }
+            else {
+                detailText = [NSString stringWithFormat:@"%@", mailbox.externsionNumber];
+            }
+        }
+        self.extensionLabel.text = detailText;
     }
     
     [self doubleCheckNamesAndNumbers];
     
-    self.shortTime.text = [Common shortDateFromTimestamp:voicemail.createdDate];
-    self.creationTime.text = [Common longDateFromTimestamp:voicemail.createdDate];
+    self.shortTime.text = [Common shortDateFromTimestamp:voicemail.timeStamp];
+    self.creationTime.text = [Common shortDateFromTimestamp:voicemail.timeStamp];
     self.elapsed.text = @"0:00";
     self.duration.text = @"0:00";
-    [self.slider setThumbImage:[UIImage imageNamed:@"thumb1.png"] forState:UIControlStateNormal];
     self.elapsed.adjustsFontSizeToFitWidth = YES;
 	self.duration.adjustsFontSizeToFitWidth = YES;
-	_slider.minimumValue = 0.0;
+	self.slider.minimumValue = 0.0;
     
-    //set initial image for playbutton
-    UIImage *playImage = [UIImage imageNamed:@"voicemail_scrub_play.png"];
-    [self setPlayButtonState:playImage];
     //test to see if we have already downloaded the voicemail .wav file
     if (self.voicemail.voicemail.length > 0) {
         // if the activityIndicator is visible
@@ -49,9 +76,6 @@
         }
     }
     
-    [_speakerButton.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    
-
     [self.voicemail addObserver:self forKeyPath:kVoicemailKeyPathForVoicemal options:NSKeyValueObservingOptionNew context:NULL];
     
     [self styleCellForRead];
@@ -61,17 +85,17 @@
 {
     [_voicemailIcon.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     if(![self.voicemail.read boolValue]){
-        self.shortTime.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
-        self.creationTime.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
-        self.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16];
-        self.detailLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
-        self.voicemailIcon.image = [Common tintedImageWithColor:[UIColor redColor] image:self.voicemailIcon.image];
+//        self.shortTime.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
+        self.creationTime.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
+        self.callerIdLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16];
+        self.extensionLabel.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
+        //self.voicemailIcon.image = [Common tintedImageWithColor:[UIColor redColor] image:self.voicemailIcon.image];
     }else{
-        self.shortTime.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
+//        self.shortTime.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
         self.creationTime.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
-        self.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
-        self.detailLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
-        self.voicemailIcon.image = [Common tintedImageWithColor:[UIColor blackColor] image:self.voicemailIcon.image];
+        self.callerIdLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
+        self.extensionLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
+        //self.voicemailIcon.image = [Common tintedImageWithColor:[UIColor blackColor] image:self.voicemailIcon.image];
     }
 }
 
@@ -80,22 +104,28 @@
     if ([keyPath isEqualToString:kVoicemailKeyPathForVoicemal]) {
         Voicemail *voicemail = (Voicemail *)object;
         
-        if (voicemail && voicemail.voicemailId != nil && voicemail.urn != nil && voicemail.file != nil) {
-            self.voicemail = voicemail;
+        if (voicemail && voicemail.jrn != nil && voicemail.url_self != nil) {
+            _voicemail = voicemail;
             
             //[self performSelectorOnMainThread:@selector(setupAudioPlayer) withObject:nil waitUntilDone:NO];
             [self.spinningWheel performSelectorOnMainThread:@selector(stopAnimating) withObject:nil waitUntilDone:NO];
+            if (_delegate) {
+                [_delegate voiceCellAudioAvailable:_indexPath];
+            }
         }
     }
 }
 
 - (void)doubleCheckNamesAndNumbers
 {
-    if ([Common stringIsNilOrEmpty:self.titleLabel.text] || [self.titleLabel.text isEqualToString:@"Unknown"]) {
+    if ([Common stringIsNilOrEmpty:self.callerIdLabel.text] || [self.callerIdLabel.text isEqualToString:@"Unknown"]) {
         NSString *regexForName = @"\".+?\"";
         NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexForName
                                                                                options:NSRegularExpressionCaseInsensitive
                                                                                  error:nil];
+        if ([Common stringIsNilOrEmpty:_voicemail.callerId]) {
+            return;
+        }
         NSArray *matches = [regex matchesInString:_voicemail.callerId
                                           options:0
                                             range:NSMakeRange(0, [_voicemail.callerId length])];
@@ -103,11 +133,11 @@
         if (matches.count > 0) {
             NSString *callerName = [_voicemail.callerId substringWithRange:[matches[0] range]];
             callerName = [callerName stringByReplacingOccurrencesOfString:@"\"" withString:@""];
-            self.titleLabel.text = callerName;
+            self.callerIdLabel.text = callerName;
         }
     }
     
-    if ([Common stringIsNilOrEmpty:self.detailLabel.text] || [self.detailLabel.text isEqualToString:@"Unknown"]) {
+    if ([Common stringIsNilOrEmpty:self.extensionLabel.text] || [self.extensionLabel.text isEqualToString:@"Unknown"]) {
         NSString *regexForNumber = @"<.+?>";
         NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexForNumber
                                                           options:NSRegularExpressionCaseInsensitive
@@ -120,7 +150,7 @@
             NSString *callerNumber = [_voicemail.callerId substringWithRange:[matches[0] range]];
             callerNumber = [callerNumber stringByReplacingOccurrencesOfString:@"<" withString:@""];
             callerNumber = [callerNumber stringByReplacingOccurrencesOfString:@">" withString:@""];
-            self.detailLabel.text = callerNumber;
+            self.extensionLabel.text = callerNumber;
         }
     }
 }
@@ -143,16 +173,12 @@
     }
 }
 
-- (void)setPlayButtonState:(UIImage *)image
-{
-    [self.playButton setImage:image forState:UIControlStateNormal];
-}
-
 - (IBAction)progressSliderMoved:(id)sender {
     if (self.delegate && [self.delegate respondsToSelector:@selector(voiceCellSliderMoved:)]) {
         [self.delegate voiceCellSliderMoved:self.slider.value];
     }
 }
+
 - (void)setSliderValue:(float)value
 {
     self.slider.value = value;
@@ -169,6 +195,13 @@
 {
     if (self.delegate && [self.delegate respondsToSelector:@selector(voicecellSpeakerTouched:)]) {
         [self.delegate voicecellSpeakerTouched:YES];
+    }
+}
+
+-(IBAction)voiceCellDeleteTapped:(NSIndexPath *)indexPath
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(voiceCellDeleteTapped:)]) {
+        [self.delegate voiceCellDeleteTapped:indexPath];
     }
 }
 
