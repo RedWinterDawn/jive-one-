@@ -163,20 +163,22 @@ describe(@"Voicemail VC", ^{
         it(@"voicemail objects should have non nil attributes", ^{
             if(voicemailViewController){
                 Voicemail *first = voicemailViewController.voicemails[0];
-                [[first.callerId shouldNot] beNil];
-                //            [[first.callerIdNumber shouldNot] beNil];
-                [[first.duration shouldNot] beNil];
-                [[first.jrn shouldNot] beNil];
-                [[first.mailboxUrl shouldNot] beNil];
-                [[first.timeStamp shouldNot] beNil];
-                //            [[first.transcription shouldNot] beNil];
-                //            [[first.transcriptionPercent shouldNot] beNil];
-                [[first.url_changeStatus shouldNot] beNil];
-                [[first.url_download shouldNot] beNil];
-                //            [[first.url_pbx shouldNot] beNil];
-                [[first.url_self shouldNot] beNil];
-                //            [[first.voicemailId shouldNot] beNil];
-                //            [[first.voicemail shouldNot] beNil];
+                if(first){
+                    [[first.callerId shouldNot] beNil];
+                    //            [[first.callerIdNumber shouldNot] beNil];
+                    [[first.duration shouldNot] beNil];
+                    [[first.jrn shouldNot] beNil];
+                    [[first.mailboxUrl shouldNot] beNil];
+                    [[first.timeStamp shouldNot] beNil];
+                    //            [[first.transcription shouldNot] beNil];
+                    //            [[first.transcriptionPercent shouldNot] beNil];
+                    [[first.url_changeStatus shouldNot] beNil];
+                    [[first.url_download shouldNot] beNil];
+                    //            [[first.url_pbx shouldNot] beNil];
+                    [[first.url_self shouldNot] beNil];
+                    //            [[first.voicemailId shouldNot] beNil];
+                    //            [[first.voicemail shouldNot] beNil];
+                }
             }
         });
         
