@@ -161,7 +161,7 @@ describe(@"Voicemail VC", ^{
         });
         
         it(@"voicemail objects should have non nil attributes", ^{
-            if(voicemailViewController){
+            if(voicemailViewController.voicemails.count>0){
                 Voicemail *first = voicemailViewController.voicemails[0];
                 if(first){
                     [[first.callerId shouldNot] beNil];
