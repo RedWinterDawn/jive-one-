@@ -142,7 +142,7 @@ static BOOL closedSocketOnPurpose;
 	 */
 	if (self.completionBlock) {
 		self.completionBlock(YES, nil);
-		code = SocketCloseCode;
+		closedSocketOnPurpose = YES;
 	}
 	
 	
