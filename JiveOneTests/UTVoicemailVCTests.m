@@ -181,11 +181,13 @@ describe(@"Voicemail VC", ^{
         it(@"should mark a voicemail as read when play button is pressed on unread voicemail", ^{
             NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
             JCVoiceCell *cell = (JCVoiceCell*)[voicemailViewController.tableView cellForRowAtIndexPath:indexpath];
-            [[cell.voicemail.read shouldNot] beYes];
-            voicemailViewController.selectedCell = cell;
-            [voicemailViewController voiceCellPlayTapped:cell];
-            
-            [[expectFutureValue(theValue([cell.voicemail.read boolValue])) shouldEventually] beYes];
+            if(![cell.voicemail.read boolValue]){
+                [[theValue([cell.voicemail.read boolValue])shouldNot] beYes];
+                voicemailViewController.selectedCell = cell;
+                [voicemailViewController voiceCellPlayTapped:cell];
+                
+                [[expectFutureValue(theValue([cell.voicemail.read boolValue])) shouldEventually] beYes];
+            }
         });
         
         it(@"should mark email for deletion when deleted", ^{
@@ -195,7 +197,7 @@ describe(@"Voicemail VC", ^{
             
             [voicemailViewController voiceCellDeleteTapped:indexpath];
             //wait for async task
-            [[expectFutureValue(theValue(cell.voicemail.deleted)) shouldEventually] beYes];
+            [[expectFutureValue(theValue([cell.voicemail.deleted boolValue])) shouldEventually] beYes];
 //            [[cell.voicemail.deleted should] beYes];
             
         });
