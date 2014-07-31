@@ -5,7 +5,7 @@
       "idiom" : "iphone",
       "extent" : "full-screen",
       "minimum-system-version" : "7.0",
-      "filename" : "iPhone1Xnew.png",
+      "filename" : "iPadLaunch2Xnew.png",
       "scale" : "2x"
     },
     {
@@ -29,7 +29,7 @@
     {
       "extent" : "full-screen",
       "idiom" : "ipad",
-      "filename" : "iPadLaunch2Xnew.png",
+      "filename" : "iPhone1Xnew.png",
       "minimum-system-version" : "7.0",
       "orientation" : "portrait",
       "unassigned" : true,

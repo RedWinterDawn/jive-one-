@@ -280,6 +280,7 @@
 		F258589218BD3A420020AF34 /* JCDirectoryGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F258589118BD3A420020AF34 /* JCDirectoryGroupViewController.m */; };
 		F266162618B42AA0000B770A /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266162418B42AA0000B770A /* AddressBook.framework */; };
 		F266162718B42AA0000B770A /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266162518B42AA0000B770A /* AddressBookUI.framework */; };
+		F532DE34198B075800B44DD6 /* iPhone2Xnew.png in Resources */ = {isa = PBXBuildFile; fileRef = F532DE33198B075800B44DD6 /* iPhone2Xnew.png */; };
 		F59AE2BD192F07BA00CAF0F3 /* iPadlaunch1Xnew.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2B6192F07BA00CAF0F3 /* iPadlaunch1Xnew.png */; };
 		F59AE2C3192F07BA00CAF0F3 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2B9192F07BA00CAF0F3 /* Default.png */; };
 		F59AE2C5192F07BA00CAF0F3 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2BA192F07BA00CAF0F3 /* Default-568h@2x.png */; };
@@ -774,6 +775,7 @@
 		F258589118BD3A420020AF34 /* JCDirectoryGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDirectoryGroupViewController.m; sourceTree = "<group>"; };
 		F266162418B42AA0000B770A /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		F266162518B42AA0000B770A /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		F532DE33198B075800B44DD6 /* iPhone2Xnew.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhone2Xnew.png; sourceTree = "<group>"; };
 		F59AE2B6192F07BA00CAF0F3 /* iPadlaunch1Xnew.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPadlaunch1Xnew.png; sourceTree = "<group>"; };
 		F59AE2B9192F07BA00CAF0F3 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		F59AE2BA192F07BA00CAF0F3 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -1099,6 +1101,7 @@
 				27C3715118EDE9A000F159EF /* first_message.png */,
 				27B8153418D94E9C00516BF6 /* close_notification.png */,
 				27B8153518D94E9C00516BF6 /* close_notification@2x.png */,
+				F532DE33198B075800B44DD6 /* iPhone2Xnew.png */,
 				F59AE2B6192F07BA00CAF0F3 /* iPadlaunch1Xnew.png */,
 				F59AE2CB192F0B0D00CAF0F3 /* iPadLaunch2Xnew.png */,
 				F59AE2B9192F07BA00CAF0F3 /* Default.png */,
@@ -2011,6 +2014,7 @@
 				2700989B18F4714100B6BC2F /* bubble-stroked@2x.png in Resources */,
 				270098A318F4714100B6BC2F /* input-field-cover@2x.png in Resources */,
 				27F1779418FDEECE0073C6AD /* release_notes.md in Resources */,
+				F532DE34198B075800B44DD6 /* iPhone2Xnew.png in Resources */,
 				275F4A6818AD0FBC00D2F069 /* Main_iPad.storyboard in Resources */,
 				2700988518F4714100B6BC2F /* bubble-classic-blue@2x.png in Resources */,
 				272580F0192120500027887C /* people-start-conv.png in Resources */,
