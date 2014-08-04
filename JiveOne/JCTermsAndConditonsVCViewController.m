@@ -13,12 +13,6 @@
 
 @interface JCTermsAndConditonsVCViewController ()
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *backButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *forwardButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *refreshButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *actionButton;
-@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
-- (IBAction)OpenLinkInBrowser:(id)sender;
 
 @end
 
@@ -39,7 +33,7 @@
 //    [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
     // Do any additional setup after loading the view.
     NSURL *websiteUrl = [NSURL URLWithString:kEulaSite];
-
+    self.title = @"Jive Mobile EULA";
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:websiteUrl];
     [[NSURLCache sharedURLCache] removeCachedResponseForRequest:urlRequest];
 	self.webView.delegate = self;
@@ -64,9 +58,7 @@
 
 - (void)updateButtons
 {
-	self.forwardButton.enabled = self.webView.canGoForward;
-	self.backButton.enabled = self.webView.canGoBack;
-}
+	}
 
 - (void)didReceiveMemoryWarning
 {
