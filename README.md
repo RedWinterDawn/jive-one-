@@ -56,19 +56,19 @@ For example, an alarm clock program which causes a bell to ring at a certain tim
 
 
 
-How to send a push notification through Parse web service
+How to send a push notification through Urban Airship API 
 ==========
+Reference: http://docs.urbanairship.com/connect/ios_push.html
 ```
-curl -X POST  -H "X-Parse-Application-Id: pF8x8MNin5QJY3EVyXvQF21PBasJxAmoxA5eo16B"  
--H "X-Parse-REST-API-Key: KKGQt7I9D5mR1HlGn4fxwx8FbxH9LWfJ5iKGcqg6" 
--H "Content-Type: application/json"  
--d '{ 
-	"where": 
-		{"deviceToken": "9f4477a2408056e340cfdc0eaf9da40bd24639595e841f43fda28676502a51eb"}, 
-	"data": 
-		{ "message" : "silent remote", "content-available" : "1", "pushCode" : "1" }
-	}' 
-https://api.parse.com/1/push
+curl -X POST -u "PBJUc1sXQTaAk1YwnWzlKQ:P0-eJ93JR1Ov7OmltF5XDw"
+-H "Content-Type: application/json"
+-H "Accept: application/vnd.urbanairship+json; version=3;"
+--data '{
+	"audience": {"device_token": "FE66489F304DC75B8D6E8200DFF8A456E8DAEACEC428B427E9518741C92C6660"}, 
+	"notification": {"ios": {"content-available": 1}}, 
+	"device_types": ["ios"]
+	}'
+https://go.urbanairship.com/api/push/
 ```
 
 How to SSH to API Server and Tail the Output
