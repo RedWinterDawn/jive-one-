@@ -54,8 +54,10 @@
 - (void)setRequestAuthHeader
 {
     
-    KeychainItemWrapper* _keychainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
-    NSString *token = [_keychainWrapper objectForKey:(__bridge id)(kSecAttrAccount)];
+//    KeychainItemWrapper* _keychainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
+//    NSString *token = [_keychainWrapper objectForKey:(__bridge id)(kSecAttrAccount)];
+	
+	NSString *token = [[JCAuthenticationManager sharedInstance] getAuthenticationToken];
     
     [self clearCookies];
     

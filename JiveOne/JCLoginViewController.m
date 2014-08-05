@@ -353,8 +353,14 @@
 
 - (void)fetchVoicemailsMetadata
 {
-    
+    NSPredicate *linesWithUrlNotNil = [NSPredicate predicateWithFormat:@"mailboxUrl != nil"];
+    NSArray* lines = [Lines MR_findAllWithPredicate:linesWithUrlNotNil];
+	__block int count = 0;
+
     [[JCVoicemailClient sharedClient] getVoicemails:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+		
+		
+		
         if(suceeded) {
             [[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
         }
@@ -362,7 +368,12 @@
 			//may be one of the mailboxes failed or it's v4; in any case, we don't want the app to fail here.
 		}
 		
-		[self fetchMyContact];
+		if (count == lines.count - 1) {
+			[self fetchMyContact];
+		}
+		
+		count++;
+		
     }];
 	
 	
