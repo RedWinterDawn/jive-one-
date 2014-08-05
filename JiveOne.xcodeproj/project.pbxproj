@@ -164,8 +164,6 @@
 		27CE639C191C1D1700E85FD5 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 27F1F303191C182A00AEAFD7 /* libsqlite3.dylib */; };
 		27D2C1F7196F030C005285FF /* JCLineSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D2C1F6196F030C005285FF /* JCLineSelectorViewController.m */; };
 		27DADE141940C13600F2C9B4 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DADE131940C13600F2C9B4 /* UIImage+ImageEffects.m */; };
-		27DC81931980939A00596480 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27DC81911980939A00596480 /* Default-568h@2x.png */; };
-		27DC81941980939A00596480 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 27DC81921980939A00596480 /* Default.png */; };
 		27E9A35818E0A17A0017B65D /* Presence+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E9A35718E0A17A0017B65D /* Presence+Custom.m */; };
 		27EA1DFD1900A83D0075CAEE /* JCVoiceTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EA1DFC1900A83D0075CAEE /* JCVoiceTableViewController.m */; };
 		27EA5DB2190888AD008C7590 /* Draft_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27EA5DB1190888AD008C7590 /* Draft_iPhone.storyboard */; };
@@ -282,6 +280,7 @@
 		F258589218BD3A420020AF34 /* JCDirectoryGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F258589118BD3A420020AF34 /* JCDirectoryGroupViewController.m */; };
 		F266162618B42AA0000B770A /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266162418B42AA0000B770A /* AddressBook.framework */; };
 		F266162718B42AA0000B770A /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266162518B42AA0000B770A /* AddressBookUI.framework */; };
+		F532DE34198B075800B44DD6 /* iPhone2Xnew.png in Resources */ = {isa = PBXBuildFile; fileRef = F532DE33198B075800B44DD6 /* iPhone2Xnew.png */; };
 		F59AE2BD192F07BA00CAF0F3 /* iPadlaunch1Xnew.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2B6192F07BA00CAF0F3 /* iPadlaunch1Xnew.png */; };
 		F59AE2C3192F07BA00CAF0F3 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2B9192F07BA00CAF0F3 /* Default.png */; };
 		F59AE2C5192F07BA00CAF0F3 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2BA192F07BA00CAF0F3 /* Default-568h@2x.png */; };
@@ -776,6 +775,7 @@
 		F258589118BD3A420020AF34 /* JCDirectoryGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDirectoryGroupViewController.m; sourceTree = "<group>"; };
 		F266162418B42AA0000B770A /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		F266162518B42AA0000B770A /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		F532DE33198B075800B44DD6 /* iPhone2Xnew.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhone2Xnew.png; sourceTree = "<group>"; };
 		F59AE2B6192F07BA00CAF0F3 /* iPadlaunch1Xnew.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPadlaunch1Xnew.png; sourceTree = "<group>"; };
 		F59AE2B9192F07BA00CAF0F3 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		F59AE2BA192F07BA00CAF0F3 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -1101,6 +1101,7 @@
 				27C3715118EDE9A000F159EF /* first_message.png */,
 				27B8153418D94E9C00516BF6 /* close_notification.png */,
 				27B8153518D94E9C00516BF6 /* close_notification@2x.png */,
+				F532DE33198B075800B44DD6 /* iPhone2Xnew.png */,
 				F59AE2B6192F07BA00CAF0F3 /* iPadlaunch1Xnew.png */,
 				F59AE2CB192F0B0D00CAF0F3 /* iPadLaunch2Xnew.png */,
 				F59AE2B9192F07BA00CAF0F3 /* Default.png */,
@@ -2013,7 +2014,7 @@
 				2700989B18F4714100B6BC2F /* bubble-stroked@2x.png in Resources */,
 				270098A318F4714100B6BC2F /* input-field-cover@2x.png in Resources */,
 				27F1779418FDEECE0073C6AD /* release_notes.md in Resources */,
-				27DC81931980939A00596480 /* Default-568h@2x.png in Resources */,
+				F532DE34198B075800B44DD6 /* iPhone2Xnew.png in Resources */,
 				275F4A6818AD0FBC00D2F069 /* Main_iPad.storyboard in Resources */,
 				2700988518F4714100B6BC2F /* bubble-classic-blue@2x.png in Resources */,
 				272580F0192120500027887C /* people-start-conv.png in Resources */,
@@ -2070,7 +2071,6 @@
 				27F1F2FB191C171300AEAFD7 /* UAPushSettingsChannelInfoViewController.xib in Resources */,
 				91ADB99118D8BBDA00DF41A3 /* JCVoicemailCell.xib in Resources */,
 				270098A518F4714100B6BC2F /* send-button-pressed@2x.png in Resources */,
-				27DC81941980939A00596480 /* Default.png in Resources */,
 				27F1F2EF191C171300AEAFD7 /* bottom-detail.png in Resources */,
 				270098AB18F4714100B6BC2F /* input-bar-flat@2x.png in Resources */,
 				270098A618F4714100B6BC2F /* send-button.png in Resources */,
@@ -2534,7 +2534,7 @@
 					"\"${PODS_ROOT}/Headers/SDWebImage\"",
 					"\"${PODS_ROOT}/Headers/SocketRocket\"",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/JiveOne/JiveOne-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/JiveOne/JiveOneEnterprise-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

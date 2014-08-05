@@ -117,9 +117,7 @@
 
 + (Voicemail *)updateVoicemail:(Voicemail*)vmail withDictionary:(NSDictionary*)dictionary managedContext:(NSManagedObjectContext *)context
 {
-    if (!context) {
-        context = [NSManagedObjectContext MR_contextForCurrentThread];
-    }
+
 
         if (dictionary[@"read"]) {
             vmail.read = [NSNumber numberWithBool:[dictionary[@"read"] boolValue]];

@@ -13,7 +13,7 @@
 #define kURLSchemeCallback @"jiveclient://token"
 
 #pragma mark - Miscellaneous
-#define kEulaSite @"http://jive.com/downloads/mobile-end-user-license-agreement/"
+#define kEulaSite @"https://s3-us-west-2.amazonaws.com/jive-mobile/Jive-Mobile-EULA.html"
 #define kVersionURL @"http://jiveios.local/LatestVersion"
 #define kFeedbackEmail @"MobileApps+ios@jive.com"
 //https://api.jive.com/voicemail/v1/mailbox/id/0144096f-17a0-b3a5-b5e8-000100620002/voicemail/id/6882/liste
