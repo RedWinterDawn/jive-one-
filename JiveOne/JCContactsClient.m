@@ -89,7 +89,7 @@
     [self setRequestAuthHeader];
     
     NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
-    NSString *url = [NSString stringWithFormat:@"https://api.jive.com/contacts/jiveuser/info/jiveid/%@", username];
+    NSString *url = [NSString stringWithFormat:@"https://api.jive.com/contacts/2014-07/jiveuser/info/jiveid/%@", username];
     
     NSLog(@"%@", url);
     
@@ -118,7 +118,7 @@
 		Lines *line = [Lines MR_findFirstWithPredicate:predicate];
 		
 		if (line) {
-			NSString *url = [NSString stringWithFormat:@"https://api.jive.com/contacts/%@/line/id/%@", line.pbxId, line.lineId];
+			NSString *url = [NSString stringWithFormat:@"https://api.jive.com/contacts/2014-07/%@/line/id/%@", line.pbxId, line.lineId];
 			
 			[_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 				NSArray *contactArray = (NSArray *)responseObject;
