@@ -73,8 +73,10 @@ int didNotify;
      */
 	[AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
 #if DEBUG
-    [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelError];
+    [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
     [[AFNetworkActivityLogger sharedLogger] startLogging];
+#else
+	[[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelOff];
 #endif
     
     /*
@@ -270,7 +272,7 @@ int didNotify;
 	newToken = [newToken stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
 	newToken = [newToken stringByReplacingOccurrencesOfString:@" " withString:@""];
     
-	NSLog(@"APPDELEGATE - My token is: %@", newToken);
+//	NSLog(@"APPDELEGATE - My token is: %@", newToken);
     [[NSUserDefaults standardUserDefaults] setObject:newToken forKey:UDdeviceToken];
     LogMessage(@"socket", 4, @"Will Call requestSession");
     [self startSocket:NO];
