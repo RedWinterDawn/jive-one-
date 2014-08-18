@@ -355,24 +355,28 @@
 {
     NSPredicate *linesWithUrlNotNil = [NSPredicate predicateWithFormat:@"mailboxUrl != nil"];
     NSArray* lines = [Lines MR_findAllWithPredicate:linesWithUrlNotNil];
+	
+	NSTimer *timer = [NSTimer timerWithTimeInterval:5 target:self selector:@selector(fetchMyContact) userInfo:nil repeats:NO];
+	[[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+	
 	__block int count = 0;
 
     [[JCVoicemailClient sharedClient] getVoicemails:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-		
-		
+
 		
         if(suceeded) {
             [[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
         }
 		else {
-			//may be one of the mailboxes failed or it's v4; in any case, we don't want the app to fail here.
+			//maybe one of the mailboxes failed or it's v4; in any case, we don't want the app to fail here.
 		}
 		
-		if (count == lines.count - 1) {
+		if (count == lines.count) {
+			[timer invalidate];
 			[self fetchMyContact];
 		}
 		
-		count++;
+		NSLog(@"Count is now: %i, Line count is %i", count, lines.count);
 		
     }];
 	

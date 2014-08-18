@@ -374,6 +374,9 @@ int didNotify;
             
 // V5 only provides voicemail through REST. So re make a REST Call
             
+			NSPredicate *linesWithUrlNotNil = [NSPredicate predicateWithFormat:@"mailboxUrl != nil"];
+			NSArray* lines = [Lines MR_findAllWithPredicate:linesWithUrlNotNil];
+			
             [[JCVoicemailClient sharedClient] getVoicemails:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
                 if (suceeded) {
                     NSLog(@"Success Done with Block");

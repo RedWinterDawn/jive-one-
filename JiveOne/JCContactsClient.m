@@ -146,7 +146,7 @@
 		[_manager POST:subscriptionURL parameters:dataDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
 			NSLog(@"Success");
 		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-			NSLog(@"%@", error);
+			NSLog(@"Error Subscribing %@", error);
 			// boo!
 		}];
 	}   
@@ -163,7 +163,7 @@
         params = [NSDictionary dictionaryWithObject:deviceToken forKey:UDdeviceToken];
     }
     
-    NSString *sessionURL = @"http://199.87.123.26/session";
+    NSString *sessionURL = @"https://realtime.jive.com/session";
     
     [_manager POST:sessionURL parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         completed(YES, responseObject, operation, nil);
