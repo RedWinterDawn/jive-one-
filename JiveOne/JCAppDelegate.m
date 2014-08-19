@@ -73,8 +73,10 @@ int didNotify;
      */
 	[AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
 #if DEBUG
-    [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelError];
+    [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
     [[AFNetworkActivityLogger sharedLogger] startLogging];
+#else
+	[[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelOff];
 #endif
     
     /*
@@ -270,7 +272,7 @@ int didNotify;
 	newToken = [newToken stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
 	newToken = [newToken stringByReplacingOccurrencesOfString:@" " withString:@""];
     
-	NSLog(@"APPDELEGATE - My token is: %@", newToken);
+//	NSLog(@"APPDELEGATE - My token is: %@", newToken);
     [[NSUserDefaults standardUserDefaults] setObject:newToken forKey:UDdeviceToken];
     LogMessage(@"socket", 4, @"Will Call requestSession");
     [self startSocket:NO];
@@ -374,6 +376,9 @@ int didNotify;
             
 // V5 only provides voicemail through REST. So re make a REST Call
             
+			NSPredicate *linesWithUrlNotNil = [NSPredicate predicateWithFormat:@"mailboxUrl != nil"];
+			NSArray* lines = [Lines MR_findAllWithPredicate:linesWithUrlNotNil];
+			
             [[JCVoicemailClient sharedClient] getVoicemails:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
                 if (suceeded) {
                     NSLog(@"Success Done with Block");
