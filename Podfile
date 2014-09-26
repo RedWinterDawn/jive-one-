@@ -4,7 +4,7 @@ inhibit_all_warnings!
 pod 'AFNetworking', '~> 2.1.0'
 pod 'AFNetworkActivityLogger', '~> 2.0.1'
 pod 'MBProgressHUD', '~> 0.8'
-pod 'SDWebImage', '~> 3.5.2'
+pod 'SDWebImage', '~> 3.7.1'
 pod 'MagicalRecord', '~> 2.2'
 pod 'SocketRocket', '~> 0.3'
 pod 'JSQSystemSoundPlayer', '~> 1.4.0'
