@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
-        <deployment defaultVersion="1552" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
         <!--Login View Controller-->
@@ -135,7 +134,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0vD-5q-70A" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1938" y="1576"/>
+            <point key="canvasLocation" x="-2616" y="1586"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Vex-rW-GRa">
@@ -152,6 +151,7 @@
                         <segue destination="XFb-KJ-zT0" kind="relationship" relationship="viewControllers" id="qlu-mP-rqG"/>
                         <segue destination="vaI-vc-7Id" kind="relationship" relationship="viewControllers" id="Zo8-fF-LR9"/>
                         <segue destination="4mQ-Xv-N0n" kind="relationship" relationship="viewControllers" id="dwi-Kf-NBW"/>
+                        <segue destination="EBZ-9j-60V" kind="relationship" relationship="viewControllers" id="3sF-N1-Fl6"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FNP-y4-bzi" sceneMemberID="firstResponder"/>
@@ -177,7 +177,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="A4b-Ix-6yx">
-                                                    <rect key="frame" x="20" y="11" width="280" height="21"/>
+                                                    <rect key="frame" x="20" y="6" width="280" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -196,27 +196,27 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7Ih-yt-6C0">
-                                                    <rect key="frame" x="20" y="0.0" width="280" height="24"/>
+                                                    <rect key="frame" x="20" y="62" width="280" height="23"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Z76-8y-Nke">
-                                                    <rect key="frame" x="20" y="16" width="280" height="21"/>
+                                                    <rect key="frame" x="20" y="16" width="280" height="19"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="l3G-xH-1aU">
-                                                    <rect key="frame" x="20" y="32" width="280" height="21"/>
+                                                    <rect key="frame" x="20" y="31" width="280" height="19"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="89v-4y-Isk">
-                                                    <rect key="frame" x="20" y="49" width="280" height="21"/>
+                                                    <rect key="frame" x="20" y="46" width="280" height="23"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="QVl-hT-Oxh">
-                                                    <rect key="frame" x="20" y="64" width="280" height="21"/>
+                                                    <rect key="frame" x="20" y="62" width="280" height="23"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -235,7 +235,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Server name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ms4-ac-tiJ">
-                                                    <rect key="frame" x="20" y="11" width="280" height="21"/>
+                                                    <rect key="frame" x="20" y="10" width="280" height="19"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -251,7 +251,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reachable?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ieW-3c-gBL">
-                                                    <rect key="frame" x="20" y="11" width="280" height="21"/>
+                                                    <rect key="frame" x="20" y="8" width="280" height="23"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -271,7 +271,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="iwV-Qk-SXa">
-                                                    <rect key="frame" x="20" y="11" width="280" height="21"/>
+                                                    <rect key="frame" x="20" y="11" width="280" height="19"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -291,7 +291,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fKg-6J-yuW">
-                                                    <rect key="frame" x="20" y="11" width="280" height="21"/>
+                                                    <rect key="frame" x="20" y="9" width="280" height="23"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -311,7 +311,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="Dqg-Zn-LxS">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="139"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="137"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -397,13 +397,12 @@
             </objects>
             <point key="canvasLocation" x="-2458" y="-1221"/>
         </scene>
-        <!--Navigation Controller - People-->
+        <!--People-->
         <scene sceneID="4Zu-Qh-4wk">
             <objects>
                 <navigationController storyboardIdentifier="PeopleNavViewController" definesPresentationContext="YES" id="vaI-vc-7Id" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="People" image="nav-people.png" id="WUb-WZ-m0b"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="bje-51-esT">
-                        <rect key="frame" x="0.0" y="-44" width="0.0" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textAttributes key="titleTextAttributes">
                             <offsetWrapper key="textShadowOffset" horizontal="0.0" vertical="0.0"/>
@@ -417,7 +416,7 @@
             </objects>
             <point key="canvasLocation" x="-1380" y="-546"/>
         </scene>
-        <!--Directory View Controller - Directory-->
+        <!--Directory-->
         <scene sceneID="sgK-qG-NHh">
             <objects>
                 <viewController storyboardIdentifier="JCDirectoryViewController" autoresizesArchivedViewToFullSize="NO" id="eTh-sK-SbW" customClass="JCDirectoryViewController" sceneMemberID="viewController">
@@ -465,7 +464,7 @@
             </objects>
             <point key="canvasLocation" x="-752" y="-546"/>
         </scene>
-        <!--Voice Table View Controller - Voicemail-->
+        <!--Voicemail-->
         <scene sceneID="i1y-0K-YmZ">
             <objects>
                 <tableViewController storyboardIdentifier="JCVoiceTableViewController" id="v4b-eq-yLo" customClass="JCVoiceTableViewController" sceneMemberID="viewController">
@@ -490,7 +489,7 @@
             </objects>
             <point key="canvasLocation" x="-752" y="146"/>
         </scene>
-        <!--Navigation Controller - Voicemail-->
+        <!--Voicemail-->
         <scene sceneID="Sds-P7-Vc1">
             <objects>
                 <navigationController title="Voicemail" definesPresentationContext="YES" id="XFb-KJ-zT0" sceneMemberID="viewController">
@@ -511,7 +510,7 @@
             </objects>
             <point key="canvasLocation" x="-1380" y="131"/>
         </scene>
-        <!--Account View Controller - Account-->
+        <!--Account-->
         <scene sceneID="dfQ-T1-fgJ">
             <objects>
                 <tableViewController storyboardIdentifier=" " id="xfW-W8-tPR" customClass="JCAccountViewController" sceneMemberID="viewController">
@@ -647,7 +646,7 @@
             </objects>
             <point key="canvasLocation" x="-752" y="845"/>
         </scene>
-        <!--Navigation Controller - Account-->
+        <!--Account-->
         <scene sceneID="iH8-Ew-IaF">
             <objects>
                 <navigationController title="Account" automaticallyAdjustsScrollViewInsets="NO" id="4mQ-Xv-N0n" sceneMemberID="viewController">
@@ -671,6 +670,21 @@
             </objects>
             <point key="canvasLocation" x="-1380" y="845"/>
         </scene>
+        <!--Item-->
+        <scene sceneID="kvI-oV-Vfe">
+            <objects>
+                <viewController id="EBZ-9j-60V" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="01k-zq-vDO">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="xus-7X-nHU"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ihH-sj-rrm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1380" y="1697"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="lCk-hb-okc">
             <objects>
@@ -687,9 +701,9 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XiR-SP-7my" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2458" y="1576"/>
+            <point key="canvasLocation" x="-3015" y="1586"/>
         </scene>
-        <!--Group Selector View Controller - Create Group-->
+        <!--Create Group-->
         <scene sceneID="C8d-tS-5ve">
             <objects>
                 <tableViewController id="iAN-Mj-PhA" customClass="JCGroupSelectorViewController" sceneMemberID="viewController">
@@ -746,7 +760,7 @@
             </objects>
             <point key="canvasLocation" x="894" y="-1469"/>
         </scene>
-        <!--Directory Group View Controller - Groups-->
+        <!--Groups-->
         <scene sceneID="jby-cA-ON0">
             <objects>
                 <tableViewController id="BuH-WG-Prf" customClass="JCDirectoryGroupViewController" sceneMemberID="viewController">
