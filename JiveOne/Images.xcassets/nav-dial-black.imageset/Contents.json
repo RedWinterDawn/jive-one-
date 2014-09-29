@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "nav-dialer-black.png"
+      "filename" : "nav-dialpad-black.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "nav-dialer-black@2x.png"
+      "filename" : "nav-dialpad-black@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "nav-dialer-black@3x.png"
+      "filename" : "nav-dialpad-black@3x.png"
     }
   ],
   "info" : {

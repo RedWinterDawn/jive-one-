@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "nav-voicemail-blue.png"
+      "filename" : "call-button-green.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "nav-voicemail-blue@2x.png"
+      "filename" : "call-button-green@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "nav-voicemail-blue@3x.png"
+      "filename" : "call-button-green@3x.png"
     }
   ],
   "info" : {
