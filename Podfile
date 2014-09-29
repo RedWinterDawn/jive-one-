@@ -1,5 +1,6 @@
 # ignore all warnings from all pods
 inhibit_all_warnings!
+source 'https://github.com/CocoaPods/Specs.git'
 
 pod 'AFNetworking', '~> 2.1.0'
 pod 'AFNetworkActivityLogger', '~> 2.0.1'
