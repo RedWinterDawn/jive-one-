@@ -94,7 +94,7 @@
 		
 		[LineConfiguration addConfiguration:nil completed:^(BOOL success) {
 			//TODO wow.
-		}]
+		}];
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		completed(NO, nil, operation, error);
 	}];
