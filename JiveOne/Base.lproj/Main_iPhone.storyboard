@@ -135,7 +135,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0vD-5q-70A" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1938" y="1576"/>
+            <point key="canvasLocation" x="-3250" y="396"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Vex-rW-GRa">
@@ -1827,7 +1827,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XiR-SP-7my" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2458" y="1576"/>
+            <point key="canvasLocation" x="-3250" y="-292"/>
         </scene>
         <!--Create Group-->
         <scene sceneID="C8d-tS-5ve">
@@ -1951,20 +1951,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="baF-Tl-j8X" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="330" y="-1469"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="Rom-VG-Ezf">
-            <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="9bu-lp-OYL" sceneMemberID="viewController">
-                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="eTJ-1d-t8B">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <toolbarItems/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="L5n-D7-P01" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
         </scene>
     </scenes>
     <resources>
