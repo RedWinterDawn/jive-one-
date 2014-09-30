@@ -290,6 +290,7 @@
 		F59AE2C9192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2BC192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png */; };
 		F59AE2CC192F0B0D00CAF0F3 /* iPadLaunch2Xnew.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2CB192F0B0D00CAF0F3 /* iPadLaunch2Xnew.png */; };
 		F8B62E4419D9F1E400AF98D3 /* JCDialerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8B62E4319D9F1E400AF98D3 /* JCDialerViewController.m */; };
+		F8B62E5B19DB091500AF98D3 /* JCRoundedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F8B62E5A19DB091500AF98D3 /* JCRoundedButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -797,6 +798,8 @@
 		F59AE2CB192F0B0D00CAF0F3 /* iPadLaunch2Xnew.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPadLaunch2Xnew.png; sourceTree = "<group>"; };
 		F8B62E4219D9F1E400AF98D3 /* JCDialerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDialerViewController.h; sourceTree = "<group>"; };
 		F8B62E4319D9F1E400AF98D3 /* JCDialerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDialerViewController.m; sourceTree = "<group>"; };
+		F8B62E5919DB091500AF98D3 /* JCRoundedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCRoundedButton.h; sourceTree = "<group>"; };
+		F8B62E5A19DB091500AF98D3 /* JCRoundedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCRoundedButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1903,6 +1906,8 @@
 				F8B62E4319D9F1E400AF98D3 /* JCDialerViewController.m */,
 				5DA5A1AD19DAF91400968F7D /* JCCallerViewController.h */,
 				5DA5A1AE19DAF91400968F7D /* JCCallerViewController.m */,
+				F8B62E5919DB091500AF98D3 /* JCRoundedButton.h */,
+				F8B62E5A19DB091500AF98D3 /* JCRoundedButton.m */,
 			);
 			name = Dialer;
 			sourceTree = "<group>";
@@ -2231,6 +2236,7 @@
 				27F1F2E5191C171300AEAFD7 /* UAPushNotificationHandler.m in Sources */,
 				91915738195B209D004BDE26 /* JCAppIntro.m in Sources */,
 				27F1F2E4191C171300AEAFD7 /* UAPushMoreSettingsViewController.m in Sources */,
+				F8B62E5B19DB091500AF98D3 /* JCRoundedButton.m in Sources */,
 				2762C45818B4177D00885918 /* JCOmniPresence.m in Sources */,
 				DDEC37D01910126900E166CC /* ConversationEntry.m in Sources */,
 				5DA5A1AF19DAF91400968F7D /* JCCallerViewController.m in Sources */,
