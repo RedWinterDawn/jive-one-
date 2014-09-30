@@ -9,5 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface JCV4ProvisioningClient : NSObject
+@property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
++ (instancetype)sharedClient;
 
+- (void) requestProvisioningFile:(NSDictionary *)payload completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed;
 @end
