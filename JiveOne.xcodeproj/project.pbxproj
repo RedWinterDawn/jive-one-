@@ -140,6 +140,8 @@
 		27997577195A12D7001425CC /* Lines+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 27997576195A12D7001425CC /* Lines+Custom.m */; };
 		2799757D195A1FC4001425CC /* JCContactsClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2799757C195A1FC4001425CC /* JCContactsClient.m */; };
 		279975F2195B1BCD001425CC /* Membership.m in Sources */ = {isa = PBXBuildFile; fileRef = 279975F1195B1BCD001425CC /* Membership.m */; };
+		279A3E5819DAA51500B0793C /* LineConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 279A3E5719DAA51500B0793C /* LineConfiguration.m */; };
+		279A3E5B19DAA57F00B0793C /* LineConfiguration+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 279A3E5A19DAA57F00B0793C /* LineConfiguration+Custom.m */; };
 		279A4E3019DA9A8200E8AB7B /* JCV4ProvisioningClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 279A4E2F19DA9A8200E8AB7B /* JCV4ProvisioningClient.m */; };
 		279E4C6D19226FA3002A556C /* people-search-nofocus.png in Resources */ = {isa = PBXBuildFile; fileRef = 279E4C6C19226FA3002A556C /* people-search-nofocus.png */; };
 		279E4C7019226FAC002A556C /* people-search.png in Resources */ = {isa = PBXBuildFile; fileRef = 279E4C6F19226FAC002A556C /* people-search.png */; };
@@ -483,6 +485,10 @@
 		2799757C195A1FC4001425CC /* JCContactsClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCContactsClient.m; sourceTree = "<group>"; };
 		279975F0195B1BCD001425CC /* Membership.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Membership.h; sourceTree = "<group>"; };
 		279975F1195B1BCD001425CC /* Membership.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Membership.m; sourceTree = "<group>"; };
+		279A3E5619DAA51500B0793C /* LineConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineConfiguration.h; sourceTree = "<group>"; };
+		279A3E5719DAA51500B0793C /* LineConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineConfiguration.m; sourceTree = "<group>"; };
+		279A3E5919DAA57F00B0793C /* LineConfiguration+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LineConfiguration+Custom.h"; sourceTree = "<group>"; };
+		279A3E5A19DAA57F00B0793C /* LineConfiguration+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "LineConfiguration+Custom.m"; sourceTree = "<group>"; };
 		279A4E2E19DA9A8200E8AB7B /* JCV4ProvisioningClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCV4ProvisioningClient.h; sourceTree = "<group>"; };
 		279A4E2F19DA9A8200E8AB7B /* JCV4ProvisioningClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCV4ProvisioningClient.m; sourceTree = "<group>"; };
 		279E4C6C19226FA3002A556C /* people-search-nofocus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "people-search-nofocus.png"; sourceTree = "<group>"; };
@@ -1053,6 +1059,8 @@
 				27F64D6019772D6A00F772AA /* Voicemail.h */,
 				27F64D6119772D6A00F772AA /* Voicemail.m */,
 				2751591618AD300B00FD8D3F /* OsgiData.xcdatamodel */,
+				279A3E5619DAA51500B0793C /* LineConfiguration.h */,
+				279A3E5719DAA51500B0793C /* LineConfiguration.m */,
 				27F64D5A19772CCF00F772AA /* Lines.h */,
 				27F64D5B19772CCF00F772AA /* Lines.m */,
 				27F64D5719772CCE00F772AA /* PBX.h */,
@@ -1189,6 +1197,8 @@
 				27997573195A12C5001425CC /* PBX+Custom.m */,
 				27997575195A12D7001425CC /* Lines+Custom.h */,
 				27997576195A12D7001425CC /* Lines+Custom.m */,
+				279A3E5919DAA57F00B0793C /* LineConfiguration+Custom.h */,
+				279A3E5A19DAA57F00B0793C /* LineConfiguration+Custom.m */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -2282,6 +2292,7 @@
 				2787911318CF79DC004DE651 /* JCPresenceView.m in Sources */,
 				2700987C18F4714100B6BC2F /* JSMessage.m in Sources */,
 				276215211912AA7400CFBCC8 /* NSString+URLEncoding.m in Sources */,
+				279A3E5819DAA51500B0793C /* LineConfiguration.m in Sources */,
 				91B7CFC5192ABDF800927DDD /* JCSearchBar.m in Sources */,
 				27F1F2D4191C171300AEAFD7 /* UADateUtils.m in Sources */,
 				279E4CAF192273E5002A556C /* MBContactCollectionViewFlowLayout.m in Sources */,
@@ -2300,6 +2311,7 @@
 				27B8152618D93F1A00516BF6 /* NotificationView.m in Sources */,
 				27F1F2D5191C171300AEAFD7 /* UAInboxAlertHandler.m in Sources */,
 				91CAE67E1961E47F004A28FD /* JCVoicemailIcon.m in Sources */,
+				279A3E5B19DAA57F00B0793C /* LineConfiguration+Custom.m in Sources */,
 				2700987418F4714100B6BC2F /* NSString+JSMessagesView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

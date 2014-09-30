@@ -8,6 +8,7 @@
 
 #import "JCV4ProvisioningClient.h"
 #import "Common.h"
+#import "LineConfiguration+Custom.h"
 
 @implementation JCV4ProvisioningClient
 {
@@ -88,6 +89,12 @@
 	
 	[operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
 		completed(YES, responseObject, operation, nil);
+		
+		//TODO parse XML, save in database:
+		
+		[LineConfiguration addConfiguration:nil completed:^(BOOL success) {
+			//TODO wow.
+		}]
 	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 		completed(NO, nil, operation, error);
 	}];
