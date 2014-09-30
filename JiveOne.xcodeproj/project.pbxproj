@@ -226,6 +226,7 @@
 		5D629BAD19D9C41900F5744E /* JCVoiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D629BAC19D9C41900F5744E /* JCVoiceViewController.m */; };
 		5D629BB019D9CE4500F5744E /* JCVoiceNonVisualViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D629BAF19D9CE4500F5744E /* JCVoiceNonVisualViewController.m */; };
 		5DA5A1AF19DAF91400968F7D /* JCCallerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA5A1AE19DAF91400968F7D /* JCCallerViewController.m */; };
+		5DA5A1B219DAFEAD00968F7D /* JCDialStringTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA5A1B119DAFEAD00968F7D /* JCDialStringTextField.m */; };
 		9103271718F34BEC00437503 /* JCPeopleDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9103271518F34BEC00437503 /* JCPeopleDetailCell.m */; };
 		9103271818F34BEC00437503 /* JCPeopleDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9103271618F34BEC00437503 /* JCPeopleDetailCell.xib */; };
 		910709FE1959D60B0041E1CF /* JCLogoutIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 910709FD1959D60B0041E1CF /* JCLogoutIcon.m */; };
@@ -698,6 +699,8 @@
 		5D629BAF19D9CE4500F5744E /* JCVoiceNonVisualViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoiceNonVisualViewController.m; sourceTree = "<group>"; };
 		5DA5A1AD19DAF91400968F7D /* JCCallerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCallerViewController.h; sourceTree = "<group>"; };
 		5DA5A1AE19DAF91400968F7D /* JCCallerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallerViewController.m; sourceTree = "<group>"; };
+		5DA5A1B019DAFEAD00968F7D /* JCDialStringTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDialStringTextField.h; sourceTree = "<group>"; };
+		5DA5A1B119DAFEAD00968F7D /* JCDialStringTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDialStringTextField.m; sourceTree = "<group>"; };
 		6594302CE0A00068957DC0D5 /* Pods-JiveOneTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JiveOneTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JiveOneTests/Pods-JiveOneTests.debug.xcconfig"; sourceTree = "<group>"; };
 		865FB851301D1534E4CC63E7 /* Pods-JiveOneTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JiveOneTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-JiveOneTests/Pods-JiveOneTests.release.xcconfig"; sourceTree = "<group>"; };
 		86ED89B2764949AC9BCC0C7B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1899,6 +1902,8 @@
 		F8B62E4119D9F1C300AF98D3 /* Dialer */ = {
 			isa = PBXGroup;
 			children = (
+				5DA5A1B019DAFEAD00968F7D /* JCDialStringTextField.h */,
+				5DA5A1B119DAFEAD00968F7D /* JCDialStringTextField.m */,
 				F8B62E4219D9F1E400AF98D3 /* JCDialerViewController.h */,
 				F8B62E4319D9F1E400AF98D3 /* JCDialerViewController.m */,
 				5DA5A1AD19DAF91400968F7D /* JCCallerViewController.h */,
@@ -2297,6 +2302,7 @@
 				270152C61901D1FF00F271CE /* PersonEntities+Custom.m in Sources */,
 				2799757D195A1FC4001425CC /* JCContactsClient.m in Sources */,
 				276CFEAB196AF45F00C30B30 /* JasmineSocket.m in Sources */,
+				5DA5A1B219DAFEAD00968F7D /* JCDialStringTextField.m in Sources */,
 				2700987D18F4714100B6BC2F /* JSMessageInputView.m in Sources */,
 				27F1F2D9191C171300AEAFD7 /* UAInboxNavUI.m in Sources */,
 				2736698218BD441D0069B4B3 /* JCPersonCell.m in Sources */,
