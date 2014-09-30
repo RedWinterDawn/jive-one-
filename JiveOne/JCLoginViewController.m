@@ -16,6 +16,7 @@
 #import "JCStyleKit.h"
 #import "JCContactsClient.h"
 #import "JCVoicemailClient.h"
+#import "JCV4ProvisioningClient.h"
 #import "JCJifClient.h"
 #import "JCAppIntro.h"
 #import "UIImage+ImageEffects.h"
@@ -333,10 +334,32 @@
         [self showHudWithTitle:@"One Moment Please" detail:@"Loading data"];
     }
 
+	[self fetchProvisioningConfig];
 	[self fetchMyMailboxes];
 }
 
 #pragma mark - Fetch initial data
+//provisioning
+- (void)fetchProvisioningConfig
+{
+	NSDictionary *userInformation = [NSDictionary new];
+	//TODO: capture information to create the following structure
+	/*
+		
+	 "<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n<cpc_mobile version=\"1.0\"> \n <login \n user=\"827300fa@opayq.com\" \n password=\"jive1234\" \n man=\"Apple\" \n device=\"iPhone4\" \n os=\"7.0.6\" \n loc=\"en_US\" \n lang=\"en\" \n uuid=\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab0\" \n spid=\"cpc\" \n build=\"3.0.5.23570\" \n type=\"ios.jive.phone\" /> \n</cpc_mobile>
+	 
+	 */
+	
+	[[JCV4ProvisioningClient sharedClient] requestProvisioningFile:userInformation completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+		if(suceeded){
+			//TODO: talk about logic. We should not prevent the user to get into the app if this fails. They
+			// should still be able to access the rest of the app (directory, VM, etc) and be given a change to
+			// fetch the provisioning file again...but then...do we store user creentials?
+		}
+	}];
+}
+
+
 //voicemail
 -(void)fetchMyMailboxes{
     NSString * jiveId = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];

@@ -140,6 +140,7 @@
 		27997577195A12D7001425CC /* Lines+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 27997576195A12D7001425CC /* Lines+Custom.m */; };
 		2799757D195A1FC4001425CC /* JCContactsClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2799757C195A1FC4001425CC /* JCContactsClient.m */; };
 		279975F2195B1BCD001425CC /* Membership.m in Sources */ = {isa = PBXBuildFile; fileRef = 279975F1195B1BCD001425CC /* Membership.m */; };
+		279A4E3019DA9A8200E8AB7B /* JCV4ProvisioningClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 279A4E2F19DA9A8200E8AB7B /* JCV4ProvisioningClient.m */; };
 		279E4C6D19226FA3002A556C /* people-search-nofocus.png in Resources */ = {isa = PBXBuildFile; fileRef = 279E4C6C19226FA3002A556C /* people-search-nofocus.png */; };
 		279E4C7019226FAC002A556C /* people-search.png in Resources */ = {isa = PBXBuildFile; fileRef = 279E4C6F19226FAC002A556C /* people-search.png */; };
 		279E4CA9192273E5002A556C /* MBContactCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E4C9C192273E5002A556C /* MBContactCollectionView.m */; };
@@ -482,6 +483,8 @@
 		2799757C195A1FC4001425CC /* JCContactsClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCContactsClient.m; sourceTree = "<group>"; };
 		279975F0195B1BCD001425CC /* Membership.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Membership.h; sourceTree = "<group>"; };
 		279975F1195B1BCD001425CC /* Membership.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Membership.m; sourceTree = "<group>"; };
+		279A4E2E19DA9A8200E8AB7B /* JCV4ProvisioningClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCV4ProvisioningClient.h; sourceTree = "<group>"; };
+		279A4E2F19DA9A8200E8AB7B /* JCV4ProvisioningClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCV4ProvisioningClient.m; sourceTree = "<group>"; };
 		279E4C6C19226FA3002A556C /* people-search-nofocus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "people-search-nofocus.png"; sourceTree = "<group>"; };
 		279E4C6F19226FAC002A556C /* people-search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "people-search.png"; sourceTree = "<group>"; };
 		279E4C9B192273E5002A556C /* MBContactCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBContactCollectionView.h; sourceTree = "<group>"; };
@@ -1160,6 +1163,8 @@
 				DD54A055195B894E001A34F3 /* JCVoicemailClient.m */,
 				DD54A05D195CE271001A34F3 /* JCJifClient.h */,
 				DD54A05E195CE271001A34F3 /* JCJifClient.m */,
+				279A4E2E19DA9A8200E8AB7B /* JCV4ProvisioningClient.h */,
+				279A4E2F19DA9A8200E8AB7B /* JCV4ProvisioningClient.m */,
 			);
 			name = Clients;
 			sourceTree = "<group>";
@@ -2179,6 +2184,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				279A4E3019DA9A8200E8AB7B /* JCV4ProvisioningClient.m in Sources */,
 				9103271718F34BEC00437503 /* JCPeopleDetailCell.m in Sources */,
 				F2459BB218C67FC000AF56CF /* JCGroupSelectorViewController.m in Sources */,
 				279975F2195B1BCD001425CC /* Membership.m in Sources */,
