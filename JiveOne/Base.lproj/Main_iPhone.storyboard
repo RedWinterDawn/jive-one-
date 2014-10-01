@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1552" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
         <!--Login View Controller-->
@@ -397,13 +397,12 @@
             </objects>
             <point key="canvasLocation" x="-2458" y="-1221"/>
         </scene>
-        <!--Navigation Controller - People-->
+        <!--People-->
         <scene sceneID="4Zu-Qh-4wk">
             <objects>
                 <navigationController storyboardIdentifier="PeopleNavViewController" definesPresentationContext="YES" id="vaI-vc-7Id" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="People" image="nav-people.png" id="WUb-WZ-m0b"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="bje-51-esT">
-                        <rect key="frame" x="0.0" y="-44" width="0.0" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <textAttributes key="titleTextAttributes">
                             <offsetWrapper key="textShadowOffset" horizontal="0.0" vertical="0.0"/>
@@ -417,7 +416,7 @@
             </objects>
             <point key="canvasLocation" x="-1380" y="-546"/>
         </scene>
-        <!--Directory View Controller - Directory-->
+        <!--Directory-->
         <scene sceneID="sgK-qG-NHh">
             <objects>
                 <viewController storyboardIdentifier="JCDirectoryViewController" autoresizesArchivedViewToFullSize="NO" id="eTh-sK-SbW" customClass="JCDirectoryViewController" sceneMemberID="viewController">
@@ -465,7 +464,7 @@
             </objects>
             <point key="canvasLocation" x="-752" y="-546"/>
         </scene>
-        <!--Voice Table View Controller - Voicemail-->
+        <!--Voicemail-->
         <scene sceneID="i1y-0K-YmZ">
             <objects>
                 <tableViewController storyboardIdentifier="JCVoiceTableViewController" id="v4b-eq-yLo" customClass="JCVoiceTableViewController" sceneMemberID="viewController">
@@ -490,7 +489,7 @@
             </objects>
             <point key="canvasLocation" x="-752" y="146"/>
         </scene>
-        <!--Navigation Controller - Voicemail-->
+        <!--Voicemail-->
         <scene sceneID="Sds-P7-Vc1">
             <objects>
                 <navigationController title="Voicemail" definesPresentationContext="YES" id="XFb-KJ-zT0" sceneMemberID="viewController">
@@ -511,7 +510,7 @@
             </objects>
             <point key="canvasLocation" x="-1380" y="131"/>
         </scene>
-        <!--Account View Controller - Account-->
+        <!--Account-->
         <scene sceneID="dfQ-T1-fgJ">
             <objects>
                 <tableViewController storyboardIdentifier=" " id="xfW-W8-tPR" customClass="JCAccountViewController" sceneMemberID="viewController">
@@ -647,7 +646,7 @@
             </objects>
             <point key="canvasLocation" x="-752" y="845"/>
         </scene>
-        <!--Navigation Controller - Account-->
+        <!--Account-->
         <scene sceneID="iH8-Ew-IaF">
             <objects>
                 <navigationController title="Account" automaticallyAdjustsScrollViewInsets="NO" id="4mQ-Xv-N0n" sceneMemberID="viewController">
@@ -689,7 +688,7 @@
             </objects>
             <point key="canvasLocation" x="-2458" y="1576"/>
         </scene>
-        <!--Group Selector View Controller - Create Group-->
+        <!--Create Group-->
         <scene sceneID="C8d-tS-5ve">
             <objects>
                 <tableViewController id="iAN-Mj-PhA" customClass="JCGroupSelectorViewController" sceneMemberID="viewController">
@@ -746,7 +745,7 @@
             </objects>
             <point key="canvasLocation" x="894" y="-1469"/>
         </scene>
-        <!--Directory Group View Controller - Groups-->
+        <!--Groups-->
         <scene sceneID="jby-cA-ON0">
             <objects>
                 <tableViewController id="BuH-WG-Prf" customClass="JCDirectoryGroupViewController" sceneMemberID="viewController">
