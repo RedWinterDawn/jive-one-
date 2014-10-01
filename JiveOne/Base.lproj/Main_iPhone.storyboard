@@ -523,7 +523,7 @@
             <objects>
                 <viewController id="5YP-ww-Jgx" customClass="JCDialerViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Dqu-Oj-kXE">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <userGuides>
                             <userLayoutGuide location="68" affinity="minX"/>
@@ -531,33 +531,6 @@
                             <userLayoutGuide location="153" affinity="minX"/>
                         </userGuides>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="26" clearButtonMode="always" id="F3r-oT-E9I" customClass="JCDialStringTextField">
-                                <rect key="frame" x="16" y="65" width="288" height="70"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="30"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="5YP-ww-Jgx" id="jeG-ON-WIP"/>
-                                </connections>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mlm-7I-BRW">
-                                <rect key="frame" x="127" y="454" width="67" height="67"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="dialer-callButton-green">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="initiateCall:" destination="5YP-ww-Jgx" eventType="touchUpInside" id="naX-0J-7lX"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Df3-HV-5AS">
-                                <rect key="frame" x="250" y="65" width="70" height="70"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" image="delete-black">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
                             <view contentMode="scaleToFill" id="cpl-7N-Lxx">
                                 <rect key="frame" x="0.0" y="134" width="320" height="300"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -961,19 +934,58 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mlm-7I-BRW">
+                                <rect key="frame" x="127" y="441" width="67" height="67"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="dialer-callButton-green">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="initiateCall:" destination="5YP-ww-Jgx" eventType="touchUpInside" id="naX-0J-7lX"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Df3-HV-5AS">
+                                <rect key="frame" x="267" y="65" width="53" height="70"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <gestureRecognizers/>
+                                <state key="normal" image="delete-black">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="backspace:" destination="5YP-ww-Jgx" eventType="touchUpInside" id="P1p-Pb-n8Y"/>
+                                    <outletCollection property="gestureRecognizers" destination="5B1-si-404" appends="YES" id="pbU-QN-aIt"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="O96-gt-jaf" customClass="JCDialStringLabel">
+                                <rect key="frame" x="50" y="65" width="221" height="70"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="30"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <connections>
+                                    <outlet property="delegate" destination="5YP-ww-Jgx" id="qlL-6H-cfd"/>
+                                </connections>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="j76-X1-CFr"/>
                     <navigationItem key="navigationItem" title="Phone" id="vqB-Fj-v7w"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
                     <connections>
+                        <outlet property="backspaceBtn" destination="Df3-HV-5AS" id="vkK-ic-3Tk"/>
                         <outlet property="callBtn" destination="mlm-7I-BRW" id="tTP-P8-hrm"/>
-                        <outlet property="dialString" destination="F3r-oT-E9I" id="Mr4-DN-S7W"/>
+                        <outlet property="dialStringLabel" destination="O96-gt-jaf" id="LXx-XV-aKq"/>
                         <segue destination="Yzo-Zz-XrL" kind="modal" identifier="InitiateCall" modalPresentationStyle="fullScreen" animates="NO" id="0xB-1u-nc2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RHH-eh-WXF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="5B1-si-404">
+                    <connections>
+                        <action selector="clear:" destination="5YP-ww-Jgx" id="iXr-AA-E2W"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-756" y="1187"/>
         </scene>

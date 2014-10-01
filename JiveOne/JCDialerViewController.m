@@ -10,13 +10,20 @@
 
 #import "JCCallerViewController.h"
 
+
+
 @interface JCDialerViewController ()
 
 @end
 
 @implementation JCDialerViewController
 
-#pragma mark - Navigation
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.backspaceBtn.alpha = 0;
+}
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -25,9 +32,7 @@
     if ([viewController isKindOfClass:[JCCallerViewController class]])
     {
         JCCallerViewController *callerViewController = (JCCallerViewController *)viewController;
-        callerViewController.dialString = self.dialString.text;
-        callerViewController.mute       = self.muteBtn.enabled;
-        callerViewController.speaker    = self.speakerBtn.enabled;
+        callerViewController.dialString = self.dialStringLabel.dialString;
     }
 }
 
@@ -38,24 +43,23 @@
     if ([sender isKindOfClass:[UIButton class]])
     {
         UIButton *button = (UIButton *)sender;
-        NSString *character = [self characterFromNumPadTag:button.tag];
-        self.dialString.text = [NSString stringWithFormat:@"%@%@", self.dialString.text, character];
+        [self.dialStringLabel append:[self characterFromNumPadTag:button.tag]];
     }
-}
-
--(IBAction)speakerToggle:(id)sender
-{
-    self.speakerBtn.selected = !self.speakerBtn.selected;
-}
-
--(IBAction)muteToggle:(id)sender
-{
-    self.muteBtn.selected = !self.muteBtn.selected;
 }
 
 -(IBAction)initiateCall:(id)sender
 {
     [self performSegueWithIdentifier:@"InitiateCall" sender:self];
+}
+
+-(IBAction)backspace:(id)sender
+{
+    [self.dialStringLabel backspace];
+}
+
+-(IBAction)clear:(id)sender
+{
+    [self.dialStringLabel clear];
 }
 
 #pragma mark - Private -
@@ -72,52 +76,28 @@
     }
 }
 
-#pragma mark - Delegate handlers -
-
-#pragma mark UITextFieldDelegate
-
-/*
-// return NO to disallow editing.
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+-(void)didUpdateDialString:(NSString *)dialString
 {
-    return YES;
+    __unsafe_unretained JCDialerViewController *weakSelf = self;
+    if (dialString.length == 0) {
+        [UIView animateWithDuration:0.3
+                         animations:^{
+                             weakSelf.backspaceBtn.alpha = 0;
+                         }
+                         completion:^(BOOL finished) {
+     
+                         }];
+    } else {
+        [UIView animateWithDuration:0.3
+                         animations:^{
+                             weakSelf.backspaceBtn.alpha = 1;
+                         }
+                         completion:^(BOOL finished) {
+     
+                         }];
+    }
 }
-
-// became first responder
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    
-}
-
-// return YES to allow editing to stop and to resign first responder status. NO to disallow the editing session to end
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
-{
-    return YES;
-}
-
-// may be called if forced even if shouldEndEditing returns NO (e.g. view removed from window) or endEditing:YES called
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-    
-}
-
-// return NO to not change text
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    return YES;
-}
-
-// called when clear button pressed. return NO to ignore (no notifications)
-- (BOOL)textFieldShouldClear:(UITextField *)textField
-{
-    return YES;
-}
-
-// called when 'return' key pressed. return NO to ignore.
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    return YES;
-}
-*/
 
 @end
+
+

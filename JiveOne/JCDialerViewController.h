@@ -7,18 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JCDialStringLabel.h"
 
-@interface JCDialerViewController : UIViewController <UITextFieldDelegate>
+@interface JCDialerViewController : UIViewController <JCDialStringLabelDelegate>
 
-@property (nonatomic, weak) IBOutlet UIButton *muteBtn;
-@property (nonatomic, weak) IBOutlet UIButton *speakerBtn;
 @property (nonatomic, weak) IBOutlet UIButton *callBtn;
-
-@property (nonatomic, weak) IBOutlet UITextField *dialString;
+@property (nonatomic, weak) IBOutlet JCDialStringLabel *dialStringLabel;
+@property (nonatomic, weak) IBOutlet UIButton *backspaceBtn;
 
 -(IBAction)numPadPressed:(id)sender;
--(IBAction)speakerToggle:(id)sender;
--(IBAction)muteToggle:(id)sender;
 -(IBAction)initiateCall:(id)sender;
+-(IBAction)backspace:(id)sender;
 
 @end
