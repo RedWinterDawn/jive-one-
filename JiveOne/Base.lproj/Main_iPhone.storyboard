@@ -1024,49 +1024,52 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="esd-M8-Lxg" customClass="JCDialerOptions">
                                 <rect key="frame" x="0.0" y="345" width="320" height="223"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pl8-2v-mXV" customClass="JCRoundedButton">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pl8-2v-mXV" customClass="JCRoundedButton">
                                         <rect key="frame" x="125" y="28" width="70" height="70"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="70" id="glW-dR-RyK"/>
                                             <constraint firstAttribute="height" constant="70" id="qsi-dh-m3b"/>
                                         </constraints>
+                                        <color key="tintColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" image="call-dialpad-white">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="keypad:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="xyA-wC-Mx2"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TRc-ED-Hu8" customClass="JCRoundedButton">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TRc-ED-Hu8" customClass="JCRoundedButton">
                                         <rect key="frame" x="228" y="28" width="70" height="70"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="70" id="gav-Di-mH2"/>
                                             <constraint firstAttribute="height" constant="70" id="jrH-NY-QkO"/>
                                         </constraints>
+                                        <color key="tintColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" image="call-speaker-white">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="speaker:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="v35-QH-GQH"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="248" horizontalCompressionResistancePriority="249" verticalCompressionResistancePriority="253" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OJ5-fR-lFW" customClass="JCRoundedButton">
+                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="248" horizontalCompressionResistancePriority="249" verticalCompressionResistancePriority="253" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OJ5-fR-lFW" customClass="JCRoundedButton">
                                         <rect key="frame" x="25" y="125" width="70" height="70"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="70" id="Kh6-Te-FQC"/>
                                             <constraint firstAttribute="width" constant="70" id="hQt-sX-iTj"/>
                                         </constraints>
+                                        <color key="tintColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" image="call-arrow-outline-white">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="blindTransfer:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="gYl-hO-sAU"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="252" text="Mute" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c8n-IX-EHR">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="252" ambiguous="YES" misplaced="YES" text="Mute" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c8n-IX-EHR">
                                         <rect key="frame" x="25" y="98" width="70" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="9pN-He-1yl"/>
@@ -1076,7 +1079,7 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Keypad" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SPX-SZ-R8t">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Keypad" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SPX-SZ-R8t">
                                         <rect key="frame" x="125" y="97" width="70" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="YLq-dI-oeM"/>
@@ -1086,7 +1089,7 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Speaker" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V8W-GZ-oVM">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" misplaced="YES" text="Speaker" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V8W-GZ-oVM">
                                         <rect key="frame" x="228" y="97" width="70" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="70" id="cCd-PR-yeQ"/>
@@ -1096,7 +1099,7 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transfer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="szn-nR-AS9">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Transfer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="szn-nR-AS9">
                                         <rect key="frame" x="25" y="194" width="70" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="mCP-Sw-TnV"/>
@@ -1105,16 +1108,17 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Warm Transfer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qTn-fV-hyq">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Warm Transfer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qTn-fV-hyq">
                                         <rect key="frame" x="111" y="194" width="99" height="21"/>
                                         <constraints>
+                                            <constraint firstAttribute="width" constant="99" id="IuI-aH-rCS"/>
                                             <constraint firstAttribute="height" constant="21" id="ckc-0k-WJ1"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Call" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8rt-eE-9r5">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Add Call" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8rt-eE-9r5">
                                         <rect key="frame" x="228" y="194" width="70" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="56M-HO-VVA"/>
@@ -1129,9 +1133,9 @@
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="70" id="NkB-ZW-Tgm"/>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="SJs-mg-O7m"/>
                                             <constraint firstAttribute="height" constant="70" id="tV7-Ic-kIu"/>
                                         </constraints>
+                                        <color key="tintColor" red="0.14509803921568626" green="0.49411764705882355" blue="0.59607843137254901" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" image="call-mute-white">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -1139,29 +1143,31 @@
                                             <action selector="mute:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="BFt-rx-uR2"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zZ6-Xz-Txj" customClass="JCRoundedButton">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zZ6-Xz-Txj" customClass="JCRoundedButton">
                                         <rect key="frame" x="228" y="125" width="70" height="70"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="70" id="FVp-Hh-KqS"/>
                                             <constraint firstAttribute="width" constant="70" id="skx-TJ-PSD"/>
                                         </constraints>
+                                        <color key="tintColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" image="call-plus-white">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="addCall:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="4eA-wE-x0i"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="warmTransferButton" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tcw-Rg-ytb" customClass="JCRoundedButton">
+                                    <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="warmTransferButton" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tcw-Rg-ytb" customClass="JCRoundedButton">
                                         <rect key="frame" x="125" y="125" width="70" height="70"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="70" id="XRg-ma-kdR"/>
                                             <constraint firstAttribute="height" constant="70" id="mgJ-pm-Xlx"/>
                                         </constraints>
+                                        <color key="tintColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" image="call-arrow-white">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="warmTransfer:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="QFu-my-YJB"/>
@@ -1170,40 +1176,18 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="223" id="1YV-C1-Pa0"/>
-                                    <constraint firstItem="SPX-SZ-R8t" firstAttribute="top" secondItem="pl8-2v-mXV" secondAttribute="bottom" constant="-1" id="27d-Lh-ss0"/>
-                                    <constraint firstItem="Tcw-Rg-ytb" firstAttribute="leading" secondItem="OJ5-fR-lFW" secondAttribute="trailing" constant="30" id="6TW-6h-QIF"/>
-                                    <constraint firstItem="TRc-ED-Hu8" firstAttribute="leading" secondItem="pl8-2v-mXV" secondAttribute="trailing" constant="33" id="6jx-R9-I5c"/>
-                                    <constraint firstItem="V8W-GZ-oVM" firstAttribute="leading" secondItem="SPX-SZ-R8t" secondAttribute="trailing" constant="33" id="6q3-BK-1dK"/>
-                                    <constraint firstItem="SPX-SZ-R8t" firstAttribute="leading" secondItem="c8n-IX-EHR" secondAttribute="trailing" constant="30" id="8u4-5S-pgd"/>
-                                    <constraint firstAttribute="width" constant="320" id="DTr-xc-Dd0"/>
-                                    <constraint firstItem="zZ6-Xz-Txj" firstAttribute="leading" secondItem="Tcw-Rg-ytb" secondAttribute="trailing" constant="33" id="EEm-4h-Ysh"/>
-                                    <constraint firstItem="c8n-IX-EHR" firstAttribute="top" secondItem="lUT-6r-uIK" secondAttribute="bottom" id="GkY-Jo-yFd"/>
-                                    <constraint firstAttribute="bottom" secondItem="szn-nR-AS9" secondAttribute="bottom" constant="8" id="I4D-tb-io4"/>
-                                    <constraint firstItem="pl8-2v-mXV" firstAttribute="centerX" secondItem="SPX-SZ-R8t" secondAttribute="centerX" id="IOy-9y-1yg"/>
-                                    <constraint firstItem="c8n-IX-EHR" firstAttribute="top" secondItem="lUT-6r-uIK" secondAttribute="bottom" id="KVw-Rz-cnu"/>
-                                    <constraint firstItem="V8W-GZ-oVM" firstAttribute="top" secondItem="TRc-ED-Hu8" secondAttribute="bottom" constant="-1" id="OK7-lW-2eC"/>
-                                    <constraint firstAttribute="trailing" secondItem="V8W-GZ-oVM" secondAttribute="trailing" constant="22" id="OP7-w8-LPL"/>
-                                    <constraint firstAttribute="bottom" secondItem="8rt-eE-9r5" secondAttribute="bottom" constant="8" id="QYL-XH-fjH"/>
-                                    <constraint firstAttribute="trailing" secondItem="zZ6-Xz-Txj" secondAttribute="trailing" priority="250" constant="22" id="Rjw-bT-Hcz"/>
-                                    <constraint firstItem="qTn-fV-hyq" firstAttribute="top" secondItem="Tcw-Rg-ytb" secondAttribute="bottom" constant="-1" id="SDB-A6-1bZ"/>
-                                    <constraint firstItem="zZ6-Xz-Txj" firstAttribute="top" secondItem="TRc-ED-Hu8" secondAttribute="bottom" priority="250" constant="27" id="SMp-uk-3ED"/>
-                                    <constraint firstItem="lUT-6r-uIK" firstAttribute="leading" secondItem="esd-M8-Lxg" secondAttribute="leading" constant="25" id="T5D-ce-BMl"/>
-                                    <constraint firstAttribute="trailing" secondItem="8rt-eE-9r5" secondAttribute="trailing" constant="22" id="VfZ-nF-fxW"/>
-                                    <constraint firstAttribute="bottom" secondItem="zZ6-Xz-Txj" secondAttribute="bottom" constant="28" id="WU5-9y-iwE"/>
-                                    <constraint firstItem="TRc-ED-Hu8" firstAttribute="centerX" secondItem="V8W-GZ-oVM" secondAttribute="centerX" id="YHd-KB-hsj"/>
-                                    <constraint firstItem="szn-nR-AS9" firstAttribute="leading" secondItem="esd-M8-Lxg" secondAttribute="leading" constant="25" id="bDV-qU-T8S"/>
-                                    <constraint firstItem="OJ5-fR-lFW" firstAttribute="leading" secondItem="esd-M8-Lxg" secondAttribute="leading" constant="25" id="bnX-4l-Ce2"/>
-                                    <constraint firstItem="Tcw-Rg-ytb" firstAttribute="leading" secondItem="qTn-fV-hyq" secondAttribute="leading" constant="14" id="eDz-zy-IA6"/>
-                                    <constraint firstItem="pl8-2v-mXV" firstAttribute="leading" secondItem="lUT-6r-uIK" secondAttribute="trailing" constant="30" id="ekk-ou-SwN"/>
-                                    <constraint firstAttribute="bottom" secondItem="qTn-fV-hyq" secondAttribute="bottom" constant="8" id="gQw-Ij-8og"/>
-                                    <constraint firstAttribute="centerY" secondItem="Tcw-Rg-ytb" secondAttribute="centerY" constant="-48.5" id="gfg-VH-qea"/>
-                                    <constraint firstItem="OJ5-fR-lFW" firstAttribute="centerX" secondItem="szn-nR-AS9" secondAttribute="centerX" id="jFl-XY-jxY"/>
-                                    <constraint firstItem="szn-nR-AS9" firstAttribute="top" secondItem="OJ5-fR-lFW" secondAttribute="bottom" constant="-1" id="sEe-4M-2XB"/>
-                                    <constraint firstItem="8rt-eE-9r5" firstAttribute="centerX" secondItem="zZ6-Xz-Txj" secondAttribute="centerX" id="t1R-vh-OcH"/>
-                                    <constraint firstItem="Tcw-Rg-ytb" firstAttribute="top" secondItem="pl8-2v-mXV" secondAttribute="bottom" constant="27" id="uQx-9d-eC5"/>
-                                    <constraint firstAttribute="trailing" secondItem="TRc-ED-Hu8" secondAttribute="trailing" priority="250" constant="22" id="v0v-bF-pGb"/>
-                                    <constraint firstItem="c8n-IX-EHR" firstAttribute="leading" secondItem="esd-M8-Lxg" secondAttribute="leading" constant="25" id="wym-oL-6lN"/>
+                                    <constraint firstItem="TRc-ED-Hu8" firstAttribute="trailing" secondItem="zZ6-Xz-Txj" secondAttribute="trailing" id="0Mp-LN-kTY"/>
+                                    <constraint firstItem="Tcw-Rg-ytb" firstAttribute="top" secondItem="esd-M8-Lxg" secondAttribute="top" constant="125" id="41z-98-tjd"/>
+                                    <constraint firstItem="Tcw-Rg-ytb" firstAttribute="top" secondItem="pl8-2v-mXV" secondAttribute="bottom" constant="27" id="Dc9-Yx-bZh"/>
+                                    <constraint firstAttribute="centerX" secondItem="Tcw-Rg-ytb" secondAttribute="centerX" id="F3O-MU-ejy"/>
+                                    <constraint firstItem="zZ6-Xz-Txj" firstAttribute="bottom" secondItem="Tcw-Rg-ytb" secondAttribute="bottom" id="MyM-eH-EFg"/>
+                                    <constraint firstItem="lUT-6r-uIK" firstAttribute="bottom" secondItem="TRc-ED-Hu8" secondAttribute="bottom" id="Q8f-Er-uiL"/>
+                                    <constraint firstAttribute="bottom" secondItem="Tcw-Rg-ytb" secondAttribute="bottom" constant="28" id="QV0-d6-jh0"/>
+                                    <constraint firstItem="lUT-6r-uIK" firstAttribute="leading" secondItem="OJ5-fR-lFW" secondAttribute="leading" id="Uve-wj-8cZ"/>
+                                    <constraint firstItem="lUT-6r-uIK" firstAttribute="leading" secondItem="esd-M8-Lxg" secondAttribute="leading" constant="25" id="dKP-uW-gqm"/>
+                                    <constraint firstAttribute="trailing" secondItem="TRc-ED-Hu8" secondAttribute="trailing" constant="22" id="uci-Rp-yyb"/>
+                                    <constraint firstItem="Tcw-Rg-ytb" firstAttribute="leading" secondItem="pl8-2v-mXV" secondAttribute="leading" id="xZl-NJ-RhA"/>
+                                    <constraint firstItem="zZ6-Xz-Txj" firstAttribute="bottom" secondItem="OJ5-fR-lFW" secondAttribute="bottom" id="zLm-fD-ZlO"/>
                                 </constraints>
                             </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ctK-D7-oO0" customClass="JCCallCard">
@@ -1291,20 +1275,21 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="esd-M8-Lxg" firstAttribute="leading" secondItem="Xii-sf-O3Y" secondAttribute="leading" id="0kg-GO-7gI"/>
                             <constraint firstItem="mCa-uf-nio" firstAttribute="bottom" secondItem="Xii-sf-O3Y" secondAttribute="top" id="3b5-m3-j3h"/>
+                            <constraint firstAttribute="bottom" secondItem="esd-M8-Lxg" secondAttribute="bottom" id="67U-vd-QSJ"/>
                             <constraint firstItem="lUT-6r-uIK" firstAttribute="top" secondItem="UBY-qh-P2D" secondAttribute="bottom" constant="27" id="Cg1-hA-uaR"/>
                             <constraint firstItem="pl8-2v-mXV" firstAttribute="top" secondItem="ctK-D7-oO0" secondAttribute="bottom" constant="27" id="GIe-cj-2kB"/>
                             <constraint firstItem="TRc-ED-Hu8" firstAttribute="top" secondItem="qab-Jq-aAP" secondAttribute="bottom" constant="27" id="Npa-fb-pxq"/>
                             <constraint firstItem="ctK-D7-oO0" firstAttribute="top" secondItem="01Z-Ab-Znh" secondAttribute="bottom" id="Q0V-AP-Tdb"/>
                             <constraint firstItem="mCa-uf-nio" firstAttribute="leading" secondItem="Aj5-ZF-aP3" secondAttribute="leading" id="VaV-th-W9k"/>
+                            <constraint firstAttribute="trailing" secondItem="esd-M8-Lxg" secondAttribute="trailing" id="VsS-eq-KaV"/>
                             <constraint firstAttribute="trailing" secondItem="ctK-D7-oO0" secondAttribute="trailing" constant="8" id="a0c-a0-nVa"/>
                             <constraint firstItem="TRc-ED-Hu8" firstAttribute="top" secondItem="ctK-D7-oO0" secondAttribute="bottom" constant="27" id="brR-ka-hZn"/>
                             <constraint firstItem="mCa-uf-nio" firstAttribute="top" secondItem="gJK-PA-23r" secondAttribute="bottom" constant="-98" id="buF-lf-Ggw"/>
                             <constraint firstItem="mCa-uf-nio" firstAttribute="top" secondItem="ba9-af-X2N" secondAttribute="bottom" constant="-79" id="cDB-5i-2cd"/>
                             <constraint firstItem="ctK-D7-oO0" firstAttribute="leading" secondItem="Aj5-ZF-aP3" secondAttribute="leading" constant="8" id="d58-Pr-YYJ"/>
+                            <constraint firstItem="esd-M8-Lxg" firstAttribute="leading" secondItem="Aj5-ZF-aP3" secondAttribute="leading" id="fO7-Pk-8aN"/>
                             <constraint firstItem="lUT-6r-uIK" firstAttribute="top" secondItem="ctK-D7-oO0" secondAttribute="bottom" constant="27" id="gGf-sN-o97"/>
-                            <constraint firstItem="esd-M8-Lxg" firstAttribute="bottom" secondItem="Xii-sf-O3Y" secondAttribute="top" id="iRA-IU-hev"/>
                             <constraint firstItem="Xii-sf-O3Y" firstAttribute="top" secondItem="ctK-D7-oO0" secondAttribute="bottom" constant="222" id="y5G-AD-dI7"/>
                         </constraints>
                     </view>
@@ -1336,7 +1321,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7M3-tY-ahL">
-                                <rect key="frame" x="8" y="27" width="304" height="385"/>
+                                <rect key="frame" x="8" y="69" width="304" height="385"/>
                                 <subviews>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6dF-ks-wml">
                                         <rect key="frame" x="33" y="60" width="70" height="60"/>
@@ -1797,11 +1782,11 @@
             </objects>
             <point key="canvasLocation" x="227" y="1193"/>
         </scene>
-        <!--Dialer-->
+        <!--Keypad-->
         <scene sceneID="UYS-F1-4gx">
             <objects>
                 <navigationController id="elO-IG-RBo" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Dialer" image="nav-dial-black" id="qgj-el-bhw"/>
+                    <tabBarItem key="tabBarItem" title="Keypad" image="nav-dial-black" id="qgj-el-bhw"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="grG-K9-E8M">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -2179,7 +2164,7 @@
         <image name="incall-background" width="320" height="568"/>
         <image name="incall-hangup-red" width="35" height="35"/>
         <image name="incall-hold-black" width="35" height="35"/>
-        <image name="nav-dial-black" width="35" height="35"/>
+        <image name="nav-dial-black" width="19" height="19"/>
         <image name="nav-people.png" width="44" height="44"/>
         <image name="transfer-call-green" width="35" height="35"/>
         <image name="transfer-cancel-white" width="35" height="35"/>

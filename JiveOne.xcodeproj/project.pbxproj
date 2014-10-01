@@ -1998,7 +1998,7 @@
 				ORGANIZATIONNAME = "Jive Communications, Inc";
 				TargetAttributes = {
 					275F4A4D18AD0FBC00D2F069 = {
-						DevelopmentTeam = TQYP9PSX94;
+						DevelopmentTeam = 5NE3JJD5L3;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
