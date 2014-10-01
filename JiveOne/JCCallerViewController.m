@@ -31,7 +31,7 @@ NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTran
 
 -(IBAction)keypad:(id)sender
 {
-    
+    [self closeCallerViewController];
 }
 
 -(IBAction)mute:(id)sender
@@ -64,6 +64,12 @@ NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTran
 }
 
 #pragma mark - Private - 
+
+-(void)closeCallerViewController
+{
+    if (_delegate && [_delegate respondsToSelector:@selector(shouldDismissCallerViewController:)])
+        [_delegate shouldDismissCallerViewController:self];
+}
 
 -(void)presentTransferViewController:(UIViewController *)viewController
 {

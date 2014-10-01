@@ -12,6 +12,11 @@
 
 NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCall";
 
+@interface JCDialerViewController () <JCCallerViewControllerDelegate>
+
+@end
+
+
 @implementation JCDialerViewController
 
 - (void)viewDidLoad
@@ -30,6 +35,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     {
         JCCallerViewController *callerViewController = (JCCallerViewController *)viewController;
         callerViewController.dialString = self.dialStringLabel.dialString;
+        callerViewController.delegate = self;
     }
 }
 
@@ -93,6 +99,17 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
      
                          }];
     }
+}
+
+#pragma mark - Delegate Handlers -
+
+#pragma mark JCCallerViewController
+
+-(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController
+{
+    [self dismissViewControllerAnimated:NO completion:^{
+        
+    }];
 }
 
 @end
