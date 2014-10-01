@@ -8,16 +8,12 @@
 
 #import "JCCallerViewController.h"
 
-@interface JCCallerViewController ()
 
-@end
 
 @implementation JCCallerViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
+
+
 -(IBAction)warmTransfer:(id)sender{
     UIViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"warmTransferModal"];
     [self addChildViewController:viewController];
@@ -37,36 +33,28 @@
                      }];
     
     
-};
+}
+
 -(IBAction)blindTransfer:(id)sender{
     
-};
+}
+
 -(IBAction)speaker:(id)sender{
     
-};
+}
+
 -(IBAction)keypad:(id)sender{
     
-};
+}
+
 -(IBAction)addCall:(id)sender{
     
-};
+}
+
 -(IBAction)mute:(id)sender{
     
-};
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
