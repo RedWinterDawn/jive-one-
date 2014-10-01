@@ -527,16 +527,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <userGuides>
                             <userLayoutGuide location="68" affinity="minX"/>
-                            <userLayoutGuide location="232" affinity="minX"/>
-                            <userLayoutGuide location="153" affinity="minX"/>
+                            <userLayoutGuide location="231" affinity="minX"/>
+                            <userLayoutGuide location="152" affinity="minX"/>
                         </userGuides>
                         <subviews>
                             <view contentMode="scaleToFill" id="cpl-7N-Lxx">
-                                <rect key="frame" x="0.0" y="134" width="320" height="300"/>
+                                <rect key="frame" x="0.0" y="125" width="320" height="257"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="0UV-r4-Bbv">
-                                        <rect key="frame" x="128" y="0.0" width="70" height="70"/>
+                                        <rect key="frame" x="125" y="0.0" width="70" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -569,7 +569,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="gkT-vh-OkV">
-                                        <rect key="frame" x="50" y="0.0" width="70" height="70"/>
+                                        <rect key="frame" x="41" y="0.0" width="70" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -601,41 +601,8 @@
                                             <action selector="numPadPressed:" destination="5YP-ww-Jgx" eventType="touchUpInside" id="bvO-ij-yh8"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="9" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="WqO-Or-LYW">
-                                        <rect key="frame" x="206" y="156" width="70" height="70"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
-                                        <state key="normal">
-                                            <attributedString key="attributedTitle">
-                                                <fragment content="9">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <font key="NSFont" size="40" name="HelveticaNeue-Thin"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                                <fragment content=" ">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
-                                                        <font key="NSFont" size="12" name=".LucidaGrandeUI"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                                <fragment content="WXYZ">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
-                                                        <font key="NSFont" size="12" name="HelveticaNeue-Medium"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
-                                        </state>
-                                        <connections>
-                                            <action selector="numPadPressed:" destination="5YP-ww-Jgx" eventType="touchUpInside" id="qEN-8M-tMi"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="h1M-n8-b3q">
-                                        <rect key="frame" x="206" y="0.0" width="70" height="70"/>
+                                        <rect key="frame" x="209" y="0.0" width="70" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -668,7 +635,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="uIw-vO-ANB">
-                                        <rect key="frame" x="50" y="78" width="70" height="70"/>
+                                        <rect key="frame" x="41" y="59" width="70" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -701,7 +668,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="9kb-KU-bVj">
-                                        <rect key="frame" x="128" y="78" width="70" height="70"/>
+                                        <rect key="frame" x="125" y="59" width="70" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -733,41 +700,8 @@
                                             <action selector="numPadPressed:" destination="5YP-ww-Jgx" eventType="touchUpInside" id="gwq-3A-EJe"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="Miw-lc-tYP">
-                                        <rect key="frame" x="206" y="78" width="70" height="70"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
-                                        <state key="normal">
-                                            <attributedString key="attributedTitle">
-                                                <fragment content="6">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <font key="NSFont" size="40" name="HelveticaNeue-Thin"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                                <fragment content=" ">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
-                                                        <font key="NSFont" size="12" name=".LucidaGrandeUI"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                                <fragment content="MNO ">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
-                                                        <font key="NSFont" size="12" name="HelveticaNeue-Medium"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
-                                        </state>
-                                        <connections>
-                                            <action selector="numPadPressed:" destination="5YP-ww-Jgx" eventType="touchUpInside" id="R5W-Yx-4TD"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="hKr-tR-vL2">
-                                        <rect key="frame" x="50" y="156" width="70" height="70"/>
+                                        <rect key="frame" x="41" y="118" width="70" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -800,7 +734,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="oKn-95-ydz">
-                                        <rect key="frame" x="128" y="156" width="70" height="70"/>
+                                        <rect key="frame" x="125" y="118" width="70" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -833,7 +767,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="PY6-97-6ER">
-                                        <rect key="frame" x="50" y="234" width="70" height="70"/>
+                                        <rect key="frame" x="41" y="177" width="70" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -866,7 +800,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="or4-kZ-NZ1">
-                                        <rect key="frame" x="128" y="234" width="70" height="70"/>
+                                        <rect key="frame" x="125" y="177" width="70" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -898,8 +832,74 @@
                                             <action selector="numPadPressed:" destination="5YP-ww-Jgx" eventType="touchUpInside" id="JwB-LZ-VUB"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" tag="9" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="WqO-Or-LYW">
+                                        <rect key="frame" x="209" y="118" width="70" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="9">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <font key="NSFont" size="40" name="HelveticaNeue-Thin"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content=" ">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
+                                                        <font key="NSFont" size="12" name=".LucidaGrandeUI"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content="WXYZ">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
+                                                        <font key="NSFont" size="12" name="HelveticaNeue-Medium"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <connections>
+                                            <action selector="numPadPressed:" destination="5YP-ww-Jgx" eventType="touchUpInside" id="qEN-8M-tMi"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="Miw-lc-tYP">
+                                        <rect key="frame" x="209" y="59" width="70" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="6">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <font key="NSFont" size="40" name="HelveticaNeue-Thin"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content=" ">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
+                                                        <font key="NSFont" size="12" name=".LucidaGrandeUI"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content="MNO ">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
+                                                        <font key="NSFont" size="12" name="HelveticaNeue-Medium"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <connections>
+                                            <action selector="numPadPressed:" destination="5YP-ww-Jgx" eventType="touchUpInside" id="R5W-Yx-4TD"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="eET-gh-54d">
-                                        <rect key="frame" x="206" y="234" width="70" height="70"/>
+                                        <rect key="frame" x="209" y="177" width="70" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -934,18 +934,8 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mlm-7I-BRW">
-                                <rect key="frame" x="127" y="441" width="67" height="67"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="dialer-callButton-green">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="initiateCall:" destination="5YP-ww-Jgx" eventType="touchUpInside" id="naX-0J-7lX"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="center" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Df3-HV-5AS">
-                                <rect key="frame" x="267" y="65" width="53" height="70"/>
+                                <rect key="frame" x="280" y="65" width="40" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <gestureRecognizers/>
                                 <state key="normal" image="delete-black">
@@ -957,7 +947,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="O96-gt-jaf" customClass="JCDialStringLabel">
-                                <rect key="frame" x="50" y="65" width="221" height="70"/>
+                                <rect key="frame" x="39" y="65" width="242" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="30"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -966,6 +956,16 @@
                                     <outlet property="delegate" destination="5YP-ww-Jgx" id="qlL-6H-cfd"/>
                                 </connections>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="mlm-7I-BRW">
+                                <rect key="frame" x="127" y="390" width="67" height="67"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="dialer-callButton-green">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="initiateCall:" destination="5YP-ww-Jgx" eventType="touchUpInside" id="naX-0J-7lX"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -1197,11 +1197,11 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" id="7M3-tY-ahL">
-                                <rect key="frame" x="8" y="27" width="304" height="425"/>
+                                <rect key="frame" x="8" y="27" width="304" height="385"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="6dF-ks-wml">
-                                        <rect key="frame" x="48" y="79" width="70" height="70"/>
+                                        <rect key="frame" x="33" y="60" width="70" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -1234,7 +1234,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="9" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="lgM-H9-GtT">
-                                        <rect key="frame" x="186" y="217" width="70" height="70"/>
+                                        <rect key="frame" x="201" y="178" width="70" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -1266,41 +1266,8 @@
                                             <action selector="numPadPressed:" destination="5YP-ww-Jgx" eventType="touchUpInside" id="suM-eB-GDH"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="aTS-QF-KZd">
-                                        <rect key="frame" x="186" y="79" width="70" height="70"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
-                                        <state key="normal">
-                                            <attributedString key="attributedTitle">
-                                                <fragment content="3">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <font key="NSFont" size="40" name="HelveticaNeue-Thin"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                                <fragment content=" ">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
-                                                        <font key="NSFont" size="12" name=".LucidaGrandeUI"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                                <fragment content="DEF ">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
-                                                        <font key="NSFont" size="12" name="HelveticaNeue-Medium"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
-                                        </state>
-                                        <connections>
-                                            <action selector="numPadPressed:" destination="5YP-ww-Jgx" eventType="touchUpInside" id="b1K-Nl-n3r"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="qjp-lc-lHN">
-                                        <rect key="frame" x="48" y="148" width="70" height="70"/>
+                                        <rect key="frame" x="33" y="119" width="70" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -1333,7 +1300,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="jOW-NO-g4P">
-                                        <rect key="frame" x="117" y="148" width="70" height="70"/>
+                                        <rect key="frame" x="117" y="119" width="70" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -1366,7 +1333,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="IsH-YV-cXg">
-                                        <rect key="frame" x="186" y="148" width="70" height="70"/>
+                                        <rect key="frame" x="201" y="119" width="70" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -1399,7 +1366,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="Rum-pF-uxI">
-                                        <rect key="frame" x="48" y="217" width="70" height="70"/>
+                                        <rect key="frame" x="33" y="178" width="70" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -1432,7 +1399,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="ads-xw-uVY">
-                                        <rect key="frame" x="117" y="217" width="70" height="70"/>
+                                        <rect key="frame" x="117" y="178" width="70" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -1465,7 +1432,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="dyM-tW-5z9">
-                                        <rect key="frame" x="48" y="286" width="70" height="70"/>
+                                        <rect key="frame" x="33" y="237" width="70" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -1498,7 +1465,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="bfc-TJ-XCL">
-                                        <rect key="frame" x="117" y="286" width="70" height="70"/>
+                                        <rect key="frame" x="117" y="237" width="70" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -1531,7 +1498,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="IWn-jO-xaF">
-                                        <rect key="frame" x="186" y="286" width="70" height="70"/>
+                                        <rect key="frame" x="201" y="237" width="70" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -1564,7 +1531,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="OxG-Gd-BJh">
-                                        <rect key="frame" x="117" y="79" width="70" height="70"/>
+                                        <rect key="frame" x="117" y="60" width="70" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -1597,14 +1564,14 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="wLA-r6-OoW">
-                                        <rect key="frame" x="117" y="355" width="70" height="70"/>
+                                        <rect key="frame" x="117" y="311" width="70" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" image="transfer-call-green">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="center" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="6JM-UR-CId">
-                                        <rect key="frame" x="243" y="1" width="53" height="70"/>
+                                        <rect key="frame" x="264" y="1" width="40" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <gestureRecognizers/>
                                         <state key="normal" image="delete-black">
@@ -1615,7 +1582,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0g6-Xp-CZJ" customClass="JCDialStringLabel">
-                                        <rect key="frame" x="26" y="1" width="221" height="70"/>
+                                        <rect key="frame" x="39" y="1" width="226" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="30"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -1624,6 +1591,39 @@
                                             <outlet property="delegate" destination="5YP-ww-Jgx" id="whL-XF-rH6"/>
                                         </connections>
                                     </label>
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" id="aTS-QF-KZd">
+                                        <rect key="frame" x="201" y="60" width="70" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="3">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <font key="NSFont" size="40" name="HelveticaNeue-Thin"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content=" ">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
+                                                        <font key="NSFont" size="12" name=".LucidaGrandeUI"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content="DEF ">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
+                                                        <font key="NSFont" size="12" name="HelveticaNeue-Medium"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <connections>
+                                            <action selector="numPadPressed:" destination="5YP-ww-Jgx" eventType="touchUpInside" id="b1K-Nl-n3r"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
