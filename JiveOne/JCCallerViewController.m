@@ -123,7 +123,7 @@ NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTran
     [self.callCardList removeCallCard:view];
     
     // If no other calls are active, close caller.
-    if (self.callCardList.count)
+    if (self.callCardList.count == 0)
         [self closeCallerViewController];
 }
 

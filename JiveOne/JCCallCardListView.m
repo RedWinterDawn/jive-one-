@@ -8,7 +8,7 @@
 
 #import "JCCallCardListView.h"
 
-#define CALL_CARD_MIN_CALL_HEIGHT 200
+#define CALL_CARD_MIN_CALL_HEIGHT 100
 #define CALL_CARD_OFFSET 10
 
 @implementation JCCallCardListView
@@ -32,15 +32,18 @@
     CGRect bounds = self.bounds;
     
     CGFloat cardHeight = (subviews.count > 1)? MAX((bounds.size.height - _callCardOffset) / 2, _minCallCardHeight) : bounds.size.height;
-    if (cardHeight == _minCallCardHeight)
-        self.scrollEnabled = true;
-    
     CGRect cardFrame = CGRectMake(0, 0, bounds.size.width, cardHeight);
     
     for (JCCallCardView *callCardView in subviews)
     {
         callCardView.frame = cardFrame;
         cardFrame.origin.y += cardHeight + _callCardOffset;
+    }
+    
+    if (cardFrame.origin.y > bounds.size.height)
+    {
+        self.scrollEnabled = true;
+        self.contentSize = CGSizeMake(bounds.size.width, cardFrame.origin.y);
     }
     
     [super layoutSubviews];
@@ -58,10 +61,16 @@
     [self setNeedsLayout];
 }
 
--(void)removeCallCard:(JCCallCardView *)callCard
+-(void)removeCallCard:(JCCallCardView *)callCardView
 {
-    [callCard removeFromSuperview];
-    [self setNeedsLayout];
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         callCardView.alpha = 0;
+                     }
+                     completion:^(BOOL finished) {
+                         [callCardView removeFromSuperview];
+                         [self setNeedsLayout];
+                     }];
 }
 
 -(NSUInteger)count
