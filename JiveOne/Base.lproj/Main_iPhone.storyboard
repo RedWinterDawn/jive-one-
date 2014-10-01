@@ -1697,7 +1697,7 @@
             <objects>
                 <viewController storyboardIdentifier="VoiceNonVisualViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="nRU-y0-Obl" customClass="JCVoiceNonVisualViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="diH-J2-UbW">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="SRF-4b-KhZ">
@@ -1709,12 +1709,14 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="callVoicemail:" destination="nRU-y0-Obl" eventType="touchUpInside" id="QUg-DB-InM"/>
+                                    <segue destination="Yzo-Zz-XrL" kind="modal" animates="NO" id="EOv-Zd-uHq"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics" barStyle="black" translucent="NO"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3tX-BI-B8u" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2069,5 +2071,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="dIf-i9-QYA"/>
+        <segue reference="EOv-Zd-uHq"/>
     </inferredMetricsTieBreakers>
 </document>
