@@ -12,5 +12,5 @@
 @property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
 + (instancetype)sharedClient;
 
-- (void) requestProvisioningFile:(NSDictionary *)payload completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed;
+- (void) requestProvisioningFile:(NSString *)payload completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed;
 @end
