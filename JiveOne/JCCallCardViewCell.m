@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCCallCardView.h"
+#import "JCCallCardViewCell.h"
 
-@implementation JCCallCardView
+@implementation JCCallCardViewCell
 
 -(IBAction)hangup:(id)sender
 {
@@ -27,11 +27,11 @@
 
 NSString *const kJCCallCardViewNibName = @"CallCard";
 
-@implementation JCCallCardView (NibLoading)
+@implementation JCCallCardViewCell (NibLoading)
 
-+(JCCallCardView *)createCallCardWithIdentifier:(NSString *)identifier  delegate:(id<JCCallCardViewDelegate>)delegate
++(JCCallCardViewCell *)createCallCardWithIdentifier:(NSString *)identifier  delegate:(id<JCCallCardViewDelegate>)delegate
 {
-    JCCallCardView *callCard = (JCCallCardView *)[[[NSBundle mainBundle] loadNibNamed:kJCCallCardViewNibName owner:self options:nil] objectAtIndex:0];
+    JCCallCardViewCell *callCard = (JCCallCardViewCell *)[[[NSBundle mainBundle] loadNibNamed:kJCCallCardViewNibName owner:self options:nil] objectAtIndex:0];
     
     callCard.delegate = delegate;
     callCard.identifer = identifier;

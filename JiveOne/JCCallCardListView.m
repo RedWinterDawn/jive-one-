@@ -20,13 +20,11 @@
     {
         _minCallCardHeight = CALL_CARD_MIN_CALL_HEIGHT;
         _callCardOffset = CALL_CARD_OFFSET;
-        
-        self.scrollEnabled = false;
     }
     return self;
 }
 
--(void)layoutSubviews
+/*-(void)layoutSubviews
 {
     NSArray *subviews = self.subviews;
     CGRect bounds = self.bounds;
@@ -34,7 +32,7 @@
     CGFloat cardHeight = (subviews.count > 1)? MAX((bounds.size.height - _callCardOffset) / 2, _minCallCardHeight) : bounds.size.height;
     CGRect cardFrame = CGRectMake(0, 0, bounds.size.width, cardHeight);
     
-    for (JCCallCardView *callCardView in subviews)
+    for (JCCallCardViewCell *callCardView in subviews)
     {
         callCardView.frame = cardFrame;
         cardFrame.origin.y += cardHeight + _callCardOffset;
@@ -47,36 +45,36 @@
     }
     
     [super layoutSubviews];
+}*/
+
+/*-(void)addSubview:(UIView *)view
+{
+    if ([view isKindOfClass:[JCCallCardViewCell class]])
+        [self addCallCard:(JCCallCardViewCell *)view];
+}*/
+
+-(void)addCallCard:(JCCallCardViewCell *)callCard
+{
+    /*[super addSubview:callCard];
+    [self setNeedsLayout];*/
 }
 
--(void)addSubview:(UIView *)view
+-(void)removeCallCard:(JCCallCardViewCell *)callCardView
 {
-    if ([view isKindOfClass:[JCCallCardView class]])
-        [self addCallCard:(JCCallCardView *)view];
-}
-
--(void)addCallCard:(JCCallCardView *)callCard
-{
-    [super addSubview:callCard];
-    [self setNeedsLayout];
-}
-
--(void)removeCallCard:(JCCallCardView *)callCardView
-{
-    [UIView animateWithDuration:0.3
+    /*[UIView animateWithDuration:0.3
                      animations:^{
                          callCardView.alpha = 0;
                      }
                      completion:^(BOOL finished) {
                          [callCardView removeFromSuperview];
                          [self setNeedsLayout];
-                     }];
+                     }];*/
 }
 
--(NSUInteger)count
+/*-(NSUInteger)count
 {
-    return self.subviews.count;
-}
+    //return self.subviews.count;
+}*/
 
 
 @end

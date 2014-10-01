@@ -17,7 +17,7 @@
 
 @end
 
-@interface JCCallerViewController : UIViewController
+@interface JCCallerViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (nonatomic, weak) IBOutlet id<JCCallerViewControllerDelegate> delegate;
 @property (nonatomic, weak) IBOutlet JCCallCardListView *callCardList;

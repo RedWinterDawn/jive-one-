@@ -7,19 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JCCallCardView.h"
+#import "JCCallCardViewCell.h"
 
-@interface JCCallCardListView : UIScrollView
+@interface JCCallCardListView : UICollectionView
 
 @property (nonatomic, readonly) NSUInteger count;
 
 @property (nonatomic) NSInteger minCallCardHeight;
 @property (nonatomic) NSInteger callCardOffset;
 
--(void)addCallCard:(JCCallCardView *)callCard;
--(void)removeCallCard:(JCCallCardView *)callCard;
+-(void)addCallCard:(JCCallCardViewCell *)callCard;
+-(void)removeCallCard:(JCCallCardViewCell *)callCard;
 
--(JCCallCardView *)findCallCardByIdentifier:(NSString *)identifier;
--(JCCallCardView *)removeCallCardByIdentifier:(NSString *)identifier;
+-(JCCallCardViewCell *)findCallCardByIdentifier:(NSString *)identifier;
+-(JCCallCardViewCell *)removeCallCardByIdentifier:(NSString *)identifier;
 
 @end

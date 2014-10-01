@@ -8,17 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-@class JCCallCardView;
+@class JCCallCardViewCell;
 
 @protocol JCCallCardViewDelegate <NSObject>
 
--(void)callCardViewShouldHangUp:(JCCallCardView *)view;
--(void)callCardViewShouldHold:(JCCallCardView *)view;
+-(void)callCardViewShouldHangUp:(JCCallCardViewCell *)view;
+-(void)callCardViewShouldHold:(JCCallCardViewCell *)view;
 
 @end
 
 
-@interface JCCallCardView : UIView
+@interface JCCallCardViewCell : UICollectionViewCell
 
 
 @property (nonatomic, weak) id<JCCallCardViewDelegate> delegate;
@@ -30,8 +30,8 @@
 @end
 
 
-@interface JCCallCardView (NibLoading)
+@interface JCCallCardViewCell (NibLoading)
 
-+(JCCallCardView *)createCallCardWithIdentifier:(NSString *)identifier delegate:(id<JCCallCardViewDelegate>)delegate;
++(JCCallCardViewCell *)createCallCardWithIdentifier:(NSString *)identifier delegate:(id<JCCallCardViewDelegate>)delegate;
 
 @end
