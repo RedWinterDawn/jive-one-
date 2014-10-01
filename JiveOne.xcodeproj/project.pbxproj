@@ -1935,12 +1935,12 @@
 				5DA5A1AE19DAF91400968F7D /* JCCallerViewController.m */,
 				F8B62E5919DB091500AF98D3 /* JCRoundedButton.h */,
 				F8B62E5A19DB091500AF98D3 /* JCRoundedButton.m */,
+				5D03648F19DC5A450090CC21 /* JCTransferViewController.h */,
+				5D03649019DC5A450090CC21 /* JCTransferViewController.m */,
 				F8A2BC0619DB56BA00251310 /* JCCallCard.h */,
 				F8A2BC0719DB56BA00251310 /* JCCallCard.m */,
 				F8A2BC0919DB5B3C00251310 /* JCDialerOptions.h */,
 				F8A2BC0A19DB5B3C00251310 /* JCDialerOptions.m */,
-				5D03648F19DC5A450090CC21 /* JCTransferViewController.h */,
-				5D03649019DC5A450090CC21 /* JCTransferViewController.m */,
 			);
 			name = Dialer;
 			sourceTree = "<group>";

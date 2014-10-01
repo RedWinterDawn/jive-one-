@@ -10,11 +10,7 @@
 
 #import "JCCallerViewController.h"
 
-
-
-@interface JCDialerViewController ()
-
-@end
+NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCall";
 
 @implementation JCDialerViewController
 
@@ -22,6 +18,7 @@
 {
     [super viewDidLoad];
     
+    // Initialy hide the backspace button
     self.backspaceBtn.alpha = 0;
 }
 
@@ -49,7 +46,7 @@
 
 -(IBAction)initiateCall:(id)sender
 {
-    [self performSegueWithIdentifier:@"InitiateCall" sender:self];
+    [self performSegueWithIdentifier:kJCDialerViewControllerCallerStoryboardIdentifier sender:self];
 }
 
 -(IBAction)backspace:(id)sender

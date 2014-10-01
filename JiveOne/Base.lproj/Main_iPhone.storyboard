@@ -1569,6 +1569,9 @@
                                         <state key="normal" image="transfer-call-green">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="initiateCall:" destination="4Bh-kh-Va8" eventType="touchUpInside" id="0M7-VP-HHV"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="center" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="6JM-UR-CId">
                                         <rect key="frame" x="264" y="1" width="40" height="60"/>
@@ -1635,6 +1638,9 @@
                                 <state key="normal" image="transfer-cancel-white">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="cancel:" destination="4Bh-kh-Va8" eventType="touchUpInside" id="M6Y-nN-R1K"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

@@ -7,54 +7,111 @@
 //
 
 #import "JCCallerViewController.h"
+#import "JCTransferViewController.h"
 
+#define TRANSFER_ANIMATION_DURATION 0.3
 
+NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTransferModal";
+
+@interface JCCallerViewController () <JCTransferViewControllerDelegate>
+{
+    UIViewController *_presentedTransferViewController;
+}
+
+@end
 
 @implementation JCCallerViewController
 
+#pragma mark - IBActions -
 
-
--(IBAction)warmTransfer:(id)sender{
-    UIViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"warmTransferModal"];
-    [self addChildViewController:viewController];
+-(IBAction)speaker:(id)sender
+{
     
+}
+
+-(IBAction)keypad:(id)sender
+{
+    
+}
+
+-(IBAction)mute:(id)sender
+{
+    
+}
+
+-(IBAction)blindTransfer:(id)sender
+{
+    JCTransferViewController *transferViewController = [self.storyboard instantiateViewControllerWithIdentifier:kJCCallerViewControllerTransferStoryboardIdentifier];
+    transferViewController.transferType = JCTransferBlind;
+    transferViewController.delegate = self;
+    [self presentTransferViewController:transferViewController];
+}
+
+-(IBAction)warmTransfer:(id)sender
+{
+    JCTransferViewController *transferViewController = [self.storyboard instantiateViewControllerWithIdentifier:kJCCallerViewControllerTransferStoryboardIdentifier];
+    transferViewController.transferType = JCTransferWarm;
+    transferViewController.delegate = self;
+    [self presentTransferViewController:transferViewController];
+}
+
+-(IBAction)addCall:(id)sender
+{
+    JCTransferViewController *transferViewController = [self.storyboard instantiateViewControllerWithIdentifier:kJCCallerViewControllerTransferStoryboardIdentifier];
+    transferViewController.transferType = JCTransferHold;
+    transferViewController.delegate = self;
+    [self presentTransferViewController:transferViewController];
+}
+
+#pragma mark - Private - 
+
+-(void)presentTransferViewController:(UIViewController *)viewController
+{
+    if (viewController == _presentedTransferViewController)
+        return;
+    
+    _presentedTransferViewController = viewController;
+    [self addChildViewController:viewController];
     CGRect bounds = self.view.bounds;
     CGRect frame = self.view.frame;
     frame.origin.y = frame.origin.y + frame.size.height;
     viewController.view.frame = frame;
-    
     [self.view addSubview:viewController.view];
-    [UIView animateWithDuration:0.6
+    [UIView animateWithDuration:TRANSFER_ANIMATION_DURATION
                      animations:^{
                          viewController.view.frame = bounds;
                      }
-                     completion:^(BOOL finished) {
-        
+                     completion:NULL];
+}
+
+-(void)dismissTransferViewControllerAnimated:(bool)animated;
+{
+    UIViewController *viewController = _presentedTransferViewController;
+    CGRect frame = self.view.frame;
+    frame.origin.y = frame.origin.y + frame.size.height;
+    [UIView animateWithDuration:(animated ? TRANSFER_ANIMATION_DURATION : 0)
+                     animations:^{
+                         viewController.view.frame = frame;
+                     } completion:^(BOOL finished) {
+                         [viewController removeFromParentViewController];
+                         [viewController.view removeFromSuperview];
                      }];
-    
-    
 }
 
--(IBAction)blindTransfer:(id)sender{
-    
+#pragma mark - Delegate Handlers -
+
+#pragma mark JCTransferViewController
+
+-(void)transferViewController:(JCTransferViewController *)controller shouldDialNumber:(NSString *)dialString
+{
+    [self dismissTransferViewControllerAnimated:NO];
+    NSLog(@"%@, %i", dialString, controller.transferType);
 }
 
--(IBAction)speaker:(id)sender{
-    
+-(void)shouldCancelTransferViewController:(JCTransferViewController *)controller
+{
+    [self dismissTransferViewControllerAnimated:YES];
 }
-
--(IBAction)keypad:(id)sender{
-    
-}
-
--(IBAction)addCall:(id)sender{
-    
-}
-
--(IBAction)mute:(id)sender{
-    
-}
-
 
 
 @end
