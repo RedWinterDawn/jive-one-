@@ -3,12 +3,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "incall-background.png"
+      "filename" : "incall-background@1x-1.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "incall-background@2x.png"
+      "filename" : "incall-background@2x-1.png"
     },
     {
       "idiom" : "universal",
