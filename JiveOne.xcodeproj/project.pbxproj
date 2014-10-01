@@ -299,6 +299,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1B209FFD8576BB760529B3CA /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		2700982118F4714100B6BC2F /* NSString+JSMessagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+JSMessagesView.h"; sourceTree = "<group>"; };
 		2700982218F4714100B6BC2F /* NSString+JSMessagesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+JSMessagesView.m"; sourceTree = "<group>"; };
 		2700982318F4714100B6BC2F /* UIColor+JSMessagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+JSMessagesView.h"; sourceTree = "<group>"; };
@@ -401,6 +402,7 @@
 		272580EF192120500027887C /* people-start-conv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "people-start-conv.png"; sourceTree = "<group>"; };
 		272B61DB18B2A4DD00EB8ED5 /* TRVSMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRVSMonitor.h; sourceTree = "<group>"; };
 		272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRVSMonitor.m; sourceTree = "<group>"; };
+		27364B6C977955C61C47BA59 /* Pods.enterprise.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.enterprise.xcconfig; path = "Pods/Target Support Files/Pods/Pods.enterprise.xcconfig"; sourceTree = "<group>"; };
 		2736698018BD441D0069B4B3 /* JCPersonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPersonCell.h; sourceTree = "<group>"; };
 		2736698118BD441D0069B4B3 /* JCPersonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPersonCell.m; sourceTree = "<group>"; };
 		273CC25C1900B23B005A2857 /* JCVoiceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVoiceCell.h; sourceTree = "<group>"; };
@@ -685,8 +687,10 @@
 		27F64D6019772D6A00F772AA /* Voicemail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Voicemail.h; sourceTree = "<group>"; };
 		27F64D6119772D6A00F772AA /* Voicemail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Voicemail.m; sourceTree = "<group>"; };
 		27FE96F819802D81009C6C67 /* arrow-back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-back.png"; sourceTree = "<group>"; };
+		43C81F9C015A20BD2322B787 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		6594302CE0A00068957DC0D5 /* Pods-JiveOneTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JiveOneTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JiveOneTests/Pods-JiveOneTests.debug.xcconfig"; sourceTree = "<group>"; };
+		865FB851301D1534E4CC63E7 /* Pods-JiveOneTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JiveOneTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-JiveOneTests/Pods-JiveOneTests.release.xcconfig"; sourceTree = "<group>"; };
 		86ED89B2764949AC9BCC0C7B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		8B150D3FF8864E2786E514D9 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		9103271418F34BEB00437503 /* JCPeopleDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPeopleDetailCell.h; sourceTree = "<group>"; };
 		9103271518F34BEC00437503 /* JCPeopleDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPeopleDetailCell.m; sourceTree = "<group>"; };
 		9103271618F34BEC00437503 /* JCPeopleDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCPeopleDetailCell.xib; sourceTree = "<group>"; };
@@ -741,8 +745,8 @@
 		91F6DFAE192A7053001C54FB /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		91F6DFB1192A706B001C54FB /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		91F6DFB4192A7080001C54FB /* Enterprise.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Enterprise.xcconfig; sourceTree = "<group>"; };
+		C87156C53B57B04D9871E012 /* Pods-JiveOneTests.enterprise.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JiveOneTests.enterprise.xcconfig"; path = "Pods/Target Support Files/Pods-JiveOneTests/Pods-JiveOneTests.enterprise.xcconfig"; sourceTree = "<group>"; };
 		CC093DDEE92F4DF7A7C9D21C /* libPods-JiveOneTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JiveOneTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D6BB6A2380B14317A711CC7C /* Pods-JiveOneTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JiveOneTests.xcconfig"; path = "Pods/Pods-JiveOneTests.xcconfig"; sourceTree = "<group>"; };
 		DD28DA5018AEC4F5003BFC44 /* JCAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAccountViewController.h; sourceTree = "<group>"; };
 		DD28DA5118AEC4F5003BFC44 /* JCAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAccountViewController.m; sourceTree = "<group>"; };
 		DD3BD9F218DCB1740080318E /* Voicemail+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Voicemail+Custom.h"; sourceTree = "<group>"; };
@@ -1191,9 +1195,8 @@
 				275F4A7C18AD0FBC00D2F069 /* JiveOneTests */,
 				275F4A5018AD0FBC00D2F069 /* Frameworks */,
 				275F4A4F18AD0FBC00D2F069 /* Products */,
-				8B150D3FF8864E2786E514D9 /* Pods.xcconfig */,
 				F202433C18B2CF4A006DB2EF /* README.md */,
-				D6BB6A2380B14317A711CC7C /* Pods-JiveOneTests.xcconfig */,
+				B2F9AA5070F27249A43D0F71 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1853,6 +1856,19 @@
 			name = AppTutorial;
 			sourceTree = "<group>";
 		};
+		B2F9AA5070F27249A43D0F71 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1B209FFD8576BB760529B3CA /* Pods.debug.xcconfig */,
+				27364B6C977955C61C47BA59 /* Pods.enterprise.xcconfig */,
+				43C81F9C015A20BD2322B787 /* Pods.release.xcconfig */,
+				6594302CE0A00068957DC0D5 /* Pods-JiveOneTests.debug.xcconfig */,
+				C87156C53B57B04D9871E012 /* Pods-JiveOneTests.enterprise.xcconfig */,
+				865FB851301D1534E4CC63E7 /* Pods-JiveOneTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		DDED87DE1958857C0011DB55 /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -2108,7 +2124,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-JiveOneTests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JiveOneTests/Pods-JiveOneTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		2D6CC6088E10467383A549A4 /* Check Pods Manifest.lock */ = {
@@ -2153,7 +2169,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -2429,12 +2445,12 @@
 		};
 		275F4A8718AD0FBC00D2F069 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8B150D3FF8864E2786E514D9 /* Pods.xcconfig */;
+			baseConfigurationReference = 1B209FFD8576BB760529B3CA /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Eduardo  Gueiros (66JA5P379T)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Eduardo  Gueiros (66JA5P379T)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JiveOne/JiveOne-Prefix.pch";
@@ -2445,22 +2461,7 @@
 					"${inherited}",
 					"LOGGER_TARGET=@\\\"$(LOGGER_TARGET)\\\"",
 				);
-				HEADER_SEARCH_PATHS = (
-					"\"${PODS_ROOT}/Headers\"",
-					"\"${PODS_ROOT}/Headers/AFNetworkActivityLogger\"",
-					"\"${PODS_ROOT}/Headers/AFNetworking\"",
-					"\"${PODS_ROOT}/Headers/Bolts\"",
-					"\"${PODS_ROOT}/Headers/Facebook-iOS-SDK\"",
-					"\"${PODS_ROOT}/Headers/Facebook-iOS-SDK/FacebookSDK\"",
-					"\"${PODS_ROOT}/Headers/JSONModel\"",
-					"\"${PODS_ROOT}/Headers/JSQSystemSoundPlayer\"",
-					"\"${PODS_ROOT}/Headers/MBContactPicker\"",
-					"\"${PODS_ROOT}/Headers/MBProgressHUD\"",
-					"\"${PODS_ROOT}/Headers/MagicalRecord\"",
-					"\"${PODS_ROOT}/Headers/OCMock\"",
-					"\"${PODS_ROOT}/Headers/SDWebImage\"",
-					"\"${PODS_ROOT}/Headers/SocketRocket\"",
-				);
+				HEADER_SEARCH_PATHS = "$(inherited)/**";
 				INFOPLIST_FILE = "$(SRCROOT)/JiveOne/JiveOne-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
@@ -2471,28 +2472,7 @@
 				);
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-licucore",
-					"-framework",
-					AudioToolbox,
-					"-framework",
-					CFNetwork,
-					"-framework",
-					CoreData,
-					"-framework",
-					CoreGraphics,
-					"-framework",
-					ImageIO,
-					"-framework",
-					MobileCoreServices,
-					"-framework",
-					QuartzCore,
-					"-framework",
-					Security,
-					"-framework",
-					SystemConfiguration,
-				);
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2502,7 +2482,7 @@
 		};
 		275F4A8818AD0FBC00D2F069 /* Enterprise */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8B150D3FF8864E2786E514D9 /* Pods.xcconfig */;
+			baseConfigurationReference = 27364B6C977955C61C47BA59 /* Pods.enterprise.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -2518,22 +2498,7 @@
 					"CONFIGURATION_$(CONFIGURATION)",
 					"LOGGER_TARGET=@\\\"$(LOGGER_TARGET)\\\"",
 				);
-				HEADER_SEARCH_PATHS = (
-					"\"${PODS_ROOT}/Headers\"",
-					"\"${PODS_ROOT}/Headers/AFNetworkActivityLogger\"",
-					"\"${PODS_ROOT}/Headers/AFNetworking\"",
-					"\"${PODS_ROOT}/Headers/Bolts\"",
-					"\"${PODS_ROOT}/Headers/Facebook-iOS-SDK\"",
-					"\"${PODS_ROOT}/Headers/Facebook-iOS-SDK/FacebookSDK\"",
-					"\"${PODS_ROOT}/Headers/JSONModel\"",
-					"\"${PODS_ROOT}/Headers/JSQSystemSoundPlayer\"",
-					"\"${PODS_ROOT}/Headers/MBContactPicker\"",
-					"\"${PODS_ROOT}/Headers/MBProgressHUD\"",
-					"\"${PODS_ROOT}/Headers/MagicalRecord\"",
-					"\"${PODS_ROOT}/Headers/OCMock\"",
-					"\"${PODS_ROOT}/Headers/SDWebImage\"",
-					"\"${PODS_ROOT}/Headers/SocketRocket\"",
-				);
+				HEADER_SEARCH_PATHS = "$(inherited)/**";
 				INFOPLIST_FILE = "$(SRCROOT)/JiveOne/JiveOneEnterprise-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
@@ -2544,28 +2509,7 @@
 				);
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-licucore",
-					"-framework",
-					AudioToolbox,
-					"-framework",
-					CFNetwork,
-					"-framework",
-					CoreData,
-					"-framework",
-					CoreGraphics,
-					"-framework",
-					ImageIO,
-					"-framework",
-					MobileCoreServices,
-					"-framework",
-					QuartzCore,
-					"-framework",
-					Security,
-					"-framework",
-					SystemConfiguration,
-				);
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "5D91116E-2070-4EF3-880B-C4A07E2656B7";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2575,7 +2519,7 @@
 		};
 		275F4A8A18AD0FBC00D2F069 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D6BB6A2380B14317A711CC7C /* Pods-JiveOneTests.xcconfig */;
+			baseConfigurationReference = 6594302CE0A00068957DC0D5 /* Pods-JiveOneTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/JiveOne.app/JiveOne";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -2590,6 +2534,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				HEADER_SEARCH_PATHS = "$(inherited)/**";
 				INFOPLIST_FILE = "JiveOneTests/JiveOneTests-Info.plist";
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2600,7 +2545,7 @@
 		};
 		275F4A8B18AD0FBC00D2F069 /* Enterprise */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D6BB6A2380B14317A711CC7C /* Pods-JiveOneTests.xcconfig */;
+			baseConfigurationReference = C87156C53B57B04D9871E012 /* Pods-JiveOneTests.enterprise.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/JiveOne.app/JiveOne";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -2611,6 +2556,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JiveOne/JiveOne-Prefix.pch";
+				HEADER_SEARCH_PATHS = "$(inherited)/**";
 				INFOPLIST_FILE = "JiveOneTests/JiveOneTests-Info.plist";
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
 				ONLY_ACTIVE_ARCH = NO;
@@ -2659,7 +2605,7 @@
 		};
 		91F6DFB8192A7B35001C54FB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8B150D3FF8864E2786E514D9 /* Pods.xcconfig */;
+			baseConfigurationReference = 43C81F9C015A20BD2322B787 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -2675,22 +2621,7 @@
 					"${inherited}",
 					"LOGGER_TARGET=@\\\"$(LOGGER_TARGET)\\\"",
 				);
-				HEADER_SEARCH_PATHS = (
-					"\"${PODS_ROOT}/Headers\"",
-					"\"${PODS_ROOT}/Headers/AFNetworkActivityLogger\"",
-					"\"${PODS_ROOT}/Headers/AFNetworking\"",
-					"\"${PODS_ROOT}/Headers/Bolts\"",
-					"\"${PODS_ROOT}/Headers/Facebook-iOS-SDK\"",
-					"\"${PODS_ROOT}/Headers/Facebook-iOS-SDK/FacebookSDK\"",
-					"\"${PODS_ROOT}/Headers/JSONModel\"",
-					"\"${PODS_ROOT}/Headers/JSQSystemSoundPlayer\"",
-					"\"${PODS_ROOT}/Headers/MBContactPicker\"",
-					"\"${PODS_ROOT}/Headers/MBProgressHUD\"",
-					"\"${PODS_ROOT}/Headers/MagicalRecord\"",
-					"\"${PODS_ROOT}/Headers/OCMock\"",
-					"\"${PODS_ROOT}/Headers/SDWebImage\"",
-					"\"${PODS_ROOT}/Headers/SocketRocket\"",
-				);
+				HEADER_SEARCH_PATHS = "$(inherited)/**";
 				INFOPLIST_FILE = "$(SRCROOT)/JiveOne/JiveOne-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
@@ -2701,28 +2632,7 @@
 				);
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-licucore",
-					"-framework",
-					AudioToolbox,
-					"-framework",
-					CFNetwork,
-					"-framework",
-					CoreData,
-					"-framework",
-					CoreGraphics,
-					"-framework",
-					ImageIO,
-					"-framework",
-					MobileCoreServices,
-					"-framework",
-					QuartzCore,
-					"-framework",
-					Security,
-					"-framework",
-					SystemConfiguration,
-				);
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "C3125494-B323-4069-B38E-29B30ADF7BFF";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2732,7 +2642,7 @@
 		};
 		91F6DFBA192A7B35001C54FB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D6BB6A2380B14317A711CC7C /* Pods-JiveOneTests.xcconfig */;
+			baseConfigurationReference = 865FB851301D1534E4CC63E7 /* Pods-JiveOneTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/JiveOne.app/JiveOne";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -2743,6 +2653,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JiveOne/JiveOne-Prefix.pch";
+				HEADER_SEARCH_PATHS = "$(inherited)/**";
 				INFOPLIST_FILE = "JiveOneTests/JiveOneTests-Info.plist";
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
 				ONLY_ACTIVE_ARCH = NO;

@@ -11,7 +11,10 @@
 #import "Lines+Custom.h"
 #import "Membership+Custom.h"
 #import "Common.h"
+@interface JCContactsClient()
+@property (strong, nonatomic) NSString* serverUrl;
 
+@end
 @implementation JCContactsClient
 {
     KeychainItemWrapper *keyChainWrapper;
@@ -67,7 +70,7 @@
     
     _manager.requestSerializer = [AFJSONRequestSerializer serializer];
     [_manager.requestSerializer clearAuthorizationHeader];
-    [_manager.requestSerializer setValue:token forHTTPHeaderField:@"Authorization"];
+    [_manager.requestSerializer setValue:[NSString stringWithFormat:@"Basic: %@",token] forHTTPHeaderField:@"Authorization"];
     [_manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
 }
 
@@ -82,7 +85,7 @@
     
 }
 
-#pragma mark - class methods
+#pragma mark - instance methods
 
 - (void)RetrieveMyInformation:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
 {
