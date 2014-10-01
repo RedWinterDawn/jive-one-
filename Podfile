@@ -17,3 +17,4 @@ pod 'ELFixSecureTextFieldFont', :git => 'https://github.com/elegion/ELFixSecureT
 target :JiveOneTests, :exclusive => true do
    pod 'Kiwi', '~> 2.3'
 end
+pod 'XMLDictionary', '~> 1.4'

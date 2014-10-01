@@ -21,7 +21,7 @@
 #define kVoicemailService @"http://10.20.26.141:8890/" //@"api.jive.com/voicemail"
 #define kMailboxPath @"voicemail/v1/mailbox/"
 #define kJifService @"https://api.jive.com/jif/v1/" //@"api.jive.com/jif"
-#define kv4Provisioning @"https://pbx.onjive.com/p/mobility/usersettings"
+#define kv4Provisioning @"https://pbx.onjive.com/p/mobility/mobileusersettings"
 #define kContactsService @"https://api.jive.com/contacts/"
 #define kJiveUserInfo @"/jiveuser/info/jiveid/"
 
