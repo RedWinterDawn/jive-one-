@@ -31,7 +31,7 @@
     NSArray *subviews = self.subviews;
     CGRect bounds = self.bounds;
     
-    CGFloat cardHeight = MAX((bounds.size.height - _callCardOffset) / 2, _minCallCardHeight);
+    CGFloat cardHeight = (subviews.count > 1)? MAX((bounds.size.height - _callCardOffset) / 2, _minCallCardHeight) : bounds.size.height;
     if (cardHeight == _minCallCardHeight)
         self.scrollEnabled = true;
     

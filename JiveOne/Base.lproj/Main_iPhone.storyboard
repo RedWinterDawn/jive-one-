@@ -1190,25 +1190,20 @@
                                     <constraint firstItem="zZ6-Xz-Txj" firstAttribute="bottom" secondItem="OJ5-fR-lFW" secondAttribute="bottom" id="zLm-fD-ZlO"/>
                                 </constraints>
                             </view>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" id="ctK-D7-oO0" customClass="JCCallCardListView">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ctK-D7-oO0" customClass="JCCallCardListView">
                                 <rect key="frame" x="8" y="20" width="304" height="326"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="mCa-uf-nio" firstAttribute="bottom" secondItem="Xii-sf-O3Y" secondAttribute="top" id="3b5-m3-j3h"/>
                             <constraint firstAttribute="bottom" secondItem="esd-M8-Lxg" secondAttribute="bottom" id="67U-vd-QSJ"/>
-                            <constraint firstItem="lUT-6r-uIK" firstAttribute="top" secondItem="UBY-qh-P2D" secondAttribute="bottom" constant="27" id="Cg1-hA-uaR"/>
                             <constraint firstItem="pl8-2v-mXV" firstAttribute="top" secondItem="ctK-D7-oO0" secondAttribute="bottom" constant="27" id="GIe-cj-2kB"/>
-                            <constraint firstItem="TRc-ED-Hu8" firstAttribute="top" secondItem="qab-Jq-aAP" secondAttribute="bottom" constant="27" id="Npa-fb-pxq"/>
                             <constraint firstItem="ctK-D7-oO0" firstAttribute="top" secondItem="01Z-Ab-Znh" secondAttribute="bottom" id="Q0V-AP-Tdb"/>
                             <constraint firstItem="mCa-uf-nio" firstAttribute="leading" secondItem="Aj5-ZF-aP3" secondAttribute="leading" id="VaV-th-W9k"/>
                             <constraint firstAttribute="trailing" secondItem="esd-M8-Lxg" secondAttribute="trailing" id="VsS-eq-KaV"/>
                             <constraint firstAttribute="trailing" secondItem="ctK-D7-oO0" secondAttribute="trailing" constant="8" id="a0c-a0-nVa"/>
                             <constraint firstItem="TRc-ED-Hu8" firstAttribute="top" secondItem="ctK-D7-oO0" secondAttribute="bottom" constant="27" id="brR-ka-hZn"/>
-                            <constraint firstItem="mCa-uf-nio" firstAttribute="top" secondItem="gJK-PA-23r" secondAttribute="bottom" constant="-98" id="buF-lf-Ggw"/>
-                            <constraint firstItem="mCa-uf-nio" firstAttribute="top" secondItem="ba9-af-X2N" secondAttribute="bottom" constant="-79" id="cDB-5i-2cd"/>
                             <constraint firstItem="ctK-D7-oO0" firstAttribute="leading" secondItem="Aj5-ZF-aP3" secondAttribute="leading" constant="8" id="d58-Pr-YYJ"/>
                             <constraint firstItem="esd-M8-Lxg" firstAttribute="leading" secondItem="Aj5-ZF-aP3" secondAttribute="leading" id="fO7-Pk-8aN"/>
                             <constraint firstItem="lUT-6r-uIK" firstAttribute="top" secondItem="ctK-D7-oO0" secondAttribute="bottom" constant="27" id="gGf-sN-o97"/>
@@ -1217,7 +1212,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="iCC-Rn-KEN"/>
                     <connections>
-                        <outlet property="callCardList" destination="ctK-D7-oO0" id="Xh3-Xw-ykc"/>
+                        <outlet property="callCardList" destination="ctK-D7-oO0" id="j52-eH-d1p"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dIP-55-Mtj" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2087,8 +2082,6 @@
         <image name="iPhone2Xnew.png" width="640" height="1136"/>
         <image name="iPhone2XnewBlurSmall.png" width="320" height="480"/>
         <image name="incall-background" width="320" height="568"/>
-        <image name="incall-hangup-red" width="35" height="35"/>
-        <image name="incall-hold-black" width="35" height="35"/>
         <image name="nav-dial-black" width="19" height="19"/>
         <image name="nav-people.png" width="44" height="44"/>
         <image name="transfer-call-green" width="35" height="35"/>
