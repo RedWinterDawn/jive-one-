@@ -1180,7 +1180,7 @@
         <!--Transfer-->
         <scene sceneID="Nc0-xg-t5k">
             <objects>
-                <viewController storyboardIdentifier="warmTransferModal" title="Transfer" useStoryboardIdentifierAsRestorationIdentifier="YES" id="4Bh-kh-Va8" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="warmTransferModal" title="Transfer" useStoryboardIdentifierAsRestorationIdentifier="YES" id="4Bh-kh-Va8" customClass="JCTransferViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="647-jR-rm5">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
