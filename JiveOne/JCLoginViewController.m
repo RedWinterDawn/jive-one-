@@ -23,6 +23,7 @@
 #import "UITextField+ELFixSecureTextFieldFont.h"
 #import "Lines+Custom.h"
 #import "JCLineSelectorViewController.h"
+#import <XMLDictionary/XMLDictionary.h>
 
 
 
@@ -342,15 +343,51 @@
 //provisioning
 - (void)fetchProvisioningConfig
 {
-	NSDictionary *userInformation = [NSDictionary new];
-	//TODO: capture information to create the following structure
-	/*
-		
-	 "<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n<cpc_mobile version=\"1.0\"> \n <login \n user=\"827300fa@opayq.com\" \n password=\"jive1234\" \n man=\"Apple\" \n device=\"iPhone4\" \n os=\"7.0.6\" \n loc=\"en_US\" \n lang=\"en\" \n uuid=\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab0\" \n spid=\"cpc\" \n build=\"3.0.5.23570\" \n type=\"ios.jive.phone\" /> \n</cpc_mobile>
-	 
-	 */
 	
-	[[JCV4ProvisioningClient sharedClient] requestProvisioningFile:userInformation completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+	
+	NSString *language = [[[NSBundle mainBundle] preferredLocalizations] objectAtIndex:0];
+	NSString *locale = [NSLocale currentLocale].localeIdentifier;
+	NSString * appBuildString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
+	NSString *model = [UIDevice currentDevice].model;
+	NSString *os = [UIDevice currentDevice].systemVersion;
+	NSString *uuid = [UIDevice currentDevice].identifierForVendor.UUIDString;
+	NSString *type = [UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone ? @"ios.jive.phone" : @"ios.jive.tablet";
+	
+//	NSDictionary *userInformation = @{@"user": self.usernameTextField.text,
+//									  @"password" : self.passwordTextField.text,
+//									  @"man" : @"Apple",
+//									  @"device" : [UIDevice currentDevice].model,
+//									  @"os" : [UIDevice currentDevice].systemVersion,
+//									  @"loc" : locale,
+//									  @"lan" : language,
+//									  @"uuid" : [UIDevice currentDevice].identifierForVendor.UUIDString,
+//									  @"spid" : @"cpc",
+//									  @"build" : appBuildString,
+//									  @"type" :	[UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone ? @"ios.jive.phone" : @"ios.jive.tablet"};
+//	NSString *test = [userInformation XMLString];
+
+	
+
+	
+	
+	//TODO: capture information to create the following structure
+	
+		
+	NSString *xml = [NSString stringWithFormat:@"<login \n user=\"%@\" \n password=\"%@\" \n man=\"Apple\" \n device=\"%@\" \n os=\"%@\" \n loc=\"%@\" \n lang=\"%@\" \n uuid=\"%@\" \n spid=\"cpc\" \n build=\"%@\" \n type=\"%@\" />",
+					 self.usernameTextField.text,
+					 self.passwordTextField.text,
+					 model,
+					 os,
+					 locale,
+					 language,
+					 uuid,
+					 appBuildString,
+					 type
+					 ];
+	 
+	 
+	
+	[[JCV4ProvisioningClient sharedClient] requestProvisioningFile:xml completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
 		if(suceeded){
 			//TODO: talk about logic. We should not prevent the user to get into the app if this fails. They
 			// should still be able to access the rest of the app (directory, VM, etc) and be given a change to
