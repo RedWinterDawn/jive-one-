@@ -10,11 +10,12 @@
 
 #import "JCCallerViewController.h"
 
+NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCall";
 
-
-@interface JCDialerViewController ()
+@interface JCDialerViewController () <JCCallerViewControllerDelegate>
 
 @end
+
 
 @implementation JCDialerViewController
 
@@ -22,6 +23,7 @@
 {
     [super viewDidLoad];
     
+    // Initialy hide the backspace button
     self.backspaceBtn.alpha = 0;
 }
 
@@ -33,6 +35,7 @@
     {
         JCCallerViewController *callerViewController = (JCCallerViewController *)viewController;
         callerViewController.dialString = self.dialStringLabel.dialString;
+        callerViewController.delegate = self;
     }
 }
 
@@ -49,7 +52,7 @@
 
 -(IBAction)initiateCall:(id)sender
 {
-    [self performSegueWithIdentifier:@"InitiateCall" sender:self];
+    [self performSegueWithIdentifier:kJCDialerViewControllerCallerStoryboardIdentifier sender:self];
 }
 
 -(IBAction)backspace:(id)sender
@@ -96,6 +99,17 @@
      
                          }];
     }
+}
+
+#pragma mark - Delegate Handlers -
+
+#pragma mark JCCallerViewController
+
+-(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController
+{
+    [self dismissViewControllerAnimated:NO completion:^{
+        
+    }];
 }
 
 @end

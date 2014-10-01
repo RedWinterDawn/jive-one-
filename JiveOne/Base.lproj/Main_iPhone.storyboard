@@ -1319,6 +1319,7 @@
                                         </state>
                                         <connections>
                                             <action selector="numPadPressed:" destination="5YP-ww-Jgx" eventType="touchUpInside" id="Pdw-oK-erP"/>
+                                            <action selector="numPadPressed:" destination="4Bh-kh-Va8" eventType="touchUpInside" id="oRm-8i-bWL"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="9" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lgM-H9-GtT">
@@ -1350,6 +1351,7 @@
                                             </attributedString>
                                         </state>
                                         <connections>
+                                            <action selector="numPadPressed:" destination="4Bh-kh-Va8" eventType="touchUpInside" id="4SK-rU-23e"/>
                                             <action selector="numPadPressed:" destination="5YP-ww-Jgx" eventType="touchUpInside" id="suM-eB-GDH"/>
                                         </connections>
                                     </button>
@@ -1382,6 +1384,7 @@
                                             </attributedString>
                                         </state>
                                         <connections>
+                                            <action selector="numPadPressed:" destination="4Bh-kh-Va8" eventType="touchUpInside" id="JPr-yQ-0yF"/>
                                             <action selector="numPadPressed:" destination="5YP-ww-Jgx" eventType="touchUpInside" id="lVo-LP-p5S"/>
                                         </connections>
                                     </button>
@@ -1414,6 +1417,7 @@
                                             </attributedString>
                                         </state>
                                         <connections>
+                                            <action selector="numPadPressed:" destination="4Bh-kh-Va8" eventType="touchUpInside" id="ScW-sh-jRm"/>
                                             <action selector="numPadPressed:" destination="5YP-ww-Jgx" eventType="touchUpInside" id="b4I-9I-r68"/>
                                         </connections>
                                     </button>
@@ -1446,6 +1450,7 @@
                                             </attributedString>
                                         </state>
                                         <connections>
+                                            <action selector="numPadPressed:" destination="4Bh-kh-Va8" eventType="touchUpInside" id="fGT-ti-XM0"/>
                                             <action selector="numPadPressed:" destination="5YP-ww-Jgx" eventType="touchUpInside" id="yxd-qC-YT8"/>
                                         </connections>
                                     </button>
@@ -1479,6 +1484,7 @@
                                         </state>
                                         <connections>
                                             <action selector="numPadPressed:" destination="5YP-ww-Jgx" eventType="touchUpInside" id="gaQ-RL-ofG"/>
+                                            <action selector="numPadPressed:" destination="4Bh-kh-Va8" eventType="touchUpInside" id="sro-O1-PL1"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="8" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ads-xw-uVY">
@@ -1510,6 +1516,7 @@
                                             </attributedString>
                                         </state>
                                         <connections>
+                                            <action selector="numPadPressed:" destination="4Bh-kh-Va8" eventType="touchUpInside" id="CLa-lK-Bcu"/>
                                             <action selector="numPadPressed:" destination="5YP-ww-Jgx" eventType="touchUpInside" id="v4E-qg-FRM"/>
                                         </connections>
                                     </button>
@@ -1542,6 +1549,7 @@
                                             </attributedString>
                                         </state>
                                         <connections>
+                                            <action selector="numPadPressed:" destination="4Bh-kh-Va8" eventType="touchUpInside" id="942-BH-Ota"/>
                                             <action selector="numPadPressed:" destination="5YP-ww-Jgx" eventType="touchUpInside" id="flc-zM-Wvc"/>
                                         </connections>
                                     </button>
@@ -1575,6 +1583,7 @@
                                         </state>
                                         <connections>
                                             <action selector="numPadPressed:" destination="5YP-ww-Jgx" eventType="touchUpInside" id="RYu-I0-pqw"/>
+                                            <action selector="numPadPressed:" destination="4Bh-kh-Va8" eventType="touchUpInside" id="bHz-bl-iSx"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="11" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IWn-jO-xaF">
@@ -1607,6 +1616,7 @@
                                         </state>
                                         <connections>
                                             <action selector="numPadPressed:" destination="5YP-ww-Jgx" eventType="touchUpInside" id="LGG-vo-gRF"/>
+                                            <action selector="numPadPressed:" destination="4Bh-kh-Va8" eventType="touchUpInside" id="Sc5-cL-ngS"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OxG-Gd-BJh">
@@ -1639,6 +1649,7 @@
                                         </state>
                                         <connections>
                                             <action selector="numPadPressed:" destination="5YP-ww-Jgx" eventType="touchUpInside" id="DNw-T3-tRU"/>
+                                            <action selector="numPadPressed:" destination="4Bh-kh-Va8" eventType="touchUpInside" id="IiR-Wk-qNt"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wLA-r6-OoW">
@@ -1646,6 +1657,9 @@
                                         <state key="normal" image="transfer-call-green">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="initiateCall:" destination="4Bh-kh-Va8" eventType="touchUpInside" id="0M7-VP-HHV"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="center" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6JM-UR-CId">
                                         <rect key="frame" x="264" y="1" width="40" height="60"/>
@@ -1654,7 +1668,9 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
+                                            <action selector="backspace:" destination="4Bh-kh-Va8" eventType="touchUpInside" id="OXb-tt-TbX"/>
                                             <action selector="backspace:" destination="5YP-ww-Jgx" eventType="touchUpInside" id="Pus-Qg-hUS"/>
+                                            <outletCollection property="gestureRecognizers" destination="g7K-RB-eza" appends="YES" id="1ke-0m-LJY"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0g6-Xp-CZJ" customClass="JCDialStringLabel">
@@ -1663,7 +1679,7 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                         <connections>
-                                            <outlet property="delegate" destination="5YP-ww-Jgx" id="whL-XF-rH6"/>
+                                            <outlet property="delegate" destination="4Bh-kh-Va8" id="kvU-WE-8S7"/>
                                         </connections>
                                     </label>
                                     <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aTS-QF-KZd">
@@ -1696,6 +1712,7 @@
                                         </state>
                                         <connections>
                                             <action selector="numPadPressed:" destination="5YP-ww-Jgx" eventType="touchUpInside" id="b1K-Nl-n3r"/>
+                                            <action selector="numPadPressed:" destination="4Bh-kh-Va8" eventType="touchUpInside" id="etU-tD-2yF"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1708,13 +1725,26 @@
                                 <state key="normal" image="transfer-cancel-white">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="cancel:" destination="4Bh-kh-Va8" eventType="touchUpInside" id="M6Y-nN-R1K"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="rD2-pZ-MGY"/>
+                    <connections>
+                        <outlet property="backspaceBtn" destination="6JM-UR-CId" id="690-9w-k8j"/>
+                        <outlet property="callBtn" destination="wLA-r6-OoW" id="HT1-6C-3ae"/>
+                        <outlet property="dialStringLabel" destination="0g6-Xp-CZJ" id="fls-qo-wHz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IvC-7O-VMH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="g7K-RB-eza">
+                    <connections>
+                        <action selector="clear:" destination="4Bh-kh-Va8" id="2Lk-sM-5cc"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="88" y="1193"/>
         </scene>

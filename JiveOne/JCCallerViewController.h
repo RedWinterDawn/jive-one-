@@ -8,11 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+@class JCCallerViewController;
+
+@protocol JCCallerViewControllerDelegate <NSObject>
+
+-(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController;
+
+@end
+
 @interface JCCallerViewController : UIViewController
 
+@property (nonatomic, weak) id<JCCallerViewControllerDelegate> delegate;
 @property (nonatomic, strong) NSString *dialString;
-@property (nonatomic) bool speaker;
-@property (nonatomic) bool mute;
 
 -(IBAction)warmTransfer:(id)sender;
 -(IBAction)blindTransfer:(id)sender;
@@ -20,7 +27,5 @@
 -(IBAction)keypad:(id)sender;
 -(IBAction)addCall:(id)sender;
 -(IBAction)mute:(id)sender;
-
-
 
 @end
