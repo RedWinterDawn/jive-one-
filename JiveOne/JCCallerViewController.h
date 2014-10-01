@@ -14,5 +14,13 @@
 @property (nonatomic) bool speaker;
 @property (nonatomic) bool mute;
 
+-(IBAction)warmTransfer:(id)sender;
+-(IBAction)blindTransfer:(id)sender;
+-(IBAction)speaker:(id)sender;
+-(IBAction)keypad:(id)sender;
+-(IBAction)addCall:(id)sender;
+-(IBAction)mute:(id)sender;
+
+
 
 @end

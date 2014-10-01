@@ -14,6 +14,7 @@
 
 @interface JCDialerOptions : UIView
 
-@property (weak, nonatomic) IBOutlet JCRoundedButton *warmTransferButton;
+
+
 
 @end
