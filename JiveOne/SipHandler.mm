@@ -8,6 +8,7 @@
 
 #import "SipHandler.h"
 #import "JCLineSession.h"
+#import "LineConfiguration+Custom.h"
 
 @interface SipHandler()
 {
@@ -53,12 +54,16 @@
 - (void)online
 {
 	
+	LineConfiguration *config = [LineConfiguration MR_findFirst];
+	if (!config) {
+		return;
+	}
 	// TODO: get configuration from database
-	NSString* kSipUserName = @"0147a20ad7f07eb6b0000100620005";
-	NSString* kDisplayName = @"Eduardo Gueiros";
-	NSString* kSipPassword = @"VWG2cmZADP84TIrZ";
-	NSString* kSIPServer = @"reg.jiveip.net";
-	NSString* kProxy = @"jive.jive.rtcfront.net";
+	NSString* kSipUserName = config.sipUsername;
+	NSString* kDisplayName = config.display;
+	NSString* kSipPassword = config.sipPassword;
+	NSString* kSIPServer = config.registrationHost;
+	NSString* kProxy = config.outboundProxy;
 	int kSIPServerPort = 5060;
 	
 	int ret = [_mPortSIPSDK initialize:TRANSPORT_UDP loglevel:PORTSIP_LOG_DEBUG logPath:NULL maxLine:8 agent:@"Jive iOS Client" virtualAudioDevice:FALSE virtualVideoDevice:FALSE];
