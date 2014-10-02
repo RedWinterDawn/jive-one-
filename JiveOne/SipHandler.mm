@@ -7,14 +7,21 @@
 //
 
 #import "SipHandler.h"
+#import "JCLineSession.h"
 
 @interface SipHandler()
-- (int)findSession:(long)sessionId;
+{
+	BOOL    SIPInitialized;
+	BOOL    SIPRegistered;
+}
+- (JCLineSession *)findSession:(long)sessionId;
+@property (nonatomic) NSMutableArray *lineSessions;
+
 @end
 
 #define ALERT_TAG_REFER 100
 @implementation SipHandler
-@synthesize mActiveLine;
+//@synthesize mActiveLine;
 
 + (instancetype) sharedHandler
 {
@@ -22,58 +29,273 @@
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		handler = [[self alloc] init];
+		[handler initiate];
 	});
 	return handler;
 }
 
-- (int)findSession:(long)sessionId
+
+
+- (void)initiate
 {
-	int index = -1;
-	for (int i=LINE_BASE; i<MAX_LINES; ++i)
+	_lineSessions = [NSMutableArray new];
+	for (int i = 0; i < 2; i++)
 	{
-		if (sessionId == mSessionArray[i].getSessionId())
+		[_lineSessions addObject:[JCLineSession new]];
+	}
+	
+	[self online];
+}
+
+- (void)online
+{
+	// TODO: get configuration from database
+	NSString* kSipUserName = @"0147a20ad7f07eb6b0000100620005";
+	NSString* kDisplayName = @"Eduardo Gueiros";
+	NSString* kSipPassword = @"VWG2cmZADP84TIrZ";
+	NSString* kSIPServer = @"reg.jiveip.net";
+	NSString* kProxy = @"jive.jive.rtcfront.net";
+	int kSIPServerPort = 5060;
+	
+	int ret = [mPortSIPSDK initialize:TRANSPORT_UDP loglevel:PORTSIP_LOG_DEBUG logPath:NULL maxLine:8 agent:@"Jive iOS Client" virtualAudioDevice:FALSE virtualVideoDevice:FALSE];
+	if(ret != 0)
+	{
+		NSLog(@"initializeSDK failure ErrorCode = %d",ret);
+		return ;
+	}
+	
+	int localPort = 10000 + arc4random()%1000;
+	NSString* loaclIPaddress = @"0.0.0.0";//Auto select IP address
+	
+	[mPortSIPSDK setUser:kSipUserName displayName:kDisplayName authName:kSipUserName password:kSipPassword localIP:loaclIPaddress localSIPPort:localPort userDomain:@"" SIPServer:kSIPServer SIPServerPort:kSIPServerPort STUNServer:@"" STUNServerPort:0 outboundServer:kProxy outboundServerPort:kSIPServerPort];
+
+	int rt = [mPortSIPSDK setLicenseKey:kPortSIPKey];
+	if (rt == ECoreTrialVersionLicenseKey)
+	{
+		
+		UIAlertView *alert = [[UIAlertView alloc]
+							  initWithTitle:@"Warning"
+							  message: @"This trial version SDK just allows short conversation, you can't heairng anyting after 2-3 minutes, contact us: sales@portsip.com to buy official version."
+							  delegate: self
+							  cancelButtonTitle: @"OK"
+							  otherButtonTitles:nil];
+		[alert show];
+	}
+	else if (rt == ECoreWrongLicenseKey)
+	{
+		UIAlertView *alert = [[UIAlertView alloc]
+							  initWithTitle:@"Warning"
+							  message: @"The wrong license key was detected, please check with sales@portsip.com or support@portsip.com"
+							  delegate: self
+							  cancelButtonTitle: @"OK"
+							  otherButtonTitles:nil];
+		[alert show];
+	}
+	
+	//    [mPortSIPSDK addAudioCodec:AUDIOCODEC_PCMA];
+	[mPortSIPSDK addAudioCodec:AUDIOCODEC_PCMU];
+	//    [mPortSIPSDK addAudioCodec:AUDIOCODEC_SPEEX];
+	[mPortSIPSDK addAudioCodec:AUDIOCODEC_G729];
+	[mPortSIPSDK addAudioCodec:AUDIOCODEC_G722];
+	
+	//[mPortSIPSDK addAudioCodec:AUDIOCODEC_GSM];
+	//[mPortSIPSDK addAudioCodec:AUDIOCODEC_ILBC];
+	//[mPortSIPSDK addAudioCodec:AUDIOCODEC_AMR];
+	//[mPortSIPSDK addAudioCodec:AUDIOCODEC_SPEEXWB];
+	
+	//[mPortSIPSDK addVideoCodec:VIDEO_CODEC_H263];
+	//[mPortSIPSDK addVideoCodec:VIDEO_CODEC_H263_1998];
+	[mPortSIPSDK addVideoCodec:VIDEO_CODEC_H264];
+	
+	[mPortSIPSDK setVideoBitrate:100];//video send bitrate,100kbps
+	[mPortSIPSDK setVideoFrameRate:10];
+	[mPortSIPSDK setVideoResolution:VIDEO_CIF];
+	[mPortSIPSDK setAudioSamples:20 maxPtime:60];//ptime 20
+	
+	//1 - FrontCamra 0 - BackCamra
+	[mPortSIPSDK setVideoDeviceId:1];
+	//[mPortSIPSDK setVideoOrientation:180];
+	
+	//enable srtp
+	[mPortSIPSDK setSrtpPolicy:SRTP_POLICY_NONE];
+	
+	// Try to register the default identity
+	[mPortSIPSDK registerServer:120 retryTimes:3];
+	
+	NSString* sipURL = nil;
+	if(kSIPServerPort == 5060) {
+		sipURL = [[NSString alloc] initWithFormat:@"sip:%@:%@",kSipUserName,kSIPServer];
+	}
+	else {
+		sipURL = [[NSString alloc] initWithFormat:@"sip:%@:%@:%d",kSipUserName,kSIPServer,kSIPServerPort];
+	}
+	
+	SIPInitialized = YES;
+}
+
+- (void)offline
+{
+	if(SIPInitialized)
+	{
+		[mPortSIPSDK unRegisterServer];
+		[mPortSIPSDK unInitialize];
+		//[viewStatus setBackgroundColor:[UIColor redColor]];
+		
+		//[labelStatus setText:@"Not Connected"];
+		//[labelDebugInfo setText:[NSString stringWithFormat: @"unRegisterServer"]];
+		
+		SIPRegistered = NO;
+		SIPInitialized = NO;
+	}
+	//if([activityIndicator isAnimating])
+	//	[activityIndicator stopAnimating];
+};
+
+//#pragma mark - Registration Delegates
+//
+//- (void)onRegisterSuccess:(char*) statusText statusCode:(int)statusCode
+//{
+////	[viewStatus setBackgroundColor:[UIColor greenColor]];
+////	
+////	[labelStatus setText:@"Connected"];
+////	
+////	[labelDebugInfo setText:[NSString stringWithFormat: @"onRegisterSuccess: %s", statusText]];
+////	
+////	[activityIndicator stopAnimating];
+//	
+//	SIPRegistered = YES;
+////	return 0;
+//}
+//
+//
+//- (void)onRegisterFailure:(char*) statusText statusCode:(int)statusCode
+//{
+////	[viewStatus setBackgroundColor:[UIColor redColor]];
+////	
+////	[labelStatus setText:@"Not Connected"];
+////	
+////	[labelDebugInfo setText:[NSString stringWithFormat: @"onRegisterFailure: %s", statusText]];
+////	
+////	[activityIndicator stopAnimating];
+//	
+//	SIPRegistered = NO;
+////	return 0;
+//};
+
+- (JCLineSession *)findSession:(long)sessionId
+{
+
+	for (JCLineSession *line in self.lineSessions)
+	{
+		if (sessionId == line.mSessionId)
 		{
-			index = i;
-			break;
+			return line;
 		}
 	}
 	
-	return index;
+	return nil;
+}
+
+#pragma mark - Find line methods
+- (JCLineSession *)findLineWithSessionState
+{
+	for (JCLineSession *line in self.lineSessions)
+	{
+		if (line.mSessionState &&
+			!line.mHoldSate &&
+			!line.mRecvCallState)
+		{
+			return line;
+		}
+	}
+	return nil;
+}
+
+- (JCLineSession *)findLineWithRecevingState
+{
+	for (JCLineSession *line in self.lineSessions)
+	{
+		if (!line.mSessionState &&
+			line.mRecvCallState)
+		{
+			return line;
+		}
+	}
+	return nil;
+}
+
+- (JCLineSession *)findLineWithHoldState
+{
+	for (JCLineSession *line in self.lineSessions)
+	{
+		if (line.mSessionState &&
+			line.mHoldSate &&
+			!line.mRecvCallState)
+		{
+			return line;
+		}
+	}
+	return nil;
+}
+
+- (JCLineSession *)findIdleLine
+{
+	for (JCLineSession *line in self.lineSessions)
+	{
+		if (!line.mSessionState &&
+			!line.mRecvCallState)
+		{
+			return line;
+		}
+	}
+	return nil;
 }
 
 - (void) pressNumpadButton:(char )dtmf
 {
-	if(mSessionArray[mActiveLine].getSessionState() == true)
+	JCLineSession *session = [self findLineWithSessionState];
+	if(session && session.mSessionState)
 	{
-		[mPortSIPSDK sendDtmf:mSessionArray[mActiveLine].getSessionId() dtmfMethod:DTMF_RFC2833 code:dtmf dtmfDration:160 playDtmfTone:TRUE];
+		[mPortSIPSDK sendDtmf:session.mSessionId dtmfMethod:DTMF_RFC2833 code:dtmf dtmfDration:160 playDtmfTone:TRUE];
 	}
 }
 
 - (void) makeCall:(NSString*) callee
 		videoCall:(BOOL)videoCall
 {
-	if(mSessionArray[mActiveLine].getSessionState() == true ||
-	   mSessionArray[mActiveLine].getRecvCallState() == true)
-	{
-		UIAlertView *alert = [[UIAlertView alloc]
-							  initWithTitle:@"Warning"
-							  message: @"Current line is busy now, please switch a line"
-							  delegate: nil
-							  cancelButtonTitle: @"OK"
-							  otherButtonTitles:nil];
-		[alert show];
-		
-		return;
+
+	JCLineSession *currentSession = [self findLineWithSessionState];
+	if (currentSession && currentSession.mSessionState && !currentSession.mHoldSate) {
+		[mPortSIPSDK hold:currentSession.mSessionId];
 	}
 	
+//	if(mSessionArray[mActiveLine].getSessionState() == true ||
+//	   mSessionArray[mActiveLine].getRecvCallState() == true)
+//	{
+//		UIAlertView *alert = [[UIAlertView alloc]
+//							  initWithTitle:@"Warning"
+//							  message: @"Current line is busy now, please switch a line"
+//							  delegate: nil
+//							  cancelButtonTitle: @"OK"
+//							  otherButtonTitles:nil];
+//		[alert show];
+//		
+//		return;
+//	}
+	
+	currentSession = [self findIdleLine];	
 	
 	long sessionId = [mPortSIPSDK call:callee sendSdp:TRUE videoCall:videoCall];
 	
 	if(sessionId >= 0)
 	{
-		mSessionArray[mActiveLine].setSessionId(sessionId);
-		mSessionArray[mActiveLine].setSessionState(true);
-		mSessionArray[mActiveLine].setVideoState(videoCall);
+		[currentSession setMSessionId:sessionId];
+		[currentSession setMSessionState:true];
+
+		
+//		mSessionArray[mActiveLine].setSessionId(sessionId);
+//		mSessionArray[mActiveLine].setSessionState(true);
+//		mSessionArray[mActiveLine].setVideoState(videoCall);
 		
 		//TODO:update call state
 		
@@ -82,69 +304,97 @@
 	else
 	{
 		//TODO:update call state
-		
+		[currentSession setMCallState:JCCallFailed];
 //		[numpadViewController setStatusText:[NSString  stringWithFormat:@"make call failure ErrorCode =%ld", sessionId]];
 	}
 }
 
-- (void) hungUpCall
+- (void) hangUpCall
 {
-	if (mSessionArray[mActiveLine].getSessionState() == true)
+	JCLineSession *selectedLine = [self findLineWithSessionState];
+	if (selectedLine.mSessionState)
 	{
-		[mPortSIPSDK hangUp :mSessionArray[mActiveLine].getSessionId()];
+		[mPortSIPSDK hangUp:selectedLine.mSessionId];
 //		if (mSessionArray[mActiveLine].getVideoState() == true) {
 //			[videoViewController onStopVideo:mSessionArray[mActiveLine].getSessionId()];
 //		}
-		mSessionArray[mActiveLine].reset();
+		
 //		[numpadViewController setStatusText:[NSString  stringWithFormat:@"Hungup call on line %ld", mActiveLine]];
 		
 	}
-	else if (mSessionArray[mActiveLine].getRecvCallState() == true)
+	else if (selectedLine.mRecvCallState)
 	{
-		[mPortSIPSDK rejectCall:mSessionArray[mActiveLine].getSessionId() code:486];
-		mSessionArray[mActiveLine].reset();
+		[mPortSIPSDK rejectCall:selectedLine.mSessionId code:486];
 		
 //		[numpadViewController setStatusText:[NSString  stringWithFormat:@"Rejected call on line %ld", mActiveLine]];
 	}
 	
-	//TODO:update call state
+	[selectedLine setMCallState:JCCallCanceled];
+	[selectedLine reset];
+}
+
+- (void)toggleHoldForLineWithSessionId:(long)sessionId
+{
+	JCLineSession *selectedLine = [self findSession:sessionId];
+	if (selectedLine.mHoldSate) {
+		[mPortSIPSDK unHold:selectedLine.mSessionId];
+		[selectedLine setMHoldSate:false];
+	}
+	else {
+		[mPortSIPSDK hold:selectedLine.mSessionId];
+		[selectedLine setMHoldSate:true];
+	}
+}
+
+- (void) toggleHoldForCallWithSessionState
+{
+	JCLineSession *selectedLine = [self findLineWithSessionState];
+	if (selectedLine.mHoldSate) {
+		[mPortSIPSDK unHold:selectedLine.mSessionId];
+		[selectedLine setMHoldSate:false];
+	}
+	else {
+		[mPortSIPSDK hold:selectedLine.mSessionId];
+		[selectedLine setMHoldSate:true];
+	}
 }
 
 - (void) holdCall
 {
-	if (mSessionArray[mActiveLine].getSessionState() == false ||
-		mSessionArray[mActiveLine].getHoldState() == true)
+	JCLineSession *selectedLine = [self findLineWithSessionState];
+	if (!selectedLine)
 	{
 		return;
 	}
 	
-	[mPortSIPSDK hold:mSessionArray[mActiveLine].getSessionId()];
-	mSessionArray[mActiveLine].setHoldState(true);
+	[mPortSIPSDK hold:selectedLine.mSessionId];
+	[selectedLine setMHoldSate:true];
 	
 //	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Hold the call on line %ld", mActiveLine]];
 	
 	//TODO:update call state
 }
 
-- (void) unholdCall
-{
-	if (mSessionArray[mActiveLine].getSessionState() == false ||
-		mSessionArray[mActiveLine].getHoldState() == false)
-	{
-		return;
-	}
-	
-	[mPortSIPSDK unHold:mSessionArray[mActiveLine].getSessionId()];
-	mSessionArray[mActiveLine].setHoldState(false);
-	
-//	[numpadViewController setStatusText:[NSString  stringWithFormat:@"UnHold the call on line %ld", mActiveLine]];
-	
-	//TODO:update call state
-}
+//- (void) unholdCall
+//{
+//	if (mSessionArray[mActiveLine].getSessionState() == false ||
+//		mSessionArray[mActiveLine].getHoldState() == false)
+//	{
+//		return;
+//	}
+//	
+//	[mPortSIPSDK unHold:mSessionArray[mActiveLine].getSessionId()];
+//	mSessionArray[mActiveLine].setHoldState(false);
+//	
+////	[numpadViewController setStatusText:[NSString  stringWithFormat:@"UnHold the call on line %ld", mActiveLine]];
+//	
+//	//TODO:update call state
+//}
 
 - (void) referCall:(NSString*)referTo
 {
-	if (mSessionArray[mActiveLine].getSessionState() == false)
+	JCLineSession *selectedLine = [self findLineWithSessionState];
+	if (!selectedLine || selectedLine.mSessionState == false)
 	{
 		UIAlertView *alert = [[UIAlertView alloc]
 							  initWithTitle:@"Warning"
@@ -156,7 +406,7 @@
 		return;
 	}
 	
-	int errorCodec = [mPortSIPSDK refer:mSessionArray[mActiveLine].getSessionId() referTo:referTo];
+	int errorCodec = [mPortSIPSDK refer:selectedLine.mSessionId referTo:referTo];
 	if (errorCodec != 0)
 	{
 		UIAlertView *alert = [[UIAlertView alloc]
@@ -166,17 +416,20 @@
 							  cancelButtonTitle: @"OK"
 							  otherButtonTitles:nil];
 		[alert show];
+		[selectedLine setMCallState:JCTransferFailed];
 	}
 	
-	//TODO:update call state
+	[selectedLine setMCallState:JCTransferSuccess];
 }
 
 - (void) muteCall:(BOOL)mute
 {
-	if(mSessionArray[mActiveLine].getSessionState() == true){
+	JCLineSession *selectedLine = [self findLineWithSessionState];
+	
+	if(selectedLine.mSessionState){
 		if(mute)
 		{
-			[mPortSIPSDK muteSession:mSessionArray[mActiveLine].getSessionId()
+			[mPortSIPSDK muteSession:selectedLine.mSessionState
 				   muteIncomingAudio:TRUE
 				   muteOutgoingAudio:TRUE
 				   muteIncomingVideo:TRUE
@@ -184,7 +437,7 @@
 		}
 		else
 		{
-			[mPortSIPSDK muteSession:mSessionArray[mActiveLine].getSessionId()
+			[mPortSIPSDK muteSession:selectedLine.mSessionState
 				   muteIncomingAudio:FALSE
 				   muteOutgoingAudio:FALSE
 				   muteIncomingVideo:FALSE
@@ -193,45 +446,70 @@
 	}
 }
 
+- (void)switchLines
+{
+	JCLineSession *activeLine = [self findLineWithSessionState];
+	JCLineSession *lineOnHold = [self findLineWithHoldState];
+	if (activeLine)
+	{
+		// Need to hold this line
+		[mPortSIPSDK hold:activeLine.mSessionId];
+		[activeLine setMHoldSate:true];
+		
+		//		[numpadViewController setStatusText:[NSString  stringWithFormat:@"Hold call on line %ld", mActiveLine]];
+	}
+	//	[numpadViewController.buttonLine setTitle:[NSString  stringWithFormat:@"Line%ld:", mActiveLine] forState:UIControlStateNormal];
+	
+	if (lineOnHold)
+	{
+		// Need to unhold this line
+		[mPortSIPSDK unHold:lineOnHold.mSessionState];
+		[activeLine setMHoldSate:false];
+		
+		//		[numpadViewController setStatusText:[NSString  stringWithFormat:@"unHold call on line %ld", mActiveLine]];
+	}
+
+}
+
 - (void) setLoudspeakerStatus:(BOOL)enable
 {
 	[mPortSIPSDK setLoudspeakerStatus:enable];
 }
 
-- (void)didSelectLine:(NSInteger)activeLine
-{
-	UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
-	
-	[tabBarController dismissViewControllerAnimated:TRUE completion:nil];
-	
-	if (mSIPRegistered == false || mActiveLine == activeLine)
-	{
-		return;
-	}
-	
-	if (mSessionArray[mActiveLine].getSessionState()==true && mSessionArray[mActiveLine].getHoldState()==false)
-	{
-		// Need to hold this line
-		[mPortSIPSDK hold:mSessionArray[mActiveLine].getSessionId()];
-		
-		mSessionArray[mActiveLine].setHoldState(true);
-		
-//		[numpadViewController setStatusText:[NSString  stringWithFormat:@"Hold call on line %ld", mActiveLine]];
-	}
-	
-	mActiveLine = activeLine;
-//	[numpadViewController.buttonLine setTitle:[NSString  stringWithFormat:@"Line%ld:", mActiveLine] forState:UIControlStateNormal];
-	
-	if (mSessionArray[mActiveLine].getSessionState()==true && mSessionArray[mActiveLine].getHoldState()==true)
-	{
-		// Need to unhold this line
-		[mPortSIPSDK unHold:mSessionArray[mActiveLine].getSessionId()];
-		
-		mSessionArray[mActiveLine].setHoldState(false);
-		
-//		[numpadViewController setStatusText:[NSString  stringWithFormat:@"unHold call on line %ld", mActiveLine]];
-	}
-}
+//- (void)didSelectLine:(NSInteger)activeLine
+//{
+//	UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
+//	
+//	[tabBarController dismissViewControllerAnimated:TRUE completion:nil];
+//	
+//	if (mSIPRegistered == false || mActiveLine == activeLine)
+//	{
+//		return;
+//	}
+//	
+//	if (mSessionArray[mActiveLine].getSessionState()==true && mSessionArray[mActiveLine].getHoldState()==false)
+//	{
+//		// Need to hold this line
+//		[mPortSIPSDK hold:mSessionArray[mActiveLine].getSessionId()];
+//		
+//		mSessionArray[mActiveLine].setHoldState(true);
+//		
+////		[numpadViewController setStatusText:[NSString  stringWithFormat:@"Hold call on line %ld", mActiveLine]];
+//	}
+//	
+//	mActiveLine = activeLine;
+////	[numpadViewController.buttonLine setTitle:[NSString  stringWithFormat:@"Line%ld:", mActiveLine] forState:UIControlStateNormal];
+//	
+//	if (mSessionArray[mActiveLine].getSessionState()==true && mSessionArray[mActiveLine].getHoldState()==true)
+//	{
+//		// Need to unhold this line
+//		[mPortSIPSDK unHold:mSessionArray[mActiveLine].getSessionId()];
+//		
+//		mSessionArray[mActiveLine].setHoldState(false);
+//		
+////		[numpadViewController setStatusText:[NSString  stringWithFormat:@"unHold call on line %ld", mActiveLine]];
+//	}
+//}
 
 //- (void) switchSessionLine
 //{
@@ -280,31 +558,35 @@
 			 existsAudio:(BOOL)existsAudio
 			 existsVideo:(BOOL)existsVideo
 {
-	int index = -1;
-	for (int i=0; i< MAX_LINES; ++i)
-	{
-		if (mSessionArray[i].getSessionState()==false && mSessionArray[i].getRecvCallState()==false)
-		{
-			mSessionArray[i].setRecvCallState(true);
-			index = i;
-			break;
-		}
-	}
+//	int index = -1;
+//	for (int i=0; i< MAX_LINES; ++i)
+//	{
+//		if (mSessionArray[i].getSessionState()==false && mSessionArray[i].getRecvCallState()==false)
+//		{
+//			mSessionArray[i].setRecvCallState(true);
+//			index = i;
+//			break;
+//		}
+//	}
 	
-	if (index == -1)
+	JCLineSession *idleLine = [self findIdleLine];
+	
+	if (!idleLine)
 	{
 		[mPortSIPSDK rejectCall:sessionId code:486];
 		return ;
 	}
 	
-	mSessionArray[index].setSessionId(sessionId);
-	mSessionArray[index].setVideoState(existsVideo);
+	[idleLine setMSessionId:sessionId];
+	[idleLine setMRecvCallState:true];
+
+//	mSessionArray[index].setVideoState(existsVideo);
 //	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Incoming call:%s on line %d",caller, index]];
 	
 	if ([UIApplication sharedApplication].applicationState ==  UIApplicationStateBackground) {
 		UILocalNotification* localNotif = [[UILocalNotification alloc] init];
 		if (localNotif){
-			localNotif.alertBody =[NSString  stringWithFormat:@"Call from <%s>%s on line %d", callerDisplayName,caller,index];
+			localNotif.alertBody =[NSString  stringWithFormat:@"Call from <%s>%s", callerDisplayName,caller];
 			localNotif.soundName = UILocalNotificationDefaultSoundName;
 			localNotif.applicationIconBadgeNumber = 1;
 			
@@ -320,7 +602,7 @@
 							  delegate: self
 							  cancelButtonTitle: @"Reject"
 							  otherButtonTitles:@"Answer", @"Video",nil];
-		alert.tag = index;
+//		alert.tag = index;
 		[alert show];
 	}
 	else
@@ -331,15 +613,15 @@
 							  delegate: self
 							  cancelButtonTitle: @"Reject"
 							  otherButtonTitles:@"Answer", nil];
-		alert.tag = index;
+//		alert.tag = index;
 		[alert show];
 	}
 };
 
 - (void)onInviteTrying:(long)sessionId
 {
-	int index = [self findSession:sessionId];
-	if (index == -1)
+	JCLineSession *selectedLine = [self findSession:sessionId];
+	if (!selectedLine)
 	{
 		return;
 	}
@@ -354,8 +636,8 @@
 					existsAudio:(BOOL)existsAudio
 					existsVideo:(BOOL)existsVideo
 {
-	int index = [self findSession:sessionId];
-	if (index == -1)
+	JCLineSession *selectedLine = [self findSession:sessionId];
+	if (!selectedLine)
 	{
 		return;
 	}
@@ -377,7 +659,7 @@
 		}
 	}
 	
-	mSessionArray[index].setExistEarlyMedia(existsEarlyMedia);
+	[selectedLine setMExistEarlyMedia:existsEarlyMedia];
 	
 //	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Call session progress on line %d",index]];
 }
@@ -386,16 +668,18 @@
 			 statusText:(char*)statusText
 			 statusCode:(int)statusCode
 {
-	int index = [self findSession:sessionId];
-	if (index == -1)
+	JCLineSession *selectedLine = [self findSession:sessionId];
+	if (!selectedLine)
 	{
 		return;
 	}
 	
-	if (!mSessionArray[index].getExistEarlyMedia())
+	if (!selectedLine.mExistEarlyMedia)
 	{
 		// No early media, you must play the local WAVE file for ringing tone
 	}
+	
+	[selectedLine setMCallState:JCCallRinging];
 	
 //	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Call ringing on line %d",index]];
 }
@@ -410,8 +694,8 @@
 			 existsAudio:(BOOL)existsAudio
 			 existsVideo:(BOOL)existsVideo
 {
-	int index = [self findSession:sessionId];
-	if (index == -1)
+	JCLineSession *selectedLine = [self findSession:sessionId];
+	if (!selectedLine)
 	{
 		return;
 	}
@@ -428,15 +712,17 @@
 	{
 	}
 	
-	mSessionArray[index].setSessionState(true);
-	mSessionArray[mActiveLine].setVideoState(existsVideo);
+	[selectedLine setMSessionState:true];
+	[selectedLine setMVideoState:existsVideo];
+	[selectedLine setMCallState:JCCallConnected];
+	
 	
 //	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Call Established on line  %d",index]];
 	
 	// If this is the refer call then need set it to normal
-	if (mSessionArray[index].isReferCall())
+	if (selectedLine.mIsReferCall)
 	{
-		mSessionArray[index].setReferCall(false, 0);
+		[selectedLine setReferCall:false originalCallSessionId:0];
 	}
 	
 	///todo: joinConference(index);
@@ -446,45 +732,46 @@
 				 reason:(char*)reason
 				   code:(int)code
 {
-	int index = [self findSession:sessionId];
-	if (index == -1)
+	JCLineSession *selectedLine = [self findSession:sessionId];
+	if (!selectedLine)
 	{
 		return;
 	}
 	
 //	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Failed to call on line  %d,%s(%d)",index,reason,code]];
 	
-	if (mSessionArray[index].isReferCall())
-	{
-		// Take off the origin call from HOLD if the refer call is failure
-		long originIndex = -1;
-		for (int i=LINE_BASE; i<MAX_LINES; ++i)
-		{
-			// Looking for the origin call
-			if (mSessionArray[i].getSessionId() == mSessionArray[index].getOriginCallSessionId())
-			{
-				originIndex = i;
-				break;
-			}
-		}
-		
-		if (originIndex != -1)
-		{
-//			[numpadViewController setStatusText:[NSString  stringWithFormat:@"Call failure on line  %d,%s(%d)",index,reason,code]];
-			
-			// Now take off the origin call
-			[mPortSIPSDK unHold:mSessionArray[index].getOriginCallSessionId()];
-			
-			mSessionArray[originIndex].setHoldState(false);
-			
-			// Switch the currently line to origin call line
-			mActiveLine = originIndex;
-			
-			NSLog(@"Current line is: %ld",(long)mActiveLine);
-		}
-	}
+//	if (selectedLine.mIsReferCall)
+//	{
+//		// Take off the origin call from HOLD if the refer call is failure
+//		long originIndex = -1;
+//		for (int i=LINE_BASE; i<MAX_LINES; ++i)
+//		{
+//			// Looking for the origin call
+//			if (mSessionArray[i].getSessionId() == mSessionArray[index].getOriginCallSessionId())
+//			{
+//				originIndex = i;
+//				break;
+//			}
+//		}
+//		
+//		if (originIndex != -1)
+//		{
+////			[numpadViewController setStatusText:[NSString  stringWithFormat:@"Call failure on line  %d,%s(%d)",index,reason,code]];
+//			
+//			// Now take off the origin call
+//			[mPortSIPSDK unHold:mSessionArray[index].getOriginCallSessionId()];
+//			
+//			mSessionArray[originIndex].setHoldState(false);
+//			
+//			// Switch the currently line to origin call line
+//			mActiveLine = originIndex;
+//			
+//			NSLog(@"Current line is: %ld",(long)mActiveLine);
+//		}
+//	}
 	
-	mSessionArray[index].reset();
+//	mSessionArray[index].reset();
+	[selectedLine reset];
 }
 
 - (void)onInviteUpdated:(long)sessionId
@@ -493,8 +780,8 @@
 			existsAudio:(BOOL)existsAudio
 			existsVideo:(BOOL)existsVideo
 {
-	int index = [self findSession:sessionId];
-	if (index == -1)
+	JCLineSession *selectedLine = [self findSession:sessionId];
+	if (!selectedLine)
 	{
 		return;
 	}
@@ -514,11 +801,13 @@
 
 - (void)onInviteConnected:(long)sessionId
 {
-	int index = [self findSession:sessionId];
-	if (index == -1)
+	JCLineSession *selectedLine = [self findSession:sessionId];
+	if (!selectedLine)
 	{
 		return;
 	}
+	
+	[selectedLine setMCallState:JCCallConnected];
 	
 //	[numpadViewController setStatusText:[NSString  stringWithFormat:@"The call is connected on line %d",index]];
 }
@@ -531,15 +820,16 @@
 
 - (void)onInviteClosed:(long)sessionId
 {
-	int index = [self findSession:sessionId];
-	if (index == -1)
+	JCLineSession *selectedLine = [self findSession:sessionId];
+	if (!selectedLine)
 	{
 		return;
 	}
 	
 //	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Call closed by remote on line %d",index]];
 	
-	mSessionArray[index].reset();
+	[selectedLine setMCallState:JCCallCanceled];
+	[selectedLine reset];
 	
 //	if (mSessionArray[index].getVideoState() == true) {
 //		[videoViewController onStopVideo:sessionId];
@@ -548,8 +838,8 @@
 
 - (void)onRemoteHold:(long)sessionId
 {
-	int index = [self findSession:sessionId];
-	if (index == -1)
+	JCLineSession *selectedLine = [self findSession:sessionId];
+	if (!selectedLine)
 	{
 		return;
 	}
@@ -563,8 +853,8 @@
 		   existsAudio:(BOOL)existsAudio
 		   existsVideo:(BOOL)existsVideo
 {
-	int index = [self findSession:sessionId];
-	if (index == -1)
+	JCLineSession *selectedLine = [self findSession:sessionId];
+	if (!selectedLine)
 	{
 		return;
 	}
@@ -581,25 +871,27 @@
 				   from:(char*)from
 		referSipMessage:(char*)referSipMessage
 {
-	int index = [self findSession:sessionId];
-	if (index == -1)
+	JCLineSession *selectedLine = [self findSession:sessionId];
+	if (!selectedLine)
 	{
 		[mPortSIPSDK rejectRefer:referId];
 		return;
 	}
 	
-	int referCallIndex = -1;
-	for (int i=LINE_BASE; i<MAX_LINES; ++i)
-	{
-		if (mSessionArray[i].getSessionState()==false && mSessionArray[i].getRecvCallState()==false)
-		{
-			mSessionArray[i].setSessionState(true);
-			referCallIndex = i;
-			break;
-		}
-	}
+//	int referCallIndex = -1;
+//	for (int i=LINE_BASE; i<MAX_LINES; ++i)
+//	{
+//		if (mSessionArray[i].getSessionState()==false && mSessionArray[i].getRecvCallState()==false)
+//		{
+//			mSessionArray[i].setSessionState(true);
+//			referCallIndex = i;
+//			break;
+//		}
+//	}
 	
-	if (referCallIndex == -1)
+	JCLineSession *idleLine = [self findIdleLine];
+	
+	if (!idleLine)
 	{
 		[mPortSIPSDK rejectRefer:referId];
 		return;
@@ -610,33 +902,33 @@
 	//auto accept refer
 	// Hold currently call after accepted the REFER
 	
-	[mPortSIPSDK hold:mSessionArray[mActiveLine].getSessionId()];
-	mSessionArray[mActiveLine].setHoldState(true);
+	[mPortSIPSDK hold:selectedLine.mSessionId];
+	[selectedLine setMHoldSate:true];
 	
 	long referSessionId = [mPortSIPSDK acceptRefer:referId referSignaling:[NSString stringWithUTF8String:referSipMessage]];
 	if (referSessionId <= 0)
 	{
-//		[numpadViewController setStatusText:[NSString  stringWithFormat:@"Failed to accept the refer."]];
-		
-		
-		mSessionArray[referCallIndex].reset();
-		
+		[idleLine reset];
 		// Take off the hold
-		[mPortSIPSDK unHold:mSessionArray[mActiveLine].getSessionId()];
-		mSessionArray[mActiveLine].setHoldState(false);
+		[mPortSIPSDK unHold:selectedLine.mSessionId];
+		[selectedLine setMHoldSate:false];
 	}
 	else
 	{
-		mSessionArray[referCallIndex].setSessionId(referSessionId);
-		mSessionArray[referCallIndex].setSessionState(true);
-		mSessionArray[referCallIndex].setReferCall(true, mSessionArray[index].getSessionId());
+		[idleLine setMSessionId:referSessionId];
+		[idleLine setMSessionState:true];
+		[idleLine setReferCall:true originalCallSessionId:selectedLine.mSessionId];
+		
+//		mSessionArray[referCallIndex].setSessionId(referSessionId);
+//		mSessionArray[referCallIndex].setSessionState(true);
+//		mSessionArray[referCallIndex].setReferCall(true, mSessionArray[index].getSessionId());
 		
 		// Set the refer call to active line
-		mActiveLine = referCallIndex;
+//		mActiveLine = referCallIndex;
 		
 //		[numpadViewController setStatusText:[NSString  stringWithFormat:@"Accepted the refer, new call is trying on line %d",referCallIndex]];
 		
-		[self didSelectLine:mActiveLine];
+//		[self didSelectLine:mActiveLine];
 	}
 	
 	
@@ -649,8 +941,8 @@
 
 - (void)onReferAccepted:(long)sessionId
 {
-	int index = [self findSession:sessionId];
-	if (index == -1)
+	JCLineSession *selectedLine = [self findSession:sessionId];
+	if (!selectedLine)
 	{
 		return;
 	}
@@ -660,8 +952,8 @@
 
 - (void)onReferRejected:(long)sessionId reason:(char*)reason code:(int)code
 {
-	int index = [self findSession:sessionId];
-	if (index == -1)
+	JCLineSession *selectedLine = [self findSession:sessionId];
+	if (!selectedLine)
 	{
 		return;
 	}
@@ -671,8 +963,8 @@
 
 - (void)onTransferTrying:(long)sessionId
 {
-	int index = [self findSession:sessionId];
-	if (index == -1)
+	JCLineSession *selectedLine = [self findSession:sessionId];
+	if (!selectedLine)
 	{
 		return;
 	}
@@ -682,8 +974,8 @@
 
 - (void)onTransferRinging:(long)sessionId
 {
-	int index = [self findSession:sessionId];
-	if (index == -1)
+	JCLineSession *selectedLine = [self findSession:sessionId];
+	if (!selectedLine)
 	{
 		return;
 	}
@@ -693,8 +985,8 @@
 
 - (void)onACTVTransferSuccess:(long)sessionId
 {
-	int index = [self findSession:sessionId];
-	if (index == -1)
+	JCLineSession *selectedLine = [self findSession:sessionId];
+	if (!selectedLine)
 	{
 		return;
 	}
@@ -704,8 +996,8 @@
 
 - (void)onACTVTransferFailure:(long)sessionId reason:(char*)reason code:(int)code
 {
-	int index = [self findSession:sessionId];
-	if (index == -1)
+	JCLineSession *selectedLine = [self findSession:sessionId];
+	if (!selectedLine)
 	{
 		return;
 	}
@@ -746,8 +1038,8 @@
 
 - (void)onRecvDtmfTone:(long)sessionId tone:(int)tone
 {
-	int index = [self findSession:sessionId];
-	if (index == -1)
+	JCLineSession *selectedLine = [self findSession:sessionId];
+	if (!selectedLine)
 	{
 		return;
 	}
@@ -795,8 +1087,8 @@
 		  messageData:(unsigned char*)messageData
 	messageDataLength:(int)messageDataLength
 {
-	int index = [self findSession:sessionId];
-	if (index == -1)
+	JCLineSession *selectedLine = [self findSession:sessionId];
+	if (!selectedLine)
 	{
 		return;
 	}
@@ -956,43 +1248,53 @@
 
 - (void)alertView: (UIAlertView *)alertView clickedButtonAtIndex: (NSInteger)buttonIndex
 {
-	int index = alertView.tag;
-	if(buttonIndex == 0){//reject Call
-		[mPortSIPSDK rejectCall:mSessionArray[index].getSessionId() code:486];
+	JCLineSession *selectedLine = [self findLineWithRecevingState];
+	if (selectedLine) {
 		
-//		[numpadViewController setStatusText:[NSString  stringWithFormat:@"Reject Call on line %d",index]];
-	}
-	else if (buttonIndex == 1){//Answer Call
-		int nRet = [mPortSIPSDK answerCall:mSessionArray[index].getSessionId() videoCall:FALSE];
-		if(nRet == 0)
-		{
-			mSessionArray[index].setSessionState(TRUE);
-			mSessionArray[index].setVideoState(FALSE);
+		if(buttonIndex == 0){//reject Call
+			[mPortSIPSDK rejectCall:selectedLine.mSessionId code:486];
 			
-//			[numpadViewController setStatusText:[NSString  stringWithFormat:@"Answer Call on line %d",index]];
-			[self didSelectLine:index];
+	//		[numpadViewController setStatusText:[NSString  stringWithFormat:@"Reject Call on line %d",index]];
 		}
-		else
-		{
-			mSessionArray[index].reset();
-//			[numpadViewController setStatusText:[NSString  stringWithFormat:@"Answer Call on line %d Failed",index]];
+		else if (buttonIndex == 1){//Answer Call
+			int nRet = [mPortSIPSDK answerCall:selectedLine.mSessionId videoCall:FALSE];
+			if(nRet == 0)
+			{
+				[selectedLine setMSessionState:true];
+				[selectedLine setMVideoState:false];
+//				mSessionArray[index].setSessionState(TRUE);
+//				mSessionArray[index].setVideoState(FALSE);
+				
+	//			[numpadViewController setStatusText:[NSString  stringWithFormat:@"Answer Call on line %d",index]];
+//				[self didSelectLine:index];
+			}
+			else
+			{
+				[selectedLine reset];
+//				mSessionArray[index].reset();
+	//			[numpadViewController setStatusText:[NSString  stringWithFormat:@"Answer Call on line %d Failed",index]];
+			}
 		}
-	}
-	else if (buttonIndex == 2){//Answer Video Call
-		int nRet = [mPortSIPSDK answerCall:mSessionArray[index].getSessionId() videoCall:TRUE];
-		if(nRet == 0)
-		{
-			mSessionArray[index].setSessionState(TRUE);
-			mSessionArray[index].setVideoState(TRUE);
-//			[videoViewController onStartVideo:mSessionArray[index].getSessionId()];
-//			
-//			[numpadViewController setStatusText:[NSString  stringWithFormat:@"Answer Call on line %d",index]];
-			[self didSelectLine:index];
-		}
-		else
-		{
-			mSessionArray[index].reset();
-//			[numpadViewController setStatusText:[NSString  stringWithFormat:@"Answer Call on line %d Failed",index]];
+		else if (buttonIndex == 2){//Answer Video Call
+			int nRet = [mPortSIPSDK answerCall:selectedLine.mSessionId videoCall:TRUE];
+			if(nRet == 0)
+			{
+				[selectedLine setMSessionState:true];
+				[selectedLine setMVideoState:true];
+
+//				mSessionArray[index].setSessionState(TRUE);
+//				mSessionArray[index].setVideoState(TRUE);
+	//			[videoViewController onStartVideo:mSessionArray[index].getSessionId()];
+	//			
+	//			[numpadViewController setStatusText:[NSString  stringWithFormat:@"Answer Call on line %d",index]];
+//				[self didSelectLine:index];
+			}
+			else
+			{
+				[selectedLine reset];
+//				mSessionArray[index].reset();
+	//			[numpadViewController setStatusText:[NSString  stringWithFormat:@"Answer Call on line %d Failed",index]];
+			}
 		}
 	}
 }
