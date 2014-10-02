@@ -23,8 +23,10 @@ static NSString * const incommingCallCardCellReuseIdentifier = @"IncommingCallCa
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     JCCallCardManager *callCardManager = [JCCallCardManager sharedManager];
     
-    [center addObserver:self selector:@selector(addedCallCardNotification:) name:kJCCallCardManagerAddedCallNotification object:callCardManager];
-    [center addObserver:self selector:@selector(callCardRemovedNotification:) name:kJCCallCardManagerRemoveCallNotification object:callCardManager];
+    [center addObserver:self selector:@selector(addedIncomingCallCardNotification:) name:kJCCallCardManagerAddedIncomingCallNotification object:callCardManager];
+    [center addObserver:self selector:@selector(incomingCallCardRemovedNotification:) name:kJCCallCardManagerRemoveIncomingCallNotification object:callCardManager];
+    [center addObserver:self selector:@selector(addedCurrentCallCardNotification:) name:kJCCallCardManagerAddedCurrentCallNotification object:callCardManager];
+    [center addObserver:self selector:@selector(currentCallCardRemovedNotification:) name:kJCCallCardManagerRemoveCurrentCallNotification object:callCardManager];
 }
 
 -(void)dealloc
@@ -32,7 +34,31 @@ static NSString * const incommingCallCardCellReuseIdentifier = @"IncommingCallCa
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
--(void)addedCallCardNotification:(NSNotification *)notification
+-(void)addedIncomingCallCardNotification:(NSNotification *)notification
+{
+    /*NSDictionary *userInfo = notification.userInfo;
+     NSNumber *index = [userInfo objectForKey:kJCCallCardManagerUpdatedIndex];
+     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index.integerValue inSection:1];
+     //[self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+     //[self.collectionView insertItemsAtIndexPaths:@[indexPath]];*/
+    
+    
+    // For now reload the whole table....will change to handle animated entry and exit.
+    [self.collectionView reloadData];
+    
+}
+
+-(void)incomingCallCardRemovedNotification:(NSNotification *)notification
+{
+    /*NSDictionary *userInfo = notification.userInfo;
+     NSNumber *index = [userInfo objectForKey:kJCCallCardManagerUpdatedIndex];
+     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index.integerValue inSection:1];*/
+    
+    // For now reload the whole table....will change to handle animated entry and exit.
+    [self.collectionView reloadData];
+}
+
+-(void)addedCurrentCallCardNotification:(NSNotification *)notification
 {
     /*NSDictionary *userInfo = notification.userInfo;
     NSNumber *index = [userInfo objectForKey:kJCCallCardManagerUpdatedIndex];
@@ -46,7 +72,7 @@ static NSString * const incommingCallCardCellReuseIdentifier = @"IncommingCallCa
     
 }
 
--(void)callCardRemovedNotification:(NSNotification *)notification
+-(void)currentCallCardRemovedNotification:(NSNotification *)notification
 {
     /*NSDictionary *userInfo = notification.userInfo;
     NSNumber *index = [userInfo objectForKey:kJCCallCardManagerUpdatedIndex];

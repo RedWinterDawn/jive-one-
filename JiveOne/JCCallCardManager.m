@@ -8,14 +8,18 @@
 
 #import "JCCallCardManager.h"
 
-NSString *const kJCCallCardManagerAddedCallNotification = @"addedCall";
-NSString *const kJCCallCardManagerRemoveCallNotification = @"removedCall";
+NSString *const kJCCallCardManagerAddedIncomingCallNotification = @"addedIncommingCall";
+NSString *const kJCCallCardManagerRemoveIncomingCallNotification = @"removedIncommingCall";
+
+NSString *const kJCCallCardManagerAddedCurrentCallNotification = @"addedCurrentCall";
+NSString *const kJCCallCardManagerRemoveCurrentCallNotification = @"removedCurrentCall";
 
 NSString *const kJCCallCardManagerUpdatedIndex = @"index";
 
 @interface JCCallCardManager ()
 {
     NSMutableArray *_currentCalls;
+    NSMutableArray *_incomingCalls;
 }
 
 @end
@@ -23,6 +27,29 @@ NSString *const kJCCallCardManagerUpdatedIndex = @"index";
 
 @implementation JCCallCardManager
 
+-(void)addIncomingCall:(JCCallCard *)callCard
+{
+    if (!_incomingCalls)
+        _incomingCalls = [NSMutableArray array];
+    [_incomingCalls addObject:callCard];
+    
+    // Sort the array and fetch the resulting new index of the call card.
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"started" ascending:NO];
+    [_incomingCalls sortUsingDescriptors:@[sortDescriptor]];
+    
+    NSUInteger newIndex = [_incomingCalls indexOfObject:callCard];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerAddedIncomingCallNotification object:self userInfo:@{kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:newIndex]}];
+}
+
+-(void)removeIncomingCall:(JCCallCard *)callCard
+{
+    if (![_incomingCalls containsObject:callCard])
+        return;
+    
+    NSUInteger index = [_incomingCalls indexOfObject:callCard];
+    [_incomingCalls removeObject:callCard];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerRemoveIncomingCallNotification object:self userInfo:@{kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:index]}];
+}
 
 -(void)dialNumber:(NSString *)dialNumber
 {
@@ -32,7 +59,7 @@ NSString *const kJCCallCardManagerUpdatedIndex = @"index";
     
     // TODO: Do something to initiate the call.
     
-    [self addCallCard:callCard];
+    [self addCurrentCallCard:callCard];
 }
 
 -(void)hangUpCall:(JCCallCard *)callCard
@@ -40,7 +67,7 @@ NSString *const kJCCallCardManagerUpdatedIndex = @"index";
     // TODO: do something to end the Sip call
     
     
-    [self removeCall:callCard];
+    [self removeCurrentCall:callCard];
 }
 
 -(void)placeCallOnHold:(JCCallCard *)callCard
@@ -61,17 +88,17 @@ NSString *const kJCCallCardManagerUpdatedIndex = @"index";
                      
 #pragma mark - Private -
 
--(void)removeCall:(JCCallCard *)callCard
+-(void)removeCurrentCall:(JCCallCard *)callCard
 {
     if (![_currentCalls containsObject:callCard])
         return;
     
     NSUInteger index = [_currentCalls indexOfObject:callCard];
     [_currentCalls removeObject:callCard];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerRemoveCallNotification object:self userInfo:@{kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:index]}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerRemoveCurrentCallNotification object:self userInfo:@{kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:index]}];
 }
 
--(void)addCallCard:(JCCallCard *)callCard
+-(void)addCurrentCallCard:(JCCallCard *)callCard
 {
     if (!_currentCalls)
         _currentCalls = [NSMutableArray array];
@@ -82,7 +109,7 @@ NSString *const kJCCallCardManagerUpdatedIndex = @"index";
     [_currentCalls sortUsingDescriptors:@[sortDescriptor]];
     
     NSUInteger newIndex = [_currentCalls indexOfObject:callCard];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerAddedCallNotification object:self userInfo:@{kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:newIndex]}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerAddedCurrentCallNotification object:self userInfo:@{kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:newIndex]}];
 }
 
 @end

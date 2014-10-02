@@ -33,7 +33,7 @@ NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTran
     if (dialString)
         [[JCCallCardManager sharedManager] dialNumber:dialString];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callHungUp:) name:kJCCallCardManagerRemoveCallNotification object:[JCCallCardManager sharedManager]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callHungUp:) name:kJCCallCardManagerRemoveCurrentCallNotification object:[JCCallCardManager sharedManager]];
 }
 
 -(void)dealloc
@@ -48,12 +48,13 @@ NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTran
         [self closeCallerViewController];
 }
 
-
 #pragma mark - IBActions -
 
 -(IBAction)speaker:(id)sender
 {
-    
+    JCCallCard *incomingCallCard = [[JCCallCard alloc] init];
+    incomingCallCard.dialNumber = @"555-123-4567";
+    [[JCCallCardManager sharedManager] addIncomingCall:incomingCallCard];
 }
 
 -(IBAction)keypad:(id)sender
