@@ -50,6 +50,12 @@
     return NO;
 }
 
+-(void)setDialString:(NSString *)dialString
+{
+    _dialString = [NSMutableString stringWithString:dialString];
+    [self updateDialString];
+}
+
 #pragma mark - Public -
 
 -(void)append:(NSString *)string

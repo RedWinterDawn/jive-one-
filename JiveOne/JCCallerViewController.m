@@ -10,14 +10,14 @@
 #import "JCTransferViewController.h"
 #import "JCCallCardCollectionViewController.h"
 
+#import "JCCallCardManager.h"
+
 #define TRANSFER_ANIMATION_DURATION 0.3
 
 NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTransferModal";
 
-@interface JCCallerViewController () <JCTransferViewControllerDelegate, JCCallCardCollectionViewControllerDelegate, JCCallCardViewDelegate>
+@interface JCCallerViewController () <JCTransferViewControllerDelegate>
 {
-    JCCallCardCollectionViewController *_collectionViewController;
-    
     UIViewController *_presentedTransferViewController;
 }
 
@@ -29,17 +29,9 @@ NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTran
 {
     [super viewDidLoad];
     
-    [_collectionViewController addCall:@"1"];
-}
-
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    UIViewController *viewController = segue.destinationViewController;
-    if ([viewController isKindOfClass:[JCCallCardCollectionViewController class]])
-    {
-        _collectionViewController = (JCCallCardCollectionViewController *)viewController;
-        _collectionViewController.delegate = self;
-    }
+    NSString *dialString = self.dialString;
+    if (dialString)
+        [[JCCallCardManager sharedManager] dialNumber:dialString];
 }
 
 #pragma mark - IBActions -
@@ -126,30 +118,6 @@ NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTran
 
 #pragma mark - Delegate Handlers -
 
--(void)callCardViewShouldHangUp:(JCCallCardViewCell *)view
-{
-    // TODO: Do whatever to close the call for whatever call has the given identifier
-    //NSString *callIdentifier = view.identifer;
-    
-    // Update UI
-    [self.callCardList removeCallCard:view];
-    
-    // If no other calls are active, close caller.
-    if (self.callCardList.count == 0)
-        [self closeCallerViewController];
-}
-
--(void)callCardViewShouldHold:(JCCallCardViewCell *)view
-{
-    // TODO: Do whatever to close the call for whatever call has the given identifier
-    //NSString *callIdentifier = view.identifer;
-}
-
--(void)callCardCollectionViewController:(JCCallCardCollectionViewController *)viewController configureCell:(JCCallCardViewCell *)callCardCell callIdentifier:(NSString *)identifier
-{
-    NSLog(@"configure: %@", identifier);
-}
-
 #pragma mark JCTransferViewController
 
 -(void)transferViewController:(JCTransferViewController *)controller shouldDialNumber:(NSString *)dialString
@@ -170,11 +138,7 @@ NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTran
         
     }*/
     
-    
-    //JCCallCardViewCell *callCardView = [JCCallCardViewCell createCallCardWithIdentifier:@"2" delegate:self];
-    [_collectionViewController addCall:@"2"];
-    
-    //[self.callCardList addSubview:callCardView];
+    [[JCCallCardManager sharedManager] dialNumber:dialString];
 }
 
 -(void)shouldCancelTransferViewController:(JCTransferViewController *)controller
