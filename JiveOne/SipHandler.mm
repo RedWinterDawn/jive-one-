@@ -44,11 +44,15 @@
 		[_lineSessions addObject:[JCLineSession new]];
 	}
 	
+	_mPortSIPSDK = [[PortSIPSDK alloc] init];
+	_mPortSIPSDK.delegate = self;
+	
 	[self online];
 }
 
 - (void)online
 {
+	
 	// TODO: get configuration from database
 	NSString* kSipUserName = @"0147a20ad7f07eb6b0000100620005";
 	NSString* kDisplayName = @"Eduardo Gueiros";
@@ -57,7 +61,7 @@
 	NSString* kProxy = @"jive.jive.rtcfront.net";
 	int kSIPServerPort = 5060;
 	
-	int ret = [mPortSIPSDK initialize:TRANSPORT_UDP loglevel:PORTSIP_LOG_DEBUG logPath:NULL maxLine:8 agent:@"Jive iOS Client" virtualAudioDevice:FALSE virtualVideoDevice:FALSE];
+	int ret = [_mPortSIPSDK initialize:TRANSPORT_UDP loglevel:PORTSIP_LOG_DEBUG logPath:NULL maxLine:8 agent:@"Jive iOS Client" virtualAudioDevice:FALSE virtualVideoDevice:FALSE];
 	if(ret != 0)
 	{
 		NSLog(@"initializeSDK failure ErrorCode = %d",ret);
@@ -67,9 +71,9 @@
 	int localPort = 10000 + arc4random()%1000;
 	NSString* loaclIPaddress = @"0.0.0.0";//Auto select IP address
 	
-	[mPortSIPSDK setUser:kSipUserName displayName:kDisplayName authName:kSipUserName password:kSipPassword localIP:loaclIPaddress localSIPPort:localPort userDomain:@"" SIPServer:kSIPServer SIPServerPort:kSIPServerPort STUNServer:@"" STUNServerPort:0 outboundServer:kProxy outboundServerPort:kSIPServerPort];
+	[_mPortSIPSDK setUser:kSipUserName displayName:kDisplayName authName:kSipUserName password:kSipPassword localIP:loaclIPaddress localSIPPort:localPort userDomain:@"" SIPServer:kSIPServer SIPServerPort:kSIPServerPort STUNServer:@"" STUNServerPort:0 outboundServer:kProxy outboundServerPort:kSIPServerPort];
 
-	int rt = [mPortSIPSDK setLicenseKey:kPortSIPKey];
+	int rt = [_mPortSIPSDK setLicenseKey:kPortSIPKey];
 	if (rt == ECoreTrialVersionLicenseKey)
 	{
 		
@@ -92,35 +96,35 @@
 		[alert show];
 	}
 	
-	//    [mPortSIPSDK addAudioCodec:AUDIOCODEC_PCMA];
-	[mPortSIPSDK addAudioCodec:AUDIOCODEC_PCMU];
-	//    [mPortSIPSDK addAudioCodec:AUDIOCODEC_SPEEX];
-	[mPortSIPSDK addAudioCodec:AUDIOCODEC_G729];
-	[mPortSIPSDK addAudioCodec:AUDIOCODEC_G722];
+	//    [_mPortSIPSDK addAudioCodec:AUDIOCODEC_PCMA];
+	[_mPortSIPSDK addAudioCodec:AUDIOCODEC_PCMU];
+	//    [_mPortSIPSDK addAudioCodec:AUDIOCODEC_SPEEX];
+	[_mPortSIPSDK addAudioCodec:AUDIOCODEC_G729];
+	[_mPortSIPSDK addAudioCodec:AUDIOCODEC_G722];
 	
-	//[mPortSIPSDK addAudioCodec:AUDIOCODEC_GSM];
-	//[mPortSIPSDK addAudioCodec:AUDIOCODEC_ILBC];
-	//[mPortSIPSDK addAudioCodec:AUDIOCODEC_AMR];
-	//[mPortSIPSDK addAudioCodec:AUDIOCODEC_SPEEXWB];
+	//[_mPortSIPSDK addAudioCodec:AUDIOCODEC_GSM];
+	//[_mPortSIPSDK addAudioCodec:AUDIOCODEC_ILBC];
+	//[_mPortSIPSDK addAudioCodec:AUDIOCODEC_AMR];
+	//[_mPortSIPSDK addAudioCodec:AUDIOCODEC_SPEEXWB];
 	
-	//[mPortSIPSDK addVideoCodec:VIDEO_CODEC_H263];
-	//[mPortSIPSDK addVideoCodec:VIDEO_CODEC_H263_1998];
-	[mPortSIPSDK addVideoCodec:VIDEO_CODEC_H264];
+	//[_mPortSIPSDK addVideoCodec:VIDEO_CODEC_H263];
+	//[_mPortSIPSDK addVideoCodec:VIDEO_CODEC_H263_1998];
+	[_mPortSIPSDK addVideoCodec:VIDEO_CODEC_H264];
 	
-	[mPortSIPSDK setVideoBitrate:100];//video send bitrate,100kbps
-	[mPortSIPSDK setVideoFrameRate:10];
-	[mPortSIPSDK setVideoResolution:VIDEO_CIF];
-	[mPortSIPSDK setAudioSamples:20 maxPtime:60];//ptime 20
+	[_mPortSIPSDK setVideoBitrate:100];//video send bitrate,100kbps
+	[_mPortSIPSDK setVideoFrameRate:10];
+	[_mPortSIPSDK setVideoResolution:VIDEO_CIF];
+	[_mPortSIPSDK setAudioSamples:20 maxPtime:60];//ptime 20
 	
 	//1 - FrontCamra 0 - BackCamra
-	[mPortSIPSDK setVideoDeviceId:1];
-	//[mPortSIPSDK setVideoOrientation:180];
+	[_mPortSIPSDK setVideoDeviceId:1];
+	//[_mPortSIPSDK setVideoOrientation:180];
 	
 	//enable srtp
-	[mPortSIPSDK setSrtpPolicy:SRTP_POLICY_NONE];
+	[_mPortSIPSDK setSrtpPolicy:SRTP_POLICY_NONE];
 	
 	// Try to register the default identity
-	[mPortSIPSDK registerServer:120 retryTimes:3];
+	[_mPortSIPSDK registerServer:120 retryTimes:3];
 	
 	NSString* sipURL = nil;
 	if(kSIPServerPort == 5060) {
@@ -137,8 +141,8 @@
 {
 	if(SIPInitialized)
 	{
-		[mPortSIPSDK unRegisterServer];
-		[mPortSIPSDK unInitialize];
+		[_mPortSIPSDK unRegisterServer];
+		[_mPortSIPSDK unInitialize];
 		//[viewStatus setBackgroundColor:[UIColor redColor]];
 		
 		//[labelStatus setText:@"Not Connected"];
@@ -256,7 +260,7 @@
 	JCLineSession *session = [self findLineWithSessionState];
 	if(session && session.mSessionState)
 	{
-		[mPortSIPSDK sendDtmf:session.mSessionId dtmfMethod:DTMF_RFC2833 code:dtmf dtmfDration:160 playDtmfTone:TRUE];
+		[_mPortSIPSDK sendDtmf:session.mSessionId dtmfMethod:DTMF_RFC2833 code:dtmf dtmfDration:160 playDtmfTone:TRUE];
 	}
 }
 
@@ -266,7 +270,7 @@
 
 	JCLineSession *currentSession = [self findLineWithSessionState];
 	if (currentSession && currentSession.mSessionState && !currentSession.mHoldSate) {
-		[mPortSIPSDK hold:currentSession.mSessionId];
+		[_mPortSIPSDK hold:currentSession.mSessionId];
 	}
 	
 //	if(mSessionArray[mActiveLine].getSessionState() == true ||
@@ -285,7 +289,7 @@
 	
 	currentSession = [self findIdleLine];	
 	
-	long sessionId = [mPortSIPSDK call:callee sendSdp:TRUE videoCall:videoCall];
+	long sessionId = [_mPortSIPSDK call:callee sendSdp:TRUE videoCall:videoCall];
 	
 	if(sessionId >= 0)
 	{
@@ -314,7 +318,7 @@
 	JCLineSession *selectedLine = [self findLineWithSessionState];
 	if (selectedLine.mSessionState)
 	{
-		[mPortSIPSDK hangUp:selectedLine.mSessionId];
+		[_mPortSIPSDK hangUp:selectedLine.mSessionId];
 //		if (mSessionArray[mActiveLine].getVideoState() == true) {
 //			[videoViewController onStopVideo:mSessionArray[mActiveLine].getSessionId()];
 //		}
@@ -324,7 +328,7 @@
 	}
 	else if (selectedLine.mRecvCallState)
 	{
-		[mPortSIPSDK rejectCall:selectedLine.mSessionId code:486];
+		[_mPortSIPSDK rejectCall:selectedLine.mSessionId code:486];
 		
 //		[numpadViewController setStatusText:[NSString  stringWithFormat:@"Rejected call on line %ld", mActiveLine]];
 	}
@@ -337,11 +341,11 @@
 {
 	JCLineSession *selectedLine = [self findSession:sessionId];
 	if (selectedLine.mHoldSate) {
-		[mPortSIPSDK unHold:selectedLine.mSessionId];
+		[_mPortSIPSDK unHold:selectedLine.mSessionId];
 		[selectedLine setMHoldSate:false];
 	}
 	else {
-		[mPortSIPSDK hold:selectedLine.mSessionId];
+		[_mPortSIPSDK hold:selectedLine.mSessionId];
 		[selectedLine setMHoldSate:true];
 	}
 }
@@ -350,11 +354,11 @@
 {
 	JCLineSession *selectedLine = [self findLineWithSessionState];
 	if (selectedLine.mHoldSate) {
-		[mPortSIPSDK unHold:selectedLine.mSessionId];
+		[_mPortSIPSDK unHold:selectedLine.mSessionId];
 		[selectedLine setMHoldSate:false];
 	}
 	else {
-		[mPortSIPSDK hold:selectedLine.mSessionId];
+		[_mPortSIPSDK hold:selectedLine.mSessionId];
 		[selectedLine setMHoldSate:true];
 	}
 }
@@ -367,7 +371,7 @@
 		return;
 	}
 	
-	[mPortSIPSDK hold:selectedLine.mSessionId];
+	[_mPortSIPSDK hold:selectedLine.mSessionId];
 	[selectedLine setMHoldSate:true];
 	
 //	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Hold the call on line %ld", mActiveLine]];
@@ -383,7 +387,7 @@
 //		return;
 //	}
 //	
-//	[mPortSIPSDK unHold:mSessionArray[mActiveLine].getSessionId()];
+//	[_mPortSIPSDK unHold:mSessionArray[mActiveLine].getSessionId()];
 //	mSessionArray[mActiveLine].setHoldState(false);
 //	
 ////	[numpadViewController setStatusText:[NSString  stringWithFormat:@"UnHold the call on line %ld", mActiveLine]];
@@ -406,7 +410,7 @@
 		return;
 	}
 	
-	int errorCodec = [mPortSIPSDK refer:selectedLine.mSessionId referTo:referTo];
+	int errorCodec = [_mPortSIPSDK refer:selectedLine.mSessionId referTo:referTo];
 	if (errorCodec != 0)
 	{
 		UIAlertView *alert = [[UIAlertView alloc]
@@ -429,7 +433,7 @@
 	if(selectedLine.mSessionState){
 		if(mute)
 		{
-			[mPortSIPSDK muteSession:selectedLine.mSessionState
+			[_mPortSIPSDK muteSession:selectedLine.mSessionState
 				   muteIncomingAudio:TRUE
 				   muteOutgoingAudio:TRUE
 				   muteIncomingVideo:TRUE
@@ -437,7 +441,7 @@
 		}
 		else
 		{
-			[mPortSIPSDK muteSession:selectedLine.mSessionState
+			[_mPortSIPSDK muteSession:selectedLine.mSessionState
 				   muteIncomingAudio:FALSE
 				   muteOutgoingAudio:FALSE
 				   muteIncomingVideo:FALSE
@@ -453,7 +457,7 @@
 	if (activeLine)
 	{
 		// Need to hold this line
-		[mPortSIPSDK hold:activeLine.mSessionId];
+		[_mPortSIPSDK hold:activeLine.mSessionId];
 		[activeLine setMHoldSate:true];
 		
 		//		[numpadViewController setStatusText:[NSString  stringWithFormat:@"Hold call on line %ld", mActiveLine]];
@@ -463,7 +467,7 @@
 	if (lineOnHold)
 	{
 		// Need to unhold this line
-		[mPortSIPSDK unHold:lineOnHold.mSessionState];
+		[_mPortSIPSDK unHold:lineOnHold.mSessionState];
 		[activeLine setMHoldSate:false];
 		
 		//		[numpadViewController setStatusText:[NSString  stringWithFormat:@"unHold call on line %ld", mActiveLine]];
@@ -473,7 +477,7 @@
 
 - (void) setLoudspeakerStatus:(BOOL)enable
 {
-	[mPortSIPSDK setLoudspeakerStatus:enable];
+	[_mPortSIPSDK setLoudspeakerStatus:enable];
 }
 
 //- (void)didSelectLine:(NSInteger)activeLine
@@ -490,7 +494,7 @@
 //	if (mSessionArray[mActiveLine].getSessionState()==true && mSessionArray[mActiveLine].getHoldState()==false)
 //	{
 //		// Need to hold this line
-//		[mPortSIPSDK hold:mSessionArray[mActiveLine].getSessionId()];
+//		[_mPortSIPSDK hold:mSessionArray[mActiveLine].getSessionId()];
 //		
 //		mSessionArray[mActiveLine].setHoldState(true);
 //		
@@ -503,7 +507,7 @@
 //	if (mSessionArray[mActiveLine].getSessionState()==true && mSessionArray[mActiveLine].getHoldState()==true)
 //	{
 //		// Need to unhold this line
-//		[mPortSIPSDK unHold:mSessionArray[mActiveLine].getSessionId()];
+//		[_mPortSIPSDK unHold:mSessionArray[mActiveLine].getSessionId()];
 //		
 //		mSessionArray[mActiveLine].setHoldState(false);
 //		
@@ -573,7 +577,7 @@
 	
 	if (!idleLine)
 	{
-		[mPortSIPSDK rejectCall:sessionId code:486];
+		[_mPortSIPSDK rejectCall:sessionId code:486];
 		return ;
 	}
 	
@@ -759,7 +763,7 @@
 ////			[numpadViewController setStatusText:[NSString  stringWithFormat:@"Call failure on line  %d,%s(%d)",index,reason,code]];
 //			
 //			// Now take off the origin call
-//			[mPortSIPSDK unHold:mSessionArray[index].getOriginCallSessionId()];
+//			[_mPortSIPSDK unHold:mSessionArray[index].getOriginCallSessionId()];
 //			
 //			mSessionArray[originIndex].setHoldState(false);
 //			
@@ -874,7 +878,7 @@
 	JCLineSession *selectedLine = [self findSession:sessionId];
 	if (!selectedLine)
 	{
-		[mPortSIPSDK rejectRefer:referId];
+		[_mPortSIPSDK rejectRefer:referId];
 		return;
 	}
 	
@@ -893,7 +897,7 @@
 	
 	if (!idleLine)
 	{
-		[mPortSIPSDK rejectRefer:referId];
+		[_mPortSIPSDK rejectRefer:referId];
 		return;
 	}
 	
@@ -902,15 +906,15 @@
 	//auto accept refer
 	// Hold currently call after accepted the REFER
 	
-	[mPortSIPSDK hold:selectedLine.mSessionId];
+	[_mPortSIPSDK hold:selectedLine.mSessionId];
 	[selectedLine setMHoldSate:true];
 	
-	long referSessionId = [mPortSIPSDK acceptRefer:referId referSignaling:[NSString stringWithUTF8String:referSipMessage]];
+	long referSessionId = [_mPortSIPSDK acceptRefer:referId referSignaling:[NSString stringWithUTF8String:referSipMessage]];
 	if (referSessionId <= 0)
 	{
 		[idleLine reset];
 		// Take off the hold
-		[mPortSIPSDK unHold:selectedLine.mSessionId];
+		[_mPortSIPSDK unHold:selectedLine.mSessionId];
 		[selectedLine setMHoldSate:false];
 	}
 	else
@@ -933,7 +937,7 @@
 	
 	
 	/*if you want to reject Refer
-	 [mPortSIPSDK rejectRefer:referId];
+	 [_mPortSIPSDK rejectRefer:referId];
 	 mSessionArray[referCallIndex].reset();
 	 [numpadViewController setStatusText:@"Rejected the the refer."];
 	 */
@@ -1252,12 +1256,12 @@
 	if (selectedLine) {
 		
 		if(buttonIndex == 0){//reject Call
-			[mPortSIPSDK rejectCall:selectedLine.mSessionId code:486];
+			[_mPortSIPSDK rejectCall:selectedLine.mSessionId code:486];
 			
 	//		[numpadViewController setStatusText:[NSString  stringWithFormat:@"Reject Call on line %d",index]];
 		}
 		else if (buttonIndex == 1){//Answer Call
-			int nRet = [mPortSIPSDK answerCall:selectedLine.mSessionId videoCall:FALSE];
+			int nRet = [_mPortSIPSDK answerCall:selectedLine.mSessionId videoCall:FALSE];
 			if(nRet == 0)
 			{
 				[selectedLine setMSessionState:true];
@@ -1276,7 +1280,7 @@
 			}
 		}
 		else if (buttonIndex == 2){//Answer Video Call
-			int nRet = [mPortSIPSDK answerCall:selectedLine.mSessionId videoCall:TRUE];
+			int nRet = [_mPortSIPSDK answerCall:selectedLine.mSessionId videoCall:TRUE];
 			if(nRet == 0)
 			{
 				[selectedLine setMSessionState:true];

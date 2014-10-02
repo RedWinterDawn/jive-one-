@@ -20,6 +20,7 @@
 #import "TestFlight.h"
 #import "JCVersion.h"
 #import "LoggerClient.h"
+#import "SipHandler.h"
 
 @interface JCAppDelegate ()
 
@@ -166,6 +167,8 @@ int didNotify;
     LogMessage(@"socket", 4, @"Will Call CloseSocket");
 
     [self stopSocket];
+	
+	[[SipHandler sharedHandler].mPortSIPSDK startKeepAwake];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -185,6 +188,8 @@ int didNotify;
         LogMessage(@"socket", 4, @"Will Call requestSession");
         [self startSocket:NO];
     }
+	
+	[[SipHandler sharedHandler].mPortSIPSDK startKeepAwake];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

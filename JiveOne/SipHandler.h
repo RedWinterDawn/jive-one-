@@ -11,16 +11,17 @@
 
 @interface SipHandler : NSObject <PortSIPEventDelegate>
 {
-	PortSIPSDK *mPortSIPSDK;
+	
 	BOOL mSIPRegistered;
 	NSString *sipUrl;
 }
 
+@property (strong, nonatomic) PortSIPSDK *mPortSIPSDK;
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic,retain) NSString *sipURL;
 @property NSInteger    mActiveLine;
 
-//+ (instancetype) sharedHandler;
++ (instancetype) sharedHandler;
 - (void)initiate;
 - (void) pressNumpadButton:(char )dtmf;
 - (void) makeCall:(NSString*) callee videoCall:(BOOL)videoCall;
