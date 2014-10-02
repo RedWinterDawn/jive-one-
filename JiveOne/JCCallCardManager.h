@@ -30,6 +30,7 @@ extern NSString *const kJCCallCardManagerUpdatedIndex;
 -(void)removeFromHold:(JCCallCard *)callCard;
 
 -(void)dialNumber:(NSString *)dialNumber;
+-(void)answerCall:(JCCallCard *)callCard;
 
 // Temporary for POC
 -(void)addIncomingCall:(JCCallCard *)callCard;

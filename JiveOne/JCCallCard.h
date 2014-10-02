@@ -19,6 +19,7 @@
 
 @property (nonatomic) BOOL hold;
 
+-(void)answerCall;
 -(void)endCall;
 
 @end

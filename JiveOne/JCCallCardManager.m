@@ -62,9 +62,21 @@ NSString *const kJCCallCardManagerUpdatedIndex = @"index";
     [self addCurrentCallCard:callCard];
 }
 
+-(void)answerCall:(JCCallCard *)newCallCard
+{
+    // TODO: do something to answer the call;
+    
+    for (JCCallCard *callCard in _currentCalls)
+        callCard.hold = true;
+    
+    newCallCard.started = [NSDate date];
+    [self removeIncomingCall:newCallCard];
+    [self addCurrentCallCard:newCallCard];
+}
+
 -(void)hangUpCall:(JCCallCard *)callCard
 {
-    // TODO: do something to end the Sip call
+    // TODO: do something to end call
     
     
     [self removeCurrentCall:callCard];

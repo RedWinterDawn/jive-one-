@@ -69,7 +69,7 @@
 
 -(IBAction)answer:(id)sender
 {
-    
+    [_callCard answerCall];
 }
 
 #pragma mark - Private -

@@ -41,6 +41,11 @@
     return _hold;
 }
 
+-(void)answerCall
+{
+    [[JCCallCardManager sharedManager] answerCall:self];
+}
+
 -(void)endCall
 {
     [[JCCallCardManager sharedManager] hangUpCall:self];
