@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="s23-a1-P1H">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="s23-a1-P1H">
     <dependencies>
         <deployment defaultVersion="1552" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
-        <!--Group Selector View Controller - Create Group-->
+        <!--Create Group-->
         <scene sceneID="Nog-zT-bnj">
             <objects>
                 <tableViewController id="GmD-f1-Ikz" customClass="JCGroupSelectorViewController" sceneMemberID="viewController">
@@ -76,39 +76,33 @@
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Socket Status" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pAZ-8y-gHo">
                                 <rect key="frame" x="20" y="220" width="118" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ndE-8h-421">
                                 <rect key="frame" x="146" y="220" width="154" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Last Socket Events" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dmo-fb-x7x">
                                 <rect key="frame" x="20" y="249" width="156" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fsf-fn-GCi">
                                 <rect key="frame" x="20" y="278" width="280" height="221"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Device Token" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ETM-Ib-gJ1">
                                 <rect key="frame" x="20" y="84" width="108" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4iE-ux-bak">
                                 <rect key="frame" x="136" y="84" width="164" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="8"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -132,7 +126,7 @@
             </objects>
             <point key="canvasLocation" x="1067" y="-882"/>
         </scene>
-        <!--Directory Group View Controller - Groups-->
+        <!--Groups-->
         <scene sceneID="wvC-Lu-lyf">
             <objects>
                 <tableViewController id="s23-a1-P1H" customClass="JCDirectoryGroupViewController" sceneMemberID="viewController">
@@ -322,7 +316,6 @@
                             <outlet property="delegate" destination="Udl-o5-oNi" id="Vaq-fg-Pcs"/>
                         </connections>
                     </tableView>
-                    <size key="freeformSize" width="320" height="568"/>
                     <connections>
                         <outlet property="presenceAvailable" destination="Oo9-vT-2zd" id="3kn-M1-Gsh"/>
                         <outlet property="presenceBusy" destination="tqr-Jn-QK8" id="lJc-aG-0ay"/>
@@ -334,7 +327,7 @@
             </objects>
             <point key="canvasLocation" x="845" y="-131"/>
         </scene>
-        <!--Conversations View Controller - Conversations-->
+        <!--Conversations-->
         <scene sceneID="aoz-Ao-5CC">
             <objects>
                 <tableViewController storyboardIdentifier="JCConversationsViewController" id="Js6-I9-TTA" customClass="JCConversationsViewController" sceneMemberID="viewController">
@@ -428,7 +421,7 @@
             </objects>
             <point key="canvasLocation" x="2404" y="928"/>
         </scene>
-        <!--Messages View Controller - Message-->
+        <!--Message-->
         <scene sceneID="iGf-tq-oxI">
             <objects>
                 <viewController storyboardIdentifier="JCMessagesViewController" id="RK7-JP-3pc" customClass="JCMessagesViewController" sceneMemberID="viewController">
@@ -468,7 +461,7 @@
             </objects>
             <point key="canvasLocation" x="1507" y="928"/>
         </scene>
-        <!--Conversation Participants Table View Controller - Participants-->
+        <!--Participants-->
         <scene sceneID="S6a-1p-MZI">
             <objects>
                 <tableViewController id="P6D-vf-ctd" customClass="JCConversationParticipantsTableViewController" sceneMemberID="viewController">
@@ -503,7 +496,7 @@
             </objects>
             <point key="canvasLocation" x="1923" y="928"/>
         </scene>
-        <!--Navigation Controller - Conversations-->
+        <!--Conversations-->
         <scene sceneID="CrH-tM-3Aa">
             <objects>
                 <navigationController storyboardIdentifier="ConversationsNavigationController" definesPresentationContext="YES" id="H1Y-oH-62n" sceneMemberID="viewController">
@@ -639,7 +632,6 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="1Dx-j0-tAx"/>
-                    <size key="freeformSize" width="320" height="568"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p0l-oT-Syh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -687,7 +679,6 @@
                             <outlet property="delegate" destination="2lz-xZ-R2g" id="GII-tv-RaI"/>
                         </connections>
                     </tableView>
-                    <size key="freeformSize" width="320" height="568"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bPS-ui-FEi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -817,7 +808,6 @@
                             <outlet property="delegate" destination="HPQ-hv-GJo" id="0P5-dj-Kq6"/>
                         </connections>
                     </tableView>
-                    <size key="freeformSize" width="320" height="568"/>
                     <connections>
                         <outlet property="presenceAvailable" destination="dgV-eR-wIN" id="1Xm-0U-cS6"/>
                         <outlet property="presenceBusy" destination="MRs-xQ-3p0" id="3n0-tC-gk0"/>
