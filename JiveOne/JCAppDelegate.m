@@ -361,7 +361,12 @@ int didNotify;
 {
     LOG_Info();
 //    [[JCSocketDispatch sharedInstance] setStartedInBackground:YES];
-
+    
+    // If we are not a V5 PBX, we do not have a voicemail data to go fetch, and return with a no data callback.
+    PBX *pbx = [PBX fetchFirstPBX];
+    if (!pbx.v5)
+        return UIBackgroundFetchResultNoData;
+    
     NSLog(@"APPDELEGATE - performFetchWithCompletionHandler");
     __block UIBackgroundFetchResult fetchResult = UIBackgroundFetchResultFailed;
     if ([JasmineSocket sharedInstance].socket.readyState != SR_OPEN) {
@@ -373,12 +378,7 @@ int didNotify;
             TRVSMonitor *monitor = [TRVSMonitor monitor];
             NSInteger previousCount = [self currentBadgeCount];
 
-            
-// V5 only provides voicemail through REST. So re make a REST Call
-            
-			NSPredicate *linesWithUrlNotNil = [NSPredicate predicateWithFormat:@"mailboxUrl != nil"];
-			NSArray* lines = [Lines MR_findAllWithPredicate:linesWithUrlNotNil];
-			
+            // V5 only provides voicemail through REST. So re make a REST Call
             [[JCVoicemailClient sharedClient] getVoicemails:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
                 if (suceeded) {
                     NSLog(@"Success Done with Block");
