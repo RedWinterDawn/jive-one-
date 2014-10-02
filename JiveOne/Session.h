@@ -27,6 +27,7 @@ public:
 		,mIsReferCall(false)
 		,mExistEarlyMedia(false)
         ,mVideoState(false)
+		,mCallState(JCNoCall)
 	{
 
 	}
@@ -100,6 +101,7 @@ public:
 		mOriginCallSessionId = INVALID_SESSION_ID;
 		mExistEarlyMedia = false;
         mVideoState = false;
+		mCallState = JCNoCall;
 	}
 
 	bool isReferCall() { return mIsReferCall; }
@@ -113,12 +115,15 @@ public:
 	{
 		mVideoState = state;
 	}
-    
-    
-    
+	
 	bool getVideoState()
 	{
 		return mVideoState;
+	}
+	
+	JCCall getCallState()
+	{
+		return mCallState;
 	}
 
 protected:
@@ -135,6 +140,7 @@ private:
 	long mOriginCallSessionId;
 	bool mExistEarlyMedia;
     bool mVideoState;
+	JCCall mCallState;
 };
 
 
