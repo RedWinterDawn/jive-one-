@@ -36,11 +36,22 @@
     }
 }
 
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"hold"])
+        [self showHoldStateAnimated:YES];
+}
+
 #pragma mark - Setters -
 
 -(void)setCallCard:(JCCallCard *)callCard
 {
+    if (_callCard)
+        [_callCard removeObserver:self forKeyPath:@"hold"];
+    
     _callCard = callCard;
+    [callCard addObserver:self forKeyPath:@"hold" options:NSKeyValueObservingOptionInitial context:NULL];
+    
     [self setNeedsLayout];
 }
 
@@ -54,7 +65,6 @@
 -(IBAction)toggleHold:(id)sender
 {
     _callCard.hold = !_callCard.hold;
-    [self showHoldStateAnimated:YES];
 }
 
 -(IBAction)answer:(id)sender
