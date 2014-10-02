@@ -1177,6 +1177,56 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="248" horizontalCompressionResistancePriority="249" verticalCompressionResistancePriority="253" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="74r-RB-XRO" customClass="JCRoundedButton">
+                                        <rect key="frame" x="78" y="114" width="60" height="60"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="Ojc-ZC-ISl"/>
+                                            <constraint firstAttribute="width" constant="60" id="xrI-7O-nSn"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" image="transfer-mergCalls-white">
+                                            <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="blindTransfer:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="7RN-IC-tVQ"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Merge Calls" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tug-Ny-Zug">
+                                        <rect key="frame" x="78" y="173" width="67" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="Zjg-DA-LjX"/>
+                                            <constraint firstAttribute="height" constant="21" id="eR6-x1-eoA"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="248" horizontalCompressionResistancePriority="249" verticalCompressionResistancePriority="253" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h6q-Cp-RHf" customClass="JCRoundedButton">
+                                        <rect key="frame" x="181" y="114" width="60" height="60"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="TID-1S-dYP"/>
+                                            <constraint firstAttribute="width" constant="60" id="kQp-yb-wgz"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" image="transfer-swapCalls-white">
+                                            <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="blindTransfer:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="cxU-wd-J8I"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Swap Calls" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9H2-tC-F7q">
+                                        <rect key="frame" x="181" y="173" width="64" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="sg8-Mm-wYE"/>
+                                            <constraint firstAttribute="width" constant="60" id="yod-Ap-qq1"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Warm Transfer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qTn-fV-hyq">
                                         <rect key="frame" x="118" y="173" width="85" height="21"/>
                                         <constraints>
@@ -1265,26 +1315,46 @@
                                     <constraint firstItem="zZ6-Xz-Txj" firstAttribute="baseline" secondItem="Tcw-Rg-ytb" secondAttribute="baseline" id="49V-dL-Exc"/>
                                     <constraint firstAttribute="bottom" secondItem="pl8-2v-mXV" secondAttribute="bottom" constant="114" id="4uN-vY-9p8"/>
                                     <constraint firstItem="zZ6-Xz-Txj" firstAttribute="centerX" secondItem="8rt-eE-9r5" secondAttribute="centerX" id="7MI-n8-mKr"/>
+                                    <constraint firstItem="h6q-Cp-RHf" firstAttribute="trailing" secondItem="esd-M8-Lxg" secondAttribute="trailing" constant="79" id="7YY-95-Yrw"/>
+                                    <constraint firstItem="zZ6-Xz-Txj" firstAttribute="baseline" secondItem="h6q-Cp-RHf" secondAttribute="baseline" id="9rF-ap-MEQ"/>
+                                    <constraint firstItem="Tug-Ny-Zug" firstAttribute="top" secondItem="74r-RB-XRO" secondAttribute="bottom" constant="-1" id="C49-Ev-4RQ"/>
                                     <constraint firstAttribute="trailing" secondItem="zZ6-Xz-Txj" secondAttribute="trailing" constant="26" id="DYV-bD-9b9"/>
                                     <constraint firstItem="SPX-SZ-R8t" firstAttribute="top" secondItem="pl8-2v-mXV" secondAttribute="bottom" constant="-1" id="Fy0-1x-RvD"/>
                                     <constraint firstItem="szn-nR-AS9" firstAttribute="top" secondItem="OJ5-fR-lFW" secondAttribute="bottom" constant="-1" id="HDS-mW-jLn"/>
                                     <constraint firstItem="pl8-2v-mXV" firstAttribute="baseline" secondItem="lUT-6r-uIK" secondAttribute="baseline" id="JMB-GO-VML"/>
+                                    <constraint firstItem="9H2-tC-F7q" firstAttribute="top" secondItem="h6q-Cp-RHf" secondAttribute="bottom" constant="-1" id="Ofm-Ye-22x"/>
                                     <constraint firstItem="Tcw-Rg-ytb" firstAttribute="centerX" secondItem="qTn-fV-hyq" secondAttribute="centerX" constant="-0.5" id="RFe-8c-z8i"/>
+                                    <constraint firstItem="74r-RB-XRO" firstAttribute="leading" secondItem="esd-M8-Lxg" secondAttribute="leading" constant="-78" id="Sle-cw-UfB"/>
                                     <constraint firstAttribute="trailing" secondItem="TRc-ED-Hu8" secondAttribute="trailing" constant="26" id="UVn-b2-dkj"/>
                                     <constraint firstAttribute="centerX" secondItem="Tcw-Rg-ytb" secondAttribute="centerX" id="W2k-NJ-N1l"/>
                                     <constraint firstItem="lUT-6r-uIK" firstAttribute="leading" secondItem="esd-M8-Lxg" secondAttribute="leading" constant="26" id="Yji-60-neP"/>
+                                    <constraint firstItem="Tug-Ny-Zug" firstAttribute="centerX" secondItem="74r-RB-XRO" secondAttribute="centerX" id="ZiI-Cg-Soe"/>
                                     <constraint firstAttribute="centerX" secondItem="pl8-2v-mXV" secondAttribute="centerX" id="fM0-R2-bNm"/>
+                                    <constraint firstItem="9H2-tC-F7q" firstAttribute="centerX" secondItem="h6q-Cp-RHf" secondAttribute="centerX" id="g4c-Ls-2cO"/>
                                     <constraint firstItem="V8W-GZ-oVM" firstAttribute="top" secondItem="TRc-ED-Hu8" secondAttribute="bottom" constant="-1" id="hz5-U8-kCY"/>
                                     <constraint firstItem="szn-nR-AS9" firstAttribute="centerX" secondItem="OJ5-fR-lFW" secondAttribute="centerX" id="jIG-vz-dWY"/>
                                     <constraint firstItem="TRc-ED-Hu8" firstAttribute="baseline" secondItem="pl8-2v-mXV" secondAttribute="baseline" id="ke4-LB-vCb"/>
                                     <constraint firstItem="TRc-ED-Hu8" firstAttribute="centerX" secondItem="V8W-GZ-oVM" secondAttribute="centerX" id="l3O-hR-CFj"/>
                                     <constraint firstItem="OJ5-fR-lFW" firstAttribute="baseline" secondItem="Tcw-Rg-ytb" secondAttribute="baseline" id="mkb-XW-72e"/>
+                                    <constraint firstItem="74r-RB-XRO" firstAttribute="baseline" secondItem="OJ5-fR-lFW" secondAttribute="baseline" id="pO5-sY-6CY"/>
                                     <constraint firstItem="c8n-IX-EHR" firstAttribute="top" secondItem="lUT-6r-uIK" secondAttribute="bottom" constant="-1" id="qHD-FB-M58"/>
                                     <constraint firstAttribute="bottom" secondItem="Tcw-Rg-ytb" secondAttribute="bottom" constant="20" id="rFD-yx-ctB"/>
                                     <constraint firstItem="c8n-IX-EHR" firstAttribute="centerX" secondItem="lUT-6r-uIK" secondAttribute="centerX" id="u5X-og-qMu"/>
                                     <constraint firstItem="OJ5-fR-lFW" firstAttribute="leading" secondItem="esd-M8-Lxg" secondAttribute="leading" constant="26" id="z7y-YX-FcN"/>
                                     <constraint firstItem="8rt-eE-9r5" firstAttribute="top" secondItem="zZ6-Xz-Txj" secondAttribute="bottom" constant="-1" id="zdz-Fm-Yty"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="addCallBtn" destination="zZ6-Xz-Txj" id="b4G-5D-UI8"/>
+                                    <outlet property="addCallBtnHorizontalContstraint" destination="DYV-bD-9b9" id="VYv-yH-ZGz"/>
+                                    <outlet property="mergeBtn" destination="74r-RB-XRO" id="Xnc-9d-2Uh"/>
+                                    <outlet property="mergeBtnHorizontalContstraint" destination="Sle-cw-UfB" id="PPx-jk-KzW"/>
+                                    <outlet property="swapBtn" destination="h6q-Cp-RHf" id="0Xg-AE-Xjy"/>
+                                    <outlet property="swapBtnHorizontalContstraint" destination="7YY-95-Yrw" id="cBF-Mi-fxX"/>
+                                    <outlet property="transferBtn" destination="OJ5-fR-lFW" id="w4t-3L-JfO"/>
+                                    <outlet property="transferBtnHorizontalContstraint" destination="z7y-YX-FcN" id="Rjc-Mt-gWN"/>
+                                    <outlet property="warmBtnVerticalConstraint" destination="rFD-yx-ctB" id="xUA-9x-3Vv"/>
+                                    <outlet property="warmTransferBtn" destination="Tcw-Rg-ytb" id="ihM-SK-BfF"/>
+                                </connections>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2573,7 +2643,9 @@
         <image name="nav-people.png" width="44" height="44"/>
         <image name="transfer-call-green" width="35" height="35"/>
         <image name="transfer-cancel-white" width="35" height="35"/>
+        <image name="transfer-mergCalls-white" width="35" height="35"/>
         <image name="transfer-onhold-mini-blackish" width="11" height="12"/>
+        <image name="transfer-swapCalls-white" width="35" height="35"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
