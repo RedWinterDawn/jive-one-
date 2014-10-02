@@ -22,20 +22,17 @@
 
 -(void)setHold:(BOOL)hold
 {
-    
-    
     [[JCCallCardManager sharedManager] placeCallOnHold:self];
     
-    //TODO: talk to acctual SIP interface to find out call status, etc, and hold/unhold
+    self.holdStarted = [NSDate date];
     
+    //TODO: talk to acctual SIP interface to find out call status, etc, and hold/unhold
     _hold = hold;
 }
 
 -(BOOL)hold
 {
-    
     //TODO: get actual hold status from SIP interface.
-    
     return _hold;
 }
 

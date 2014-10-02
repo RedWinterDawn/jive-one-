@@ -12,6 +12,7 @@
 #import "JCCallCard.h"
 
 extern NSString *const kJCCallCardManagerAddedCallNotification;
+extern NSString *const kJCCallCardManagerRemoveCallNotification;
 extern NSString *const kJCCallCardManagerUpdatedIndex;
 
 @interface JCCallCardManager : NSObject

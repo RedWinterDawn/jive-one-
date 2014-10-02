@@ -9,6 +9,7 @@
 #import "JCCallCardManager.h"
 
 NSString *const kJCCallCardManagerAddedCallNotification = @"addedCall";
+NSString *const kJCCallCardManagerRemoveCallNotification = @"removedCall";
 
 NSString *const kJCCallCardManagerUpdatedIndex = @"index";
 
@@ -29,32 +30,47 @@ NSString *const kJCCallCardManagerUpdatedIndex = @"index";
     callCard.dialNumber = dialNumber;
     callCard.started = [NSDate date];
     
+    // TODO: Do something to initiate the call.
+    
     [self addCallCard:callCard];
 }
 
 -(void)hangUpCall:(JCCallCard *)callCard
 {
+    // TODO: do something to end the Sip call
     
+    
+    [self removeCall:callCard];
 }
 
 -(void)placeCallOnHold:(JCCallCard *)callCard
 {
+    // TODO: do something to place the call on hold
     
 }
 
 -(void)removeFromHold:(JCCallCard *)callCard
 {
-    
+    // TODO: do something to remove call from hold.
 }
 
 -(NSUInteger)totalCalls
 {
     return self.incomingCalls.count + self.currentCalls.count;
 }
-
                      
 #pragma mark - Private -
-                     
+
+-(void)removeCall:(JCCallCard *)callCard
+{
+    if (![_currentCalls containsObject:callCard])
+        return;
+    
+    NSUInteger index = [_currentCalls indexOfObject:callCard];
+    [_currentCalls removeObject:callCard];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerRemoveCallNotification object:self userInfo:@{kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:index]}];
+}
+
 -(void)addCallCard:(JCCallCard *)callCard
 {
     if (!_currentCalls)
@@ -62,7 +78,7 @@ NSString *const kJCCallCardManagerUpdatedIndex = @"index";
     [_currentCalls addObject:callCard];
     
     // Sort the array and fetch the resulting new index of the call card.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"started" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"started" ascending:NO];
     [_currentCalls sortUsingDescriptors:@[sortDescriptor]];
     
     NSUInteger newIndex = [_currentCalls indexOfObject:callCard];
