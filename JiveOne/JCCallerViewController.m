@@ -13,7 +13,7 @@
 
 NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTransferModal";
 
-@interface JCCallerViewController () <JCTransferViewControllerDelegate>
+@interface JCCallerViewController () <JCTransferViewControllerDelegate, JCCallCardViewDelegate>
 {
     UIViewController *_presentedTransferViewController;
 }
@@ -21,6 +21,14 @@ NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTran
 @end
 
 @implementation JCCallerViewController
+
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    JCCallCardView *callCardView = [JCCallCardView createCallCardWithIdentifier:@"1" delegate:self];
+    [self.callCardList addSubview:callCardView];
+}
 
 #pragma mark - IBActions -
 
@@ -31,7 +39,7 @@ NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTran
 
 -(IBAction)keypad:(id)sender
 {
-    [self closeCallerViewController];
+    
 }
 
 -(IBAction)mute:(id)sender
@@ -106,12 +114,48 @@ NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTran
 
 #pragma mark - Delegate Handlers -
 
+-(void)callCardViewShouldHangUp:(JCCallCardView *)view
+{
+    // TODO: Do whatever to close the call for whatever call has the given identifier
+    //NSString *callIdentifier = view.identifer;
+    
+    // Update UI
+    [self.callCardList removeCallCard:view];
+    
+    // If no other calls are active, close caller.
+    if (self.callCardList.count == 0)
+        [self closeCallerViewController];
+}
+
+-(void)callCardViewShouldHold:(JCCallCardView *)view
+{
+    // TODO: Do whatever to close the call for whatever call has the given identifier
+    //NSString *callIdentifier = view.identifer;
+}
+
 #pragma mark JCTransferViewController
 
 -(void)transferViewController:(JCTransferViewController *)controller shouldDialNumber:(NSString *)dialString
 {
     [self dismissTransferViewControllerAnimated:NO];
     NSLog(@"%@, %i", dialString, controller.transferType);
+    
+    /*if (controller.transferType == JCTransferBlind)
+    {
+        
+    }
+    else if(controller.transferType == JCTransferHold)
+    {
+        
+    }
+    else if(controller.transferType == JCTransferWarm)
+    {
+        
+    }*/
+    
+    
+    JCCallCardView *callCardView = [JCCallCardView createCallCardWithIdentifier:@"2" delegate:self];
+    [self.callCardList addSubview:callCardView];
 }
 
 -(void)shouldCancelTransferViewController:(JCTransferViewController *)controller

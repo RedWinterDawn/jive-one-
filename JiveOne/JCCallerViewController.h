@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JCCallCardListView.h"
 
 @class JCCallerViewController;
 
@@ -18,7 +19,9 @@
 
 @interface JCCallerViewController : UIViewController
 
-@property (nonatomic, weak) id<JCCallerViewControllerDelegate> delegate;
+@property (nonatomic, weak) IBOutlet id<JCCallerViewControllerDelegate> delegate;
+@property (nonatomic, weak) IBOutlet JCCallCardListView *callCardList;
+
 @property (nonatomic, strong) NSString *dialString;
 
 -(IBAction)warmTransfer:(id)sender;

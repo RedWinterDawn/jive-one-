@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "nav-dialpad-black.png"
+      "filename" : "keypad-black.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "nav-dialpad-black@2x.png"
+      "filename" : "keypad-black@1x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "nav-dialpad-black@3x.png"
+      "filename" : "keypad-black@2x.png"
     }
   ],
   "info" : {
