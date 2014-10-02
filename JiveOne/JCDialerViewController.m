@@ -2,36 +2,116 @@
 //  JCDialerViewController.m
 //  JiveOne
 //
-//  Created by Daniel George on 9/29/14.
+//  Created by P Leonard on 9/29/14.
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
 #import "JCDialerViewController.h"
 
-@interface JCDialerViewController ()
+#import "JCCallerViewController.h"
+
+NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCall";
+
+@interface JCDialerViewController () <JCCallerViewControllerDelegate>
 
 @end
+
 
 @implementation JCDialerViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    // Initialy hide the backspace button
+    self.backspaceBtn.alpha = 0;
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    UIViewController *viewController = segue.destinationViewController;
+    if ([viewController isKindOfClass:[JCCallerViewController class]])
+    {
+        JCCallerViewController *callerViewController = (JCCallerViewController *)viewController;
+        callerViewController.dialString = self.dialStringLabel.dialString;
+        callerViewController.delegate = self;
+    }
 }
-*/
+
+#pragma mark - IBActions -
+
+-(IBAction)numPadPressed:(id)sender
+{
+    if ([sender isKindOfClass:[UIButton class]])
+    {
+        UIButton *button = (UIButton *)sender;
+        [self.dialStringLabel append:[self characterFromNumPadTag:button.tag]];
+    }
+}
+
+-(IBAction)initiateCall:(id)sender
+{
+    [self performSegueWithIdentifier:kJCDialerViewControllerCallerStoryboardIdentifier sender:self];
+}
+
+-(IBAction)backspace:(id)sender
+{
+    [self.dialStringLabel backspace];
+}
+
+-(IBAction)clear:(id)sender
+{
+    [self.dialStringLabel clear];
+}
+
+#pragma mark - Private -
+
+-(NSString *)characterFromNumPadTag:(int)tag
+{
+    switch (tag) {
+        case 10:
+            return @"*";
+        case 11:
+            return @"#";
+        default:
+            return [NSString stringWithFormat:@"%i", tag];
+    }
+}
+
+-(void)didUpdateDialString:(NSString *)dialString
+{
+    __unsafe_unretained JCDialerViewController *weakSelf = self;
+    if (dialString.length == 0) {
+        [UIView animateWithDuration:0.3
+                         animations:^{
+                             weakSelf.backspaceBtn.alpha = 0;
+                         }
+                         completion:^(BOOL finished) {
+     
+                         }];
+    } else {
+        [UIView animateWithDuration:0.3
+                         animations:^{
+                             weakSelf.backspaceBtn.alpha = 1;
+                         }
+                         completion:^(BOOL finished) {
+     
+                         }];
+    }
+}
+
+#pragma mark - Delegate Handlers -
+
+#pragma mark JCCallerViewController
+
+-(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController
+{
+    [self dismissViewControllerAnimated:NO completion:^{
+        
+    }];
+}
 
 @end
+
+

@@ -1833,8 +1833,6 @@
 				<string>27F64D6019772D6A00F772AA</string>
 				<string>27F64D6119772D6A00F772AA</string>
 				<string>2751591618AD300B00FD8D3F</string>
-				<string>279A3E5619DAA51500B0793C</string>
-				<string>279A3E5719DAA51500B0793C</string>
 				<string>27F64D5A19772CCF00F772AA</string>
 				<string>27F64D5B19772CCF00F772AA</string>
 				<string>27F64D5719772CCE00F772AA</string>
@@ -2522,6 +2520,7 @@
 		<dict>
 			<key>children</key>
 			<array>
+				<string>F8B62E4119D9F1C300AF98D3</string>
 				<string>277F093E18FECEB800EEF0E3</string>
 				<string>277F093B18FECE5E00EEF0E3</string>
 				<string>277F093D18FECEA800EEF0E3</string>
@@ -2551,8 +2550,6 @@
 				<string>DD54A055195B894E001A34F3</string>
 				<string>DD54A05D195CE271001A34F3</string>
 				<string>DD54A05E195CE271001A34F3</string>
-				<string>279A4E2E19DA9A8200E8AB7B</string>
-				<string>279A4E2F19DA9A8200E8AB7B</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
@@ -2662,8 +2659,6 @@
 				<string>27997573195A12C5001425CC</string>
 				<string>27997575195A12D7001425CC</string>
 				<string>27997576195A12D7001425CC</string>
-				<string>279A3E5919DAA57F00B0793C</string>
-				<string>279A3E5A19DAA57F00B0793C</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
@@ -2760,7 +2755,7 @@
 				<key>CLASSPREFIX</key>
 				<string>JC</string>
 				<key>LastUpgradeCheck</key>
-				<string>0510</string>
+				<string>0600</string>
 				<key>ORGANIZATIONNAME</key>
 				<string>Jive Communications, Inc</string>
 				<key>TargetAttributes</key>
@@ -2842,9 +2837,10 @@
 			<string>2147483647</string>
 			<key>files</key>
 			<array>
-				<string>279A4E3019DA9A8200E8AB7B</string>
 				<string>9103271718F34BEC00437503</string>
+				<string>5D15AF2C19DB271500E86116</string>
 				<string>F2459BB218C67FC000AF56CF</string>
+				<string>F8A2BC0B19DB5B3C00251310</string>
 				<string>279975F2195B1BCD001425CC</string>
 				<string>277F094218FED58C00EEF0E3</string>
 				<string>27F1F2DA191C171300AEAFD7</string>
@@ -2853,6 +2849,7 @@
 				<string>279E4CA9192273E5002A556C</string>
 				<string>27F1F2EC191C171300AEAFD7</string>
 				<string>27F1F2ED191C171300AEAFD7</string>
+				<string>5D629BAD19D9C41900F5744E</string>
 				<string>27F1F2E6191C171300AEAFD7</string>
 				<string>270559A5196DD11700A7AF35</string>
 				<string>270152CB1901D86700F271CE</string>
@@ -2865,9 +2862,13 @@
 				<string>27F1F2E3191C171300AEAFD7</string>
 				<string>27F1F2E5191C171300AEAFD7</string>
 				<string>91915738195B209D004BDE26</string>
+				<string>F8A2BC0819DB56BA00251310</string>
 				<string>27F1F2E4191C171300AEAFD7</string>
+				<string>F8B62E5B19DB091500AF98D3</string>
 				<string>2762C45818B4177D00885918</string>
 				<string>DDEC37D01910126900E166CC</string>
+				<string>5D03649619DC77E20090CC21</string>
+				<string>5DA5A1AF19DAF91400968F7D</string>
 				<string>27F1F2EE191C171300AEAFD7</string>
 				<string>2788F146190EACD20099348D</string>
 				<string>2700987E18F4714100B6BC2F</string>
@@ -2890,6 +2891,7 @@
 				<string>2700988018F4714100B6BC2F</string>
 				<string>274493BC18D0E98C002744CB</string>
 				<string>27F1F2E7191C171300AEAFD7</string>
+				<string>F8B62E4419D9F1E400AF98D3</string>
 				<string>279E4CB3192273E5002A556C</string>
 				<string>279E4CAD192273E5002A556C</string>
 				<string>27D2C1F7196F030C005285FF</string>
@@ -2909,11 +2911,13 @@
 				<string>2700987518F4714100B6BC2F</string>
 				<string>279E4CB5192273E5002A556C</string>
 				<string>275F4A6218AD0FBC00D2F069</string>
+				<string>5D03649119DC5A450090CC21</string>
 				<string>270559A8196DD11800A7AF35</string>
 				<string>DDEC37D6191029B800E166CC</string>
 				<string>2788F14A190EB1260099348D</string>
 				<string>2784BA681940344000389F5F</string>
 				<string>279E4CAB192273E5002A556C</string>
+				<string>5D15AF2B19DB271500E86116</string>
 				<string>27F1F2D7191C171300AEAFD7</string>
 				<string>91CAE6811961EA6A004A28FD</string>
 				<string>91260EDD18B2965900704670</string>
@@ -2930,17 +2934,18 @@
 				<string>270152C61901D1FF00F271CE</string>
 				<string>2799757D195A1FC4001425CC</string>
 				<string>276CFEAB196AF45F00C30B30</string>
+				<string>5DA5A1B219DAFEAD00968F7D</string>
 				<string>2700987D18F4714100B6BC2F</string>
 				<string>27F1F2D9191C171300AEAFD7</string>
 				<string>2736698218BD441D0069B4B3</string>
 				<string>91915732195A2DC0004BDE26</string>
+				<string>5D629BB019D9CE4500F5744E</string>
 				<string>2788F143190EACD20099348D</string>
 				<string>27F1F2EA191C171300AEAFD7</string>
 				<string>27997574195A12C5001425CC</string>
 				<string>2787911318CF79DC004DE651</string>
 				<string>2700987C18F4714100B6BC2F</string>
 				<string>276215211912AA7400CFBCC8</string>
-				<string>279A3E5819DAA51500B0793C</string>
 				<string>91B7CFC5192ABDF800927DDD</string>
 				<string>27F1F2D4191C171300AEAFD7</string>
 				<string>279E4CAF192273E5002A556C</string>
@@ -2959,7 +2964,6 @@
 				<string>27B8152618D93F1A00516BF6</string>
 				<string>27F1F2D5191C171300AEAFD7</string>
 				<string>91CAE67E1961E47F004A28FD</string>
-				<string>279A3E5B19DAA57F00B0793C</string>
 				<string>2700987418F4714100B6BC2F</string>
 			</array>
 			<key>isa</key>
@@ -3019,7 +3023,6 @@
 				<string>DD577D531940DC6C008DAB46</string>
 				<string>270098C418F5EA9300B6BC2F</string>
 				<string>2700989118F4714100B6BC2F</string>
-				<string>91F6DFB5192A7080001C54FB</string>
 				<string>27F1F2F8191C171300AEAFD7</string>
 				<string>2700989218F4714100B6BC2F</string>
 				<string>27F1779318FDEECE0073C6AD</string>
@@ -3041,12 +3044,12 @@
 				<string>F202433D18B2CF4A006DB2EF</string>
 				<string>2700988A18F4714100B6BC2F</string>
 				<string>9103271818F34BEC00437503</string>
+				<string>5D03649319DC754C0090CC21</string>
 				<string>27F1F2DC191C171300AEAFD7</string>
 				<string>270098A218F4714100B6BC2F</string>
 				<string>2700989418F4714100B6BC2F</string>
 				<string>2700989E18F4714100B6BC2F</string>
 				<string>9136FF281925D7350040B367</string>
-				<string>91F6DFAF192A7053001C54FB</string>
 				<string>270098A818F4714100B6BC2F</string>
 				<string>270098AA18F4714100B6BC2F</string>
 				<string>27F1F2FD191C171300AEAFD7</string>
@@ -3055,7 +3058,6 @@
 				<string>27F1F2FE191C171300AEAFD7</string>
 				<string>27C3715218EDE9A000F159EF</string>
 				<string>270098C818F5EA9300B6BC2F</string>
-				<string>91F6DFAB192A702F001C54FB</string>
 				<string>F59AE2C5192F07BA00CAF0F3</string>
 				<string>2700989918F4714100B6BC2F</string>
 				<string>270098A418F4714100B6BC2F</string>
@@ -3106,7 +3108,6 @@
 				<string>2700988E18F4714100B6BC2F</string>
 				<string>2700988318F4714100B6BC2F</string>
 				<string>27FE96F919802D81009C6C67</string>
-				<string>91B4A53419427A9C00DC7459</string>
 				<string>F59AE2BD192F07BA00CAF0F3</string>
 				<string>27F1F2F7191C171300AEAFD7</string>
 				<string>2700989518F4714100B6BC2F</string>
@@ -3117,7 +3118,6 @@
 				<string>2700988618F4714100B6BC2F</string>
 				<string>27A86A9019461ED500332965</string>
 				<string>27F1F2DD191C171300AEAFD7</string>
-				<string>91F6DFB2192A706B001C54FB</string>
 				<string>27F1F2FB191C171300AEAFD7</string>
 				<string>91ADB99118D8BBDA00DF41A3</string>
 				<string>270098A518F4714100B6BC2F</string>
@@ -3294,6 +3294,7 @@
 				<string>275F4A6318AD0FBC00D2F069</string>
 				<string>275F4A6618AD0FBC00D2F069</string>
 				<string>27EA5DB1190888AD008C7590</string>
+				<string>5D03649219DC754C0090CC21</string>
 				<string>275F4A6F18AD0FBC00D2F069</string>
 				<string>2764BDB918C83A80007320B0</string>
 				<string>275F4A5818AD0FBC00D2F069</string>
@@ -4001,9 +4002,9 @@
 				<key>CLANG_ENABLE_OBJC_ARC</key>
 				<string>YES</string>
 				<key>CODE_SIGN_IDENTITY</key>
-				<string>iPhone Distribution: JIVE COMMUNICATIONS, INC</string>
+				<string>iPhone Developer</string>
 				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
-				<string>iPhone Distribution: JIVE COMMUNICATIONS, INC</string>
+				<string>iPhone Developer</string>
 				<key>FRAMEWORK_SEARCH_PATHS</key>
 				<string></string>
 				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
@@ -4040,7 +4041,7 @@
 				<key>PRODUCT_NAME</key>
 				<string>$(TARGET_NAME)</string>
 				<key>PROVISIONING_PROFILE</key>
-				<string>5D91116E-2070-4EF3-880B-C4A07E2656B7</string>
+				<string></string>
 				<key>TARGETED_DEVICE_FAMILY</key>
 				<string>1</string>
 				<key>WRAPPER_EXTENSION</key>
@@ -4374,11 +4375,15 @@
 			<array>
 				<string>919DD29A1922E2770039205E</string>
 				<string>91E3738219351E0C00534C7C</string>
+				<string>5D629BAB19D9C41900F5744E</string>
+				<string>5D629BAC19D9C41900F5744E</string>
 				<string>27EA1DFB1900A83D0075CAEE</string>
 				<string>27EA1DFC1900A83D0075CAEE</string>
 				<string>273CC25C1900B23B005A2857</string>
 				<string>273CC25D1900B23B005A2857</string>
 				<string>91ADB98F18D8BBDA00DF41A3</string>
+				<string>5D629BAE19D9CE4500F5744E</string>
+				<string>5D629BAF19D9CE4500F5744E</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
@@ -4626,6 +4631,10 @@
 		<dict>
 			<key>children</key>
 			<array>
+				<string>5D15AF2719DB271500E86116</string>
+				<string>5D15AF2819DB271500E86116</string>
+				<string>5D15AF2919DB271500E86116</string>
+				<string>5D15AF2A19DB271500E86116</string>
 				<string>2788F148190EB1260099348D</string>
 				<string>2788F149190EB1260099348D</string>
 				<string>2762151C1912AA2500CFBCC8</string>
@@ -4874,105 +4883,6 @@
 		<dict>
 			<key>fileRef</key>
 			<string>279975F1195B1BCD001425CC</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>279A3E5619DAA51500B0793C</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>LineConfiguration.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>279A3E5719DAA51500B0793C</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>LineConfiguration.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>279A3E5819DAA51500B0793C</key>
-		<dict>
-			<key>fileRef</key>
-			<string>279A3E5719DAA51500B0793C</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>279A3E5919DAA57F00B0793C</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>LineConfiguration+Custom.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>279A3E5A19DAA57F00B0793C</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>LineConfiguration+Custom.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>279A3E5B19DAA57F00B0793C</key>
-		<dict>
-			<key>fileRef</key>
-			<string>279A3E5A19DAA57F00B0793C</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>279A4E2E19DA9A8200E8AB7B</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.h</string>
-			<key>path</key>
-			<string>JCV4ProvisioningClient.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>279A4E2F19DA9A8200E8AB7B</key>
-		<dict>
-			<key>fileEncoding</key>
-			<string>4</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>JCV4ProvisioningClient.m</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>279A4E3019DA9A8200E8AB7B</key>
-		<dict>
-			<key>fileRef</key>
-			<string>279A4E2F19DA9A8200E8AB7B</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
@@ -8701,6 +8611,290 @@ fi
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>5D03648F19DC5A450090CC21</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>JCTransferViewController.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>5D03649019DC5A450090CC21</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>JCTransferViewController.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>5D03649119DC5A450090CC21</key>
+		<dict>
+			<key>fileRef</key>
+			<string>5D03649019DC5A450090CC21</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>5D03649219DC754C0090CC21</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file.xib</string>
+			<key>path</key>
+			<string>CallCard.xib</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>5D03649319DC754C0090CC21</key>
+		<dict>
+			<key>fileRef</key>
+			<string>5D03649219DC754C0090CC21</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>5D03649419DC77E20090CC21</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>JCCallCardListView.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>5D03649519DC77E20090CC21</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>JCCallCardListView.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>5D03649619DC77E20090CC21</key>
+		<dict>
+			<key>fileRef</key>
+			<string>5D03649519DC77E20090CC21</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>5D15AF2719DB271500E86116</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>NSString+DialString.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>5D15AF2819DB271500E86116</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>NSString+DialString.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>5D15AF2919DB271500E86116</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>NSString+IsNumeric.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>5D15AF2A19DB271500E86116</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>NSString+IsNumeric.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>5D15AF2B19DB271500E86116</key>
+		<dict>
+			<key>fileRef</key>
+			<string>5D15AF2819DB271500E86116</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>5D15AF2C19DB271500E86116</key>
+		<dict>
+			<key>fileRef</key>
+			<string>5D15AF2A19DB271500E86116</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>5D629BAB19D9C41900F5744E</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>JCVoiceViewController.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>5D629BAC19D9C41900F5744E</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>JCVoiceViewController.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>5D629BAD19D9C41900F5744E</key>
+		<dict>
+			<key>fileRef</key>
+			<string>5D629BAC19D9C41900F5744E</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>5D629BAE19D9CE4500F5744E</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>JCVoiceNonVisualViewController.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>5D629BAF19D9CE4500F5744E</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>JCVoiceNonVisualViewController.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>5D629BB019D9CE4500F5744E</key>
+		<dict>
+			<key>fileRef</key>
+			<string>5D629BAF19D9CE4500F5744E</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>5DA5A1AD19DAF91400968F7D</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>JCCallerViewController.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>5DA5A1AE19DAF91400968F7D</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>JCCallerViewController.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>5DA5A1AF19DAF91400968F7D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>5DA5A1AE19DAF91400968F7D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>5DA5A1B019DAFEAD00968F7D</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>JCDialStringLabel.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>5DA5A1B119DAFEAD00968F7D</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>JCDialStringLabel.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>5DA5A1B219DAFEAD00968F7D</key>
+		<dict>
+			<key>fileRef</key>
+			<string>5DA5A1B119DAFEAD00968F7D</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>6594302CE0A00068957DC0D5</key>
 		<dict>
 			<key>includeInIndex</key>
@@ -9405,13 +9599,6 @@ fi
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>91B4A53419427A9C00DC7459</key>
-		<dict>
-			<key>fileRef</key>
-			<string>91B4A53319427A9C00DC7459</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
 		<key>91B7CFC2192ABBEF00927DDD</key>
 		<dict>
 			<key>children</key>
@@ -9794,13 +9981,6 @@ fi
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>91F6DFAB192A702F001C54FB</key>
-		<dict>
-			<key>fileRef</key>
-			<string>91F6DFAA192A702F001C54FB</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
 		<key>91F6DFAE192A7053001C54FB</key>
 		<dict>
 			<key>fileEncoding</key>
@@ -9813,13 +9993,6 @@ fi
 			<string>Release.xcconfig</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
-		</dict>
-		<key>91F6DFAF192A7053001C54FB</key>
-		<dict>
-			<key>fileRef</key>
-			<string>91F6DFAE192A7053001C54FB</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
 		</dict>
 		<key>91F6DFB1192A706B001C54FB</key>
 		<dict>
@@ -9834,13 +10007,6 @@ fi
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>91F6DFB2192A706B001C54FB</key>
-		<dict>
-			<key>fileRef</key>
-			<string>91F6DFB1192A706B001C54FB</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
 		<key>91F6DFB4192A7080001C54FB</key>
 		<dict>
 			<key>fileEncoding</key>
@@ -9853,13 +10019,6 @@ fi
 			<string>Enterprise.xcconfig</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
-		</dict>
-		<key>91F6DFB5192A7080001C54FB</key>
-		<dict>
-			<key>fileRef</key>
-			<string>91F6DFB4192A7080001C54FB</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
 		</dict>
 		<key>91F6DFB7192A7B35001C54FB</key>
 		<dict>
@@ -9944,9 +10103,9 @@ fi
 				<key>CLANG_ENABLE_OBJC_ARC</key>
 				<string>YES</string>
 				<key>CODE_SIGN_IDENTITY</key>
-				<string>iPhone Distribution: Jive Communications, Inc (5NE3JJD5L3)</string>
+				<string>iPhone Developer</string>
 				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
-				<string>iPhone Distribution: Jive Communications, Inc (5NE3JJD5L3)</string>
+				<string>iPhone Developer</string>
 				<key>FRAMEWORK_SEARCH_PATHS</key>
 				<string></string>
 				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
@@ -9983,7 +10142,7 @@ fi
 				<key>PRODUCT_NAME</key>
 				<string>$(TARGET_NAME)</string>
 				<key>PROVISIONING_PROFILE</key>
-				<string>C3125494-B323-4069-B38E-29B30ADF7BFF</string>
+				<string></string>
 				<key>TARGETED_DEVICE_FAMILY</key>
 				<string>1</string>
 				<key>WRAPPER_EXTENSION</key>
@@ -10836,6 +10995,178 @@ fi
 		<dict>
 			<key>fileRef</key>
 			<string>F59AE2CB192F0B0D00CAF0F3</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>F8A2BC0619DB56BA00251310</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>JCCallCardView.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>F8A2BC0719DB56BA00251310</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>JCCallCardView.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>F8A2BC0819DB56BA00251310</key>
+		<dict>
+			<key>fileRef</key>
+			<string>F8A2BC0719DB56BA00251310</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>F8A2BC0919DB5B3C00251310</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>JCDialerOptions.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>F8A2BC0A19DB5B3C00251310</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>JCDialerOptions.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>F8A2BC0B19DB5B3C00251310</key>
+		<dict>
+			<key>fileRef</key>
+			<string>F8A2BC0A19DB5B3C00251310</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>F8A2BC0C19DB5FC400251310</key>
+		<dict>
+			<key>children</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>DialerButtons</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>F8B62E4119D9F1C300AF98D3</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>F8A2BC0C19DB5FC400251310</string>
+				<string>5DA5A1B019DAFEAD00968F7D</string>
+				<string>5DA5A1B119DAFEAD00968F7D</string>
+				<string>F8B62E4219D9F1E400AF98D3</string>
+				<string>F8B62E4319D9F1E400AF98D3</string>
+				<string>5DA5A1AD19DAF91400968F7D</string>
+				<string>5DA5A1AE19DAF91400968F7D</string>
+				<string>F8B62E5919DB091500AF98D3</string>
+				<string>F8B62E5A19DB091500AF98D3</string>
+				<string>5D03648F19DC5A450090CC21</string>
+				<string>5D03649019DC5A450090CC21</string>
+				<string>5D03649419DC77E20090CC21</string>
+				<string>5D03649519DC77E20090CC21</string>
+				<string>F8A2BC0619DB56BA00251310</string>
+				<string>F8A2BC0719DB56BA00251310</string>
+				<string>F8A2BC0919DB5B3C00251310</string>
+				<string>F8A2BC0A19DB5B3C00251310</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Dialer</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>F8B62E4219D9F1E400AF98D3</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>JCDialerViewController.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>F8B62E4319D9F1E400AF98D3</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>JCDialerViewController.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>F8B62E4419D9F1E400AF98D3</key>
+		<dict>
+			<key>fileRef</key>
+			<string>F8B62E4319D9F1E400AF98D3</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>F8B62E5919DB091500AF98D3</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>JCRoundedButton.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>F8B62E5A19DB091500AF98D3</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>JCRoundedButton.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>F8B62E5B19DB091500AF98D3</key>
+		<dict>
+			<key>fileRef</key>
+			<string>F8B62E5A19DB091500AF98D3</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
