@@ -91,4 +91,10 @@
     pbx.v5 = new_pbx[@"v5"] ? [NSNumber numberWithBool:[new_pbx[@"v5"] boolValue]] : false;
 }
 
++ (PBX *)fetchFirstPBX
+{
+    Lines *mailbox = [Lines MR_findFirst];
+    return [PBX MR_findFirstByAttribute:@"pbxId" withValue:mailbox.pbxId];
+}
+
 @end

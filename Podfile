@@ -14,6 +14,8 @@ pod 'NSLogger', '~> 1.2'
 pod 'JazzHands', '~> 0.1'
 pod 'tuneup_js', :inhibit_warnings =>true
 pod 'ELFixSecureTextFieldFont', :git => 'https://github.com/elegion/ELFixSecureTextFieldFont.git'
+pod 'libPhoneNumber-iOS', '~> 0.7'
 target :JiveOneTests, :exclusive => true do
    pod 'Kiwi', '~> 2.3'
 end
+pod 'XMLDictionary', '~> 1.4'
