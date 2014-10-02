@@ -15,7 +15,7 @@
 @property (nonatomic, strong) NSString *dialNumber;
 
 @property (nonatomic, strong) NSDate *started;
-
+@property (nonatomic, strong) NSDate *holdStarted;
 
 @property (nonatomic) BOOL hold;
 

@@ -12,6 +12,7 @@
 @interface JCCallCardCollectionViewCell()
 {
     NSTimer *_timer;
+    NSTimer *_holdTimer;
 }
 @end
 
@@ -26,6 +27,7 @@
     self.dialedNumberLabel.dialString = _callCard.dialNumber;
     
     self.holdCallButton.selected = _callCard.hold;
+    [self showHoldStateAnimated:NO];
     
     if (!_timer)
     {
@@ -34,19 +36,15 @@
     }
 }
 
--(void)timerUpdate
-{
-    int secondsElapsed = -[_callCard.started timeIntervalSinceNow];
-    int seconds = secondsElapsed % 60;
-    int minutes = secondsElapsed / 60;
-    self.elapsedTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d", minutes, seconds];
-}
+#pragma mark - Setters -
 
 -(void)setCallCard:(JCCallCard *)callCard
 {
     _callCard = callCard;
     [self setNeedsLayout];
 }
+
+#pragma mark - IBActions -
 
 -(IBAction)hangup:(id)sender
 {
@@ -56,11 +54,43 @@
 -(IBAction)toggleHold:(id)sender
 {
     _callCard.hold = !_callCard.hold;
+    [self showHoldStateAnimated:YES];
 }
 
 -(IBAction)answer:(id)sender
 {
     
 }
+
+#pragma mark - Private -
+
+-(void)timerUpdate
+{
+    int secondsElapsed = -[_callCard.started timeIntervalSinceNow];
+    int seconds = secondsElapsed % 60;
+    int minutes = secondsElapsed / 60;
+    self.elapsedTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d", minutes, seconds];
+}
+
+-(void)showHoldStateAnimated:(BOOL)animated
+{
+    __unsafe_unretained JCCallCardCollectionViewCell *weakSelf = self;
+    if (_callCard.hold)
+    {
+        [UIView animateWithDuration:(animated ? 0.3 : 0)
+                         animations:^{
+                             weakSelf.alpha = 0.5;
+                         }];
+    }
+    else
+    {
+        [UIView animateWithDuration:(animated ? 0.3 : 0)
+                         animations:^{
+                             weakSelf.alpha = 1;
+                         }];
+    }
+}
+
+
 
 @end

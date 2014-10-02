@@ -19,19 +19,41 @@ static NSString * const incommingCallCardCellReuseIdentifier = @"IncommingCallCa
 {
     [super viewDidLoad];
     self.collectionView.backgroundColor = [UIColor clearColor];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addedCallCardNotification:) name:kJCCallCardManagerAddedCallNotification object:[JCCallCardManager sharedManager]];
+    
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    JCCallCardManager *callCardManager = [JCCallCardManager sharedManager];
+    
+    [center addObserver:self selector:@selector(addedCallCardNotification:) name:kJCCallCardManagerAddedCallNotification object:callCardManager];
+    [center addObserver:self selector:@selector(callCardRemovedNotification:) name:kJCCallCardManagerRemoveCallNotification object:callCardManager];
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)addedCallCardNotification:(NSNotification *)notification
 {
-    NSDictionary *userInfo = notification.userInfo;
+    /*NSDictionary *userInfo = notification.userInfo;
     NSNumber *index = [userInfo objectForKey:kJCCallCardManagerUpdatedIndex];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index.integerValue inSection:1];
-    
-    
-    [self.collectionView reloadData];
     //[self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
-    //[self.collectionView insertItemsAtIndexPaths:@[indexPath]];
+    //[self.collectionView insertItemsAtIndexPaths:@[indexPath]];*/
+    
+    
+    // For now reload the whole table....will change to handle animated entry and exit.
+    [self.collectionView reloadData];
+    
+}
+
+-(void)callCardRemovedNotification:(NSNotification *)notification
+{
+    /*NSDictionary *userInfo = notification.userInfo;
+    NSNumber *index = [userInfo objectForKey:kJCCallCardManagerUpdatedIndex];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index.integerValue inSection:1];*/
+    
+    // For now reload the whole table....will change to handle animated entry and exit.
+    [self.collectionView reloadData];
 }
 
 #pragma mark - Priviate -
