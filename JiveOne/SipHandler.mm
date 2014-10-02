@@ -16,12 +16,12 @@
 }
 - (JCLineSession *)findSession:(long)sessionId;
 @property (nonatomic) NSMutableArray *lineSessions;
-
 @end
 
 #define ALERT_TAG_REFER 100
 @implementation SipHandler
 //@synthesize mActiveLine;
+
 
 + (instancetype) sharedHandler
 {

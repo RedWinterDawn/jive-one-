@@ -90,7 +90,6 @@
 		272B61DD18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */; };
 		272B61DE18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */; };
 		2736698218BD441D0069B4B3 /* JCPersonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2736698118BD441D0069B4B3 /* JCPersonCell.m */; };
-		27382ECB19DDAEF300130C20 /* JCDialerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27382ECA19DDAEF300130C20 /* JCDialerViewController.m */; };
 		273CC25E1900B23B005A2857 /* JCVoiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 273CC25D1900B23B005A2857 /* JCVoiceCell.m */; };
 		2741EB8118FC4C0200F2FE64 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2741EB8018FC4C0200F2FE64 /* CoreTelephony.framework */; };
 		274493B918D0E98C002744CB /* Presence.m in Sources */ = {isa = PBXBuildFile; fileRef = 274493B818D0E98C002744CB /* Presence.m */; };
@@ -165,6 +164,7 @@
 		27A01612192EF1E80073C824 /* companies.json in Resources */ = {isa = PBXBuildFile; fileRef = 27A01611192EF1E80073C824 /* companies.json */; };
 		27A86A9019461ED500332965 /* boss.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 27A86A8F19461ED500332965 /* boss.jpg */; };
 		27A86A9119461ED500332965 /* boss.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 27A86A8F19461ED500332965 /* boss.jpg */; };
+		27B6F23D19DDC676007E80DA /* JCDialerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8B62E4319D9F1E400AF98D3 /* JCDialerViewController.m */; };
 		27B8152618D93F1A00516BF6 /* NotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B8152518D93F1A00516BF6 /* NotificationView.m */; };
 		27B8153618D94E9C00516BF6 /* close_notification.png in Resources */ = {isa = PBXBuildFile; fileRef = 27B8153418D94E9C00516BF6 /* close_notification.png */; };
 		27B8153718D94E9C00516BF6 /* close_notification@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27B8153518D94E9C00516BF6 /* close_notification@2x.png */; };
@@ -304,7 +304,6 @@
 		F82A283E19DDC29400C3620D /* LineConfiguration+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = F82A283C19DDC29400C3620D /* LineConfiguration+Custom.m */; };
 		F8A2BC0819DB56BA00251310 /* JCCallCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = F8A2BC0719DB56BA00251310 /* JCCallCardView.m */; };
 		F8A2BC0B19DB5B3C00251310 /* JCDialerOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = F8A2BC0A19DB5B3C00251310 /* JCDialerOptions.m */; };
-		F8B62E4419D9F1E400AF98D3 /* JCDialerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8B62E4319D9F1E400AF98D3 /* JCDialerViewController.m */; };
 		F8B62E5B19DB091500AF98D3 /* JCRoundedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F8B62E5A19DB091500AF98D3 /* JCRoundedButton.m */; };
 /* End PBXBuildFile section */
 
@@ -425,8 +424,6 @@
 		27364B6C977955C61C47BA59 /* Pods.enterprise.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.enterprise.xcconfig; path = "Pods/Target Support Files/Pods/Pods.enterprise.xcconfig"; sourceTree = "<group>"; };
 		2736698018BD441D0069B4B3 /* JCPersonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPersonCell.h; sourceTree = "<group>"; };
 		2736698118BD441D0069B4B3 /* JCPersonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPersonCell.m; sourceTree = "<group>"; };
-		27382EC919DDAEF300130C20 /* JCDialerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDialerViewController.h; sourceTree = "<group>"; };
-		27382ECA19DDAEF300130C20 /* JCDialerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDialerViewController.m; sourceTree = "<group>"; };
 		273CC25C1900B23B005A2857 /* JCVoiceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVoiceCell.h; sourceTree = "<group>"; };
 		273CC25D1900B23B005A2857 /* JCVoiceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoiceCell.m; sourceTree = "<group>"; };
 		273D24A2193CCB73004D2B23 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
@@ -2365,7 +2362,7 @@
 				274493BC18D0E98C002744CB /* Company.m in Sources */,
 				27F1F2E7191C171300AEAFD7 /* UAPushSettingsAliasViewController.m in Sources */,
 				279A4E2C19DA91E100E8AB7B /* SipHandler.mm in Sources */,
-				27382ECB19DDAEF300130C20 /* JCDialerViewController.m in Sources */,
+				27B6F23D19DDC676007E80DA /* JCDialerViewController.m in Sources */,
 				279E4CB3192273E5002A556C /* MBContactModel.m in Sources */,
 				279E4CAD192273E5002A556C /* MBContactCollectionViewEntryCell.m in Sources */,
 				27D2C1F7196F030C005285FF /* JCLineSelectorViewController.m in Sources */,

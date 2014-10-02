@@ -19,21 +19,19 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic,retain) NSString *sipURL;
 @property NSInteger    mActiveLine;
-@property (nonatomic) NSMutableArray *lineSessions;
 
 //+ (instancetype) sharedHandler;
-+ (void)initiate;
-+ (void) pressNumpadButton:(char )dtmf;
-+ (void) makeCall:(NSString*) callee
-		videoCall:(BOOL)videoCall;
-+ (void) hungUpCall;
-+ (void) holdCall;
+- (void)initiate;
+- (void) pressNumpadButton:(char )dtmf;
+- (void) makeCall:(NSString*) callee videoCall:(BOOL)videoCall;
+- (void) hungUpCall;
+- (void) holdCall;
 //- (void) unholdCall;
-+ (void) hangUpCall;
-+ (void) referCall:(NSString*)referTo;
-+ (void) muteCall:(BOOL)mute;
-+ (void) setLoudspeakerStatus:(BOOL)enable;
-+ (void) toggleHoldForCallWithSessionState;
+- (void) hangUpCall;
+- (void) referCall:(NSString*)referTo;
+- (void) muteCall:(BOOL)mute;
+- (void) setLoudspeakerStatus:(BOOL)enable;
+- (void) toggleHoldForCallWithSessionState;
 
 //- (void) switchSessionLine;
 
