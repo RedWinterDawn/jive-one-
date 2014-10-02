@@ -108,7 +108,7 @@ static NSString * const incommingCallCardCellReuseIdentifier = @"IncommingCallCa
     if(calls == 2)
         return CGSizeMake(self.view.bounds.size.width, (self.view.bounds.size.height - 10) / 2 );
     
-    return CGSizeMake(self.view.bounds.size.width, 120);
+    return CGSizeMake(self.view.bounds.size.width, 150);
 }
 
 #pragma mark <UICollectionViewDelegate>
