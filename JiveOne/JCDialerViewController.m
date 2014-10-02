@@ -7,8 +7,8 @@
 //
 
 #import "JCDialerViewController.h"
-
 #import "JCCallerViewController.h"
+#import "SipHandler.h"
 
 NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCall";
 
@@ -22,6 +22,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	[SipHandler sharedHandler];
     
     // Initialy hide the backspace button
     self.backspaceBtn.alpha = 0;
@@ -52,6 +53,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 
 -(IBAction)initiateCall:(id)sender
 {
+	[[SipHandler sharedHandler] makeCall:self.dialStringLabel.text videoCall:NO];
     [self performSegueWithIdentifier:kJCDialerViewControllerCallerStoryboardIdentifier sender:self];
 }
 
