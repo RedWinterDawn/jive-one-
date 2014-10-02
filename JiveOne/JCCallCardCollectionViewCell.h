@@ -15,6 +15,7 @@
 @property (nonatomic, weak) IBOutlet UILabel *callerIdLabel;
 @property (nonatomic, weak) IBOutlet JCDialStringLabel *dialedNumberLabel;
 @property (nonatomic, weak) IBOutlet UILabel *elapsedTimeLabel;
+@property (nonatomic, weak) IBOutlet UILabel *holdElapsedTimeLabel;
 
 @property (nonatomic, weak) IBOutlet UIButton *endCallButton;
 @property (nonatomic, weak) IBOutlet UIButton *holdCallButton;

@@ -36,11 +36,22 @@
     }
 }
 
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"hold"])
+        [self showHoldStateAnimated:YES];
+}
+
 #pragma mark - Setters -
 
 -(void)setCallCard:(JCCallCard *)callCard
 {
+    if (_callCard)
+        [_callCard removeObserver:self forKeyPath:@"hold"];
+    
     _callCard = callCard;
+    [callCard addObserver:self forKeyPath:@"hold" options:NSKeyValueObservingOptionInitial context:NULL];
+    
     [self setNeedsLayout];
 }
 
@@ -54,12 +65,11 @@
 -(IBAction)toggleHold:(id)sender
 {
     _callCard.hold = !_callCard.hold;
-    [self showHoldStateAnimated:YES];
 }
 
 -(IBAction)answer:(id)sender
 {
-    
+    [_callCard answerCall];
 }
 
 #pragma mark - Private -
@@ -72,11 +82,26 @@
     self.elapsedTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d", minutes, seconds];
 }
 
+-(void)holdTimerUpdate
+{
+    int secondsElapsed = -[_callCard.holdStarted timeIntervalSinceNow];
+    int seconds = secondsElapsed % 60;
+    int minutes = secondsElapsed / 60;
+    self.holdElapsedTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d", minutes, seconds];
+}
+
 -(void)showHoldStateAnimated:(BOOL)animated
 {
     __unsafe_unretained JCCallCardCollectionViewCell *weakSelf = self;
     if (_callCard.hold)
     {
+        if (_holdTimer)
+        {
+            [_holdTimer invalidate];
+            _holdTimer = nil;
+        }
+        
+        _holdTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(holdTimerUpdate) userInfo:nil repeats:YES];
         [UIView animateWithDuration:(animated ? 0.3 : 0)
                          animations:^{
                              weakSelf.alpha = 0.5;
@@ -84,6 +109,9 @@
     }
     else
     {
+        [_holdTimer invalidate];
+        _holdTimer = nil;
+        
         [UIView animateWithDuration:(animated ? 0.3 : 0)
                          animations:^{
                              weakSelf.alpha = 1;
