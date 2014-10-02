@@ -72,11 +72,26 @@
     self.elapsedTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d", minutes, seconds];
 }
 
+-(void)holdTimerUpdate
+{
+    int secondsElapsed = -[_callCard.holdStarted timeIntervalSinceNow];
+    int seconds = secondsElapsed % 60;
+    int minutes = secondsElapsed / 60;
+    self.holdElapsedTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d", minutes, seconds];
+}
+
 -(void)showHoldStateAnimated:(BOOL)animated
 {
     __unsafe_unretained JCCallCardCollectionViewCell *weakSelf = self;
     if (_callCard.hold)
     {
+        if (_holdTimer)
+        {
+            [_holdTimer invalidate];
+            _holdTimer = nil;
+        }
+        
+        _holdTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(holdTimerUpdate) userInfo:nil repeats:YES];
         [UIView animateWithDuration:(animated ? 0.3 : 0)
                          animations:^{
                              weakSelf.alpha = 0.5;
@@ -84,6 +99,9 @@
     }
     else
     {
+        [_holdTimer invalidate];
+        _holdTimer = nil;
+        
         [UIView animateWithDuration:(animated ? 0.3 : 0)
                          animations:^{
                              weakSelf.alpha = 1;
