@@ -46,6 +46,9 @@
 #define kScopeProfile @"contacts.v1.profile.read"
 #define kScopeVoicemail @"vm.v1.msgs.meta.read"
 
+#pragma mark - SIP SDK
+#define kPortSIPKey @"	"
+
 
 #pragma mark - Presence Constants
 #define kPresenceAvailable @"Available"
@@ -87,7 +90,15 @@
 #define UDdeviceToken @"deviceToken"
 #define kRememberMe @"keyrememberme"
 
-
+typedef enum {
+	JCNoCall,
+	JCCallRinging,
+	JCCallCanceled,
+	JCCallConnected,
+	JCCallFailed,
+	JCTransferSuccess,
+	JCTransferFailed
+} JCCall;
 
 typedef enum {
     JCPresenceTypeOffline = 0,
