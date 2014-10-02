@@ -24,5 +24,6 @@
 
 -(IBAction)hangup:(id)sender;
 -(IBAction)toggleHold:(id)sender;
+-(IBAction)answer:(id)sender;
 
 @end

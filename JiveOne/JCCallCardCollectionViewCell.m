@@ -58,4 +58,9 @@
     _callCard.hold = !_callCard.hold;
 }
 
+-(IBAction)answer:(id)sender
+{
+    
+}
+
 @end

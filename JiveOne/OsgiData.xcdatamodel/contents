@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13E28" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6244" systemVersion="13F34" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Company" representedClassName="Company" syncable="YES">
         <attribute name="companyId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="createDate" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -43,6 +43,13 @@
     </entity>
     <entity name="ConversationETag" representedClassName="ConversationETag" syncable="YES">
         <attribute name="etag" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="LineConfiguration" representedClassName="LineConfiguration" syncable="YES">
+        <attribute name="display" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="outboundProxy" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="registrationHost" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sipPassword" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sipUsername" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="LineGroup" representedClassName="LineGroup" syncable="YES">
         <attribute name="groupId" optional="YES" attributeType="String" syncable="YES"/>
@@ -149,5 +156,6 @@
         <element name="Presence" positionX="0" positionY="0" width="128" height="120"/>
         <element name="Voicemail" positionX="0" positionY="0" width="128" height="283"/>
         <element name="VoicemailETag" positionX="9" positionY="153" width="128" height="58"/>
+        <element name="LineConfiguration" positionX="18" positionY="153" width="128" height="118"/>
     </elements>
 </model>

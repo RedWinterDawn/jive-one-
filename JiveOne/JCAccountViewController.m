@@ -185,7 +185,7 @@
     [self presenceTypeChanged:presenceType];
 }
 
-#pragma makr - Line Selector Delegate
+#pragma mark - Line Selector Delegate
 - (void)didChangeLine:(Lines *)selectedLine
 {
 	[self selectedLineChanged:selectedLine];
