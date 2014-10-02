@@ -163,7 +163,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FNP-y4-bzi" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2273" y="972"/>
+            <point key="canvasLocation" x="-1987" y="692"/>
         </scene>
         <!--Status View Controller-->
         <scene sceneID="Zxi-Am-zZd">
@@ -403,7 +403,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-2031" y="-1519"/>
+            <point key="canvasLocation" x="-1380" y="-1537"/>
         </scene>
         <!--People-->
         <scene sceneID="4Zu-Qh-4wk">
@@ -530,7 +530,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h1W-r8-SuZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-424" y="29"/>
+            <point key="canvasLocation" x="-485" y="440"/>
         </scene>
         <!--Phone-->
         <scene sceneID="BaF-LF-Hu7">
@@ -1299,7 +1299,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dIP-55-Mtj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-267" y="1193"/>
+            <point key="canvasLocation" x="-316" y="1151"/>
         </scene>
         <!--Call Card Collection View Controller-->
         <scene sceneID="evG-m7-7Dg">
@@ -1356,7 +1356,7 @@
                                                     <rect key="frame" x="-1" y="0.0" width="20" height="20"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Call State" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lB8-8A-Qf5">
-                                                    <rect key="frame" x="20" y="0.0" width="268" height="20"/>
+                                                    <rect key="frame" x="18" y="0.0" width="270" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="37" id="3OY-as-zuZ"/>
                                                     </constraints>
@@ -1547,7 +1547,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UHI-u8-S2O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="171" y="861.5"/>
+            <point key="canvasLocation" x="173" y="966.5"/>
         </scene>
         <!--Transfer-->
         <scene sceneID="Nc0-xg-t5k">
@@ -2101,7 +2101,7 @@
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="646" y="1187"/>
+            <point key="canvasLocation" x="173" y="1531"/>
         </scene>
         <!--Keypad-->
         <scene sceneID="UYS-F1-4gx">
@@ -2151,7 +2151,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3tX-BI-B8u" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-36" y="293"/>
+            <point key="canvasLocation" x="-47" y="440"/>
         </scene>
         <!--Voicemail-->
         <scene sceneID="Sds-P7-Vc1">
@@ -2499,7 +2499,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="PKy-V4-VLv"/>
+        <segue reference="dIf-i9-QYA"/>
         <segue reference="EOv-Zd-uHq"/>
     </inferredMetricsTieBreakers>
 </document>
