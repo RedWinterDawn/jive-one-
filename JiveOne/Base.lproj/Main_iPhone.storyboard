@@ -1439,7 +1439,7 @@
             <objects>
                 <collectionViewController id="Kvn-c6-FPG" customClass="JCCallCardCollectionViewController" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" id="Gwv-qN-HJW">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <inset key="scrollIndicatorInsets" minX="0.0" minY="0.0" maxX="-9" maxY="0.0"/>
@@ -1865,11 +1865,11 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UHI-u8-S2O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="217.5" y="741.5"/>
+            <point key="canvasLocation" x="251" y="1151"/>
         </scene>
         <!--Transfer-->
         <scene sceneID="Nc0-xg-t5k">
