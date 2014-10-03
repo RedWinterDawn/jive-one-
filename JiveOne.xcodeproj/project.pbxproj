@@ -227,6 +227,7 @@
 		5D15AF2B19DB271500E86116 /* NSString+DialString.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D15AF2819DB271500E86116 /* NSString+DialString.m */; };
 		5D15AF2C19DB271500E86116 /* NSString+IsNumeric.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D15AF2A19DB271500E86116 /* NSString+IsNumeric.m */; };
 		5D1FAC5F19DDD68000899915 /* JCCallCardCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FAC5E19DDD68000899915 /* JCCallCardCollectionViewCell.m */; };
+		5D1FAC6219DDFF5300899915 /* JCCallCardCollectionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FAC6119DDFF5300899915 /* JCCallCardCollectionLayout.m */; };
 		5D629BAD19D9C41900F5744E /* JCVoiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D629BAC19D9C41900F5744E /* JCVoiceViewController.m */; };
 		5D629BB019D9CE4500F5744E /* JCVoiceNonVisualViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D629BAF19D9CE4500F5744E /* JCVoiceNonVisualViewController.m */; };
 		5DA5A1AF19DAF91400968F7D /* JCCallerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA5A1AE19DAF91400968F7D /* JCCallerViewController.m */; };
@@ -708,6 +709,8 @@
 		5D15AF2A19DB271500E86116 /* NSString+IsNumeric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+IsNumeric.m"; sourceTree = "<group>"; };
 		5D1FAC5D19DDD68000899915 /* JCCallCardCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCallCardCollectionViewCell.h; sourceTree = "<group>"; };
 		5D1FAC5E19DDD68000899915 /* JCCallCardCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallCardCollectionViewCell.m; sourceTree = "<group>"; };
+		5D1FAC6019DDFF5300899915 /* JCCallCardCollectionLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCallCardCollectionLayout.h; sourceTree = "<group>"; };
+		5D1FAC6119DDFF5300899915 /* JCCallCardCollectionLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallCardCollectionLayout.m; sourceTree = "<group>"; };
 		5D629BAB19D9C41900F5744E /* JCVoiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVoiceViewController.h; sourceTree = "<group>"; };
 		5D629BAC19D9C41900F5744E /* JCVoiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoiceViewController.m; sourceTree = "<group>"; };
 		5D629BAE19D9CE4500F5744E /* JCVoiceNonVisualViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVoiceNonVisualViewController.h; sourceTree = "<group>"; };
@@ -1961,6 +1964,8 @@
 				5DA5A1AE19DAF91400968F7D /* JCCallerViewController.m */,
 				5DBBDCC119DCB29100A4DB96 /* JCCallCardCollectionViewController.h */,
 				5DBBDCC219DCB29100A4DB96 /* JCCallCardCollectionViewController.m */,
+				5D1FAC6019DDFF5300899915 /* JCCallCardCollectionLayout.h */,
+				5D1FAC6119DDFF5300899915 /* JCCallCardCollectionLayout.m */,
 				5D1FAC5D19DDD68000899915 /* JCCallCardCollectionViewCell.h */,
 				5D1FAC5E19DDD68000899915 /* JCCallCardCollectionViewCell.m */,
 				5DBBDCC719DDA0A300A4DB96 /* JCCallCard.h */,
@@ -2310,6 +2315,7 @@
 				274493CE18D13538002744CB /* Common.m in Sources */,
 				27F1F2D8191C171300AEAFD7 /* UAInboxMessageViewController.m in Sources */,
 				919DD2A11922E3570039205E /* JCPopoverView.m in Sources */,
+				5D1FAC6219DDFF5300899915 /* JCCallCardCollectionLayout.m in Sources */,
 				2700987B18F4714100B6BC2F /* JSDismissiveTextView.m in Sources */,
 				27DADE141940C13600F2C9B4 /* UIImage+ImageEffects.m in Sources */,
 				F82A284119DDC55E00C3620D /* JCV4ProvisioningClient.m in Sources */,
