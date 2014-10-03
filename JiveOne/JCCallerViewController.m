@@ -59,7 +59,7 @@ NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTran
 
 -(IBAction)keypad:(id)sender
 {
-    [self.dialerOptions setState:JCDialerOptionMultiple animated:YES];
+    [self.dialerOptions setState:JCDialerOptionConference animated:YES];
 }
 
 -(IBAction)mute:(id)sender

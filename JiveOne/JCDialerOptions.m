@@ -141,19 +141,19 @@
 -(void)showMultiple:(BOOL)animated
 {
     if (_showingSingle)
-    {
         [self hideSingle:animated completion:^(BOOL finished) {
             [self showMultiple:animated completion:NULL];
         }];
-    }
+    
     else if (_showingConference)
-    {
-        
-    }
+        [self hideConference:animated completion:^(BOOL finished) {
+            [self showMultiple:animated completion:NULL];
+        }];
+    
     else if (_showingFinish)
-    {
-        
-    }
+        [self hideFinishTransfer:animated completion:^(BOOL finished) {
+            [self showMultiple:animated completion:NULL];
+        }];
 }
 
 -(void)showMultiple:(bool)animated completion:(void (^)(BOOL finished))completion
@@ -187,61 +187,45 @@
 -(void)showConference:(bool)animated
 {
     if (_showingSingle)
-    {
         [self hideSingle:animated completion:^(BOOL finished) {
-            //[self showMultiple:animated completion:NULL];
+            [self showConference:animated completion:NULL];
         }];
-    }
+    
     else if (_showingMultiple)
-    {
         [self hideMultiple:animated completion:^(BOOL finished) {
-            
+            [self showConference:animated completion:NULL];
         }];
-    }
+    
     else if (_showingFinish)
-    {
-        
-    }
+        [self hideFinishTransfer:animated completion:^(BOOL finished) {
+            [self showConference:animated completion:NULL];
+        }];
 }
 
 -(void)showConference:(bool)animated completion:(void (^)(BOOL finished))completion
 {
-    /*_swapBtnHorizontalContstraint.constant  = - _defaultSwapPosition;
     _mergeBtnHorizontalContstraint.constant = - _defaultMergePosition;
-    [self needsUpdateConstraints];
+    _addCallBtnHorizontalContstraint.constant = - _defaultSwapPosition;
     
-    [UIView animateWithDuration:animated ? _annimationDuration : 0
-                          delay:0
-                        options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^{
-                         [self layoutIfNeeded];
-                     }
-                     completion:^(BOOL finished) {
-                         _showingMultiple = true;
-                         if (completion != NULL && finished)
-                             completion(finished);
-                     }];*/
+    [self animate:animated completion:^(BOOL finished) {
+        _showingConference = true;
+        if (completion != NULL && finished)
+            completion(finished);
+    }];
 }
 
 
 
 -(void)hideConference:(bool)animated completion:(void (^)(BOOL finished))completion
 {
-    /*_swapBtnHorizontalContstraint.constant  = _defaultSwapPosition;
     _mergeBtnHorizontalContstraint.constant = _defaultMergePosition;
-    [self needsUpdateConstraints];
+    _addCallBtnHorizontalContstraint.constant = _defaultSwapPosition;
     
-    [UIView animateWithDuration:animated ? _annimationDuration : 0
-                          delay:0
-                        options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^{
-                         [self layoutIfNeeded];
-                     }
-                     completion:^(BOOL finished) {
-                         _showingMultiple = false;
-                         if (completion != NULL && finished)
-                             completion(finished);
-                     }];*/
+    [self animate:animated completion:^(BOOL finished) {
+        _showingConference = false;
+        if (completion != NULL && finished)
+            completion(finished);
+    }];
 }
 
 #pragma mark - Finish Transfer -
@@ -249,21 +233,19 @@
 -(void)showFinishTransfer:(bool)animated
 {
     if (_showingSingle)
-    {
         [self hideSingle:animated completion:^(BOOL finished) {
-            [self showMultiple:animated completion:NULL];
+            [self showFinishTransfer:animated completion:NULL];
         }];
-    }
+    
     else if (_showingMultiple)
-    {
         [self hideMultiple:animated completion:^(BOOL finished) {
-            
+            [self showFinishTransfer:animated completion:NULL];
         }];
-    }
+    
     else if (_showingConference)
-    {
-        
-    }
+        [self hideConference:animated completion:^(BOOL finished) {
+            [self showFinishTransfer:animated completion:NULL];
+        }];
 }
 
 -(void)showFinishTransfer:(bool)animated completion:(void (^)(BOOL finished))completion
@@ -278,7 +260,7 @@
 
 -(void)hideFinishTransfer:(bool)animated completion:(void (^)(BOOL finished))completion
 {
-    _finishTransferConstraint.constant = - (_defaultFinishPosition / 4);
+    _finishTransferConstraint.constant = _defaultFinishPosition;
     [self animate:animated completion:^(BOOL finished) {
         _showingFinish = false;
         if (completion != NULL && finished)
