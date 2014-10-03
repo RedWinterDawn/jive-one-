@@ -8,10 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import <PortSIPLib/PortSIPSDK.h>
+#import "Lines+Custom.h"
 
 @interface SipHandler : NSObject <PortSIPEventDelegate>
 {
-	
 	BOOL mSIPRegistered;
 	NSString *sipUrl;
 }
@@ -24,7 +24,7 @@
 + (instancetype) sharedHandler;
 - (void)initiate;
 - (void) pressNumpadButton:(char )dtmf;
-- (void) makeCall:(NSString*) callee videoCall:(BOOL)videoCall;
+- (void) makeCall:(NSString*)callee videoCall:(BOOL)videoCall contactName:(NSString *)contactName;
 - (void) hungUpCall;
 - (void) holdCall;
 //- (void) unholdCall;
@@ -33,6 +33,7 @@
 - (void) muteCall:(BOOL)mute;
 - (void) setLoudspeakerStatus:(BOOL)enable;
 - (void) toggleHoldForCallWithSessionState;
+- (NSArray *) findAllActiveLines;
 
 //- (void) switchSessionLine;
 

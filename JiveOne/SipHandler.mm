@@ -260,6 +260,17 @@
 	return nil;
 }
 
+- (NSArray *) findAllActiveLines {
+	NSMutableArray *activeLines = [NSMutableArray new];
+	for (JCLineSession *line in self.lineSessions)
+	{
+		if (line.mSessionState) {
+			[activeLines addObject:line];
+		}
+	}
+	return activeLines;
+}
+
 - (void) pressNumpadButton:(char )dtmf
 {
 	JCLineSession *session = [self findLineWithSessionState];
@@ -270,7 +281,7 @@
 }
 
 - (void) makeCall:(NSString*) callee
-		videoCall:(BOOL)videoCall
+		videoCall:(BOOL)videoCall contactName:(NSString *)contactName;
 {
 
 	JCLineSession *currentSession = [self findLineWithSessionState];
@@ -300,6 +311,10 @@
 	{
 		[currentSession setMSessionId:sessionId];
 		[currentSession setMSessionState:true];
+		
+		[currentSession setCallTitle:contactName ? contactName : callee];
+		[currentSession setCallDetail:callee];
+		
 
 		
 //		mSessionArray[mActiveLine].setSessionId(sessionId);
@@ -314,7 +329,7 @@
 	{
 		//TODO:update call state
 		[currentSession setMCallState:JCCallFailed];
-//		[numpadViewController setStatusText:[NSString  stringWithFormat:@"make call failure ErrorCode =%ld", sessionId]];
+		[currentSession reset];
 	}
 }
 
@@ -358,13 +373,17 @@
 - (void) toggleHoldForCallWithSessionState
 {
 	JCLineSession *selectedLine = [self findLineWithSessionState];
+	if (!selectedLine) {
+		selectedLine = [self findLineWithHoldState];
+	}
+	
 	if (selectedLine.mHoldSate) {
 		[_mPortSIPSDK unHold:selectedLine.mSessionId];
-		[selectedLine setMHoldSate:false];
+		[selectedLine setMHoldSate:NO];
 	}
 	else {
 		[_mPortSIPSDK hold:selectedLine.mSessionId];
-		[selectedLine setMHoldSate:true];
+		[selectedLine setMHoldSate:YES];
 	}
 }
 
@@ -588,6 +607,10 @@
 	
 	[idleLine setMSessionId:sessionId];
 	[idleLine setMRecvCallState:true];
+	[idleLine setCallTitle:[NSString stringWithUTF8String:callerDisplayName]];
+	[idleLine setCallDetail:[NSString stringWithUTF8String:caller]];
+	
+	
 
 //	mSessionArray[index].setVideoState(existsVideo);
 //	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Incoming call:%s on line %d",caller, index]];
