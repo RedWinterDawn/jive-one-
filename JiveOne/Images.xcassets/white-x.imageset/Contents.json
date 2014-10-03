@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "transfer-check-white.png"
+      "filename" : "white-X@1x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "transfer-check-white@2x.png"
+      "filename" : "white-X@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "transfer-check-white@3x.png"
+      "filename" : "white-X@3x.png"
     }
   ],
   "info" : {

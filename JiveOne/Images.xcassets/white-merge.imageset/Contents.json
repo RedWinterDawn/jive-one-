@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "cancel-white.png"
+      "filename" : "white-merge@1x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "cancel-white@2x.png"
+      "filename" : "transfer-merge-white@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "cancel-white@3x.png"
+      "filename" : "transfer-merge-white@3x.png"
     }
   ],
   "info" : {
