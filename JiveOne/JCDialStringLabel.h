@@ -20,7 +20,7 @@
 @interface JCDialStringLabel : UILabel
 
 @property (nonatomic, weak) IBOutlet id <JCDialStringLabelDelegate> delegate;
-@property (nonatomic, readonly) NSString *dialString;
+@property (nonatomic) NSString *dialString;
 
 // Appends a string to the internal dial string at the end of the string.
 -(void)append:(NSString *)string;

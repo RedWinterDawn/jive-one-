@@ -10,6 +10,4 @@
 
 @interface JCVoiceNonVisualViewController : UIViewController
 
--(IBAction)callVoicemail:(id)sender;
-
 @end

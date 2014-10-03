@@ -7,17 +7,29 @@
 //
 
 #import "JCVoiceNonVisualViewController.h"
+#import "JCCallerViewController.h"
 
-@interface JCVoiceNonVisualViewController ()
+@interface JCVoiceNonVisualViewController () <JCCallerViewControllerDelegate>
 
 @end
 
 @implementation JCVoiceNonVisualViewController
 
-
--(IBAction)callVoicemail:(id)sender
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    NSLog(@"SHould call voicmail....however that is done.");
+    UIViewController *viewController = segue.destinationViewController;
+    if ([viewController isKindOfClass:[JCCallerViewController class]]) {
+        JCCallerViewController *callerViewController = (JCCallerViewController *)viewController;
+        callerViewController.delegate = self;
+        callerViewController.dialString = @"*99";
+    }
+}
+
+-(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController
+{
+    [self dismissViewControllerAnimated:NO completion:^{
+        
+    }];
 }
 
 @end
