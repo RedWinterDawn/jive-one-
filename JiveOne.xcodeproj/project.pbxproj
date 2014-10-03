@@ -176,6 +176,7 @@
 		27E9A35818E0A17A0017B65D /* Presence+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E9A35718E0A17A0017B65D /* Presence+Custom.m */; };
 		27EA1DFD1900A83D0075CAEE /* JCVoiceTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EA1DFC1900A83D0075CAEE /* JCVoiceTableViewController.m */; };
 		27EA5DB2190888AD008C7590 /* Draft_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27EA5DB1190888AD008C7590 /* Draft_iPhone.storyboard */; };
+		27EB18BF19DE045900C1503B /* JCV5ApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EB18BE19DE045900C1503B /* JCV5ApiClient.m */; };
 		27F1779218FDEECE0073C6AD /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27F1778C18FDEECE0073C6AD /* libTestFlight.a */; };
 		27F1779318FDEECE0073C6AD /* TestFlightREADME.md in Resources */ = {isa = PBXBuildFile; fileRef = 27F1778D18FDEECE0073C6AD /* TestFlightREADME.md */; };
 		27F1779418FDEECE0073C6AD /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 27F1778E18FDEECE0073C6AD /* release_notes.md */; };
@@ -551,6 +552,8 @@
 		27EA1DFB1900A83D0075CAEE /* JCVoiceTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVoiceTableViewController.h; sourceTree = "<group>"; };
 		27EA1DFC1900A83D0075CAEE /* JCVoiceTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoiceTableViewController.m; sourceTree = "<group>"; };
 		27EA5DB1190888AD008C7590 /* Draft_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Draft_iPhone.storyboard; sourceTree = "<group>"; };
+		27EB18BD19DE045900C1503B /* JCV5ApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCV5ApiClient.h; sourceTree = "<group>"; };
+		27EB18BE19DE045900C1503B /* JCV5ApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCV5ApiClient.m; sourceTree = "<group>"; };
 		27F1778C18FDEECE0073C6AD /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
 		27F1778D18FDEECE0073C6AD /* TestFlightREADME.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TestFlightREADME.md; sourceTree = "<group>"; };
 		27F1778E18FDEECE0073C6AD /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
@@ -1099,6 +1102,8 @@
 		270152C71901D77A00F271CE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				F82A283919DDC29400C3620D /* LineConfiguration.h */,
+				F82A283A19DDC29400C3620D /* LineConfiguration.m */,
 				270559A6196DD11800A7AF35 /* LineGroup.h */,
 				270559A7196DD11800A7AF35 /* LineGroup.m */,
 				270559A3196DD11700A7AF35 /* ContactGroup.h */,
@@ -1217,10 +1222,6 @@
 		2751590818AD16E200FD8D3F /* Clients */ = {
 			isa = PBXGroup;
 			children = (
-				F82A283919DDC29400C3620D /* LineConfiguration.h */,
-				F82A283A19DDC29400C3620D /* LineConfiguration.m */,
-				F82A283B19DDC29400C3620D /* LineConfiguration+Custom.h */,
-				F82A283C19DDC29400C3620D /* LineConfiguration+Custom.m */,
 				F82A283619DDC12700C3620D /* JCV4ProvisioningClient.h */,
 				F82A283719DDC12700C3620D /* JCV4ProvisioningClient.m */,
 				91059D341949F8E6002DE67C /* LoggerCommon.h */,
@@ -1234,6 +1235,8 @@
 				DD54A055195B894E001A34F3 /* JCVoicemailClient.m */,
 				DD54A05D195CE271001A34F3 /* JCJifClient.h */,
 				DD54A05E195CE271001A34F3 /* JCJifClient.m */,
+				27EB18BD19DE045900C1503B /* JCV5ApiClient.h */,
+				27EB18BE19DE045900C1503B /* JCV5ApiClient.m */,
 			);
 			name = Clients;
 			sourceTree = "<group>";
@@ -1258,6 +1261,8 @@
 				27997573195A12C5001425CC /* PBX+Custom.m */,
 				27997575195A12D7001425CC /* Lines+Custom.h */,
 				27997576195A12D7001425CC /* Lines+Custom.m */,
+				F82A283B19DDC29400C3620D /* LineConfiguration+Custom.h */,
+				F82A283C19DDC29400C3620D /* LineConfiguration+Custom.m */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -2359,6 +2364,7 @@
 				2700987618F4714100B6BC2F /* UIImage+JSMessagesView.m in Sources */,
 				27F1F2E1191C171300AEAFD7 /* UALocationDemoAnnotation.m in Sources */,
 				2700988018F4714100B6BC2F /* JSMessageTableView.m in Sources */,
+				27EB18BF19DE045900C1503B /* JCV5ApiClient.m in Sources */,
 				274493BC18D0E98C002744CB /* Company.m in Sources */,
 				27F1F2E7191C171300AEAFD7 /* UAPushSettingsAliasViewController.m in Sources */,
 				279A4E2C19DA91E100E8AB7B /* SipHandler.mm in Sources */,
