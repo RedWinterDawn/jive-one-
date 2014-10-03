@@ -15,6 +15,8 @@ NSString *const kJCCallCardManagerAddedCurrentCallNotification = @"addedCurrentC
 NSString *const kJCCallCardManagerRemoveCurrentCallNotification = @"removedCurrentCall";
 
 NSString *const kJCCallCardManagerUpdatedIndex = @"index";
+NSString *const kJCCallCardManagerPriorUpdateCount = @"priorCount";
+NSString *const kJCCallCardManagerUpdateCount = @"updateCount";
 
 @interface JCCallCardManager ()
 {
@@ -24,21 +26,29 @@ NSString *const kJCCallCardManagerUpdatedIndex = @"index";
 
 @end
 
-
 @implementation JCCallCardManager
 
 -(void)addIncomingCall:(JCCallCard *)callCard
 {
     if (!_incomingCalls)
         _incomingCalls = [NSMutableArray array];
+    
+    NSUInteger priorCount = self.totalCalls;
     [_incomingCalls addObject:callCard];
+    callCard.incoming = true;
     
     // Sort the array and fetch the resulting new index of the call card.
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"started" ascending:NO];
     [_incomingCalls sortUsingDescriptors:@[sortDescriptor]];
     
-    NSUInteger newIndex = [_incomingCalls indexOfObject:callCard];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerAddedIncomingCallNotification object:self userInfo:@{kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:newIndex]}];
+    NSUInteger newIndex = [self.calls indexOfObject:callCard];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerAddedIncomingCallNotification
+                                                        object:self
+                                                      userInfo:@{
+                                                                 kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:newIndex],
+                                                                 kJCCallCardManagerPriorUpdateCount:[NSNumber numberWithInteger:priorCount],
+                                                                 kJCCallCardManagerUpdateCount: [NSNumber numberWithInteger:self.totalCalls]
+                                                                }];
 }
 
 -(void)removeIncomingCall:(JCCallCard *)callCard
@@ -46,9 +56,17 @@ NSString *const kJCCallCardManagerUpdatedIndex = @"index";
     if (![_incomingCalls containsObject:callCard])
         return;
     
-    NSUInteger index = [_incomingCalls indexOfObject:callCard];
+    NSUInteger index = [self.calls indexOfObject:callCard];
+    NSUInteger priorCount = self.totalCalls;
     [_incomingCalls removeObject:callCard];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerRemoveIncomingCallNotification object:self userInfo:@{kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:index]}];
+    callCard.incoming = false;
+    [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerRemoveIncomingCallNotification
+                                                        object:self
+                                                      userInfo:@{
+                                                                 kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:index],
+                                                                 kJCCallCardManagerPriorUpdateCount:[NSNumber numberWithInteger:priorCount],
+                                                                 kJCCallCardManagerUpdateCount: [NSNumber numberWithInteger:self.totalCalls]
+                                                                }];
 }
 
 -(void)dialNumber:(NSString *)dialNumber
@@ -93,9 +111,19 @@ NSString *const kJCCallCardManagerUpdatedIndex = @"index";
     // TODO: do something to remove call from hold.
 }
 
+#pragma mark - Properties -
+
 -(NSUInteger)totalCalls
 {
-    return self.incomingCalls.count + self.currentCalls.count;
+    return self.calls.count;
+}
+
+-(NSArray *)calls
+{
+    if (!_incomingCalls)
+        _incomingCalls = [NSMutableArray array];
+    
+    return [_incomingCalls arrayByAddingObjectsFromArray:_currentCalls];
 }
                      
 #pragma mark - Private -

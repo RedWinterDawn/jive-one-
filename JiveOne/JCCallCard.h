@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum : NSUInteger {
+    JCCallCardCurrentCall = 0,
+    JCCallCardIncomingCall,
+} JCCallCardState;
+
+
 @interface JCCallCard : NSObject
 
 @property (nonatomic, strong) NSString *identifer;
@@ -16,6 +22,7 @@
 
 @property (nonatomic, strong) NSDate *started;
 @property (nonatomic, strong) NSDate *holdStarted;
+@property (nonatomic, getter=isIncoming) bool incoming;
 
 @property (nonatomic) BOOL hold;
 
