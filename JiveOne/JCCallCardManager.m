@@ -95,7 +95,7 @@ NSString *const kJCCallCardManagerUpdateCount = @"updateCount";
 		callCard.lineSession = line;
 		callCard.started = [NSDate date];
 		
-		[self addCallCard:callCard];
+		[self addCurrentCallCard:callCard];
 	}
 	
 }
@@ -115,11 +115,8 @@ NSString *const kJCCallCardManagerUpdateCount = @"updateCount";
 -(void)hangUpCall:(JCCallCard *)callCard
 {
 	[[SipHandler sharedHandler] hangUpCallWithSession:callCard.lineSession.mSessionId];
-	[self refreshCallDatasource];
-    // TODO: do something to end call
-    
-    
-    [self removeCurrentCall:callCard];
+//	[self refreshCallDatasource];
+   [self removeCurrentCall:callCard];
 }
 
 -(void)placeCallOnHold:(JCCallCard *)callCard
@@ -156,6 +153,7 @@ NSString *const kJCCallCardManagerUpdateCount = @"updateCount";
     
     NSUInteger index = [_currentCalls indexOfObject:callCard];
     [_currentCalls removeObject:callCard];
+	[self refreshCallDatasource];
     [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerRemoveCurrentCallNotification object:self userInfo:@{kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:index]}];
 }
 

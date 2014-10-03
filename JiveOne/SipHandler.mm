@@ -37,6 +37,10 @@
 
 - (void)initiate
 {
+	if (mSIPRegistered) {
+		return;
+	}
+	
 	_lineSessions = [NSMutableArray new];
 	for (int i = 0; i < 2; i++)
 	{
@@ -51,6 +55,10 @@
 
 - (void)online
 {
+	
+	if (mSIPRegistered) {
+		return;
+	}
 	
 	LineConfiguration *config = [LineConfiguration MR_findFirst];
 	if (!config) {
@@ -287,41 +295,16 @@
 		[_mPortSIPSDK hold:currentSession.mSessionId];
 	}
 	
-//	if(mSessionArray[mActiveLine].getSessionState() == true ||
-//	   mSessionArray[mActiveLine].getRecvCallState() == true)
-//	{
-//		UIAlertView *alert = [[UIAlertView alloc]
-//							  initWithTitle:@"Warning"
-//							  message: @"Current line is busy now, please switch a line"
-//							  delegate: nil
-//							  cancelButtonTitle: @"OK"
-//							  otherButtonTitles:nil];
-//		[alert show];
-//		
-//		return;
-//	}
-	
 	currentSession = [self findIdleLine];	
 	
-	long sessionId = [_mPortSIPSDK call:callee sendSdp:TRUE videoCall:videoCall];
-	
+	long sessionId = [_mPortSIPSDK call:callee sendSdp:TRUE videoCall:videoCall];	
 	if(sessionId >= 0)
 	{
 		[currentSession setMSessionId:sessionId];
-		[currentSession setMSessionState:true];
+		[currentSession setMSessionState:YES];
 		
 		[currentSession setCallTitle:contactName ? contactName : callee];
 		[currentSession setCallDetail:callee];
-		
-
-		
-//		mSessionArray[mActiveLine].setSessionId(sessionId);
-//		mSessionArray[mActiveLine].setSessionState(true);
-//		mSessionArray[mActiveLine].setVideoState(videoCall);
-		
-		//TODO:update call state
-		
-//		[numpadViewController setStatusText:[NSString  stringWithFormat:@"Calling:%@ on line %ld", callee, mActiveLine]];
 	}
 	else
 	{
@@ -584,6 +567,9 @@
 			 existsAudio:(BOOL)existsAudio
 			 existsVideo:(BOOL)existsVideo
 {
+	NSLog(@"onInviteIncoming - Session ID: %ld", sessionId);
+
+	
 //	int index = -1;
 //	for (int i=0; i< MAX_LINES; ++i)
 //	{
@@ -650,6 +636,7 @@
 
 - (void)onInviteTrying:(long)sessionId
 {
+	NSLog(@"onInviteTrying - Session ID: %ld", sessionId);
 	JCLineSession *selectedLine = [self findSession:sessionId];
 	if (!selectedLine)
 	{
@@ -666,6 +653,7 @@
 					existsAudio:(BOOL)existsAudio
 					existsVideo:(BOOL)existsVideo
 {
+	NSLog(@"onInviteSessionProgress - Session ID: %ld", sessionId);
 	JCLineSession *selectedLine = [self findSession:sessionId];
 	if (!selectedLine)
 	{
@@ -698,6 +686,7 @@
 			 statusText:(char*)statusText
 			 statusCode:(int)statusCode
 {
+	NSLog(@"onInviteRinging - Session ID: %ld", sessionId);
 	JCLineSession *selectedLine = [self findSession:sessionId];
 	if (!selectedLine)
 	{
@@ -724,6 +713,8 @@
 			 existsAudio:(BOOL)existsAudio
 			 existsVideo:(BOOL)existsVideo
 {
+	
+	NSLog(@"onInviveAnswered - Session ID: %ld", sessionId);
 	JCLineSession *selectedLine = [self findSession:sessionId];
 	if (!selectedLine)
 	{
@@ -762,6 +753,7 @@
 				 reason:(char*)reason
 				   code:(int)code
 {
+	NSLog(@"onInviteFailure - Session ID: %ld", sessionId);
 	JCLineSession *selectedLine = [self findSession:sessionId];
 	if (!selectedLine)
 	{
@@ -810,6 +802,7 @@
 			existsAudio:(BOOL)existsAudio
 			existsVideo:(BOOL)existsVideo
 {
+	NSLog(@"onInviteUpdated - Session ID: %ld", sessionId);
 	JCLineSession *selectedLine = [self findSession:sessionId];
 	if (!selectedLine)
 	{
@@ -831,6 +824,7 @@
 
 - (void)onInviteConnected:(long)sessionId
 {
+	NSLog(@"onInviteConnected - Session ID: %ld", sessionId);
 	JCLineSession *selectedLine = [self findSession:sessionId];
 	if (!selectedLine)
 	{
@@ -850,6 +844,7 @@
 
 - (void)onInviteClosed:(long)sessionId
 {
+	NSLog(@"onInviteClosed - Session ID: %ld", sessionId);
 	JCLineSession *selectedLine = [self findSession:sessionId];
 	if (!selectedLine)
 	{

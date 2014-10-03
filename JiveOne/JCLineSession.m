@@ -44,7 +44,7 @@
 
 - (void)setMCallState:(JCCall)mCallState
 {
-	//self.mCallState = mCallState;
+	_mCallState = mCallState;
 	if (self.delegate && [self.delegate respondsToSelector:@selector(callStateDidChange:callState:)]) {
 		[self.delegate callStateDidChange:self.mSessionId callState:self.mCallState];
 	}

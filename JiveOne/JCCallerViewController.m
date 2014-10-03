@@ -9,7 +9,7 @@
 #import "JCCallerViewController.h"
 #import "JCTransferViewController.h"
 #import "JCCallCardCollectionViewController.h"
-
+#import "SipHandler.h"
 #import "JCCallCardManager.h"
 
 #define TRANSFER_ANIMATION_DURATION 0.3
@@ -33,10 +33,7 @@ NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTran
 //    NSString *dialString = self.dialString;
 //    if (dialString)
 //        [[JCCallCardManager sharedManager] dialNumber:dialString];
-    
-    NSString *dialString = self.dialString;
-    if (dialString)
-        [[JCCallCardManager sharedManager] dialNumber:dialString];
+	
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callHungUp:) name:kJCCallCardManagerRemoveCurrentCallNotification object:[JCCallCardManager sharedManager]];
 }
@@ -111,6 +108,16 @@ NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTran
     
 }
 
+- (NSString *)getContactNameByNumber:(NSString *)number
+{
+	Lines *contact = [Lines MR_findFirstByAttribute:@"externsionNumber" withValue:number];
+	if (contact) {
+		return contact.displayName;
+	}
+	
+	return nil;
+}
+
 #pragma mark - Private - 
 
 -(void)closeCallerViewController
@@ -159,22 +166,23 @@ NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTran
 -(void)transferViewController:(JCTransferViewController *)controller shouldDialNumber:(NSString *)dialString
 {
     [self dismissTransferViewControllerAnimated:NO];
-    NSLog(@"%@, %i", dialString, controller.transferType);
+    NSLog(@"%@, %lu", dialString, controller.transferType);
     
-    /*if (controller.transferType == JCTransferBlind)
+    if (controller.transferType == JCTransferBlind)
     {
-        
+		[[SipHandler sharedHandler] referCall:dialString];
     }
     else if(controller.transferType == JCTransferHold)
     {
-        
+        [[SipHandler sharedHandler] makeCall:dialString videoCall:NO contactName:[self getContactNameByNumber:dialString]];
     }
     else if(controller.transferType == JCTransferWarm)
     {
-        
-    }*/
+        [[SipHandler sharedHandler] referCall:dialString];
+    }
     
-    [[JCCallCardManager sharedManager] dialNumber:dialString];
+//    [[JCCallCardManager sharedManager] dialNumber:dialString];
+	[[JCCallCardManager sharedManager] refreshCallDatasource];
 }
 
 -(void)shouldCancelTransferViewController:(JCTransferViewController *)controller

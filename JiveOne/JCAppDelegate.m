@@ -168,7 +168,7 @@ int didNotify;
 
     [self stopSocket];
 	
-	[[SipHandler sharedHandler].mPortSIPSDK startKeepAwake];
+//	[[SipHandler sharedHandler].mPortSIPSDK startKeepAwake];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -189,7 +189,7 @@ int didNotify;
         [self startSocket:NO];
     }
 	
-	[[SipHandler sharedHandler].mPortSIPSDK startKeepAwake];
+//	[[SipHandler sharedHandler].mPortSIPSDK startKeepAwake];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
