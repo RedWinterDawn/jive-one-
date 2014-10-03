@@ -1374,6 +1374,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="iCC-Rn-KEN"/>
+                    <connections>
+                        <outlet property="dialerOptions" destination="esd-M8-Lxg" id="s5z-H3-dYL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dIP-55-Mtj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

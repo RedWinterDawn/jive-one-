@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JCDialerOptions.h"
 
 @class JCCallerViewController;
 
@@ -19,6 +20,7 @@
 @interface JCCallerViewController : UIViewController
 
 @property (nonatomic, weak) IBOutlet id<JCCallerViewControllerDelegate> delegate;
+@property (nonatomic, weak) IBOutlet JCDialerOptions *dialerOptions;
 
 // Phone number to be dialed when the view controller is loads.
 @property (nonatomic, strong) NSString *dialString;
@@ -30,5 +32,8 @@
 -(IBAction)blindTransfer:(id)sender;
 -(IBAction)warmTransfer:(id)sender;
 -(IBAction)addCall:(id)sender;
+-(IBAction)swapCall:(id)sender;
+-(IBAction)mergeCall:(id)sender;
+-(IBAction)finishTransfer:(id)sender;
 
 @end
