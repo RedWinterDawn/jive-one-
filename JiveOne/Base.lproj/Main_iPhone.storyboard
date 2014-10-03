@@ -1107,7 +1107,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="esd-M8-Lxg" customClass="JCDialerOptions">
                                 <rect key="frame" x="0.0" y="366" width="320" height="194"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TRc-ED-Hu8" customClass="JCRoundedButton">
+                                    <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TRc-ED-Hu8" customClass="JCRoundedButton">
                                         <rect key="frame" x="234" y="20" width="60" height="60"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
                                         <constraints>
@@ -1115,14 +1115,14 @@
                                             <constraint firstAttribute="height" constant="60" id="jhG-tp-yEV"/>
                                         </constraints>
                                         <color key="tintColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" image="call-speaker-white">
+                                        <state key="normal" image="white-speaker">
                                             <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="speaker:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="v35-QH-GQH"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="248" horizontalCompressionResistancePriority="249" verticalCompressionResistancePriority="253" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OJ5-fR-lFW" customClass="JCRoundedButton">
+                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="248" horizontalCompressionResistancePriority="249" verticalCompressionResistancePriority="253" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OJ5-fR-lFW" customClass="JCRoundedButton">
                                         <rect key="frame" x="26" y="114" width="60" height="60"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
                                         <constraints>
@@ -1130,7 +1130,7 @@
                                             <constraint firstAttribute="width" constant="60" id="ehP-7N-jft"/>
                                         </constraints>
                                         <color key="tintColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" image="call-arrow-outline-white">
+                                        <state key="normal" image="white-arrow-outline">
                                             <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
@@ -1167,7 +1167,7 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transfer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="szn-nR-AS9">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Transfer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="szn-nR-AS9">
                                         <rect key="frame" x="26" y="173" width="60" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="60" id="PaW-pO-lFi"/>
@@ -1237,7 +1237,7 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Call" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8rt-eE-9r5">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Add Call" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8rt-eE-9r5">
                                         <rect key="frame" x="234" y="173" width="60" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="AP0-fK-cug"/>
@@ -1250,19 +1250,21 @@
                                     <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="249" verticalCompressionResistancePriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lUT-6r-uIK" customClass="JCRoundedButton">
                                         <rect key="frame" x="26" y="20" width="60" height="60"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
+                                        <rect key="contentStretch" x="0.5" y="0.5" width="1" height="1"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="60" id="VVa-vg-F23"/>
                                             <constraint firstAttribute="height" constant="60" id="xFI-bs-yMu"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="5"/>
                                         <color key="tintColor" red="0.14509803921568626" green="0.49411764705882355" blue="0.59607843137254901" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" image="call-mute-white">
+                                        <state key="normal" image="white-mute">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="mute:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="BFt-rx-uR2"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zZ6-Xz-Txj" customClass="JCRoundedButton">
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zZ6-Xz-Txj" customClass="JCRoundedButton">
                                         <rect key="frame" x="234" y="114" width="60" height="60"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
                                         <constraints>
@@ -1270,7 +1272,7 @@
                                             <constraint firstAttribute="width" constant="60" id="ywT-gV-c1a"/>
                                         </constraints>
                                         <color key="tintColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" image="call-plus-white">
+                                        <state key="normal" image="white-pluse">
                                             <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
@@ -1285,22 +1287,25 @@
                                             <constraint firstAttribute="width" constant="60" id="nCe-NS-SCV"/>
                                         </constraints>
                                         <color key="tintColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" image="call-arrow-white">
+                                        <state key="normal" image="white-arrow">
                                             <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="warmTransfer:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="QFu-my-YJB"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pl8-2v-mXV" customClass="JCRoundedButton">
+                                    <button opaque="NO" contentMode="redraw" placeholderIntrinsicWidth="40" placeholderIntrinsicHeight="40" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" adjustsImageWhenDisabled="NO" lineBreakMode="headTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pl8-2v-mXV" customClass="JCRoundedButton">
                                         <rect key="frame" x="130" y="20" width="60" height="60"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" none="YES" button="YES" image="YES"/>
+                                        </accessibility>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="60" id="GTG-TC-xep"/>
                                             <constraint firstAttribute="height" constant="60" id="R81-uh-a35"/>
                                         </constraints>
                                         <color key="tintColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" image="call-dialpad-white">
+                                        <state key="normal" image="white-keypad">
                                             <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
@@ -1420,13 +1425,17 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1:03" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L3V-YE-n0n">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1:03" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L3V-YE-n0n">
                                                     <rect key="frame" x="246" y="39" width="42" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="qqk-as-nmm"/>
+                                                        <constraint firstAttribute="width" constant="42" id="rm2-hD-dwa"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8xF-YG-FuP">
+                                                <view contentMode="scaleToFill" restorationIdentifier="CallStateView" translatesAutoresizingMaskIntoConstraints="NO" id="8xF-YG-FuP">
                                                     <rect key="frame" x="0.0" y="6" width="289" height="34"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1:03" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h8H-HJ-zPa">
@@ -1435,7 +1444,7 @@
                                                             <color key="textColor" red="0.12941176470588234" green="0.44705882352941173" blue="0.54117647058823526" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CALL STATE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lB8-8A-Qf5">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="INCOMING CALL" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lB8-8A-Qf5">
                                                             <rect key="frame" x="34" y="0.0" width="201" height="35"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="35" id="tjw-5u-5gU"/>
@@ -1453,7 +1462,9 @@
                                                         </imageView>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                    <accessibility key="accessibilityConfiguration" hint="CallStateView" label="CallStateView"/>
+                                                    <accessibility key="accessibilityConfiguration" hint="CallStateView" label="CallStateView">
+                                                        <bool key="isElement" value="YES"/>
+                                                    </accessibility>
                                                     <constraints>
                                                         <constraint firstAttribute="trailing" secondItem="h8H-HJ-zPa" secondAttribute="trailing" id="2VT-zR-h5I"/>
                                                         <constraint firstItem="Gqs-CH-VSN" firstAttribute="leading" secondItem="8xF-YG-FuP" secondAttribute="leading" constant="10" id="5g6-11-Tm3"/>
@@ -1479,6 +1490,8 @@
                                                 <constraint firstItem="8xF-YG-FuP" firstAttribute="leading" secondItem="GJW-4s-8Yh" secondAttribute="leading" id="ZSk-0W-xTq"/>
                                                 <constraint firstItem="M9Q-CU-veO" firstAttribute="top" secondItem="sGU-0K-AK5" secondAttribute="bottom" constant="-1" id="cC6-rb-4kR"/>
                                                 <constraint firstAttribute="trailing" secondItem="sGU-0K-AK5" secondAttribute="trailing" id="fnO-l0-A31"/>
+                                                <constraint firstItem="L3V-YE-n0n" firstAttribute="leading" secondItem="sGU-0K-AK5" secondAttribute="trailing" constant="-42" id="lqT-mx-rdx"/>
+                                                <constraint firstItem="sGU-0K-AK5" firstAttribute="top" secondItem="L3V-YE-n0n" secondAttribute="top" id="os7-J1-SFK"/>
                                                 <constraint firstAttribute="height" constant="96" id="vaH-eq-j0u"/>
                                             </constraints>
                                         </view>
@@ -1488,13 +1501,15 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fCz-UY-bzP" userLabel="HangUp">
                                                     <rect key="frame" x="0.0" y="0.0" width="150" height="50"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.69999999999999996" colorSpace="deviceRGB"/>
-                                                    <state key="normal" image="incall-hangup-red">
+                                                    <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="1"/>
+                                                    <state key="normal" image="red-phone">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dHb-AW-ELG" userLabel="Answer">
                                                     <rect key="frame" x="150" y="0.0" width="150" height="50"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.69999999999999996" colorSpace="deviceRGB"/>
+                                                    <inset key="contentEdgeInsets" minX="0.0" minY="2" maxX="0.0" maxY="0.0"/>
                                                     <state key="normal" image="transfer-call-green">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
@@ -1530,6 +1545,9 @@
                                     <constraint firstAttribute="trailing" secondItem="GJW-4s-8Yh" secondAttribute="trailing" constant="4" id="w4T-8W-7zd"/>
                                 </constraints>
                                 <size key="customSize" width="300" height="154"/>
+                                <connections>
+                                    <outlet property="callStateView" destination="MkH-bT-ckR" id="ps2-bf-3Fx"/>
+                                </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CurrentCallCardCell" id="H27-8U-9Ld" userLabel="CurrentCallCardCell" customClass="JCCallCardCollectionViewCell">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -1538,11 +1556,11 @@
                                     <rect key="frame" x="0.0" y="0.0" width="300" height="170"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9BT-of-lxi" userLabel="CallInfo">
+                                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9BT-of-lxi" userLabel="CallInfo">
                                             <rect key="frame" x="8" y="-10" width="288" height="105"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eE3-py-PGS">
-                                                    <rect key="frame" x="-1" y="10" width="289" height="34"/>
+                                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eE3-py-PGS" userLabel="callStateView">
+                                                    <rect key="frame" x="-1" y="-40" width="289" height="34"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1:03" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ucw-E9-y2Q">
                                                             <rect key="frame" x="247" y="-1" width="42" height="35"/>
@@ -1560,9 +1578,10 @@
                                                                 <constraint firstAttribute="height" constant="17" id="hLa-Az-GdC"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CALL STATE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T20-oZ-4Mu">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ON HOLD" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T20-oZ-4Mu">
                                                             <rect key="frame" x="34" y="0.0" width="201" height="35"/>
                                                             <constraints>
+                                                                <constraint firstAttribute="width" constant="201" id="Azf-Yk-g70"/>
                                                                 <constraint firstAttribute="height" constant="35" id="SUp-cA-QTb"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="14"/>
@@ -1571,7 +1590,7 @@
                                                         </label>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                    <accessibility key="accessibilityConfiguration" hint="CallStateView" label="CallStateView"/>
+                                                    <accessibility key="accessibilityConfiguration" hint="callStateView" label="callStateView"/>
                                                     <constraints>
                                                         <constraint firstItem="7uw-2f-KzQ" firstAttribute="top" secondItem="T20-oZ-4Mu" secondAttribute="top" constant="9" id="0Y5-4g-Pxf"/>
                                                         <constraint firstItem="7uw-2f-KzQ" firstAttribute="top" secondItem="eE3-py-PGS" secondAttribute="top" constant="9" id="1f7-fC-ix9"/>
@@ -1585,7 +1604,7 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Callers Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AjJ-s1-RGg">
-                                                    <rect key="frame" x="0.0" y="43" width="288" height="36"/>
+                                                    <rect key="frame" x="0.0" y="10" width="288" height="36"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="36" id="L2X-Qy-bDb"/>
                                                     </constraints>
@@ -1594,7 +1613,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Callers Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pcy-gN-OgZ" customClass="JCDialStringLabel">
-                                                    <rect key="frame" x="0.0" y="78" width="288" height="21"/>
+                                                    <rect key="frame" x="0.0" y="45" width="288" height="21"/>
                                                     <accessibility key="accessibilityConfiguration" hint="" label="Callers Number"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="E4d-ce-DgN"/>
@@ -1603,8 +1622,12 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1:03" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n3h-gY-XNw">
-                                                    <rect key="frame" x="246" y="43" width="42" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1:03" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n3h-gY-XNw">
+                                                    <rect key="frame" x="246" y="10" width="42" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="42" id="2Pj-YN-epY"/>
+                                                        <constraint firstAttribute="height" constant="21" id="414-id-RWD"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -1616,40 +1639,42 @@
                                                 <constraint firstItem="AjJ-s1-RGg" firstAttribute="leading" secondItem="9BT-of-lxi" secondAttribute="leading" id="2sz-qv-uzn"/>
                                                 <constraint firstItem="Pcy-gN-OgZ" firstAttribute="leading" secondItem="9BT-of-lxi" secondAttribute="leading" id="9Hx-C9-p1b"/>
                                                 <constraint firstAttribute="trailing" secondItem="eE3-py-PGS" secondAttribute="trailing" id="CWe-bO-XfD"/>
+                                                <constraint firstItem="n3h-gY-XNw" firstAttribute="top" secondItem="AjJ-s1-RGg" secondAttribute="top" id="EsZ-Ps-SZS"/>
                                                 <constraint firstAttribute="height" constant="105" id="J6d-6h-ROY"/>
                                                 <constraint firstAttribute="trailing" secondItem="Pcy-gN-OgZ" secondAttribute="trailing" id="JM1-Zp-fg2"/>
-                                                <constraint firstItem="eE3-py-PGS" firstAttribute="leading" secondItem="9BT-of-lxi" secondAttribute="leading" constant="-1" id="NjL-oy-o6Z"/>
-                                                <constraint firstItem="eE3-py-PGS" firstAttribute="top" secondItem="9BT-of-lxi" secondAttribute="top" constant="10" id="Qxp-cO-Mv0"/>
+                                                <constraint firstItem="eE3-py-PGS" firstAttribute="top" secondItem="9BT-of-lxi" secondAttribute="top" constant="-40" id="Qxp-cO-Mv0"/>
+                                                <constraint firstItem="Pcy-gN-OgZ" firstAttribute="top" secondItem="AjJ-s1-RGg" secondAttribute="bottom" constant="-1" id="U8Z-ZB-Yup"/>
                                                 <constraint firstItem="Pcy-gN-OgZ" firstAttribute="leading" secondItem="AjJ-s1-RGg" secondAttribute="leading" id="deV-TA-WVO"/>
-                                                <constraint firstItem="Pcy-gN-OgZ" firstAttribute="top" secondItem="AjJ-s1-RGg" secondAttribute="bottom" constant="-1" id="eM8-vY-IpR"/>
-                                                <constraint firstItem="AjJ-s1-RGg" firstAttribute="top" secondItem="9BT-of-lxi" secondAttribute="top" constant="43" id="fw7-MK-Pkl"/>
+                                                <constraint firstItem="AjJ-s1-RGg" firstAttribute="top" secondItem="9BT-of-lxi" secondAttribute="top" constant="10" id="fw7-MK-Pkl"/>
+                                                <constraint firstItem="n3h-gY-XNw" firstAttribute="leading" secondItem="AjJ-s1-RGg" secondAttribute="trailing" constant="-42" id="k47-6k-Nc7"/>
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="deD-dT-TSL" userLabel="Actions">
                                             <rect key="frame" x="0.0" y="120" width="300" height="50"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Irl-DY-CnL" userLabel="HangUp">
-                                                    <rect key="frame" x="0.0" y="0.0" width="150" height="50"/>
-                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.69999999999999996" colorSpace="deviceRGB"/>
-                                                    <state key="normal" image="incall-hangup-red">
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="hangup:" destination="H27-8U-9Ld" eventType="touchUpInside" id="Yqm-XI-aZ6"/>
-                                                    </connections>
-                                                </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Rw-dd-jvH" userLabel="Hold">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Rw-dd-jvH" userLabel="Hold">
                                                     <rect key="frame" x="150" y="0.0" width="150" height="50"/>
-                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.69999999999999996" colorSpace="deviceRGB"/>
-                                                    <state key="normal" image="incall-hold-black">
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <state key="normal" image="black-hold">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="toggleHold:" destination="H27-8U-9Ld" eventType="touchUpInside" id="5uH-P3-LbY"/>
                                                     </connections>
                                                 </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Irl-DY-CnL" userLabel="HangUp">
+                                                    <rect key="frame" x="0.0" y="0.0" width="150" height="50"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="1"/>
+                                                    <state key="normal" image="red-phone">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="hangup:" destination="H27-8U-9Ld" eventType="touchUpInside" id="Yqm-XI-aZ6"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.69999999999999996" colorSpace="deviceRGB"/>
                                             <constraints>
                                                 <constraint firstItem="Irl-DY-CnL" firstAttribute="width" secondItem="5Rw-dd-jvH" secondAttribute="width" id="6wN-P5-O3d"/>
                                                 <constraint firstAttribute="trailing" secondItem="5Rw-dd-jvH" secondAttribute="trailing" id="Ehx-uJ-Fsd"/>
@@ -1680,7 +1705,10 @@
                                 </constraints>
                                 <size key="customSize" width="300" height="170"/>
                                 <connections>
+                                    <outlet property="callActions" destination="deD-dT-TSL" id="k43-GI-tw9"/>
+                                    <outlet property="callCardInfoTopConstraint" destination="fw7-MK-Pkl" id="nKq-KQ-Z8s"/>
                                     <outlet property="callerIdLabel" destination="AjJ-s1-RGg" id="0ed-91-VL8"/>
+                                    <outlet property="currentCallTopToContainerConstraint" destination="Qxp-cO-Mv0" id="0Yu-Qn-cKr"/>
                                     <outlet property="dialedNumberLabel" destination="Pcy-gN-OgZ" id="UK6-8Y-CMP"/>
                                     <outlet property="elapsedTimeLabel" destination="n3h-gY-XNw" id="xPF-iM-zGM"/>
                                     <outlet property="endCallButton" destination="Irl-DY-CnL" id="Oav-nV-FMS"/>
@@ -2626,26 +2654,26 @@
         </scene>
     </scenes>
     <resources>
-        <image name="call-arrow-outline-white" width="35" height="35"/>
-        <image name="call-arrow-white" width="35" height="35"/>
-        <image name="call-dialpad-white" width="35" height="35"/>
-        <image name="call-mute-white" width="35" height="35"/>
-        <image name="call-plus-white" width="35" height="35"/>
-        <image name="call-speaker-white" width="35" height="35"/>
+        <image name="black-hold" width="30" height="30"/>
         <image name="delete-black" width="35" height="35"/>
         <image name="dialer-callButton-green" width="58" height="58"/>
         <image name="iPhone2Xnew.png" width="640" height="1136"/>
         <image name="iPhone2XnewBlurSmall.png" width="320" height="480"/>
         <image name="incall-background" width="320" height="568"/>
-        <image name="incall-hangup-red" width="35" height="35"/>
-        <image name="incall-hold-black" width="35" height="35"/>
         <image name="nav-dial-black" width="19" height="19"/>
         <image name="nav-people.png" width="44" height="44"/>
+        <image name="red-phone" width="30" height="30"/>
         <image name="transfer-call-green" width="35" height="35"/>
         <image name="transfer-cancel-white" width="35" height="35"/>
         <image name="transfer-mergCalls-white" width="35" height="35"/>
         <image name="transfer-onhold-mini-blackish" width="11" height="12"/>
         <image name="transfer-swapCalls-white" width="35" height="35"/>
+        <image name="white-arrow" width="30" height="31"/>
+        <image name="white-arrow-outline" width="30" height="30"/>
+        <image name="white-keypad" width="30" height="30"/>
+        <image name="white-mute" width="30" height="30"/>
+        <image name="white-pluse" width="30" height="30"/>
+        <image name="white-speaker" width="30" height="31"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

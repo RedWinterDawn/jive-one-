@@ -13,11 +13,22 @@
 {
     NSTimer *_timer;
     NSTimer *_holdTimer;
+    UIColor *_defaultCallActionsColor;
+    CGFloat _currentCallCardInfoElevation;
+    CGFloat _originalCurrentCallViewConstraint;
 }
 @end
 
 
 @implementation JCCallCardCollectionViewCell
+
+-(void)awakeFromNib
+{
+    _defaultCallActionsColor = self.callActions.backgroundColor;
+    _currentCallCardInfoElevation = self.callCardInfoTopConstraint.constant;
+    _originalCurrentCallViewConstraint = self.currentCallTopToContainerConstraint.constant;
+
+}
 
 -(void)layoutSubviews
 {
@@ -72,6 +83,8 @@
     [_callCard answerCall];
 }
 
+
+
 #pragma mark - Private -
 
 -(void)timerUpdate
@@ -93,6 +106,7 @@
 -(void)showHoldStateAnimated:(BOOL)animated
 {
     __unsafe_unretained JCCallCardCollectionViewCell *weakSelf = self;
+    
     if (_callCard.hold)
     {
         if (_holdTimer)
@@ -101,10 +115,16 @@
             _holdTimer = nil;
         }
         
+        weakSelf.currentCallTopToContainerConstraint.constant = 10;
+        weakSelf.callCardInfoTopConstraint.constant = 40;
+        [self setNeedsUpdateConstraints];
+        
         _holdTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(holdTimerUpdate) userInfo:nil repeats:YES];
-        [UIView animateWithDuration:(animated ? 0.3 : 0)
+        [UIView animateWithDuration:(animated ? 1.3 : 0)
                          animations:^{
                              weakSelf.alpha = 0.5;
+                             weakSelf.callActions.backgroundColor = [UIColor clearColor];
+                             [weakSelf layoutIfNeeded];
                          }];
     }
     else
@@ -112,9 +132,15 @@
         [_holdTimer invalidate];
         _holdTimer = nil;
         
-        [UIView animateWithDuration:(animated ? 0.3 : 0)
+        weakSelf.callCardInfoTopConstraint.constant = _currentCallCardInfoElevation;
+        weakSelf.currentCallTopToContainerConstraint.constant = _originalCurrentCallViewConstraint;
+        [self setNeedsUpdateConstraints];
+        
+        [UIView animateWithDuration:(animated ? 1.3 : 0)
                          animations:^{
                              weakSelf.alpha = 1;
+                             weakSelf.callActions.backgroundColor = _defaultCallActionsColor;
+                             [weakSelf layoutIfNeeded];
                          }];
     }
 }
