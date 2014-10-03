@@ -1195,6 +1195,7 @@
                                         </state>
                                         <connections>
                                             <action selector="blindTransfer:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="7RN-IC-tVQ"/>
+                                            <action selector="mergeCall:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="VFr-f2-PEf"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Merge Calls" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tug-Ny-Zug">
@@ -1292,6 +1293,7 @@
                                         </state>
                                         <connections>
                                             <action selector="addCall:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="4eA-wE-x0i"/>
+                                            <action selector="swapCall:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="r5g-qh-Rbd"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="warmTransferButton" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tcw-Rg-ytb" customClass="JCRoundedButton">
@@ -1321,6 +1323,7 @@
                                             <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
+                                            <action selector="finishTransfer:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="81J-ee-oex"/>
                                             <action selector="warmTransfer:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="hq0-32-RBz"/>
                                         </connections>
                                     </button>
@@ -1397,6 +1400,8 @@
                                 <connections>
                                     <outlet property="addCallBtn" destination="zZ6-Xz-Txj" id="b4G-5D-UI8"/>
                                     <outlet property="addCallBtnHorizontalContstraint" destination="DYV-bD-9b9" id="VYv-yH-ZGz"/>
+                                    <outlet property="finishTransferBtn" destination="Uid-o6-zKW" id="NdI-3j-hMe"/>
+                                    <outlet property="finishTransferConstraint" destination="CNx-5e-hav" id="ju7-Dp-Vuq"/>
                                     <outlet property="mergeBtn" destination="74r-RB-XRO" id="Xnc-9d-2Uh"/>
                                     <outlet property="mergeBtnHorizontalContstraint" destination="Sle-cw-UfB" id="PPx-jk-KzW"/>
                                     <outlet property="swapBtn" destination="h6q-Cp-RHf" id="0Xg-AE-Xjy"/>
@@ -1773,7 +1778,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UHI-u8-S2O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="181" y="943.5"/>
+            <point key="canvasLocation" x="362" y="906"/>
         </scene>
         <!--Transfer-->
         <scene sceneID="Nc0-xg-t5k">
