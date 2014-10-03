@@ -8,6 +8,7 @@
 
 #import "JCCallCardCollectionLayout.h"
 #import "JCCallCardManager.h"
+#import "JCCallCardCollectionViewCell.h"
 
 static NSString * const JSCallCardLayoutCellKind = @"CallCardCell";
 
@@ -185,12 +186,14 @@ static NSString * const JSCallCardLayoutCellKind = @"CallCardCell";
         
         [self.collectionView.viewForBaselineLayout.layer setSpeed:1.5f];
         
+        JCCallCardCollectionViewCell *cell = (JCCallCardCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:itemIndexPath];
+        JCCallCard *callCard = cell.callCard;
+        
         // Configure attributes ...
-        //JCCallCard *callCard = [[JCCallCardManager sharedManager].calls objectAtIndex:itemIndexPath.row];
-        /*if (callCard.isIncoming)
+        if (callCard.isIncoming)
             attributes.center = CGPointMake(attributes.center.x, -attributes.center.y);
-        else*/
-        attributes.center = CGPointMake(attributes.center.x * 10, attributes.center.y);
+        else
+            attributes.center = CGPointMake(attributes.center.x * 10, attributes.center.y);
         attributes.alpha = 0.0;
     }
     
