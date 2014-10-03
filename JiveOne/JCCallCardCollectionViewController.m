@@ -63,9 +63,18 @@ static NSString * const incommingCallCardCellReuseIdentifier = @"IncommingCallCa
     
     NSNumber *index = [userInfo objectForKey:kJCCallCardManagerUpdatedIndex];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index.integerValue inSection:0];
-    [self.collectionView performBatchUpdates:^{
-        [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
-    } completion:nil];
+    JCCallCardCollectionViewCell *cell = (JCCallCardCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+    
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         cell.alpha = 0;
+                         cell.center = CGPointMake(cell.center.x * 10, cell.center.y);
+                     }
+                     completion:^(BOOL finished) {
+                         [self.collectionView performBatchUpdates:^{
+                             [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
+                         } completion:nil];
+                     }];
 }
 
 #pragma mark - Priviate -

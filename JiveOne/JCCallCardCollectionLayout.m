@@ -183,12 +183,14 @@ static NSString * const JSCallCardLayoutCellKind = @"CallCardCell";
         if (!attributes)
             attributes = [self layoutAttributesForItemAtIndexPath:itemIndexPath];
         
+        [self.collectionView.viewForBaselineLayout.layer setSpeed:1.5f];
+        
         // Configure attributes ...
-        JCCallCard *callCard = [[JCCallCardManager sharedManager].calls objectAtIndex:itemIndexPath.row];
-        if (callCard.isIncoming)
+        //JCCallCard *callCard = [[JCCallCardManager sharedManager].calls objectAtIndex:itemIndexPath.row];
+        /*if (callCard.isIncoming)
             attributes.center = CGPointMake(attributes.center.x, -attributes.center.y);
-        else
-            attributes.center = CGPointMake(attributes.center.x * 2, attributes.center.y);
+        else*/
+        attributes.center = CGPointMake(attributes.center.x * 10, attributes.center.y);
         attributes.alpha = 0.0;
     }
     
