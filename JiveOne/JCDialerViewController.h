@@ -19,4 +19,6 @@
 -(IBAction)initiateCall:(id)sender;
 -(IBAction)backspace:(id)sender;
 
+-(NSString *)characterFromNumPadTag:(int)tag;
+
 @end
