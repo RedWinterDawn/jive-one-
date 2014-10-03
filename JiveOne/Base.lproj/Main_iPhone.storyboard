@@ -1185,7 +1185,7 @@
                                             <constraint firstAttribute="width" constant="60" id="xrI-7O-nSn"/>
                                         </constraints>
                                         <color key="tintColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" image="transfer-mergCalls-white">
+                                        <state key="normal" image="white-merge">
                                             <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
@@ -1748,7 +1748,7 @@
                                         <rect key="frame" x="130" y="123" width="60" height="60"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
                                         <accessibility key="accessibilityConfiguration" label="Cancel Button"/>
-                                        <state key="normal" image="transfer-cancel-white">
+                                        <state key="normal" image="white-x">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -2661,16 +2661,16 @@
         <image name="nav-dial-black" width="19" height="19"/>
         <image name="nav-people.png" width="44" height="44"/>
         <image name="red-phone" width="30" height="30"/>
-        <image name="transfer-cancel-white" width="35" height="35"/>
-        <image name="transfer-mergCalls-white" width="35" height="35"/>
         <image name="transfer-onhold-mini-blackish" width="11" height="12"/>
         <image name="transfer-swapCalls-white" width="35" height="35"/>
         <image name="white-arrow" width="30" height="31"/>
         <image name="white-arrow-outline" width="30" height="30"/>
         <image name="white-keypad" width="30" height="30"/>
+        <image name="white-merge" width="30" height="30"/>
         <image name="white-mute" width="30" height="30"/>
         <image name="white-pluse" width="30" height="30"/>
         <image name="white-speaker" width="30" height="31"/>
+        <image name="white-x" width="30" height="30"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

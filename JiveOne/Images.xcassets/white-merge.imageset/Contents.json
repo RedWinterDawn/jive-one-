@@ -8,12 +8,12 @@
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "transfer-merge-white@2x.png"
+      "filename" : "white-merge@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "transfer-merge-white@3x.png"
+      "filename" : "white-merge@3x.png"
     }
   ],
   "info" : {
