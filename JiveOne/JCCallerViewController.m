@@ -33,23 +33,43 @@ NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTran
 //    NSString *dialString = self.dialString;
 //    if (dialString)
 //        [[JCCallCardManager sharedManager] dialNumber:dialString];
+    
+    NSString *dialString = self.dialString;
+    if (dialString)
+        [[JCCallCardManager sharedManager] dialNumber:dialString];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callHungUp:) name:kJCCallCardManagerRemoveCurrentCallNotification object:[JCCallCardManager sharedManager]];
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+-(void)callHungUp:(NSNotification *)notification
+{
+    JCCallCardManager *callManager = (JCCallCardManager *)notification.object;
+    if(callManager.totalCalls == 0)
+        [self closeCallerViewController];
 }
 
 #pragma mark - IBActions -
 
 -(IBAction)speaker:(id)sender
 {
-    
+    JCCallCard *incomingCallCard = [[JCCallCard alloc] init];
+    incomingCallCard.dialNumber = @"555-123-4567";
+    [[JCCallCardManager sharedManager] addIncomingCall:incomingCallCard];
 }
 
 -(IBAction)keypad:(id)sender
 {
-    
+    [self.dialerOptions setState:JCDialerOptionMultiple animated:YES];
 }
 
 -(IBAction)mute:(id)sender
 {
-    
+    [self.dialerOptions setState:JCDialerOptionSingle animated:YES];
 }
 
 -(IBAction)blindTransfer:(id)sender
@@ -74,6 +94,21 @@ NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTran
     transferViewController.transferType = JCTransferHold;
     transferViewController.delegate = self;
     [self presentTransferViewController:transferViewController];
+}
+
+-(IBAction)swapCall:(id)sender
+{
+    
+}
+
+-(IBAction)mergeCall:(id)sender
+{
+    
+}
+
+-(IBAction)finishTransfer:(id)sender
+{
+    
 }
 
 #pragma mark - Private - 

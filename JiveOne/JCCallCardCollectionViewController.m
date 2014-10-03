@@ -19,37 +19,74 @@ static NSString * const incommingCallCardCellReuseIdentifier = @"IncommingCallCa
 {
     [super viewDidLoad];
     self.collectionView.backgroundColor = [UIColor clearColor];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addedCallCardNotification:) name:kJCCallCardManagerAddedCallNotification object:[JCCallCardManager sharedManager]];
+    
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    JCCallCardManager *callCardManager = [JCCallCardManager sharedManager];
+    
+    [center addObserver:self selector:@selector(addedCallCardNotification:) name:kJCCallCardManagerAddedIncomingCallNotification object:callCardManager];
+    [center addObserver:self selector:@selector(callCardRemovedNotification:) name:kJCCallCardManagerRemoveIncomingCallNotification object:callCardManager];
+    [center addObserver:self selector:@selector(addedCallCardNotification:) name:kJCCallCardManagerAddedCurrentCallNotification object:callCardManager];
+    [center addObserver:self selector:@selector(callCardRemovedNotification:) name:kJCCallCardManagerRemoveCurrentCallNotification object:callCardManager];
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)addedCallCardNotification:(NSNotification *)notification
 {
     NSDictionary *userInfo = notification.userInfo;
+    NSNumber *priorCount = [userInfo objectForKey:kJCCallCardManagerPriorUpdateCount];
+    if (priorCount.intValue < 1)
+    {
+        [self.collectionView reloadData];
+        return;
+    }
+    
     NSNumber *index = [userInfo objectForKey:kJCCallCardManagerUpdatedIndex];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index.integerValue inSection:1];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index.integerValue inSection:0];
+    [self.collectionView performBatchUpdates:^{
+        [self.collectionView insertItemsAtIndexPaths:@[indexPath]];
+    } completion:nil];
+}
+
+-(void)callCardRemovedNotification:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    NSNumber *count = [userInfo objectForKey:kJCCallCardManagerUpdateCount];
+    /*if (count.intValue < 1)
+    {
+        [self.collectionView reloadData];
+        return;
+    }*/
     
+    NSNumber *index = [userInfo objectForKey:kJCCallCardManagerUpdatedIndex];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index.integerValue inSection:0];
+    JCCallCardCollectionViewCell *cell = (JCCallCardCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
     
-    [self.collectionView reloadData];
-    //[self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
-    //[self.collectionView insertItemsAtIndexPaths:@[indexPath]];
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         cell.alpha = 0;
+                         cell.center = CGPointMake(cell.center.x * 10, cell.center.y);
+                     }
+                     completion:^(BOOL finished) {
+                         [self.collectionView performBatchUpdates:^{
+                             [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
+                         } completion:nil];
+                     }];
 }
 
 #pragma mark - Priviate -
 
 -(NSUInteger)numberOfCallsForSection:(NSUInteger)section
 {
-    JCCallCardManager *callManager = [JCCallCardManager sharedManager];
-    if (section == 0)
-        return (callManager.incomingCalls) ? callManager.incomingCalls.count : 0;
-    return (callManager.currentCalls) ? callManager.currentCalls.count : 0;
+    return [JCCallCardManager sharedManager].totalCalls;
 }
 
 -(JCCallCard *)callCardForIndexPath:(NSIndexPath *)indexPath
 {
-    JCCallCardManager *callManager = [JCCallCardManager sharedManager];
-    if (indexPath.section == 0)
-        return [callManager.incomingCalls objectAtIndex:indexPath.row];
-    return [callManager.currentCalls objectAtIndex:indexPath.row];
+    return [[JCCallCardManager sharedManager].calls objectAtIndex:indexPath.row];
 }
 
 #pragma mark - Delegate Handlers -
@@ -58,7 +95,7 @@ static NSString * const incommingCallCardCellReuseIdentifier = @"IncommingCallCa
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return 2;
+    return 1;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -69,24 +106,13 @@ static NSString * const incommingCallCardCellReuseIdentifier = @"IncommingCallCa
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     JCCallCardCollectionViewCell *cell = nil;
-    if (indexPath.section == 0)
+    JCCallCard *callCard = [self callCardForIndexPath:indexPath];
+    if (callCard.isIncoming)
         cell = (JCCallCardCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:incommingCallCardCellReuseIdentifier forIndexPath:indexPath];
     else
         cell = (JCCallCardCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:currenctCallCardCellReuseIdentifier forIndexPath:indexPath];
-    cell.callCard = [self callCardForIndexPath:indexPath];
+    cell.callCard = callCard;
     return cell;
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSUInteger calls = [JCCallCardManager sharedManager].totalCalls;
-    if (calls == 1)
-        return self.view.bounds.size;
-    
-    if(calls == 2)
-        return CGSizeMake(self.view.bounds.size.width, (self.view.bounds.size.height - 10) / 2 );
-    
-    return CGSizeMake(self.view.bounds.size.width, 120);
 }
 
 #pragma mark <UICollectionViewDelegate>
