@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JCLineSession.h"
 
 @class JCCallCardView;
 
@@ -18,11 +19,15 @@
 @end
 
 
-@interface JCCallCardView : UIView
+@interface JCCallCardView : UIView <JCLineSessionDelegate>
 
 
 @property (nonatomic, weak) id<JCCallCardViewDelegate> delegate;
 @property (nonatomic, strong) NSString *identifer;
+@property (weak, nonatomic) IBOutlet UILabel *callTitle;
+@property (weak, nonatomic) IBOutlet UILabel *callDetail;
+@property (weak, nonatomic) IBOutlet UILabel *callTimer;
+@property (nonatomic, strong) JCLineSession *lineSession;
 
 -(IBAction)hangup:(id)sender;
 -(IBAction)placeOnHold:(id)sender;
