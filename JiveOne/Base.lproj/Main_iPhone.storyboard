@@ -1099,7 +1099,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sEm-pY-RBF">
-                                <rect key="frame" x="8" y="20" width="304" height="347"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="347"/>
                                 <connections>
                                     <segue destination="Kvn-c6-FPG" kind="embed" id="W5I-Z4-hf4"/>
                                 </connections>
@@ -1374,11 +1374,11 @@
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="esd-M8-Lxg" secondAttribute="bottom" constant="8" id="CTg-kI-9N0"/>
                             <constraint firstItem="esd-M8-Lxg" firstAttribute="top" secondItem="sEm-pY-RBF" secondAttribute="bottom" constant="-1" id="Gtb-Wk-axZ"/>
-                            <constraint firstAttribute="trailing" secondItem="sEm-pY-RBF" secondAttribute="trailing" constant="8" id="Q4u-K8-RPg"/>
+                            <constraint firstAttribute="trailing" secondItem="sEm-pY-RBF" secondAttribute="trailing" id="Q4u-K8-RPg"/>
                             <constraint firstItem="esd-M8-Lxg" firstAttribute="leading" secondItem="Aj5-ZF-aP3" secondAttribute="leading" id="Uwr-fk-AOI"/>
                             <constraint firstAttribute="trailing" secondItem="esd-M8-Lxg" secondAttribute="trailing" id="WZ3-72-wsQ"/>
                             <constraint firstItem="sEm-pY-RBF" firstAttribute="top" secondItem="Aj5-ZF-aP3" secondAttribute="top" constant="20" id="cNG-4i-0Yn"/>
-                            <constraint firstItem="sEm-pY-RBF" firstAttribute="leading" secondItem="Aj5-ZF-aP3" secondAttribute="leading" constant="8" id="ewl-Y0-lO7"/>
+                            <constraint firstItem="sEm-pY-RBF" firstAttribute="leading" secondItem="Aj5-ZF-aP3" secondAttribute="leading" id="ewl-Y0-lO7"/>
                             <constraint firstAttribute="bottom" secondItem="sEm-pY-RBF" secondAttribute="bottom" constant="201" id="fE7-xx-oPK"/>
                         </constraints>
                     </view>
@@ -1393,7 +1393,7 @@
             <objects>
                 <collectionViewController id="Kvn-c6-FPG" customClass="JCCallCardCollectionViewController" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" id="Gwv-qN-HJW">
-                        <rect key="frame" x="0.0" y="0.0" width="304" height="347"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="347"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <inset key="scrollIndicatorInsets" minX="0.0" minY="0.0" maxX="-9" maxY="0.0"/>

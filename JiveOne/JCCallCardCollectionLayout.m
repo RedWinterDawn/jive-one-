@@ -44,7 +44,7 @@ static NSString * const JSCallCardLayoutCellKind = @"CallCardCell";
 
 - (void)setup
 {
-    _itemInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
+    _itemInsets = UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 10.0f);
     _interItemSpacingY = 10.0f;
 }
 
@@ -76,16 +76,18 @@ static NSString * const JSCallCardLayoutCellKind = @"CallCardCell";
     for (NSInteger section = 0; section < sectionCount; section++)
     {
         NSInteger itemCount = [self.collectionView numberOfItemsInSection:section];
-        if (itemCount > 0) {
+        if (itemCount > 0)
+        {
             CGFloat height = self.cellHeight;
-            CGFloat y = 0;
-            for (NSInteger item = 0; item < itemCount; item++) {
+            CGFloat width = self.collectionView.bounds.size.width - (_itemInsets.left + _itemInsets.right);
+            CGFloat x = _itemInsets.left;
+            for (NSInteger item = 0; item < itemCount; item++)
+            {
                 indexPath = [NSIndexPath indexPathForItem:item inSection:section];
-                
                 UICollectionViewLayoutAttributes *itemAttributes =
                 [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
-                y = floor((height + _interItemSpacingY) * indexPath.row);
-                itemAttributes.frame = CGRectMake(0, y, self.collectionView.bounds.size.width, height);
+                CGFloat y = floor((height + _interItemSpacingY) * indexPath.row);
+                itemAttributes.frame = CGRectMake(x, y, width, height);
                 cellLayoutInfo[indexPath] = itemAttributes;
             }
         }
@@ -100,6 +102,7 @@ static NSString * const JSCallCardLayoutCellKind = @"CallCardCell";
     NSArray *array = self.layoutInfo[JSCallCardLayoutCellKind];
     NSInteger rowCount = array.count;
     CGFloat height = self.itemInsets.top + (rowCount * self.cellHeight) + (rowCount - 1) * self.interItemSpacingY + self.itemInsets.bottom;
+    
     return CGSizeMake(self.collectionView.bounds.size.width, height);
 }
 
@@ -196,8 +199,6 @@ static NSString * const JSCallCardLayoutCellKind = @"CallCardCell";
             attributes.center = CGPointMake(attributes.center.x * 10, attributes.center.y);
         attributes.alpha = 0.0;
     }
-    
-    
     
     return attributes;
 }
