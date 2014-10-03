@@ -59,12 +59,12 @@ NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTran
 
 -(IBAction)keypad:(id)sender
 {
-    
+    [self.dialerOptions setState:JCDialerOptionMultiple animated:YES];
 }
 
 -(IBAction)mute:(id)sender
 {
-    
+    [self.dialerOptions setState:JCDialerOptionSingle animated:YES];
 }
 
 -(IBAction)blindTransfer:(id)sender
@@ -89,6 +89,21 @@ NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTran
     transferViewController.transferType = JCTransferHold;
     transferViewController.delegate = self;
     [self presentTransferViewController:transferViewController];
+}
+
+-(IBAction)swapCall:(id)sender
+{
+    
+}
+
+-(IBAction)mergeCall:(id)sender
+{
+    
+}
+
+-(IBAction)finishTransfer:(id)sender
+{
+    
 }
 
 #pragma mark - Private - 

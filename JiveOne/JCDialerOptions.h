@@ -21,6 +21,8 @@ typedef enum : NSUInteger {
 
 @property (nonatomic) JCDialerOptionState state;
 
+@property (nonatomic) CGFloat annimationDuration;
+
 @property (nonatomic, weak) IBOutlet UIButton *transferBtn;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *transferBtnHorizontalContstraint;
 
@@ -35,6 +37,9 @@ typedef enum : NSUInteger {
 
 @property (nonatomic, weak) IBOutlet UIButton *mergeBtn;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *mergeBtnHorizontalContstraint;
+
+@property (nonatomic, weak) IBOutlet UIButton *finishTransferBtn;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *finishTransferConstraint;
 
 -(void)setState:(JCDialerOptionState)state animated:(bool)animated;
 
