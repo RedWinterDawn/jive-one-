@@ -120,7 +120,7 @@
         [self setNeedsUpdateConstraints];
         
         _holdTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(holdTimerUpdate) userInfo:nil repeats:YES];
-        [UIView animateWithDuration:(animated ? 1.3 : 0)
+        [UIView animateWithDuration:(animated ? .5 : 0)
                          animations:^{
                              weakSelf.alpha = 0.5;
                              weakSelf.callActions.backgroundColor = [UIColor clearColor];
@@ -136,7 +136,7 @@
         weakSelf.currentCallTopToContainerConstraint.constant = _originalCurrentCallViewConstraint;
         [self setNeedsUpdateConstraints];
         
-        [UIView animateWithDuration:(animated ? 1.3 : 0)
+        [UIView animateWithDuration:(animated ? .5 : 0)
                          animations:^{
                              weakSelf.alpha = 1;
                              weakSelf.callActions.backgroundColor = _defaultCallActionsColor;

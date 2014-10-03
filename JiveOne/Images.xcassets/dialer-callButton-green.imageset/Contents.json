@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "dialer-callButton-green-1.png"
+      "filename" : "green-call-white-phone@1x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "dialer-callButton-green@2x-1.png"
+      "filename" : "green-call-white-phone@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "dialer-callButton-green@3x.png"
+      "filename" : "green-call-white-phone@3x.png"
     }
   ],
   "info" : {
