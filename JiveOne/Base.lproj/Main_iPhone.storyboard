@@ -1107,7 +1107,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="esd-M8-Lxg" customClass="JCDialerOptions">
                                 <rect key="frame" x="0.0" y="366" width="320" height="194"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="center" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TRc-ED-Hu8" customClass="JCRoundedButton">
+                                    <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TRc-ED-Hu8" customClass="JCRoundedButton">
                                         <rect key="frame" x="234" y="20" width="60" height="60"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
                                         <constraints>
@@ -1157,7 +1157,7 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" misplaced="YES" text="Speaker" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V8W-GZ-oVM">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Speaker" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V8W-GZ-oVM">
                                         <rect key="frame" x="234" y="79" width="60" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="60" id="M5L-gL-Jb3"/>
@@ -1192,7 +1192,7 @@
                                             <action selector="blindTransfer:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="7RN-IC-tVQ"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Merge Calls" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tug-Ny-Zug">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Merge Calls" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tug-Ny-Zug">
                                         <rect key="frame" x="78" y="173" width="67" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="60" id="Zjg-DA-LjX"/>
@@ -1218,7 +1218,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Swap Calls" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9H2-tC-F7q">
-                                        <rect key="frame" x="181" y="173" width="64" height="21"/>
+                                        <rect key="frame" x="183" y="173" width="60" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="sg8-Mm-wYE"/>
                                             <constraint firstAttribute="width" constant="60" id="yod-Ap-qq1"/>
@@ -1326,15 +1326,18 @@
                                     <constraint firstItem="SPX-SZ-R8t" firstAttribute="top" secondItem="pl8-2v-mXV" secondAttribute="bottom" constant="-1" id="Fy0-1x-RvD"/>
                                     <constraint firstItem="szn-nR-AS9" firstAttribute="top" secondItem="OJ5-fR-lFW" secondAttribute="bottom" constant="-1" id="HDS-mW-jLn"/>
                                     <constraint firstItem="pl8-2v-mXV" firstAttribute="baseline" secondItem="lUT-6r-uIK" secondAttribute="baseline" id="JMB-GO-VML"/>
+                                    <constraint firstItem="Tug-Ny-Zug" firstAttribute="top" secondItem="74r-RB-XRO" secondAttribute="bottom" constant="-1" id="JMT-Q5-oBx"/>
                                     <constraint firstAttribute="bottom" secondItem="OJ5-fR-lFW" secondAttribute="bottom" constant="20" id="KZV-IL-u05"/>
                                     <constraint firstItem="9H2-tC-F7q" firstAttribute="top" secondItem="h6q-Cp-RHf" secondAttribute="bottom" constant="-1" id="Ofm-Ye-22x"/>
                                     <constraint firstItem="Tcw-Rg-ytb" firstAttribute="centerX" secondItem="qTn-fV-hyq" secondAttribute="centerX" constant="-0.5" id="RFe-8c-z8i"/>
                                     <constraint firstItem="74r-RB-XRO" firstAttribute="leading" secondItem="esd-M8-Lxg" secondAttribute="leading" constant="-78" id="Sle-cw-UfB"/>
                                     <constraint firstAttribute="trailing" secondItem="TRc-ED-Hu8" secondAttribute="trailing" constant="26" id="UVn-b2-dkj"/>
+                                    <constraint firstAttribute="bottom" secondItem="TRc-ED-Hu8" secondAttribute="bottom" constant="114" id="Uxd-B9-ryE"/>
                                     <constraint firstAttribute="centerX" secondItem="Tcw-Rg-ytb" secondAttribute="centerX" id="W2k-NJ-N1l"/>
                                     <constraint firstItem="lUT-6r-uIK" firstAttribute="leading" secondItem="esd-M8-Lxg" secondAttribute="leading" constant="26" id="Yji-60-neP"/>
                                     <constraint firstItem="Tug-Ny-Zug" firstAttribute="centerX" secondItem="74r-RB-XRO" secondAttribute="centerX" constant="-4" id="ZiI-Cg-Soe"/>
                                     <constraint firstAttribute="bottom" secondItem="h6q-Cp-RHf" secondAttribute="bottom" constant="20" id="bDK-6N-fGc"/>
+                                    <constraint firstItem="9H2-tC-F7q" firstAttribute="centerX" secondItem="h6q-Cp-RHf" secondAttribute="centerX" id="dC7-o7-9JO"/>
                                     <constraint firstAttribute="centerX" secondItem="pl8-2v-mXV" secondAttribute="centerX" id="fM0-R2-bNm"/>
                                     <constraint firstItem="9H2-tC-F7q" firstAttribute="centerX" secondItem="h6q-Cp-RHf" secondAttribute="centerX" id="g4c-Ls-2cO"/>
                                     <constraint firstItem="V8W-GZ-oVM" firstAttribute="top" secondItem="TRc-ED-Hu8" secondAttribute="bottom" constant="-1" id="hz5-U8-kCY"/>
