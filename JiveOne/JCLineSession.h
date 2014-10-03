@@ -7,9 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+@class JCLineSession;
+@protocol JCLineSessionDelegate <NSObject>
+
+- (void) callStateDidChange:(long)sessionId callState:(JCCall)callState;
+
+@end
 
 @interface JCLineSession : NSObject
 
+@property (nonatomic, weak) id<JCLineSessionDelegate> delegate;
 @property (nonatomic) long mSessionId;
 @property (nonatomic) bool mHoldSate;
 @property (nonatomic) bool mSessionState;
@@ -20,6 +27,8 @@
 @property (nonatomic) bool mExistEarlyMedia;
 @property (nonatomic) bool mVideoState;
 @property (nonatomic) JCCall mCallState;
+@property (nonatomic) NSString *callTitle;
+@property (nonatomic) NSString *callDetail;
 
 - (BOOL) isReferCall;
 - (long) getOriginalCallSessionId;
