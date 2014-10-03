@@ -1048,9 +1048,23 @@
                                     <action selector="initiateCall:" destination="5YP-ww-Jgx" eventType="touchUpInside" id="naX-0J-7lX"/>
                                 </connections>
                             </button>
+                            <button hidden="YES" autoresizesSubviews="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bZw-13-k3Y" customClass="JCRoundedButton">
+                                <rect key="frame" x="130" y="382" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="809-bg-Xm1"/>
+                                    <constraint firstAttribute="width" constant="60" id="MfG-PT-2sn"/>
+                                </constraints>
+                                <state key="normal" image="green-phone-arrow">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="initiateCall:" destination="5YP-ww-Jgx" eventType="touchUpInside" id="HNN-xZ-xnb"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="centerX" secondItem="bZw-13-k3Y" secondAttribute="centerX" id="81X-cT-07K"/>
                             <constraint firstItem="O96-gt-jaf" firstAttribute="top" secondItem="Dqu-Oj-kXE" secondAttribute="top" constant="65" id="9R7-ep-UEj"/>
                             <constraint firstItem="mlm-7I-BRW" firstAttribute="top" secondItem="cpl-7N-Lxx" secondAttribute="bottom" constant="20" id="9uX-jD-BzK"/>
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="mlm-7I-BRW" secondAttribute="bottom" constant="10" id="Gi0-Jb-sbH"/>
@@ -1059,6 +1073,7 @@
                             <constraint firstAttribute="trailing" secondItem="O96-gt-jaf" secondAttribute="trailing" constant="39" id="c1J-Ch-br0"/>
                             <constraint firstItem="O96-gt-jaf" firstAttribute="top" secondItem="cpl-7N-Lxx" secondAttribute="top" constant="-60" id="ecI-2w-vYd"/>
                             <constraint firstAttribute="trailing" secondItem="cpl-7N-Lxx" secondAttribute="trailing" id="jxV-e4-fXu"/>
+                            <constraint firstItem="bZw-13-k3Y" firstAttribute="top" secondItem="cpl-7N-Lxx" secondAttribute="bottom" constant="20" id="ntW-Lz-gXq"/>
                             <constraint firstAttribute="trailing" secondItem="mlm-7I-BRW" secondAttribute="trailing" constant="130" id="ycl-9b-rlg"/>
                             <constraint firstItem="cpl-7N-Lxx" firstAttribute="leading" secondItem="Dqu-Oj-kXE" secondAttribute="leading" id="z6K-s4-tvo"/>
                         </constraints>
@@ -1107,7 +1122,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="esd-M8-Lxg" customClass="JCDialerOptions">
                                 <rect key="frame" x="0.0" y="366" width="320" height="194"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="center" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TRc-ED-Hu8" customClass="JCRoundedButton">
+                                    <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TRc-ED-Hu8" customClass="JCRoundedButton">
                                         <rect key="frame" x="234" y="20" width="60" height="60"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
                                         <constraints>
@@ -1157,21 +1172,11 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" misplaced="YES" text="Speaker" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V8W-GZ-oVM">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Speaker" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V8W-GZ-oVM">
                                         <rect key="frame" x="234" y="79" width="60" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="60" id="M5L-gL-Jb3"/>
                                             <constraint firstAttribute="height" constant="21" id="brT-oC-o7F"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transfer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="szn-nR-AS9">
-                                        <rect key="frame" x="26" y="173" width="60" height="21"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="60" id="PaW-pO-lFi"/>
-                                            <constraint firstAttribute="height" constant="21" id="uNE-9V-xaA"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -1192,7 +1197,7 @@
                                             <action selector="blindTransfer:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="7RN-IC-tVQ"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Merge Calls" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tug-Ny-Zug">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Merge Calls" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tug-Ny-Zug">
                                         <rect key="frame" x="78" y="173" width="67" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="60" id="Zjg-DA-LjX"/>
@@ -1218,7 +1223,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Swap Calls" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9H2-tC-F7q">
-                                        <rect key="frame" x="181" y="173" width="64" height="21"/>
+                                        <rect key="frame" x="183" y="173" width="60" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="sg8-Mm-wYE"/>
                                             <constraint firstAttribute="width" constant="60" id="yod-Ap-qq1"/>
@@ -1232,6 +1237,16 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="aPW-cj-vp8"/>
                                             <constraint firstAttribute="width" constant="85" id="dL5-nf-I2W"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Finish Transfer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rIq-gm-zST">
+                                        <rect key="frame" x="173" y="63" width="85" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="iRG-4i-WqJ"/>
+                                            <constraint firstAttribute="width" constant="85" id="yCJ-9W-M8S"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -1294,6 +1309,36 @@
                                             <action selector="warmTransfer:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="QFu-my-YJB"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="checkButton" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uid-o6-zKW" customClass="JCRoundedButton">
+                                        <rect key="frame" x="185" y="4" width="60" height="60"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="QYd-D2-s5j"/>
+                                            <constraint firstAttribute="width" constant="60" id="vEv-a9-qgc"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" image="white-check">
+                                            <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="warmTransfer:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="hq0-32-RBz"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" restorationIdentifier="checkConfermationButton" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f1f-q2-ztP">
+                                        <rect key="frame" x="80" y="4" width="60" height="60"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="2ol-bL-1ef"/>
+                                            <constraint firstAttribute="width" constant="60" id="m5N-ni-k4Y"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" image="green-check">
+                                            <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="warmTransfer:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="Tvd-WP-Tq8"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="redraw" placeholderIntrinsicWidth="40" placeholderIntrinsicHeight="40" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" adjustsImageWhenDisabled="NO" lineBreakMode="headTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pl8-2v-mXV" customClass="JCRoundedButton">
                                         <rect key="frame" x="130" y="20" width="60" height="60"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
@@ -1312,6 +1357,16 @@
                                             <action selector="keypad:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="xyA-wC-Mx2"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transfer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="szn-nR-AS9">
+                                        <rect key="frame" x="26" y="173" width="60" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="PaW-pO-lFi"/>
+                                            <constraint firstAttribute="height" constant="21" id="uNE-9V-xaA"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -1321,20 +1376,28 @@
                                     <constraint firstAttribute="bottom" secondItem="pl8-2v-mXV" secondAttribute="bottom" constant="114" id="4uN-vY-9p8"/>
                                     <constraint firstItem="zZ6-Xz-Txj" firstAttribute="centerX" secondItem="8rt-eE-9r5" secondAttribute="centerX" id="7MI-n8-mKr"/>
                                     <constraint firstAttribute="trailing" secondItem="h6q-Cp-RHf" secondAttribute="trailing" constant="-79" id="7YY-95-Yrw"/>
+                                    <constraint firstAttribute="bottom" secondItem="Uid-o6-zKW" secondAttribute="bottom" constant="-80" id="CNx-5e-hav"/>
                                     <constraint firstItem="c8n-IX-EHR" firstAttribute="baseline" secondItem="SPX-SZ-R8t" secondAttribute="baseline" id="Cux-Ab-SZI"/>
                                     <constraint firstAttribute="trailing" secondItem="zZ6-Xz-Txj" secondAttribute="trailing" constant="26" id="DYV-bD-9b9"/>
                                     <constraint firstItem="SPX-SZ-R8t" firstAttribute="top" secondItem="pl8-2v-mXV" secondAttribute="bottom" constant="-1" id="Fy0-1x-RvD"/>
                                     <constraint firstItem="szn-nR-AS9" firstAttribute="top" secondItem="OJ5-fR-lFW" secondAttribute="bottom" constant="-1" id="HDS-mW-jLn"/>
                                     <constraint firstItem="pl8-2v-mXV" firstAttribute="baseline" secondItem="lUT-6r-uIK" secondAttribute="baseline" id="JMB-GO-VML"/>
+                                    <constraint firstItem="Tug-Ny-Zug" firstAttribute="top" secondItem="74r-RB-XRO" secondAttribute="bottom" constant="-1" id="JMT-Q5-oBx"/>
                                     <constraint firstAttribute="bottom" secondItem="OJ5-fR-lFW" secondAttribute="bottom" constant="20" id="KZV-IL-u05"/>
                                     <constraint firstItem="9H2-tC-F7q" firstAttribute="top" secondItem="h6q-Cp-RHf" secondAttribute="bottom" constant="-1" id="Ofm-Ye-22x"/>
                                     <constraint firstItem="Tcw-Rg-ytb" firstAttribute="centerX" secondItem="qTn-fV-hyq" secondAttribute="centerX" constant="-0.5" id="RFe-8c-z8i"/>
+                                    <constraint firstItem="rIq-gm-zST" firstAttribute="centerX" secondItem="Uid-o6-zKW" secondAttribute="centerX" constant="0.5" id="S7m-tb-r8V"/>
+                                    <constraint firstItem="rIq-gm-zST" firstAttribute="top" secondItem="Uid-o6-zKW" secondAttribute="bottom" constant="-1" id="SCy-sD-BwJ"/>
                                     <constraint firstItem="74r-RB-XRO" firstAttribute="leading" secondItem="esd-M8-Lxg" secondAttribute="leading" constant="-78" id="Sle-cw-UfB"/>
                                     <constraint firstAttribute="trailing" secondItem="TRc-ED-Hu8" secondAttribute="trailing" constant="26" id="UVn-b2-dkj"/>
+                                    <constraint firstAttribute="bottom" secondItem="TRc-ED-Hu8" secondAttribute="bottom" constant="114" id="Uxd-B9-ryE"/>
                                     <constraint firstAttribute="centerX" secondItem="Tcw-Rg-ytb" secondAttribute="centerX" id="W2k-NJ-N1l"/>
                                     <constraint firstItem="lUT-6r-uIK" firstAttribute="leading" secondItem="esd-M8-Lxg" secondAttribute="leading" constant="26" id="Yji-60-neP"/>
                                     <constraint firstItem="Tug-Ny-Zug" firstAttribute="centerX" secondItem="74r-RB-XRO" secondAttribute="centerX" constant="-4" id="ZiI-Cg-Soe"/>
                                     <constraint firstAttribute="bottom" secondItem="h6q-Cp-RHf" secondAttribute="bottom" constant="20" id="bDK-6N-fGc"/>
+                                    <constraint firstItem="9H2-tC-F7q" firstAttribute="centerX" secondItem="h6q-Cp-RHf" secondAttribute="centerX" id="dC7-o7-9JO"/>
+                                    <constraint firstAttribute="centerX" secondItem="Uid-o6-zKW" secondAttribute="centerX" id="eIu-IG-sMD"/>
+                                    <constraint firstAttribute="bottom" secondItem="f1f-q2-ztP" secondAttribute="bottom" constant="-80" id="f2o-iB-4XR"/>
                                     <constraint firstAttribute="centerX" secondItem="pl8-2v-mXV" secondAttribute="centerX" id="fM0-R2-bNm"/>
                                     <constraint firstItem="9H2-tC-F7q" firstAttribute="centerX" secondItem="h6q-Cp-RHf" secondAttribute="centerX" id="g4c-Ls-2cO"/>
                                     <constraint firstItem="V8W-GZ-oVM" firstAttribute="top" secondItem="TRc-ED-Hu8" secondAttribute="bottom" constant="-1" id="hz5-U8-kCY"/>
@@ -1342,6 +1405,7 @@
                                     <constraint firstItem="8rt-eE-9r5" firstAttribute="top" secondItem="zZ6-Xz-Txj" secondAttribute="bottom" constant="-1" id="kMP-72-ai3"/>
                                     <constraint firstItem="TRc-ED-Hu8" firstAttribute="centerX" secondItem="V8W-GZ-oVM" secondAttribute="centerX" id="l3O-hR-CFj"/>
                                     <constraint firstAttribute="bottom" secondItem="74r-RB-XRO" secondAttribute="bottom" constant="20" id="mjl-Md-cra"/>
+                                    <constraint firstAttribute="centerX" secondItem="f1f-q2-ztP" secondAttribute="centerX" id="nVr-tP-T3p"/>
                                     <constraint firstItem="c8n-IX-EHR" firstAttribute="top" secondItem="lUT-6r-uIK" secondAttribute="bottom" constant="-1" id="qHD-FB-M58"/>
                                     <constraint firstAttribute="bottom" secondItem="Tcw-Rg-ytb" secondAttribute="bottom" constant="20" id="rFD-yx-ctB"/>
                                     <constraint firstItem="c8n-IX-EHR" firstAttribute="centerX" secondItem="lUT-6r-uIK" secondAttribute="centerX" id="u5X-og-qMu"/>
@@ -2656,7 +2720,9 @@
         <image name="black-hold" width="30" height="30"/>
         <image name="delete-black" width="35" height="35"/>
         <image name="dialer-callButton-green" width="58" height="58"/>
+        <image name="green-check" width="58" height="58"/>
         <image name="green-phone" width="30" height="30"/>
+        <image name="green-phone-arrow" width="35" height="30"/>
         <image name="iPhone2Xnew.png" width="640" height="1136"/>
         <image name="iPhone2XnewBlurSmall.png" width="320" height="480"/>
         <image name="incall-background" width="320" height="568"/>
@@ -2667,6 +2733,7 @@
         <image name="transfer-swapCalls-white" width="35" height="35"/>
         <image name="white-arrow" width="30" height="31"/>
         <image name="white-arrow-outline" width="30" height="30"/>
+        <image name="white-check" width="30" height="30"/>
         <image name="white-keypad" width="30" height="30"/>
         <image name="white-merge" width="30" height="30"/>
         <image name="white-mute" width="30" height="30"/>
@@ -2681,6 +2748,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="dIf-i9-QYA"/>
-        <segue reference="EOv-Zd-uHq"/>
+        <segue reference="0xB-1u-nc2"/>
     </inferredMetricsTieBreakers>
 </document>
