@@ -1717,6 +1717,7 @@
                                     <outlet property="elapsedTimeLabel" destination="n3h-gY-XNw" id="xPF-iM-zGM"/>
                                     <outlet property="endCallButton" destination="Irl-DY-CnL" id="Oav-nV-FMS"/>
                                     <outlet property="holdCallButton" destination="5Rw-dd-jvH" id="mD9-b0-JH6"/>
+                                    <outlet property="holdElapsedTimeLabel" destination="Ucw-E9-y2Q" id="taj-74-GHF"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>

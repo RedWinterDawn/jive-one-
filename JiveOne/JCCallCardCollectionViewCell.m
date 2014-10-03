@@ -38,7 +38,6 @@
     self.dialedNumberLabel.dialString = _callCard.dialNumber;
     
     self.holdCallButton.selected = _callCard.hold;
-    [self showHoldStateAnimated:NO];
     
     if (!_timer)
     {
@@ -119,7 +118,9 @@
         weakSelf.callCardInfoTopConstraint.constant = 40;
         [self setNeedsUpdateConstraints];
         
-        _holdTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(holdTimerUpdate) userInfo:nil repeats:YES];
+        _holdTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(holdTimerUpdate) userInfo:nil repeats:YES];
+        [self holdTimerUpdate];
+        
         [UIView animateWithDuration:(animated ? .5 : 0)
                          animations:^{
                              weakSelf.alpha = 0.5;
