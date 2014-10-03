@@ -106,6 +106,7 @@
 		
 		@try {
 			NSDictionary *response = [NSDictionary dictionaryWithXMLData:receivedData];
+			
 			[LineConfiguration addConfiguration:response completed:^(BOOL success) {
 				completed(YES, response, nil, nil);
 			}];

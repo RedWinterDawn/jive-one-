@@ -7,6 +7,8 @@
 //
 
 #import "JCCallCardManager.h"
+#import "SipHandler.h"
+#import "JCLineSession.h"
 
 NSString *const kJCCallCardManagerAddedCallNotification = @"addedCall";
 
@@ -32,14 +34,33 @@ NSString *const kJCCallCardManagerUpdatedIndex = @"index";
     [self addCallCard:callCard];
 }
 
+-(void)refreshCallDatasource
+{
+	if (!_currentCalls) {
+		_currentCalls = [NSMutableArray array];
+	} else {
+		[_currentCalls removeAllObjects];
+	}
+	
+	for (JCLineSession *line in [[SipHandler sharedHandler] findAllActiveLines]) {
+		JCCallCard *callCard = [JCCallCard new];
+		callCard.lineSession = line;
+		callCard.started = [NSDate date];
+		
+		[self addCallCard:callCard];
+	}
+	
+}
+
 -(void)hangUpCall:(JCCallCard *)callCard
 {
-    
+	[[SipHandler sharedHandler] hangUpCallWithSession:callCard.lineSession.mSessionId];
+	[self refreshCallDatasource];
 }
 
 -(void)placeCallOnHold:(JCCallCard *)callCard
 {
-    
+	[[SipHandler sharedHandler] toggleHoldForLineWithSessionId:callCard.lineSession.mSessionId];
 }
 
 -(void)removeFromHold:(JCCallCard *)callCard

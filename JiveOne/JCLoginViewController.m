@@ -455,7 +455,7 @@
 //			else {
 				//maybe it's v4; in any case, we don't want the app to fail here.
 //			}
-			
+			[[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
 			[self fetchContacts];
 		}];
 	}

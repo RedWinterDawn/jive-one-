@@ -28,10 +28,11 @@ NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTran
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    NSString *dialString = self.dialString;
-    if (dialString)
-        [[JCCallCardManager sharedManager] dialNumber:dialString];
+
+	[[JCCallCardManager sharedManager] refreshCallDatasource];
+//    NSString *dialString = self.dialString;
+//    if (dialString)
+//        [[JCCallCardManager sharedManager] dialNumber:dialString];
 }
 
 #pragma mark - IBActions -

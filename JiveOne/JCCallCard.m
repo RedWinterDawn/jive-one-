@@ -28,7 +28,7 @@
     
     //TODO: talk to acctual SIP interface to find out call status, etc, and hold/unhold
     
-    _hold = hold;
+    _hold = _lineSession.mHoldSate;
 }
 
 -(BOOL)hold
@@ -50,6 +50,36 @@
     if (_callerId)
         return _callerId;
     return @"Unknown";
+}
+
+-(void)setLineSession:(JCLineSession *)lineSession
+{
+	_lineSession = lineSession;
+	_lineSession.delegate = self;
+	
+	_callerId = _lineSession.callTitle;
+	_dialNumber = _lineSession.callDetail;
+	_identifer = [NSString stringWithFormat:@"%ld", _lineSession.mSessionId];
+	
+	[self callStateDidChange:_lineSession.mSessionId callState:_lineSession.mCallState];
+}
+
+#pragma mark - Line Session Delegate
+-(void)callStateDidChange:(long)sessionId callState:(JCCall)callState
+{
+	switch (callState) {
+		case  JCNoCall:
+			_dialNumber = @"Connecting";
+		case JCCallRinging:
+			_dialNumber = @"Ringing";
+			break;
+		case JCCallConnected:
+			_dialNumber = _lineSession.callDetail;
+			break;
+		default:
+			break;
+	}
+	NSLog(@"State Changed For Session %ld - State: %u", sessionId, callState);
 }
 
 

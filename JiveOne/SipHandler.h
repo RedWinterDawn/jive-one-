@@ -25,14 +25,14 @@
 - (void)initiate;
 - (void) pressNumpadButton:(char )dtmf;
 - (void) makeCall:(NSString*)callee videoCall:(BOOL)videoCall contactName:(NSString *)contactName;
-- (void) hungUpCall;
+- (void) hangUpCallWithSession:(long)sessionId;
 - (void) holdCall;
 //- (void) unholdCall;
 - (void) hangUpCall;
 - (void) referCall:(NSString*)referTo;
 - (void) muteCall:(BOOL)mute;
 - (void) setLoudspeakerStatus:(BOOL)enable;
-- (void) toggleHoldForCallWithSessionState;
+- (void)toggleHoldForLineWithSessionId:(long)sessionId;
 - (NSArray *) findAllActiveLines;
 
 //- (void) switchSessionLine;

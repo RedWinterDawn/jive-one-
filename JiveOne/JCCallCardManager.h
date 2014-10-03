@@ -18,7 +18,6 @@ extern NSString *const kJCCallCardManagerUpdatedIndex;
 
 @property (nonatomic, readonly) NSArray *incomingCalls;
 @property (nonatomic, readonly) NSArray *currentCalls;
-
 @property (nonatomic, readonly) NSUInteger totalCalls;
 
 -(void)hangUpCall:(JCCallCard *)callCard;
@@ -26,6 +25,7 @@ extern NSString *const kJCCallCardManagerUpdatedIndex;
 -(void)removeFromHold:(JCCallCard *)callCard;
 
 -(void)dialNumber:(NSString *)dialNumber;
+-(void)refreshCallDatasource;
 
 @end
 

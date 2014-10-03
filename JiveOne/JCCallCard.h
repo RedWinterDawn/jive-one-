@@ -7,13 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JCLineSession.h"
 
-@interface JCCallCard : NSObject
+@interface JCCallCard : NSObject <JCLineSessionDelegate>
 
 @property (nonatomic, strong) NSString *identifer;
 @property (nonatomic, strong) NSString *callerId;
 @property (nonatomic, strong) NSString *dialNumber;
-
+@property (nonatomic, strong) JCLineSession *lineSession;
 @property (nonatomic, strong) NSDate *started;
 
 

@@ -35,8 +35,6 @@
 	return handler;
 }
 
-
-
 - (void)initiate
 {
 	_lineSessions = [NSMutableArray new];
@@ -333,9 +331,9 @@
 	}
 }
 
-- (void) hangUpCall
+- (void) hangUpCallWithSession:(long)sessionId;
 {
-	JCLineSession *selectedLine = [self findLineWithSessionState];
+	JCLineSession *selectedLine = [self findSession:sessionId];
 	if (selectedLine.mSessionState)
 	{
 		[_mPortSIPSDK hangUp:selectedLine.mSessionId];

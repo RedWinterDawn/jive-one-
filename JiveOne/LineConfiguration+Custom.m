@@ -22,9 +22,6 @@
 			localContext = [NSManagedObjectContext MR_contextForCurrentThread];
 		}
 		
-		
-		
-		
 		LineConfiguration *lineConfig = [LineConfiguration MR_findFirst];
 		if (!lineConfig) {
 			lineConfig = [LineConfiguration MR_createInContext:localContext];
