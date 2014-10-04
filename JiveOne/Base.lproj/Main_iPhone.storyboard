@@ -1096,7 +1096,7 @@
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-1016" y="1151"/>
+            <point key="canvasLocation" x="-207" y="1195"/>
         </scene>
         <!--Caller View Controller-->
         <scene sceneID="pUR-2N-lJT">
@@ -1428,11 +1428,12 @@
                     <navigationItem key="navigationItem" id="iCC-Rn-KEN"/>
                     <connections>
                         <outlet property="dialerOptions" destination="esd-M8-Lxg" id="s5z-H3-dYL"/>
+                        <segue destination="tDl-8a-4VI" kind="modal" identifier="blindTransferComplete" animates="NO" id="fIT-eL-2bQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dIP-55-Mtj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-510" y="1151"/>
+            <point key="canvasLocation" x="322" y="1195"/>
         </scene>
         <!--Call Card Collection View Controller-->
         <scene sceneID="evG-m7-7Dg">
@@ -1632,7 +1633,7 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Callers Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M9Q-CU-veO">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Callers Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M9Q-CU-veO" customClass="JCDialStringLabel">
                                                     <rect key="frame" x="0.0" y="75" width="288" height="21"/>
                                                     <accessibility key="accessibilityConfiguration" hint="" label="Callers Number"/>
                                                     <constraints>
@@ -1722,6 +1723,9 @@
                                                     <state key="normal" image="red-phone">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="hangup:" destination="pHP-fS-KDd" eventType="touchUpInside" id="7Rf-WP-98t"/>
+                                                    </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dHb-AW-ELG" userLabel="Answer">
                                                     <rect key="frame" x="150" y="0.0" width="150" height="50"/>
@@ -1730,6 +1734,9 @@
                                                     <state key="normal" image="green-phone">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="answer:" destination="pHP-fS-KDd" eventType="touchUpInside" id="ldU-j2-ZGL"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1763,7 +1770,12 @@
                                 </constraints>
                                 <size key="customSize" width="300" height="154"/>
                                 <connections>
-                                    <outlet property="callStateView" destination="MkH-bT-ckR" id="ps2-bf-3Fx"/>
+                                    <outlet property="answerCallButton" destination="dHb-AW-ELG" id="0ra-9Y-Ez3"/>
+                                    <outlet property="callActions" destination="jui-6o-7rV" id="WpZ-vg-RRt"/>
+                                    <outlet property="callerIdLabel" destination="sGU-0K-AK5" id="be0-4w-xYS"/>
+                                    <outlet property="dialedNumberLabel" destination="M9Q-CU-veO" id="GSG-NE-Zc3"/>
+                                    <outlet property="elapsedTimeLabel" destination="h8H-HJ-zPa" id="2bs-jT-xPy"/>
+                                    <outlet property="endCallButton" destination="fCz-UY-bzP" id="moM-sF-2Rp"/>
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell autoresizesSubviews="NO" opaque="NO" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="center" id="L4D-sj-h8p">
@@ -1869,7 +1881,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UHI-u8-S2O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="251" y="1151"/>
+            <point key="canvasLocation" x="859" y="1195"/>
         </scene>
         <!--Transfer-->
         <scene sceneID="Nc0-xg-t5k">
@@ -2423,7 +2435,7 @@
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-1016" y="1845"/>
+            <point key="canvasLocation" x="322" y="1901"/>
         </scene>
         <!--Keyboard-->
         <scene sceneID="99C-FI-XcW">
@@ -2855,7 +2867,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="usW-9z-IeP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="596" y="1531"/>
+            <point key="canvasLocation" x="322" y="399"/>
         </scene>
         <!--Keypad-->
         <scene sceneID="UYS-F1-4gx">
@@ -3366,7 +3378,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sXS-yz-Aoo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-649" y="1845"/>
+            <point key="canvasLocation" x="859" y="1917"/>
         </scene>
     </scenes>
     <resources>
@@ -3402,6 +3414,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="dIf-i9-QYA"/>
-        <segue reference="EOv-Zd-uHq"/>
+        <segue reference="0xB-1u-nc2"/>
     </inferredMetricsTieBreakers>
 </document>

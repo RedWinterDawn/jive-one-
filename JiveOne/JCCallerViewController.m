@@ -18,6 +18,8 @@
 NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTransferModal";
 NSString *const kJCCallerViewControllerKeyboardStoryboardIdentifier = @"keyboardModal";
 
+NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"blindTransferComplete";
+
 @interface JCCallerViewController () <JCTransferViewControllerDelegate, JCKeyboardViewControllerDelegate>
 {
     UIViewController *_presentedTransferViewController;
@@ -61,9 +63,26 @@ NSString *const kJCCallerViewControllerKeyboardStoryboardIdentifier = @"keyboard
 
 -(IBAction)speaker:(id)sender
 {
-    JCCallCard *incomingCallCard = [[JCCallCard alloc] init];
-    incomingCallCard.dialNumber = @"555-123-4567";
-    [[JCCallCardManager sharedManager] addIncomingCall:incomingCallCard];
+    if ([sender isKindOfClass:[UIButton class]])
+    {
+        UIButton *button = (UIButton *)sender;
+        button.selected = ! button.selected;
+        
+        // Temporary
+        if (button.selected)
+        {
+            JCCallCard *incomingCallCard = [[JCCallCard alloc] init];
+            incomingCallCard.dialNumber = @"555-123-4567";
+            [[JCCallCardManager sharedManager] addIncomingCall:incomingCallCard];
+        }
+        else
+        {
+            JCCallCard *incomingCard = [[JCCallCardManager sharedManager].incomingCalls objectAtIndex:0];
+            [[JCCallCardManager sharedManager] removeIncomingCall:incomingCard];
+        }
+        
+        // TODO: talk to whatever to turn on the speaker
+    }
 }
 
 -(IBAction)keypad:(id)sender
@@ -75,16 +94,18 @@ NSString *const kJCCallerViewControllerKeyboardStoryboardIdentifier = @"keyboard
         [self presentKeyboardViewController:keyboardViewController];
     }
     else
-    {
         [self dismissKeyboardViewController:YES];
-    }
-    
-    
 }
 
 -(IBAction)mute:(id)sender
 {
-    [self.dialerOptions setState:JCDialerOptionSingle animated:YES];
+    if ([sender isKindOfClass:[UIButton class]])
+    {
+        UIButton *button = (UIButton *)sender;
+        button.selected = ! button.selected;
+        
+        // TODO: talk to whatever to turn on the speaker
+    }
 }
 
 -(IBAction)blindTransfer:(id)sender
@@ -123,10 +144,26 @@ NSString *const kJCCallerViewControllerKeyboardStoryboardIdentifier = @"keyboard
 
 -(IBAction)finishTransfer:(id)sender
 {
-    
+    [[JCCallCardManager sharedManager] finishWarmTransfer:^(bool success) {
+        if (success)
+            [self showTransferSuccess];
+    }];
 }
 
 #pragma mark - Private - 
+
+-(void)showTransferSuccess
+{
+    [self performSegueWithIdentifier:kJCCallerViewControllerBlindTransferCompleteSegueIdentifier sender:self];
+    [self performSelector:@selector(dismissModalViewController) withObject:nil afterDelay:3];
+}
+
+-(void)dismissModalViewController
+{
+    [self dismissViewControllerAnimated:NO completion:^{
+        [self closeCallerViewController];
+    }];
+}
 
 -(void)closeCallerViewController
 {
@@ -226,13 +263,9 @@ NSString *const kJCCallerViewControllerKeyboardStoryboardIdentifier = @"keyboard
         if (success)
         {
             if (dialType == JCCallCardDialWarmTransfer)
-            {
-                
-            }
+                [self.dialerOptions setState:JCDialerOptionFinish animated:YES];
             else if(dialType == JCCallCardDialBlindTransfer)
-            {
-                
-            }
+                [self showTransferSuccess];
             else
                 [self.dialerOptions setState:JCDialerOptionMultiple animated:YES];
         }

@@ -131,6 +131,11 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
     // TODO: do something to remove call from hold.
 }
 
+-(void)finishWarmTransfer:(void (^)(bool success))completion
+{
+    completion(true);
+}
+
 #pragma mark - Properties -
 
 -(NSUInteger)totalCalls
