@@ -47,8 +47,14 @@ NSString *const kJCCallerViewControllerKeyboardStoryboardIdentifier = @"keyboard
 -(void)callHungUp:(NSNotification *)notification
 {
     JCCallCardManager *callManager = (JCCallCardManager *)notification.object;
-    if(callManager.totalCalls == 0)
+    NSUInteger count = callManager.totalCalls;
+    if(count == 0)
         [self closeCallerViewController];
+    else if (count == 1)
+        [self.dialerOptions setState:JCDialerOptionSingle animated:YES];
+    
+    
+    
 }
 
 #pragma mark - IBActions -
@@ -208,20 +214,29 @@ NSString *const kJCCallerViewControllerKeyboardStoryboardIdentifier = @"keyboard
     [self dismissTransferViewControllerAnimated:NO];
     NSLog(@"%@, %i", dialString, controller.transferType);
     
-    /*if (controller.transferType == JCTransferBlind)
-    {
-        
-    }
-    else if(controller.transferType == JCTransferHold)
-    {
-        
-    }
+    JCCallCardDialTypes dialType;
+    if (controller.transferType == JCTransferBlind)
+        dialType = JCCallCardDialBlindTransfer;
     else if(controller.transferType == JCTransferWarm)
-    {
-        
-    }*/
+        dialType = JCCallCardDialWarmTransfer;
+    else
+        dialType = JCCallCardDialSingle;
     
-    [[JCCallCardManager sharedManager] dialNumber:dialString];
+    [[JCCallCardManager sharedManager] dialNumber:dialString type:dialType completion:^(bool success, NSDictionary *callInfo) {
+        if (success)
+        {
+            if (dialType == JCCallCardDialWarmTransfer)
+            {
+                
+            }
+            else if(dialType == JCCallCardDialBlindTransfer)
+            {
+                
+            }
+            else
+                [self.dialerOptions setState:JCDialerOptionMultiple animated:YES];
+        }
+    }];
 }
 
 -(void)shouldCancelTransferViewController:(JCTransferViewController *)controller
