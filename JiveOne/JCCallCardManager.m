@@ -74,36 +74,30 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
 
 -(void)dialNumber:(NSString *)dialNumber
 {
-    JCCallCard *callCard = [[JCCallCard alloc] init];
-    callCard.dialNumber = dialNumber;
-    callCard.started = [NSDate date];
-    
-    // TODO: Do something to initiate the call.
-    
-    [self addCurrentCallCard:callCard];
-    
-    //[self dialNumber:dialNumber type:JCCallCardDialSingle completion:NULL];
+    [self dialNumber:dialNumber type:JCCallCardDialSingle completion:NULL];
 }
 
 -(void)dialNumber:(NSString *)dialNumber type:(JCCallCardDialTypes)dialType completion:(void (^)(bool success, NSDictionary *callInfo))completion
 {
-    JCCallCard *callCard = [[JCCallCard alloc] init];
-    callCard.dialNumber = dialNumber;
-    callCard.started = [NSDate date];
-    
-    // TODO: Do something to initiate the call.
-    
-    [self addCurrentCallCard:callCard];
-    
-    bool success = true;
-    NSUInteger index = [self.calls indexOfObject:callCard];
-    NSDictionary *dictionary = @{
-                                 kJCCallCardManagerNewCall: callCard,
-                                 kJCCallCardManagerUpdatedIndex: [NSNumber numberWithInteger:index],
-                                 };
-    
-    if (completion != NULL)
-        completion(success, dictionary);
+    if (true)
+    {
+        JCCallCard *callCard = [[JCCallCard alloc] init];
+        callCard.dialNumber = dialNumber;
+        callCard.started = [NSDate date];
+        [self addCurrentCallCard:callCard];
+        
+        NSUInteger index = [self.calls indexOfObject:callCard];
+        if (completion != NULL)
+            completion(true, @{
+                               kJCCallCardManagerNewCall: callCard,
+                               kJCCallCardManagerUpdatedIndex: [NSNumber numberWithInteger:index],
+                               });
+    }
+    else
+    {
+        if (completion != NULL)
+            completion(false, @{});
+    }
 }
 
 -(void)answerCall:(JCCallCard *)newCallCard
@@ -168,6 +162,11 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
 {
     if (!_currentCalls)
         _currentCalls = [NSMutableArray array];
+    
+    // Place other calls on hold.
+    for (JCCallCard *card in _currentCalls)
+        card.hold = true;
+    
     [_currentCalls addObject:callCard];
     
     // Sort the array and fetch the resulting new index of the call card.
