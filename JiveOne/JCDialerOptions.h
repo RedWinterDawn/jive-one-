@@ -15,6 +15,7 @@ typedef enum : NSUInteger {
     JCDialerOptionSingle = 0,
     JCDialerOptionMultiple,
     JCDialerOptionConference,
+    JCDialerOptionFinish
 } JCDialerOptionState;
 
 @interface JCDialerOptions : UIView

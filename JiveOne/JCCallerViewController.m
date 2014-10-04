@@ -10,15 +10,19 @@
 #import "JCTransferViewController.h"
 #import "JCCallCardCollectionViewController.h"
 #import "SipHandler.h"
+#import "JCKeyboardViewController.h"
+
 #import "JCCallCardManager.h"
 
 #define TRANSFER_ANIMATION_DURATION 0.3
 
 NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTransferModal";
+NSString *const kJCCallerViewControllerKeyboardStoryboardIdentifier = @"keyboardModal";
 
-@interface JCCallerViewController () <JCTransferViewControllerDelegate>
+@interface JCCallerViewController () <JCTransferViewControllerDelegate, JCKeyboardViewControllerDelegate>
 {
     UIViewController *_presentedTransferViewController;
+    UIViewController *_presentedKeyboardViewController;
 }
 
 @end
@@ -61,7 +65,18 @@ NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTran
 
 -(IBAction)keypad:(id)sender
 {
-    [self.dialerOptions setState:JCDialerOptionMultiple animated:YES];
+    if (!_presentedKeyboardViewController)
+    {
+        JCKeyboardViewController *keyboardViewController = [self.storyboard instantiateViewControllerWithIdentifier:kJCCallerViewControllerKeyboardStoryboardIdentifier];
+        keyboardViewController.delegate = self;
+        [self presentKeyboardViewController:keyboardViewController];
+    }
+    else
+    {
+        [self dismissKeyboardViewController:YES];
+    }
+    
+    
 }
 
 -(IBAction)mute:(id)sender
@@ -126,8 +141,45 @@ NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTran
         [_delegate shouldDismissCallerViewController:self];
 }
 
+-(void)presentKeyboardViewController:(UIViewController *)viewController
+{
+    if (viewController == _presentedKeyboardViewController)
+        return;
+    
+    _presentedKeyboardViewController = viewController;
+    [self addChildViewController:viewController];
+    CGRect bounds = self.view.bounds;
+    CGRect frame = self.view.frame;
+    frame.origin.y = -frame.size.height;
+    viewController.view.frame = frame;
+    [self.view addSubview:viewController.view];
+    [UIView animateWithDuration:TRANSFER_ANIMATION_DURATION
+                     animations:^{
+                         viewController.view.frame = bounds;
+                     }
+                     completion:NULL];
+}
+
+-(void)dismissKeyboardViewController:(bool)animated
+{
+    UIViewController *viewController = _presentedKeyboardViewController;
+    CGRect frame = self.view.frame;
+    frame.origin.y = -frame.size.height;
+    [UIView animateWithDuration:(animated ? TRANSFER_ANIMATION_DURATION : 0)
+                     animations:^{
+                         viewController.view.frame = frame;
+                     } completion:^(BOOL finished) {
+                         [viewController removeFromParentViewController];
+                         [viewController.view removeFromSuperview];
+                         _presentedKeyboardViewController = nil;
+                     }];
+}
+
 -(void)presentTransferViewController:(UIViewController *)viewController
 {
+    if (_presentedKeyboardViewController)
+        [self dismissKeyboardViewController:YES];
+    
     if (viewController == _presentedTransferViewController)
         return;
     
@@ -156,6 +208,7 @@ NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTran
                      } completion:^(BOOL finished) {
                          [viewController removeFromParentViewController];
                          [viewController.view removeFromSuperview];
+                         _presentedTransferViewController = nil;
                      }];
 }
 
