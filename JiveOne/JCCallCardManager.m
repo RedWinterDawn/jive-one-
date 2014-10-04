@@ -18,6 +18,9 @@ NSString *const kJCCallCardManagerUpdatedIndex = @"index";
 NSString *const kJCCallCardManagerPriorUpdateCount = @"priorCount";
 NSString *const kJCCallCardManagerUpdateCount = @"updateCount";
 
+NSString *const kJCCallCardManagerNewCall       = @"newCall";
+NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
+
 @interface JCCallCardManager ()
 {
     NSMutableArray *_currentCalls;
@@ -78,6 +81,29 @@ NSString *const kJCCallCardManagerUpdateCount = @"updateCount";
     // TODO: Do something to initiate the call.
     
     [self addCurrentCallCard:callCard];
+    
+    //[self dialNumber:dialNumber type:JCCallCardDialSingle completion:NULL];
+}
+
+-(void)dialNumber:(NSString *)dialNumber type:(JCCallCardDialTypes)dialType completion:(void (^)(bool success, NSDictionary *callInfo))completion
+{
+    JCCallCard *callCard = [[JCCallCard alloc] init];
+    callCard.dialNumber = dialNumber;
+    callCard.started = [NSDate date];
+    
+    // TODO: Do something to initiate the call.
+    
+    [self addCurrentCallCard:callCard];
+    
+    bool success = true;
+    NSUInteger index = [self.calls indexOfObject:callCard];
+    NSDictionary *dictionary = @{
+                                 kJCCallCardManagerNewCall: callCard,
+                                 kJCCallCardManagerUpdatedIndex: [NSNumber numberWithInteger:index],
+                                 };
+    
+    if (completion != NULL)
+        completion(success, dictionary);
 }
 
 -(void)answerCall:(JCCallCard *)newCallCard
