@@ -49,8 +49,12 @@
 
 -(void)endCall
 {
-    [[JCCallCardManager sharedManager] hangUpCall:self];
-    
+    [[JCCallCardManager sharedManager] hangUpCall:self remote:NO];
+}
+
+-(void)endCallRemote
+{
+	[[JCCallCardManager sharedManager] hangUpCall:self remote:YES];
 }
 
 -(NSString *)callerId
@@ -83,6 +87,12 @@
 			break;
 		case JCCallConnected:
 			_dialNumber = _lineSession.callDetail;
+			break;
+		case JCCallCanceled:
+			[self endCallRemote];
+		case JCCallOnHold:
+		case JCCALlOffHold:
+			[self setHold:YES];
 			break;
 		default:
 			break;

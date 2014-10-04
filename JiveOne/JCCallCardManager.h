@@ -29,12 +29,11 @@ extern NSString *const kJCCallCardManagerUpdateCount;
 
 @property (nonatomic, readonly) NSUInteger totalCalls;
 
--(void)hangUpCall:(JCCallCard *)callCard;
+-(void)hangUpCall:(JCCallCard *)callCard remote:(BOOL)remote;
 -(void)placeCallOnHold:(JCCallCard *)callCard;
 -(void)removeFromHold:(JCCallCard *)callCard;
 
 -(void)dialNumber:(NSString *)dialNumber;
--(void)refreshCallDatasource;
 -(void)answerCall:(JCCallCard *)callCard;
 
 // Temporary for POC

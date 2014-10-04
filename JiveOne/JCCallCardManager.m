@@ -9,6 +9,7 @@
 #import "JCCallCardManager.h"
 #import "SipHandler.h"
 #import "JCLineSession.h"
+#import "Lines+Custom.h"
 
 NSString *const kJCCallCardManagerAddedIncomingCallNotification = @"addedIncommingCall";
 NSString *const kJCCallCardManagerRemoveIncomingCallNotification = @"removedIncommingCall";
@@ -73,32 +74,39 @@ NSString *const kJCCallCardManagerUpdateCount = @"updateCount";
 
 -(void)dialNumber:(NSString *)dialNumber
 {
-    JCCallCard *callCard = [[JCCallCard alloc] init];
-    callCard.dialNumber = dialNumber;
-    callCard.started = [NSDate date];
-    
-    // TODO: Do something to initiate the call.
-    
-    [self addCurrentCallCard:callCard];
+	JCCallCard *callCard = [[JCCallCard alloc] init];
+	callCard.dialNumber = dialNumber;
+	callCard.started = [NSDate date];
+	
+	[self addCurrentCallCard:callCard];
+	
+	JCLineSession *session = [[SipHandler sharedHandler] makeCall:dialNumber videoCall:NO contactName:[self getContactNameByNumber:dialNumber]];
+	if (session.mSessionState) {
+		callCard.lineSession = session;
+	}
+	else {
+		[self removeCurrentCall:callCard];
+	}
+	
 }
 
--(void)refreshCallDatasource
-{
-	if (!_currentCalls) {
-		_currentCalls = [NSMutableArray array];
-	} else {
-		[_currentCalls removeAllObjects];
-	}
-	
-	for (JCLineSession *line in [[SipHandler sharedHandler] findAllActiveLines]) {
-		JCCallCard *callCard = [JCCallCard new];
-		callCard.lineSession = line;
-		callCard.started = [NSDate date];
-		
-		[self addCurrentCallCard:callCard];
-	}
-	
-}
+//-(void)refreshCallDatasource
+//{
+//	if (!_currentCalls) {
+//		_currentCalls = [NSMutableArray array];
+//	} else {
+//		[_currentCalls removeAllObjects];
+//	}
+//	
+//	for (JCLineSession *line in [[SipHandler sharedHandler] findAllActiveLines]) {
+//		JCCallCard *callCard = [JCCallCard new];
+//		callCard.lineSession = line;
+//		callCard.started = [NSDate date];
+//		
+//		[self addCurrentCallCard:callCard];
+//	}
+//	
+//}
 
 -(void)answerCall:(JCCallCard *)newCallCard
 {
@@ -112,10 +120,11 @@ NSString *const kJCCallCardManagerUpdateCount = @"updateCount";
     [self addCurrentCallCard:newCallCard];
 }
 
--(void)hangUpCall:(JCCallCard *)callCard
+-(void)hangUpCall:(JCCallCard *)callCard remote:(BOOL)remote
 {
-	[[SipHandler sharedHandler] hangUpCallWithSession:callCard.lineSession.mSessionId];
-//	[self refreshCallDatasource];
+	if (!remote) {
+		[[SipHandler sharedHandler] hangUpCallWithSession:callCard.lineSession.mSessionId];
+	}
    [self removeCurrentCall:callCard];
 }
 
@@ -128,6 +137,17 @@ NSString *const kJCCallCardManagerUpdateCount = @"updateCount";
 {
     // TODO: do something to remove call from hold.
 }
+#pragma mark - Contact
+- (NSString *)getContactNameByNumber:(NSString *)number
+{
+	Lines *contact = [Lines MR_findFirstByAttribute:@"externsionNumber" withValue:number];
+	if (contact) {
+		return contact.displayName;
+	}
+	
+	return nil;
+}
+
 
 #pragma mark - Properties -
 
@@ -153,7 +173,6 @@ NSString *const kJCCallCardManagerUpdateCount = @"updateCount";
     
     NSUInteger index = [_currentCalls indexOfObject:callCard];
     [_currentCalls removeObject:callCard];
-	[self refreshCallDatasource];
     [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerRemoveCurrentCallNotification object:self userInfo:@{kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:index]}];
 }
 

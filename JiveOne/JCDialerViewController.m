@@ -9,7 +9,6 @@
 #import "JCDialerViewController.h"
 #import "JCCallerViewController.h"
 #import "SipHandler.h"
-#import "Lines+Custom.h"
 
 NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCall";
 
@@ -41,15 +40,6 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     }
 }
 
-- (NSString *)getContactNameByNumber:(NSString *)number
-{
-	Lines *contact = [Lines MR_findFirstByAttribute:@"externsionNumber" withValue:number];
-	if (contact) {
-		return contact.displayName;
-	}
-	
-	return nil;
-}
 
 #pragma mark - IBActions -
 
@@ -66,7 +56,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 
 -(IBAction)initiateCall:(id)sender
 {
-	[[SipHandler sharedHandler] makeCall:self.dialStringLabel.text videoCall:NO contactName:[self getContactNameByNumber:self.dialStringLabel.text]];
+//	[[SipHandler sharedHandler] makeCall:self.dialStringLabel.text videoCall:NO contactName:[self getContactNameByNumber:self.dialStringLabel.text]];
     [self performSegueWithIdentifier:kJCDialerViewControllerCallerStoryboardIdentifier sender:self];
 }
 

@@ -33,10 +33,9 @@ NSString *const kJCCallerViewControllerKeyboardStoryboardIdentifier = @"keyboard
 {
     [super viewDidLoad];
 
-	[[JCCallCardManager sharedManager] refreshCallDatasource];
-//    NSString *dialString = self.dialString;
-//    if (dialString)
-//        [[JCCallCardManager sharedManager] dialNumber:dialString];
+    NSString *dialString = self.dialString;
+    if (dialString)
+        [[JCCallCardManager sharedManager] dialNumber:dialString];
 	
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callHungUp:) name:kJCCallCardManagerRemoveCurrentCallNotification object:[JCCallCardManager sharedManager]];
@@ -234,8 +233,7 @@ NSString *const kJCCallerViewControllerKeyboardStoryboardIdentifier = @"keyboard
         [[SipHandler sharedHandler] referCall:dialString];
     }
     
-//    [[JCCallCardManager sharedManager] dialNumber:dialString];
-	[[JCCallCardManager sharedManager] refreshCallDatasource];
+    [[JCCallCardManager sharedManager] dialNumber:dialString];
 }
 
 -(void)shouldCancelTransferViewController:(JCTransferViewController *)controller

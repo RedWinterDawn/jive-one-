@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <PortSIPLib/PortSIPSDK.h>
 #import "Lines+Custom.h"
+#import "JCLineSession.h"
 
 @interface SipHandler : NSObject <PortSIPEventDelegate>
 {
@@ -24,7 +25,7 @@
 + (instancetype) sharedHandler;
 - (void)initiate;
 - (void) pressNumpadButton:(char )dtmf;
-- (void) makeCall:(NSString*)callee videoCall:(BOOL)videoCall contactName:(NSString *)contactName;
+- (JCLineSession *) makeCall:(NSString*)callee videoCall:(BOOL)videoCall contactName:(NSString *)contactName;
 - (void) hangUpCallWithSession:(long)sessionId;
 - (void) holdCall;
 //- (void) unholdCall;

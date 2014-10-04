@@ -286,7 +286,7 @@
 	}
 }
 
-- (void) makeCall:(NSString*) callee
+- (JCLineSession *) makeCall:(NSString*) callee
 		videoCall:(BOOL)videoCall contactName:(NSString *)contactName;
 {
 
@@ -312,6 +312,8 @@
 		[currentSession setMCallState:JCCallFailed];
 		[currentSession reset];
 	}
+	
+	return currentSession;
 }
 
 - (void) hangUpCallWithSession:(long)sessionId;
@@ -341,11 +343,11 @@
 - (void)toggleHoldForLineWithSessionId:(long)sessionId
 {
 	JCLineSession *selectedLine = [self findSession:sessionId];
-	if (selectedLine.mHoldSate) {
+	if (selectedLine && selectedLine.mHoldSate) {
 		[_mPortSIPSDK unHold:selectedLine.mSessionId];
 		[selectedLine setMHoldSate:false];
 	}
-	else {
+	else if (selectedLine) {
 		[_mPortSIPSDK hold:selectedLine.mSessionId];
 		[selectedLine setMHoldSate:true];
 	}

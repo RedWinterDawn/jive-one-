@@ -15,7 +15,7 @@ typedef enum : NSUInteger {
 } JCCallCardState;
 
 
-@interface JCCallCard : NSObject
+@interface JCCallCard : NSObject <JCLineSessionDelegate>
 
 @property (nonatomic, strong) NSString *identifer;
 @property (nonatomic, strong) NSString *callerId;

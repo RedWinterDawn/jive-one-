@@ -99,7 +99,9 @@ typedef enum {
 	JCCallConnected,
 	JCCallFailed,
 	JCTransferSuccess,
-	JCTransferFailed
+	JCTransferFailed,
+	JCCallOnHold,
+	JCCALlOffHold	
 } JCCall;
 
 typedef enum {
