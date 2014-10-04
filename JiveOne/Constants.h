@@ -49,7 +49,7 @@
 #define kScopeVoicemail @"vm.v1.msgs.meta.read"
 
 #pragma mark - SIP SDK
-#define kPortSIPKey @"	"
+#define kPortSIPKey @"1Rx1CNDEwOUM4MzA5RTNEMjM2Q0IwNTVBNEUxMjNBNzhEOEA5Njg2NEI1OTE3OTIxMkM4MTRCMzY5QjMxMzU5NEI2Q0BCNjk0NzZCNkE2MTk1NTY1RjE0Q0M4RDU3NDg3NTdCREBDNUZGRkVCQjNBMzgwMTI3MjI2QkNFMDgxNjg5MjJFRg"
 
 
 #pragma mark - Presence Constants
