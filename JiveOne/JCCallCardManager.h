@@ -21,6 +21,12 @@ extern NSString *const kJCCallCardManagerUpdatedIndex;
 extern NSString *const kJCCallCardManagerPriorUpdateCount;
 extern NSString *const kJCCallCardManagerUpdateCount;
 
+typedef enum : NSUInteger {
+    JCCallCardDialSingle = 0,
+    JCCallCardDialBlindTransfer,
+    JCCallCardDialWarmTransfer,
+} JCCallCardDialTypes;
+
 @interface JCCallCardManager : NSObject
 
 @property (nonatomic, readonly) NSArray *incomingCalls;
@@ -34,6 +40,8 @@ extern NSString *const kJCCallCardManagerUpdateCount;
 -(void)removeFromHold:(JCCallCard *)callCard;
 
 -(void)dialNumber:(NSString *)dialNumber;
+-(void)dialNumber:(NSString *)dialNumber type:(JCCallCardDialTypes)dialType completion:(void (^)(bool success, NSDictionary *callInfo))completion;
+
 -(void)answerCall:(JCCallCard *)callCard;
 
 // Temporary for POC

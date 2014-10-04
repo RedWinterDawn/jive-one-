@@ -21,6 +21,9 @@ NSString *const kJCCallCardManagerUpdatedIndex = @"index";
 NSString *const kJCCallCardManagerPriorUpdateCount = @"priorCount";
 NSString *const kJCCallCardManagerUpdateCount = @"updateCount";
 
+NSString *const kJCCallCardManagerNewCall       = @"newCall";
+NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
+
 @interface JCCallCardManager ()
 {
     NSMutableArray *_currentCalls;
@@ -74,20 +77,32 @@ NSString *const kJCCallCardManagerUpdateCount = @"updateCount";
 
 -(void)dialNumber:(NSString *)dialNumber
 {
-	JCCallCard *callCard = [[JCCallCard alloc] init];
-	callCard.dialNumber = dialNumber;
-	callCard.started = [NSDate date];
-	
-	[self addCurrentCallCard:callCard];
-	
-	JCLineSession *session = [[SipHandler sharedHandler] makeCall:dialNumber videoCall:NO contactName:[self getContactNameByNumber:dialNumber]];
-	if (session.mSessionState) {
-		callCard.lineSession = session;
-	}
-	else {
-		[self removeCurrentCall:callCard];
-	}
-	
+    [self dialNumber:dialNumber type:JCCallCardDialSingle completion:NULL];
+}
+
+-(void)dialNumber:(NSString *)dialNumber type:(JCCallCardDialTypes)dialType completion:(void (^)(bool success, NSDictionary *callInfo))completion
+{
+    JCLineSession *session = [[SipHandler sharedHandler] makeCall:dialNumber videoCall:NO contactName:[self getContactNameByNumber:dialNumber]];
+    if (session.mSessionState)
+    {
+        JCCallCard *callCard = [[JCCallCard alloc] init];
+        callCard.dialNumber = dialNumber;
+        callCard.started = [NSDate date];
+        callCard.lineSession = session;
+        [self addCurrentCallCard:callCard];
+        
+        NSUInteger index = [self.calls indexOfObject:callCard];
+        if (completion != NULL)
+            completion(true, @{
+                               kJCCallCardManagerNewCall: callCard,
+                               kJCCallCardManagerUpdatedIndex: [NSNumber numberWithInteger:index],
+                               });
+    }
+    else
+    {
+        if (completion != NULL)
+            completion(false, @{});
+    }
 }
 
 //-(void)refreshCallDatasource
