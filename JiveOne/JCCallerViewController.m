@@ -87,14 +87,20 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(IBAction)keypad:(id)sender
 {
-    if (!_presentedKeyboardViewController)
+    if ([sender isKindOfClass:[UIButton class]])
     {
-        JCKeyboardViewController *keyboardViewController = [self.storyboard instantiateViewControllerWithIdentifier:kJCCallerViewControllerKeyboardStoryboardIdentifier];
-        keyboardViewController.delegate = self;
-        [self presentKeyboardViewController:keyboardViewController];
+        UIButton *button = (UIButton *)sender;
+        button.selected = ! button.selected;
+        
+        if (!_presentedKeyboardViewController)
+        {
+            JCKeyboardViewController *keyboardViewController = [self.storyboard instantiateViewControllerWithIdentifier:kJCCallerViewControllerKeyboardStoryboardIdentifier];
+            keyboardViewController.delegate = self;
+            [self presentKeyboardViewController:keyboardViewController];
+        }
+        else
+            [self dismissKeyboardViewController:YES];
     }
-    else
-        [self dismissKeyboardViewController:YES];
 }
 
 -(IBAction)mute:(id)sender
