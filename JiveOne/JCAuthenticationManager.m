@@ -84,7 +84,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     webview.delegate = self;
     [webview loadRequest:[NSURLRequest requestWithURL:url]];
 
-    
+// IF WE CAN EVER HIT AN API AGAIN, THIS IS WHAT WE WOULD USE
 //    [self.client OAuthLoginWithUsername:username password:password success:^(AFHTTPRequestOperation *operation, id JSON) {
 //        
 //        if (JSON[@"access_token"]) {

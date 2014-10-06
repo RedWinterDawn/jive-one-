@@ -7,18 +7,27 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JCLineSession.h"
 
-@interface JCCallCard : NSObject
+typedef enum : NSUInteger {
+    JCCallCardCurrentCall = 0,
+    JCCallCardIncomingCall,
+} JCCallCardState;
+
+
+@interface JCCallCard : NSObject <JCLineSessionDelegate>
 
 @property (nonatomic, strong) NSString *identifer;
 @property (nonatomic, strong) NSString *callerId;
 @property (nonatomic, strong) NSString *dialNumber;
-
+@property (nonatomic, strong) JCLineSession *lineSession;
 @property (nonatomic, strong) NSDate *started;
-
+@property (nonatomic, strong) NSDate *holdStarted;
+@property (nonatomic, getter=isIncoming) bool incoming;
 
 @property (nonatomic) BOOL hold;
 
+-(void)answerCall;
 -(void)endCall;
 
 @end
