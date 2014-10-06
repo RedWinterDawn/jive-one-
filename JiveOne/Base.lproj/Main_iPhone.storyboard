@@ -1092,7 +1092,7 @@
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="esd-M8-Lxg" customClass="JCDialerOptions">
                                 <rect key="frame" x="0.0" y="366" width="320" height="194"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TRc-ED-Hu8" customClass="JCRoundedButton">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TRc-ED-Hu8" customClass="JCRoundedButton">
                                         <rect key="frame" x="234" y="20" width="60" height="60"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
                                         <constraints>
@@ -1103,6 +1103,7 @@
                                         <state key="normal" image="white-speaker">
                                             <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <state key="selected" image="blue-speaker"/>
                                         <connections>
                                             <action selector="speaker:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="v35-QH-GQH"/>
                                         </connections>
@@ -1118,6 +1119,7 @@
                                         <state key="normal" image="white-arrow-outline">
                                             <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <state key="selected" image="blue-arrow-outline"/>
                                         <connections>
                                             <action selector="blindTransfer:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="gYl-hO-sAU"/>
                                         </connections>
@@ -1163,6 +1165,7 @@
                                         <state key="normal" image="white-merge">
                                             <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <state key="selected" image="blue-merge"/>
                                         <connections>
                                             <action selector="blindTransfer:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="7RN-IC-tVQ"/>
                                             <action selector="mergeCall:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="VFr-f2-PEf"/>
@@ -1186,9 +1189,10 @@
                                             <constraint firstAttribute="width" constant="60" id="kQp-yb-wgz"/>
                                         </constraints>
                                         <color key="tintColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" image="transfer-swapCalls-white">
+                                        <state key="normal" image="white-switch">
                                             <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <state key="selected" image="blue-switch"/>
                                         <connections>
                                             <action selector="blindTransfer:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="cxU-wd-J8I"/>
                                         </connections>
@@ -1246,6 +1250,10 @@
                                         <state key="normal" image="white-mute">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <state key="selected" image="blue-mute"/>
+                                        <state key="highlighted">
+                                            <color key="titleShadowColor" red="0.075322996150000002" green="0.86947495600000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="mute:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="BFt-rx-uR2"/>
                                         </connections>
@@ -1261,6 +1269,7 @@
                                         <state key="normal" image="white-pluse">
                                             <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <state key="selected" image="blue-pluse"/>
                                         <connections>
                                             <action selector="addCall:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="4eA-wE-x0i"/>
                                             <action selector="swapCall:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="r5g-qh-Rbd"/>
@@ -1277,6 +1286,7 @@
                                         <state key="normal" image="white-arrow">
                                             <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <state key="selected" image="blue-arrow"/>
                                         <connections>
                                             <action selector="warmTransfer:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="QFu-my-YJB"/>
                                         </connections>
@@ -1292,27 +1302,10 @@
                                         <state key="normal" image="white-check">
                                             <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <state key="selected" image="blue-check"/>
                                         <connections>
                                             <action selector="finishTransfer:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="81J-ee-oex"/>
                                             <action selector="warmTransfer:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="hq0-32-RBz"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="redraw" placeholderIntrinsicWidth="40" placeholderIntrinsicHeight="40" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" adjustsImageWhenDisabled="NO" lineBreakMode="headTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pl8-2v-mXV" customClass="JCRoundedButton">
-                                        <rect key="frame" x="130" y="20" width="60" height="60"/>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
-                                        <accessibility key="accessibilityConfiguration">
-                                            <accessibilityTraits key="traits" none="YES" button="YES" image="YES"/>
-                                        </accessibility>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="60" id="GTG-TC-xep"/>
-                                            <constraint firstAttribute="height" constant="60" id="R81-uh-a35"/>
-                                        </constraints>
-                                        <color key="tintColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" image="white-keypad">
-                                            <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="keypad:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="xyA-wC-Mx2"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transfer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="szn-nR-AS9">
@@ -1325,6 +1318,22 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="40" placeholderIntrinsicHeight="40" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pl8-2v-mXV" customClass="JCRoundedButton">
+                                        <rect key="frame" x="130" y="20" width="60" height="60"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="GTG-TC-xep"/>
+                                            <constraint firstAttribute="height" constant="60" id="R81-uh-a35"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" image="white-keypad">
+                                            <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <state key="selected" image="blue-keypad"/>
+                                        <connections>
+                                            <action selector="keypad:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="xyA-wC-Mx2"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -1698,9 +1707,10 @@
                                                         <action selector="hangup:" destination="pHP-fS-KDd" eventType="touchUpInside" id="7Rf-WP-98t"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dHb-AW-ELG" userLabel="Answer">
-                                                    <rect key="frame" x="150" y="5" width="150" height="40"/>
+                                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dHb-AW-ELG" userLabel="Answer">
+                                                    <rect key="frame" x="150" y="0.0" width="150" height="50"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.69999999999999996" colorSpace="deviceRGB"/>
+                                                    <rect key="contentStretch" x="0.0" y="0.0" width="1" height="0.49999999999999961"/>
                                                     <inset key="contentEdgeInsets" minX="0.0" minY="2" maxX="0.0" maxY="0.0"/>
                                                     <state key="normal" image="green-phone">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -1712,13 +1722,13 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
+                                                <constraint firstItem="dHb-AW-ELG" firstAttribute="height" secondItem="fCz-UY-bzP" secondAttribute="height" id="1qc-qy-gmY"/>
                                                 <constraint firstAttribute="trailing" secondItem="dHb-AW-ELG" secondAttribute="trailing" id="3TW-Bl-cS4"/>
-                                                <constraint firstItem="dHb-AW-ELG" firstAttribute="top" secondItem="jui-6o-7rV" secondAttribute="top" constant="5" id="EQG-jy-yic"/>
                                                 <constraint firstItem="fCz-UY-bzP" firstAttribute="leading" secondItem="jui-6o-7rV" secondAttribute="leading" id="LFY-sS-7RT"/>
                                                 <constraint firstItem="fCz-UY-bzP" firstAttribute="top" secondItem="jui-6o-7rV" secondAttribute="top" id="OSa-9J-y2b"/>
                                                 <constraint firstAttribute="bottom" secondItem="fCz-UY-bzP" secondAttribute="bottom" id="QeL-sy-5j6"/>
                                                 <constraint firstAttribute="trailing" secondItem="dHb-AW-ELG" secondAttribute="trailing" id="VHq-EZ-vp6"/>
-                                                <constraint firstAttribute="bottom" secondItem="dHb-AW-ELG" secondAttribute="bottom" constant="5" id="cg2-wp-uqc"/>
+                                                <constraint firstAttribute="bottom" secondItem="dHb-AW-ELG" secondAttribute="bottom" id="cg2-wp-uqc"/>
                                                 <constraint firstItem="dHb-AW-ELG" firstAttribute="width" secondItem="fCz-UY-bzP" secondAttribute="width" id="euE-5n-IAI"/>
                                                 <constraint firstItem="dHb-AW-ELG" firstAttribute="leading" secondItem="fCz-UY-bzP" secondAttribute="trailing" id="gR9-nq-yBY"/>
                                                 <constraint firstItem="dHb-AW-ELG" firstAttribute="leading" secondItem="fCz-UY-bzP" secondAttribute="trailing" id="k9a-xl-FT9"/>
@@ -1872,12 +1882,13 @@
                                         <rect key="frame" x="0.0" y="-365" width="320" height="568"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2dJ-OP-pPL" customClass="JCRoundedButton">
-                                        <rect key="frame" x="130" y="123" width="60" height="60"/>
+                                        <rect key="frame" x="135" y="123" width="50" height="50"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
                                         <accessibility key="accessibilityConfiguration" label="Cancel Button"/>
                                         <state key="normal" image="white-x">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <state key="highlighted" image="blue-x"/>
                                         <connections>
                                             <action selector="cancel:" destination="4Bh-kh-Va8" eventType="touchUpInside" id="M6Y-nN-R1K"/>
                                         </connections>
@@ -3014,8 +3025,19 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="green-check" translatesAutoresizingMaskIntoConstraints="NO" id="xfV-JY-7Ni">
+                                                    <rect key="frame" x="248" y="5" width="45" height="45"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="45" id="MJX-II-xuD"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <gestureRecognizers/>
+                                            <constraints>
+                                                <constraint firstItem="xfV-JY-7Ni" firstAttribute="top" secondItem="WHS-Wu-If2" secondAttribute="top" constant="5" id="7AI-fp-2yI"/>
+                                                <constraint firstItem="xfV-JY-7Ni" firstAttribute="bottom" secondItem="WHS-Wu-If2" secondAttribute="bottom" constant="-5" id="7c1-iq-M3m"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="xfV-JY-7Ni" secondAttribute="trailing" constant="19" id="XdK-Yv-iaO"/>
+                                            </constraints>
                                             <connections>
                                                 <outletCollection property="gestureRecognizers" destination="MUd-Wf-zgB" appends="YES" id="l0W-nx-xwJ"/>
                                             </connections>
@@ -3355,6 +3377,16 @@
     </scenes>
     <resources>
         <image name="black-hold" width="30" height="30"/>
+        <image name="blue-arrow" width="30" height="31"/>
+        <image name="blue-arrow-outline" width="30" height="31"/>
+        <image name="blue-check" width="30" height="30"/>
+        <image name="blue-keypad" width="30" height="30"/>
+        <image name="blue-merge" width="30" height="30"/>
+        <image name="blue-mute" width="30" height="30"/>
+        <image name="blue-pluse" width="30" height="31"/>
+        <image name="blue-speaker" width="30" height="31"/>
+        <image name="blue-switch" width="30" height="31"/>
+        <image name="blue-x" width="35" height="35"/>
         <image name="conference-avatar-white" width="116" height="123"/>
         <image name="delete-black" width="35" height="35"/>
         <image name="dialer-callButton-green" width="58" height="58"/>
@@ -3365,18 +3397,18 @@
         <image name="incall-background" width="320" height="568"/>
         <image name="nav-dial-black" width="19" height="19"/>
         <image name="nav-people.png" width="44" height="44"/>
-        <image name="red-phone" width="30" height="30"/>
+        <image name="red-phone" width="37" height="30"/>
         <image name="transfer-onhold-mini-blackish" width="11" height="12"/>
-        <image name="transfer-swapCalls-white" width="35" height="35"/>
         <image name="white-arrow" width="30" height="31"/>
-        <image name="white-arrow-outline" width="30" height="30"/>
+        <image name="white-arrow-outline" width="30" height="31"/>
         <image name="white-check" width="30" height="30"/>
         <image name="white-keypad" width="30" height="30"/>
         <image name="white-merge" width="30" height="30"/>
         <image name="white-mute" width="30" height="30"/>
         <image name="white-pluse" width="30" height="30"/>
         <image name="white-speaker" width="30" height="31"/>
-        <image name="white-x" width="30" height="30"/>
+        <image name="white-switch" width="35" height="35"/>
+        <image name="white-x" width="35" height="35"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
