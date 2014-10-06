@@ -83,8 +83,22 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
 
 -(void)dialNumber:(NSString *)dialNumber type:(JCCallCardDialTypes)dialType completion:(void (^)(bool success, NSDictionary *callInfo))completion
 {
-    JCLineSession *session = [[SipHandler sharedHandler] makeCall:dialNumber videoCall:NO contactName:[self getContactNameByNumber:dialNumber]];
-    if (session.mSessionState)
+	JCLineSession *session = nil;
+	switch (dialType) {
+		case JCCallCardDialSingle:
+			session = [[SipHandler sharedHandler] makeCall:dialNumber videoCall:NO contactName:[self getContactNameByNumber:dialNumber]];
+			break;
+		case JCCallCardDialBlindTransfer:
+			[[SipHandler sharedHandler] referCall:dialNumber];
+			break;
+		case JCCallCardDialWarmTransfer:
+			session = [[SipHandler sharedHandler] makeCall:dialNumber videoCall:NO contactName:[self getContactNameByNumber:dialNumber]];
+				
+	  default:
+				break;
+	}
+	
+    if (session.mSessionState && dialType != JCCallCardDialBlindTransfer)
     {
         JCCallCard *callCard = [[JCCallCard alloc] init];
         callCard.dialNumber = dialNumber;
@@ -101,6 +115,12 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
     }
     else
     {
+		if (dialType == JCCallCardDialBlindTransfer) {
+			// do somethinng
+			if (completion != NULL)
+				completion(true, @{});
+		}
+		
         if (completion != NULL)
             completion(false, @{});
     }
@@ -126,14 +146,14 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
 
 -(void)answerCall:(JCCallCard *)newCallCard
 {
-    // TODO: do something to answer the call;
-    
-    for (JCCallCard *callCard in _currentCalls)
-        callCard.hold = true;
-    
+	[[SipHandler sharedHandler] answerCall];
+	
+//    for (JCCallCard *callCard in _currentCalls)
+//        callCard.hold = true;
+	
     newCallCard.started = [NSDate date];
-    [self removeIncomingCall:newCallCard];
-    [self addCurrentCallCard:newCallCard];
+	[self removeIncomingCall:newCallCard];
+	[self addCurrentCallCard:newCallCard];
 }
 
 -(void)hangUpCall:(JCCallCard *)callCard remote:(BOOL)remote

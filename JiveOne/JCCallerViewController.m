@@ -102,19 +102,19 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         UIButton *button = (UIButton *)sender;
         button.selected = ! button.selected;
         
-        // Temporary
-        if (button.selected)
-        {
-            JCCallCard *incomingCallCard = [[JCCallCard alloc] init];
-            incomingCallCard.dialNumber = @"5551234567";
-            [[JCCallCardManager sharedManager] addIncomingCall:incomingCallCard];
-        }
-        else
-        {
-            JCCallCard *incomingCard = [[JCCallCardManager sharedManager].incomingCalls objectAtIndex:0];
-            [[JCCallCardManager sharedManager] removeIncomingCall:incomingCard];
-        }
-        
+//        // Temporary
+//        if (button.selected)
+//        {
+//            JCCallCard *incomingCallCard = [[JCCallCard alloc] init];
+//            incomingCallCard.dialNumber = @"5551234567";
+//            [[JCCallCardManager sharedManager] addIncomingCall:incomingCallCard];
+//        }
+//        else
+//        {
+//            JCCallCard *incomingCard = [[JCCallCardManager sharedManager].incomingCalls objectAtIndex:0];
+//            [[JCCallCardManager sharedManager] removeIncomingCall:incomingCard];
+//        }
+		
         // TODO: talk to whatever to turn on the speaker
     }
 }
@@ -294,18 +294,23 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 {
     [self dismissTransferViewControllerAnimated:NO];
     NSLog(@"%@, %lu", dialString, controller.transferType);
+	JCCallCardDialTypes dialType = JCCallCardDialSingle;
     
     if (controller.transferType == JCTransferBlind)
     {
-		[[SipHandler sharedHandler] referCall:dialString];
+//		[[SipHandler sharedHandler] referCall:dialString];
+		dialType = JCCallCardDialBlindTransfer;
     }
     else if(controller.transferType == JCTransferHold)
     {
-        [[SipHandler sharedHandler] makeCall:dialString videoCall:NO contactName:[self getContactNameByNumber:dialString]];
+//        [[SipHandler sharedHandler] makeCall:dialString videoCall:NO contactName:[self getContactNameByNumber:dialString]];
+		dialType = JCCallCardDialSingle;
+		
     }
     else if(controller.transferType == JCTransferWarm)
     {
-        [[SipHandler sharedHandler] referCall:dialString];
+//        [[SipHandler sharedHandler] referCall:dialString];
+		dialType = JCCallCardDialWarmTransfer;
     }
     
     [[JCCallCardManager sharedManager] dialNumber:dialString type:dialType completion:^(bool success, NSDictionary *callInfo) {
