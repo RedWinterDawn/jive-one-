@@ -26,45 +26,46 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
 
 @interface JCCallCardManager ()
 {
-    NSMutableArray *_currentCalls;
-    NSMutableArray *_incomingCalls;
+//    NSMutableArray *_currentCalls;
+//    NSMutableArray *_incomingCalls;
 }
 
 @end
 
 @implementation JCCallCardManager
 
--(void)addIncomingCall:(JCCallCard *)callCard
+-(void)addIncomingCall:(JCLineSession *)session
 {
-    if (!_incomingCalls)
-        _incomingCalls = [NSMutableArray array];
-    
-    NSUInteger priorCount = self.totalCalls;
-    [_incomingCalls addObject:callCard];
-    callCard.incoming = true;
-    
-    // Sort the array and fetch the resulting new index of the call card.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"started" ascending:NO];
-    [_incomingCalls sortUsingDescriptors:@[sortDescriptor]];
-    
-    NSUInteger newIndex = [self.calls indexOfObject:callCard];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerAddedIncomingCallNotification
-                                                        object:self
-                                                      userInfo:@{
-                                                                 kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:newIndex],
-                                                                 kJCCallCardManagerPriorUpdateCount:[NSNumber numberWithInteger:priorCount],
-                                                                 kJCCallCardManagerUpdateCount: [NSNumber numberWithInteger:self.totalCalls]
-                                                                }];
+	NSUInteger priorCount = self.totalCalls;
+	JCCallCard *callCard = [[JCCallCard alloc] init];
+	callCard.started = [NSDate date];
+	callCard.lineSession = session;
+	callCard.incoming = true;
+	[self addCurrentCallCard:callCard];
+	
+	// Sort the array and fetch the resulting new index of the call card.
+	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"started" ascending:NO];
+	[self.currentCalls sortUsingDescriptors:@[sortDescriptor]];
+	
+	NSUInteger newIndex = [self.currentCalls indexOfObject:callCard];
+	[[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerAddedIncomingCallNotification
+														object:self
+													  userInfo:@{
+																 kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:newIndex],
+																 kJCCallCardManagerPriorUpdateCount:[NSNumber numberWithInteger:priorCount],
+																 kJCCallCardManagerUpdateCount: [NSNumber numberWithInteger:self.totalCalls]
+																 }];
+	
 }
 
 -(void)removeIncomingCall:(JCCallCard *)callCard
 {
-    if (![_incomingCalls containsObject:callCard])
+    if (![_currentCalls containsObject:callCard])
         return;
-    
-    NSUInteger index = [self.calls indexOfObject:callCard];
+	
+    NSUInteger index = [self.currentCalls indexOfObject:callCard];
     NSUInteger priorCount = self.totalCalls;
-    [_incomingCalls removeObject:callCard];
+    [_currentCalls removeObject:callCard];
     callCard.incoming = false;
     [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerRemoveIncomingCallNotification
                                                         object:self
@@ -91,7 +92,7 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
         callCard.lineSession = session;
         [self addCurrentCallCard:callCard];
         
-        NSUInteger index = [self.calls indexOfObject:callCard];
+        NSUInteger index = [self.currentCalls indexOfObject:callCard];
         if (completion != NULL)
             completion(true, @{
                                kJCCallCardManagerNewCall: callCard,
@@ -168,17 +169,17 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
 
 -(NSUInteger)totalCalls
 {
-    return self.calls.count;
+    return self.currentCalls.count;
 }
 
--(NSArray *)calls
+- (NSMutableArray *)currentCalls
 {
-    if (!_incomingCalls)
-        _incomingCalls = [NSMutableArray array];
-    
-    return [_incomingCalls arrayByAddingObjectsFromArray:_currentCalls];
+	if (!_currentCalls)
+		_currentCalls = [NSMutableArray array];
+
+	return _currentCalls;
 }
-                     
+
 #pragma mark - Private -
 
 -(void)removeCurrentCall:(JCCallCard *)callCard
@@ -221,6 +222,7 @@ static JCCallCardManager *singleton = nil;
     static dispatch_once_t pred;        // Lock
     dispatch_once(&pred, ^{             // This code is called at most once per app
         singleton = [[JCCallCardManager alloc] init];
+		
     });
     
     return singleton;

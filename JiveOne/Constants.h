@@ -40,6 +40,9 @@
 #define kPresenceChanged @"keypresencechanged"
 #define kNewVoicemail @"keynewvoicemail"
 
+#pragma mark - Global Call Notification
+#define kIncomingCallNotification @"keyincomingcallnotification"
+
 #pragma mark - OAuth Credentials
 #define kOAuthClientSecret @"enXabnU5KuVm4XRSWGkU"
 #define kOAuthClientId @"f62d7f80-3749-11e3-9b37-542696d7c505"

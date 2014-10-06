@@ -9,6 +9,7 @@
 #import "SipHandler.h"
 #import "JCLineSession.h"
 #import "LineConfiguration+Custom.h"
+#import "JCCallCardManager.h"
 
 @interface SipHandler()
 {
@@ -570,19 +571,6 @@
 			 existsVideo:(BOOL)existsVideo
 {
 	NSLog(@"onInviteIncoming - Session ID: %ld", sessionId);
-
-	
-//	int index = -1;
-//	for (int i=0; i< MAX_LINES; ++i)
-//	{
-//		if (mSessionArray[i].getSessionState()==false && mSessionArray[i].getRecvCallState()==false)
-//		{
-//			mSessionArray[i].setRecvCallState(true);
-//			index = i;
-//			break;
-//		}
-//	}
-	
 	JCLineSession *idleLine = [self findIdleLine];
 	
 	if (!idleLine)
@@ -593,13 +581,10 @@
 	
 	[idleLine setMSessionId:sessionId];
 	[idleLine setMRecvCallState:true];
+	[idleLine setMVideoState:existsVideo];
 	[idleLine setCallTitle:[NSString stringWithUTF8String:callerDisplayName]];
 	[idleLine setCallDetail:[NSString stringWithUTF8String:caller]];
 	
-	
-
-//	mSessionArray[index].setVideoState(existsVideo);
-//	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Incoming call:%s on line %d",caller, index]];
 	
 	if ([UIApplication sharedApplication].applicationState ==  UIApplicationStateBackground) {
 		UILocalNotification* localNotif = [[UILocalNotification alloc] init];
@@ -612,28 +597,31 @@
 		}
 	}
 	
-	if(existsVideo)
-	{//video call
-		UIAlertView *alert = [[UIAlertView alloc]
-							  initWithTitle: @"Incoming Call"
-							  message: [NSString  stringWithFormat:@"Call from <%s>%s on line %d", callerDisplayName,caller,index]
-							  delegate: self
-							  cancelButtonTitle: @"Reject"
-							  otherButtonTitles:@"Answer", @"Video",nil];
-//		alert.tag = index;
-		[alert show];
-	}
-	else
-	{
-		UIAlertView *alert = [[UIAlertView alloc]
-							  initWithTitle: @"Incoming Call"
-							  message: [NSString  stringWithFormat:@"Call from <%s>%s on line %d", callerDisplayName,caller,index]
-							  delegate: self
-							  cancelButtonTitle: @"Reject"
-							  otherButtonTitles:@"Answer", nil];
-//		alert.tag = index;
-		[alert show];
-	}
+// DO NOT DELETE
+//	if(existsVideo)
+//	{//video call
+//		UIAlertView *alert = [[UIAlertView alloc]
+//							  initWithTitle: @"Incoming Call"
+//							  message: [NSString  stringWithFormat:@"Call from <%s>%s on line %d", callerDisplayName,caller,index]
+//							  delegate: self
+//							  cancelButtonTitle: @"Reject"
+//							  otherButtonTitles:@"Answer", @"Video",nil];
+////		alert.tag = index;
+//		[alert show];
+//	}
+//	else
+//	{
+//		UIAlertView *alert = [[UIAlertView alloc]
+//							  initWithTitle: @"Incoming Call"
+//							  message: [NSString  stringWithFormat:@"Call from <%s>%s on line %d", callerDisplayName,caller,index]
+//							  delegate: self
+//							  cancelButtonTitle: @"Reject"
+//							  otherButtonTitles:@"Answer", nil];
+////		alert.tag = index;
+//		[alert show];
+//	}
+	
+	[[JCCallCardManager sharedManager] addIncomingCall:idleLine];
 };
 
 - (void)onInviteTrying:(long)sessionId

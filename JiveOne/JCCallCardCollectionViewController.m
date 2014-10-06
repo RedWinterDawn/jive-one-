@@ -86,7 +86,7 @@ static NSString * const incommingCallCardCellReuseIdentifier = @"IncommingCallCa
 
 -(JCCallCard *)callCardForIndexPath:(NSIndexPath *)indexPath
 {
-    return [[JCCallCardManager sharedManager].calls objectAtIndex:indexPath.row];
+    return [[JCCallCardManager sharedManager].currentCalls objectAtIndex:indexPath.row];
 }
 
 #pragma mark - Delegate Handlers -

@@ -10,6 +10,7 @@
 
 #import <Foundation/Foundation.h>
 #import "JCCallCard.h"
+#import "JCLineSession.h"
 
 extern NSString *const kJCCallCardManagerAddedIncomingCallNotification;
 extern NSString *const kJCCallCardManagerRemoveIncomingCallNotification;
@@ -29,10 +30,8 @@ typedef enum : NSUInteger {
 
 @interface JCCallCardManager : NSObject
 
-@property (nonatomic, readonly) NSArray *incomingCalls;
-@property (nonatomic, readonly) NSArray *currentCalls;
-@property (nonatomic, readonly) NSArray *calls;
-
+//@property (nonatomic, readonly) NSArray *incomingCalls;
+@property (nonatomic, strong) NSMutableArray *currentCalls;
 @property (nonatomic, readonly) NSUInteger totalCalls;
 
 -(void)hangUpCall:(JCCallCard *)callCard remote:(BOOL)remote;
@@ -45,7 +44,7 @@ typedef enum : NSUInteger {
 -(void)answerCall:(JCCallCard *)callCard;
 
 // Temporary for POC
--(void)addIncomingCall:(JCCallCard *)callCard;
+-(void)addIncomingCall:(JCLineSession *)session;
 -(void)removeIncomingCall:(JCCallCard *)callCard;
 
 @end
