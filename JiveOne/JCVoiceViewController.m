@@ -31,7 +31,7 @@ NSString *const kJCVoiceNonVisualViewControllerIdentifier = @"VoiceNonVisualView
     [super viewWillAppear:animated];
     
     PBX *pbx = [PBX fetchFirstPBX];
-    if (!pbx.v5)
+    if (![pbx.v5 boolValue])
     {
         [_voiceTableViewController.view removeFromSuperview];
         [_voiceTableViewController removeFromParentViewController];
