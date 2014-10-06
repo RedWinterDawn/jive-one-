@@ -1606,6 +1606,7 @@
                                     <outlet property="callActions" destination="deD-dT-TSL" id="k43-GI-tw9"/>
                                     <outlet property="callCardInfoTopConstraint" destination="fw7-MK-Pkl" id="nKq-KQ-Z8s"/>
                                     <outlet property="callerIdLabel" destination="AjJ-s1-RGg" id="0ed-91-VL8"/>
+                                    <outlet property="cardInfoView" destination="9BT-of-lxi" id="BDF-vR-dmo"/>
                                     <outlet property="currentCallTopToContainerConstraint" destination="Qxp-cO-Mv0" id="0Yu-Qn-cKr"/>
                                     <outlet property="dialedNumberLabel" destination="Pcy-gN-OgZ" id="UK6-8Y-CMP"/>
                                     <outlet property="elapsedTimeLabel" destination="n3h-gY-XNw" id="xPF-iM-zGM"/>

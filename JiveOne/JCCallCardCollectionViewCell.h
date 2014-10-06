@@ -12,6 +12,9 @@
 
 @interface JCCallCardCollectionViewCell : UICollectionViewCell
 
+@property (nonatomic) CGFloat holdAnimationDuration;
+@property (nonatomic) CGFloat holdAnimationAlpha;
+
 @property (nonatomic, weak) IBOutlet UILabel *callerIdLabel;
 @property (nonatomic, weak) IBOutlet JCDialStringLabel *dialedNumberLabel;
 @property (nonatomic, weak) IBOutlet UILabel *elapsedTimeLabel;
@@ -21,9 +24,10 @@
 @property (nonatomic, weak) IBOutlet UIButton *holdCallButton;
 @property (nonatomic, weak) IBOutlet UIButton *answerCallButton;
 @property (nonatomic, weak) IBOutlet UIView *callActions;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *callCardInfoTopConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *currentCallTopToContainerConstraint;
 
+@property (nonatomic, weak) IBOutlet UIView *cardInfoView;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *currentCallTopToContainerConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *callCardInfoTopConstraint;
 
 @property (nonatomic, strong) JCCallCard *callCard;
 

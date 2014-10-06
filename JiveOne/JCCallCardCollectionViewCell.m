@@ -9,6 +9,9 @@
 #import "JCCallCardCollectionViewCell.h"
 #import "JCCallCardManager.h"
 
+#define HOLD_ANIMATION_DURATION 0.5f
+#define HOLD_ANIMATION_ALPHA 0.5f
+
 @interface JCCallCardCollectionViewCell()
 {
     NSTimer *_timer;
@@ -19,25 +22,33 @@
 }
 @end
 
-
 @implementation JCCallCardCollectionViewCell
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self)
+    {
+        _holdAnimationDuration = HOLD_ANIMATION_DURATION;
+        _holdAnimationAlpha = HOLD_ANIMATION_ALPHA;
+    }
+    return self;
+}
 
 -(void)awakeFromNib
 {
-    _defaultCallActionsColor = self.callActions.backgroundColor;
-    _currentCallCardInfoElevation = self.callCardInfoTopConstraint.constant;
-    _originalCurrentCallViewConstraint = self.currentCallTopToContainerConstraint.constant;
-
+    _defaultCallActionsColor            = self.callActions.backgroundColor;
+    _currentCallCardInfoElevation       = self.callCardInfoTopConstraint.constant;
+    _originalCurrentCallViewConstraint  = self.currentCallTopToContainerConstraint.constant;
 }
 
 -(void)layoutSubviews
 {
     [super layoutSubviews];
     
-    self.callerIdLabel.text = _callCard.callerId;
-    self.dialedNumberLabel.dialString = _callCard.dialNumber;
-    
-    self.holdCallButton.selected = _callCard.hold;
+    self.callerIdLabel.text             = _callCard.callerId;
+    self.dialedNumberLabel.dialString   = _callCard.dialNumber;
+    self.holdCallButton.selected        = _callCard.hold;
     
     if (!_timer)
     {
@@ -49,7 +60,7 @@
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ([keyPath isEqualToString:@"hold"])
-        [self showHoldStateAnimated:YES];
+        [self showHoldStateAnimated:(self.superview != nil)];
 }
 
 #pragma mark - Setters -
@@ -114,18 +125,18 @@
             _holdTimer = nil;
         }
         
-        weakSelf.currentCallTopToContainerConstraint.constant = 10;
-        weakSelf.callCardInfoTopConstraint.constant = 40;
-        [self setNeedsUpdateConstraints];
+        _currentCallTopToContainerConstraint.constant = 10;
+        _callCardInfoTopConstraint.constant = 40;
+        [_cardInfoView setNeedsUpdateConstraints];
         
         _holdTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(holdTimerUpdate) userInfo:nil repeats:YES];
         [self holdTimerUpdate];
         
-        [UIView animateWithDuration:(animated ? .5 : 0)
+        [UIView animateWithDuration:(animated ? _holdAnimationDuration : 0)
                          animations:^{
-                             weakSelf.alpha = 0.5;
+                             weakSelf.alpha = _holdAnimationAlpha;
                              weakSelf.callActions.backgroundColor = [UIColor clearColor];
-                             [weakSelf layoutIfNeeded];
+                             [_cardInfoView layoutIfNeeded];
                          }];
     }
     else
@@ -133,15 +144,15 @@
         [_holdTimer invalidate];
         _holdTimer = nil;
         
-        weakSelf.callCardInfoTopConstraint.constant = _currentCallCardInfoElevation;
-        weakSelf.currentCallTopToContainerConstraint.constant = _originalCurrentCallViewConstraint;
-        [self setNeedsUpdateConstraints];
+        _currentCallTopToContainerConstraint.constant = _originalCurrentCallViewConstraint;
+        _callCardInfoTopConstraint.constant = _currentCallCardInfoElevation;
+        [_cardInfoView setNeedsUpdateConstraints];
         
-        [UIView animateWithDuration:(animated ? .5 : 0)
+        [UIView animateWithDuration:(animated ? _holdAnimationDuration : 0)
                          animations:^{
                              weakSelf.alpha = 1;
                              weakSelf.callActions.backgroundColor = _defaultCallActionsColor;
-                             [weakSelf layoutIfNeeded];
+                             [_cardInfoView layoutIfNeeded];
                          }];
     }
 }
