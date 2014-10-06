@@ -9,6 +9,7 @@
 #import "JCCallerViewController.h"
 #import "JCTransferViewController.h"
 #import "JCCallCardCollectionViewController.h"
+#import "SipHandler.h"
 #import "JCKeyboardViewController.h"
 
 #import "JCCallCardManager.h"
@@ -33,10 +34,11 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     NSString *dialString = self.dialString;
     if (dialString)
         [[JCCallCardManager sharedManager] dialNumber:dialString];
+	
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     JCCallCardManager *manager = [JCCallCardManager sharedManager];
@@ -98,21 +100,22 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     if ([sender isKindOfClass:[UIButton class]])
     {
         UIButton *button = (UIButton *)sender;
-        button.selected = ! button.selected;
-        
-        // Temporary
-        if (button.selected)
-        {
-            JCCallCard *incomingCallCard = [[JCCallCard alloc] init];
-            incomingCallCard.dialNumber = @"5551234567";
-            [[JCCallCardManager sharedManager] addIncomingCall:incomingCallCard];
-        }
-        else
-        {
-            JCCallCard *incomingCard = [[JCCallCardManager sharedManager].incomingCalls objectAtIndex:0];
-            [[JCCallCardManager sharedManager] removeIncomingCall:incomingCard];
-        }
-        
+        button.selected = !button.selected;
+		[[SipHandler sharedHandler] setLoudspeakerStatus:button.selected];
+		
+//        // Temporary
+//        if (button.selected)
+//        {
+//            JCCallCard *incomingCallCard = [[JCCallCard alloc] init];
+//            incomingCallCard.dialNumber = @"5551234567";
+//            [[JCCallCardManager sharedManager] addIncomingCall:incomingCallCard];
+//        }
+//        else
+//        {
+//            JCCallCard *incomingCard = [[JCCallCardManager sharedManager].incomingCalls objectAtIndex:0];
+//            [[JCCallCardManager sharedManager] removeIncomingCall:incomingCard];
+//        }
+		
         // TODO: talk to whatever to turn on the speaker
     }
 }
@@ -140,9 +143,9 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     if ([sender isKindOfClass:[UIButton class]])
     {
         UIButton *button = (UIButton *)sender;
-        button.selected = ! button.selected;
+        button.selected = !button.selected;
         
-        // TODO: talk to whatever to turn on the speaker
+		[[SipHandler sharedHandler] muteCall:button.selected];
     }
 }
 
@@ -186,6 +189,16 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         if (success)
             [self showTransferSuccess];
     }];
+}
+
+- (NSString *)getContactNameByNumber:(NSString *)number
+{
+	Lines *contact = [Lines MR_findFirstByAttribute:@"externsionNumber" withValue:number];
+	if (contact) {
+		return contact.displayName;
+	}
+	
+	return nil;
 }
 
 #pragma mark - Private - 
@@ -287,15 +300,22 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 -(void)transferViewController:(JCTransferViewController *)controller shouldDialNumber:(NSString *)dialString
 {
     [self dismissTransferViewControllerAnimated:NO];
-    NSLog(@"%@, %i", dialString, controller.transferType);
+    NSLog(@"%@, %lu", dialString, controller.transferType);
+	JCCallCardDialTypes dialType = JCCallCardDialSingle;
     
-    JCCallCardDialTypes dialType;
     if (controller.transferType == JCTransferBlind)
-        dialType = JCCallCardDialBlindTransfer;
+    {
+		dialType = JCCallCardDialBlindTransfer;
+    }
+    else if(controller.transferType == JCTransferHold)
+    {
+		dialType = JCCallCardDialSingle;
+		
+    }
     else if(controller.transferType == JCTransferWarm)
-        dialType = JCCallCardDialWarmTransfer;
-    else
-        dialType = JCCallCardDialSingle;
+    {
+		dialType = JCCallCardDialWarmTransfer;
+    }
     
     [[JCCallCardManager sharedManager] dialNumber:dialString type:dialType completion:^(bool success, NSDictionary *callInfo) {
         if (success)

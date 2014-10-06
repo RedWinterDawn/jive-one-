@@ -49,29 +49,48 @@
     self.callerIdLabel.text             = _callCard.callerId;
     self.dialedNumberLabel.dialString   = _callCard.dialNumber;
     self.holdCallButton.selected        = _callCard.hold;
-    
-    if (!_timer)
-    {
-        _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerUpdate) userInfo:nil repeats:YES];
-        [self timerUpdate];
-    }
+	
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if ([keyPath isEqualToString:@"hold"])
+	if ([keyPath isEqualToString:@"hold"]) {
         [self showHoldStateAnimated:(self.superview != nil)];
+	}
+	else if ([keyPath isEqualToString:@"status"]) {
+		switch (_callCard.lineSession.mCallState) {
+			case JCNoCall:
+				self.elapsedTimeLabel.text = NSLocalizedString(@"CONNECTING", nil);
+				break;
+			case JCCallFailed:
+			case JCCallCanceled:
+				self.elapsedTimeLabel.text = NSLocalizedString(@"CANCELED", nil);
+				break;
+			case JCCallRinging:
+				self.elapsedTimeLabel.text = NSLocalizedString(@"RINGING", nil);
+				break;
+			case JCCallConnected:
+				if (!_timer) {
+					_timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerUpdate) userInfo:nil repeats:YES];
+					[self timerUpdate];
+				}
+				break;
+		}
+	}
 }
 
 #pragma mark - Setters -
 
 -(void)setCallCard:(JCCallCard *)callCard
 {
-    if (_callCard)
+	if (_callCard) {
         [_callCard removeObserver:self forKeyPath:@"hold"];
-    
+		[_callCard removeObserver:self forKeyPath:@"status"];
+	}
+	
     _callCard = callCard;
     [callCard addObserver:self forKeyPath:@"hold" options:NSKeyValueObservingOptionInitial context:NULL];
+	[callCard addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionInitial context:NULL];
     
     [self setNeedsLayout];
 }

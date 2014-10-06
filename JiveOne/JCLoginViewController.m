@@ -429,8 +429,7 @@
             [[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
         }
 		else {
-			//maybe one of the mailboxes failed or it's v4; in any case, we don't want the app to fail here.
-		}
+					}
 		
 		if (count == lines.count) {
 			[timer invalidate];
@@ -451,21 +450,22 @@
 	if (!alreadyMakingMyContactRequest) {
 		alreadyMakingMyContactRequest = YES;
 		[[JCContactsClient sharedClient] RetrieveMyInformation:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-			if (suceeded) {
-				[self fetchContacts];
-			}
-			else {
-				self.errorOccurred = error;
-				[self errorInitializingApp:error];
-			}
+//			if (suceeded) {
+//				[self fetchContacts];
+//			}
+//			else {
+				//maybe it's v4; in any case, we don't want the app to fail here.
+//			}
+			[[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
+			[self fetchContacts];
 		}];
 	}
 }
 
 - (void)fetchContacts
 {
-	if (!alreadyMakingContactsRequest) {
-		alreadyMakingContactsRequest = YES;
+//	if (!alreadyMakingContactsRequest) {
+//		alreadyMakingContactsRequest = YES;
 		[[JCContactsClient sharedClient] RetrieveContacts:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
 			if (suceeded) {
 				_doneLoadingContent = YES;
@@ -480,8 +480,8 @@
 				[self errorInitializingApp:error];
 			}
 		}];
-	}
-    
+//	}
+	
 }
 
 - (void)fetchPBXInformation

@@ -18,6 +18,7 @@
 #define kFeedbackEmail @"MobileApps+ios@jive.com"
 //https://api.jive.com/voicemail/v1/mailbox/id/0144096f-17a0-b3a5-b5e8-000100620002/voicemail/id/6882/liste
 #pragma mark - V5 services
+#define kV5BaseUrl @"https://api.jive.com/"
 #define kVoicemailService @"http://10.20.26.141:8890/" //@"api.jive.com/voicemail"
 #define kMailboxPath @"voicemail/v1/mailbox/"
 #define kJifService @"https://api.jive.com/jif/v1/" //@"api.jive.com/jif"
@@ -39,6 +40,9 @@
 #define kPresenceChanged @"keypresencechanged"
 #define kNewVoicemail @"keynewvoicemail"
 
+#pragma mark - Global Call Notification
+#define kIncomingCallNotification @"keyincomingcallnotification"
+
 #pragma mark - OAuth Credentials
 #define kOAuthClientSecret @"enXabnU5KuVm4XRSWGkU"
 #define kOAuthClientId @"f62d7f80-3749-11e3-9b37-542696d7c505"
@@ -46,6 +50,9 @@
 #pragma -mark Scopes
 #define kScopeProfile @"contacts.v1.profile.read"
 #define kScopeVoicemail @"vm.v1.msgs.meta.read"
+
+#pragma mark - SIP SDK
+#define kPortSIPKey @"1Rx1CNDEwOUM4MzA5RTNEMjM2Q0IwNTVBNEUxMjNBNzhEOEA5Njg2NEI1OTE3OTIxMkM4MTRCMzY5QjMxMzU5NEI2Q0BCNjk0NzZCNkE2MTk1NTY1RjE0Q0M4RDU3NDg3NTdCREBDNUZGRkVCQjNBMzgwMTI3MjI2QkNFMDgxNjg5MjJFRg"
 
 
 #pragma mark - Presence Constants
@@ -88,7 +95,17 @@
 #define UDdeviceToken @"deviceToken"
 #define kRememberMe @"keyrememberme"
 
-
+typedef enum {
+	JCNoCall,
+	JCCallRinging,
+	JCCallCanceled,
+	JCCallConnected,
+	JCCallFailed,
+	JCTransferSuccess,
+	JCTransferFailed,
+	JCCallOnHold,
+	JCCALlOffHold	
+} JCCall;
 
 typedef enum {
     JCPresenceTypeOffline = 0,
