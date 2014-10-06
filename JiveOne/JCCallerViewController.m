@@ -281,7 +281,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(void)keyboardViewController:(JCKeyboardViewController *)controller didTypeNumber:(NSString *)typedNumber
 {
-    NSLog(@"%@", typedNumber);
+    [[SipHandler sharedHandler] pressNumpadButton:*(char*)[typedNumber UTF8String]];
 }
 
 
