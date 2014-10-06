@@ -79,9 +79,12 @@
 #pragma mark - Line Session Delegate
 -(void)callStateDidChange:(long)sessionId callState:(JCCall)callState
 {
+	[self willChangeValueForKey:@"status"];
+	
 	switch (callState) {
 		case  JCNoCall:
 			_dialNumber = @"Connecting";
+			break;
 		case JCCallRinging:
 			_dialNumber = @"Ringing";
 			break;
@@ -90,6 +93,7 @@
 			break;
 		case JCCallCanceled:
 			[self endCallRemote];
+			break;
 		case JCCallOnHold:
 		case JCCALlOffHold:
 			[self setHold:YES];
@@ -97,6 +101,8 @@
 		default:
 			break;
 	}
+	
+	[self didChangeValueForKey:@"status"];
 	NSLog(@"State Changed For Session %ld - State: %u", sessionId, callState);
 }
 
