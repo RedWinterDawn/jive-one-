@@ -9,6 +9,7 @@
 #import "SipHandler.h"
 #import "JCLineSession.h"
 #import "LineConfiguration+Custom.h"
+#import "PBX+Custom.h"
 #import "JCCallCardManager.h"
 
 @interface SipHandler()
@@ -62,6 +63,7 @@
 	}
 	
 	LineConfiguration *config = [LineConfiguration MR_findFirst];
+	PBX *pbx = [PBX MR_findFirst];
 	if (!config) {
 		return;
 	}
@@ -70,6 +72,11 @@
 	NSString* kDisplayName = config.display;
 	NSString* kSipPassword = config.sipPassword;
 	NSString* kSIPServer = config.registrationHost;
+	
+	if (pbx && [pbx.v5 boolValue]) {
+		kSIPServer = config.outboundProxy;
+	}
+	
 	NSString* kProxy = config.outboundProxy;
 	int kSIPServerPort = 5060;
 	

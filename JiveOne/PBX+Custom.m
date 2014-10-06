@@ -81,7 +81,7 @@
     pbx.pbxId = new_pbx[@"jrn"] ? new_pbx[@"jrn"] : new_pbx[@"id"] ;
     pbx.name = new_pbx[@"name"] ? new_pbx[@"name"] : @"";
     pbx.jrn = new_pbx[@"jrn"] ? new_pbx[@"jrn"] : new_pbx[@"id"];
-    pbx.v5 = new_pbx[@"v5"] ? [NSNumber numberWithBool:[new_pbx[@"v5"] boolValue]] : false;
+    pbx.v5 = new_pbx[@"v5"] ? [NSNumber numberWithBool:[new_pbx[@"v5"] boolValue]] : pbx.v5;
 }
 
 + (PBX *)fetchFirstPBX
