@@ -37,6 +37,4 @@
 -(IBAction)mergeCall:(id)sender;
 -(IBAction)finishTransfer:(id)sender;
 
--(void)setDialerOptionsHidden:(bool)dialerOptionsHidden animated:(bool)animated;
-
 @end

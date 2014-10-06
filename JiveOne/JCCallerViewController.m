@@ -102,21 +102,6 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         UIButton *button = (UIButton *)sender;
         button.selected = !button.selected;
 		[[SipHandler sharedHandler] setLoudspeakerStatus:button.selected];
-		
-//        // Temporary
-//        if (button.selected)
-//        {
-//            JCCallCard *incomingCallCard = [[JCCallCard alloc] init];
-//            incomingCallCard.dialNumber = @"5551234567";
-//            [[JCCallCardManager sharedManager] addIncomingCall:incomingCallCard];
-//        }
-//        else
-//        {
-//            JCCallCard *incomingCard = [[JCCallCardManager sharedManager].incomingCalls objectAtIndex:0];
-//            [[JCCallCardManager sharedManager] removeIncomingCall:incomingCard];
-//        }
-		
-        // TODO: talk to whatever to turn on the speaker
     }
 }
 
@@ -144,7 +129,6 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     {
         UIButton *button = (UIButton *)sender;
         button.selected = !button.selected;
-        
 		[[SipHandler sharedHandler] muteCall:button.selected];
     }
 }
@@ -295,12 +279,17 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 #pragma mark - Delegate Handlers -
 
+-(void)keyboardViewController:(JCKeyboardViewController *)controller didTypeNumber:(NSString *)typedNumber
+{
+    NSLog(@"%@", typedNumber);
+}
+
+
 #pragma mark JCTransferViewController
 
 -(void)transferViewController:(JCTransferViewController *)controller shouldDialNumber:(NSString *)dialString
 {
     [self dismissTransferViewControllerAnimated:NO];
-    NSLog(@"%@, %lu", dialString, controller.transferType);
 	JCCallCardDialTypes dialType = JCCallCardDialSingle;
     
     if (controller.transferType == JCTransferBlind)
@@ -310,7 +299,6 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     else if(controller.transferType == JCTransferHold)
     {
 		dialType = JCCallCardDialSingle;
-		
     }
     else if(controller.transferType == JCTransferWarm)
     {
