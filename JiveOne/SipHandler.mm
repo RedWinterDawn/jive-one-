@@ -1260,6 +1260,24 @@
 	 */
 }
 
+- (void)answerCall
+{
+	JCLineSession *currentLine = [self findLineWithRecevingState];
+	if (currentLine) {
+		int nRet = [_mPortSIPSDK answerCall:currentLine.mSessionId videoCall:FALSE];
+		if(nRet == 0)
+		{
+			[currentLine setMSessionState:true];
+			[currentLine setMVideoState:false];
+		}
+		else {
+			[currentLine reset];
+		}
+
+	}
+	
+}
+
 
 - (void)alertView: (UIAlertView *)alertView clickedButtonAtIndex: (NSInteger)buttonIndex
 {

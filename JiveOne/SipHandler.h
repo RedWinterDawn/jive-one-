@@ -26,6 +26,7 @@
 - (void)initiate;
 - (void) pressNumpadButton:(char )dtmf;
 - (JCLineSession *) makeCall:(NSString*)callee videoCall:(BOOL)videoCall contactName:(NSString *)contactName;
+- (void)answerCall;
 - (void) hangUpCallWithSession:(long)sessionId;
 - (void) holdCall;
 //- (void) unholdCall;
