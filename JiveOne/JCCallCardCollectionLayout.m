@@ -163,7 +163,9 @@ static NSString * const JSCallCardLayoutCellKind = @"CallCardCell";
             attributes = [self layoutAttributesForItemAtIndexPath:itemIndexPath];
         
         // Configure attributes ...
-        JCCallCard *callCard = [[JCCallCardManager sharedManager].currentCalls objectAtIndex:itemIndexPath.row];
+        JCCallCardCollectionViewCell *cell = (JCCallCardCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:itemIndexPath];
+        JCCallCard *callCard = cell.callCard;
+        
         if (callCard.isIncoming)
             attributes.center = CGPointMake(attributes.center.x, -attributes.center.y);
         else

@@ -22,7 +22,13 @@
 #import "LoggerClient.h"
 #import "SipHandler.h"
 
-@interface JCAppDelegate ()
+#import "JCCallCardManager.h"
+#import "JCCallerViewController.h"
+
+@interface JCAppDelegate () <JCCallerViewControllerDelegate>
+{
+    JCCallerViewController *_presentedCallerViewController;
+}
 
 @property (nonatomic) UIStoryboard* storyboard;
 @property (strong, nonatomic) UIViewController *tabBarViewController;
@@ -109,8 +115,9 @@ int didNotify;
     // Call takeOff (which creates the UAirship singleton)
     [UAirship takeOff:config];
     
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
+    [center addObserver:self selector:@selector(didReceiveIncomingCall:) name:kJCCallCardManagerAddedIncomingCallNotification object:[JCCallCardManager sharedManager]];
     
     
     [self refreshTabBadges:NO];    
@@ -125,6 +132,8 @@ int didNotify;
     
     return YES;
 }
+
+
 
 - (void)didLogInSoCanRegisterForPushNotifications
 {
@@ -146,37 +155,44 @@ int didNotify;
 }
 
 
-
+/**
+ * Sent when the application is about to move from active to inactive state. This can occur for certain types of 
+ * temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it
+ * begins the transition to the background state. Use this method to pause ongoing tasks, disable timers, and throttle 
+ * down OpenGL ES frame rates. Games should use this method to pause the game.
+ */
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     LOG_Info();
     
     [Flurry logEvent:@"Left Application"];
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)application
+/**
+ * Use this method to release shared resources, save user data, invalidate timers, and store enough application state 
+ * information to restore your application to its current state in case it is terminated later. If your application 
+ * supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+ */
+-(void)applicationDidEnterBackground:(UIApplication *)application
 {
     LOG_Info();
-
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     
     LogMessage(@"socket", 4, @"Will Call CloseSocket");
-
     [self stopSocket];
 	
 //	[[SipHandler sharedHandler].mPortSIPSDK startKeepAwake];
 }
 
+/**
+ * Called as part of the transition from the background to the inactive state; here you can undo many of the changes 
+ * made on entering the background.
+ */
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     LOG_Info();
 
     [Flurry logEvent:@"Resumed Session"];
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
     //[[NotificationView sharedInstance] didChangeConnection:nil];
     if ([[JCAuthenticationManager sharedInstance] userAuthenticated] && [[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {
         //[[JCAuthenticationManager sharedInstance] checkForTokenValidity];
@@ -192,6 +208,10 @@ int didNotify;
 //	[[SipHandler sharedHandler].mPortSIPSDK startKeepAwake];
 }
 
+/**
+ * Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was 
+ * previously in the background, optionally refresh the user interface.
+ */
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     LOG_Info();
@@ -206,7 +226,7 @@ int didNotify;
     [[JCVersion sharedClient] getVersion];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"kApplicationDidBecomeActive" object:nil];
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
 }
 
 -(void)alertUserToUpdate:(NSNotification *)notification
@@ -666,8 +686,8 @@ int didNotify;
 }
 
 //#pragma mark - Reachability
-//- (void)didChangeConnection:(NSNotification *)notification
-//{
+- (void)didChangeConnection:(NSNotification *)notification
+{
 //    LOG_Info();
 //    
 //    AFNetworkReachabilityStatus status = [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
@@ -701,7 +721,7 @@ int didNotify;
 //            
 //            [[AFNetworkReachabilityManager sharedManager] startMonitoring];
 //    }
-//}
+}
 
 -(BOOL)seenTutorial
 {
@@ -775,6 +795,37 @@ int didNotify;
     [self.window makeKeyAndVisible];
 }
 
+#pragma mark - Incoming Calls -
 
+/**
+ * Responds to a notification dispatched by the JCCallCardManager when a incoming call occurs. Presents an instance of 
+ * the CallerViewController modaly with ourselves set up as the delegate responder to the view controller.
+ */
+-(void)didReceiveIncomingCall:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    NSNumber *priorCount = [userInfo objectForKey:kJCCallCardManagerPriorUpdateCount];
+    if (priorCount.intValue > 0)
+        return;
+    
+    _presentedCallerViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CallerViewController"];
+    _presentedCallerViewController.delegate = self;
+    _presentedCallerViewController.dialerOptionsHidden = true;
+    
+    [self.window.rootViewController presentViewController:_presentedCallerViewController animated:NO completion:^{
+        
+    }];
+}
+
+/**
+ * Delegate rsponder to remove the the presented modal view controller when an incomming callerver view controller is 
+ * dismissed. Used only if the caller was presented from the app delegate.
+ */
+-(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController
+{
+    [self.window.rootViewController dismissViewControllerAnimated:FALSE completion:^{
+        _presentedCallerViewController = nil;
+    }];
+}
 
 @end

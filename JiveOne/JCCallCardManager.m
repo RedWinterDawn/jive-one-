@@ -164,6 +164,10 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
 	return nil;
 }
 
+-(void)finishWarmTransfer:(void (^)(bool success))completion
+{
+    completion(true);
+}
 
 #pragma mark - Properties -
 
@@ -185,7 +189,7 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
 -(void)removeCurrentCall:(JCCallCard *)callCard
 {
     if (![_currentCalls containsObject:callCard])
-        return;
+        [self removeIncomingCall:callCard];
     
     NSUInteger index = [_currentCalls indexOfObject:callCard];
     [_currentCalls removeObject:callCard];
@@ -196,6 +200,11 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
 {
     if (!_currentCalls)
         _currentCalls = [NSMutableArray array];
+    
+    // Place other calls on hold.
+    for (JCCallCard *card in _currentCalls)
+        card.hold = true;
+    
     [_currentCalls addObject:callCard];
     
     // Sort the array and fetch the resulting new index of the call card.

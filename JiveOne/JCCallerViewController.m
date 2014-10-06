@@ -19,6 +19,8 @@
 NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTransferModal";
 NSString *const kJCCallerViewControllerKeyboardStoryboardIdentifier = @"keyboardModal";
 
+NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"blindTransferComplete";
+
 @interface JCCallerViewController () <JCTransferViewControllerDelegate, JCKeyboardViewControllerDelegate>
 {
     UIViewController *_presentedTransferViewController;
@@ -38,7 +40,12 @@ NSString *const kJCCallerViewControllerKeyboardStoryboardIdentifier = @"keyboard
         [[JCCallCardManager sharedManager] dialNumber:dialString];
 	
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callHungUp:) name:kJCCallCardManagerRemoveCurrentCallNotification object:[JCCallCardManager sharedManager]];
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    JCCallCardManager *manager = [JCCallCardManager sharedManager];
+    [center addObserver:self selector:@selector(callHungUp:) name:kJCCallCardManagerRemoveCurrentCallNotification object:manager];
+    [center addObserver:self selector:@selector(addCurrentCall:) name:kJCCallCardManagerAddedCurrentCallNotification object:manager];
+    
+    [self updateDialerOptionsAnimated:NO];
 }
 
 -(void)dealloc
@@ -46,20 +53,70 @@ NSString *const kJCCallerViewControllerKeyboardStoryboardIdentifier = @"keyboard
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+-(void)addCurrentCall:(NSNotification *)notification
+{
+    self.dialerOptionsHidden = false;
+    [self updateDialerOptionsAnimated:true];
+}
+
 -(void)callHungUp:(NSNotification *)notification
 {
     JCCallCardManager *callManager = (JCCallCardManager *)notification.object;
-    if(callManager.totalCalls == 0)
+    NSUInteger count = callManager.totalCalls;
+    if(count == 0)
         [self closeCallerViewController];
+    else if (count == 1)
+        [self.dialerOptions setState:JCDialerOptionSingle animated:YES];
+}
+
+-(void)updateDialerOptionsAnimated:(bool)animated
+{
+    if (_dialerOptionsHidden)
+    {
+        _dialerOptions.userInteractionEnabled = false;
+        [UIView animateWithDuration:animated ? 0.3 : 0
+                         animations:^{
+                             _dialerOptions.alpha = 0;
+                         } completion:^(BOOL finished) {
+                             _dialerOptions.hidden = true;
+                         }];
+    }
+    else
+    {
+        _dialerOptions.hidden = false;
+        [UIView animateWithDuration:animated ? 0.3 : 0
+                         animations:^{
+                             _dialerOptions.alpha = 1;
+                         } completion:^(BOOL finished) {
+                             _dialerOptions.userInteractionEnabled = true;
+                         }];
+    }
 }
 
 #pragma mark - IBActions -
 
 -(IBAction)speaker:(id)sender
 {
-    JCCallCard *incomingCallCard = [[JCCallCard alloc] init];
-    incomingCallCard.dialNumber = @"555-123-4567";
-    [[JCCallCardManager sharedManager] addIncomingCall:incomingCallCard];
+    if ([sender isKindOfClass:[UIButton class]])
+    {
+        UIButton *button = (UIButton *)sender;
+        button.selected = ! button.selected;
+        
+        // Temporary
+        if (button.selected)
+        {
+            JCCallCard *incomingCallCard = [[JCCallCard alloc] init];
+            incomingCallCard.dialNumber = @"5551234567";
+            [[JCCallCardManager sharedManager] addIncomingCall:incomingCallCard];
+        }
+        else
+        {
+            JCCallCard *incomingCard = [[JCCallCardManager sharedManager].incomingCalls objectAtIndex:0];
+            [[JCCallCardManager sharedManager] removeIncomingCall:incomingCard];
+        }
+        
+        // TODO: talk to whatever to turn on the speaker
+    }
 }
 
 -(IBAction)keypad:(id)sender
@@ -71,16 +128,18 @@ NSString *const kJCCallerViewControllerKeyboardStoryboardIdentifier = @"keyboard
         [self presentKeyboardViewController:keyboardViewController];
     }
     else
-    {
         [self dismissKeyboardViewController:YES];
-    }
-    
-    
 }
 
 -(IBAction)mute:(id)sender
 {
-    [self.dialerOptions setState:JCDialerOptionSingle animated:YES];
+    if ([sender isKindOfClass:[UIButton class]])
+    {
+        UIButton *button = (UIButton *)sender;
+        button.selected = ! button.selected;
+        
+        // TODO: talk to whatever to turn on the speaker
+    }
 }
 
 -(IBAction)blindTransfer:(id)sender
@@ -119,7 +178,10 @@ NSString *const kJCCallerViewControllerKeyboardStoryboardIdentifier = @"keyboard
 
 -(IBAction)finishTransfer:(id)sender
 {
-    
+    [[JCCallCardManager sharedManager] finishWarmTransfer:^(bool success) {
+        if (success)
+            [self showTransferSuccess];
+    }];
 }
 
 - (NSString *)getContactNameByNumber:(NSString *)number
@@ -133,6 +195,19 @@ NSString *const kJCCallerViewControllerKeyboardStoryboardIdentifier = @"keyboard
 }
 
 #pragma mark - Private - 
+
+-(void)showTransferSuccess
+{
+    [self performSegueWithIdentifier:kJCCallerViewControllerBlindTransferCompleteSegueIdentifier sender:self];
+    [self performSelector:@selector(dismissModalViewController) withObject:nil afterDelay:3];
+}
+
+-(void)dismissModalViewController
+{
+    [self dismissViewControllerAnimated:NO completion:^{
+        [self closeCallerViewController];
+    }];
+}
 
 -(void)closeCallerViewController
 {
@@ -233,7 +308,17 @@ NSString *const kJCCallerViewControllerKeyboardStoryboardIdentifier = @"keyboard
         [[SipHandler sharedHandler] referCall:dialString];
     }
     
-    [[JCCallCardManager sharedManager] dialNumber:dialString];
+    [[JCCallCardManager sharedManager] dialNumber:dialString type:dialType completion:^(bool success, NSDictionary *callInfo) {
+        if (success)
+        {
+            if (dialType == JCCallCardDialWarmTransfer)
+                [self.dialerOptions setState:JCDialerOptionFinish animated:YES];
+            else if(dialType == JCCallCardDialBlindTransfer)
+                [self showTransferSuccess];
+            else
+                [self.dialerOptions setState:JCDialerOptionMultiple animated:YES];
+        }
+    }];
 }
 
 -(void)shouldCancelTransferViewController:(JCTransferViewController *)controller

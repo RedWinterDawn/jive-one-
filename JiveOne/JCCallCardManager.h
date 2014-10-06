@@ -41,6 +41,8 @@ typedef enum : NSUInteger {
 -(void)dialNumber:(NSString *)dialNumber;
 -(void)dialNumber:(NSString *)dialNumber type:(JCCallCardDialTypes)dialType completion:(void (^)(bool success, NSDictionary *callInfo))completion;
 
+-(void)finishWarmTransfer:(void (^)(bool success))completion;
+
 -(void)answerCall:(JCCallCard *)callCard;
 
 // Temporary for POC
