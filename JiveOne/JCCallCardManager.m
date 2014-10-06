@@ -156,7 +156,7 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
 -(void)removeCurrentCall:(JCCallCard *)callCard
 {
     if (![_currentCalls containsObject:callCard])
-        return;
+        [self removeIncomingCall:callCard];
     
     NSUInteger index = [_currentCalls indexOfObject:callCard];
     [_currentCalls removeObject:callCard];

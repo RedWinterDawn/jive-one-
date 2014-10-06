@@ -22,6 +22,8 @@
 #import "Lines+Custom.h"
 //#import "JCStyleKit.h"
 
+#import "JCCallCardManager.h"
+
 @interface JCAccountViewController () <MFMailComposeViewControllerDelegate>
 {
     PersonEntities *me;
@@ -194,7 +196,7 @@
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;//TODO: change to 4 when brining back presence.
+    return 4;//TODO: change to 4 when brining back presence.
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -407,5 +409,12 @@
     [segue.destinationViewController setHidesBottomBarWhenPushed:YES];
 }
 
+
+-(IBAction)simulateIncomingCall:(id)sender
+{
+    JCCallCard *incomingCallCard = [[JCCallCard alloc] init];
+    incomingCallCard.dialNumber = @"555-123-4567";
+    [[JCCallCardManager sharedManager] addIncomingCall:incomingCallCard];
+}
 
 @end

@@ -55,16 +55,15 @@ static NSString * const incommingCallCardCellReuseIdentifier = @"IncommingCallCa
 {
     NSDictionary *userInfo = notification.userInfo;
     NSNumber *count = [userInfo objectForKey:kJCCallCardManagerUpdateCount];
-    /*if (count.intValue < 1)
+    if (count.intValue < 1)
     {
         [self.collectionView reloadData];
         return;
-    }*/
+    }
     
     NSNumber *index = [userInfo objectForKey:kJCCallCardManagerUpdatedIndex];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index.integerValue inSection:0];
     JCCallCardCollectionViewCell *cell = (JCCallCardCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-    
     [UIView animateWithDuration:0.3
                      animations:^{
                          cell.alpha = 0;
