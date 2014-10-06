@@ -38,12 +38,23 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     if (dialString)
         [[JCCallCardManager sharedManager] dialNumber:dialString];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(callHungUp:) name:kJCCallCardManagerRemoveCurrentCallNotification object:[JCCallCardManager sharedManager]];
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    JCCallCardManager *manager = [JCCallCardManager sharedManager];
+    [center addObserver:self selector:@selector(callHungUp:) name:kJCCallCardManagerRemoveCurrentCallNotification object:manager];
+    [center addObserver:self selector:@selector(addCurrentCall:) name:kJCCallCardManagerAddedCurrentCallNotification object:manager];
+    
+    [self updateDialerOptionsAnimated:NO];
 }
 
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+-(void)addCurrentCall:(NSNotification *)notification
+{
+    self.dialerOptionsHidden = false;
+    [self updateDialerOptionsAnimated:true];
 }
 
 -(void)callHungUp:(NSNotification *)notification
@@ -54,9 +65,30 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         [self closeCallerViewController];
     else if (count == 1)
         [self.dialerOptions setState:JCDialerOptionSingle animated:YES];
-    
-    
-    
+}
+
+-(void)updateDialerOptionsAnimated:(bool)animated
+{
+    if (_dialerOptionsHidden)
+    {
+        _dialerOptions.userInteractionEnabled = false;
+        [UIView animateWithDuration:animated ? 0.3 : 0
+                         animations:^{
+                             _dialerOptions.alpha = 0;
+                         } completion:^(BOOL finished) {
+                             _dialerOptions.hidden = true;
+                         }];
+    }
+    else
+    {
+        _dialerOptions.hidden = false;
+        [UIView animateWithDuration:animated ? 0.3 : 0
+                         animations:^{
+                             _dialerOptions.alpha = 1;
+                         } completion:^(BOOL finished) {
+                             _dialerOptions.userInteractionEnabled = true;
+                         }];
+    }
 }
 
 #pragma mark - IBActions -
@@ -72,7 +104,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         if (button.selected)
         {
             JCCallCard *incomingCallCard = [[JCCallCard alloc] init];
-            incomingCallCard.dialNumber = @"555-123-4567";
+            incomingCallCard.dialNumber = @"5551234567";
             [[JCCallCardManager sharedManager] addIncomingCall:incomingCallCard];
         }
         else
