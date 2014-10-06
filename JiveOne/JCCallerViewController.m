@@ -100,8 +100,9 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     if ([sender isKindOfClass:[UIButton class]])
     {
         UIButton *button = (UIButton *)sender;
-        button.selected = ! button.selected;
-        
+        button.selected = !button.selected;
+		[[SipHandler sharedHandler] setLoudspeakerStatus:button.selected];
+		
 //        // Temporary
 //        if (button.selected)
 //        {
@@ -136,9 +137,9 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     if ([sender isKindOfClass:[UIButton class]])
     {
         UIButton *button = (UIButton *)sender;
-        button.selected = ! button.selected;
+        button.selected = !button.selected;
         
-        // TODO: talk to whatever to turn on the speaker
+		[[SipHandler sharedHandler] muteCall:button.selected];
     }
 }
 
@@ -298,18 +299,15 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     
     if (controller.transferType == JCTransferBlind)
     {
-//		[[SipHandler sharedHandler] referCall:dialString];
 		dialType = JCCallCardDialBlindTransfer;
     }
     else if(controller.transferType == JCTransferHold)
     {
-//        [[SipHandler sharedHandler] makeCall:dialString videoCall:NO contactName:[self getContactNameByNumber:dialString]];
 		dialType = JCCallCardDialSingle;
 		
     }
     else if(controller.transferType == JCTransferWarm)
     {
-//        [[SipHandler sharedHandler] referCall:dialString];
 		dialType = JCCallCardDialWarmTransfer;
     }
     
