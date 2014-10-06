@@ -410,5 +410,11 @@
 }
 
 
+-(IBAction)simulateIncomingCall:(id)sender
+{
+    JCCallCard *incomingCallCard = [[JCCallCard alloc] init];
+    incomingCallCard.dialNumber = @"5551234567";
+    [[JCCallCardManager sharedManager] addIncomingCall:incomingCallCard];
+}
 
 @end
