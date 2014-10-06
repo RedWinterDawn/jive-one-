@@ -123,14 +123,14 @@ int didNotify;
     
     
     [self refreshTabBadges:NO];    
-    //if ([[JCAuthenticationManager sharedInstance] userAuthenticated] && [[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {
+    if ([[JCAuthenticationManager sharedInstance] userAuthenticated] && [[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {
         [self.window setRootViewController:self.tabBarViewController];
         //[[JCAuthenticationManager sharedInstance] checkForTokenValidity];
-    /*}
+    }
     else {
         //TODO:********
         [self.window setRootViewController:self.loginViewController];
-    }*/
+    }
     
     return YES;
 }
