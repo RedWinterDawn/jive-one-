@@ -83,14 +83,15 @@
 	
 	switch (callState) {
 		case  JCNoCall:
-			_dialNumber = @"Connecting";
+//			_dialNumber = @"Connecting";
 			break;
 		case JCCallRinging:
-			_dialNumber = @"Ringing";
+//			_dialNumber = @"Ringing";
 			break;
 		case JCCallConnected:
-			_dialNumber = _lineSession.callDetail;
+//			_dialNumber = _lineSession.callDetail;
 			break;
+		case JCCallFailed:
 		case JCCallCanceled:
 			[self endCallRemote];
 			break;
