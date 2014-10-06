@@ -24,4 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *feedbackImageView;
 
 @property (weak, nonatomic) IBOutlet UIView *presenceAccessory;
+
+-(IBAction)simulateIncomingCall:(id)sender;
+
 @end

@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "mini-onhold-blackish.png"
+      "filename" : "blackish-hold-mini@1x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "mini-onhold-blackish@2x.png"
+      "filename" : "blackish-hold-mini@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "mini-onhold-blackish@3x.png"
+      "filename" : "blackish-hold-mini@3x.png"
     }
   ],
   "info" : {

@@ -70,7 +70,7 @@
     
     _manager.requestSerializer = [AFJSONRequestSerializer serializer];
     [_manager.requestSerializer clearAuthorizationHeader];
-    [_manager.requestSerializer setValue:[NSString stringWithFormat:@"Basic: %@",token] forHTTPHeaderField:@"Authorization"];
+    [_manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",token] forHTTPHeaderField:@"Authorization"];
     [_manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
 }
 

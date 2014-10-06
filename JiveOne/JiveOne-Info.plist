@@ -47,6 +47,7 @@
 	<array>
 		<string>fetch</string>
 		<string>remote-notification</string>
+		<string>voip</string>
 	</array>
 	<key>UILaunchImageFile</key>
 	<string>Default</string>
