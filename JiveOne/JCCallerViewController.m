@@ -2,19 +2,31 @@
 //  JCCallerViewController.m
 //  JiveOne
 //
+//  This controller in responsible for managing call options, i.e.: Blind transfer, Warm transfer, Adding calls, Merging
+//  calls, Splitting calls, controlling mute and speaker options. It managed the view workflow for transfers. In manages
+//  the state of a subview which visually displays all the call options available for any given state. Its in closely
+//  coupled with the call card manager, for call actions and the SipHandler for the mute, speaker, and other behaviors.
+//
+//  When a dial string is set befor ethe view is loaded, it will be dialed.
+//
 //  Created by Robert Barclay on 9/30/14.
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
 #import "JCCallerViewController.h"
-#import "JCTransferViewController.h"
-#import "JCCallCardCollectionViewController.h"
-#import "SipHandler.h"
-#import "JCKeyboardViewController.h"
 
-#import "JCCallCardManager.h"
+// Managers
+#import "JCCallCardManager.h"   // Handles call cards, and managed calls
+#import "SipHandler.h"          // Direct access to the lower level sip manager.
 
+// Presented View Controllers
+#import "JCTransferViewController.h"                // Shows dial pad to dial for blind, warm transfer and additional call.
+#import "JCKeyboardViewController.h"                // Numberpad
+#import "JCTransferConfirmationViewController.h"    // Transfer confimation view controller
+
+#define CALL_OPTIONS_ANIMATION_DURATION 0.3
 #define TRANSFER_ANIMATION_DURATION 0.3
+#define KEYBOARD_ANIMATION_DURATION 0.3
 
 NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTransferModal";
 NSString *const kJCCallerViewControllerKeyboardStoryboardIdentifier = @"keyboardModal";
@@ -25,11 +37,29 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 {
     UIViewController *_presentedTransferViewController;
     UIViewController *_presentedKeyboardViewController;
+    
+    NSTimeInterval _defaultCallOptionViewConstraint;
 }
 
 @end
 
 @implementation JCCallerViewController
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self)
+    {
+        _transferAnimationDuration             = TRANSFER_ANIMATION_DURATION;
+        _keyboardAnimationDuration             = KEYBOARD_ANIMATION_DURATION;
+        
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        JCCallCardManager *manager = [JCCallCardManager sharedManager];
+        [center addObserver:self selector:@selector(callHungUp:) name:kJCCallCardManagerRemoveCurrentCallNotification object:manager];
+        [center addObserver:self selector:@selector(addCurrentCall:) name:kJCCallCardManagerAddedCurrentCallNotification object:manager];
+    }
+    return self;
+}
 
 -(void)viewDidLoad
 {
@@ -38,14 +68,22 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     NSString *dialString = self.dialString;
     if (dialString)
         [[JCCallCardManager sharedManager] dialNumber:dialString];
-	
-    
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    JCCallCardManager *manager = [JCCallCardManager sharedManager];
-    [center addObserver:self selector:@selector(callHungUp:) name:kJCCallCardManagerRemoveCurrentCallNotification object:manager];
-    [center addObserver:self selector:@selector(addCurrentCall:) name:kJCCallCardManagerAddedCurrentCallNotification object:manager];
-    
-    [self updateCallOptionsAnimated:NO];
+}
+
+-(void)awakeFromNib
+{
+    _defaultCallOptionViewConstraint = 202;
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    UIViewController *viewController = segue.destinationViewController;
+    if ([viewController isKindOfClass:[JCTransferConfirmationViewController class]])
+    {
+        //JCTransferConfirmationViewController *transferConfirmationViewController = (JCTransferConfirmationViewController *)viewController;
+        
+        // TODO: Pass Data Array of call cards from transfer result to view controller to transfer completion.
+    }
 }
 
 -(void)dealloc
@@ -53,55 +91,15 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
--(void)addCurrentCall:(NSNotification *)notification
-{
-    self.callOptionsHidden = false;
-    [self updateCallOptionsAnimated:true];
-}
-
--(void)callHungUp:(NSNotification *)notification
-{
-    JCCallCardManager *callManager = (JCCallCardManager *)notification.object;
-    NSUInteger count = callManager.totalCalls;
-    if(count == 0)
-        [self closeCallerViewController];
-    else if (count == 1)
-        [self.callOptionsView setState:JCCallOptionViewSingleCallState animated:YES];
-}
-
--(void)updateCallOptionsAnimated:(bool)animated
-{
-    if (_callOptionsHidden)
-    {
-        _callOptionsView.userInteractionEnabled = false;
-        [UIView animateWithDuration:animated ? 0.3 : 0
-                         animations:^{
-                             _callOptionsView.alpha = 0;
-                         } completion:^(BOOL finished) {
-                             _callOptionsView.hidden = true;
-                         }];
-    }
-    else
-    {
-        _callOptionsView.hidden = false;
-        [UIView animateWithDuration:animated ? 0.3 : 0
-                         animations:^{
-                             _callOptionsView.alpha = 1;
-                         } completion:^(BOOL finished) {
-                             _callOptionsView.userInteractionEnabled = true;
-                         }];
-    }
-}
-
 #pragma mark - IBActions -
 
--(IBAction)speaker:(id)sender
+-(IBAction)mute:(id)sender
 {
     if ([sender isKindOfClass:[UIButton class]])
     {
         UIButton *button = (UIButton *)sender;
         button.selected = !button.selected;
-		[[SipHandler sharedHandler] setLoudspeakerStatus:button.selected];
+        [[SipHandler sharedHandler] muteCall:button.selected];
     }
 }
 
@@ -123,13 +121,13 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     }
 }
 
--(IBAction)mute:(id)sender
+-(IBAction)speaker:(id)sender
 {
     if ([sender isKindOfClass:[UIButton class]])
     {
         UIButton *button = (UIButton *)sender;
         button.selected = !button.selected;
-		[[SipHandler sharedHandler] muteCall:button.selected];
+        [[SipHandler sharedHandler] setLoudspeakerStatus:button.selected];
     }
 }
 
@@ -159,12 +157,13 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(IBAction)swapCall:(id)sender
 {
-    
+    // TODO: Swap current calls.
+
 }
 
 -(IBAction)mergeCall:(id)sender
 {
-    
+    // TODO: Merge two calls.
 }
 
 -(IBAction)finishTransfer:(id)sender
@@ -175,18 +174,11 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     }];
 }
 
-- (NSString *)getContactNameByNumber:(NSString *)number
-{
-	Lines *contact = [Lines MR_findFirstByAttribute:@"externsionNumber" withValue:number];
-	if (contact) {
-		return contact.displayName;
-	}
-	
-	return nil;
-}
+#pragma mark - Private -
 
-#pragma mark - Private - 
-
+/**
+ * Displays the "Transfer Success page" after a warm or blind transfer.
+ */
 -(void)showTransferSuccess
 {
     [self performSegueWithIdentifier:kJCCallerViewControllerBlindTransferCompleteSegueIdentifier sender:self];
@@ -218,7 +210,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     frame.origin.y = -frame.size.height;
     viewController.view.frame = frame;
     [self.view addSubview:viewController.view];
-    [UIView animateWithDuration:TRANSFER_ANIMATION_DURATION
+    [UIView animateWithDuration:_keyboardAnimationDuration
                      animations:^{
                          viewController.view.frame = bounds;
                      }
@@ -230,7 +222,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     UIViewController *viewController = _presentedKeyboardViewController;
     CGRect frame = self.view.frame;
     frame.origin.y = -frame.size.height;
-    [UIView animateWithDuration:(animated ? TRANSFER_ANIMATION_DURATION : 0)
+    [UIView animateWithDuration:(animated ? _keyboardAnimationDuration : 0)
                      animations:^{
                          viewController.view.frame = frame;
                      } completion:^(BOOL finished) {
@@ -255,7 +247,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     frame.origin.y = frame.origin.y + frame.size.height;
     viewController.view.frame = frame;
     [self.view addSubview:viewController.view];
-    [UIView animateWithDuration:TRANSFER_ANIMATION_DURATION
+    [UIView animateWithDuration:_transferAnimationDuration
                      animations:^{
                          viewController.view.frame = bounds;
                      }
@@ -267,7 +259,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     UIViewController *viewController = _presentedTransferViewController;
     CGRect frame = self.view.frame;
     frame.origin.y = frame.origin.y + frame.size.height;
-    [UIView animateWithDuration:(animated ? TRANSFER_ANIMATION_DURATION : 0)
+    [UIView animateWithDuration:(animated ? _transferAnimationDuration : 0)
                      animations:^{
                          viewController.view.frame = frame;
                      } completion:^(BOOL finished) {
@@ -277,7 +269,33 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
                      }];
 }
 
+#pragma mark - Notification Handlers -
+
+/**
+ * Notification recieved when a call has been added to the call card manager. Can happen after a call has been added via
+ * the add call or warm call, or after an incominc call is answered.
+ */
+-(void)addCurrentCall:(NSNotification *)notification
+{
+    self.callOptionsHidden = false;
+}
+
+/**
+ * Notification when a call has been been removed and we shoudl possibly respond to close the view.
+ */
+-(void)callHungUp:(NSNotification *)notification
+{
+    JCCallCardManager *callManager = (JCCallCardManager *)notification.object;
+    NSUInteger count = callManager.totalCalls;
+    if(count == 0)
+        [self closeCallerViewController];
+    else if (count == 1)
+        [self.callOptionsView setState:JCCallOptionViewSingleCallState animated:YES];
+}
+
 #pragma mark - Delegate Handlers -
+
+#pragma mark JCKeyboardViewController
 
 -(void)keyboardViewController:(JCKeyboardViewController *)controller didTypeNumber:(NSString *)typedNumber
 {
