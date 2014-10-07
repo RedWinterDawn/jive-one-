@@ -435,7 +435,7 @@
 			[self fetchMyContact];
 		}
 		
-		NSLog(@"Count is now: %i, Line count is %i", count, lines.count);
+		NSLog(@"Count is now: %i, Line count is %lu", count, (unsigned long)lines.count);
 		
     }];
 	

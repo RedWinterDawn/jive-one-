@@ -15,7 +15,7 @@
 	NSTimer *breakSocketTimer;
 }
 
-static NSInteger SocketCloseCode = 1001;
+//static NSInteger SocketCloseCode = 1001;
 static BOOL closedSocketOnPurpose;
 
 + (JasmineSocket *)sharedInstance

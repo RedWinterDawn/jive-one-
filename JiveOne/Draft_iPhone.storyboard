@@ -329,7 +329,7 @@
         <!--Conversations-->
         <scene sceneID="aoz-Ao-5CC">
             <objects>
-                <tableViewController storyboardIdentifier="JCConversationsViewController" id="Js6-I9-TTA" customClass="JCConversationsViewController" sceneMemberID="viewController">
+                <tableViewController restorationIdentifier="JCConversationsViewController" storyboardIdentifier="JCConversationsViewController" id="Js6-I9-TTA" customClass="JCConversationsViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="uUn-W5-uvk">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -498,7 +498,7 @@
         <!--Conversations-->
         <scene sceneID="CrH-tM-3Aa">
             <objects>
-                <navigationController storyboardIdentifier="ConversationsNavigationController" definesPresentationContext="YES" id="H1Y-oH-62n" sceneMemberID="viewController">
+                <navigationController restorationIdentifier="ConversationsNavigationController" storyboardIdentifier="ConversationsNavigationController" definesPresentationContext="YES" id="H1Y-oH-62n" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Conversations" image="nav-conv.png" id="GiT-eD-evb"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="pUA-xD-aVz">
                         <autoresizingMask key="autoresizingMask"/>
@@ -515,7 +515,7 @@
         <!--Directory Detail View Controller-->
         <scene sceneID="PB8-BC-LRD">
             <objects>
-                <tableViewController id="847-OG-ybh" customClass="JCDirectoryDetailViewController" sceneMemberID="viewController">
+                <tableViewController restorationIdentifier="DirectoryDetailView" storyboardIdentifier="DirectoryDetailView" id="847-OG-ybh" customClass="JCDirectoryDetailViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" sectionIndexMinimumDisplayRowCount="2" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="IE2-7x-SCd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -549,7 +549,7 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ijh-wk-NAn">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ijh-wk-NAn">
                                             <rect key="frame" x="253" y="4" width="34" height="35"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="34" id="bFh-BL-tMQ"/>
