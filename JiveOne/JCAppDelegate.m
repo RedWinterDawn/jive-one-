@@ -817,7 +817,7 @@ int didNotify;
     
     _presentedCallerViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CallerViewController"];
     _presentedCallerViewController.delegate = self;
-    _presentedCallerViewController.dialerOptionsHidden = true;
+    _presentedCallerViewController.callOptionsHidden = true;
     [_presentedCallerViewController.view setNeedsUpdateConstraints];
     
     [self.window.rootViewController presentViewController:_presentedCallerViewController animated:NO completion:^{

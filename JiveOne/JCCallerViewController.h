@@ -20,8 +20,8 @@
 @interface JCCallerViewController : UIViewController
 
 @property (nonatomic, weak) IBOutlet id<JCCallerViewControllerDelegate> delegate;
-@property (nonatomic, weak) IBOutlet JCCallOptionsView *dialerOptions;
-@property (nonatomic) bool dialerOptionsHidden;
+@property (nonatomic, weak) IBOutlet JCCallOptionsView *callOptionsView;
+@property (nonatomic) bool callOptionsHidden;
 
 // Phone number to be dialed when the view controller is loads.
 @property (nonatomic, strong) NSString *dialString;

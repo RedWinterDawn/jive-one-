@@ -45,7 +45,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     [center addObserver:self selector:@selector(callHungUp:) name:kJCCallCardManagerRemoveCurrentCallNotification object:manager];
     [center addObserver:self selector:@selector(addCurrentCall:) name:kJCCallCardManagerAddedCurrentCallNotification object:manager];
     
-    [self updateDialerOptionsAnimated:NO];
+    [self updateCallOptionsAnimated:NO];
 }
 
 -(void)dealloc
@@ -55,8 +55,8 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(void)addCurrentCall:(NSNotification *)notification
 {
-    self.dialerOptionsHidden = false;
-    [self updateDialerOptionsAnimated:true];
+    self.callOptionsHidden = false;
+    [self updateCallOptionsAnimated:true];
 }
 
 -(void)callHungUp:(NSNotification *)notification
@@ -66,29 +66,29 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     if(count == 0)
         [self closeCallerViewController];
     else if (count == 1)
-        [self.dialerOptions setState:JCCallOptionViewSingleCallState animated:YES];
+        [self.callOptionsView setState:JCCallOptionViewSingleCallState animated:YES];
 }
 
--(void)updateDialerOptionsAnimated:(bool)animated
+-(void)updateCallOptionsAnimated:(bool)animated
 {
-    if (_dialerOptionsHidden)
+    if (_callOptionsHidden)
     {
-        _dialerOptions.userInteractionEnabled = false;
+        _callOptionsView.userInteractionEnabled = false;
         [UIView animateWithDuration:animated ? 0.3 : 0
                          animations:^{
-                             _dialerOptions.alpha = 0;
+                             _callOptionsView.alpha = 0;
                          } completion:^(BOOL finished) {
-                             _dialerOptions.hidden = true;
+                             _callOptionsView.hidden = true;
                          }];
     }
     else
     {
-        _dialerOptions.hidden = false;
+        _callOptionsView.hidden = false;
         [UIView animateWithDuration:animated ? 0.3 : 0
                          animations:^{
-                             _dialerOptions.alpha = 1;
+                             _callOptionsView.alpha = 1;
                          } completion:^(BOOL finished) {
-                             _dialerOptions.userInteractionEnabled = true;
+                             _callOptionsView.userInteractionEnabled = true;
                          }];
     }
 }
@@ -309,11 +309,11 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         if (success)
         {
             if (dialType == JCCallCardDialWarmTransfer)
-                [self.dialerOptions setState:JCCallOptionViewFinishTransferState animated:YES];
+                [self.callOptionsView setState:JCCallOptionViewFinishTransferState animated:YES];
             else if(dialType == JCCallCardDialBlindTransfer)
                 [self showTransferSuccess];
             else
-                [self.dialerOptions setState:JCCallOptionViewMultipleCallsState animated:YES];
+                [self.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];
         }
     }];
 }

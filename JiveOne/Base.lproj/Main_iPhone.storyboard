@@ -1415,7 +1415,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="iCC-Rn-KEN"/>
                     <connections>
-                        <outlet property="dialerOptions" destination="esd-M8-Lxg" id="s5z-H3-dYL"/>
+                        <outlet property="callOptionsView" destination="esd-M8-Lxg" id="Cp5-hn-19B"/>
                         <segue destination="tDl-8a-4VI" kind="modal" identifier="blindTransferComplete" animates="NO" id="fIT-eL-2bQ"/>
                     </connections>
                 </viewController>
