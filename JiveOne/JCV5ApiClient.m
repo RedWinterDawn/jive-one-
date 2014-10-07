@@ -255,7 +255,8 @@
 	
 	[_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 		//parse list of mailbox references
-		[PBX addPBXs:responseObject[@"userPbxs"] userName:nil completed:^(BOOL success) {
+		NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
+		[PBX addPBXs:responseObject[@"userPbxs"] userName:username completed:^(BOOL success) {
 			completed(YES, responseObject, operation, nil);
 		}];
 		
