@@ -344,7 +344,7 @@
 //		[numpadViewController setStatusText:[NSString  stringWithFormat:@"Rejected call on line %ld", mActiveLine]];
 	}
 	
-	[selectedLine setMCallState:JCCallCanceled];
+//	[selectedLine setMCallState:JCCallCanceled];
 	[selectedLine reset];
 }
 
