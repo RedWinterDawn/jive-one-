@@ -307,8 +307,6 @@
 		F59AE2C9192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2BC192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png */; };
 		F59AE2CC192F0B0D00CAF0F3 /* iPadLaunch2Xnew.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2CB192F0B0D00CAF0F3 /* iPadLaunch2Xnew.png */; };
 		F82A284119DDC55E00C3620D /* JCV4ProvisioningClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F82A284019DDC55E00C3620D /* JCV4ProvisioningClient.m */; };
-		F82A284619DDC59400C3620D /* LineConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = F82A284319DDC59400C3620D /* LineConfiguration.m */; };
-		F82A284719DDC59400C3620D /* LineConfiguration+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = F82A284519DDC59400C3620D /* LineConfiguration+Custom.m */; };
 		F84A087919DF38C8003476E6 /* JCTransferConfirmationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F84A087819DF38C8003476E6 /* JCTransferConfirmationViewController.m */; };
 		F8A2BC0B19DB5B3C00251310 /* JCDialerOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = F8A2BC0A19DB5B3C00251310 /* JCDialerOptions.m */; };
 		F8B62E5B19DB091500AF98D3 /* JCRoundedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F8B62E5A19DB091500AF98D3 /* JCRoundedButton.m */; };
@@ -855,10 +853,6 @@
 		F59AE2CB192F0B0D00CAF0F3 /* iPadLaunch2Xnew.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPadLaunch2Xnew.png; sourceTree = "<group>"; };
 		F82A283F19DDC55E00C3620D /* JCV4ProvisioningClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCV4ProvisioningClient.h; sourceTree = "<group>"; };
 		F82A284019DDC55E00C3620D /* JCV4ProvisioningClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCV4ProvisioningClient.m; sourceTree = "<group>"; };
-		F82A284219DDC59400C3620D /* LineConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineConfiguration.h; sourceTree = "<group>"; };
-		F82A284319DDC59400C3620D /* LineConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineConfiguration.m; sourceTree = "<group>"; };
-		F82A284419DDC59400C3620D /* LineConfiguration+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LineConfiguration+Custom.h"; sourceTree = "<group>"; };
-		F82A284519DDC59400C3620D /* LineConfiguration+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "LineConfiguration+Custom.m"; sourceTree = "<group>"; };
 		F84A087719DF38C8003476E6 /* JCTransferConfirmationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTransferConfirmationViewController.h; sourceTree = "<group>"; };
 		F84A087819DF38C8003476E6 /* JCTransferConfirmationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTransferConfirmationViewController.m; sourceTree = "<group>"; };
 		F8A2BC0919DB5B3C00251310 /* JCDialerOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDialerOptions.h; sourceTree = "<group>"; };
@@ -2670,8 +2664,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: JIVE COMMUNICATIONS, INC";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: JIVE COMMUNICATIONS, INC";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JiveOne/JiveOne-Prefix.pch";
@@ -2794,8 +2788,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Jive Communications, Inc (5NE3JJD5L3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jive Communications, Inc (5NE3JJD5L3)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JiveOne/JiveOne-Prefix.pch";
@@ -2819,7 +2813,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C3125494-B323-4069-B38E-29B30ADF7BFF";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
