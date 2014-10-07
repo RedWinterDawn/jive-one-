@@ -14,10 +14,8 @@
 #import "Company.h"
 #import <MBProgressHUD.h>
 #import "JCStyleKit.h"
-#import "JCContactsClient.h"
-#import "JCVoicemailClient.h"
+#import "JCV5ApiClient.h"
 #import "JCV4ProvisioningClient.h"
-#import "JCJifClient.h"
 #import "JCAppIntro.h"
 #import "UIImage+ImageEffects.h"
 #import "UITextField+ELFixSecureTextFieldFont.h"
@@ -400,7 +398,7 @@
 //voicemail
 -(void)fetchMyMailboxes{
     NSString * jiveId = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
-    [[JCJifClient sharedClient] getMailboxReferencesForUser:jiveId completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+    [[JCV5ApiClient sharedClient] getMailboxReferencesForUser:jiveId completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
         if(suceeded){
             [self fetchVoicemailsMetadata];
         }
@@ -421,7 +419,7 @@
 	
 	__block int count = 0;
 
-    [[JCVoicemailClient sharedClient] getVoicemails:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+    [[JCV5ApiClient sharedClient] getVoicemails:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
 
 		
         if(suceeded) {
@@ -448,7 +446,7 @@
 {
 	if (!alreadyMakingMyContactRequest) {
 		alreadyMakingMyContactRequest = YES;
-		[[JCContactsClient sharedClient] RetrieveMyInformation:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+		[[JCV5ApiClient sharedClient] RetrieveMyInformation:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
 //			if (suceeded) {
 //				[self fetchContacts];
 //			}
@@ -465,14 +463,14 @@
 {
 //	if (!alreadyMakingContactsRequest) {
 //		alreadyMakingContactsRequest = YES;
-		[[JCContactsClient sharedClient] RetrieveContacts:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+		[[JCV5ApiClient sharedClient] RetrieveContacts:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
 			if (suceeded) {
 				_doneLoadingContent = YES;
 				[self hideHud];
 				if (self.userIsDoneWithTutorial) {
 					[self goToApplication];
 				}
-				[self fetchPBXInformation];
+//				[self fetchPBXInformation];
 			}
 			else {
 				self.errorOccurred = error;
@@ -483,19 +481,19 @@
 	
 }
 
-- (void)fetchPBXInformation
-{
-    NSArray *mailboxes = [Lines MR_findAll];
-    
-    for (Lines *box in mailboxes) {
-		
-		PBX *pbx = [PBX MR_findFirstByAttribute:@"pbxId" withValue:box.pbxId];
-		
-        [[JCJifClient sharedClient] getPbxInformationFromUrl:pbx.selfUrl completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-            //[self fetchMyContact];
-        }];
-    }
-}
+//- (void)fetchPBXInformation
+//{
+//    NSArray *mailboxes = [Lines MR_findAll];
+//    
+//    for (Lines *box in mailboxes) {
+//		
+//		PBX *pbx = [PBX MR_findFirstByAttribute:@"pbxId" withValue:box.pbxId];
+//		
+//        [[JCV5ApiClient sharedClient] getPbxInformationFromUrl:pbx.selfUrl completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+//            //[self fetchMyContact];
+//        }];
+//    }
+//}
 
 
 
