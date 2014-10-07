@@ -50,6 +50,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     self = [super initWithCoder:aDecoder];
     if (self)
     {
+        _callOptionTransitionAnimationDuration = CALL_OPTIONS_ANIMATION_DURATION;
         _transferAnimationDuration             = TRANSFER_ANIMATION_DURATION;
         _keyboardAnimationDuration             = KEYBOARD_ANIMATION_DURATION;
         
@@ -68,6 +69,8 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     NSString *dialString = self.dialString;
     if (dialString)
         [[JCCallCardManager sharedManager] dialNumber:dialString];
+	
+    [self setCallOptionsHidden:_callOptionsHidden animated:NO];
 }
 
 -(void)awakeFromNib
@@ -89,6 +92,24 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - Setters -
+
+-(void)setCallOptionsHidden:(bool)callOptionsHidden
+{
+    _callOptionsHidden = callOptionsHidden;
+    if (self.view.superview)
+        [self setCallOptionsHidden:callOptionsHidden animated:YES];
+
+}
+
+-(void)setCallOptionsHidden:(bool)callOptionsHidden animated:(bool)animated
+{
+    if (callOptionsHidden)
+        [self hideCallOptionsAnimated:animated];
+    else
+        [self showCallOptionsAnimated:animated];
 }
 
 #pragma mark - IBActions -
@@ -174,7 +195,35 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     }];
 }
 
-#pragma mark - Private -
+#pragma mark - Private - 
+
+/**
+ * Hides the call options card.
+ */
+-(void)hideCallOptionsAnimated:(bool)animated
+{
+    _callOptionsViewOriginYConstraint.constant = 10;
+    [self.view setNeedsUpdateConstraints];
+    __unsafe_unretained UIView *weakView = self.view;
+    [UIView animateWithDuration:animated ? _callOptionTransitionAnimationDuration : 0
+                     animations:^{
+                         [weakView layoutIfNeeded];
+                     }];
+}
+
+/**
+ * Shows the call option card.
+ */
+-(void)showCallOptionsAnimated:(bool)animated
+{
+    _callOptionsViewOriginYConstraint.constant = _defaultCallOptionViewConstraint;
+    [self.view setNeedsUpdateConstraints];
+    __unsafe_unretained UIView *weakView = self.view;
+    [UIView animateWithDuration:animated ? _callOptionTransitionAnimationDuration : 0
+                     animations:^{
+                         [weakView layoutIfNeeded];
+                     }];
+}
 
 /**
  * Displays the "Transfer Success page" after a warm or blind transfer.

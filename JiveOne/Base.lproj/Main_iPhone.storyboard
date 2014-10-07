@@ -1378,6 +1378,7 @@
                                     <constraint firstItem="Tug-Ny-Zug" firstAttribute="centerX" secondItem="74r-RB-XRO" secondAttribute="centerX" constant="-4" id="ZiI-Cg-Soe"/>
                                     <constraint firstAttribute="bottom" secondItem="h6q-Cp-RHf" secondAttribute="bottom" constant="20" id="bDK-6N-fGc"/>
                                     <constraint firstItem="9H2-tC-F7q" firstAttribute="centerX" secondItem="h6q-Cp-RHf" secondAttribute="centerX" id="dC7-o7-9JO"/>
+                                    <constraint firstAttribute="height" constant="194" id="duu-eu-wBH"/>
                                     <constraint firstAttribute="centerX" secondItem="Uid-o6-zKW" secondAttribute="centerX" id="eIu-IG-sMD"/>
                                     <constraint firstAttribute="centerX" secondItem="pl8-2v-mXV" secondAttribute="centerX" id="fM0-R2-bNm"/>
                                     <constraint firstItem="9H2-tC-F7q" firstAttribute="centerX" secondItem="h6q-Cp-RHf" secondAttribute="centerX" id="g4c-Ls-2cO"/>
@@ -1403,19 +1404,19 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="esd-M8-Lxg" secondAttribute="bottom" constant="8" id="CTg-kI-9N0"/>
+                            <constraint firstAttribute="bottom" secondItem="esd-M8-Lxg" secondAttribute="top" constant="202" id="CTg-kI-9N0"/>
                             <constraint firstItem="esd-M8-Lxg" firstAttribute="top" secondItem="sEm-pY-RBF" secondAttribute="bottom" constant="-1" id="Gtb-Wk-axZ"/>
                             <constraint firstAttribute="trailing" secondItem="sEm-pY-RBF" secondAttribute="trailing" id="Q4u-K8-RPg"/>
                             <constraint firstItem="esd-M8-Lxg" firstAttribute="leading" secondItem="Aj5-ZF-aP3" secondAttribute="leading" id="Uwr-fk-AOI"/>
                             <constraint firstAttribute="trailing" secondItem="esd-M8-Lxg" secondAttribute="trailing" id="WZ3-72-wsQ"/>
                             <constraint firstItem="sEm-pY-RBF" firstAttribute="top" secondItem="Aj5-ZF-aP3" secondAttribute="top" constant="20" id="cNG-4i-0Yn"/>
                             <constraint firstItem="sEm-pY-RBF" firstAttribute="leading" secondItem="Aj5-ZF-aP3" secondAttribute="leading" id="ewl-Y0-lO7"/>
-                            <constraint firstAttribute="bottom" secondItem="sEm-pY-RBF" secondAttribute="bottom" constant="201" id="fE7-xx-oPK"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="iCC-Rn-KEN"/>
                     <connections>
                         <outlet property="callOptionsView" destination="esd-M8-Lxg" id="Cp5-hn-19B"/>
+                        <outlet property="callOptionsViewOriginYConstraint" destination="CTg-kI-9N0" id="my5-3X-mMz"/>
                         <segue destination="tDl-8a-4VI" kind="modal" identifier="blindTransferComplete" animates="NO" id="fIT-eL-2bQ"/>
                     </connections>
                 </viewController>

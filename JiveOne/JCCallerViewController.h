@@ -21,8 +21,10 @@
 
 @property (nonatomic, weak) IBOutlet id<JCCallerViewControllerDelegate> delegate;
 @property (nonatomic, weak) IBOutlet JCCallOptionsView *callOptionsView;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *callOptionsViewOriginYConstraint;
 
 @property (nonatomic) bool callOptionsHidden;
+@property (nonatomic) NSTimeInterval callOptionTransitionAnimationDuration;
 @property (nonatomic) NSTimeInterval transferAnimationDuration;
 @property (nonatomic) NSTimeInterval keyboardAnimationDuration;
 
