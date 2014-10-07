@@ -1104,7 +1104,7 @@
                                     <segue destination="Kvn-c6-FPG" kind="embed" id="W5I-Z4-hf4"/>
                                 </connections>
                             </containerView>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="esd-M8-Lxg" customClass="JCDialerOptions">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="esd-M8-Lxg" customClass="JCCallOptionsView">
                                 <rect key="frame" x="0.0" y="366" width="320" height="194"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TRc-ED-Hu8" customClass="JCRoundedButton">
@@ -1392,18 +1392,12 @@
                                     <constraint firstItem="OJ5-fR-lFW" firstAttribute="leading" secondItem="esd-M8-Lxg" secondAttribute="leading" constant="26" id="z7y-YX-FcN"/>
                                 </constraints>
                                 <connections>
-                                    <outlet property="addCallBtn" destination="zZ6-Xz-Txj" id="b4G-5D-UI8"/>
                                     <outlet property="addCallBtnHorizontalContstraint" destination="DYV-bD-9b9" id="VYv-yH-ZGz"/>
-                                    <outlet property="finishTransferBtn" destination="Uid-o6-zKW" id="NdI-3j-hMe"/>
                                     <outlet property="finishTransferConstraint" destination="CNx-5e-hav" id="ju7-Dp-Vuq"/>
-                                    <outlet property="mergeBtn" destination="74r-RB-XRO" id="Xnc-9d-2Uh"/>
                                     <outlet property="mergeBtnHorizontalContstraint" destination="Sle-cw-UfB" id="PPx-jk-KzW"/>
-                                    <outlet property="swapBtn" destination="h6q-Cp-RHf" id="0Xg-AE-Xjy"/>
                                     <outlet property="swapBtnHorizontalContstraint" destination="7YY-95-Yrw" id="cBF-Mi-fxX"/>
-                                    <outlet property="transferBtn" destination="OJ5-fR-lFW" id="w4t-3L-JfO"/>
                                     <outlet property="transferBtnHorizontalContstraint" destination="z7y-YX-FcN" id="Rjc-Mt-gWN"/>
                                     <outlet property="warmBtnVerticalConstraint" destination="rFD-yx-ctB" id="xUA-9x-3Vv"/>
-                                    <outlet property="warmTransferBtn" destination="Tcw-Rg-ytb" id="ihM-SK-BfF"/>
                                 </connections>
                             </view>
                         </subviews>

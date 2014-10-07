@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JCDialerOptions.h"
+#import "JCCallOptionsView.h"
 
 @class JCCallerViewController;
 
@@ -20,7 +20,7 @@
 @interface JCCallerViewController : UIViewController
 
 @property (nonatomic, weak) IBOutlet id<JCCallerViewControllerDelegate> delegate;
-@property (nonatomic, weak) IBOutlet JCDialerOptions *dialerOptions;
+@property (nonatomic, weak) IBOutlet JCCallOptionsView *dialerOptions;
 @property (nonatomic) bool dialerOptionsHidden;
 
 // Phone number to be dialed when the view controller is loads.
