@@ -33,6 +33,7 @@ static NSString * const incommingCallCardCellReuseIdentifier = @"IncommingCallCa
 {
     [super viewWillLayoutSubviews];
     [self.collectionViewLayout invalidateLayout];
+    [self.collectionView setNeedsUpdateConstraints];
 }
 
 -(void)dealloc

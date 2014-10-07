@@ -49,16 +49,17 @@
     self.callerIdLabel.text             = _callCard.callerId;
     self.dialedNumberLabel.dialString   = _callCard.dialNumber;
     self.holdCallButton.selected        = _callCard.hold;
-	
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	if ([keyPath isEqualToString:@"hold"]) {
+	if ([keyPath isEqualToString:kJCCallCardHoldKey])
         [self showHoldStateAnimated:(self.superview != nil)];
-	}
-	else if ([keyPath isEqualToString:@"status"]) {
-		switch (_callCard.lineSession.mCallState) {
+	
+	else if ([keyPath isEqualToString:kJCCallCardStatusChangeKey])
+    {
+		switch (_callCard.lineSession.mCallState)
+        {
 			case JCNoCall:
 				self.elapsedTimeLabel.text = NSLocalizedString(@"CONNECTING", nil);
 				break;
@@ -75,8 +76,19 @@
 					[self timerUpdate];
 				}
 				break;
+            default:
+                break;
 		}
 	}
+}
+
+-(void)dealloc
+{
+    if (_callCard != nil)
+    {
+        [_callCard removeObserver:self forKeyPath:kJCCallCardHoldKey];
+        [_callCard removeObserver:self forKeyPath:kJCCallCardStatusChangeKey];
+    }
 }
 
 #pragma mark - Setters -
@@ -84,13 +96,16 @@
 -(void)setCallCard:(JCCallCard *)callCard
 {
 	if (_callCard) {
-        [_callCard removeObserver:self forKeyPath:@"hold"];
-		[_callCard removeObserver:self forKeyPath:@"status"];
+        [_callCard removeObserver:self forKeyPath:kJCCallCardHoldKey];
+		[_callCard removeObserver:self forKeyPath:kJCCallCardStatusChangeKey];
 	}
 	
     _callCard = callCard;
-    [callCard addObserver:self forKeyPath:@"hold" options:NSKeyValueObservingOptionInitial context:NULL];
-	[callCard addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionInitial context:NULL];
+    if (callCard != nil)
+    {
+        [callCard addObserver:self forKeyPath:kJCCallCardHoldKey options:NSKeyValueObservingOptionInitial context:NULL];
+        [callCard addObserver:self forKeyPath:kJCCallCardStatusChangeKey options:NSKeyValueObservingOptionInitial context:NULL];
+    }
     
     [self setNeedsLayout];
 }
