@@ -66,7 +66,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     if(count == 0)
         [self closeCallerViewController];
     else if (count == 1)
-        [self.dialerOptions setState:JCDialerOptionSingle animated:YES];
+        [self.dialerOptions setState:JCCallOptionViewSingleCallState animated:YES];
 }
 
 -(void)updateDialerOptionsAnimated:(bool)animated
@@ -309,11 +309,11 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         if (success)
         {
             if (dialType == JCCallCardDialWarmTransfer)
-                [self.dialerOptions setState:JCDialerOptionFinish animated:YES];
+                [self.dialerOptions setState:JCCallOptionViewFinishTransferState animated:YES];
             else if(dialType == JCCallCardDialBlindTransfer)
                 [self showTransferSuccess];
             else
-                [self.dialerOptions setState:JCDialerOptionMultiple animated:YES];
+                [self.dialerOptions setState:JCCallOptionViewMultipleCallsState animated:YES];
         }
     }];
 }
