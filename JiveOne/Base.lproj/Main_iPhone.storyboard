@@ -544,7 +544,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cpl-7N-Lxx">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cpl-7N-Lxx">
                                 <rect key="frame" x="0.0" y="114" width="320" height="238"/>
                                 <subviews>
                                     <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0UV-r4-Bbv">
@@ -992,7 +992,7 @@
                                     <constraint firstItem="gkT-vh-OkV" firstAttribute="top" secondItem="cpl-7N-Lxx" secondAttribute="top" id="jmc-tf-tMO"/>
                                     <constraint firstItem="uIw-vO-ANB" firstAttribute="centerX" secondItem="gkT-vh-OkV" secondAttribute="centerX" id="kRw-SV-wRS"/>
                                     <constraint firstAttribute="centerX" secondItem="0UV-r4-Bbv" secondAttribute="centerX" id="m9X-QA-Ipr"/>
-                                    <constraint firstAttribute="height" constant="212" id="ouo-g2-Usz"/>
+                                    <constraint firstAttribute="height" constant="238" id="ouo-g2-Usz"/>
                                     <constraint firstItem="9kb-KU-bVj" firstAttribute="top" secondItem="0UV-r4-Bbv" secondAttribute="bottom" constant="-1" id="yaN-AV-zAP"/>
                                     <constraint firstItem="uIw-vO-ANB" firstAttribute="leading" secondItem="gkT-vh-OkV" secondAttribute="leading" id="ylB-3k-Z5L"/>
                                     <constraint firstItem="hKr-tR-vL2" firstAttribute="leading" secondItem="gkT-vh-OkV" secondAttribute="leading" id="zNc-vY-xKj"/>
@@ -1021,8 +1021,8 @@
                                     <outlet property="delegate" destination="5YP-ww-Jgx" id="qlL-6H-cfd"/>
                                 </connections>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mlm-7I-BRW">
-                                <rect key="frame" x="135" y="367" width="50" height="50"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mlm-7I-BRW">
+                                <rect key="frame" x="135" y="356" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="U1i-9c-oJb"/>
                                     <constraint firstAttribute="width" constant="50" id="dwc-BZ-y8T"/>
@@ -1030,19 +1030,32 @@
                                 <state key="normal" image="dialer-callButton-green">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <state key="disabled" image="gray-callbutton"/>
                                 <connections>
                                     <action selector="initiateCall:" destination="5YP-ww-Jgx" eventType="touchUpInside" id="naX-0J-7lX"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RegStatus" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NCi-t7-hnZ">
+                                <rect key="frame" x="135" y="405" width="50" height="26"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="BZ8-lW-2I4"/>
+                                    <constraint firstAttribute="height" constant="26" id="afc-MP-3Bv"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="10"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="O96-gt-jaf" firstAttribute="top" secondItem="Dqu-Oj-kXE" secondAttribute="top" constant="65" id="9R7-ep-UEj"/>
-                            <constraint firstItem="mlm-7I-BRW" firstAttribute="top" secondItem="cpl-7N-Lxx" secondAttribute="bottom" constant="30" id="9uX-jD-BzK"/>
+                            <constraint firstItem="mlm-7I-BRW" firstAttribute="top" secondItem="cpl-7N-Lxx" secondAttribute="bottom" constant="4" id="9uX-jD-BzK"/>
                             <constraint firstItem="mlm-7I-BRW" firstAttribute="leading" secondItem="Dqu-Oj-kXE" secondAttribute="leading" constant="135" id="Qa0-Ah-UW3"/>
                             <constraint firstItem="O96-gt-jaf" firstAttribute="leading" secondItem="Dqu-Oj-kXE" secondAttribute="leading" constant="40" id="Whw-uq-L8W"/>
+                            <constraint firstItem="NCi-t7-hnZ" firstAttribute="top" secondItem="mlm-7I-BRW" secondAttribute="bottom" constant="-1" id="YaJ-RU-AV6"/>
                             <constraint firstAttribute="trailing" secondItem="O96-gt-jaf" secondAttribute="trailing" constant="38" id="c1J-Ch-br0"/>
                             <constraint firstItem="O96-gt-jaf" firstAttribute="top" secondItem="cpl-7N-Lxx" secondAttribute="top" constant="-49" id="ecI-2w-vYd"/>
+                            <constraint firstItem="mlm-7I-BRW" firstAttribute="leading" secondItem="NCi-t7-hnZ" secondAttribute="leading" id="i3E-pN-RLs"/>
                             <constraint firstAttribute="trailing" secondItem="cpl-7N-Lxx" secondAttribute="trailing" id="jxV-e4-fXu"/>
                             <constraint firstAttribute="trailing" secondItem="mlm-7I-BRW" secondAttribute="trailing" constant="135" id="ycl-9b-rlg"/>
                             <constraint firstItem="cpl-7N-Lxx" firstAttribute="leading" secondItem="Dqu-Oj-kXE" secondAttribute="leading" id="z6K-s4-tvo"/>
@@ -1055,7 +1068,9 @@
                     <connections>
                         <outlet property="backspaceBtn" destination="Df3-HV-5AS" id="vkK-ic-3Tk"/>
                         <outlet property="callBtn" destination="mlm-7I-BRW" id="tTP-P8-hrm"/>
+                        <outlet property="callButton" destination="mlm-7I-BRW" id="eAO-CQ-Tf4"/>
                         <outlet property="dialStringLabel" destination="O96-gt-jaf" id="LXx-XV-aKq"/>
+                        <outlet property="regestrationStatus" destination="NCi-t7-hnZ" id="wLC-a6-oMp"/>
                         <segue destination="Yzo-Zz-XrL" kind="modal" identifier="InitiateCall" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" animates="NO" id="0xB-1u-nc2"/>
                     </connections>
                 </viewController>
@@ -1740,9 +1755,9 @@
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.40000000000000002" colorSpace="deviceRGB"/>
                                 <constraints>
                                     <constraint firstItem="GJW-4s-8Yh" firstAttribute="leading" secondItem="pHP-fS-KDd" secondAttribute="leading" constant="8" id="2v9-IK-3eq"/>
-                                    <constraint firstAttribute="bottomMargin" secondItem="jui-6o-7rV" secondAttribute="bottom" constant="-8" id="7Df-b2-P7X"/>
                                     <constraint firstAttribute="trailingMargin" secondItem="jui-6o-7rV" secondAttribute="trailing" constant="-8" id="IeQ-Rj-oNe"/>
                                     <constraint firstItem="GJW-4s-8Yh" firstAttribute="top" secondItem="pHP-fS-KDd" secondAttribute="top" constant="-6" id="eff-fI-MMa"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="jui-6o-7rV" secondAttribute="bottom" constant="-8" id="iNc-DK-AlO"/>
                                     <constraint firstItem="jui-6o-7rV" firstAttribute="leading" secondItem="pHP-fS-KDd" secondAttribute="leadingMargin" constant="-8" id="kpM-vu-kcv"/>
                                     <constraint firstAttribute="trailing" secondItem="GJW-4s-8Yh" secondAttribute="trailing" constant="4" id="w4T-8W-7zd"/>
                                 </constraints>
@@ -3365,6 +3380,7 @@
         <image name="conference-avatar-white" width="116" height="123"/>
         <image name="delete-black" width="35" height="35"/>
         <image name="dialer-callButton-green" width="58" height="58"/>
+        <image name="gray-callbutton" width="58" height="58"/>
         <image name="green-check" width="58" height="58"/>
         <image name="green-phone" width="30" height="30"/>
         <image name="iPhone2Xnew.png" width="640" height="1136"/>
@@ -3392,6 +3408,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="0xB-1u-nc2"/>
-        <segue reference="PKy-V4-VLv"/>
+        <segue reference="dIf-i9-QYA"/>
     </inferredMetricsTieBreakers>
 </document>

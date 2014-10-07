@@ -18,6 +18,8 @@
 -(IBAction)numPadPressed:(id)sender;
 -(IBAction)initiateCall:(id)sender;
 -(IBAction)backspace:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *regestrationStatus;
+@property (weak, nonatomic) IBOutlet UIButton *callButton;
 
 -(NSString *)characterFromNumPadTag:(int)tag;
 
