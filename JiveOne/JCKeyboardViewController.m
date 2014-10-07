@@ -15,12 +15,14 @@
     if ([sender isKindOfClass:[UIButton class]])
     {
         UIButton *button = (UIButton *)sender;
-        NSString *typedChar = [self characterFromNumPadTag:button.tag];
+        NSString *typedChar = [self characterFromNumPadTag:(int)button.tag];
+        
+        self.outputLabel.text =  [NSString stringWithFormat:@"%@%@", self.outputLabel.text, typedChar];
         
         if (_delegate && [_delegate respondsToSelector:@selector(keyboardViewController:didTypeNumber:)])
             [_delegate keyboardViewController:self didTypeNumber:typedChar];
         
-        self.outputLabel.text =  [NSString stringWithFormat:@"%@%@", self.outputLabel.text, typedChar];
+        
     }
 }
 
