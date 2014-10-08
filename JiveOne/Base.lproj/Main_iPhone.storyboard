@@ -2594,21 +2594,21 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zof-Dr-c6i" userLabel="buildLabel" customClass="JCLogOutButton">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="55"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Build Number is" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Dh-E4-Cdo">
-                                                            <rect key="frame" x="16" y="17" width="125" height="21"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ziJ-Qr-hFf">
+                                                            <rect key="frame" x="141" y="0.0" width="42" height="21"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="125" id="NGB-Ei-2Cw"/>
-                                                                <constraint firstAttribute="height" constant="21" id="kJ8-VF-eLp"/>
+                                                                <constraint firstAttribute="width" constant="42" id="TAh-FY-0Fl"/>
+                                                                <constraint firstAttribute="height" constant="21" id="lmW-8s-YAg"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ziJ-Qr-hFf">
-                                                            <rect key="frame" x="144" y="17" width="42" height="21"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Build Number is" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Dh-E4-Cdo">
+                                                            <rect key="frame" x="57" y="0.0" width="86" height="21"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="42" id="TAh-FY-0Fl"/>
-                                                                <constraint firstAttribute="height" constant="21" id="lmW-8s-YAg"/>
+                                                                <constraint firstAttribute="width" constant="86" id="NGB-Ei-2Cw"/>
+                                                                <constraint firstAttribute="height" constant="21" id="kJ8-VF-eLp"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -2621,12 +2621,12 @@
                                                     </accessibility>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="55" id="02m-sW-j0e"/>
-                                                        <constraint firstAttribute="trailing" secondItem="ziJ-Qr-hFf" secondAttribute="trailing" constant="134" id="NvK-WM-Eg9"/>
+                                                        <constraint firstAttribute="trailing" secondItem="ziJ-Qr-hFf" secondAttribute="trailing" constant="137" id="NvK-WM-Eg9"/>
                                                         <constraint firstAttribute="width" constant="320" id="VXS-1q-kOF"/>
                                                         <constraint firstItem="ziJ-Qr-hFf" firstAttribute="top" secondItem="5Dh-E4-Cdo" secondAttribute="top" id="c5G-pk-oBc"/>
-                                                        <constraint firstAttribute="bottom" secondItem="5Dh-E4-Cdo" secondAttribute="bottom" constant="17" id="neZ-qY-e0q"/>
-                                                        <constraint firstItem="5Dh-E4-Cdo" firstAttribute="leading" secondItem="Zof-Dr-c6i" secondAttribute="leading" constant="16" id="rKt-bC-I7r"/>
-                                                        <constraint firstItem="5Dh-E4-Cdo" firstAttribute="top" secondItem="Zof-Dr-c6i" secondAttribute="top" constant="17" id="xgV-uC-wd3"/>
+                                                        <constraint firstAttribute="bottom" secondItem="5Dh-E4-Cdo" secondAttribute="bottom" constant="34" id="neZ-qY-e0q"/>
+                                                        <constraint firstItem="5Dh-E4-Cdo" firstAttribute="leading" secondItem="Zof-Dr-c6i" secondAttribute="leading" constant="57" id="rKt-bC-I7r"/>
+                                                        <constraint firstItem="5Dh-E4-Cdo" firstAttribute="top" secondItem="Zof-Dr-c6i" secondAttribute="top" id="xgV-uC-wd3"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
