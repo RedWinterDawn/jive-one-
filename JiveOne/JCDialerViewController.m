@@ -16,19 +16,21 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 
 @end
 
-
 @implementation JCDialerViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	[SipHandler sharedHandler];
-    
-    // Initialy hide the backspace button
     self.backspaceBtn.alpha = 0;
+    
+    NSString *prompt = @"Unregistered";
+    SipHandler *sipHandler = [SipHandler sharedHandler];
+    if (sipHandler.isRegistered)
+        prompt = [NSString stringWithFormat:@"Ext: %@", @"5555"];
+    
+    self.regestrationStatus.text = prompt;
 }
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     UIViewController *viewController = segue.destinationViewController;
@@ -39,7 +41,6 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
         callerViewController.delegate = self;
     }
 }
-
 
 #pragma mark - IBActions -
 
@@ -56,7 +57,18 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 
 -(IBAction)initiateCall:(id)sender
 {
-//	[[SipHandler sharedHandler] makeCall:self.dialStringLabel.text videoCall:NO contactName:[self getContactNameByNumber:self.dialStringLabel.text]];
+    SipHandler *sipHandler = [SipHandler sharedHandler];
+    if (!sipHandler.isRegistered)
+        [sipHandler connect:^(bool success, NSError *error) {
+            if (success)
+                [self performCall];
+        }];
+    else
+        [self performCall];
+}
+
+-(void)performCall
+{
     [self performSegueWithIdentifier:kJCDialerViewControllerCallerStoryboardIdentifier sender:self];
 }
 
@@ -112,9 +124,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 
 -(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController
 {
-    [self dismissViewControllerAnimated:NO completion:^{
-        
-    }];
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 @end

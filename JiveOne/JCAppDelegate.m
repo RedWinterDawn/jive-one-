@@ -116,9 +116,12 @@ int didNotify;
     [UAirship takeOff:config];
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    JCCallCardManager *callCardManager = [JCCallCardManager sharedManager];
     [center addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
     [center addObserver:self selector:@selector(didReceiveIncomingCall:) name:kJCCallCardManagerAddedIncomingCallNotification object:[JCCallCardManager sharedManager]];
     
+    // Kicks off the Sip handler.
+    [SipHandler sharedHandler];
     
     [self refreshTabBadges:NO];    
     if ([[JCAuthenticationManager sharedInstance] userAuthenticated] && [[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {
@@ -131,6 +134,11 @@ int didNotify;
     }
     
     return YES;
+}
+
+-(void)configureLogging
+{
+    
 }
 
 

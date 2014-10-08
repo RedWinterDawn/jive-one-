@@ -11,26 +11,28 @@
 #import "Lines+Custom.h"
 #import "JCLineSession.h"
 
-@interface SipHandler : NSObject <PortSIPEventDelegate>
-{
-	BOOL mSIPRegistered;
-	NSString *sipUrl;
-}
+typedef void(^ConnectionCompletionHandler)(bool success, NSError *error);
 
-@property (strong, nonatomic) PortSIPSDK *mPortSIPSDK;
-@property (strong, nonatomic) UIWindow *window;
-@property (nonatomic,retain) NSString *sipURL;
-@property NSInteger    mActiveLine;
+@interface SipHandler : NSObject
 
-+ (instancetype) sharedHandler;
-- (void)initiate;
+@property (nonatomic, strong) NSString *sipURL;
+@property (nonatomic) NSInteger mActiveLine;
+
+@property (nonatomic, readonly, getter=isRegistered) BOOL registered;
+@property (nonatomic, readonly, getter=isInitialized) BOOL initialized;
+
+-(void)connect:(ConnectionCompletionHandler)completion;
+-(void)disconnect;
+
+
+
 - (void) pressNumpadButton:(char )dtmf;
 - (JCLineSession *) makeCall:(NSString*)callee videoCall:(BOOL)videoCall contactName:(NSString *)contactName;
 - (void)answerCall;
 - (void) hangUpCallWithSession:(long)sessionId;
 - (void) holdCall;
 //- (void) unholdCall;
-- (void) hangUpCall;
+//- (void) hangUpCall;
 - (void) referCall:(NSString*)referTo;
 - (void) muteCall:(BOOL)mute;
 - (void) setLoudspeakerStatus:(BOOL)enable;
@@ -38,5 +40,12 @@
 - (NSArray *) findAllActiveLines;
 
 //- (void) switchSessionLine;
+
+@end
+
+
+@interface SipHandler (Singleton)
+
++ (instancetype) sharedHandler;
 
 @end

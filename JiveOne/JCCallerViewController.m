@@ -39,7 +39,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     if (dialString)
         [[JCCallCardManager sharedManager] dialNumber:dialString type:JCCallCardDialSingle completion:^(bool success, NSDictionary *callInfo) {
             if (!success)
-                [self closeCallerViewController];
+                [self performSelector:@selector(closeCallerViewController) withObject:nil afterDelay:0];
         }];
 	
     
