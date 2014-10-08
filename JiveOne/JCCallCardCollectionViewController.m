@@ -12,13 +12,16 @@
 
 @implementation JCCallCardCollectionViewController
 
-static NSString * const currenctCallCardCellReuseIdentifier = @"CurrentCallCardCell";
-static NSString * const incommingCallCardCellReuseIdentifier = @"IncommingCallCardCell";
+static NSString *const currenctCallCardCellReuseIdentifier = @"CurrentCallCardCell";
+static NSString *const incomingCallCardCellReuseIdentifier = @"IncomingCallCardCell";
 
 - (void)viewDidLoad
 {
+    [self.collectionView registerNib:[UINib nibWithNibName:@"CurrentCallViewCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:currenctCallCardCellReuseIdentifier];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"IncomingCallViewCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:incomingCallCardCellReuseIdentifier];
+    
+    
     [super viewDidLoad];
-    self.collectionView.backgroundColor = [UIColor clearColor];
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     JCCallCardManager *callCardManager = [JCCallCardManager sharedManager];
@@ -29,19 +32,10 @@ static NSString * const incommingCallCardCellReuseIdentifier = @"IncommingCallCa
     [center addObserver:self selector:@selector(callCardRemovedNotification:) name:kJCCallCardManagerRemoveCurrentCallNotification object:callCardManager];
 }
 
--(void)viewWillLayoutSubviews
-{
-    [super viewWillLayoutSubviews];
-    [self.collectionViewLayout invalidateLayout];
-    [self.collectionView setNeedsUpdateConstraints];
-}
-
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
-
 
 -(void)addedCallCardNotification:(NSNotification *)notification
 {
@@ -113,45 +107,14 @@ static NSString * const incommingCallCardCellReuseIdentifier = @"IncommingCallCa
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    JCCallCardCollectionViewCell *cell = nil;
+    JCCallCardCollectionViewCell *cell;
     JCCallCard *callCard = [self callCardForIndexPath:indexPath];
     if (callCard.isIncoming)
-        cell = (JCCallCardCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:incommingCallCardCellReuseIdentifier forIndexPath:indexPath];
+        cell = (JCCallCardCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:incomingCallCardCellReuseIdentifier forIndexPath:indexPath];
     else
         cell = (JCCallCardCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:currenctCallCardCellReuseIdentifier forIndexPath:indexPath];
     cell.callCard = callCard;
     return cell;
 }
-
-#pragma mark <UICollectionViewDelegate>
-
-/*
-// Uncomment this method to specify if the specified item should be highlighted during tracking
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-	return YES;
-}
-*/
-
-/*
-// Uncomment this method to specify if the specified item should be selected
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-*/
-
-/*
-// Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
-	return NO;
-}
-
-- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	return NO;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	
-}
-*/
 
 @end

@@ -12,6 +12,8 @@
 #define HOLD_ANIMATION_DURATION 0.5f
 #define HOLD_ANIMATION_ALPHA 0.5f
 
+NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
+
 @interface JCCallCardCollectionViewCell()
 {
     NSTimer *_timer;
@@ -110,6 +112,17 @@
     [self setNeedsLayout];
 }
 
+/**
+ * Due to an iOS 7 bug under the iOS 8 SDK, it appear that the content's view bounds is not updated when the cell's 
+ * bounds are changed via the Autolayout feature, causing some odd behavior when running the app in iOS7. Here for 
+ * backwards compatibility with iOS 7. - Robert Barclay, Oct 2014.
+ */
+- (void)setBounds:(CGRect)bounds
+{
+    [super setBounds:bounds];
+    self.contentView.frame = bounds;
+}
+
 #pragma mark - IBActions -
 
 -(IBAction)hangup:(id)sender
@@ -127,8 +140,6 @@
     [_callCard answerCall];
 }
 
-
-
 #pragma mark - Private -
 
 -(void)timerUpdate
@@ -136,7 +147,7 @@
     int secondsElapsed = -[_callCard.started timeIntervalSinceNow];
     int seconds = secondsElapsed % 60;
     int minutes = secondsElapsed / 60;
-    self.elapsedTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d", minutes, seconds];
+    self.elapsedTimeLabel.text = [NSString stringWithFormat:kJCCallCardCollectionViewCellTimerFormat, minutes, seconds];
 }
 
 -(void)holdTimerUpdate
@@ -144,7 +155,7 @@
     int secondsElapsed = -[_callCard.holdStarted timeIntervalSinceNow];
     int seconds = secondsElapsed % 60;
     int minutes = secondsElapsed / 60;
-    self.holdElapsedTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d", minutes, seconds];
+    self.holdElapsedTimeLabel.text = [NSString stringWithFormat:kJCCallCardCollectionViewCellTimerFormat, minutes, seconds];
 }
 
 -(void)showHoldStateAnimated:(BOOL)animated

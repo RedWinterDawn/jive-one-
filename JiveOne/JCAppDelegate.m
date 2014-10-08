@@ -814,15 +814,11 @@ int didNotify;
     
     [self startRingtone];
     
-    
     _presentedCallerViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CallerViewController"];
     _presentedCallerViewController.delegate = self;
     _presentedCallerViewController.callOptionsHidden = true;
     [_presentedCallerViewController.view setNeedsUpdateConstraints];
-    
-    [self.window.rootViewController presentViewController:_presentedCallerViewController animated:NO completion:^{
-        
-    }];
+    [self.window.rootViewController presentViewController:_presentedCallerViewController animated:NO completion:NULL];
 }
 
 /**
