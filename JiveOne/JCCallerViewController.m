@@ -65,7 +65,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 -(void)callHungUp:(NSNotification *)notification
 {
     JCCallCardManager *callManager = (JCCallCardManager *)notification.object;
-    NSUInteger count = callManager.totalCalls;
+    NSUInteger count = callManager.calls.count;
     if(count == 0)
         [self closeCallerViewController];
     else if (count == 1)
@@ -176,16 +176,6 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         if (success)
             [self showTransferSuccess];
     }];
-}
-
-- (NSString *)getContactNameByNumber:(NSString *)number
-{
-	Lines *contact = [Lines MR_findFirstByAttribute:@"externsionNumber" withValue:number];
-	if (contact) {
-		return contact.displayName;
-	}
-	
-	return nil;
 }
 
 #pragma mark - Private - 

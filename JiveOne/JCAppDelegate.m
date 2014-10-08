@@ -120,9 +120,6 @@ int didNotify;
     [center addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
     [center addObserver:self selector:@selector(didReceiveIncomingCall:) name:kJCCallCardManagerAddedIncomingCallNotification object:[JCCallCardManager sharedManager]];
     
-    // Kicks off the Sip handler.
-    [SipHandler sharedHandler];
-    
     [self refreshTabBadges:NO];    
     if ([[JCAuthenticationManager sharedInstance] userAuthenticated] && [[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {
         [self.window setRootViewController:self.tabBarViewController];

@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <PortSIPLib/PortSIPSDK.h>
-#import "Lines+Custom.h"
 #import "JCLineSession.h"
 
 typedef void(^ConnectionCompletionHandler)(bool success, NSError *error);
+
+extern NSString *const kSipHandlerRegisteredSelectorKey;
 
 @interface SipHandler : NSObject
 
@@ -21,10 +21,11 @@ typedef void(^ConnectionCompletionHandler)(bool success, NSError *error);
 @property (nonatomic, readonly, getter=isRegistered) BOOL registered;
 @property (nonatomic, readonly, getter=isInitialized) BOOL initialized;
 
+// "Registers" the application to the SIP service via the Port SIP SDK.
 -(void)connect:(ConnectionCompletionHandler)completion;
+
+// "Deregisters" the application from the SIP service.
 -(void)disconnect;
-
-
 
 - (void) pressNumpadButton:(char )dtmf;
 - (JCLineSession *) makeCall:(NSString*)callee videoCall:(BOOL)videoCall contactName:(NSString *)contactName;

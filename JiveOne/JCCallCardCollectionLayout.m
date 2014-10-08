@@ -53,7 +53,7 @@ static NSString * const JSCallCardLayoutCellKind = @"CallCardCell";
 -(CGFloat)cellHeight
 {
     CGFloat height = 180.0f;
-    NSUInteger calls = [JCCallCardManager sharedManager].totalCalls;
+    NSUInteger calls = [JCCallCardManager sharedManager].calls.count;
     if (calls == 1)
         return self.collectionView.bounds.size.height;
     

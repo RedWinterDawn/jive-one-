@@ -7,21 +7,22 @@
 //
 
 #import "SipHandler.h"
-#import "JCLineSession.h"
+
+#import <PortSIPLib/PortSIPSDK.h>
+
 #import "LineConfiguration+Custom.h"
+#import "Lines+Custom.h"
 #import "PBX+Custom.h"
 #import "JCCallCardManager.h"
-
-NSString *const kSipHandlerServerAgentname = @"Jive iOS Client";
-
-NSString *const kSipHandlerFetchLineConfigurationErrorMessage = @"Unable to fetch the line configuration";
-NSString *const kSipHandlerFetchPBXErrorMessage = @"Unable to fetch the line configuration";
-
-NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 #define MAX_LINES 8
 #define ALERT_TAG_REFER 100
 #define OUTBOUND_SIP_SERVER_PORT 5060
+
+NSString *const kSipHandlerServerAgentname = @"Jive iOS Client";
+NSString *const kSipHandlerFetchLineConfigurationErrorMessage = @"Unable to fetch the line configuration";
+NSString *const kSipHandlerFetchPBXErrorMessage = @"Unable to fetch the line configuration";
+NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 @interface SipHandler() <PortSIPEventDelegate>
 {
@@ -68,7 +69,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     NSError *error;
     bool success;
     @try {
-        [self logInUser];
+        [self login];
         _initialized = true;
         success = true;
     }
@@ -85,7 +86,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 /**
  *  Sets the User info from Core Data into the Port Sip SDK.
  */
--(void)logInUser
+-(void)login
 {
     LineConfiguration *config = [LineConfiguration MR_findFirst];
     if (!config)
@@ -96,12 +97,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         [NSException raise:NSInvalidArgumentException format:kSipHandlerFetchPBXErrorMessage];
     
     NSString *kSipUserName  = config.sipUsername;
-    NSString *kDisplayName  = config.display;
-    NSString *kSipPassword  = config.sipPassword;
     NSString *kSIPServer    = ([pbx.v5 boolValue]) ? config.outboundProxy : config.registrationHost;
-    NSString *kProxy        = config.outboundProxy;
     
-    int kSIPServerPort = 5060;
+    _sipURL = [[NSString alloc] initWithFormat:@"sip:%@:%@", kSipUserName, kSIPServer];
     
     // Initialized the SIP SDK
     int ret = [_mPortSIPSDK initialize:TRANSPORT_UDP
@@ -115,22 +113,19 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     if(ret != 0)
         [NSException raise:NSInvalidArgumentException format:@"initializeSDK failure ErrorCode = %d",ret];
     
-    int localPort = 10000 + arc4random()%1000;
-    NSString *localIPaddress = @"0.0.0.0";          //Auto select IP address
-    
     ret = [_mPortSIPSDK setUser:kSipUserName
-                        displayName:kDisplayName
-                           authName:kSipUserName
-                           password:kSipPassword
-                            localIP:localIPaddress
-                       localSIPPort:localPort
-                         userDomain:@""
-                          SIPServer:kSIPServer
-                      SIPServerPort:kSIPServerPort
-                         STUNServer:@""
-                     STUNServerPort:0
-                     outboundServer:kProxy
-                 outboundServerPort:kSIPServerPort];
+                    displayName:config.display
+                       authName:kSipUserName
+                       password:config.sipPassword
+                        localIP:@"0.0.0.0"                      // Auto select IP address
+                   localSIPPort:(10000 + arc4random()%1000)     // Generate a random port in the 10,000 range
+                     userDomain:@""
+                      SIPServer:kSIPServer
+                  SIPServerPort:OUTBOUND_SIP_SERVER_PORT
+                     STUNServer:@""
+                 STUNServerPort:0
+                 outboundServer:config.outboundProxy
+             outboundServerPort:OUTBOUND_SIP_SERVER_PORT];
     
     if(ret != 0)
         [NSException raise:NSInvalidArgumentException format:@"set user failure ErrorCode = %d",ret];
@@ -141,9 +136,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     else if (ret == ECoreWrongLicenseKey)
         [NSException raise:NSInvalidArgumentException format:@"The wrong license key was detected, please check with sales@portsip.com or support@portsip.com"];
     
-    //    [_mPortSIPSDK addAudioCodec:AUDIOCODEC_PCMA];
+    //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_PCMA];
     [_mPortSIPSDK addAudioCodec:AUDIOCODEC_PCMU];
-    //    [_mPortSIPSDK addAudioCodec:AUDIOCODEC_SPEEX];
+    //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_SPEEX];
     [_mPortSIPSDK addAudioCodec:AUDIOCODEC_G729];
     [_mPortSIPSDK addAudioCodec:AUDIOCODEC_G722];
     
@@ -170,8 +165,6 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     
     // Try to register the default identity
     [_mPortSIPSDK registerServer:120 retryTimes:3];
-    
-    _sipURL = [[NSString alloc] initWithFormat:@"sip:%@:%@",kSipUserName,kSIPServer];
 }
 
 -(void)disconnect

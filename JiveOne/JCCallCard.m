@@ -25,7 +25,7 @@
     
     [self willChangeValueForKey:@"hold"];
     
-    [[JCCallCardManager sharedManager] placeCallOnHold:self];
+    [[JCCallCardManager sharedManager] toggleCallHold:self];
     
     self.holdStarted = [NSDate date];
     
