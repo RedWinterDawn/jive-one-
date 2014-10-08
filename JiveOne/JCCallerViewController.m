@@ -24,7 +24,7 @@
 #import "JCKeyboardViewController.h"                // Numberpad
 #import "JCTransferConfirmationViewController.h"    // Transfer confimation view controller
 
-#define CALL_OPTIONS_ANIMATION_DURATION 0.3
+#define CALL_OPTIONS_ANIMATION_DURATION 0.5
 #define TRANSFER_ANIMATION_DURATION 0.3
 #define KEYBOARD_ANIMATION_DURATION 0.3
 
@@ -219,13 +219,17 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
  */
 -(void)showCallOptionsAnimated:(bool)animated
 {
-    _callOptionsViewOriginYConstraint.constant = _defaultCallOptionViewConstraint;
-    [self.view setNeedsUpdateConstraints];
     __unsafe_unretained UIView *weakView = self.view;
-    [UIView animateWithDuration:animated ? _callOptionTransitionAnimationDuration : 0
-                     animations:^{
-                         [weakView layoutIfNeeded];
-                     }];
+    _callOptionsViewOriginYConstraint.constant = _defaultCallOptionViewConstraint;
+    [weakView setNeedsUpdateConstraints];
+    [UIView transitionWithView:self.view
+                      duration:_callOptionTransitionAnimationDuration
+                       options:UIViewAnimationOptionTransitionFlipFromRight
+                    animations:^{
+                        [weakView layoutIfNeeded];
+                    } completion:^(BOOL finished) {
+                        
+                    }];
 }
 
 /**
