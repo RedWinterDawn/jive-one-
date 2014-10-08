@@ -1169,7 +1169,7 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="248" horizontalCompressionResistancePriority="249" verticalCompressionResistancePriority="253" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="74r-RB-XRO" customClass="JCRoundedButton">
+                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="248" horizontalCompressionResistancePriority="249" verticalCompressionResistancePriority="253" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="74r-RB-XRO" userLabel="Merge Button" customClass="JCRoundedButton">
                                         <rect key="frame" x="-78" y="114" width="60" height="60"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
                                         <constraints>
@@ -1182,7 +1182,6 @@
                                         </state>
                                         <state key="selected" image="blue-merge"/>
                                         <connections>
-                                            <action selector="blindTransfer:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="7RN-IC-tVQ"/>
                                             <action selector="mergeCall:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="VFr-f2-PEf"/>
                                         </connections>
                                     </button>
@@ -1196,7 +1195,7 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="248" horizontalCompressionResistancePriority="249" verticalCompressionResistancePriority="253" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h6q-Cp-RHf" customClass="JCRoundedButton">
+                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="248" horizontalCompressionResistancePriority="249" verticalCompressionResistancePriority="253" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h6q-Cp-RHf" userLabel="Swap Button" customClass="JCRoundedButton">
                                         <rect key="frame" x="339" y="114" width="60" height="60"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
                                         <constraints>
@@ -1209,7 +1208,7 @@
                                         </state>
                                         <state key="selected" image="blue-switch"/>
                                         <connections>
-                                            <action selector="blindTransfer:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="cxU-wd-J8I"/>
+                                            <action selector="swapCall:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="ssN-Uw-iJq"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Swap Calls" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9H2-tC-F7q">

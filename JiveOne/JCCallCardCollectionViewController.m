@@ -32,6 +32,12 @@ static NSString *const incomingCallCardCellReuseIdentifier = @"IncomingCallCardC
     [center addObserver:self selector:@selector(callCardRemovedNotification:) name:kJCCallCardManagerRemoveCurrentCallNotification object:callCardManager];
 }
 
+-(void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    [self.collectionViewLayout invalidateLayout];
+}
+
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
