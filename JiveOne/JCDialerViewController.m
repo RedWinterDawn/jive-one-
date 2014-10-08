@@ -13,6 +13,9 @@
 NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCall";
 
 @interface JCDialerViewController () <JCCallerViewControllerDelegate>
+{
+    SipHandler *_sipHandler;
+}
 
 @end
 
@@ -23,12 +26,9 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     [super viewDidLoad];
     self.backspaceBtn.alpha = 0;
     
-    NSString *prompt = @"Unregistered";
-    SipHandler *sipHandler = [SipHandler sharedHandler];
-    if (sipHandler.isRegistered)
-        prompt = [NSString stringWithFormat:@"Ext: %@", @"5555"];
-    
-    self.regestrationStatus.text = prompt;
+    _sipHandler = [SipHandler sharedHandler];
+    [_sipHandler addObserver:self forKeyPath:kSipHandlerRegisteredSelectorKey options:NSKeyValueObservingOptionNew context:NULL];
+    [self updateResgistrationStatus];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -42,6 +42,17 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     }
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:kSipHandlerRegisteredSelectorKey])
+        [self updateResgistrationStatus];
+}
+
+- (void)dealloc
+{
+    [_sipHandler removeObserver:self forKeyPath:kSipHandlerRegisteredSelectorKey];
+}
+
 #pragma mark - IBActions -
 
 -(IBAction)numPadPressed:(id)sender
@@ -51,25 +62,19 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
         UIButton *button = (UIButton *)sender;
 		NSString *dtmf = [self characterFromNumPadTag:(int)button.tag];
         [self.dialStringLabel append:dtmf];
-		[[SipHandler sharedHandler] pressNumpadButton:*(char*)[dtmf UTF8String]];
+		[_sipHandler pressNumpadButton:*(char*)[dtmf UTF8String]];
     }
 }
 
 -(IBAction)initiateCall:(id)sender
 {
-    SipHandler *sipHandler = [SipHandler sharedHandler];
-    if (!sipHandler.isRegistered)
-        [sipHandler connect:^(bool success, NSError *error) {
+    if (!_sipHandler.isRegistered)
+        [_sipHandler connect:^(bool success, NSError *error) {
             if (success)
-                [self performCall];
+                [self performSegueWithIdentifier:kJCDialerViewControllerCallerStoryboardIdentifier sender:self];
         }];
     else
-        [self performCall];
-}
-
--(void)performCall
-{
-    [self performSegueWithIdentifier:kJCDialerViewControllerCallerStoryboardIdentifier sender:self];
+        [self performSegueWithIdentifier:kJCDialerViewControllerCallerStoryboardIdentifier sender:self];
 }
 
 -(IBAction)backspace:(id)sender
@@ -83,6 +88,20 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 }
 
 #pragma mark - Private -
+
+-(void)updateResgistrationStatus
+{
+    NSString *prompt = @"Unregistered";
+    if (_sipHandler.isRegistered)
+    {
+        _callBtn.selected = false;
+        prompt = [NSString stringWithFormat:@"Ext: %@", @"5555"];
+    }
+    else
+        _callBtn.selected = true;
+    
+    self.regestrationStatus.text = prompt;
+}
 
 -(NSString *)characterFromNumPadTag:(int)tag
 {

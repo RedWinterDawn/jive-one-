@@ -17,11 +17,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *regestrationStatus;
 @property (weak, nonatomic) IBOutlet UIButton *callButton;
 
-
 -(IBAction)numPadPressed:(id)sender;
 -(IBAction)initiateCall:(id)sender;
 -(IBAction)backspace:(id)sender;
-
 
 -(NSString *)characterFromNumPadTag:(int)tag;
 
