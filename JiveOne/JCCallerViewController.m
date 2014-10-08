@@ -37,7 +37,10 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
     NSString *dialString = self.dialString;
     if (dialString)
-        [[JCCallCardManager sharedManager] dialNumber:dialString];
+        [[JCCallCardManager sharedManager] dialNumber:dialString type:JCCallCardDialSingle completion:^(bool success, NSDictionary *callInfo) {
+            if (!success)
+                [self closeCallerViewController];
+        }];
 	
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
