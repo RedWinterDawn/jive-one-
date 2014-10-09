@@ -9,6 +9,7 @@
 #import "SipHandler.h"
 
 #import <PortSIPLib/PortSIPSDK.h>
+#import <AFNetworking/AFNetworkReachabilityManager.h>
 
 #import "LineConfiguration+Custom.h"
 #import "Lines+Custom.h"
@@ -28,6 +29,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 {
     PortSIPSDK *_mPortSIPSDK;
     ConnectionCompletionHandler _connectionCompletionHandler;
+    AFNetworkReachabilityStatus _previousNetworkStatus;
 }
 
 @property (nonatomic) NSMutableArray *lineSessions;
@@ -53,10 +55,17 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         _mPortSIPSDK = [[PortSIPSDK alloc] init];
         _mPortSIPSDK.delegate = self;
         
+        // Register to listen for AFNetworkReachability Changes.
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self selector:@selector(networkConnectivityChanged:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
+        _previousNetworkStatus = [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
+        
         [self connect:NULL];
     }
     return self;
 }
+
+#pragma mark - Device Registration -
 
 -(void)connect:(ConnectionCompletionHandler)completionHandler;
 {
@@ -66,19 +75,20 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     if (_registered)
         [self disconnect];
     
-    NSError *error;
-    bool success;
+    if (![AFNetworkReachabilityManager sharedManager].isReachable)
+        return;
+    
     @try {
+        NSLog(@"Connecting");
+        
         [self login];
         _initialized = true;
-        success = true;
     }
     @catch (NSException *exception) {
-        error = [NSError errorWithDomain:exception.reason code:0 userInfo:nil];
+        NSError *error = [NSError errorWithDomain:exception.reason code:0 userInfo:nil];
         if (completionHandler != NULL)
-            completionHandler(success, error);
-        
-        if (error)
+            completionHandler(false, error);
+        else
             NSLog(@"%@", error);
     }
 }
@@ -177,6 +187,70 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         _registered = NO;
         _initialized = NO;
     }
+}
+
+#pragma mark Registration Callback
+
+- (void)onRegisterSuccess:(char*) statusText statusCode:(int)statusCode
+{
+    [self willChangeValueForKey:kSipHandlerRegisteredSelectorKey];
+    _registered = TRUE;
+    if (_connectionCompletionHandler != NULL)
+        _connectionCompletionHandler(true, nil);
+    [self didChangeValueForKey:kSipHandlerRegisteredSelectorKey];
+};
+
+- (void)onRegisterFailure:(char*) statusText statusCode:(int)statusCode
+{
+    [self willChangeValueForKey:kSipHandlerRegisteredSelectorKey];
+    _registered = FALSE;
+    NSString *errorMessage = [NSString stringWithFormat:@"%@ code:(%i)", [NSString stringWithUTF8String:statusText], statusCode];
+    if (_connectionCompletionHandler != NULL)
+        _connectionCompletionHandler(false, [NSError errorWithDomain:errorMessage code:0 userInfo:nil]);
+    [self didChangeValueForKey:kSipHandlerRegisteredSelectorKey];
+};
+
+#pragma mark NetworkConnectivity
+
+-(void)networkConnectivityChanged:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    AFNetworkReachabilityStatus status = (AFNetworkReachabilityStatus)((NSNumber *)[userInfo valueForKey:AFNetworkingReachabilityNotificationStatusItem]).integerValue;
+    NSLog(@"AFNetworking status change");
+    
+    if (_previousNetworkStatus == AFNetworkReachabilityStatusUnknown)
+        _previousNetworkStatus = status;
+    
+    switch (status)
+    {
+        case AFNetworkReachabilityStatusNotReachable:
+            break;
+        case AFNetworkReachabilityStatusReachableViaWiFi: {
+            
+            // If we are not transitioning from cellular to wifi, reconnect
+            if (_previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWWAN && _previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWiFi)
+            {
+                JCLineSession *lineSession = [self findLineWithSessionState];
+                if (lineSession)
+                {
+                    [self hangUpCallWithSession:lineSession.mSessionId];
+                }
+                
+                [self connect:NULL];
+            }
+            
+            break;
+        }
+        case AFNetworkReachabilityStatusReachableViaWWAN:
+            
+            
+            break;
+            
+        default:
+            [self connect:NULL];
+            break;
+    }
+    _previousNetworkStatus = status;
 }
 
 //#pragma mark - Registration Delegates
@@ -549,26 +623,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 //	[tabBarController presentViewController:selectLineView animated:YES completion:nil];
 //}
 
-#pragma mark Registration Callback
 
-- (void)onRegisterSuccess:(char*) statusText statusCode:(int)statusCode
-{
-    [self willChangeValueForKey:kSipHandlerRegisteredSelectorKey];
-    _registered = TRUE;
-    if (_connectionCompletionHandler != NULL)
-        _connectionCompletionHandler(true, nil);
-    [self didChangeValueForKey:kSipHandlerRegisteredSelectorKey];
-};
-
-- (void)onRegisterFailure:(char*) statusText statusCode:(int)statusCode
-{
-	[self willChangeValueForKey:kSipHandlerRegisteredSelectorKey];
-    _registered = FALSE;
-    NSString *errorMessage = [NSString stringWithFormat:@"%@ code:(%i)", [NSString stringWithUTF8String:statusText], statusCode];
-    if (_connectionCompletionHandler != NULL)
-        _connectionCompletionHandler(false, [NSError errorWithDomain:errorMessage code:0 userInfo:nil]);
-    [self didChangeValueForKey:kSipHandlerRegisteredSelectorKey];
-};
 
 
 #pragma mark - Call Events

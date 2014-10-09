@@ -690,43 +690,7 @@ int didNotify;
     [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
 }
 
-//#pragma mark - Reachability
-- (void)didChangeConnection:(NSNotification *)notification
-{
-//    LOG_Info();
-//    
-//    AFNetworkReachabilityStatus status = [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
-//    BOOL appIsActive = [UIApplication sharedApplication].applicationState == UIApplicationStateActive;
-//    switch (status) {
-//        case AFNetworkReachabilityStatusNotReachable: {
-//            NSLog(@"No Internet Connection");
-//            break;
-//        }
-//        case AFNetworkReachabilityStatusReachableViaWiFi:
-//            NSLog(@"WIFI");
-//            //send any chat messages in the queue
-//            [JCMessagesViewController sendOfflineMessagesQueue:[JCRESTClient sharedClient]];
-//            //try to initialize socket connections
-//            LogMessage(@"socket", 4, @"Will Call requestSession");
-//
-//            [self startSocket:!appIsActive];
-//            break;
-//        case AFNetworkReachabilityStatusReachableViaWWAN:
-//            NSLog(@"3G");
-//            //send any chat messages in the queue
-//            [JCMessagesViewController sendOfflineMessagesQueue:[JCRESTClient sharedClient]];
-//            //try to initialize socket connections
-//            LogMessage(@"socket", 4, @"Will Call requestSession");
-//
-//            [self startSocket:!appIsActive];
-//            break;
-//        default:
-//            NSLog(@"Unkown network status");
-//            break;
-//            
-//            [[AFNetworkReachabilityManager sharedManager] startMonitoring];
-//    }
-}
+
 
 -(BOOL)seenTutorial
 {
@@ -798,6 +762,49 @@ int didNotify;
     }
     
     [self.window makeKeyAndVisible];
+}
+
+//#pragma mark - Reachability
+- (void)didChangeConnection:(NSNotification *)notification
+{
+    LOG_Info();
+    
+    AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];
+    AFNetworkReachabilityStatus status = manager.networkReachabilityStatus;
+    switch (status)
+    {
+        case AFNetworkReachabilityStatusNotReachable: {
+            NSLog(@"No Internet Connection");
+            
+            break;
+        }
+        case AFNetworkReachabilityStatusReachableViaWiFi: {
+            NSLog(@"WIFI");
+            
+            // TRY TO RECONNECT
+            
+            //            //send any chat messages in the queue
+            //            [JCMessagesViewController sendOfflineMessagesQueue:[JCRESTClient sharedClient]];
+            //            //try to initialize socket connections
+            //            LogMessage(@"socket", 4, @"Will Call requestSession");
+            //
+            //            [self startSocket:!appIsActive];
+            break;
+        }
+        case AFNetworkReachabilityStatusReachableViaWWAN: {
+            NSLog(@"3G");
+            //            //send any chat messages in the queue
+            //            [JCMessagesViewController sendOfflineMessagesQueue:[JCRESTClient sharedClient]];
+            //            //try to initialize socket connections
+            //            LogMessage(@"socket", 4, @"Will Call requestSession");
+            //
+            //            [self startSocket:!appIsActive];
+            break;
+        }
+        default:
+            NSLog(@"Unkown network status");
+            break;
+    }
 }
 
 #pragma mark - Incoming Calls -
