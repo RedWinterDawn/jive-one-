@@ -8,6 +8,7 @@
 
 #import "JCCallCardCollectionViewCell.h"
 #import "JCCallCardManager.h"
+#import "NSString+IsNumeric.h"
 
 #define HOLD_ANIMATION_DURATION 0.5f
 #define HOLD_ANIMATION_ALPHA 0.5f
@@ -49,7 +50,11 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
     [super layoutSubviews];
     
     self.callerIdLabel.text             = _callCard.callerId;
-    self.dialedNumberLabel.dialString   = _callCard.dialNumber;
+    NSString *dialNumber = _callCard.dialNumber;
+    if (dialNumber.isNumeric)
+        self.dialedNumberLabel.dialString = dialNumber;
+    else
+        self.dialedNumberLabel.text = dialNumber;
     self.holdCallButton.selected        = _callCard.hold;
 }
 

@@ -63,7 +63,8 @@
 -(void)setState:(JCCallOptionViewState)state animated:(bool)animated
 {
     _state = state;
-    [self changeState:animated];
+    if (self.superview)
+        [self changeState:animated];
 }
 
 -(void)changeState:(bool)animated

@@ -15,27 +15,34 @@
 static NSString *const currenctCallCardCellReuseIdentifier = @"CurrentCallCardCell";
 static NSString *const incomingCallCardCellReuseIdentifier = @"IncomingCallCardCell";
 
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        JCCallCardManager *callCardManager = [JCCallCardManager sharedManager];
+        
+        [center addObserver:self selector:@selector(addedCallCardNotification:) name:kJCCallCardManagerAddedIncomingCallNotification object:callCardManager];
+        [center addObserver:self selector:@selector(callCardRemovedNotification:) name:kJCCallCardManagerRemoveIncomingCallNotification object:callCardManager];
+        [center addObserver:self selector:@selector(addedCallCardNotification:) name:kJCCallCardManagerAddedCurrentCallNotification object:callCardManager];
+        [center addObserver:self selector:@selector(callCardRemovedNotification:) name:kJCCallCardManagerRemoveCurrentCallNotification object:callCardManager];
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
-    [self.collectionView registerNib:[UINib nibWithNibName:@"CurrentCallViewCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:currenctCallCardCellReuseIdentifier];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"IncomingCallViewCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:incomingCallCardCellReuseIdentifier];
-    
-    
     [super viewDidLoad];
     
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    JCCallCardManager *callCardManager = [JCCallCardManager sharedManager];
-    
-    [center addObserver:self selector:@selector(addedCallCardNotification:) name:kJCCallCardManagerAddedIncomingCallNotification object:callCardManager];
-    [center addObserver:self selector:@selector(callCardRemovedNotification:) name:kJCCallCardManagerRemoveIncomingCallNotification object:callCardManager];
-    [center addObserver:self selector:@selector(addedCallCardNotification:) name:kJCCallCardManagerAddedCurrentCallNotification object:callCardManager];
-    [center addObserver:self selector:@selector(callCardRemovedNotification:) name:kJCCallCardManagerRemoveCurrentCallNotification object:callCardManager];
+    NSBundle *bundle = [NSBundle mainBundle];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"CurrentCallViewCell" bundle:bundle] forCellWithReuseIdentifier:currenctCallCardCellReuseIdentifier];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"IncomingCallViewCell" bundle:bundle] forCellWithReuseIdentifier:incomingCallCardCellReuseIdentifier];
 }
 
 -(void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
-    [self.collectionViewLayout invalidateLayout];
+    [self.collectionViewLayout performSelector:@selector(invalidateLayout) withObject:nil afterDelay:0];
 }
 
 -(void)dealloc

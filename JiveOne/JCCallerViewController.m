@@ -222,11 +222,12 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     __unsafe_unretained UIView *weakView = self.view;
     _callOptionsViewOriginYConstraint.constant = _defaultCallOptionViewConstraint;
     [weakView setNeedsUpdateConstraints];
+    [weakView layoutIfNeeded];
     [UIView transitionWithView:self.view
                       duration:_callOptionTransitionAnimationDuration
                        options:UIViewAnimationOptionTransitionFlipFromRight
                     animations:^{
-                        [weakView layoutIfNeeded];
+                        
                     } completion:^(BOOL finished) {
                         
                     }];
