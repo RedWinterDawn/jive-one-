@@ -1022,10 +1022,10 @@
                                 </connections>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mlm-7I-BRW">
-                                <rect key="frame" x="135" y="356" width="50" height="50"/>
+                                <rect key="frame" x="130" y="399" width="60" height="60"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="U1i-9c-oJb"/>
-                                    <constraint firstAttribute="width" constant="50" id="dwc-BZ-y8T"/>
+                                    <constraint firstAttribute="height" constant="60" id="U1i-9c-oJb"/>
+                                    <constraint firstAttribute="width" constant="60" id="dwc-BZ-y8T"/>
                                 </constraints>
                                 <state key="normal" image="dialer-callButton-green">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -1039,13 +1039,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="O96-gt-jaf" firstAttribute="top" secondItem="Dqu-Oj-kXE" secondAttribute="top" constant="65" id="9R7-ep-UEj"/>
-                            <constraint firstItem="mlm-7I-BRW" firstAttribute="top" secondItem="cpl-7N-Lxx" secondAttribute="bottom" constant="4" id="9uX-jD-BzK"/>
-                            <constraint firstItem="mlm-7I-BRW" firstAttribute="leading" secondItem="Dqu-Oj-kXE" secondAttribute="leading" constant="135" id="Qa0-Ah-UW3"/>
+                            <constraint firstItem="mlm-7I-BRW" firstAttribute="top" secondItem="cpl-7N-Lxx" secondAttribute="bottom" constant="47" id="9uX-jD-BzK"/>
+                            <constraint firstItem="mlm-7I-BRW" firstAttribute="leading" secondItem="Dqu-Oj-kXE" secondAttribute="leading" constant="130" id="Qa0-Ah-UW3"/>
                             <constraint firstItem="O96-gt-jaf" firstAttribute="leading" secondItem="Dqu-Oj-kXE" secondAttribute="leading" constant="40" id="Whw-uq-L8W"/>
                             <constraint firstAttribute="trailing" secondItem="O96-gt-jaf" secondAttribute="trailing" constant="38" id="c1J-Ch-br0"/>
                             <constraint firstItem="O96-gt-jaf" firstAttribute="top" secondItem="cpl-7N-Lxx" secondAttribute="top" constant="-49" id="ecI-2w-vYd"/>
                             <constraint firstAttribute="trailing" secondItem="cpl-7N-Lxx" secondAttribute="trailing" id="jxV-e4-fXu"/>
-                            <constraint firstAttribute="trailing" secondItem="mlm-7I-BRW" secondAttribute="trailing" constant="135" id="ycl-9b-rlg"/>
+                            <constraint firstAttribute="trailing" secondItem="mlm-7I-BRW" secondAttribute="trailing" constant="130" id="ycl-9b-rlg"/>
                             <constraint firstItem="cpl-7N-Lxx" firstAttribute="leading" secondItem="Dqu-Oj-kXE" secondAttribute="leading" id="z6K-s4-tvo"/>
                         </constraints>
                     </view>
