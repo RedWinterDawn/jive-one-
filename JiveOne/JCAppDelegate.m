@@ -817,8 +817,9 @@ int didNotify;
     _presentedCallerViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CallerViewController"];
     _presentedCallerViewController.delegate = self;
     _presentedCallerViewController.callOptionsHidden = true;
-    [_presentedCallerViewController.view setNeedsUpdateConstraints];
-    [self.window.rootViewController presentViewController:_presentedCallerViewController animated:NO completion:NULL];
+    _presentedCallerViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    
+    [self.window.rootViewController presentViewController:_presentedCallerViewController animated:YES completion:NULL];
 }
 
 /**
