@@ -8,6 +8,7 @@
 
 #import "JCAppDelegate.h"
 #import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
+#import <AudioToolbox/AudioToolbox.h>
 #import "AFNetworkActivityIndicatorManager.h"
 #import "JasmineSocket.h"
 #import "JCRESTClient.h"
@@ -119,6 +120,7 @@ int didNotify;
     JCCallCardManager *callCardManager = [JCCallCardManager sharedManager];
     [center addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
     [center addObserver:self selector:@selector(didReceiveIncomingCall:) name:kJCCallCardManagerAddedIncomingCallNotification object:[JCCallCardManager sharedManager]];
+    [center addObserver:self selector:@selector(stopRingtone) name:kJCCallCardManagerAddedCurrentCallNotification object:[JCCallCardManager sharedManager]];
     
     [self refreshTabBadges:NO];    
     if ([[JCAuthenticationManager sharedInstance] userAuthenticated] && [[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {
@@ -815,18 +817,21 @@ int didNotify;
  */
 -(void)didReceiveIncomingCall:(NSNotification *)notification
 {
+    [self startVibration];
+    
     NSDictionary *userInfo = notification.userInfo;
     NSNumber *priorCount = [userInfo objectForKey:kJCCallCardManagerPriorUpdateCount];
-    if (priorCount.intValue > 0)
+    if (priorCount && priorCount.intValue > 0)
         return;
+    
+    [self startRingtone];
     
     _presentedCallerViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CallerViewController"];
     _presentedCallerViewController.delegate = self;
-    _presentedCallerViewController.dialerOptionsHidden = true;
+    _presentedCallerViewController.callOptionsHidden = true;
+    _presentedCallerViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     
-    [self.window.rootViewController presentViewController:_presentedCallerViewController animated:NO completion:^{
-        
-    }];
+    [self.window.rootViewController presentViewController:_presentedCallerViewController animated:YES completion:NULL];
 }
 
 /**
@@ -837,7 +842,90 @@ int didNotify;
 {
     [self.window.rootViewController dismissViewControllerAnimated:FALSE completion:^{
         _presentedCallerViewController = nil;
+        [self stopRingtone];
+        [self stopVibration];
     }];
+}
+
+#pragma mark - Ringing
+
+static bool incommingCall;
+
+-(void)startVibration
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    bool vibrate = [userDefaults boolForKey:@"vibrateOnRing"];
+    if (vibrate)
+    {
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+        AudioServicesAddSystemSoundCompletion(kSystemSoundID_Vibrate, NULL, NULL, endVibration, NULL);
+    }
+}
+
+
+-(void)stopVibration
+{
+    incommingCall = false;
+}
+
+void endVibration (SystemSoundID ssID, void *clientData)
+{
+    if (!incommingCall)
+        return;
+    
+    double delayInSeconds = 1;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        if (!incommingCall)
+            return;
+        AudioServicesPlaySystemSound(ssID);
+    });
+}
+
+-(void)startRingtone
+{
+    incommingCall = true;
+    @try {
+        SystemSoundID soundId = [self playRingtone];
+        AudioServicesAddSystemSoundCompletion(soundId, NULL, NULL, endRingtone, NULL);
+    }
+    @catch (NSException *exception) {
+        NSLog(@"%@", exception.description);
+    }
+}
+
+void endRingtone (SystemSoundID ssID, void *clientData)
+{
+    if (!incommingCall)
+        return;
+    
+    double delayInSeconds = 1;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        if (!incommingCall)
+            return;
+        AudioServicesPlaySystemSound(ssID);
+    });
+}
+
+-(SystemSoundID)playRingtone
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSURL *url = [NSURL fileURLWithPath:@"/System/Library/Audio/UISounds/vc~ringing.caf"];
+    SystemSoundID soundID;
+    AudioServicesCreateSystemSoundID((__bridge_retained CFURLRef)url, &soundID);
+    AudioServicesPlaySystemSound(soundID);
+    
+    bool vibrate = [userDefaults boolForKey:@"vibrateOnRing"];
+    if (vibrate)
+        AudioServicesPlaySystemSound(4095);
+    return soundID;
+}
+
+
+-(void)stopRingtone
+{
+    incommingCall = false;
 }
 
 @end

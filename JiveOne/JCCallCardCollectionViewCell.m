@@ -8,9 +8,12 @@
 
 #import "JCCallCardCollectionViewCell.h"
 #import "JCCallCardManager.h"
+#import "NSString+IsNumeric.h"
 
 #define HOLD_ANIMATION_DURATION 0.5f
 #define HOLD_ANIMATION_ALPHA 0.5f
+
+NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
 
 @interface JCCallCardCollectionViewCell()
 {
@@ -47,18 +50,23 @@
     [super layoutSubviews];
     
     self.callerIdLabel.text             = _callCard.callerId;
-    self.dialedNumberLabel.dialString   = _callCard.dialNumber;
+    NSString *dialNumber = _callCard.dialNumber;
+    if (dialNumber.isNumeric)
+        self.dialedNumberLabel.dialString = dialNumber;
+    else
+        self.dialedNumberLabel.text = dialNumber;
     self.holdCallButton.selected        = _callCard.hold;
-	
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	if ([keyPath isEqualToString:@"hold"]) {
-        [self showHoldStateAnimated:(self.superview != nil)];
-	}
-	else if ([keyPath isEqualToString:@"status"]) {
-		switch (_callCard.lineSession.mCallState) {
+	if ([keyPath isEqualToString:kJCCallCardHoldKey] && self.superview != nil)
+        [self showHoldStateAnimated:YES];
+	
+	else if ([keyPath isEqualToString:kJCCallCardStatusChangeKey])
+    {
+		switch (_callCard.lineSession.mCallState)
+        {
 			case JCNoCall:
 				self.elapsedTimeLabel.text = NSLocalizedString(@"CONNECTING", nil);
 				break;
@@ -75,8 +83,19 @@
 					[self timerUpdate];
 				}
 				break;
+            default:
+                break;
 		}
 	}
+}
+
+-(void)dealloc
+{
+    if (_callCard != nil)
+    {
+        [_callCard removeObserver:self forKeyPath:kJCCallCardHoldKey];
+        [_callCard removeObserver:self forKeyPath:kJCCallCardStatusChangeKey];
+    }
 }
 
 #pragma mark - Setters -
@@ -84,15 +103,31 @@
 -(void)setCallCard:(JCCallCard *)callCard
 {
 	if (_callCard) {
-        [_callCard removeObserver:self forKeyPath:@"hold"];
-		[_callCard removeObserver:self forKeyPath:@"status"];
+        [_callCard removeObserver:self forKeyPath:kJCCallCardHoldKey];
+		[_callCard removeObserver:self forKeyPath:kJCCallCardStatusChangeKey];
 	}
 	
     _callCard = callCard;
-    [callCard addObserver:self forKeyPath:@"hold" options:NSKeyValueObservingOptionInitial context:NULL];
-	[callCard addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionInitial context:NULL];
+    if (callCard != nil)
+    {
+        [callCard addObserver:self forKeyPath:kJCCallCardHoldKey options:NSKeyValueObservingOptionNew context:NULL];
+        [callCard addObserver:self forKeyPath:kJCCallCardStatusChangeKey options:NSKeyValueObservingOptionInitial context:NULL];
+    }
     
     [self setNeedsLayout];
+}
+
+/**
+ * Due to an iOS 7 bug under the iOS 8 SDK, it appear that the content's view bounds is not updated when the cell's 
+ * bounds are changed via the Autolayout feature, causing some odd behavior when running the app in iOS7. Here for 
+ * backwards compatibility with iOS 7. - Robert Barclay, Oct 2014.
+ */
+- (void)setBounds:(CGRect)bounds
+{
+    [super setBounds:bounds];
+    
+    if ([[UIDevice currentDevice].systemVersion floatValue] < 8.0f)
+        self.contentView.frame = bounds;
 }
 
 #pragma mark - IBActions -
@@ -112,8 +147,6 @@
     [_callCard answerCall];
 }
 
-
-
 #pragma mark - Private -
 
 -(void)timerUpdate
@@ -121,7 +154,7 @@
     int secondsElapsed = -[_callCard.started timeIntervalSinceNow];
     int seconds = secondsElapsed % 60;
     int minutes = secondsElapsed / 60;
-    self.elapsedTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d", minutes, seconds];
+    self.elapsedTimeLabel.text = [NSString stringWithFormat:kJCCallCardCollectionViewCellTimerFormat, minutes, seconds];
 }
 
 -(void)holdTimerUpdate
@@ -129,7 +162,7 @@
     int secondsElapsed = -[_callCard.holdStarted timeIntervalSinceNow];
     int seconds = secondsElapsed % 60;
     int minutes = secondsElapsed / 60;
-    self.holdElapsedTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d", minutes, seconds];
+    self.holdElapsedTimeLabel.text = [NSString stringWithFormat:kJCCallCardCollectionViewCellTimerFormat, minutes, seconds];
 }
 
 -(void)showHoldStateAnimated:(BOOL)animated

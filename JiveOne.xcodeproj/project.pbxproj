@@ -245,9 +245,12 @@
 		5D629BB019D9CE4500F5744E /* JCVoiceNonVisualViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D629BAF19D9CE4500F5744E /* JCVoiceNonVisualViewController.m */; };
 		5DA5A1AF19DAF91400968F7D /* JCCallerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA5A1AE19DAF91400968F7D /* JCCallerViewController.m */; };
 		5DA5A1B219DAFEAD00968F7D /* JCDialStringLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA5A1B119DAFEAD00968F7D /* JCDialStringLabel.m */; };
+		5DA80B6819E4EB0200620630 /* IncomingCallViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DA80B6719E4EB0200620630 /* IncomingCallViewCell.xib */; };
+		5DA80B6A19E4EE6900620630 /* ConferenceCallViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DA80B6919E4EE6900620630 /* ConferenceCallViewCell.xib */; };
 		5DBBDCC319DCB29100A4DB96 /* JCCallCardCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBBDCC219DCB29100A4DB96 /* JCCallCardCollectionViewController.m */; };
 		5DBBDCC619DD9A4100A4DB96 /* JCCallCardManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBBDCC519DD9A4100A4DB96 /* JCCallCardManager.m */; };
 		5DBBDCC919DDA0A300A4DB96 /* JCCallCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBBDCC819DDA0A300A4DB96 /* JCCallCard.m */; };
+		5DF1D1C419E4C6E1005EDCD5 /* CurrentCallViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DF1D1C219E4C6E1005EDCD5 /* CurrentCallViewCell.xib */; };
 		9103271718F34BEC00437503 /* JCPeopleDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9103271518F34BEC00437503 /* JCPeopleDetailCell.m */; };
 		9103271818F34BEC00437503 /* JCPeopleDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9103271618F34BEC00437503 /* JCPeopleDetailCell.xib */; };
 		910709FE1959D60B0041E1CF /* JCLogoutIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 910709FD1959D60B0041E1CF /* JCLogoutIcon.m */; };
@@ -749,12 +752,15 @@
 		5DA5A1AE19DAF91400968F7D /* JCCallerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallerViewController.m; sourceTree = "<group>"; };
 		5DA5A1B019DAFEAD00968F7D /* JCDialStringLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDialStringLabel.h; sourceTree = "<group>"; };
 		5DA5A1B119DAFEAD00968F7D /* JCDialStringLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDialStringLabel.m; sourceTree = "<group>"; };
+		5DA80B6719E4EB0200620630 /* IncomingCallViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IncomingCallViewCell.xib; sourceTree = "<group>"; };
+		5DA80B6919E4EE6900620630 /* ConferenceCallViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConferenceCallViewCell.xib; sourceTree = "<group>"; };
 		5DBBDCC119DCB29100A4DB96 /* JCCallCardCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCallCardCollectionViewController.h; sourceTree = "<group>"; };
 		5DBBDCC219DCB29100A4DB96 /* JCCallCardCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallCardCollectionViewController.m; sourceTree = "<group>"; };
 		5DBBDCC419DD9A4100A4DB96 /* JCCallCardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCallCardManager.h; sourceTree = "<group>"; };
 		5DBBDCC519DD9A4100A4DB96 /* JCCallCardManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallCardManager.m; sourceTree = "<group>"; };
 		5DBBDCC719DDA0A300A4DB96 /* JCCallCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCallCard.h; sourceTree = "<group>"; };
 		5DBBDCC819DDA0A300A4DB96 /* JCCallCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallCard.m; sourceTree = "<group>"; };
+		5DF1D1C219E4C6E1005EDCD5 /* CurrentCallViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CurrentCallViewCell.xib; sourceTree = "<group>"; };
 		6594302CE0A00068957DC0D5 /* Pods-JiveOneTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JiveOneTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JiveOneTests/Pods-JiveOneTests.debug.xcconfig"; sourceTree = "<group>"; };
 		865FB851301D1534E4CC63E7 /* Pods-JiveOneTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JiveOneTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-JiveOneTests/Pods-JiveOneTests.release.xcconfig"; sourceTree = "<group>"; };
 		86ED89B2764949AC9BCC0C7B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1352,7 +1358,9 @@
 				2743985218D0CFAA00ABCD69 /* Views */,
 				275F4A6318AD0FBC00D2F069 /* Main_iPhone.storyboard */,
 				275F4A6618AD0FBC00D2F069 /* Main_iPad.storyboard */,
-				27EA5DB1190888AD008C7590 /* Draft_iPhone.storyboard */,
+				5DF1D1C219E4C6E1005EDCD5 /* CurrentCallViewCell.xib */,
+				5DA80B6719E4EB0200620630 /* IncomingCallViewCell.xib */,
+				5DA80B6919E4EE6900620630 /* ConferenceCallViewCell.xib */,
 				275F4A6F18AD0FBC00D2F069 /* Images.xcassets */,
 				2764BDB918C83A80007320B0 /* Vendors */,
 				275F4A5818AD0FBC00D2F069 /* Supporting Files */,
@@ -1363,6 +1371,7 @@
 		275F4A5818AD0FBC00D2F069 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				27EA5DB1190888AD008C7590 /* Draft_iPhone.storyboard */,
 				91CAE6761961CDE9004A28FD /* Fonts */,
 				271EBDAE1910525E00421BA9 /* GTalkNotify.aiff */,
 				275158F618AD10A500FD8D3F /* Images */,
@@ -2161,6 +2170,7 @@
 				2700989318F4714100B6BC2F /* bubble-classic-square-selected@2x.png in Resources */,
 				27EA5DB2190888AD008C7590 /* Draft_iPhone.storyboard in Resources */,
 				91B7CFCE192AD78B00927DDD /* searchGray2.png in Resources */,
+				5DA80B6819E4EB0200620630 /* IncomingCallViewCell.xib in Resources */,
 				27F1F2F2191C171300AEAFD7 /* middle-detail@2x.png in Resources */,
 				275158FC18AD10BB00FD8D3F /* main-logo.png in Resources */,
 				27F1F2F3191C171300AEAFD7 /* top-detail.png in Resources */,
@@ -2211,6 +2221,7 @@
 				275F4A6518AD0FBC00D2F069 /* Main_iPhone.storyboard in Resources */,
 				270098C718F5EA9300B6BC2F /* nav-people.png in Resources */,
 				27F1F2F9191C171300AEAFD7 /* UAPushSettingsAddTagViewController.xib in Resources */,
+				5DF1D1C419E4C6E1005EDCD5 /* CurrentCallViewCell.xib in Resources */,
 				279E602418C8C59900C5CC9F /* JCPersonCell.xib in Resources */,
 				2700988918F4714100B6BC2F /* bubble-classic-green@2x.png in Resources */,
 				270098C218F5EA9300B6BC2F /* nav-conv@2x.png in Resources */,
@@ -2238,6 +2249,7 @@
 				270098C118F5EA9300B6BC2F /* conv-compose.png in Resources */,
 				275F4A5C18AD0FBC00D2F069 /* InfoPlist.strings in Resources */,
 				27F1F2DE191C171300AEAFD7 /* UAInboxMessageListCell.xib in Resources */,
+				5DA80B6A19E4EE6900620630 /* ConferenceCallViewCell.xib in Resources */,
 				27F1F2F6191C171300AEAFD7 /* UAMapPresentationViewController.xib in Resources */,
 				2700988618F4714100B6BC2F /* bubble-classic-gray.png in Resources */,
 				27A86A9019461ED500332965 /* boss.jpg in Resources */,

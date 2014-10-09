@@ -9,6 +9,9 @@
 #import "JCCallCard.h"
 #import "JCCallCardManager.h"
 
+NSString *const kJCCallCardStatusChangeKey = @"status";
+NSString *const kJCCallCardHoldKey = @"hold";
+
 @interface JCCallCard ()
 {
     bool _hold;
@@ -23,7 +26,7 @@
 -(void)setHold:(BOOL)hold
 {
     
-    [self willChangeValueForKey:@"hold"];
+    [self willChangeValueForKey:kJCCallCardHoldKey];
     
     [[JCCallCardManager sharedManager] toggleCallHold:self];
     
@@ -33,7 +36,7 @@
     _hold = hold;
     
     _hold = _lineSession.mHoldSate;
-    [self didChangeValueForKey:@"hold"];
+    [self didChangeValueForKey:kJCCallCardHoldKey];
 }
 
 -(BOOL)hold
@@ -79,7 +82,7 @@
 #pragma mark - Line Session Delegate
 -(void)callStateDidChange:(long)sessionId callState:(JCCall)callState
 {
-	[self willChangeValueForKey:@"status"];
+	[self willChangeValueForKey:kJCCallCardStatusChangeKey];
 	
 	switch (callState) {
 		case  JCNoCall:
@@ -103,7 +106,7 @@
 			break;
 	}
 	
-	[self didChangeValueForKey:@"status"];
+	[self didChangeValueForKey:kJCCallCardStatusChangeKey];
 	NSLog(@"State Changed For Session %ld - State: %u", sessionId, callState);
 }
 

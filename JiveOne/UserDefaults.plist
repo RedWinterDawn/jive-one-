@@ -4,5 +4,7 @@
 <dict>
 	<key>seenAppTutorial</key>
 	<false/>
+	<key>vibrateOnRing</key>
+	<true/>
 </dict>
 </plist>

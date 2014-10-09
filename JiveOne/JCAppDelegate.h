@@ -35,4 +35,6 @@
 - (void)clearBadgeCountForConversation:(NSString *)conversationId;
 - (void)refreshTabBadges:(BOOL)fromRemoteNotification;
 
+- (void)stopRingtone;
+
 @end

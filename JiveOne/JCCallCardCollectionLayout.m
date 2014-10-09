@@ -10,6 +10,8 @@
 #import "JCCallCardManager.h"
 #import "JCCallCardCollectionViewCell.h"
 
+#define MINIMUM_CELL_HEIGHT 180.0f
+
 static NSString * const JSCallCardLayoutCellKind = @"CallCardCell";
 
 @interface JCCallCardCollectionLayout ()
@@ -52,14 +54,12 @@ static NSString * const JSCallCardLayoutCellKind = @"CallCardCell";
 
 -(CGFloat)cellHeight
 {
-    CGFloat height = 180.0f;
+    CGFloat height = self.collectionView.bounds.size.height;
     NSUInteger calls = [JCCallCardManager sharedManager].calls.count;
-    if (calls == 1)
-        return self.collectionView.bounds.size.height;
-    
     if(calls == 2)
-        return ((self.collectionView.bounds.size.height - 10) / 2 );
-    
+        height = ((height - _interItemSpacingY) / 2 );
+    else if(calls > 2)
+        height = MINIMUM_CELL_HEIGHT;
     return height;
 }
 
@@ -101,7 +101,7 @@ static NSString * const JSCallCardLayoutCellKind = @"CallCardCell";
 {
     NSArray *array = self.layoutInfo[JSCallCardLayoutCellKind];
     NSInteger rowCount = array.count;
-    CGFloat height = self.itemInsets.top + (rowCount * self.cellHeight) + (rowCount - 1) * self.interItemSpacingY + self.itemInsets.bottom;
+    CGFloat height = self.itemInsets.top + (rowCount * self.cellHeight) + (rowCount - 1) * _interItemSpacingY + _itemInsets.bottom;
     
     return CGSizeMake(self.collectionView.bounds.size.width, height);
 }
@@ -128,73 +128,54 @@ static NSString * const JSCallCardLayoutCellKind = @"CallCardCell";
 -(void)prepareForCollectionViewUpdates:(NSArray *)updateItems
 {
     [super prepareForCollectionViewUpdates:updateItems];
-    
-    self.deleteIndexPaths = [NSMutableArray array];
-    self.insertIndexPaths = [NSMutableArray array];
-    
+    _deleteIndexPaths = [NSMutableArray array];
+    _insertIndexPaths = [NSMutableArray array];
     for (UICollectionViewUpdateItem *update in updateItems)
     {
         if (update.updateAction == UICollectionUpdateActionDelete)
-            [self.deleteIndexPaths addObject:update.indexPathBeforeUpdate];
+            [_deleteIndexPaths addObject:update.indexPathBeforeUpdate];
         else if (update.updateAction == UICollectionUpdateActionInsert)
-            [self.insertIndexPaths addObject:update.indexPathAfterUpdate];
+            [_insertIndexPaths addObject:update.indexPathAfterUpdate];
     }
 }
 
 -(void)finalizeCollectionViewUpdates
 {
     [super finalizeCollectionViewUpdates];
-    
-    // release the insert and delete index paths
-    self.deleteIndexPaths = nil;
-    self.insertIndexPaths = nil;
+    _deleteIndexPaths = nil;
+    _insertIndexPaths = nil;
 }
 
 
 -(UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath
 {
-    // Must call super
     UICollectionViewLayoutAttributes *attributes = [super initialLayoutAttributesForAppearingItemAtIndexPath:itemIndexPath];
-    
     if ([self.insertIndexPaths containsObject:itemIndexPath])
     {
-        // only change attributes on inserted cells
         if (!attributes)
             attributes = [self layoutAttributesForItemAtIndexPath:itemIndexPath];
         
-        // Configure attributes ...
         JCCallCardCollectionViewCell *cell = (JCCallCardCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:itemIndexPath];
         JCCallCard *callCard = cell.callCard;
-        
         if (callCard.isIncoming)
             attributes.center = CGPointMake(attributes.center.x, -attributes.center.y);
         else
             attributes.center = CGPointMake(attributes.center.x * 2, attributes.center.y);
         attributes.alpha = 0.0;
-
     }
-    
     return attributes;
 }
 
 -(UICollectionViewLayoutAttributes *)finalLayoutAttributesForDisappearingItemAtIndexPath:(NSIndexPath *)itemIndexPath
 {
-    // So far, calling super hasn't been strictly necessary here, but leaving it in
-    // for good measure
     UICollectionViewLayoutAttributes *attributes = [super finalLayoutAttributesForDisappearingItemAtIndexPath:itemIndexPath];
-    
     if ([self.deleteIndexPaths containsObject:itemIndexPath])
     {
-        // only change attributes on deleted cells
         if (!attributes)
             attributes = [self layoutAttributesForItemAtIndexPath:itemIndexPath];
         
         [self.collectionView.viewForBaselineLayout.layer setSpeed:1.5f];
-        
-        JCCallCardCollectionViewCell *cell = (JCCallCardCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:itemIndexPath];
-        JCCallCard *callCard = cell.callCard;
-        
-        // Configure attributes ...
+        JCCallCard *callCard = ((JCCallCardCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:itemIndexPath]).callCard;
         if (callCard.isIncoming)
             attributes.center = CGPointMake(attributes.center.x, -attributes.center.y);
         else
@@ -204,7 +185,5 @@ static NSString * const JSCallCardLayoutCellKind = @"CallCardCell";
     
     return attributes;
 }
-
-
 
 @end
