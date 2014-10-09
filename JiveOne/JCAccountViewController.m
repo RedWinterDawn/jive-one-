@@ -194,37 +194,6 @@
 }
 
 #pragma mark - Table view data source
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 4;//TODO: change to 4 when brining back presence.
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return [super tableView:tableView numberOfRowsInSection:section];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
-    
-//    if (indexPath.section != 0) {
-//        cell.contentView.layer.borderWidth = 1.0f;
-//        cell.contentView.layer.borderColor = [UIColor lightGrayColor].CGColor;
-//    }
-
-    
-    return cell;
-}
-
-//
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//    //UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)];
-////    headerView.backgroundColor = [UIColor whiteColor];
-//    
-//    return headerView;
-//}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
@@ -245,28 +214,18 @@
         [self performSegueWithIdentifier:@"PresenceSegue" sender:underlyingView];
         
     }
-//    else
 
-        //Eula or leave feedback
-        
-        if([cell.reuseIdentifier isEqualToString:@"TermsOfService"])
-        {
-            [Flurry logEvent:@"TermsOfService button clicked"];
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-            
-            [self presentViewController:[storyboard instantiateViewControllerWithIdentifier:@"JCTermsAndConditonsVCViewControllerContainer"] animated:YES completion:nil];
-        }
-        else if ([cell.reuseIdentifier isEqualToString:@"LeaveFeedback"])
-        {
-            //send email to mobileapps+ios@jive.com
-            [self leaveFeedbackPressed];
-            
-            
-        }
-        else if ([cell.reuseIdentifier isEqualToString:@"LogOut"])
-        {
-			[self logoutButtonPress];
-        }
+    //Eula or leave feedback
+    if([cell.reuseIdentifier isEqualToString:@"TermsOfService"])
+    {
+        [Flurry logEvent:@"TermsOfService button clicked"];
+        [self presentViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"JCTermsAndConditonsVCViewControllerContainer"] animated:YES completion:nil];
+    }
+    else if ([cell.reuseIdentifier isEqualToString:@"LeaveFeedback"])
+        [self leaveFeedbackPressed];
+    
+    else if ([cell.reuseIdentifier isEqualToString:@"LogOut"])
+        [self logoutButtonPress];
 }
 
 
@@ -407,14 +366,6 @@
     [segue.destinationViewController setBluredBackgroundImage:sender];
     [segue.destinationViewController setDelegate:self];
     [segue.destinationViewController setHidesBottomBarWhenPushed:YES];
-}
-
-
--(IBAction)simulateIncomingCall:(id)sender
-{
-    JCCallCard *incomingCallCard = [[JCCallCard alloc] init];
-    incomingCallCard.dialNumber = @"5551234567";
-    [[JCCallCardManager sharedManager] addIncomingCall:incomingCallCard];
 }
 
 @end

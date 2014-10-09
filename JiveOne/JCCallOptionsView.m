@@ -6,11 +6,11 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCDialerOptions.h"
+#import "JCCallOptionsView.h"
 
 #define DIAL_OPTIONS_ANIMATION_DURATION 0.3f
 
-@interface JCDialerOptions ()
+@interface JCCallOptionsView ()
 {
     CGFloat _defaultTransferPosition;
     CGFloat _defaultWarmTransferPosition;
@@ -27,20 +27,18 @@
 
 @end
 
-@implementation JCDialerOptions
+@implementation JCCallOptionsView
 
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
-    if (self) {
+    if (self)
+    {
         _annimationDuration = DIAL_OPTIONS_ANIMATION_DURATION;
-        
         _showingSingle = true;
     }
     return self;
 }
-
-
 
 -(void)awakeFromNib
 {
@@ -57,29 +55,30 @@
     [super layoutSubviews];
 }
 
--(void)setState:(JCDialerOptionState)state
+-(void)setState:(JCCallOptionViewState)state
 {
     [self setState:state animated:NO];
 }
 
--(void)setState:(JCDialerOptionState)state animated:(bool)animated
+-(void)setState:(JCCallOptionViewState)state animated:(bool)animated
 {
     _state = state;
-    [self changeState:animated];
+    if (self.superview)
+        [self changeState:animated];
 }
 
 -(void)changeState:(bool)animated
 {
     switch (_state) {
-        case JCDialerOptionMultiple:
+        case JCCallOptionViewMultipleCallsState:
             [self showMultiple:animated];
             break;
             
-        case JCDialerOptionConference:
+        case JCCallOptionViewConferenceCallState:
             [self showConference:animated];
             break;
             
-        case JCDialerOptionFinish:
+        case JCCallOptionViewFinishTransferState:
             [self showFinishTransfer:animated];
             break;
             

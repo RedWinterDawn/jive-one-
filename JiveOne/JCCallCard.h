@@ -14,6 +14,8 @@ typedef enum : NSUInteger {
     JCCallCardIncomingCall,
 } JCCallCardState;
 
+extern NSString *const kJCCallCardStatusChangeKey;
+extern NSString *const kJCCallCardHoldKey;
 
 @interface JCCallCard : NSObject <JCLineSessionDelegate>
 

@@ -7,41 +7,26 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JCRoundedButton.h"
-
-@class JCRoundedButton;
 
 typedef enum : NSUInteger {
-    JCDialerOptionSingle = 0,
-    JCDialerOptionMultiple,
-    JCDialerOptionConference,
-    JCDialerOptionFinish
-} JCDialerOptionState;
+    JCCallOptionViewSingleCallState = 0,
+    JCCallOptionViewMultipleCallsState,
+    JCCallOptionViewConferenceCallState,
+    JCCallOptionViewFinishTransferState
+} JCCallOptionViewState;
 
-@interface JCDialerOptions : UIView
+@interface JCCallOptionsView : UIView
 
-@property (nonatomic) JCDialerOptionState state;
-
+@property (nonatomic) JCCallOptionViewState state;
 @property (nonatomic) CGFloat annimationDuration;
 
-@property (nonatomic, weak) IBOutlet UIButton *transferBtn;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *transferBtnHorizontalContstraint;
-
-@property (nonatomic, weak) IBOutlet UIButton *warmTransferBtn;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *warmBtnVerticalConstraint;
-
-@property (nonatomic, weak) IBOutlet UIButton *addCallBtn;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *addCallBtnHorizontalContstraint;
-
-@property (nonatomic, weak) IBOutlet UIButton *swapBtn;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *swapBtnHorizontalContstraint;
-
-@property (nonatomic, weak) IBOutlet UIButton *mergeBtn;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *mergeBtnHorizontalContstraint;
-
-@property (nonatomic, weak) IBOutlet UIButton *finishTransferBtn;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *finishTransferConstraint;
 
--(void)setState:(JCDialerOptionState)state animated:(bool)animated;
+-(void)setState:(JCCallOptionViewState)state animated:(bool)animated;
 
 @end

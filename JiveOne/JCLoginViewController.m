@@ -403,7 +403,7 @@
             [self fetchVoicemailsMetadata];
         }
 		else {
-			self.errorOccurred = error;
+            self.errorOccurred = error;
 			[self errorInitializingApp:error];
 		}
     }];

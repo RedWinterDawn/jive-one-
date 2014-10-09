@@ -5,7 +5,6 @@
       "idiom" : "iphone",
       "extent" : "full-screen",
       "minimum-system-version" : "7.0",
-      "filename" : "iPadLaunch2Xnew.png",
       "scale" : "2x"
     },
     {
@@ -18,21 +17,22 @@
       "scale" : "2x"
     },
     {
-      "extent" : "full-screen",
-      "idiom" : "ipad",
-      "filename" : "iPadlaunch1Xnew.png",
-      "minimum-system-version" : "7.0",
       "orientation" : "portrait",
-      "unassigned" : true,
+      "idiom" : "iphone",
+      "extent" : "full-screen",
       "scale" : "1x"
     },
     {
-      "extent" : "full-screen",
-      "idiom" : "ipad",
-      "filename" : "iPhone1Xnew.png",
-      "minimum-system-version" : "7.0",
       "orientation" : "portrait",
-      "unassigned" : true,
+      "idiom" : "iphone",
+      "extent" : "full-screen",
+      "scale" : "2x"
+    },
+    {
+      "orientation" : "portrait",
+      "idiom" : "iphone",
+      "extent" : "full-screen",
+      "subtype" : "retina4",
       "scale" : "2x"
     }
   ],
