@@ -75,9 +75,6 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     if (_registered)
         [self disconnect];
     
-    if (![AFNetworkReachabilityManager sharedManager].isReachable)
-        return;
-    
     @try {
         NSLog(@"Connecting");
         
@@ -252,6 +249,23 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     }
     _previousNetworkStatus = status;
 }
+
+- (void)startKeepAwake
+{
+    if (_mPortSIPSDK)
+    {
+        [_mPortSIPSDK startKeepAwake];
+    }
+}
+
+-(void)stopKeepAwake
+{
+    if (_mPortSIPSDK)
+    {
+        [_mPortSIPSDK stopKeepAwake];
+    }
+}
+
 
 //#pragma mark - Registration Delegates
 //

@@ -187,7 +187,7 @@ int didNotify;
     LogMessage(@"socket", 4, @"Will Call CloseSocket");
     [self stopSocket];
 	
-//	[[SipHandler sharedHandler].mPortSIPSDK startKeepAwake];
+	[[SipHandler sharedHandler] startKeepAwake];
 }
 
 /**
@@ -212,7 +212,7 @@ int didNotify;
         [self startSocket:NO];
     }
 	
-//	[[SipHandler sharedHandler].mPortSIPSDK startKeepAwake];
+	[[SipHandler sharedHandler] stopKeepAwake];
 }
 
 /**

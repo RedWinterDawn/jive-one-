@@ -41,6 +41,8 @@ extern NSString *const kSipHandlerRegisteredSelectorKey;
 - (NSArray *) findAllActiveLines;
 
 //- (void) switchSessionLine;
+- (void)startKeepAwake;
+- (void)stopKeepAwake;
 
 @end
 
