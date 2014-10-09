@@ -55,8 +55,8 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	if ([keyPath isEqualToString:kJCCallCardHoldKey])
-        [self showHoldStateAnimated:(self.superview != nil)];
+	if ([keyPath isEqualToString:kJCCallCardHoldKey] && self.superview != nil)
+        [self showHoldStateAnimated:YES];
 	
 	else if ([keyPath isEqualToString:kJCCallCardStatusChangeKey])
     {
@@ -105,7 +105,7 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
     _callCard = callCard;
     if (callCard != nil)
     {
-        [callCard addObserver:self forKeyPath:kJCCallCardHoldKey options:NSKeyValueObservingOptionInitial context:NULL];
+        [callCard addObserver:self forKeyPath:kJCCallCardHoldKey options:NSKeyValueObservingOptionNew context:NULL];
         [callCard addObserver:self forKeyPath:kJCCallCardStatusChangeKey options:NSKeyValueObservingOptionInitial context:NULL];
     }
     
@@ -120,7 +120,9 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
 - (void)setBounds:(CGRect)bounds
 {
     [super setBounds:bounds];
-    self.contentView.frame = bounds;
+    
+    if ([[UIDevice currentDevice].systemVersion floatValue] < 8.0f)
+        self.contentView.frame = bounds;
 }
 
 #pragma mark - IBActions -
