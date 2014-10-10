@@ -625,7 +625,7 @@
                                     <outlet property="extensionLabel" destination="ZRE-05-Y6o" id="2gt-71-Cog"/>
                                     <outlet property="playPauseButton" destination="md7-z8-u5j" id="MeQ-nm-Cpi"/>
                                     <outlet property="slider" destination="StW-c4-K1R" id="SIT-Tc-f51"/>
-                                    <outlet property="speakerView" destination="pAr-DF-rfE" id="VQP-nA-dTK"/>
+                                    <outlet property="speakerButton" destination="pAr-DF-rfE" id="Dgh-tm-ypH"/>
                                     <outlet property="spinningWheel" destination="DqH-15-aia" id="ej1-kg-2nD"/>
                                 </connections>
                             </tableViewCell>

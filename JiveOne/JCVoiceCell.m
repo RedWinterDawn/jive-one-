@@ -162,6 +162,7 @@
     
     
     self.playPauseButton.selected = false;
+    self.speakerButton.selected = false;
 }
 
 -(void)removeObservers
@@ -210,12 +211,6 @@
     if (self.delegate && [self.delegate respondsToSelector:@selector(voiceCellDeleteTapped:)]) {
         [self.delegate voiceCellDeleteTapped:indexPath];
     }
-}
-
-- (void)setSpeakerButtonTint:(UIColor*)color
-{
-    [_speakerButton.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    _speakerButton.imageView.image = [Common tintedImageWithColor:color image:_speakerButton.imageView.image];
 }
 
 @end

@@ -33,12 +33,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *callerNumberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *extensionLabel;
 //@property (weak,nonatomic) IBOutlet UIButton *playButton;
-@property (weak, nonatomic) IBOutlet JCPlayPauseButton *playPauseButton;
+@property (weak, nonatomic) IBOutlet UIButton *playPauseButton;
 @property (weak,nonatomic) IBOutlet UILabel  *creationTime;
 @property (weak,nonatomic) IBOutlet UILabel  *elapsed;
 @property (weak,nonatomic) IBOutlet UILabel  *duration;
 @property (weak,nonatomic) IBOutlet UILabel  *shortTime;
-@property (weak, nonatomic) IBOutlet JCSpeakerButton *speakerView;
 @property (weak,nonatomic) IBOutlet UIButton *speakerButton;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 

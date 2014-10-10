@@ -19,7 +19,7 @@
 
 - (void)drawRect:(CGRect)rect
 {
-   [JCStyleKit drawSpeakerButtonWithSpeakerFrame:self.bounds speakerIsSelected:self.isSelected];
+   [JCStyleKit drawSpeakerButtonWithSpeakerFrame:self.bounds speakerIsSelected:self.selected];
 }
 
 @end

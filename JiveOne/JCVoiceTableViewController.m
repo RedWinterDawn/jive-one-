@@ -209,13 +209,21 @@ NSString *const kJCVoicemailCellIdentifier = @"VoicemailCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     JCVoiceCell *cell = [tableView dequeueReusableCellWithIdentifier:kJCVoicemailCellIdentifier];
-    
     Voicemail *voicemail = self.voicemails[indexPath.row];
     
     cell.voicemail = voicemail;
     cell.indexPath = indexPath;
     cell.delegate = self;
     
+    BOOL isSelected = [self.selectedIndexPaths containsObject:indexPath];
+    if (isSelected)
+    {
+        self.selectedCell = cell;
+        cell.playPauseButton.selected = [player isPlaying];
+        cell.speakerButton.selected = _playThroughSpeaker;
+        [self updateViewForPlayerInfo];
+        [self updateProgress:nil];
+    }
     return cell;
 }
 
@@ -246,6 +254,7 @@ NSString *const kJCVoicemailCellIdentifier = @"VoicemailCell";
     if (isSelected) {
         [self prepareAudioForIndexPath:indexPath];
         self.selectedCell = (JCVoiceCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        self.selectedCell.speakerButton.selected = _playThroughSpeaker;
         
         CGPoint positionRelativeToWindow = [self.selectedCell.contentView convertPoint:self.selectedCell.contentView.frame.origin toView:[UIApplication sharedApplication].keyWindow];
         NSLog(@"PositionRelativeToWindow%@", NSStringFromCGPoint(positionRelativeToWindow));
@@ -524,10 +533,10 @@ NSString *const kJCVoicemailCellIdentifier = @"VoicemailCell";
         
         if (!error) {
             if (_playThroughSpeaker) {
-                self.selectedCell.speakerView.selected = YES;
+                self.selectedCell.speakerButton.selected = YES;
             }
             else {
-                self.selectedCell.speakerView.selected = NO;
+                self.selectedCell.speakerButton.selected = NO;
             }
         }
     }
