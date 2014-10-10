@@ -19,7 +19,7 @@
 - (void)voiceCellSliderTouched:(BOOL)touched;
 - (void)voicecellSpeakerTouched;
 - (void)voiceCellAudioAvailable:(NSIndexPath *)indexPath;
-- (void)voiceCellDeleteTapped:(NSIndexPath *)indexPath;
+- (void)voiceCellDeleteTapped:(JCVoiceCell *)cell;
 @end
 
 @interface JCVoiceCell : UITableViewCell
@@ -32,7 +32,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *callerIdLabel;
 @property (weak, nonatomic) IBOutlet UILabel *callerNumberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *extensionLabel;
-//@property (weak,nonatomic) IBOutlet UIButton *playButton;
 @property (weak, nonatomic) IBOutlet UIButton *playPauseButton;
 @property (weak,nonatomic) IBOutlet UILabel  *creationTime;
 @property (weak,nonatomic) IBOutlet UILabel  *elapsed;

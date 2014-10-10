@@ -206,10 +206,10 @@
     }
 }
 
--(IBAction)voiceCellDeleteTapped:(NSIndexPath *)indexPath
+-(IBAction)voiceCellDeleteTapped:(id)sender
 {
     if (self.delegate && [self.delegate respondsToSelector:@selector(voiceCellDeleteTapped:)]) {
-        [self.delegate voiceCellDeleteTapped:indexPath];
+        [self.delegate voiceCellDeleteTapped:self];
     }
 }
 

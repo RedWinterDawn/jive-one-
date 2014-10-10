@@ -285,8 +285,11 @@ NSString *const kJCVoicemailCellIdentifier = @"VoicemailCell";
 }
 
 #pragma mark - JCVoicemailCellDelegate
--(void)voiceCellDeleteTapped:(NSIndexPath *)indexPath {
+-(void)voiceCellDeleteTapped:(JCVoiceCell *)cell {
     
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    [self addOrRemoveSelectedIndexPath:indexPath];
+
     // if we are playing a voicemail and we delete the voicemail cell that is being played -> stop playing then delete.
     if (player.isPlaying && (self.selectedCell.indexPath == indexPath)) {
         //pause

@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JCDeleteView : UIView
+@interface JCDeleteButton : UIButton
 
 @end

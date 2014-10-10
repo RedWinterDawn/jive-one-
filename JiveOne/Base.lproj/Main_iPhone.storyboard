@@ -557,9 +557,12 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GcH-xf-vb7" customClass="JCDeleteView">
+                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GcH-xf-vb7" customClass="JCDeleteButton">
                                             <rect key="frame" x="206" y="120" width="51" height="46"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                            <connections>
+                                                <action selector="voiceCellDeleteTapped:" destination="HLX-xJ-Zcf" eventType="touchUpInside" id="Kc0-oC-G29"/>
+                                            </connections>
                                         </view>
                                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pAr-DF-rfE" customClass="JCSpeakerButton">
                                             <rect key="frame" x="90" y="120" width="113" height="46"/>
@@ -621,6 +624,7 @@
                                     <outlet property="callerIdLabel" destination="z7T-85-bKG" id="wTJ-ME-a5R"/>
                                     <outlet property="callerNumberLabel" destination="W9d-Mn-BOh" id="9Nj-mS-ZOk"/>
                                     <outlet property="creationTime" destination="NKy-8U-Uh8" id="stj-lP-iZf"/>
+                                    <outlet property="deleteButton" destination="GcH-xf-vb7" id="dwY-Vu-Gfl"/>
                                     <outlet property="duration" destination="aXj-uL-Dya" id="P8L-ch-rd8"/>
                                     <outlet property="extensionLabel" destination="ZRE-05-Y6o" id="2gt-71-Cog"/>
                                     <outlet property="playPauseButton" destination="md7-z8-u5j" id="MeQ-nm-Cpi"/>
