@@ -19,7 +19,7 @@
     NSData *soundData;
     AVAudioPlayer *player;
     NSManagedObjectContext *context;
-    BOOL useSpeaker;
+    BOOL _playThroughSpeaker;
     MBProgressHUD *hud;
     NSTimer *requestTimeout;
     
@@ -401,10 +401,10 @@ NSString *const kJCVoicemailCellIdentifier = @"VoicemailCell";
     [self stopProgressTimerForVoicemail];
 }
 
-- (void)voicecellSpeakerTouched:(BOOL)touched
+- (void)voicecellSpeakerTouched
 {
-    useSpeaker = !useSpeaker;
-    [self.selectedCell.speakerButton setSelected:useSpeaker];
+    _playThroughSpeaker = !_playThroughSpeaker;
+    self.selectedCell.speakerButton.selected = _playThroughSpeaker;
     [self setupSpeaker];
 }
 
@@ -516,19 +516,18 @@ NSString *const kJCVoicemailCellIdentifier = @"VoicemailCell";
     [session setCategory:AVAudioSessionCategoryPlayAndRecord
                              error:&error];
     
-    AVAudioSessionPortOverride portOverride = useSpeaker ? AVAudioSessionPortOverrideSpeaker : AVAudioSessionPortOverrideNone;
+    AVAudioSessionPortOverride portOverride = _playThroughSpeaker ? AVAudioSessionPortOverrideSpeaker : AVAudioSessionPortOverrideNone;
     [session overrideOutputAudioPort:portOverride error:&error];
     
     if (!error) {
         [session setActive:YES error:&error];
         
         if (!error) {
-            if (useSpeaker) {
-                [self.selectedCell.speakerView setIsSelected:YES];
+            if (_playThroughSpeaker) {
+                self.selectedCell.speakerView.selected = YES;
             }
             else {
-                [self.selectedCell.speakerView setIsSelected:NO];
-
+                self.selectedCell.speakerView.selected = NO;
             }
         }
     }

@@ -170,19 +170,18 @@
         [_voicemail removeObserver:self forKeyPath:kVoicemailKeyPathForVoicemal];
 }
 
-- (IBAction)playPauseButtonTapped:(id)sender
-{
-    if ([sender isKindOfClass:[UIButton class]])
-    {
+- (IBAction)playPauseButtonTapped:(id)sender {
+    if ([sender isKindOfClass:[UIButton class]]) {
         UIButton *button = (UIButton *)sender;
         button.selected = !button.selected;
-    }
-    if (self.delegate && [self.delegate respondsToSelector:@selector(voiceCellPlayTapped:)]) {
-        [self.delegate voiceCellPlayTapped:self];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(voiceCellPlayTapped:)]) {
+            [self.delegate voiceCellPlayTapped:self];
+        }
     }
 }
 
-- (IBAction)progressSliderMoved:(id)sender {
+- (IBAction)progressSliderMoved:(id)sender
+{
     if (self.delegate && [self.delegate respondsToSelector:@selector(voiceCellSliderMoved:)]) {
         [self.delegate voiceCellSliderMoved:self.slider.value];
     }
@@ -200,10 +199,9 @@
     }
 }
 
-- (IBAction)speakerTouched:(id)sender;
-{
-    if (self.delegate && [self.delegate respondsToSelector:@selector(voicecellSpeakerTouched:)]) {
-        [self.delegate voicecellSpeakerTouched:YES];
+- (IBAction)speakerTouched:(id)sender {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(voicecellSpeakerTouched)]) {
+        [self.delegate voicecellSpeakerTouched];
     }
 }
 

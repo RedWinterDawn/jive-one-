@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Voicemail+Custom.h"
 #import "JCPopoverSlider.h"
-#import "JCSpeakerView.h"
+#import "JCSpeakerButton.h"
 #import "JCPlayPauseButton.h"
 
 @class JCVoiceCell;
@@ -17,7 +17,7 @@
 - (void)voiceCellPlayTapped:(JCVoiceCell *)cell;
 - (void)voiceCellSliderMoved:(float)value;
 - (void)voiceCellSliderTouched:(BOOL)touched;
-- (void)voicecellSpeakerTouched:(BOOL)touched;
+- (void)voicecellSpeakerTouched;
 - (void)voiceCellAudioAvailable:(NSIndexPath *)indexPath;
 - (void)voiceCellDeleteTapped:(NSIndexPath *)indexPath;
 @end
@@ -38,7 +38,7 @@
 @property (weak,nonatomic) IBOutlet UILabel  *elapsed;
 @property (weak,nonatomic) IBOutlet UILabel  *duration;
 @property (weak,nonatomic) IBOutlet UILabel  *shortTime;
-@property (weak, nonatomic) IBOutlet JCSpeakerView *speakerView;
+@property (weak, nonatomic) IBOutlet JCSpeakerButton *speakerView;
 @property (weak,nonatomic) IBOutlet UIButton *speakerButton;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 

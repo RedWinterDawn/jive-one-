@@ -279,7 +279,7 @@
 		91CAE67A1961D485004A28FD /* JCJiveLogoWhite.m in Sources */ = {isa = PBXBuildFile; fileRef = 91CAE6791961D485004A28FD /* JCJiveLogoWhite.m */; };
 		91CAE67E1961E47F004A28FD /* JCVoicemailIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 91CAE67D1961E47F004A28FD /* JCVoicemailIcon.m */; };
 		91CAE6811961EA6A004A28FD /* JCJiveLogoBlack.m in Sources */ = {isa = PBXBuildFile; fileRef = 91CAE6801961EA6A004A28FD /* JCJiveLogoBlack.m */; };
-		91DDB1991935008A00550F10 /* JCSpeakerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DDB1981935008A00550F10 /* JCSpeakerView.m */; };
+		91DDB1991935008A00550F10 /* JCSpeakerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DDB1981935008A00550F10 /* JCSpeakerButton.m */; };
 		91DDB19D193500B500550F10 /* JCDeleteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DDB19C193500B500550F10 /* JCDeleteView.m */; };
 		DD28DA5218AEC4F5003BFC44 /* JCAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD28DA5118AEC4F5003BFC44 /* JCAccountViewController.m */; };
 		DD3BD9F418DCB1740080318E /* Voicemail+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = DD3BD9F318DCB1740080318E /* Voicemail+Custom.m */; };
@@ -810,8 +810,8 @@
 		91CAE67D1961E47F004A28FD /* JCVoicemailIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoicemailIcon.m; sourceTree = SOURCE_ROOT; };
 		91CAE67F1961EA6A004A28FD /* JCJiveLogoBlack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCJiveLogoBlack.h; sourceTree = SOURCE_ROOT; };
 		91CAE6801961EA6A004A28FD /* JCJiveLogoBlack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCJiveLogoBlack.m; sourceTree = SOURCE_ROOT; };
-		91DDB1971935008A00550F10 /* JCSpeakerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSpeakerView.h; sourceTree = "<group>"; };
-		91DDB1981935008A00550F10 /* JCSpeakerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSpeakerView.m; sourceTree = "<group>"; };
+		91DDB1971935008A00550F10 /* JCSpeakerButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSpeakerButton.h; sourceTree = "<group>"; };
+		91DDB1981935008A00550F10 /* JCSpeakerButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSpeakerButton.m; sourceTree = "<group>"; };
 		91DDB19B193500B500550F10 /* JCDeleteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDeleteView.h; sourceTree = "<group>"; };
 		91DDB19C193500B500550F10 /* JCDeleteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDeleteView.m; sourceTree = "<group>"; };
 		91F6DFAA192A702F001C54FB /* Shared.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Shared.xcconfig; sourceTree = "<group>"; };
@@ -1957,8 +1957,8 @@
 			children = (
 				9154947619366C54003DCED4 /* JCPlayPauseButton.h */,
 				9154947719366C54003DCED4 /* JCPlayPauseButton.m */,
-				91DDB1971935008A00550F10 /* JCSpeakerView.h */,
-				91DDB1981935008A00550F10 /* JCSpeakerView.m */,
+				91DDB1971935008A00550F10 /* JCSpeakerButton.h */,
+				91DDB1981935008A00550F10 /* JCSpeakerButton.m */,
 				91DDB19B193500B500550F10 /* JCDeleteView.h */,
 				91DDB19C193500B500550F10 /* JCDeleteView.m */,
 			);
@@ -2444,7 +2444,7 @@
 				2751591718AD300B00FD8D3F /* OsgiData.xcdatamodel in Sources */,
 				91DDB19D193500B500550F10 /* JCDeleteView.m in Sources */,
 				2751591118AD174F00FD8D3F /* KeychainItemWrapper.m in Sources */,
-				91DDB1991935008A00550F10 /* JCSpeakerView.m in Sources */,
+				91DDB1991935008A00550F10 /* JCSpeakerButton.m in Sources */,
 				2751591318AD174F00FD8D3F /* JCAuthenticationManager.m in Sources */,
 				2784BA6C1940390100389F5F /* JCTableViewCellWithInset.m in Sources */,
 				2700988118F4714100B6BC2F /* JSMessageTextView.m in Sources */,

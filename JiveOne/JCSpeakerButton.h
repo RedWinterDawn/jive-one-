@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JCSpeakerView : UIView
--(void)setIsSelected:(BOOL)isSelected;
+@interface JCSpeakerButton : UIButton
+
 @end

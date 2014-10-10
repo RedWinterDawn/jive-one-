@@ -60,7 +60,7 @@
                         <rect key="frame" x="206" y="120" width="51" height="46"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cp3-bc-vEw" customClass="JCSpeakerView">
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cp3-bc-vEw" customClass="JCSpeakerButton">
                         <rect key="frame" x="90" y="120" width="113" height="46"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
