@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1552" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -159,6 +158,7 @@
                         <segue destination="vaI-vc-7Id" kind="relationship" relationship="viewControllers" id="Zo8-fF-LR9"/>
                         <segue destination="4mQ-Xv-N0n" kind="relationship" relationship="viewControllers" id="dwi-Kf-NBW"/>
                         <segue destination="elO-IG-RBo" kind="relationship" relationship="viewControllers" id="fJp-rq-gl2"/>
+                        <segue destination="g1o-0f-4uw" kind="push" id="4nZ-PO-faX"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FNP-y4-bzi" sceneMemberID="firstResponder"/>
@@ -2430,7 +2430,51 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ypS-A4-wLx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1380" y="1151"/>
+            <point key="canvasLocation" x="-1388" y="1083"/>
+        </scene>
+        <!--Call History-->
+        <scene sceneID="mHh-pl-9Kn">
+            <objects>
+                <tableViewController id="Hpw-Pg-h6z" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="0i3-CE-L8S">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="1q5-Ex-FtJ">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1q5-Ex-FtJ" id="0lp-B2-jDi">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Hpw-Pg-h6z" id="WwY-mf-bdB"/>
+                            <outlet property="delegate" destination="Hpw-Pg-h6z" id="gix-Bz-M92"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Call History" id="aYd-6j-dMb"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Eyx-ig-8do" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-883" y="1853"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="tiz-UH-dPq">
+            <objects>
+                <navigationController id="g1o-0f-4uw" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="fEs-Dv-vjy"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ATJ-52-1JU">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Hpw-Pg-h6z" kind="relationship" relationship="rootViewController" id="1xu-g7-KSd"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eUR-1J-5NG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1363" y="1853"/>
         </scene>
         <!--Voice Non Visual View Controller-->
         <scene sceneID="M0W-Fb-sRC">
