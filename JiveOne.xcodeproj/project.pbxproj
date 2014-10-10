@@ -314,6 +314,8 @@
 		F8A2BC0B19DB5B3C00251310 /* JCCallOptionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = F8A2BC0A19DB5B3C00251310 /* JCCallOptionsView.m */; };
 		F8B62E5B19DB091500AF98D3 /* JCRoundedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F8B62E5A19DB091500AF98D3 /* JCRoundedButton.m */; };
 		F8BC82C319E44A2E00340BA1 /* JCKeypadView.m in Sources */ = {isa = PBXBuildFile; fileRef = F8BC82C219E44A2E00340BA1 /* JCKeypadView.m */; };
+		F8C9A7CE19E880C20049A715 /* JCRecentEvents.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F8C9A7CC19E880C20049A715 /* JCRecentEvents.xcdatamodeld */; };
+		F8C9A7D119E880E70049A715 /* JCRecentEvents.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F8C9A7CF19E880E70049A715 /* JCRecentEvents.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -870,6 +872,8 @@
 		F8B62E5A19DB091500AF98D3 /* JCRoundedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCRoundedButton.m; sourceTree = "<group>"; };
 		F8BC82C119E44A2E00340BA1 /* JCKeypadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCKeypadView.h; sourceTree = "<group>"; };
 		F8BC82C219E44A2E00340BA1 /* JCKeypadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCKeypadView.m; sourceTree = "<group>"; };
+		F8C9A7CD19E880C20049A715 /* JCRecentEvents.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = JCRecentEvents.xcdatamodel; sourceTree = "<group>"; };
+		F8C9A7D019E880E70049A715 /* JCRecentEvents.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = JCRecentEvents.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1124,6 +1128,7 @@
 		270152C71901D77A00F271CE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				F8C9A7CF19E880E70049A715 /* JCRecentEvents.xcdatamodeld */,
 				270559A6196DD11800A7AF35 /* LineGroup.h */,
 				270559A7196DD11800A7AF35 /* LineGroup.m */,
 				270559A3196DD11700A7AF35 /* ContactGroup.h */,
@@ -1153,6 +1158,7 @@
 				2788F142190EACD20099348D /* VoicemailETag.m */,
 				274493B718D0E98C002744CB /* Presence.h */,
 				274493B818D0E98C002744CB /* Presence.m */,
+				F8C9A7CC19E880C20049A715 /* JCRecentEvents.xcdatamodeld */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1230,11 +1236,11 @@
 		2751590318AD113C00FD8D3F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				277F093F18FECECA00EEF0E3 /* Login */,
 				F8B62E4119D9F1C300AF98D3 /* Dialer */,
 				277F093E18FECEB800EEF0E3 /* Account */,
 				277F093B18FECE5E00EEF0E3 /* People */,
 				277F093D18FECEA800EEF0E3 /* Voicemail */,
-				277F093F18FECECA00EEF0E3 /* Login */,
 				91F87CF4190EE16B00152FDB /* AppTutorial */,
 				91743F351965B7EA003CD5E4 /* Status */,
 			);
@@ -2443,12 +2449,14 @@
 				91260EDD18B2965900704670 /* JCDirectoryDetailViewController.m in Sources */,
 				2751591718AD300B00FD8D3F /* OsgiData.xcdatamodel in Sources */,
 				91DDB19D193500B500550F10 /* JCDeleteView.m in Sources */,
+				F8C9A7D119E880E70049A715 /* JCRecentEvents.xcdatamodeld in Sources */,
 				2751591118AD174F00FD8D3F /* KeychainItemWrapper.m in Sources */,
 				91DDB1991935008A00550F10 /* JCSpeakerView.m in Sources */,
 				2751591318AD174F00FD8D3F /* JCAuthenticationManager.m in Sources */,
 				2784BA6C1940390100389F5F /* JCTableViewCellWithInset.m in Sources */,
 				2700988118F4714100B6BC2F /* JSMessageTextView.m in Sources */,
 				27F1F2E8191C171300AEAFD7 /* UAPushSettingsChannelInfoViewController.m in Sources */,
+				F8C9A7CE19E880C20049A715 /* JCRecentEvents.xcdatamodeld in Sources */,
 				9145E31F191D842500840D66 /* JCVersion.m in Sources */,
 				27EB18C419DF194E00C1503B /* LineConfiguration.m in Sources */,
 				277A1F8018F88987009A41F7 /* JCLoginViewController.m in Sources */,
@@ -2894,6 +2902,29 @@
 			defaultConfigurationName = Enterprise;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		F8C9A7CC19E880C20049A715 /* JCRecentEvents.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F8C9A7CD19E880C20049A715 /* JCRecentEvents.xcdatamodel */,
+			);
+			currentVersion = F8C9A7CD19E880C20049A715 /* JCRecentEvents.xcdatamodel */;
+			path = JCRecentEvents.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		F8C9A7CF19E880E70049A715 /* JCRecentEvents.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F8C9A7D019E880E70049A715 /* JCRecentEvents.xcdatamodel */,
+			);
+			currentVersion = F8C9A7D019E880E70049A715 /* JCRecentEvents.xcdatamodel */;
+			path = JCRecentEvents.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 275F4A4618AD0FBC00D2F069 /* Project object */;
 }

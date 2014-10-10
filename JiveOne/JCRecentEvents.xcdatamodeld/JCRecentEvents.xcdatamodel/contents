@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6244" systemVersion="13F34" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="IncommingCall" syncable="YES">
+        <attribute name="callerExt" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="callerName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="callerNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="newRelationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecentEvent" inverseName="incomnigCall" inverseEntity="RecentEvent" syncable="YES"/>
+    </entity>
+    <entity name="MissedCall" syncable="YES">
+        <attribute name="callerExt" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="callerName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="callerNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="newRelationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecentEvent" inverseName="missedCall" inverseEntity="RecentEvent" syncable="YES"/>
+        <userInfo>
+            <entry key="key" value="value"/>
+        </userInfo>
+    </entity>
+    <entity name="OutGoingCall" syncable="YES">
+        <attribute name="callerExt" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="callerName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="callerNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="newRelationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecentEvent" inverseName="outgoingCall" inverseEntity="RecentEvent" syncable="YES"/>
+    </entity>
+    <entity name="RecentEvent" syncable="YES">
+        <attribute name="callerExt" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="callerName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="callerNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="typeOfEvent" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="incomnigCall" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="IncommingCall" inverseName="newRelationship" inverseEntity="IncommingCall" syncable="YES"/>
+        <relationship name="missedCall" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MissedCall" inverseName="newRelationship" inverseEntity="MissedCall" syncable="YES"/>
+        <relationship name="outgoingCall" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OutGoingCall" inverseName="newRelationship" inverseEntity="OutGoingCall" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="RecentEvent" positionX="-99" positionY="-198" width="128" height="148"/>
+        <element name="OutGoingCall" positionX="-180" positionY="144" width="128" height="118"/>
+        <element name="MissedCall" positionX="-416" positionY="144" width="128" height="118"/>
+        <element name="IncommingCall" positionX="-36" positionY="138" width="128" height="118"/>
+    </elements>
+</model>
