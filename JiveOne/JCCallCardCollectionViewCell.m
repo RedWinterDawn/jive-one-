@@ -50,19 +50,24 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
     [super layoutSubviews];
     
     self.callerIdLabel.text             = _callCard.callerId;
-    NSString *dialNumber = _callCard.dialNumber;
+    NSString *dialNumber                = _callCard.dialNumber;
     if (dialNumber.isNumeric)
+    {
         self.dialedNumberLabel.dialString = dialNumber;
+    }
     else
+    {
         self.dialedNumberLabel.text = dialNumber;
-    self.holdCallButton.selected        = _callCard.hold;
+    }
+    
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
 	if ([keyPath isEqualToString:kJCCallCardHoldKey] && self.superview != nil)
-        [self showHoldStateAnimated:YES];
-	
+    {
+        [self updateHoldState];
+    }
 	else if ([keyPath isEqualToString:kJCCallCardStatusChangeKey])
     {
 		switch (_callCard.lineSession.mCallState)
@@ -165,48 +170,61 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
     self.holdElapsedTimeLabel.text = [NSString stringWithFormat:kJCCallCardCollectionViewCellTimerFormat, minutes, seconds];
 }
 
+-(void)updateHoldState
+{
+    if (_holdTimer)
+    {
+        [_holdTimer invalidate];
+        _holdTimer = nil;
+    }
+    
+    if (_callCard.hold) {
+        [self showHoldStateAnimated:YES];
+    }
+    else {
+        [self showConnectedState:YES];
+    }
+}
+
+/**
+ * Animates up the hold view and sets the actions background to be shown. Whole view is fully visible. The hold button 
+ * should be visible.
+ */
+-(void)showConnectedState:(bool)animated
+{
+    __unsafe_unretained JCCallCardCollectionViewCell *weakSelf = self;
+    _currentCallTopToContainerConstraint.constant = _originalCurrentCallViewConstraint;
+    _callCardInfoTopConstraint.constant = _currentCallCardInfoElevation;
+    [_cardInfoView setNeedsUpdateConstraints];
+    
+    [UIView animateWithDuration:(animated ? _holdAnimationDuration : 0)
+                     animations:^{
+                         weakSelf.alpha = 1;
+                         weakSelf.callActions.backgroundColor = _defaultCallActionsColor;
+                         [_cardInfoView layoutIfNeeded];
+                     }];
+}
+
+/**
+ * Animates down the hold view, and fades the action background to be clear. Partially fades the whole view. The hold 
+ * button should be visible.
+ */
 -(void)showHoldStateAnimated:(BOOL)animated
 {
     __unsafe_unretained JCCallCardCollectionViewCell *weakSelf = self;
-    
-    if (_callCard.hold)
-    {
-        if (_holdTimer)
-        {
-            [_holdTimer invalidate];
-            _holdTimer = nil;
-        }
+    _currentCallTopToContainerConstraint.constant = 10;
+    _callCardInfoTopConstraint.constant = 40;
+    [_cardInfoView setNeedsUpdateConstraints];
         
-        _currentCallTopToContainerConstraint.constant = 10;
-        _callCardInfoTopConstraint.constant = 40;
-        [_cardInfoView setNeedsUpdateConstraints];
+    _holdTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(holdTimerUpdate) userInfo:nil repeats:YES];
+    [self holdTimerUpdate];
         
-        _holdTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(holdTimerUpdate) userInfo:nil repeats:YES];
-        [self holdTimerUpdate];
-        
-        [UIView animateWithDuration:(animated ? _holdAnimationDuration : 0)
+    [UIView animateWithDuration:(animated ? _holdAnimationDuration : 0)
                          animations:^{
                              weakSelf.alpha = _holdAnimationAlpha;
                              weakSelf.callActions.backgroundColor = [UIColor clearColor];
                              [_cardInfoView layoutIfNeeded];
                          }];
-    }
-    else
-    {
-        [_holdTimer invalidate];
-        _holdTimer = nil;
-        
-        _currentCallTopToContainerConstraint.constant = _originalCurrentCallViewConstraint;
-        _callCardInfoTopConstraint.constant = _currentCallCardInfoElevation;
-        [_cardInfoView setNeedsUpdateConstraints];
-        
-        [UIView animateWithDuration:(animated ? _holdAnimationDuration : 0)
-                         animations:^{
-                             weakSelf.alpha = 1;
-                             weakSelf.callActions.backgroundColor = _defaultCallActionsColor;
-                             [_cardInfoView layoutIfNeeded];
-                         }];
-    }
 }
 
 
