@@ -159,6 +159,9 @@
 {
     [super prepareForReuse];
     [self removeObservers];
+    
+    
+    self.playPauseButton.selected = false;
 }
 
 -(void)removeObservers
@@ -167,7 +170,13 @@
         [_voicemail removeObserver:self forKeyPath:kVoicemailKeyPathForVoicemal];
 }
 
-- (IBAction)playPauseButtonTapped:(id)sender {
+- (IBAction)playPauseButtonTapped:(id)sender
+{
+    if ([sender isKindOfClass:[UIButton class]])
+    {
+        UIButton *button = (UIButton *)sender;
+        button.selected = !button.selected;
+    }
     if (self.delegate && [self.delegate respondsToSelector:@selector(voiceCellPlayTapped:)]) {
         [self.delegate voiceCellPlayTapped:self];
     }

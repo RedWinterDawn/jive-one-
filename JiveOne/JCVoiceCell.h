@@ -10,7 +10,7 @@
 #import "Voicemail+Custom.h"
 #import "JCPopoverSlider.h"
 #import "JCSpeakerView.h"
-#import "JCPlayPauseView.h"
+#import "JCPlayPauseButton.h"
 
 @class JCVoiceCell;
 @protocol JCVoiceCellDelegate <NSObject>
@@ -33,7 +33,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *callerNumberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *extensionLabel;
 //@property (weak,nonatomic) IBOutlet UIButton *playButton;
-@property (weak, nonatomic) IBOutlet JCPlayPauseView *playPauseButton;
+@property (weak, nonatomic) IBOutlet JCPlayPauseButton *playPauseButton;
 @property (weak,nonatomic) IBOutlet UILabel  *creationTime;
 @property (weak,nonatomic) IBOutlet UILabel  *elapsed;
 @property (weak,nonatomic) IBOutlet UILabel  *duration;

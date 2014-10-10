@@ -30,9 +30,9 @@
 
 @end
 
-@implementation JCVoiceTableViewController
+NSString *const kJCVoicemailCellIdentifier = @"VoicemailCell";
 
-static NSString *CellIdentifier = @"VoicemailCell";
+@implementation JCVoiceTableViewController
 
 - (void)setClient:(JCVoicemailClient*)client
 {
@@ -53,8 +53,8 @@ static NSString *CellIdentifier = @"VoicemailCell";
     [super viewDidLoad];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     [self.tableView setSeparatorInset:UIEdgeInsetsZero];
-    [self.tableView registerClass:[JCVoiceCell class] forCellReuseIdentifier:CellIdentifier];
-    [self.tableView registerNib:[UINib nibWithNibName:@"JCVoicemailCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
+    //[self.tableView registerClass:[JCVoiceCell class] forCellReuseIdentifier:CellIdentifier];
+    //[self.tableView registerNib:[UINib nibWithNibName:@"JCVoicemailCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
     self.progressTimer = nil;
     
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc]
@@ -208,10 +208,7 @@ static NSString *CellIdentifier = @"VoicemailCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    JCVoiceCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (!cell) {
-        cell = [[JCVoiceCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    }
+    JCVoiceCell *cell = [tableView dequeueReusableCellWithIdentifier:kJCVoicemailCellIdentifier];
     
     Voicemail *voicemail = self.voicemails[indexPath.row];
     
@@ -240,7 +237,6 @@ static NSString *CellIdentifier = @"VoicemailCell";
         [player pause];
         
         [self stopProgressTimerForVoicemail];
-        [self.selectedCell.playPauseButton setPlayPauseDisplaysPlay:YES];
         [self performSelector:@selector(resetSlider) withObject:nil afterDelay:.5];
     }
     [self addOrRemoveSelectedIndexPath:indexPath];
@@ -447,14 +443,14 @@ static NSString *CellIdentifier = @"VoicemailCell";
         [player pause];
         
         [self stopProgressTimerForVoicemail];
-        [self.selectedCell.playPauseButton setPlayPauseDisplaysPlay:YES];
+        self.selectedCell.playPauseButton.selected = false;
     }
     else {
         //play
         [player play];
         
         [self startProgressTimerForVoicemail];
-        [self.selectedCell.playPauseButton setPlayPauseDisplaysPlay:NO];
+        self.selectedCell.playPauseButton.selected = TRUE;
         [(JCAppDelegate *)[UIApplication sharedApplication].delegate decrementBadgeCountForVoicemail:self.selectedCell.voicemail.jrn];
         if (![self.selectedCell.voicemail.read boolValue]) {
             [self markVoicemailAsRead];
@@ -485,8 +481,8 @@ static NSString *CellIdentifier = @"VoicemailCell";
 }
 
 - (void)updateProgress:(NSNotification*)notification {
-    if (self.selectedCell.playPauseButton.playPauseDisplaysPlay == YES && player.isPlaying) {
-        [self.selectedCell.playPauseButton setPlayPauseDisplaysPlay:NO];
+    if (self.selectedCell.playPauseButton.selected == FALSE && player.isPlaying) {
+        self.selectedCell.playPauseButton.selected = TRUE;
     }
     self.selectedCell.duration.text = [self formatSeconds:player.duration];
     self.selectedCell.elapsed.text = [self formatSeconds:player.currentTime];
@@ -503,12 +499,12 @@ static NSString *CellIdentifier = @"VoicemailCell";
 
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
     [self stopProgressTimerForVoicemail];
-    [self.selectedCell.playPauseButton setPlayPauseDisplaysPlay:YES];
+    self.selectedCell.playPauseButton.selected = FALSE;
 }
 
 - (void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error {
     [self stopProgressTimerForVoicemail];
-    [self.selectedCell.playPauseButton setPlayPauseDisplaysPlay:YES];
+    self.selectedCell.playPauseButton.selected = TRUE;
 }
 
 - (void)setupSpeaker

@@ -261,7 +261,7 @@
 		913786F7194A22E200002DD3 /* LoggerClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 913786F6194A22E200002DD3 /* LoggerClient.m */; };
 		9145E31F191D842500840D66 /* JCVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 9145E31E191D842500840D66 /* JCVersion.m */; };
 		914B3985195B727100334579 /* VoicemailCell.png in Resources */ = {isa = PBXBuildFile; fileRef = 914B3984195B727100334579 /* VoicemailCell.png */; };
-		9154947819366C54003DCED4 /* JCPlayPauseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9154947719366C54003DCED4 /* JCPlayPauseView.m */; };
+		9154947819366C54003DCED4 /* JCPlayPauseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9154947719366C54003DCED4 /* JCPlayPauseButton.m */; };
 		91634C2F19630A3B0079A823 /* JCGetStartedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 91634C2E19630A3B0079A823 /* JCGetStartedButton.m */; };
 		9172AD5C19192A1500481B01 /* UserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9172AD5B19192A1500481B01 /* UserDefaults.plist */; };
 		91743AA0191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91743A9F191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m */; };
@@ -780,8 +780,8 @@
 		9145E31D191D842500840D66 /* JCVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVersion.h; sourceTree = "<group>"; };
 		9145E31E191D842500840D66 /* JCVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVersion.m; sourceTree = "<group>"; };
 		914B3984195B727100334579 /* VoicemailCell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VoicemailCell.png; sourceTree = "<group>"; };
-		9154947619366C54003DCED4 /* JCPlayPauseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPlayPauseView.h; sourceTree = "<group>"; };
-		9154947719366C54003DCED4 /* JCPlayPauseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPlayPauseView.m; sourceTree = "<group>"; };
+		9154947619366C54003DCED4 /* JCPlayPauseButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPlayPauseButton.h; sourceTree = "<group>"; };
+		9154947719366C54003DCED4 /* JCPlayPauseButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPlayPauseButton.m; sourceTree = "<group>"; };
 		91634C2D19630A3B0079A823 /* JCGetStartedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCGetStartedButton.h; sourceTree = SOURCE_ROOT; };
 		91634C2E19630A3B0079A823 /* JCGetStartedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCGetStartedButton.m; sourceTree = SOURCE_ROOT; };
 		9172AD5B19192A1500481B01 /* UserDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserDefaults.plist; sourceTree = "<group>"; };
@@ -1955,8 +1955,8 @@
 		91E3738219351E0C00534C7C /* VoiceMailIcons */ = {
 			isa = PBXGroup;
 			children = (
-				9154947619366C54003DCED4 /* JCPlayPauseView.h */,
-				9154947719366C54003DCED4 /* JCPlayPauseView.m */,
+				9154947619366C54003DCED4 /* JCPlayPauseButton.h */,
+				9154947719366C54003DCED4 /* JCPlayPauseButton.m */,
 				91DDB1971935008A00550F10 /* JCSpeakerView.h */,
 				91DDB1981935008A00550F10 /* JCSpeakerView.m */,
 				91DDB19B193500B500550F10 /* JCDeleteView.h */,
@@ -2474,7 +2474,7 @@
 				273CC25E1900B23B005A2857 /* JCVoiceCell.m in Sources */,
 				5D1FAC6519DF376B00899915 /* JCKeyboardViewController.m in Sources */,
 				2799755F1959CD38001425CC /* JCStyleKit.m in Sources */,
-				9154947819366C54003DCED4 /* JCPlayPauseView.m in Sources */,
+				9154947819366C54003DCED4 /* JCPlayPauseButton.m in Sources */,
 				91869D871959E5CF007743CE /* JCTOSButtonView.m in Sources */,
 				2710E40F18CEC8C300152C91 /* ConversationEntry+Custom.m in Sources */,
 				91634C2F19630A3B0079A823 /* JCGetStartedButton.m in Sources */,
