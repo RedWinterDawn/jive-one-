@@ -25,6 +25,7 @@
 @property (nonatomic, weak) IBOutlet UIButton *endCallButton;
 @property (nonatomic, weak) IBOutlet UIButton *holdCallButton;
 @property (nonatomic, weak) IBOutlet UIButton *answerCallButton;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *endCallButtonWidthConstraint;
 
 @property (nonatomic, strong) JCCallCard *callCard;
 

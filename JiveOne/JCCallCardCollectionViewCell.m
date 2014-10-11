@@ -22,6 +22,9 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
     UIColor *_defaultCallActionsColor;
     CGFloat _currentCallCardInfoElevation;
     CGFloat _originalCurrentCallViewConstraint;
+    CGFloat _originalEndCallButtonWidthConstraint;
+    
+    bool _showingHold;
 }
 @end
 
@@ -43,6 +46,7 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
     _defaultCallActionsColor            = self.callActions.backgroundColor;
     _currentCallCardInfoElevation       = self.callCardInfoTopConstraint.constant;
     _originalCurrentCallViewConstraint  = self.currentCallTopToContainerConstraint.constant;
+    _originalEndCallButtonWidthConstraint  = self.endCallButtonWidthConstraint.constant;
 }
 
 -(void)layoutSubviews
@@ -74,16 +78,20 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
         {
 			case JCNoCall:
 				self.elapsedTimeLabel.text = NSLocalizedString(@"CONNECTING", nil);
+                [self hideHoldButton:NO];
 				break;
 			case JCCallFailed:
 			case JCCallCanceled:
 				self.elapsedTimeLabel.text = NSLocalizedString(@"CANCELED", nil);
+                [self hideHoldButton:NO];
 				break;
 			case JCCallRinging:
 				self.elapsedTimeLabel.text = NSLocalizedString(@"RINGING", nil);
+                [self hideHoldButton:NO];
 				break;
 			case JCCallConnected:
-				if (!_timer) {
+                [self showHoldButton:YES];
+                if (!_timer) {
 					_timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerUpdate) userInfo:nil repeats:YES];
 					[self timerUpdate];
 				}
@@ -227,6 +235,30 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
                          }];
 }
 
+-(void)hideHoldButton:(bool)animated
+{
+    _endCallButtonWidthConstraint.constant = self.bounds.size.width;
+    [_callActions setNeedsUpdateConstraints];
+    
+    [UIView animateWithDuration:animated ? 0.3 : 0
+                     animations:^{
+                         [_callActions layoutIfNeeded];
+                     } completion:^(BOOL finished) {
+                         _showingHold = false;
+                     }];
+}
 
+-(void)showHoldButton:(bool)animated
+{
+    _endCallButtonWidthConstraint.constant = _originalEndCallButtonWidthConstraint;
+    [_callActions setNeedsUpdateConstraints];
+    
+    [UIView animateWithDuration:animated ? 0.3 : 0
+                     animations:^{
+                         [_callActions layoutIfNeeded];
+                     } completion:^(BOOL finished) {
+                         _showingHold = true;
+                     }];
+}
 
 @end
