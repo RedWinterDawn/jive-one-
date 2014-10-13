@@ -15,6 +15,8 @@
 #import "Lines+Custom.h"
 #import "PBX+Custom.h"
 #import "JCCallCardManager.h"
+#import "VideoViewController.h"
+
 
 #define MAX_LINES 8
 #define ALERT_TAG_REFER 100
@@ -30,6 +32,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     PortSIPSDK *_mPortSIPSDK;
     ConnectionCompletionHandler _connectionCompletionHandler;
     AFNetworkReachabilityStatus _previousNetworkStatus;
+	VideoViewController *_videoController;
+	bool inConference;
 }
 
 @property (nonatomic) NSMutableArray *lineSessions;
@@ -54,6 +58,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         
         _mPortSIPSDK = [[PortSIPSDK alloc] init];
         _mPortSIPSDK.delegate = self;
+		
+		_videoController = [VideoViewController new];
         
         // Register to listen for AFNetworkReachability Changes.
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
@@ -583,10 +589,61 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 }
 
+- (bool)setConference:(bool)conference
+{
+	return conference;
+	
+	if (conference)
+	{
+		int rt = [_mPortSIPSDK createConference:_videoController.view videoResolution:VIDEO_NONE displayLocalVideo:NO];
+		if (rt == 0) {
+			for (JCLineSession *line in self.lineSessions)
+			{
+				if (line.mSessionState)
+				{
+					if (line.mHoldSate)
+					{
+						[_mPortSIPSDK unHold:line.mSessionId];
+						line.mHoldSate = false;
+					}
+					
+					[_mPortSIPSDK joinToConference:line.mSessionId];
+				}
+			}
+			
+			inConference = true;
+		}
+		else
+		{
+			// failed to create conference
+			inConference = false;
+		}
+	}
+	else
+	{
+		inConference = false;
+		// Before stop the conference, MUST place all lines to hold state
+		for (JCLineSession *line in self.lineSessions)
+		{
+			if (line.mSessionState && !line.mHoldSate )
+			{
+				[_mPortSIPSDK hold:line.mSessionId];
+				line.mHoldSate = true;
+			}
+		}
+		
+		[_mPortSIPSDK destroyConference];
+	}
+	
+	return inConference;
+}
+
 - (void) setLoudspeakerStatus:(BOOL)enable
 {
 	[_mPortSIPSDK setLoudspeakerStatus:enable];
 }
+
+
 
 //- (void)didSelectLine:(NSInteger)activeLine
 //{

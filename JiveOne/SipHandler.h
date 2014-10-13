@@ -32,6 +32,7 @@ extern NSString *const kSipHandlerRegisteredSelectorKey;
 - (void)answerCall;
 - (void) hangUpCallWithSession:(long)sessionId;
 - (void) holdCall;
+- (bool)setConference:(bool)conference;
 //- (void) unholdCall;
 //- (void) hangUpCall;
 - (void) referCall:(NSString*)referTo;

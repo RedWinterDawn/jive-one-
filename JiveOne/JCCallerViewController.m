@@ -181,13 +181,17 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(IBAction)swapCall:(id)sender
 {
-    // TODO: Swap current calls.
-
+	
 }
 
 -(IBAction)mergeCall:(id)sender
 {
-    // TODO: Merge two calls.
+	if ([sender isKindOfClass:[UIButton class]])
+	{
+		UIButton *button = (UIButton *)sender;
+		button.selected = !button.selected;
+		[[SipHandler sharedHandler] setConference:button.selected];
+	}
 }
 
 -(IBAction)finishTransfer:(id)sender
