@@ -159,6 +159,10 @@
 {
     [super prepareForReuse];
     [self removeObservers];
+    
+    
+    self.playPauseButton.selected = false;
+    self.speakerButton.selected = false;
 }
 
 -(void)removeObservers
@@ -168,12 +172,17 @@
 }
 
 - (IBAction)playPauseButtonTapped:(id)sender {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(voiceCellPlayTapped:)]) {
-        [self.delegate voiceCellPlayTapped:self];
+    if ([sender isKindOfClass:[UIButton class]]) {
+        UIButton *button = (UIButton *)sender;
+        button.selected = !button.selected;
+        if (self.delegate && [self.delegate respondsToSelector:@selector(voiceCellPlayTapped:)]) {
+            [self.delegate voiceCellPlayTapped:self];
+        }
     }
 }
 
-- (IBAction)progressSliderMoved:(id)sender {
+- (IBAction)progressSliderMoved:(id)sender
+{
     if (self.delegate && [self.delegate respondsToSelector:@selector(voiceCellSliderMoved:)]) {
         [self.delegate voiceCellSliderMoved:self.slider.value];
     }
@@ -191,24 +200,17 @@
     }
 }
 
-- (IBAction)speakerTouched:(id)sender;
-{
-    if (self.delegate && [self.delegate respondsToSelector:@selector(voicecellSpeakerTouched:)]) {
-        [self.delegate voicecellSpeakerTouched:YES];
+- (IBAction)speakerTouched:(id)sender {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(voicecellSpeakerTouched)]) {
+        [self.delegate voicecellSpeakerTouched];
     }
 }
 
--(IBAction)voiceCellDeleteTapped:(NSIndexPath *)indexPath
+-(IBAction)voiceCellDeleteTapped:(id)sender
 {
     if (self.delegate && [self.delegate respondsToSelector:@selector(voiceCellDeleteTapped:)]) {
-        [self.delegate voiceCellDeleteTapped:indexPath];
+        [self.delegate voiceCellDeleteTapped:self];
     }
-}
-
-- (void)setSpeakerButtonTint:(UIColor*)color
-{
-    [_speakerButton.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    _speakerButton.imageView.image = [Common tintedImageWithColor:color image:_speakerButton.imageView.image];
 }
 
 @end

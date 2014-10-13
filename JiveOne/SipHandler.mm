@@ -7,172 +7,265 @@
 //
 
 #import "SipHandler.h"
-#import "JCLineSession.h"
+
+#import <PortSIPLib/PortSIPSDK.h>
+#import <AFNetworking/AFNetworkReachabilityManager.h>
+
 #import "LineConfiguration+Custom.h"
+#import "Lines+Custom.h"
 #import "PBX+Custom.h"
 #import "JCCallCardManager.h"
 
-@interface SipHandler()
+#define MAX_LINES 8
+#define ALERT_TAG_REFER 100
+#define OUTBOUND_SIP_SERVER_PORT 5060
+
+NSString *const kSipHandlerServerAgentname = @"Jive iOS Client";
+NSString *const kSipHandlerFetchLineConfigurationErrorMessage = @"Unable to fetch the line configuration";
+NSString *const kSipHandlerFetchPBXErrorMessage = @"Unable to fetch the line configuration";
+NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
+
+@interface SipHandler() <PortSIPEventDelegate>
 {
-	BOOL    SIPInitialized;
-	BOOL    SIPRegistered;
+    PortSIPSDK *_mPortSIPSDK;
+    ConnectionCompletionHandler _connectionCompletionHandler;
+    AFNetworkReachabilityStatus _previousNetworkStatus;
 }
-- (JCLineSession *)findSession:(long)sessionId;
+
 @property (nonatomic) NSMutableArray *lineSessions;
+
+- (JCLineSession *)findSession:(long)sessionId;
+
 @end
 
-#define ALERT_TAG_REFER 100
 @implementation SipHandler
-//@synthesize mActiveLine;
 
-
-+ (instancetype) sharedHandler
+-(id)init
 {
-	static SipHandler *handler = nil;
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		handler = [[self alloc] init];
-		[handler initiate];
-	});
-	return handler;
+    self = [super init];
+    if (self)
+    {
+        if (_registered)
+            return self;
+        
+        _lineSessions = [NSMutableArray new];
+        for (int i = 0; i < 2; i++)
+            [_lineSessions addObject:[JCLineSession new]];
+        
+        _mPortSIPSDK = [[PortSIPSDK alloc] init];
+        _mPortSIPSDK.delegate = self;
+        
+        // Register to listen for AFNetworkReachability Changes.
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self selector:@selector(networkConnectivityChanged:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
+        _previousNetworkStatus = [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
+        
+        [self connect:NULL];
+    }
+    return self;
 }
 
-- (void)initiate
+#pragma mark - Device Registration -
+
+-(void)connect:(ConnectionCompletionHandler)completionHandler;
 {
-	if (mSIPRegistered) {
-		return;
-	}
-	
-	_lineSessions = [NSMutableArray new];
-	for (int i = 0; i < 2; i++)
-	{
-		[_lineSessions addObject:[JCLineSession new]];
-	}
-	
-	_mPortSIPSDK = [[PortSIPSDK alloc] init];
-	_mPortSIPSDK.delegate = self;
-	
-	[self online];
+    _connectionCompletionHandler = completionHandler;
+    
+    // If we are already connected, disconnect then reconnect.
+    if (_registered)
+        [self disconnect];
+    
+    @try {
+        NSLog(@"Connecting");
+        
+        [self login];
+        _initialized = true;
+    }
+    @catch (NSException *exception) {
+        NSError *error = [NSError errorWithDomain:exception.reason code:0 userInfo:nil];
+        if (completionHandler != NULL)
+            completionHandler(false, error);
+        else
+            NSLog(@"%@", error);
+    }
 }
 
-- (void)online
+/**
+ *  Sets the User info from Core Data into the Port Sip SDK.
+ */
+-(void)login
 {
-	
-	if (mSIPRegistered) {
-		return;
-	}
-	
-	LineConfiguration *config = [LineConfiguration MR_findFirst];
-	PBX *pbx = [PBX MR_findFirst];
-	if (!config) {
-		return;
-	}
-	// TODO: get configuration from database
-	NSString* kSipUserName = config.sipUsername;
-	NSString* kDisplayName = config.display;
-	NSString* kSipPassword = config.sipPassword;
-	NSString* kSIPServer = config.registrationHost;
-	
-	if (pbx && [pbx.v5 boolValue]) {
-		kSIPServer = config.outboundProxy;
-	}
-	
-	NSString* kProxy = config.outboundProxy;
-	int kSIPServerPort = 5060;
-	
-	int ret = [_mPortSIPSDK initialize:TRANSPORT_UDP loglevel:PORTSIP_LOG_DEBUG logPath:NULL maxLine:8 agent:@"Jive iOS Client" virtualAudioDevice:FALSE virtualVideoDevice:FALSE];
-	if(ret != 0)
-	{
-		NSLog(@"initializeSDK failure ErrorCode = %d",ret);
-		return ;
-	}
-	
-	int localPort = 10000 + arc4random()%1000;
-	NSString* loaclIPaddress = @"0.0.0.0";//Auto select IP address
-	
-	[_mPortSIPSDK setUser:kSipUserName displayName:kDisplayName authName:kSipUserName password:kSipPassword localIP:loaclIPaddress localSIPPort:localPort userDomain:@"" SIPServer:kSIPServer SIPServerPort:kSIPServerPort STUNServer:@"" STUNServerPort:0 outboundServer:kProxy outboundServerPort:kSIPServerPort];
-
-	int rt = [_mPortSIPSDK setLicenseKey:kPortSIPKey];
-	if (rt == ECoreTrialVersionLicenseKey)
-	{
-		
-		UIAlertView *alert = [[UIAlertView alloc]
-							  initWithTitle:@"Warning"
-							  message: @"This trial version SDK just allows short conversation, you can't heairng anyting after 2-3 minutes, contact us: sales@portsip.com to buy official version."
-							  delegate: self
-							  cancelButtonTitle: @"OK"
-							  otherButtonTitles:nil];
-		[alert show];
-	}
-	else if (rt == ECoreWrongLicenseKey)
-	{
-		UIAlertView *alert = [[UIAlertView alloc]
-							  initWithTitle:@"Warning"
-							  message: @"The wrong license key was detected, please check with sales@portsip.com or support@portsip.com"
-							  delegate: self
-							  cancelButtonTitle: @"OK"
-							  otherButtonTitles:nil];
-		[alert show];
-	}
-	
-	//    [_mPortSIPSDK addAudioCodec:AUDIOCODEC_PCMA];
-	[_mPortSIPSDK addAudioCodec:AUDIOCODEC_PCMU];
-	//    [_mPortSIPSDK addAudioCodec:AUDIOCODEC_SPEEX];
-	[_mPortSIPSDK addAudioCodec:AUDIOCODEC_G729];
-	[_mPortSIPSDK addAudioCodec:AUDIOCODEC_G722];
-	
-	//[_mPortSIPSDK addAudioCodec:AUDIOCODEC_GSM];
-	//[_mPortSIPSDK addAudioCodec:AUDIOCODEC_ILBC];
-	//[_mPortSIPSDK addAudioCodec:AUDIOCODEC_AMR];
-	//[_mPortSIPSDK addAudioCodec:AUDIOCODEC_SPEEXWB];
-	
-	//[_mPortSIPSDK addVideoCodec:VIDEO_CODEC_H263];
-	//[_mPortSIPSDK addVideoCodec:VIDEO_CODEC_H263_1998];
-	[_mPortSIPSDK addVideoCodec:VIDEO_CODEC_H264];
-	
-	[_mPortSIPSDK setVideoBitrate:100];//video send bitrate,100kbps
-	[_mPortSIPSDK setVideoFrameRate:10];
-	[_mPortSIPSDK setVideoResolution:VIDEO_CIF];
-	[_mPortSIPSDK setAudioSamples:20 maxPtime:60];//ptime 20
-	
-	//1 - FrontCamra 0 - BackCamra
-	[_mPortSIPSDK setVideoDeviceId:1];
-	//[_mPortSIPSDK setVideoOrientation:180];
-	
-	//enable srtp
-	[_mPortSIPSDK setSrtpPolicy:SRTP_POLICY_NONE];
-	
-	// Try to register the default identity
-	[_mPortSIPSDK registerServer:120 retryTimes:3];
-	
-	NSString* sipURL = nil;
-	if(kSIPServerPort == 5060) {
-		sipURL = [[NSString alloc] initWithFormat:@"sip:%@:%@",kSipUserName,kSIPServer];
-	}
-	else {
-		sipURL = [[NSString alloc] initWithFormat:@"sip:%@:%@:%d",kSipUserName,kSIPServer,kSIPServerPort];
-	}
-	
-	SIPInitialized = YES;
+    LineConfiguration *config = [LineConfiguration MR_findFirst];
+    if (!config)
+        [NSException raise:NSInvalidArgumentException format:kSipHandlerFetchLineConfigurationErrorMessage];
+    
+    PBX *pbx = [PBX MR_findFirst];
+    if (!pbx)
+        [NSException raise:NSInvalidArgumentException format:kSipHandlerFetchPBXErrorMessage];
+    
+    NSString *kSipUserName  = config.sipUsername;
+    NSString *kSIPServer    = ([pbx.v5 boolValue]) ? config.outboundProxy : config.registrationHost;
+    
+    _sipURL = [[NSString alloc] initWithFormat:@"sip:%@:%@", kSipUserName, kSIPServer];
+    
+    // Initialized the SIP SDK
+    int ret = [_mPortSIPSDK initialize:TRANSPORT_UDP
+                              loglevel:PORTSIP_LOG_DEBUG
+                               logPath:NULL
+                               maxLine:MAX_LINES
+                                 agent:kSipHandlerServerAgentname
+                    virtualAudioDevice:FALSE
+                    virtualVideoDevice:FALSE];
+    
+    if(ret != 0)
+        [NSException raise:NSInvalidArgumentException format:@"initializeSDK failure ErrorCode = %d",ret];
+    
+    ret = [_mPortSIPSDK setUser:kSipUserName
+                    displayName:config.display
+                       authName:kSipUserName
+                       password:config.sipPassword
+                        localIP:@"0.0.0.0"                      // Auto select IP address
+                   localSIPPort:(10000 + arc4random()%1000)     // Generate a random port in the 10,000 range
+                     userDomain:@""
+                      SIPServer:kSIPServer
+                  SIPServerPort:OUTBOUND_SIP_SERVER_PORT
+                     STUNServer:@""
+                 STUNServerPort:0
+                 outboundServer:config.outboundProxy
+             outboundServerPort:OUTBOUND_SIP_SERVER_PORT];
+    
+    if(ret != 0)
+        [NSException raise:NSInvalidArgumentException format:@"set user failure ErrorCode = %d",ret];
+    
+    ret = [_mPortSIPSDK setLicenseKey:kPortSIPKey];
+    if (ret == ECoreTrialVersionLicenseKey)
+        [NSException raise:NSInvalidArgumentException format:@"This trial version SDK just allows short conversation, you can't heairng anyting after 2-3 minutes, contact us: sales@portsip.com to buy official version."];
+    else if (ret == ECoreWrongLicenseKey)
+        [NSException raise:NSInvalidArgumentException format:@"The wrong license key was detected, please check with sales@portsip.com or support@portsip.com"];
+    
+    //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_PCMA];
+    [_mPortSIPSDK addAudioCodec:AUDIOCODEC_PCMU];
+    //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_SPEEX];
+    [_mPortSIPSDK addAudioCodec:AUDIOCODEC_G729];
+    [_mPortSIPSDK addAudioCodec:AUDIOCODEC_G722];
+    
+    //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_GSM];
+    //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_ILBC];
+    //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_AMR];
+    //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_SPEEXWB];
+    
+    //[_mPortSIPSDK addVideoCodec:VIDEO_CODEC_H263];
+    //[_mPortSIPSDK addVideoCodec:VIDEO_CODEC_H263_1998];
+    [_mPortSIPSDK addVideoCodec:VIDEO_CODEC_H264];
+    
+    [_mPortSIPSDK setVideoBitrate:100];//video send bitrate,100kbps
+    [_mPortSIPSDK setVideoFrameRate:10];
+    [_mPortSIPSDK setVideoResolution:VIDEO_CIF];
+    [_mPortSIPSDK setAudioSamples:20 maxPtime:60];//ptime 20
+    
+    //1 - FrontCamra 0 - BackCamra
+    [_mPortSIPSDK setVideoDeviceId:1];
+    //[_mPortSIPSDK setVideoOrientation:180];
+    
+    //enable srtp
+    [_mPortSIPSDK setSrtpPolicy:SRTP_POLICY_NONE];
+    
+    // Try to register the default identity
+    [_mPortSIPSDK registerServer:120 retryTimes:3];
 }
 
-- (void)offline
+-(void)disconnect
 {
-	if(SIPInitialized)
-	{
-		[_mPortSIPSDK unRegisterServer];
-		[_mPortSIPSDK unInitialize];
-		//[viewStatus setBackgroundColor:[UIColor redColor]];
-		
-		//[labelStatus setText:@"Not Connected"];
-		//[labelDebugInfo setText:[NSString stringWithFormat: @"unRegisterServer"]];
-		
-		SIPRegistered = NO;
-		SIPInitialized = NO;
-	}
-	//if([activityIndicator isAnimating])
-	//	[activityIndicator stopAnimating];
+    if(_initialized)
+    {
+        [_mPortSIPSDK unRegisterServer];
+        [_mPortSIPSDK unInitialize];
+        
+        _registered = NO;
+        _initialized = NO;
+    }
+}
+
+#pragma mark Registration Callback
+
+- (void)onRegisterSuccess:(char*) statusText statusCode:(int)statusCode
+{
+    [self willChangeValueForKey:kSipHandlerRegisteredSelectorKey];
+    _registered = TRUE;
+    if (_connectionCompletionHandler != NULL)
+        _connectionCompletionHandler(true, nil);
+    [self didChangeValueForKey:kSipHandlerRegisteredSelectorKey];
 };
+
+- (void)onRegisterFailure:(char*) statusText statusCode:(int)statusCode
+{
+    [self willChangeValueForKey:kSipHandlerRegisteredSelectorKey];
+    _registered = FALSE;
+    NSString *errorMessage = [NSString stringWithFormat:@"%@ code:(%i)", [NSString stringWithUTF8String:statusText], statusCode];
+    if (_connectionCompletionHandler != NULL)
+        _connectionCompletionHandler(false, [NSError errorWithDomain:errorMessage code:0 userInfo:nil]);
+    [self didChangeValueForKey:kSipHandlerRegisteredSelectorKey];
+};
+
+#pragma mark NetworkConnectivity
+
+-(void)networkConnectivityChanged:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    AFNetworkReachabilityStatus status = (AFNetworkReachabilityStatus)((NSNumber *)[userInfo valueForKey:AFNetworkingReachabilityNotificationStatusItem]).integerValue;
+    NSLog(@"AFNetworking status change");
+    
+    if (_previousNetworkStatus == AFNetworkReachabilityStatusUnknown)
+        _previousNetworkStatus = status;
+    
+    switch (status)
+    {
+        case AFNetworkReachabilityStatusNotReachable:
+            break;
+        case AFNetworkReachabilityStatusReachableViaWiFi: {
+            
+            // If we are not transitioning from cellular to wifi, reconnect
+            if (_previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWWAN && _previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWiFi)
+            {
+                JCLineSession *lineSession = [self findLineWithSessionState];
+                if (lineSession)
+                {
+                    [self hangUpCallWithSession:lineSession.mSessionId];
+                }
+                
+                [self connect:NULL];
+            }
+            
+            break;
+        }
+        case AFNetworkReachabilityStatusReachableViaWWAN:
+            
+            
+            break;
+            
+        default:
+            [self connect:NULL];
+            break;
+    }
+    _previousNetworkStatus = status;
+}
+
+- (void)startKeepAwake
+{
+    if (_mPortSIPSDK)
+    {
+        [_mPortSIPSDK startKeepAwake];
+    }
+}
+
+-(void)stopKeepAwake
+{
+    if (_mPortSIPSDK)
+    {
+        [_mPortSIPSDK stopKeepAwake];
+    }
+}
+
 
 //#pragma mark - Registration Delegates
 //
@@ -544,25 +637,7 @@
 //	[tabBarController presentViewController:selectLineView animated:YES completion:nil];
 //}
 
-#pragma mark Registration Callback
-//
-//	sip callback events implementation
-//
-//Register Event
-- (void)onRegisterSuccess:(char*) statusText statusCode:(int)statusCode
 
-{
-	mSIPRegistered = TRUE;
-	//TODO:Announce didRegister
-//	[loginViewController onRegisterSuccess:statusCode withStatusText:statusText];
-};
-
-- (void)onRegisterFailure:(char*) statusText statusCode:(int)statusCode
-{
-	mSIPRegistered = FALSE;
-	//TODO:Announce didFailToRegister
-//	[loginViewController onRegisterFailure:statusCode withStatusText:statusText];
-};
 
 
 #pragma mark - Call Events
@@ -1338,4 +1413,24 @@
 		}
 	}
 }
+@end
+
+
+@implementation SipHandler (Singleton)
+
++ (instancetype) sharedHandler
+{
+    static SipHandler *handler = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        handler = [[self alloc] init];
+    });
+    return handler;
+}
+
++ (id)copyWithZone:(NSZone *)zone
+{
+    return self;
+}
+
 @end

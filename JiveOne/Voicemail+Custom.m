@@ -73,7 +73,7 @@
         vmail.timeStamp = [NSNumber numberWithLongLong:[dictionary[@"timeStamp"] longLongValue]];
         vmail.duration = [NSNumber numberWithInteger:[dictionary[@"duration"] intValue]];
         vmail.read = [NSNumber numberWithBool:[dictionary[@"read"] boolValue]];
-        if ([[dictionary objectForKey:@"transcription"] isKindOfClass:[NSNull class]]) {
+        /*if ([[dictionary objectForKey:@"transcription"] isKindOfClass:[NSNull class]]) {
             vmail.transcription = nil;
         } else {
             vmail.transcription = [dictionary objectForKey:@"transcription"];
@@ -82,7 +82,7 @@
             vmail.transcriptionPercent = nil;
         } else {
             vmail.transcriptionPercent = [dictionary objectForKey:@"transcriptionPercent"];
-        }
+        }*/
         vmail.callerId = dictionary[@"callerId"];
         if ([[dictionary objectForKey:@"callerIdNumber"] isKindOfClass:[NSNull class]]) {
             vmail.callerIdNumber = nil;

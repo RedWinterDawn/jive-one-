@@ -1,5 +1,5 @@
 //
-//  JCSpeakerView.h
+//  JCDeleteView.h
 //  JiveOne
 //
 //  Created by Doug on 5/27/14.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JCSpeakerView : UIView
--(void)setIsSelected:(BOOL)isSelected;
+@interface JCDeleteButton : UIButton
+
 @end
