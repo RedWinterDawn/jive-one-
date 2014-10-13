@@ -6,15 +6,9 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "OutGoingCall.h"
+#import "OutgoingCall.h"
 
+@implementation OutgoingCall
 
-@implementation OutGoingCall
-
-@dynamic date;
-@dynamic callerNumber;
-@dynamic callerName;
-@dynamic callerExt;
-@dynamic newRelationship;
 
 @end

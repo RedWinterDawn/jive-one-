@@ -8,13 +8,6 @@
 
 #import "MissedCall.h"
 
-
 @implementation MissedCall
-
-@dynamic date;
-@dynamic callerNumber;
-@dynamic callerName;
-@dynamic callerExt;
-@dynamic newRelationship;
 
 @end

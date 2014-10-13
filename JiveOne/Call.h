@@ -6,11 +6,13 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
+#import "RecentEvent.h"
 
+@interface Call : RecentEvent
 
-@interface Call : NSManagedObject
-
+@property (nonatomic, retain) NSDate *date;
+@property (nonatomic, retain) NSString *number;
+@property (nonatomic, retain) NSString *name;
+@property (nonatomic, retain) NSNumber *extension;
 
 @end

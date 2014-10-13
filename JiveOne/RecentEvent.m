@@ -7,10 +7,15 @@
 //
 
 #import "RecentEvent.h"
-
+#import "Common.h"
 
 @implementation RecentEvent
 
 @dynamic timeStamp;
+
+-(NSString *)formattedShortDate
+{
+    return [Common shortDateFromTimestamp:self.timeStamp];
+}
 
 @end

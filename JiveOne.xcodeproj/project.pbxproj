@@ -314,12 +314,12 @@
 		F8A2BC0B19DB5B3C00251310 /* JCCallOptionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = F8A2BC0A19DB5B3C00251310 /* JCCallOptionsView.m */; };
 		F8B62E5B19DB091500AF98D3 /* JCRoundedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F8B62E5A19DB091500AF98D3 /* JCRoundedButton.m */; };
 		F8BC82C319E44A2E00340BA1 /* JCKeypadView.m in Sources */ = {isa = PBXBuildFile; fileRef = F8BC82C219E44A2E00340BA1 /* JCKeypadView.m */; };
-		F8C9A7D119E880E70049A715 /* JCRecentEvents.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F8C9A7CF19E880E70049A715 /* JCRecentEvents.xcdatamodeld */; };
-		F8C9A7D419E884D20049A715 /* OutGoingCall.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C9A7D319E884D20049A715 /* OutGoingCall.m */; };
+		F8C9A7D419E884D20049A715 /* OutgoingCall.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C9A7D319E884D20049A715 /* OutgoingCall.m */; };
 		F8C9A7D719E884D30049A715 /* MissedCall.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C9A7D619E884D30049A715 /* MissedCall.m */; };
 		F8C9A7DA19E884D30049A715 /* IncommingCall.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C9A7D919E884D30049A715 /* IncommingCall.m */; };
-		F8C9A7DD19E884D30049A715 /* RecentEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C9A7DC19E884D30049A715 /* RecentEvent.m */; };
 		F8C9A7DF19E8869B0049A715 /* callHistoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8C9A7DE19E8869B0049A715 /* callHistoryCell.xib */; };
+		F8C9A7E219EC31DF0049A715 /* Call.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C9A7E119EC31DF0049A715 /* Call.m */; };
+		F8C9A7E519EC36340049A715 /* RecentEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C9A7E419EC36340049A715 /* RecentEvent.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -876,16 +876,17 @@
 		F8B62E5A19DB091500AF98D3 /* JCRoundedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCRoundedButton.m; sourceTree = "<group>"; };
 		F8BC82C119E44A2E00340BA1 /* JCKeypadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCKeypadView.h; sourceTree = "<group>"; };
 		F8BC82C219E44A2E00340BA1 /* JCKeypadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCKeypadView.m; sourceTree = "<group>"; };
-		F8C9A7D019E880E70049A715 /* JCRecentEvents.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = JCRecentEvents.xcdatamodel; sourceTree = "<group>"; };
-		F8C9A7D219E884D20049A715 /* OutGoingCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OutGoingCall.h; sourceTree = "<group>"; };
-		F8C9A7D319E884D20049A715 /* OutGoingCall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OutGoingCall.m; sourceTree = "<group>"; };
+		F8C9A7D219E884D20049A715 /* OutgoingCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OutgoingCall.h; sourceTree = "<group>"; };
+		F8C9A7D319E884D20049A715 /* OutgoingCall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OutgoingCall.m; sourceTree = "<group>"; };
 		F8C9A7D519E884D30049A715 /* MissedCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MissedCall.h; sourceTree = "<group>"; };
 		F8C9A7D619E884D30049A715 /* MissedCall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MissedCall.m; sourceTree = "<group>"; };
 		F8C9A7D819E884D30049A715 /* IncommingCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IncommingCall.h; sourceTree = "<group>"; };
 		F8C9A7D919E884D30049A715 /* IncommingCall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IncommingCall.m; sourceTree = "<group>"; };
-		F8C9A7DB19E884D30049A715 /* RecentEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentEvent.h; sourceTree = "<group>"; };
-		F8C9A7DC19E884D30049A715 /* RecentEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecentEvent.m; sourceTree = "<group>"; };
 		F8C9A7DE19E8869B0049A715 /* callHistoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = callHistoryCell.xib; sourceTree = "<group>"; };
+		F8C9A7E019EC31DF0049A715 /* Call.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Call.h; sourceTree = "<group>"; };
+		F8C9A7E119EC31DF0049A715 /* Call.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Call.m; sourceTree = "<group>"; };
+		F8C9A7E319EC36340049A715 /* RecentEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentEvent.h; sourceTree = "<group>"; };
+		F8C9A7E419EC36340049A715 /* RecentEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecentEvent.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1140,15 +1141,12 @@
 		270152C71901D77A00F271CE /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				F8C9A7CF19E880E70049A715 /* JCRecentEvents.xcdatamodeld */,
-				F8C9A7DB19E884D30049A715 /* RecentEvent.h */,
-				F8C9A7DC19E884D30049A715 /* RecentEvent.m */,
 				F8C9A7D819E884D30049A715 /* IncommingCall.h */,
 				F8C9A7D919E884D30049A715 /* IncommingCall.m */,
 				F8C9A7D519E884D30049A715 /* MissedCall.h */,
 				F8C9A7D619E884D30049A715 /* MissedCall.m */,
-				F8C9A7D219E884D20049A715 /* OutGoingCall.h */,
-				F8C9A7D319E884D20049A715 /* OutGoingCall.m */,
+				F8C9A7D219E884D20049A715 /* OutgoingCall.h */,
+				F8C9A7D319E884D20049A715 /* OutgoingCall.m */,
 				270559A6196DD11800A7AF35 /* LineGroup.h */,
 				270559A7196DD11800A7AF35 /* LineGroup.m */,
 				270559A3196DD11700A7AF35 /* ContactGroup.h */,
@@ -1178,6 +1176,10 @@
 				2788F142190EACD20099348D /* VoicemailETag.m */,
 				274493B718D0E98C002744CB /* Presence.h */,
 				274493B818D0E98C002744CB /* Presence.m */,
+				F8C9A7E019EC31DF0049A715 /* Call.h */,
+				F8C9A7E119EC31DF0049A715 /* Call.m */,
+				F8C9A7E319EC36340049A715 /* RecentEvent.h */,
+				F8C9A7E419EC36340049A715 /* RecentEvent.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -2379,7 +2381,6 @@
 				9103271718F34BEC00437503 /* JCPeopleDetailCell.m in Sources */,
 				5D15AF2C19DB271500E86116 /* NSString+IsNumeric.m in Sources */,
 				F2459BB218C67FC000AF56CF /* JCGroupSelectorViewController.m in Sources */,
-				F8C9A7DD19E884D30049A715 /* RecentEvent.m in Sources */,
 				F8A2BC0B19DB5B3C00251310 /* JCCallOptionsView.m in Sources */,
 				279975F2195B1BCD001425CC /* Membership.m in Sources */,
 				277F094218FED58C00EEF0E3 /* JCStatusViewController.m in Sources */,
@@ -2388,7 +2389,7 @@
 				F8C9A7D719E884D30049A715 /* MissedCall.m in Sources */,
 				27F1F2EB191C171300AEAFD7 /* UAPushSettingsTokenViewController.m in Sources */,
 				279E4CA9192273E5002A556C /* MBContactCollectionView.m in Sources */,
-				F8C9A7D419E884D20049A715 /* OutGoingCall.m in Sources */,
+				F8C9A7D419E884D20049A715 /* OutgoingCall.m in Sources */,
 				27F1F2EC191C171300AEAFD7 /* UAPushSettingsUserInfoViewController.m in Sources */,
 				27F1F2ED191C171300AEAFD7 /* UAPushSettingsViewController.m in Sources */,
 				5D629BAD19D9C41900F5744E /* JCVoiceViewController.m in Sources */,
@@ -2403,6 +2404,7 @@
 				2710E40C18CE873000152C91 /* Conversation+Custom.m in Sources */,
 				27F1F2E9191C171300AEAFD7 /* UAPushSettingsSoundsViewController.m in Sources */,
 				5DBBDCC319DCB29100A4DB96 /* JCCallCardCollectionViewController.m in Sources */,
+				F8C9A7E519EC36340049A715 /* RecentEvent.m in Sources */,
 				27F1F2E3191C171300AEAFD7 /* UAMapPresentationController.m in Sources */,
 				27F1F2E5191C171300AEAFD7 /* UAPushNotificationHandler.m in Sources */,
 				91915738195B209D004BDE26 /* JCAppIntro.m in Sources */,
@@ -2470,11 +2472,11 @@
 				279E4CAB192273E5002A556C /* MBContactCollectionViewContactCell.m in Sources */,
 				5D15AF2B19DB271500E86116 /* NSString+DialString.m in Sources */,
 				27F1F2D7191C171300AEAFD7 /* UAInboxMessageListController.m in Sources */,
+				F8C9A7E219EC31DF0049A715 /* Call.m in Sources */,
 				91CAE6811961EA6A004A28FD /* JCJiveLogoBlack.m in Sources */,
 				91260EDD18B2965900704670 /* JCDirectoryDetailViewController.m in Sources */,
 				2751591718AD300B00FD8D3F /* OsgiData.xcdatamodel in Sources */,
 				91DDB19D193500B500550F10 /* JCDeleteView.m in Sources */,
-				F8C9A7D119E880E70049A715 /* JCRecentEvents.xcdatamodeld in Sources */,
 				2751591118AD174F00FD8D3F /* KeychainItemWrapper.m in Sources */,
 				91DDB1991935008A00550F10 /* JCSpeakerView.m in Sources */,
 				2751591318AD174F00FD8D3F /* JCAuthenticationManager.m in Sources */,
@@ -2926,19 +2928,6 @@
 			defaultConfigurationName = Enterprise;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		F8C9A7CF19E880E70049A715 /* JCRecentEvents.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				F8C9A7D019E880E70049A715 /* JCRecentEvents.xcdatamodel */,
-			);
-			currentVersion = F8C9A7D019E880E70049A715 /* JCRecentEvents.xcdatamodel */;
-			path = JCRecentEvents.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 275F4A4618AD0FBC00D2F069 /* Project object */;
 }

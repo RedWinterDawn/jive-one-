@@ -8,8 +8,11 @@
 
 #import "Call.h"
 
-
 @implementation Call
 
+@dynamic date;
+@dynamic name;
+@dynamic number;
+@dynamic extension;
 
 @end

@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6244" systemVersion="13F34" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Call" representedClassName="Call" isAbstract="YES" parentEntity="RecentEvent" syncable="YES">
+        <attribute name="extension" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Company" representedClassName="Company" syncable="YES">
         <attribute name="companyId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="createDate" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -44,6 +49,7 @@
     <entity name="ConversationETag" representedClassName="ConversationETag" syncable="YES">
         <attribute name="etag" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
+    <entity name="IncomingCall" representedClassName="IncomingCall" parentEntity="Call" syncable="YES"/>
     <entity name="LineConfiguration" representedClassName="LineConfiguration" syncable="YES">
         <attribute name="display" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="outboundProxy" optional="YES" attributeType="String" syncable="YES"/>
@@ -74,6 +80,8 @@
         <attribute name="membershipId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pbxId" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="MissedCall" representedClassName="MissedCall" parentEntity="Call" syncable="YES"/>
+    <entity name="OutgoingCall" representedClassName="OutgoingCall" parentEntity="Call" syncable="YES"/>
     <entity name="PBX" representedClassName="PBX" syncable="YES">
         <attribute name="jrn" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -120,7 +128,10 @@
         <attribute name="lastModified" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="presenceId" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="Voicemail" representedClassName="Voicemail" syncable="YES">
+    <entity name="RecentEvent" representedClassName="RecentEvent" isAbstract="YES" syncable="YES">
+        <attribute name="timeStamp" optional="YES" attributeType="Date" syncable="YES"/>
+    </entity>
+    <entity name="Voicemail" representedClassName="Voicemail" parentEntity="RecentEvent" syncable="YES">
         <attribute name="callerId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="callerIdNumber" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="deleted" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -128,7 +139,6 @@
         <attribute name="jrn" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mailboxUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="read" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="timeStamp" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="transcription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="transcriptionPercent" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url_changeStatus" optional="YES" attributeType="String" syncable="YES"/>
@@ -142,20 +152,25 @@
         <attribute name="etag" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Company" positionX="0" positionY="0" width="128" height="150"/>
-        <element name="ContactGroup" positionX="0" positionY="0" width="128" height="73"/>
-        <element name="Conversation" positionX="0" positionY="0" width="128" height="180"/>
-        <element name="ConversationEntry" positionX="0" positionY="0" width="128" height="268"/>
-        <element name="ConversationETag" positionX="18" positionY="162" width="128" height="60"/>
-        <element name="LineGroup" positionX="18" positionY="153" width="128" height="75"/>
-        <element name="Lines" positionX="27" positionY="171" width="128" height="223"/>
-        <element name="Membership" positionX="9" positionY="153" width="128" height="88"/>
-        <element name="PBX" positionX="18" positionY="162" width="128" height="120"/>
-        <element name="PersonEntities" positionX="0" positionY="0" width="128" height="360"/>
-        <element name="PersonMeta" positionX="0" positionY="0" width="128" height="150"/>
-        <element name="Presence" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="Voicemail" positionX="0" positionY="0" width="128" height="283"/>
-        <element name="VoicemailETag" positionX="9" positionY="153" width="128" height="58"/>
-        <element name="LineConfiguration" positionX="18" positionY="153" width="128" height="118"/>
+        <element name="Company" positionX="-621" positionY="345" width="128" height="150"/>
+        <element name="ContactGroup" positionX="-387" positionY="306" width="128" height="73"/>
+        <element name="Conversation" positionX="-801" positionY="558" width="128" height="180"/>
+        <element name="ConversationEntry" positionX="-803" positionY="270" width="128" height="268"/>
+        <element name="ConversationETag" positionX="-351" positionY="570" width="128" height="60"/>
+        <element name="LineConfiguration" positionX="-155" positionY="792" width="128" height="118"/>
+        <element name="LineGroup" positionX="-155" positionY="702" width="128" height="75"/>
+        <element name="Lines" positionX="-155" positionY="459" width="128" height="223"/>
+        <element name="Membership" positionX="-191" positionY="297" width="128" height="88"/>
+        <element name="PBX" positionX="-180" positionY="54" width="128" height="120"/>
+        <element name="PersonEntities" positionX="-594" positionY="-99" width="128" height="360"/>
+        <element name="PersonMeta" positionX="-254" positionY="-252" width="128" height="150"/>
+        <element name="Presence" positionX="-423" positionY="-255" width="128" height="120"/>
+        <element name="Voicemail" positionX="36" positionY="-765" width="128" height="268"/>
+        <element name="VoicemailETag" positionX="-180" positionY="-36" width="128" height="58"/>
+        <element name="RecentEvent" positionX="259" positionY="-846" width="128" height="58"/>
+        <element name="Call" positionX="297" positionY="-511" width="128" height="88"/>
+        <element name="IncomingCall" positionX="27" positionY="-369" width="128" height="43"/>
+        <element name="OutgoingCall" positionX="25" positionY="-142" width="128" height="43"/>
+        <element name="MissedCall" positionX="25" positionY="-261" width="128" height="43"/>
     </elements>
 </model>

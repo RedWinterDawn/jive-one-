@@ -8,7 +8,6 @@
 
 #import "Voicemail.h"
 
-
 @implementation Voicemail
 
 @dynamic callerId;
@@ -18,7 +17,6 @@
 @dynamic jrn;
 @dynamic mailboxUrl;
 @dynamic read;
-@dynamic timeStamp;
 @dynamic transcription;
 @dynamic transcriptionPercent;
 @dynamic url_changeStatus;

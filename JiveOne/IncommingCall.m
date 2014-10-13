@@ -8,13 +8,6 @@
 
 #import "IncommingCall.h"
 
-
 @implementation IncommingCall
-
-@dynamic date;
-@dynamic callerNumber;
-@dynamic callerName;
-@dynamic callerExt;
-@dynamic newRelationship;
 
 @end
