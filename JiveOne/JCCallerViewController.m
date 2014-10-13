@@ -70,7 +70,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     if (dialString)
         [[JCCallCardManager sharedManager] dialNumber:dialString type:JCCallCardDialSingle completion:^(bool success, NSDictionary *callInfo) {
             if (!success)
-                [self closeCallerViewController];
+                [self performSelector:@selector(closeCallerViewController) withObject:nil afterDelay:0];
         }];
 	
     [self setCallOptionsHidden:_callOptionsHidden animated:NO];
@@ -198,7 +198,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     }];
 }
 
-#pragma mark - Private - 
+#pragma mark - Private -
 
 /**
  * Hides the call options card.
@@ -343,7 +343,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 -(void)callHungUp:(NSNotification *)notification
 {
     JCCallCardManager *callManager = (JCCallCardManager *)notification.object;
-    NSUInteger count = callManager.totalCalls;
+    NSUInteger count = callManager.calls.count;
     if(count == 0)
         [self closeCallerViewController];
     else if (count == 1)

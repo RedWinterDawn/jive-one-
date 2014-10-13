@@ -30,31 +30,24 @@ typedef enum : NSUInteger {
 
 @interface JCCallCardManager : NSObject
 
-//@property (nonatomic, readonly) NSArray *incomingCalls;
-@property (nonatomic, strong) NSMutableArray *currentCalls;
-@property (nonatomic, readonly) NSUInteger totalCalls;
+@property (nonatomic, strong) NSMutableArray *calls;
+
+-(void)dialNumber:(NSString *)dialNumber
+             type:(JCCallCardDialTypes)dialType
+       completion:(void (^)(bool success, NSDictionary *callInfo))completion;
 
 -(void)hangUpCall:(JCCallCard *)callCard remote:(BOOL)remote;
--(void)placeCallOnHold:(JCCallCard *)callCard;
--(void)removeFromHold:(JCCallCard *)callCard;
-
--(void)dialNumber:(NSString *)dialNumber;
--(void)dialNumber:(NSString *)dialNumber type:(JCCallCardDialTypes)dialType completion:(void (^)(bool success, NSDictionary *callInfo))completion;
-
--(void)finishWarmTransfer:(void (^)(bool success))completion;
+-(void)toggleCallHold:(JCCallCard *)callCard;
 
 -(void)answerCall:(JCCallCard *)callCard;
-
-// Temporary for POC
 -(void)addIncomingCall:(JCLineSession *)session;
--(void)removeIncomingCall:(JCCallCard *)callCard;
+-(void)finishWarmTransfer:(void (^)(bool success))completion;
 
 @end
 
 
 @interface JCCallCardManager (Singleton)
 
-// Singleton accessor
 + (JCCallCardManager *)sharedManager;
 
 @end

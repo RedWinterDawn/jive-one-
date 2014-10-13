@@ -9,17 +9,17 @@
 #import <UIKit/UIKit.h>
 #import "Voicemail+Custom.h"
 #import "JCPopoverSlider.h"
-#import "JCSpeakerView.h"
-#import "JCPlayPauseView.h"
+#import "JCSpeakerButton.h"
+#import "JCPlayPauseButton.h"
 
 @class JCVoiceCell;
 @protocol JCVoiceCellDelegate <NSObject>
 - (void)voiceCellPlayTapped:(JCVoiceCell *)cell;
 - (void)voiceCellSliderMoved:(float)value;
 - (void)voiceCellSliderTouched:(BOOL)touched;
-- (void)voicecellSpeakerTouched:(BOOL)touched;
+- (void)voicecellSpeakerTouched;
 - (void)voiceCellAudioAvailable:(NSIndexPath *)indexPath;
-- (void)voiceCellDeleteTapped:(NSIndexPath *)indexPath;
+- (void)voiceCellDeleteTapped:(JCVoiceCell *)cell;
 @end
 
 @interface JCVoiceCell : UITableViewCell
@@ -32,13 +32,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *callerIdLabel;
 @property (weak, nonatomic) IBOutlet UILabel *callerNumberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *extensionLabel;
-//@property (weak,nonatomic) IBOutlet UIButton *playButton;
-@property (weak, nonatomic) IBOutlet JCPlayPauseView *playPauseButton;
+@property (weak, nonatomic) IBOutlet UIButton *playPauseButton;
 @property (weak,nonatomic) IBOutlet UILabel  *creationTime;
 @property (weak,nonatomic) IBOutlet UILabel  *elapsed;
 @property (weak,nonatomic) IBOutlet UILabel  *duration;
 @property (weak,nonatomic) IBOutlet UILabel  *shortTime;
-@property (weak, nonatomic) IBOutlet JCSpeakerView *speakerView;
 @property (weak,nonatomic) IBOutlet UIButton *speakerButton;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 
