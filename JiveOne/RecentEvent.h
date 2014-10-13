@@ -12,7 +12,7 @@
 
 @interface RecentEvent : NSManagedObject
 
-@property (nonatomic, retain) NSDate *timeStamp;
+@property (nonatomic, retain) NSNumber *timeStamp;
 
 @property (nonatomic, readonly) NSString *formattedShortDate;
 
