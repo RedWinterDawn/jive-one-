@@ -26,6 +26,7 @@ extern NSString *const kJCCallCardHoldKey;
 @property (nonatomic, strong) NSDate *started;
 @property (nonatomic, strong) NSDate *holdStarted;
 @property (nonatomic, getter=isIncoming) bool incoming;
+@property (nonatomic, getter=isConference) bool conference;
 
 @property (nonatomic) BOOL hold;
 
