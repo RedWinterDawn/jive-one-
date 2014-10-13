@@ -144,10 +144,7 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
     
     if (session.mSessionState && dialType != JCCallCardDialBlindTransfer)
     {
-        JCCallCard *callCard = [[JCCallCard alloc] init];
-        callCard.dialNumber = dialNumber;
-        callCard.started = [NSDate date];
-        callCard.lineSession = session;
+        JCCallCard *callCard = [[JCCallCard alloc] initWithLineSession:session];
         [self addCurrentCallCard:callCard];
         
         NSUInteger index = [self.calls indexOfObject:callCard];
