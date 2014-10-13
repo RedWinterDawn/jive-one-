@@ -114,6 +114,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dim-MR-5Mi" userLabel="Hold">
                                 <rect key="frame" x="150" y="0.0" width="150" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="d6e-F6-9mX"/>
+                                </constraints>
                                 <state key="normal" image="black-hold">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -124,6 +127,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fMI-EZ-LsX" userLabel="HangUp">
                                 <rect key="frame" x="0.0" y="0.0" width="150" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="gtd-cR-yRD"/>
+                                </constraints>
                                 <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="1"/>
                                 <state key="normal" image="red-phone">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -136,18 +142,14 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.69999999999999996" colorSpace="deviceRGB"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="dim-MR-5Mi" secondAttribute="bottom" id="0UN-hk-qwh"/>
-                            <constraint firstAttribute="trailing" secondItem="dim-MR-5Mi" secondAttribute="trailing" id="469-qz-Cc3"/>
                             <constraint firstAttribute="height" constant="50" id="9ci-Iy-RV5"/>
-                            <constraint firstItem="dim-MR-5Mi" firstAttribute="leading" secondItem="fMI-EZ-LsX" secondAttribute="trailing" id="9ls-og-j9P"/>
-                            <constraint firstAttribute="trailing" secondItem="dim-MR-5Mi" secondAttribute="trailing" id="BQf-I7-eUX"/>
                             <constraint firstItem="fMI-EZ-LsX" firstAttribute="height" secondItem="dim-MR-5Mi" secondAttribute="height" id="Bhv-43-PtJ"/>
-                            <constraint firstItem="fMI-EZ-LsX" firstAttribute="width" secondItem="dim-MR-5Mi" secondAttribute="width" id="Icd-FR-VQi"/>
                             <constraint firstAttribute="bottom" secondItem="fMI-EZ-LsX" secondAttribute="bottom" id="OLL-Lt-UHt"/>
                             <constraint firstItem="fMI-EZ-LsX" firstAttribute="top" secondItem="yUi-Hn-q9R" secondAttribute="top" id="OTC-Uu-GTG"/>
                             <constraint firstItem="fMI-EZ-LsX" firstAttribute="leading" secondItem="yUi-Hn-q9R" secondAttribute="leading" id="fHi-NA-ePF"/>
                             <constraint firstItem="dim-MR-5Mi" firstAttribute="top" secondItem="yUi-Hn-q9R" secondAttribute="top" id="gWg-RB-Tfc"/>
-                            <constraint firstItem="dim-MR-5Mi" firstAttribute="leading" secondItem="fMI-EZ-LsX" secondAttribute="trailing" id="oqN-Pj-sAZ"/>
                             <constraint firstItem="fMI-EZ-LsX" firstAttribute="leading" secondItem="yUi-Hn-q9R" secondAttribute="leading" id="pz7-Af-bx7"/>
+                            <constraint firstItem="dim-MR-5Mi" firstAttribute="leading" secondItem="fMI-EZ-LsX" secondAttribute="trailing" id="qIw-ol-pLx"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -172,6 +174,7 @@
                 <outlet property="dialedNumberLabel" destination="ijK-Po-99E" id="WRF-R9-Yvr"/>
                 <outlet property="elapsedTimeLabel" destination="zQp-R0-cci" id="76e-Ro-RyV"/>
                 <outlet property="endCallButton" destination="fMI-EZ-LsX" id="bJx-6G-LoH"/>
+                <outlet property="endCallButtonWidthConstraint" destination="gtd-cR-yRD" id="hAk-6a-mff"/>
                 <outlet property="holdCallButton" destination="dim-MR-5Mi" id="xzD-dr-SKc"/>
                 <outlet property="holdElapsedTimeLabel" destination="vAI-dZ-8vN" id="z4g-NE-GAe"/>
             </connections>
