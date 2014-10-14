@@ -28,9 +28,12 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Callers Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Ts-vU-ZOh" customClass="JCDialStringLabel">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Callers Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Ts-vU-ZOh" customClass="JCDialStringLabel">
                                 <rect key="frame" x="13" y="35" width="275" height="21"/>
                                 <accessibility key="accessibilityConfiguration" hint="" label="Callers Number"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="xiD-FB-Afq"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="12"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -73,23 +76,28 @@
                                     <constraint firstItem="3Bi-dC-Ajg" firstAttribute="leading" secondItem="fVM-Ov-3LX" secondAttribute="leading" id="43T-D9-imT"/>
                                     <constraint firstItem="yCA-oV-pxj" firstAttribute="top" secondItem="3Bi-dC-Ajg" secondAttribute="top" id="Mjt-VM-3Ai"/>
                                     <constraint firstItem="yCA-oV-pxj" firstAttribute="leading" secondItem="3Bi-dC-Ajg" secondAttribute="trailing" id="S6N-MU-bnZ"/>
+                                    <constraint firstAttribute="height" constant="50" id="SFA-7B-KsD"/>
                                     <constraint firstAttribute="bottom" secondItem="3Bi-dC-Ajg" secondAttribute="bottom" id="Vfj-zB-zaY"/>
                                     <constraint firstItem="yCA-oV-pxj" firstAttribute="height" secondItem="3Bi-dC-Ajg" secondAttribute="height" id="ff0-aD-uCc"/>
                                     <constraint firstAttribute="trailing" secondItem="yCA-oV-pxj" secondAttribute="trailing" id="g0T-2z-6dQ"/>
                                     <constraint firstItem="yCA-oV-pxj" firstAttribute="width" secondItem="3Bi-dC-Ajg" secondAttribute="width" id="iL7-gA-yth"/>
                                 </constraints>
                             </view>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="conference-avatar-white" translatesAutoresizingMaskIntoConstraints="NO" id="8c3-rV-6S6">
-                                <rect key="frame" x="90" y="88" width="116" height="123"/>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" ambiguous="YES" misplaced="YES" image="conference-avatar-white" translatesAutoresizingMaskIntoConstraints="NO" id="8c3-rV-6S6">
+                                <rect key="frame" x="55" y="88" width="150" height="123"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.69999999999999996" colorSpace="deviceRGB"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="fVM-Ov-3LX" secondAttribute="bottom" constant="1" id="2ny-9y-trW"/>
+                            <constraint firstItem="fVM-Ov-3LX" firstAttribute="top" secondItem="8c3-rV-6S6" secondAttribute="bottom" constant="38" id="3Kb-zJ-VUC"/>
                             <constraint firstItem="qfp-g2-efF" firstAttribute="top" secondItem="stb-hv-2O0" secondAttribute="top" id="Eyk-zo-K1J"/>
+                            <constraint firstItem="5Ts-vU-ZOh" firstAttribute="top" secondItem="stb-hv-2O0" secondAttribute="top" constant="35" id="NZc-Mc-JTf"/>
+                            <constraint firstItem="5Ts-vU-ZOh" firstAttribute="leading" secondItem="stb-hv-2O0" secondAttribute="leading" constant="13" id="Pc8-dl-JT0"/>
+                            <constraint firstAttribute="trailing" secondItem="5Ts-vU-ZOh" secondAttribute="trailing" constant="12" id="Q4G-VG-cfo"/>
                             <constraint firstItem="qfp-g2-efF" firstAttribute="leading" secondItem="stb-hv-2O0" secondAttribute="leading" constant="8" id="Syh-Bw-JF3"/>
-                            <constraint firstItem="fVM-Ov-3LX" firstAttribute="top" secondItem="stb-hv-2O0" secondAttribute="top" constant="249" id="TfQ-G0-jCG"/>
                             <constraint firstAttribute="trailing" secondItem="fVM-Ov-3LX" secondAttribute="trailing" id="f8r-Jc-d7B"/>
+                            <constraint firstItem="8c3-rV-6S6" firstAttribute="top" secondItem="5Ts-vU-ZOh" secondAttribute="bottom" constant="32" id="i1b-Cw-T6w"/>
                             <constraint firstItem="fVM-Ov-3LX" firstAttribute="leading" secondItem="stb-hv-2O0" secondAttribute="leading" id="zXC-ti-dUI"/>
                         </constraints>
                     </view>
