@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1552" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -156,14 +155,15 @@
                     <connections>
                         <segue destination="hBc-AN-e9c" kind="modal" identifier="logoutSegue" modalTransitionStyle="flipHorizontal" id="FYf-gt-lpx"/>
                         <segue destination="XFb-KJ-zT0" kind="relationship" relationship="viewControllers" id="qlu-mP-rqG"/>
-                        <segue destination="4mQ-Xv-N0n" kind="relationship" relationship="viewControllers" id="dwi-Kf-NBW"/>
                         <segue destination="elO-IG-RBo" kind="relationship" relationship="viewControllers" id="fJp-rq-gl2"/>
                         <segue destination="q2J-Bw-WhQ" kind="relationship" relationship="viewControllers" id="01A-As-Zxf"/>
+                        <segue destination="vaI-vc-7Id" kind="relationship" relationship="viewControllers" id="VBp-ej-okN"/>
+                        <segue destination="4mQ-Xv-N0n" kind="relationship" relationship="viewControllers" id="zFy-U8-aF0"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FNP-y4-bzi" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1987" y="692"/>
+            <point key="canvasLocation" x="-2007" y="708"/>
         </scene>
         <!--Status View Controller-->
         <scene sceneID="Zxi-Am-zZd">
@@ -1547,7 +1547,7 @@
             <objects>
                 <collectionViewController id="zhT-8a-SlE" customClass="JCCallCardCollectionViewController" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="rwh-qv-yU8">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="347"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <collectionViewLayout key="collectionViewLayout" id="8ug-Q6-sKe" customClass="JCCallCardCollectionLayout"/>
@@ -3127,7 +3127,7 @@
                                     <segue destination="uZP-Ez-Yy3" kind="embed" id="6ch-W5-ocS"/>
                                 </connections>
                             </containerView>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="EnF-NZ-q0n">
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" highlighted="YES" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="EnF-NZ-q0n">
                                 <rect key="frame" x="58" y="72" width="205" height="29"/>
                                 <segments>
                                     <segment title="All"/>
@@ -3144,10 +3144,10 @@
             </objects>
             <point key="canvasLocation" x="-906" y="1947"/>
         </scene>
-        <!--Table View Controller-->
+        <!--History Table View Controller-->
         <scene sceneID="wXu-Sv-0Fl">
             <objects>
-                <tableViewController id="uZP-Ez-Yy3" sceneMemberID="viewController">
+                <tableViewController id="uZP-Ez-Yy3" customClass="JCHistoryTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="82" sectionHeaderHeight="22" sectionFooterHeight="22" id="kZw-D3-nif">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

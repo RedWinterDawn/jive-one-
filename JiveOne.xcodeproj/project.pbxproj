@@ -315,11 +315,12 @@
 		F8BC82C319E44A2E00340BA1 /* JCKeypadView.m in Sources */ = {isa = PBXBuildFile; fileRef = F8BC82C219E44A2E00340BA1 /* JCKeypadView.m */; };
 		F8C9A7D419E884D20049A715 /* OutgoingCall.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C9A7D319E884D20049A715 /* OutgoingCall.m */; };
 		F8C9A7D719E884D30049A715 /* MissedCall.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C9A7D619E884D30049A715 /* MissedCall.m */; };
-		F8C9A7DA19E884D30049A715 /* IncommingCall.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C9A7D919E884D30049A715 /* IncommingCall.m */; };
+		F8C9A7DA19E884D30049A715 /* IncomingCall.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C9A7D919E884D30049A715 /* IncomingCall.m */; };
 		F8C9A7E219EC31DF0049A715 /* Call.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C9A7E119EC31DF0049A715 /* Call.m */; };
 		F8C9A7E519EC36340049A715 /* RecentEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C9A7E419EC36340049A715 /* RecentEvent.m */; };
 		F8C9A7E919EC5F4C0049A715 /* JCHistoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C9A7E819EC5F4C0049A715 /* JCHistoryTableViewController.m */; };
 		F8C9A7EC19EC691C0049A715 /* JCHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C9A7EB19EC691C0049A715 /* JCHistoryCell.m */; };
+		F8C9A7EF19EC8A9A0049A715 /* IncomingCall+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C9A7EE19EC8A9A0049A715 /* IncomingCall+Custom.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -879,8 +880,8 @@
 		F8C9A7D319E884D20049A715 /* OutgoingCall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OutgoingCall.m; sourceTree = "<group>"; };
 		F8C9A7D519E884D30049A715 /* MissedCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MissedCall.h; sourceTree = "<group>"; };
 		F8C9A7D619E884D30049A715 /* MissedCall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MissedCall.m; sourceTree = "<group>"; };
-		F8C9A7D819E884D30049A715 /* IncommingCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IncommingCall.h; sourceTree = "<group>"; };
-		F8C9A7D919E884D30049A715 /* IncommingCall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IncommingCall.m; sourceTree = "<group>"; };
+		F8C9A7D819E884D30049A715 /* IncomingCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IncomingCall.h; sourceTree = "<group>"; };
+		F8C9A7D919E884D30049A715 /* IncomingCall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IncomingCall.m; sourceTree = "<group>"; };
 		F8C9A7E019EC31DF0049A715 /* Call.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Call.h; sourceTree = "<group>"; };
 		F8C9A7E119EC31DF0049A715 /* Call.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Call.m; sourceTree = "<group>"; };
 		F8C9A7E319EC36340049A715 /* RecentEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentEvent.h; sourceTree = "<group>"; };
@@ -889,6 +890,8 @@
 		F8C9A7E819EC5F4C0049A715 /* JCHistoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHistoryTableViewController.m; sourceTree = "<group>"; };
 		F8C9A7EA19EC691C0049A715 /* JCHistoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHistoryCell.h; sourceTree = "<group>"; };
 		F8C9A7EB19EC691C0049A715 /* JCHistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHistoryCell.m; sourceTree = "<group>"; };
+		F8C9A7ED19EC8A9A0049A715 /* IncomingCall+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IncomingCall+Custom.h"; sourceTree = "<group>"; };
+		F8C9A7EE19EC8A9A0049A715 /* IncomingCall+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IncomingCall+Custom.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1143,8 +1146,8 @@
 		270152C71901D77A00F271CE /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				F8C9A7D819E884D30049A715 /* IncommingCall.h */,
-				F8C9A7D919E884D30049A715 /* IncommingCall.m */,
+				F8C9A7D819E884D30049A715 /* IncomingCall.h */,
+				F8C9A7D919E884D30049A715 /* IncomingCall.m */,
 				F8C9A7D519E884D30049A715 /* MissedCall.h */,
 				F8C9A7D619E884D30049A715 /* MissedCall.m */,
 				F8C9A7D219E884D20049A715 /* OutgoingCall.h */,
@@ -1316,6 +1319,8 @@
 				27997573195A12C5001425CC /* PBX+Custom.m */,
 				27997575195A12D7001425CC /* Lines+Custom.h */,
 				27997576195A12D7001425CC /* Lines+Custom.m */,
+				F8C9A7ED19EC8A9A0049A715 /* IncomingCall+Custom.h */,
+				F8C9A7EE19EC8A9A0049A715 /* IncomingCall+Custom.m */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -2420,7 +2425,7 @@
 				27F1F2E5191C171300AEAFD7 /* UAPushNotificationHandler.m in Sources */,
 				91915738195B209D004BDE26 /* JCAppIntro.m in Sources */,
 				27F1F2E4191C171300AEAFD7 /* UAPushMoreSettingsViewController.m in Sources */,
-				F8C9A7DA19E884D30049A715 /* IncommingCall.m in Sources */,
+				F8C9A7DA19E884D30049A715 /* IncomingCall.m in Sources */,
 				F8B62E5B19DB091500AF98D3 /* JCRoundedButton.m in Sources */,
 				2762C45818B4177D00885918 /* JCOmniPresence.m in Sources */,
 				DDEC37D01910126900E166CC /* ConversationEntry.m in Sources */,
@@ -2446,6 +2451,7 @@
 				274493B918D0E98C002744CB /* Presence.m in Sources */,
 				2700987F18F4714100B6BC2F /* JSMessagesViewController.m in Sources */,
 				274493CB18D0E98D002744CB /* PersonMeta.m in Sources */,
+				F8C9A7EF19EC8A9A0049A715 /* IncomingCall+Custom.m in Sources */,
 				2700987618F4714100B6BC2F /* UIImage+JSMessagesView.m in Sources */,
 				27F1F2E1191C171300AEAFD7 /* UALocationDemoAnnotation.m in Sources */,
 				2700988018F4714100B6BC2F /* JSMessageTableView.m in Sources */,

@@ -8,7 +8,15 @@
 
 #import "RecentEvent.h"
 
-@interface Call : RecentEvent
+@protocol Call <NSObject>
+
+@optional
+@property (nonatomic, readonly) UIImage *icon;
+
+@end
+
+
+@interface Call : RecentEvent <Call>
 
 @property (nonatomic, retain) NSDate *date;
 @property (nonatomic, retain) NSString *number;
@@ -16,3 +24,5 @@
 @property (nonatomic, retain) NSNumber *extension;
 
 @end
+
+

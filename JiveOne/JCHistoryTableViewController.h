@@ -10,6 +10,6 @@
 #import "JCHistoryCell.h"
 
 @interface JCHistoryTableViewController : UITableViewController
-@property (weak, nonatomic) IBOutlet UISegmentedControl *historySegmentedControl;
+
 
 @end

@@ -152,25 +152,25 @@
         <attribute name="etag" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Call" positionX="297" positionY="-511" width="128" height="88"/>
-        <element name="Company" positionX="-621" positionY="345" width="128" height="150"/>
-        <element name="ContactGroup" positionX="-387" positionY="306" width="128" height="73"/>
-        <element name="Conversation" positionX="-801" positionY="558" width="128" height="180"/>
-        <element name="ConversationEntry" positionX="-803" positionY="270" width="128" height="268"/>
-        <element name="ConversationETag" positionX="-351" positionY="570" width="128" height="60"/>
-        <element name="IncomingCall" positionX="27" positionY="-369" width="128" height="45"/>
-        <element name="LineConfiguration" positionX="-155" positionY="792" width="128" height="118"/>
-        <element name="LineGroup" positionX="-155" positionY="702" width="128" height="75"/>
-        <element name="Lines" positionX="-155" positionY="459" width="128" height="223"/>
-        <element name="Membership" positionX="-191" positionY="297" width="128" height="88"/>
-        <element name="MissedCall" positionX="25" positionY="-261" width="128" height="45"/>
-        <element name="OutgoingCall" positionX="25" positionY="-142" width="128" height="45"/>
-        <element name="PBX" positionX="-180" positionY="54" width="128" height="120"/>
-        <element name="PersonEntities" positionX="-594" positionY="-99" width="128" height="360"/>
-        <element name="PersonMeta" positionX="-254" positionY="-252" width="128" height="150"/>
-        <element name="Presence" positionX="-423" positionY="-255" width="128" height="120"/>
-        <element name="RecentEvent" positionX="259" positionY="-846" width="128" height="60"/>
-        <element name="Voicemail" positionX="36" positionY="-765" width="128" height="268"/>
-        <element name="VoicemailETag" positionX="-180" positionY="-36" width="128" height="58"/>
+        <element name="Call" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Company" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="ContactGroup" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Conversation" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="ConversationEntry" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="ConversationETag" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="IncomingCall" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="LineConfiguration" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="LineGroup" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Lines" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Membership" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="MissedCall" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="OutgoingCall" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="PBX" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="PersonEntities" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="PersonMeta" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Presence" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="RecentEvent" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Voicemail" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="VoicemailETag" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

@@ -10,6 +10,7 @@
 
 #import <PortSIPLib/PortSIPSDK.h>
 #import <AFNetworking/AFNetworkReachabilityManager.h>
+#import "IncomingCall+Custom.h"
 
 #import "LineConfiguration+Custom.h"
 #import "Lines+Custom.h"
@@ -704,6 +705,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 //	}
 	
 	[[JCCallCardManager sharedManager] addIncomingCall:idleLine];
+    [IncomingCall addIncommingCallWithLineSession:idleLine];
 };
 
 - (void)onInviteTrying:(long)sessionId
@@ -1358,6 +1360,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 	}
 	
+   
 }
 
 

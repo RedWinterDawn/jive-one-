@@ -18,12 +18,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    /*[self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
-    [self.tableView setSeparatorInset:UIEdgeInsetsZero];
     
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main-logo.png"]];
     imageView.contentMode = UIViewContentModeCenter;
-    self.tableView.backgroundView = imageView;*/
+    self.tableView.backgroundView = imageView;
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
