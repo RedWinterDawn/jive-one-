@@ -111,17 +111,6 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RgF-K8-zw2" userLabel="Actions">
                         <rect key="frame" x="0.0" y="367" width="300" height="50"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6AT-cr-W7i" userLabel="HangUp">
-                                <rect key="frame" x="0.0" y="0.0" width="150" height="50"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.69999999999999996" colorSpace="deviceRGB"/>
-                                <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="1"/>
-                                <state key="normal" image="red-phone">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="hangup:" destination="QsI-zY-aNm" eventType="touchUpInside" id="BuL-FU-J4z"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NP4-wW-qRx" userLabel="Answer">
                                 <rect key="frame" x="150" y="0.0" width="150" height="50"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.69999999999999996" colorSpace="deviceRGB"/>
@@ -132,6 +121,18 @@
                                 </state>
                                 <connections>
                                     <action selector="answer:" destination="QsI-zY-aNm" eventType="touchUpInside" id="5mr-P5-R0Q"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6AT-cr-W7i" userLabel="HangUp">
+                                <rect key="frame" x="0.0" y="0.0" width="150" height="50"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.69999999999999996" colorSpace="deviceRGB"/>
+                                <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="1"/>
+                                <state key="normal" image="red-phone">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" image="grayed-phone"/>
+                                <connections>
+                                    <action selector="hangup:" destination="QsI-zY-aNm" eventType="touchUpInside" id="BuL-FU-J4z"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -177,6 +178,7 @@
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="grayed-phone" width="73" height="24"/>
         <image name="green-phone" width="30" height="30"/>
         <image name="red-phone" width="37" height="30"/>
         <image name="transfer-onhold-mini-blackish" width="11" height="12"/>

@@ -60,6 +60,7 @@
                                         <state key="normal" image="red-phone">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <state key="selected" image="grayed-phone"/>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.69999999999999996" colorSpace="deviceRGB"/>
@@ -103,6 +104,7 @@
     <resources>
         <image name="black-hold" width="30" height="30"/>
         <image name="conference-avatar-white" width="116" height="123"/>
+        <image name="grayed-phone" width="73" height="24"/>
         <image name="red-phone" width="37" height="30"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

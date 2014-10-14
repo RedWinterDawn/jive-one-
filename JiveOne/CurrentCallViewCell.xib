@@ -134,6 +134,8 @@
                                 <state key="normal" image="red-phone">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <state key="disabled" image="gray-callbutton"/>
+                                <state key="selected" image="grayed-phone"/>
                                 <connections>
                                     <action selector="hangup:" destination="Sdb-VX-oTp" eventType="touchUpInside" id="EvS-2A-C0P"/>
                                 </connections>
@@ -183,6 +185,8 @@
     </objects>
     <resources>
         <image name="black-hold" width="30" height="30"/>
+        <image name="gray-callbutton" width="58" height="58"/>
+        <image name="grayed-phone" width="73" height="24"/>
         <image name="red-phone" width="37" height="30"/>
         <image name="transfer-onhold-mini-blackish" width="11" height="12"/>
     </resources>
