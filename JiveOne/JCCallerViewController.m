@@ -181,8 +181,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(IBAction)swapCall:(id)sender
 {
-    // TODO: Swap current calls.
-
+	
 }
 
 -(IBAction)mergeCall:(id)sender

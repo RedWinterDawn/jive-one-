@@ -134,6 +134,8 @@
 		2788F143190EACD20099348D /* VoicemailETag.m in Sources */ = {isa = PBXBuildFile; fileRef = 2788F142190EACD20099348D /* VoicemailETag.m */; };
 		2788F146190EACD20099348D /* ConversationETag.m in Sources */ = {isa = PBXBuildFile; fileRef = 2788F145190EACD20099348D /* ConversationETag.m */; };
 		2788F14A190EB1260099348D /* NSNull+IntValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2788F149190EB1260099348D /* NSNull+IntValue.m */; };
+		278E858619EC6B6E0087649D /* VideoViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 278E858519EC6B6E0087649D /* VideoViewController.mm */; };
+		278E858719EC6B6E0087649D /* VideoViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 278E858519EC6B6E0087649D /* VideoViewController.mm */; };
 		2799755F1959CD38001425CC /* JCStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 2799755E1959CD38001425CC /* JCStyleKit.m */; };
 		27997571195A12B7001425CC /* Membership+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 27997570195A12B7001425CC /* Membership+Custom.m */; };
 		27997574195A12C5001425CC /* PBX+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 27997573195A12C5001425CC /* PBX+Custom.m */; };
@@ -497,6 +499,8 @@
 		2788F145190EACD20099348D /* ConversationETag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationETag.m; sourceTree = "<group>"; };
 		2788F148190EB1260099348D /* NSNull+IntValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNull+IntValue.h"; sourceTree = "<group>"; };
 		2788F149190EB1260099348D /* NSNull+IntValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNull+IntValue.m"; sourceTree = "<group>"; };
+		278E858419EC6B6E0087649D /* VideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
+		278E858519EC6B6E0087649D /* VideoViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VideoViewController.mm; sourceTree = "<group>"; };
 		2799755D1959CD38001425CC /* JCStyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JCStyleKit.h; path = StyleKitAssets/JCStyleKit.h; sourceTree = SOURCE_ROOT; };
 		2799755E1959CD38001425CC /* JCStyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JCStyleKit.m; path = StyleKitAssets/JCStyleKit.m; sourceTree = SOURCE_ROOT; };
 		2799756F195A12B7001425CC /* Membership+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Membership+Custom.h"; sourceTree = "<group>"; };
@@ -1501,6 +1505,8 @@
 			children = (
 				279A4E2A19DA91E100E8AB7B /* SipHandler.h */,
 				279A4E2B19DA91E100E8AB7B /* SipHandler.mm */,
+				278E858419EC6B6E0087649D /* VideoViewController.h */,
+				278E858519EC6B6E0087649D /* VideoViewController.mm */,
 				27BE503B19DCF6A800B725ED /* JCLineSession.h */,
 				27BE503C19DCF6A800B725ED /* JCLineSession.m */,
 			);
@@ -2485,6 +2491,7 @@
 				91CAE67E1961E47F004A28FD /* JCVoicemailIcon.m in Sources */,
 				2700987418F4714100B6BC2F /* NSString+JSMessagesView.m in Sources */,
 				27BE503D19DCF6A800B725ED /* JCLineSession.m in Sources */,
+				278E858619EC6B6E0087649D /* VideoViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2500,6 +2507,7 @@
 				276CFEAC196AF45F00C30B30 /* JasmineSocket.m in Sources */,
 				272B61DE18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */,
 				275F4A8318AD0FBC00D2F069 /* UTJiveOneTests.m in Sources */,
+				278E858719EC6B6E0087649D /* VideoViewController.mm in Sources */,
 				DDCADB6D197D75D800483D98 /* UTDirectoryVCTests.m in Sources */,
 				2751592018AD303500FD8D3F /* JCDirectoryViewController.m in Sources */,
 				DDFFB60118D2284E00372019 /* UTVoicemailVCTests.m in Sources */,
