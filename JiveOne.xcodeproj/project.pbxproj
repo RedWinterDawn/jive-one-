@@ -240,6 +240,7 @@
 		5D03649119DC5A450090CC21 /* JCTransferViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D03649019DC5A450090CC21 /* JCTransferViewController.m */; };
 		5D15AF2B19DB271500E86116 /* NSString+DialString.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D15AF2819DB271500E86116 /* NSString+DialString.m */; };
 		5D15AF2C19DB271500E86116 /* NSString+IsNumeric.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D15AF2A19DB271500E86116 /* NSString+IsNumeric.m */; };
+		5D1BBE5B19EDC9EF006526B2 /* JCMergeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1BBE5A19EDC9EF006526B2 /* JCMergeButton.m */; };
 		5D1FAC5F19DDD68000899915 /* JCCallCardCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FAC5E19DDD68000899915 /* JCCallCardCollectionViewCell.m */; };
 		5D1FAC6219DDFF5300899915 /* JCCallCardCollectionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FAC6119DDFF5300899915 /* JCCallCardCollectionLayout.m */; };
 		5D1FAC6519DF376B00899915 /* JCKeyboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FAC6419DF376B00899915 /* JCKeyboardViewController.m */; };
@@ -741,6 +742,8 @@
 		5D15AF2819DB271500E86116 /* NSString+DialString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DialString.m"; sourceTree = "<group>"; };
 		5D15AF2919DB271500E86116 /* NSString+IsNumeric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+IsNumeric.h"; sourceTree = "<group>"; };
 		5D15AF2A19DB271500E86116 /* NSString+IsNumeric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+IsNumeric.m"; sourceTree = "<group>"; };
+		5D1BBE5919EDC9EF006526B2 /* JCMergeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMergeButton.h; sourceTree = "<group>"; };
+		5D1BBE5A19EDC9EF006526B2 /* JCMergeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMergeButton.m; sourceTree = "<group>"; };
 		5D1FAC5D19DDD68000899915 /* JCCallCardCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCallCardCollectionViewCell.h; sourceTree = "<group>"; };
 		5D1FAC5E19DDD68000899915 /* JCCallCardCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallCardCollectionViewCell.m; sourceTree = "<group>"; };
 		5D1FAC6019DDFF5300899915 /* JCCallCardCollectionLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCallCardCollectionLayout.h; sourceTree = "<group>"; };
@@ -2050,6 +2053,8 @@
 				F8A2BC0A19DB5B3C00251310 /* JCCallOptionsView.m */,
 				F84A087719DF38C8003476E6 /* JCTransferConfirmationViewController.h */,
 				F84A087819DF38C8003476E6 /* JCTransferConfirmationViewController.m */,
+				5D1BBE5919EDC9EF006526B2 /* JCMergeButton.h */,
+				5D1BBE5A19EDC9EF006526B2 /* JCMergeButton.m */,
 			);
 			name = Dialer;
 			sourceTree = "<group>";
@@ -2450,6 +2455,7 @@
 				2751591318AD174F00FD8D3F /* JCAuthenticationManager.m in Sources */,
 				2784BA6C1940390100389F5F /* JCTableViewCellWithInset.m in Sources */,
 				2700988118F4714100B6BC2F /* JSMessageTextView.m in Sources */,
+				5D1BBE5B19EDC9EF006526B2 /* JCMergeButton.m in Sources */,
 				27F1F2E8191C171300AEAFD7 /* UAPushSettingsChannelInfoViewController.m in Sources */,
 				9145E31F191D842500840D66 /* JCVersion.m in Sources */,
 				27EB18C419DF194E00C1503B /* LineConfiguration.m in Sources */,

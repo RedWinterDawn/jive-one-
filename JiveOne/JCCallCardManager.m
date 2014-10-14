@@ -82,6 +82,10 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
 	if (!remote)
 		[_sipHandler hangUpCallWithSession:callCard.lineSession.mSessionId];
     
+    if (callCard.isConference) {
+        [_sipHandler hangUpAll];
+    }
+    
    [self removeCurrentCall:callCard];
 }
 

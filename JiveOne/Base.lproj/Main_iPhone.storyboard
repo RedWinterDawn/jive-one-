@@ -541,7 +541,7 @@
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aXj-uL-Dya" userLabel="duration">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="0:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aXj-uL-Dya" userLabel="duration">
                                             <rect key="frame" x="292" y="91" width="21" height="12"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                             <nil key="highlightedColor"/>
@@ -586,7 +586,7 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="StW-c4-K1R" userLabel="slider" customClass="JCPopoverSlider">
+                                        <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="StW-c4-K1R" userLabel="slider" customClass="JCPopoverSlider">
                                             <rect key="frame" x="62" y="96" width="223" height="31"/>
                                             <connections>
                                                 <action selector="progressSliderMoved:" destination="HLX-xJ-Zcf" eventType="valueChanged" id="Tdh-3O-Y8j"/>
@@ -1288,7 +1288,7 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="248" horizontalCompressionResistancePriority="249" verticalCompressionResistancePriority="253" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="74r-RB-XRO" userLabel="Merge Button" customClass="JCRoundedButton">
+                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="248" horizontalCompressionResistancePriority="249" verticalCompressionResistancePriority="253" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="74r-RB-XRO" userLabel="Merge Button" customClass="JCMergeButton">
                                         <rect key="frame" x="-78" y="114" width="60" height="60"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
                                         <constraints>
@@ -1299,7 +1299,12 @@
                                         <state key="normal" image="white-merge">
                                             <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
-                                        <state key="selected" image="blue-merge"/>
+                                        <state key="selected" image="white-split"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="selectedBackgroundColor">
+                                                <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="mergeCall:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="VFr-f2-PEf"/>
                                         </connections>
@@ -1535,6 +1540,7 @@
                     <connections>
                         <outlet property="callOptionsView" destination="esd-M8-Lxg" id="Cp5-hn-19B"/>
                         <outlet property="callOptionsViewOriginYConstraint" destination="CTg-kI-9N0" id="my5-3X-mMz"/>
+                        <outlet property="mergeLabel" destination="Tug-Ny-Zug" id="vBU-MO-gRE"/>
                         <segue destination="tDl-8a-4VI" kind="modal" identifier="blindTransferComplete" animates="NO" id="fIT-eL-2bQ"/>
                     </connections>
                 </viewController>
@@ -3094,7 +3100,6 @@
         <image name="blue-arrow-outline" width="30" height="31"/>
         <image name="blue-check" width="30" height="30"/>
         <image name="blue-keypad" width="30" height="30"/>
-        <image name="blue-merge" width="30" height="30"/>
         <image name="blue-mute" width="30" height="30"/>
         <image name="blue-pluse" width="30" height="31"/>
         <image name="blue-speaker" width="30" height="31"/>
@@ -3117,6 +3122,7 @@
         <image name="white-mute" width="30" height="30"/>
         <image name="white-pluse" width="30" height="30"/>
         <image name="white-speaker" width="30" height="31"/>
+        <image name="white-split" width="30" height="30"/>
         <image name="white-switch" width="35" height="35"/>
         <image name="white-x" width="35" height="35"/>
     </resources>
