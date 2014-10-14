@@ -8,7 +8,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" contentMode="center" id="Qvt-6N-iCf">
+        <collectionViewCell opaque="NO" contentMode="center" reuseIdentifier="ConferenceCallCardCell" id="Qvt-6N-iCf" customClass="JCCallCardCollectionViewCell">
             <rect key="frame" x="0.0" y="0.0" width="317" height="305"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -48,6 +48,9 @@
                                         <state key="normal" image="black-hold">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="toggleHold:" destination="Qvt-6N-iCf" eventType="touchUpInside" id="NGq-1I-Wjd"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Bi-dC-Ajg" userLabel="HangUp">
                                         <rect key="frame" x="0.0" y="0.0" width="150" height="50"/>
@@ -60,6 +63,9 @@
                                         <state key="normal" image="red-phone">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="hangup:" destination="Qvt-6N-iCf" eventType="touchUpInside" id="RzS-cB-1Af"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.69999999999999996" colorSpace="deviceRGB"/>
@@ -97,6 +103,13 @@
                 <constraint firstItem="stb-hv-2O0" firstAttribute="top" secondItem="Qvt-6N-iCf" secondAttribute="topMargin" constant="-8" id="z1X-Nb-azC"/>
             </constraints>
             <size key="customSize" width="317" height="305"/>
+            <connections>
+                <outlet property="callActions" destination="fVM-Ov-3LX" id="rZr-11-hDZ"/>
+                <outlet property="callerIdLabel" destination="qfp-g2-efF" id="9md-9A-kpz"/>
+                <outlet property="dialedNumberLabel" destination="5Ts-vU-ZOh" id="jyW-2N-GB8"/>
+                <outlet property="endCallButton" destination="3Bi-dC-Ajg" id="Ti5-vj-tUN"/>
+                <outlet property="holdCallButton" destination="yCA-oV-pxj" id="IBe-1s-ABd"/>
+            </connections>
             <point key="canvasLocation" x="140.5" y="154.5"/>
         </collectionViewCell>
     </objects>

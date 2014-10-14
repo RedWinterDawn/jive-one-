@@ -186,12 +186,17 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(IBAction)mergeCall:(id)sender
 {
-	if ([sender isKindOfClass:[UIButton class]])
-	{
-		UIButton *button = (UIButton *)sender;
-		button.selected = !button.selected;
-		[[SipHandler sharedHandler] setConference:button.selected];
-	}
+    if ([sender isKindOfClass:[UIButton class]]) {
+        UIButton *button = (UIButton *)sender;
+        button.selected = !button.selected;
+        
+        JCCallCardManager *callCardManager = [JCCallCardManager sharedManager];
+        if (button.selected) {
+            [callCardManager mergeCalls];
+        } else {
+            [callCardManager splitCalls];
+        }
+    }
 }
 
 -(IBAction)finishTransfer:(id)sender
