@@ -31,6 +31,7 @@ extern NSString *const kSipHandlerRegisteredSelectorKey;
 - (JCLineSession *) makeCall:(NSString*)callee videoCall:(BOOL)videoCall contactName:(NSString *)contactName;
 - (void)answerCall;
 - (void) hangUpCallWithSession:(long)sessionId;
+- (void) hangUpAll;
 - (void) holdCall;
 - (bool)setConference:(bool)conference;
 //- (void) unholdCall;

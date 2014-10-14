@@ -184,6 +184,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 {
     if(_initialized)
     {
+		[self hangUpAll];
         [_mPortSIPSDK unRegisterServer];
         [_mPortSIPSDK unInitialize];
         
@@ -425,6 +426,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 - (void) hangUpCallWithSession:(long)sessionId;
 {
+	
 	JCLineSession *selectedLine = [self findSession:sessionId];
 	if (selectedLine.mSessionState)
 	{
@@ -433,18 +435,35 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 //			[videoViewController onStopVideo:mSessionArray[mActiveLine].getSessionId()];
 //		}
 		
-//		[numpadViewController setStatusText:[NSString  stringWithFormat:@"Hungup call on line %ld", mActiveLine]];
-		
 	}
 	else if (selectedLine.mRecvCallState)
 	{
 		[_mPortSIPSDK rejectCall:selectedLine.mSessionId code:486];
-		
-//		[numpadViewController setStatusText:[NSString  stringWithFormat:@"Rejected call on line %ld", mActiveLine]];
 	}
 	
-//	[selectedLine setMCallState:JCCallCanceled];
 	[selectedLine reset];
+	
+}
+
+- (void)hangUpAll
+{
+	for (JCLineSession *line in self.lineSessions)
+	{
+		if (line.mSessionState)
+		{
+			[_mPortSIPSDK hangUp:line.mSessionId];
+			//		if (mSessionArray[mActiveLine].getVideoState() == true) {
+			//			[videoViewController onStopVideo:mSessionArray[mActiveLine].getSessionId()];
+			//		}
+			
+		}
+		else if (line.mRecvCallState)
+		{
+			[_mPortSIPSDK rejectCall:line.mSessionId code:486];
+		}
+		
+		[line reset];
+	}
 }
 
 - (void)toggleHoldForLineWithSessionId:(long)sessionId
