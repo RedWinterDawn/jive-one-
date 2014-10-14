@@ -99,36 +99,26 @@ NSString *const kJCCallCardCollectionConferenceCallCellReuseIdentifier = @"Confe
 
 -(void)addedConferenceCallNotification:(NSNotification *)notification
 {
-    NSDictionary *userInfo = notification.userInfo;
-    
-    NSArray *rowsToRemove = [userInfo objectForKey:kJCCallCardManagerRemovedCells];
-    NSMutableArray *indexPaths = [NSMutableArray array];
-    for (NSNumber *index in rowsToRemove) {
-        [indexPaths addObject:[NSIndexPath indexPathForRow:index.integerValue inSection:0]];
-    }
-    
-    NSNumber *insertIndex = [userInfo objectForKey:kJCCallCardManagerUpdatedIndex];
-    [self.collectionView performBatchUpdates:^{
-        [self.collectionView deleteItemsAtIndexPaths:indexPaths];
-        [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:insertIndex.integerValue inSection:0]]];
-    } completion:nil];
+    [UIView transitionWithView:self.view
+                      duration:0.3
+                       options:UIViewAnimationOptionTransitionFlipFromRight
+                    animations:^{
+                        [self.collectionView reloadData];
+                    } completion:^(BOOL finished) {
+                        
+                    }];
 }
 
 -(void)removeConferenceCallNotification:(NSNotification *)notification
 {
-    NSDictionary *userInfo = notification.userInfo;
-    NSArray *rowsToAdd = [userInfo objectForKey:kJCCallCardManagerAddedCells];
-    NSMutableArray *indexPaths = [NSMutableArray array];
-    for (NSNumber *index in rowsToAdd) {
-        [indexPaths addObject:[NSIndexPath indexPathForRow:index.integerValue inSection:0]];
-    }
-    
-    NSNumber *removeIndex = [userInfo objectForKey:kJCCallCardManagerUpdatedIndex];
-    
-    [self.collectionView performBatchUpdates:^{
-        [self.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:removeIndex.integerValue inSection:0]]];
-        [self.collectionView insertItemsAtIndexPaths:indexPaths];
-    } completion:nil];
+   [UIView transitionWithView:self.view
+                      duration:0.3
+                       options:UIViewAnimationOptionTransitionFlipFromLeft
+                    animations:^{
+                        [self.collectionView reloadData];
+                    } completion:^(BOOL finished) {
+                        
+                    }];
 }
 
 #pragma mark - Priviate -
