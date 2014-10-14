@@ -18,7 +18,7 @@ NSString *const kJCCallCardManagerAddedCurrentCallNotification      = @"addedCur
 NSString *const kJCCallCardManagerRemoveCurrentCallNotification     = @"removedCurrentCall";
 
 NSString *const kJCCallCardManagerAddedConferenceCallNotification   = @"addedConferenceCall";
-NSString *const kJCCallCardManagerRemovedConfenceCallNotification   = @"removeConferenceCall";
+NSString *const kJCCallCardManagerRemoveConferenceCallNotification   = @"removeConferenceCall";
 
 NSString *const kJCCallCardManagerUpdatedIndex = @"index";
 NSString *const kJCCallCardManagerPriorUpdateCount = @"priorCount";
@@ -97,13 +97,18 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
 
 -(void)mergeCalls
 {
+    // Assumed only two call are in calls.
+    
     NSArray *calls = self.calls;
     [self addConferenceCallWithCallArray:calls];
 }
 
 -(void)splitCalls
 {
+    // Assumed only one call is in the calls array
     
+    JCCallCard *callCard = [self.calls objectAtIndex:0];
+    [self removeConferenceCall:callCard];
 }
 
 -(void)addIncomingCall:(JCLineSession *)session
@@ -286,15 +291,17 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
     NSUInteger priorCount = _calls.count;
     NSInteger removeIndex = [_calls indexOfObject:conferenceCallCard];
     [_calls removeObject:conferenceCallCard];
+    
     NSMutableArray *addCalls = [NSMutableArray array];
+    NSMutableArray *calls = [NSMutableArray arrayWithArray:_calls];
     
     for (JCCallCard *callCard in callCards) {
-        [_calls addObject:callCard];
-        [addCalls addObject:[NSNumber numberWithInteger:[_calls indexOfObject:callCard]]];
+        [calls addObject:callCard];
+        [addCalls addObject:[NSNumber numberWithInteger:[calls indexOfObject:callCard]]];
     }
+    _calls = calls;
     
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerAddedConferenceCallNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerRemoveConferenceCallNotification
                                                         object:self
                                                       userInfo:@{
                                                                  kJCCallCardManagerUpdatedIndex : [NSNumber numberWithInteger:removeIndex],

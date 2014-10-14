@@ -19,7 +19,7 @@ extern NSString *const kJCCallCardManagerAddedCurrentCallNotification;
 extern NSString *const kJCCallCardManagerRemoveCurrentCallNotification;
 
 extern NSString *const kJCCallCardManagerAddedConferenceCallNotification;
-extern NSString *const kJCCallCardManagerRemovedConfenceCallNotification;
+extern NSString *const kJCCallCardManagerRemoveConferenceCallNotification;
 
 extern NSString *const kJCCallCardManagerUpdatedIndex;
 extern NSString *const kJCCallCardManagerPriorUpdateCount;

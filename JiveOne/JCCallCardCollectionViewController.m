@@ -29,7 +29,7 @@ NSString *const kJCCallCardCollectionConferenceCallCellReuseIdentifier = @"Confe
         [center addObserver:self selector:@selector(callCardRemovedNotification:) name:kJCCallCardManagerRemoveCurrentCallNotification object:callCardManager];
         
         [center addObserver:self selector:@selector(addedConferenceCallNotification:) name:kJCCallCardManagerAddedConferenceCallNotification object:callCardManager];
-        [center addObserver:self selector:@selector(removeConferenceCallNotification:) name:kJCCallCardManagerRemovedConfenceCallNotification object:callCardManager];
+        [center addObserver:self selector:@selector(removeConferenceCallNotification:) name:kJCCallCardManagerRemoveConferenceCallNotification object:callCardManager];
     }
     return self;
 }
@@ -108,25 +108,27 @@ NSString *const kJCCallCardCollectionConferenceCallCellReuseIdentifier = @"Confe
     }
     
     NSNumber *insertIndex = [userInfo objectForKey:kJCCallCardManagerUpdatedIndex];
-    
-    
-    [UIView animateWithDuration:0.3
-                          delay:0
-                        options:UIViewAnimationOptionTransitionFlipFromRight
-                     animations:^{
-                         
-                     }
-                     completion:^(BOOL finished) {
-                         [self.collectionView performBatchUpdates:^{
-                             [self.collectionView deleteItemsAtIndexPaths:indexPaths];
-                             [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:insertIndex.integerValue inSection:0]]];
-                         } completion:nil];
-                     }];
+    [self.collectionView performBatchUpdates:^{
+        [self.collectionView deleteItemsAtIndexPaths:indexPaths];
+        [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:insertIndex.integerValue inSection:0]]];
+    } completion:nil];
 }
 
 -(void)removeConferenceCallNotification:(NSNotification *)notification
 {
+    NSDictionary *userInfo = notification.userInfo;
+    NSArray *rowsToAdd = [userInfo objectForKey:kJCCallCardManagerAddedCells];
+    NSMutableArray *indexPaths = [NSMutableArray array];
+    for (NSNumber *index in rowsToAdd) {
+        [indexPaths addObject:[NSIndexPath indexPathForRow:index.integerValue inSection:0]];
+    }
     
+    NSNumber *removeIndex = [userInfo objectForKey:kJCCallCardManagerUpdatedIndex];
+    
+    [self.collectionView performBatchUpdates:^{
+        [self.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:removeIndex.integerValue inSection:0]]];
+        [self.collectionView insertItemsAtIndexPaths:indexPaths];
+    } completion:nil];
 }
 
 #pragma mark - Priviate -
