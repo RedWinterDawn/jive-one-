@@ -12,8 +12,9 @@
 
 @implementation JCCallCardCollectionViewController
 
-static NSString *const currenctCallCardCellReuseIdentifier = @"CurrentCallCardCell";
-static NSString *const incomingCallCardCellReuseIdentifier = @"IncomingCallCardCell";
+NSString *const kJCCallCardCollectionCurrentCallCellReuseIdentifier = @"CurrentCallCardCell";
+NSString *const kJCCallCardCollectionIncomingCallCellReuseIdentifier = @"IncomingCallCardCell";
+NSString *const kJCCallCardCollectionConferenceCallCellReuseIdentifier = @"ConferenceCallCardCell";
 
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -26,6 +27,9 @@ static NSString *const incomingCallCardCellReuseIdentifier = @"IncomingCallCardC
         [center addObserver:self selector:@selector(callCardRemovedNotification:) name:kJCCallCardManagerRemoveIncomingCallNotification object:callCardManager];
         [center addObserver:self selector:@selector(addedCallCardNotification:) name:kJCCallCardManagerAddedCurrentCallNotification object:callCardManager];
         [center addObserver:self selector:@selector(callCardRemovedNotification:) name:kJCCallCardManagerRemoveCurrentCallNotification object:callCardManager];
+        
+        [center addObserver:self selector:@selector(addedConferenceCallNotification:) name:kJCCallCardManagerAddedConferenceCallNotification object:callCardManager];
+        [center addObserver:self selector:@selector(removeConferenceCallNotification:) name:kJCCallCardManagerRemoveConferenceCallNotification object:callCardManager];
     }
     return self;
 }
@@ -35,8 +39,9 @@ static NSString *const incomingCallCardCellReuseIdentifier = @"IncomingCallCardC
     [super viewDidLoad];
     
     NSBundle *bundle = [NSBundle mainBundle];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"CurrentCallViewCell" bundle:bundle] forCellWithReuseIdentifier:currenctCallCardCellReuseIdentifier];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"IncomingCallViewCell" bundle:bundle] forCellWithReuseIdentifier:incomingCallCardCellReuseIdentifier];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"CurrentCallViewCell" bundle:bundle] forCellWithReuseIdentifier:kJCCallCardCollectionCurrentCallCellReuseIdentifier];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"IncomingCallViewCell" bundle:bundle] forCellWithReuseIdentifier:kJCCallCardCollectionIncomingCallCellReuseIdentifier];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"ConferenceCallViewCell" bundle:bundle] forCellWithReuseIdentifier:kJCCallCardCollectionConferenceCallCellReuseIdentifier];
 }
 
 -(void)viewWillLayoutSubviews
@@ -92,6 +97,40 @@ static NSString *const incomingCallCardCellReuseIdentifier = @"IncomingCallCardC
                      }];
 }
 
+-(void)addedConferenceCallNotification:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    
+    NSArray *rowsToRemove = [userInfo objectForKey:kJCCallCardManagerRemovedCells];
+    NSMutableArray *indexPaths = [NSMutableArray array];
+    for (NSNumber *index in rowsToRemove) {
+        [indexPaths addObject:[NSIndexPath indexPathForRow:index.integerValue inSection:0]];
+    }
+    
+    NSNumber *insertIndex = [userInfo objectForKey:kJCCallCardManagerUpdatedIndex];
+    [self.collectionView performBatchUpdates:^{
+        [self.collectionView deleteItemsAtIndexPaths:indexPaths];
+        [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:insertIndex.integerValue inSection:0]]];
+    } completion:nil];
+}
+
+-(void)removeConferenceCallNotification:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    NSArray *rowsToAdd = [userInfo objectForKey:kJCCallCardManagerAddedCells];
+    NSMutableArray *indexPaths = [NSMutableArray array];
+    for (NSNumber *index in rowsToAdd) {
+        [indexPaths addObject:[NSIndexPath indexPathForRow:index.integerValue inSection:0]];
+    }
+    
+    NSNumber *removeIndex = [userInfo objectForKey:kJCCallCardManagerUpdatedIndex];
+    
+    [self.collectionView performBatchUpdates:^{
+        [self.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:removeIndex.integerValue inSection:0]]];
+        [self.collectionView insertItemsAtIndexPaths:indexPaths];
+    } completion:nil];
+}
+
 #pragma mark - Priviate -
 
 -(NSUInteger)numberOfCallsForSection:(NSUInteger)section
@@ -123,9 +162,11 @@ static NSString *const incomingCallCardCellReuseIdentifier = @"IncomingCallCardC
     JCCallCardCollectionViewCell *cell;
     JCCallCard *callCard = [self callCardForIndexPath:indexPath];
     if (callCard.isIncoming)
-        cell = (JCCallCardCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:incomingCallCardCellReuseIdentifier forIndexPath:indexPath];
+        cell = (JCCallCardCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kJCCallCardCollectionIncomingCallCellReuseIdentifier forIndexPath:indexPath];
+    else if(callCard.isConference)
+        cell = (JCCallCardCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kJCCallCardCollectionConferenceCallCellReuseIdentifier forIndexPath:indexPath];
     else
-        cell = (JCCallCardCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:currenctCallCardCellReuseIdentifier forIndexPath:indexPath];
+        cell = (JCCallCardCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kJCCallCardCollectionCurrentCallCellReuseIdentifier forIndexPath:indexPath];
     cell.callCard = callCard;
     return cell;
 }
