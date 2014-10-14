@@ -27,6 +27,9 @@ NSString *const kJCCallCardCollectionConferenceCallCellReuseIdentifier = @"Confe
         [center addObserver:self selector:@selector(callCardRemovedNotification:) name:kJCCallCardManagerRemoveIncomingCallNotification object:callCardManager];
         [center addObserver:self selector:@selector(addedCallCardNotification:) name:kJCCallCardManagerAddedCurrentCallNotification object:callCardManager];
         [center addObserver:self selector:@selector(callCardRemovedNotification:) name:kJCCallCardManagerRemoveCurrentCallNotification object:callCardManager];
+        
+        [center addObserver:self selector:@selector(addedConferenceCallNotification:) name:kJCCallCardManagerAddedConferenceCallNotification object:callCardManager];
+        [center addObserver:self selector:@selector(removeConferenceCallNotification:) name:kJCCallCardManagerRemovedConfenceCallNotification object:callCardManager];
     }
     return self;
 }
@@ -92,6 +95,38 @@ NSString *const kJCCallCardCollectionConferenceCallCellReuseIdentifier = @"Confe
                              [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
                          } completion:nil];
                      }];
+}
+
+-(void)addedConferenceCallNotification:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    
+    NSArray *rowsToRemove = [userInfo objectForKey:kJCCallCardManagerRemovedCells];
+    NSMutableArray *indexPaths = [NSMutableArray array];
+    for (NSNumber *index in rowsToRemove) {
+        [indexPaths addObject:[NSIndexPath indexPathForRow:index.integerValue inSection:0]];
+    }
+    
+    NSNumber *insertIndex = [userInfo objectForKey:kJCCallCardManagerUpdatedIndex];
+    
+    
+    [UIView animateWithDuration:0.3
+                          delay:0
+                        options:UIViewAnimationOptionTransitionFlipFromRight
+                     animations:^{
+                         
+                     }
+                     completion:^(BOOL finished) {
+                         [self.collectionView performBatchUpdates:^{
+                             [self.collectionView deleteItemsAtIndexPaths:indexPaths];
+                             [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:insertIndex.integerValue inSection:0]]];
+                         } completion:nil];
+                     }];
+}
+
+-(void)removeConferenceCallNotification:(NSNotification *)notification
+{
+    
 }
 
 #pragma mark - Priviate -

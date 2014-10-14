@@ -21,11 +21,13 @@ extern NSString *const kJCCallCardHoldKey;
 @property (nonatomic, readonly) NSString *identifer;
 @property (nonatomic, readonly) NSString *callerId;
 @property (nonatomic, readonly) NSString *dialNumber;
+@property (nonatomic, readonly) NSArray *calls;
 
 @property (nonatomic, getter=isIncoming) bool incoming;
 @property (nonatomic, getter=isConference) bool conference;
 @property (nonatomic) BOOL hold;
 @property (nonatomic) JCCall callState;
+
 
 -(id)initWithLineSession:(JCLineSession *)lineSession;
 -(id)initWithCalls:(NSArray *)calls;
