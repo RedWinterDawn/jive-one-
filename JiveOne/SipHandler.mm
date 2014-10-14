@@ -11,6 +11,8 @@
 #import <PortSIPLib/PortSIPSDK.h>
 #import <AFNetworking/AFNetworkReachabilityManager.h>
 #import "IncomingCall+Custom.h"
+#import "MissedCall+Custom.h"
+#import "OutgoingCall+Custom.h"
 
 #import "LineConfiguration+Custom.h"
 #import "Lines+Custom.h"
@@ -35,6 +37,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     AFNetworkReachabilityStatus _previousNetworkStatus;
 	VideoViewController *_videoController;
 	bool inConference;
+    bool wasIncomingCall;
 }
 
 @property (nonatomic) NSMutableArray *lineSessions;
@@ -414,6 +417,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 		
 		[currentSession setCallTitle:contactName ? contactName : callee];
 		[currentSession setCallDetail:callee];
+        [OutgoingCall addutgoingCallWithLineSession:currentSession];
 	}
 	else
 	{
@@ -421,7 +425,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 		[currentSession setMCallState:JCCallFailed];
 		[currentSession reset];
 	}
-	
+    
 	return currentSession;
 }
 
@@ -730,6 +734,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 			 existsVideo:(BOOL)existsVideo
 {
 	NSLog(@"onInviteIncoming - Session ID: %ld", sessionId);
+    wasIncomingCall = true;
 	JCLineSession *idleLine = [self findIdleLine];
 	
 	if (!idleLine)
@@ -1005,6 +1010,14 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	
 	[selectedLine setMCallState:JCCallCanceled];
 	[selectedLine reset];
+    
+    if (wasIncomingCall) {
+        //create missed call notification  addIncommingCallWithLineSession:idleLine
+        [MissedCall addMissedCallWithLineSession:selectedLine];
+        
+        
+        wasIncomingCall = false;
+    }
 	
 //	if (mSessionArray[index].getVideoState() == true) {
 //		[videoViewController onStopVideo:sessionId];

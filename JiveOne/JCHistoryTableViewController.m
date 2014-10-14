@@ -7,9 +7,16 @@
 //
 
 #import "JCHistoryTableViewController.h"
+#import <CoreData/CoreData.h>
+#import <MagicalRecord/MagicalRecord.h>
+#import "JCHistoryCell.h"
+
+#import "Call.h"
 
 
-@interface JCHistoryTableViewController ()
+@interface JCHistoryTableViewController () <NSFetchedResultsControllerDelegate>
+
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 @end
 
@@ -22,12 +29,6 @@
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main-logo.png"]];
     imageView.contentMode = UIViewContentModeCenter;
     self.tableView.backgroundView = imageView;
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -35,29 +36,80 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
+-(NSFetchedResultsController *)fetchedResultsController
+{
+    if (!_fetchedResultsController) {
+     
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Call"];
+        fetchRequest.fetchBatchSize = 6;
+        fetchRequest.includesSubentities = TRUE;
+        
+        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"timeStamp" ascending:false];
+        fetchRequest.sortDescriptors = @[sortDescriptor];
+        
+        fetchRequest.predicate = self.predicate;
+        
+        NSManagedObjectContext *managedObjectContext = [NSManagedObjectContext MR_defaultContext];
+        NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+                                                                                                   managedObjectContext:managedObjectContext
+                                                                                                     sectionNameKeyPath:nil
+                                                                                                              cacheName:nil];
+        
+        fetchedResultsController.delegate = self;
+
+        __autoreleasing NSError *error;
+        [fetchedResultsController performFetch:&error];
+        if (error) {
+            NSLog(@"%@", [error description]);
+        }
+        _fetchedResultsController = fetchedResultsController;
+        
+    }
+    return _fetchedResultsController;
+}
+
+
+#pragma mark - Delegate Handlers -
+
+#pragma mark Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    return self.fetchedResultsController.sections.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
+    
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController.sections objectAtIndex:section];
+    if (sectionInfo) {
+        return [sectionInfo numberOfObjects];
+    }
     return 0;
 }
 
-/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    JCHistoryCell *cell = (JCHistoryCell *)[tableView dequeueReusableCellWithIdentifier:@"JCHistoryCell" forIndexPath:indexPath];
+    
+    Call *call = (Call *)[self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    
+    //cell.
+    cell.name.text = call.name;
+    cell.number.text = call.number;
+    cell.timestamp.text = call.formattedShortDate;
+    cell.icon.image = call.icon;
+   
     
     // Configure the cell...
     
     return cell;
 }
-*/
+
+#pragma mark Fetched Results Controller
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
+{
+    [self.tableView reloadData];
+}
 
 
 @end

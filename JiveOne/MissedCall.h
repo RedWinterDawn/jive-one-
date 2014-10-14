@@ -7,6 +7,9 @@
 //
 
 #import "Call.h"
+#import "JCLineSession.h"
+
+extern NSString *const kMissedCallEntityName;
 
 @interface MissedCall : Call
 

@@ -8,6 +8,26 @@
 
 #import "MissedCall.h"
 
+NSString *const kMissedCallEntityName = @"IncomingCall";
+
+@interface MissedCall ()
+{
+    
+}
+
+@end
+
 @implementation MissedCall
+-(UIImage *)icon
+{
+    // Get icon, but only ever once.
+    static UIImage *missedCallIcon;
+    static dispatch_once_t oncePredicate;
+    dispatch_once(&oncePredicate, ^{
+        missedCallIcon = [UIImage imageNamed:@"red-missed"];
+    });
+    
+    return missedCallIcon;
+}
 
 @end

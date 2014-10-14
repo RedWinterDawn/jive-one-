@@ -11,5 +11,6 @@
 
 @interface JCHistoryTableViewController : UITableViewController
 
+@property (nonatomic, strong) NSPredicate *predicate;
 
 @end

@@ -12,14 +12,6 @@
 
 NSString *const kIncomingCallEntityName = @"IncomingCall";
 
-
-@interface IncomingCall ()
-{
-    CALayer *_incomingCallIconLayer;
-}
-
-@end
-
 @implementation IncomingCall
 
 -(UIImage *)icon

@@ -311,6 +311,8 @@
 		F59AE2C9192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2BC192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png */; };
 		F59AE2CC192F0B0D00CAF0F3 /* iPadLaunch2Xnew.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2CB192F0B0D00CAF0F3 /* iPadLaunch2Xnew.png */; };
 		F82A284119DDC55E00C3620D /* JCV4ProvisioningClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F82A284019DDC55E00C3620D /* JCV4ProvisioningClient.m */; };
+		F843929A19ED961000CF9B15 /* OutgoingCall+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = F843929919ED961000CF9B15 /* OutgoingCall+Custom.m */; };
+		F843929D19ED963100CF9B15 /* MissedCall+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = F843929C19ED963100CF9B15 /* MissedCall+Custom.m */; };
 		F84A087919DF38C8003476E6 /* JCTransferConfirmationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F84A087819DF38C8003476E6 /* JCTransferConfirmationViewController.m */; };
 		F8A2BC0B19DB5B3C00251310 /* JCCallOptionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = F8A2BC0A19DB5B3C00251310 /* JCCallOptionsView.m */; };
 		F8B62E5B19DB091500AF98D3 /* JCRoundedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F8B62E5A19DB091500AF98D3 /* JCRoundedButton.m */; };
@@ -870,6 +872,10 @@
 		F59AE2CB192F0B0D00CAF0F3 /* iPadLaunch2Xnew.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPadLaunch2Xnew.png; sourceTree = "<group>"; };
 		F82A283F19DDC55E00C3620D /* JCV4ProvisioningClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCV4ProvisioningClient.h; sourceTree = "<group>"; };
 		F82A284019DDC55E00C3620D /* JCV4ProvisioningClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCV4ProvisioningClient.m; sourceTree = "<group>"; };
+		F843929819ED961000CF9B15 /* OutgoingCall+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OutgoingCall+Custom.h"; sourceTree = "<group>"; };
+		F843929919ED961000CF9B15 /* OutgoingCall+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OutgoingCall+Custom.m"; sourceTree = "<group>"; };
+		F843929B19ED963100CF9B15 /* MissedCall+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MissedCall+Custom.h"; sourceTree = "<group>"; };
+		F843929C19ED963100CF9B15 /* MissedCall+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MissedCall+Custom.m"; sourceTree = "<group>"; };
 		F84A087719DF38C8003476E6 /* JCTransferConfirmationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTransferConfirmationViewController.h; sourceTree = "<group>"; };
 		F84A087819DF38C8003476E6 /* JCTransferConfirmationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTransferConfirmationViewController.m; sourceTree = "<group>"; };
 		F8A2BC0919DB5B3C00251310 /* JCCallOptionsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCallOptionsView.h; sourceTree = "<group>"; };
@@ -1152,10 +1158,16 @@
 			children = (
 				F8C9A7D819E884D30049A715 /* IncomingCall.h */,
 				F8C9A7D919E884D30049A715 /* IncomingCall.m */,
+				F8C9A7ED19EC8A9A0049A715 /* IncomingCall+Custom.h */,
+				F8C9A7EE19EC8A9A0049A715 /* IncomingCall+Custom.m */,
 				F8C9A7D519E884D30049A715 /* MissedCall.h */,
 				F8C9A7D619E884D30049A715 /* MissedCall.m */,
+				F843929B19ED963100CF9B15 /* MissedCall+Custom.h */,
+				F843929C19ED963100CF9B15 /* MissedCall+Custom.m */,
 				F8C9A7D219E884D20049A715 /* OutgoingCall.h */,
 				F8C9A7D319E884D20049A715 /* OutgoingCall.m */,
+				F843929819ED961000CF9B15 /* OutgoingCall+Custom.h */,
+				F843929919ED961000CF9B15 /* OutgoingCall+Custom.m */,
 				270559A6196DD11800A7AF35 /* LineGroup.h */,
 				270559A7196DD11800A7AF35 /* LineGroup.m */,
 				270559A3196DD11700A7AF35 /* ContactGroup.h */,
@@ -1323,8 +1335,6 @@
 				27997573195A12C5001425CC /* PBX+Custom.m */,
 				27997575195A12D7001425CC /* Lines+Custom.h */,
 				27997576195A12D7001425CC /* Lines+Custom.m */,
-				F8C9A7ED19EC8A9A0049A715 /* IncomingCall+Custom.h */,
-				F8C9A7EE19EC8A9A0049A715 /* IncomingCall+Custom.m */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -2481,6 +2491,7 @@
 				91743AA0191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m in Sources */,
 				2762151E1912AA2500CFBCC8 /* NSDictionary+QueryString.m in Sources */,
 				27997577195A12D7001425CC /* Lines+Custom.m in Sources */,
+				F843929D19ED963100CF9B15 /* MissedCall+Custom.m in Sources */,
 				91CAE67A1961D485004A28FD /* JCJiveLogoWhite.m in Sources */,
 				2700987518F4714100B6BC2F /* UIColor+JSMessagesView.m in Sources */,
 				279E4CB5192273E5002A556C /* MBContactPicker.m in Sources */,
@@ -2515,6 +2526,7 @@
 				276CFEAB196AF45F00C30B30 /* JasmineSocket.m in Sources */,
 				5DA5A1B219DAFEAD00968F7D /* JCDialStringLabel.m in Sources */,
 				2700987D18F4714100B6BC2F /* JSMessageInputView.m in Sources */,
+				F843929A19ED961000CF9B15 /* OutgoingCall+Custom.m in Sources */,
 				27F1F2D9191C171300AEAFD7 /* UAInboxNavUI.m in Sources */,
 				2736698218BD441D0069B4B3 /* JCPersonCell.m in Sources */,
 				91915732195A2DC0004BDE26 /* JCLeaveFeedbackButton.m in Sources */,

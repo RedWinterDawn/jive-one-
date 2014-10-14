@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1552" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -1548,7 +1547,7 @@
             <objects>
                 <collectionViewController id="zhT-8a-SlE" customClass="JCCallCardCollectionViewController" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="rwh-qv-yU8">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="347"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <collectionViewLayout key="collectionViewLayout" id="8ug-Q6-sKe" customClass="JCCallCardCollectionLayout"/>
@@ -3121,13 +3120,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JBy-JJ-42y">
-                                <rect key="frame" x="0.0" y="108" width="320" height="460"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <segue destination="uZP-Ez-Yy3" kind="embed" id="6ch-W5-ocS"/>
-                                </connections>
-                            </containerView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" highlighted="YES" selected="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="EnF-NZ-q0n">
                                 <rect key="frame" x="58" y="72" width="205" height="29"/>
                                 <segments>
@@ -3135,6 +3127,13 @@
                                     <segment title="Missed"/>
                                 </segments>
                             </segmentedControl>
+                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JBy-JJ-42y">
+                                <rect key="frame" x="0.0" y="108" width="320" height="460"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="uZP-Ez-Yy3" kind="embed" id="6ch-W5-ocS"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -3154,7 +3153,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="82" id="ZqA-Pm-UOP" customClass="JCHistoryCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="JCHistoryCell" rowHeight="82" id="ZqA-Pm-UOP" customClass="JCHistoryCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZqA-Pm-UOP" id="7IG-ct-6WZ">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -3189,10 +3188,10 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="Number" destination="7IG-ct-6WZ" id="ZgS-pX-3gZ"/>
-                                    <outlet property="exstention" destination="7IG-ct-6WZ" id="DPS-12-kCo"/>
+                                    <outlet property="extensions" destination="cWv-is-iwj" id="yYO-E4-JSe"/>
                                     <outlet property="icon" destination="Jpu-p5-yxO" id="Ew0-Tl-Nxn"/>
-                                    <outlet property="name" destination="7IG-ct-6WZ" id="ptR-SO-hmC"/>
+                                    <outlet property="name" destination="w5M-28-ft9" id="whd-c6-uwv"/>
+                                    <outlet property="number" destination="s31-J3-jwX" id="W4e-p8-JgU"/>
                                     <outlet property="timestamp" destination="FuN-Uh-Rv5" id="JEF-01-AFJ"/>
                                 </connections>
                             </tableViewCell>

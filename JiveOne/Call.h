@@ -18,7 +18,6 @@
 
 @interface Call : RecentEvent <Call>
 
-@property (nonatomic, retain) NSDate *date;
 @property (nonatomic, retain) NSString *number;
 @property (nonatomic, retain) NSString *name;
 @property (nonatomic, retain) NSNumber *extension;

@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface JCHistoryCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIView *name;
-@property (weak, nonatomic) IBOutlet UIView *Number;
-@property (weak, nonatomic) IBOutlet UIView *exstention;
+@property (weak, nonatomic) IBOutlet UILabel *name;
+@property (weak, nonatomic) IBOutlet UILabel *number;
+@property (weak, nonatomic) IBOutlet UILabel *extensions;
 @property (weak, nonatomic) IBOutlet UIImageView *icon;
 @property (weak, nonatomic) IBOutlet UILabel *timestamp;
 

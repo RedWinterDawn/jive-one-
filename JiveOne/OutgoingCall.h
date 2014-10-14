@@ -7,8 +7,10 @@
 //
 
 #import "Call.h"
+#import "JCLineSession.h"
+
+extern NSString *const kOutgoingCallEntityName;
 
 @interface OutgoingCall : Call
-
 
 @end
