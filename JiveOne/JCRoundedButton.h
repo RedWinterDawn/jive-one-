@@ -9,5 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface JCRoundedButton : UIButton
+{
+    UIColor *_defaultBackgroundColor;
+}
+
+@property (nonatomic, strong) UIColor *selectedBackgroundColor;
 
 @end

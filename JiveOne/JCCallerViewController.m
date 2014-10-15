@@ -18,6 +18,7 @@
 // Managers
 #import "JCCallCardManager.h"   // Handles call cards, and managed calls
 #import "SipHandler.h"          // Direct access to the lower level sip manager.
+#import <MBProgressHUD.h>
 
 // Presented View Controllers
 #import "JCTransferViewController.h"                // Shows dial pad to dial for blind, warm transfer and additional call.
@@ -37,8 +38,8 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 {
     UIViewController *_presentedTransferViewController;
     UIViewController *_presentedKeyboardViewController;
-    
     NSTimeInterval _defaultCallOptionViewConstraint;
+	MBProgressHUD *hud;
 }
 
 @end
@@ -181,13 +182,33 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(IBAction)swapCall:(id)sender
 {
-    // TODO: Swap current calls.
-
+	
 }
 
 -(IBAction)mergeCall:(id)sender
 {
-    // TODO: Merge two calls.
+    if ([sender isKindOfClass:[UIButton class]]){
+        UIButton *button = (UIButton *)sender;
+        button.selected = !button.selected;
+		
+
+        if (button.selected) {
+            [[JCCallCardManager sharedManager] mergeCalls:^(bool success) {
+				if (success) {
+					self.mergeLabel.text = @"Split Calls";
+				}
+				else
+				{
+					button.selected = !button.selected;
+					[self showHudWithTitle:@"Oh-oh" detail:@"Failed to Create Conference"];
+				}
+			}];
+			
+        } else {
+            [[JCCallCardManager sharedManager] splitCalls];
+            self.mergeLabel.text = @"Merge Calls";
+        }
+    }
 }
 
 -(IBAction)finishTransfer:(id)sender
@@ -196,6 +217,30 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         if (success)
             [self showTransferSuccess];
     }];
+}
+
+#pragma -mark HUD Operations
+- (void)showHudWithTitle:(NSString*)title detail:(NSString*)detail
+{
+	if (!hud) {
+		hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+		hud.mode = MBProgressHUDModeText;
+			}
+	
+	hud.labelText = title;
+	hud.detailsLabelText = detail;
+	[hud hide:YES afterDelay:2.0];
+	[hud show:YES];
+}
+
+- (void)hideHud
+{
+	//    self.doneLoadingContent = YES;
+	if (hud) {
+		[MBProgressHUD hideHUDForView:self.view animated:YES];
+		[hud removeFromSuperview];
+		hud = nil;
+	}
 }
 
 #pragma mark - Private -

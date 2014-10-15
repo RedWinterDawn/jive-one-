@@ -67,14 +67,14 @@ NSString *const kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey = @"pul
     {
         self.dialedNumberLabel.text = dialNumber;
     }
-    
+    [self updateHoldState:NO];
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
 	if ([keyPath isEqualToString:kJCCallCardHoldKey] && self.superview != nil)
     {
-        [self updateHoldState];
+        [self updateHoldState:YES];
     }
 	else if ([keyPath isEqualToString:kJCCallCardStatusChangeKey])
     {
@@ -132,6 +132,8 @@ NSString *const kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey = @"pul
     }
     
     [self setNeedsLayout];
+    
+    
 }
 
 /**
@@ -182,7 +184,7 @@ NSString *const kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey = @"pul
     self.holdElapsedTimeLabel.text = [NSString stringWithFormat:kJCCallCardCollectionViewCellTimerFormat, minutes, seconds];
 }
 
--(void)updateHoldState
+-(void)updateHoldState:(BOOL)animated
 {
     if (_holdTimer)
     {
@@ -191,10 +193,10 @@ NSString *const kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey = @"pul
     }
     
     if (_callCard.hold) {
-        [self showHoldStateAnimated:YES];
+        [self showHoldStateAnimated:animated];
     }
     else {
-        [self showConnectedState:YES];
+        [self showConnectedState:animated];
     }
 }
 
@@ -213,16 +215,25 @@ NSString *const kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey = @"pul
     if ([_holdCallButton.layer animationForKey:kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey])
         [_holdCallButton.layer removeAnimationForKey:kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey];
     
-    [UIView animateWithDuration:(animated ? _holdAnimationDuration : 0)
-                     animations:^{
-                         weakSelf.alpha = 1;
-                         weakSelf.callActions.backgroundColor = _defaultCallActionsColor;
-                         [_cardInfoView layoutIfNeeded];
-                     }];
+    if (animated)
+    {
+        [UIView animateWithDuration:_holdAnimationDuration
+                         animations:^{
+                             weakSelf.alpha = 1;
+                             weakSelf.callActions.backgroundColor = _defaultCallActionsColor;
+                             [_cardInfoView layoutIfNeeded];
+                         }];
+    }
+    else
+    {
+        weakSelf.alpha = 1;
+        weakSelf.callActions.backgroundColor = _defaultCallActionsColor;
+        [_cardInfoView layoutIfNeeded];
+    }
 }
 
 /**
- * Animates down the hold view, and fades the action background to be clear. Partially fades the whole view. The hold 
+ * Animates down the hold view, and fades the action background to be clear. Partially fades the whole view. The hold
  * button should be visible.
  */
 -(void)showHoldStateAnimated:(BOOL)animated
@@ -235,36 +246,44 @@ NSString *const kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey = @"pul
         
     _holdTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(holdTimerUpdate) userInfo:nil repeats:YES];
     [self holdTimerUpdate];
-        
-    [UIView animateWithDuration:(animated ? _holdAnimationDuration : 0)
+    
+    if (animated)
+    {
+        [UIView animateWithDuration:_holdAnimationDuration
                          animations:^{
                              weakSelf.alpha = _holdAnimationAlpha;
                              weakSelf.callActions.backgroundColor = [UIColor clearColor];
                              [_cardInfoView layoutIfNeeded];
                          }];
-    
-    CALayer *holdBtnLayer = _holdCallButton.layer;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
         
-        CABasicAnimation *pulseAnim = [CABasicAnimation animationWithKeyPath:@"opacity"];
-        pulseAnim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-        pulseAnim.fromValue = @1.0f;
-        pulseAnim.toValue = @HOLD_PULSE_OPACITY_TO_VALUE;
-        pulseAnim.repeatCount = INFINITY;
-        pulseAnim.duration = _holdPulseAnimationDuration;
-        pulseAnim.autoreverses = YES;
-        pulseAnim.removedOnCompletion = NO;
-        dispatch_async(dispatch_get_main_queue(), ^(void) {
-            [holdBtnLayer addAnimation:pulseAnim forKey:kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey];
+        CALayer *holdBtnLayer = _holdCallButton.layer;
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
+            
+            CABasicAnimation *pulseAnim = [CABasicAnimation animationWithKeyPath:@"opacity"];
+            pulseAnim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+            pulseAnim.fromValue = @1.0f;
+            pulseAnim.toValue = @HOLD_PULSE_OPACITY_TO_VALUE;
+            pulseAnim.repeatCount = INFINITY;
+            pulseAnim.duration = _holdPulseAnimationDuration;
+            pulseAnim.autoreverses = YES;
+            pulseAnim.removedOnCompletion = NO;
+            dispatch_async(dispatch_get_main_queue(), ^(void) {
+                [holdBtnLayer addAnimation:pulseAnim forKey:kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey];
+            });
         });
-    });
+    }
+    else
+    {
+        weakSelf.alpha = _holdAnimationAlpha;
+        weakSelf.callActions.backgroundColor = [UIColor clearColor];
+        [_cardInfoView layoutIfNeeded];
+    }
 }
 
 -(void)hideHoldButton:(bool)animated
 {
     _endCallButtonWidthConstraint.constant = self.bounds.size.width;
     [_callActions setNeedsUpdateConstraints];
-    
     [UIView animateWithDuration:animated ? 0.3 : 0
                      animations:^{
                          [_callActions layoutIfNeeded];

@@ -12,8 +12,9 @@
 
 @implementation JCCallCardCollectionViewController
 
-static NSString *const currenctCallCardCellReuseIdentifier = @"CurrentCallCardCell";
-static NSString *const incomingCallCardCellReuseIdentifier = @"IncomingCallCardCell";
+NSString *const kJCCallCardCollectionCurrentCallCellReuseIdentifier = @"CurrentCallCardCell";
+NSString *const kJCCallCardCollectionIncomingCallCellReuseIdentifier = @"IncomingCallCardCell";
+NSString *const kJCCallCardCollectionConferenceCallCellReuseIdentifier = @"ConferenceCallCardCell";
 
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -26,6 +27,9 @@ static NSString *const incomingCallCardCellReuseIdentifier = @"IncomingCallCardC
         [center addObserver:self selector:@selector(callCardRemovedNotification:) name:kJCCallCardManagerRemoveIncomingCallNotification object:callCardManager];
         [center addObserver:self selector:@selector(addedCallCardNotification:) name:kJCCallCardManagerAddedCurrentCallNotification object:callCardManager];
         [center addObserver:self selector:@selector(callCardRemovedNotification:) name:kJCCallCardManagerRemoveCurrentCallNotification object:callCardManager];
+        
+        [center addObserver:self selector:@selector(addedConferenceCallNotification:) name:kJCCallCardManagerAddedConferenceCallNotification object:callCardManager];
+        [center addObserver:self selector:@selector(removeConferenceCallNotification:) name:kJCCallCardManagerRemoveConferenceCallNotification object:callCardManager];
     }
     return self;
 }
@@ -35,8 +39,9 @@ static NSString *const incomingCallCardCellReuseIdentifier = @"IncomingCallCardC
     [super viewDidLoad];
     
     NSBundle *bundle = [NSBundle mainBundle];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"CurrentCallViewCell" bundle:bundle] forCellWithReuseIdentifier:currenctCallCardCellReuseIdentifier];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"IncomingCallViewCell" bundle:bundle] forCellWithReuseIdentifier:incomingCallCardCellReuseIdentifier];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"CurrentCallViewCell" bundle:bundle] forCellWithReuseIdentifier:kJCCallCardCollectionCurrentCallCellReuseIdentifier];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"IncomingCallViewCell" bundle:bundle] forCellWithReuseIdentifier:kJCCallCardCollectionIncomingCallCellReuseIdentifier];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"ConferenceCallViewCell" bundle:bundle] forCellWithReuseIdentifier:kJCCallCardCollectionConferenceCallCellReuseIdentifier];
 }
 
 -(void)viewWillLayoutSubviews
@@ -92,6 +97,30 @@ static NSString *const incomingCallCardCellReuseIdentifier = @"IncomingCallCardC
                      }];
 }
 
+-(void)addedConferenceCallNotification:(NSNotification *)notification
+{
+    [UIView transitionWithView:self.view
+                      duration:0.3
+                       options:UIViewAnimationOptionTransitionFlipFromRight
+                    animations:^{
+                        [self.collectionView reloadData];
+                    } completion:^(BOOL finished) {
+                        
+                    }];
+}
+
+-(void)removeConferenceCallNotification:(NSNotification *)notification
+{
+   [UIView transitionWithView:self.view
+                      duration:0.3
+                       options:UIViewAnimationOptionTransitionFlipFromLeft
+                    animations:^{
+                        [self.collectionView reloadData];
+                    } completion:^(BOOL finished) {
+                        
+                    }];
+}
+
 #pragma mark - Priviate -
 
 -(NSUInteger)numberOfCallsForSection:(NSUInteger)section
@@ -123,9 +152,11 @@ static NSString *const incomingCallCardCellReuseIdentifier = @"IncomingCallCardC
     JCCallCardCollectionViewCell *cell;
     JCCallCard *callCard = [self callCardForIndexPath:indexPath];
     if (callCard.isIncoming)
-        cell = (JCCallCardCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:incomingCallCardCellReuseIdentifier forIndexPath:indexPath];
+        cell = (JCCallCardCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kJCCallCardCollectionIncomingCallCellReuseIdentifier forIndexPath:indexPath];
+    else if(callCard.isConference)
+        cell = (JCCallCardCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kJCCallCardCollectionConferenceCallCellReuseIdentifier forIndexPath:indexPath];
     else
-        cell = (JCCallCardCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:currenctCallCardCellReuseIdentifier forIndexPath:indexPath];
+        cell = (JCCallCardCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kJCCallCardCollectionCurrentCallCellReuseIdentifier forIndexPath:indexPath];
     cell.callCard = callCard;
     return cell;
 }

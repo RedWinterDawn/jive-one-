@@ -146,7 +146,6 @@ static NSString * const JSCallCardLayoutCellKind = @"CallCardCell";
     _insertIndexPaths = nil;
 }
 
-
 -(UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath
 {
     UICollectionViewLayoutAttributes *attributes = [super initialLayoutAttributesForAppearingItemAtIndexPath:itemIndexPath];
@@ -155,8 +154,11 @@ static NSString * const JSCallCardLayoutCellKind = @"CallCardCell";
         if (!attributes)
             attributes = [self layoutAttributesForItemAtIndexPath:itemIndexPath];
         
-        JCCallCardCollectionViewCell *cell = (JCCallCardCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:itemIndexPath];
+        JCCallCardCollectionViewCell *cell = (JCCallCardCollectionViewCell *)[self.collectionView.dataSource collectionView:self.collectionView cellForItemAtIndexPath:itemIndexPath];
         JCCallCard *callCard = cell.callCard;
+        if (callCard.isConference)
+            return attributes;
+        
         if (callCard.isIncoming)
             attributes.center = CGPointMake(attributes.center.x, -attributes.center.y);
         else
@@ -176,6 +178,9 @@ static NSString * const JSCallCardLayoutCellKind = @"CallCardCell";
         
         [self.collectionView.viewForBaselineLayout.layer setSpeed:1.5f];
         JCCallCard *callCard = ((JCCallCardCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:itemIndexPath]).callCard;
+        if (callCard.isConference)
+            return attributes;
+        
         if (callCard.isIncoming)
             attributes.center = CGPointMake(attributes.center.x, -attributes.center.y);
         else
