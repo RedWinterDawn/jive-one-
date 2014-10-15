@@ -13,6 +13,7 @@
 
 #import "Call.h"
 
+NSString *const kJCHistoryTableViewControllerCellReuseIdentifier = @"JCHistoryCell";
 
 @interface JCHistoryTableViewController () <NSFetchedResultsControllerDelegate>
 
@@ -25,7 +26,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main-logo.png"]];
     imageView.contentMode = UIViewContentModeCenter;
     self.tableView.backgroundView = imageView;
@@ -33,7 +33,7 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    self.fetchedResultsController = nil;
 }
 
 -(NSFetchedResultsController *)fetchedResultsController
@@ -87,20 +87,13 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    JCHistoryCell *cell = (JCHistoryCell *)[tableView dequeueReusableCellWithIdentifier:@"JCHistoryCell" forIndexPath:indexPath];
+    JCHistoryCell *cell = (JCHistoryCell *)[tableView dequeueReusableCellWithIdentifier:kJCHistoryTableViewControllerCellReuseIdentifier forIndexPath:indexPath];
     
     Call *call = (Call *)[self.fetchedResultsController objectAtIndexPath:indexPath];
-    
-    
-    //cell.
     cell.name.text = call.name;
     cell.number.text = call.number;
-    cell.timestamp.text = call.formattedShortDate;
+    cell.timestamp.text = call.formattedModifiedShortDate;
     cell.icon.image = call.icon;
-   
-    
-    // Configure the cell...
-    
     return cell;
 }
 

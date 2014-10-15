@@ -9,11 +9,14 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-
 @interface RecentEvent : NSManagedObject
 
-@property (nonatomic, retain) NSNumber *timeStamp;
+@property (nonatomic, strong) NSDate *date;
 
-@property (nonatomic, readonly) NSString *formattedShortDate;
+@property (nonatomic, assign) NSNumber *timestamp;
+@property (nonatomic) long long unixTimestamp;
+
+@property (nonatomic, readonly) NSString *formattedModifiedShortDate;
+@property (nonatomic, readonly) NSString *formattedLongDate;
 
 @end

@@ -70,7 +70,7 @@
 
         vmail.voicemailId = dictionary[@"id"];
         //vmail.mailboxId = dictionary[@"mailboxId"];
-        vmail.timeStamp = [NSNumber numberWithLongLong:[dictionary[@"timeStamp"] longLongValue]];
+        vmail.unixTimestamp = [dictionary[@"timeStamp"] longLongValue];
         vmail.duration = [NSNumber numberWithInteger:[dictionary[@"duration"] intValue]];
         vmail.read = [NSNumber numberWithBool:[dictionary[@"read"] boolValue]];
         /*if ([[dictionary objectForKey:@"transcription"] isKindOfClass:[NSNull class]]) {

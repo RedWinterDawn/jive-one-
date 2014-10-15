@@ -129,7 +129,7 @@
         <attribute name="presenceId" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="RecentEvent" representedClassName="RecentEvent" isAbstract="YES" syncable="YES">
-        <attribute name="timeStamp" optional="YES" attributeType="Integer 64" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
     </entity>
     <entity name="Voicemail" representedClassName="Voicemail" parentEntity="RecentEvent" syncable="YES">
         <attribute name="callerId" optional="YES" attributeType="String" syncable="YES"/>
@@ -152,25 +152,25 @@
         <attribute name="etag" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Call" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Company" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="ContactGroup" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Conversation" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="ConversationEntry" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="ConversationETag" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="IncomingCall" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="LineConfiguration" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="LineGroup" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Lines" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Membership" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="MissedCall" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="OutgoingCall" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="PBX" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="PersonEntities" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="PersonMeta" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Presence" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="RecentEvent" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Voicemail" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="VoicemailETag" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Call" positionX="0" positionY="0" width="128" height="90"/>
+        <element name="Company" positionX="0" positionY="0" width="128" height="150"/>
+        <element name="ContactGroup" positionX="0" positionY="0" width="128" height="75"/>
+        <element name="Conversation" positionX="0" positionY="0" width="128" height="180"/>
+        <element name="ConversationEntry" positionX="0" positionY="0" width="128" height="270"/>
+        <element name="ConversationETag" positionX="0" positionY="0" width="128" height="60"/>
+        <element name="IncomingCall" positionX="0" positionY="0" width="128" height="45"/>
+        <element name="LineConfiguration" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="LineGroup" positionX="0" positionY="0" width="128" height="75"/>
+        <element name="Lines" positionX="0" positionY="0" width="128" height="225"/>
+        <element name="Membership" positionX="0" positionY="0" width="128" height="90"/>
+        <element name="MissedCall" positionX="0" positionY="0" width="128" height="45"/>
+        <element name="OutgoingCall" positionX="0" positionY="0" width="128" height="45"/>
+        <element name="PBX" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="PersonEntities" positionX="0" positionY="0" width="128" height="360"/>
+        <element name="PersonMeta" positionX="0" positionY="0" width="128" height="150"/>
+        <element name="Presence" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="RecentEvent" positionX="0" positionY="0" width="128" height="60"/>
+        <element name="Voicemail" positionX="0" positionY="0" width="128" height="270"/>
+        <element name="VoicemailETag" positionX="0" positionY="0" width="128" height="60"/>
     </elements>
 </model>

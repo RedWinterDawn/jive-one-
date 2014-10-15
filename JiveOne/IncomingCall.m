@@ -7,8 +7,7 @@
 //
 
 #import "IncomingCall.h"
-
-
+#import <MagicalRecord/MagicalRecord.h>
 
 NSString *const kIncomingCallEntityName = @"IncomingCall";
 
@@ -24,6 +23,16 @@ NSString *const kIncomingCallEntityName = @"IncomingCall";
     });
         
     return incomingCallIcon;
+}
+
+@end
+
+
+@implementation IncomingCall (MagicalRecord)
+
++(void)addIncommingCallWithLineSession:(JCLineSession *)session
+{
+    [IncomingCall addCallEntity:kIncomingCallEntityName lineSession:session];
 }
 
 @end

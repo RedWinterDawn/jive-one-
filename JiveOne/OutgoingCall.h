@@ -14,3 +14,9 @@ extern NSString *const kOutgoingCallEntityName;
 @interface OutgoingCall : Call
 
 @end
+
+@interface OutgoingCall (MagicalRecord)
+
++(void)addOutgoingCallWithLineSession:(JCLineSession *)session;
+
+@end

@@ -10,9 +10,9 @@
 
 #import <PortSIPLib/PortSIPSDK.h>
 #import <AFNetworking/AFNetworkReachabilityManager.h>
-#import "IncomingCall+Custom.h"
-#import "MissedCall+Custom.h"
-#import "OutgoingCall+Custom.h"
+#import "IncomingCall.h"
+#import "MissedCall.h"
+#import "OutgoingCall.h"
 
 #import "LineConfiguration+Custom.h"
 #import "Lines+Custom.h"
@@ -417,7 +417,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 		
 		[currentSession setCallTitle:contactName ? contactName : callee];
 		[currentSession setCallDetail:callee];
-        [OutgoingCall addutgoingCallWithLineSession:currentSession];
+        [OutgoingCall addOutgoingCallWithLineSession:currentSession];
 	}
 	else
 	{

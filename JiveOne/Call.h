@@ -7,6 +7,7 @@
 //
 
 #import "RecentEvent.h"
+#import "JCLineSession.h"
 
 @protocol Call <NSObject>
 
@@ -14,7 +15,6 @@
 @property (nonatomic, readonly) UIImage *icon;
 
 @end
-
 
 @interface Call : RecentEvent <Call>
 
@@ -24,4 +24,8 @@
 
 @end
 
+@interface Call (MagicalRecord)
 
++(void)addCallEntity:(NSString *)entityName lineSession:(JCLineSession *)session;
+
+@end

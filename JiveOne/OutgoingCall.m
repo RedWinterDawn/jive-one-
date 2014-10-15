@@ -8,16 +8,7 @@
 
 #import "OutgoingCall.h"
 
-
 NSString *const kOutgoingCallEntityName = @"OutgoingCall";
-
-
-@interface OutgoingCall ()
-{
-    CALayer *_outgoingCallIconLayer;
-}
-
-@end
 
 @implementation OutgoingCall
 
@@ -31,6 +22,15 @@ NSString *const kOutgoingCallEntityName = @"OutgoingCall";
     });
     
     return outgoingCallIcon;
+}
+
+@end
+
+@implementation OutgoingCall (MagicalRecord)
+
++(void)addOutgoingCallWithLineSession:(JCLineSession *)session
+{
+    [OutgoingCall addCallEntity:kOutgoingCallEntityName lineSession:session];
 }
 
 @end

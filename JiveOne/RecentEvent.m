@@ -11,11 +11,40 @@
 
 @implementation RecentEvent
 
-@dynamic timeStamp;
+@dynamic date;
 
--(NSString *)formattedShortDate
+#pragma mark - Setters -
+
+-(void)setUnixTimestamp:(long long)unixTimestamp
 {
-    return [Common shortDateFromTimestamp:self.timeStamp];
+    self.timestamp = [NSNumber numberWithLongLong:unixTimestamp];
+}
+
+-(void)setTimestamp:(NSNumber *)timestamp
+{
+    self.date = [Common dateFromTimestamp:timestamp];
+}
+
+#pragma mark - Getters -
+
+-(long long)unixTimestamp
+{
+    return [self.date timeIntervalSince1970];
+}
+
+-(NSNumber *)timestamp
+{
+    return [NSNumber numberWithLongLong:self.unixTimestamp];
+}
+
+-(NSString *)formattedModifiedShortDate
+{
+    return [Common formattedModifiedShortDate:self.date];
+}
+
+-(NSString *)formattedLongDate
+{
+    return [Common formattedLongDate:self.date];
 }
 
 @end
