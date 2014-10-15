@@ -207,6 +207,7 @@ NSString *const kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey = @"pul
     __unsafe_unretained JCCallCardCollectionViewCell *weakSelf = self;
     _currentCallTopToContainerConstraint.constant = _originalCurrentCallViewConstraint;
     _callCardInfoTopConstraint.constant = _currentCallCardInfoElevation;
+    self.endCallButton.selected = false;
     [_cardInfoView setNeedsUpdateConstraints];
     
     if ([_holdCallButton.layer animationForKey:kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey])
@@ -229,6 +230,7 @@ NSString *const kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey = @"pul
     __unsafe_unretained JCCallCardCollectionViewCell *weakSelf = self;
     _currentCallTopToContainerConstraint.constant = 10;
     _callCardInfoTopConstraint.constant = 40;
+    self.endCallButton.selected = true;
     [_cardInfoView setNeedsUpdateConstraints];
         
     _holdTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(holdTimerUpdate) userInfo:nil repeats:YES];
