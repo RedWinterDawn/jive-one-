@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JCPlayPauseView : UIView
--(void)setPlayPauseDisplaysPlay:(BOOL)playPauseDisplaysPlay;
-@property (nonatomic) BOOL playPauseDisplaysPlay;
+@interface JCPlayPauseButton : UIButton
 
 @end

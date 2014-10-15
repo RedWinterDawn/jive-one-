@@ -7,30 +7,33 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <PortSIPLib/PortSIPSDK.h>
-#import "Lines+Custom.h"
 #import "JCLineSession.h"
 
-@interface SipHandler : NSObject <PortSIPEventDelegate>
-{
-	BOOL mSIPRegistered;
-	NSString *sipUrl;
-}
+typedef void(^ConnectionCompletionHandler)(bool success, NSError *error);
 
-@property (strong, nonatomic) PortSIPSDK *mPortSIPSDK;
-@property (strong, nonatomic) UIWindow *window;
-@property (nonatomic,retain) NSString *sipURL;
-@property NSInteger    mActiveLine;
+extern NSString *const kSipHandlerRegisteredSelectorKey;
 
-+ (instancetype) sharedHandler;
-- (void)initiate;
+@interface SipHandler : NSObject
+
+@property (nonatomic, strong) NSString *sipURL;
+@property (nonatomic) NSInteger mActiveLine;
+
+@property (nonatomic, readonly, getter=isRegistered) BOOL registered;
+@property (nonatomic, readonly, getter=isInitialized) BOOL initialized;
+
+// "Registers" the application to the SIP service via the Port SIP SDK.
+-(void)connect:(ConnectionCompletionHandler)completion;
+
+// "Deregisters" the application from the SIP service.
+-(void)disconnect;
+
 - (void) pressNumpadButton:(char )dtmf;
 - (JCLineSession *) makeCall:(NSString*)callee videoCall:(BOOL)videoCall contactName:(NSString *)contactName;
 - (void)answerCall;
 - (void) hangUpCallWithSession:(long)sessionId;
 - (void) holdCall;
 //- (void) unholdCall;
-- (void) hangUpCall;
+//- (void) hangUpCall;
 - (void) referCall:(NSString*)referTo;
 - (void) muteCall:(BOOL)mute;
 - (void) setLoudspeakerStatus:(BOOL)enable;
@@ -38,5 +41,14 @@
 - (NSArray *) findAllActiveLines;
 
 //- (void) switchSessionLine;
+- (void)startKeepAwake;
+- (void)stopKeepAwake;
+
+@end
+
+
+@interface SipHandler (Singleton)
+
++ (instancetype) sharedHandler;
 
 @end

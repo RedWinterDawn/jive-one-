@@ -28,7 +28,7 @@ NSString *const kJCCallCardHoldKey = @"hold";
     
     [self willChangeValueForKey:kJCCallCardHoldKey];
     
-    [[JCCallCardManager sharedManager] placeCallOnHold:self];
+    [[JCCallCardManager sharedManager] toggleCallHold:self];
     
     self.holdStarted = [NSDate date];
     

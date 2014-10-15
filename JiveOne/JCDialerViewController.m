@@ -13,22 +13,24 @@
 NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCall";
 
 @interface JCDialerViewController () <JCCallerViewControllerDelegate>
+{
+    SipHandler *_sipHandler;
+}
 
 @end
-
 
 @implementation JCDialerViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	[SipHandler sharedHandler];
-    
-    // Initialy hide the backspace button
     self.backspaceBtn.alpha = 0;
+    
+    _sipHandler = [SipHandler sharedHandler];
+    [_sipHandler addObserver:self forKeyPath:kSipHandlerRegisteredSelectorKey options:NSKeyValueObservingOptionNew context:NULL];
+    [self updateResgistrationStatus];
 }
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     UIViewController *viewController = segue.destinationViewController;
@@ -40,6 +42,16 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     }
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:kSipHandlerRegisteredSelectorKey])
+        [self updateResgistrationStatus];
+}
+
+- (void)dealloc
+{
+    [_sipHandler removeObserver:self forKeyPath:kSipHandlerRegisteredSelectorKey];
+}
 
 #pragma mark - IBActions -
 
@@ -50,14 +62,19 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
         UIButton *button = (UIButton *)sender;
 		NSString *dtmf = [self characterFromNumPadTag:(int)button.tag];
         [self.dialStringLabel append:dtmf];
-		[[SipHandler sharedHandler] pressNumpadButton:*(char*)[dtmf UTF8String]];
+		[_sipHandler pressNumpadButton:*(char*)[dtmf UTF8String]];
     }
 }
 
 -(IBAction)initiateCall:(id)sender
 {
-//	[[SipHandler sharedHandler] makeCall:self.dialStringLabel.text videoCall:NO contactName:[self getContactNameByNumber:self.dialStringLabel.text]];
-    [self performSegueWithIdentifier:kJCDialerViewControllerCallerStoryboardIdentifier sender:self];
+    if (!_sipHandler.isRegistered)
+        [_sipHandler connect:^(bool success, NSError *error) {
+            if (success)
+                [self performSegueWithIdentifier:kJCDialerViewControllerCallerStoryboardIdentifier sender:self];
+        }];
+    else
+        [self performSegueWithIdentifier:kJCDialerViewControllerCallerStoryboardIdentifier sender:self];
 }
 
 -(IBAction)backspace:(id)sender
@@ -71,6 +88,20 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 }
 
 #pragma mark - Private -
+
+-(void)updateResgistrationStatus
+{
+    NSString *prompt = @"Unregistered";
+    if (_sipHandler.isRegistered)
+    {
+        _callBtn.selected = false;
+        prompt = [NSString stringWithFormat:@"Ext: %@", @"5555"];
+    }
+    else
+        _callBtn.selected = true;
+    
+    self.regestrationStatus.text = prompt;
+}
 
 -(NSString *)characterFromNumPadTag:(int)tag
 {
@@ -112,9 +143,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 
 -(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController
 {
-    [self dismissViewControllerAnimated:NO completion:^{
-        
-    }];
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 @end
