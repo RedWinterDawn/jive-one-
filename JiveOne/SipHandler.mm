@@ -773,8 +773,19 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 ////		alert.tag = index;
 //		[alert show];
 //	}
-	
+    
 	[[JCCallCardManager sharedManager] addIncomingCall:idleLine];
+    
+    [idleLine setCallTitle:[NSString stringWithUTF8String:callerDisplayName]];
+    
+    NSRange range = NSMakeRange(4, 4);
+    NSString *callerDetailSubString = [[NSString stringWithUTF8String:caller]substringWithRange:range];
+    
+    [idleLine setCallDetail:  callerDetailSubString];
+    
+    
+    
+    
     [IncomingCall addIncommingCallWithLineSession:idleLine];
 };
 
@@ -986,6 +997,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 //	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Call has been forward to:%s" ,forwardTo]];
 }
 
+
 - (void)onInviteClosed:(long)sessionId
 {
 	NSLog(@"onInviteClosed - Session ID: %ld", sessionId);
@@ -1002,6 +1014,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     
     if (wasIncomingCall) {
         //create missed call notification  addIncommingCallWithLineSession:idleLine
+    
         [MissedCall addMissedCallWithLineSession:selectedLine];
         
         

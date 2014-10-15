@@ -3112,7 +3112,7 @@
         <!--History-->
         <scene sceneID="88i-sS-JFd">
             <objects>
-                <viewController id="YNm-tZ-Ew0" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="JCHistroyContainerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YNm-tZ-Ew0" customClass="JCHistroyContainerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="r6G-I2-6jK"/>
                         <viewControllerLayoutGuide type="bottom" id="UAA-Ve-Fk6"/>
@@ -3127,9 +3127,12 @@
                                     <segment title="All"/>
                                     <segment title="Missed"/>
                                 </segments>
+                                <connections>
+                                    <action selector="toggleFilterState:" destination="YNm-tZ-Ew0" eventType="valueChanged" id="v7p-GB-Fg1"/>
+                                </connections>
                             </segmentedControl>
                             <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JBy-JJ-42y">
-                                <rect key="frame" x="0.0" y="108" width="320" height="460"/>
+                                <rect key="frame" x="0.0" y="108" width="320" height="417"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <segue destination="uZP-Ez-Yy3" kind="embed" id="6ch-W5-ocS"/>
@@ -3246,7 +3249,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="A09-FY-NzJ"/>
         <segue reference="dIf-i9-QYA"/>
-        <segue reference="EOv-Zd-uHq"/>
     </inferredMetricsTieBreakers>
 </document>

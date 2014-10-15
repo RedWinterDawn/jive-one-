@@ -16,9 +16,12 @@
 NSString *const kJCHistoryTableViewControllerCellReuseIdentifier = @"JCHistoryCell";
 
 @interface JCHistoryTableViewController () <NSFetchedResultsControllerDelegate, JCCallerViewControllerDelegate>
+{
+    NSFetchRequest *_fetchRequest;
+}
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
-@property (nonatomic, weak) NSString *cellNumber;
+
 
 @end
 
@@ -55,18 +58,8 @@ NSString *const kJCHistoryTableViewControllerCellReuseIdentifier = @"JCHistoryCe
 -(NSFetchedResultsController *)fetchedResultsController
 {
     if (!_fetchedResultsController) {
-     
-        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kCallEntityName];
-        fetchRequest.fetchBatchSize = 6;
-        fetchRequest.includesSubentities = TRUE;
-        
-        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:false];
-        fetchRequest.sortDescriptors = @[sortDescriptor];
-        
-        fetchRequest.predicate = self.predicate;
-        
         NSManagedObjectContext *managedObjectContext = [NSManagedObjectContext MR_defaultContext];
-        NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+        NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:self.fetchRequest
                                                                                                    managedObjectContext:managedObjectContext
                                                                                                      sectionNameKeyPath:nil
                                                                                                               cacheName:nil];
@@ -82,6 +75,27 @@ NSString *const kJCHistoryTableViewControllerCellReuseIdentifier = @"JCHistoryCe
         
     }
     return _fetchedResultsController;
+}
+
+-(void)setFetchRequest:(NSFetchRequest *)fetchRequest
+{
+    _fetchRequest = fetchRequest;
+    self.fetchedResultsController = nil;
+    [self.tableView reloadData];
+}
+
+-(NSFetchRequest *)fetchRequest
+{
+    if (!_fetchRequest)
+    {
+        _fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kCallEntityName];
+        _fetchRequest.fetchBatchSize = 6;
+        _fetchRequest.includesSubentities = TRUE;
+        
+        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:false];
+        _fetchRequest.sortDescriptors = @[sortDescriptor];
+    }
+    return _fetchRequest;
 }
 
 
@@ -110,7 +124,6 @@ NSString *const kJCHistoryTableViewControllerCellReuseIdentifier = @"JCHistoryCe
     cell.number.text = call.number;
     cell.timestamp.text = call.formattedModifiedShortDate;
     cell.extension.text = call.extension;
-    _cellNumber = call.number;
     cell.icon.image = call.icon;
     return cell;
 }
