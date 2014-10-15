@@ -417,7 +417,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 		
 		[currentSession setCallTitle:contactName ? contactName : callee];
 		[currentSession setCallDetail:callee];
-        [OutgoingCall addutgoingCallWithLineSession:currentSession];
+        [OutgoingCall addOutgoingCallWithLineSession:currentSession];
 	}
 	else
 	{

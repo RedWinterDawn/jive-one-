@@ -3188,11 +3188,12 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="extensions" destination="cWv-is-iwj" id="yYO-E4-JSe"/>
+                                    <outlet property="extension" destination="cWv-is-iwj" id="NiB-Fs-3gC"/>
                                     <outlet property="icon" destination="Jpu-p5-yxO" id="Ew0-Tl-Nxn"/>
                                     <outlet property="name" destination="w5M-28-ft9" id="whd-c6-uwv"/>
                                     <outlet property="number" destination="s31-J3-jwX" id="W4e-p8-JgU"/>
                                     <outlet property="timestamp" destination="FuN-Uh-Rv5" id="JEF-01-AFJ"/>
+                                    <segue destination="Yzo-Zz-XrL" kind="modal" id="A09-FY-NzJ"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -3244,7 +3245,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="0xB-1u-nc2"/>
         <segue reference="dIf-i9-QYA"/>
+        <segue reference="A09-FY-NzJ"/>
     </inferredMetricsTieBreakers>
 </document>

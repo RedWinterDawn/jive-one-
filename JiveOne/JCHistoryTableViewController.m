@@ -10,11 +10,12 @@
 #import <CoreData/CoreData.h>
 #import <MagicalRecord/MagicalRecord.h>
 #import "JCHistoryCell.h"
+#import "JCCallerViewController.h"
 
 #import "Call.h"
 
 
-@interface JCHistoryTableViewController () <NSFetchedResultsControllerDelegate>
+@interface JCHistoryTableViewController () <NSFetchedResultsControllerDelegate, JCCallerViewControllerDelegate>
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
@@ -35,6 +36,26 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    UIViewController *viewController = segue.destinationViewController;
+    if ([viewController isKindOfClass:[JCCallerViewController class]]) {
+        JCCallerViewController *callerViewController = (JCCallerViewController *)viewController;
+        callerViewController.delegate = self;
+        callerViewController.dialString = @"*99";
+    }
+}
+
+-(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController
+{
+    [self dismissViewControllerAnimated:NO completion:^{
+        
+    }];
+}
+
+
 
 -(NSFetchedResultsController *)fetchedResultsController
 {
@@ -95,6 +116,7 @@
     //cell.
     cell.name.text = call.name;
     cell.number.text = call.number;
+    cell.extension.text = call.extension;
     cell.timestamp.text = call.formattedShortDate;
     cell.icon.image = call.icon;
    

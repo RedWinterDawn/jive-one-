@@ -10,7 +10,7 @@
 
 @implementation OutgoingCall (Custom)
 
-+(void)addIncommingCallWithLineSession:(JCLineSession *)session
++(void)addOutgoingCallWithLineSession:(JCLineSession *)session
 {
     [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
         
@@ -22,6 +22,7 @@
     } completion:^(BOOL success, NSError *error) {
         //completed(success);
         //[self fetchVoicemailInBackground];
+        NSLog(@"%@", [error description]);
     }];
 }
 

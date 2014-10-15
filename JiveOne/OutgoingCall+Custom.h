@@ -10,6 +10,6 @@
 
 @interface OutgoingCall (Custom)
 
-+(void)addutgoingCallWithLineSession:(JCLineSession *)session;
++(void)addOutgoingCallWithLineSession:(JCLineSession *)session;
 
 @end
