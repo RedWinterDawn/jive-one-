@@ -48,7 +48,7 @@ typedef enum : NSUInteger {
 -(void)addIncomingCall:(JCLineSession *)session;
 -(void)finishWarmTransfer:(void (^)(bool success))completion;
 
--(void)mergeCalls;
+-(void)mergeCalls:(void (^)(bool success))completion;
 -(void)splitCalls;
 
 @end

@@ -10,6 +10,7 @@
 #import "SipHandler.h"
 #import "JCLineSession.h"
 #import "Lines+Custom.h"
+#import <MBProgressHUD.h>
 
 NSString *const kJCCallCardManagerAddedIncomingCallNotification     = @"addedIncommingCall";
 NSString *const kJCCallCardManagerRemoveIncomingCallNotification    = @"removedIncommingCall";
@@ -99,12 +100,14 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
     completion(true);
 }
 
--(void)mergeCalls
+-(void)mergeCalls:(void (^)(bool success))completion
 {
-    // Assumed only two call are in calls.
-    
-    NSArray *calls = self.calls;
-    [self addConferenceCallWithCallArray:calls];
+	bool inConference = [[SipHandler sharedHandler] setConference:true];
+	if (inConference) {
+		NSArray *calls = self.calls;
+		[self addConferenceCallWithCallArray:calls];
+	}
+	completion(inConference);
 }
 
 -(void)splitCalls
@@ -113,6 +116,7 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
     
     JCCallCard *callCard = [self.calls objectAtIndex:0];
     [self removeConferenceCall:callCard];
+	[[SipHandler sharedHandler] setConference:false];
 }
 
 -(void)addIncomingCall:(JCLineSession *)session

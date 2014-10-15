@@ -610,11 +610,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 - (bool)setConference:(bool)conference
 {
-	return conference;
-	
 	if (conference)
 	{
-		int rt = [_mPortSIPSDK createConference:_videoController.view videoResolution:VIDEO_NONE displayLocalVideo:NO];
+		int rt = [_mPortSIPSDK createConference:nullptr videoResolution:VIDEO_NONE displayLocalVideo:NO];
 		if (rt == 0) {
 			for (JCLineSession *line in self.lineSessions)
 			{
@@ -638,7 +636,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 			inConference = false;
 		}
 	}
-	else
+	else if (inConference)
 	{
 		inConference = false;
 		// Before stop the conference, MUST place all lines to hold state
