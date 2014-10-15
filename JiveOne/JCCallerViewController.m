@@ -365,7 +365,22 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(void)keyboardViewController:(JCKeyboardViewController *)controller didTypeNumber:(NSString *)typedNumber
 {
-    [[SipHandler sharedHandler] pressNumpadButton:*(char*)[typedNumber UTF8String]];
+	NSInteger tag = [typedNumber integerValue];
+	char dtmf = tag;
+	switch (tag) {
+		case kTAGStar:
+		{
+			dtmf = 10;
+			break;
+		}
+		case kTAGSharp:
+		{
+			dtmf = 11;
+			break;
+		}
+	}
+
+    [[SipHandler sharedHandler] pressNumpadButton:dtmf];
 }
 
 

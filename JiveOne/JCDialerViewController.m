@@ -60,9 +60,24 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     if ([sender isKindOfClass:[UIButton class]])
     {
         UIButton *button = (UIButton *)sender;
-		NSString *dtmf = [self characterFromNumPadTag:(int)button.tag];
-        [self.dialStringLabel append:dtmf];
-		[_sipHandler pressNumpadButton:*(char*)[dtmf UTF8String]];
+        [self.dialStringLabel append:[self characterFromNumPadTag:(int)button.tag]];
+		
+		NSInteger tag = [[self characterFromNumPadTag:(int)button.tag] integerValue];
+		char dtmf = tag;
+		switch (tag) {
+			case kTAGStar:
+			{
+				dtmf = 10;
+				break;
+			}
+			case kTAGSharp:
+			{
+				dtmf = 11;
+				break;
+			}
+		}
+		
+		[[SipHandler sharedHandler] pressNumpadButton:dtmf];
     }
 }
 

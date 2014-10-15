@@ -569,22 +569,11 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	JCLineSession *selectedLine = [self findLineWithSessionState];
 	
 	if(selectedLine.mSessionState){
-		if(mute)
-		{
-			[_mPortSIPSDK muteSession:selectedLine.mSessionState
-				   muteIncomingAudio:TRUE
-				   muteOutgoingAudio:TRUE
-				   muteIncomingVideo:TRUE
-				   muteOutgoingVideo:TRUE];
-		}
-		else
-		{
 			[_mPortSIPSDK muteSession:selectedLine.mSessionState
 				   muteIncomingAudio:FALSE
-				   muteOutgoingAudio:FALSE
+				   muteOutgoingAudio:mute
 				   muteIncomingVideo:FALSE
-				   muteOutgoingVideo:FALSE];
-		}
+				   muteOutgoingVideo:mute];
 	}
 }
 
