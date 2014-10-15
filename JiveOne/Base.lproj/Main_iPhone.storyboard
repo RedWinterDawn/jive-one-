@@ -1553,7 +1553,7 @@
             <objects>
                 <collectionViewController id="zhT-8a-SlE" customClass="JCCallCardCollectionViewController" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="rwh-qv-yU8">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="347"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <collectionViewLayout key="collectionViewLayout" id="8ug-Q6-sKe" customClass="JCCallCardCollectionLayout"/>
@@ -3132,7 +3132,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="0xB-1u-nc2"/>
         <segue reference="dIf-i9-QYA"/>
+        <segue reference="EOv-Zd-uHq"/>
     </inferredMetricsTieBreakers>
 </document>
