@@ -100,6 +100,10 @@
 #define UDdeviceToken   @"deviceToken"
 #define kRememberMe     @"keyrememberme"
 
+#pragma mark - Misc
+#define kTAGStar		10
+#define kTAGSharp		11
+
 typedef enum {
 	JCNoCall,
 	JCCallRinging,

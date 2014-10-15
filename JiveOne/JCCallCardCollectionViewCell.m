@@ -12,8 +12,11 @@
 
 #define HOLD_ANIMATION_DURATION 0.5f
 #define HOLD_ANIMATION_ALPHA 0.5f
+#define HOLD_PULSE_ANIMATION_DURATION 1.0f
+#define HOLD_PULSE_OPACITY_TO_VALUE 0.35f
 
 NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
+NSString *const kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey = @"pulse";
 
 @interface JCCallCardCollectionViewCell()
 {
@@ -37,16 +40,17 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
     {
         _holdAnimationDuration = HOLD_ANIMATION_DURATION;
         _holdAnimationAlpha = HOLD_ANIMATION_ALPHA;
+        _holdPulseAnimationDuration = HOLD_PULSE_ANIMATION_DURATION;
     }
     return self;
 }
 
 -(void)awakeFromNib
 {
-    _defaultCallActionsColor            = self.callActions.backgroundColor;
-    _currentCallCardInfoElevation       = self.callCardInfoTopConstraint.constant;
-    _originalCurrentCallViewConstraint  = self.currentCallTopToContainerConstraint.constant;
-    _originalEndCallButtonWidthConstraint  = self.endCallButtonWidthConstraint.constant;
+    _defaultCallActionsColor                = self.callActions.backgroundColor;
+    _currentCallCardInfoElevation           = self.callCardInfoTopConstraint.constant;
+    _originalCurrentCallViewConstraint      = self.currentCallTopToContainerConstraint.constant;
+    _originalEndCallButtonWidthConstraint   = self.endCallButtonWidthConstraint.constant;
 }
 
 -(void)layoutSubviews
@@ -205,7 +209,11 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
     __unsafe_unretained JCCallCardCollectionViewCell *weakSelf = self;
     _currentCallTopToContainerConstraint.constant = _originalCurrentCallViewConstraint;
     _callCardInfoTopConstraint.constant = _currentCallCardInfoElevation;
+    self.endCallButton.selected = false;
     [_cardInfoView setNeedsUpdateConstraints];
+    
+    if ([_holdCallButton.layer animationForKey:kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey])
+        [_holdCallButton.layer removeAnimationForKey:kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey];
     
     if (animated)
     {
@@ -233,6 +241,7 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
     __unsafe_unretained JCCallCardCollectionViewCell *weakSelf = self;
     _currentCallTopToContainerConstraint.constant = 10;
     _callCardInfoTopConstraint.constant = 40;
+    self.endCallButton.selected = true;
     [_cardInfoView setNeedsUpdateConstraints];
         
     _holdTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(holdTimerUpdate) userInfo:nil repeats:YES];
@@ -246,6 +255,22 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
                              weakSelf.callActions.backgroundColor = [UIColor clearColor];
                              [_cardInfoView layoutIfNeeded];
                          }];
+        
+        CALayer *holdBtnLayer = _holdCallButton.layer;
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
+            
+            CABasicAnimation *pulseAnim = [CABasicAnimation animationWithKeyPath:@"opacity"];
+            pulseAnim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+            pulseAnim.fromValue = @1.0f;
+            pulseAnim.toValue = @HOLD_PULSE_OPACITY_TO_VALUE;
+            pulseAnim.repeatCount = INFINITY;
+            pulseAnim.duration = _holdPulseAnimationDuration;
+            pulseAnim.autoreverses = YES;
+            pulseAnim.removedOnCompletion = NO;
+            dispatch_async(dispatch_get_main_queue(), ^(void) {
+                [holdBtnLayer addAnimation:pulseAnim forKey:kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey];
+            });
+        });
     }
     else
     {

@@ -32,6 +32,7 @@
 // Configurable Properties.
 @property (nonatomic) CGFloat holdAnimationDuration;
 @property (nonatomic) CGFloat holdAnimationAlpha;
+@property (nonatomic) CGFloat holdPulseAnimationDuration;
 
 -(IBAction)hangup:(id)sender;
 -(IBAction)toggleHold:(id)sender;
