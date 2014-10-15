@@ -9,11 +9,15 @@
 #import "JCCallCardCollectionViewCell.h"
 #import "JCCallCardManager.h"
 #import "NSString+IsNumeric.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define HOLD_ANIMATION_DURATION 0.5f
 #define HOLD_ANIMATION_ALPHA 0.5f
 #define HOLD_PULSE_ANIMATION_DURATION 1.0f
 #define HOLD_PULSE_OPACITY_TO_VALUE 0.35f
+#define CALL_CARD_BORDER_WIDTH 0.5f
+#define CALL_CARD_BORDER_COLOR [UIColor colorWithWhite:1 alpha:0.6]
+
 
 NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
 NSString *const kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey = @"pulse";
@@ -51,11 +55,18 @@ NSString *const kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey = @"pul
     _currentCallCardInfoElevation           = self.callCardInfoTopConstraint.constant;
     _originalCurrentCallViewConstraint      = self.currentCallTopToContainerConstraint.constant;
     _originalEndCallButtonWidthConstraint   = self.endCallButtonWidthConstraint.constant;
+    
+    self.layer.cornerRadius = 2;
+    self.layer.masksToBounds = TRUE;
+    
+    self.layer.borderColor = CALL_CARD_BORDER_COLOR.CGColor;
 }
 
 -(void)layoutSubviews
 {
     [super layoutSubviews];
+    
+    
     
     self.callerIdLabel.text             = _callCard.callerId;
     NSString *dialNumber                = _callCard.dialNumber;
@@ -219,6 +230,7 @@ NSString *const kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey = @"pul
     {
         [UIView animateWithDuration:_holdAnimationDuration
                          animations:^{
+                             weakSelf.layer.borderWidth = CALL_CARD_BORDER_WIDTH;
                              weakSelf.alpha = 1;
                              weakSelf.callActions.backgroundColor = _defaultCallActionsColor;
                              [_cardInfoView layoutIfNeeded];
@@ -251,6 +263,7 @@ NSString *const kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey = @"pul
     {
         [UIView animateWithDuration:_holdAnimationDuration
                          animations:^{
+                             weakSelf.layer.borderWidth = 0;
                              weakSelf.alpha = _holdAnimationAlpha;
                              weakSelf.callActions.backgroundColor = [UIColor clearColor];
                              [_cardInfoView layoutIfNeeded];
