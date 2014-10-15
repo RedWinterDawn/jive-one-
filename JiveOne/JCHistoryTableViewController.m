@@ -18,6 +18,7 @@
 @interface JCHistoryTableViewController () <NSFetchedResultsControllerDelegate, JCCallerViewControllerDelegate>
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, weak) NSString *cellNumber;
 
 @end
 
@@ -41,10 +42,11 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     UIViewController *viewController = segue.destinationViewController;
+   
     if ([viewController isKindOfClass:[JCCallerViewController class]]) {
         JCCallerViewController *callerViewController = (JCCallerViewController *)viewController;
         callerViewController.delegate = self;
-        callerViewController.dialString = @"*99";
+        callerViewController.dialString = _cellNumber;
     }
 }
 
@@ -117,6 +119,7 @@
     cell.name.text = call.name;
     cell.number.text = call.number;
     cell.extension.text = call.extension;
+    _cellNumber = call.number;
     cell.timestamp.text = call.formattedShortDate;
     cell.icon.image = call.icon;
    
