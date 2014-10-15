@@ -60,7 +60,7 @@ NSString *const kJCHistoryTableViewControllerCellReuseIdentifier = @"JCHistoryCe
         fetchRequest.fetchBatchSize = 6;
         fetchRequest.includesSubentities = TRUE;
         
-        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"timeStamp" ascending:false];
+        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:false];
         fetchRequest.sortDescriptors = @[sortDescriptor];
         
         fetchRequest.predicate = self.predicate;

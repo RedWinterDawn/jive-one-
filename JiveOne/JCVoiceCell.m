@@ -58,8 +58,8 @@
     
     [self doubleCheckNamesAndNumbers];
     
-    self.shortTime.text = voicemail.formattedShortDate;
-    self.creationTime.text = voicemail.formattedShortDate;
+    self.shortTime.text = voicemail.formattedModifiedShortDate;
+    self.creationTime.text = voicemail.formattedModifiedShortDate;
     self.elapsed.text = @"0:00";
     self.duration.text = @"0:00";
     self.elapsed.adjustsFontSizeToFitWidth = YES;
