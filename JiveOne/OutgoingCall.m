@@ -18,7 +18,7 @@ NSString *const kOutgoingCallEntityName = @"OutgoingCall";
     static UIImage *outgoingCallIcon;
     static dispatch_once_t oncePredicate;
     dispatch_once(&oncePredicate, ^{
-        outgoingCallIcon = [UIImage imageNamed:@"green-incoming"];
+        outgoingCallIcon = [UIImage imageNamed:@"blue-outgoing"];
     });
     
     return outgoingCallIcon;

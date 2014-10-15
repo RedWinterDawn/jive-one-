@@ -8,6 +8,8 @@
 
 #import "Call.h"
 
+NSString *const kCallEntityName = @"Call";
+
 @implementation Call
 
 @dynamic name;

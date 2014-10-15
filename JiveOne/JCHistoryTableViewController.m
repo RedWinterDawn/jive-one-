@@ -10,14 +10,15 @@
 #import <CoreData/CoreData.h>
 #import <MagicalRecord/MagicalRecord.h>
 #import "JCHistoryCell.h"
-
+#import "JCCallerViewController.h"
 #import "Call.h"
 
 NSString *const kJCHistoryTableViewControllerCellReuseIdentifier = @"JCHistoryCell";
 
-@interface JCHistoryTableViewController () <NSFetchedResultsControllerDelegate>
+@interface JCHistoryTableViewController () <NSFetchedResultsControllerDelegate, JCCallerViewControllerDelegate>
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, weak) NSString *cellNumber;
 
 @end
 
@@ -36,11 +37,26 @@ NSString *const kJCHistoryTableViewControllerCellReuseIdentifier = @"JCHistoryCe
     self.fetchedResultsController = nil;
 }
 
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    UIViewController *viewController = segue.destinationViewController;
+   
+    if ([viewController isKindOfClass:[JCCallerViewController class]]) {
+        JCCallerViewController *callerViewController = (JCCallerViewController *)viewController;
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        Call *call = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        callerViewController.delegate = self;
+        callerViewController.dialString = call.number;
+    }
+}
+
+
 -(NSFetchedResultsController *)fetchedResultsController
 {
     if (!_fetchedResultsController) {
      
-        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Call"];
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kCallEntityName];
         fetchRequest.fetchBatchSize = 6;
         fetchRequest.includesSubentities = TRUE;
         
@@ -93,15 +109,26 @@ NSString *const kJCHistoryTableViewControllerCellReuseIdentifier = @"JCHistoryCe
     cell.name.text = call.name;
     cell.number.text = call.number;
     cell.timestamp.text = call.formattedModifiedShortDate;
+    cell.extension.text = call.extension;
+    _cellNumber = call.number;
     cell.icon.image = call.icon;
     return cell;
 }
 
-#pragma mark Fetched Results Controller
+#pragma mark Fetched Results Controller Delegate
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
     [self.tableView reloadData];
+}
+
+#pragma mark Caller View Controller Delegate
+
+-(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController
+{
+    [self dismissViewControllerAnimated:NO completion:^{
+        
+    }];
 }
 
 

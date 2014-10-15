@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment defaultVersion="1552" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -3147,7 +3148,7 @@
         <!--History Table View Controller-->
         <scene sceneID="wXu-Sv-0Fl">
             <objects>
-                <tableViewController id="uZP-Ez-Yy3" customClass="JCHistoryTableViewController" sceneMemberID="viewController">
+                <tableViewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="uZP-Ez-Yy3" customClass="JCHistoryTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="82" sectionHeaderHeight="22" sectionFooterHeight="22" id="kZw-D3-nif">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3188,11 +3189,12 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="extensions" destination="cWv-is-iwj" id="yYO-E4-JSe"/>
+                                    <outlet property="extension" destination="cWv-is-iwj" id="NiB-Fs-3gC"/>
                                     <outlet property="icon" destination="Jpu-p5-yxO" id="Ew0-Tl-Nxn"/>
                                     <outlet property="name" destination="w5M-28-ft9" id="whd-c6-uwv"/>
                                     <outlet property="number" destination="s31-J3-jwX" id="W4e-p8-JgU"/>
                                     <outlet property="timestamp" destination="FuN-Uh-Rv5" id="JEF-01-AFJ"/>
+                                    <segue destination="Yzo-Zz-XrL" kind="modal" id="A09-FY-NzJ"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -3244,7 +3246,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="0xB-1u-nc2"/>
         <segue reference="dIf-i9-QYA"/>
+        <segue reference="A09-FY-NzJ"/>
     </inferredMetricsTieBreakers>
 </document>

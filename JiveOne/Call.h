@@ -9,6 +9,8 @@
 #import "RecentEvent.h"
 #import "JCLineSession.h"
 
+extern NSString *const kCallEntityName;
+
 @protocol Call <NSObject>
 
 @optional
@@ -20,7 +22,7 @@
 
 @property (nonatomic, retain) NSString *number;
 @property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain) NSNumber *extension;
+@property (nonatomic, retain) NSString *extension;
 
 @end
 
