@@ -35,6 +35,7 @@ extern NSString *const kSipHandlerRegisteredSelectorKey;
 //- (void) unholdCall;
 //- (void) hangUpCall;
 - (void) referCall:(NSString*)referTo;
+- (void) attendedRefer:(NSString*)referTo;
 - (void) muteCall:(BOOL)mute;
 - (void) setLoudspeakerStatus:(BOOL)enable;
 - (void)toggleHoldForLineWithSessionId:(long)sessionId;

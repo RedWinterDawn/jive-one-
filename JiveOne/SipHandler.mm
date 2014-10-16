@@ -530,8 +530,24 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 		[alert show];
 		[selectedLine setMCallState:JCTransferFailed];
 	}
-	
-	[selectedLine setMCallState:JCTransferSuccess];
+}
+
+- (void) attendedRefer:(NSString*)referTo
+{
+	JCLineSession *currentLine = [self findLineWithSessionState];
+	if (currentLine) {
+		JCLineSession *replaceSession = [self findLineWithHoldState];
+		if (replaceSession && !replaceSession.mSessionState) {
+			return;
+		}
+		
+		int rt = [_mPortSIPSDK attendedRefer:currentLine.mSessionId
+							replaceSessionId:replaceSession.mSessionId referTo:referTo];
+		
+		if (rt != 0) {
+			[currentLine setMCallState:JCTransferFailed];
+		}
+	}
 }
 
 - (void) muteCall:(BOOL)mute
@@ -1032,8 +1048,6 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	{
 		return;
 	}
-	
-//	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Line %d, the REFER was accepted.",index]];
 }
 
 - (void)onReferRejected:(long)sessionId reason:(char*)reason code:(int)code
@@ -1077,7 +1091,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 		return;
 	}
 	
-//	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Transfer succeeded on line %d",index]];
+	[selectedLine setMCallState:JCTransferSuccess];
 }
 
 - (void)onACTVTransferFailure:(long)sessionId reason:(char*)reason code:(int)code
@@ -1087,6 +1101,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	{
 		return;
 	}
+	
+	[selectedLine setMCallState:JCTransferFailed];
 	
 //	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Failed to transfer on line %d",index]];
 }
