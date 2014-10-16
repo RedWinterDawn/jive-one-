@@ -103,7 +103,8 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
 -(void)mergeCalls:(void (^)(bool success))completion
 {
 	bool inConference = [[SipHandler sharedHandler] setConference:true];
-	if (inConference) {
+	//if (inConference)
+    {
 		NSArray *calls = self.calls;
 		[self addConferenceCallWithCallArray:calls];
 	}

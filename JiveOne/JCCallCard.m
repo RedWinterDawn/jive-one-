@@ -17,6 +17,7 @@ NSString *const kJCCallCardConferenceString = @"Conference";
 @interface JCCallCard ()
 {
     NSMutableArray *_calls;
+    BOOL _hold;
 }
 
 @end
@@ -141,7 +142,13 @@ NSString *const kJCCallCardConferenceString = @"Conference";
 -(void)setHold:(BOOL)hold
 {
     [self willChangeValueForKey:kJCCallCardHoldKey];
-    [[JCCallCardManager sharedManager] toggleCallHold:self];
+    if (self.isConference) {
+        _hold = hold;
+    }
+    else
+    {
+        [[JCCallCardManager sharedManager] toggleCallHold:self];
+    }
     self.holdStarted = [NSDate date];
     [self didChangeValueForKey:kJCCallCardHoldKey];
 }
@@ -170,6 +177,10 @@ NSString *const kJCCallCardConferenceString = @"Conference";
 
 -(BOOL)hold
 {
+    if (self.isConference)
+    {
+        return _hold;
+    }
     return _lineSession.mHoldSate;
 }
 
