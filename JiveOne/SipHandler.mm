@@ -777,12 +777,18 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	[[JCCallCardManager sharedManager] addIncomingCall:idleLine];
     
     [idleLine setCallTitle:[NSString stringWithUTF8String:callerDisplayName]];
+    NSString *newDetail = (NSString *)idleLine.callDetail;
+    NSRange stripRange = [newDetail rangeOfString:@"@"];
     
-    NSRange range = NSMakeRange(4, 4);
-    NSString *callerDetailSubString = [[NSString stringWithUTF8String:caller]substringWithRange:range];
+    NSRange striped = NSMakeRange(stripRange.location, (newDetail.length - stripRange.location));
+    newDetail = [newDetail stringByReplacingCharactersInRange:striped withString:@""];
     
-    [idleLine setCallDetail:  callerDetailSubString];
+    NSRange finalrange = NSMakeRange(4, newDetail.length-4);
+    newDetail = [newDetail substringWithRange:finalrange];
+//    NSString *callerDetailSubString = [[NSString stringWithUTF8String:caller]substringWithRange:range];
     
+//    [idleLine setCallDetail:  callerDetailSubString];
+    [idleLine setCallDetail:newDetail];
     
     
     
