@@ -17,10 +17,12 @@ extern NSString *const kJCCallCardManagerRemoveIncomingCallNotification;
 
 extern NSString *const kJCCallCardManagerAddedCurrentCallNotification;
 extern NSString *const kJCCallCardManagerRemoveCurrentCallNotification;
+extern NSString *const kJCCallCardManagerTransferFailed;
 
 extern NSString *const kJCCallCardManagerUpdatedIndex;
 extern NSString *const kJCCallCardManagerPriorUpdateCount;
 extern NSString *const kJCCallCardManagerUpdateCount;
+extern NSString *const kJCCallCardManagerLastCallState;
 
 typedef enum : NSUInteger {
     JCCallCardDialSingle = 0,
@@ -42,6 +44,8 @@ typedef enum : NSUInteger {
 -(void)answerCall:(JCCallCard *)callCard;
 -(void)addIncomingCall:(JCLineSession *)session;
 -(void)finishWarmTransfer:(void (^)(bool success))completion;
+
+- (void)transferFailed;
 
 @end
 

@@ -16,10 +16,12 @@ NSString *const kJCCallCardManagerRemoveIncomingCallNotification = @"removedInco
 
 NSString *const kJCCallCardManagerAddedCurrentCallNotification = @"addedCurrentCall";
 NSString *const kJCCallCardManagerRemoveCurrentCallNotification = @"removedCurrentCall";
+NSString *const kJCCallCardManagerTransferFailed = @"tranferFailed";
 
 NSString *const kJCCallCardManagerUpdatedIndex = @"index";
 NSString *const kJCCallCardManagerPriorUpdateCount = @"priorCount";
 NSString *const kJCCallCardManagerUpdateCount = @"updateCount";
+NSString *const kJCCallCardManagerLastCallState = @"lastCallState";
 
 NSString *const kJCCallCardManagerNewCall       = @"newCall";
 NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
@@ -27,6 +29,7 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
 @interface JCCallCardManager ()
 {
     SipHandler *_sipHandler;
+	NSString *_warmTransferNumber;
 }
 
 @end
@@ -87,6 +90,10 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
 
 -(void)finishWarmTransfer:(void (^)(bool success))completion
 {
+	if (_warmTransferNumber) {
+		[[SipHandler sharedHandler] attendedRefer:_warmTransferNumber];
+	}
+	
     completion(true);
 }
 
@@ -149,7 +156,9 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
         callCard.started = [NSDate date];
         callCard.lineSession = session;
         [self addCurrentCallCard:callCard];
-        
+		
+		_warmTransferNumber = dialNumber;
+		
         NSUInteger index = [self.calls indexOfObject:callCard];
         if (completion != NULL)
             completion(true, @{
@@ -160,7 +169,7 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
     else
     {
         if (dialType == JCCallCardDialBlindTransfer) {
-            // do somethinng
+			
             if (completion != NULL)
                 completion(true, @{});
         }
@@ -205,8 +214,12 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
         [self removeIncomingCall:callCard];
     
     NSUInteger index = [_calls indexOfObject:callCard];
+	JCCall lastState = callCard.lastState;
     [_calls removeObject:callCard];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerRemoveCurrentCallNotification object:self userInfo:@{kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:index]}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerRemoveCurrentCallNotification object:self userInfo:@{
+																																	  kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:index],
+																																	  kJCCallCardManagerLastCallState: [NSNumber numberWithInt:lastState]
+																																	  }];
 }
 
 -(void)addCurrentCallCard:(JCCallCard *)callCard
@@ -226,6 +239,11 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
     
     NSUInteger newIndex = [_calls indexOfObject:callCard];
     [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerAddedCurrentCallNotification object:self userInfo:@{kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:newIndex]}];
+}
+
+- (void)transferFailed:(JCCallCard *)callCard
+{
+	[[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerTransferFailed object:self userInfo:@{kJCCallCardManagerLastCallState:[NSNumber numberWithInt:callCard.lastState]}];
 }
 
 @end
