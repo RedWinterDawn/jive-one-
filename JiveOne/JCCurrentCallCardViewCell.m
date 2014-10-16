@@ -1,30 +1,25 @@
 //
-//  JCCallCard.m
+//  JCCurrentCallCardViewCell.m
 //  JiveOne
 //
-//  Created by P Leonard on 9/30/14.
+//  Created by Robert Barclay on 10/16/14.
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCCallCardCollectionViewCell.h"
-#import "JCCallCardManager.h"
-#import "NSString+IsNumeric.h"
+#import "JCCurrentCallCardViewCell.h"
+
 #import <QuartzCore/QuartzCore.h>
 
 #define HOLD_ANIMATION_DURATION 0.5f
 #define HOLD_ANIMATION_ALPHA 0.6f
 #define HOLD_PULSE_ANIMATION_DURATION 1.0f
 #define HOLD_PULSE_OPACITY_TO_VALUE 0.35f
-#define CALL_CARD_BORDER_WIDTH 0.5f
-#define CALL_CARD_BORDER_COLOR [UIColor colorWithWhite:1 alpha:0.6]
 
-
-NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
 NSString *const kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey = @"pulse";
+NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
 
-@interface JCCallCardCollectionViewCell()
+@interface JCCurrentCallCardViewCell ()
 {
-    NSTimer *_timer;
     NSTimer *_holdTimer;
     UIColor *_defaultCallActionsColor;
     CGFloat _currentCallCardInfoElevation;
@@ -32,10 +27,12 @@ NSString *const kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey = @"pul
     CGFloat _originalEndCallButtonWidthConstraint;
     
     bool _showingHold;
+    NSTimer *_timer;
 }
+
 @end
 
-@implementation JCCallCardCollectionViewCell
+@implementation JCCurrentCallCardViewCell
 
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -51,137 +48,102 @@ NSString *const kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey = @"pul
 
 -(void)awakeFromNib
 {
+    [super awakeFromNib];
+    
     _defaultCallActionsColor                = self.actionView.backgroundColor;
-    _currentCallCardInfoElevation           = self.callCardInfoTopConstraint.constant;
-    _originalCurrentCallViewConstraint      = self.currentCallTopToContainerConstraint.constant;
+    _currentCallCardInfoElevation           = self.holdViewTopConstraint.constant;
+    _originalCurrentCallViewConstraint      = self.cardInfoViewTopConstraint.constant;
     _originalEndCallButtonWidthConstraint   = self.endCallButtonWidthConstraint.constant;
-    
-    self.layer.cornerRadius = 2;
-    self.layer.masksToBounds = TRUE;
-    
-    self.layer.borderColor = CALL_CARD_BORDER_COLOR.CGColor;
-}
-
--(void)layoutSubviews
-{
-    [super layoutSubviews];
-    
-    
-    
-    self.callerIdLabel.text             = _callCard.callerId;
-    NSString *dialNumber                = _callCard.dialNumber;
-    if (dialNumber.isNumeric)
-    {
-        self.dialedNumberLabel.dialString = dialNumber;
-    }
-    else
-    {
-        self.dialedNumberLabel.text = dialNumber;
-    }
-    [self updateHoldState:NO];
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	if ([keyPath isEqualToString:kJCCallCardHoldKey] && self.superview != nil)
+    if ([keyPath isEqualToString:kJCCallCardHoldKey] && self.superview != nil)
     {
         [self updateHoldState:YES];
     }
-	else if ([keyPath isEqualToString:kJCCallCardStatusChangeKey])
+    else if ([keyPath isEqualToString:kJCCallCardStatusChangeKey])
     {
-		switch (_callCard.lineSession.mCallState)
+        switch (self.callCard.lineSession.mCallState)
         {
-			case JCNoCall:
-				self.elapsedTimeLabel.text = NSLocalizedString(@"CONNECTING", nil);
+            case JCCallFailed:
+            case JCCallCanceled:
                 [self hideHoldButton:NO];
-				break;
-			case JCCallFailed:
-			case JCCallCanceled:
-				self.elapsedTimeLabel.text = NSLocalizedString(@"CANCELED", nil);
+                self.elapsedTimeLabel.text = NSLocalizedString(@"CANCELED", nil);
+                break;
+            case JCNoCall:
+            case JCCallRinging:
                 [self hideHoldButton:NO];
-				break;
-			case JCCallRinging:
-				self.elapsedTimeLabel.text = NSLocalizedString(@"RINGING", nil);
-                [self hideHoldButton:NO];
-				break;
-			case JCCallConnected:
+                self.elapsedTimeLabel.text = NSLocalizedString(@"RINGING", nil);
+                break;
+            case JCCallConnected:
                 [self showHoldButton:YES];
                 if (!_timer) {
-					_timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerUpdate) userInfo:nil repeats:YES];
-					[self timerUpdate];
-				}
-				break;
+                    _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerUpdate) userInfo:nil repeats:YES];
+                    [self timerUpdate];
+                }
+                break;
             default:
                 break;
-		}
-	}
+        }
+    }
 }
 
 -(void)dealloc
 {
-    if (_callCard != nil)
+    if (self.callCard != nil)
     {
-        [_callCard removeObserver:self forKeyPath:kJCCallCardHoldKey];
-        [_callCard removeObserver:self forKeyPath:kJCCallCardStatusChangeKey];
+        [self.callCard removeObserver:self forKeyPath:kJCCallCardHoldKey];
+        [self.callCard removeObserver:self forKeyPath:kJCCallCardStatusChangeKey];
     }
 }
+
+-(void)willMoveToSuperview:(UIView *)newSuperview
+{
+    if (newSuperview)
+        [self updateHoldState:NO];
+}
+
+#pragma mark - Actions -
+
+-(IBAction)toggleHold:(id)sender
+{
+    self.callCard.hold = !self.callCard.hold;
+}
+
 
 #pragma mark - Setters -
 
 -(void)setCallCard:(JCCallCard *)callCard
 {
-	if (_callCard) {
-        [_callCard removeObserver:self forKeyPath:kJCCallCardHoldKey];
-		[_callCard removeObserver:self forKeyPath:kJCCallCardStatusChangeKey];
-	}
-	
-    _callCard = callCard;
+    JCCallCard *currentCallCard = self.callCard;
+    
+    if (currentCallCard) {
+        [currentCallCard removeObserver:self forKeyPath:kJCCallCardHoldKey];
+        [currentCallCard removeObserver:self forKeyPath:kJCCallCardStatusChangeKey];
+    }
+    
+    [super setCallCard:callCard];
+    
     if (callCard != nil)
     {
         [callCard addObserver:self forKeyPath:kJCCallCardHoldKey options:NSKeyValueObservingOptionNew context:NULL];
         [callCard addObserver:self forKeyPath:kJCCallCardStatusChangeKey options:NSKeyValueObservingOptionInitial context:NULL];
     }
-    
-    [self setNeedsLayout];
-    
-    
 }
 
-/**
- * Due to an iOS 7 bug under the iOS 8 SDK, it appear that the content's view bounds is not updated when the cell's 
- * bounds are changed via the Autolayout feature, causing some odd behavior when running the app in iOS7. Here for 
- * backwards compatibility with iOS 7. - Robert Barclay, Oct 2014.
- */
-- (void)setBounds:(CGRect)bounds
+-(void)setHighlighted:(BOOL)highlighted
 {
-    [super setBounds:bounds];
+    [super setHighlighted:highlighted];
     
-    if ([[UIDevice currentDevice].systemVersion floatValue] < 8.0f)
-        self.contentView.frame = bounds;
-}
-
-#pragma mark - IBActions -
-
--(IBAction)hangup:(id)sender
-{
-    [_callCard endCall];
-}
-
--(IBAction)toggleHold:(id)sender
-{
-    _callCard.hold = !_callCard.hold;
-}
-
--(IBAction)answer:(id)sender
-{
-    [_callCard answerCall];
+    self.elapsedTimeLabel.highlighted = highlighted;
 }
 
 #pragma mark - Private -
 
 -(void)timerUpdate
 {
-    int secondsElapsed = -[_callCard.started timeIntervalSinceNow];
+    int secondsElapsed = -[self.callCard.started timeIntervalSinceNow];
     int seconds = secondsElapsed % 60;
     int minutes = secondsElapsed / 60;
     self.elapsedTimeLabel.text = [NSString stringWithFormat:kJCCallCardCollectionViewCellTimerFormat, minutes, seconds];
@@ -189,7 +151,7 @@ NSString *const kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey = @"pul
 
 -(void)holdTimerUpdate
 {
-    int secondsElapsed = -[_callCard.holdStarted timeIntervalSinceNow];
+    int secondsElapsed = -[self.callCard.holdStarted timeIntervalSinceNow];
     int seconds = secondsElapsed % 60;
     int minutes = secondsElapsed / 60;
     self.holdElapsedTimeLabel.text = [NSString stringWithFormat:kJCCallCardCollectionViewCellTimerFormat, minutes, seconds];
@@ -203,7 +165,7 @@ NSString *const kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey = @"pul
         _holdTimer = nil;
     }
     
-    if (_callCard.hold) {
+    if (self.callCard.hold) {
         [self showHoldStateAnimated:animated];
     }
     else {
@@ -211,37 +173,43 @@ NSString *const kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey = @"pul
     }
 }
 
+
 /**
- * Animates up the hold view and sets the actions background to be shown. Whole view is fully visible. The hold button 
+ * Animates up the hold view and sets the actions background to be shown. Whole view is fully visible. The hold button
  * should be visible.
  */
 -(void)showConnectedState:(bool)animated
 {
-    _currentCallTopToContainerConstraint.constant = _originalCurrentCallViewConstraint;
-    _callCardInfoTopConstraint.constant = _currentCallCardInfoElevation;
+    _cardInfoViewTopConstraint.constant = -28;
+    _holdViewTopConstraint.constant = -10;
     self.endCallButton.selected = false;
     [_cardInfoView setNeedsUpdateConstraints];
     
     if ([_holdCallButton.layer animationForKey:kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey])
         [_holdCallButton.layer removeAnimationForKey:kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey];
     
+    __unsafe_unretained JCCurrentCallCardViewCell *weakSelf = self;
+    __block void (^holdAnimation)() = [^void(){
+        weakSelf.layer.borderWidth = CALL_CARD_BORDER_WIDTH;
+        _cardInfoView.alpha = 1;
+        [_cardInfoView layoutIfNeeded];
+        weakSelf.actionView.backgroundColor = _defaultCallActionsColor;
+        weakSelf.highlighted = false;
+    } copy];
+    
     if (animated)
     {
-        __unsafe_unretained JCCallCardCollectionViewCell *weakSelf = self;
         [UIView animateWithDuration:_holdAnimationDuration
+                              delay:0
+                            options:UIViewAnimationOptionCurveEaseInOut
                          animations:^{
-                             weakSelf.layer.borderWidth = CALL_CARD_BORDER_WIDTH;
-                             weakSelf.alpha = 1;
-                             [_cardInfoView layoutIfNeeded];
-                             weakSelf.actionView.backgroundColor = _defaultCallActionsColor;
-                         }];
+                             holdAnimation();
+                         }
+                         completion:NULL];
     }
     else
     {
-        [_cardInfoView layoutIfNeeded];
-        self.layer.borderWidth = CALL_CARD_BORDER_WIDTH;
-        self.alpha = 1;
-        self.actionView.backgroundColor = _defaultCallActionsColor;
+        holdAnimation();
     }
 }
 
@@ -251,24 +219,33 @@ NSString *const kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey = @"pul
  */
 -(void)showHoldStateAnimated:(BOOL)animated
 {
-    _currentCallTopToContainerConstraint.constant = 10;
-    _callCardInfoTopConstraint.constant = 40;
+    _cardInfoViewTopConstraint.constant = 0;
+    _holdViewTopConstraint.constant = 0;
     self.endCallButton.selected = true;
     [_cardInfoView setNeedsUpdateConstraints];
-        
+    
     _holdTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(holdTimerUpdate) userInfo:nil repeats:YES];
     [self holdTimerUpdate];
     
+    __unsafe_unretained JCCurrentCallCardViewCell *weakSelf = self;
+    __block void (^holdAnimation)() = [^void(){
+        weakSelf.layer.borderWidth = 0;
+        _cardInfoView.alpha = _holdAnimationAlpha;
+        [_cardInfoView layoutIfNeeded];
+        weakSelf.actionView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.35/2];
+        weakSelf.highlighted = true;
+    } copy];
+    
     if (animated)
     {
-        __unsafe_unretained JCCallCardCollectionViewCell *weakSelf = self;
         [UIView animateWithDuration:_holdAnimationDuration
+                              delay:0
+                            options:UIViewAnimationOptionCurveEaseInOut
                          animations:^{
-                             weakSelf.layer.borderWidth = 0;
-                             weakSelf.alpha = _holdAnimationAlpha;
-                             [_cardInfoView layoutIfNeeded];
-                             weakSelf.actionView.backgroundColor = [UIColor clearColor];
-                         }];
+                             holdAnimation();
+                         }
+                         completion:NULL];
+        
         
         CALayer *holdBtnLayer = _holdCallButton.layer;
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
@@ -288,10 +265,7 @@ NSString *const kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey = @"pul
     }
     else
     {
-        [_cardInfoView layoutIfNeeded];
-        self.layer.borderWidth = 0;
-        self.alpha = _holdAnimationAlpha;
-        self.actionView.backgroundColor = [UIColor clearColor];
+        holdAnimation();
     }
 }
 

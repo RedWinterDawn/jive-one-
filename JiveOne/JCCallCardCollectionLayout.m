@@ -8,7 +8,7 @@
 
 #import "JCCallCardCollectionLayout.h"
 #import "JCCallCardManager.h"
-#import "JCCallCardCollectionViewCell.h"
+#import "JCCallCardViewCell.h"
 
 #define MINIMUM_CELL_HEIGHT 180.0f
 
@@ -154,7 +154,7 @@ static NSString * const JSCallCardLayoutCellKind = @"CallCardCell";
         if (!attributes)
             attributes = [self layoutAttributesForItemAtIndexPath:itemIndexPath];
         
-        JCCallCardCollectionViewCell *cell = (JCCallCardCollectionViewCell *)[self.collectionView.dataSource collectionView:self.collectionView cellForItemAtIndexPath:itemIndexPath];
+        JCCallCardViewCell *cell = (JCCallCardViewCell *)[self.collectionView.dataSource collectionView:self.collectionView cellForItemAtIndexPath:itemIndexPath];
         JCCallCard *callCard = cell.callCard;
         if (callCard.isConference)
             return attributes;
@@ -177,7 +177,7 @@ static NSString * const JSCallCardLayoutCellKind = @"CallCardCell";
             attributes = [self layoutAttributesForItemAtIndexPath:itemIndexPath];
         
         [self.collectionView.viewForBaselineLayout.layer setSpeed:1.5f];
-        JCCallCard *callCard = ((JCCallCardCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:itemIndexPath]).callCard;
+        JCCallCard *callCard = ((JCCallCardViewCell *)[self.collectionView cellForItemAtIndexPath:itemIndexPath]).callCard;
         if (callCard.isConference)
             return attributes;
         

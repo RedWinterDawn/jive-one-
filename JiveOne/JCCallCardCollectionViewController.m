@@ -8,7 +8,7 @@
 
 #import "JCCallCardCollectionViewController.h"
 #import "JCCallCardManager.h"
-#import "JCCallCardCollectionViewCell.h"
+#import "JCCallCardViewCell.h"
 
 @implementation JCCallCardCollectionViewController
 
@@ -84,7 +84,7 @@ NSString *const kJCCallCardCollectionConferenceCallCellReuseIdentifier = @"Confe
     
     NSNumber *index = [userInfo objectForKey:kJCCallCardManagerUpdatedIndex];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index.integerValue inSection:0];
-    JCCallCardCollectionViewCell *cell = (JCCallCardCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+    JCCallCardViewCell *cell = (JCCallCardViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
     [UIView animateWithDuration:0.3
                      animations:^{
                          cell.alpha = 0;
@@ -149,14 +149,14 @@ NSString *const kJCCallCardCollectionConferenceCallCellReuseIdentifier = @"Confe
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    JCCallCardCollectionViewCell *cell;
+    JCCallCardViewCell *cell;
     JCCallCard *callCard = [self callCardForIndexPath:indexPath];
     if (callCard.isIncoming)
-        cell = (JCCallCardCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kJCCallCardCollectionIncomingCallCellReuseIdentifier forIndexPath:indexPath];
+        cell = (JCCallCardViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kJCCallCardCollectionIncomingCallCellReuseIdentifier forIndexPath:indexPath];
     else if(callCard.isConference)
-        cell = (JCCallCardCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kJCCallCardCollectionConferenceCallCellReuseIdentifier forIndexPath:indexPath];
+        cell = (JCCallCardViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kJCCallCardCollectionConferenceCallCellReuseIdentifier forIndexPath:indexPath];
     else
-        cell = (JCCallCardCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kJCCallCardCollectionCurrentCallCellReuseIdentifier forIndexPath:indexPath];
+        cell = (JCCallCardViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kJCCallCardCollectionCurrentCallCellReuseIdentifier forIndexPath:indexPath];
     cell.callCard = callCard;
     return cell;
 }

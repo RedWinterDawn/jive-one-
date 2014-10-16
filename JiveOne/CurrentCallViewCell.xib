@@ -6,9 +6,9 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JCCallCardCollectionViewCell"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JCCallCardViewCell"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CurrentCallCardCell" id="Sdb-VX-oTp" userLabel="CurrentCallCardCell" customClass="JCCallCardCollectionViewCell">
+        <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CurrentCallCardCell" id="Sdb-VX-oTp" userLabel="CurrentCallCardCell" customClass="JCCurrentCallCardViewCell">
             <rect key="frame" x="0.0" y="0.0" width="300" height="170"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -16,7 +16,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QCr-7s-whc" userLabel="Call Card View">
-                        <rect key="frame" x="0.0" y="-1" width="300" height="86"/>
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="120"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rkJ-cf-ec6" userLabel="Hold Bar">
                                 <rect key="frame" x="0.0" y="0.0" width="300" height="28"/>
@@ -38,7 +38,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1:03" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vAI-dZ-8vN">
-                                        <rect key="frame" x="247" y="8" width="42" height="15"/>
+                                        <rect key="frame" x="248" y="8" width="42" height="15"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="15" id="rPq-ZQ-3fe"/>
                                             <constraint firstAttribute="width" constant="42" id="sHR-U5-xnj"/>
@@ -50,7 +50,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <accessibility key="accessibilityConfiguration" hint="callStateView" label="callStateView"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="vAI-dZ-8vN" secondAttribute="trailing" constant="11" id="5vY-vN-zts"/>
+                                    <constraint firstAttribute="trailing" secondItem="vAI-dZ-8vN" secondAttribute="trailing" constant="10" id="5vY-vN-zts"/>
                                     <constraint firstItem="4Oj-D7-F4v" firstAttribute="top" secondItem="rkJ-cf-ec6" secondAttribute="top" constant="9" id="7e3-RS-JWn"/>
                                     <constraint firstItem="4Oj-D7-F4v" firstAttribute="leading" secondItem="axI-Sc-RBD" secondAttribute="trailing" constant="7" id="G3P-Lf-Xa6"/>
                                     <constraint firstItem="vAI-dZ-8vN" firstAttribute="top" secondItem="rkJ-cf-ec6" secondAttribute="top" constant="8" id="Mjp-1r-PuV"/>
@@ -63,13 +63,12 @@
                                 <rect key="frame" x="0.0" y="27" width="300" height="59"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Katerina Illiov" lineBreakMode="tailTruncation" baselineAdjustment="none" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="H4z-0p-bTI">
-                                        <rect key="frame" x="15" y="10" width="214" height="27"/>
+                                        <rect key="frame" x="15" y="10" width="201" height="27"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="27" id="GRA-Wp-ab1"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="26.5"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(801) 238-9090" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ijK-Po-99E" customClass="JCDialStringLabel">
                                         <rect key="frame" x="15" y="43" width="275" height="21"/>
@@ -79,17 +78,15 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="12"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RINGING" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zQp-R0-cci">
-                                        <rect key="frame" x="237" y="10" width="53" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CANCELED" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="none" adjustsLetterSpacingToFitWidth="YES" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zQp-R0-cci">
+                                        <rect key="frame" x="224" y="10" width="66" height="21"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="53" id="L1b-12-rAK"/>
+                                            <constraint firstAttribute="width" constant="66" id="L1b-12-rAK"/>
                                             <constraint firstAttribute="height" constant="21" id="bPR-mc-X3j"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -106,15 +103,14 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="deviceRGB"/>
                         <constraints>
                             <constraint firstItem="8Zm-YG-q5c" firstAttribute="leading" secondItem="QCr-7s-whc" secondAttribute="leading" id="1XQ-fG-qkM"/>
-                            <constraint firstAttribute="bottom" secondItem="8Zm-YG-q5c" secondAttribute="bottom" id="6Ru-GB-BZP"/>
                             <constraint firstItem="rkJ-cf-ec6" firstAttribute="top" secondItem="QCr-7s-whc" secondAttribute="top" id="EeP-7w-6AA"/>
                             <constraint firstAttribute="trailing" secondItem="rkJ-cf-ec6" secondAttribute="trailing" id="G9Z-jr-U4M"/>
                             <constraint firstAttribute="trailing" secondItem="8Zm-YG-q5c" secondAttribute="trailing" id="KfH-aM-65k"/>
+                            <constraint firstItem="8Zm-YG-q5c" firstAttribute="top" secondItem="QCr-7s-whc" secondAttribute="top" constant="27" id="QyH-nI-2r3"/>
                             <constraint firstItem="rkJ-cf-ec6" firstAttribute="leading" secondItem="QCr-7s-whc" secondAttribute="leading" id="UDR-eN-OWr"/>
-                            <constraint firstAttribute="height" constant="86" id="qbW-Wl-QtG"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yUi-Hn-q9R" userLabel="Action Bar">
@@ -166,25 +162,31 @@
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="deviceRGB"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="bottomMargin" secondItem="yUi-Hn-q9R" secondAttribute="bottom" constant="-8" id="2m8-Ya-HDg"/>
+                <constraint firstItem="yUi-Hn-q9R" firstAttribute="bottom" secondItem="Sdb-VX-oTp" secondAttribute="bottomMargin" constant="8" id="2m8-Ya-HDg"/>
                 <constraint firstAttribute="trailingMargin" secondItem="yUi-Hn-q9R" secondAttribute="trailing" constant="-8" id="2uS-DD-a5n"/>
                 <constraint firstItem="yUi-Hn-q9R" firstAttribute="leading" secondItem="Sdb-VX-oTp" secondAttribute="leadingMargin" constant="-8" id="YiS-lT-s4F"/>
-                <constraint firstItem="QCr-7s-whc" firstAttribute="top" secondItem="Sdb-VX-oTp" secondAttribute="top" constant="-1" id="dbk-zW-vD4"/>
+                <constraint firstItem="QCr-7s-whc" firstAttribute="top" secondItem="Sdb-VX-oTp" secondAttribute="top" id="dbk-zW-vD4"/>
                 <constraint firstAttribute="trailing" secondItem="QCr-7s-whc" secondAttribute="trailing" id="hdr-hu-TCw"/>
+                <constraint firstItem="yUi-Hn-q9R" firstAttribute="top" secondItem="QCr-7s-whc" secondAttribute="bottom" id="iC2-bf-xf4"/>
                 <constraint firstItem="QCr-7s-whc" firstAttribute="leading" secondItem="Sdb-VX-oTp" secondAttribute="leading" id="iya-mG-NTo"/>
             </constraints>
             <size key="customSize" width="300" height="170"/>
             <connections>
                 <outlet property="actionView" destination="yUi-Hn-q9R" id="7mo-Bp-q50"/>
                 <outlet property="callerIdLabel" destination="H4z-0p-bTI" id="cVv-c3-SfY"/>
+                <outlet property="cardInfoView" destination="QCr-7s-whc" id="vpM-ma-3G0"/>
+                <outlet property="cardInfoViewTopConstraint" destination="dbk-zW-vD4" id="y1L-Kc-i1L"/>
                 <outlet property="dialedNumberLabel" destination="ijK-Po-99E" id="WRF-R9-Yvr"/>
                 <outlet property="elapsedTimeLabel" destination="zQp-R0-cci" id="76e-Ro-RyV"/>
                 <outlet property="endCallButton" destination="fMI-EZ-LsX" id="bJx-6G-LoH"/>
                 <outlet property="endCallButtonWidthConstraint" destination="gtd-cR-yRD" id="hAk-6a-mff"/>
                 <outlet property="holdCallButton" destination="dim-MR-5Mi" id="xzD-dr-SKc"/>
                 <outlet property="holdElapsedTimeLabel" destination="vAI-dZ-8vN" id="z4g-NE-GAe"/>
+                <outlet property="holdView" destination="rkJ-cf-ec6" id="wXT-c7-vN4"/>
+                <outlet property="holdViewTopConstraint" destination="EeP-7w-6AA" id="hPv-b0-ovz"/>
+                <outlet property="infoView" destination="8Zm-YG-q5c" id="lux-DC-zSX"/>
             </connections>
             <point key="canvasLocation" x="136" y="154"/>
         </collectionViewCell>
