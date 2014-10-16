@@ -24,7 +24,7 @@
 
 #import "JCCallCardManager.h"
 
-@interface JCAccountViewController () <MFMailComposeViewControllerDelegate>
+@interface JCAccountViewController () <MFMailComposeViewControllerDelegate, NSFileManagerDelegate>
 {
     PersonEntities *me;
     NSMutableArray *presenceValues;

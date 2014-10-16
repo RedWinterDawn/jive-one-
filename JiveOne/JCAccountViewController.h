@@ -23,9 +23,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *eulaImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *feedbackImageView;
 @property (weak, nonatomic) IBOutlet UIView *buildNumber;
-
 @property (weak, nonatomic) IBOutlet UIView *presenceAccessory;
-
--(IBAction)simulateIncomingCall:(id)sender;
 
 @end

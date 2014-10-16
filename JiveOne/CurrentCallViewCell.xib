@@ -3,7 +3,6 @@
     <dependencies>
         <deployment defaultVersion="1552" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JCCallCardViewCell"/>
@@ -164,9 +163,9 @@
             </view>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="yUi-Hn-q9R" firstAttribute="bottom" secondItem="Sdb-VX-oTp" secondAttribute="bottomMargin" constant="8" id="2m8-Ya-HDg"/>
-                <constraint firstAttribute="trailingMargin" secondItem="yUi-Hn-q9R" secondAttribute="trailing" constant="-8" id="2uS-DD-a5n"/>
-                <constraint firstItem="yUi-Hn-q9R" firstAttribute="leading" secondItem="Sdb-VX-oTp" secondAttribute="leadingMargin" constant="-8" id="YiS-lT-s4F"/>
+                <constraint firstItem="yUi-Hn-q9R" firstAttribute="bottom" secondItem="Sdb-VX-oTp" secondAttribute="bottom" id="2m8-Ya-HDg"/>
+                <constraint firstAttribute="trailing" secondItem="yUi-Hn-q9R" secondAttribute="trailing" id="2uS-DD-a5n"/>
+                <constraint firstItem="yUi-Hn-q9R" firstAttribute="leading" secondItem="Sdb-VX-oTp" secondAttribute="leading" id="YiS-lT-s4F"/>
                 <constraint firstItem="QCr-7s-whc" firstAttribute="top" secondItem="Sdb-VX-oTp" secondAttribute="top" id="dbk-zW-vD4"/>
                 <constraint firstAttribute="trailing" secondItem="QCr-7s-whc" secondAttribute="trailing" id="hdr-hu-TCw"/>
                 <constraint firstItem="yUi-Hn-q9R" firstAttribute="top" secondItem="QCr-7s-whc" secondAttribute="bottom" id="iC2-bf-xf4"/>

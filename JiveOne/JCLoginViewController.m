@@ -26,7 +26,7 @@
 
 
 
-@interface JCLoginViewController ()
+@interface JCLoginViewController () <NSFileManagerDelegate>
 {
     BOOL fastConnection;
     MBProgressHUD *hud;
