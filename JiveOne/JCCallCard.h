@@ -12,7 +12,13 @@
 extern NSString *const kJCCallCardStatusChangeKey;
 extern NSString *const kJCCallCardHoldKey;
 
-@interface JCCallCard : NSObject <JCLineSessionDelegate>
+@protocol JCCallCardDelegate <JCLineSessionDelegate>
+
+@end
+
+@interface JCCallCard : NSObject <JCCallCardDelegate>
+
+@property (nonatomic, weak) id <JCCallCardDelegate> delegate;
 
 @property (nonatomic, strong) JCLineSession *lineSession;
 @property (nonatomic, strong) NSDate *started;

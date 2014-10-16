@@ -64,27 +64,31 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
     }
     else if ([keyPath isEqualToString:kJCCallCardStatusChangeKey])
     {
-        switch (self.callCard.lineSession.mCallState)
+        if (self.callCard.isConference) {
+            [self showHoldButton:YES];
+            [self startTimer];
+        }
+        else
         {
-            case JCCallFailed:
-            case JCCallCanceled:
-                [self hideHoldButton:NO];
-                self.elapsedTimeLabel.text = NSLocalizedString(@"CANCELED", nil);
-                break;
-            case JCNoCall:
-            case JCCallRinging:
-                [self hideHoldButton:NO];
-                self.elapsedTimeLabel.text = NSLocalizedString(@"RINGING", nil);
-                break;
-            case JCCallConnected:
-                [self showHoldButton:YES];
-                if (!_timer) {
-                    _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerUpdate) userInfo:nil repeats:YES];
-                    [self timerUpdate];
-                }
-                break;
-            default:
-                break;
+            switch (self.callCard.lineSession.mCallState)
+            {
+                case JCCallFailed:
+                case JCCallCanceled:
+                    [self hideHoldButton:NO];
+                    self.elapsedTimeLabel.text = NSLocalizedString(@"CANCELED", nil);
+                    break;
+                case JCNoCall:
+                case JCCallRinging:
+                    [self hideHoldButton:NO];
+                    self.elapsedTimeLabel.text = NSLocalizedString(@"RINGING", nil);
+                    break;
+                case JCCallConnected:
+                    [self showHoldButton:YES];
+                    [self startTimer];
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
@@ -140,6 +144,15 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
 }
 
 #pragma mark - Private -
+
+
+-(void)startTimer
+{
+    if (!_timer) {
+        _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timerUpdate) userInfo:nil repeats:YES];
+        [self timerUpdate];
+    }
+}
 
 -(void)timerUpdate
 {
