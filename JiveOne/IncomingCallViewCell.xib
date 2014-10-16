@@ -112,8 +112,8 @@
             </constraints>
             <size key="customSize" width="302" height="557"/>
             <connections>
+                <outlet property="actionView" destination="RgF-K8-zw2" id="e9C-3A-8w7"/>
                 <outlet property="answerCallButton" destination="NP4-wW-qRx" id="WnM-n0-HJz"/>
-                <outlet property="callActions" destination="RgF-K8-zw2" id="L80-zJ-VCl"/>
                 <outlet property="callerIdLabel" destination="FT8-wZ-Uc2" id="Dyj-ef-fDy"/>
                 <outlet property="dialedNumberLabel" destination="5rL-pd-NyF" id="Phr-zl-uFS"/>
                 <outlet property="endCallButton" destination="6AT-cr-W7i" id="dKi-jB-di3"/>

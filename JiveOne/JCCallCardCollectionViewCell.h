@@ -12,7 +12,7 @@
 
 @interface JCCallCardCollectionViewCell : UICollectionViewCell
 
-@property (nonatomic, weak) IBOutlet UIView *callActions;
+@property (nonatomic, weak) IBOutlet UIView *actionView;
 @property (nonatomic, weak) IBOutlet UIView *cardInfoView;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *currentCallTopToContainerConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *callCardInfoTopConstraint;

@@ -51,7 +51,7 @@ NSString *const kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey = @"pul
 
 -(void)awakeFromNib
 {
-    _defaultCallActionsColor                = self.callActions.backgroundColor;
+    _defaultCallActionsColor                = self.actionView.backgroundColor;
     _currentCallCardInfoElevation           = self.callCardInfoTopConstraint.constant;
     _originalCurrentCallViewConstraint      = self.currentCallTopToContainerConstraint.constant;
     _originalEndCallButtonWidthConstraint   = self.endCallButtonWidthConstraint.constant;
@@ -233,7 +233,7 @@ NSString *const kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey = @"pul
                              weakSelf.layer.borderWidth = CALL_CARD_BORDER_WIDTH;
                              weakSelf.alpha = 1;
                              [_cardInfoView layoutIfNeeded];
-                             weakSelf.actionsView.backgroundColor = _defaultCallActionsColor;
+                             weakSelf.actionView.backgroundColor = _defaultCallActionsColor;
                          }];
     }
     else
@@ -241,7 +241,7 @@ NSString *const kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey = @"pul
         [_cardInfoView layoutIfNeeded];
         self.layer.borderWidth = CALL_CARD_BORDER_WIDTH;
         self.alpha = 1;
-        self.actionsView.backgroundColor = _defaultCallActionsColor;
+        self.actionView.backgroundColor = _defaultCallActionsColor;
     }
 }
 
@@ -267,7 +267,7 @@ NSString *const kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey = @"pul
                              weakSelf.layer.borderWidth = 0;
                              weakSelf.alpha = _holdAnimationAlpha;
                              [_cardInfoView layoutIfNeeded];
-                             weakSelf.actionsView.backgroundColor = [UIColor clearColor];
+                             weakSelf.actionView.backgroundColor = [UIColor clearColor];
                          }];
         
         CALayer *holdBtnLayer = _holdCallButton.layer;
@@ -291,17 +291,17 @@ NSString *const kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey = @"pul
         [_cardInfoView layoutIfNeeded];
         self.layer.borderWidth = 0;
         self.alpha = _holdAnimationAlpha;
-        self.actionsView.backgroundColor = [UIColor clearColor];
+        self.actionView.backgroundColor = [UIColor clearColor];
     }
 }
 
 -(void)hideHoldButton:(bool)animated
 {
     _endCallButtonWidthConstraint.constant = self.bounds.size.width;
-    [_callActions setNeedsUpdateConstraints];
+    [_actionView setNeedsUpdateConstraints];
     [UIView animateWithDuration:animated ? 0.3 : 0
                      animations:^{
-                         [_callActions layoutIfNeeded];
+                         [_actionView layoutIfNeeded];
                      } completion:^(BOOL finished) {
                          _showingHold = false;
                      }];
@@ -310,11 +310,11 @@ NSString *const kJCCallCardCollectionViewCellHoldButtonPulseAnimationKey = @"pul
 -(void)showHoldButton:(bool)animated
 {
     _endCallButtonWidthConstraint.constant = _originalEndCallButtonWidthConstraint;
-    [_callActions setNeedsUpdateConstraints];
+    [_actionView setNeedsUpdateConstraints];
     
     [UIView animateWithDuration:animated ? 0.3 : 0
                      animations:^{
-                         [_callActions layoutIfNeeded];
+                         [_actionView layoutIfNeeded];
                      } completion:^(BOOL finished) {
                          _showingHold = true;
                      }];

@@ -115,7 +115,7 @@
             </constraints>
             <size key="customSize" width="317" height="305"/>
             <connections>
-                <outlet property="callActions" destination="fVM-Ov-3LX" id="rZr-11-hDZ"/>
+                <outlet property="actionView" destination="fVM-Ov-3LX" id="kHs-FD-ci8"/>
                 <outlet property="callerIdLabel" destination="qfp-g2-efF" id="9md-9A-kpz"/>
                 <outlet property="dialedNumberLabel" destination="5Ts-vU-ZOh" id="jyW-2N-GB8"/>
                 <outlet property="endCallButton" destination="3Bi-dC-Ajg" id="Ti5-vj-tUN"/>
