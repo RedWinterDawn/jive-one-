@@ -110,7 +110,7 @@ NSString *const kJCVoicemailCellIdentifier = @"VoicemailCell";
         [self.voicemails removeAllObjects];
     }
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"deleted ==[c] %@", [NSNumber numberWithBool:NO]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"markForDeletion ==[c] %@", [NSNumber numberWithBool:NO]];
     self.voicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAllSortedBy:@"timeStamp" ascending:NO withPredicate:predicate]];
     
     
