@@ -27,12 +27,11 @@ NSString *const kJCHistoryTableViewControllerCellReuseIdentifier = @"JCHistoryCe
 
 @implementation JCHistoryTableViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main-logo.png"]];
-    imageView.contentMode = UIViewContentModeCenter;
-    self.tableView.backgroundView = imageView;
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)didReceiveMemoryWarning {

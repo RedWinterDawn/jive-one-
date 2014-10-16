@@ -51,10 +51,7 @@ NSString *const kJCVoicemailCellIdentifier = @"VoicemailCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
-    [self.tableView setSeparatorInset:UIEdgeInsetsZero];
-    //[self.tableView registerClass:[JCVoiceCell class] forCellReuseIdentifier:CellIdentifier];
-    //[self.tableView registerNib:[UINib nibWithNibName:@"JCVoicemailCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
+    
     self.progressTimer = nil;
     
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc]
@@ -62,10 +59,6 @@ NSString *const kJCVoicemailCellIdentifier = @"VoicemailCell";
     [refreshControl addTarget:self action:@selector(updateVoiceTable:) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main-logo.png"]];
-    imageView.contentMode = UIViewContentModeCenter;
-    self.tableView.backgroundView = imageView;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadVoicemails) name:@"kApplicationDidBecomeActive" object:nil];
     
