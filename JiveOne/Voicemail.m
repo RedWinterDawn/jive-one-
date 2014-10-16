@@ -13,7 +13,7 @@
 
 @dynamic callerId;
 @dynamic callerIdNumber;
-@dynamic deleted;
+@dynamic markForDeletion;
 @dynamic duration;
 @dynamic jrn;
 @dynamic mailboxUrl;

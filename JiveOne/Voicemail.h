@@ -14,7 +14,7 @@
 
 @property (nonatomic, retain) NSString * callerId;
 @property (nonatomic, retain) NSString * callerIdNumber;
-@property (nonatomic, retain) NSNumber * deleted;
+@property (nonatomic, retain) NSNumber * markForDeletion;
 @property (nonatomic, retain) NSNumber * duration;
 @property (nonatomic, retain) NSString * jrn;
 @property (nonatomic, retain) NSString * mailboxUrl;

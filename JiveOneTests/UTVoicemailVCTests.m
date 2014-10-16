@@ -203,7 +203,7 @@ describe(@"Voicemail VC", ^{
             if(cell){
                 [voicemailViewController voiceCellDeleteTapped:indexpath];
                 //wait for async task
-                [[expectFutureValue(theValue([cell.voicemail.deleted boolValue])) shouldEventually] beYes];
+                [[expectFutureValue(theValue([cell.voicemail.markForDeletion boolValue])) shouldEventually] beYes];
                 //            [[cell.voicemail.deleted should] beYes];
             }
         });

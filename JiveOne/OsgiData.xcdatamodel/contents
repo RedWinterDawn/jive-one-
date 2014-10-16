@@ -123,10 +123,10 @@
     <entity name="Voicemail" representedClassName="Voicemail" syncable="YES">
         <attribute name="callerId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="callerIdNumber" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="deleted" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="duration" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="jrn" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mailboxUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="markForDeletion" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="read" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="timeStamp" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="transcription" optional="YES" attributeType="String" syncable="YES"/>
@@ -142,20 +142,20 @@
         <attribute name="etag" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Company" positionX="0" positionY="0" width="128" height="150"/>
-        <element name="ContactGroup" positionX="0" positionY="0" width="128" height="73"/>
-        <element name="Conversation" positionX="0" positionY="0" width="128" height="180"/>
-        <element name="ConversationEntry" positionX="0" positionY="0" width="128" height="268"/>
-        <element name="ConversationETag" positionX="18" positionY="162" width="128" height="60"/>
-        <element name="LineGroup" positionX="18" positionY="153" width="128" height="75"/>
-        <element name="Lines" positionX="27" positionY="171" width="128" height="223"/>
-        <element name="Membership" positionX="9" positionY="153" width="128" height="88"/>
-        <element name="PBX" positionX="18" positionY="162" width="128" height="120"/>
-        <element name="PersonEntities" positionX="0" positionY="0" width="128" height="360"/>
-        <element name="PersonMeta" positionX="0" positionY="0" width="128" height="150"/>
-        <element name="Presence" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="Voicemail" positionX="0" positionY="0" width="128" height="283"/>
-        <element name="VoicemailETag" positionX="9" positionY="153" width="128" height="58"/>
-        <element name="LineConfiguration" positionX="18" positionY="153" width="128" height="118"/>
+        <element name="Company" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="ContactGroup" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Conversation" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="ConversationEntry" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="ConversationETag" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="LineConfiguration" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="LineGroup" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Lines" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Membership" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="PBX" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="PersonEntities" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="PersonMeta" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Presence" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Voicemail" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="VoicemailETag" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

@@ -96,7 +96,7 @@
         vmail.url_self = dictionary[@"self"];
 	    vmail.url_download = dictionary[@"self_download"];
 		vmail.url_changeStatus = dictionary[@"self_changeStatus"] ;
-        vmail.deleted = [NSNumber numberWithBool:NO];
+        vmail.markForDeletion = [NSNumber numberWithBool:NO];
         vmail.mailboxUrl = mailboxUrl;
         
         //get all voicemail messages through a queue
@@ -183,7 +183,7 @@
     Voicemail *voicemail = [Voicemail MR_findFirstByAttribute:@"jrn" withValue:voicemailId];
     
     if (voicemail) {
-        voicemail.deleted = [NSNumber numberWithBool:YES];
+        voicemail.markForDeletion = [NSNumber numberWithBool:YES];
         [context MR_saveToPersistentStoreAndWait];
         
         //save to deleted voicemail storage
