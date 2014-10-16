@@ -92,6 +92,7 @@ NSString *const kJCCallCardConferenceString = @"Conference";
     
     if (![_calls containsObject:call]) {
         [_calls addObject:call];
+        call.delegate = self;
     }
 }
 
@@ -116,6 +117,7 @@ NSString *const kJCCallCardConferenceString = @"Conference";
     if ([_calls containsObject:call])
     {
         [_calls removeObject:call];
+        call.delegate = nil;
     }
 }
 
@@ -224,6 +226,11 @@ NSString *const kJCCallCardConferenceString = @"Conference";
 -(void)callStateDidChange:(long)sessionId callState:(JCCall)callState
 {
     self.callState = callState;
+    
+    if (_delegate && [_delegate respondsToSelector:@selector(callStateDidChange:callState:)]) {
+        [_delegate callStateDidChange:sessionId callState:callState];
+    }
+    
 }
 
 
