@@ -83,6 +83,7 @@ NSString *const kJCCallCardHoldKey = @"hold";
 -(void)callStateDidChange:(long)sessionId callState:(JCCall)callState
 {
 	[self willChangeValueForKey:kJCCallCardStatusChangeKey];
+	_lastState = callState;
 	
 	switch (callState) {
 		case  JCNoCall:
@@ -98,10 +99,17 @@ NSString *const kJCCallCardHoldKey = @"hold";
 		case JCCallCanceled:
 			[self endCallRemote];
 			break;
-		case JCCallOnHold:
-		case JCCALlOffHold:
+		case JCCallPutOnHold:
+		case JCCallPutOffHold:
 			[self setHold:YES];
 			break;
+		case JCTransferSuccess:
+			[self endCallRemote];
+			break;
+		case JCTransferFailed:
+			[self endCallRemote];
+			break;
+		
 		default:
 			break;
 	}

@@ -25,6 +25,7 @@ extern NSString *const kJCCallCardHoldKey;
 @property (nonatomic, strong) JCLineSession *lineSession;
 @property (nonatomic, strong) NSDate *started;
 @property (nonatomic, strong) NSDate *holdStarted;
+@property (nonatomic) JCCall lastState;
 @property (nonatomic, getter=isIncoming) bool incoming;
 
 @property (nonatomic) BOOL hold;
