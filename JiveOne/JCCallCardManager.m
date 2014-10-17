@@ -92,7 +92,18 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
 
 -(void)toggleCallHold:(JCCallCard *)callCard
 {
-	[_sipHandler toggleHoldForLineWithSessionId:callCard.lineSession.mSessionId];
+	if (callCard.isConference)
+	{
+		for (JCCallCard *card in callCard.calls)
+		{
+			[_sipHandler toggleHoldForLineWithSessionId:card.lineSession.mSessionId];
+		}
+	}
+	else
+	{
+		[_sipHandler toggleHoldForLineWithSessionId:callCard.lineSession.mSessionId];
+	}
+	
 }
 
 -(void)finishWarmTransfer:(void (^)(bool success))completion
