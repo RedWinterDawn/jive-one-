@@ -76,6 +76,8 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
     newCallCard.started = [NSDate date];
 	[self removeIncomingCall:newCallCard];
 	[self addCurrentCallCard:newCallCard];
+    
+    
 }
 
 -(void)hangUpCall:(JCCallCard *)callCard remote:(BOOL)remote

@@ -314,9 +314,17 @@
 		F59AE2CC192F0B0D00CAF0F3 /* iPadLaunch2Xnew.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2CB192F0B0D00CAF0F3 /* iPadLaunch2Xnew.png */; };
 		F82A284119DDC55E00C3620D /* JCV4ProvisioningClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F82A284019DDC55E00C3620D /* JCV4ProvisioningClient.m */; };
 		F84A087919DF38C8003476E6 /* JCTransferConfirmationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F84A087819DF38C8003476E6 /* JCTransferConfirmationViewController.m */; };
+		F85DAD0919EF07D30075AAA2 /* JCHistroyContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F85DAD0819EF07D30075AAA2 /* JCHistroyContainerViewController.m */; };
 		F8A2BC0B19DB5B3C00251310 /* JCCallOptionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = F8A2BC0A19DB5B3C00251310 /* JCCallOptionsView.m */; };
 		F8B62E5B19DB091500AF98D3 /* JCRoundedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F8B62E5A19DB091500AF98D3 /* JCRoundedButton.m */; };
 		F8BC82C319E44A2E00340BA1 /* JCKeypadView.m in Sources */ = {isa = PBXBuildFile; fileRef = F8BC82C219E44A2E00340BA1 /* JCKeypadView.m */; };
+		F8C9A7D419E884D20049A715 /* OutgoingCall.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C9A7D319E884D20049A715 /* OutgoingCall.m */; };
+		F8C9A7D719E884D30049A715 /* MissedCall.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C9A7D619E884D30049A715 /* MissedCall.m */; };
+		F8C9A7DA19E884D30049A715 /* IncomingCall.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C9A7D919E884D30049A715 /* IncomingCall.m */; };
+		F8C9A7E219EC31DF0049A715 /* Call.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C9A7E119EC31DF0049A715 /* Call.m */; };
+		F8C9A7E519EC36340049A715 /* RecentEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C9A7E419EC36340049A715 /* RecentEvent.m */; };
+		F8C9A7E919EC5F4C0049A715 /* JCHistoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C9A7E819EC5F4C0049A715 /* JCHistoryTableViewController.m */; };
+		F8C9A7EC19EC691C0049A715 /* JCHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C9A7EB19EC691C0049A715 /* JCHistoryCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -870,6 +878,8 @@
 		F82A284019DDC55E00C3620D /* JCV4ProvisioningClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCV4ProvisioningClient.m; sourceTree = "<group>"; };
 		F84A087719DF38C8003476E6 /* JCTransferConfirmationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTransferConfirmationViewController.h; sourceTree = "<group>"; };
 		F84A087819DF38C8003476E6 /* JCTransferConfirmationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTransferConfirmationViewController.m; sourceTree = "<group>"; };
+		F85DAD0719EF07D30075AAA2 /* JCHistroyContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHistroyContainerViewController.h; sourceTree = "<group>"; };
+		F85DAD0819EF07D30075AAA2 /* JCHistroyContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHistroyContainerViewController.m; sourceTree = "<group>"; };
 		F8A2BC0919DB5B3C00251310 /* JCCallOptionsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCallOptionsView.h; sourceTree = "<group>"; };
 		F8A2BC0A19DB5B3C00251310 /* JCCallOptionsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallOptionsView.m; sourceTree = "<group>"; };
 		F8B62E4219D9F1E400AF98D3 /* JCDialerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDialerViewController.h; sourceTree = "<group>"; };
@@ -878,6 +888,20 @@
 		F8B62E5A19DB091500AF98D3 /* JCRoundedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCRoundedButton.m; sourceTree = "<group>"; };
 		F8BC82C119E44A2E00340BA1 /* JCKeypadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCKeypadView.h; sourceTree = "<group>"; };
 		F8BC82C219E44A2E00340BA1 /* JCKeypadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCKeypadView.m; sourceTree = "<group>"; };
+		F8C9A7D219E884D20049A715 /* OutgoingCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OutgoingCall.h; sourceTree = "<group>"; };
+		F8C9A7D319E884D20049A715 /* OutgoingCall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OutgoingCall.m; sourceTree = "<group>"; };
+		F8C9A7D519E884D30049A715 /* MissedCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MissedCall.h; sourceTree = "<group>"; };
+		F8C9A7D619E884D30049A715 /* MissedCall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MissedCall.m; sourceTree = "<group>"; };
+		F8C9A7D819E884D30049A715 /* IncomingCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IncomingCall.h; sourceTree = "<group>"; };
+		F8C9A7D919E884D30049A715 /* IncomingCall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IncomingCall.m; sourceTree = "<group>"; };
+		F8C9A7E019EC31DF0049A715 /* Call.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Call.h; sourceTree = "<group>"; };
+		F8C9A7E119EC31DF0049A715 /* Call.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Call.m; sourceTree = "<group>"; };
+		F8C9A7E319EC36340049A715 /* RecentEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentEvent.h; sourceTree = "<group>"; };
+		F8C9A7E419EC36340049A715 /* RecentEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecentEvent.m; sourceTree = "<group>"; };
+		F8C9A7E719EC5F4C0049A715 /* JCHistoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHistoryTableViewController.h; sourceTree = "<group>"; };
+		F8C9A7E819EC5F4C0049A715 /* JCHistoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHistoryTableViewController.m; sourceTree = "<group>"; };
+		F8C9A7EA19EC691C0049A715 /* JCHistoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCHistoryCell.h; sourceTree = "<group>"; };
+		F8C9A7EB19EC691C0049A715 /* JCHistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCHistoryCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1132,6 +1156,8 @@
 		270152C71901D77A00F271CE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				2751591618AD300B00FD8D3F /* OsgiData.xcdatamodel */,
+				5D1BBE5C19EDE481006526B2 /* Events */,
 				270559A6196DD11800A7AF35 /* LineGroup.h */,
 				270559A7196DD11800A7AF35 /* LineGroup.m */,
 				270559A3196DD11700A7AF35 /* ContactGroup.h */,
@@ -1146,9 +1172,6 @@
 				274493C718D0E98D002744CB /* Conversation.m */,
 				279975F0195B1BCD001425CC /* Membership.h */,
 				279975F1195B1BCD001425CC /* Membership.m */,
-				27F64D6019772D6A00F772AA /* Voicemail.h */,
-				27F64D6119772D6A00F772AA /* Voicemail.m */,
-				2751591618AD300B00FD8D3F /* OsgiData.xcdatamodel */,
 				27F64D5A19772CCF00F772AA /* Lines.h */,
 				27F64D5B19772CCF00F772AA /* Lines.m */,
 				27F64D5719772CCE00F772AA /* PBX.h */,
@@ -1238,11 +1261,11 @@
 		2751590318AD113C00FD8D3F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				277F093F18FECECA00EEF0E3 /* Login */,
 				F8B62E4119D9F1C300AF98D3 /* Dialer */,
 				277F093E18FECEB800EEF0E3 /* Account */,
 				277F093B18FECE5E00EEF0E3 /* People */,
 				277F093D18FECEA800EEF0E3 /* Voicemail */,
-				277F093F18FECECA00EEF0E3 /* Login */,
 				91F87CF4190EE16B00152FDB /* AppTutorial */,
 				91743F351965B7EA003CD5E4 /* Status */,
 			);
@@ -1863,6 +1886,25 @@
 			path = Shared;
 			sourceTree = "<group>";
 		};
+		5D1BBE5C19EDE481006526B2 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				F8C9A7E319EC36340049A715 /* RecentEvent.h */,
+				F8C9A7E419EC36340049A715 /* RecentEvent.m */,
+				F8C9A7E019EC31DF0049A715 /* Call.h */,
+				F8C9A7E119EC31DF0049A715 /* Call.m */,
+				F8C9A7D819E884D30049A715 /* IncomingCall.h */,
+				F8C9A7D919E884D30049A715 /* IncomingCall.m */,
+				F8C9A7D519E884D30049A715 /* MissedCall.h */,
+				F8C9A7D619E884D30049A715 /* MissedCall.m */,
+				F8C9A7D219E884D20049A715 /* OutgoingCall.h */,
+				F8C9A7D319E884D20049A715 /* OutgoingCall.m */,
+				27F64D6019772D6A00F772AA /* Voicemail.h */,
+				27F64D6119772D6A00F772AA /* Voicemail.m */,
+			);
+			name = Events;
+			sourceTree = "<group>";
+		};
 		910709F81959D5B90041E1CF /* AccountIcons */ = {
 			isa = PBXGroup;
 			children = (
@@ -2029,6 +2071,7 @@
 		F8B62E4119D9F1C300AF98D3 /* Dialer */ = {
 			isa = PBXGroup;
 			children = (
+				F8C9A7E619EC5F160049A715 /* HistoryView */,
 				F8A2BC0C19DB5FC400251310 /* DialerButtons */,
 				F8BC82C119E44A2E00340BA1 /* JCKeypadView.h */,
 				F8BC82C219E44A2E00340BA1 /* JCKeypadView.m */,
@@ -2062,6 +2105,19 @@
 				5D1BBE5A19EDC9EF006526B2 /* JCMergeButton.m */,
 			);
 			name = Dialer;
+			sourceTree = "<group>";
+		};
+		F8C9A7E619EC5F160049A715 /* HistoryView */ = {
+			isa = PBXGroup;
+			children = (
+				F8C9A7E719EC5F4C0049A715 /* JCHistoryTableViewController.h */,
+				F8C9A7E819EC5F4C0049A715 /* JCHistoryTableViewController.m */,
+				F8C9A7EA19EC691C0049A715 /* JCHistoryCell.h */,
+				F8C9A7EB19EC691C0049A715 /* JCHistoryCell.m */,
+				F85DAD0719EF07D30075AAA2 /* JCHistroyContainerViewController.h */,
+				F85DAD0819EF07D30075AAA2 /* JCHistroyContainerViewController.m */,
+			);
+			name = HistoryView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2366,11 +2422,15 @@
 				F2459BB218C67FC000AF56CF /* JCGroupSelectorViewController.m in Sources */,
 				F8A2BC0B19DB5B3C00251310 /* JCCallOptionsView.m in Sources */,
 				279975F2195B1BCD001425CC /* Membership.m in Sources */,
+				F8C9A7E919EC5F4C0049A715 /* JCHistoryTableViewController.m in Sources */,
 				277F094218FED58C00EEF0E3 /* JCStatusViewController.m in Sources */,
 				27F1F2DA191C171300AEAFD7 /* UAInboxUI.m in Sources */,
 				27E9A35818E0A17A0017B65D /* Presence+Custom.m in Sources */,
+				F85DAD0919EF07D30075AAA2 /* JCHistroyContainerViewController.m in Sources */,
+				F8C9A7D719E884D30049A715 /* MissedCall.m in Sources */,
 				27F1F2EB191C171300AEAFD7 /* UAPushSettingsTokenViewController.m in Sources */,
 				279E4CA9192273E5002A556C /* MBContactCollectionView.m in Sources */,
+				F8C9A7D419E884D20049A715 /* OutgoingCall.m in Sources */,
 				27F1F2EC191C171300AEAFD7 /* UAPushSettingsUserInfoViewController.m in Sources */,
 				27F1F2ED191C171300AEAFD7 /* UAPushSettingsViewController.m in Sources */,
 				5D629BAD19D9C41900F5744E /* JCVoiceViewController.m in Sources */,
@@ -2385,10 +2445,12 @@
 				2710E40C18CE873000152C91 /* Conversation+Custom.m in Sources */,
 				27F1F2E9191C171300AEAFD7 /* UAPushSettingsSoundsViewController.m in Sources */,
 				5DBBDCC319DCB29100A4DB96 /* JCCallCardCollectionViewController.m in Sources */,
+				F8C9A7E519EC36340049A715 /* RecentEvent.m in Sources */,
 				27F1F2E3191C171300AEAFD7 /* UAMapPresentationController.m in Sources */,
 				27F1F2E5191C171300AEAFD7 /* UAPushNotificationHandler.m in Sources */,
 				91915738195B209D004BDE26 /* JCAppIntro.m in Sources */,
 				27F1F2E4191C171300AEAFD7 /* UAPushMoreSettingsViewController.m in Sources */,
+				F8C9A7DA19E884D30049A715 /* IncomingCall.m in Sources */,
 				F8B62E5B19DB091500AF98D3 /* JCRoundedButton.m in Sources */,
 				2762C45818B4177D00885918 /* JCOmniPresence.m in Sources */,
 				DDEC37D01910126900E166CC /* ConversationEntry.m in Sources */,
@@ -2452,6 +2514,7 @@
 				279E4CAB192273E5002A556C /* MBContactCollectionViewContactCell.m in Sources */,
 				5D15AF2B19DB271500E86116 /* NSString+DialString.m in Sources */,
 				27F1F2D7191C171300AEAFD7 /* UAInboxMessageListController.m in Sources */,
+				F8C9A7E219EC31DF0049A715 /* Call.m in Sources */,
 				91CAE6811961EA6A004A28FD /* JCJiveLogoBlack.m in Sources */,
 				91260EDD18B2965900704670 /* JCDirectoryDetailViewController.m in Sources */,
 				2751591718AD300B00FD8D3F /* OsgiData.xcdatamodel in Sources */,
@@ -2460,6 +2523,7 @@
 				91DDB1991935008A00550F10 /* JCSpeakerButton.m in Sources */,
 				2751591318AD174F00FD8D3F /* JCAuthenticationManager.m in Sources */,
 				2784BA6C1940390100389F5F /* JCTableViewCellWithInset.m in Sources */,
+				F8C9A7EC19EC691C0049A715 /* JCHistoryCell.m in Sources */,
 				2700988118F4714100B6BC2F /* JSMessageTextView.m in Sources */,
 				5D1BBE5B19EDC9EF006526B2 /* JCMergeButton.m in Sources */,
 				27F1F2E8191C171300AEAFD7 /* UAPushSettingsChannelInfoViewController.m in Sources */,

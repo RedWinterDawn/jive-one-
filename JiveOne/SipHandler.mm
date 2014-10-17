@@ -10,6 +10,9 @@
 
 #import <PortSIPLib/PortSIPSDK.h>
 #import <AFNetworking/AFNetworkReachabilityManager.h>
+#import "IncomingCall.h"
+#import "MissedCall.h"
+#import "OutgoingCall.h"
 
 #import "LineConfiguration+Custom.h"
 #import "Lines+Custom.h"
@@ -34,6 +37,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     AFNetworkReachabilityStatus _previousNetworkStatus;
 	VideoViewController *_videoController;
 	bool inConference;
+    bool wasIncomingCall;
 }
 
 @property (nonatomic) NSMutableArray *lineSessions;
@@ -413,6 +417,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 		
 		[currentSession setCallTitle:contactName ? contactName : callee];
 		[currentSession setCallDetail:callee];
+        [OutgoingCall addOutgoingCallWithLineSession:currentSession];
 	}
 	else
 	{
@@ -420,7 +425,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 		[currentSession setMCallState:JCCallFailed];
 		[currentSession reset];
 	}
-	
+    
 	return currentSession;
 }
 
@@ -716,6 +721,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 			 existsVideo:(BOOL)existsVideo
 {
 	NSLog(@"onInviteIncoming - Session ID: %ld", sessionId);
+    wasIncomingCall = true;
 	JCLineSession *idleLine = [self findIdleLine];
 	
 	if (!idleLine)
@@ -765,8 +771,26 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 ////		alert.tag = index;
 //		[alert show];
 //	}
-	
+    
 	[[JCCallCardManager sharedManager] addIncomingCall:idleLine];
+    
+    [idleLine setCallTitle:[NSString stringWithUTF8String:callerDisplayName]];
+    NSString *newDetail = (NSString *)idleLine.callDetail;
+    NSRange stripRange = [newDetail rangeOfString:@"@"];
+    
+    NSRange striped = NSMakeRange(stripRange.location, (newDetail.length - stripRange.location));
+    newDetail = [newDetail stringByReplacingCharactersInRange:striped withString:@""];
+    
+    NSRange finalrange = NSMakeRange(4, newDetail.length-4);
+    newDetail = [newDetail substringWithRange:finalrange];
+//    NSString *callerDetailSubString = [[NSString stringWithUTF8String:caller]substringWithRange:range];
+    
+//    [idleLine setCallDetail:  callerDetailSubString];
+    [idleLine setCallDetail:newDetail];
+    
+    
+    
+    [IncomingCall addIncommingCallWithLineSession:idleLine];
 };
 
 - (void)onInviteTrying:(long)sessionId
@@ -977,6 +1001,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 //	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Call has been forward to:%s" ,forwardTo]];
 }
 
+
 - (void)onInviteClosed:(long)sessionId
 {
 	NSLog(@"onInviteClosed - Session ID: %ld", sessionId);
@@ -990,6 +1015,15 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	
 	[selectedLine setMCallState:JCCallCanceled];
 	[selectedLine reset];
+    
+    if (wasIncomingCall) {
+        //create missed call notification  addIncommingCallWithLineSession:idleLine
+    
+        [MissedCall addMissedCallWithLineSession:selectedLine];
+        
+        
+        wasIncomingCall = false;
+    }
 	
 //	if (mSessionArray[index].getVideoState() == true) {
 //		[videoViewController onStopVideo:sessionId];
@@ -1421,6 +1455,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 	}
 	
+   
 }
 
 
