@@ -107,7 +107,7 @@ NSString *const kJCVoicemailCellIdentifier = @"VoicemailCell";
     }
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"markForDeletion ==[c] %@", [NSNumber numberWithBool:NO]];
-    self.voicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAllSortedBy:@"timeStamp" ascending:NO withPredicate:predicate]];
+    self.voicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAllSortedBy:@"date" ascending:NO withPredicate:predicate]];
     
     
     [self.tableView reloadData];
