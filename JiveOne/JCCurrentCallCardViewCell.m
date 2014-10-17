@@ -193,8 +193,19 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
  */
 -(void)showConnectedState:(bool)animated
 {
-    _cardInfoViewTopConstraint.constant = -28;
-    _holdViewTopConstraint.constant = -10;
+    // @!^$#$ Apple! Seriously!
+    if ([[UIDevice currentDevice].systemVersion floatValue] < 8.0f)
+    {
+        _cardInfoViewTopConstraint.constant = -15;
+        _holdViewTopConstraint.constant = -5;
+    }
+    else
+    {
+        _cardInfoViewTopConstraint.constant = -28;
+        _holdViewTopConstraint.constant = -10;
+    }
+    
+    
     self.endCallButton.selected = false;
     [_cardInfoView setNeedsUpdateConstraints];
     
@@ -232,8 +243,17 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
  */
 -(void)showHoldStateAnimated:(BOOL)animated
 {
-    _cardInfoViewTopConstraint.constant = 0;
-    _holdViewTopConstraint.constant = 0;
+    // @!^$#$ Apple! Seriously!
+    if ([[UIDevice currentDevice].systemVersion floatValue] < 8.0f)
+    {
+        _cardInfoViewTopConstraint.constant = 13;
+        _holdViewTopConstraint.constant = 5;
+    }
+    else
+    {
+        _cardInfoViewTopConstraint.constant = 0;
+        _holdViewTopConstraint.constant = 0;
+    }
     self.endCallButton.selected = true;
     [_cardInfoView setNeedsUpdateConstraints];
     
