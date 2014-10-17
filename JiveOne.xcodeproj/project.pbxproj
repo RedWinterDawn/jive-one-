@@ -1191,7 +1191,7 @@
 		270152C81901D79000F271CE /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				279A4E1319DA894700E8AB7B /* SIP */,
+				5DDE651219F0C49A00B90B55 /* Calling */,
 				2788F147190EB0F70099348D /* Categories */,
 				270152C91901D86700F271CE /* JCContactModel.h */,
 				270152CA1901D86700F271CE /* JCContactModel.m */,
@@ -1201,8 +1201,6 @@
 				2762C45718B4177D00885918 /* JCOmniPresence.m */,
 				2751590F18AD174F00FD8D3F /* JCAuthenticationManager.h */,
 				2751591018AD174F00FD8D3F /* JCAuthenticationManager.m */,
-				5DBBDCC419DD9A4100A4DB96 /* JCCallCardManager.h */,
-				5DBBDCC519DD9A4100A4DB96 /* JCCallCardManager.m */,
 				272B61DB18B2A4DD00EB8ED5 /* TRVSMonitor.h */,
 				272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */,
 			);
@@ -1212,6 +1210,8 @@
 		2743985218D0CFAA00ABCD69 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F8B62E5919DB091500AF98D3 /* JCRoundedButton.h */,
+				F8B62E5A19DB091500AF98D3 /* JCRoundedButton.m */,
 				2787911118CF79DC004DE651 /* JCPresenceView.h */,
 				2787911218CF79DC004DE651 /* JCPresenceView.m */,
 				27B8152418D93F1A00516BF6 /* NotificationView.h */,
@@ -1261,6 +1261,8 @@
 		2751590318AD113C00FD8D3F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				5DDE651119F0C2E100B90B55 /* Caller */,
+				5DDE651019F0C29900B90B55 /* Call History */,
 				277F093F18FECECA00EEF0E3 /* Login */,
 				F8B62E4119D9F1C300AF98D3 /* Dialer */,
 				277F093E18FECEB800EEF0E3 /* Account */,
@@ -1905,6 +1907,54 @@
 			name = Events;
 			sourceTree = "<group>";
 		};
+		5DDE651019F0C29900B90B55 /* Call History */ = {
+			isa = PBXGroup;
+			children = (
+				F8C9A7E719EC5F4C0049A715 /* JCHistoryTableViewController.h */,
+				F8C9A7E819EC5F4C0049A715 /* JCHistoryTableViewController.m */,
+				F8C9A7EA19EC691C0049A715 /* JCHistoryCell.h */,
+				F8C9A7EB19EC691C0049A715 /* JCHistoryCell.m */,
+				F85DAD0719EF07D30075AAA2 /* JCHistroyContainerViewController.h */,
+				F85DAD0819EF07D30075AAA2 /* JCHistroyContainerViewController.m */,
+			);
+			name = "Call History";
+			sourceTree = "<group>";
+		};
+		5DDE651119F0C2E100B90B55 /* Caller */ = {
+			isa = PBXGroup;
+			children = (
+				5DA5A1AD19DAF91400968F7D /* JCCallerViewController.h */,
+				5DA5A1AE19DAF91400968F7D /* JCCallerViewController.m */,
+				5DBBDCC119DCB29100A4DB96 /* JCCallCardCollectionViewController.h */,
+				5DBBDCC219DCB29100A4DB96 /* JCCallCardCollectionViewController.m */,
+				5D1FAC6019DDFF5300899915 /* JCCallCardCollectionLayout.h */,
+				5D1FAC6119DDFF5300899915 /* JCCallCardCollectionLayout.m */,
+				5D1FAC5D19DDD68000899915 /* JCCallCardViewCell.h */,
+				5D1FAC5E19DDD68000899915 /* JCCallCardViewCell.m */,
+				5D34446319F02F1C00315230 /* JCCurrentCallCardViewCell.h */,
+				5D34446419F02F1C00315230 /* JCCurrentCallCardViewCell.m */,
+				F8A2BC0919DB5B3C00251310 /* JCCallOptionsView.h */,
+				F8A2BC0A19DB5B3C00251310 /* JCCallOptionsView.m */,
+				F84A087719DF38C8003476E6 /* JCTransferConfirmationViewController.h */,
+				F84A087819DF38C8003476E6 /* JCTransferConfirmationViewController.m */,
+				5D1BBE5919EDC9EF006526B2 /* JCMergeButton.h */,
+				5D1BBE5A19EDC9EF006526B2 /* JCMergeButton.m */,
+			);
+			name = Caller;
+			sourceTree = "<group>";
+		};
+		5DDE651219F0C49A00B90B55 /* Calling */ = {
+			isa = PBXGroup;
+			children = (
+				279A4E1319DA894700E8AB7B /* SIP */,
+				5DBBDCC419DD9A4100A4DB96 /* JCCallCardManager.h */,
+				5DBBDCC519DD9A4100A4DB96 /* JCCallCardManager.m */,
+				5DBBDCC719DDA0A300A4DB96 /* JCCallCard.h */,
+				5DBBDCC819DDA0A300A4DB96 /* JCCallCard.m */,
+			);
+			name = Calling;
+			sourceTree = "<group>";
+		};
 		910709F81959D5B90041E1CF /* AccountIcons */ = {
 			isa = PBXGroup;
 			children = (
@@ -2061,63 +2111,21 @@
 			name = UnitTests;
 			sourceTree = "<group>";
 		};
-		F8A2BC0C19DB5FC400251310 /* DialerButtons */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = DialerButtons;
-			sourceTree = "<group>";
-		};
 		F8B62E4119D9F1C300AF98D3 /* Dialer */ = {
 			isa = PBXGroup;
 			children = (
-				F8C9A7E619EC5F160049A715 /* HistoryView */,
-				F8A2BC0C19DB5FC400251310 /* DialerButtons */,
 				F8BC82C119E44A2E00340BA1 /* JCKeypadView.h */,
 				F8BC82C219E44A2E00340BA1 /* JCKeypadView.m */,
 				5DA5A1B019DAFEAD00968F7D /* JCDialStringLabel.h */,
 				5DA5A1B119DAFEAD00968F7D /* JCDialStringLabel.m */,
 				F8B62E4219D9F1E400AF98D3 /* JCDialerViewController.h */,
 				F8B62E4319D9F1E400AF98D3 /* JCDialerViewController.m */,
-				5DA5A1AD19DAF91400968F7D /* JCCallerViewController.h */,
-				5DA5A1AE19DAF91400968F7D /* JCCallerViewController.m */,
-				5DBBDCC119DCB29100A4DB96 /* JCCallCardCollectionViewController.h */,
-				5DBBDCC219DCB29100A4DB96 /* JCCallCardCollectionViewController.m */,
-				5D1FAC6019DDFF5300899915 /* JCCallCardCollectionLayout.h */,
-				5D1FAC6119DDFF5300899915 /* JCCallCardCollectionLayout.m */,
-				5D1FAC5D19DDD68000899915 /* JCCallCardViewCell.h */,
-				5D1FAC5E19DDD68000899915 /* JCCallCardViewCell.m */,
-				5D34446319F02F1C00315230 /* JCCurrentCallCardViewCell.h */,
-				5D34446419F02F1C00315230 /* JCCurrentCallCardViewCell.m */,
-				5DBBDCC719DDA0A300A4DB96 /* JCCallCard.h */,
-				5DBBDCC819DDA0A300A4DB96 /* JCCallCard.m */,
-				F8B62E5919DB091500AF98D3 /* JCRoundedButton.h */,
-				F8B62E5A19DB091500AF98D3 /* JCRoundedButton.m */,
 				5D03648F19DC5A450090CC21 /* JCTransferViewController.h */,
 				5D03649019DC5A450090CC21 /* JCTransferViewController.m */,
 				5D1FAC6319DF376B00899915 /* JCKeyboardViewController.h */,
 				5D1FAC6419DF376B00899915 /* JCKeyboardViewController.m */,
-				F8A2BC0919DB5B3C00251310 /* JCCallOptionsView.h */,
-				F8A2BC0A19DB5B3C00251310 /* JCCallOptionsView.m */,
-				F84A087719DF38C8003476E6 /* JCTransferConfirmationViewController.h */,
-				F84A087819DF38C8003476E6 /* JCTransferConfirmationViewController.m */,
-				5D1BBE5919EDC9EF006526B2 /* JCMergeButton.h */,
-				5D1BBE5A19EDC9EF006526B2 /* JCMergeButton.m */,
 			);
 			name = Dialer;
-			sourceTree = "<group>";
-		};
-		F8C9A7E619EC5F160049A715 /* HistoryView */ = {
-			isa = PBXGroup;
-			children = (
-				F8C9A7E719EC5F4C0049A715 /* JCHistoryTableViewController.h */,
-				F8C9A7E819EC5F4C0049A715 /* JCHistoryTableViewController.m */,
-				F8C9A7EA19EC691C0049A715 /* JCHistoryCell.h */,
-				F8C9A7EB19EC691C0049A715 /* JCHistoryCell.m */,
-				F85DAD0719EF07D30075AAA2 /* JCHistroyContainerViewController.h */,
-				F85DAD0819EF07D30075AAA2 /* JCHistroyContainerViewController.m */,
-			);
-			name = HistoryView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
