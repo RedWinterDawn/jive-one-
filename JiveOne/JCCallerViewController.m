@@ -77,6 +77,11 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     [self setCallOptionsHidden:_callOptionsHidden animated:NO];
 }
 
+-(UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+
 -(void)awakeFromNib
 {
     _defaultCallOptionViewConstraint = 202;
