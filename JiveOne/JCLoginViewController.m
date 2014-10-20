@@ -26,7 +26,7 @@
 
 
 
-@interface JCLoginViewController ()
+@interface JCLoginViewController () <NSFileManagerDelegate>
 {
     BOOL fastConnection;
     MBProgressHUD *hud;
@@ -100,7 +100,7 @@
     self.passwordTextField.layer.borderWidth = 1.0f;
     
 #if DEBUG
-    self.usernameTextField.text = @"jivetesting12@gmail.com";
+    self.usernameTextField.text = @"jivetesting@gmail.com";
     self.passwordTextField.text = @"testing12";
     [self.passwordTextField becomeFirstResponder];
 #endif

@@ -10,7 +10,6 @@
 #import "Common.h"
 #import "PBX+Custom.h"
 #import "Lines+Custom.h"
-#import "Common.h"
 
 @implementation JCVoiceCell
 
@@ -59,8 +58,8 @@
     
     [self doubleCheckNamesAndNumbers];
     
-    self.shortTime.text = [Common shortDateFromTimestamp:voicemail.timeStamp];
-    self.creationTime.text = [Common shortDateFromTimestamp:voicemail.timeStamp];
+    self.shortTime.text = voicemail.formattedModifiedShortDate;
+    self.creationTime.text = voicemail.formattedModifiedShortDate;
     self.elapsed.text = @"0:00";
     self.duration.text = @"0:00";
     self.elapsed.adjustsFontSizeToFitWidth = YES;

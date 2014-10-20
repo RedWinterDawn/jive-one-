@@ -19,10 +19,14 @@
 
 @interface Common : NSObject
 
++(NSDate *)dateFromTimestamp:(NSNumber *)timestamp;
 
-+(NSString *) shortDateFromTimestamp:(NSNumber *)timestamp;
-+(NSString *) longDateFromTimestamp:(NSNumber *)timestamp;
-+(NSDate *)NSDateFromTimestap:(NSNumber *)timestamp;
++(NSString *)formattedModifiedShortDate:(NSDate *)date;
++(NSString *)formattedModifiedShortDateFromTimestamp:(NSNumber *)timestamp;
++(NSString *)formattedLongDate:(NSDate *)date;
++(NSString *)formattedLongDateFromTimestamp:(NSNumber *)timestamp;
+
+
 + (BOOL) isEqualToDateIgnoringTime: (NSDate *) aDate;
 + (BOOL) isEarlierThanDate: (NSDate *) aDate;
 + (BOOL) isLaterThanDate: (NSDate *) aDate;

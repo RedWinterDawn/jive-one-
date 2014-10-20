@@ -12,9 +12,12 @@
 NSString *const kJCCallCardStatusChangeKey = @"status";
 NSString *const kJCCallCardHoldKey = @"hold";
 
+NSString *const kJCCallCardConferenceString = @"Conference";
+
 @interface JCCallCard ()
 {
-    bool _hold;
+    NSMutableArray *_calls;
+    BOOL _hold;
 }
 
 @end
@@ -22,28 +25,47 @@ NSString *const kJCCallCardHoldKey = @"hold";
 
 @implementation JCCallCard
 
-
--(void)setHold:(BOOL)hold
+-(id)init
 {
-    
-    [self willChangeValueForKey:kJCCallCardHoldKey];
-    
-    [[JCCallCardManager sharedManager] toggleCallHold:self];
-    
-    self.holdStarted = [NSDate date];
-    
-    //TODO: talk to acctual SIP interface to find out call status, etc, and hold/unhold
-    _hold = hold;
-    
-    _hold = _lineSession.mHoldSate;
-    [self didChangeValueForKey:kJCCallCardHoldKey];
+    self = [super init];
+    if (self) {
+        self.started = [NSDate date];
+    }
+    return self;
 }
 
--(BOOL)hold
+-(id)initWithLineSession:(JCLineSession *)lineSession
 {
-    //TODO: get actual hold status from SIP interface.
-    return _hold;
+    self = [self init];
+    if (self) {
+        self.lineSession = lineSession;
+    }
+    return self;
 }
+
+-(id)initWithCalls:(NSArray *)calls
+{
+    self = [self init];
+    if (self) {
+        [self addCalls:calls];
+    }
+    return self;
+}
+
+-(id)initWithLineSessions:(NSArray *)sessions
+{
+    self = [self init];
+    if (self) {
+        for (id session in sessions){
+            if ([session isKindOfClass:[JCLineSession class]]){
+                [self addCall:[[JCCallCard alloc] initWithLineSession:(JCLineSession *)session]];
+            }
+        }
+    }
+    return self;
+}
+
+#pragma mark - Actions -
 
 -(void)answerCall
 {
@@ -57,65 +79,159 @@ NSString *const kJCCallCardHoldKey = @"hold";
 
 -(void)endCallRemote
 {
-	[[JCCallCardManager sharedManager] hangUpCall:self remote:YES];
+    [[JCCallCardManager sharedManager] hangUpCall:self remote:YES];
+}
+
+#pragma mark Conference Calls
+
+-(void)addCall:(JCCallCard *)call
+{
+    if (!_calls) {
+        _calls = [NSMutableArray array];
+    }
+    
+    if (![_calls containsObject:call]) {
+        [_calls addObject:call];
+        call.delegate = self;
+    }
+}
+
+-(void)addCalls:(NSArray *)calls
+{
+    for (id object in calls)
+    {
+        if ([object isKindOfClass:[JCCallCard class]])
+        {
+            [self addCall:(JCCallCard *)object];
+        }
+    }
+}
+
+-(void)removeCall:(JCCallCard *)call
+{
+    if (!_calls)
+    {
+        return;
+    }
+    
+    if ([_calls containsObject:call])
+    {
+        [_calls removeObject:call];
+        call.delegate = nil;
+    }
+}
+
+-(void)removeCalls:(NSArray *)calls
+{
+    for (id object in calls)
+    {
+        if ([object isKindOfClass:[JCCallCard class]])
+        {
+            [self removeCall:(JCCallCard *)object];
+        }
+    }
+}
+
+#pragma mark - Setters -
+
+-(void)setLineSession:(JCLineSession *)lineSession
+{
+    _lineSession = lineSession;
+    _lineSession.delegate = self;
+    self.callState = _lineSession.mCallState;
+}
+
+-(void)setHold:(BOOL)hold
+{
+    [self willChangeValueForKey:kJCCallCardHoldKey];
+    if (self.isConference) {
+        _hold = hold;
+    }
+    else
+    {
+        [[JCCallCardManager sharedManager] toggleCallHold:self];
+    }
+    self.holdStarted = [NSDate date];
+    [self didChangeValueForKey:kJCCallCardHoldKey];
+}
+
+-(void)setCallState:(JCCall)callState
+{
+    [self willChangeValueForKey:kJCCallCardStatusChangeKey];
+    _callState = callState;
+    switch (callState) {
+        case JCCallFailed:
+        case JCCallCanceled:
+        case JCTransferSuccess:
+        case JCTransferFailed:
+            [self endCallRemote];
+            break;
+        case JCCallPutOnHold:
+            self.hold = YES;
+        case JCCallPutOffHold:
+            self.hold = NO;
+        default:
+            break;
+    }
+    
+    [self didChangeValueForKey:kJCCallCardStatusChangeKey];
+}
+
+#pragma mark - Getters -
+
+-(BOOL)hold
+{
+    if (self.isConference)
+    {
+        return _hold;
+    }
+    return _lineSession.mHoldSate;
 }
 
 -(NSString *)callerId
 {
-    if (_callerId)
-        return _callerId;
-    return @"Unknown";
+    if (self.isConference)
+        return NSLocalizedString(kJCCallCardConferenceString, null) ;
+    return _lineSession.callTitle;
 }
 
--(void)setLineSession:(JCLineSession *)lineSession
+-(NSString *)dialNumber
 {
-	_lineSession = lineSession;
-	_lineSession.delegate = self;
-	
-	_callerId = _lineSession.callTitle;
-	_dialNumber = _lineSession.callDetail;
-	_identifer = [NSString stringWithFormat:@"%ld", _lineSession.mSessionId];
-	
-	[self callStateDidChange:_lineSession.mSessionId callState:_lineSession.mCallState];
+    if (self.isConference) {
+        NSMutableString *output = [NSMutableString string];
+        for(JCCallCard *callCard in _calls) {
+            if (output.length > 0) {
+                [output appendString:@","];
+            }
+            [output appendString:callCard.callerId];
+        }
+        return output;
+    }
+    
+    return _lineSession.callDetail;
 }
 
-#pragma mark - Line Session Delegate
+-(NSString *)identifer
+{
+    return [NSString stringWithFormat:@"%ld", _lineSession.mSessionId];
+}
+
+-(bool)isConference
+{
+    return (_calls && _calls.count > 0);
+}
+
+#pragma mark - Delegate Handlers -
+
+#pragma mark Line Session Delegate
+
 -(void)callStateDidChange:(long)sessionId callState:(JCCall)callState
 {
-	[self willChangeValueForKey:kJCCallCardStatusChangeKey];
-	_lastState = callState;
-	
-	switch (callState) {
-		case  JCNoCall:
-//			_dialNumber = @"Connecting";
-			break;
-		case JCCallRinging:
-//			_dialNumber = @"Ringing";
-			break;
-		case JCCallConnected:
-//			_dialNumber = _lineSession.callDetail;
-			break;
-		case JCCallFailed:
-		case JCCallCanceled:
-			[self endCallRemote];
-			break;
-		case JCCallPutOnHold:
-		case JCCallPutOffHold:
-			[self setHold:YES];
-			break;
-		case JCTransferSuccess:
-			[self endCallRemote];
-			break;
-		case JCTransferFailed:
-			[self endCallRemote];
-			break;
-		
-		default:
-			break;
-	}
-	
-	[self didChangeValueForKey:kJCCallCardStatusChangeKey];
-	NSLog(@"State Changed For Session %ld - State: %u", sessionId, callState);
+    self.callState = callState;
+    
+    if (_delegate && [_delegate respondsToSelector:@selector(callStateDidChange:callState:)]) {
+        [_delegate callStateDidChange:sessionId callState:callState];
+    }
 }
 
 

@@ -20,6 +20,7 @@
 #import "LineGroup.h"
 #import "Lines.h"
 #import "LineConfiguration.h"
+#import "Call.h"
 
 
 @implementation JCOmniPresence
@@ -67,6 +68,7 @@
 	[LineGroup MR_truncateAllInContext:localContext];
 	[Lines MR_truncateAllInContext:localContext];
 	[LineConfiguration MR_truncateAllInContext:localContext];
+    [Call MR_truncateAllInContext:localContext];
 	
     [localContext MR_saveToPersistentStoreAndWait];
 }

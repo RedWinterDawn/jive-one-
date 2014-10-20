@@ -10,17 +10,23 @@
 #import "SipHandler.h"
 #import "JCLineSession.h"
 #import "Lines+Custom.h"
+#import <MBProgressHUD.h>
 
-NSString *const kJCCallCardManagerAddedIncomingCallNotification = @"addedIncommingCall";
-NSString *const kJCCallCardManagerRemoveIncomingCallNotification = @"removedIncommingCall";
+NSString *const kJCCallCardManagerAddedIncomingCallNotification     = @"addedIncommingCall";
+NSString *const kJCCallCardManagerRemoveIncomingCallNotification    = @"removedIncommingCall";
 
 NSString *const kJCCallCardManagerAddedCurrentCallNotification = @"addedCurrentCall";
 NSString *const kJCCallCardManagerRemoveCurrentCallNotification = @"removedCurrentCall";
 NSString *const kJCCallCardManagerTransferFailed = @"tranferFailed";
 
+NSString *const kJCCallCardManagerAddedConferenceCallNotification   = @"addedConferenceCall";
+NSString *const kJCCallCardManagerRemoveConferenceCallNotification   = @"removeConferenceCall";
+
 NSString *const kJCCallCardManagerUpdatedIndex = @"index";
 NSString *const kJCCallCardManagerPriorUpdateCount = @"priorCount";
 NSString *const kJCCallCardManagerUpdateCount = @"updateCount";
+NSString *const kJCCallCardManagerRemovedCells = @"removedCells";
+NSString *const kJCCallCardManagerAddedCells = @"addedCells";
 NSString *const kJCCallCardManagerLastCallState = @"lastCallState";
 
 NSString *const kJCCallCardManagerNewCall       = @"newCall";
@@ -76,6 +82,8 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
     newCallCard.started = [NSDate date];
 	[self removeIncomingCall:newCallCard];
 	[self addCurrentCallCard:newCallCard];
+    
+    
 }
 
 -(void)hangUpCall:(JCCallCard *)callCard remote:(BOOL)remote
@@ -83,12 +91,27 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
 	if (!remote)
 		[_sipHandler hangUpCallWithSession:callCard.lineSession.mSessionId];
     
+    if (callCard.isConference) {
+        [_sipHandler hangUpAll];
+    }
+    
    [self removeCurrentCall:callCard];
 }
 
 -(void)toggleCallHold:(JCCallCard *)callCard
 {
-	[_sipHandler toggleHoldForLineWithSessionId:callCard.lineSession.mSessionId];
+	if (callCard.isConference)
+	{
+		for (JCCallCard *card in callCard.calls)
+		{
+			[_sipHandler toggleHoldForLineWithSessionId:card.lineSession.mSessionId];
+		}
+	}
+	else
+	{
+		[_sipHandler toggleHoldForLineWithSessionId:callCard.lineSession.mSessionId];
+	}
+	
 }
 
 -(void)finishWarmTransfer:(void (^)(bool success))completion
@@ -98,6 +121,26 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
             completion(success);
         }];
 	}
+}
+
+-(void)mergeCalls:(void (^)(bool success))completion
+{
+	bool inConference = [[SipHandler sharedHandler] setConference:true];
+	//if (inConference)
+    {
+		NSArray *calls = self.calls;
+		[self addConferenceCallWithCallArray:calls];
+	}
+	completion(inConference);
+}
+
+-(void)splitCalls
+{
+    // Assumed only one call is in the calls array
+    
+    JCCallCard *callCard = [self.calls objectAtIndex:0];
+    [self removeConferenceCall:callCard];
+	[[SipHandler sharedHandler] setConference:false];
 }
 
 -(void)addIncomingCall:(JCLineSession *)session
@@ -122,6 +165,8 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
                                                                  kJCCallCardManagerUpdateCount: [NSNumber numberWithInteger:self.calls.count]
                                                                  }];
 }
+
+
 
 #pragma mark - Properties -
 
@@ -156,10 +201,7 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
     JCLineSession *session = [_sipHandler makeCall:dialNumber videoCall:NO contactName:[self getContactNameByNumber:dialNumber]];
     if (session.mSessionState)
     {
-        JCCallCard *callCard = [[JCCallCard alloc] init];
-        callCard.dialNumber = dialNumber;
-        callCard.started = [NSDate date];
-        callCard.lineSession = session;
+        JCCallCard *callCard = [[JCCallCard alloc] initWithLineSession:session];
         [self addCurrentCallCard:callCard];
 		
         NSUInteger index = [self.calls indexOfObject:callCard];
@@ -237,6 +279,69 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
     
     NSUInteger newIndex = [_calls indexOfObject:callCard];
     [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerAddedCurrentCallNotification object:self userInfo:@{kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:newIndex]}];
+}
+
+-(void)addConferenceCallWithCallArray:(NSArray *)callCards
+{
+    if (!callCards || callCards.count < 2)
+        return;
+    
+    NSUInteger priorCount = self.calls.count;
+    NSMutableArray *removeCells = [NSMutableArray array];
+    NSMutableArray *calls = [NSMutableArray arrayWithArray:_calls];
+    
+    for (JCCallCard *callCard in callCards)
+    {
+        if ([_calls containsObject:callCard]) {
+            [removeCells addObject:[NSNumber numberWithInteger:[_calls indexOfObject:callCard]]];
+            [calls removeObject:callCard];
+        }
+    }
+    
+    _calls = calls;
+    
+    JCCallCard *conferenceCall = [[JCCallCard alloc] initWithCalls:callCards];
+    [_calls addObject:conferenceCall];
+    NSNumber *index = [NSNumber numberWithInteger:[_calls indexOfObject:conferenceCall]];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerAddedConferenceCallNotification
+                                                        object:self
+                                                      userInfo:@{
+                                                                 kJCCallCardManagerUpdatedIndex : index,
+                                                                 kJCCallCardManagerPriorUpdateCount : [NSNumber numberWithInteger:priorCount],
+                                                                 kJCCallCardManagerUpdateCount : [NSNumber numberWithInteger:self.calls.count],
+                                                                 kJCCallCardManagerRemovedCells : removeCells
+                                                                 }];
+}
+
+-(void)removeConferenceCall:(JCCallCard *)conferenceCallCard
+{
+    if (![_calls containsObject:conferenceCallCard]) {
+        return;
+    }
+    
+    NSArray *callCards = conferenceCallCard.calls;
+    NSUInteger priorCount = _calls.count;
+    NSInteger removeIndex = [_calls indexOfObject:conferenceCallCard];
+    [_calls removeObject:conferenceCallCard];
+    
+    NSMutableArray *addCalls = [NSMutableArray array];
+    NSMutableArray *calls = [NSMutableArray arrayWithArray:_calls];
+    
+    for (JCCallCard *callCard in callCards) {
+        [calls addObject:callCard];
+        [addCalls addObject:[NSNumber numberWithInteger:[calls indexOfObject:callCard]]];
+    }
+    _calls = calls;
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerRemoveConferenceCallNotification
+                                                        object:self
+                                                      userInfo:@{
+                                                                 kJCCallCardManagerUpdatedIndex : [NSNumber numberWithInteger:removeIndex],
+                                                                 kJCCallCardManagerPriorUpdateCount : [NSNumber numberWithInteger:priorCount],
+                                                                 kJCCallCardManagerUpdateCount : [NSNumber numberWithInteger:self.calls.count],
+                                                                 kJCCallCardManagerAddedCells : addCalls
+                                                                 }];
 }
 
 - (void)transferFailed:(JCCallCard *)callCard

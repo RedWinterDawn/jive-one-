@@ -112,7 +112,7 @@
 			}];
 		}
 		@catch (NSException *exception) {
-			completed(NO, nil, nil, exception);
+			completed(NO, nil, nil, [NSError errorWithDomain:exception.reason code:0 userInfo:nil]);
 		}
 	});
 }

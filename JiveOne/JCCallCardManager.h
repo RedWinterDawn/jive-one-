@@ -19,9 +19,14 @@ extern NSString *const kJCCallCardManagerAddedCurrentCallNotification;
 extern NSString *const kJCCallCardManagerRemoveCurrentCallNotification;
 extern NSString *const kJCCallCardManagerTransferFailed;
 
+extern NSString *const kJCCallCardManagerAddedConferenceCallNotification;
+extern NSString *const kJCCallCardManagerRemoveConferenceCallNotification;
+
 extern NSString *const kJCCallCardManagerUpdatedIndex;
 extern NSString *const kJCCallCardManagerPriorUpdateCount;
 extern NSString *const kJCCallCardManagerUpdateCount;
+extern NSString *const kJCCallCardManagerRemovedCells;
+extern NSString *const kJCCallCardManagerAddedCells;
 extern NSString *const kJCCallCardManagerLastCallState;
 
 typedef enum : NSUInteger {
@@ -44,6 +49,9 @@ typedef enum : NSUInteger {
 -(void)answerCall:(JCCallCard *)callCard;
 -(void)addIncomingCall:(JCLineSession *)session;
 -(void)finishWarmTransfer:(void (^)(bool success))completion;
+
+-(void)mergeCalls:(void (^)(bool success))completion;
+-(void)splitCalls;
 
 - (void)transferFailed:(JCCallCard *)callCard;
 
