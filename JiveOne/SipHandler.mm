@@ -18,9 +18,14 @@
 #import "VideoViewController.h"
 
 
+#ifdef __APPLE__
+#include "TargetConditionals.h"
+#endif
+
 #define MAX_LINES 8
 #define ALERT_TAG_REFER 100
 #define OUTBOUND_SIP_SERVER_PORT 5060
+
 
 NSString *const kSipHandlerServerAgentname = @"Jive iOS Client";
 NSString *const kSipHandlerFetchLineConfigurationErrorMessage = @"Unable to fetch the line configuration";
@@ -113,6 +118,13 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     NSString *kSIPServer    = ([pbx.v5 boolValue]) ? config.outboundProxy : config.registrationHost;
     
     _sipURL = [[NSString alloc] initWithFormat:@"sip:%@:%@", kSipUserName, kSIPServer];
+	
+	bool isSimulator = FALSE;
+#if TARGET_IPHONE_SIMULATOR
+	isSimulator = TRUE;
+#elif TARGET_OS_IPHONE
+	isSimulator = FALSE;
+#endif
     
     // Initialized the SIP SDK
     int ret = [_mPortSIPSDK initialize:TRANSPORT_UDP
@@ -121,7 +133,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
                                maxLine:MAX_LINES
                                  agent:kSipHandlerServerAgentname
                     virtualAudioDevice:FALSE
-                    virtualVideoDevice:FALSE];
+                    virtualVideoDevice:isSimulator];
     
     if(ret != 0)
         [NSException raise:NSInvalidArgumentException format:@"initializeSDK failure ErrorCode = %d",ret];
