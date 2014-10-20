@@ -314,25 +314,12 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 #pragma mark - Find line methods
 
-- (JCLineSession *)currentLineWithSessionState
-{
-    for (JCLineSession *line in self.lineSessions)
-    {
-        if (line.mSessionState && !line.mHoldSate)
-        {
-            return line;
-        }
-    }
-    return nil;
-}
-
 - (JCLineSession *)findLineWithSessionState
 {
 	for (JCLineSession *line in self.lineSessions)
 	{
 		if (line.mSessionState &&
-			!line.mHoldSate &&
-			!line.mRecvCallState)
+			!line.mHoldSate)
 		{
 			return line;
 		}
@@ -358,8 +345,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	for (JCLineSession *line in self.lineSessions)
 	{
 		if (line.mSessionState &&
-			line.mHoldSate &&
-			!line.mRecvCallState)
+			line.mHoldSate)
 		{
 			return line;
 		}
@@ -518,7 +504,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 - (void) referCall:(NSString *)referTo completion:(void (^)(bool success, NSError *error))completion
 {
-	JCLineSession *currentLine = [self currentLineWithSessionState];
+	JCLineSession *currentLine = [self findLineWithSessionState];
 	if (!currentLine || currentLine.mSessionState == false)
 	{
         completion(false, [NSError errorWithDomain:@"Need to make the call established first" code:0 userInfo:nil]);
@@ -538,7 +524,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 - (void)attendedRefer:(NSString *)referTo completion:(void (^)(bool success, NSError *error))completion
 {
-	JCLineSession *currentLine = [self currentLineWithSessionState];
+	JCLineSession *currentLine = [self findLineWithSessionState];
     if (!currentLine || currentLine.mSessionState == false)
     {
         completion(false, [NSError errorWithDomain:@"Need to make the call established first" code:0 userInfo:nil]);
