@@ -342,7 +342,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	for (JCLineSession *line in self.lineSessions)
 	{
 		if (line.mSessionState &&
-			!line.mHoldSate)
+			!line.mHoldSate &&
+			!line.mRecvCallState)
 		{
 			return line;
 		}
@@ -368,7 +369,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	for (JCLineSession *line in self.lineSessions)
 	{
 		if (line.mSessionState &&
-			line.mHoldSate)
+			line.mHoldSate &&
+			!line.mRecvCallState)
 		{
 			return line;
 		}
@@ -1472,6 +1474,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 		if(nRet == 0)
 		{
 			[currentLine setMSessionState:true];
+			[currentLine setMRecvCallState:false];
 			[currentLine setMVideoState:false];
 		}
 		else {
