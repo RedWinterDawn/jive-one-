@@ -97,8 +97,8 @@ int didNotify;
     
     if ([[UINavigationBar class]respondsToSelector:@selector(appearance)]) {
         [[UINavigationBar appearance] setTitleTextAttributes:@{
-                                                               UITextAttributeTextColor : [UIColor blackColor],
-                                                               UITextAttributeFont : [UIFont fontWithName:@"HelveticaNeue-Light" size:24.0f]
+                                                               NSForegroundColorAttributeName : [UIColor blackColor],
+                                                               NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:24.0f]
                                                                }];
     }
     
