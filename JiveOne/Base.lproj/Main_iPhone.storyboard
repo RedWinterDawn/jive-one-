@@ -987,7 +987,7 @@
                     <navigationItem key="navigationItem" id="vqB-Fj-v7w">
                         <nil key="title"/>
                         <view key="titleView" contentMode="scaleToFill" id="9Me-IO-yJQ" userLabel="t">
-                            <rect key="frame" x="96" y="6" width="128" height="33"/>
+                            <rect key="frame" x="96" y="5.5" width="128" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eDf-U3-ZG9">
@@ -1041,7 +1041,7 @@
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" image="incall-background" translatesAutoresizingMaskIntoConstraints="NO" id="mCa-uf-nio">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
-                            <containerView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sEm-pY-RBF">
+                            <containerView clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sEm-pY-RBF">
                                 <rect key="frame" x="0.0" y="25" width="320" height="315"/>
                                 <connections>
                                     <segue destination="zhT-8a-SlE" kind="embed" identifier="CallerCollectionView" id="FVJ-tw-VX5"/>
@@ -1050,7 +1050,7 @@
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="esd-M8-Lxg" customClass="JCCallOptionsView">
                                 <rect key="frame" x="0.0" y="339" width="320" height="209"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="249" verticalCompressionResistancePriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lUT-6r-uIK" userLabel="Mute Button" customClass="JCRoundedButton">
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="249" verticalCompressionResistancePriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lUT-6r-uIK" userLabel="Mute Button" customClass="JCRoundedButton">
                                         <rect key="frame" x="26" y="22" width="60" height="60"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
                                         <rect key="contentStretch" x="0.5" y="0.5" width="1" height="1"/>
@@ -1059,7 +1059,6 @@
                                             <constraint firstAttribute="height" constant="60" id="xFI-bs-yMu"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="5"/>
-                                        <color key="tintColor" red="0.14509803921568626" green="0.49411764705882355" blue="0.59607843137254901" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" image="white-mute">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -1088,10 +1087,7 @@
                                             <constraint firstAttribute="width" constant="60" id="GTG-TC-xep"/>
                                             <constraint firstAttribute="height" constant="60" id="R81-uh-a35"/>
                                         </constraints>
-                                        <color key="tintColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" image="white-keypad">
-                                            <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
+                                        <state key="normal" image="white-keypad"/>
                                         <state key="selected" image="blue-keypad"/>
                                         <connections>
                                             <action selector="keypad:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="xyA-wC-Mx2"/>
@@ -1107,17 +1103,15 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TRc-ED-Hu8" userLabel="Speaker Button" customClass="JCRoundedButton">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TRc-ED-Hu8" userLabel="Speaker Button" customClass="JCRoundedButton">
                                         <rect key="frame" x="234" y="22" width="60" height="60"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="60" id="Mmp-hl-2mw"/>
                                             <constraint firstAttribute="height" constant="60" id="jhG-tp-yEV"/>
                                         </constraints>
-                                        <color key="tintColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" image="white-speaker">
-                                            <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" image="white-speaker"/>
                                         <state key="selected" image="blue-speaker"/>
                                         <connections>
                                             <action selector="speaker:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="v35-QH-GQH"/>
@@ -1140,7 +1134,6 @@
                                             <constraint firstAttribute="height" constant="60" id="awt-In-21v"/>
                                             <constraint firstAttribute="width" constant="60" id="ehP-7N-jft"/>
                                         </constraints>
-                                        <color key="tintColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" image="white-arrow-outline">
                                             <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
@@ -1166,7 +1159,6 @@
                                             <constraint firstAttribute="height" constant="60" id="LWL-gu-2sh"/>
                                             <constraint firstAttribute="width" constant="60" id="nCe-NS-SCV"/>
                                         </constraints>
-                                        <color key="tintColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" image="white-arrow">
                                             <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
@@ -1192,7 +1184,6 @@
                                             <constraint firstAttribute="height" constant="60" id="M9E-rQ-fce"/>
                                             <constraint firstAttribute="width" constant="60" id="ywT-gV-c1a"/>
                                         </constraints>
-                                        <color key="tintColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" image="white-pluse">
                                             <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
@@ -1219,7 +1210,6 @@
                                             <constraint firstAttribute="height" constant="60" id="Ojc-ZC-ISl"/>
                                             <constraint firstAttribute="width" constant="60" id="xrI-7O-nSn"/>
                                         </constraints>
-                                        <color key="tintColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" image="white-merge">
                                             <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
@@ -1250,7 +1240,6 @@
                                             <constraint firstAttribute="height" constant="60" id="TID-1S-dYP"/>
                                             <constraint firstAttribute="width" constant="60" id="kQp-yb-wgz"/>
                                         </constraints>
-                                        <color key="tintColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" image="white-switch">
                                             <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
@@ -1276,7 +1265,6 @@
                                             <constraint firstAttribute="height" constant="60" id="QYd-D2-s5j"/>
                                             <constraint firstAttribute="width" constant="60" id="vEv-a9-qgc"/>
                                         </constraints>
-                                        <color key="tintColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" image="white-check">
                                             <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
@@ -1298,6 +1286,7 @@
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="zZ6-Xz-Txj" secondAttribute="bottom" constant="20" id="0iq-Wa-Fnn"/>
                                     <constraint firstItem="qTn-fV-hyq" firstAttribute="top" secondItem="Tcw-Rg-ytb" secondAttribute="bottom" constant="-1" id="1sC-Ng-Lg7"/>
@@ -1380,6 +1369,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="315"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewLayout key="collectionViewLayout" id="8ug-Q6-sKe" customClass="JCCallCardCollectionLayout"/>
                         <cells/>
                         <connections>
