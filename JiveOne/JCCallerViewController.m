@@ -40,7 +40,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     
     NSTimeInterval _defaultCallOptionViewConstraint;
 	
-	NSString *_warmTransferNumber;
+	NSDictionary *_warmTransferInfo;
 }
 
 @end
@@ -89,9 +89,8 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     UIViewController *viewController = segue.destinationViewController;
     if ([viewController isKindOfClass:[JCTransferConfirmationViewController class]])
     {
-        //JCTransferConfirmationViewController *transferConfirmationViewController = (JCTransferConfirmationViewController *)viewController;
-        
-        // TODO: Pass Data Array of call cards from transfer result to view controller to transfer completion.
+        JCTransferConfirmationViewController *transferConfirmationViewController = (JCTransferConfirmationViewController *)viewController;
+        transferConfirmationViewController.transferInfo = _warmTransferInfo;
     }
 }
 
@@ -422,10 +421,10 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         {
 			if (dialType == JCCallCardDialWarmTransfer) {
                 [self.callOptionsView setState:JCCallOptionViewFinishTransferState animated:YES];
-				_warmTransferNumber = dialString;
+				_warmTransferInfo = callInfo;
 			}
 			else if(dialType == JCCallCardDialBlindTransfer) {
-                //do nothig?
+                [self closeCallerViewController];
 			}
 			else {
                 [self.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];
@@ -434,7 +433,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     }];
 }
 
-- (void)waitForTransferConfirmation:(BOOL)sucessTransfering
+/*- (void)waitForTransferConfirmation:(BOOL)sucessTransfering
 {
 	if (sucessTransfering) {
 		[self showTransferSuccess];
@@ -442,7 +441,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 	else {
 		// show toast
 	}
-}
+}*/
 
 -(void)shouldCancelTransferViewController:(JCTransferViewController *)controller
 {

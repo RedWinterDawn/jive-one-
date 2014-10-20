@@ -61,6 +61,9 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
                 [self internal_dialNumber:dialNumber type:dialType completion:completion];
             else
                 completion(false, nil);
+            
+            if (error)
+                NSLog(@"%@", [error description]);
         }];
     }
     else
@@ -91,10 +94,10 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
 -(void)finishWarmTransfer:(void (^)(bool success))completion
 {
 	if (_warmTransferNumber) {
-		[[SipHandler sharedHandler] attendedRefer:_warmTransferNumber];
+		[_sipHandler attendedRefer:_warmTransferNumber completion:^(bool success, NSError *error) {
+            completion(success);
+        }];
 	}
-	
-    completion(true);
 }
 
 -(void)addIncomingCall:(JCLineSession *)session
@@ -134,30 +137,30 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
 
 -(void)internal_dialNumber:(NSString *)dialNumber type:(JCCallCardDialTypes)dialType completion:(void (^)(bool success, NSDictionary *callInfo))completion
 {
-    JCLineSession *session = nil;
-    switch (dialType) {
-        case JCCallCardDialSingle:
-            session = [_sipHandler makeCall:dialNumber videoCall:NO contactName:[self getContactNameByNumber:dialNumber]];
-            break;
-        case JCCallCardDialBlindTransfer:
-            [_sipHandler referCall:dialNumber];
-            break;
-        case JCCallCardDialWarmTransfer:
-            session = [_sipHandler makeCall:dialNumber videoCall:NO contactName:[self getContactNameByNumber:dialNumber]];
+    if (dialType == JCCallCardDialBlindTransfer) {
+        [_sipHandler referCall:dialNumber completion:^(bool success, NSError *error) {
             
-        default:
-            break;
+            if (completion != NULL)
+                completion(success, @{});
+            
+            if (error)
+                NSLog(@"%@", [error description]);
+        }];
+        return;
+    }
+    else if (dialType == JCCallCardDialWarmTransfer)
+    {
+        _warmTransferNumber = dialNumber;
     }
     
-    if (session.mSessionState && dialType != JCCallCardDialBlindTransfer)
+    JCLineSession *session = [_sipHandler makeCall:dialNumber videoCall:NO contactName:[self getContactNameByNumber:dialNumber]];
+    if (session.mSessionState)
     {
         JCCallCard *callCard = [[JCCallCard alloc] init];
         callCard.dialNumber = dialNumber;
         callCard.started = [NSDate date];
         callCard.lineSession = session;
         [self addCurrentCallCard:callCard];
-		
-		_warmTransferNumber = dialNumber;
 		
         NSUInteger index = [self.calls indexOfObject:callCard];
         if (completion != NULL)
@@ -168,12 +171,7 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
     }
     else
     {
-        if (dialType == JCCallCardDialBlindTransfer) {
-			
-            if (completion != NULL)
-                completion(true, @{});
-        }
-        
+         NSLog(@"Error Making Call");
         if (completion != NULL)
             completion(false, @{});
     }

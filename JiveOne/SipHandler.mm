@@ -313,6 +313,19 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 }
 
 #pragma mark - Find line methods
+
+- (JCLineSession *)currentLineWithSessionState
+{
+    for (JCLineSession *line in self.lineSessions)
+    {
+        if (line.mSessionState && !line.mHoldSate)
+        {
+            return line;
+        }
+    }
+    return nil;
+}
+
 - (JCLineSession *)findLineWithSessionState
 {
 	for (JCLineSession *line in self.lineSessions)
@@ -503,51 +516,49 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 //	//TODO:update call state
 //}
 
-- (void) referCall:(NSString*)referTo
+- (void) referCall:(NSString *)referTo completion:(void (^)(bool success, NSError *error))completion
 {
-	JCLineSession *selectedLine = [self findLineWithSessionState];
-	if (!selectedLine || selectedLine.mSessionState == false)
+	JCLineSession *currentLine = [self currentLineWithSessionState];
+	if (!currentLine || currentLine.mSessionState == false)
 	{
-		UIAlertView *alert = [[UIAlertView alloc]
-							  initWithTitle:@"Warning"
-							  message: @"Need to make the call established first"
-							  delegate: nil
-							  cancelButtonTitle: @"OK"
-							  otherButtonTitles:nil];
-		[alert show];
+        completion(false, [NSError errorWithDomain:@"Need to make the call established first" code:0 userInfo:nil]);
 		return;
 	}
 	
-	int errorCodec = [_mPortSIPSDK refer:selectedLine.mSessionId referTo:referTo];
-	if (errorCodec != 0)
-	{
-		UIAlertView *alert = [[UIAlertView alloc]
-							  initWithTitle:@"Warning"
-							  message: @"Refer failed"
-							  delegate: nil
-							  cancelButtonTitle: @"OK"
-							  otherButtonTitles:nil];
-		[alert show];
-		[selectedLine setMCallState:JCTransferFailed];
-	}
+	int error = [_mPortSIPSDK refer:currentLine.mSessionId referTo:referTo];
+    if (!error) {
+        completion(true, nil);
+        return;
+    }
+    
+	completion(false, [NSError errorWithDomain:@"Refer failed" code:0 userInfo:nil]);
+    [currentLine setMCallState:JCTransferFailed];
+    return;
 }
 
-- (void) attendedRefer:(NSString*)referTo
+- (void)attendedRefer:(NSString *)referTo completion:(void (^)(bool success, NSError *error))completion
 {
-	JCLineSession *currentLine = [self findLineWithSessionState];
-	if (currentLine) {
-		JCLineSession *replaceSession = [self findLineWithHoldState];
-		if (replaceSession && !replaceSession.mSessionState) {
-			return;
-		}
+	JCLineSession *currentLine = [self currentLineWithSessionState];
+    if (!currentLine || currentLine.mSessionState == false)
+    {
+        completion(false, [NSError errorWithDomain:@"Need to make the call established first" code:0 userInfo:nil]);
+        return;
+    }
+    
+	JCLineSession *replaceSession = [self findLineWithHoldState];
+    if (replaceSession && !replaceSession.mSessionState) {
+        completion(false, [NSError errorWithDomain:@"Unable to find replace session" code:0 userInfo:nil]);
+        return;
+    }
 		
-		int rt = [_mPortSIPSDK attendedRefer:currentLine.mSessionId
-							replaceSessionId:replaceSession.mSessionId referTo:referTo];
-		
-		if (rt != 0) {
-			[currentLine setMCallState:JCTransferFailed];
-		}
-	}
+    int error = [_mPortSIPSDK attendedRefer:currentLine.mSessionId replaceSessionId:replaceSession.mSessionId referTo:referTo];
+    if (!error) {
+        completion(true, nil);
+        return;
+    }
+	
+    completion(false, [NSError errorWithDomain:@"Warm Tranfer failed" code:0 userInfo:nil]);
+    [currentLine setMCallState:JCTransferFailed];
 }
 
 - (void) muteCall:(BOOL)mute
