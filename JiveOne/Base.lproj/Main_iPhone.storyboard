@@ -1040,7 +1040,7 @@
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" image="incall-background" translatesAutoresizingMaskIntoConstraints="NO" id="mCa-uf-nio">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
-                            <containerView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sEm-pY-RBF">
+                            <containerView clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sEm-pY-RBF">
                                 <rect key="frame" x="0.0" y="25" width="320" height="315"/>
                                 <connections>
                                     <segue destination="zhT-8a-SlE" kind="embed" identifier="CallerCollectionView" id="FVJ-tw-VX5"/>
@@ -2447,13 +2447,6 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.94389748090000003" green="0.94389748090000003" blue="0.94389748090000003" alpha="1" colorSpace="calibratedRGB"/>
                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        <label key="tableFooterView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="McK-YX-gVp">
-                            <rect key="frame" x="0.0" y="424" width="320" height="21"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                         <sections>
                             <tableViewSection id="0t6-gD-sD8">
                                 <cells>
@@ -2607,7 +2600,6 @@
                     <navigationItem key="navigationItem" title="Account" id="7BX-g7-cjd"/>
                     <connections>
                         <outlet property="buildNumber" destination="Zof-Dr-c6i" id="pzx-Y4-RZk"/>
-                        <outlet property="ext" destination="McK-YX-gVp" id="ycJ-ob-0GD"/>
                         <outlet property="selectedLineLabel" destination="Xi6-NK-c2o" id="Ahp-R6-97L"/>
                         <outlet property="userNameDetail" destination="ROA-cR-BnY" id="V15-gN-pbp"/>
                     </connections>
