@@ -15,6 +15,7 @@
 #import "JCSocketDispatch.h"
 #import "JCJifClient.h"
 #import "JCVoicemailClient.h"
+#import "SipHandler.h"
 
 #if DEBUG
 @interface NSURLRequest(Private)
@@ -288,6 +289,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     [[JCVoicemailClient sharedClient] clearCookies];
 	[[JCContactsClient sharedClient] clearCookies];
     [[JCOmniPresence sharedInstance] truncateAllTablesAtLogout];
+	[[SipHandler sharedHandler] disconnect];
     
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     
