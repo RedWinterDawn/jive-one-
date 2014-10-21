@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *userNameDetail;
 @property (weak, nonatomic) IBOutlet UILabel *userTitleDetail;
 @property (weak, nonatomic) IBOutlet UILabel *presenceDetail;
+@property (weak, nonatomic) IBOutlet UILabel *ext;
 @property (weak, nonatomic) IBOutlet JCPresenceView *presenceDetailView;
 @property (weak, nonatomic) IBOutlet UIImageView *userImage;
 @property (weak, nonatomic) IBOutlet UITextField *userMoodDetail;
