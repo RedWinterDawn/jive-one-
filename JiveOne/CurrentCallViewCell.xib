@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JCCallCardViewCell"/>
@@ -37,7 +37,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1:03" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vAI-dZ-8vN">
-                                        <rect key="frame" x="248" y="8" width="42" height="15"/>
+                                        <rect key="frame" x="242" y="8" width="42" height="15"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="15" id="rPq-ZQ-3fe"/>
                                             <constraint firstAttribute="width" constant="42" id="sHR-U5-xnj"/>
@@ -49,7 +49,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <accessibility key="accessibilityConfiguration" hint="callStateView" label="callStateView"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="vAI-dZ-8vN" secondAttribute="trailing" constant="10" id="5vY-vN-zts"/>
+                                    <constraint firstAttribute="trailing" secondItem="vAI-dZ-8vN" secondAttribute="trailing" constant="16" id="5vY-vN-zts"/>
                                     <constraint firstItem="4Oj-D7-F4v" firstAttribute="top" secondItem="rkJ-cf-ec6" secondAttribute="top" constant="9" id="7e3-RS-JWn"/>
                                     <constraint firstItem="4Oj-D7-F4v" firstAttribute="leading" secondItem="axI-Sc-RBD" secondAttribute="trailing" constant="7" id="G3P-Lf-Xa6"/>
                                     <constraint firstItem="vAI-dZ-8vN" firstAttribute="top" secondItem="rkJ-cf-ec6" secondAttribute="top" constant="8" id="Mjp-1r-PuV"/>
@@ -59,27 +59,27 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Zm-YG-q5c" userLabel="Info Bar">
-                                <rect key="frame" x="0.0" y="27" width="300" height="59"/>
+                                <rect key="frame" x="0.0" y="27" width="300" height="72"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Katerina Illiov" lineBreakMode="tailTruncation" baselineAdjustment="none" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="H4z-0p-bTI">
-                                        <rect key="frame" x="15" y="10" width="201" height="34"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Katerina Illiov" lineBreakMode="tailTruncation" baselineAdjustment="none" minimumFontSize="18" highlighted="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H4z-0p-bTI">
+                                        <rect key="frame" x="15" y="18" width="201" height="34"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="34" id="GRA-Wp-ab1"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="26.5"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(801) 238-9090" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ijK-Po-99E" customClass="JCDialStringLabel">
-                                        <rect key="frame" x="15" y="43" width="275" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(801) 238-9090" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ijK-Po-99E" customClass="JCDialStringLabel">
+                                        <rect key="frame" x="15" y="50" width="275" height="21"/>
                                         <accessibility key="accessibilityConfiguration" hint="" label="Callers Number"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="6cu-ty-rpE"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="12"/>
+                                        <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CANCELED" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="none" adjustsLetterSpacingToFitWidth="YES" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zQp-R0-cci">
-                                        <rect key="frame" x="224" y="10" width="66" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CANCELED" textAlignment="right" lineBreakMode="tailTruncation" adjustsLetterSpacingToFitWidth="YES" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zQp-R0-cci">
+                                        <rect key="frame" x="218" y="20" width="66" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="66" id="L1b-12-rAK"/>
                                             <constraint firstAttribute="height" constant="21" id="bPR-mc-X3j"/>
@@ -90,15 +90,15 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="zQp-R0-cci" firstAttribute="leading" secondItem="H4z-0p-bTI" secondAttribute="trailing" constant="8" id="Cck-Ds-4E5"/>
+                                    <constraint firstItem="zQp-R0-cci" firstAttribute="leading" secondItem="H4z-0p-bTI" secondAttribute="trailing" constant="2" id="Cck-Ds-4E5"/>
                                     <constraint firstAttribute="trailing" secondItem="ijK-Po-99E" secondAttribute="trailing" constant="10" id="Tqu-bw-cNW"/>
                                     <constraint firstItem="ijK-Po-99E" firstAttribute="leading" secondItem="8Zm-YG-q5c" secondAttribute="leading" constant="15" id="U6S-RX-UQP"/>
-                                    <constraint firstItem="H4z-0p-bTI" firstAttribute="top" secondItem="8Zm-YG-q5c" secondAttribute="top" constant="10" id="X0E-4a-nbs"/>
-                                    <constraint firstItem="zQp-R0-cci" firstAttribute="top" secondItem="8Zm-YG-q5c" secondAttribute="top" constant="10" id="ZCz-Gv-wTK"/>
+                                    <constraint firstItem="H4z-0p-bTI" firstAttribute="top" secondItem="8Zm-YG-q5c" secondAttribute="top" constant="18" id="X0E-4a-nbs"/>
+                                    <constraint firstItem="zQp-R0-cci" firstAttribute="top" secondItem="8Zm-YG-q5c" secondAttribute="top" constant="20" id="ZCz-Gv-wTK"/>
                                     <constraint firstItem="H4z-0p-bTI" firstAttribute="leading" secondItem="8Zm-YG-q5c" secondAttribute="leading" constant="15" id="baU-mT-Px3"/>
-                                    <constraint firstAttribute="bottom" secondItem="ijK-Po-99E" secondAttribute="bottom" constant="-5" id="ebH-BH-mj5"/>
-                                    <constraint firstAttribute="height" constant="59" id="l5A-Kg-tsU"/>
-                                    <constraint firstAttribute="trailing" secondItem="zQp-R0-cci" secondAttribute="trailing" constant="10" id="zbh-iA-mTm"/>
+                                    <constraint firstAttribute="bottom" secondItem="ijK-Po-99E" secondAttribute="bottom" constant="1" id="ebH-BH-mj5"/>
+                                    <constraint firstAttribute="height" constant="72" id="l5A-Kg-tsU"/>
+                                    <constraint firstAttribute="trailing" secondItem="zQp-R0-cci" secondAttribute="trailing" constant="16" id="zbh-iA-mTm"/>
                                 </constraints>
                             </view>
                         </subviews>
