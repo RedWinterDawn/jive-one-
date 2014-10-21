@@ -243,7 +243,7 @@
 		5D1BBE5B19EDC9EF006526B2 /* JCMergeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1BBE5A19EDC9EF006526B2 /* JCMergeButton.m */; };
 		5D1FAC5F19DDD68000899915 /* JCCallCardViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FAC5E19DDD68000899915 /* JCCallCardViewCell.m */; };
 		5D1FAC6219DDFF5300899915 /* JCCallCardCollectionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FAC6119DDFF5300899915 /* JCCallCardCollectionLayout.m */; };
-		5D1FAC6519DF376B00899915 /* JCKeyboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FAC6419DF376B00899915 /* JCKeyboardViewController.m */; };
+		5D1FAC6519DF376B00899915 /* JCKeypadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FAC6419DF376B00899915 /* JCKeypadViewController.m */; };
 		5D34446519F02F1C00315230 /* JCCurrentCallCardViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D34446419F02F1C00315230 /* JCCurrentCallCardViewCell.m */; };
 		5D629BAD19D9C41900F5744E /* JCVoiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D629BAC19D9C41900F5744E /* JCVoiceViewController.m */; };
 		5D629BB019D9CE4500F5744E /* JCVoiceNonVisualViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D629BAF19D9CE4500F5744E /* JCVoiceNonVisualViewController.m */; };
@@ -758,8 +758,8 @@
 		5D1FAC5E19DDD68000899915 /* JCCallCardViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallCardViewCell.m; sourceTree = "<group>"; };
 		5D1FAC6019DDFF5300899915 /* JCCallCardCollectionLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCallCardCollectionLayout.h; sourceTree = "<group>"; };
 		5D1FAC6119DDFF5300899915 /* JCCallCardCollectionLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallCardCollectionLayout.m; sourceTree = "<group>"; };
-		5D1FAC6319DF376B00899915 /* JCKeyboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCKeyboardViewController.h; sourceTree = "<group>"; };
-		5D1FAC6419DF376B00899915 /* JCKeyboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCKeyboardViewController.m; sourceTree = "<group>"; };
+		5D1FAC6319DF376B00899915 /* JCKeypadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCKeypadViewController.h; sourceTree = "<group>"; };
+		5D1FAC6419DF376B00899915 /* JCKeypadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCKeypadViewController.m; sourceTree = "<group>"; };
 		5D34446319F02F1C00315230 /* JCCurrentCallCardViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCurrentCallCardViewCell.h; sourceTree = "<group>"; };
 		5D34446419F02F1C00315230 /* JCCurrentCallCardViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCurrentCallCardViewCell.m; sourceTree = "<group>"; };
 		5D629BAB19D9C41900F5744E /* JCVoiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVoiceViewController.h; sourceTree = "<group>"; };
@@ -2127,8 +2127,8 @@
 				F8B62E4319D9F1E400AF98D3 /* JCDialerViewController.m */,
 				5D03648F19DC5A450090CC21 /* JCTransferViewController.h */,
 				5D03649019DC5A450090CC21 /* JCTransferViewController.m */,
-				5D1FAC6319DF376B00899915 /* JCKeyboardViewController.h */,
-				5D1FAC6419DF376B00899915 /* JCKeyboardViewController.m */,
+				5D1FAC6319DF376B00899915 /* JCKeypadViewController.h */,
+				5D1FAC6419DF376B00899915 /* JCKeypadViewController.m */,
 			);
 			name = Dialer;
 			sourceTree = "<group>";
@@ -2564,7 +2564,7 @@
 				279E4CAF192273E5002A556C /* MBContactCollectionViewFlowLayout.m in Sources */,
 				5DBBDCC919DDA0A300A4DB96 /* JCCallCard.m in Sources */,
 				273CC25E1900B23B005A2857 /* JCVoiceCell.m in Sources */,
-				5D1FAC6519DF376B00899915 /* JCKeyboardViewController.m in Sources */,
+				5D1FAC6519DF376B00899915 /* JCKeypadViewController.m in Sources */,
 				2799755F1959CD38001425CC /* JCStyleKit.m in Sources */,
 				9154947819366C54003DCED4 /* JCPlayPauseButton.m in Sources */,
 				91869D871959E5CF007743CE /* JCTOSButtonView.m in Sources */,

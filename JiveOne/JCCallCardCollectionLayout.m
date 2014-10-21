@@ -184,7 +184,7 @@ static NSString * const JSCallCardLayoutCellKind = @"CallCardCell";
         if (callCard.isIncoming)
             attributes.center = CGPointMake(attributes.center.x, -attributes.center.y);
         else
-            attributes.center = CGPointMake(attributes.center.x * 10, attributes.center.y);
+            attributes.center = CGPointMake(attributes.center.x * 2, attributes.center.y);
         attributes.alpha = 0.0;
     }
     

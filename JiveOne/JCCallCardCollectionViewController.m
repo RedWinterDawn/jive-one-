@@ -61,7 +61,6 @@ NSString *const kJCCallCardCollectionConferenceCallCellReuseIdentifier = @"Confe
     NSNumber *priorCount = [userInfo objectForKey:kJCCallCardManagerPriorUpdateCount];
     if (priorCount.intValue < 1)
     {
-        [self.collectionView reloadData];
         return;
     }
     
@@ -78,23 +77,14 @@ NSString *const kJCCallCardCollectionConferenceCallCellReuseIdentifier = @"Confe
     NSNumber *count = [userInfo objectForKey:kJCCallCardManagerUpdateCount];
     if (count.intValue < 1)
     {
-        [self.collectionView reloadData];
         return;
     }
     
     NSNumber *index = [userInfo objectForKey:kJCCallCardManagerUpdatedIndex];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index.integerValue inSection:0];
-    JCCallCardViewCell *cell = (JCCallCardViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-    [UIView animateWithDuration:0.3
-                     animations:^{
-                         cell.alpha = 0;
-                         cell.center = CGPointMake(cell.center.x * 10, cell.center.y);
-                     }
-                     completion:^(BOOL finished) {
-                         [self.collectionView performBatchUpdates:^{
-                             [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
-                         } completion:nil];
-                     }];
+    [self.collectionView performBatchUpdates:^{
+        [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
+    } completion:nil];
 }
 
 -(void)addedConferenceCallNotification:(NSNotification *)notification

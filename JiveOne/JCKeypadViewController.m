@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCKeyboardViewController.h"
+#import "JCKeypadViewController.h"
 
-@implementation JCKeyboardViewController
+@implementation JCKeypadViewController
 
 -(IBAction)numPadPressed:(id)sender
 {
@@ -16,13 +16,9 @@
     {
         UIButton *button = (UIButton *)sender;
         NSString *typedChar = [self characterFromNumPadTag:(int)button.tag];
-        
         self.outputLabel.text =  [NSString stringWithFormat:@"%@%@", self.outputLabel.text, typedChar];
-        
-        if (_delegate && [_delegate respondsToSelector:@selector(keyboardViewController:didTypeNumber:)])
-            [_delegate keyboardViewController:self didTypeNumber:typedChar];
-        
-        
+        if (_delegate && [_delegate respondsToSelector:@selector(keypadViewController:didTypeNumber:)])
+            [_delegate keypadViewController:self didTypeNumber:typedChar];
     }
 }
 
