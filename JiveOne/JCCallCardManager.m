@@ -238,13 +238,15 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
     NSUInteger index = [self.calls indexOfObject:callCard];
     NSUInteger priorCount = self.calls.count;
     [_calls removeObject:callCard];
+    JCCall lastState = callCard.lastState;
     callCard.incoming = false;
     [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerRemoveIncomingCallNotification
                                                         object:self
                                                       userInfo:@{
                                                                  kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:index],
                                                                  kJCCallCardManagerPriorUpdateCount:[NSNumber numberWithInteger:priorCount],
-                                                                 kJCCallCardManagerUpdateCount: [NSNumber numberWithInteger:self.calls.count]
+                                                                 kJCCallCardManagerUpdateCount:[NSNumber numberWithInteger:self.calls.count],
+                                                                 kJCCallCardManagerLastCallState:[NSNumber numberWithInt:lastState]
                                                                  }];
 }
 
@@ -253,13 +255,18 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
     if (![_calls containsObject:callCard])
         [self removeIncomingCall:callCard];
     
-    NSUInteger index = [_calls indexOfObject:callCard];
+    NSUInteger index = [self.calls indexOfObject:callCard];
 	JCCall lastState = callCard.lastState;
-    [_calls removeObject:callCard];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerRemoveCurrentCallNotification object:self userInfo:@{
-																																	  kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:index],
-																																	  kJCCallCardManagerLastCallState: [NSNumber numberWithInt:lastState]
-																																	  }];
+    NSUInteger priorCount = self.calls.count;
+    [self.calls removeObject:callCard];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerRemoveCurrentCallNotification
+                                                        object:self
+                                                      userInfo:@{
+                                                                 kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:index],
+                                                                 kJCCallCardManagerPriorUpdateCount:[NSNumber numberWithInteger:priorCount],
+                                                                 kJCCallCardManagerUpdateCount: [NSNumber numberWithInteger:self.calls.count],
+                                                                 kJCCallCardManagerLastCallState: [NSNumber numberWithInt:lastState]
+                                                                 }];
 }
 
 -(void)addCurrentCallCard:(JCCallCard *)callCard
@@ -271,6 +278,8 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
     for (JCCallCard *card in _calls)
         card.hold = true;
     
+    JCCall lastState = callCard.lastState;
+    NSUInteger priorCount = self.calls.count;
     [_calls addObject:callCard];
     
     // Sort the array and fetch the resulting new index of the call card.
@@ -278,7 +287,14 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
     [_calls sortUsingDescriptors:@[sortDescriptor]];
     
     NSUInteger newIndex = [_calls indexOfObject:callCard];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerAddedCurrentCallNotification object:self userInfo:@{kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:newIndex]}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerAddedCurrentCallNotification
+                                                        object:self
+                                                      userInfo:@{
+                                                                 kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:newIndex],
+                                                                 kJCCallCardManagerPriorUpdateCount:[NSNumber numberWithInteger:priorCount],
+                                                                 kJCCallCardManagerUpdateCount: [NSNumber numberWithInteger:self.calls.count],
+                                                                 kJCCallCardManagerLastCallState: [NSNumber numberWithInt:lastState]
+                                                                 }];
 }
 
 -(void)addConferenceCallWithCallArray:(NSArray *)callCards

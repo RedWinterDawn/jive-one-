@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCKeypadView.h"
+#import "JCKeypadOverlayView.h"
 
-@implementation JCKeypadView
+@implementation JCKeypadOverlayView
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
 {
-    return CGRectContainsPoint(_keypadAreaView.frame, point);
+    return CGRectContainsPoint(_keypadView.frame, point);
 }
 
 @end

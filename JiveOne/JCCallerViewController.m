@@ -22,10 +22,11 @@
 
 // Presented View Controllers
 #import "JCTransferViewController.h"                // Shows dial pad to dial for blind, warm transfer and additional call.
-#import "JCKeyboardViewController.h"                // Numberpad
+#import "JCKeypadViewController.h"                  // Numberpad
 #import "JCTransferConfirmationViewController.h"    // Transfer confimation view controller
+#import "JCCallCardCollectionViewController.h"
 
-#define CALL_OPTIONS_ANIMATION_DURATION 0.5
+#define CALL_OPTIONS_ANIMATION_DURATION 0.6
 #define TRANSFER_ANIMATION_DURATION 0.3
 #define KEYBOARD_ANIMATION_DURATION 0.3
 
@@ -34,7 +35,7 @@ NSString *const kJCCallerViewControllerKeyboardStoryboardIdentifier = @"keyboard
 
 NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"blindTransferComplete";
 
-@interface JCCallerViewController () <JCTransferViewControllerDelegate, JCKeyboardViewControllerDelegate>
+@interface JCCallerViewController () <JCTransferViewControllerDelegate, JCKeypadViewControllerDelegate>
 {
     UIViewController *_presentedTransferViewController;
     UIViewController *_presentedKeyboardViewController;
@@ -42,6 +43,10 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 	MBProgressHUD *hud;
 	
 	NSDictionary *_warmTransferInfo;
+    
+    bool _showingCallOptions;
+    
+    JCCallCardCollectionViewController *_callCardCollectionViewController;
 }
 
 @end
@@ -87,7 +92,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(void)awakeFromNib
 {
-    _defaultCallOptionViewConstraint = 202;
+    _defaultCallOptionViewConstraint = 229;
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -97,6 +102,10 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     {
         JCTransferConfirmationViewController *transferConfirmationViewController = (JCTransferConfirmationViewController *)viewController;
         transferConfirmationViewController.transferInfo = _warmTransferInfo;
+    }
+    else if ([viewController isKindOfClass:[JCCallCardCollectionViewController class]])
+    {
+        _callCardCollectionViewController = (JCCallCardCollectionViewController *)viewController;
     }
 }
 
@@ -144,7 +153,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         
         if (!_presentedKeyboardViewController)
         {
-            JCKeyboardViewController *keyboardViewController = [self.storyboard instantiateViewControllerWithIdentifier:kJCCallerViewControllerKeyboardStoryboardIdentifier];
+            JCKeypadViewController *keyboardViewController = [self.storyboard instantiateViewControllerWithIdentifier:kJCCallerViewControllerKeyboardStoryboardIdentifier];
             keyboardViewController.delegate = self;
             [self presentKeyboardViewController:keyboardViewController];
         }
@@ -263,6 +272,8 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     [UIView animateWithDuration:animated ? _callOptionTransitionAnimationDuration : 0
                      animations:^{
                          [weakView layoutIfNeeded];
+                     } completion:^(BOOL finished) {
+                         _showingCallOptions = false;
                      }];
 }
 
@@ -271,17 +282,25 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
  */
 -(void)showCallOptionsAnimated:(bool)animated
 {
-    __unsafe_unretained UIView *weakView = self.view;
+    if (_showingCallOptions)
+        return;
+    
     _callOptionsViewOriginYConstraint.constant = _defaultCallOptionViewConstraint;
-    [weakView setNeedsUpdateConstraints];
-    [weakView layoutIfNeeded];
+    [self.view setNeedsUpdateConstraints];
+    [_callCardCollectionViewController.collectionView reloadData];
+    __unsafe_unretained UIView *weakView = self.view;
+    [UIView animateWithDuration:animated ? 0.1 : 0
+                     animations:^{
+                         [weakView layoutIfNeeded];
+                     }
+                     completion:NULL];
+    
     [UIView transitionWithView:self.view
                       duration:_callOptionTransitionAnimationDuration
                        options:UIViewAnimationOptionTransitionFlipFromRight
-                    animations:^{
-                        
-                    } completion:^(BOOL finished) {
-                        
+                    animations:NULL
+                    completion:^(BOOL finished) {
+                        _showingCallOptions = true;
                     }];
 }
 
@@ -425,7 +444,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 #pragma mark JCKeyboardViewController
 
--(void)keyboardViewController:(JCKeyboardViewController *)controller didTypeNumber:(NSString *)typedNumber
+-(void)keypadViewController:(JCKeypadViewController *)controller didTypeNumber:(NSString *)typedNumber
 {
 	NSInteger tag = [typedNumber integerValue];
 	char dtmf = tag;
@@ -482,16 +501,6 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         }
     }];
 }
-
-/*- (void)waitForTransferConfirmation:(BOOL)sucessTransfering
-{
-	if (sucessTransfering) {
-		[self showTransferSuccess];
-	}
-	else {
-		// show toast
-	}
-}*/
 
 -(void)shouldCancelTransferViewController:(JCTransferViewController *)controller
 {

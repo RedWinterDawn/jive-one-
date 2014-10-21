@@ -15,6 +15,7 @@
 -(void)awakeFromNib
 {
     self.layer.borderColor      = CALL_CARD_BORDER_COLOR.CGColor;
+    self.layer.borderWidth      = CALL_CARD_BORDER_WIDTH;
     self.layer.cornerRadius     = 2;
     self.layer.masksToBounds    = TRUE;
 }
