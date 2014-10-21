@@ -24,7 +24,7 @@
 
 #import "JCCallCardManager.h"
 
-@interface JCAccountViewController () <MFMailComposeViewControllerDelegate>
+@interface JCAccountViewController () <MFMailComposeViewControllerDelegate, NSFileManagerDelegate>
 {
     PersonEntities *me;
     NSMutableArray *presenceValues;
@@ -83,9 +83,11 @@
 	_selectedLine = [Lines MR_findFirstByAttribute:@"inUse" withValue:[NSNumber numberWithBool:YES] inContext:self.managedContext];
 	if (_selectedLine) {
 		self.selectedLineLabel.text = self.selectedLine.externsionNumber;
+        self.ext.text = self.selectedLine.externsionNumber;
 	}
 	else {
 		self.selectedLineLabel.text = @"No line selected";
+        self.ext.text = self.selectedLine.externsionNumber;
 	}
 	
 

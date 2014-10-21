@@ -112,8 +112,8 @@ typedef enum {
 	JCCallFailed,
 	JCTransferSuccess,
 	JCTransferFailed,
-	JCCallOnHold,
-	JCCALlOffHold	
+	JCCallPutOnHold,
+	JCCallPutOffHold
 } JCCall;
 
 typedef enum {

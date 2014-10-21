@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "keypad-black.png"
+      "filename" : "Keypad.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "keypad-black@1x.png"
+      "filename" : "Keypad@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "keypad-black@2x.png"
+      "filename" : "Keypad@3x.png"
     }
   ],
   "info" : {

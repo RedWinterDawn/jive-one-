@@ -18,6 +18,7 @@
 // Managers
 #import "JCCallCardManager.h"   // Handles call cards, and managed calls
 #import "SipHandler.h"          // Direct access to the lower level sip manager.
+#import <MBProgressHUD.h>
 
 // Presented View Controllers
 #import "JCTransferViewController.h"                // Shows dial pad to dial for blind, warm transfer and additional call.
@@ -37,8 +38,10 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 {
     UIViewController *_presentedTransferViewController;
     UIViewController *_presentedKeyboardViewController;
-    
     NSTimeInterval _defaultCallOptionViewConstraint;
+	MBProgressHUD *hud;
+	
+	NSDictionary *_warmTransferInfo;
 }
 
 @end
@@ -58,6 +61,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         JCCallCardManager *manager = [JCCallCardManager sharedManager];
         [center addObserver:self selector:@selector(callHungUp:) name:kJCCallCardManagerRemoveCurrentCallNotification object:manager];
         [center addObserver:self selector:@selector(addCurrentCall:) name:kJCCallCardManagerAddedCurrentCallNotification object:manager];
+		[center addObserver:self selector:@selector(transferFailed:) name:kJCCallCardManagerTransferFailed object:manager];
     }
     return self;
 }
@@ -76,6 +80,11 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     [self setCallOptionsHidden:_callOptionsHidden animated:NO];
 }
 
+-(UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+
 -(void)awakeFromNib
 {
     _defaultCallOptionViewConstraint = 202;
@@ -86,9 +95,8 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     UIViewController *viewController = segue.destinationViewController;
     if ([viewController isKindOfClass:[JCTransferConfirmationViewController class]])
     {
-        //JCTransferConfirmationViewController *transferConfirmationViewController = (JCTransferConfirmationViewController *)viewController;
-        
-        // TODO: Pass Data Array of call cards from transfer result to view controller to transfer completion.
+        JCTransferConfirmationViewController *transferConfirmationViewController = (JCTransferConfirmationViewController *)viewController;
+        transferConfirmationViewController.transferInfo = _warmTransferInfo;
     }
 }
 
@@ -181,13 +189,33 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(IBAction)swapCall:(id)sender
 {
-    // TODO: Swap current calls.
-
+	
 }
 
 -(IBAction)mergeCall:(id)sender
 {
-    // TODO: Merge two calls.
+    if ([sender isKindOfClass:[UIButton class]]){
+        UIButton *button = (UIButton *)sender;
+        button.selected = !button.selected;
+		
+
+        if (button.selected) {
+            [[JCCallCardManager sharedManager] mergeCalls:^(bool success) {
+				if (success) {
+					self.mergeLabel.text = @"Split Calls";
+				}
+				else
+				{
+					button.selected = !button.selected;
+					[self showHudWithTitle:@"Oh-oh" detail:@"Failed to Create Conference"];
+				}
+			}];
+			
+        } else {
+            [[JCCallCardManager sharedManager] splitCalls];
+            self.mergeLabel.text = @"Merge Calls";
+        }
+    }
 }
 
 -(IBAction)finishTransfer:(id)sender
@@ -196,6 +224,30 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         if (success)
             [self showTransferSuccess];
     }];
+}
+
+#pragma -mark HUD Operations
+- (void)showHudWithTitle:(NSString*)title detail:(NSString*)detail
+{
+	if (!hud) {
+		hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+		hud.mode = MBProgressHUDModeText;
+			}
+	
+	hud.labelText = title;
+	hud.detailsLabelText = detail;
+	[hud hide:YES afterDelay:2.0];
+	[hud show:YES];
+}
+
+- (void)hideHud
+{
+	//    self.doneLoadingContent = YES;
+	if (hud) {
+		[MBProgressHUD hideHUDForView:self.view animated:YES];
+		[hud removeFromSuperview];
+		hud = nil;
+	}
 }
 
 #pragma mark - Private -
@@ -343,11 +395,30 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 -(void)callHungUp:(NSNotification *)notification
 {
     JCCallCardManager *callManager = (JCCallCardManager *)notification.object;
+	NSDictionary *userInfo = [notification userInfo];
+	
+	if (userInfo[kJCCallCardManagerLastCallState]) {
+		JCCall lastState = [userInfo[kJCCallCardManagerLastCallState] intValue];
+		if (lastState == JCTransferSuccess) {
+			[self showTransferSuccess];
+			return;
+			// in the future when we handle more than 2 calls we might want to
+			// briefly display the transfer success but come back to possible
+			// other ongoing calls.
+		}
+	}
+	
+	
     NSUInteger count = callManager.calls.count;
     if(count == 0)
         [self closeCallerViewController];
     else if (count == 1)
         [self.callOptionsView setState:JCCallOptionViewSingleCallState animated:YES];
+}
+
+- (void)transferFailed:(NSNotification *)notification
+{
+	NSLog(@"Transfer Failed");
 }
 
 #pragma mark - Delegate Handlers -
@@ -398,15 +469,29 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     [[JCCallCardManager sharedManager] dialNumber:dialString type:dialType completion:^(bool success, NSDictionary *callInfo) {
         if (success)
         {
-            if (dialType == JCCallCardDialWarmTransfer)
+			if (dialType == JCCallCardDialWarmTransfer) {
                 [self.callOptionsView setState:JCCallOptionViewFinishTransferState animated:YES];
-            else if(dialType == JCCallCardDialBlindTransfer)
-                [self showTransferSuccess];
-            else
+				_warmTransferInfo = callInfo;
+			}
+			else if(dialType == JCCallCardDialBlindTransfer) {
+                [self closeCallerViewController];
+			}
+			else {
                 [self.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];
+			}
         }
     }];
 }
+
+/*- (void)waitForTransferConfirmation:(BOOL)sucessTransfering
+{
+	if (sucessTransfering) {
+		[self showTransferSuccess];
+	}
+	else {
+		// show toast
+	}
+}*/
 
 -(void)shouldCancelTransferViewController:(JCTransferViewController *)controller
 {

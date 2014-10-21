@@ -10,15 +10,25 @@
 
 #import <PortSIPLib/PortSIPSDK.h>
 #import <AFNetworking/AFNetworkReachabilityManager.h>
+#import "IncomingCall.h"
+#import "MissedCall.h"
+#import "OutgoingCall.h"
 
 #import "LineConfiguration+Custom.h"
 #import "Lines+Custom.h"
 #import "PBX+Custom.h"
 #import "JCCallCardManager.h"
+#import "VideoViewController.h"
+
+
+#ifdef __APPLE__
+#include "TargetConditionals.h"
+#endif
 
 #define MAX_LINES 8
 #define ALERT_TAG_REFER 100
 #define OUTBOUND_SIP_SERVER_PORT 5060
+
 
 NSString *const kSipHandlerServerAgentname = @"Jive iOS Client";
 NSString *const kSipHandlerFetchLineConfigurationErrorMessage = @"Unable to fetch the line configuration";
@@ -30,6 +40,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     PortSIPSDK *_mPortSIPSDK;
     ConnectionCompletionHandler _connectionCompletionHandler;
     AFNetworkReachabilityStatus _previousNetworkStatus;
+	VideoViewController *_videoController;
+	bool inConference;
+    bool wasIncomingCall;
 }
 
 @property (nonatomic) NSMutableArray *lineSessions;
@@ -46,14 +59,18 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     if (self)
     {
         if (_registered)
+        {
             return self;
-        
+        }
+    
         _lineSessions = [NSMutableArray new];
         for (int i = 0; i < 2; i++)
             [_lineSessions addObject:[JCLineSession new]];
         
         _mPortSIPSDK = [[PortSIPSDK alloc] init];
         _mPortSIPSDK.delegate = self;
+		
+		_videoController = [VideoViewController new];
         
         // Register to listen for AFNetworkReachability Changes.
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
@@ -107,6 +124,13 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     NSString *kSIPServer    = ([pbx.v5 boolValue]) ? config.outboundProxy : config.registrationHost;
     
     _sipURL = [[NSString alloc] initWithFormat:@"sip:%@:%@", kSipUserName, kSIPServer];
+	
+	bool isSimulator = FALSE;
+#if TARGET_IPHONE_SIMULATOR
+	isSimulator = TRUE;
+#elif TARGET_OS_IPHONE
+	isSimulator = FALSE;
+#endif
     
     // Initialized the SIP SDK
     int ret = [_mPortSIPSDK initialize:TRANSPORT_UDP
@@ -115,7 +139,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
                                maxLine:MAX_LINES
                                  agent:kSipHandlerServerAgentname
                     virtualAudioDevice:FALSE
-                    virtualVideoDevice:FALSE];
+                    virtualVideoDevice:isSimulator];
     
     if(ret != 0)
         [NSException raise:NSInvalidArgumentException format:@"initializeSDK failure ErrorCode = %d",ret];
@@ -178,6 +202,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 {
     if(_initialized)
     {
+		[self hangUpAll];
         [_mPortSIPSDK unRegisterServer];
         [_mPortSIPSDK unInitialize];
         
@@ -313,6 +338,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 }
 
 #pragma mark - Find line methods
+
 - (JCLineSession *)findLineWithSessionState
 {
 	for (JCLineSession *line in self.lineSessions)
@@ -406,6 +432,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 		
 		[currentSession setCallTitle:contactName ? contactName : callee];
 		[currentSession setCallDetail:callee];
+        [OutgoingCall addOutgoingCallWithLineSession:currentSession];
 	}
 	else
 	{
@@ -413,12 +440,13 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 		[currentSession setMCallState:JCCallFailed];
 		[currentSession reset];
 	}
-	
+    
 	return currentSession;
 }
 
 - (void) hangUpCallWithSession:(long)sessionId;
 {
+	
 	JCLineSession *selectedLine = [self findSession:sessionId];
 	if (selectedLine.mSessionState)
 	{
@@ -427,18 +455,35 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 //			[videoViewController onStopVideo:mSessionArray[mActiveLine].getSessionId()];
 //		}
 		
-//		[numpadViewController setStatusText:[NSString  stringWithFormat:@"Hungup call on line %ld", mActiveLine]];
-		
 	}
 	else if (selectedLine.mRecvCallState)
 	{
 		[_mPortSIPSDK rejectCall:selectedLine.mSessionId code:486];
-		
-//		[numpadViewController setStatusText:[NSString  stringWithFormat:@"Rejected call on line %ld", mActiveLine]];
 	}
 	
-//	[selectedLine setMCallState:JCCallCanceled];
 	[selectedLine reset];
+	
+}
+
+- (void)hangUpAll
+{
+	for (JCLineSession *line in self.lineSessions)
+	{
+		if (line.mSessionState)
+		{
+			[_mPortSIPSDK hangUp:line.mSessionId];
+			//		if (mSessionArray[mActiveLine].getVideoState() == true) {
+			//			[videoViewController onStopVideo:mSessionArray[mActiveLine].getSessionId()];
+			//		}
+			
+		}
+		else if (line.mRecvCallState)
+		{
+			[_mPortSIPSDK rejectCall:line.mSessionId code:486];
+		}
+		
+		[line reset];
+	}
 }
 
 - (void)toggleHoldForLineWithSessionId:(long)sessionId
@@ -503,35 +548,49 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 //	//TODO:update call state
 //}
 
-- (void) referCall:(NSString*)referTo
+- (void) referCall:(NSString *)referTo completion:(void (^)(bool success, NSError *error))completion
 {
-	JCLineSession *selectedLine = [self findLineWithSessionState];
-	if (!selectedLine || selectedLine.mSessionState == false)
+	JCLineSession *currentLine = [self findLineWithSessionState];
+	if (!currentLine || currentLine.mSessionState == false)
 	{
-		UIAlertView *alert = [[UIAlertView alloc]
-							  initWithTitle:@"Warning"
-							  message: @"Need to make the call established first"
-							  delegate: nil
-							  cancelButtonTitle: @"OK"
-							  otherButtonTitles:nil];
-		[alert show];
+        completion(false, [NSError errorWithDomain:@"Need to make the call established first" code:0 userInfo:nil]);
 		return;
 	}
 	
-	int errorCodec = [_mPortSIPSDK refer:selectedLine.mSessionId referTo:referTo];
-	if (errorCodec != 0)
-	{
-		UIAlertView *alert = [[UIAlertView alloc]
-							  initWithTitle:@"Warning"
-							  message: @"Refer failed"
-							  delegate: nil
-							  cancelButtonTitle: @"OK"
-							  otherButtonTitles:nil];
-		[alert show];
-		[selectedLine setMCallState:JCTransferFailed];
-	}
+	int error = [_mPortSIPSDK refer:currentLine.mSessionId referTo:referTo];
+    if (!error) {
+        completion(true, nil);
+        return;
+    }
+    
+	completion(false, [NSError errorWithDomain:@"Refer failed" code:0 userInfo:nil]);
+    [currentLine setMCallState:JCTransferFailed];
+    return;
+}
+
+- (void)attendedRefer:(NSString *)referTo completion:(void (^)(bool success, NSError *error))completion
+{
+	JCLineSession *currentLine = [self findLineWithSessionState];
+    if (!currentLine || currentLine.mSessionState == false)
+    {
+        completion(false, [NSError errorWithDomain:@"Need to make the call established first" code:0 userInfo:nil]);
+        return;
+    }
+    
+	JCLineSession *replaceSession = [self findLineWithHoldState];
+    if (replaceSession && !replaceSession.mSessionState) {
+        completion(false, [NSError errorWithDomain:@"Unable to find replace session" code:0 userInfo:nil]);
+        return;
+    }
+		
+    int error = [_mPortSIPSDK attendedRefer:currentLine.mSessionId replaceSessionId:replaceSession.mSessionId referTo:referTo];
+    if (!error) {
+        completion(true, nil);
+        return;
+    }
 	
-	[selectedLine setMCallState:JCTransferSuccess];
+    completion(false, [NSError errorWithDomain:@"Warm Tranfer failed" code:0 userInfo:nil]);
+    [currentLine setMCallState:JCTransferFailed];
 }
 
 - (void) muteCall:(BOOL)mute
@@ -572,10 +631,59 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 }
 
+- (bool)setConference:(bool)conference
+{
+	if (conference)
+	{
+		int rt = [_mPortSIPSDK createConference:nullptr videoResolution:VIDEO_NONE displayLocalVideo:NO];
+		if (rt == 0) {
+			for (JCLineSession *line in self.lineSessions)
+			{
+				if (line.mSessionState)
+				{
+					if (line.mHoldSate)
+					{
+						[_mPortSIPSDK unHold:line.mSessionId];
+						line.mHoldSate = false;
+					}
+					
+					[_mPortSIPSDK joinToConference:line.mSessionId];
+				}
+			}
+			
+			inConference = true;
+		}
+		else
+		{
+			// failed to create conference
+			inConference = false;
+		}
+	}
+	else if (inConference)
+	{
+		inConference = false;
+		// Before stop the conference, MUST place all lines to hold state
+		for (JCLineSession *line in self.lineSessions)
+		{
+			if (line.mSessionState && !line.mHoldSate )
+			{
+				[_mPortSIPSDK hold:line.mSessionId];
+				line.mHoldSate = true;
+			}
+		}
+		
+		[_mPortSIPSDK destroyConference];
+	}
+	
+	return inConference;
+}
+
 - (void) setLoudspeakerStatus:(BOOL)enable
 {
 	[_mPortSIPSDK setLoudspeakerStatus:enable];
 }
+
+
 
 //- (void)didSelectLine:(NSInteger)activeLine
 //{
@@ -642,6 +750,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 			 existsVideo:(BOOL)existsVideo
 {
 	NSLog(@"onInviteIncoming - Session ID: %ld", sessionId);
+    wasIncomingCall = true;
 	JCLineSession *idleLine = [self findIdleLine];
 	
 	if (!idleLine)
@@ -691,8 +800,26 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 ////		alert.tag = index;
 //		[alert show];
 //	}
-	
+    
 	[[JCCallCardManager sharedManager] addIncomingCall:idleLine];
+    
+    [idleLine setCallTitle:[NSString stringWithUTF8String:callerDisplayName]];
+    NSString *newDetail = (NSString *)idleLine.callDetail;
+    NSRange stripRange = [newDetail rangeOfString:@"@"];
+    
+    NSRange striped = NSMakeRange(stripRange.location, (newDetail.length - stripRange.location));
+    newDetail = [newDetail stringByReplacingCharactersInRange:striped withString:@""];
+    
+    NSRange finalrange = NSMakeRange(4, newDetail.length-4);
+    newDetail = [newDetail substringWithRange:finalrange];
+//    NSString *callerDetailSubString = [[NSString stringWithUTF8String:caller]substringWithRange:range];
+    
+//    [idleLine setCallDetail:  callerDetailSubString];
+    [idleLine setCallDetail:newDetail];
+    
+    
+    
+    [IncomingCall addIncommingCallWithLineSession:idleLine];
 };
 
 - (void)onInviteTrying:(long)sessionId
@@ -903,6 +1030,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 //	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Call has been forward to:%s" ,forwardTo]];
 }
 
+
 - (void)onInviteClosed:(long)sessionId
 {
 	NSLog(@"onInviteClosed - Session ID: %ld", sessionId);
@@ -916,6 +1044,15 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	
 	[selectedLine setMCallState:JCCallCanceled];
 	[selectedLine reset];
+    
+    if (wasIncomingCall) {
+        //create missed call notification  addIncommingCallWithLineSession:idleLine
+    
+        [MissedCall addMissedCallWithLineSession:selectedLine];
+        
+        
+        wasIncomingCall = false;
+    }
 	
 //	if (mSessionArray[index].getVideoState() == true) {
 //		[videoViewController onStopVideo:sessionId];
@@ -1032,8 +1169,6 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	{
 		return;
 	}
-	
-//	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Line %d, the REFER was accepted.",index]];
 }
 
 - (void)onReferRejected:(long)sessionId reason:(char*)reason code:(int)code
@@ -1077,7 +1212,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 		return;
 	}
 	
-//	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Transfer succeeded on line %d",index]];
+	[selectedLine setMCallState:JCTransferSuccess];
 }
 
 - (void)onACTVTransferFailure:(long)sessionId reason:(char*)reason code:(int)code
@@ -1087,6 +1222,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	{
 		return;
 	}
+	
+	[selectedLine setMCallState:JCTransferFailed];
 	
 //	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Failed to transfer on line %d",index]];
 }
@@ -1339,6 +1476,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 		if(nRet == 0)
 		{
 			[currentLine setMSessionState:true];
+			[currentLine setMRecvCallState:false];
 			[currentLine setMVideoState:false];
 		}
 		else {
@@ -1347,6 +1485,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 	}
 	
+   
 }
 
 

@@ -97,8 +97,8 @@ int didNotify;
     
     if ([[UINavigationBar class]respondsToSelector:@selector(appearance)]) {
         [[UINavigationBar appearance] setTitleTextAttributes:@{
-                                                               UITextAttributeTextColor : [UIColor blackColor],
-                                                               UITextAttributeFont : [UIFont fontWithName:@"HelveticaNeue-Light" size:24.0f]
+                                                               NSForegroundColorAttributeName : [UIColor blackColor],
+                                                               NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:24.0f]
                                                                }];
     }
     
@@ -119,8 +119,8 @@ int didNotify;
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     JCCallCardManager *callCardManager = [JCCallCardManager sharedManager];
     [center addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
-    [center addObserver:self selector:@selector(didReceiveIncomingCall:) name:kJCCallCardManagerAddedIncomingCallNotification object:[JCCallCardManager sharedManager]];
-    [center addObserver:self selector:@selector(stopRingtone) name:kJCCallCardManagerAddedCurrentCallNotification object:[JCCallCardManager sharedManager]];
+    [center addObserver:self selector:@selector(didReceiveIncomingCall:) name:kJCCallCardManagerAddedIncomingCallNotification object:callCardManager];
+    [center addObserver:self selector:@selector(stopRingtone) name:kJCCallCardManagerAddedCurrentCallNotification object:callCardManager];
     
     [self refreshTabBadges:NO];    
     if ([[JCAuthenticationManager sharedInstance] userAuthenticated] && [[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {
