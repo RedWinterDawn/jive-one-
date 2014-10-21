@@ -1271,7 +1271,6 @@
                                         <state key="selected" image="blue-check"/>
                                         <connections>
                                             <action selector="finishTransfer:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="81J-ee-oex"/>
-                                            <action selector="warmTransfer:" destination="Yzo-Zz-XrL" eventType="touchUpInside" id="hq0-32-RBz"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Finish Transfer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rIq-gm-zST" userLabel="Finish Transfer Label">
