@@ -62,9 +62,9 @@
                                 <rect key="frame" x="0.0" y="27" width="300" height="59"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Katerina Illiov" lineBreakMode="tailTruncation" baselineAdjustment="none" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="H4z-0p-bTI">
-                                        <rect key="frame" x="15" y="10" width="201" height="27"/>
+                                        <rect key="frame" x="15" y="10" width="201" height="34"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="27" id="GRA-Wp-ab1"/>
+                                            <constraint firstAttribute="height" constant="34" id="GRA-Wp-ab1"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="26.5"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

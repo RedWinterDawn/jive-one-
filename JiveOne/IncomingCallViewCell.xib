@@ -32,14 +32,13 @@
                                 <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="11"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Callers Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FT8-wZ-Uc2">
-                                <rect key="frame" x="15" y="29" width="285" height="37"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Callers Nagme" lineBreakMode="tailTruncation" baselineAdjustment="none" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FT8-wZ-Uc2">
+                                <rect key="frame" x="15" y="29" width="285" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="37" id="7By-Qy-Lcc"/>
+                                    <constraint firstAttribute="height" constant="40" id="7By-Qy-Lcc"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="26.5"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -48,7 +47,7 @@
                             <constraint firstAttribute="trailing" secondItem="FT8-wZ-Uc2" secondAttribute="trailing" id="VSh-zV-5BZ"/>
                             <constraint firstItem="FT8-wZ-Uc2" firstAttribute="top" secondItem="wpr-n7-w9W" secondAttribute="top" constant="29" id="Vpf-no-miY"/>
                             <constraint firstAttribute="height" constant="86" id="bqV-YN-USh"/>
-                            <constraint firstItem="5rL-pd-NyF" firstAttribute="top" secondItem="FT8-wZ-Uc2" secondAttribute="bottom" constant="-1" id="dse-Xa-Ios"/>
+                            <constraint firstItem="5rL-pd-NyF" firstAttribute="top" secondItem="FT8-wZ-Uc2" secondAttribute="bottom" constant="-4" id="dse-Xa-Ios"/>
                             <constraint firstItem="5rL-pd-NyF" firstAttribute="leading" secondItem="wpr-n7-w9W" secondAttribute="leading" constant="15" id="jyt-3P-fvN"/>
                             <constraint firstAttribute="trailing" secondItem="5rL-pd-NyF" secondAttribute="trailing" id="qXK-Qe-fOg"/>
                         </constraints>
