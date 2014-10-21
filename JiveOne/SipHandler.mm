@@ -59,8 +59,10 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     if (self)
     {
         if (_registered)
+        {
             return self;
-        
+        }
+    
         _lineSessions = [NSMutableArray new];
         for (int i = 0; i < 2; i++)
             [_lineSessions addObject:[JCLineSession new]];

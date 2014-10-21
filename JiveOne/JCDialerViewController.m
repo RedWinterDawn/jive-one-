@@ -8,7 +8,9 @@
 
 #import "JCDialerViewController.h"
 #import "JCCallerViewController.h"
+#import "Call.h"
 #import "SipHandler.h"
+#import "Lines+Custom.h"
 
 NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCall";
 
@@ -18,6 +20,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 }
 
 @end
+
 
 @implementation JCDialerViewController
 
@@ -102,6 +105,8 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     [self.dialStringLabel clear];
 }
 
+
+
 #pragma mark - Private -
 
 -(void)updateResgistrationStatus
@@ -110,7 +115,9 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     if (_sipHandler.isRegistered)
     {
         _callBtn.selected = false;
-        prompt = [NSString stringWithFormat:@"Ext: %@", @"5555"];
+        NSString * jiveId = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
+        Lines *line = [Lines MR_findFirstByAttribute:@"userName" withValue:jiveId];
+        prompt = [NSString stringWithFormat:@"Ext: %@", line.externsionNumber];
     }
     else
         _callBtn.selected = true;
