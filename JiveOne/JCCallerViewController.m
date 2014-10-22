@@ -197,7 +197,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(IBAction)swapCall:(id)sender
 {
-	
+    [[JCCallCardManager sharedManager] swapCalls];
 }
 
 -(IBAction)mergeCall:(id)sender
@@ -205,8 +205,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     if ([sender isKindOfClass:[UIButton class]]){
         UIButton *button = (UIButton *)sender;
         button.selected = !button.selected;
-		
-
+        
         if (button.selected) {
             [[JCCallCardManager sharedManager] mergeCalls:^(bool success) {
 				if (success) {

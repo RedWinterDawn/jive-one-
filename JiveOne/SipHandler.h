@@ -32,15 +32,16 @@ extern NSString *const kSipHandlerRegisteredSelectorKey;
 - (void)answerCall;
 - (void) hangUpCallWithSession:(long)sessionId;
 - (void) hangUpAll;
-- (void) holdCall;
 - (bool)setConference:(bool)conference;
-//- (void) unholdCall;
 //- (void) hangUpCall;
 - (void) referCall:(NSString*)referTo completion:(void (^)(bool success, NSError *error))completion;        // Blind Transfer
 - (void) attendedRefer:(NSString*)referTo completion:(void (^)(bool success, NSError *error))completion;    // warm Transfer
 - (void) muteCall:(BOOL)mute;
 - (void) setLoudspeakerStatus:(BOOL)enable;
-- (void)toggleHoldForLineWithSessionId:(long)sessionId;
+
+// Directly sets the hold state of a call session.
+- (void)setHoldCallState:(bool)holdState forSessionId:(long)sessionId;
+
 - (NSArray *) findAllActiveLines;
 
 //- (void) switchSessionLine;

@@ -144,12 +144,9 @@ NSString *const kJCCallCardConferenceString = @"Conference";
 -(void)setHold:(BOOL)hold
 {
     [self willChangeValueForKey:kJCCallCardHoldKey];
+    [[JCCallCardManager sharedManager] setCallCallHoldState:hold forCard:self];
     if (self.isConference) {
         _hold = hold;
-    }
-    else
-    {
-        [[JCCallCardManager sharedManager] toggleCallHold:self];
     }
     self.holdStarted = [NSDate date];
     [self didChangeValueForKey:kJCCallCardHoldKey];

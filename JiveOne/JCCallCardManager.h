@@ -43,7 +43,8 @@ typedef enum : NSUInteger {
        completion:(void (^)(bool success, NSDictionary *callInfo))completion;
 
 -(void)hangUpCall:(JCCallCard *)callCard remote:(BOOL)remote;
--(void)toggleCallHold:(JCCallCard *)callCard;
+
+-(void)setCallCallHoldState:(bool)hold forCard:(JCCallCard *)callCard;
 
 -(void)answerCall:(JCCallCard *)callCard;
 -(void)addIncomingCall:(JCLineSession *)session;

@@ -486,17 +486,30 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	}
 }
 
-- (void)toggleHoldForLineWithSessionId:(long)sessionId
+- (void)switchLines
 {
-	JCLineSession *selectedLine = [self findSession:sessionId];
-	if (selectedLine && selectedLine.mHoldSate) {
-		[_mPortSIPSDK unHold:selectedLine.mSessionId];
-		[selectedLine setMHoldSate:false];
-	}
-	else if (selectedLine) {
-		[_mPortSIPSDK hold:selectedLine.mSessionId];
-		[selectedLine setMHoldSate:true];
-	}
+    JCLineSession *activeLine = [self findLineWithSessionState];
+    JCLineSession *lineOnHold = [self findLineWithHoldState];
+    
+    [self setHoldCallState:true forSessionId:activeLine.mSessionId];
+    [self setHoldCallState:false forSessionId:lineOnHold.mSessionId];
+}
+
+- (void)setHoldCallState:(bool)holdState forSessionId:(long)sessionId
+{
+    JCLineSession *selectedLine = [self findSession:sessionId];
+    if (selectedLine)
+    {
+        if (holdState)
+        {
+            [_mPortSIPSDK hold:selectedLine.mSessionId];
+        }
+        else
+        {
+            [_mPortSIPSDK unHold:selectedLine.mSessionId];
+        }
+        [selectedLine setMHoldSate:holdState];
+    }
 }
 
 - (void) toggleHoldForCallWithSessionState
@@ -515,38 +528,6 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 		[selectedLine setMHoldSate:YES];
 	}
 }
-
-- (void) holdCall
-{
-	JCLineSession *selectedLine = [self findLineWithSessionState];
-	if (!selectedLine)
-	{
-		return;
-	}
-	
-	[_mPortSIPSDK hold:selectedLine.mSessionId];
-	[selectedLine setMHoldSate:true];
-	
-//	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Hold the call on line %ld", mActiveLine]];
-	
-	//TODO:update call state
-}
-
-//- (void) unholdCall
-//{
-//	if (mSessionArray[mActiveLine].getSessionState() == false ||
-//		mSessionArray[mActiveLine].getHoldState() == false)
-//	{
-//		return;
-//	}
-//	
-//	[_mPortSIPSDK unHold:mSessionArray[mActiveLine].getSessionId()];
-//	mSessionArray[mActiveLine].setHoldState(false);
-//	
-////	[numpadViewController setStatusText:[NSString  stringWithFormat:@"UnHold the call on line %ld", mActiveLine]];
-//	
-//	//TODO:update call state
-//}
 
 - (void) referCall:(NSString *)referTo completion:(void (^)(bool success, NSError *error))completion
 {
@@ -606,30 +587,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	}
 }
 
-- (void)switchLines
-{
-	JCLineSession *activeLine = [self findLineWithSessionState];
-	JCLineSession *lineOnHold = [self findLineWithHoldState];
-	if (activeLine)
-	{
-		// Need to hold this line
-		[_mPortSIPSDK hold:activeLine.mSessionId];
-		[activeLine setMHoldSate:true];
-		
-		//		[numpadViewController setStatusText:[NSString  stringWithFormat:@"Hold call on line %ld", mActiveLine]];
-	}
-	//	[numpadViewController.buttonLine setTitle:[NSString  stringWithFormat:@"Line%ld:", mActiveLine] forState:UIControlStateNormal];
-	
-	if (lineOnHold)
-	{
-		// Need to unhold this line
-		[_mPortSIPSDK unHold:lineOnHold.mSessionState];
-		[activeLine setMHoldSate:false];
-		
-		//		[numpadViewController setStatusText:[NSString  stringWithFormat:@"unHold call on line %ld", mActiveLine]];
-	}
 
-}
 
 - (bool)setConference:(bool)conference
 {
