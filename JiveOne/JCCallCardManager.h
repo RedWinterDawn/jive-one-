@@ -52,6 +52,7 @@ typedef enum : NSUInteger {
 
 -(void)mergeCalls:(void (^)(bool success))completion;
 -(void)splitCalls;
+-(void)swapCalls;
 
 @end
 
