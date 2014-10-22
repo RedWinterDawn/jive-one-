@@ -27,6 +27,10 @@ extern NSString *const kJCCallCardManagerAddedCells;
 extern NSString *const kJCCallCardManagerLastCallState;
 extern NSString *const kJCCallCardManagerIncomingCall;
 
+extern NSString *const kJCCallCardManagerNewCall;
+extern NSString *const kJCCallCardManagerTransferedCall;
+
+
 typedef enum : NSUInteger {
     JCCallCardDialSingle = 0,
     JCCallCardDialBlindTransfer,

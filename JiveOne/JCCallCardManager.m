@@ -29,6 +29,7 @@ NSString *const kJCCallCardManagerLastCallState     = @"lastCallState";
 NSString *const kJCCallCardManagerNewCall           = @"newCall";
 NSString *const kJCCallCardManagerActiveCall        = @"activeCall";
 NSString *const kJCCallCardManagerIncomingCall      = @"incomingCall";
+NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 
 @interface JCCallCardManager ()
 {
@@ -199,22 +200,36 @@ NSString *const kJCCallCardManagerIncomingCall      = @"incomingCall";
         }];
         return;
     }
-    else if (dialType == JCCallCardDialWarmTransfer)
-    {
-        _warmTransferNumber = dialNumber;
-    }
     
     JCLineSession *session = [_sipHandler makeCall:dialNumber videoCall:NO contactName:[self getContactNameByNumber:dialNumber]];
     if (session.mSessionState)
     {
+        JCCallCard *transferedCall = self.calls.lastObject;
         JCCallCard *callCard = [[JCCallCard alloc] initWithLineSession:session];
         [self addCall:callCard];
         NSUInteger index = [self.calls indexOfObject:callCard];
         if (completion != NULL)
-            completion(true, @{
-                               kJCCallCardManagerNewCall: callCard,
-                               kJCCallCardManagerUpdatedIndex: [NSNumber numberWithInteger:index],
-                               });
+        {
+            if (dialType == JCCallCardDialWarmTransfer) {
+                _warmTransferNumber = dialNumber;
+                
+                completion(true, @{
+                                   kJCCallCardManagerTransferedCall: transferedCall,
+                                   kJCCallCardManagerNewCall: callCard,
+                                   kJCCallCardManagerUpdatedIndex: [NSNumber numberWithInteger:index],
+                                   });
+            }
+            else
+            {
+                completion(true, @{
+                                   kJCCallCardManagerNewCall: callCard,
+                                   kJCCallCardManagerUpdatedIndex: [NSNumber numberWithInteger:index],
+                                   });
+            }
+            
+            
+            
+        }
     }
     else
     {

@@ -7,33 +7,19 @@
 //
 
 #import "JCTransferConfirmationViewController.h"
-
-@interface JCTransferConfirmationViewController ()
-
-@end
+#import "JCCallCardManager.h"
 
 @implementation JCTransferConfirmationViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
-- (IBAction)confirmButton:(UIButton *)sender {
+    
+    JCCallCard *call = [self.transferInfo objectForKey:kJCCallCardManagerTransferedCall];
+    JCCallCard *transferCall = [self.transferInfo objectForKey:kJCCallCardManagerNewCall];
+    
+    self.currentCallersName.text = call.callerId;
+    self.currentCallersNumber.text = call.dialNumber;
+    self.transferToCallersName.text = transferCall.callerId;
+    self.transferToCallersNumber.text = transferCall.dialNumber;
 }
 @end
