@@ -119,8 +119,8 @@ int didNotify;
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     JCCallCardManager *callCardManager = [JCCallCardManager sharedManager];
     [center addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
-    [center addObserver:self selector:@selector(didReceiveIncomingCall:) name:kJCCallCardManagerAddedIncomingCallNotification object:callCardManager];
-    [center addObserver:self selector:@selector(stopRingtone) name:kJCCallCardManagerAddedCurrentCallNotification object:callCardManager];
+    [center addObserver:self selector:@selector(didReceiveIncomingCall:) name:kJCCallCardManagerAddedCallNotification object:callCardManager];
+    [center addObserver:self selector:@selector(stopRingtone) name:kJCCallCardManagerUpdateCallNotification object:callCardManager];
     
     [self refreshTabBadges:NO];    
     if ([[JCAuthenticationManager sharedInstance] userAuthenticated] && [[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {
@@ -820,8 +820,9 @@ int didNotify;
     [self startVibration];
     
     NSDictionary *userInfo = notification.userInfo;
-    NSNumber *priorCount = [userInfo objectForKey:kJCCallCardManagerPriorUpdateCount];
-    if (priorCount && priorCount.intValue > 0)
+    BOOL incoming = [[userInfo objectForKey:kJCCallCardManagerIncomingCall] boolValue];
+    int priorCount = [[userInfo objectForKey:kJCCallCardManagerPriorUpdateCount] intValue];
+    if (!incoming || priorCount > 0)
         return;
     
     [self startRingtone];

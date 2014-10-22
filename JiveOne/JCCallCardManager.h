@@ -12,11 +12,9 @@
 #import "JCCallCard.h"
 #import "JCLineSession.h"
 
-extern NSString *const kJCCallCardManagerAddedIncomingCallNotification;
-extern NSString *const kJCCallCardManagerRemoveIncomingCallNotification;
-
-extern NSString *const kJCCallCardManagerAddedCurrentCallNotification;
-extern NSString *const kJCCallCardManagerRemoveCurrentCallNotification;
+extern NSString *const kJCCallCardManagerAddedCallNotification;
+extern NSString *const kJCCallCardManagerUpdateCallNotification;
+extern NSString *const kJCCallCardManagerRemoveCallNotification;
 
 extern NSString *const kJCCallCardManagerAddedConferenceCallNotification;
 extern NSString *const kJCCallCardManagerRemoveConferenceCallNotification;
@@ -27,6 +25,7 @@ extern NSString *const kJCCallCardManagerUpdateCount;
 extern NSString *const kJCCallCardManagerRemovedCells;
 extern NSString *const kJCCallCardManagerAddedCells;
 extern NSString *const kJCCallCardManagerLastCallState;
+extern NSString *const kJCCallCardManagerIncomingCall;
 
 typedef enum : NSUInteger {
     JCCallCardDialSingle = 0,
@@ -47,7 +46,7 @@ typedef enum : NSUInteger {
 -(void)setCallCallHoldState:(bool)hold forCard:(JCCallCard *)callCard;
 
 -(void)answerCall:(JCCallCard *)callCard;
--(void)addIncomingCall:(JCLineSession *)session;
+-(void)addIncomingCallSession:(JCLineSession *)session;
 -(void)finishWarmTransfer:(void (^)(bool success))completion;
 
 -(void)mergeCalls:(void (^)(bool success))completion;

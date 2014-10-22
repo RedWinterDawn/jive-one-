@@ -154,14 +154,14 @@ static NSString * const JSCallCardLayoutCellKind = @"CallCardCell";
         if (!attributes)
             attributes = [self layoutAttributesForItemAtIndexPath:itemIndexPath];
         
-        JCCallCardViewCell *cell = (JCCallCardViewCell *)[self.collectionView.dataSource collectionView:self.collectionView cellForItemAtIndexPath:itemIndexPath];
+        /*JCCallCardViewCell *cell = (JCCallCardViewCell *)[self.collectionView.dataSource collectionView:self.collectionView cellForItemAtIndexPath:itemIndexPath];
         JCCallCard *callCard = cell.callCard;
         if (callCard.isConference)
             return attributes;
         
         if (callCard.isIncoming)
             attributes.center = CGPointMake(attributes.center.x, -attributes.center.y);
-        else
+        else*/
             attributes.center = CGPointMake(attributes.center.x * 2, attributes.center.y);
         attributes.alpha = 0.0;
     }
@@ -176,14 +176,14 @@ static NSString * const JSCallCardLayoutCellKind = @"CallCardCell";
         if (!attributes)
             attributes = [self layoutAttributesForItemAtIndexPath:itemIndexPath];
         
-        [self.collectionView.viewForBaselineLayout.layer setSpeed:1.5f];
+        /*[self.collectionView.viewForBaselineLayout.layer setSpeed:1.5f];
         JCCallCard *callCard = ((JCCallCardViewCell *)[self.collectionView cellForItemAtIndexPath:itemIndexPath]).callCard;
         if (callCard.isConference)
             return attributes;
         
         if (callCard.isIncoming)
             attributes.center = CGPointMake(attributes.center.x, -attributes.center.y);
-        else
+        else*/
             attributes.center = CGPointMake(attributes.center.x * 2, attributes.center.y);
         attributes.alpha = 0.0;
     }

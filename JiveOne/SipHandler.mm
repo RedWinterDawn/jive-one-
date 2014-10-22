@@ -444,6 +444,26 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	return currentSession;
 }
 
+- (void)answerCall
+{
+    JCLineSession *currentLine = [self findLineWithRecevingState];
+    if (currentLine) {
+        int nRet = [_mPortSIPSDK answerCall:currentLine.mSessionId videoCall:FALSE];
+        if(nRet == 0)
+        {
+            [currentLine setMSessionState:true];
+            [currentLine setMRecvCallState:false];
+            [currentLine setMVideoState:false];
+        }
+        else {
+            [currentLine reset];
+        }
+        
+    }
+    
+    
+}
+
 - (void) hangUpCallWithSession:(long)sessionId;
 {
 	
@@ -462,7 +482,6 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	}
 	
 	[selectedLine reset];
-	
 }
 
 - (void)hangUpAll
@@ -759,7 +778,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 //		[alert show];
 //	}
     
-	[[JCCallCardManager sharedManager] addIncomingCall:idleLine];
+	[[JCCallCardManager sharedManager] addIncomingCallSession:idleLine];
     
     [idleLine setCallTitle:[NSString stringWithUTF8String:callerDisplayName]];
     NSString *newDetail = (NSString *)idleLine.callDetail;
@@ -1426,25 +1445,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	 */
 }
 
-- (void)answerCall
-{
-	JCLineSession *currentLine = [self findLineWithRecevingState];
-	if (currentLine) {
-		int nRet = [_mPortSIPSDK answerCall:currentLine.mSessionId videoCall:FALSE];
-		if(nRet == 0)
-		{
-			[currentLine setMSessionState:true];
-			[currentLine setMRecvCallState:false];
-			[currentLine setMVideoState:false];
-		}
-		else {
-			[currentLine reset];
-		}
 
-	}
-	
-   
-}
 
 
 - (void)alertView: (UIAlertView *)alertView clickedButtonAtIndex: (NSInteger)buttonIndex
