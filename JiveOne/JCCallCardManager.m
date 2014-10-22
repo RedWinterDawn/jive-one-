@@ -131,6 +131,9 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 	if (_warmTransferNumber) {
 		[_sipHandler attendedRefer:_warmTransferNumber completion:^(bool success, NSError *error) {
             completion(success);
+            if (error) {
+                NSLog(@"%@", [error description]);
+            }
         }];
 	}
 }

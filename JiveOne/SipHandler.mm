@@ -589,7 +589,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return;
     }
 	
-    completion(false, [NSError errorWithDomain:@"Warm Tranfer failed" code:0 userInfo:nil]);
+    completion(false, [NSError errorWithDomain:@"Warm Tranfer failed" code:error userInfo:nil]);
     [currentLine setMCallState:JCTransferFailed];
 }
 
