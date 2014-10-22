@@ -47,7 +47,14 @@ NSString *const kJCCallCardCollectionConferenceCallCellReuseIdentifier = @"Confe
 -(void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
-    [self.collectionViewLayout performSelector:@selector(invalidateLayout) withObject:nil afterDelay:0];
+    [self performSelector:@selector(refreshLayout) withObject:nil afterDelay:0];
+}
+
+-(void)refreshLayout
+{
+    if (self.collectionViewLayout) {
+        [self.collectionViewLayout invalidateLayout];
+    }
 }
 
 -(void)dealloc
