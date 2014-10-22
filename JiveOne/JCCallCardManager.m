@@ -17,7 +17,6 @@ NSString *const kJCCallCardManagerRemoveIncomingCallNotification    = @"removedI
 
 NSString *const kJCCallCardManagerAddedCurrentCallNotification = @"addedCurrentCall";
 NSString *const kJCCallCardManagerRemoveCurrentCallNotification = @"removedCurrentCall";
-NSString *const kJCCallCardManagerTransferFailed = @"tranferFailed";
 
 NSString *const kJCCallCardManagerAddedConferenceCallNotification   = @"addedConferenceCall";
 NSString *const kJCCallCardManagerRemoveConferenceCallNotification   = @"removeConferenceCall";
@@ -82,8 +81,6 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
     newCallCard.started = [NSDate date];
 	[self removeIncomingCall:newCallCard];
 	[self addCurrentCallCard:newCallCard];
-    
-    
 }
 
 -(void)hangUpCall:(JCCallCard *)callCard remote:(BOOL)remote
@@ -358,11 +355,6 @@ NSString *const kJCCallCardManagerActiveCall    = @"activeCall";
                                                                  kJCCallCardManagerUpdateCount : [NSNumber numberWithInteger:self.calls.count],
                                                                  kJCCallCardManagerAddedCells : addCalls
                                                                  }];
-}
-
-- (void)transferFailed:(JCCallCard *)callCard
-{
-	[[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerTransferFailed object:self userInfo:@{kJCCallCardManagerLastCallState:[NSNumber numberWithInt:callCard.lastState]}];
 }
 
 @end

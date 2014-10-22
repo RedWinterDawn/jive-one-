@@ -66,7 +66,6 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         JCCallCardManager *manager = [JCCallCardManager sharedManager];
         [center addObserver:self selector:@selector(callHungUp:) name:kJCCallCardManagerRemoveCurrentCallNotification object:manager];
         [center addObserver:self selector:@selector(addCurrentCall:) name:kJCCallCardManagerAddedCurrentCallNotification object:manager];
-		[center addObserver:self selector:@selector(transferFailed:) name:kJCCallCardManagerTransferFailed object:manager];
     }
     return self;
 }
@@ -414,30 +413,11 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 -(void)callHungUp:(NSNotification *)notification
 {
     JCCallCardManager *callManager = (JCCallCardManager *)notification.object;
-	NSDictionary *userInfo = [notification userInfo];
-	
-	if (userInfo[kJCCallCardManagerLastCallState]) {
-		JCCall lastState = [userInfo[kJCCallCardManagerLastCallState] intValue];
-		if (lastState == JCTransferSuccess) {
-			[self showTransferSuccess];
-			return;
-			// in the future when we handle more than 2 calls we might want to
-			// briefly display the transfer success but come back to possible
-			// other ongoing calls.
-		}
-	}
-	
-	
     NSUInteger count = callManager.calls.count;
     if(count == 0)
         [self closeCallerViewController];
     else if (count == 1)
         [self.callOptionsView setState:JCCallOptionViewSingleCallState animated:YES];
-}
-
-- (void)transferFailed:(NSNotification *)notification
-{
-	NSLog(@"Transfer Failed");
 }
 
 #pragma mark - Delegate Handlers -

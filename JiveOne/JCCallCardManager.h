@@ -17,7 +17,6 @@ extern NSString *const kJCCallCardManagerRemoveIncomingCallNotification;
 
 extern NSString *const kJCCallCardManagerAddedCurrentCallNotification;
 extern NSString *const kJCCallCardManagerRemoveCurrentCallNotification;
-extern NSString *const kJCCallCardManagerTransferFailed;
 
 extern NSString *const kJCCallCardManagerAddedConferenceCallNotification;
 extern NSString *const kJCCallCardManagerRemoveConferenceCallNotification;
@@ -52,8 +51,6 @@ typedef enum : NSUInteger {
 
 -(void)mergeCalls:(void (^)(bool success))completion;
 -(void)splitCalls;
-
-- (void)transferFailed:(JCCallCard *)callCard;
 
 @end
 
