@@ -219,6 +219,7 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
         [_cardInfoView layoutIfNeeded];
         weakSelf.actionView.backgroundColor = _defaultCallActionsColor;
         weakSelf.highlighted = false;
+        weakSelf.endCallButton.alpha = 1;
     } copy];
     
     if (animated)
@@ -267,6 +268,7 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
         [_cardInfoView layoutIfNeeded];
         weakSelf.actionView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.35/2];
         weakSelf.highlighted = true;
+        weakSelf.endCallButton.alpha = HOLD_PULSE_OPACITY_TO_VALUE;
     } copy];
     
     if (animated)
