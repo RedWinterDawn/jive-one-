@@ -63,10 +63,6 @@ NSString *const kJCVoicemailCellIdentifier = @"VoicemailCell";
     self.refreshControl = refreshControl;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main-logo.png"]];
-    imageView.contentMode = UIViewContentModeCenter;
-    self.tableView.backgroundView = imageView;
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadVoicemails) name:@"kApplicationDidBecomeActive" object:nil];
     
     [Voicemail fetchVoicemailInBackground];
@@ -110,8 +106,8 @@ NSString *const kJCVoicemailCellIdentifier = @"VoicemailCell";
         [self.voicemails removeAllObjects];
     }
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"deleted ==[c] %@", [NSNumber numberWithBool:NO]];
-    self.voicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAllSortedBy:@"timeStamp" ascending:NO withPredicate:predicate]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"markForDeletion ==[c] %@", [NSNumber numberWithBool:NO]];
+    self.voicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAllSortedBy:@"date" ascending:NO withPredicate:predicate]];
     
     
     [self.tableView reloadData];

@@ -18,13 +18,15 @@
 // Managers
 #import "JCCallCardManager.h"   // Handles call cards, and managed calls
 #import "SipHandler.h"          // Direct access to the lower level sip manager.
+#import <MBProgressHUD.h>
 
 // Presented View Controllers
 #import "JCTransferViewController.h"                // Shows dial pad to dial for blind, warm transfer and additional call.
-#import "JCKeyboardViewController.h"                // Numberpad
+#import "JCKeypadViewController.h"                  // Numberpad
 #import "JCTransferConfirmationViewController.h"    // Transfer confimation view controller
+#import "JCCallCardCollectionViewController.h"
 
-#define CALL_OPTIONS_ANIMATION_DURATION 0.5
+#define CALL_OPTIONS_ANIMATION_DURATION 0.6
 #define TRANSFER_ANIMATION_DURATION 0.3
 #define KEYBOARD_ANIMATION_DURATION 0.3
 
@@ -33,12 +35,18 @@ NSString *const kJCCallerViewControllerKeyboardStoryboardIdentifier = @"keyboard
 
 NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"blindTransferComplete";
 
-@interface JCCallerViewController () <JCTransferViewControllerDelegate, JCKeyboardViewControllerDelegate>
+@interface JCCallerViewController () <JCTransferViewControllerDelegate, JCKeypadViewControllerDelegate>
 {
     UIViewController *_presentedTransferViewController;
     UIViewController *_presentedKeyboardViewController;
-    
     NSTimeInterval _defaultCallOptionViewConstraint;
+	MBProgressHUD *hud;
+	
+	NSDictionary *_warmTransferInfo;
+    
+    bool _showingCallOptions;
+    
+    JCCallCardCollectionViewController *_callCardCollectionViewController;
 }
 
 @end
@@ -58,6 +66,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         JCCallCardManager *manager = [JCCallCardManager sharedManager];
         [center addObserver:self selector:@selector(callHungUp:) name:kJCCallCardManagerRemoveCurrentCallNotification object:manager];
         [center addObserver:self selector:@selector(addCurrentCall:) name:kJCCallCardManagerAddedCurrentCallNotification object:manager];
+		[center addObserver:self selector:@selector(transferFailed:) name:kJCCallCardManagerTransferFailed object:manager];
     }
     return self;
 }
@@ -76,9 +85,14 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     [self setCallOptionsHidden:_callOptionsHidden animated:NO];
 }
 
+-(UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+
 -(void)awakeFromNib
 {
-    _defaultCallOptionViewConstraint = 202;
+    _defaultCallOptionViewConstraint = 229;
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -86,9 +100,12 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     UIViewController *viewController = segue.destinationViewController;
     if ([viewController isKindOfClass:[JCTransferConfirmationViewController class]])
     {
-        //JCTransferConfirmationViewController *transferConfirmationViewController = (JCTransferConfirmationViewController *)viewController;
-        
-        // TODO: Pass Data Array of call cards from transfer result to view controller to transfer completion.
+        JCTransferConfirmationViewController *transferConfirmationViewController = (JCTransferConfirmationViewController *)viewController;
+        transferConfirmationViewController.transferInfo = _warmTransferInfo;
+    }
+    else if ([viewController isKindOfClass:[JCCallCardCollectionViewController class]])
+    {
+        _callCardCollectionViewController = (JCCallCardCollectionViewController *)viewController;
     }
 }
 
@@ -136,7 +153,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         
         if (!_presentedKeyboardViewController)
         {
-            JCKeyboardViewController *keyboardViewController = [self.storyboard instantiateViewControllerWithIdentifier:kJCCallerViewControllerKeyboardStoryboardIdentifier];
+            JCKeypadViewController *keyboardViewController = [self.storyboard instantiateViewControllerWithIdentifier:kJCCallerViewControllerKeyboardStoryboardIdentifier];
             keyboardViewController.delegate = self;
             [self presentKeyboardViewController:keyboardViewController];
         }
@@ -181,13 +198,33 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(IBAction)swapCall:(id)sender
 {
-    // TODO: Swap current calls.
-
+	
 }
 
 -(IBAction)mergeCall:(id)sender
 {
-    // TODO: Merge two calls.
+    if ([sender isKindOfClass:[UIButton class]]){
+        UIButton *button = (UIButton *)sender;
+        button.selected = !button.selected;
+		
+
+        if (button.selected) {
+            [[JCCallCardManager sharedManager] mergeCalls:^(bool success) {
+				if (success) {
+					self.mergeLabel.text = @"Split Calls";
+				}
+				else
+				{
+					button.selected = !button.selected;
+					[self showHudWithTitle:@"Oh-oh" detail:@"Failed to Create Conference"];
+				}
+			}];
+			
+        } else {
+            [[JCCallCardManager sharedManager] splitCalls];
+            self.mergeLabel.text = @"Merge Calls";
+        }
+    }
 }
 
 -(IBAction)finishTransfer:(id)sender
@@ -196,6 +233,30 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         if (success)
             [self showTransferSuccess];
     }];
+}
+
+#pragma -mark HUD Operations
+- (void)showHudWithTitle:(NSString*)title detail:(NSString*)detail
+{
+	if (!hud) {
+		hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+		hud.mode = MBProgressHUDModeText;
+			}
+	
+	hud.labelText = title;
+	hud.detailsLabelText = detail;
+	[hud hide:YES afterDelay:2.0];
+	[hud show:YES];
+}
+
+- (void)hideHud
+{
+	//    self.doneLoadingContent = YES;
+	if (hud) {
+		[MBProgressHUD hideHUDForView:self.view animated:YES];
+		[hud removeFromSuperview];
+		hud = nil;
+	}
 }
 
 #pragma mark - Private -
@@ -211,6 +272,8 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     [UIView animateWithDuration:animated ? _callOptionTransitionAnimationDuration : 0
                      animations:^{
                          [weakView layoutIfNeeded];
+                     } completion:^(BOOL finished) {
+                         _showingCallOptions = false;
                      }];
 }
 
@@ -219,17 +282,25 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
  */
 -(void)showCallOptionsAnimated:(bool)animated
 {
-    __unsafe_unretained UIView *weakView = self.view;
+    if (_showingCallOptions)
+        return;
+    
     _callOptionsViewOriginYConstraint.constant = _defaultCallOptionViewConstraint;
-    [weakView setNeedsUpdateConstraints];
-    [weakView layoutIfNeeded];
+    [self.view setNeedsUpdateConstraints];
+    [_callCardCollectionViewController.collectionView reloadData];
+    __unsafe_unretained UIView *weakView = self.view;
+    [UIView animateWithDuration:animated ? 0.1 : 0
+                     animations:^{
+                         [weakView layoutIfNeeded];
+                     }
+                     completion:NULL];
+    
     [UIView transitionWithView:self.view
                       duration:_callOptionTransitionAnimationDuration
                        options:UIViewAnimationOptionTransitionFlipFromRight
-                    animations:^{
-                        
-                    } completion:^(BOOL finished) {
-                        
+                    animations:NULL
+                    completion:^(BOOL finished) {
+                        _showingCallOptions = true;
                     }];
 }
 
@@ -343,6 +414,20 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 -(void)callHungUp:(NSNotification *)notification
 {
     JCCallCardManager *callManager = (JCCallCardManager *)notification.object;
+	NSDictionary *userInfo = [notification userInfo];
+	
+	if (userInfo[kJCCallCardManagerLastCallState]) {
+		JCCall lastState = [userInfo[kJCCallCardManagerLastCallState] intValue];
+		if (lastState == JCTransferSuccess) {
+			[self showTransferSuccess];
+			return;
+			// in the future when we handle more than 2 calls we might want to
+			// briefly display the transfer success but come back to possible
+			// other ongoing calls.
+		}
+	}
+	
+	
     NSUInteger count = callManager.calls.count;
     if(count == 0)
         [self closeCallerViewController];
@@ -350,11 +435,16 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         [self.callOptionsView setState:JCCallOptionViewSingleCallState animated:YES];
 }
 
+- (void)transferFailed:(NSNotification *)notification
+{
+	NSLog(@"Transfer Failed");
+}
+
 #pragma mark - Delegate Handlers -
 
 #pragma mark JCKeyboardViewController
 
--(void)keyboardViewController:(JCKeyboardViewController *)controller didTypeNumber:(NSString *)typedNumber
+-(void)keypadViewController:(JCKeypadViewController *)controller didTypeNumber:(NSString *)typedNumber
 {
 	NSInteger tag = [typedNumber integerValue];
 	char dtmf = tag;
@@ -398,12 +488,16 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     [[JCCallCardManager sharedManager] dialNumber:dialString type:dialType completion:^(bool success, NSDictionary *callInfo) {
         if (success)
         {
-            if (dialType == JCCallCardDialWarmTransfer)
+			if (dialType == JCCallCardDialWarmTransfer) {
                 [self.callOptionsView setState:JCCallOptionViewFinishTransferState animated:YES];
-            else if(dialType == JCCallCardDialBlindTransfer)
-                [self showTransferSuccess];
-            else
+				_warmTransferInfo = callInfo;
+			}
+			else if(dialType == JCCallCardDialBlindTransfer) {
+                [self closeCallerViewController];
+			}
+			else {
                 [self.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];
+			}
         }
     }];
 }

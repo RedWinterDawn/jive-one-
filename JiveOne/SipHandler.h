@@ -31,10 +31,13 @@ extern NSString *const kSipHandlerRegisteredSelectorKey;
 - (JCLineSession *) makeCall:(NSString*)callee videoCall:(BOOL)videoCall contactName:(NSString *)contactName;
 - (void)answerCall;
 - (void) hangUpCallWithSession:(long)sessionId;
+- (void) hangUpAll;
 - (void) holdCall;
+- (bool)setConference:(bool)conference;
 //- (void) unholdCall;
 //- (void) hangUpCall;
-- (void) referCall:(NSString*)referTo;
+- (void) referCall:(NSString*)referTo completion:(void (^)(bool success, NSError *error))completion;        // Blind Transfer
+- (void) attendedRefer:(NSString*)referTo completion:(void (^)(bool success, NSError *error))completion;    // warm Transfer
 - (void) muteCall:(BOOL)mute;
 - (void) setLoudspeakerStatus:(BOOL)enable;
 - (void)toggleHoldForLineWithSessionId:(long)sessionId;

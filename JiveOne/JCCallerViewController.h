@@ -23,6 +23,8 @@
 @property (nonatomic, weak) IBOutlet JCCallOptionsView *callOptionsView;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *callOptionsViewOriginYConstraint;
 
+@property (nonatomic, weak) IBOutlet UILabel *mergeLabel;
+
 @property (nonatomic) bool callOptionsHidden;
 @property (nonatomic) NSTimeInterval callOptionTransitionAnimationDuration;
 @property (nonatomic) NSTimeInterval transferAnimationDuration;

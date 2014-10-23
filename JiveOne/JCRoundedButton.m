@@ -10,27 +10,42 @@
 #import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIKit.h>
 
+#define DEFAULT_SELECTED_BACKGROUND_COLOR [UIColor whiteColor]
+
 @implementation JCRoundedButton
 
--(void)layoutSubviews{
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        _selectedBackgroundColor = DEFAULT_SELECTED_BACKGROUND_COLOR;
+    }
+    return self;
+}
+
+
+-(void)awakeFromNib
+{
+    _defaultBackgroundColor = self.backgroundColor;
+    self.selected = self.selected;
+}
+
+-(void)layoutSubviews
+{
     [super layoutSubviews];
     self.layer.cornerRadius = self.bounds.size.width/2;
-    if (self.selected) {
-        self.backgroundColor = [UIColor whiteColor];
-    }
-    else{
-        self.backgroundColor = [UIColor colorWithWhite:1 alpha:.2];
-    }
     self.layer.masksToBounds = true;
 }
 
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+-(void)setSelected:(BOOL)selected
+{
+    [super setSelected:selected];
+    if (selected) {
+        self.backgroundColor = _selectedBackgroundColor;
+    }
+    else{
+        self.backgroundColor = _defaultBackgroundColor; // [UIColor colorWithWhite:1 alpha:.2];
+    }
 }
-*/
 
 @end

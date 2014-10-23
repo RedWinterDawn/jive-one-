@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JCKeypadView : UIView
-@property (nonatomic, weak)IBOutlet UIView *keypadAreaView;
+@interface JCKeypadOverlayView : UIView
+
+@property (nonatomic, weak) IBOutlet UIView *keypadView;
 
 @end

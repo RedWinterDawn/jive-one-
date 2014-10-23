@@ -16,52 +16,62 @@
 
 static inline double radians (double degrees) { return degrees * M_PI/180; }
 
-+(NSString *) shortDateFromTimestamp:(NSNumber *)timestamp
++(NSString *)formattedModifiedShortDateFromTimestamp:(NSNumber *)timestamp
 {
     NSTimeInterval timeInterval = [timestamp longLongValue];// Depending of how the service give us the unix timestamp, we might need to devide it by 1000: /1000;
     NSDate *date = [[NSDate alloc]initWithTimeIntervalSince1970: timeInterval];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.timeZone = [NSTimeZone defaultTimeZone];
+    return [Common formattedModifiedShortDate:date];
+}
+
++(NSString *)formattedModifiedShortDate:(NSDate *)date
+{
+    static NSDateFormatter *shortDateFormatter;
+    static dispatch_once_t pred;        // Lock
+    dispatch_once(&pred, ^{             // This code is called at most once per app
+        shortDateFormatter = [[NSDateFormatter alloc] init];
+        shortDateFormatter.timeZone = [NSTimeZone defaultTimeZone];
+    });
     
     int days = (int)[self differenceInDaysToDate:date];
-    
-    if (days == 0) {
-        [formatter setDateFormat:@"HH:mm a"];
-        NSString* hour = [formatter stringFromDate:date];
-        //return [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"Today", @"Today"), hour];
+    if (days == 0){
+        [shortDateFormatter setDateFormat:@"HH:mm a"];
+        NSString* hour = [shortDateFormatter stringFromDate:date];
         return hour;
-    } else if (days == -1) {
-        //[formatter setDateFormat:@"HH:mm a"];
-        //NSString* hour = [formatter stringFromDate:date];
-        //return [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"Yesterday", @"Yesterday"), hour];
+    } else if (days == -1){
         return NSLocalizedString(@"Yesterday", @"Yesterday");
     } else if (days < -1 && days > -6) {
-        //[formatter setDateFormat:@"EEEE HH:mm a"];
-        [formatter setDateFormat:@"EEE"];
-        return [formatter stringFromDate:date];
+        [shortDateFormatter setDateFormat:@"EEE"];
+        return [shortDateFormatter stringFromDate:date];
     }else{
-        [formatter setDateFormat:@"MMM d"];
-        return [formatter stringFromDate:date];
+        [shortDateFormatter setDateFormat:@"MMM d"];
+        return [shortDateFormatter stringFromDate:date];
     }
 }
-+(NSString*) longDateFromTimestamp:(NSNumber*)timestamp{
+
++(NSString *)formattedLongDateFromTimestamp:(NSNumber*)timestamp{
     
     NSTimeInterval timeInterval = [timestamp longLongValue]/1000;
     NSDate *date = [[NSDate alloc]initWithTimeIntervalSince1970: timeInterval];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.timeZone = [NSTimeZone defaultTimeZone];
+    return [Common formattedLongDate:date];
+}
 
-    [formatter setDateFormat:@"M/dd/yyyy hh:mm a"];//TODO: check this works in october
-    NSTimeZone *timezone = [NSTimeZone defaultTimeZone];
-    formatter.timeZone = timezone;
-    return [formatter stringFromDate:date];
++(NSString *)formattedLongDate:(NSDate *)date
+{
+    static NSDateFormatter *longDateFormatter;
+    static dispatch_once_t pred;
+    dispatch_once(&pred, ^{
+        longDateFormatter = [[NSDateFormatter alloc] init];
+        longDateFormatter.timeZone = [NSTimeZone defaultTimeZone];
+        [longDateFormatter setDateFormat:@"M/dd/yyyy hh:mm a"];
+    });
+    return [longDateFormatter stringFromDate:date];
 }
 
 +(NSString *) shortDateFromTimestampDate:(NSDate *)date{
     return [NSString stringWithFormat:@"%@", date];
 }
 
-+(NSDate *)NSDateFromTimestap:(NSNumber *)timestamp
++(NSDate *)dateFromTimestamp:(NSNumber *)timestamp
 {
     NSTimeInterval timeInterval = [timestamp longLongValue]/1000;
     NSDate *date = [[NSDate alloc]initWithTimeIntervalSince1970: timeInterval];
