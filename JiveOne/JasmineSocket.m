@@ -116,8 +116,9 @@ static BOOL closedSocketOnPurpose;
     NSLog(@"The websocket handshake completed and is now open!");
     [[NSNotificationCenter defaultCenter] postNotificationName:@"socketDidOpen" object:nil];
 }
+
 - (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message {
-    NSLog(@"The websocket received a message: %@", message);
+//    NSLog(@"The websocket received a message: %@", message);
     
     NSData *data = [message dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *messageDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];

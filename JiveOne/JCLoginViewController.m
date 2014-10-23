@@ -327,14 +327,15 @@
         [Flurry logEvent:@"First Login"];
         [self hideHud];
         [self performSegueWithIdentifier: @"AppTutorialSegue" sender:self];
+        [self fetchProvisioningConfig];
+        [self fetchMyMailboxes];
     }
     else
     {
         [self showHudWithTitle:@"One Moment Please" detail:@"Loading data"];
-    }
-
-	[self fetchProvisioningConfig];
-	[self fetchMyMailboxes];
+        [self fetchProvisioningConfig];
+        [self fetchMyMailboxes];
+        }
 }
 
 #pragma mark - Fetch initial data
@@ -625,7 +626,7 @@
 {
     NSLog(@"errorInitializingApp: %@",err);
     [self hideHud];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Server Unavailable", nil) message: NSLocalizedString(@"We could not connect to the server at this time. Please try again", nil) delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Server Unavailable", nil) message: NSLocalizedString(@"We could not connect to the server at this time. Make sure you have internet connection", nil) delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
     
     [alert show];
     [[JCAuthenticationManager sharedInstance] logout:self];
