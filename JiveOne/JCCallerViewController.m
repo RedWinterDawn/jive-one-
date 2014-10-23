@@ -64,8 +64,8 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         JCCallCardManager *manager = [JCCallCardManager sharedManager];
-        [center addObserver:self selector:@selector(callHungUp:) name:kJCCallCardManagerRemoveCurrentCallNotification object:manager];
-        [center addObserver:self selector:@selector(addCurrentCall:) name:kJCCallCardManagerAddedCurrentCallNotification object:manager];
+        [center addObserver:self selector:@selector(answeredCall:) name:kJCCallCardManagerUpdateCallNotification object:manager];
+        [center addObserver:self selector:@selector(removedCall:) name:kJCCallCardManagerRemoveCallNotification object:manager];
     }
     return self;
 }
@@ -401,15 +401,16 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
  * Notification recieved when a call has been added to the call card manager. Can happen after a call has been added via
  * the add call or warm call, or after an incominc call is answered.
  */
--(void)addCurrentCall:(NSNotification *)notification
+-(void)answeredCall:(NSNotification *)notification
 {
-    self.callOptionsHidden = false;
+    if (!_showingCallOptions)
+        self.callOptionsHidden = false;
 }
 
 /**
  * Notification when a call has been been removed and we shoudl possibly respond to close the view.
  */
--(void)callHungUp:(NSNotification *)notification
+-(void)removedCall:(NSNotification *)notification
 {
     JCCallCardManager *callManager = (JCCallCardManager *)notification.object;
     NSUInteger count = callManager.calls.count;

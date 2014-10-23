@@ -23,10 +23,9 @@ NSString *const kJCCallCardCollectionConferenceCallCellReuseIdentifier = @"Confe
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         JCCallCardManager *callCardManager = [JCCallCardManager sharedManager];
         
-        [center addObserver:self selector:@selector(addedCallCardNotification:) name:kJCCallCardManagerAddedIncomingCallNotification object:callCardManager];
-        [center addObserver:self selector:@selector(callCardRemovedNotification:) name:kJCCallCardManagerRemoveIncomingCallNotification object:callCardManager];
-        [center addObserver:self selector:@selector(addedCallCardNotification:) name:kJCCallCardManagerAddedCurrentCallNotification object:callCardManager];
-        [center addObserver:self selector:@selector(callCardRemovedNotification:) name:kJCCallCardManagerRemoveCurrentCallNotification object:callCardManager];
+        [center addObserver:self selector:@selector(addedCall:) name:kJCCallCardManagerAddedCallNotification object:callCardManager];
+        [center addObserver:self selector:@selector(removedCall:) name:kJCCallCardManagerRemoveCallNotification object:callCardManager];
+        [center addObserver:self selector:@selector(updateCall:) name:kJCCallCardManagerUpdateCallNotification object:callCardManager];
         
         [center addObserver:self selector:@selector(addedConferenceCallNotification:) name:kJCCallCardManagerAddedConferenceCallNotification object:callCardManager];
         [center addObserver:self selector:@selector(removeConferenceCallNotification:) name:kJCCallCardManagerRemoveConferenceCallNotification object:callCardManager];
@@ -62,45 +61,59 @@ NSString *const kJCCallCardCollectionConferenceCallCellReuseIdentifier = @"Confe
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
--(void)addedCallCardNotification:(NSNotification *)notification
+-(void)addedCall:(NSNotification *)notification
 {
     NSDictionary *userInfo = notification.userInfo;
-    NSNumber *priorCount = [userInfo objectForKey:kJCCallCardManagerPriorUpdateCount];
-    if (priorCount.intValue < 1)
-    {
+    int count = [[userInfo objectForKey:kJCCallCardManagerPriorUpdateCount] intValue];
+    if (count < 1)
         return;
-    }
     
+    // We only care about animating the add call where out count is > 0 items. If we already have a call, we are showing
+    // the collection, so we animate the insertion of a row at the provided index.
     NSNumber *index = [userInfo objectForKey:kJCCallCardManagerUpdatedIndex];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index.integerValue inSection:0];
-    [self.collectionView performBatchUpdates:^{
-        [self.collectionView insertItemsAtIndexPaths:@[indexPath]];
+    __unsafe_unretained UICollectionView *collectionView = self.collectionView;
+    [collectionView performBatchUpdates:^{
+        [collectionView insertItemsAtIndexPaths:@[indexPath]];
     } completion:nil];
 }
 
--(void)callCardRemovedNotification:(NSNotification *)notification
+-(void)updateCall:(NSNotification *)notification
+{
+    // When we transition a call from an incoming call to a current call the update gets triggered, and we reload the
+    // cell the coresponds to the index of that call that was answered.
+    NSDictionary *userInfo = notification.userInfo;
+    NSInteger index = [[userInfo objectForKey:kJCCallCardManagerUpdatedIndex] integerValue];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+    __unsafe_unretained UICollectionView *collectionView = self.collectionView;
+    [collectionView performBatchUpdates:^{
+        [collectionView reloadItemsAtIndexPaths:@[indexPath]];
+    } completion:nil];
+}
+
+-(void)removedCall:(NSNotification *)notification
 {
     NSDictionary *userInfo = notification.userInfo;
-    NSNumber *count = [userInfo objectForKey:kJCCallCardManagerUpdateCount];
-    if (count.intValue < 1)
-    {
+    int count = [[userInfo objectForKey:kJCCallCardManagerUpdateCount] intValue];
+    if (count < 1)
         return;
-    }
     
-    NSNumber *index = [userInfo objectForKey:kJCCallCardManagerUpdatedIndex];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index.integerValue inSection:0];
-    [self.collectionView performBatchUpdates:^{
-        [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
+    NSInteger index = [[userInfo objectForKey:kJCCallCardManagerUpdatedIndex] integerValue];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+    __unsafe_unretained UICollectionView *collectionView = self.collectionView;
+    [collectionView performBatchUpdates:^{
+        [collectionView deleteItemsAtIndexPaths:@[indexPath]];
     } completion:nil];
 }
 
 -(void)addedConferenceCallNotification:(NSNotification *)notification
 {
+    __unsafe_unretained UICollectionView *collectionView = self.collectionView;
     [UIView transitionWithView:self.view
                       duration:0.3
                        options:UIViewAnimationOptionTransitionFlipFromRight
                     animations:^{
-                        [self.collectionView reloadData];
+                        [collectionView reloadData];
                     } completion:^(BOOL finished) {
                         
                     }];
@@ -108,11 +121,12 @@ NSString *const kJCCallCardCollectionConferenceCallCellReuseIdentifier = @"Confe
 
 -(void)removeConferenceCallNotification:(NSNotification *)notification
 {
-   [UIView transitionWithView:self.view
+    __unsafe_unretained UICollectionView *collectionView = self.collectionView;
+    [UIView transitionWithView:self.view
                       duration:0.3
                        options:UIViewAnimationOptionTransitionFlipFromLeft
                     animations:^{
-                        [self.collectionView reloadData];
+                        [collectionView reloadData];
                     } completion:^(BOOL finished) {
                         
                     }];
