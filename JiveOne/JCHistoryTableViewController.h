@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JCHistoryCell.h"
+#import "JCFetchedResultsTableViewController.h"
 
-@interface JCHistoryTableViewController : UITableViewController
+@interface JCHistoryTableViewController : JCFetchedResultsTableViewController
 
 @property (nonatomic, strong) NSFetchRequest *fetchRequest;
 
