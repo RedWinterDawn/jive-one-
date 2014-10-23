@@ -7,8 +7,6 @@
 //
 
 #import "JCHistoryTableViewController.h"
-#import <CoreData/CoreData.h>
-#import <MagicalRecord/MagicalRecord.h>
 #import "JCHistoryCell.h"
 #import "JCCallerViewController.h"
 #import "Call.h"
@@ -23,12 +21,6 @@ NSString *const kJCHistoryTableViewControllerCellReuseIdentifier = @"JCHistoryCe
 @end
 
 @implementation JCHistoryTableViewController
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-}
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
