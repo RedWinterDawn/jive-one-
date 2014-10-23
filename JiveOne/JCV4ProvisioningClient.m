@@ -92,7 +92,7 @@
 													 returningResponse:&response
 																 error:&error];
 		if (error) {
-			// Deal with your error
+			// Deal with error
 			if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
 				NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
 				NSLog(@"HTTP Error: %ld %@", (long)httpResponse.statusCode, error);
