@@ -616,8 +616,8 @@
 {
 	alreadyMakingMyContactRequest = NO;
 	alreadyMakingContactsRequest = NO;
-    [self performSegueWithIdentifier: @"LoginToTabBarSegue" sender: self];
-    //[(JCAppDelegate *)[UIApplication sharedApplication].delegate changeRootViewController:JCRootTabbarViewController];
+    //[self performSegueWithIdentifier: @"LoginToTabBarSegue" sender: self];
+    [(JCAppDelegate *)[UIApplication sharedApplication].delegate changeRootViewController:JCRootTabbarViewController];
 }
 
 
