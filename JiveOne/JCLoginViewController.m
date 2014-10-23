@@ -205,7 +205,7 @@
         } completion: ^(BOOL finished){
             if(finished) {
             }
-            [self showHudWithTitle:@"One Moment Please" detail:@"Logging In"];
+            [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil) detail:NSLocalizedString(@"Logging In", nil)];
         }];
         
         [[JCAuthenticationManager sharedInstance] loginWithUsername:self.usernameTextField.text password:self.passwordTextField.text completed:^(BOOL success, NSError *error) {
@@ -215,7 +215,7 @@
             }
             else {
                 if (error.userInfo[@"error"]) {
-                    [self alertStatus:@"Authentication Error" message:error.userInfo[@"error"]];
+                    [self alertStatus:NSLocalizedString(@"Authentication Error", nil) message:error.userInfo[@"error"]];
                     NSLog(@"Authentication error: %@", error);
                     [self hideHud];
                     [UIView animateWithDuration:0.50 animations:^{
@@ -224,7 +224,7 @@
                     }];
                 }
                 else {
-                    [self alertStatus:@"Authentication Error" message:error.localizedDescription];
+                    [self alertStatus:NSLocalizedString(@"Authentication Error", nil) message:error.localizedDescription];
                     NSLog(@"Authentication error: %@", error);
                     [self hideHud];
                     [UIView animateWithDuration:0.50 animations:^{
@@ -334,7 +334,6 @@
     }
 
 	[self fetchProvisioningConfig];
-	[self fetchMyMailboxes];
 }
 
 #pragma mark - Fetch initial data
@@ -390,7 +389,13 @@
 			//TODO: talk about logic. We should not prevent the user to get into the app if this fails. They
 			// should still be able to access the rest of the app (directory, VM, etc) and be given a change to
 			// fetch the provisioning file again...but then...do we store user creentials?
+			[self fetchMyMailboxes];
+			
 		}
+		else {
+			[self errorInitializingApp:error];
+		}
+			
 	}];
 }
 
@@ -400,6 +405,8 @@
     NSString * jiveId = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
     [[JCV5ApiClient sharedClient] getMailboxReferencesForUser:jiveId completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
         if(suceeded){
+			[[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
+			[self goToApplication];
             [self fetchVoicemailsMetadata];
         }
 		else {
@@ -425,8 +432,6 @@
         if(suceeded) {
             [[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
         }
-		else {
-					}
 		
 		if (count == lines.count) {
 			[timer invalidate];
@@ -447,13 +452,6 @@
 	if (!alreadyMakingMyContactRequest) {
 		alreadyMakingMyContactRequest = YES;
 		[[JCV5ApiClient sharedClient] RetrieveMyInformation:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-//			if (suceeded) {
-//				[self fetchContacts];
-//			}
-//			else {
-				//maybe it's v4; in any case, we don't want the app to fail here.
-//			}
-			[[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
 			[self fetchContacts];
 		}];
 	}
@@ -615,8 +613,8 @@
 {
 	alreadyMakingMyContactRequest = NO;
 	alreadyMakingContactsRequest = NO;
-    [self performSegueWithIdentifier: @"LoginToTabBarSegue" sender: self];
-    //[(JCAppDelegate *)[UIApplication sharedApplication].delegate changeRootViewController:JCRootTabbarViewController];
+    //[self performSegueWithIdentifier: @"LoginToTabBarSegue" sender: self];
+    [(JCAppDelegate *)[UIApplication sharedApplication].delegate changeRootViewController:JCRootTabbarViewController];
 }
 
 
