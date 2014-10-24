@@ -29,7 +29,9 @@ extern NSString *const kSipHandlerRegisteredSelectorKey;
 
 - (void) pressNumpadButton:(char )dtmf;
 - (JCLineSession *) makeCall:(NSString*)callee videoCall:(BOOL)videoCall contactName:(NSString *)contactName;
-- (void)answerCall;
+
+- (void)answerSession:(JCLineSession *)lineSession completion:(void (^)(bool success, NSError *error))completion;
+
 - (void) hangUpCallWithSession:(long)sessionId;
 - (void) hangUpAll;
 - (bool)setConference:(bool)conference;

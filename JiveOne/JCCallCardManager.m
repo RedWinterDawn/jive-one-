@@ -13,7 +13,7 @@
 #import <MBProgressHUD.h>
 
 NSString *const kJCCallCardManagerAddedCallNotification      = @"addedCall";
-NSString *const kJCCallCardManagerUpdateCallNotification     = @"updatedCall";
+NSString *const kJCCallCardManagerAnswerCallNotification     = @"answerCall";
 NSString *const kJCCallCardManagerRemoveCallNotification     = @"removedCall";
 
 NSString *const kJCCallCardManagerAddedConferenceCallNotification   = @"addedConferenceCall";
@@ -75,14 +75,28 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
         [self internal_dialNumber:dialNumber type:dialType completion:completion];
 }
 
+/**
+ * Answer the call by notifying the sip handler to answer the passed call.
+ */
 -(void)answerCall:(JCCallCard *)callCard
 {
-	[_sipHandler answerCall];
-    callCard.incoming = false;
-    callCard.started = [NSDate date];
-    
-    [self setCallCallHoldState:NO forCard:callCard];
-    [self updateCall:callCard];
+    [_sipHandler answerSession:callCard.lineSession completion:^(bool success, NSError *error) {
+        if (success)
+        {
+            callCard.hold = false;
+            callCard.started = [NSDate date];
+            
+            NSDictionary *userInfo = @{kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:[self.calls indexOfObject:callCard]],
+                                       kJCCallCardManagerIncomingCall: [NSNumber numberWithBool:callCard.isIncoming],
+                                       kJCCallCardManagerLastCallState:[NSNumber numberWithInt:callCard.lastState]};
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerAnswerCallNotification object:self userInfo:userInfo];
+        }
+        else
+        {
+            NSLog(@"%@", [error description]);
+        }
+    }];
 }
 
 -(void)hangUpCall:(JCCallCard *)callCard remote:(BOOL)remote
@@ -273,17 +287,6 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
                                                                  kJCCallCardManagerPriorUpdateCount:[NSNumber numberWithInteger:priorCount],
                                                                  kJCCallCardManagerUpdateCount: [NSNumber numberWithInteger:self.calls.count],
                                                                  kJCCallCardManagerIncomingCall: [NSNumber numberWithBool:callCard.isIncoming]
-                                                                 }];
-}
-
--(void)updateCall:(JCCallCard *)callCard
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerUpdateCallNotification
-                                                        object:self
-                                                      userInfo:@{
-                                                                 kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:[self.calls indexOfObject:callCard]],
-                                                                 kJCCallCardManagerIncomingCall: [NSNumber numberWithBool:callCard.isIncoming],
-                                                                 kJCCallCardManagerLastCallState:[NSNumber numberWithInt:callCard.lastState]
                                                                  }];
 }
 

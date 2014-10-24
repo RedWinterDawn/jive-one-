@@ -13,7 +13,7 @@
 #import "JCLineSession.h"
 
 extern NSString *const kJCCallCardManagerAddedCallNotification;
-extern NSString *const kJCCallCardManagerUpdateCallNotification;
+extern NSString *const kJCCallCardManagerAnswerCallNotification;
 extern NSString *const kJCCallCardManagerRemoveCallNotification;
 
 extern NSString *const kJCCallCardManagerAddedConferenceCallNotification;

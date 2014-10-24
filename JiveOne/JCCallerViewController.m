@@ -64,7 +64,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         JCCallCardManager *manager = [JCCallCardManager sharedManager];
-        [center addObserver:self selector:@selector(answeredCall:) name:kJCCallCardManagerUpdateCallNotification object:manager];
+        [center addObserver:self selector:@selector(answeredCall:) name:kJCCallCardManagerAnswerCallNotification object:manager];
         [center addObserver:self selector:@selector(removedCall:) name:kJCCallCardManagerRemoveCallNotification object:manager];
     }
     return self;
@@ -398,26 +398,34 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 #pragma mark - Notification Handlers -
 
 /**
- * Notification recieved when a call has been added to the call card manager. Can happen after a call has been added via
- * the add call or warm call, or after an incominc call is answered.
+ * Notification recieved when an incoming call has been answered. If we are currently not showing the call options view,
+ * We animate in the showing of the call options view. This would occur if we were recieving an incomming call, with no 
+ * other active calls. If we answer a call while already on the call, we should shown the multiple call state of the 
+ * call options, allowing us to merge or swap calls.
  */
 -(void)answeredCall:(NSNotification *)notification
 {
     if (!_showingCallOptions)
         self.callOptionsHidden = false;
+    
+    NSInteger count = [[notification.userInfo objectForKey:kJCCallCardManagerUpdateCount] integerValue];
+    if (count > 1)
+        [self.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];
 }
 
 /**
- * Notification when a call has been been removed and we shoudl possibly respond to close the view.
+ * Notification when a call has been been removed and we should possibly respond to close the view. We check the number
+ * of calls. If we have no calls, we close the view. If we have a single call, we show the single call state.
  */
 -(void)removedCall:(NSNotification *)notification
 {
-    JCCallCardManager *callManager = (JCCallCardManager *)notification.object;
-    NSUInteger count = callManager.calls.count;
+    NSInteger count = [[notification.userInfo objectForKey:kJCCallCardManagerUpdateCount] integerValue];
     if(count == 0)
         [self closeCallerViewController];
     else if (count == 1)
         [self.callOptionsView setState:JCCallOptionViewSingleCallState animated:YES];
+    else if (count > 1)
+        [self.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];
 }
 
 #pragma mark - Delegate Handlers -

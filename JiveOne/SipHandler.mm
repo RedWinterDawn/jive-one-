@@ -444,25 +444,30 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	return currentSession;
 }
 
-- (void)answerCall
+- (void)answerCall:(void (^)(bool success, NSError *error))completion
 {
-    JCLineSession *currentLine = [self findLineWithRecevingState];
-    if (currentLine) {
-        int nRet = [_mPortSIPSDK answerCall:currentLine.mSessionId videoCall:FALSE];
-        if(nRet == 0)
-        {
-            [currentLine setMSessionState:true];
-            [currentLine setMRecvCallState:false];
-            [currentLine setMVideoState:false];
-        }
-        else {
-            [currentLine reset];
-        }
-        
-    }
-    
     
 }
+
+- (void)answerSession:(JCLineSession *)lineSession completion:(void (^)(bool success, NSError *error))completion
+{
+    if (lineSession)
+    {
+        int error = [_mPortSIPSDK answerCall:lineSession.mSessionId videoCall:FALSE];
+        if(error == 0)
+        {
+            [lineSession setMSessionState:true];
+            [lineSession setMRecvCallState:false];
+            [lineSession setMVideoState:false];
+            completion(true, nil);
+        }
+        else {
+            [lineSession reset];
+            completion(false, [NSError errorWithDomain:@"Unable to answer the call" code:error userInfo:nil]);
+        }
+    }
+}
+
 
 - (void) hangUpCallWithSession:(long)sessionId;
 {

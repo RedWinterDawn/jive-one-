@@ -218,6 +218,11 @@ NSString *const kJCCallCardConferenceString = @"Conference";
     return (_calls && _calls.count > 0);
 }
 
+-(BOOL)isIncoming
+{
+    return _lineSession.mRecvCallState;
+}
+
 #pragma mark - Delegate Handlers -
 
 #pragma mark Line Session Delegate

@@ -25,7 +25,7 @@ NSString *const kJCCallCardCollectionConferenceCallCellReuseIdentifier = @"Confe
         
         [center addObserver:self selector:@selector(addedCall:) name:kJCCallCardManagerAddedCallNotification object:callCardManager];
         [center addObserver:self selector:@selector(removedCall:) name:kJCCallCardManagerRemoveCallNotification object:callCardManager];
-        [center addObserver:self selector:@selector(updateCall:) name:kJCCallCardManagerUpdateCallNotification object:callCardManager];
+        [center addObserver:self selector:@selector(updateCall:) name:kJCCallCardManagerAnswerCallNotification object:callCardManager];
         
         [center addObserver:self selector:@selector(addedConferenceCallNotification:) name:kJCCallCardManagerAddedConferenceCallNotification object:callCardManager];
         [center addObserver:self selector:@selector(removeConferenceCallNotification:) name:kJCCallCardManagerRemoveConferenceCallNotification object:callCardManager];
