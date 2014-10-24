@@ -294,12 +294,11 @@
         NSLog (@"Successfully received the AppTutorialDismissed notification!");
         if (!self.doneLoadingContent) {
 			if (self.errorOccurred) {
-				[self errorInitializingApp:self.errorOccurred];
+				[self errorInitializingApp:self.errorOccurred useError:NO title:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"An Unknown Error has Occurred, please try again", nil)];
 			}
 			else {
 	            [self showHudWithTitle:@"One Moment Please" detail:@"Preparing for first use"];
 			}
-
         }
         else
         {
@@ -323,19 +322,16 @@
 
 - (void)tokenValidityPassed:(NSNotification*)notification
 {
+	[self fetchMyMailboxes];
     if (!self.seenTutorial) {
         [Flurry logEvent:@"First Login"];
         [self hideHud];
         [self performSegueWithIdentifier: @"AppTutorialSegue" sender:self];
-        [self fetchProvisioningConfig];
-        [self fetchMyMailboxes];
     }
     else
     {
         [self showHudWithTitle:@"One Moment Please" detail:@"Loading data"];
     }
-
-	[self fetchProvisioningConfig];
 }
 
 #pragma mark - Fetch initial data
@@ -391,11 +387,13 @@
 			//TODO: talk about logic. We should not prevent the user to get into the app if this fails. They
 			// should still be able to access the rest of the app (directory, VM, etc) and be given a change to
 			// fetch the provisioning file again...but then...do we store user creentials?
-			[self fetchMyMailboxes];
+			[[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
+			[self goToApplication];
+			[self fetchVoicemailsMetadata];
 			
 		}
 		else {
-			[self errorInitializingApp:error];
+			[self errorInitializingApp:error useError:YES title:nil message:nil];
 		}
 			
 	}];
@@ -407,13 +405,19 @@
     NSString * jiveId = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
     [[JCV5ApiClient sharedClient] getMailboxReferencesForUser:jiveId completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
         if(suceeded){
-			[[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
-			[self goToApplication];
-            [self fetchVoicemailsMetadata];
+			NSArray *pbxs = [PBX MR_findAll];
+			if (pbxs.count == 0) {
+				[self errorInitializingApp:error useError:NO title:NSLocalizedString(@"No PBX", nil)	message:NSLocalizedString(@"This username is not associated with any PBX. Please contact your Administrator", nil)];
+			}
+			else if (pbxs.count > 1) {
+				[self errorInitializingApp:error useError:NO title:NSLocalizedString(@"Multiple PBXs", nil)	message:NSLocalizedString(@"This app does not support account with multiple PBXs at this time", nil)];			}
+			else {
+				[self fetchProvisioningConfig];
+			}
         }
 		else {
             self.errorOccurred = error;
-			[self errorInitializingApp:error];
+			[self errorInitializingApp:error useError:NO title:NSLocalizedString(@"Server Unavailable", nil) message:NSLocalizedString(@"We could not reach the server at this time. Please check your connection", nil)];
 		}
     }];
 }
@@ -470,11 +474,6 @@
 				if (self.userIsDoneWithTutorial) {
 					[self goToApplication];
 				}
-//				[self fetchPBXInformation];
-			}
-			else {
-				self.errorOccurred = error;
-				[self errorInitializingApp:error];
 			}
 		}];
 //	}
@@ -621,13 +620,18 @@
 
 
 
-- (void)errorInitializingApp:(NSError*)err
+- (void)errorInitializingApp:(NSError*)err useError:(BOOL)useError title:(NSString *)title message:(NSString *)message
 {
     NSLog(@"errorInitializingApp: %@",err);
     [self hideHud];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Server Unavailable", nil) message: NSLocalizedString(@"We could not connect to the server at this time. Make sure you have internet connection", nil) delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-    
-    [alert show];
+	
+	if (useError) {
+		[self alertStatus:NSLocalizedString(@"An error has occurred", nil) message:err.localizedDescription];
+	}
+	else {
+		[self alertStatus:title message:message];
+	}
+	
     [[JCAuthenticationManager sharedInstance] logout:self];
 }
 
