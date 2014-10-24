@@ -42,12 +42,12 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     NSTimeInterval _defaultCallOptionViewConstraint;
 	MBProgressHUD *hud;
 	
-	NSDictionary *_warmTransferInfo;
-    
     bool _showingCallOptions;
     
     JCCallCardCollectionViewController *_callCardCollectionViewController;
 }
+
+@property (nonatomic, strong) NSDictionary *warmTransferInfo;
 
 @end
 
@@ -174,7 +174,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 -(IBAction)blindTransfer:(id)sender
 {
     JCTransferViewController *transferViewController = [self.storyboard instantiateViewControllerWithIdentifier:kJCCallerViewControllerTransferStoryboardIdentifier];
-    transferViewController.transferType = JCTransferBlind;
+    transferViewController.transferCallType = JCCallCardDialBlindTransfer;
     transferViewController.delegate = self;
     [self presentTransferViewController:transferViewController];
 }
@@ -182,7 +182,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 -(IBAction)warmTransfer:(id)sender
 {
     JCTransferViewController *transferViewController = [self.storyboard instantiateViewControllerWithIdentifier:kJCCallerViewControllerTransferStoryboardIdentifier];
-    transferViewController.transferType = JCTransferWarm;
+    transferViewController.transferCallType = JCCallCardDialWarmTransfer;
     transferViewController.delegate = self;
     [self presentTransferViewController:transferViewController];
 }
@@ -190,7 +190,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 -(IBAction)addCall:(id)sender
 {
     JCTransferViewController *transferViewController = [self.storyboard instantiateViewControllerWithIdentifier:kJCCallerViewControllerTransferStoryboardIdentifier];
-    transferViewController.transferType = JCTransferHold;
+    transferViewController.transferCallType = JCCallCardDialSingle;
     transferViewController.delegate = self;
     [self presentTransferViewController:transferViewController];
 }
@@ -432,60 +432,40 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 #pragma mark JCKeyboardViewController
 
--(void)keypadViewController:(JCKeypadViewController *)controller didTypeNumber:(NSString *)typedNumber
+-(void)keypadViewController:(JCKeypadViewController *)controller didTypeDTMF:(char)dtmf
 {
-	NSInteger tag = [typedNumber integerValue];
-	char dtmf = tag;
-	switch (tag) {
-		case kTAGStar:
-		{
-			dtmf = 10;
-			break;
-		}
-		case kTAGSharp:
-		{
-			dtmf = 11;
-			break;
-		}
-	}
-
     [[SipHandler sharedHandler] pressNumpadButton:dtmf];
 }
-
 
 #pragma mark JCTransferViewController
 
 -(void)transferViewController:(JCTransferViewController *)controller shouldDialNumber:(NSString *)dialString
 {
-    [self dismissTransferViewControllerAnimated:NO];
-	JCCallCardDialTypes dialType = JCCallCardDialSingle;
-    
-    if (controller.transferType == JCTransferBlind)
-    {
-		dialType = JCCallCardDialBlindTransfer;
-    }
-    else if(controller.transferType == JCTransferHold)
-    {
-		dialType = JCCallCardDialSingle;
-    }
-    else if(controller.transferType == JCTransferWarm)
-    {
-		dialType = JCCallCardDialWarmTransfer;
-    }
-    
-    [[JCCallCardManager sharedManager] dialNumber:dialString type:dialType completion:^(bool success, NSDictionary *callInfo) {
+    __unsafe_unretained JCCallerViewController *weakSelf = self;
+    [[JCCallCardManager sharedManager] dialNumber:dialString type:controller.transferCallType completion:^(bool success, NSDictionary *callInfo) {
         if (success)
         {
-			if (dialType == JCCallCardDialWarmTransfer) {
-                [self.callOptionsView setState:JCCallOptionViewFinishTransferState animated:YES];
-				_warmTransferInfo = callInfo;
-			}
-			else if(dialType == JCCallCardDialBlindTransfer) {
-                [self closeCallerViewController];
-			}
-			else {
-                [self.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];
-			}
+            switch (controller.transferCallType) {
+                case JCCallCardDialBlindTransfer:
+                {
+                    [weakSelf dismissTransferViewControllerAnimated:NO];
+                    [weakSelf closeCallerViewController];
+                    break;
+                }
+                case JCCallCardDialWarmTransfer:
+                {
+                    [weakSelf dismissTransferViewControllerAnimated:YES];
+                    [weakSelf.callOptionsView setState:JCCallOptionViewFinishTransferState animated:YES];
+                    weakSelf.warmTransferInfo = callInfo;
+                    break;
+                }
+                default:
+                {
+                    [weakSelf dismissTransferViewControllerAnimated:YES];
+                    [weakSelf.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];
+                    break;
+                }
+            }
         }
     }];
 }
