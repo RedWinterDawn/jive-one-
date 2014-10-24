@@ -74,12 +74,7 @@ NSString *const kJCCallCardConferenceString = @"Conference";
 
 -(void)endCall
 {
-    [[JCCallCardManager sharedManager] hangUpCall:self remote:NO];
-}
-
--(void)endCallRemote
-{
-    [[JCCallCardManager sharedManager] hangUpCall:self remote:YES];
+    [[JCCallCardManager sharedManager] hangUpCall:self];
 }
 
 #pragma mark Conference Calls
@@ -161,7 +156,7 @@ NSString *const kJCCallCardConferenceString = @"Conference";
         case JCCallCanceled:
         case JCTransferSuccess:
         case JCTransferFailed:
-            [self endCallRemote];
+            [[JCCallCardManager sharedManager] removeCall:self];
             break;
         case JCCallPutOnHold:
             self.hold = YES;

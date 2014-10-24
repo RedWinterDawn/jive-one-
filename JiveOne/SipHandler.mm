@@ -202,7 +202,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 {
     if(_initialized)
     {
-		[self hangUpAll];
+        for (JCLineSession *lineSession in _lineSessions) {
+            [self hangUpSession:lineSession completion:NULL];
+        }
         [_mPortSIPSDK unRegisterServer];
         [_mPortSIPSDK unInitialize];
         
@@ -251,23 +253,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             
             // If we are not transitioning from cellular to wifi, reconnect
             if (_previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWWAN && _previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWiFi)
-            {
-                JCLineSession *lineSession = [self findLineWithSessionState];
-                if (lineSession)
-                {
-                    [self hangUpCallWithSession:lineSession.mSessionId];
-                }
-                
                 [self connect:NULL];
-            }
-            
             break;
         }
-        case AFNetworkReachabilityStatusReachableViaWWAN:
-            
-            
-            break;
-            
         default:
             [self connect:NULL];
             break;
@@ -467,46 +455,40 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     }
 }
 
-
-- (void) hangUpCallWithSession:(long)sessionId;
+- (void)hangUpSession:(JCLineSession *)lineSession completion:(void (^)(bool success, NSError *error))completion
 {
-	
-	JCLineSession *selectedLine = [self findSession:sessionId];
-	if (selectedLine.mSessionState)
-	{
-		[_mPortSIPSDK hangUp:selectedLine.mSessionId];
-//		if (mSessionArray[mActiveLine].getVideoState() == true) {
-//			[videoViewController onStopVideo:mSessionArray[mActiveLine].getSessionId()];
-//		}
-		
-	}
-	else if (selectedLine.mRecvCallState)
-	{
-		[_mPortSIPSDK rejectCall:selectedLine.mSessionId code:486];
-	}
-	
-	[selectedLine reset];
-}
-
-- (void)hangUpAll
-{
-	for (JCLineSession *line in self.lineSessions)
-	{
-		if (line.mSessionState)
-		{
-			[_mPortSIPSDK hangUp:line.mSessionId];
-			//		if (mSessionArray[mActiveLine].getVideoState() == true) {
-			//			[videoViewController onStopVideo:mSessionArray[mActiveLine].getSessionId()];
-			//		}
-			
-		}
-		else if (line.mRecvCallState)
-		{
-			[_mPortSIPSDK rejectCall:line.mSessionId code:486];
-		}
-		
-		[line reset];
-	}
+    if (lineSession.mSessionState)
+    {
+        int error = [_mPortSIPSDK hangUp:lineSession.mSessionId];
+        if (error == 0) {
+            [lineSession reset];
+            if (completion != NULL) {
+                completion(true, nil);
+            }
+        }
+        else
+        {
+            if (completion != NULL) {
+                completion(false, [NSError errorWithDomain:@"Error Trying to Hange up" code:error userInfo:nil]);
+            }
+        }
+    }
+    else if (lineSession.mRecvCallState)
+    {
+        int error = [_mPortSIPSDK rejectCall:lineSession.mSessionId code:486];
+        if (error == 0) {
+            [lineSession reset];
+            if (completion != NULL) {
+                completion(true, nil);
+            }
+        }
+        else
+        {
+            if (completion != NULL) {
+                completion(false, [NSError errorWithDomain:@"Error Trying to reject Call" code:error userInfo:nil]);
+            }
+        }
+    }
 }
 
 - (void)switchLines

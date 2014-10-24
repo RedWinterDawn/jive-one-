@@ -45,7 +45,7 @@ typedef enum : NSUInteger {
              type:(JCCallCardDialTypes)dialType
        completion:(void (^)(bool success, NSDictionary *callInfo))completion;
 
--(void)hangUpCall:(JCCallCard *)callCard remote:(BOOL)remote;
+-(void)hangUpCall:(JCCallCard *)callCard;
 
 -(void)setCallCallHoldState:(bool)hold forCard:(JCCallCard *)callCard;
 
@@ -56,6 +56,8 @@ typedef enum : NSUInteger {
 -(void)mergeCalls:(void (^)(bool success))completion;
 -(void)splitCalls;
 -(void)swapCalls;
+
+-(void)removeCall:(JCCallCard *)callCard;
 
 @end
 

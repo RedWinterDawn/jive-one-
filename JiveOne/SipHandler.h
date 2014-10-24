@@ -32,8 +32,8 @@ extern NSString *const kSipHandlerRegisteredSelectorKey;
 
 - (void)answerSession:(JCLineSession *)lineSession completion:(void (^)(bool success, NSError *error))completion;
 
-- (void) hangUpCallWithSession:(long)sessionId;
-- (void) hangUpAll;
+- (void) hangUpSession:(JCLineSession *)lineSession completion:(void (^)(bool success, NSError *error))completion;
+
 - (bool)setConference:(bool)conference;
 //- (void) hangUpCall;
 - (void) referCall:(NSString*)referTo completion:(void (^)(bool success, NSError *error))completion;        // Blind Transfer
