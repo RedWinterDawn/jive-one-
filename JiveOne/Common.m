@@ -157,7 +157,12 @@ static inline double radians (double degrees) { return degrees * M_PI/180; }
 
 #pragma mark - String Utils
 +(BOOL)stringIsNilOrEmpty:(NSString*)aString {
-    return !(aString && aString.length);
+	if ([aString isKindOfClass:[NSNull class]]) {
+		return YES;
+	}
+	else {	
+		return !(aString && aString.length);
+	}
 }
 
 
