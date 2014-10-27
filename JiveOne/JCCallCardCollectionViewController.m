@@ -10,6 +10,8 @@
 #import "JCCallCardManager.h"
 #import "JCCallCardViewCell.h"
 
+#import "JCConferenceCallCard.h"
+
 @implementation JCCallCardCollectionViewController
 
 NSString *const kJCCallCardCollectionCurrentCallCellReuseIdentifier = @"CurrentCallCardCell";
@@ -164,7 +166,7 @@ NSString *const kJCCallCardCollectionConferenceCallCellReuseIdentifier = @"Confe
     JCCallCard *callCard = [self callCardForIndexPath:indexPath];
     if (callCard.isIncoming)
         cell = (JCCallCardViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kJCCallCardCollectionIncomingCallCellReuseIdentifier forIndexPath:indexPath];
-    else if(callCard.isConference)
+    else if([callCard isKindOfClass:[JCConferenceCallCard class]])
         cell = (JCCallCardViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kJCCallCardCollectionConferenceCallCellReuseIdentifier forIndexPath:indexPath];
     else
         cell = (JCCallCardViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kJCCallCardCollectionCurrentCallCellReuseIdentifier forIndexPath:indexPath];

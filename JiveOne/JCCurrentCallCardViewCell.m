@@ -9,6 +9,7 @@
 #import "JCCurrentCallCardViewCell.h"
 
 #import <QuartzCore/QuartzCore.h>
+#import "JCConferenceCallCard.h"
 
 #define HOLD_ANIMATION_DURATION 0.5f
 #define HOLD_ANIMATION_ALPHA 0.6f
@@ -58,38 +59,9 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if ([keyPath isEqualToString:kJCCallCardHoldKey] && self.superview != nil)
+    if ([keyPath isEqualToString:kJCCallCardStatusChangeKey])
     {
-        [self updateHoldState:YES];
-    }
-    else if ([keyPath isEqualToString:kJCCallCardStatusChangeKey])
-    {
-        if (self.callCard.isConference) {
-            [self showHoldButton:YES];
-            [self startTimer];
-        }
-        else
-        {
-            switch (self.callCard.lineSession.mCallState)
-            {
-                case JCCallFailed:
-                case JCCallCanceled:
-                    [self hideHoldButton:NO];
-                    self.elapsedTimeLabel.text = NSLocalizedString(@"CANCELED", nil);
-                    break;
-                case JCNoCall:
-                case JCCallRinging:
-                    [self hideHoldButton:NO];
-                    self.elapsedTimeLabel.text = NSLocalizedString(@"RINGING", nil);
-                    break;
-                case JCCallConnected:
-                    [self showHoldButton:YES];
-                    [self startTimer];
-                    break;
-                default:
-                    break;
-            }
-        }
+        [self updateState:YES];
     }
 }
 
@@ -97,7 +69,6 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
 {
     if (self.callCard != nil)
     {
-        [self.callCard removeObserver:self forKeyPath:kJCCallCardHoldKey];
         [self.callCard removeObserver:self forKeyPath:kJCCallCardStatusChangeKey];
     }
 }
@@ -105,7 +76,7 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
 -(void)willMoveToSuperview:(UIView *)newSuperview
 {
     if (newSuperview)
-        [self updateHoldState:NO];
+        [self updateState:NO];
 }
 
 #pragma mark - Actions -
@@ -121,19 +92,12 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
 -(void)setCallCard:(JCCallCard *)callCard
 {
     JCCallCard *currentCallCard = self.callCard;
-    
-    if (currentCallCard) {
-        [currentCallCard removeObserver:self forKeyPath:kJCCallCardHoldKey];
+    if (currentCallCard && currentCallCard != callCard) {
         [currentCallCard removeObserver:self forKeyPath:kJCCallCardStatusChangeKey];
     }
     
     [super setCallCard:callCard];
-    
-    if (callCard != nil)
-    {
-        [callCard addObserver:self forKeyPath:kJCCallCardHoldKey options:NSKeyValueObservingOptionNew context:NULL];
-        [callCard addObserver:self forKeyPath:kJCCallCardStatusChangeKey options:NSKeyValueObservingOptionInitial context:NULL];
-    }
+    [callCard addObserver:self forKeyPath:kJCCallCardStatusChangeKey options:0 context:NULL];
 }
 
 -(void)setHighlighted:(BOOL)highlighted
@@ -170,7 +134,7 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
     self.holdElapsedTimeLabel.text = [NSString stringWithFormat:kJCCallCardCollectionViewCellTimerFormat, minutes, seconds];
 }
 
--(void)updateHoldState:(BOOL)animated
+-(void)updateState:(BOOL)animated
 {
     if (_holdTimer)
     {
@@ -183,6 +147,39 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
     }
     else {
         [self showConnectedState:animated];
+    }
+    
+    if ([self.callCard isKindOfClass:[JCConferenceCallCard class]])
+    {
+        [self showHoldButton:YES];
+        [self startTimer];
+    }
+    else
+    {
+        switch (self.callCard.lineSession.sessionState)
+        {
+            case JCCallFailed:
+            case JCCallCanceled:
+            {
+                [self hideHoldButton:NO];
+                self.elapsedTimeLabel.text = NSLocalizedString(@"CANCELED", nil);
+                break;
+            }
+            case JCCallConnected:
+            {
+                [self showHoldButton:YES];
+                [self startTimer];
+                break;
+            }
+            case JCNoCall:
+            case JCInvite:
+            case JCCallRinging:
+                [self hideHoldButton:NO];
+                self.elapsedTimeLabel.text = NSLocalizedString(@"RINGING", nil);
+                break;
+            default:
+                break;
+        }
     }
 }
 

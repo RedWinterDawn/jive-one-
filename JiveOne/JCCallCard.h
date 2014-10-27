@@ -10,43 +10,39 @@
 #import "JCLineSession.h"
 
 extern NSString *const kJCCallCardStatusChangeKey;
-extern NSString *const kJCCallCardHoldKey;
 
-@protocol JCCallCardDelegate <JCLineSessionDelegate>
+@class JCCallCard;
+
+@protocol JCCallCardDelegate <NSObject>
+
+// Notify delegate to answer an Incoming call card.
+-(void)answerCall:(JCCallCard *)callCard;
+
+// Notify delegate to hangs up a specific call card.
+-(void)hangUpCall:(JCCallCard *)callCard;
+
+// Notify the delegate to sets the specified call state for the given call card.
+-(void)setCallHold:(bool)hold forCall:(JCCallCard *)callCard;
 
 @end
 
-@interface JCCallCard : NSObject <JCCallCardDelegate>
+@interface JCCallCard : NSObject
 
 @property (nonatomic, weak) id <JCCallCardDelegate> delegate;
-
-@property (nonatomic, strong) JCLineSession *lineSession;
 @property (nonatomic, strong) NSDate *started;
 @property (nonatomic, strong) NSDate *holdStarted;
+@property (nonatomic, getter=isHolding) bool hold;
 
+@property (nonatomic, readonly) JCLineSession *lineSession;
 @property (nonatomic, readonly) NSString *identifer;
 @property (nonatomic, readonly) NSString *callerId;
 @property (nonatomic, readonly) NSString *dialNumber;
-@property (nonatomic, readonly) NSArray *calls;
+@property (nonatomic, readonly) JCLineSessionState callState;
+@property (nonatomic, readonly) bool isIncoming;
 
-@property (nonatomic) JCCall lastState;
-@property (nonatomic, getter=isIncoming) bool incoming;
-@property (nonatomic, getter=isConference) bool conference;
-@property (nonatomic) BOOL hold;
-@property (nonatomic) JCCall callState;
-
-
--(id)initWithLineSession:(JCLineSession *)lineSession;
--(id)initWithCalls:(NSArray *)calls;
--(id)initWithLineSessions:(NSArray *)sessions;
+-(instancetype)initWithLineSession:(JCLineSession *)lineSession;
 
 -(void)answerCall;
 -(void)endCall;
-
--(void)addCall:(JCCallCard *)call;
--(void)addCalls:(NSArray *)calls;
-
--(void)removeCall:(JCCallCard *)call;
--(void)removeCalls:(NSArray *)calls;
 
 @end
