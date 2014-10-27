@@ -9,8 +9,8 @@
 //
 
 #import <Foundation/Foundation.h>
+
 #import "JCCallCard.h"
-#import "JCLineSession.h"
 
 extern NSString *const kJCCallCardManagerAddedCallNotification;
 extern NSString *const kJCCallCardManagerAnswerCallNotification;
@@ -41,23 +41,26 @@ typedef enum : NSUInteger {
 
 @property (nonatomic, strong) NSMutableArray *calls;
 
+// Attempts to dial a passed string following the dial type directive. When the dial operation was completed, we are
+// notified. If the dial action resulted in the creation of a dial card, an kJCCallCardManagerAddedCallNotification is
+// broadcasted through the notification center.
 -(void)dialNumber:(NSString *)dialNumber
              type:(JCCallCardDialTypes)dialType
        completion:(void (^)(bool success, NSDictionary *callInfo))completion;
 
--(void)hangUpCall:(JCCallCard *)callCard;
 
--(void)setCallCallHoldState:(bool)hold forCard:(JCCallCard *)callCard;
 
--(void)answerCall:(JCCallCard *)callCard;
--(void)addIncomingCallSession:(JCLineSession *)session;
--(void)finishWarmTransfer:(void (^)(bool success))completion;
-
+// Merges two existing calls into a conference call. Requires there to be two current calls to be merged.
 -(void)mergeCalls:(void (^)(bool success))completion;
+
+// Splits a conference call into it calls.
 -(void)splitCalls;
+
+// Switches the active call to be on hold, and unholding the inactive call.
 -(void)swapCalls;
 
--(void)removeCall:(JCCallCard *)callCard;
+// Finish a transfer
+-(void)finishWarmTransfer:(void (^)(bool success))completion;
 
 @end
 

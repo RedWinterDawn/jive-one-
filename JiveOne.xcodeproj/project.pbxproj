@@ -254,6 +254,7 @@
 		5DBBDCC319DCB29100A4DB96 /* JCCallCardCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBBDCC219DCB29100A4DB96 /* JCCallCardCollectionViewController.m */; };
 		5DBBDCC619DD9A4100A4DB96 /* JCCallCardManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBBDCC519DD9A4100A4DB96 /* JCCallCardManager.m */; };
 		5DBBDCC919DDA0A300A4DB96 /* JCCallCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBBDCC819DDA0A300A4DB96 /* JCCallCard.m */; };
+		5DBCB93919FE9300001C7157 /* JCConferenceCallCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBCB93819FE9300001C7157 /* JCConferenceCallCard.m */; };
 		5DE0F1B519F6D47E000469D0 /* JCRoundedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0F1B419F6D47E000469D0 /* JCRoundedView.m */; };
 		5DF1D1C419E4C6E1005EDCD5 /* CurrentCallViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DF1D1C219E4C6E1005EDCD5 /* CurrentCallViewCell.xib */; };
 		9103271718F34BEC00437503 /* JCPeopleDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9103271518F34BEC00437503 /* JCPeopleDetailCell.m */; };
@@ -778,6 +779,8 @@
 		5DBBDCC519DD9A4100A4DB96 /* JCCallCardManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallCardManager.m; sourceTree = "<group>"; };
 		5DBBDCC719DDA0A300A4DB96 /* JCCallCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCallCard.h; sourceTree = "<group>"; };
 		5DBBDCC819DDA0A300A4DB96 /* JCCallCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallCard.m; sourceTree = "<group>"; };
+		5DBCB93719FE9300001C7157 /* JCConferenceCallCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCConferenceCallCard.h; sourceTree = "<group>"; };
+		5DBCB93819FE9300001C7157 /* JCConferenceCallCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCConferenceCallCard.m; sourceTree = "<group>"; };
 		5DE0F1B319F6D47E000469D0 /* JCRoundedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCRoundedView.h; sourceTree = "<group>"; };
 		5DE0F1B419F6D47E000469D0 /* JCRoundedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCRoundedView.m; sourceTree = "<group>"; };
 		5DF1D1C219E4C6E1005EDCD5 /* CurrentCallViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CurrentCallViewCell.xib; sourceTree = "<group>"; };
@@ -1956,6 +1959,8 @@
 				5DBBDCC519DD9A4100A4DB96 /* JCCallCardManager.m */,
 				5DBBDCC719DDA0A300A4DB96 /* JCCallCard.h */,
 				5DBBDCC819DDA0A300A4DB96 /* JCCallCard.m */,
+				5DBCB93719FE9300001C7157 /* JCConferenceCallCard.h */,
+				5DBCB93819FE9300001C7157 /* JCConferenceCallCard.m */,
 			);
 			name = Calling;
 			sourceTree = "<group>";
@@ -2544,6 +2549,7 @@
 				9145E31F191D842500840D66 /* JCVersion.m in Sources */,
 				27EB18C419DF194E00C1503B /* LineConfiguration.m in Sources */,
 				277A1F8018F88987009A41F7 /* JCLoginViewController.m in Sources */,
+				5DBCB93919FE9300001C7157 /* JCConferenceCallCard.m in Sources */,
 				270152C61901D1FF00F271CE /* PersonEntities+Custom.m in Sources */,
 				2799757D195A1FC4001425CC /* JCContactsClient.m in Sources */,
 				276CFEAB196AF45F00C30B30 /* JasmineSocket.m in Sources */,
