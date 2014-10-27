@@ -234,7 +234,7 @@
 #pragma mark - Table Actions
 - (void) logoutButtonPress{
     [[JCAuthenticationManager sharedInstance] logout:self];
-    [self.tabBarController performSegueWithIdentifier:@"logoutSegue" sender:self.tabBarController];
+    //[self.tabBarController performSegueWithIdentifier:@"logoutSegue" sender:self.tabBarController];
     [Flurry logEvent:@"Log out"];
 }
 

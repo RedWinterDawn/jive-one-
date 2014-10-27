@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="8YX-ce-x5E">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <scenes>
@@ -74,7 +75,7 @@
                                                 </state>
                                                 <connections>
                                                     <action selector="termsAndConditionsButton:" destination="hBc-AN-e9c" eventType="touchUpInside" id="1Sz-Tb-0xw"/>
-                                                    <segue destination="rZc-lh-rwn" kind="modal" identifier="TCSegue" id="F1G-FB-Ony"/>
+                                                    <segue destination="rZc-lh-rwn" kind="modal" identifier="TCSegue" animates="NO" id="F1G-FB-Ony"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -98,14 +99,13 @@
                         <outlet property="passwordTextField" destination="GZW-BX-qe0" id="McQ-Ao-Xqa"/>
                         <outlet property="rememberMeSwitch" destination="OcL-uK-wvb" id="BG7-FG-ODY"/>
                         <outlet property="usernameTextField" destination="Tho-ch-vQR" id="NY5-OJ-rkG"/>
-                        <segue destination="8YX-ce-x5E" kind="modal" identifier="LoginToTabBarSegue" modalTransitionStyle="crossDissolve" id="PKy-V4-VLv"/>
-                        <segue destination="Yyy-YN-Ji0" kind="modal" identifier="AppTutorialSegue" modalTransitionStyle="crossDissolve" animates="NO" id="T1T-6r-sA2"/>
+                        <segue destination="Yyy-YN-Ji0" kind="modal" identifier="AppTutorialSegue" id="OEz-7M-HVz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KCP-nN-szi" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="7QC-E7-Qz9" customClass="JCStyleKit"/>
             </objects>
-            <point key="canvasLocation" x="-3807" y="294"/>
+            <point key="canvasLocation" x="-3418" y="668"/>
         </scene>
         <!--Terms And ConditonsVC View Controller-->
         <scene sceneID="5ti-Vq-dxr">
@@ -139,7 +139,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0vD-5q-70A" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2335" y="-412"/>
+            <point key="canvasLocation" x="-2427" y="28"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Vex-rW-GRa">
@@ -155,7 +155,6 @@
                         <color key="selectedImageTintColor" red="0.29803921570000003" green="0.44705882349999998" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                     </tabBar>
                     <connections>
-                        <segue destination="hBc-AN-e9c" kind="modal" identifier="logoutSegue" modalTransitionStyle="flipHorizontal" id="FYf-gt-lpx"/>
                         <segue destination="q2J-Bw-WhQ" kind="relationship" relationship="viewControllers" id="01A-As-Zxf"/>
                         <segue destination="elO-IG-RBo" kind="relationship" relationship="viewControllers" id="fJp-rq-gl2"/>
                         <segue destination="XFb-KJ-zT0" kind="relationship" relationship="viewControllers" id="qlu-mP-rqG"/>
@@ -165,12 +164,12 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FNP-y4-bzi" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3651" y="1732"/>
+            <point key="canvasLocation" x="-3739" y="1684"/>
         </scene>
         <!--App Intro-->
         <scene sceneID="0NL-Qz-mWu">
             <objects>
-                <viewController id="Yyy-YN-Ji0" customClass="JCAppIntro" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="JCAppIntro" id="Yyy-YN-Ji0" customClass="JCAppIntro" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="54g-CX-TIq"/>
                         <viewControllerLayoutGuide type="bottom" id="ugd-dV-K1W"/>
@@ -200,7 +199,6 @@
                         <outlet property="backgroundImageView" destination="n6g-pE-ELr" id="laD-1f-XXb"/>
                         <outlet property="getStartedButton" destination="ytc-8F-wc6" id="opu-L6-KYD"/>
                         <outlet property="pageControlDots" destination="deT-GF-i3y" id="Bst-LA-HDq"/>
-                        <segue destination="8YX-ce-x5E" kind="modal" identifier="TutorialToTabBarSegue" modalTransitionStyle="crossDissolve" animates="NO" id="dIf-i9-QYA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a9K-Lc-Eq7" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -211,7 +209,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-2967" y="294"/>
+            <point key="canvasLocation" x="-2845" y="668"/>
         </scene>
         <!--Directory-->
         <scene sceneID="4Zu-Qh-4wk">
@@ -2724,7 +2722,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XiR-SP-7my" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2967" y="-418"/>
+            <point key="canvasLocation" x="-2845" y="28"/>
         </scene>
         <!--Transfer Confirmation View Controller-->
         <scene sceneID="tRP-SY-v3G">
@@ -3042,7 +3040,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="dIf-i9-QYA"/>
         <segue reference="0xB-1u-nc2"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29803921570000003" green="0.44705882349999998" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
