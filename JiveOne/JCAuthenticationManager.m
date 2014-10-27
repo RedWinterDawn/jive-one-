@@ -253,7 +253,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
                 //                {
                 JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
                 if (![delegate.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
-                    [delegate changeRootViewController:JCRootLoginViewController];
+                    //[delegate changeRootViewController:JCRootLoginViewController];
                 }
                 else {
                     [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenFailed object:nil];
@@ -291,16 +291,13 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 	[[JCContactsClient sharedClient] clearCookies];
     [[JCOmniPresence sharedInstance] truncateAllTablesAtLogout];
 	[[SipHandler sharedHandler] disconnect];
-    
+
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-    
+	
     JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
     [delegate didLogOutSoUnRegisterForPushNotifications];
     [delegate stopSocket];
-    
-    if(![viewController isKindOfClass:[JCLoginViewController class]]){
-        [delegate changeRootViewController:JCRootLoginViewController];
-    }
+	[delegate changeRootViewController:JCRootLoginViewController];
 }
 
 #pragma mark - UIWebview Delegates

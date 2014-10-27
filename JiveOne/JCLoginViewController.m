@@ -287,10 +287,13 @@
 
 - (void)checkIfLoadingHasFinished:(NSNotification *)notification
 {
-    self.userIsDoneWithTutorial = YES;
-    [[NSUserDefaults standardUserDefaults] setBool:self.userIsDoneWithTutorial forKey:@"seenAppTutorial"];
-    if ([[notification name] isEqualToString:@"AppTutorialDismissed"])
-    {
+	_userIsDoneWithTutorial = [[NSUserDefaults standardUserDefaults] boolForKey:@"seenAppTutorial"];
+	if (notification && [[notification name] isEqualToString:@"AppTutorialDismissed"]) {
+		_userIsDoneWithTutorial = YES;
+		[[NSUserDefaults standardUserDefaults] setBool:self.userIsDoneWithTutorial forKey:@"seenAppTutorial"];
+		[[NSNotificationCenter defaultCenter] removeObserver:self name:@"AppTutorialDismissed" object:nil];
+	}
+	
         NSLog (@"Successfully received the AppTutorialDismissed notification!");
         if (!self.doneLoadingContent) {
 			if (self.errorOccurred) {
@@ -300,24 +303,18 @@
 	            [self showHudWithTitle:@"One Moment Please" detail:@"Preparing for first use"];
 			}
         }
-        else
+        else if (_userIsDoneWithTutorial)
         {
-//			Lines *line = [Lines MR_findFirstByAttribute:@"inUse" withValue:[NSNumber numberWithBool:YES]];
+			[self goToApplication];
 			
+// Re-add this when user can select line again
+//			Lines *line = [Lines MR_findFirstByAttribute:@"inUse" withValue:[NSNumber numberWithBool:YES]];
 //			if (line) {
-				[self goToApplication];
 //			}
 //			else {
 //				[self performSegueWithIdentifier:@"SelectLineLoginSegue" sender:self];
-//			} 
-			
-            
-        }
-    }
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"seenAppTutorial"]) {
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AppTutorialDismissed" object:nil];
-    }
-    
+//			}
+        }    
 }
 
 - (void)tokenValidityPassed:(NSNotification*)notification
@@ -326,6 +323,10 @@
     if (!self.seenTutorial) {
         [Flurry logEvent:@"First Login"];
         [self hideHud];
+//		JCAppIntro *introVC = [self.storyboard instantiateViewControllerWithIdentifier:@"JCAppIntro"];
+//		[self presentViewController:introVC animated:YES completion:^{
+//			//present
+//		}];
         [self performSegueWithIdentifier: @"AppTutorialSegue" sender:self];
     }
     else
@@ -387,9 +388,11 @@
 			//TODO: talk about logic. We should not prevent the user to get into the app if this fails. They
 			// should still be able to access the rest of the app (directory, VM, etc) and be given a change to
 			// fetch the provisioning file again...but then...do we store user creentials?
+			self.doneLoadingContent = YES;
 			[[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
-			[self goToApplication];
-			[self fetchVoicemailsMetadata];
+			[self checkIfLoadingHasFinished:nil];
+			//[self goToApplication];
+			//[self fetchVoicemailsMetadata];
 			
 		}
 		else {
@@ -614,8 +617,9 @@
 {
 	alreadyMakingMyContactRequest = NO;
 	alreadyMakingContactsRequest = NO;
-    //[self performSegueWithIdentifier: @"LoginToTabBarSegue" sender: self];
-    [(JCAppDelegate *)[UIApplication sharedApplication].delegate changeRootViewController:JCRootTabbarViewController];
+	[self hideHud];
+	JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
+	[delegate changeRootViewController:JCRootTabbarViewController];
 }
 
 

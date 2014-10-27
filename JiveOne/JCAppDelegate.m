@@ -123,13 +123,8 @@ int didNotify;
     [center addObserver:self selector:@selector(stopRingtone) name:kJCCallCardManagerUpdateCallNotification object:callCardManager];
     
     [self refreshTabBadges:NO];    
-    if ([[JCAuthenticationManager sharedInstance] userAuthenticated] && [[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {
-        [self.window setRootViewController:self.tabBarViewController];
-        //[[JCAuthenticationManager sharedInstance] checkForTokenValidity];
-    }
-    else {
-        //TODO:********
-        [self.window setRootViewController:self.loginViewController];
+    if (![[JCAuthenticationManager sharedInstance] userAuthenticated] || ![[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {
+        [self changeRootViewController:JCRootLoginViewController];
     }
     
     return YES;
@@ -748,21 +743,13 @@ int didNotify;
 - (void)changeRootViewController:(JCRootViewControllerType)type
 {
     LOG_Info();
-    //[[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
-
-    if (type == JCRootTabbarViewController) {
-        
-        //[self.loginViewController goToApplication];
-        self.tabBarViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-        [self.window setRootViewController:self.tabBarViewController];
-        
-    }
-    else if (type == JCRootLoginViewController)
-    {
-//        [self logout];
-        [self.window setRootViewController:self.loginViewController];
-    }
-    
+ 
+	[UIView transitionWithView:self.window
+					  duration:0.5
+					   options:type == JCRootTabbarViewController ? UIViewAnimationOptionTransitionFlipFromRight : UIViewAnimationOptionTransitionFlipFromLeft
+					animations:^{ self.window.rootViewController = (type == JCRootTabbarViewController ? self.tabBarViewController : self.loginViewController); }
+					completion:nil];
+	
     [self.window makeKeyAndVisible];
 }
 
