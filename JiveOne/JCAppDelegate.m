@@ -759,8 +759,8 @@ int didNotify;
     }
     else if (type == JCRootLoginViewController)
     {
-        [self logout];
-//        [self.window setRootViewController:self.loginViewController];
+//        [self logout];
+        [self.window setRootViewController:self.loginViewController];
     }
     
     [self.window makeKeyAndVisible];

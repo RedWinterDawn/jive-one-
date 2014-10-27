@@ -34,6 +34,18 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     [self updateResgistrationStatus];
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if (!_sipHandler.isRegistered) {
+        [_sipHandler connect:^(bool success, NSError *error) {
+            if (error) {
+                NSLog(@"%@", [error description]);
+            }
+        }];
+    }
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     UIViewController *viewController = segue.destinationViewController;
@@ -90,6 +102,11 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
         [_sipHandler connect:^(bool success, NSError *error) {
             if (success)
                 [self performSegueWithIdentifier:kJCDialerViewControllerCallerStoryboardIdentifier sender:self];
+            
+            if (error) {
+                NSLog(@"%@", [error description]);
+            }
+            
         }];
     else
         [self performSegueWithIdentifier:kJCDialerViewControllerCallerStoryboardIdentifier sender:self];

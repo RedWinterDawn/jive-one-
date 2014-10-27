@@ -33,7 +33,7 @@
     NSString *self_url = pbx[@"self_pbx"] ? pbx[@"self_pbx"] : pbx[@"self"] ? pbx[@"self"] : @"";
 	NSString *pbxId = pbx[@"pbxId"] ? pbx[@"pbxId"] : nil;
     if ([Common stringIsNilOrEmpty:self_url]) {
-        if (pbx[@"id"]) {
+        if (pbxId) {
             self_url = [NSString stringWithFormat:@"https://api.jive.com/jif/v1/pbx/id/%@", pbx[@"id"]];
         }
     }
