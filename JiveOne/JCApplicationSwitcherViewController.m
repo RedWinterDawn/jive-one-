@@ -111,7 +111,7 @@
     [super viewWillLayoutSubviews];
     
     CGRect navBarFrame = _menuNavigationController.navigationBar.frame;
-    CGFloat tableHeight = navBarFrame.size.height + (57 * _viewControllers.count);
+    CGFloat tableHeight = navBarFrame.origin.y + navBarFrame.size.height + [_menuTableViewController.tableView contentSize].height;
     CGRect frame = self.view.bounds;
     CGFloat viewHeight = frame.size.height;
     frame.size.height = tableHeight;
