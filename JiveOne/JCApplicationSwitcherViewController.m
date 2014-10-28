@@ -110,16 +110,35 @@
 {
     [super viewWillLayoutSubviews];
     
-    CGRect navBarFrame = _menuNavigationController.navigationBar.frame;
-    CGFloat tableHeight = navBarFrame.origin.y + navBarFrame.size.height + [_menuTableViewController.tableView contentSize].height;
-    CGRect frame = self.view.bounds;
-    CGFloat viewHeight = frame.size.height;
-    frame.size.height = tableHeight;
-    _menuNavigationController.view.frame = frame;
-    
-    frame.size.height = viewHeight - tableHeight;
-    frame.origin.y = tableHeight;
-    _activityViewController.view.frame = frame;
+    if (!_selectedViewController)
+    {
+        CGRect navBarFrame = _menuNavigationController.navigationBar.frame;
+        CGFloat tableHeight = navBarFrame.origin.y + navBarFrame.size.height + [_menuTableViewController.tableView contentSize].height;
+        CGRect frame = self.view.bounds;
+        CGFloat viewHeight = frame.size.height;
+        frame.size.height = tableHeight;
+        _menuNavigationController.view.frame = frame;
+        _menuNavigationController.view.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
+        
+        frame.size.height = viewHeight - tableHeight;
+        frame.origin.y = tableHeight;
+        _activityViewController.view.frame = frame;
+        
+        // When first loading, ask the dataSource if we have a saved view controller;
+        if (self.delegate && [self.delegate respondsToSelector:@selector(applicationSwitcherLastSelectedViewController:)])
+        {
+            UIViewController *viewController = [self.delegate applicationSwitcherLastSelectedViewController:self];
+            if (!viewController)
+            {
+                [self showMenuAnimated:FALSE];
+            }
+            else
+            {
+                self.selectedViewController = viewController;
+                [self hideMenuAnimated:FALSE];
+            }
+        }
+    }
 }
 
 -(void)addMenuBarButtonItemToViewController:(UIViewController *)viewController

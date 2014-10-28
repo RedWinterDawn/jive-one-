@@ -23,7 +23,7 @@
 
 -(UIViewController *)applicationSwitcherLastSelectedViewController:(JCApplicationSwitcherViewController *)controller
 {
-    return nil;
+    return [controller.viewControllers firstObject];
 }
 
 -(void)applicationSwitcherController:(JCApplicationSwitcherViewController *)controller willSelectViewController:(UIViewController *)viewController
