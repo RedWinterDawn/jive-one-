@@ -95,13 +95,6 @@ int didNotify;
     //Register for background fetches
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     
-    if ([[UINavigationBar class]respondsToSelector:@selector(appearance)]) {
-        [[UINavigationBar appearance] setTitleTextAttributes:@{
-                                                               NSForegroundColorAttributeName : [UIColor blackColor],
-                                                               NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:24.0f]
-                                                               }];
-    }
-    
     //Start monitor for Reachability
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     
