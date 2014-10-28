@@ -99,7 +99,7 @@
 {
     [super viewDidLoad];
     
-    //[self addMenuBarButtonItemToViewController:_menuNavigationController];
+    [self addMenuBarButtonItemToViewController:_menuNavigationController];
     
     [self hideMenuAnimated:NO];
     for (UIViewController *viewController in _viewControllers)
