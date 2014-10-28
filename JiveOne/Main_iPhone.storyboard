@@ -1473,8 +1473,8 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Phone" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Sc-JQ-q86" userLabel="t">
-                                    <rect key="frame" x="0.0" y="0.0" width="128" height="21"/>
-                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
+                                    <rect key="frame" x="0.0" y="4" width="128" height="18"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
@@ -2921,9 +2921,11 @@
                 <navigationController title="Keypad" id="vrQ-kc-2ec" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Keypad" image="nav-dial-black" id="idj-mu-viK"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="G3Z-gL-2uq">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="G3Z-gL-2uq">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="3A8-R9-IcP" kind="relationship" relationship="rootViewController" id="yF3-we-Crg"/>
@@ -2971,8 +2973,10 @@
                 <navigationController title="Voicemail" id="wLV-k9-4Pz" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Voicemail" image="nav-voicemail-black" id="yfS-ds-xyB"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="FOV-KF-2bN">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="FOV-KF-2bN">
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="Koj-vL-83I" kind="relationship" relationship="rootViewController" id="9gN-pz-5JS"/>
@@ -3357,7 +3361,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="qpb-jz-IY5"/>
+        <segue reference="qaE-xG-axE"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29803921570000003" green="0.44705882349999998" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
 </document>
