@@ -118,6 +118,9 @@ NSString *const kJCHistoryTableViewControllerCellReuseIdentifier = @"JCHistoryCe
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     JCHistoryCell *cell = (JCHistoryCell *)[tableView dequeueReusableCellWithIdentifier:kJCHistoryTableViewControllerCellReuseIdentifier forIndexPath:indexPath];
     
+    if (indexPath.row == 0)
+        cell.top = TRUE;
+    
     Call *call = (Call *)[self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.name.text = call.name;
     cell.number.text = call.number;

@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JCHistoryCell : UITableViewCell
+#import "JCTableViewCell.h"
+
+@interface JCHistoryCell : JCTableViewCell
+
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet UILabel *number;
 @property (weak, nonatomic) IBOutlet UILabel *extension;
