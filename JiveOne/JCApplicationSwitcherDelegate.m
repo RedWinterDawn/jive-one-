@@ -9,7 +9,42 @@
 #import "JCApplicationSwitcherDelegate.h"
 #import "JCMenuBarButtonItem.h"
 
+NSString *const kApplicationSwitcherLastSelectedViewControllerIdentifierKey = @"applicationSwitcherLastSelected";
+
+@interface JCApplicationSwitcherDelegate ()
+
+@property (nonatomic, strong) NSString *lastSelectedViewControllerIdentifier;
+
+@end
+
+
 @implementation JCApplicationSwitcherDelegate
+
++(void)reset
+{
+    JCApplicationSwitcherDelegate *obj = [[JCApplicationSwitcherDelegate alloc] init];
+    obj.lastSelectedViewControllerIdentifier = nil;
+}
+
+#pragma mark - Setters -
+
+-(void)setLastSelectedViewControllerIdentifier:(NSString *)lastSelectedViewControllerIdentifier
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setValue:lastSelectedViewControllerIdentifier forKey:kApplicationSwitcherLastSelectedViewControllerIdentifierKey];
+    [defaults synchronize];
+}
+
+#pragma mark - Getters -
+
+-(NSString *)lastSelectedViewControllerIdentifier
+{
+    return [[NSUserDefaults standardUserDefaults] valueForKey:kApplicationSwitcherLastSelectedViewControllerIdentifierKey];
+}
+
+#pragma mark - Delegate Handlers -
+
+#pragma mark JCApplicationSwitcherViewControllerDelegate
 
 -(NSArray *)applicationSwitcherController:(JCApplicationSwitcherViewController *)controller willLoadViewControllers:(NSArray *)viewControllers
 {
@@ -23,18 +58,25 @@
 
 -(UIViewController *)applicationSwitcherLastSelectedViewController:(JCApplicationSwitcherViewController *)controller
 {
-    return [controller.viewControllers firstObject];
+    NSString *identifier = self.lastSelectedViewControllerIdentifier;
+    for (UIViewController *viewController in controller.viewControllers) {
+        if ([viewController.restorationIdentifier isEqualToString:identifier]) {
+            return viewController;
+        }
+    }
+    return nil;
 }
 
--(void)applicationSwitcherController:(JCApplicationSwitcherViewController *)controller willSelectViewController:(UIViewController *)viewController
+-(BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
 {
-    
+    return YES;
 }
 
--(void)applicationSwitcherController:(JCApplicationSwitcherViewController *)controller didSelectViewController:(UIViewController *)viewController
+-(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
-    
+    if (viewController.restorationIdentifier) {
+        self.lastSelectedViewControllerIdentifier = viewController.restorationIdentifier;
+    }
 }
-
 
 @end

@@ -82,7 +82,7 @@
         <!--Contacts Navigation Controller-->
         <scene sceneID="uWe-X5-OtT">
             <objects>
-                <navigationController id="3E5-0Q-2Rs" userLabel="Contacts Navigation Controller" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ContactsNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="3E5-0Q-2Rs" userLabel="Contacts Navigation Controller" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Contacts" image="black-avatar" id="yqu-Rh-YHg"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="l9h-UT-ItF">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -179,7 +179,7 @@
         <!--Settings Navigation Controller-->
         <scene sceneID="xTX-H4-1Bh">
             <objects>
-                <navigationController id="fwQ-1I-zye" userLabel="Settings Navigation Controller" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="SettingsNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="fwQ-1I-zye" userLabel="Settings Navigation Controller" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Settings" image="black-gear" id="30a-yD-tba"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="tXh-9c-n4v">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -741,7 +741,7 @@
         <!--Phone-->
         <scene sceneID="m60-zF-4Od">
             <objects>
-                <tabBarController storyboardIdentifier="UITabBarController" id="dm4-oa-PNL" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="PhoneTabBarController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dm4-oa-PNL" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Phone" image="black-phone" id="hn5-ub-HBZ"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" id="bJP-GX-cED">

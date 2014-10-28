@@ -16,6 +16,7 @@
 #import "JCJifClient.h"
 #import "JCVoicemailClient.h"
 #import "SipHandler.h"
+#import "JCApplicationSwitcherDelegate.h"
 
 #if DEBUG
 @interface NSURLRequest(Private)
@@ -298,6 +299,8 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     [delegate didLogOutSoUnRegisterForPushNotifications];
     [delegate stopSocket];
 	[delegate changeRootViewController:JCRootLoginViewController];
+    
+    [JCApplicationSwitcherDelegate reset];
 }
 
 #pragma mark - UIWebview Delegates
