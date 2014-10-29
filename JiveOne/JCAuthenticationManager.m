@@ -291,13 +291,15 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 	[[SipHandler sharedHandler] disconnect];
 
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+	[JCApplicationSwitcherDelegate reset];
+	
 	
     JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
     [delegate didLogOutSoUnRegisterForPushNotifications];
     [delegate stopSocket];
 	[delegate changeRootViewController:JCRootLoginViewController];
     
-    [JCApplicationSwitcherDelegate reset];
+	
 }
 
 #pragma mark - UIWebview Delegates

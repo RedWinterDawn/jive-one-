@@ -60,6 +60,9 @@ int didNotify;
     
     //check if we are using a iphone or ipad
     self.deviceIsIPhone = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? NO : YES;
+	[self tabBarViewController];
+	[self loginViewController];
+
     
     /*
      * FLURRY
@@ -736,6 +739,10 @@ int didNotify;
 - (void)changeRootViewController:(JCRootViewControllerType)type
 {
     LOG_Info();
+	
+	if (type == JCRootLoginViewController && [self.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
+		return;
+	}
  
 	[UIView transitionWithView:self.window
 					  duration:0.5

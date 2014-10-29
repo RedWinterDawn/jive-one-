@@ -237,7 +237,7 @@
         }];
 		
 		// start timer
-		loginTimer = [NSTimer scheduledTimerWithTimeInterval:30
+		loginTimer = [NSTimer scheduledTimerWithTimeInterval:120
 													  target:self
 													selector:@selector(loginIsTakingTooLong)
 													userInfo:nil
