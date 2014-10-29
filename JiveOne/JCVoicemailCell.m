@@ -13,8 +13,20 @@
 
 @implementation JCVoicemailCell
 
+#pragma mark - Setters -
+
+-(void)setRecentEvent:(RecentEvent *)recentEvent
+{
+    if ([recentEvent isKindOfClass:[Voicemail class]])
+    {
+        self.voicemail = (Voicemail *)recentEvent;
+    }
+}
+
 -(void)setVoicemail:(Voicemail *)voicemail
 {
+    super.recentEvent = voicemail;
+    
     _voicemail = voicemail;
     
     self.callerIdLabel.text = [voicemail.callerId stringByReplacingOccurrencesOfString:@"\"" withString:@""];

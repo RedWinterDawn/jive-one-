@@ -24,9 +24,16 @@
 
 #pragma mark - Setters -
 
+-(void)setRecentEvent:(RecentEvent *)recentEvent
+{
+    if ([self.call isKindOfClass:[Call class]]) {
+        self.call = (Call *)recentEvent;
+    }
+}
+
 -(void)setCall:(Call *)call
 {
-    self.recentEvent = call;
+    super.recentEvent = call;
     [self setNeedsLayout];
 }
 
