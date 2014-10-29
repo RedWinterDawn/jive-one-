@@ -184,7 +184,7 @@ describe(@"Voicemail VC", ^{
         
         it(@"should mark a voicemail as read when play button is pressed on unread voicemail", ^{
             NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
-            JCVoiceCell *cell = (JCVoiceCell*)[voicemailViewController.tableView cellForRowAtIndexPath:indexpath];
+            JCVoicemailPlaybackCell *cell = (JCVoicemailPlaybackCell*)[voicemailViewController.tableView cellForRowAtIndexPath:indexpath];
             if(cell){
                 if(![cell.voicemail.read boolValue]){
                     [[theValue([cell.voicemail.read boolValue])shouldNot] beYes];
@@ -199,7 +199,7 @@ describe(@"Voicemail VC", ^{
         it(@"should mark email for deletion when deleted", ^{
             
             NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
-            JCVoiceCell *cell = (JCVoiceCell*)[voicemailViewController.tableView cellForRowAtIndexPath:indexpath];
+            JCVoicemailPlaybackCell *cell = (JCVoicemailPlaybackCell*)[voicemailViewController.tableView cellForRowAtIndexPath:indexpath];
             if(cell){
                 [voicemailViewController voiceCellDeleteTapped:indexpath];
                 //wait for async task

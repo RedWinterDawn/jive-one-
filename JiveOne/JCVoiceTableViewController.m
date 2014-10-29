@@ -7,7 +7,7 @@
 //
 
 #import "JCVoiceTableViewController.h"
-#import "JCVoiceCell.h"
+#import "JCVoicemailPlaybackCell.h"
 #import "JCVoicemailClient.h"
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "JCMessagesViewController.h"
@@ -204,7 +204,7 @@ NSString *const kJCVoicemailCellIdentifier = @"VoicemailCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    JCVoiceCell *cell = [tableView dequeueReusableCellWithIdentifier:kJCVoicemailCellIdentifier];
+    JCVoicemailPlaybackCell *cell = [tableView dequeueReusableCellWithIdentifier:kJCVoicemailCellIdentifier];
     Voicemail *voicemail = self.voicemails[indexPath.row];
     
     cell.voicemail = voicemail;
@@ -249,7 +249,7 @@ NSString *const kJCVoicemailCellIdentifier = @"VoicemailCell";
     
     if (isSelected) {
         [self prepareAudioForIndexPath:indexPath];
-        self.selectedCell = (JCVoiceCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        self.selectedCell = (JCVoicemailPlaybackCell *)[self.tableView cellForRowAtIndexPath:indexPath];
         self.selectedCell.speakerButton.selected = _playThroughSpeaker;
         
         CGPoint positionRelativeToWindow = [self.selectedCell.contentView convertPoint:self.selectedCell.contentView.frame.origin toView:[UIApplication sharedApplication].keyWindow];
@@ -281,7 +281,7 @@ NSString *const kJCVoicemailCellIdentifier = @"VoicemailCell";
 }
 
 #pragma mark - JCVoicemailCellDelegate
--(void)voiceCellDeleteTapped:(JCVoiceCell *)cell {
+-(void)voiceCellDeleteTapped:(JCVoicemailPlaybackCell *)cell {
     
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     [self addOrRemoveSelectedIndexPath:indexPath];
@@ -392,7 +392,7 @@ NSString *const kJCVoicemailCellIdentifier = @"VoicemailCell";
 
 
 #pragma mark - JCVoiceCell Delegate
-- (void)voiceCellPlayTapped:(JCVoiceCell *)cell
+- (void)voiceCellPlayTapped:(JCVoicemailPlaybackCell *)cell
 {
     [self playPauseAudio:cell];
 }
@@ -430,7 +430,7 @@ NSString *const kJCVoicemailCellIdentifier = @"VoicemailCell";
     if (player && player.isPlaying) {
         [player stop];
     }
-    self.selectedCell = (JCVoiceCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    self.selectedCell = (JCVoicemailPlaybackCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     
     NSError *error;
     player = [[AVAudioPlayer alloc] initWithData:self.selectedCell.voicemail.voicemail fileTypeHint:AVFileTypeWAVE error:&error];
@@ -442,7 +442,7 @@ NSString *const kJCVoicemailCellIdentifier = @"VoicemailCell";
     }
 }
 
-- (void)playPauseAudio:(JCVoiceCell *)cell
+- (void)playPauseAudio:(JCVoicemailPlaybackCell *)cell
 {
     BOOL playing = player.isPlaying;
     

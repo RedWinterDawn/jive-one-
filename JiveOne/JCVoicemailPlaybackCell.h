@@ -6,36 +6,32 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "JCVoicemailCell.h"
+
 #import "Voicemail+Custom.h"
 #import "JCPopoverSlider.h"
 #import "JCSpeakerButton.h"
 #import "JCPlayPauseButton.h"
 
-@class JCVoiceCell;
+@class JCVoicemailPlaybackCell;
 @protocol JCVoiceCellDelegate <NSObject>
-- (void)voiceCellPlayTapped:(JCVoiceCell *)cell;
+- (void)voiceCellPlayTapped:(JCVoicemailPlaybackCell *)cell;
 - (void)voiceCellSliderMoved:(float)value;
 - (void)voiceCellSliderTouched:(BOOL)touched;
 - (void)voicecellSpeakerTouched;
 - (void)voiceCellAudioAvailable:(NSIndexPath *)indexPath;
-- (void)voiceCellDeleteTapped:(JCVoiceCell *)cell;
+- (void)voiceCellDeleteTapped:(JCVoicemailPlaybackCell *)cell;
 @end
 
-@interface JCVoiceCell : UITableViewCell
+@interface JCVoicemailPlaybackCell : JCVoicemailCell
 
 
-@property (strong, nonatomic) Voicemail *voicemail;
 @property (weak,nonatomic) id<JCVoiceCellDelegate> delegate;
 #pragma mark - Visible Collapsed
 
-@property (weak, nonatomic) IBOutlet UILabel *callerIdLabel;
-@property (weak, nonatomic) IBOutlet UILabel *callerNumberLabel;
-@property (weak, nonatomic) IBOutlet UILabel *extensionLabel;
+
 @property (weak, nonatomic) IBOutlet UIButton *playPauseButton;
-@property (weak,nonatomic) IBOutlet UILabel  *creationTime;
 @property (weak,nonatomic) IBOutlet UILabel  *elapsed;
-@property (weak,nonatomic) IBOutlet UILabel  *duration;
 @property (weak,nonatomic) IBOutlet UILabel  *shortTime;
 @property (weak,nonatomic) IBOutlet UIButton *speakerButton;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
@@ -47,6 +43,7 @@
 @property (nonatomic) BOOL useSpeaker;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinningWheel;
 @property (strong, nonatomic) NSIndexPath *indexPath;
+
 - (IBAction)playPauseButtonTapped:(id)sender;
 //- (void)setPlayButtonState:(UIImage *)image;
 - (IBAction)progressSliderMoved:(id)sender;

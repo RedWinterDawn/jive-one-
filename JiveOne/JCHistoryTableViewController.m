@@ -7,13 +7,10 @@
 //
 
 #import "JCHistoryTableViewController.h"
-#import "JCHistoryCell.h"
-#import "JCCallerViewController.h"
+
 #import "Call.h"
 
-NSString *const kJCHistoryTableViewControllerCellReuseIdentifier = @"JCHistoryCell";
-
-@interface JCHistoryTableViewController () <JCCallerViewControllerDelegate>
+@interface JCHistoryTableViewController ()
 {
     NSFetchRequest *_fetchRequest;
 }
@@ -21,40 +18,6 @@ NSString *const kJCHistoryTableViewControllerCellReuseIdentifier = @"JCHistoryCe
 @end
 
 @implementation JCHistoryTableViewController
-
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    UIViewController *viewController = segue.destinationViewController;
-   
-    if ([viewController isKindOfClass:[JCCallerViewController class]]) {
-        JCCallerViewController *callerViewController = (JCCallerViewController *)viewController;
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        Call *call = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        callerViewController.delegate = self;
-        callerViewController.dialString = call.number;
-    }
-}
-
--(JCHistoryCell *)tableView:(UITableView *)tableView cellForObject:(id <NSObject>)object atIndexPath:(NSIndexPath*)indexPath;
-{
-    JCHistoryCell *cell = [tableView dequeueReusableCellWithIdentifier:kJCHistoryTableViewControllerCellReuseIdentifier forIndexPath:indexPath];
-    [self configureCell:cell withObject:object];
-    return cell;
-}
-
-
-- (void)configureCell:(JCHistoryCell *)cell withObject:(id<NSObject>)object
-{
-    if ([object isKindOfClass:[Call class]])
-    {
-        Call *call = (Call *)object;
-        cell.name.text = call.name;
-        cell.number.text = call.number;
-        cell.timestamp.text = call.formattedModifiedShortDate;
-        cell.extension.text = call.extension;
-        cell.icon.image = call.icon;
-    }
-}
 
 #pragma mark - Setters - 
 
@@ -88,15 +51,5 @@ NSString *const kJCHistoryTableViewControllerCellReuseIdentifier = @"JCHistoryCe
     }
     return _fetchRequest;
 }
-
-#pragma mark Caller View Controller Delegate
-
--(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController
-{
-    [self dismissViewControllerAnimated:NO completion:^{
-        
-    }];
-}
-
 
 @end

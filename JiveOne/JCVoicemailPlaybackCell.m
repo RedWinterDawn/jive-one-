@@ -6,12 +6,12 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCVoiceCell.h"
+#import "JCVoicemailPlaybackCell.h"
 #import "Common.h"
 #import "PBX+Custom.h"
 #import "Lines+Custom.h"
 
-@implementation JCVoiceCell
+@implementation JCVoicemailPlaybackCell
 
 
 - (void)awakeFromNib
@@ -22,41 +22,9 @@
 
 - (void)setVoicemail:(Voicemail *)voicemail
 {
-    _voicemail = voicemail;
-
-    //[self.userImage setImage:[UIImage imageNamed:@"avatar.png"]];
-    self.callerIdLabel.text = [voicemail.callerId stringByReplacingOccurrencesOfString:@"\"" withString:@""];
-    if (![voicemail.callerId isEqualToString:voicemail.callerIdNumber]) {
-        self.callerNumberLabel.text = voicemail.callerIdNumber;
-    }else{
-        self.callerNumberLabel.text = @"";
-    }
+    super.voicemail = voicemail;
     
-    if (voicemail.transcription) {
-        self.extensionLabel.text = voicemail.transcription;
-    }
-    else {
-        //set extension label with mailbox extension
-        NSString *detailText = voicemail.callerIdNumber;
-        Lines *mailbox = [Lines MR_findFirstByAttribute:@"mailboxUrl" withValue:self.voicemail.mailboxUrl];
-        if (mailbox) {
-            PBX *pbx = [PBX MR_findFirstByAttribute:@"pbxId" withValue:mailbox.pbxId];
-            if (pbx) {
-                if ([Common stringIsNilOrEmpty:pbx.name]) {
-                    detailText = [NSString stringWithFormat:@"%@ on %@", mailbox.externsionNumber, pbx.name];
-                }
-                else {
-                    detailText = [NSString stringWithFormat:@"%@", mailbox.externsionNumber];
-                }
-            }
-            else {
-                detailText = [NSString stringWithFormat:@"%@", mailbox.externsionNumber];
-            }
-        }
-        self.extensionLabel.text = detailText;
-    }
     
-    [self doubleCheckNamesAndNumbers];
     
     self.shortTime.text = voicemail.formattedModifiedShortDate;
     self.creationTime.text = voicemail.formattedModifiedShortDate;
@@ -104,7 +72,7 @@
         Voicemail *voicemail = (Voicemail *)object;
         
         if (voicemail && voicemail.jrn != nil && voicemail.url_self != nil) {
-            _voicemail = voicemail;
+            self.voicemail = voicemail;
             
             //[self performSelectorOnMainThread:@selector(setupAudioPlayer) withObject:nil waitUntilDone:NO];
             [self.spinningWheel performSelectorOnMainThread:@selector(stopAnimating) withObject:nil waitUntilDone:NO];
@@ -115,44 +83,7 @@
     }
 }
 
-- (void)doubleCheckNamesAndNumbers
-{
-    if ([Common stringIsNilOrEmpty:self.callerIdLabel.text] || [self.callerIdLabel.text isEqualToString:@"Unknown"]) {
-        NSString *regexForName = @"\".+?\"";
-        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexForName
-                                                                               options:NSRegularExpressionCaseInsensitive
-                                                                                 error:nil];
-        if ([Common stringIsNilOrEmpty:_voicemail.callerId]) {
-            return;
-        }
-        NSArray *matches = [regex matchesInString:_voicemail.callerId
-                                          options:0
-                                            range:NSMakeRange(0, [_voicemail.callerId length])];
-        
-        if (matches.count > 0) {
-            NSString *callerName = [_voicemail.callerId substringWithRange:[matches[0] range]];
-            callerName = [callerName stringByReplacingOccurrencesOfString:@"\"" withString:@""];
-            self.callerIdLabel.text = callerName;
-        }
-    }
-    
-    if ([Common stringIsNilOrEmpty:self.extensionLabel.text] || [self.extensionLabel.text isEqualToString:@"Unknown"]) {
-        NSString *regexForNumber = @"<.+?>";
-        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexForNumber
-                                                          options:NSRegularExpressionCaseInsensitive
-                                                            error:nil];
-        NSArray *matches = [regex matchesInString:_voicemail.callerId
-                                 options:0
-                                   range:NSMakeRange(0, [_voicemail.callerId length])];
-        
-        if (matches.count > 0) {
-            NSString *callerNumber = [_voicemail.callerId substringWithRange:[matches[0] range]];
-            callerNumber = [callerNumber stringByReplacingOccurrencesOfString:@"<" withString:@""];
-            callerNumber = [callerNumber stringByReplacingOccurrencesOfString:@">" withString:@""];
-            self.extensionLabel.text = callerNumber;
-        }
-    }
-}
+
 
 -(void)prepareForReuse
 {
@@ -166,11 +97,12 @@
 
 -(void)removeObservers
 {
-    if (_voicemail)
-        [_voicemail removeObserver:self forKeyPath:kVoicemailKeyPathForVoicemal];
+    if (self.voicemail)
+        [self.voicemail removeObserver:self forKeyPath:kVoicemailKeyPathForVoicemal];
 }
 
-- (IBAction)playPauseButtonTapped:(id)sender {
+- (IBAction)playPauseButtonTapped:(id)sender
+{
     if ([sender isKindOfClass:[UIButton class]]) {
         UIButton *button = (UIButton *)sender;
         button.selected = !button.selected;
