@@ -17,7 +17,6 @@
 #import "LineConfiguration+Custom.h"
 #import "Lines+Custom.h"
 #import "PBX+Custom.h"
-#import "JCCallCardManager.h"
 #import "VideoViewController.h"
 
 
@@ -38,11 +37,10 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 @interface SipHandler() <PortSIPEventDelegate>
 {
     PortSIPSDK *_mPortSIPSDK;
-    ConnectionCompletionHandler _connectionCompletionHandler;
+    CompletionHandler _connectionCompletionHandler;
     AFNetworkReachabilityStatus _previousNetworkStatus;
 	VideoViewController *_videoController;
 	bool inConference;
-    bool wasIncomingCall;
 }
 
 @property (nonatomic) NSMutableArray *lineSessions;
@@ -84,7 +82,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 #pragma mark - Device Registration -
 
--(void)connect:(ConnectionCompletionHandler)completionHandler;
+-(void)connect:(CompletionHandler)completionHandler;
 {
     _connectionCompletionHandler = completionHandler;
     
@@ -202,7 +200,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 {
     if(_initialized)
     {
-		[self hangUpAll];
+        for (JCLineSession *lineSession in _lineSessions) {
+            [self hangUpSession:lineSession completion:NULL];
+        }
         [_mPortSIPSDK unRegisterServer];
         [_mPortSIPSDK unInitialize];
         
@@ -251,23 +251,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             
             // If we are not transitioning from cellular to wifi, reconnect
             if (_previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWWAN && _previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWiFi)
-            {
-                JCLineSession *lineSession = [self findLineWithSessionState];
-                if (lineSession)
-                {
-                    [self hangUpCallWithSession:lineSession.mSessionId];
-                }
-                
                 [self connect:NULL];
-            }
-            
             break;
         }
-        case AFNetworkReachabilityStatusReachableViaWWAN:
-            
-            
-            break;
-            
         default:
             [self connect:NULL];
             break;
@@ -291,38 +277,6 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     }
 }
 
-
-//#pragma mark - Registration Delegates
-//
-//- (void)onRegisterSuccess:(char*) statusText statusCode:(int)statusCode
-//{
-////	[viewStatus setBackgroundColor:[UIColor greenColor]];
-////	
-////	[labelStatus setText:@"Connected"];
-////	
-////	[labelDebugInfo setText:[NSString stringWithFormat: @"onRegisterSuccess: %s", statusText]];
-////	
-////	[activityIndicator stopAnimating];
-//	
-//	SIPRegistered = YES;
-////	return 0;
-//}
-//
-//
-//- (void)onRegisterFailure:(char*) statusText statusCode:(int)statusCode
-//{
-////	[viewStatus setBackgroundColor:[UIColor redColor]];
-////	
-////	[labelStatus setText:@"Not Connected"];
-////	
-////	[labelDebugInfo setText:[NSString stringWithFormat: @"onRegisterFailure: %s", statusText]];
-////	
-////	[activityIndicator stopAnimating];
-//	
-//	SIPRegistered = NO;
-////	return 0;
-//};
-
 - (JCLineSession *)findSession:(long)sessionId
 {
 
@@ -344,7 +298,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	for (JCLineSession *line in self.lineSessions)
 	{
 		if (line.mSessionState &&
-			!line.mHoldSate &&
+			!line.isHolding &&
 			!line.mRecvCallState)
 		{
 			return line;
@@ -371,7 +325,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	for (JCLineSession *line in self.lineSessions)
 	{
 		if (line.mSessionState &&
-			line.mHoldSate &&
+			line.isHolding &&
 			!line.mRecvCallState)
 		{
 			return line;
@@ -413,96 +367,90 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	}
 }
 
-- (JCLineSession *) makeCall:(NSString*) callee
+- (JCLineSession *) makeCall:(NSString *)dialString
 		videoCall:(BOOL)videoCall contactName:(NSString *)contactName;
 {
-
-	JCLineSession *currentSession = [self findLineWithSessionState];
-	if (currentSession && currentSession.mSessionState && !currentSession.mHoldSate) {
-		[_mPortSIPSDK hold:currentSession.mSessionId];
-	}
+	JCLineSession *lineSession = [self findIdleLine];
+    if (!lineSession) {
+        return nil;
+    }
 	
-	currentSession = [self findIdleLine];	
-	
-	long sessionId = [_mPortSIPSDK call:callee sendSdp:TRUE videoCall:videoCall];	
+	long sessionId = [_mPortSIPSDK call:dialString sendSdp:TRUE videoCall:videoCall];
 	if(sessionId >= 0)
 	{
-		[currentSession setMSessionId:sessionId];
-		[currentSession setMSessionState:YES];
+		[lineSession setMSessionId:sessionId];
+		[lineSession setMSessionState:YES];
 		
-		[currentSession setCallTitle:contactName ? contactName : callee];
-		[currentSession setCallDetail:callee];
-        [OutgoingCall addOutgoingCallWithLineSession:currentSession];
+		[lineSession setCallTitle:contactName ? contactName : dialString];
+		[lineSession setCallDetail:dialString];
+        [OutgoingCall addOutgoingCallWithLineSession:lineSession];
 	}
 	else
 	{
-		//TODO:update call state
-		[currentSession setMCallState:JCCallFailed];
-		[currentSession reset];
+        [self setSessionState:JCCallFailed forSession:lineSession event:@"makeCall:"];
 	}
     
-	return currentSession;
+	return lineSession;
 }
 
-- (void)answerCall
+- (void)answerSession:(JCLineSession *)lineSession completion:(CompletionHandler)completion
 {
-    JCLineSession *currentLine = [self findLineWithRecevingState];
-    if (currentLine) {
-        int nRet = [_mPortSIPSDK answerCall:currentLine.mSessionId videoCall:FALSE];
-        if(nRet == 0)
-        {
-            [currentLine setMSessionState:true];
-            [currentLine setMRecvCallState:false];
-            [currentLine setMVideoState:false];
-        }
-        else {
-            [currentLine reset];
-        }
+    if (!lineSession)
+        return;
+    
+    int error = [_mPortSIPSDK answerCall:lineSession.mSessionId videoCall:FALSE];
+    if(error == 0)
+    {
+        [lineSession setMSessionState:true];
+        [lineSession setMRecvCallState:false];
+        [lineSession setMVideoState:false];
         
+        if (completion != NULL) {
+            completion(true, nil);
+        }
     }
-    
-    
+    else {
+        if (completion != NULL) {
+            completion(false, [NSError errorWithDomain:@"Unable to answer the call" code:error userInfo:nil]);
+        }
+        [lineSession reset];
+    }
 }
 
-- (void) hangUpCallWithSession:(long)sessionId;
+- (void)hangUpSession:(JCLineSession *)lineSession completion:(CompletionHandler)completion
 {
-	
-	JCLineSession *selectedLine = [self findSession:sessionId];
-	if (selectedLine.mSessionState)
-	{
-		[_mPortSIPSDK hangUp:selectedLine.mSessionId];
-//		if (mSessionArray[mActiveLine].getVideoState() == true) {
-//			[videoViewController onStopVideo:mSessionArray[mActiveLine].getSessionId()];
-//		}
-		
-	}
-	else if (selectedLine.mRecvCallState)
-	{
-		[_mPortSIPSDK rejectCall:selectedLine.mSessionId code:486];
-	}
-	
-	[selectedLine reset];
-}
-
-- (void)hangUpAll
-{
-	for (JCLineSession *line in self.lineSessions)
-	{
-		if (line.mSessionState)
-		{
-			[_mPortSIPSDK hangUp:line.mSessionId];
-			//		if (mSessionArray[mActiveLine].getVideoState() == true) {
-			//			[videoViewController onStopVideo:mSessionArray[mActiveLine].getSessionId()];
-			//		}
-			
-		}
-		else if (line.mRecvCallState)
-		{
-			[_mPortSIPSDK rejectCall:line.mSessionId code:486];
-		}
-		
-		[line reset];
-	}
+    if (lineSession.mSessionState)
+    {
+        int error = [_mPortSIPSDK hangUp:lineSession.mSessionId];
+        if (error == 0) {
+            if (completion != NULL) {
+                completion(true, nil);
+            }
+            [lineSession reset];
+        }
+        else
+        {
+            if (completion != NULL) {
+                completion(false, [NSError errorWithDomain:@"Error Trying to Hange up" code:error userInfo:nil]);
+            }
+        }
+    }
+    else if (lineSession.mRecvCallState)
+    {
+        int error = [_mPortSIPSDK rejectCall:lineSession.mSessionId code:486];
+        if (error == 0) {
+            if (completion != NULL) {
+                completion(true, nil);
+            }
+            [lineSession reset];
+        }
+        else
+        {
+            if (completion != NULL) {
+                completion(false, [NSError errorWithDomain:@"Error Trying to reject Call" code:error userInfo:nil]);
+            }
+        }
+    }
 }
 
 - (void)switchLines
@@ -514,37 +462,37 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     [self setHoldCallState:false forSessionId:lineOnHold.mSessionId];
 }
 
-- (void)setHoldCallState:(bool)holdState forSessionId:(long)sessionId
+- (void)setHoldCallState:(bool)hold forSessionId:(long)sessionId
 {
-    JCLineSession *selectedLine = [self findSession:sessionId];
-    if (selectedLine)
+    JCLineSession *lineSession = [self findSession:sessionId];
+    if (lineSession)
     {
-        if (holdState)
+        if (hold)
         {
-            [_mPortSIPSDK hold:selectedLine.mSessionId];
+            [_mPortSIPSDK hold:lineSession.mSessionId];
         }
         else
         {
-            [_mPortSIPSDK unHold:selectedLine.mSessionId];
+            [_mPortSIPSDK unHold:lineSession.mSessionId];
         }
-        [selectedLine setMHoldSate:holdState];
+        lineSession.hold = hold;
     }
 }
 
 - (void) toggleHoldForCallWithSessionState
 {
-	JCLineSession *selectedLine = [self findLineWithSessionState];
-	if (!selectedLine) {
-		selectedLine = [self findLineWithHoldState];
+	JCLineSession *lineSession = [self findLineWithSessionState];
+	if (!lineSession) {
+		lineSession = [self findLineWithHoldState];
 	}
 	
-	if (selectedLine.mHoldSate) {
-		[_mPortSIPSDK unHold:selectedLine.mSessionId];
-		[selectedLine setMHoldSate:NO];
+	if (lineSession.isHolding) {
+		[_mPortSIPSDK unHold:lineSession.mSessionId];
+        lineSession.hold = NO;
 	}
 	else {
-		[_mPortSIPSDK hold:selectedLine.mSessionId];
-		[selectedLine setMHoldSate:YES];
+		[_mPortSIPSDK hold:lineSession.mSessionId];
+        lineSession.hold = YES;
 	}
 }
 
@@ -563,8 +511,10 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return;
     }
     
-	completion(false, [NSError errorWithDomain:@"Refer failed" code:0 userInfo:nil]);
-    [currentLine setMCallState:JCTransferFailed];
+    NSString *msg = @"Refer failed";
+    [self setSessionState:JCTransferFailed forSession:currentLine event:msg];
+	completion(false, [NSError errorWithDomain:msg code:0 userInfo:nil]);
+    
     return;
 }
 
@@ -589,8 +539,10 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return;
     }
 	
-    completion(false, [NSError errorWithDomain:@"Warm Tranfer failed" code:error userInfo:nil]);
-    [currentLine setMCallState:JCTransferFailed];
+    NSString *msg = @"Warm Tranfer failed";
+    [self setSessionState:JCTransferFailed forSession:currentLine event:msg];
+    currentLine.sessionState = JCTransferFailed;
+    completion(false, [NSError errorWithDomain:msg code:error userInfo:nil]);
 }
 
 - (void) muteCall:(BOOL)mute
@@ -606,8 +558,6 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	}
 }
 
-
-
 - (bool)setConference:(bool)conference
 {
 	if (conference)
@@ -618,10 +568,10 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 			{
 				if (line.mSessionState)
 				{
-					if (line.mHoldSate)
+					if (line.isHolding)
 					{
 						[_mPortSIPSDK unHold:line.mSessionId];
-						line.mHoldSate = false;
+						line.hold = false;
 					}
 					
 					[_mPortSIPSDK joinToConference:line.mSessionId];
@@ -642,10 +592,10 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 		// Before stop the conference, MUST place all lines to hold state
 		for (JCLineSession *line in self.lineSessions)
 		{
-			if (line.mSessionState && !line.mHoldSate )
+			if (line.mSessionState && !line.isHolding )
 			{
 				[_mPortSIPSDK hold:line.mSessionId];
-				line.mHoldSate = true;
+				line.hold = true;
 			}
 		}
 		
@@ -660,62 +610,46 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	[_mPortSIPSDK setLoudspeakerStatus:enable];
 }
 
+#pragma mark - Private -
 
+-(void)setSessionState:(JCLineSessionState)state forSession:(JCLineSession *)lineSession event:(NSString *)event
+{
+    if (!lineSession)
+        return;
+    
+    NSLog(@"%@ Session Id: %ld", event, lineSession.mSessionId);
+    switch (state)
+    {
+        case JCCallCanceled:
+        {
+            if (lineSession.mRecvCallState)
+            {
+                [MissedCall addMissedCallWithLineSession:lineSession];
+            }
+        }
+        case JCInviteFailure:
+        case JCCallFailed:
+        case JCTransferSuccess:
+        case JCTransferFailed:
+            [self.delegate removeLineSession:lineSession];
+            [lineSession reset];
+            break;
+        default:
+            lineSession.sessionState = state;
+            break;
+    }
+    
+}
 
-//- (void)didSelectLine:(NSInteger)activeLine
-//{
-//	UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
-//	
-//	[tabBarController dismissViewControllerAnimated:TRUE completion:nil];
-//	
-//	if (mSIPRegistered == false || mActiveLine == activeLine)
-//	{
-//		return;
-//	}
-//	
-//	if (mSessionArray[mActiveLine].getSessionState()==true && mSessionArray[mActiveLine].getHoldState()==false)
-//	{
-//		// Need to hold this line
-//		[_mPortSIPSDK hold:mSessionArray[mActiveLine].getSessionId()];
-//		
-//		mSessionArray[mActiveLine].setHoldState(true);
-//		
-////		[numpadViewController setStatusText:[NSString  stringWithFormat:@"Hold call on line %ld", mActiveLine]];
-//	}
-//	
-//	mActiveLine = activeLine;
-////	[numpadViewController.buttonLine setTitle:[NSString  stringWithFormat:@"Line%ld:", mActiveLine] forState:UIControlStateNormal];
-//	
-//	if (mSessionArray[mActiveLine].getSessionState()==true && mSessionArray[mActiveLine].getHoldState()==true)
-//	{
-//		// Need to unhold this line
-//		[_mPortSIPSDK unHold:mSessionArray[mActiveLine].getSessionId()];
-//		
-//		mSessionArray[mActiveLine].setHoldState(false);
-//		
-////		[numpadViewController setStatusText:[NSString  stringWithFormat:@"unHold call on line %ld", mActiveLine]];
-//	}
-//}
+-(void)setSessionState:(JCLineSessionState)state forSessionId:(long)sessionId event:(NSString *)event
+{
+    [self setSessionState:state forSession:[self findSession:sessionId] event:event];
+}
 
-//- (void) switchSessionLine
-//{
-//	UIStoryboard *stryBoard=[UIStoryboard storyboardWithName:@"MainStoryboard_iPhone" bundle:nil];
-//	
-////	LineTableViewController* selectLineView  = [stryBoard instantiateViewControllerWithIdentifier:@"LineTableViewController"];
-//	
-////	selectLineView.delegate = self;
-////	selectLineView.mActiveLine = mActiveLine;
-//	
-//	UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
-//	
-//	[tabBarController presentViewController:selectLineView animated:YES completion:nil];
-//}
+#pragma mark - Delegate Handlers -
 
+#pragma mark Call Events
 
-
-
-#pragma mark - Call Events
-//Call Event
 - (void)onInviteIncoming:(long)sessionId
 	   callerDisplayName:(char*)callerDisplayName
 				  caller:(char*)caller
@@ -726,10 +660,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 			 existsAudio:(BOOL)existsAudio
 			 existsVideo:(BOOL)existsVideo
 {
-	NSLog(@"onInviteIncoming - Session ID: %ld", sessionId);
-    wasIncomingCall = true;
 	JCLineSession *idleLine = [self findIdleLine];
-	
 	if (!idleLine)
 	{
 		[_mPortSIPSDK rejectCall:sessionId code:486];
@@ -778,7 +709,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 //		[alert show];
 //	}
     
-	[[JCCallCardManager sharedManager] addIncomingCallSession:idleLine];
+    
     
     [idleLine setCallTitle:[NSString stringWithUTF8String:callerDisplayName]];
     NSString *newDetail = (NSString *)idleLine.callDetail;
@@ -789,26 +720,20 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     
     NSRange finalrange = NSMakeRange(4, newDetail.length-4);
     newDetail = [newDetail substringWithRange:finalrange];
-//    NSString *callerDetailSubString = [[NSString stringWithUTF8String:caller]substringWithRange:range];
-    
-//    [idleLine setCallDetail:  callerDetailSubString];
     [idleLine setCallDetail:newDetail];
     
-    
-    
+    // Add to Core data
     [IncomingCall addIncommingCallWithLineSession:idleLine];
+    
+    // Notify delegate to add a line session.
+    [self.delegate addLineSession:idleLine];
+    
+    [self setSessionState:JCInvite forSession:idleLine event:@"onInviteIncoming"];
 };
 
 - (void)onInviteTrying:(long)sessionId
 {
-	NSLog(@"onInviteTrying - Session ID: %ld", sessionId);
-	JCLineSession *selectedLine = [self findSession:sessionId];
-	if (!selectedLine)
-	{
-		return;
-	}
-	
-//	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Call is trying on line %d",index]];
+	[self setSessionState:JCInviteTrying forSessionId:sessionId event:@"onInviteTrying"];
 };
 
 - (void)onInviteSessionProgress:(long)sessionId
@@ -818,7 +743,6 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 					existsAudio:(BOOL)existsAudio
 					existsVideo:(BOOL)existsVideo
 {
-	NSLog(@"onInviteSessionProgress - Session ID: %ld", sessionId);
 	JCLineSession *selectedLine = [self findSession:sessionId];
 	if (!selectedLine)
 	{
@@ -843,29 +767,20 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	}
 	
 	[selectedLine setMExistEarlyMedia:existsEarlyMedia];
-	
-//	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Call session progress on line %d",index]];
+    
+    [self setSessionState:JCInviteProgress forSession:selectedLine event:@"onInviteSessionProgress"];
 }
 
 - (void)onInviteRinging:(long)sessionId
 			 statusText:(char*)statusText
 			 statusCode:(int)statusCode
 {
-	NSLog(@"onInviteRinging - Session ID: %ld", sessionId);
-	JCLineSession *selectedLine = [self findSession:sessionId];
-	if (!selectedLine)
-	{
-		return;
+    JCLineSession *selectedLine = [self findSession:sessionId];
+	if (selectedLine && !selectedLine.mExistEarlyMedia)
+    {
+        // No early media, you must play the local WAVE file for ringing tone
 	}
-	
-	if (!selectedLine.mExistEarlyMedia)
-	{
-		// No early media, you must play the local WAVE file for ringing tone
-	}
-	
-	[selectedLine setMCallState:JCCallRinging];
-	
-//	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Call ringing on line %d",index]];
+    [self setSessionState:JCCallRinging forSession:selectedLine event:@"onInviteRinging"];
 }
 
 - (void)onInviteAnswered:(long)sessionId
@@ -878,8 +793,6 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 			 existsAudio:(BOOL)existsAudio
 			 existsVideo:(BOOL)existsVideo
 {
-	
-	NSLog(@"onInviveAnswered - Session ID: %ld", sessionId);
 	JCLineSession *selectedLine = [self findSession:sessionId];
 	if (!selectedLine)
 	{
@@ -894,172 +807,73 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 //		[videoViewController onStartVideo:sessionId];
 //	}
 	
-	if (existsAudio)
+	/*if (existsAudio)
 	{
-	}
+        
+	}*/
 	
 	[selectedLine setMSessionState:true];
 	[selectedLine setMVideoState:existsVideo];
-	[selectedLine setMCallState:JCCallConnected];
-	
-	
-//	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Call Established on line  %d",index]];
 	
 	// If this is the refer call then need set it to normal
 	if (selectedLine.mIsReferCall)
 	{
 		[selectedLine setReferCall:false originalCallSessionId:0];
 	}
-	
-	///todo: joinConference(index);
+    
+    [self setSessionState:JCCallConnected forSession:selectedLine event:@"onInviteAnswered"];
 }
 
-- (void)onInviteFailure:(long)sessionId
-				 reason:(char*)reason
-				   code:(int)code
+- (void)onInviteFailure:(long)sessionId reason:(char*)reason code:(int)code
 {
-	NSLog(@"onInviteFailure - Session ID: %ld", sessionId);
-	JCLineSession *selectedLine = [self findSession:sessionId];
-	if (!selectedLine)
-	{
-		return;
-	}
-	
-//	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Failed to call on line  %d,%s(%d)",index,reason,code]];
-	
-//	if (selectedLine.mIsReferCall)
-//	{
-//		// Take off the origin call from HOLD if the refer call is failure
-//		long originIndex = -1;
-//		for (int i=LINE_BASE; i<MAX_LINES; ++i)
-//		{
-//			// Looking for the origin call
-//			if (mSessionArray[i].getSessionId() == mSessionArray[index].getOriginCallSessionId())
-//			{
-//				originIndex = i;
-//				break;
-//			}
-//		}
-//		
-//		if (originIndex != -1)
-//		{
-////			[numpadViewController setStatusText:[NSString  stringWithFormat:@"Call failure on line  %d,%s(%d)",index,reason,code]];
-//			
-//			// Now take off the origin call
-//			[_mPortSIPSDK unHold:mSessionArray[index].getOriginCallSessionId()];
-//			
-//			mSessionArray[originIndex].setHoldState(false);
-//			
-//			// Switch the currently line to origin call line
-//			mActiveLine = originIndex;
-//			
-//			NSLog(@"Current line is: %ld",(long)mActiveLine);
-//		}
-//	}
-	
-//	mSessionArray[index].reset();
-	[selectedLine reset];
-}
-
-- (void)onInviteUpdated:(long)sessionId
-			audioCodecs:(char*)audioCodecs
-			videoCodecs:(char*)videoCodecs
-			existsAudio:(BOOL)existsAudio
-			existsVideo:(BOOL)existsVideo
-{
-	NSLog(@"onInviteUpdated - Session ID: %ld", sessionId);
-	JCLineSession *selectedLine = [self findSession:sessionId];
-	if (!selectedLine)
-	{
-		return;
-	}
-	
-	// Checking does this call has video
-//	if (existsVideo)
-//	{
-//		[videoViewController onStartVideo:sessionId];
-//	}
-	if (existsAudio)
-	{
-	}
-	
-	
-//	[numpadViewController setStatusText:[NSString  stringWithFormat:@"The call has been updated on line %d",index]];
+    NSString *event = [NSString stringWithFormat:@"onInviteFailure reason: %@ code: %i", [NSString stringWithCString:reason encoding:NSUTF8StringEncoding], code];
+    [self setSessionState:JCInviteFailure forSessionId:sessionId event:event];
 }
 
 - (void)onInviteConnected:(long)sessionId
 {
-	NSLog(@"onInviteConnected - Session ID: %ld", sessionId);
-	JCLineSession *selectedLine = [self findSession:sessionId];
-	if (!selectedLine)
-	{
-		return;
-	}
-	
-	[selectedLine setMCallState:JCCallConnected];
-	
-//	[numpadViewController setStatusText:[NSString  stringWithFormat:@"The call is connected on line %d",index]];
+    [self setSessionState:JCCallConnected forSessionId:sessionId event:@"onInviteConnected"];
 }
-
-
-- (void)onInviteBeginingForward:(char*)forwardTo
-{
-//	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Call has been forward to:%s" ,forwardTo]];
-}
-
 
 - (void)onInviteClosed:(long)sessionId
 {
-	NSLog(@"onInviteClosed - Session ID: %ld", sessionId);
-	JCLineSession *selectedLine = [self findSession:sessionId];
-	if (!selectedLine)
-	{
-		return;
-	}
-	
-//	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Call closed by remote on line %d",index]];
-	
-	[selectedLine setMCallState:JCCallCanceled];
-	[selectedLine reset];
+    [self setSessionState:JCCallCanceled forSessionId:sessionId event:@"onInviteClosed"];
+}
+
+#pragma mark Not Implemented
+
+- (void)onInviteUpdated:(long)sessionId
+            audioCodecs:(char*)audioCodecs
+            videoCodecs:(char*)videoCodecs
+            existsAudio:(BOOL)existsAudio
+            existsVideo:(BOOL)existsVideo
+{
+    // TODO: Implement.
     
-    if (wasIncomingCall) {
-        //create missed call notification  addIncommingCallWithLineSession:idleLine
-    
-        [MissedCall addMissedCallWithLineSession:selectedLine];
-        
-        
-        wasIncomingCall = false;
-    }
-	
-//	if (mSessionArray[index].getVideoState() == true) {
-//		[videoViewController onStopVideo:sessionId];
-//	}
+    // NSLog(@"onInviteUpdated - Session ID: %ld", sessionId);
+    // Checking does this call has video
+    //	if (existsVideo)
+    //	{
+    //		[videoViewController onStartVideo:sessionId];
+    //	}
+    //  if (existsAudio)
+    //  {
+    //  }
+}
+
+- (void)onInviteBeginingForward:(char*)forwardTo
+{
+    // TODO: Implement.
 }
 
 - (void)onRemoteHold:(long)sessionId
 {
-	JCLineSession *selectedLine = [self findSession:sessionId];
-	if (!selectedLine)
-	{
-		return;
-	}
-	
-//	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Placed on hold by remote on line %d",index]];
+    // TODO: Implement.
 }
 
-- (void)onRemoteUnHold:(long)sessionId
-		   audioCodecs:(char*)audioCodecs
-		   videoCodecs:(char*)videoCodecs
-		   existsAudio:(BOOL)existsAudio
-		   existsVideo:(BOOL)existsVideo
+- (void)onRemoteUnHold:(long)sessionId audioCodecs:(char*)audioCodecs videoCodecs:(char*)videoCodecs existsAudio:(BOOL)existsAudio existsVideo:(BOOL)existsVideo
 {
-	JCLineSession *selectedLine = [self findSession:sessionId];
-	if (!selectedLine)
-	{
-		return;
-	}
-	
-//	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Take off hold by remote on line  %d",index]];
+	// TODO: Implement.
 }
 
 #pragma mark - Transfer Events
@@ -1078,17 +892,6 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 		return;
 	}
 	
-//	int referCallIndex = -1;
-//	for (int i=LINE_BASE; i<MAX_LINES; ++i)
-//	{
-//		if (mSessionArray[i].getSessionState()==false && mSessionArray[i].getRecvCallState()==false)
-//		{
-//			mSessionArray[i].setSessionState(true);
-//			referCallIndex = i;
-//			break;
-//		}
-//	}
-	
 	JCLineSession *idleLine = [self findIdleLine];
 	
 	if (!idleLine)
@@ -1097,124 +900,72 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 		return;
 	}
 	
-//	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Received the refer on line %d, refer to %s",index,to]];
-	
 	//auto accept refer
 	// Hold currently call after accepted the REFER
-	
-	[_mPortSIPSDK hold:selectedLine.mSessionId];
-	[selectedLine setMHoldSate:true];
-	
+    [_mPortSIPSDK hold:selectedLine.mSessionId];
+    selectedLine.hold = true;
+    
 	long referSessionId = [_mPortSIPSDK acceptRefer:referId referSignaling:[NSString stringWithUTF8String:referSipMessage]];
 	if (referSessionId <= 0)
 	{
 		[idleLine reset];
-		// Take off the hold
 		[_mPortSIPSDK unHold:selectedLine.mSessionId];
-		[selectedLine setMHoldSate:false];
+        selectedLine.hold = false;
 	}
 	else
 	{
 		[idleLine setMSessionId:referSessionId];
 		[idleLine setMSessionState:true];
 		[idleLine setReferCall:true originalCallSessionId:selectedLine.mSessionId];
-		
-//		mSessionArray[referCallIndex].setSessionId(referSessionId);
-//		mSessionArray[referCallIndex].setSessionState(true);
-//		mSessionArray[referCallIndex].setReferCall(true, mSessionArray[index].getSessionId());
-		
-		// Set the refer call to active line
-//		mActiveLine = referCallIndex;
-		
-//		[numpadViewController setStatusText:[NSString  stringWithFormat:@"Accepted the refer, new call is trying on line %d",referCallIndex]];
-		
-//		[self didSelectLine:mActiveLine];
 	}
-	
-	
-	/*if you want to reject Refer
-	 [_mPortSIPSDK rejectRefer:referId];
-	 mSessionArray[referCallIndex].reset();
-	 [numpadViewController setStatusText:@"Rejected the the refer."];
-	 */
-}
-
-- (void)onReferAccepted:(long)sessionId
-{
-	JCLineSession *selectedLine = [self findSession:sessionId];
-	if (!selectedLine)
-	{
-		return;
-	}
-}
-
-- (void)onReferRejected:(long)sessionId reason:(char*)reason code:(int)code
-{
-	JCLineSession *selectedLine = [self findSession:sessionId];
-	if (!selectedLine)
-	{
-		return;
-	}
-	
-//	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Line %d, the REFER was rejected.",index]];
-}
-
-- (void)onTransferTrying:(long)sessionId
-{
-	JCLineSession *selectedLine = [self findSession:sessionId];
-	if (!selectedLine)
-	{
-		return;
-	}
-	
-//	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Transfer trying on line %d",index]];
-}
-
-- (void)onTransferRinging:(long)sessionId
-{
-	JCLineSession *selectedLine = [self findSession:sessionId];
-	if (!selectedLine)
-	{
-		return;
-	}
-	
-//	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Transfer ringing on line %d",index]];
 }
 
 - (void)onACTVTransferSuccess:(long)sessionId
 {
-	JCLineSession *selectedLine = [self findSession:sessionId];
-	if (!selectedLine)
-	{
-		return;
-	}
-	
-	[selectedLine setMCallState:JCTransferSuccess];
+    [self setSessionState:JCTransferSuccess forSessionId:sessionId event:@"onACTVTransferSuccess"];
 }
 
 - (void)onACTVTransferFailure:(long)sessionId reason:(char*)reason code:(int)code
 {
-	JCLineSession *selectedLine = [self findSession:sessionId];
-	if (!selectedLine)
-	{
-		return;
-	}
-	
-	[selectedLine setMCallState:JCTransferFailed];
-	
-//	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Failed to transfer on line %d",index]];
+    NSString *event = [NSString stringWithFormat:@"onACTVTransferFailure reason: %@ code: %i", [NSString stringWithCString:reason encoding:NSUTF8StringEncoding], code];
+    [self setSessionState:JCTransferFailed forSessionId:sessionId event:event];
 }
 
-//Signaling Event
+#pragma mark Not Implemented
+
+- (void)onReferAccepted:(long)sessionId
+{
+	// TODO: Implement.
+}
+
+- (void)onReferRejected:(long)sessionId reason:(char*)reason code:(int)code
+{
+	// TODO: Implement.
+}
+
+- (void)onTransferTrying:(long)sessionId
+{
+	// TODO: Implement.
+}
+
+- (void)onTransferRinging:(long)sessionId
+{
+	// TODO: Implement.
+}
+
 - (void)onReceivedSignaling:(long)sessionId message:(char*)message
 {
-	// This event will be fired when the SDK received a SIP message
+	// TODO: Implement.
+    
+    // This event will be fired when the SDK received a SIP message
 	// you can use signaling to access the SIP message.
 }
 
 - (void)onSendingSignaling:(long)sessionId message:(char*)message
 {
-	// This event will be fired when the SDK sent a SIP message
+	// TODO: Implement.
+    
+    // This event will be fired when the SDK sent a SIP message
 	// you can use signaling to access the SIP message.
 }
 
@@ -1224,7 +975,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 			  newMessageCount:(int)newMessageCount
 			  oldMessageCount:(int)oldMessageCount
 {
-//	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Has voice messages,%s(%d,%d,%d,%d)",messageAccount,urgentNewMessageCount,urgentOldMessageCount,newMessageCount,oldMessageCount]];
+    // TODO: Implement.
 }
 
 - (void)onWaitingFaxMessage:(char*)messageAccount
@@ -1233,29 +984,29 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 			newMessageCount:(int)newMessageCount
 			oldMessageCount:(int)oldMessageCount
 {
-//	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Has Fax messages,%s(%d,%d,%d,%d)",messageAccount,urgentNewMessageCount,urgentOldMessageCount,newMessageCount,oldMessageCount]];
+    // TODO: Implement.
 }
 
 - (void)onRecvDtmfTone:(long)sessionId tone:(int)tone
 {
-	JCLineSession *selectedLine = [self findSession:sessionId];
-	if (!selectedLine)
-	{
-		return;
-	}
-	
-//	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Received DTMF tone: %d  on line %d",tone, index]];
+	// TODO: Implement.
 }
 
 - (void)onRecvOptions:(char*)optionsMessage
 {
-	NSLog(@"Received an OPTIONS message:%s",optionsMessage);
+	// TODO: Implement.
+    
+    //NSLog(@"Received an OPTIONS message:%s",optionsMessage);
 }
 
 - (void)onRecvInfo:(char*)infoMessage
 {
-	NSLog(@"Received an INFO message:%s",infoMessage);
+	// TODO: Implement.
+    
+    //NSLog(@"Received an INFO message:%s",infoMessage);
 }
+
+#pragma mark - Messaging / Presence -
 
 //Instant Message/Presence Event
 - (void)onPresenceRecvSubscribe:(long)subscribeId
@@ -1263,23 +1014,21 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 						   from:(char*)from
 						subject:(char*)subject
 {
-//	[imViewController onPresenceRecvSubscribe:subscribeId fromDisplayName:fromDisplayName from:from subject:subject];
+    // TODO: Implement.
 }
 
 - (void)onPresenceOnline:(char*)fromDisplayName
 					from:(char*)from
 			   stateText:(char*)stateText
 {
-//	[imViewController onPresenceOnline:fromDisplayName from:from
-//							 stateText:stateText];
+    // TODO: Implement.
 }
 
 
 - (void)onPresenceOffline:(char*)fromDisplayName from:(char*)from
 {
-//	[imViewController onPresenceOffline:fromDisplayName from:from];
+    // TODO: Implement.
 }
-
 
 - (void)onRecvMessage:(long)sessionId
 			 mimeType:(char*)mimeType
@@ -1287,14 +1036,13 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 		  messageData:(unsigned char*)messageData
 	messageDataLength:(int)messageDataLength
 {
-	JCLineSession *selectedLine = [self findSession:sessionId];
+	// TODO: Implement.
+    
+    /*JCLineSession *selectedLine = [self findSession:sessionId];
 	if (!selectedLine)
 	{
 		return;
 	}
-	
-//	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Received a MESSAGE message on line %d",index]];
-	
 	
 	if (strcmp(mimeType,"text") == 0 && strcmp(subMimeType,"plain") == 0)
 	{
@@ -1315,7 +1063,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	else if (strcmp(mimeType,"application") == 0 && strcmp(subMimeType,"vnd.3gpp2.sms") == 0)
 	{
 		// The messageData is binary data
-	}
+	}*/
 }
 
 - (void)onRecvOutOfDialogMessage:(char*)fromDisplayName
@@ -1327,9 +1075,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 					 messageData:(unsigned char*)messageData
 			   messageDataLength:(int)messageDataLength
 {
-//	[numpadViewController setStatusText:[NSString  stringWithFormat:@"Received a message(out of dialog) from %s",from]];
-	
-	if (strcasecmp(mimeType,"text") == 0 && strcasecmp(subMimeType,"plain") == 0)
+	// TODO: Implement.
+    
+    /*if (strcasecmp(mimeType,"text") == 0 && strcasecmp(subMimeType,"plain") == 0)
 	{
 		NSString* recvMessage = [NSString stringWithUTF8String:(const char*)messageData];
 		
@@ -1348,18 +1096,18 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	else if (strcasecmp(mimeType,"application") == 0 && strcasecmp(subMimeType,"vnd.3gpp2.sms") == 0)
 	{
 		// The messageData is binary data
-	}
+	}*/
 }
 
 - (void)onSendMessageSuccess:(long)sessionId messageId:(long)messageId
 {
-//	[imViewController onSendMessageSuccess:messageId];
+    // TODO: Implement.
 }
 
 
 - (void)onSendMessageFailure:(long)sessionId messageId:(long)messageId reason:(char*)reason code:(int)code
 {
-//	[imViewController onSendMessageFailure:messageId reason:reason code:code];
+    // TODO: Implement.
 }
 
 - (void)onSendOutOfDialogMessageSuccess:(long)messageId
@@ -1368,7 +1116,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 						  toDisplayName:(char*)toDisplayName
 									 to:(char*)to
 {
-//	[imViewController onSendMessageSuccess:messageId];
+    // TODO: Implement.
 }
 
 
@@ -1380,25 +1128,28 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 								 reason:(char*)reason
 								   code:(int)code
 {
-//	[imViewController onSendMessageFailure:messageId reason:reason code:code];
+    // TODO: Implement.
 }
 
-#pragma mark - Other Events
+#pragma mark - Other Events -
+
 //Play file event
 - (void)onPlayAudioFileFinished:(long)sessionId fileName:(char*)fileName
 {
-	
+	// TODO: Implement.
 }
 
 - (void)onPlayVideoFileFinished:(long)sessionId
 {
-	
+	// TODO: Implement.
 }
 
 //RTP/Audio/video stream callback data
 - (void)onReceivedRTPPacket:(long)sessionId isAudio:(BOOL)isAudio RTPPacket:(unsigned char *)RTPPacket packetSize:(int)packetSize
 {
-	/* !!! IMPORTANT !!!
+	// TODO: Implement.
+    
+    /* !!! IMPORTANT !!!
 	 
 	 Don't call any PortSIP SDK API functions in here directly. If you want to call the PortSIP API functions or
 	 other code which will spend long time, you should post a message to main thread(main window) or other thread,
@@ -1408,7 +1159,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 - (void)onSendingRTPPacket:(long)sessionId isAudio:(BOOL)isAudio RTPPacket:(unsigned char *)RTPPacket packetSize:(int)packetSize
 {
-	/* !!! IMPORTANT !!!
+	// TODO: Implement.
+    
+    /* !!! IMPORTANT !!!
 	 
 	 Don't call any PortSIP SDK API functions in here directly. If you want to call the PortSIP API functions or
 	 other code which will spend long time, you should post a message to main thread(main window) or other thread,
@@ -1422,7 +1175,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 				dataLength:(int)dataLength
 			samplingFreqHz:(int)samplingFreqHz
 {
-	/* !!! IMPORTANT !!!
+	// TODO: Implement.
+    
+    /* !!! IMPORTANT !!!
 	 
 	 Don't call any PortSIP SDK API functions in here directly. If you want to call the PortSIP API functions or
 	 other code which will spend long time, you should post a message to main thread(main window) or other thread,
@@ -1437,7 +1192,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 					  data:(unsigned char *)data
 				dataLength:(int)dataLength
 {
-	/* !!! IMPORTANT !!!
+	// TODO: Implement.
+    
+    /* !!! IMPORTANT !!!
 	 
 	 Don't call any PortSIP SDK API functions in here directly. If you want to call the PortSIP API functions or
 	 other code which will spend long time, you should post a message to main thread(main window) or other thread,
@@ -1445,63 +1202,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	 */
 }
 
-
-
-
-- (void)alertView: (UIAlertView *)alertView clickedButtonAtIndex: (NSInteger)buttonIndex
-{
-	JCLineSession *selectedLine = [self findLineWithRecevingState];
-	if (selectedLine) {
-		
-		if(buttonIndex == 0){//reject Call
-			[_mPortSIPSDK rejectCall:selectedLine.mSessionId code:486];
-			
-	//		[numpadViewController setStatusText:[NSString  stringWithFormat:@"Reject Call on line %d",index]];
-		}
-		else if (buttonIndex == 1){//Answer Call
-			int nRet = [_mPortSIPSDK answerCall:selectedLine.mSessionId videoCall:FALSE];
-			if(nRet == 0)
-			{
-				[selectedLine setMSessionState:true];
-				[selectedLine setMVideoState:false];
-//				mSessionArray[index].setSessionState(TRUE);
-//				mSessionArray[index].setVideoState(FALSE);
-				
-	//			[numpadViewController setStatusText:[NSString  stringWithFormat:@"Answer Call on line %d",index]];
-//				[self didSelectLine:index];
-			}
-			else
-			{
-				[selectedLine reset];
-//				mSessionArray[index].reset();
-	//			[numpadViewController setStatusText:[NSString  stringWithFormat:@"Answer Call on line %d Failed",index]];
-			}
-		}
-		else if (buttonIndex == 2){//Answer Video Call
-			int nRet = [_mPortSIPSDK answerCall:selectedLine.mSessionId videoCall:TRUE];
-			if(nRet == 0)
-			{
-				[selectedLine setMSessionState:true];
-				[selectedLine setMVideoState:true];
-
-//				mSessionArray[index].setSessionState(TRUE);
-//				mSessionArray[index].setVideoState(TRUE);
-	//			[videoViewController onStartVideo:mSessionArray[index].getSessionId()];
-	//			
-	//			[numpadViewController setStatusText:[NSString  stringWithFormat:@"Answer Call on line %d",index]];
-//				[self didSelectLine:index];
-			}
-			else
-			{
-				[selectedLine reset];
-//				mSessionArray[index].reset();
-	//			[numpadViewController setStatusText:[NSString  stringWithFormat:@"Answer Call on line %d Failed",index]];
-			}
-		}
-	}
-}
 @end
-
 
 @implementation SipHandler (Singleton)
 

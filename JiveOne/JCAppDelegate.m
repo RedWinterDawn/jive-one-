@@ -113,7 +113,7 @@ int didNotify;
     JCCallCardManager *callCardManager = [JCCallCardManager sharedManager];
     [center addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
     [center addObserver:self selector:@selector(didReceiveIncomingCall:) name:kJCCallCardManagerAddedCallNotification object:callCardManager];
-    [center addObserver:self selector:@selector(stopRingtone) name:kJCCallCardManagerUpdateCallNotification object:callCardManager];
+    [center addObserver:self selector:@selector(stopRingtone) name:kJCCallCardManagerAnswerCallNotification object:callCardManager];
     
     [self refreshTabBadges:NO];    
     if (![[JCAuthenticationManager sharedInstance] userAuthenticated] || ![[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {

@@ -12,8 +12,10 @@
 #import "Lines+Custom.h"
 #import <MBProgressHUD.h>
 
+#import "JCConferenceCallCard.h"
+
 NSString *const kJCCallCardManagerAddedCallNotification      = @"addedCall";
-NSString *const kJCCallCardManagerUpdateCallNotification     = @"updatedCall";
+NSString *const kJCCallCardManagerAnswerCallNotification     = @"answerCall";
 NSString *const kJCCallCardManagerRemoveCallNotification     = @"removedCall";
 
 NSString *const kJCCallCardManagerAddedConferenceCallNotification   = @"addedConferenceCall";
@@ -31,7 +33,7 @@ NSString *const kJCCallCardManagerActiveCall        = @"activeCall";
 NSString *const kJCCallCardManagerIncomingCall      = @"incomingCall";
 NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 
-@interface JCCallCardManager ()
+@interface JCCallCardManager ()<SipHandlerDelegate, JCCallCardDelegate>
 {
     SipHandler *_sipHandler;
 	NSString *_warmTransferNumber;
@@ -47,6 +49,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     if (self)
     {
         _sipHandler = [SipHandler sharedHandler];
+        _sipHandler.delegate = self;
     }
     return self;
 }
@@ -75,57 +78,6 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
         [self internal_dialNumber:dialNumber type:dialType completion:completion];
 }
 
--(void)answerCall:(JCCallCard *)callCard
-{
-	[_sipHandler answerCall];
-    callCard.incoming = false;
-    callCard.started = [NSDate date];
-    
-    [self setCallCallHoldState:NO forCard:callCard];
-    [self updateCall:callCard];
-}
-
--(void)hangUpCall:(JCCallCard *)callCard remote:(BOOL)remote
-{
-	if (!remote)
-		[_sipHandler hangUpCallWithSession:callCard.lineSession.mSessionId];
-    
-    if (callCard.isConference) {
-        [_sipHandler hangUpAll];
-    }
-    [self removeCall:callCard];
-}
-
--(void)setCallCallHoldState:(bool)hold forCard:(JCCallCard *)callCard
-{
-    // If we are in a conference call, all the child cards show recieve the hold call state.
-    if (callCard.isConference)
-    {
-        for (JCCallCard *card in callCard.calls)
-        {
-            [_sipHandler setHoldCallState:hold forSessionId:card.lineSession.mSessionId];
-        }
-    }
-    
-    // If we are not in a conference call, all other call should be placed on hold while we are not on hold on a line.
-    // When a line is placed on hold, then only it should be placed on hold. If it is returning from hold, all other
-    // lines should be placed on hold that are not already on hold.
-    else
-    {
-        if (!hold)
-        {
-            for (JCCallCard *card in self.calls)
-            {
-                if (card != callCard)
-                {
-                    card.hold = TRUE;
-                }
-            }
-        }
-        [_sipHandler setHoldCallState:hold forSessionId:callCard.lineSession.mSessionId];
-    }
-}
-
 -(void)finishWarmTransfer:(void (^)(bool success))completion
 {
 	if (_warmTransferNumber) {
@@ -151,22 +103,21 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 
 -(void)splitCalls
 {
+    // Since we are only supporting two line sessions at a time, if we have a conference call, it should be the only
+    // object in the array;
     JCCallCard *callCard = [self.calls objectAtIndex:0];
-    [self removeConferenceCall:callCard];
-	[_sipHandler setConference:false];
+    if ([callCard isKindOfClass:[JCConferenceCallCard class]])
+    {
+        JCConferenceCallCard *conferenceCallCard = (JCConferenceCallCard *)callCard;
+        [self removeConferenceCall:conferenceCallCard];
+        [_sipHandler setConference:false];
+    }
 }
 
 -(void)swapCalls
 {
     JCCallCard *inactiveCall = [self findInactiveCallCard];
     inactiveCall.hold = false;
-}
-
--(void)addIncomingCallSession:(JCLineSession *)session
-{
-    JCCallCard *callCard = [[JCCallCard alloc] initWithLineSession:session];
-    callCard.incoming = true;
-    [self addCall:callCard];
 }
 
 #pragma mark - Properties -
@@ -183,7 +134,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 -(JCCallCard *)findInactiveCallCard
 {
     for (JCCallCard *callCard in self.calls) {
-        if (callCard.lineSession.mHoldSate == TRUE) {
+        if (callCard.lineSession.isHolding == TRUE) {
             return callCard;
         }
     }
@@ -209,6 +160,8 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     {
         JCCallCard *transferedCall = self.calls.lastObject;
         JCCallCard *callCard = [[JCCallCard alloc] initWithLineSession:session];
+        callCard.delegate = self;
+        callCard.hold = false;
         [self addCall:callCard];
         NSUInteger index = [self.calls indexOfObject:callCard];
         if (completion != NULL)
@@ -276,17 +229,6 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
                                                                  }];
 }
 
--(void)updateCall:(JCCallCard *)callCard
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerUpdateCallNotification
-                                                        object:self
-                                                      userInfo:@{
-                                                                 kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:[self.calls indexOfObject:callCard]],
-                                                                 kJCCallCardManagerIncomingCall: [NSNumber numberWithBool:callCard.isIncoming],
-                                                                 kJCCallCardManagerLastCallState:[NSNumber numberWithInt:callCard.lastState]
-                                                                 }];
-}
-
 -(void)removeCall:(JCCallCard *)callCard
 {
     if (![self.calls containsObject:callCard])
@@ -300,9 +242,8 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
                                                       userInfo:@{
                                                                  kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:index],
                                                                  kJCCallCardManagerPriorUpdateCount:[NSNumber numberWithInteger:priorCount],
-                                                                 kJCCallCardManagerUpdateCount:[NSNumber numberWithInteger:self.calls.count],
-                                                                 kJCCallCardManagerLastCallState:[NSNumber numberWithInt:callCard.lastState]
-                                                                }];
+                                                                 kJCCallCardManagerUpdateCount:[NSNumber numberWithInteger:self.calls.count]
+                                                                 }];
 }
 
 -(void)addConferenceCallWithCallArray:(NSArray *)callCards
@@ -323,8 +264,8 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     }
     
     self.calls = calls;
-    JCCallCard *conferenceCall = [[JCCallCard alloc] initWithCalls:callCards];
-    [self setCallCallHoldState:false forCard:conferenceCall];
+    JCCallCard *conferenceCall = [[JCConferenceCallCard alloc] initWithCalls:callCards];
+    [self setCallHold:false forCall:conferenceCall];
     [self.calls addObject:conferenceCall];
     NSNumber *index = [NSNumber numberWithInteger:[self.calls indexOfObject:conferenceCall]];
     
@@ -338,7 +279,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
                                                                  }];
 }
 
--(void)removeConferenceCall:(JCCallCard *)conferenceCallCard
+-(void)removeConferenceCall:(JCConferenceCallCard *)conferenceCallCard
 {
     if (![self.calls containsObject:conferenceCallCard]) {
         return;
@@ -366,6 +307,98 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
                                                                  kJCCallCardManagerUpdateCount : [NSNumber numberWithInteger:self.calls.count],
                                                                  kJCCallCardManagerAddedCells : addCalls
                                                                  }];
+}
+
+#pragma mark - Delegate Handlers -
+
+#pragma mark JCCallCardDelegate
+
+/**
+ * Answer the call by notifying the sip handler to answer the passed call.
+ */
+-(void)answerCall:(JCCallCard *)callCard
+{
+    [_sipHandler answerSession:callCard.lineSession completion:^(bool success, NSError *error) {
+        if (success)
+        {
+            callCard.started = [NSDate date];
+            callCard.hold = false;
+            
+            NSDictionary *userInfo = @{kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:[self.calls indexOfObject:callCard]],
+                                       kJCCallCardManagerIncomingCall: [NSNumber numberWithBool:callCard.isIncoming],
+                                       kJCCallCardManagerLastCallState:[NSNumber numberWithInt:callCard.callState]};
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerAnswerCallNotification object:self userInfo:userInfo];
+        }
+        else
+        {
+            NSLog(@"%@", [error description]);
+        }
+    }];
+}
+
+-(void)hangUpCall:(JCCallCard *)callCard
+{
+    if ([callCard isKindOfClass:[JCConferenceCallCard class]]) {
+        JCConferenceCallCard *conferenceCall = (JCConferenceCallCard *)callCard;
+        for (JCCallCard *call in conferenceCall.calls) {
+            [self hangUpCall:call];
+        }
+    }
+    else
+    {
+        [_sipHandler hangUpSession:callCard.lineSession completion:^(bool success, NSError *error) {
+            [self removeCall:callCard];
+        }];
+    }
+}
+
+-(void)setCallHold:(bool)hold forCall:(JCCallCard *)callCard
+{
+    // If we are in a conference call, all the child cards show recieve the hold call state.
+    if ([callCard isKindOfClass:[JCConferenceCallCard class]])
+    {
+        JCConferenceCallCard *conferenceCall = (JCConferenceCallCard *)callCard;
+        for (JCCallCard *card in conferenceCall.calls)
+        {
+            [_sipHandler setHoldCallState:hold forSessionId:card.lineSession.mSessionId];
+        }
+    }
+    
+    // If we are not in a conference call, all other call should be placed on hold while we are not on hold on a line.
+    // When a line is placed on hold, then only it should be placed on hold. If it is returning from hold, all other
+    // lines should be placed on hold that are not already on hold.
+    else
+    {
+        if (!hold)
+        {
+            for (JCCallCard *card in self.calls)
+            {
+                if (card != callCard)
+                {
+                    [_sipHandler setHoldCallState:TRUE forSessionId:card.lineSession.mSessionId];
+                }
+            }
+        }
+        [_sipHandler setHoldCallState:hold forSessionId:callCard.lineSession.mSessionId];
+    }
+}
+
+#pragma mark SipHanglerDelegate
+
+-(void)addLineSession:(JCLineSession *)session
+{
+    JCCallCard *callCard = [[JCCallCard alloc] initWithLineSession:session];
+    callCard.delegate = self;
+    [self addCall:callCard];
+}
+
+-(void)removeLineSession:(JCLineSession *)session
+{
+    for (JCCallCard *callCard in self.calls) {
+        if ([callCard.lineSession isEqual:session])
+            [self removeCall:callCard];
+    }
 }
 
 @end

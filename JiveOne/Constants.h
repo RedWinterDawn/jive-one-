@@ -104,17 +104,7 @@
 #define kTAGStar		10
 #define kTAGSharp		11
 
-typedef enum {
-	JCNoCall,
-	JCCallRinging,
-	JCCallCanceled,
-	JCCallConnected,
-	JCCallFailed,
-	JCTransferSuccess,
-	JCTransferFailed,
-	JCCallPutOnHold,
-	JCCallPutOffHold
-} JCCall;
+
 
 typedef enum {
     JCPresenceTypeOffline       = 0,
