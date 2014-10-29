@@ -29,9 +29,10 @@
 @interface JCLoginViewController () <NSFileManagerDelegate>
 {
     BOOL fastConnection;
+	BOOL loginCanceled;
     MBProgressHUD *hud;
-	BOOL alreadyMakingMyContactRequest;
-	BOOL alreadyMakingContactsRequest;
+	NSTimer *loginTimer;
+	
 }
 
 @property (nonatomic, strong) NSError *errorOccurred;
@@ -138,8 +139,6 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
 	[super viewWillDisappear:animated];
-	alreadyMakingContactsRequest = NO;
-	alreadyMakingMyContactRequest = NO;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -190,6 +189,7 @@
 
 - (void)validateFields
 {
+	loginCanceled = NO;
     self.loginStatusLabel.text = @"";
     if([self.usernameTextField.text length] != 0 && [self.passwordTextField.text length] != 0)
     {
@@ -235,11 +235,34 @@
             }
 
         }];
+		
+		// start timer
+		loginTimer = [NSTimer scheduledTimerWithTimeInterval:30
+													  target:self
+													selector:@selector(loginIsTakingTooLong)
+													userInfo:nil
+													 repeats:NO];
+		
+		[[NSRunLoop currentRunLoop] addTimer:loginTimer forMode:NSDefaultRunLoopMode];
+
+		
     }
     else
     {
         [self alertStatus:NSLocalizedString(@"Invalid Parameters", nil) message: NSLocalizedString(@"UserName/Password Cannot Be Empty", nil)];
     }
+}
+
+- (void) loginIsTakingTooLong
+{
+	[self errorInitializingApp:nil useError:NO title:NSLocalizedString(@"Login Timed Out", nil) message:NSLocalizedString(@"This is taking longer than expected. Please check your connection and try again", nil)];
+}
+
+- (void) invalidateLoginTimer
+{
+	if (loginTimer) {
+		[loginTimer invalidate];
+	}
 }
 
 -(void)alertStatus:(NSString*)title message:(NSString*)message
@@ -392,7 +415,8 @@
 			[[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
 			[self checkIfLoadingHasFinished:nil];
 			//[self goToApplication];
-			//[self fetchVoicemailsMetadata];
+			[self fetchVoicemailsMetadata];
+			[self fetchContacts];
 			
 		}
 		else {
@@ -427,29 +451,31 @@
 
 - (void)fetchVoicemailsMetadata
 {
-    NSPredicate *linesWithUrlNotNil = [NSPredicate predicateWithFormat:@"mailboxUrl != nil"];
-    NSArray* lines = [Lines MR_findAllWithPredicate:linesWithUrlNotNil];
+//    NSPredicate *linesWithUrlNotNil = [NSPredicate predicateWithFormat:@"mailboxUrl != nil"];
+//    NSArray* lines = [Lines MR_findAllWithPredicate:linesWithUrlNotNil];
 	
-	NSTimer *timer = [NSTimer timerWithTimeInterval:5 target:self selector:@selector(fetchMyContact) userInfo:nil repeats:NO];
-	[[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+//	NSTimer *timer = [NSTimer timerWithTimeInterval:5 target:self selector:@selector(fetchMyContact) userInfo:nil repeats:NO];
+//	[[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
 	
-	__block int count = 0;
+//	__block int count = 0;
+	
+	[[JCV5ApiClient sharedClient] getVoicemails:nil];
 
-    [[JCV5ApiClient sharedClient] getVoicemails:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-
-		
-        if(suceeded) {
-            [[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
-        }
-		
-		if (count == lines.count) {
-			[timer invalidate];
-			[self fetchMyContact];
-		}
-		
-		NSLog(@"Count is now: %i, Line count is %lu", count, (unsigned long)lines.count);
-		
-    }];
+//    [[JCV5ApiClient sharedClient] getVoicemails:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+//
+//		
+//        if(suceeded) {
+//            [[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
+//        }
+//		
+//		if (count == lines.count) {
+//			[timer invalidate];
+//			[self fetchMyContact];
+//		}
+//		
+//		NSLog(@"Count is now: %i, Line count is %lu", count, (unsigned long)lines.count);
+//		
+//    }];
 	
 	
 }
@@ -458,27 +484,27 @@
 //Contacts
 - (void)fetchMyContact
 {
-	if (!alreadyMakingMyContactRequest) {
-		alreadyMakingMyContactRequest = YES;
 		[[JCV5ApiClient sharedClient] RetrieveMyInformation:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
 			[self fetchContacts];
 		}];
-	}
+	
 }
 
 - (void)fetchContacts
 {
+	[[JCV5ApiClient sharedClient] RetrieveContacts:nil];
+	
 //	if (!alreadyMakingContactsRequest) {
 //		alreadyMakingContactsRequest = YES;
-		[[JCV5ApiClient sharedClient] RetrieveContacts:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-			if (suceeded) {
-				_doneLoadingContent = YES;
-				[self hideHud];
-				if (self.userIsDoneWithTutorial) {
-					[self goToApplication];
-				}
-			}
-		}];
+//		[[JCV5ApiClient sharedClient] RetrieveContacts:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+//			if (suceeded) {
+//				_doneLoadingContent = YES;
+//				[self hideHud];
+//				if (self.userIsDoneWithTutorial) {
+//					[self goToApplication];
+//				}
+//			}
+//		}];
 //	}
 	
 }
@@ -615,11 +641,12 @@
 
 - (void)goToApplication
 {
-	alreadyMakingMyContactRequest = NO;
-	alreadyMakingContactsRequest = NO;
-	[self hideHud];
-	JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
-	[delegate changeRootViewController:JCRootTabbarViewController];
+	if (!loginCanceled) {
+		[self hideHud];
+		[self invalidateLoginTimer];
+		JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
+		[delegate changeRootViewController:JCRootTabbarViewController];
+	}
 }
 
 
@@ -627,6 +654,8 @@
 - (void)errorInitializingApp:(NSError*)err useError:(BOOL)useError title:(NSString *)title message:(NSString *)message
 {
     NSLog(@"errorInitializingApp: %@",err);
+	loginCanceled = YES;
+	[self invalidateLoginTimer];
     [self hideHud];
 	
 	if (useError) {
@@ -637,6 +666,7 @@
 	}
 	
     [[JCAuthenticationManager sharedInstance] logout:self];
+	
 }
 
 #pragma mark - Line selection update

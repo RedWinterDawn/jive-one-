@@ -743,6 +743,11 @@ int didNotify;
 - (void)changeRootViewController:(JCRootViewControllerType)type
 {
     LOG_Info();
+	
+	if ([self.window.rootViewController isKindOfClass:[JCLoginViewController class]] &&
+		type == JCRootLoginViewController) {
+		return;
+	}
  
 	[UIView transitionWithView:self.window
 					  duration:0.5
