@@ -18,7 +18,9 @@
 @property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
 + (instancetype)sharedClient;
 
-- (void)clearCookies;
+- (void) clearCookies;
+- (void) stopAllOperations;
+- (BOOL) isOperationRunning:(NSString *)operationName;
 
 
 #pragma mark - Contact API Calls

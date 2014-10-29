@@ -7,18 +7,29 @@
 //
 
 #import <Foundation/Foundation.h>
-@class JCLineSession;
-@protocol JCLineSessionDelegate <NSObject>
 
-- (void) callStateDidChange:(long)sessionId callState:(JCCall)callState;
+extern NSString *const kJCLineSessionStateKey;
 
-@end
+typedef enum {
+    JCNoCall,
+    JCInvite,
+    JCInviteTrying,
+    JCInviteProgress,
+    JCInviteFailure,
+    JCCallRinging,
+    JCCallCanceled,
+    JCCallConnected,
+    JCCallFailed,
+    JCTransferSuccess,
+    JCTransferFailed,
+    JCCallPutOnHold,
+    JCCallPutOffHold
+} JCLineSessionState;
 
 @interface JCLineSession : NSObject
 
-@property (nonatomic, weak) id<JCLineSessionDelegate> delegate;
 @property (nonatomic) long mSessionId;
-@property (nonatomic) bool mHoldSate;
+@property (nonatomic, getter=isHolding) bool hold;
 @property (nonatomic) bool mSessionState;
 @property (nonatomic) bool mConferenceState;
 @property (nonatomic) bool mRecvCallState;
@@ -26,7 +37,7 @@
 @property (nonatomic) long mOriginCallSessionId;
 @property (nonatomic) bool mExistEarlyMedia;
 @property (nonatomic) bool mVideoState;
-@property (nonatomic) JCCall mCallState;
+@property (nonatomic) JCLineSessionState sessionState;
 @property (nonatomic) NSString *callTitle;
 @property (nonatomic) NSString *callDetail;
 

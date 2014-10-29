@@ -9,11 +9,21 @@
 #import <Foundation/Foundation.h>
 #import "JCLineSession.h"
 
-typedef void(^ConnectionCompletionHandler)(bool success, NSError *error);
+typedef void(^CompletionHandler)(bool success, NSError *error);
 
 extern NSString *const kSipHandlerRegisteredSelectorKey;
 
+@protocol SipHandlerDelegate <NSObject>
+
+-(void)addLineSession:(JCLineSession *)session;
+-(void)removeLineSession:(JCLineSession *)session;
+
+@end
+
+
 @interface SipHandler : NSObject
+
+@property (nonatomic, weak) id <SipHandlerDelegate> delegate;
 
 @property (nonatomic, strong) NSString *sipURL;
 @property (nonatomic) NSInteger mActiveLine;
@@ -22,16 +32,18 @@ extern NSString *const kSipHandlerRegisteredSelectorKey;
 @property (nonatomic, readonly, getter=isInitialized) BOOL initialized;
 
 // "Registers" the application to the SIP service via the Port SIP SDK.
--(void)connect:(ConnectionCompletionHandler)completion;
+- (void)connect:(CompletionHandler)completion;
 
 // "Deregisters" the application from the SIP service.
--(void)disconnect;
+- (void)disconnect;
 
 - (void) pressNumpadButton:(char )dtmf;
 - (JCLineSession *) makeCall:(NSString*)callee videoCall:(BOOL)videoCall contactName:(NSString *)contactName;
-- (void)answerCall;
-- (void) hangUpCallWithSession:(long)sessionId;
-- (void) hangUpAll;
+
+- (void)answerSession:(JCLineSession *)lineSession completion:(CompletionHandler)completion;
+
+- (void)hangUpSession:(JCLineSession *)lineSession completion:(CompletionHandler)completion;
+
 - (bool)setConference:(bool)conference;
 //- (void) hangUpCall;
 - (void) referCall:(NSString*)referTo completion:(void (^)(bool success, NSError *error))completion;        // Blind Transfer

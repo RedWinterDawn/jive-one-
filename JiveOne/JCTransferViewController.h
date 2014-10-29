@@ -7,6 +7,7 @@
 //
 
 #import "JCDialerViewController.h"
+#import "JCCallCardManager.h"
 
 @class JCTransferViewController;
 
@@ -17,16 +18,10 @@
 
 @end
 
-typedef enum : NSUInteger {
-    JCTransferBlind = 0,
-    JCTransferWarm,
-    JCTransferHold,
-} JCTransferType;
-
 @interface JCTransferViewController : JCDialerViewController
 
 @property (nonatomic, weak) id <JCTransferViewControllerDelegate> delegate;
-@property (nonatomic) JCTransferType transferType;
+@property (nonatomic) JCCallCardDialTypes transferCallType;
 
 -(IBAction)cancel:(id)sender;
 

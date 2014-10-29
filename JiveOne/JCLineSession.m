@@ -12,25 +12,50 @@
 #define MAX_LINES 2
 #define INVALID_SESSION_ID -1
 
+NSString *const kJCLineSessionStateKey = @"sessionState";
+
 @implementation JCLineSession
+
+#pragma mark - Setters -
+
+- (void) setReferCall:(BOOL)referCall originalCallSessionId:(long)originalCallSessionId
+{
+    _mIsReferCall = referCall;
+    _mOriginCallSessionId = originalCallSessionId;
+}
+
+- (void) setHold:(bool)hold
+{
+    [self willChangeValueForKey:@"hold"];
+    _hold = hold;
+    if (hold) {
+        self.sessionState = JCCallPutOnHold;
+    }
+    else {
+        self.sessionState = JCCallPutOffHold;
+    }
+    [self didChangeValueForKey:@"hold"];
+}
+
+#pragma mark - Getters -
 
 - (BOOL) isReferCall
 {
-	return _mIsReferCall;
+    return _mIsReferCall;
 }
 - (long) getOriginalCallSessionId
 {
-	return _mOriginCallSessionId;
+    return _mOriginCallSessionId;
 }
-- (void) setReferCall:(BOOL)referCall originalCallSessionId:(long)originalCallSessionId
-{
-	_mIsReferCall = referCall;
-	_mOriginCallSessionId = originalCallSessionId;
-}
+
+#pragma mark - Actions -
+
 - (void)reset
 {
 	[self setMSessionId:INVALID_SESSION_ID];
-	[self setMHoldSate:false];
+    
+    
+    
 	[self setMSessionState:false];
 	[self setMConferenceState:false];
 	[self setMRecvCallState:false];
@@ -38,16 +63,9 @@
 	[self setMIsReferCall:false];
 	[self setMExistEarlyMedia:false];
 	[self setMVideoState:false];
-	[self setMCallState:JCNoCall];
-	[self setDelegate:nil];
-}
-
-- (void)setMCallState:(JCCall)mCallState
-{
-	_mCallState = mCallState;
-	if (self.delegate && [self.delegate respondsToSelector:@selector(callStateDidChange:callState:)]) {
-		[self.delegate callStateDidChange:self.mSessionId callState:self.mCallState];
-	}
+    
+    _hold = false;
+    self.sessionState = JCNoCall;
 }
 
 @end

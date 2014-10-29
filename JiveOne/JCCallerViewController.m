@@ -42,12 +42,12 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     NSTimeInterval _defaultCallOptionViewConstraint;
 	MBProgressHUD *hud;
 	
-	NSDictionary *_warmTransferInfo;
-    
     bool _showingCallOptions;
     
     JCCallCardCollectionViewController *_callCardCollectionViewController;
 }
+
+@property (nonatomic, strong) NSDictionary *warmTransferInfo;
 
 @end
 
@@ -64,7 +64,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         JCCallCardManager *manager = [JCCallCardManager sharedManager];
-        [center addObserver:self selector:@selector(answeredCall:) name:kJCCallCardManagerUpdateCallNotification object:manager];
+        [center addObserver:self selector:@selector(answeredCall:) name:kJCCallCardManagerAnswerCallNotification object:manager];
         [center addObserver:self selector:@selector(removedCall:) name:kJCCallCardManagerRemoveCallNotification object:manager];
     }
     return self;
@@ -174,7 +174,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 -(IBAction)blindTransfer:(id)sender
 {
     JCTransferViewController *transferViewController = [self.storyboard instantiateViewControllerWithIdentifier:kJCCallerViewControllerTransferStoryboardIdentifier];
-    transferViewController.transferType = JCTransferBlind;
+    transferViewController.transferCallType = JCCallCardDialBlindTransfer;
     transferViewController.delegate = self;
     [self presentTransferViewController:transferViewController];
 }
@@ -182,7 +182,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 -(IBAction)warmTransfer:(id)sender
 {
     JCTransferViewController *transferViewController = [self.storyboard instantiateViewControllerWithIdentifier:kJCCallerViewControllerTransferStoryboardIdentifier];
-    transferViewController.transferType = JCTransferWarm;
+    transferViewController.transferCallType = JCCallCardDialWarmTransfer;
     transferViewController.delegate = self;
     [self presentTransferViewController:transferViewController];
 }
@@ -190,7 +190,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 -(IBAction)addCall:(id)sender
 {
     JCTransferViewController *transferViewController = [self.storyboard instantiateViewControllerWithIdentifier:kJCCallerViewControllerTransferStoryboardIdentifier];
-    transferViewController.transferType = JCTransferHold;
+    transferViewController.transferCallType = JCCallCardDialSingle;
     transferViewController.delegate = self;
     [self presentTransferViewController:transferViewController];
 }
@@ -398,86 +398,74 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 #pragma mark - Notification Handlers -
 
 /**
- * Notification recieved when a call has been added to the call card manager. Can happen after a call has been added via
- * the add call or warm call, or after an incominc call is answered.
+ * Notification recieved when an incoming call has been answered. If we are currently not showing the call options view,
+ * We animate in the showing of the call options view. This would occur if we were recieving an incomming call, with no 
+ * other active calls. If we answer a call while already on the call, we should shown the multiple call state of the 
+ * call options, allowing us to merge or swap calls.
  */
 -(void)answeredCall:(NSNotification *)notification
 {
     if (!_showingCallOptions)
         self.callOptionsHidden = false;
+    
+    NSInteger count = [[notification.userInfo objectForKey:kJCCallCardManagerUpdateCount] integerValue];
+    if (count > 1)
+        [self.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];
 }
 
 /**
- * Notification when a call has been been removed and we shoudl possibly respond to close the view.
+ * Notification when a call has been been removed and we should possibly respond to close the view. We check the number
+ * of calls. If we have no calls, we close the view. If we have a single call, we show the single call state.
  */
 -(void)removedCall:(NSNotification *)notification
 {
-    JCCallCardManager *callManager = (JCCallCardManager *)notification.object;
-    NSUInteger count = callManager.calls.count;
+    NSInteger count = [[notification.userInfo objectForKey:kJCCallCardManagerUpdateCount] integerValue];
     if(count == 0)
         [self closeCallerViewController];
     else if (count == 1)
         [self.callOptionsView setState:JCCallOptionViewSingleCallState animated:YES];
+    else if (count > 1)
+        [self.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];
 }
 
 #pragma mark - Delegate Handlers -
 
 #pragma mark JCKeyboardViewController
 
--(void)keypadViewController:(JCKeypadViewController *)controller didTypeNumber:(NSString *)typedNumber
+-(void)keypadViewController:(JCKeypadViewController *)controller didTypeDTMF:(char)dtmf
 {
-	NSInteger tag = [typedNumber integerValue];
-	char dtmf = tag;
-	switch (tag) {
-		case kTAGStar:
-		{
-			dtmf = 10;
-			break;
-		}
-		case kTAGSharp:
-		{
-			dtmf = 11;
-			break;
-		}
-	}
-
     [[SipHandler sharedHandler] pressNumpadButton:dtmf];
 }
-
 
 #pragma mark JCTransferViewController
 
 -(void)transferViewController:(JCTransferViewController *)controller shouldDialNumber:(NSString *)dialString
 {
-    [self dismissTransferViewControllerAnimated:NO];
-	JCCallCardDialTypes dialType = JCCallCardDialSingle;
-    
-    if (controller.transferType == JCTransferBlind)
-    {
-		dialType = JCCallCardDialBlindTransfer;
-    }
-    else if(controller.transferType == JCTransferHold)
-    {
-		dialType = JCCallCardDialSingle;
-    }
-    else if(controller.transferType == JCTransferWarm)
-    {
-		dialType = JCCallCardDialWarmTransfer;
-    }
-    
-    [[JCCallCardManager sharedManager] dialNumber:dialString type:dialType completion:^(bool success, NSDictionary *callInfo) {
+    __unsafe_unretained JCCallerViewController *weakSelf = self;
+    [[JCCallCardManager sharedManager] dialNumber:dialString type:controller.transferCallType completion:^(bool success, NSDictionary *callInfo) {
         if (success)
         {
-			if (dialType == JCCallCardDialWarmTransfer) {
-                [self.callOptionsView setState:JCCallOptionViewFinishTransferState animated:YES];
-				_warmTransferInfo = callInfo;
-			}
-			else if(dialType == JCCallCardDialBlindTransfer) {
-                [self closeCallerViewController];
-			}
-			else {
-                [self.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];
-			}
+            switch (controller.transferCallType) {
+                case JCCallCardDialBlindTransfer:
+                {
+                    [weakSelf dismissTransferViewControllerAnimated:NO];
+                    [weakSelf closeCallerViewController];
+                    break;
+                }
+                case JCCallCardDialWarmTransfer:
+                {
+                    [weakSelf dismissTransferViewControllerAnimated:YES];
+                    [weakSelf.callOptionsView setState:JCCallOptionViewFinishTransferState animated:YES];
+                    weakSelf.warmTransferInfo = callInfo;
+                    break;
+                }
+                default:
+                {
+                    [weakSelf dismissTransferViewControllerAnimated:YES];
+                    [weakSelf.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];
+                    break;
+                }
+            }
         }
     }];
 }

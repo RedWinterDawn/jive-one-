@@ -7,16 +7,14 @@
 //
 
 #import "JCAuthenticationManager.h"
-#import "JCContactsClient.h"
 #import "JCAppDelegate.h"
 #import "JCAccountViewController.h"
 #import "JCLoginViewController.h"
 #import "Common.h"
 #import "JCSocketDispatch.h"
-#import "JCJifClient.h"
-#import "JCVoicemailClient.h"
 #import "SipHandler.h"
 #import "JCApplicationSwitcherDelegate.h"
+#import "JCV5ApiClient.h"
 
 #if DEBUG
 @interface NSURLRequest(Private)
@@ -232,7 +230,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     //Rolling back to hack
     //[self verifyToken];
     NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
-    [[JCJifClient sharedClient] getMailboxReferencesForUser:username completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+    [[JCV5ApiClient sharedClient] getMailboxReferencesForUser:username completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
         if (suceeded) {
             JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
             if (![delegate.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
@@ -287,9 +285,8 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     if (![self getRememberMe]) {
         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kUserName];
     }
-    
-    [[JCVoicemailClient sharedClient] clearCookies];
-	[[JCContactsClient sharedClient] clearCookies];
+	
+	[[JCV5ApiClient sharedClient] stopAllOperations];
     [[JCOmniPresence sharedInstance] truncateAllTablesAtLogout];
 	[[SipHandler sharedHandler] disconnect];
 
