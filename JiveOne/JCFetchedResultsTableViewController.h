@@ -39,12 +39,18 @@
 // a cell by the identifier "Cell" and calls configure on it. Override for custom behavior.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForObject:(id <NSObject>)object atIndexPath:(NSIndexPath*)indexPath;
 
-@property (nonatomic, readwrite) NSUInteger count;
+// Count of the total objects in the response
+@property (nonatomic, readonly) NSUInteger count;
+
+// Number of sections.
+@property (nonatomic, readonly) NSUInteger numberOfSections;
+
+- (NSInteger)numberOfRowsInSection:(NSUInteger)section;
 
 // Provide an abstacted means to obtain object from the index path. Meant to be subclassed for customized behavior. Is
 // called by configure cell and index path and the returned object is sent on the the configure cell with object. In
 // this default case it uses the fetched results controller to determine what object is returned.
-- (id<NSObject>)objectForIndexPath:(NSIndexPath *)indexPath;
+- (id<NSObject>)objectAtIndexPath:(NSIndexPath *)indexPath;
 
 // Called when the cell need to be configure for the passed object. By default, it does nothing, and should be overriden
 // by an implementing subclass.

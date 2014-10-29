@@ -244,10 +244,10 @@
 		5D1FAC6219DDFF5300899915 /* JCCallCardCollectionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FAC6119DDFF5300899915 /* JCCallCardCollectionLayout.m */; };
 		5D1FAC6519DF376B00899915 /* JCKeypadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FAC6419DF376B00899915 /* JCKeypadViewController.m */; };
 		5D34446519F02F1C00315230 /* JCCurrentCallCardViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D34446419F02F1C00315230 /* JCCurrentCallCardViewCell.m */; };
-		5D36B7AB19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D36B7AA19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m */; };
 		5D35479519FF4B6E009E3CB4 /* JCApplicationSwitcherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D35479419FF4B6E009E3CB4 /* JCApplicationSwitcherViewController.m */; };
 		5D35479819FF4B85009E3CB4 /* JCApplicationSwitcherDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D35479719FF4B85009E3CB4 /* JCApplicationSwitcherDelegate.m */; };
 		5D35479B19FF4BB7009E3CB4 /* JCMenuBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D35479A19FF4BB7009E3CB4 /* JCMenuBarButtonItem.m */; };
+		5D36B7AB19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D36B7AA19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m */; };
 		5D629BAD19D9C41900F5744E /* JCVoiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D629BAC19D9C41900F5744E /* JCVoiceViewController.m */; };
 		5D629BB019D9CE4500F5744E /* JCVoiceNonVisualViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D629BAF19D9CE4500F5744E /* JCVoiceNonVisualViewController.m */; };
 		5DA5A1AF19DAF91400968F7D /* JCCallerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA5A1AE19DAF91400968F7D /* JCCallerViewController.m */; };
@@ -768,14 +768,14 @@
 		5D1FAC6419DF376B00899915 /* JCKeypadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCKeypadViewController.m; sourceTree = "<group>"; };
 		5D34446319F02F1C00315230 /* JCCurrentCallCardViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCurrentCallCardViewCell.h; sourceTree = "<group>"; };
 		5D34446419F02F1C00315230 /* JCCurrentCallCardViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCurrentCallCardViewCell.m; sourceTree = "<group>"; };
-		5D36B7A919F8674E0024A0E7 /* JCFetchedResultsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCFetchedResultsTableViewController.h; sourceTree = "<group>"; };
-		5D36B7AA19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCFetchedResultsTableViewController.m; sourceTree = "<group>"; };
 		5D35479319FF4B6E009E3CB4 /* JCApplicationSwitcherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCApplicationSwitcherViewController.h; sourceTree = "<group>"; };
 		5D35479419FF4B6E009E3CB4 /* JCApplicationSwitcherViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCApplicationSwitcherViewController.m; sourceTree = "<group>"; };
 		5D35479619FF4B85009E3CB4 /* JCApplicationSwitcherDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCApplicationSwitcherDelegate.h; sourceTree = "<group>"; };
 		5D35479719FF4B85009E3CB4 /* JCApplicationSwitcherDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCApplicationSwitcherDelegate.m; sourceTree = "<group>"; };
 		5D35479919FF4BB7009E3CB4 /* JCMenuBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMenuBarButtonItem.h; sourceTree = "<group>"; };
 		5D35479A19FF4BB7009E3CB4 /* JCMenuBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMenuBarButtonItem.m; sourceTree = "<group>"; };
+		5D36B7A919F8674E0024A0E7 /* JCFetchedResultsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCFetchedResultsTableViewController.h; sourceTree = "<group>"; };
+		5D36B7AA19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCFetchedResultsTableViewController.m; sourceTree = "<group>"; };
 		5D629BAB19D9C41900F5744E /* JCVoiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVoiceViewController.h; sourceTree = "<group>"; };
 		5D629BAC19D9C41900F5744E /* JCVoiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoiceViewController.m; sourceTree = "<group>"; };
 		5D629BAE19D9CE4500F5744E /* JCVoiceNonVisualViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVoiceNonVisualViewController.h; sourceTree = "<group>"; };
@@ -1299,6 +1299,8 @@
 			children = (
 				5D35479319FF4B6E009E3CB4 /* JCApplicationSwitcherViewController.h */,
 				5D35479419FF4B6E009E3CB4 /* JCApplicationSwitcherViewController.m */,
+				5D36B7A919F8674E0024A0E7 /* JCFetchedResultsTableViewController.h */,
+				5D36B7AA19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m */,
 				5DDE651119F0C2E100B90B55 /* Caller */,
 				5DDE651019F0C29900B90B55 /* Call History */,
 				277F093F18FECECA00EEF0E3 /* Login */,
@@ -1308,8 +1310,6 @@
 				277F093D18FECEA800EEF0E3 /* Voicemail */,
 				91F87CF4190EE16B00152FDB /* AppTutorial */,
 				91743F351965B7EA003CD5E4 /* Status */,
-				5D36B7A919F8674E0024A0E7 /* JCFetchedResultsTableViewController.h */,
-				5D36B7AA19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";

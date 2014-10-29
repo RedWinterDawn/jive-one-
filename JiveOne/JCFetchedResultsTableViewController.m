@@ -118,19 +118,27 @@
     return self.fetchedResultsController.fetchedObjects.count;
 }
 
--(NSInteger)countAtIndexPath
+-(NSUInteger)numberOfSections
 {
+    return self.fetchedResultsController.sections.count;
+}
+
+-(NSInteger)numberOfRowsInSection:(NSUInteger)section
+{
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController.sections objectAtIndex:section];
+    if (sectionInfo)
+        return [sectionInfo numberOfObjects];
     return 0;
 }
 
--(id <NSObject>)objectForIndexPath:(NSIndexPath *)indexPath
+-(id <NSObject>)objectAtIndexPath:(NSIndexPath *)indexPath
 {
     return [self.fetchedResultsController objectAtIndexPath:indexPath];
 }
 
 -(void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    [self configureCell:cell withObject:[self objectForIndexPath:indexPath]];
+    [self configureCell:cell withObject:[self objectAtIndexPath:indexPath]];
 }
 
 -(void)configureCell:(UITableViewCell *)cell withObject:(id<NSObject>)object
@@ -176,20 +184,17 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return self.fetchedResultsController.sections.count;
+    return [self numberOfSections];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController.sections objectAtIndex:section];
-    if (sectionInfo)
-        return [sectionInfo numberOfObjects];
-    return 0;
+    return [self numberOfRowsInSection:section];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    id object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    id object = [self objectAtIndexPath:indexPath];
     UITableViewCell *cell = [self tableView:tableView cellForObject:object atIndexPath:indexPath];
     return cell;
 }
@@ -211,7 +216,8 @@
 
 -(void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
 {
-    switch(type) {
+    switch(type)
+    {
         case NSFetchedResultsChangeInsert:
             [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;
