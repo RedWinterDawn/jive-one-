@@ -10,13 +10,15 @@
 #import <AVFoundation/AVFoundation.h>
 #import "JCVoicemailPlaybackCell.h"
 #import "JCVoicemailClient.h"
+#import "JCRecentActivityTableViewController.h"
 
-@interface JCVoiceTableViewController : UITableViewController <AVAudioPlayerDelegate, JCVoiceCellDelegate>
+@interface JCVoiceTableViewController : JCRecentActivityTableViewController <AVAudioPlayerDelegate, JCVoiceCellDelegate>
 
-@property (nonatomic) NSMutableArray *voicemails; // exposed for testing
+//@property (nonatomic) NSMutableArray *voicemails; // exposed for testing
 @property (nonatomic) JCVoicemailPlaybackCell *selectedCell;//exposed for testing
+
+
 - (void)updateVoiceTable:(id)sender;
-- (void)loadVoicemails;
 - (void)setClient:(JCVoicemailClient*)client;
 - (void)voiceCellPlayTapped:(JCVoicemailPlaybackCell *)cell; //exposed for testing
 - (void)voiceCellDeleteTapped:(NSIndexPath *)indexPath;

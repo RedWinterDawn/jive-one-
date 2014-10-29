@@ -56,7 +56,7 @@ NSString *const kJCVoicemailCellReuseIdentifier = @"VoicemailCell";
         super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                              managedObjectContext:self.managedObjectContext
                                                                                sectionNameKeyPath:nil
-                                                                                        cacheName:nil];
+																						cacheName:nil];
     }
     return _fetchedResultsController;
 }
@@ -65,13 +65,13 @@ NSString *const kJCVoicemailCellReuseIdentifier = @"VoicemailCell";
 {
     if ([object isKindOfClass:[Call class]])
     {
-        JCCallHistoryCell *cell = [tableView dequeueReusableCellWithIdentifier:kJCHistoryCellReuseIdentifier forIndexPath:indexPath];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kJCHistoryCellReuseIdentifier forIndexPath:indexPath];
         [self configureCell:cell withObject:object];
         return cell;
     }
     else if ([object isKindOfClass:[Voicemail class]])
     {
-        JCVoicemailPlaybackCell *cell = [tableView dequeueReusableCellWithIdentifier:kJCVoicemailCellReuseIdentifier forIndexPath:indexPath];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kJCVoicemailCellReuseIdentifier forIndexPath:indexPath];
         [self configureCell:cell withObject:object];
         return cell;
     }
@@ -87,9 +87,9 @@ NSString *const kJCVoicemailCellReuseIdentifier = @"VoicemailCell";
         JCCallHistoryCell *historyCell = (JCCallHistoryCell *)cell;
         historyCell.call = (Call *)object;
     }
-    else if ([object isKindOfClass:[Voicemail class]] && [cell isKindOfClass:[JCVoicemailPlaybackCell class]])
+    else if ([object isKindOfClass:[Voicemail class]] && [cell isKindOfClass:[JCVoicemailCell class]])
     {
-        JCVoicemailPlaybackCell *voiceCell = (JCVoicemailPlaybackCell *)cell;
+        JCVoicemailCell *voiceCell = (JCVoicemailCell *)cell;
         voiceCell.voicemail = (Voicemail *)object;
     }
 }

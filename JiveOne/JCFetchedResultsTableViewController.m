@@ -8,6 +8,7 @@
 
 #import "JCFetchedResultsTableViewController.h"
 #import <MagicalRecord/MagicalRecord.h>
+#import "JCTableViewCell.h"
 
 @interface JCFetchedResultsTableViewController ()
 {
@@ -148,7 +149,7 @@
 
 -(void)deleteObjectAtIndexPath:(NSIndexPath *)indexPath
 {
-    id object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    id object = [self objectAtIndexPath:indexPath];
     [self deleteObject:object];
 }
 
@@ -196,6 +197,11 @@
 {
     id object = [self objectAtIndexPath:indexPath];
     UITableViewCell *cell = [self tableView:tableView cellForObject:object atIndexPath:indexPath];
+	
+	if ([cell isKindOfClass:[JCTableViewCell class]] && (indexPath.row == 0 && indexPath.section == 0) ) {
+		((JCTableViewCell *)cell).top = true;
+	}
+	
     return cell;
 }
 

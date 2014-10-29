@@ -24,13 +24,12 @@
     NSTimer *requestTimeout;
     
 }
+
 @property (weak, nonatomic) JCVoicemailClient *client;
 @property (nonatomic) NSMutableArray *selectedIndexPaths;
 @property (nonatomic, retain) NSTimer *progressTimer;
 
 @end
-
-NSString *const kJCVoicemailCellIdentifier = @"VoicemailCell";
 
 @implementation JCVoiceTableViewController
 
@@ -51,22 +50,14 @@ NSString *const kJCVoicemailCellIdentifier = @"VoicemailCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
-    [self.tableView setSeparatorInset:UIEdgeInsetsZero];
-    //[self.tableView registerClass:[JCVoiceCell class] forCellReuseIdentifier:CellIdentifier];
-    //[self.tableView registerNib:[UINib nibWithNibName:@"JCVoicemailCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
     self.progressTimer = nil;
     
-    UIRefreshControl *refreshControl = [[UIRefreshControl alloc]
-                                        init];
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(updateVoiceTable:) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadVoicemails) name:@"kApplicationDidBecomeActive" object:nil];
-    
+	
+	
     [Voicemail fetchVoicemailInBackground];
-    [self loadVoicemails];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -80,37 +71,26 @@ NSString *const kJCVoicemailCellIdentifier = @"VoicemailCell";
 {
     [super viewWillAppear:animated];
 //    [Flurry logEvent:@"Voicemail View"];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveNewVoicemail:) name:kNewVoicemail object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveNewVoicemail:) name:kNewVoicemail object:nil];
 //    [(JCAppDelegate *)[UIApplication sharedApplication].delegate clearBadgeCountForVoicemail];
-        [self loadVoicemails];
 }
 
-
-
-- (void)viewWillDisappear:(BOOL)animated
+-(NSFetchedResultsController *)fetchedResultsController
 {
-    [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kNewVoicemail object:nil];
-}
-
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)loadVoicemails
-{
-    if (self.voicemails) {
-        [self.voicemails removeAllObjects];
-    }
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"markForDeletion ==[c] %@", [NSNumber numberWithBool:NO]];
-    self.voicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAllSortedBy:@"date" ascending:NO withPredicate:predicate]];
-    
-    
-    [self.tableView reloadData];
+	if (!_fetchedResultsController) {
+		
+//		NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Voicemail"];
+//		
+//		fetchRequest.predicate = [NSPredicate predicateWithFormat:@"markForDeletion ==[c] %@", [NSNumber numberWithBool:NO]];
+//		fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO]];
+		
+		NSFetchRequest *fetchRequest = [Voicemail MR_requestAllSortedBy:@"date" ascending:NO withPredicate:[NSPredicate predicateWithFormat:@"markForDeletion ==[c] %@", [NSNumber numberWithBool:NO]]];
+		fetchRequest.fetchBatchSize = 10;
+		
+		super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+		
+	}
+	return _fetchedResultsController;
 }
 
 - (void)updateVoiceTable:(id)sender
@@ -128,7 +108,6 @@ NSString *const kJCVoicemailCellIdentifier = @"VoicemailCell";
                 [requestTimeout invalidate];
             }
             [self.refreshControl endRefreshing];
-            [self loadVoicemails];
         }
     }];
 }
@@ -178,49 +157,48 @@ NSString *const kJCVoicemailCellIdentifier = @"VoicemailCell";
     }
 }
 
-#pragma mark - New Voicemail
-- (void)didReceiveNewVoicemail:(NSNotification *)notification
-{
-//    if (self.view.window) {
-//        [(JCAppDelegate *)[UIApplication sharedApplication].delegate clearBadgeCountForVoicemail];
-//    }
-    [self loadVoicemails];
-}
-
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+-(void)configureCell:(UITableViewCell *)cell withObject:(id<NSObject>)object
 {
-    // Return the number of sections.
-    return 1;
+	[super configureCell:cell withObject:object];
+	((JCVoicemailPlaybackCell *)cell).delegate = self;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+-(void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    // Return the number of rows in the section.
-    return self.voicemails.count;
+	Voicemail *voicemail = [self objectAtIndexPath:indexPath];
+	JCVoicemailPlaybackCell *voiceCell = (JCVoicemailPlaybackCell *)cell;
+	[self configureCell:cell withObject:voicemail];
+	voiceCell.indexPath = indexPath;
+	BOOL isSelected = [self.selectedIndexPaths containsObject:indexPath];
+	if (isSelected)
+	{
+		self.selectedCell = voiceCell;
+		voiceCell.playPauseButton.selected = [player isPlaying];
+		voiceCell.speakerButton.selected = _playThroughSpeaker;
+		[self updateViewForPlayerInfo];
+		[self updateProgress:nil];
+	}
+	
 }
 
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)deleteObjectAtIndexPath:(NSIndexPath *)indexPath
 {
-    JCVoicemailPlaybackCell *cell = [tableView dequeueReusableCellWithIdentifier:kJCVoicemailCellIdentifier];
-    Voicemail *voicemail = self.voicemails[indexPath.row];
-    
-    cell.voicemail = voicemail;
-    cell.indexPath = indexPath;
-    cell.delegate = self;
-    
-    BOOL isSelected = [self.selectedIndexPaths containsObject:indexPath];
-    if (isSelected)
-    {
-        self.selectedCell = cell;
-        cell.playPauseButton.selected = [player isPlaying];
-        cell.speakerButton.selected = _playThroughSpeaker;
-        [self updateViewForPlayerInfo];
-        [self updateProgress:nil];
-    }
-    return cell;
+	[self addOrRemoveSelectedIndexPath:indexPath];
+	
+	// if we are playing a voicemail and we delete the voicemail cell that is being played -> stop playing then delete.
+	if (player.isPlaying && (self.selectedCell.indexPath == indexPath)) {
+		//pause
+		[player pause];
+		
+		[self stopProgressTimerForVoicemail];
+	}
+	
+	Voicemail *voicemail = [self objectAtIndexPath:indexPath];
+	[Voicemail markVoicemailForDeletion:voicemail.jrn managedContext:nil];
+	[(JCAppDelegate *)[UIApplication sharedApplication].delegate decrementBadgeCountForVoicemail:voicemail.jrn];
+	[self deleteVoicemailsInBackground];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -265,41 +243,18 @@ NSString *const kJCVoicemailCellIdentifier = @"VoicemailCell";
     
 }
 
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        //attempt to delete from server first
-        [self voiceCellDeleteTapped:indexPath];
-    }
-}
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+/*- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
     BOOL isSelected = [self.selectedIndexPaths containsObject:indexPath];
     
     return !isSelected;
-}
+}*/
 
 #pragma mark - JCVoicemailCellDelegate
+
 -(void)voiceCellDeleteTapped:(JCVoicemailPlaybackCell *)cell {
     
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    [self addOrRemoveSelectedIndexPath:indexPath];
-
-    // if we are playing a voicemail and we delete the voicemail cell that is being played -> stop playing then delete.
-    if (player.isPlaying && (self.selectedCell.indexPath == indexPath)) {
-        //pause
-        [player pause];
-        
-        [self stopProgressTimerForVoicemail];
-    }
-    Voicemail *voicemail = self.voicemails[indexPath.row];
-    [Voicemail markVoicemailForDeletion:voicemail.jrn managedContext:nil];
-    [(JCAppDelegate *)[UIApplication sharedApplication].delegate decrementBadgeCountForVoicemail:voicemail.jrn];
-    [self.voicemails removeObjectAtIndex:indexPath.row];
-    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    
-    [self deleteVoicemailsInBackground];
+	NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+	[self deleteObjectAtIndexPath:indexPath];
 }
 
 - (void)deleteVoicemailsInBackground

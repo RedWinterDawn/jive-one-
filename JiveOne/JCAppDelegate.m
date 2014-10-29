@@ -721,7 +721,7 @@ int didNotify;
 {
     LOG_Info();
     if (!_tabBarViewController) {
-        _tabBarViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"UITabBarController"];
+		_tabBarViewController = self.window.rootViewController;
     }
     return _tabBarViewController;
 }
