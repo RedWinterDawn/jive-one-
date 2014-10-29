@@ -16,6 +16,7 @@
 #import "JCJifClient.h"
 #import "JCVoicemailClient.h"
 #import "SipHandler.h"
+#import "JCApplicationSwitcherDelegate.h"
 
 #if DEBUG
 @interface NSURLRequest(Private)
@@ -253,7 +254,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
                 //                {
                 JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
                 if (![delegate.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
-                    [delegate changeRootViewController:JCRootLoginViewController];
+                    //[delegate changeRootViewController:JCRootLoginViewController];
                 }
                 else {
                     [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenFailed object:nil];
@@ -291,16 +292,15 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 	[[JCContactsClient sharedClient] clearCookies];
     [[JCOmniPresence sharedInstance] truncateAllTablesAtLogout];
 	[[SipHandler sharedHandler] disconnect];
-    
+
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-    
+	
     JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
     [delegate didLogOutSoUnRegisterForPushNotifications];
     [delegate stopSocket];
+	[delegate changeRootViewController:JCRootLoginViewController];
     
-    if(![viewController isKindOfClass:[JCLoginViewController class]]){
-        [delegate changeRootViewController:JCRootLoginViewController];
-    }
+    [JCApplicationSwitcherDelegate reset];
 }
 
 #pragma mark - UIWebview Delegates
