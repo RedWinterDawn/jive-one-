@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCTableViewCell.h"
+#import "JCRecentEventCell.h"
 #import "Voicemail.h"
 
-@interface JCVoicemailCell : JCTableViewCell
+@interface JCVoicemailCell : JCRecentEventCell
 
 @property (nonatomic, strong) Voicemail *voicemail;
 
