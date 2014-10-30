@@ -25,31 +25,23 @@
 
 @interface JCVoicemailPlaybackCell : JCVoicemailCell
 
+@property (nonatomic, weak) id <JCVoiceCellDelegate> delegate;
 
-@property (weak,nonatomic) id<JCVoiceCellDelegate> delegate;
-#pragma mark - Visible Collapsed
+@property (nonatomic, weak) IBOutlet UIButton *playPauseButton;
+@property (nonatomic, weak) IBOutlet UIButton *speakerButton;
+@property (nonatomic, weak) IBOutlet UIButton *deleteButton;
+@property (nonatomic, weak) IBOutlet JCPopoverSlider *slider;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *spinningWheel;
 
-
-@property (weak, nonatomic) IBOutlet UIButton *playPauseButton;
-@property (weak,nonatomic) IBOutlet UILabel  *elapsed;
-@property (weak,nonatomic) IBOutlet UILabel  *shortTime;
-@property (weak,nonatomic) IBOutlet UIButton *speakerButton;
-@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
-
-@property (weak,nonatomic) IBOutlet JCPopoverSlider *slider;
-@property (weak, nonatomic) IBOutlet UIImageView *userImage;
-@property (weak, nonatomic) IBOutlet UIImageView *voicemailIcon;
-@property (nonatomic, retain)	NSTimer			*updateTimer;
+@property (nonatomic, strong) NSTimer *updateTimer;
+@property (nonatomic, strong) NSIndexPath *indexPath;
 @property (nonatomic) BOOL useSpeaker;
-@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinningWheel;
-@property (strong, nonatomic) NSIndexPath *indexPath;
 
 - (IBAction)playPauseButtonTapped:(id)sender;
-//- (void)setPlayButtonState:(UIImage *)image;
 - (IBAction)progressSliderMoved:(id)sender;
 - (IBAction)progressSliderTouched:(id)sender;
 - (IBAction)speakerTouched:(id)sender;
+
 - (void)setSliderValue:(float)position;
 - (void)styleCellForRead;
-//- (void)setupButtons;
 @end

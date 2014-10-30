@@ -655,7 +655,7 @@ int didNotify;
                     notified = [NSNumber numberWithBool:YES];
                     Voicemail *lastEntry = [Voicemail MR_findFirstByAttribute:@"jrn" withValue:key];
                     if (lastEntry) {
-                        NSString *alertMessage = lastEntry.callerId ? [NSString stringWithFormat:@"New voicemail from %@", lastEntry.callerIdNumber]  : @"Unknown";
+                        NSString *alertMessage = lastEntry.name ? [NSString stringWithFormat:@"New voicemail from %@", lastEntry.number]  : @"Unknown";
                         [self showLocalNotificationWithType:@"voicemail" alertMessage:alertMessage];
                     }
                 }

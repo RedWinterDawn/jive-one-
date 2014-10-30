@@ -243,12 +243,6 @@
     
 }
 
-/*- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
-    BOOL isSelected = [self.selectedIndexPaths containsObject:indexPath];
-    
-    return !isSelected;
-}*/
-
 #pragma mark - JCVoicemailCellDelegate
 
 -(void)voiceCellDeleteTapped:(JCVoicemailPlaybackCell *)cell {
@@ -448,7 +442,6 @@
         self.selectedCell.playPauseButton.selected = TRUE;
     }
     self.selectedCell.duration.text = [self formatSeconds:player.duration];
-    self.selectedCell.elapsed.text = [self formatSeconds:player.currentTime];
     [self.selectedCell setSliderValue:player.currentTime];
     [self.selectedCell.slider updateThumbWithCurrentProgress];
 }

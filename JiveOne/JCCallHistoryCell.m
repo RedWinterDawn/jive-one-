@@ -14,12 +14,9 @@
 {
     [super layoutSubviews];
     
-    Call *call = self.call;
-    self.name.text = call.name;
-    self.number.text = call.number;
-    self.timestamp.text = call.formattedModifiedShortDate;
-    self.extension.text = call.extension;
-    self.icon.image = call.icon;
+    self.extension.text = self.call.extension;
+    
+    self.icon.image = self.call.icon;
 }
 
 #pragma mark - Setters -
