@@ -11,6 +11,32 @@
 
 @implementation JCTableViewCell
 
+-(void)awakeFromNib
+{
+    // Hack for iOS7 compatibility
+    if ([[UIDevice currentDevice].systemVersion floatValue] < 8.0f)
+    {
+        UIColor *backgroundColor = self.backgroundColor;
+        self.backgroundColor = [UIColor clearColor];
+        UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
+        view.backgroundColor = backgroundColor;
+        self.backgroundView = view;
+    }
+}
+
+-(void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    // Hack for iOS7 compatibility
+    if ([[UIDevice currentDevice].systemVersion floatValue] < 8.0f)
+    {
+        CGRect rect = self.backgroundView.bounds;
+        rect.size.height = self.frame.size.height - 1;
+        self.backgroundView.bounds = rect;
+    }
+}
+
 -(void)prepareForReuse
 {
     [super prepareForReuse];

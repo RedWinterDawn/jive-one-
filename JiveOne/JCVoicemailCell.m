@@ -13,21 +13,11 @@
 
 @implementation JCVoicemailCell
 
-#pragma mark - Setters -
-
--(void)setRecentEvent:(RecentEvent *)recentEvent
+-(void)layoutSubviews
 {
-    if ([recentEvent isKindOfClass:[Voicemail class]])
-    {
-        self.voicemail = (Voicemail *)recentEvent;
-    }
-}
-
--(void)setVoicemail:(Voicemail *)voicemail
-{
-    super.recentEvent = voicemail;
+    [super layoutSubviews];
     
-    _voicemail = voicemail;
+    Voicemail *voicemail = self.voicemail;
     
     self.callerIdLabel.text = [voicemail.callerId stringByReplacingOccurrencesOfString:@"\"" withString:@""];
     if (![voicemail.callerId isEqualToString:voicemail.callerIdNumber]) {
@@ -60,28 +50,47 @@
         self.extensionLabel.text = detailText;
     }
     
-    [self doubleCheckNamesAndNumbers];
+    [self doubleCheckNamesAndNumbersForVoicemail:voicemail];
 }
 
+#pragma mark - Setters -
+
+-(void)setRecentEvent:(RecentEvent *)recentEvent
+{
+    if ([recentEvent isKindOfClass:[Voicemail class]])
+    {
+        self.voicemail = (Voicemail *)recentEvent;
+    }
+}
+
+-(void)setVoicemail:(Voicemail *)voicemail
+{
+    super.recentEvent = voicemail;
+}
+
+-(Voicemail *)voicemail
+{
+    return (Voicemail *)super.recentEvent;
+}
 
 #pragma mark - Private -
 
-- (void)doubleCheckNamesAndNumbers
+- (void)doubleCheckNamesAndNumbersForVoicemail:(Voicemail *)voicemail
 {
     if ([Common stringIsNilOrEmpty:self.callerIdLabel.text] || [self.callerIdLabel.text isEqualToString:@"Unknown"]) {
         NSString *regexForName = @"\".+?\"";
         NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexForName
                                                                                options:NSRegularExpressionCaseInsensitive
                                                                                  error:nil];
-        if ([Common stringIsNilOrEmpty:_voicemail.callerId]) {
+        if ([Common stringIsNilOrEmpty:voicemail.callerId]) {
             return;
         }
-        NSArray *matches = [regex matchesInString:_voicemail.callerId
+        NSArray *matches = [regex matchesInString:voicemail.callerId
                                           options:0
-                                            range:NSMakeRange(0, [_voicemail.callerId length])];
+                                            range:NSMakeRange(0, [voicemail.callerId length])];
         
         if (matches.count > 0) {
-            NSString *callerName = [_voicemail.callerId substringWithRange:[matches[0] range]];
+            NSString *callerName = [voicemail.callerId substringWithRange:[matches[0] range]];
             callerName = [callerName stringByReplacingOccurrencesOfString:@"\"" withString:@""];
             self.callerIdLabel.text = callerName;
         }
@@ -92,12 +101,12 @@
         NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexForNumber
                                                                                options:NSRegularExpressionCaseInsensitive
                                                                                  error:nil];
-        NSArray *matches = [regex matchesInString:_voicemail.callerId
+        NSArray *matches = [regex matchesInString:voicemail.callerId
                                           options:0
-                                            range:NSMakeRange(0, [_voicemail.callerId length])];
+                                            range:NSMakeRange(0, [voicemail.callerId length])];
         
         if (matches.count > 0) {
-            NSString *callerNumber = [_voicemail.callerId substringWithRange:[matches[0] range]];
+            NSString *callerNumber = [voicemail.callerId substringWithRange:[matches[0] range]];
             callerNumber = [callerNumber stringByReplacingOccurrencesOfString:@"<" withString:@""];
             callerNumber = [callerNumber stringByReplacingOccurrencesOfString:@">" withString:@""];
             self.extensionLabel.text = callerNumber;

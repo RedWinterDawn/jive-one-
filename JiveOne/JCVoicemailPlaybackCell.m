@@ -20,19 +20,17 @@
 }
 
 
-- (void)setVoicemail:(Voicemail *)voicemail
+- (void)layoutSubviews
 {
-    super.voicemail = voicemail;
+    [super layoutSubviews];
     
-    
-    
-    self.shortTime.text = voicemail.formattedModifiedShortDate;
-    self.creationTime.text = voicemail.formattedModifiedShortDate;
+    self.shortTime.text = self.voicemail.formattedModifiedShortDate;
+    self.creationTime.text = self.voicemail.formattedModifiedShortDate;
     self.elapsed.text = @"0:00";
     self.duration.text = @"0:00";
     self.elapsed.adjustsFontSizeToFitWidth = YES;
-	self.duration.adjustsFontSizeToFitWidth = YES;
-	self.slider.minimumValue = 0.0;
+    self.duration.adjustsFontSizeToFitWidth = YES;
+    self.slider.minimumValue = 0.0;
     
     //test to see if we have already downloaded the voicemail .wav file
     if (self.voicemail.voicemail.length > 0) {
@@ -111,6 +109,9 @@
         }
     }
 }
+
+#pragma mark - IBActions -
+
 
 - (IBAction)progressSliderMoved:(id)sender
 {

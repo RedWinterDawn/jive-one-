@@ -13,6 +13,8 @@
     NSFetchedResultsController *_fetchedResultsController;
 }
 
+@property (nonatomic) BOOL showTopCellSeperator;
+
 // The managed object context being used by the FetchedResults Controller
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 

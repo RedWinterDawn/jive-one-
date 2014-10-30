@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -279,10 +280,11 @@
             <objects>
                 <navigationController storyboardIdentifier="SettingsNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="fwQ-1I-zye" userLabel="Settings Navigation Controller" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Settings" image="black-gear" id="30a-yD-tba"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="tXh-9c-n4v">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="tXh-9c-n4v">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="o2N-BS-dge" kind="relationship" relationship="rootViewController" id="alg-rp-IiN"/>
@@ -300,9 +302,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="separatorColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="MenuCell" textLabel="8Re-eZ-aiX" rowHeight="52" style="IBUITableViewCellStyleDefault" id="fsL-jz-3x8" customClass="JCTableViewCell">
+                            <tableViewCell opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="MenuCell" textLabel="8Re-eZ-aiX" rowHeight="52" style="IBUITableViewCellStyleDefault" id="fsL-jz-3x8" customClass="JCTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fsL-jz-3x8" id="lI5-3i-cQW">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -359,7 +360,7 @@
             <objects>
                 <tableViewController storyboardIdentifier=" " id="o2N-BS-dge" customClass="JCAccountViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="static" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="LQ9-wu-SxE">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.94389748090000003" green="0.94389748090000003" blue="0.94389748090000003" alpha="1" colorSpace="calibratedRGB"/>
                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -1019,6 +1020,12 @@
                                         <constraint firstItem="3hb-FL-acB" firstAttribute="trailing" secondItem="qgE-Wi-v1i" secondAttribute="trailing" constant="-51" id="ws8-if-I9k"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="seperatorColor">
+                                        <color key="value" red="0.6588235294" green="0.66274509800000003" blue="0.67843137249999996" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="callerIdLabel" destination="qgE-Wi-v1i" id="sze-kD-qV6"/>
                                     <outlet property="callerNumberLabel" destination="3hb-FL-acB" id="wts-Vz-Dv1"/>
@@ -1035,6 +1042,9 @@
                         </prototypes>
                     </tableView>
                     <navigationItem key="navigationItem" title="Voicemail" id="LA4-gt-zUJ"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="showTopCellSeperator" value="YES"/>
+                    </userDefinedRuntimeAttributes>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U9g-em-KGD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -3337,7 +3347,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="JCHistoryCell" rowHeight="60" id="bzx-2Z-ecg" customClass="JCCallHistoryCell">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HistoryCell" rowHeight="60" id="bzx-2Z-ecg" customClass="JCCallHistoryCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bzx-2Z-ecg" id="HxC-gN-IMm">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -3391,6 +3401,7 @@
                                         <constraint firstItem="TmI-c8-kkS" firstAttribute="leading" secondItem="HxC-gN-IMm" secondAttribute="leading" constant="8" id="w26-cp-Hrz"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="seperatorColor">
                                         <color key="value" red="0.6588235294" green="0.66274509800000003" blue="0.67843137249999996" alpha="1" colorSpace="calibratedRGB"/>
@@ -3410,6 +3421,9 @@
                             <outlet property="delegate" destination="YiF-LH-6AG" id="aGh-sX-ksZ"/>
                         </connections>
                     </tableView>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="showTopCellSeperator" value="YES"/>
+                    </userDefinedRuntimeAttributes>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MmJ-iL-Frk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

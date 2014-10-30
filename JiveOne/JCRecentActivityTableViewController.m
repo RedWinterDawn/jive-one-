@@ -65,13 +65,13 @@ NSString *const kJCVoicemailCellReuseIdentifier = @"VoicemailCell";
 {
     if ([object isKindOfClass:[Call class]])
     {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kJCHistoryCellReuseIdentifier forIndexPath:indexPath];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kJCHistoryCellReuseIdentifier];
         [self configureCell:cell withObject:object];
         return cell;
     }
     else if ([object isKindOfClass:[Voicemail class]])
     {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kJCVoicemailCellReuseIdentifier forIndexPath:indexPath];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kJCVoicemailCellReuseIdentifier];
         [self configureCell:cell withObject:object];
         return cell;
     }
@@ -80,7 +80,7 @@ NSString *const kJCVoicemailCellReuseIdentifier = @"VoicemailCell";
 }
 
 
-- (void)configureCell:(UITableViewCell *)cell withObject:(id<NSObject>)object
+- (void)configureCell:(JCTableViewCell *)cell withObject:(id<NSObject>)object
 {
     if ([object isKindOfClass:[Call class]] && [cell isKindOfClass:[JCCallHistoryCell class]])
     {

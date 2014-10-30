@@ -198,7 +198,7 @@
     id object = [self objectAtIndexPath:indexPath];
     UITableViewCell *cell = [self tableView:tableView cellForObject:object atIndexPath:indexPath];
 	
-	if ([cell isKindOfClass:[JCTableViewCell class]] && (indexPath.row == 0 && indexPath.section == 0) ) {
+	if ([cell isKindOfClass:[JCTableViewCell class]] && (indexPath.row == 0 && indexPath.section == 0) && _showTopCellSeperator) {
 		((JCTableViewCell *)cell).top = true;
 	}
 	

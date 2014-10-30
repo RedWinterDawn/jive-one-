@@ -1535,10 +1535,10 @@
 				27EA1DFC1900A83D0075CAEE /* JCVoiceTableViewController.m */,
 				273CC25C1900B23B005A2857 /* JCVoicemailPlaybackCell.h */,
 				273CC25D1900B23B005A2857 /* JCVoicemailPlaybackCell.m */,
-				5D629BAE19D9CE4500F5744E /* JCVoiceNonVisualViewController.h */,
-				5D629BAF19D9CE4500F5744E /* JCVoiceNonVisualViewController.m */,
 				5DB0BFCB1A00BAB3006737D7 /* JCVoicemailCell.h */,
 				5DB0BFCC1A00BAB3006737D7 /* JCVoicemailCell.m */,
+				5D629BAE19D9CE4500F5744E /* JCVoiceNonVisualViewController.h */,
+				5D629BAF19D9CE4500F5744E /* JCVoiceNonVisualViewController.m */,
 			);
 			name = Voicemail;
 			sourceTree = "<group>";

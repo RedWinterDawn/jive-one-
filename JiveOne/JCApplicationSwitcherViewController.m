@@ -113,7 +113,19 @@
     if (!_selectedViewController)
     {
         CGRect navBarFrame = _menuNavigationController.navigationBar.frame;
-        CGFloat tableHeight = navBarFrame.origin.y + navBarFrame.size.height + [_menuTableViewController.tableView contentSize].height;
+        
+        // @!^$#$ Apple! Seriously!
+        CGFloat tableHeight;
+        if ([[UIDevice currentDevice].systemVersion floatValue] < 8.0f)
+        {
+            CGSize textViewSize = [_menuTableViewController.tableView sizeThatFits:CGSizeMake(_menuTableViewController.tableView.frame.size.width, FLT_MAX)];
+            tableHeight = [UIApplication sharedApplication].statusBarFrame.size.height + navBarFrame.origin.y + navBarFrame.size.height + textViewSize.height;
+        }
+        else
+        {
+            tableHeight = navBarFrame.origin.y + navBarFrame.size.height + [_menuTableViewController.tableView contentSize].height;
+        }
+        
         CGRect frame = self.view.bounds;
         CGFloat viewHeight = frame.size.height;
         frame.size.height = tableHeight;
@@ -232,9 +244,18 @@
 -(void)showMenuAnimated:(bool)animated
 {
     CGRect menuFrame = _menuNavigationController.view.frame;
-    menuFrame.origin.y = 0;
+    
+    if ([[UIDevice currentDevice].systemVersion floatValue] < 8.0f)
+    {
+        menuFrame.origin.y = [UIApplication sharedApplication].statusBarFrame.size.height;
+    }
+    else
+    {
+        menuFrame.origin.y = 0;
+    }
     
     CGRect activityFrame = _activityViewController.view.frame;
+    
     activityFrame.origin.y = menuFrame.origin.y + menuFrame.size.height;
     
     [UIView animateWithDuration:(animated ? 0.3 : 0)
@@ -243,7 +264,10 @@
                      animations:^{
                          _menuNavigationController.view.frame = menuFrame;
                          _activityViewController.view.frame = activityFrame;
-                         _transitionViewController.view.alpha = 0.2;
+                         
+                         if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0f)
+                             _transitionViewController.view.alpha = 0.2;
+                         
                      }
                      completion:^(BOOL finished) {
                          _showingMenu = true;
