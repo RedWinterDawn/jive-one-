@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RecentEvent.h"
 
 @class JCApplicationSwitcherViewController;
 
@@ -18,6 +19,7 @@
 -(NSArray *)applicationSwitcherController:(JCApplicationSwitcherViewController *)controller willLoadViewControllers:(NSArray *)viewControllers;
 -(UIViewController *)applicationSwitcherLastSelectedViewController:(JCApplicationSwitcherViewController *)controller;
 -(UITableViewCell *)applicationSwitcherController:(JCApplicationSwitcherViewController *)controller tableView:(UITableView *)tableView cellForTabBarItem:(UITabBarItem *)tabBarItem identifier:(NSString *)identifier;
+-(void)applicationSwitcher:(JCApplicationSwitcherViewController *)controller shouldNavigateToRecentEvent:(RecentEvent *)recentEvent;
 
 @end
 

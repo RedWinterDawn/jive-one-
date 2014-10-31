@@ -54,6 +54,8 @@
 // this default case it uses the fetched results controller to determine what object is returned.
 - (id<NSObject>)objectAtIndexPath:(NSIndexPath *)indexPath;
 
+- (NSIndexPath *)indexPathOfObject:(id<NSObject>)object;
+
 // Called when the cell need to be configure for the passed object. By default, it does nothing, and should be overriden
 // by an implementing subclass.
 - (void)configureCell:(UITableViewCell *)cell withObject:(id<NSObject>)object;

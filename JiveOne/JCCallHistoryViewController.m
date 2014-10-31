@@ -6,20 +6,11 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCHistroyContainerViewController.h"
-#import "JCHistoryTableViewController.h"
+#import "JCCallHistoryViewController.h"
 #import <CoreData/CoreData.h>
-
 #import "MissedCall.h"
 
-@interface JCHistroyContainerViewController ()
-{
-    JCHistoryTableViewController *_historyTableViewController;
-}
-
-@end
-
-@implementation JCHistroyContainerViewController
+@implementation JCCallHistoryViewController
 
 -(IBAction)toggleFilterState:(id)sender
 {
@@ -29,17 +20,17 @@
         switch (segmentedControl.selectedSegmentIndex) {
             case 1:
             {
-                 NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kMissedCallEntityName];
+                NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:kMissedCallEntityName];
                 fetchRequest.fetchBatchSize = 6;
                 
                 NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:false];
                 fetchRequest.sortDescriptors = @[sortDescriptor];
             
-                _historyTableViewController.fetchRequest = fetchRequest;
+                _callHistoryTableViewController.fetchRequest = fetchRequest;
                 break;
             }
             default:
-                _historyTableViewController.fetchRequest = nil;
+                _callHistoryTableViewController.fetchRequest = nil;
                 break;
         }
         
@@ -51,8 +42,8 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     UIViewController *viewController = segue.destinationViewController;
     
-    if ([viewController isKindOfClass:[JCHistoryTableViewController class]]){
-        _historyTableViewController = (JCHistoryTableViewController *)viewController;
+    if ([viewController isKindOfClass:[JCCallHistoryTableViewController class]]){
+        _callHistoryTableViewController = (JCCallHistoryTableViewController *)viewController;
     
     }
 }

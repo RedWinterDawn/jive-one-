@@ -7,8 +7,9 @@
 //
 
 #import "JCApplicationSwitcherViewController.h"
+#import "JCRecentActivityTableViewController.h"
 
-@interface JCApplicationSwitcherViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface JCApplicationSwitcherViewController () <UITableViewDataSource, UITableViewDelegate, JCRecentActivityTableViewControllerDelegate>
 {
     NSArray *_viewControllers;                          // Array of available tab view controllers
     UIViewController *_selectedViewController;
@@ -86,6 +87,15 @@
     // Instance the activity view controller
     _activityViewController = [self.storyboard instantiateViewControllerWithIdentifier:self.activityViewControllerStoryboardIdentifier];
     [super addChildViewController:_activityViewController];
+    
+    // Register us as a delegate of the Recent Activity Table View Controller
+    if ([_activityViewController isKindOfClass:[UINavigationController class]]) {
+        UIViewController *controller = ((UINavigationController *)_activityViewController).topViewController;
+        if ([controller isKindOfClass:[JCRecentActivityTableViewController class]]) {
+            ((JCRecentActivityTableViewController *)controller).delegate = self;
+        }
+    }
+    
     [view addSubview:_activityViewController.view];
     
     self.view = view;
@@ -193,12 +203,15 @@
 
 -(void)setSelectedViewController:(UIViewController *)selectedViewController
 {
-    if (_selectedViewController == selectedViewController)
-        return;
-    
     // When first loading, ask the dataSource if we have a saved view controller;
     if (_selectedViewController == nil && selectedViewController == nil && self.delegate && [self.delegate respondsToSelector:@selector(applicationSwitcherLastSelectedViewController:)])
         selectedViewController = [self.delegate applicationSwitcherLastSelectedViewController:self];
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(tabBarController:shouldSelectViewController:)]) {
+        if (![self.delegate tabBarController:self shouldSelectViewController:selectedViewController]) {
+            return;
+        }
+    }
     
     [self transitionFromViewController:_selectedViewController
                       toViewController:selectedViewController
@@ -208,9 +221,12 @@
                                 
                             }
                             completion:^(BOOL finished) {
-                                _selectedViewController = selectedViewController;
-                                if (self.delegate && [self.delegate respondsToSelector:@selector(tabBarController:didSelectViewController:)])
-                                    [self.delegate tabBarController:self didSelectViewController:selectedViewController];
+                                if (finished)
+                                {
+                                    _selectedViewController = selectedViewController;
+                                    if (self.delegate && [self.delegate respondsToSelector:@selector(tabBarController:didSelectViewController:)])
+                                        [self.delegate tabBarController:self didSelectViewController:selectedViewController];
+                                }
                             }];
 }
 
@@ -305,8 +321,7 @@
                          animations:(void (^)(void))animations
                          completion:(void (^)(BOOL))completion
 {
-    // if there is not toViewController, there is no need to transition.
-    if (!toViewController)
+    if ([toViewController isEqual:fromViewController] || !toViewController)
         return;
     
     UIViewController *controller = _transitionViewController;
@@ -319,9 +334,12 @@
                          animations();
                      }
                      completion:^(BOOL finished) {
-                         [fromViewController removeFromParentViewController];
-                         [controller addChildViewController:toViewController];
-                         completion(true);
+                         if (finished)
+                         {
+                             [fromViewController removeFromParentViewController];
+                             [controller addChildViewController:toViewController];
+                             completion(true);
+                         }
                      }];
 }
 
@@ -380,6 +398,16 @@
     
     self.selectedViewController = viewController;
     [self hideMenuAnimated:YES];
+}
+
+#pragma mark JCRecentActivityTableViewControllerDelegate
+
+-(void)recentActivityDidSelectRecentEvent:(RecentEvent *)recentEvent
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(applicationSwitcher:shouldNavigateToRecentEvent:)]) {
+        [self.delegate applicationSwitcher:self shouldNavigateToRecentEvent:recentEvent];
+        [self hideMenuAnimated:YES];
+    }
 }
 
 @end

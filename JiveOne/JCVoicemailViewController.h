@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JCVoicemailTableViewController.h"
 
-@interface JCVoiceViewController : UIViewController
+@interface JCVoicemailViewController : UIViewController
 
 @property (nonatomic, weak) IBOutlet UIView *containerView;
+
+-(void)loadVoicemail:(Voicemail *)voicemail;
 
 @end

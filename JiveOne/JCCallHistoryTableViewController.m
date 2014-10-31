@@ -6,18 +6,18 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCHistoryTableViewController.h"
+#import "JCCallHistoryTableViewController.h"
 
 #import "Call.h"
 
-@interface JCHistoryTableViewController ()
+@interface JCCallHistoryTableViewController ()
 {
     NSFetchRequest *_fetchRequest;
 }
 
 @end
 
-@implementation JCHistoryTableViewController
+@implementation JCCallHistoryTableViewController
 
 #pragma mark - Setters - 
 

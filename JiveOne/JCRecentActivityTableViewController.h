@@ -7,7 +7,17 @@
 //
 
 #import "JCFetchedResultsTableViewController.h"
+#import "RecentEvent.h"
+
+@protocol JCRecentActivityTableViewControllerDelegate <NSObject>
+
+@optional
+-(void)recentActivityDidSelectRecentEvent:(RecentEvent *)recentEvent;
+
+@end
 
 @interface JCRecentActivityTableViewController : JCFetchedResultsTableViewController
+
+@property (nonatomic, weak) id <JCRecentActivityTableViewControllerDelegate> delegate;
 
 @end

@@ -8,7 +8,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "JCVoiceTableViewController.h"
+#import "JCVoicemailTableViewController.h"
 #import "JCAuthenticationManager.h"
 #import "JCVoicemailClient.h"
 #import "TRVSMonitor.h"
@@ -101,7 +101,7 @@
 //Kiwi
 //test whether the UpdateTable method will save a json(mocked) from the api into from core data
 SPEC_BEGIN(VoicemailTests)
-__block JCVoiceTableViewController* voicemailViewController;
+__block JCVoicemailTableViewController* voicemailViewController;
 
 
 

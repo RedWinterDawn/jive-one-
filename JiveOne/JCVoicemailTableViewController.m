@@ -6,15 +6,20 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCVoiceTableViewController.h"
+@import AVFoundation;
+@import UIKit;
+
+#import <MBProgressHUD/MBProgressHUD.h>
+
+#import "JCVoicemailTableViewController.h"
 #import "JCVoicemailPlaybackCell.h"
 #import "JCVoicemailClient.h"
-#import <MBProgressHUD/MBProgressHUD.h>
+
 #import "JCMessagesViewController.h"
 #import "JCAppDelegate.h"
 #import "Voicemail+Custom.h"
 
-@interface JCVoiceTableViewController ()
+@interface JCVoicemailTableViewController () <AVAudioPlayerDelegate, JCVoiceCellDelegate>
 {
     NSData *soundData;
     AVAudioPlayer *player;
@@ -22,65 +27,33 @@
     BOOL _playThroughSpeaker;
     MBProgressHUD *hud;
     NSTimer *requestTimeout;
-    
 }
 
-@property (weak, nonatomic) JCVoicemailClient *client;
 @property (nonatomic) NSMutableArray *selectedIndexPaths;
 @property (nonatomic, retain) NSTimer *progressTimer;
 
 @end
 
-@implementation JCVoiceTableViewController
-
-- (void)setClient:(JCVoicemailClient*)client
-{
-    _client = client;
-}
-
--(JCVoicemailClient*)getClient
-{
-    if(!_client){
-        _client = [JCVoicemailClient sharedClient];
-        
-    }
-    return _client;
-}
+@implementation JCVoicemailTableViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.progressTimer = nil;
     
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(updateVoiceTable:) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
 	
-	
     [Voicemail fetchVoicemailInBackground];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    [(JCAppDelegate *)[UIApplication sharedApplication].delegate refreshTabBadges:NO];
-
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-//    [Flurry logEvent:@"Voicemail View"];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveNewVoicemail:) name:kNewVoicemail object:nil];
-//    [(JCAppDelegate *)[UIApplication sharedApplication].delegate clearBadgeCountForVoicemail];
-}
+#pragma mark - Getters -
 
 -(NSFetchedResultsController *)fetchedResultsController
 {
 	if (!_fetchedResultsController) {
 		
 //		NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Voicemail"];
-//		
 //		fetchRequest.predicate = [NSPredicate predicateWithFormat:@"markForDeletion ==[c] %@", [NSNumber numberWithBool:NO]];
 //		fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO]];
 		
@@ -117,13 +90,12 @@
     if ([requestTimeout isValid]) {
         [requestTimeout invalidate];
     }
-
-    
     [self showHudWithTitle:NSLocalizedString(@"Server Not Reachable", nil) detail:NSLocalizedString(@"Could not check for voicemails at this moment. Please try again.", nil) mode:MBProgressHUDModeText];
     [self.refreshControl endRefreshing];
 }
 
 #pragma mark - HUD Operations
+
 - (void)showHudWithTitle:(NSString*)title detail:(NSString*)detail mode:(MBProgressHUDMode)mode
 {
     if (!hud) {

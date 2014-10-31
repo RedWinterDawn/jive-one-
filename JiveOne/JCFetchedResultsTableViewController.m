@@ -137,6 +137,11 @@
     return [self.fetchedResultsController objectAtIndexPath:indexPath];
 }
 
+- (NSIndexPath *)indexPathOfObject:(id<NSObject>)object
+{
+    return [self.fetchedResultsController indexPathForObject:object];
+}
+
 -(void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     [self configureCell:cell withObject:[self objectAtIndexPath:indexPath]];

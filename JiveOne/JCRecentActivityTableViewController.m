@@ -97,6 +97,14 @@ NSString *const kJCVoicemailCellReuseIdentifier = @"VoicemailCell";
 
 #pragma mark Caller View Controller Delegate
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    RecentEvent *recentEvent = [self objectAtIndexPath:indexPath];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(recentActivityDidSelectRecentEvent:)]) {
+        [self.delegate recentActivityDidSelectRecentEvent:recentEvent];
+    }
+}
+
 -(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController
 {
     [self dismissViewControllerAnimated:NO completion:^{

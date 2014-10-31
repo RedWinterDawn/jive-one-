@@ -7,8 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JCCallHistoryTableViewController.h"
 
-@interface JCHistroyContainerViewController : UIViewController
+@interface JCCallHistoryViewController : UIViewController
+
+@property (nonatomic, readonly) JCCallHistoryTableViewController *callHistoryTableViewController;
+
 -(IBAction)toggleFilterState:(id)sender;
 
 @end

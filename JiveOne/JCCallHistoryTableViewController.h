@@ -8,7 +8,7 @@
 
 #import "JCRecentActivityTableViewController.h"
 
-@interface JCHistoryTableViewController : JCRecentActivityTableViewController
+@interface JCCallHistoryTableViewController : JCRecentActivityTableViewController
 
 @property (nonatomic, strong) NSFetchRequest *fetchRequest;
 

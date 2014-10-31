@@ -9,7 +9,18 @@
 #import "JCApplicationSwitcherDelegate.h"
 #import "JCMenuBarButtonItem.h"
 
+#import "JCCallHistoryViewController.h"
+#import "JCVoicemailViewController.h"
+
+#import "Voicemail.h"
+#import "Call.h"
+
 NSString *const kApplicationSwitcherLastSelectedViewControllerIdentifierKey = @"applicationSwitcherLastSelected";
+
+NSString *const kApplicationSwitcherPhoneRestorationIdentifier = @"PhoneTabBarController";
+NSString *const kApplicationSwitcherDialerRestorationIdentifier = @"DialerNavigationController";
+NSString *const kApplicationSwitcherCallHistoryRestorationIdentifier = @"CallHistoryNavigationController";
+NSString *const kApplicationSwitcherVoicemailRestorationIdentifier = @"VoicemailNavigationController";
 
 @interface JCApplicationSwitcherDelegate ()
 
@@ -67,8 +78,101 @@ NSString *const kApplicationSwitcherLastSelectedViewControllerIdentifierKey = @"
     return nil;
 }
 
+-(void)applicationSwitcher:(JCApplicationSwitcherViewController *)controller shouldNavigateToRecentEvent:(RecentEvent *)recentEvent
+{
+    NSString *restorationIdentifier = [self applicationSwitcherRestorationIdentifierForRecentEvent:recentEvent];
+    if (restorationIdentifier) {
+        for (UIViewController *viewController in controller.viewControllers) {
+            if ([viewController.restorationIdentifier isEqualToString:restorationIdentifier]) {
+                controller.selectedViewController = viewController;
+                
+                // Logic for Phone Recent Events.
+                if ([restorationIdentifier isEqualToString:kApplicationSwitcherPhoneRestorationIdentifier] && [viewController isKindOfClass:[UITabBarController class]]){
+                    [self navigatePhoneViewController:(UITabBarController *)viewController forRecentEvent:recentEvent];
+                }
+                break;
+            }
+        }
+    }
+}
+
+-(void)navigatePhoneViewController:(UITabBarController *)tabBarController forRecentEvent:(RecentEvent *)recentEvent
+{
+    NSString *restorationIdentifier = [self phoneTabBarControllerRestorationIdentifierForRecentEvent:recentEvent];
+    for (UIViewController *controller in tabBarController.viewControllers)
+    {
+        if ([controller.restorationIdentifier isEqualToString:restorationIdentifier]) {
+            tabBarController.selectedViewController = controller;
+            
+            if ([controller.restorationIdentifier isEqualToString:kApplicationSwitcherCallHistoryRestorationIdentifier] && [recentEvent isKindOfClass:[Call class]]) {
+                [self navigateHistoryViewController:controller toRecentEvent:(Call *)recentEvent];
+            }
+            else if ([controller.restorationIdentifier isEqualToString:kApplicationSwitcherVoicemailRestorationIdentifier] && [recentEvent isKindOfClass:[Voicemail class]]) {
+                [self navigateVoicemailViewController:controller toRecentEvent:(Voicemail *)recentEvent];
+            }
+            
+            break;
+        }
+    }
+}
+
+-(void)navigateHistoryViewController:(UIViewController *)viewController toRecentEvent:(RecentEvent *)recentEvent
+{
+    if ([viewController isKindOfClass:[UINavigationController class]]) {
+        viewController = ((UINavigationController *)viewController).topViewController;
+        if ([viewController isKindOfClass:[JCCallHistoryViewController class]]) {
+            JCCallHistoryViewController *callHistoryViewController = (JCCallHistoryViewController *)viewController;
+            JCCallHistoryTableViewController *callHistoryTableViewController = callHistoryViewController.callHistoryTableViewController;
+            NSIndexPath *indexPath = [callHistoryTableViewController indexPathOfObject:recentEvent];
+            
+            [callHistoryTableViewController.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+        }
+    }
+}
+
+-(void)navigateVoicemailViewController:(UIViewController *)viewController toRecentEvent:(Voicemail *)recentEvent
+{
+    if ([viewController isKindOfClass:[UINavigationController class]]) {
+        viewController = ((UINavigationController *)viewController).topViewController;
+        if ([viewController isKindOfClass:[JCVoicemailViewController class]]) {
+            JCVoicemailViewController *voicemailViewController = (JCVoicemailViewController *)viewController;
+            [voicemailViewController loadVoicemail:recentEvent];
+        }
+    }
+}
+
+-(NSString *)applicationSwitcherRestorationIdentifierForRecentEvent:(RecentEvent *)recentEvent
+{
+    if ([recentEvent isKindOfClass:[Voicemail class]] || [recentEvent isKindOfClass:[Call class]]) {
+        return kApplicationSwitcherPhoneRestorationIdentifier;
+    }
+    return nil;
+}
+
+-(NSString *)phoneTabBarControllerRestorationIdentifierForRecentEvent:(RecentEvent *)recentEvent
+{
+    if ([recentEvent isKindOfClass:[Voicemail class]]) {
+        return kApplicationSwitcherVoicemailRestorationIdentifier;
+    }
+    else if ([recentEvent isKindOfClass:[Call class]]){
+        return kApplicationSwitcherCallHistoryRestorationIdentifier;
+    }
+    return nil;
+}
+
 -(BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
 {
+    // Default select the Dialer view if the phone controller is selected from the application switcher;
+    if ([viewController.restorationIdentifier isEqualToString:kApplicationSwitcherPhoneRestorationIdentifier]) {
+        if ([viewController isKindOfClass:[UITabBarController class]]) {
+            UITabBarController *phoneTabBarController = (UITabBarController *)viewController;
+            for (UIViewController *controller in phoneTabBarController.viewControllers) {
+                if ([controller.restorationIdentifier isEqualToString:kApplicationSwitcherDialerRestorationIdentifier]) {
+                    phoneTabBarController.selectedViewController = controller;
+                }
+            }
+        }
+    }
     return YES;
 }
 
