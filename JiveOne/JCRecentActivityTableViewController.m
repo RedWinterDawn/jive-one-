@@ -48,7 +48,6 @@ NSString *const kJCVoicemailCellReuseIdentifier = @"VoicemailCell";
     {
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"RecentEvent"];
         fetchRequest.includesSubentities = true;
-        fetchRequest.fetchLimit = 5;
         
         NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:NO];
         fetchRequest.sortDescriptors = @[sortDescriptor];
