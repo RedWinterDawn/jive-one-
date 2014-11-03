@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-@import Foundation;
-@import CoreData;
+#import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
 @interface RecentEvent : NSManagedObject
 
