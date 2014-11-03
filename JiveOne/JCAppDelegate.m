@@ -27,9 +27,10 @@
 #import "JCCallerViewController.h"
 #import "JCBadgeManager.h"
 
-@interface JCAppDelegate () <JCCallerViewControllerDelegate>
+@interface JCAppDelegate () <JCCallerViewControllerDelegate, UAPushNotificationDelegate, UARegistrationDelegate>
 {
     JCCallerViewController *_presentedCallerViewController;
+    bool _didNotify;
 }
 
 @property (nonatomic) UIStoryboard* storyboard;
@@ -39,7 +40,6 @@
 
 
 @implementation JCAppDelegate
-int didNotify;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -60,8 +60,7 @@ int didNotify;
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultPreferences];
     
     //check if we are using a iphone or ipad
-    self.deviceIsIPhone = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? NO : YES;
-	[self tabBarViewController];
+    [self tabBarViewController];
 	[self loginViewController];
 
     
@@ -131,23 +130,14 @@ int didNotify;
     return YES;
 }
 
--(void)configureLogging
-{
-    
-}
-
-
-
 - (void)didLogInSoCanRegisterForPushNotifications
 {
     LOG_Info();
 
     //[UAPush shared].pushNotificationDelegate = self;
     // Request a custom set of notification types
-    [[UAPush shared] registerForRemoteNotifications];
-    [UAPush shared].notificationTypes = (UIRemoteNotificationTypeBadge |
-                                         UIRemoteNotificationTypeSound |
-                                         UIRemoteNotificationTypeAlert);
+    //[[UAPush shared] registerForRemoteNotifications];
+    //[UAPush shared].notificationTypes = (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert);
 }
 
 - (void)didLogOutSoUnRegisterForPushNotifications
@@ -224,7 +214,7 @@ int didNotify;
 //        currentInstallation.badge = 0;
 //        [currentInstallation saveEventually];
 //    }
-    didNotify = 0;
+    _didNotify = false;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(alertUserToUpdate:) name:@"AppIsOutdated" object:nil];
     [[JCVersion sharedClient] getVersion];
     
@@ -236,7 +226,7 @@ int didNotify;
 {
     LOG_Info();
     
-    if ([[notification name] isEqualToString:@"AppIsOutdated"] && (didNotify < 1))
+    if ([[notification name] isEqualToString:@"AppIsOutdated"] && (!_didNotify))
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update Required"
                                                         message:@"Please download the latest version of JiveApp Beta."
@@ -245,7 +235,7 @@ int didNotify;
                                               otherButtonTitles:@"Download", nil];
         [alert show];
     }
-    didNotify = 1;
+    _didNotify = true;
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
@@ -262,7 +252,7 @@ int didNotify;
     
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     [MagicalRecord cleanUp];
-    didNotify = 0;
+    _didNotify = false;
 }
 
 - (void)startSocket:(BOOL)inBackground
@@ -285,8 +275,7 @@ int didNotify;
     [[JasmineSocket sharedInstance] closeSocketWithReason:@"Entering background"];
 }
 
-#pragma mark - PushNotifications
-
+#pragma mark - Push Notifications Handling
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
@@ -318,34 +307,28 @@ int didNotify;
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     LOG_Info();
-//    [[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
-
+    // [[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
     completionHandler([self BackgroundPerformFetchWithCompletionHandler]);
 }
-
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     LOG_Info();
-//    [[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
-
+    // [[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
     completionHandler([self BackgroundPerformFetchWithCompletionHandler]);
 }
 
-#pragma mark - Background Fetch
 - (void)receivedForegroundNotification:(NSDictionary *)notification fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     LOG_Info();
-//    [[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
-
+    // [[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
     completionHandler([self BackgroundPerformFetchWithCompletionHandler]);
 }
 
 - (void)receivedBackgroundNotification:(NSDictionary *)notification fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     LOG_Info();
-//    [[JCSocketDispatch sharedInstance] setStartedInBackground:YES];
-
+    // [[JCSocketDispatch sharedInstance] setStartedInBackground:YES];
     completionHandler([self BackgroundPerformFetchWithCompletionHandler]);
 }
 
@@ -362,10 +345,8 @@ int didNotify;
     
     NSLog(@"APPDELEGATE - performFetchWithCompletionHandler");
     __block UIBackgroundFetchResult fetchResult = UIBackgroundFetchResultFailed;
-    if ([JasmineSocket sharedInstance].socket.readyState != SR_OPEN) {
-        //[[JCAuthenticationManager sharedInstance] checkForTokenValidity];
-        __block UIBackgroundFetchResult fetchResult = UIBackgroundFetchResultFailed;
-        
+    if ([JasmineSocket sharedInstance].socket.readyState != SR_OPEN)
+    {
         @try {
             TRVSMonitor *monitor = [TRVSMonitor monitor];
             JCBadgeManager *badgeManger = [JCBadgeManager sharedManager];
@@ -442,7 +423,7 @@ int didNotify;
     return _storyboard;
 }
 
-- (UIWindow*)window
+- (UIWindow *)window
 {
     LOG_Info();
     if (!_window) {
@@ -470,6 +451,7 @@ int didNotify;
 }
 
 #pragma mark - Change Root ViewController
+
 - (void)logout
 {
     LOG_Info();

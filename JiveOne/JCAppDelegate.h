@@ -11,11 +11,11 @@
 #import "UAConfig.h"
 #import "UAPush.h"
 
-@interface JCAppDelegate : UIResponder <UIApplicationDelegate, UAPushNotificationDelegate, UARegistrationDelegate>
+@interface JCAppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
-@property BOOL deviceIsIPhone;
+@property (nonatomic, strong) UIWindow *window;
 @property (nonatomic) BOOL seenTutorial;
+
 - (void)changeRootViewController:(JCRootViewControllerType)type;
 - (void)startSocket:(BOOL)inBackground;
 - (void)stopSocket;
