@@ -174,6 +174,30 @@
     });
 }
 
++ (void)deleteVoicemailsInBackground
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"markForDeletion ==[c] %@", [NSNumber numberWithBool:YES]];
+    NSArray *deletedVoicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAllWithPredicate:predicate]];
+    
+    if (deletedVoicemails.count > 0) {
+        for (Voicemail *voice in deletedVoicemails) {
+            if(voice.url_self){
+                [[JCVoicemailClient sharedClient] deleteVoicemail:voice.url_self completed:^(BOOL succeeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+                    if (succeeded) {
+                        [Voicemail deleteVoicemail:voice.jrn managedContext:nil];
+                    }
+                    else {
+                        NSLog(@"Error Deleting Voicemail: %@", error);
+                    }
+                }];
+            }
+            else{
+                [Flurry logError:@"Voicemail Service" message:@"url_self is nil to delete" error:nil];
+            }
+        }
+    }
+}
+
 + (Voicemail *)markVoicemailForDeletion:(NSString*)voicemailId managedContext:(NSManagedObjectContext*)context
 {
     if (!context) {
@@ -260,6 +284,31 @@
     else {
         return 0;
     }
+}
+
+
+
+-(void)markAsRead
+{
+    if (self.read) {
+        return;
+    }
+    
+    self.read = TRUE;
+    [self.managedObjectContext MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
+        if (success)
+        {
+            // now send update to server
+            [[JCVoicemailClient sharedClient] updateVoicemailToRead:self completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+                if(error)
+                {
+                    NSString *errorMessage = @"Failed Updating Voicemail Read Status On Server, Aborting";
+                    NSLog(@"%@", errorMessage);
+                    [Flurry logError:@"Voicmail-11" message:errorMessage error:error];
+                }
+            }];
+        }
+    }];
 }
 
 

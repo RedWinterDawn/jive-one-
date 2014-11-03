@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
+@import Foundation;
+@import CoreData;
 
 @interface RecentEvent : NSManagedObject
 
@@ -19,6 +19,9 @@
 
 // Represent the date of the event.
 @property (nonatomic, strong) NSDate *date;
+
+// Indicates whether the event has been read.
+@property (nonatomic, getter=isRead) bool read;
 
 // Transient Properties.
 @property (nonatomic, weak) NSNumber *timestamp;

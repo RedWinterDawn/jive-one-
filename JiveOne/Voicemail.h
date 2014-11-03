@@ -14,7 +14,6 @@
 @property (nonatomic, retain) NSNumber * duration;
 @property (nonatomic, retain) NSString * jrn;
 @property (nonatomic, retain) NSString * mailboxUrl;
-@property (nonatomic, retain) NSNumber * read;
 @property (nonatomic, retain) NSString * transcription;
 @property (nonatomic, retain) NSString * transcriptionPercent;
 @property (nonatomic, retain) NSString * url_changeStatus;

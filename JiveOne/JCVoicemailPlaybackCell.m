@@ -106,7 +106,7 @@
 
 - (void)styleCellForRead
 {
-    if(![self.voicemail.read boolValue]){
+    if(!self.voicemail.read){
         self.date.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
         self.name.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16];
         self.extension.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];

@@ -17,7 +17,6 @@
 @dynamic duration;
 @dynamic jrn;
 @dynamic mailboxUrl;
-@dynamic read;
 @dynamic transcription;
 @dynamic transcriptionPercent;
 @dynamic url_changeStatus;

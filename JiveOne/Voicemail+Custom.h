@@ -19,6 +19,13 @@
 + (BOOL)isVoicemailInDeletedList:(NSString*)voicemailId;
 + (BOOL)deleteVoicemail:(NSString*)voicemailId managedContext:(NSManagedObjectContext*)context;
 + (void)fetchVoicemailInBackground;
++ (void)deleteVoicemailsInBackground;
+
 + (void)saveVoicemailEtag:(NSInteger)etag managedContext:(NSManagedObjectContext*)context;
 + (NSInteger)getVoicemailEtag;
+
+// Marks the Voicemail as read, notifying the server. It marks the voicmail as read if it was able to successfully
+// update the server.
+- (void)markAsRead;
+
 @end
