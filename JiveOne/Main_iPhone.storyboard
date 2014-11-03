@@ -858,12 +858,18 @@
                         <color key="selectedImageTintColor" red="0.29803921570000003" green="0.44705882349999998" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                     </tabBar>
                     <connections>
+                        <outlet property="delegate" destination="tGw-3m-9Lx" id="VCu-1S-Ouh"/>
                         <segue destination="cIE-ip-pRf" kind="relationship" relationship="viewControllers" id="z7x-e0-nDa"/>
                         <segue destination="vrQ-kc-2ec" kind="relationship" relationship="viewControllers" id="eyx-qN-Isu"/>
                         <segue destination="wLV-k9-4Pz" kind="relationship" relationship="viewControllers" id="ht2-eH-HfH"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gK0-BW-Pc8" sceneMemberID="firstResponder"/>
+                <customObject id="tGw-3m-9Lx" customClass="JCPhoneTabBarControllerDelegate">
+                    <connections>
+                        <outlet property="tabBarController" destination="dm4-oa-PNL" id="nRA-4c-dxv"/>
+                    </connections>
+                </customObject>
             </objects>
             <point key="canvasLocation" x="-115" y="-1756"/>
         </scene>
@@ -3249,7 +3255,7 @@
             <objects>
                 <navigationController storyboardIdentifier="CallHistoryNavigationController" title="History" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cIE-ip-pRf" userLabel="History" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <tabBarItem key="tabBarItem" title="History" image="nav-hist-black" id="dvD-nl-dwM"/>
+                    <tabBarItem key="tabBarItem" title="History" image="nav-hist-black" badgeValue="1" id="dvD-nl-dwM"/>
                     <navigationItem key="navigationItem" id="bfX-ob-wNY"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="re2-xE-4Bm">
