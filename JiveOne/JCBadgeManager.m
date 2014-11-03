@@ -207,6 +207,12 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
     
     RecentEvent *recentEvent = (RecentEvent *)managedObject;
     NSString *key = [self badgeKeyFromRecentEvent:recentEvent];
+    if (!key)
+    {
+        return;
+    }
+    
+    
     NSString *identifier = recentEvent.objectID.URIRepresentation.absoluteString;
     BOOL read = recentEvent.read;
     BOOL insert = inserted != nil;
