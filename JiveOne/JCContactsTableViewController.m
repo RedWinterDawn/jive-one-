@@ -10,26 +10,18 @@
 #import "Lines+Custom.h"
 #import "JCPersonCell.h"
 
+
+
 @interface JCContactsTableViewController ()
 {
-    UISearchDisplayController *searchDisplayController;
+//    UISearchDisplayController *searchDisplayController;
 }
 
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSFetchedResultsController *searchFetchedResultController;
-@property (strong, nonatomic) JCSearchBar *searchBar;
 
-@property (strong, nonatomic) UIView* searchBarView;
-@property (strong, nonatomic) UIScrollView* scrollView;
-@property BOOL searchTableIsActive;
-@property BOOL scrollDirectionIsUp;
-@property BOOL doneAnimatingToolbarFromFirstResponderState;
-@property float previousOffset;
-@property float amountScrolledSinceLastDirectionChange;
-@property float scrollViewOffsetReference;
-@property float deltaOffsetSinceLastDirectionChange;
-@property float deltaSearchBarY_SinceLastDirectionChange;
-@property float searchBarY_Reference;
-@property float scrollViewOffset;
+
+
 
 
 @end
@@ -42,7 +34,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
     [super viewDidLoad];
 
     [self.tableView registerNib:[UINib nibWithNibName:@"JCPersonCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
-    [self searchViewSetup];
+    self.tableView.contentOffset = CGPointMake(0, self.searchDisplayController.searchBar.frame.size.height);
     
     NSError *error;
     if (![self.fetchedResultsController performFetch:&error])
@@ -54,8 +46,6 @@ static NSString *CellIdentifier = @"DirectoryCell";
          */
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
     }
-    
-   
 }
 
 - (void)didReceiveMemoryWarning {
@@ -66,31 +56,29 @@ static NSString *CellIdentifier = @"DirectoryCell";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if (self.searchTableIsActive) {
-        [self.searchDisplayController.searchBar resignFirstResponder];
-    }
 }
 
 - (NSFetchedResultsController *)fetchedResultsController
 {
     if (!_fetchedResultsController)
     {
-        NSFetchRequest *fetchRequest = [Lines MR_requestAll];
-        fetchRequest.fetchBatchSize = 10;
-        
-        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"displayName" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-        NSSortDescriptor *favSort = [NSSortDescriptor sortDescriptorWithKey:@"isFavorite" ascending:NO];
-        fetchRequest.sortDescriptors = [NSArray arrayWithObjects:favSort, sort , nil];
-        
-        super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"firstLetter" cacheName:nil];
+        _fetchedResultsController = [self newFetchedResultsControllerWithSearch:nil];
     }
     
     return _fetchedResultsController;
 }
 
+- (NSFetchedResultsController *)searchFetchedResultController
+{
+    if (!(_searchFetchedResultController)) {
+        _searchFetchedResultController = [self newFetchedResultsControllerWithSearch:self.searchDisplayController.searchBar.text];
+    }
+    return _searchFetchedResultController;
+}
+
 - (NSFetchedResultsController *)controllerForTableView:(UITableView *)tableView
 {
-    return tableView == self.tableView ? self.fetchedResultsController : self.fetchedResultsController;
+    return tableView == self.tableView ? self.fetchedResultsController : self.searchFetchedResultController;
 }
 
 #pragma mark - Table view data source
@@ -119,7 +107,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
-    return [self.fetchedResultsController sectionIndexTitles];
+    return [[self controllerForTableView:tableView] sectionIndexTitles];
 }
 
 
@@ -136,21 +124,21 @@ static NSString *CellIdentifier = @"DirectoryCell";
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath forTableView:(UITableView *)tableView
 {
-    [self configureCell:cell atIndexPath:indexPath];
-    ((JCPersonCell *)cell).line = [[self controllerForTableView:tableView] objectAtIndexPath:indexPath];
-}
-
-
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
-{
-    JCPersonCell *personCell = (JCPersonCell *)cell;
-    Lines *line = [_fetchedResultsController objectAtIndexPath:indexPath];
+    //[self configureCell:cell atIndexPath:indexPath];
     
-    if (line) {
-        personCell.line = line;
-        [personCell.personNameLabel sizeToFit];
-        [personCell.personNameLabel setNumberOfLines:1];
+    NSString *tbv;
+    if (tableView == self.tableView) {
+        tbv = @"Main TableView";
     }
+    else {
+        tbv = @"Search TableView";
+    }
+    
+    NSLog(@"Configuring Cell For TableView: %@ at indexPath section: %i, row: %i", tbv, indexPath.section, indexPath.row);
+    
+    NSFetchedResultsController *controller = [self controllerForTableView:tableView];
+    ((JCPersonCell *)cell).line = [controller objectAtIndexPath:indexPath];
+    
 }
 
 - (NSArray *)reorderHeaders:(NSArray *)headers
@@ -191,6 +179,7 @@ shouldReloadTableForSearchString:(NSString *)searchString
                                       objectAtIndex:[self.searchDisplayController.searchBar
                                                      selectedScopeButtonIndex]]];
     
+    
     return YES;
 }
 
@@ -203,227 +192,146 @@ shouldReloadTableForSearchString:(NSString *)searchString
     return YES;
 }
 
-#pragma mark - Search View Setup
-- (void) searchViewSetup
-{
-    //setup search view
-    self.previousOffset = 0;
-    self.doneAnimatingToolbarFromFirstResponderState = YES;
-    [self.searchBarView addSubview:self.searchBar];
-    [self.searchBar setShowsCancelButton:YES];
-    [self.searchBar setDelegate:self];
-    self.searchBarView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:self.searchBarView];
+
+
+- (void)changeContactType:(JCContactFilter)type
+{    
     
-    // detect when user tap's outside the search bar
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTapGesture)];
-    tap.cancelsTouchesInView = NO;
-    [self.view addGestureRecognizer:tap];
-    
-    searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
-    searchDisplayController.delegate = self;
-    searchDisplayController.searchResultsDataSource = self;
-    [searchDisplayController.searchResultsTableView setDelegate:self];
-    [searchDisplayController.searchResultsTableView setDataSource:self];
-    [self.tableView setContentInset:UIEdgeInsetsMake(108, 0, 0, 0)];
-    
-    for(UIView *view in [self.tableView subviews])
-    {
-        //NSLog([[view class] description]);
-        if([[[view class] description] isEqualToString:@"UITableViewIndex"])
-        {
-            CGRect frame = view.frame;
-            frame.origin.y = frame.origin.y + 100;
-            view.frame = frame;
+    switch (type) {
+        case JCContactFilterFavorites: {
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isFavorite == 1"];
+            [self.fetchedResultsController.fetchRequest setPredicate:predicate];
+            break;
+        }
+            
+        default: {
+            self.fetchedResultsController.fetchRequest.predicate = nil;            
             break;
         }
     }
-}
-
-- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
-{
     
-    [UIView animateWithDuration:0.25
-                          delay:0
-                        options:UIViewAnimationOptionBeginFromCurrentState
-                     animations:^{
-                         [self.searchBarView setFrame:CGRectMake(0, 20, self.searchBarView.bounds.size.width, self.searchBarView.bounds.size.height)];
-                     }
-                     completion:nil];
-    
-    return YES;
-}
-
-- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
-{
-    self.doneAnimatingToolbarFromFirstResponderState = NO;
-    [UIView animateWithDuration:0.2
-                          delay:0
-                        options:UIViewAnimationOptionBeginFromCurrentState
-                     animations:^{
-                         [self.searchBarView setFrame:CGRectMake(0, 64, self.searchBarView.bounds.size.width, self.searchBarView.bounds.size.height)];
-                         
-                     }
-                     completion:^(BOOL finished){
-                         self.doneAnimatingToolbarFromFirstResponderState = YES;
-                     }];
-    [self.searchBar resignFirstResponder];
-    return YES;
-}
-
--(void)handleTapGesture{
-    self.doneAnimatingToolbarFromFirstResponderState = NO;
-    [UIView animateWithDuration:0.25
-                          delay:0.15
-                        options:UIViewAnimationOptionBeginFromCurrentState
-                     animations:^{
-                         [self.searchBarView setFrame:CGRectMake(0, 64, self.searchBarView.bounds.size.width, self.searchBarView.bounds.size.height)];
-                     }
-                     completion:^(BOOL finished){
-                         self.doneAnimatingToolbarFromFirstResponderState = YES;
-                     }];
-    [self.searchBar resignFirstResponder];
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    self.scrollViewOffset = scrollView.contentOffset.y;
-    
-    if (!self.searchDisplayController.isActive){
-        [self setSearchBarPosition:scrollView];
-        [self handleScrollAtTop];
-    }
-    else if (self.searchDisplayController.isActive)
+    NSError *error;
+    if (![self.fetchedResultsController performFetch:&error])
     {
-        // keep the content view from scrolling off the screen.
-        [self.searchBarView setFrame:CGRectMake(0, 20, self.searchBarView.bounds.size.width, self.searchBarView.bounds.size.height)];
-        [self.searchDisplayController.searchResultsTableView setContentInset:UIEdgeInsetsMake(self.searchDisplayController.searchResultsTableView.contentInset.top, 0, 0, 0)];
+        /*
+         Replace this implementation with code to handle the error appropriately.
+         
+         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
+         */
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
     }
     
-    self.previousOffset = self.scrollViewOffset;
+    [self.tableView reloadData];
 }
 
--(void)handleScrollAtTop
+#pragma mark - Overiding NSFetchedResultsDelegate
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
-    float frame_orgin_y = (-self.scrollViewOffset);
-    if (self.scrollViewOffset <= -108) {
-        if (self.searchBarView.frame.origin.y != frame_orgin_y) {
-            //            NSLog(@"1 - Changed sFrame from %f to %f based on SVOffSet:%f", self.searchBarView.frame.origin.y, frame_orgin_y, self.scrollViewOffset);
-        }
-        self.searchBarView.frame = CGRectMake(self.searchBarView.frame.origin.x,
-                                              frame_orgin_y + self.scrollViewOffset + 64,
-                                              self.searchBarView.frame.size.width, self.searchBarView.frame.size.height);
-        
-        
-        //        if (self.scrollView.contentInset.top != 108) NSLog(@"1 - Set Inset To: %f from: %f", 108.00000, self.scrollView.contentInset.top);
-        self.scrollView.contentInset = UIEdgeInsetsMake(108 , 0, 0, 0);
-    }
-    
-}
-
--(void)handleScrollUp
-{
-    const float UPPER_THREASHOLD = -64;// top of the window
-    self.deltaOffsetSinceLastDirectionChange = abs(self.scrollViewOffsetReference - self.scrollViewOffset);
-    float frame_orgin_y = (self.searchBarView.frame.origin.y <= UPPER_THREASHOLD) ? UPPER_THREASHOLD : (self.searchBarY_Reference - self.deltaOffsetSinceLastDirectionChange);
-    if (self.searchBarView.frame.origin.y != frame_orgin_y) {
-        //        NSLog(@"2 - Changed sFrame from %f to %f", self.searchBarView.frame.origin.y, frame_orgin_y);
-    }
-    self.searchBarView.frame = CGRectMake(self.searchBarView.frame.origin.x,
-                                          frame_orgin_y,
-                                          self.searchBarView.frame.size.width, self.searchBarView.frame.size.height);
-    self.scrollDirectionIsUp = YES;
-    if (self.scrollViewOffset > -64) {
-        float inset = (frame_orgin_y + 44) < 64 ? 64 : frame_orgin_y + 44;
-        //        if (self.scrollView.contentInset.top != inset) NSLog(@"2.1 - Changed Inset from: %f to: %f", self.scrollView.contentInset.top , inset);
-        self.scrollView.contentInset = UIEdgeInsetsMake(inset , 0, 0, 0);
-    }
-    
-}
-
-- (void)scrollDirectionDidChangeToUp
-{
-    self.scrollViewOffsetReference = self.scrollViewOffset;
-    self.searchBarY_Reference = self.searchBarView.frame.origin.y;
-    
-}
-
-- (void)scrollDirectionDidChangeToDown
-{
-    self.scrollViewOffsetReference = self.scrollViewOffset;
-    self.searchBarY_Reference = self.searchBarView.frame.origin.y;
-}
-
--(void)handleScrollDown
-{
-    
-    const float LOWER_THREASHOLD = 64;
-    self.deltaOffsetSinceLastDirectionChange = (abs(self.scrollViewOffsetReference - self.scrollViewOffset));
-    float frame_orgin_y = (self.searchBarView.frame.origin.y >= LOWER_THREASHOLD) ? LOWER_THREASHOLD : (self.searchBarY_Reference + self.deltaOffsetSinceLastDirectionChange);
-    if (self.searchBarView.frame.origin.y != frame_orgin_y) {
-        //        NSLog(@"3 - Changed sFrame from %f to %f", self.searchBarView.frame.origin.y, frame_orgin_y);
-    }
-    self.searchBarView.frame = CGRectMake(self.searchBarView.frame.origin.x,
-                                          frame_orgin_y,
-                                          self.searchBarView.frame.size.width, self.searchBarView.frame.size.height);
-    self.scrollDirectionIsUp = NO;
-    
-    //set the inset - to control the position of the section headers.
-    if (self.scrollViewOffset > 0) {
-        float inset = (frame_orgin_y + 44) < 64 ? 64 : frame_orgin_y + 44;
-        //        if (self.scrollView.contentInset.top != inset) NSLog(@"3 - Changed Inset from: %f to: %f", self.scrollView.contentInset.top, inset);
-        self.scrollView.contentInset = UIEdgeInsetsMake(inset, 0, 0, 0);
-    }
+    UITableView *tableView = controller == self.fetchedResultsController ? self.tableView : self.searchDisplayController.searchResultsTableView;
+    [tableView beginUpdates];
 }
 
 
--(void)setSearchBarPosition:(UIScrollView *)scrollView
+- (void)controller:(NSFetchedResultsController *)controller
+  didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
+           atIndex:(NSUInteger)sectionIndex
+     forChangeType:(NSFetchedResultsChangeType)type
 {
-    self.scrollView = scrollView;
-    if ((![self.searchBar isFirstResponder]) && (self.doneAnimatingToolbarFromFirstResponderState == YES))
+    UITableView *tableView = controller == self.fetchedResultsController ? self.tableView : self.searchDisplayController.searchResultsTableView;
+    
+    switch(type)
     {
-        self.amountScrolledSinceLastDirectionChange = abs(self.scrollViewOffsetReference - self.scrollViewOffset);
-        
-        if (self.scrollViewOffset > self.previousOffset)
-        {// if scroll Direction is up
-            if(self.scrollDirectionIsUp == NO)
-            {// if this is the first call since the scroll direction changed
-                [self scrollDirectionDidChangeToUp];
-            }
-            [self handleScrollUp];
-        }
-        else if((self.scrollViewOffset < self.previousOffset) && (self.previousOffset != 0))
-        {//if scroll direction is down or this is first call when view loads
-            if(self.scrollDirectionIsUp)
-            {// if this is the first call since the scroll direction changed
-                [self scrollDirectionDidChangeToDown];
-            }
-            [self handleScrollDown];
-        }
+        case NSFetchedResultsChangeInsert:
+            [tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
     }
 }
 
-- (UIView *)searchBarView
+
+- (void)controller:(NSFetchedResultsController *)controller
+   didChangeObject:(id)anObject
+       atIndexPath:(NSIndexPath *)theIndexPath
+     forChangeType:(NSFetchedResultsChangeType)type
+      newIndexPath:(NSIndexPath *)newIndexPath
 {
-    if (!_searchBarView) {
-        _searchBarView = [[UIView alloc]initWithFrame:CGRectMake(0, 65, 320, 44)];
+    UITableView *tableView = controller == self.fetchedResultsController ? self.tableView : self.searchDisplayController.searchResultsTableView;
+    
+    switch(type)
+    {
+        case NSFetchedResultsChangeInsert:
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:theIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            [self configureCell:[tableView cellForRowAtIndexPath:theIndexPath] atIndexPath:theIndexPath forTableView:tableView];
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:theIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
+            break;
     }
-    return _searchBarView;
 }
 
--(JCSearchBar *)searchBar
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
-    if (!_searchBar) {
-        _searchBar = [[JCSearchBar alloc]initWithFrame:CGRectMake(0,0, self.searchBarView.frame.size.width, self.searchBarView.frame.size.height)];
-        [_searchBar setBarTintColor:[UIColor whiteColor]];
-        [_searchBar layoutSubviews];
-        self.scrollViewOffsetReference = -64;
-        self.searchBarY_Reference = -64;
-    }
-    return _searchBar;
+    UITableView *tableView = controller == self.fetchedResultsController ? self.tableView : self.searchDisplayController.searchResultsTableView;
+    [tableView endUpdates];
 }
 
+// Override to support renaming section names.
+- (NSString *)controller:(NSFetchedResultsController *)controller sectionIndexTitleForSectionName:(NSString *)sectionName
+{
+    return sectionName;
+}
 
-
+#pragma mark - Rebuild FetchedController
+- (NSFetchedResultsController *)newFetchedResultsControllerWithSearch:(NSString *)searchString
+{
+    NSFetchRequest *fetchRequest = [Lines MR_requestAll];
+    fetchRequest.fetchBatchSize = 10;
+    
+    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"displayName" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+    //NSSortDescriptor *favSort = [NSSortDescriptor sortDescriptorWithKey:@"isFavorite" ascending:NO];
+    fetchRequest.sortDescriptors = [NSArray arrayWithObjects:sort , nil];
+    
+    
+    if (searchString.length)
+    {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(displayName contains[cd] %@) OR (externsionNumber contains[cd] %@)", searchString, searchString];;
+        fetchRequest.predicate = predicate;
+    }
+    
+    
+    // Edit the section name key path and cache name if appropriate.
+    // nil for section name key path means "no sections".
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+                                                                                                managedObjectContext:[NSManagedObjectContext MR_contextForCurrentThread]                                                                                                  sectionNameKeyPath:@"firstLetter"
+                                                                                                           cacheName:nil];
+    aFetchedResultsController.delegate = self;
+    
+    NSError *error = nil;
+    if (![aFetchedResultsController performFetch:&error])
+    {
+        /*
+         Replace this implementation with code to handle the error appropriately.
+         
+         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
+         */
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+    }
+    
+    return aFetchedResultsController;
+}
 
 
 

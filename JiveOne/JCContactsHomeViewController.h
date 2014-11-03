@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JCContactsHomeViewController : UIViewController
+
+
+@interface JCContactsHomeViewController : UIViewController <UITabBarDelegate>
+@property (weak, nonatomic) IBOutlet UITabBar *tabBar;
+
+
 
 @end

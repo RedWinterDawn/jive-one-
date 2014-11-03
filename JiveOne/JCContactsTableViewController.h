@@ -11,6 +11,15 @@
 #import "JCSearchBar.h"
 #import "JCPersonCell.h"
 
-@interface JCContactsTableViewController : JCFetchedResultsTableViewController <UISearchBarDelegate, UISearchDisplayDelegate, JCPersonCellDelegate>
+typedef NS_ENUM(NSInteger, JCContactFilter) {
+    JCContactFilterAll,
+    JCContactFilterFavorites
+};
+
+@interface JCContactsTableViewController : UITableViewController <NSFetchedResultsControllerDelegate, JCPersonCellDelegate, UIScrollViewDelegate>
+
+
+
+- (void)changeContactType:(JCContactFilter)type;
 
 @end

@@ -7,8 +7,20 @@
 //
 
 #import "JCContactsHomeViewController.h"
+#import "JCContactsTableViewController.h"
+#import "JCSearchBar.h"
+
+
+
+
 
 @interface JCContactsHomeViewController ()
+{
+    JCContactsTableViewController *contactsController;
+}
+
+@property (weak, nonatomic) IBOutlet UIView *container;
+
 
 @end
 
@@ -16,7 +28,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    self.tabBar.delegate = self;
+    
+    [self.tabBar setSelectedItem:self.tabBar.items[0]];
+    
+    if (!contactsController)
+    {
+        if (self.childViewControllers && self.childViewControllers.count > 0) {
+            if ([self.childViewControllers[0] isKindOfClass:[JCContactsTableViewController class]]) {
+                contactsController = (JCContactsTableViewController *)self.childViewControllers[0];
+            }
+        }
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -24,14 +48,23 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
+{
+    switch (item.tag) {
+        case 1:
+            [self changeTableViewResults:JCContactFilterFavorites];
+            break;
+            
+        default:
+            [self changeTableViewResults:JCContactFilterAll];;
+    }
 }
-*/
+
+- (void)changeTableViewResults:(JCContactFilter)type
+{
+    if (contactsController) {
+        [contactsController changeContactType:type];
+    }
+}
 
 @end
