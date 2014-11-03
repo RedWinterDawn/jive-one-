@@ -169,7 +169,6 @@
 	
 	Voicemail *voicemail = [self objectAtIndexPath:indexPath];
 	[Voicemail markVoicemailForDeletion:voicemail.jrn managedContext:nil];
-	[(JCAppDelegate *)[UIApplication sharedApplication].delegate decrementBadgeCountForVoicemail:voicemail.jrn];
 	[Voicemail deleteVoicemailsInBackground];
 }
 
@@ -331,7 +330,6 @@
         
         [self startProgressTimerForVoicemail];
         self.selectedCell.playPauseButton.selected = TRUE;
-        [(JCAppDelegate *)[UIApplication sharedApplication].delegate decrementBadgeCountForVoicemail:self.selectedCell.voicemail.jrn];
         [self.selectedCell.voicemail markAsRead];
     }
 }

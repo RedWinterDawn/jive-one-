@@ -26,15 +26,6 @@
 - (void)didLogInSoCanRegisterForPushNotifications;
 - (void)didLogOutSoUnRegisterForPushNotifications;
 
-#pragma mark - Badge Updates
-- (void)incrementBadgeCountForConversation:(NSString *)conversationId entryId:(NSString *)entryId;
-- (void)incrementBadgeCountForVoicemail:(NSString *)voicemailId;
-//- (void)decrementBadgeCountForConversation:(NSString *)conversationId;
-- (void)decrementBadgeCountForVoicemail:(NSString *)voicemailId;
-- (void)clearBadgeCountForVoicemail;
-- (void)clearBadgeCountForConversation:(NSString *)conversationId;
-- (void)refreshTabBadges:(BOOL)fromRemoteNotification;
-
 - (void)stopRingtone;
 
 @end
