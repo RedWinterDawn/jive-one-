@@ -10,31 +10,33 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCVoiceViewController.h"
+#import "JCVoicemailViewController.h"
 
-#import "JCVoiceTableViewController.h"
+#import "JCVoicemailTableViewController.h"
 #import "PBX+Custom.h"
 
 NSString *const kJCVoiceNonVisualViewControllerIdentifier = @"VoiceNonVisualViewController";
 
-@interface JCVoiceViewController ()
+@interface JCVoicemailViewController ()
 {
-    JCVoiceTableViewController *_voiceTableViewController;
+    JCVoicemailTableViewController *_voicemailTableViewController;
+    Voicemail *_voicemail;
 }
 
 @end
 
-@implementation JCVoiceViewController
+@implementation JCVoicemailViewController
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewWillLayoutSubviews
 {
-    [super viewWillAppear:animated];
+    [super viewWillLayoutSubviews];
     
     PBX *pbx = [PBX fetchFirstPBX];
     if (![pbx.v5 boolValue])
     {
-        [_voiceTableViewController.view removeFromSuperview];
-        [_voiceTableViewController removeFromParentViewController];
+        [_voicemailTableViewController.view removeFromSuperview];
+        [_voicemailTableViewController removeFromParentViewController];
+        _voicemailTableViewController = nil;
         
         @try {
             UIViewController *nonVisualViewController = [self.storyboard instantiateViewControllerWithIdentifier:kJCVoiceNonVisualViewControllerIdentifier];
@@ -45,13 +47,32 @@ NSString *const kJCVoiceNonVisualViewControllerIdentifier = @"VoiceNonVisualView
             NSLog(@"Non Visual Voicmail View Controller was unable to to loaded from the storyboard, was expecting identifier: %@", kJCVoiceNonVisualViewControllerIdentifier);
         }
     }
+    else
+    {
+        if (_voicemail)
+        {
+            NSIndexPath *indexPath = [_voicemailTableViewController indexPathOfObject:_voicemail];
+            [_voicemailTableViewController.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];
+            [_voicemailTableViewController tableView:_voicemailTableViewController.tableView didSelectRowAtIndexPath:indexPath];
+        }
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
     UIViewController *viewController = segue.destinationViewController;
-    if ([viewController isKindOfClass:[JCVoiceTableViewController class]])
-        _voiceTableViewController = (JCVoiceTableViewController *)viewController;
+    if ([viewController isKindOfClass:[JCVoicemailTableViewController class]])
+    {
+        _voicemailTableViewController = (JCVoicemailTableViewController *)viewController;
+    }
+}
+
+#pragma mark - Methods -
+
+-(void)loadVoicemail:(Voicemail *)voicemail
+{
+    _voicemail = voicemail;
+    [self.view setNeedsLayout];
 }
 
 @end

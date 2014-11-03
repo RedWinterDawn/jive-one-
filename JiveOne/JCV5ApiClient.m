@@ -75,6 +75,18 @@
 	[_manager.operationQueue cancelAllOperations];
 }
 
+- (BOOL) isOperationRunning:(NSString *)operationName
+{
+	NSArray *operations = [_manager.operationQueue operations];
+	for (AFHTTPRequestOperation *op in operations) {
+		if ([op.name isEqualToString:operationName]) {
+			return op.isExecuting;
+		}
+	}
+	
+	return NO;
+}
+
 #pragma mark - Contact API Calls
 - (void)RetrieveMyInformation:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
 {
@@ -116,11 +128,16 @@
 				NSArray *contactArray = (NSArray *)responseObject;
 				if (contactArray) {
 					[Lines addLines:contactArray pbxId:line.pbxId userName:nil completed:^(BOOL succeeded) {
-						completed(YES, responseObject, operation, nil);
+						if (completed) {
+							completed(YES, responseObject, operation, nil);
+						}
 					}];
 				}
 			} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-				completed(NO, nil, operation, error);
+				if (completed) {
+					completed(NO, nil, operation, error);
+				}
+				
 			}];
 		}
 		
@@ -179,19 +196,23 @@
 			[_manager GET:line.mailboxUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 				[Voicemail addVoicemails:responseObject mailboxUrl:line.mailboxUrl completed:^(BOOL suceeded) {
 					succeededGettingAtLeastOne = YES;
-					//					if ((lines.count -1) == idx) {
-					completed(YES, responseObject, operation, nil);
-					//					}
+					if (completed) {
+						completed(YES, responseObject, operation, nil);
+					}
 				}];
 				
 				
 			} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 				if ((lines.count -1) == idx) {
 					if (succeededGettingAtLeastOne) {
-						completed(YES, nil, operation, error);
+						if (completed) {
+							completed(YES, nil, operation, error);
+						}
 					}
 					else {
-						completed(NO, nil, operation, error);
+						if (completed) {
+							completed(NO, nil, operation, error);
+						}
 					}
 				}
 			}];

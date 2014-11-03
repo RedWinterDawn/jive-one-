@@ -11,12 +11,22 @@
 
 @interface RecentEvent : NSManagedObject
 
+// Represent the name of the event, typically the Caller ID, or name of person creating the event.
+@property (nonatomic, strong) NSString * name;
+
+// Represents the number the event came from.
+@property (nonatomic, strong) NSString * number;
+
+// Represent the date of the event.
 @property (nonatomic, strong) NSDate *date;
 
-@property (nonatomic, assign) NSNumber *timestamp;
-@property (nonatomic) long long unixTimestamp;
-
+// Transient Properties.
+@property (nonatomic, weak) NSNumber *timestamp;
 @property (nonatomic, readonly) NSString *formattedModifiedShortDate;
 @property (nonatomic, readonly) NSString *formattedLongDate;
+@property (nonatomic) long long unixTimestamp;
+
+@property (nonatomic, readonly) NSString *displayName;
+@property (nonatomic, readonly) NSString *displayNumber;
 
 @end

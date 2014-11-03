@@ -54,6 +54,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
         JCCallerViewController *callerViewController = (JCCallerViewController *)viewController;
         callerViewController.dialString = self.dialStringLabel.dialString;
         callerViewController.delegate = self;
+        self.dialStringLabel.text = nil;
     }
 }
 
@@ -98,18 +99,31 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 
 -(IBAction)initiateCall:(id)sender
 {
-    if (!_sipHandler.isRegistered)
-        [_sipHandler connect:^(bool success, NSError *error) {
-            if (success)
-                [self performSegueWithIdentifier:kJCDialerViewControllerCallerStoryboardIdentifier sender:self];
-            
-            if (error) {
-                NSLog(@"%@", [error description]);
-            }
-            
-        }];
-    else
+    NSString *string = self.dialStringLabel.text;
+    
+    // You cannot dial an empty string or null string.
+    if (!string || [string isEqualToString:@""]) {
+        return;
+    }
+    
+    // Check if we are registered. If we are registered, perform segue to initiate the call.
+    if (_sipHandler.isRegistered)
+    {
         [self performSegueWithIdentifier:kJCDialerViewControllerCallerStoryboardIdentifier sender:self];
+        return;
+    }
+        
+    // If we are not registered, try to register before we perform the seque. if we successfully register, perform
+    // segue initiate the call.
+    [_sipHandler connect:^(bool success, NSError *error) {
+        if (success) {
+            [self performSegueWithIdentifier:kJCDialerViewControllerCallerStoryboardIdentifier sender:self];
+        }
+        
+        if (error) {
+            NSLog(@"%@", [error description]);
+        }
+    }];
 }
 
 -(IBAction)backspace:(id)sender

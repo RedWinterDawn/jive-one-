@@ -83,11 +83,11 @@
         } else {
             vmail.transcriptionPercent = [dictionary objectForKey:@"transcriptionPercent"];
         }*/
-        vmail.callerId = dictionary[@"callerId"];
+        vmail.name = dictionary[@"callerId"];
         if ([[dictionary objectForKey:@"callerIdNumber"] isKindOfClass:[NSNull class]]) {
-            vmail.callerIdNumber = nil;
+            vmail.number = nil;
         } else {
-            vmail.callerIdNumber = [dictionary objectForKey:@"callerIdNumber"];
+            vmail.number = [dictionary objectForKey:@"callerIdNumber"];
         }
 
         vmail.jrn = dictionary[@"jrn"];

@@ -60,6 +60,9 @@ int didNotify;
     
     //check if we are using a iphone or ipad
     self.deviceIsIPhone = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? NO : YES;
+	[self tabBarViewController];
+	[self loginViewController];
+
     
     /*
      * FLURRY
@@ -95,13 +98,6 @@ int didNotify;
     //Register for background fetches
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     
-    if ([[UINavigationBar class]respondsToSelector:@selector(appearance)]) {
-        [[UINavigationBar appearance] setTitleTextAttributes:@{
-                                                               NSForegroundColorAttributeName : [UIColor blackColor],
-                                                               NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:24.0f]
-                                                               }];
-    }
-    
     //Start monitor for Reachability
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     
@@ -120,16 +116,11 @@ int didNotify;
     JCCallCardManager *callCardManager = [JCCallCardManager sharedManager];
     [center addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
     [center addObserver:self selector:@selector(didReceiveIncomingCall:) name:kJCCallCardManagerAddedCallNotification object:callCardManager];
-    [center addObserver:self selector:@selector(stopRingtone) name:kJCCallCardManagerUpdateCallNotification object:callCardManager];
+    [center addObserver:self selector:@selector(stopRingtone) name:kJCCallCardManagerAnswerCallNotification object:callCardManager];
     
     [self refreshTabBadges:NO];    
-    if ([[JCAuthenticationManager sharedInstance] userAuthenticated] && [[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {
-        [self.window setRootViewController:self.tabBarViewController];
-        //[[JCAuthenticationManager sharedInstance] checkForTokenValidity];
-    }
-    else {
-        //TODO:********
-        [self.window setRootViewController:self.loginViewController];
+    if (![[JCAuthenticationManager sharedInstance] userAuthenticated] || ![[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {
+        [self changeRootViewController:JCRootLoginViewController];
     }
     
     return YES;
@@ -664,7 +655,7 @@ int didNotify;
                     notified = [NSNumber numberWithBool:YES];
                     Voicemail *lastEntry = [Voicemail MR_findFirstByAttribute:@"jrn" withValue:key];
                     if (lastEntry) {
-                        NSString *alertMessage = lastEntry.callerId ? [NSString stringWithFormat:@"New voicemail from %@", lastEntry.callerIdNumber]  : @"Unknown";
+                        NSString *alertMessage = lastEntry.name ? [NSString stringWithFormat:@"New voicemail from %@", lastEntry.number]  : @"Unknown";
                         [self showLocalNotificationWithType:@"voicemail" alertMessage:alertMessage];
                     }
                 }
@@ -733,7 +724,7 @@ int didNotify;
 {
     LOG_Info();
     if (!_tabBarViewController) {
-        _tabBarViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"UITabBarController"];
+		_tabBarViewController = self.window.rootViewController;
     }
     return _tabBarViewController;
 }
@@ -748,21 +739,17 @@ int didNotify;
 - (void)changeRootViewController:(JCRootViewControllerType)type
 {
     LOG_Info();
-    //[[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
-
-    if (type == JCRootTabbarViewController) {
-        
-        //[self.loginViewController goToApplication];
-        self.tabBarViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-        [self.window setRootViewController:self.tabBarViewController];
-        
-    }
-    else if (type == JCRootLoginViewController)
-    {
-//        [self logout];
-        [self.window setRootViewController:self.loginViewController];
-    }
-    
+	
+	if (type == JCRootLoginViewController && [self.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
+		return;
+	}
+ 
+	[UIView transitionWithView:self.window
+					  duration:0.5
+					   options:type == JCRootTabbarViewController ? UIViewAnimationOptionTransitionFlipFromRight : UIViewAnimationOptionTransitionFlipFromLeft
+					animations:^{ self.window.rootViewController = (type == JCRootTabbarViewController ? self.tabBarViewController : self.loginViewController); }
+					completion:nil];
+	
     [self.window makeKeyAndVisible];
 }
 

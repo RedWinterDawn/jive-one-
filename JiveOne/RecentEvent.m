@@ -11,6 +11,8 @@
 
 @implementation RecentEvent
 
+@dynamic name;
+@dynamic number;
 @dynamic date;
 
 #pragma mark - Setters -
@@ -45,6 +47,24 @@
 -(NSString *)formattedLongDate
 {
     return [Common formattedLongDate:self.date];
+}
+
+-(NSString *)displayName
+{
+    NSString *name = [self.name stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+    if ([name isEqualToString:@"*99"]) {
+        return NSLocalizedString(@"Voicemail", nil);
+    }
+    return name;
+}
+
+-(NSString *)displayNumber
+{
+    if ([self.displayName isEqualToString:self.number])
+    {
+        return nil;
+    }
+    return self.number;
 }
 
 @end

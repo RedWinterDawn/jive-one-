@@ -29,9 +29,10 @@
 @interface JCLoginViewController () <NSFileManagerDelegate>
 {
     BOOL fastConnection;
+	BOOL loginCanceled;
     MBProgressHUD *hud;
-	BOOL alreadyMakingMyContactRequest;
-	BOOL alreadyMakingContactsRequest;
+	NSTimer *loginTimer;
+	
 }
 
 @property (nonatomic, strong) NSError *errorOccurred;
@@ -138,8 +139,6 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
 	[super viewWillDisappear:animated];
-	alreadyMakingContactsRequest = NO;
-	alreadyMakingMyContactRequest = NO;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -190,6 +189,7 @@
 
 - (void)validateFields
 {
+	loginCanceled = NO;
     self.loginStatusLabel.text = @"";
     if([self.usernameTextField.text length] != 0 && [self.passwordTextField.text length] != 0)
     {
@@ -235,11 +235,34 @@
             }
 
         }];
+		
+		// start timer
+		loginTimer = [NSTimer scheduledTimerWithTimeInterval:120
+													  target:self
+													selector:@selector(loginIsTakingTooLong)
+													userInfo:nil
+													 repeats:NO];
+		
+		[[NSRunLoop currentRunLoop] addTimer:loginTimer forMode:NSDefaultRunLoopMode];
+
+		
     }
     else
     {
         [self alertStatus:NSLocalizedString(@"Invalid Parameters", nil) message: NSLocalizedString(@"UserName/Password Cannot Be Empty", nil)];
     }
+}
+
+- (void) loginIsTakingTooLong
+{
+	[self errorInitializingApp:nil useError:NO title:NSLocalizedString(@"Login Timed Out", nil) message:NSLocalizedString(@"This is taking longer than expected. Please check your connection and try again", nil)];
+}
+
+- (void) invalidateLoginTimer
+{
+	if (loginTimer) {
+		[loginTimer invalidate];
+	}
 }
 
 -(void)alertStatus:(NSString*)title message:(NSString*)message
@@ -287,10 +310,13 @@
 
 - (void)checkIfLoadingHasFinished:(NSNotification *)notification
 {
-    self.userIsDoneWithTutorial = YES;
-    [[NSUserDefaults standardUserDefaults] setBool:self.userIsDoneWithTutorial forKey:@"seenAppTutorial"];
-    if ([[notification name] isEqualToString:@"AppTutorialDismissed"])
-    {
+	_userIsDoneWithTutorial = [[NSUserDefaults standardUserDefaults] boolForKey:@"seenAppTutorial"];
+	if (notification && [[notification name] isEqualToString:@"AppTutorialDismissed"]) {
+		_userIsDoneWithTutorial = YES;
+		[[NSUserDefaults standardUserDefaults] setBool:self.userIsDoneWithTutorial forKey:@"seenAppTutorial"];
+		[[NSNotificationCenter defaultCenter] removeObserver:self name:@"AppTutorialDismissed" object:nil];
+	}
+	
         NSLog (@"Successfully received the AppTutorialDismissed notification!");
         if (!self.doneLoadingContent) {
 			if (self.errorOccurred) {
@@ -300,24 +326,18 @@
 	            [self showHudWithTitle:@"One Moment Please" detail:@"Preparing for first use"];
 			}
         }
-        else
+        else if (_userIsDoneWithTutorial)
         {
-//			Lines *line = [Lines MR_findFirstByAttribute:@"inUse" withValue:[NSNumber numberWithBool:YES]];
+			[self goToApplication];
 			
+// Re-add this when user can select line again
+//			Lines *line = [Lines MR_findFirstByAttribute:@"inUse" withValue:[NSNumber numberWithBool:YES]];
 //			if (line) {
-				[self goToApplication];
 //			}
 //			else {
 //				[self performSegueWithIdentifier:@"SelectLineLoginSegue" sender:self];
-//			} 
-			
-            
-        }
-    }
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"seenAppTutorial"]) {
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AppTutorialDismissed" object:nil];
-    }
-    
+//			}
+        }    
 }
 
 - (void)tokenValidityPassed:(NSNotification*)notification
@@ -326,6 +346,10 @@
     if (!self.seenTutorial) {
         [Flurry logEvent:@"First Login"];
         [self hideHud];
+//		JCAppIntro *introVC = [self.storyboard instantiateViewControllerWithIdentifier:@"JCAppIntro"];
+//		[self presentViewController:introVC animated:YES completion:^{
+//			//present
+//		}];
         [self performSegueWithIdentifier: @"AppTutorialSegue" sender:self];
     }
     else
@@ -387,9 +411,12 @@
 			//TODO: talk about logic. We should not prevent the user to get into the app if this fails. They
 			// should still be able to access the rest of the app (directory, VM, etc) and be given a change to
 			// fetch the provisioning file again...but then...do we store user creentials?
+			self.doneLoadingContent = YES;
 			[[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
-			[self goToApplication];
+			[self checkIfLoadingHasFinished:nil];
+			//[self goToApplication];
 			[self fetchVoicemailsMetadata];
+			[self fetchContacts];
 			
 		}
 		else {
@@ -424,29 +451,31 @@
 
 - (void)fetchVoicemailsMetadata
 {
-    NSPredicate *linesWithUrlNotNil = [NSPredicate predicateWithFormat:@"mailboxUrl != nil"];
-    NSArray* lines = [Lines MR_findAllWithPredicate:linesWithUrlNotNil];
+//    NSPredicate *linesWithUrlNotNil = [NSPredicate predicateWithFormat:@"mailboxUrl != nil"];
+//    NSArray* lines = [Lines MR_findAllWithPredicate:linesWithUrlNotNil];
 	
-	NSTimer *timer = [NSTimer timerWithTimeInterval:5 target:self selector:@selector(fetchMyContact) userInfo:nil repeats:NO];
-	[[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+//	NSTimer *timer = [NSTimer timerWithTimeInterval:5 target:self selector:@selector(fetchMyContact) userInfo:nil repeats:NO];
+//	[[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
 	
-	__block int count = 0;
+//	__block int count = 0;
+	
+	[[JCV5ApiClient sharedClient] getVoicemails:nil];
 
-    [[JCV5ApiClient sharedClient] getVoicemails:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-
-		
-        if(suceeded) {
-            [[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
-        }
-		
-		if (count == lines.count) {
-			[timer invalidate];
-			[self fetchMyContact];
-		}
-		
-		NSLog(@"Count is now: %i, Line count is %lu", count, (unsigned long)lines.count);
-		
-    }];
+//    [[JCV5ApiClient sharedClient] getVoicemails:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+//
+//		
+//        if(suceeded) {
+//            [[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
+//        }
+//		
+//		if (count == lines.count) {
+//			[timer invalidate];
+//			[self fetchMyContact];
+//		}
+//		
+//		NSLog(@"Count is now: %i, Line count is %lu", count, (unsigned long)lines.count);
+//		
+//    }];
 	
 	
 }
@@ -455,27 +484,27 @@
 //Contacts
 - (void)fetchMyContact
 {
-	if (!alreadyMakingMyContactRequest) {
-		alreadyMakingMyContactRequest = YES;
 		[[JCV5ApiClient sharedClient] RetrieveMyInformation:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
 			[self fetchContacts];
 		}];
-	}
+	
 }
 
 - (void)fetchContacts
 {
+	[[JCV5ApiClient sharedClient] RetrieveContacts:nil];
+	
 //	if (!alreadyMakingContactsRequest) {
 //		alreadyMakingContactsRequest = YES;
-		[[JCV5ApiClient sharedClient] RetrieveContacts:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-			if (suceeded) {
-				_doneLoadingContent = YES;
-				[self hideHud];
-				if (self.userIsDoneWithTutorial) {
-					[self goToApplication];
-				}
-			}
-		}];
+//		[[JCV5ApiClient sharedClient] RetrieveContacts:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+//			if (suceeded) {
+//				_doneLoadingContent = YES;
+//				[self hideHud];
+//				if (self.userIsDoneWithTutorial) {
+//					[self goToApplication];
+//				}
+//			}
+//		}];
 //	}
 	
 }
@@ -612,10 +641,12 @@
 
 - (void)goToApplication
 {
-	alreadyMakingMyContactRequest = NO;
-	alreadyMakingContactsRequest = NO;
-    //[self performSegueWithIdentifier: @"LoginToTabBarSegue" sender: self];
-    [(JCAppDelegate *)[UIApplication sharedApplication].delegate changeRootViewController:JCRootTabbarViewController];
+	if (!loginCanceled) {
+		[self hideHud];
+		[self invalidateLoginTimer];
+		JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
+		[delegate changeRootViewController:JCRootTabbarViewController];
+	}
 }
 
 
@@ -623,6 +654,8 @@
 - (void)errorInitializingApp:(NSError*)err useError:(BOOL)useError title:(NSString *)title message:(NSString *)message
 {
     NSLog(@"errorInitializingApp: %@",err);
+	loginCanceled = YES;
+	[self invalidateLoginTimer];
     [self hideHud];
 	
 	if (useError) {
@@ -633,6 +666,7 @@
 	}
 	
     [[JCAuthenticationManager sharedInstance] logout:self];
+	
 }
 
 #pragma mark - Line selection update
