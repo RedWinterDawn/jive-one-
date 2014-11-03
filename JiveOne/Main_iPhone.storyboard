@@ -35,7 +35,7 @@
         <!--Contacts View Controller-->
         <scene sceneID="elR-ka-Apv">
             <objects>
-                <viewController id="Xmp-ga-Z9j" userLabel="Contacts View Controller" sceneMemberID="viewController">
+                <viewController id="Xmp-ga-Z9j" userLabel="Contacts View Controller" customClass="JCContactsHomeViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wQr-PL-DFN"/>
                         <viewControllerLayoutGuide type="bottom" id="Gtf-8V-jLv"/>
@@ -51,16 +51,15 @@
                                     <constraint firstAttribute="height" constant="49" id="Cf8-lu-Xam"/>
                                 </constraints>
                                 <items>
-                                    <tabBarItem title="Contacts" image="second" id="qRU-ek-73r"/>
-                                    <tabBarItem title="Favorites" image="second" id="plA-OB-q0o"/>
-                                    <tabBarItem title="Groups" image="second" id="AHL-Gn-wSi"/>
+                                    <tabBarItem systemItem="contacts" id="qRU-ek-73r"/>
+                                    <tabBarItem tag="1" systemItem="favorites" id="plA-OB-q0o"/>
                                 </items>
                                 <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </tabBar>
                             <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ta4-0u-d9a">
                                 <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                                 <connections>
-                                    <segue destination="EBb-MB-WyB" kind="embed" id="oLB-14-zIZ"/>
+                                    <segue destination="c3p-aT-jcP" kind="embed" id="Lh0-dF-r62"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -74,10 +73,14 @@
                     <tabBarItem key="tabBarItem" title="Contacts" image="second" id="j3y-6c-YEc"/>
                     <navigationItem key="navigationItem" title="Contacts" id="oEe-KQ-NpU"/>
                     <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="container" destination="Ta4-0u-d9a" id="sUV-Je-OCn"/>
+                        <outlet property="tabBar" destination="KQN-3R-ma5" id="17t-wy-IHT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ozR-aT-h5B" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="675" y="471"/>
+            <point key="canvasLocation" x="782" y="394"/>
         </scene>
         <!--Contacts Navigation Controller-->
         <scene sceneID="uWe-X5-OtT">
@@ -90,12 +93,12 @@
                         <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="jdq-nX-M51" kind="relationship" relationship="rootViewController" id="cOd-LP-Ypy"/>
+                        <segue destination="Xmp-ga-Z9j" kind="relationship" relationship="rootViewController" id="PT7-VP-vvF"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mu5-Ph-n4K" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="124" y="887"/>
+            <point key="canvasLocation" x="320" y="790"/>
         </scene>
         <!--Activity Table View Controller-->
         <scene sceneID="9lR-7G-kAa">
@@ -544,7 +547,7 @@
                         <viewControllerLayoutGuide type="bottom" id="C4C-mF-sMh"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="C7m-DR-8vU">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="455"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ULh-B7-PXr">
@@ -584,12 +587,12 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="1180" y="470.5"/>
+            <point key="canvasLocation" x="1156" y="1039"/>
         </scene>
-        <!--Old Directory-->
+        <!--Directory Table View Controller Scene-->
         <scene sceneID="NsC-ah-aVo">
             <objects>
-                <viewController storyboardIdentifier="JCDirectoryViewController" autoresizesArchivedViewToFullSize="NO" id="jdq-nX-M51" userLabel="Old Directory" customClass="JCDirectoryViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="JCDirectoryViewController" autoresizesArchivedViewToFullSize="NO" id="jdq-nX-M51" userLabel="Directory Table View Controller Scene" customClass="JCDirectoryViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="UKv-Zf-pEo"/>
                         <viewControllerLayoutGuide type="bottom" id="gke-GW-eui"/>
@@ -603,7 +606,7 @@
                                 <color key="backgroundColor" red="0.89752072699999996" green="0.89752072699999996" blue="0.89752072699999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="changeMe" rowHeight="70" id="Bmy-5D-YqX" customClass="JCPersonCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DirectoryCell" rowHeight="70" id="Bmy-5D-YqX" customClass="JCPersonCell">
                                         <rect key="frame" x="0.0" y="86" width="320" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" tableViewCell="Bmy-5D-YqX" id="hOK-7V-uHT">
@@ -612,6 +615,10 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="jdq-nX-M51" id="ljq-lG-C1m"/>
+                                    <outlet property="delegate" destination="jdq-nX-M51" id="KM7-T4-MOl"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -623,7 +630,6 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="searchDisplayController" destination="n3j-1Q-Pqe" id="r9x-Ax-OIu"/>
-                        <outlet property="tableView" destination="CAX-hi-nLR" id="cj6-4u-rMK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6I2-mi-dya" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -636,7 +642,54 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="691" y="1302"/>
+            <point key="canvasLocation" x="629" y="1184"/>
+        </scene>
+        <!--Contacts Table View Controller-->
+        <scene sceneID="842-84-rzD">
+            <objects>
+                <tableViewController id="c3p-aT-jcP" customClass="JCContactsTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="pel-iU-N6o">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="455"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="W3n-Mz-bQK" customClass="JCSearchBar">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="c3p-aT-jcP" id="5e3-rl-46R"/>
+                            </connections>
+                        </searchBar>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DirectoryCell" rowHeight="60" id="Pmc-Ul-858" customClass="JCPersonCell">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pmc-Ul-858" id="xB1-af-Too">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="c3p-aT-jcP" id="njb-zL-RLk"/>
+                            <outlet property="delegate" destination="c3p-aT-jcP" id="3gs-zc-1ic"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="Fwb-iT-l8D"/>
+                    <connections>
+                        <outlet property="searchDisplayController" destination="B4j-Ni-mxF" id="7gM-sP-A6v"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fLZ-A1-vk7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="B4j-Ni-mxF">
+                    <connections>
+                        <outlet property="delegate" destination="c3p-aT-jcP" id="nY5-xB-HSH"/>
+                        <outlet property="searchBar" destination="W3n-Mz-bQK" id="db6-bb-0TL"/>
+                        <outlet property="searchContentsController" destination="c3p-aT-jcP" id="09H-Ub-NRS"/>
+                        <outlet property="searchResultsDataSource" destination="c3p-aT-jcP" id="7My-ST-6av"/>
+                        <outlet property="searchResultsDelegate" destination="c3p-aT-jcP" id="cMy-7Z-GRX"/>
+                    </connections>
+                </searchDisplayController>
+            </objects>
+            <point key="canvasLocation" x="1222" y="355.5"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="uDf-PG-NB6">
@@ -1571,7 +1624,7 @@
                     <navigationItem key="navigationItem" id="32D-gV-RmW">
                         <nil key="title"/>
                         <view key="titleView" contentMode="scaleToFill" id="hvF-R3-hJB" userLabel="t">
-                            <rect key="frame" x="96" y="5.5" width="128" height="33"/>
+                            <rect key="frame" x="96" y="6" width="128" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IFW-et-Pls">
