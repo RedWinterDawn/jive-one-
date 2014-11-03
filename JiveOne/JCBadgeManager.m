@@ -244,7 +244,7 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
  */
 -(NSString *)badgeKeyFromRecentEvent:(RecentEvent *)recentEvent
 {
-    if ([recentEvent isKindOfClass:[MissedCall class]] || [recentEvent isKindOfClass:[OutgoingCall class]]) {
+    if ([recentEvent isKindOfClass:[MissedCall class]]) {
         return kJCBadgeManagerMissedCallsKey;
     }
     else if ([recentEvent isKindOfClass:[Voicemail class]])
