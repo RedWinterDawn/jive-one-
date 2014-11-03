@@ -66,7 +66,7 @@
 
 -(NSString *)displayDuration
 {
-    return  [NSString stringWithFormat:@"%d:%02d", self.duration.integerValue / 60, self.duration.integerValue % 60, nil];
+    return  [NSString stringWithFormat:@"%ld:%02ld", self.duration.integerValue / 60, self.duration.integerValue % 60, nil];
 }
 
 @end
