@@ -25,6 +25,7 @@
 
 #import "JCCallCardManager.h"
 #import "JCCallerViewController.h"
+#import "JCBadgeManager.h"
 
 @interface JCAppDelegate () <JCCallerViewControllerDelegate>
 {
@@ -118,7 +119,12 @@ int didNotify;
     [center addObserver:self selector:@selector(didReceiveIncomingCall:) name:kJCCallCardManagerAddedCallNotification object:callCardManager];
     [center addObserver:self selector:@selector(stopRingtone) name:kJCCallCardManagerAnswerCallNotification object:callCardManager];
     
-    if (![[JCAuthenticationManager sharedInstance] userAuthenticated] || ![[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {
+    // Launches the Badge manager. Should be launched after Mangical record has initialized.
+    [[JCBadgeManager sharedManager] initialize];
+    
+    // Authentication
+    JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
+    if (!authenticationManager.userAuthenticated || !authenticationManager.userLoadedMininumData) {
         [self changeRootViewController:JCRootLoginViewController];
     }
     
@@ -309,41 +315,6 @@ int didNotify;
 	NSLog(@"APPDELEGATE - Failed to get token, error: %@", error);
 }
 
-
-- (NSInteger)currentBadgeCount
-{
-    LOG_Info();
-    
-    NSDictionary * badgeDictionary = [[NSUserDefaults standardUserDefaults] objectForKey:@"badges"];
-    NSMutableDictionary *_badges = nil;
-    if (badgeDictionary) {
-        _badges = [NSMutableDictionary dictionaryWithDictionary:badgeDictionary];
-        int count = 0;
-        for (NSString *key in _badges.allKeys)
-        {
-            NSRange rangeConversation = [key rangeOfString:@"conversations"];
-            NSRange rangeRooms = [key rangeOfString:@"permanentrooms"];
-            if (rangeConversation.location != NSNotFound || rangeRooms.location != NSNotFound) {
-            NSMutableDictionary *conversations = [_badges[key] mutableCopy];
-                if (conversations) {
-                    count += conversations.count;
-                }
-            }
-            else {
-                count++;
-            }
-        }
-        
-        return count;
-    }
-    else
-    {
-        return 0;
-    }
-}
-
-
-// foreground
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     LOG_Info();
@@ -396,24 +367,23 @@ int didNotify;
         __block UIBackgroundFetchResult fetchResult = UIBackgroundFetchResultFailed;
         
         @try {
-            
             TRVSMonitor *monitor = [TRVSMonitor monitor];
-            NSInteger previousCount = [self currentBadgeCount];
+            JCBadgeManager *badgeManger = [JCBadgeManager sharedManager];
+            [badgeManger startBackgroundUpdates];
 
-            // V5 only provides voicemail through REST. So re make a REST Call
-            [[JCVoicemailClient sharedClient] getVoicemails:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-                if (suceeded) {
+            // Fetch Voicemails in the background.
+            [Voicemail fetchVoicemailsInBackground:^(BOOL success, NSError *error) {
+                if (success) {
                     NSLog(@"Success Done with Block");
                     LogMessage(@"socket", 4, @"Successful Rest Call In Background");
-                    
                 }
                 else {
                     NSLog(@"Error Done With Block %@", error);
                     LogMessage(@"socket", 4, @"Failed Rest Call In Background");
                 }
-                
                 [monitor signal];
-            }];            
+            }];
+            
 // No Socket for now.
 //            [[JCSocketDispatch sharedInstance] startPoolingFromSocketWithCompletion:^(BOOL success, NSError *error) {
 //                if (success) {
@@ -429,14 +399,12 @@ int didNotify;
 //            }];
             
             [monitor waitWithTimeout:25];
-            
-            NSInteger afterCount = [self currentBadgeCount];
-            
-            if (afterCount == 0 || (afterCount == previousCount)) {
-                fetchResult = UIBackgroundFetchResultNoData;
-            }
-            else if (afterCount > previousCount) {
+            NSUInteger badgeUpdateEvents = [badgeManger endBackgroundUpdates];
+            if (badgeUpdateEvents != 0) {
                 fetchResult = UIBackgroundFetchResultNewData;
+            }
+            else {
+                fetchResult = UIBackgroundFetchResultNoData;
             }
         }
         @catch (NSException *exception) {

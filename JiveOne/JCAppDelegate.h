@@ -12,10 +12,6 @@
 #import "UAPush.h"
 
 @interface JCAppDelegate : UIResponder <UIApplicationDelegate, UAPushNotificationDelegate, UARegistrationDelegate>
-{
-    NSInteger previousBadgeCount;
-    NSInteger afterBadgeCount;
-}
 
 @property (strong, nonatomic) UIWindow *window;
 @property BOOL deviceIsIPhone;

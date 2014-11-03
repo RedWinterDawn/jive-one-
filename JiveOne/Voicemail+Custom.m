@@ -12,6 +12,8 @@
 #import "JCAppDelegate.h"
 #import "Common.h"
 
+#import "JCVoicemailClient.h"
+
 @implementation Voicemail (Custom)
 
 
@@ -91,19 +93,11 @@
         }
 
         vmail.jrn = dictionary[@"jrn"];
-        __block NSString * jrn = vmail.jrn;
-            
         vmail.url_self = dictionary[@"self"];
 	    vmail.url_download = dictionary[@"self_download"];
 		vmail.url_changeStatus = dictionary[@"self_changeStatus"] ;
         vmail.markForDeletion = [NSNumber numberWithBool:NO];
         vmail.mailboxUrl = mailboxUrl;
-        
-        //get all voicemail messages through a queue
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [(JCAppDelegate *)[UIApplication sharedApplication].delegate incrementBadgeCountForVoicemail:jrn];
-        });
-        
     }
     
     if (sender != self) {
@@ -136,6 +130,21 @@
     
     
     return vmail;
+}
+
++ (void)fetchVoicemailsInBackground:(void(^)(BOOL success, NSError *error))completed
+{
+    // V5 only provides voicemail through REST. So re make a REST Call
+    [[JCVoicemailClient sharedClient] getVoicemails:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+        if (completed != nil) {
+            if (suceeded && completed != NULL) {
+                completed(true, nil);
+            }
+            else {
+                completed(false, error);
+            }
+        }
+    }];
 }
 
 + (void)fetchVoicemailInBackground

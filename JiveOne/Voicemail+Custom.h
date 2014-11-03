@@ -18,6 +18,9 @@
 + (Voicemail *)markVoicemailForDeletion:(NSString*)voicemailId managedContext:(NSManagedObjectContext*)context;
 + (BOOL)isVoicemailInDeletedList:(NSString*)voicemailId;
 + (BOOL)deleteVoicemail:(NSString*)voicemailId managedContext:(NSManagedObjectContext*)context;
+
++ (void)fetchVoicemailsInBackground:(void(^)(BOOL success, NSError *error))completed;
+
 + (void)fetchVoicemailInBackground;
 + (void)deleteVoicemailsInBackground;
 
