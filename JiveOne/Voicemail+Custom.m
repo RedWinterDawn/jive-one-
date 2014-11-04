@@ -14,6 +14,8 @@
 
 #import "JCVoicemailClient.h"
 
+#import "NSDictionary+Validations.h"
+
 @implementation Voicemail (Custom)
 
 
@@ -50,86 +52,63 @@
     return voicemail;
 }
 
+NSString *const kVoicemailResponseIdentifierKey         = @"jrn";
+NSString *const kVoicemailResponseDurationKey           = @"duration";
+NSString *const kVoicemailResponseReadKey               = @"read";
+NSString *const kVoicemailResponseNameKey               = @"callerId";
+NSString *const kVoicemailResponseNumberKey             = @"callerIdNumber";
+NSString *const kVoicemailResponseTimestampKey          = @"timeStamp";
+NSString *const kVoicemailResponseSelfKey               = @"self";
+NSString *const kVoicemailResponseSelfDownloadKey       = @"self_download";
+NSString *const kVoicemailResponseSelfChangeStatusKey   = @"self_changeStatus";
+NSString *const kVoicemailResponseSelfMailboxKey        = @"self_mailbox";
+
+
+
 + (Voicemail *)addVoicemail:(NSDictionary*)dictionary mailboxUrl:(NSString *)mailboxUrl withManagedContext:(NSManagedObjectContext *)context sender:(id)sender
 {
-    if (!context) {
-        context = [NSManagedObjectContext MR_contextForCurrentThread];
+    // Require that we have a jrn. If we no not have one, we can not create a voicemail, so exit returning nil.
+    NSString *identifier = [dictionary stringValueForKey:kVoicemailResponseIdentifierKey];
+    if (!identifier) {
+        return nil;
     }
     
+    // Fetches the voicemail to update it. If it did not yet exist, it is created with the JRN being the identifier.
+    Voicemail *voicemail = [Voicemail voicemailForIdentifier:identifier context:context];
     
-    Voicemail *vmail;
-    //find object in core data with same urn as voicemail entry in json
-    NSArray *result = [Voicemail MR_findByAttribute:@"jrn" withValue:dictionary[@"jrn"] inContext:context];
+    voicemail.duration          = [dictionary integerValueForKey:kVoicemailResponseDurationKey];
+    voicemail.read              = [dictionary boolValueForKey:kVoicemailResponseReadKey];
+    voicemail.name              = [dictionary stringValueForKey:kVoicemailResponseNameKey];
+    voicemail.number            = [dictionary stringValueForKey:kVoicemailResponseNumberKey];
+    voicemail.url_self          = [dictionary stringValueForKey:kVoicemailResponseSelfKey];
+    voicemail.url_download      = [dictionary stringValueForKey:kVoicemailResponseSelfDownloadKey];
+    voicemail.url_changeStatus  = [dictionary stringValueForKey:kVoicemailResponseSelfChangeStatusKey];
+    voicemail.mailboxUrl        = [dictionary stringValueForKey:kVoicemailResponseSelfMailboxKey];
     
-    // if there are results, we're updating, else we're creating
-    if (result.count > 0) {
-        vmail = result[0];
-        [self updateVoicemail:vmail withDictionary:dictionary managedContext:context];
-    }
-    else {
-        //create and save
-        vmail = [Voicemail MR_createInContext:context];
-
-        vmail.voicemailId = dictionary[@"id"];
-        //vmail.mailboxId = dictionary[@"mailboxId"];
-        vmail.unixTimestamp = [dictionary[@"timeStamp"] longLongValue];
-        vmail.duration = [NSNumber numberWithInteger:[dictionary[@"duration"] intValue]];
-        vmail.read = [dictionary[@"read"] boolValue];
-        /*if ([[dictionary objectForKey:@"transcription"] isKindOfClass:[NSNull class]]) {
-            vmail.transcription = nil;
-        } else {
-            vmail.transcription = [dictionary objectForKey:@"transcription"];
-        }
-        if ([[dictionary objectForKey:@"transcriptionPercent"] isKindOfClass:[NSNull class]]) {
-            vmail.transcriptionPercent = nil;
-        } else {
-            vmail.transcriptionPercent = [dictionary objectForKey:@"transcriptionPercent"];
-        }*/
-        vmail.name = dictionary[@"callerId"];
-        if ([[dictionary objectForKey:@"callerIdNumber"] isKindOfClass:[NSNull class]]) {
-            vmail.number = nil;
-        } else {
-            vmail.number = [dictionary objectForKey:@"callerIdNumber"];
-        }
-
-        vmail.jrn = dictionary[@"jrn"];
-        vmail.url_self = dictionary[@"self"];
-	    vmail.url_download = dictionary[@"self_download"];
-		vmail.url_changeStatus = dictionary[@"self_changeStatus"] ;
-        vmail.markForDeletion = [NSNumber numberWithBool:NO];
-        vmail.mailboxUrl = mailboxUrl;
-    }
+    NSInteger timestamp         = [dictionary integerValueForKey:kVoicemailResponseTimestampKey];
+    voicemail.unixTimestamp = timestamp;
     
     if (sender != self) {
-        [context MR_saveToPersistentStoreAndWait];
-        return vmail;
+        [voicemail.managedObjectContext MR_saveToPersistentStoreAndWait];
+        return voicemail;
     }
     else {
         return nil;
     }
 }
 
-+ (Voicemail *)updateVoicemail:(Voicemail*)vmail withDictionary:(NSDictionary*)dictionary managedContext:(NSManagedObjectContext *)context
++ (Voicemail *)voicemailForIdentifier:(NSString *)identifier context:(NSManagedObjectContext *)context
 {
-
-
-        if (dictionary[@"read"]) {
-            vmail.read = [dictionary[@"read"] boolValue];
-        }
-    //TODO: things that can change
-    //current folder
-    //flag?
-        
-        //Save conversation dictionary
-//        @try {
-//            [context MR_saveToPersistentStoreAndWait];
-//        }
-//        @catch (NSException *exception) {
-//            NSLog(@"%@", exception);
-//        }
+    if (!context) {
+        context = [NSManagedObjectContext MR_contextForCurrentThread];
+    }
     
-    
-    return vmail;
+    Voicemail *voicemail = [Voicemail MR_findFirstByAttribute:@"jrn" withValue:identifier inContext:context];
+    if (!voicemail) {
+        voicemail = [Voicemail MR_createInContext:context];
+        voicemail.jrn = identifier;
+    }
+    return voicemail;
 }
 
 + (void)fetchVoicemailsInBackground:(void(^)(BOOL success, NSError *error))completed
@@ -216,7 +195,7 @@
     Voicemail *voicemail = [Voicemail MR_findFirstByAttribute:@"jrn" withValue:voicemailId];
     
     if (voicemail) {
-        voicemail.markForDeletion = [NSNumber numberWithBool:YES];
+        voicemail.markForDeletion = YES;
         [context MR_saveToPersistentStoreAndWait];
         
         //save to deleted voicemail storage
