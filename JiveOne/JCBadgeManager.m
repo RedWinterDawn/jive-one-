@@ -10,12 +10,9 @@
 #import "LoggerClient.h"
 
 #import "RecentEvent.h"
-
 #import "MissedCall.h"
 #import "Voicemail.h"
 #import "Conversation.h"
-
-#import "OutgoingCall.h"
 
 static const UIUserNotificationType USER_NOTIFICATION_TYPES_REQUIRED = UIRemoteNotificationTypeBadge | UIUserNotificationTypeAlert | UIUserNotificationTypeSound;
 static const UIRemoteNotificationType REMOTE_NOTIFICATION_TYPES_REQUIRED = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
@@ -196,38 +193,60 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
 -(void)managedObjectContextUpdated:(NSNotification *)notification
 {
     NSDictionary *dictionary = notification.userInfo;
-    id inserted = [dictionary objectForKey:NSInsertedObjectsKey];
-    id updated = [dictionary objectForKey:NSUpdatedObjectsKey];
-    id deleted = [dictionary objectForKey:NSDeletedObjectsKey];
-    id object = inserted ? inserted : (updated ? updated : (deleted ? deleted : nil));
-    NSSet *objects = (NSSet *)object;
-    id managedObject = [objects anyObject];
-    if (![managedObject isKindOfClass:[RecentEvent class]])
+    [self processDictionary:dictionary forInfoKey:NSInsertedObjectsKey];
+    [self processDictionary:dictionary forInfoKey:NSUpdatedObjectsKey];
+    [self processDictionary:dictionary forInfoKey:NSDeletedObjectsKey];
+}
+
+-(void)processDictionary:(NSDictionary *)dictionary forInfoKey:(NSString *)key
+{
+    id object = [dictionary objectForKey:key];
+    if (object) {
+        [self processObject:object forInfoKey:key];
+    }
+}
+
+-(void)processObject:(id)object forInfoKey:(NSString *)key
+{
+    if (![object isKindOfClass:[NSSet class]]) {
+        return;
+    }
+    
+    NSSet *set = (NSSet *)object;
+    for (id item in set) {
+        if ([item isKindOfClass:[NSManagedObject class]]) {
+            [self processManagedObject:(NSManagedObject *)item forInfoKey:key];
+        }
+    }
+}
+
+-(void)processManagedObject:(NSManagedObject *)object forInfoKey:(NSString *)actionKey
+{
+    if (![object isKindOfClass:[RecentEvent class]])
         return;
     
-    RecentEvent *recentEvent = (RecentEvent *)managedObject;
+    RecentEvent *recentEvent = (RecentEvent *)object;
     NSString *key = [self badgeKeyFromRecentEvent:recentEvent];
     if (!key)
     {
         return;
     }
     
-    
     NSString *identifier = recentEvent.objectID.URIRepresentation.absoluteString;
-    BOOL read = recentEvent.read;
-    BOOL insert = inserted != nil;
-    BOOL update = updated != nil;
-    BOOL delete = deleted != nil;
+    BOOL read = recentEvent.isRead;
+    BOOL insert = [actionKey isEqualToString:NSInsertedObjectsKey];
+    BOOL update = [actionKey isEqualToString:NSUpdatedObjectsKey];
+    BOOL delete = [actionKey isEqualToString:NSDeletedObjectsKey];
     
     // Do this stuff off of main thread, since we need to check if it contains, and then add it in a multidimensional
     // array for performance.
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        
+    
         if (insert && !read) {
             [self setIdentifier:identifier forKey:key displayed:NO];
         }
         else if (update) {
-            if (read) {
+            if (!read) {
                 [self setIdentifier:identifier forKey:key displayed:NO];
             }
             else {
@@ -317,7 +336,13 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
  */
 -(NSMutableDictionary *)identifiersForKey:(NSString *)key
 {
-    return [NSMutableDictionary dictionaryWithDictionary:[self.badges objectForKey:key]];
+    id object = [self.badges objectForKey:key];
+    if ([object isKindOfClass:[NSDictionary class]])
+    {
+        NSDictionary *identifiers = (NSDictionary *)object;
+        return [NSMutableDictionary dictionaryWithDictionary:identifiers];
+    }
+    return [NSMutableDictionary dictionary];
 }
 
 /**
@@ -329,7 +354,6 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
 -(void)setIdentifiers:(NSDictionary *)identifiers forKey:(NSString *)key
 {
     [self willChangeValueForKey:key];
-    
     NSMutableDictionary *badges = self.badges;
     [badges setObject:identifiers forKey:key];
     self.badges = badges;
