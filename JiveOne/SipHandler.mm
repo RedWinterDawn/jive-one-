@@ -14,6 +14,7 @@
 #import "MissedCall.h"
 #import "OutgoingCall.h"
 #import "Common.h"
+#import "JCBadgeManager.h"
 
 #import "LineConfiguration+Custom.h"
 #import "Lines+Custom.h"
@@ -1025,7 +1026,10 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 			  newMessageCount:(int)newMessageCount
 			  oldMessageCount:(int)oldMessageCount
 {
-    // TODO: Implement.
+    PBX *pbx = [PBX MR_findFirst];
+    if (pbx && ![pbx.v5 boolValue]) {
+        [JCBadgeManager sharedManager].voicemails = newMessageCount;
+    }    
 }
 
 - (void)onWaitingFaxMessage:(char*)messageAccount
