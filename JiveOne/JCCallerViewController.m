@@ -228,8 +228,13 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 -(IBAction)finishTransfer:(id)sender
 {
     [[JCCallCardManager sharedManager] finishWarmTransfer:^(bool success) {
-        if (success)
+        if (success) {
             [self showTransferSuccess];
+        }
+        else {
+            [self showHudWithTitle:@"Oh-oh" detail:@"Failed to finish transfer"];
+            [self.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];
+        }
     }];
 }
 
@@ -448,6 +453,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
             switch (controller.transferCallType) {
                 case JCCallCardDialBlindTransfer:
                 {
+                    [[JCCallCardManager sharedManager] terminateSessionsOnTransferSuccess];
                     [weakSelf dismissTransferViewControllerAnimated:NO];
                     [weakSelf closeCallerViewController];
                     break;

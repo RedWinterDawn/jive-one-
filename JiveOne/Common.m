@@ -346,5 +346,17 @@ static inline double radians (double degrees) { return degrees * M_PI/180; }
     return YES;
 }
 
+#pragma mark - Create NSError Util
++ (NSError *)createErrorWithDescription:(NSString *)description reason:(NSString *)reason code:(NSInteger)code
+{
+    NSDictionary *userInfo = @{
+                               NSLocalizedDescriptionKey: description,
+                               NSLocalizedFailureReasonErrorKey: reason
+                               };
+    return [NSError errorWithDomain:@"JIVE"
+                                         code:code
+                                     userInfo:userInfo];
+}
+
 
 @end
