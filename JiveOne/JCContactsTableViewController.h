@@ -16,7 +16,7 @@ typedef NS_ENUM(NSInteger, JCContactFilter) {
     JCContactFilterFavorites
 };
 
-@interface JCContactsTableViewController : UITableViewController <NSFetchedResultsControllerDelegate, JCPersonCellDelegate, UIScrollViewDelegate>
+@interface JCContactsTableViewController : JCFetchedResultsTableViewController <JCPersonCellDelegate, UIScrollViewDelegate>
 
 
 
