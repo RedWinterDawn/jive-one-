@@ -10,6 +10,9 @@
 
 @interface Lines (Custom)
 
+@property (nonatomic, readonly) NSString *firstLetter;
+
+
 + (void)addLines:(NSArray *)lines pbxId:(NSString *)pbxId userName:(NSString *)userName completed:(void (^)(BOOL success))completed;;
 + (Lines *)addLine:(NSDictionary *)line pbxId:(NSString *)pbxId userName:(NSString *)userName withManagedContext:(NSManagedObjectContext *)context sender:(id)sender;
 

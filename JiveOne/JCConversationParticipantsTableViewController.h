@@ -18,7 +18,7 @@
 @end
 
 
-@interface JCConversationParticipantsTableViewController : UITableViewController <PeopleSearchDelegate>
+@interface JCConversationParticipantsTableViewController : UITableViewController 
 
 @property (nonatomic, assign) id<ConversationParticipantDelegate> delegate;
 @property (nonatomic, strong) NSArray *entitiesArray;

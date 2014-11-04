@@ -266,6 +266,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     self.calls = calls;
     JCCallCard *conferenceCall = [[JCConferenceCallCard alloc] initWithCalls:callCards];
     [self setCallHold:false forCall:conferenceCall];
+    conferenceCall.delegate = self;
     [self.calls addObject:conferenceCall];
     NSNumber *index = [NSNumber numberWithInteger:[self.calls indexOfObject:conferenceCall]];
     
@@ -309,6 +310,15 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
                                                                  }];
 }
 
+- (void)terminateSessionsOnTransferSuccess
+{
+    for (JCCallCard *call in self.calls) {
+        if (call.lineSession.mSessionState) {
+            [self hangUpCall:call];
+        }
+    }
+}
+
 #pragma mark - Delegate Handlers -
 
 #pragma mark JCCallCardDelegate
@@ -344,6 +354,8 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
         for (JCCallCard *call in conferenceCall.calls) {
             [self hangUpCall:call];
         }
+        // remove conference card
+        [self removeCall:callCard];
     }
     else
     {

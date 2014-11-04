@@ -300,4 +300,10 @@
     
 }
 
+// Override to support renaming section names.
+- (NSString *)controller:(NSFetchedResultsController *)controller sectionIndexTitleForSectionName:(NSString *)sectionName
+{
+    return sectionName;
+}
+
 @end

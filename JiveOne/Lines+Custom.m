@@ -13,6 +13,30 @@
 
 @implementation Lines (Custom)
 
+
+- (NSString *)firstLetter
+{
+    [self willChangeValueForKey:@"firstLetter"];
+    NSString *result = @"";
+//    if ([self.isFavorite boolValue]) {
+//        result = @"\u2605";
+//    } else {
+//        if (self.displayName.length == 0) {
+//            result = @"";
+//        }
+//        else if (self.displayName.length == 1) {
+//            result = self.displayName;
+//        }
+//        else {
+            result = [self.displayName substringToIndex:1];
+//        }
+//    }
+    
+    [self didChangeValueForKey:@"firstLetter"];
+    
+    return [result uppercaseString];
+}
+
 + (void)addLines:(NSArray *)lines pbxId:(NSString *)pbxId userName:(NSString *)userName completed:(void (^)(BOOL success))completed
 {
     [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
