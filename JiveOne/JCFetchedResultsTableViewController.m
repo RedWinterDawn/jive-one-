@@ -145,6 +145,13 @@
 -(void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     [self configureCell:cell withObject:[self objectAtIndexPath:indexPath]];
+    if([cell isKindOfClass:[JCTableViewCell class]])
+    {
+        JCTableViewCell *tableCell = (JCTableViewCell *)cell;
+        if ((indexPath.row == 0 && indexPath.section == 0) && _showTopCellSeperator) {
+            tableCell.top = true;
+        }
+    }
 }
 
 -(void)configureCell:(UITableViewCell *)cell withObject:(id<NSObject>)object
@@ -202,11 +209,13 @@
 {
     id object = [self objectAtIndexPath:indexPath];
     UITableViewCell *cell = [self tableView:tableView cellForObject:object atIndexPath:indexPath];
-	
-	if ([cell isKindOfClass:[JCTableViewCell class]] && (indexPath.row == 0 && indexPath.section == 0) && _showTopCellSeperator) {
-		((JCTableViewCell *)cell).top = true;
-	}
-	
+    if([cell isKindOfClass:[JCTableViewCell class]])
+    {
+        JCTableViewCell *tableCell = (JCTableViewCell *)cell;
+        if ((indexPath.row == 0 && indexPath.section == 0) && _showTopCellSeperator) {
+            tableCell.top = true;
+        }
+    }
     return cell;
 }
 

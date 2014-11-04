@@ -53,9 +53,9 @@
 {
 	if (!_fetchedResultsController) {
 		
-//		NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Voicemail"];
-//		fetchRequest.predicate = [NSPredicate predicateWithFormat:@"markForDeletion ==[c] %@", [NSNumber numberWithBool:NO]];
-//		fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO]];
+		/*NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Voicemail"];
+		fetchRequest.predicate = [NSPredicate predicateWithFormat:@"markForDeletion ==[c] %@", [NSNumber numberWithBool:NO]];
+		fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO]];*/
 		
 		NSFetchRequest *fetchRequest = [Voicemail MR_requestAllSortedBy:@"date" ascending:NO withPredicate:[NSPredicate predicateWithFormat:@"markForDeletion ==[c] %@", [NSNumber numberWithBool:NO]]];
 		fetchRequest.fetchBatchSize = 10;
@@ -139,9 +139,9 @@
 
 -(void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-	Voicemail *voicemail = [self objectAtIndexPath:indexPath];
-	JCVoicemailPlaybackCell *voiceCell = (JCVoicemailPlaybackCell *)cell;
-	[self configureCell:cell withObject:voicemail];
+    [super configureCell:cell atIndexPath:indexPath];
+    
+    JCVoicemailPlaybackCell *voiceCell = (JCVoicemailPlaybackCell *)cell;
 	voiceCell.indexPath = indexPath;
 	BOOL isSelected = [self.selectedIndexPaths containsObject:indexPath];
 	if (isSelected)
