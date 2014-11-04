@@ -13,10 +13,6 @@
 
 @property (nonatomic, strong) Voicemail *voicemail;
 
-@property (nonatomic, weak) IBOutlet UILabel *callerIdLabel;
-@property (nonatomic, weak) IBOutlet UILabel *callerNumberLabel;
 @property (nonatomic, weak) IBOutlet UILabel *duration;
-@property (nonatomic, weak) IBOutlet UILabel *creationTime;
-@property (nonatomic, weak) IBOutlet UILabel *extensionLabel;
 
 @end

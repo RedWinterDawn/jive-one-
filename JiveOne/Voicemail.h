@@ -10,8 +10,6 @@
 
 @interface Voicemail : RecentEvent
 
-@property (nonatomic, retain) NSString * callerId;
-@property (nonatomic, retain) NSString * callerIdNumber;
 @property (nonatomic, retain) NSNumber * markForDeletion;
 @property (nonatomic, retain) NSNumber * duration;
 @property (nonatomic, retain) NSString * jrn;
@@ -25,5 +23,8 @@
 @property (nonatomic, retain) NSString * url_self;
 @property (nonatomic, retain) NSData * voicemail;
 @property (nonatomic, retain) NSNumber * voicemailId; 
+
+@property (nonatomic, readonly) NSString *displayExtension;
+@property (nonatomic, readonly) NSString *displayDuration;
 
 @end

@@ -104,12 +104,12 @@
         <scene sceneID="9lR-7G-kAa">
             <objects>
                 <tableViewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="7eH-lQ-rpb" userLabel="Activity Table View Controller" customClass="JCRecentActivityTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" id="lun-GX-fGt">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="61" sectionHeaderHeight="22" sectionFooterHeight="22" id="lun-GX-fGt">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HistoryCell" rowHeight="60" id="WSL-wi-EAe" customClass="JCCallHistoryCell">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HistoryCell" rowHeight="61" id="WSL-wi-EAe" customClass="JCCallHistoryCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WSL-wi-EAe" id="HpG-gP-t2A">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -169,13 +169,13 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
+                                    <outlet property="date" destination="oiS-bx-elM" id="DTY-p0-HSh"/>
                                     <outlet property="icon" destination="wt7-pQ-hDy" id="W7M-8R-PYB"/>
                                     <outlet property="name" destination="gQB-DU-RKy" id="dqJ-6d-k8r"/>
                                     <outlet property="number" destination="wy5-2x-2pe" id="2Ux-qD-Ggy"/>
-                                    <outlet property="timestamp" destination="oiS-bx-elM" id="i5G-hQ-dCN"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="VoicemailCell" rowHeight="60" id="Wdn-ib-VLs" customClass="JCVoicemailCell">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="VoicemailCell" rowHeight="61" id="Wdn-ib-VLs" customClass="JCVoicemailCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Wdn-ib-VLs" id="eXc-vE-Ziy">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -246,6 +246,12 @@
                                         <color key="value" red="0.6588235294" green="0.66274509800000003" blue="0.67843137249999996" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outlet property="date" destination="gtd-8g-MGS" id="2OW-pf-ON2"/>
+                                    <outlet property="duration" destination="Xd1-F6-dWo" id="xDc-ug-Nef"/>
+                                    <outlet property="name" destination="Lsq-5H-Udv" id="FAO-Cm-BMv"/>
+                                    <outlet property="number" destination="fEO-AB-gx9" id="JAw-cM-KLi"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <sections/>
@@ -1080,12 +1086,12 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <outlet property="callerIdLabel" destination="qgE-Wi-v1i" id="sze-kD-qV6"/>
-                                    <outlet property="callerNumberLabel" destination="3hb-FL-acB" id="wts-Vz-Dv1"/>
-                                    <outlet property="creationTime" destination="h9G-CI-v9C" id="dVa-ix-Xh3"/>
+                                    <outlet property="date" destination="h9G-CI-v9C" id="dsf-kb-QnL"/>
                                     <outlet property="deleteButton" destination="KBf-Iw-KC5" id="ndL-iC-IrG"/>
                                     <outlet property="duration" destination="Dq7-oS-hNz" id="dgh-o6-AwZ"/>
-                                    <outlet property="extensionLabel" destination="qTo-LN-C26" id="QRN-ap-vOL"/>
+                                    <outlet property="extension" destination="qTo-LN-C26" id="xha-EC-hhg"/>
+                                    <outlet property="name" destination="qgE-Wi-v1i" id="lr6-9O-7JF"/>
+                                    <outlet property="number" destination="3hb-FL-acB" id="A42-CV-ZTQ"/>
                                     <outlet property="playPauseButton" destination="aW8-Rx-T0I" id="kH6-Mq-ftf"/>
                                     <outlet property="slider" destination="VLG-JC-3Zz" id="OKM-RQ-NEi"/>
                                     <outlet property="speakerButton" destination="hkb-uv-UF0" id="efD-az-gdP"/>
@@ -3461,10 +3467,10 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
+                                    <outlet property="date" destination="VOs-kP-Qid" id="xuX-SI-zr3"/>
                                     <outlet property="icon" destination="aaV-Hh-0FM" id="sID-r3-uat"/>
                                     <outlet property="name" destination="TmI-c8-kkS" id="x5m-8O-pWi"/>
                                     <outlet property="number" destination="xbE-Wj-ANr" id="sd3-eO-J0h"/>
-                                    <outlet property="timestamp" destination="VOs-kP-Qid" id="qMI-9N-M8l"/>
                                     <segue destination="ph3-lT-GBI" kind="modal" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="qpb-jz-IY5"/>
                                 </connections>
                             </tableViewCell>

@@ -13,4 +13,9 @@
 
 @property (nonatomic, strong) RecentEvent *recentEvent;
 
+@property (nonatomic, weak) IBOutlet UILabel *name;
+@property (nonatomic, weak) IBOutlet UILabel *number;
+@property (nonatomic, weak) IBOutlet UILabel *extension;
+@property (nonatomic, weak) IBOutlet UILabel *date;
+
 @end

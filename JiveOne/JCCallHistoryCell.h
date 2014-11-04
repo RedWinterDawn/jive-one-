@@ -13,11 +13,7 @@
 
 @property (nonatomic, strong) Call *call;
 
-@property (nonatomic, weak) IBOutlet UILabel *name;
-@property (nonatomic, weak) IBOutlet UILabel *number;
-@property (nonatomic, weak) IBOutlet UILabel *extension;
 @property (nonatomic, weak) IBOutlet UIImageView *icon;
-@property (nonatomic, weak) IBOutlet UILabel *timestamp;
 
 @end
  

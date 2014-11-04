@@ -10,12 +10,13 @@
 
 @implementation JCRecentEventCell
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+-(void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    self.date.text = self.recentEvent.formattedModifiedShortDate;
+    self.name.text = self.recentEvent.displayName;
+    self.number.text = self.recentEvent.displayNumber;
 }
-*/
 
 @end
