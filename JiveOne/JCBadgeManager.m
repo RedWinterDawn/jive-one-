@@ -192,74 +192,14 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
 
 -(void)managedObjectContextUpdated:(NSNotification *)notification
 {
-    NSDictionary *dictionary = notification.userInfo;
-    [self processDictionary:dictionary forInfoKey:NSInsertedObjectsKey];
-    [self processDictionary:dictionary forInfoKey:NSUpdatedObjectsKey];
-    [self processDictionary:dictionary forInfoKey:NSDeletedObjectsKey];
-}
-
--(void)processDictionary:(NSDictionary *)dictionary forInfoKey:(NSString *)key
-{
-    id object = [dictionary objectForKey:key];
-    if (object) {
-        [self processObject:object forInfoKey:key];
-    }
-}
-
--(void)processObject:(id)object forInfoKey:(NSString *)key
-{
-    if (![object isKindOfClass:[NSSet class]]) {
-        return;
-    }
-    
-    NSSet *set = (NSSet *)object;
-    for (id item in set) {
-        if ([item isKindOfClass:[NSManagedObject class]]) {
-            [self processManagedObject:(NSManagedObject *)item forInfoKey:key];
-        }
-    }
-}
-
--(void)processManagedObject:(NSManagedObject *)object forInfoKey:(NSString *)actionKey
-{
-    if (![object isKindOfClass:[RecentEvent class]])
-        return;
-    
-    RecentEvent *recentEvent = (RecentEvent *)object;
-    NSString *key = [self badgeKeyFromRecentEvent:recentEvent];
-    if (!key)
-    {
-        return;
-    }
-    
-    NSString *identifier = recentEvent.objectID.URIRepresentation.absoluteString;
-    BOOL read = recentEvent.isRead;
-    BOOL insert = [actionKey isEqualToString:NSInsertedObjectsKey];
-    BOOL update = [actionKey isEqualToString:NSUpdatedObjectsKey];
-    BOOL delete = [actionKey isEqualToString:NSDeletedObjectsKey];
-    
-    // Do this stuff off of main thread, since we need to check if it contains, and then add it in a multidimensional
-    // array for performance.
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-    
-        if (insert && !read) {
-            [self setIdentifier:identifier forKey:key displayed:NO];
-        }
-        else if (update) {
-            if (!read) {
-                [self setIdentifier:identifier forKey:key displayed:NO];
-            }
-            else {
-                [self deleteIdentifier:identifier forKey:key];
-            }
-        }
-        else if (delete) {
-            [self deleteIdentifier:identifier forKey:key];
-        }
-    });
+    // Take a snap shot of our current badges. We will add and remove objects from the snap shot, and then post process
+    // the sanpshot into the badges data store.
+    [self batchUpdate:notification.userInfo];
 }
 
 #pragma mark - Private -
+
+#pragma mark Badging
 
 /**
  * Returns a identifier key for a given recent event.
@@ -303,16 +243,6 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
 {
     NSMutableDictionary *identifiers = [self identifiersForKey:key];
     [identifiers setObject:[NSNumber numberWithBool:displayed] forKey:identifier];
-    [self setIdentifiers:identifiers forKey:key];
-}
-
-/**
- * Removes an badge event identifier from the given badge bucket by its key.
- */
--(void)deleteIdentifier:(NSString *)identifier forKey:(NSString *)key
-{
-    NSMutableDictionary *identifiers = [NSMutableDictionary dictionaryWithDictionary:[self identifiersForKey:key]];
-    [identifiers removeObjectForKey:identifier];
     [self setIdentifiers:identifiers forKey:key];
 }
 
@@ -361,6 +291,139 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
     [self didChangeValueForKey:key];
 }
 
+#pragma mark Batch Badging
+
+/**
+ *  Processes dictionary from the NSManagedObjectContextDidSaveNotification notification into a batch update proccess.
+ */
+-(void)batchUpdate:(NSDictionary *)updateDictionary
+{
+    
+    
+        // Preload the batch badges with the current batch badges.
+        _batchBadges = [self.badges mutableCopy];
+        
+        [self batchUpdateInfoKey:NSInsertedObjectsKey updateDictionary:updateDictionary];
+        [self batchUpdateInfoKey:NSUpdatedObjectsKey updateDictionary:updateDictionary];
+        [self batchUpdateInfoKey:NSDeletedObjectsKey updateDictionary:updateDictionary];
+    
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+    
+        // Iterate over the _batchBadges dictionary keys and trigger updates for each key into badges.
+        NSArray *keys = _batchBadges.allKeys;
+        for (NSString *key in keys) {
+            id object = [_batchBadges objectForKey:key];
+            if ([object isKindOfClass:[NSDictionary class]]) {
+                NSDictionary *identifiers = (NSDictionary *)object;
+                [self setIdentifiers:identifiers forKey:key];
+            }
+        }
+        
+        // Dispose of the batch badges, we are done.
+        _batchBadges = nil;
+    });
+}
+
+-(void)batchUpdateInfoKey:(NSString *)key updateDictionary:(NSDictionary *)dictionary
+{
+    // Check to see if we have a set for the info key. Exit if we do not. The object being passed should be a NSSet
+    // object. If it is not, we exit.
+    id object = [dictionary objectForKey:key];
+    if (!object || ![object isKindOfClass:[NSSet class]]) {
+        return;
+    }
+    
+    // Pull out our set and iterate over each of the objects in the set. Objects should be NSManagedObjects. Process the
+    // managed object.
+    NSSet *set = (NSSet *)object;
+    for (id item in set) {
+        if ([item isKindOfClass:[NSManagedObject class]]) {
+            [self batchProcessManagedObject:(NSManagedObject *)item forInfoKey:key];
+        }
+    }
+}
+
+-(void)batchProcessManagedObject:(NSManagedObject *)object forInfoKey:(NSString *)actionKey
+{
+    if (![object isKindOfClass:[RecentEvent class]])
+        return;
+    
+    RecentEvent *recentEvent = (RecentEvent *)object;
+    NSString *key = [self badgeKeyFromRecentEvent:recentEvent];
+    if (!key)
+    {
+        return;
+    }
+    
+    NSString *identifier = recentEvent.objectID.URIRepresentation.absoluteString;
+    BOOL read = recentEvent.isRead;
+    BOOL insert = [actionKey isEqualToString:NSInsertedObjectsKey];
+    BOOL update = [actionKey isEqualToString:NSUpdatedObjectsKey];
+    BOOL delete = [actionKey isEqualToString:NSDeletedObjectsKey];
+    
+    // Do this stuff off of main thread, since we need to check if it contains, and then add it in a multidimensional
+    // array for performance.
+    if (insert && !read) {
+        [self setBatchIdentifier:identifier forKey:key displayed:NO];
+    }
+    else if (update) {
+        if (!read) {
+            [self setBatchIdentifier:identifier forKey:key displayed:NO];
+        }
+        else {
+            [self batchDeleteIdentifier:identifier forKey:key];
+        }
+    }
+    else if (delete) {
+        [self batchDeleteIdentifier:identifier forKey:key];
+    }
+}
+
+/**
+ * Inserts a badge event identifier into the badge system for the badge category bucket by its key.
+ *
+ * Only inserts on if it does not contain one. The identifier is stored as the key in a dictionary with a boolean value
+ * representing if it has been "read". The read state is used during a background refresh to identifiy which ones have
+ * generated a local notification for.
+ */
+-(void)setBatchIdentifier:(NSString *)identifier forKey:(NSString *)key displayed:(BOOL)displayed
+{
+    NSMutableDictionary *identifiers = [self batchIdentifiersForKey:key];
+    [identifiers setObject:[NSNumber numberWithBool:displayed] forKey:identifier];
+    [self setBatchIdentifiers:identifiers forKey:key];
+}
+
+
+/**
+ * Removes an badge event identifier from the given badge bucket by its key.
+ */
+-(void)batchDeleteIdentifier:(NSString *)identifier forKey:(NSString *)key
+{
+    NSMutableDictionary *identifiers = [NSMutableDictionary dictionaryWithDictionary:[self batchIdentifiersForKey:key]];
+    [identifiers removeObjectForKey:identifier];
+    [self setBatchIdentifiers:identifiers forKey:key];
+}
+
+-(void)setBatchIdentifiers:(NSDictionary *)identifiers forKey:(NSString *)key
+{
+    [_batchBadges setObject:identifiers forKey:key];
+}
+
+/**
+ * Returns a dictionary of badge identifiers for a given key from the badges dictionary in the user default. If non have
+ * been set, it should return nil, otherwise, it should return a dictionary of identifiers, where the identifier is the
+ * key, and a bool is the value.
+ */
+-(NSMutableDictionary *)batchIdentifiersForKey:(NSString *)key
+{
+    id object = [_batchBadges objectForKey:key];
+    if ([object isKindOfClass:[NSDictionary class]])
+    {
+        NSDictionary *identifiers = (NSDictionary *)object;
+        return [NSMutableDictionary dictionaryWithDictionary:identifiers];
+    }
+    return [NSMutableDictionary dictionary];
+}
 
 /*
 - (void)setNotification:(NSInteger)voicemailCount conversation:(NSInteger)conversationCount {
