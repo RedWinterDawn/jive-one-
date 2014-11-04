@@ -74,7 +74,7 @@
         //vmail.mailboxId = dictionary[@"mailboxId"];
         vmail.unixTimestamp = [dictionary[@"timeStamp"] longLongValue];
         vmail.duration = [NSNumber numberWithInteger:[dictionary[@"duration"] intValue]];
-        vmail.read = [NSNumber numberWithBool:[dictionary[@"read"] boolValue]];
+        vmail.read = [dictionary[@"read"] boolValue];
         /*if ([[dictionary objectForKey:@"transcription"] isKindOfClass:[NSNull class]]) {
             vmail.transcription = nil;
         } else {
@@ -114,7 +114,7 @@
 
 
         if (dictionary[@"read"]) {
-            vmail.read = [NSNumber numberWithBool:[dictionary[@"read"] boolValue]];
+            vmail.read = [dictionary[@"read"] boolValue];
         }
     //TODO: things that can change
     //current folder
