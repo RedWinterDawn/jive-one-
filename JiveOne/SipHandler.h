@@ -10,6 +10,7 @@
 #import "JCLineSession.h"
 
 typedef void(^CompletionHandler)(bool success, NSError *error);
+typedef void(^TransferCompletionHandler)(bool success, NSError *error);
 
 extern NSString *const kSipHandlerRegisteredSelectorKey;
 
@@ -30,6 +31,8 @@ extern NSString *const kSipHandlerRegisteredSelectorKey;
 
 @property (nonatomic, readonly, getter=isRegistered) BOOL registered;
 @property (nonatomic, readonly, getter=isInitialized) BOOL initialized;
+
+@property (nonatomic, copy) TransferCompletionHandler transferCompleted;
 
 // "Registers" the application to the SIP service via the Port SIP SDK.
 - (void)connect:(CompletionHandler)completion;

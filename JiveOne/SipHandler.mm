@@ -13,6 +13,7 @@
 #import "IncomingCall.h"
 #import "MissedCall.h"
 #import "OutgoingCall.h"
+#import "Common.h"
 
 #import "LineConfiguration+Custom.h"
 #import "Lines+Custom.h"
@@ -24,9 +25,9 @@
 #include "TargetConditionals.h"
 #endif
 
-#define MAX_LINES 8
+#define MAX_LINES 2
 #define ALERT_TAG_REFER 100
-#define OUTBOUND_SIP_SERVER_PORT 5060
+#define OUTBOUND_SIP_SERVER_PORT 5061
 
 
 NSString *const kSipHandlerServerAgentname = @"Jive iOS Client";
@@ -62,7 +63,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         }
     
         _lineSessions = [NSMutableArray new];
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < MAX_LINES; i++)
             [_lineSessions addObject:[JCLineSession new]];
         
         _mPortSIPSDK = [[PortSIPSDK alloc] init];
@@ -136,7 +137,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
                                logPath:NULL
                                maxLine:MAX_LINES
                                  agent:kSipHandlerServerAgentname
-                    virtualAudioDevice:FALSE
+                    virtualAudioDevice:isSimulator
                     virtualVideoDevice:isSimulator];
     
     if(ret != 0)
@@ -387,7 +388,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	}
 	else
 	{
-        [self setSessionState:JCCallFailed forSession:lineSession event:@"makeCall:"];
+        NSError *error = [Common createErrorWithDescription:NSLocalizedString(@"Call Failed", nil) reason:NSLocalizedString(@"Unable to create call", nil) code:sessionId];
+        [self setSessionState:JCCallFailed forSession:lineSession event:@"makeCall:" error:error];
 	}
     
 	return lineSession;
@@ -498,71 +500,102 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 - (void) referCall:(NSString *)referTo completion:(void (^)(bool success, NSError *error))completion
 {
+    _transferCompleted = completion;
+    
 	JCLineSession *currentLine = [self findLineWithSessionState];
 	if (!currentLine || currentLine.mSessionState == false)
 	{
-        completion(false, [NSError errorWithDomain:@"Need to make the call established first" code:0 userInfo:nil]);
+        _transferCompleted(false, [NSError errorWithDomain:@"Need to make the call established first" code:0 userInfo:nil]);
 		return;
 	}
 	
-	int error = [_mPortSIPSDK refer:currentLine.mSessionId referTo:referTo];
-    if (!error) {
-        completion(true, nil);
+	int result = [_mPortSIPSDK refer:currentLine.mSessionId referTo:referTo];
+    if (!result) {
         return;
     }
     
-    NSString *msg = @"Refer failed";
-    [self setSessionState:JCTransferFailed forSession:currentLine event:msg];
-	completion(false, [NSError errorWithDomain:msg code:0 userInfo:nil]);
+    NSString *msg = NSLocalizedString(@"Blind Transfer failed", nil);
+    NSError *error = [Common createErrorWithDescription:msg
+                                                 reason:NSLocalizedString(@"Unable make transfer", nil)
+                                                   code:result];
+
+    [self setSessionState:JCTransferFailed forSession:currentLine event:msg error:error];
+	_transferCompleted(false, [NSError errorWithDomain:msg code:0 userInfo:nil]);
     
     return;
 }
 
 - (void)attendedRefer:(NSString *)referTo completion:(void (^)(bool success, NSError *error))completion
 {
+    _transferCompleted = completion;
+    
 	JCLineSession *currentLine = [self findLineWithSessionState];
     if (!currentLine || currentLine.mSessionState == false)
     {
-        completion(false, [NSError errorWithDomain:@"Need to make the call established first" code:0 userInfo:nil]);
+        _transferCompleted(false, [NSError errorWithDomain:@"Need to make the call established first" code:0 userInfo:nil]);
         return;
     }
     
 	JCLineSession *replaceSession = [self findLineWithHoldState];
     if (replaceSession && !replaceSession.mSessionState) {
-        completion(false, [NSError errorWithDomain:@"Unable to find replace session" code:0 userInfo:nil]);
+        _transferCompleted(false, [NSError errorWithDomain:@"Unable to find replace session" code:0 userInfo:nil]);
         return;
     }
 		
-    int error = [_mPortSIPSDK attendedRefer:currentLine.mSessionId replaceSessionId:replaceSession.mSessionId referTo:referTo];
-    if (!error) {
-        completion(true, nil);
+    int result = [_mPortSIPSDK attendedRefer:currentLine.mSessionId replaceSessionId:replaceSession.mSessionId referTo:referTo];
+    if (!result) {
         return;
     }
 	
-    NSString *msg = @"Warm Tranfer failed";
-    [self setSessionState:JCTransferFailed forSession:currentLine event:msg];
+    NSString *msg = NSLocalizedString(@"Warm Tranfer failed", nil);
+    NSError *error = [Common createErrorWithDescription:msg
+                                                 reason:NSLocalizedString(@"Unable make transfer", nil)
+                                                   code:result];
+    
+    [self setSessionState:JCTransferFailed forSession:currentLine event:msg error:error];
     currentLine.sessionState = JCTransferFailed;
-    completion(false, [NSError errorWithDomain:msg code:error userInfo:nil]);
+    _transferCompleted(false, error);
 }
 
 - (void) muteCall:(BOOL)mute
 {
-	JCLineSession *selectedLine = [self findLineWithSessionState];
+    
+    [_mPortSIPSDK muteMicrophone:mute];
+    
+// For the MVP the call above suffices. For more advanced control over earch session
+// the code below might come in handy.
+    
+//    if (!inConference) {
+//        JCLineSession *selectedLine = [self findLineWithSessionState];
+//        
+//        if(selectedLine.mSessionState){
+//            [_mPortSIPSDK muteSession:selectedLine.mSessionState
+//                    muteIncomingAudio:FALSE
+//                    muteOutgoingAudio:mute == YES ? TRUE : FALSE
+//                    muteIncomingVideo:FALSE
+//                    muteOutgoingVideo:mute == YES ? TRUE : FALSE];
+//        }
+//    }
+//    else {
+//        for (JCLineSession *line in self.lineSessions)
+//        {
+//            if (line.mSessionState)
+//            {
+//                [_mPortSIPSDK muteSession:line.mSessionState
+//                        muteIncomingAudio:FALSE
+//                        muteOutgoingAudio:mute == YES ? TRUE : FALSE
+//                        muteIncomingVideo:FALSE
+//                        muteOutgoingVideo:mute == YES ? TRUE : FALSE];            }
+//        }
+//    }
 	
-	if(selectedLine.mSessionState){
-			[_mPortSIPSDK muteSession:selectedLine.mSessionState
-				   muteIncomingAudio:FALSE
-				   muteOutgoingAudio:mute
-				   muteIncomingVideo:FALSE
-				   muteOutgoingVideo:mute];
-	}
 }
 
 - (bool)setConference:(bool)conference
 {
 	if (conference)
 	{
-		int rt = [_mPortSIPSDK createConference:nullptr videoResolution:VIDEO_NONE displayLocalVideo:NO];
+		int rt = [_mPortSIPSDK createConference:[UIView new] videoResolution:VIDEO_NONE displayLocalVideo:NO];
 		if (rt == 0) {
 			for (JCLineSession *line in self.lineSessions)
 			{
@@ -612,7 +645,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 #pragma mark - Private -
 
--(void)setSessionState:(JCLineSessionState)state forSession:(JCLineSession *)lineSession event:(NSString *)event
+-(void)setSessionState:(JCLineSessionState)state forSession:(JCLineSession *)lineSession event:(NSString *)event error:(NSError *)error
 {
     if (!lineSession)
         return;
@@ -630,9 +663,16 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         case JCInviteFailure:
         case JCCallFailed:
         case JCTransferSuccess:
+            if (_transferCompleted) {
+                _transferCompleted(YES, error);
+            }
+            break;
         case JCTransferFailed:
-            [self.delegate removeLineSession:lineSession];
-            [lineSession reset];
+            if (_transferCompleted) {
+                _transferCompleted(NO, error);
+            }
+//            [self.delegate removeLineSession:lineSession];
+//            [lineSession reset];
             break;
         default:
             lineSession.sessionState = state;
@@ -641,9 +681,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     
 }
 
--(void)setSessionState:(JCLineSessionState)state forSessionId:(long)sessionId event:(NSString *)event
+-(void)setSessionState:(JCLineSessionState)state forSessionId:(long)sessionId event:(NSString *)event error:(NSError *)error
 {
-    [self setSessionState:state forSession:[self findSession:sessionId] event:event];
+    [self setSessionState:state forSession:[self findSession:sessionId] event:event error:error];
 }
 
 #pragma mark - Delegate Handlers -
@@ -728,12 +768,12 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     // Notify delegate to add a line session.
     [self.delegate addLineSession:idleLine];
     
-    [self setSessionState:JCInvite forSession:idleLine event:@"onInviteIncoming"];
+    [self setSessionState:JCInvite forSession:idleLine event:@"onInviteIncoming" error:nil];
 };
 
 - (void)onInviteTrying:(long)sessionId
 {
-	[self setSessionState:JCInviteTrying forSessionId:sessionId event:@"onInviteTrying"];
+	[self setSessionState:JCInviteTrying forSessionId:sessionId event:@"onInviteTrying" error:nil];
 };
 
 - (void)onInviteSessionProgress:(long)sessionId
@@ -768,7 +808,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	
 	[selectedLine setMExistEarlyMedia:existsEarlyMedia];
     
-    [self setSessionState:JCInviteProgress forSession:selectedLine event:@"onInviteSessionProgress"];
+    [self setSessionState:JCInviteProgress forSession:selectedLine event:@"onInviteSessionProgress" error:nil] ;
 }
 
 - (void)onInviteRinging:(long)sessionId
@@ -780,7 +820,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     {
         // No early media, you must play the local WAVE file for ringing tone
 	}
-    [self setSessionState:JCCallRinging forSession:selectedLine event:@"onInviteRinging"];
+    [self setSessionState:JCCallRinging forSession:selectedLine event:@"onInviteRinging" error:nil];
 }
 
 - (void)onInviteAnswered:(long)sessionId
@@ -821,23 +861,28 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 		[selectedLine setReferCall:false originalCallSessionId:0];
 	}
     
-    [self setSessionState:JCCallConnected forSession:selectedLine event:@"onInviteAnswered"];
+    [self setSessionState:JCCallConnected forSession:selectedLine event:@"onInviteAnswered" error:nil];
 }
 
 - (void)onInviteFailure:(long)sessionId reason:(char*)reason code:(int)code
 {
     NSString *event = [NSString stringWithFormat:@"onInviteFailure reason: %@ code: %i", [NSString stringWithCString:reason encoding:NSUTF8StringEncoding], code];
-    [self setSessionState:JCInviteFailure forSessionId:sessionId event:event];
+    
+    NSError *error = [Common createErrorWithDescription:event
+                                                 reason:[NSString stringWithUTF8String:reason]
+                                                   code:code];
+    
+    [self setSessionState:JCInviteFailure forSessionId:sessionId event:event error:error];
 }
 
 - (void)onInviteConnected:(long)sessionId
 {
-    [self setSessionState:JCCallConnected forSessionId:sessionId event:@"onInviteConnected"];
+    [self setSessionState:JCCallConnected forSessionId:sessionId event:@"onInviteConnected" error:nil];
 }
 
 - (void)onInviteClosed:(long)sessionId
 {
-    [self setSessionState:JCCallCanceled forSessionId:sessionId event:@"onInviteClosed"];
+    [self setSessionState:JCCallCanceled forSessionId:sessionId event:@"onInviteClosed" error:nil];
 }
 
 #pragma mark Not Implemented
@@ -922,35 +967,40 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 - (void)onACTVTransferSuccess:(long)sessionId
 {
-    [self setSessionState:JCTransferSuccess forSessionId:sessionId event:@"onACTVTransferSuccess"];
+    [self setSessionState:JCTransferSuccess forSessionId:sessionId event:@"onACTVTransferSuccess" error:nil];
 }
 
 - (void)onACTVTransferFailure:(long)sessionId reason:(char*)reason code:(int)code
 {
     NSString *event = [NSString stringWithFormat:@"onACTVTransferFailure reason: %@ code: %i", [NSString stringWithCString:reason encoding:NSUTF8StringEncoding], code];
-    [self setSessionState:JCTransferFailed forSessionId:sessionId event:event];
+    
+    NSError *error = [Common createErrorWithDescription:event
+                                                 reason:[NSString stringWithUTF8String:reason]
+                                                   code:code];
+    
+    [self setSessionState:JCTransferFailed forSessionId:sessionId event:event error:error];
 }
 
 #pragma mark Not Implemented
 
 - (void)onReferAccepted:(long)sessionId
 {
-	// TODO: Implement.
+    NSLog(@"%li", sessionId);
 }
 
 - (void)onReferRejected:(long)sessionId reason:(char*)reason code:(int)code
 {
-	// TODO: Implement.
+    NSLog(@"%li", sessionId);
 }
 
 - (void)onTransferTrying:(long)sessionId
 {
-	// TODO: Implement.
+    NSLog(@"%li", sessionId);
 }
 
 - (void)onTransferRinging:(long)sessionId
 {
-	// TODO: Implement.
+    NSLog(@"%li", sessionId);
 }
 
 - (void)onReceivedSignaling:(long)sessionId message:(char*)message
