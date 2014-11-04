@@ -20,6 +20,7 @@ static const UIRemoteNotificationType REMOTE_NOTIFICATION_TYPES_REQUIRED = UIRem
 NSString *const kJCBadgeManagerBadgesKey        = @"badges";
 NSString *const kJCBadgeManagerRecentEventsKey  = @"recentEvents";
 NSString *const kJCBadgeManagerVoicemailsKey    = @"voicemails";
+NSString *const kJCBadgeManagerV4VoicemailKey   = @"v4_voicemails";
 NSString *const kJCBadgeManagerMissedCallsKey   = @"missedCalls";
 NSString *const kJCBadgeManagerConversationsKey = @"conversations";
 
@@ -126,6 +127,16 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
     [self didChangeValueForKey:kJCBadgeManagerBadgesKey];
 }
 
+-(void)setVoicemails:(NSUInteger)voicemails
+{
+    [self willChangeValueForKey:kJCBadgeManagerVoicemailsKey];
+    
+    NSMutableDictionary *badges = self.badges;
+    [badges setObject:[NSNumber numberWithInteger:voicemails] forKey:kJCBadgeManagerV4VoicemailKey];
+    self.badges = badges;
+    [self didChangeValueForKey:kJCBadgeManagerVoicemailsKey];
+}
+
 #pragma mark - Getters -
 
 -(NSMutableDictionary *)badges
@@ -151,14 +162,32 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
     int total = 0;
     for (NSString *key in keys)
     {
-        total += [self badgeCountForKey:key];
+        if ([key isEqualToString:kJCBadgeManagerV4VoicemailKey])
+        {
+            id object = [badges objectForKey:key];
+            if ([object isKindOfClass:[NSNumber class]]) {
+                total += ((NSNumber *)object).integerValue;
+            }
+        }
+        else
+        {
+            total += [self badgeCountForKey:key];
+        }
     }
     return total;
 }
 
 - (NSUInteger)voicemails
 {
-    return [self badgeCountForKey:kJCBadgeManagerVoicemailsKey];
+    NSUInteger total = 0;
+    NSDictionary *badges = self.badges;
+    id object = [badges objectForKey:kJCBadgeManagerV4VoicemailKey];
+    if (object && [object isKindOfClass:[NSNumber class]]) {
+        total += ((NSNumber *)object).integerValue;
+    }
+    
+    total += [self badgeCountForKey:kJCBadgeManagerVoicemailsKey];
+    return total;
 }
 
 - (NSUInteger)missedCalls

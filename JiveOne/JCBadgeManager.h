@@ -19,7 +19,7 @@ extern NSString *const kJCBadgeManagerIdentifierKey;
 @property (nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
 
 // Individual recent event types.
-@property (nonatomic, readonly) NSUInteger voicemails;
+@property (nonatomic) NSUInteger voicemails;
 @property (nonatomic, readonly) NSUInteger missedCalls;
 @property (nonatomic, readonly) NSUInteger conversations;
 
