@@ -75,10 +75,19 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="container" destination="Ta4-0u-d9a" id="sUV-Je-OCn"/>
+                        <outlet property="searchDisplayController" destination="Q6I-6W-1Q6" id="bKO-Jq-atu"/>
                         <outlet property="tabBar" destination="KQN-3R-ma5" id="17t-wy-IHT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ozR-aT-h5B" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="Q6I-6W-1Q6">
+                    <connections>
+                        <outlet property="delegate" destination="Xmp-ga-Z9j" id="Isj-oh-j6C"/>
+                        <outlet property="searchContentsController" destination="Xmp-ga-Z9j" id="EHo-0z-eiw"/>
+                        <outlet property="searchResultsDataSource" destination="Xmp-ga-Z9j" id="GfI-0F-bev"/>
+                        <outlet property="searchResultsDelegate" destination="Xmp-ga-Z9j" id="fjx-or-cyU"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="782" y="394"/>
         </scene>

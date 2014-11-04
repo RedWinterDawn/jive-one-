@@ -17,7 +17,7 @@
 //    UISearchDisplayController *searchDisplayController;
 }
 
-@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+
 @property (nonatomic, strong) NSFetchedResultsController *searchFetchedResultController;
 
 
