@@ -24,7 +24,6 @@ extern NSString *const kJCBadgeManagerIdentifierKey;
 @property (nonatomic, readonly) NSUInteger conversations;
 
 @property (nonatomic, readonly) BOOL canSendNotifications;
-@property (nonatomic) BOOL saveToPersistantStore;
 
 -(void)initialize;
 

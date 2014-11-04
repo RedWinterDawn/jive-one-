@@ -30,7 +30,7 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
 
 @interface JCBadgeManager ()
 {
-    NSMutableDictionary *_badges;
+    NSMutableDictionary *_batchBadges;
 }
 
 @property (nonatomic, strong) NSMutableDictionary *badges;
@@ -44,7 +44,6 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
     self = [super init];
     if (self) {
         _managedObjectContext = managedObjectContext;
-        _saveToPersistantStore = true;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(managedObjectContextUpdated:) name:NSManagedObjectContextDidSaveNotification object:_managedObjectContext];
         [self addObserver:self forKeyPath:kJCBadgeManagerBadgesKey options:NSKeyValueObservingOptionNew context:nil];
     }
@@ -121,15 +120,9 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
 -(void)setBadges:(NSMutableDictionary *)badges
 {
     [self willChangeValueForKey:kJCBadgeManagerBadgesKey];
-    
-    _badges = badges;
-    if (_saveToPersistantStore)
-    {
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        [userDefaults setObject:badges forKey:kJCBadgeManagerBadgesKey];
-        [userDefaults synchronize];
-    }
-    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:badges forKey:kJCBadgeManagerBadgesKey];
+    [userDefaults synchronize];
     [self didChangeValueForKey:kJCBadgeManagerBadgesKey];
 }
 
@@ -137,17 +130,7 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
 
 -(NSMutableDictionary *)badges
 {
-    if (!_badges)
-    {
-        if (_saveToPersistantStore) {
-            _badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:kJCBadgeManagerBadgesKey]];
-        }
-        else
-        {
-            _badges = [NSMutableDictionary dictionary];
-        }
-    }
-    return _badges;
+    return [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:kJCBadgeManagerBadgesKey]];
 }
 
 // Checks the permissions to see if we can sent notifications, including badging.
