@@ -57,4 +57,7 @@
 #pragma mark - Telephony Utils
 + (BOOL) IsConnectionFast;
 
+#pragma mark - Create NSError Util
++ (NSError *)createErrorWithDescription:(NSString *)description reason:(NSString *)reason code:(NSInteger)code;
+
 @end
