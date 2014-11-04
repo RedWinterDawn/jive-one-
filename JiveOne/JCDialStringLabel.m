@@ -52,8 +52,10 @@
 
 -(void)setDialString:(NSString *)dialString
 {
+     _dialString = nil;
     if (dialString)
         _dialString = [NSMutableString stringWithString:dialString];
+    
     [self updateDialString];
 }
 
