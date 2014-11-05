@@ -262,6 +262,7 @@
 {
 	if (loginTimer) {
 		[loginTimer invalidate];
+        loginTimer = nil;
 	}
 }
 
@@ -310,12 +311,12 @@
 
 - (void)checkIfLoadingHasFinished:(NSNotification *)notification
 {
-	_userIsDoneWithTutorial = [[NSUserDefaults standardUserDefaults] boolForKey:@"seenAppTutorial"];
-	if (notification && [[notification name] isEqualToString:@"AppTutorialDismissed"]) {
-		_userIsDoneWithTutorial = YES;
-		[[NSUserDefaults standardUserDefaults] setBool:self.userIsDoneWithTutorial forKey:@"seenAppTutorial"];
-		[[NSNotificationCenter defaultCenter] removeObserver:self name:@"AppTutorialDismissed" object:nil];
-	}
+//	_userIsDoneWithTutorial = [[NSUserDefaults standardUserDefaults] boolForKey:@"seenAppTutorial"];
+//	if (notification && [[notification name] isEqualToString:@"AppTutorialDismissed"]) {
+//		_userIsDoneWithTutorial = YES;
+//		[[NSUserDefaults standardUserDefaults] setBool:self.userIsDoneWithTutorial forKey:@"seenAppTutorial"];
+//		[[NSNotificationCenter defaultCenter] removeObserver:self name:@"AppTutorialDismissed" object:nil];
+//	}
 	
         NSLog (@"Successfully received the AppTutorialDismissed notification!");
         if (!self.doneLoadingContent) {
@@ -326,7 +327,7 @@
 	            [self showHudWithTitle:@"One Moment Please" detail:@"Preparing for first use"];
 			}
         }
-        else if (_userIsDoneWithTutorial)
+        else //if (_userIsDoneWithTutorial)
         {
 			[self goToApplication];
 			
@@ -342,20 +343,21 @@
 
 - (void)tokenValidityPassed:(NSNotification*)notification
 {
-	[self fetchMyMailboxes];
-    if (!self.seenTutorial) {
-        [Flurry logEvent:@"First Login"];
-        [self hideHud];
-//		JCAppIntro *introVC = [self.storyboard instantiateViewControllerWithIdentifier:@"JCAppIntro"];
-//		[self presentViewController:introVC animated:YES completion:^{
-//			//present
-//		}];
-        [self performSegueWithIdentifier: @"AppTutorialSegue" sender:self];
-    }
-    else
-    {
+//	[self fetchMyMailboxes];
+//    if (!self.seenTutorial) {
+//        [Flurry logEvent:@"First Login"];
+//        [self hideHud];
+////		JCAppIntro *introVC = [self.storyboard instantiateViewControllerWithIdentifier:@"JCAppIntro"];
+////		[self presentViewController:introVC animated:YES completion:^{
+////			//present
+////		}];
+//        [self performSegueWithIdentifier: @"AppTutorialSegue" sender:self];
+//    }
+//    else
+//    {
         [self showHudWithTitle:@"One Moment Please" detail:@"Loading data"];
-    }
+    [self fetchMyMailboxes];
+//    }
 }
 
 #pragma mark - Fetch initial data
@@ -413,10 +415,10 @@
 			// fetch the provisioning file again...but then...do we store user creentials?
 			self.doneLoadingContent = YES;
 			[[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
-			[self checkIfLoadingHasFinished:nil];
 			//[self goToApplication];
 			[self fetchVoicemailsMetadata];
 			[self fetchContacts];
+            [self checkIfLoadingHasFinished:nil];
 			
 		}
 		else {
