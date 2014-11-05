@@ -15,6 +15,7 @@
 #import "SipHandler.h"
 #import "JCApplicationSwitcherDelegate.h"
 #import "JCV5ApiClient.h"
+#import "JCBadgeManager.h"
 
 #if DEBUG
 @interface NSURLRequest(Private)
@@ -292,7 +293,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
 	[JCApplicationSwitcherDelegate reset];
-	
+    [[JCBadgeManager sharedManager] reset];
 	
     JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
     [delegate didLogOutSoUnRegisterForPushNotifications];
