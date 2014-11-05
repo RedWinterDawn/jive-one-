@@ -130,7 +130,7 @@
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="read" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="read" optional="YES" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
     </entity>
     <entity name="Voicemail" representedClassName="Voicemail" parentEntity="RecentEvent" syncable="YES">
         <attribute name="data" optional="YES" attributeType="Binary" syncable="YES"/>
@@ -164,7 +164,7 @@
         <element name="PersonEntities" positionX="270" positionY="171" width="128" height="360"/>
         <element name="PersonMeta" positionX="394" positionY="-63" width="128" height="150"/>
         <element name="Presence" positionX="558" positionY="60" width="128" height="120"/>
-        <element name="RecentEvent" positionX="52" positionY="-295" width="128" height="103"/>
+        <element name="RecentEvent" positionX="52" positionY="-295" width="128" height="105"/>
         <element name="Voicemail" positionX="-236" positionY="-459" width="128" height="180"/>
         <element name="VoicemailETag" positionX="-441" positionY="102" width="128" height="60"/>
     </elements>
