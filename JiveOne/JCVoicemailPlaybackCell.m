@@ -19,29 +19,25 @@
     
     self.slider.minimumValue = 0.0;
     
-    //test to see if we have already downloaded the voicemail .wav file
-    if (self.voicemail.voicemail.length > 0) {
-        // if the activityIndicator is visible
-        if (![self.spinningWheel isHidden]) {
-            [self.spinningWheel performSelectorOnMainThread:@selector(stopAnimating) withObject:nil waitUntilDone:NO];
-            //stopAnimating should also hide the activity indicator
-        }
+    // Loading indicator.
+    [self.voicemail addObserver:self forKeyPath:kVoicemailDataAttributeKey options:NSKeyValueObservingOptionNew context:NULL];
+    if (self.voicemail.data.length > 0) {
+        [self.spinningWheel stopAnimating];
     }
-    
-    [self.voicemail addObserver:self forKeyPath:kVoicemailKeyPathForVoicemal options:NSKeyValueObservingOptionNew context:NULL];
+    else {
+        [self.spinningWheel startAnimating];
+    }
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if ([keyPath isEqualToString:kVoicemailKeyPathForVoicemal]) {
-        Voicemail *voicemail = (Voicemail *)object;
-        if (voicemail && voicemail.jrn != nil && voicemail.url_self != nil) {
-            self.voicemail = voicemail;
-            [self.spinningWheel performSelectorOnMainThread:@selector(stopAnimating) withObject:nil waitUntilDone:NO];
+    if ([keyPath isEqualToString:kVoicemailDataAttributeKey]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.spinningWheel stopAnimating];
             if (_delegate) {
                 [_delegate voiceCellAudioAvailable:_indexPath];
             }
-        }
+        });
     }
     else
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
@@ -51,6 +47,7 @@
 {
     [super prepareForReuse];
     [self removeObservers];
+    
     self.playPauseButton.selected = false;
     self.speakerButton.selected = false;
 }
@@ -108,7 +105,7 @@
 -(void)removeObservers
 {
     if (self.voicemail)
-        [self.voicemail removeObserver:self forKeyPath:kVoicemailKeyPathForVoicemal];
+        [self.voicemail removeObserver:self forKeyPath:kVoicemailDataAttributeKey];
 }
 
 @end

@@ -8,6 +8,8 @@
 
 #import "RecentEvent.h"
 
+extern NSString *const kVoicemailDataAttributeKey;
+
 @interface Voicemail : RecentEvent
 
 // Primary Key
@@ -22,7 +24,7 @@
 @property (nonatomic, retain) NSString * url_pbx;
 @property (nonatomic, retain) NSString * url_self;
 
-@property (nonatomic, retain) NSData * voicemail;
+@property (nonatomic, retain) NSData * data;
 
 @property (nonatomic, readonly) NSString *displayExtension;
 @property (nonatomic, readonly) NSString *displayDuration;

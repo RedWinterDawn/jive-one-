@@ -133,6 +133,7 @@
         <attribute name="read" optional="YES" attributeType="Boolean" syncable="YES"/>
     </entity>
     <entity name="Voicemail" representedClassName="Voicemail" parentEntity="RecentEvent" syncable="YES">
+        <attribute name="data" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="duration" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="jrn" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="mailboxUrl" optional="YES" attributeType="String" syncable="YES"/>
@@ -141,7 +142,6 @@
         <attribute name="url_download" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url_pbx" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url_self" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="voicemail" optional="YES" attributeType="Binary" syncable="YES"/>
     </entity>
     <entity name="VoicemailETag" representedClassName="VoicemailETag" syncable="YES">
         <attribute name="etag" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
