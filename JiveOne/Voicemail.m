@@ -13,6 +13,8 @@
 
 #import "NSManagedObject+JCCoreDataAdditions.h"
 
+NSString *const kVoicemailDataAttributeKey = @"data";
+
 @implementation Voicemail
 
 @dynamic jrn;
@@ -21,7 +23,7 @@
 @dynamic url_download;
 @dynamic url_pbx;
 @dynamic url_self;
-@dynamic voicemail;
+@dynamic data;
 
 #pragma mark - Setters -
 

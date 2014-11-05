@@ -342,6 +342,100 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </tableViewCell>
+                            <tableViewCell opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="PhoneCell" rowHeight="52" id="Mg9-wK-u9j" userLabel="PhoneCell" customClass="JCPhoneMenuCell">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Mg9-wK-u9j" id="51U-15-OWx">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Voicemail:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BhM-7z-evk">
+                                            <rect key="frame" x="220" y="16" width="68" height="20"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20" id="Xi1-bY-Tm7"/>
+                                                <constraint firstAttribute="width" constant="68" id="dNV-2C-T1Y"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="12"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Missed:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XiM-TR-LPH">
+                                            <rect key="frame" x="131" y="16" width="58" height="20"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="58" id="IXn-Sf-HUd"/>
+                                                <constraint firstAttribute="height" constant="20" id="QOB-M9-kxv"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="12"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uQr-Xg-3xC" userLabel="Missed Badge" customClass="JCBadgeView">
+                                            <rect key="frame" x="190" y="13" width="25" height="25"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="25" id="57A-2u-gzc"/>
+                                                <constraint firstAttribute="width" constant="25" id="zde-Om-GJm"/>
+                                            </constraints>
+                                            <connections>
+                                                <outlet property="width" destination="zde-Om-GJm" id="kDb-iv-HON"/>
+                                            </connections>
+                                        </view>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="black-phone" translatesAutoresizingMaskIntoConstraints="NO" id="kUx-pR-UVL">
+                                            <rect key="frame" x="15" y="13" width="25" height="25"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="25" id="TzD-zU-d8Z"/>
+                                                <constraint firstAttribute="height" constant="25" id="v2H-iv-xKB"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Phone" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KVp-sT-UM5">
+                                            <rect key="frame" x="56" y="16" width="47" height="20"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20" id="70B-if-WBi"/>
+                                                <constraint firstAttribute="width" constant="47" id="NzT-KH-eIF"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b1e-io-f8e" userLabel="Voice Badge" customClass="JCBadgeView">
+                                            <rect key="frame" x="289" y="13" width="25" height="25"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="25" id="b6b-Xf-aNQ"/>
+                                                <constraint firstAttribute="height" constant="25" id="yEP-e1-dO0"/>
+                                            </constraints>
+                                            <connections>
+                                                <outlet property="width" destination="b6b-Xf-aNQ" id="UXe-C3-a8F"/>
+                                            </connections>
+                                        </view>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="centerY" secondItem="KVp-sT-UM5" secondAttribute="centerY" id="13D-zk-dPq"/>
+                                        <constraint firstItem="KVp-sT-UM5" firstAttribute="leading" secondItem="kUx-pR-UVL" secondAttribute="trailing" constant="16" id="Aj3-xY-fKM"/>
+                                        <constraint firstAttribute="centerY" secondItem="kUx-pR-UVL" secondAttribute="centerY" id="AtS-jO-Wi0"/>
+                                        <constraint firstItem="uQr-Xg-3xC" firstAttribute="leading" secondItem="XiM-TR-LPH" secondAttribute="trailing" constant="1" id="EU0-uU-yjc"/>
+                                        <constraint firstAttribute="centerY" secondItem="XiM-TR-LPH" secondAttribute="centerY" id="MUc-t1-Fu9"/>
+                                        <constraint firstAttribute="trailing" secondItem="b1e-io-f8e" secondAttribute="trailing" constant="6" id="Nbp-X1-jel"/>
+                                        <constraint firstAttribute="centerY" secondItem="BhM-7z-evk" secondAttribute="centerY" id="PPy-u4-rin"/>
+                                        <constraint firstItem="BhM-7z-evk" firstAttribute="leading" secondItem="uQr-Xg-3xC" secondAttribute="trailing" constant="5" id="T9o-42-QBy"/>
+                                        <constraint firstItem="kUx-pR-UVL" firstAttribute="leading" secondItem="51U-15-OWx" secondAttribute="leading" constant="15" id="e40-cW-Odh"/>
+                                        <constraint firstAttribute="centerY" secondItem="b1e-io-f8e" secondAttribute="centerY" id="itd-P5-jCW"/>
+                                        <constraint firstAttribute="centerY" secondItem="uQr-Xg-3xC" secondAttribute="centerY" id="lJZ-g3-4Jq"/>
+                                        <constraint firstItem="b1e-io-f8e" firstAttribute="leading" secondItem="BhM-7z-evk" secondAttribute="trailing" constant="1" id="pzR-Vz-JtO"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="seperatorColor">
+                                        <color key="value" red="0.6588235294" green="0.66274509800000003" blue="0.67843137249999996" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outlet property="imageView" destination="kUx-pR-UVL" id="0vn-Ya-vYw"/>
+                                    <outlet property="missedCallsBadgeView" destination="uQr-Xg-3xC" id="l9J-kM-oAA"/>
+                                    <outlet property="textLabel" destination="KVp-sT-UM5" id="G4U-hp-vc7"/>
+                                    <outlet property="voicemailsBadgeView" destination="b1e-io-f8e" id="WzV-dg-Q9h"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="1OB-xw-STX" id="XTp-3N-Cu9"/>
@@ -353,7 +447,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="net-e6-xWA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1434" y="784"/>
+            <point key="canvasLocation" x="-1393" y="784"/>
         </scene>
         <!--Menu Navigation Controller-->
         <scene sceneID="xcs-m7-xXE">
@@ -3317,7 +3411,7 @@
             <objects>
                 <navigationController storyboardIdentifier="CallHistoryNavigationController" title="History" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cIE-ip-pRf" userLabel="History" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <tabBarItem key="tabBarItem" title="History" image="nav-hist-black" badgeValue="1" id="dvD-nl-dwM"/>
+                    <tabBarItem key="tabBarItem" title="History" image="nav-hist-black" id="dvD-nl-dwM"/>
                     <navigationItem key="navigationItem" id="bfX-ob-wNY"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="re2-xE-4Bm">
@@ -3527,7 +3621,7 @@
         <image name="main-logo.png" width="217" height="216"/>
         <image name="nav-dial-black" width="70" height="70"/>
         <image name="nav-hist-black" width="25" height="25"/>
-        <image name="nav-voicemail-black" width="70" height="70"/>
+        <image name="nav-voicemail-black" width="33" height="16"/>
         <image name="second" width="640" height="1136"/>
         <image name="white-arrow" width="30" height="31"/>
         <image name="white-arrow-outline" width="30" height="31"/>

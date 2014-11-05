@@ -128,7 +128,7 @@
 	if (![Common stringIsNilOrEmpty:voicemail.url_changeStatus]) {
 		[_manager GET:voicemail.url_download parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 			
-			[Voicemail fetchVoicemailInBackground];
+			[Voicemail fetchAllVoicemailDataInBackground];
 			
 		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 			completed(NO, nil, operation, error);

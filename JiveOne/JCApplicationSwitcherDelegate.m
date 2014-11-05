@@ -66,6 +66,26 @@ NSString *const kApplicationSwitcherPhoneRestorationIdentifier = @"PhoneTabBarCo
     return [[JCMenuBarButtonItem alloc] initWithTarget:controller action:@selector(showMenu:)];
 }
 
+-(UITableViewCell *)applicationSwitcherController:(JCApplicationSwitcherViewController *)controller tableView:(UITableView *)tableView cellForTabBarItem:(UITabBarItem *)tabBarItem identifier:(NSString *)identifier
+{
+    if ([identifier isEqualToString:kApplicationSwitcherPhoneRestorationIdentifier]) {
+        static NSString *resueIdentifier = @"PhoneCell";
+        UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:resueIdentifier];
+        cell.textLabel.text = tabBarItem.title;
+        cell.imageView.image = tabBarItem.image;
+        
+        return cell;
+    }
+    
+    
+    static NSString *resueIdentifier = @"MenuCell";
+    UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:resueIdentifier];
+    cell.textLabel.text = tabBarItem.title;
+    cell.imageView.image = tabBarItem.image;
+    
+    return cell;
+}
+
 -(UIViewController *)applicationSwitcherLastSelectedViewController:(JCApplicationSwitcherViewController *)controller
 {
     NSString *identifier = self.lastSelectedViewControllerIdentifier;

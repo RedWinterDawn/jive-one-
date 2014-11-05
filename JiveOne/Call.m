@@ -20,7 +20,7 @@ NSString *const kCallEntityName = @"Call";
 
 @implementation Call (MagicalRecord)
 
-+(void)addCallEntity:(NSString *)entityName lineSession:(JCLineSession *)session
++(void)addCallEntity:(NSString *)entityName lineSession:(JCLineSession *)session read:(BOOL)read
 {
     [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
         
@@ -28,6 +28,7 @@ NSString *const kCallEntityName = @"Call";
         call.date = [NSDate date];
         call.name = session.callTitle;
         call.number = session.callDetail;
+        call.read = read;
         
     } completion:^(BOOL success, NSError *error) {
         if (error) {

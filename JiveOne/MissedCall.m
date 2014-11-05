@@ -36,40 +36,8 @@ NSString *const kMissedCallEntityName = @"MissedCall";
 
 +(void)addMissedCallWithLineSession:(JCLineSession *)session
 {
-    [MissedCall addCallEntity:kMissedCallEntityName lineSession:session];
+    [MissedCall addCallEntity:kMissedCallEntityName lineSession:session read:NO];
 }
 
 
 @end
-
-
-//- (JCLineSession *) makeCall:(NSString*) callee
-//videoCall:(BOOL)videoCall contactName:(NSString *)contactName;
-//{
-//    
-//    JCLineSession *currentSession = [self findLineWithSessionState];
-//    if (currentSession && currentSession.mSessionState && !currentSession.mHoldSate) {
-//        [_mPortSIPSDK hold:currentSession.mSessionId];
-//    }
-//    
-//    currentSession = [self findIdleLine];
-//    
-//    long sessionId = [_mPortSIPSDK call:callee sendSdp:TRUE videoCall:videoCall];
-//    if(sessionId >= 0)
-//    {
-//        [currentSession setMSessionId:sessionId];
-//        [currentSession setMSessionState:YES];
-//        
-//        [currentSession setCallTitle:contactName ? contactName : callee];
-//        [currentSession setCallDetail:callee];
-//        [OutgoingCall addOutgoingCallWithLineSession:currentSession];
-//    }
-//    else
-//    {
-//        //TODO:update call state
-//        [currentSession setMCallState:JCCallFailed];
-//        [currentSession reset];
-//    }
-//    
-//    return currentSession;
-//}

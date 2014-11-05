@@ -43,5 +43,5 @@
 - (IBAction)speakerTouched:(id)sender;
 
 - (void)setSliderValue:(float)position;
-- (void)styleCellForRead;
+
 @end

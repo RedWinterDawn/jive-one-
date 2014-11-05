@@ -8,7 +8,38 @@
 
 #import "JCRecentEventCell.h"
 
+@interface JCRecentEventCell(){
+    UIFont *_dateFont;
+    UIFont *_boldDateFont;
+    
+    UIFont *_nameFont;
+    UIFont *_boldNameFont;
+    
+    UIFont *_extensionFont;
+    UIFont *_boldExtensionFont;
+    
+    UIFont *_numberFont;
+    UIFont *_boldNumberFont;
+}
+
+@end
+
 @implementation JCRecentEventCell
+
+-(void)awakeFromNib
+{
+    _dateFont = self.date.font;
+    _boldDateFont = [UIFont fontWithDescriptor:[[_dateFont fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold] size:_dateFont.pointSize];
+    
+    _nameFont = self.name.font;
+    _boldNameFont = [UIFont fontWithDescriptor:[[_nameFont fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold] size:_nameFont.pointSize];
+
+    _extensionFont = self.extension.font;
+    _boldExtensionFont = [UIFont fontWithDescriptor:[[_extensionFont fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold] size:_extensionFont.pointSize];
+    
+    _numberFont = self.number.font;
+    _boldNumberFont = [UIFont fontWithDescriptor:[[_numberFont fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold] size:_numberFont.pointSize];
+}
 
 -(void)layoutSubviews
 {
@@ -17,6 +48,43 @@
     self.date.text = self.recentEvent.formattedModifiedShortDate;
     self.name.text = self.recentEvent.displayName;
     self.number.text = self.recentEvent.displayNumber;
+    
+    if (self.recentEvent.isRead)
+    {
+        self.date.font = _dateFont;
+        self.name.font = _nameFont;
+        self.number.font = _numberFont;
+        self.extension.font = _extensionFont;
+    }
+    else
+    {
+        self.date.font = _boldDateFont;
+        self.name.font = _boldNameFont;
+        self.number.font = _boldNumberFont;
+        self.extension.font = _boldExtensionFont;
+    }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"read"]) {
+        [self setNeedsLayout];
+        [self layoutIfNeeded];
+    }
+}
+
+#pragma mark - Setters -
+
+-(void)setRecentEvent:(RecentEvent *)recentEvent
+{
+    if (_recentEvent) {
+        [_recentEvent removeObserver:self forKeyPath:@"read"];
+    }
+    
+    _recentEvent = recentEvent;
+    if (_recentEvent) {
+        [_recentEvent addObserver:self forKeyPath:@"read" options:NSKeyValueObservingOptionNew context:NULL];
+    }
 }
 
 @end

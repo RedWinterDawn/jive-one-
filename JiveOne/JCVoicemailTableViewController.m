@@ -43,8 +43,6 @@
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(updateVoiceTable:) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
-	
-    [Voicemail fetchVoicemailInBackground];
 }
 
 #pragma mark - Getters -
@@ -304,7 +302,7 @@
     self.selectedCell = (JCVoicemailPlaybackCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     
     NSError *error;
-    player = [[AVAudioPlayer alloc] initWithData:self.selectedCell.voicemail.voicemail fileTypeHint:AVFileTypeWAVE error:&error];
+    player = [[AVAudioPlayer alloc] initWithData:self.selectedCell.voicemail.data fileTypeHint:AVFileTypeWAVE error:&error];
     if (player) {
         [self setupSpeaker];
         player.delegate = self;

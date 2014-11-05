@@ -9,6 +9,7 @@
 #import "JCCallHistoryTableViewController.h"
 
 #import "Call.h"
+#import "MissedCall.h"
 
 @interface JCCallHistoryTableViewController ()
 {
@@ -18,6 +19,17 @@
 @end
 
 @implementation JCCallHistoryTableViewController
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    NSArray *missedCalls = [MissedCall MR_findByAttribute:@"read" withValue:@NO inContext:self.managedObjectContext];
+    for (MissedCall *missedCall in missedCalls) {
+        missedCall.read = YES;
+    }
+    [self.managedObjectContext MR_saveOnlySelfAndWait];
+}
 
 #pragma mark - Setters - 
 
