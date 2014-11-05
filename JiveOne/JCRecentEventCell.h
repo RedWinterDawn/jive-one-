@@ -18,4 +18,6 @@
 @property (nonatomic, weak) IBOutlet UILabel *extension;
 @property (nonatomic, weak) IBOutlet UILabel *date;
 
+@property (nonatomic, getter=isRead) BOOL read;
+
 @end

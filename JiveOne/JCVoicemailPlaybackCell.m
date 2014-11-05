@@ -104,19 +104,6 @@
 
 #pragma mark - Private -
 
-- (void)styleCellForRead
-{
-    if(!self.voicemail.read){
-        self.date.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
-        self.name.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:16];
-        self.extension.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14];
-    }else{
-        self.date.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
-        self.name.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
-        self.extension.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:14];
-    }
-}
-
 -(void)removeObservers
 {
     if (self.voicemail)
