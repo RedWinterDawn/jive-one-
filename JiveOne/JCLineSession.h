@@ -19,6 +19,7 @@ typedef enum {
     JCCallRinging,
     JCCallCanceled,
     JCCallConnected,
+    JCCallAnswered,
     JCCallFailed,
     JCTransferSuccess,
     JCTransferFailed,
