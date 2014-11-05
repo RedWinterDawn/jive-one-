@@ -28,6 +28,6 @@ extern NSString *const kCallEntityName;
 
 @interface Call (MagicalRecord)
 
-+(void)addCallEntity:(NSString *)entityName lineSession:(JCLineSession *)session;
++(void)addCallEntity:(NSString *)entityName lineSession:(JCLineSession *)session read:(BOOL)read;
 
 @end
