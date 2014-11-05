@@ -65,10 +65,26 @@
     }
 }
 
--(void)setRead:(BOOL)read
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    self.recentEvent.read = read;
-    [self setNeedsLayout];
+    if ([keyPath isEqualToString:@"read"]) {
+        [self setNeedsLayout];
+        [self layoutIfNeeded];
+    }
+}
+
+#pragma mark - Setters -
+
+-(void)setRecentEvent:(RecentEvent *)recentEvent
+{
+    if (_recentEvent) {
+        [_recentEvent removeObserver:self forKeyPath:@"read"];
+    }
+    
+    _recentEvent = recentEvent;
+    if (_recentEvent) {
+        [_recentEvent addObserver:self forKeyPath:@"read" options:NSKeyValueObservingOptionNew context:NULL];
+    }
 }
 
 @end

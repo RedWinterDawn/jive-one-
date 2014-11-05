@@ -29,7 +29,6 @@
     }
     
     [self.voicemail addObserver:self forKeyPath:kVoicemailKeyPathForVoicemal options:NSKeyValueObservingOptionNew context:NULL];
-    [self styleCellForRead];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -44,6 +43,8 @@
             }
         }
     }
+    else
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 }
 
 -(void)prepareForReuse
