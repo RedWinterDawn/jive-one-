@@ -10,31 +10,16 @@
 #import "Lines+Custom.h"
 #import "JCPersonCell.h"
 
+@interface JCContactsTableViewController()
+{
+    NSString *_searchText;
+}
 
-
-@interface JCContactsTableViewController ()
-
-@property (nonatomic, strong) NSPredicate *predicate;
+@property (nonatomic, weak) NSPredicate *predicate;
 
 @end
 
 @implementation JCContactsTableViewController
-
-- (NSFetchedResultsController *)fetchedResultsController
-{
-    if (!_fetchedResultsController)
-    {
-        NSFetchRequest *fetchRequest = [Lines MR_requestAllWithPredicate:self.predicate inContext:self.managedObjectContext];
-        fetchRequest.fetchBatchSize = 10;
-        fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"displayName" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
-        
-        /**/
-        
-        super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"firstLetter" cacheName:nil];
-    }
-    
-    return _fetchedResultsController;
-}
 
 - (void)configureCell:(UITableViewCell *)cell withObject:(id<NSObject>)object
 {
@@ -63,28 +48,43 @@
 
 -(void)setPredicate:(NSPredicate *)predicate
 {
-    NSPredicate *oldPredicate = self.predicate;
-    if (oldPredicate != predicate)
-    {
+    if (!predicate) {
+        
+        if (_searchText && ![_searchText isEqualToString:@""]) {
+            predicate = [NSPredicate predicateWithFormat:@"(displayName contains[cd] %@) OR (externsionNumber contains[cd] %@)", _searchText, _searchText];
+        }
+        
         NSPredicate *filterPredicate = [self predicateFromFilterType];
         if (filterPredicate && predicate)
             predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, filterPredicate]];
         else if(filterPredicate)
             predicate = filterPredicate;
+    }
         
-        if (_fetchedResultsController)
+    if (_fetchedResultsController)
+    {
+        _fetchedResultsController.fetchRequest.predicate = predicate;
+        __autoreleasing NSError *error = nil;
+        if ([self.fetchedResultsController performFetch:&error])
         {
-            _fetchedResultsController.fetchRequest.predicate = predicate;
-            __autoreleasing NSError *error = nil;
-            if ([self.fetchedResultsController performFetch:&error])
-            {
-                [self.tableView reloadData];
-            }
+            [self.tableView reloadData];
         }
     }
 }
 
 #pragma mark - Getters -
+
+- (NSFetchedResultsController *)fetchedResultsController
+{
+    if (!_fetchedResultsController)
+    {
+        NSFetchRequest *fetchRequest = [Lines MR_requestAllWithPredicate:self.predicate inContext:self.managedObjectContext];
+        fetchRequest.fetchBatchSize = 10;
+        fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"displayName" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
+        super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"firstLetter" cacheName:nil];
+    }
+    return _fetchedResultsController;
+}
 
 - (NSPredicate *)predicate
 {
@@ -121,11 +121,8 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    NSPredicate *predicate = nil;
-    if (searchText != nil && ![searchText isEqualToString:@""])
-        predicate = [NSPredicate predicateWithFormat:@"(displayName contains[cd] %@) OR (externsionNumber contains[cd] %@)", searchText, searchText];
-    
-    self.predicate = predicate;
+    _searchText = searchText;
+    self.predicate = nil;
 }
 
 -(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
@@ -138,6 +135,7 @@
     [searchBar resignFirstResponder];
     [searchBar setShowsCancelButton:NO animated:YES];
     searchBar.text = nil;
+    _searchText = nil;
     self.predicate = nil;
 }
 

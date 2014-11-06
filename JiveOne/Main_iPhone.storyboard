@@ -96,10 +96,11 @@
                 <navigationController storyboardIdentifier="ContactsNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="3E5-0Q-2Rs" userLabel="Contacts Navigation Controller" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Contacts" image="black-avatar" id="yqu-Rh-YHg"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="l9h-UT-ItF">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="l9h-UT-ItF">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="Xmp-ga-Z9j" kind="relationship" relationship="rootViewController" id="PT7-VP-vvF"/>
