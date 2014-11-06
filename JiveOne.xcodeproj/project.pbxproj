@@ -97,7 +97,7 @@
 		274493C818D0E98D002744CB /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 274493C718D0E98D002744CB /* Conversation.m */; };
 		274493CB18D0E98D002744CB /* PersonMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = 274493CA18D0E98D002744CB /* PersonMeta.m */; };
 		274493CE18D13538002744CB /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 274493CD18D13538002744CB /* Common.m */; };
-		2747F1661A07E0F300E3FE73 /* JCContactsHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2747F1651A07E0F300E3FE73 /* JCContactsHomeViewController.m */; };
+		2747F1661A07E0F300E3FE73 /* JCContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2747F1651A07E0F300E3FE73 /* JCContactsViewController.m */; };
 		275158FC18AD10BB00FD8D3F /* main-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 275158F718AD10BA00FD8D3F /* main-logo.png */; };
 		2751591118AD174F00FD8D3F /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751590E18AD174F00FD8D3F /* KeychainItemWrapper.m */; };
 		2751591218AD174F00FD8D3F /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751590E18AD174F00FD8D3F /* KeychainItemWrapper.m */; };
@@ -475,8 +475,8 @@
 		274493CA18D0E98D002744CB /* PersonMeta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonMeta.m; sourceTree = "<group>"; };
 		274493CC18D13538002744CB /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		274493CD18D13538002744CB /* Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Common.m; sourceTree = "<group>"; };
-		2747F1641A07E0F300E3FE73 /* JCContactsHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCContactsHomeViewController.h; sourceTree = "<group>"; };
-		2747F1651A07E0F300E3FE73 /* JCContactsHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCContactsHomeViewController.m; sourceTree = "<group>"; };
+		2747F1641A07E0F300E3FE73 /* JCContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCContactsViewController.h; sourceTree = "<group>"; };
+		2747F1651A07E0F300E3FE73 /* JCContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCContactsViewController.m; sourceTree = "<group>"; };
 		275158F718AD10BA00FD8D3F /* main-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "main-logo.png"; sourceTree = "<group>"; };
 		2751590218AD10E500FD8D3F /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		2751590D18AD174F00FD8D3F /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
@@ -1535,18 +1535,11 @@
 			children = (
 				919004CE196D9C9C00BEB11C /* PeopleDetailCell */,
 				919004CD196D9C8500BEB11C /* PersonCell */,
-				2751591D18AD303500FD8D3F /* JCDirectoryViewController.h */,
-				2751591E18AD303500FD8D3F /* JCDirectoryViewController.m */,
-				91260EDB18B2965900704670 /* JCDirectoryDetailViewController.h */,
-				91260EDC18B2965900704670 /* JCDirectoryDetailViewController.m */,
-				F2459BB018C67FC000AF56CF /* JCGroupSelectorViewController.h */,
-				F2459BB118C67FC000AF56CF /* JCGroupSelectorViewController.m */,
-				F258589018BD3A420020AF34 /* JCDirectoryGroupViewController.h */,
-				F258589118BD3A420020AF34 /* JCDirectoryGroupViewController.m */,
+				5D895EB61A0BE00E0015368D /* Deprecated */,
+				2747F1641A07E0F300E3FE73 /* JCContactsViewController.h */,
+				2747F1651A07E0F300E3FE73 /* JCContactsViewController.m */,
 				276E06781A0293BC00CD2827 /* JCContactsTableViewController.h */,
 				276E06791A0293BC00CD2827 /* JCContactsTableViewController.m */,
-				2747F1641A07E0F300E3FE73 /* JCContactsHomeViewController.h */,
-				2747F1651A07E0F300E3FE73 /* JCContactsHomeViewController.m */,
 			);
 			name = Contacts;
 			sourceTree = "<group>";
@@ -1994,6 +1987,21 @@
 				27F64D6119772D6A00F772AA /* Voicemail.m */,
 			);
 			name = Events;
+			sourceTree = "<group>";
+		};
+		5D895EB61A0BE00E0015368D /* Deprecated */ = {
+			isa = PBXGroup;
+			children = (
+				2751591D18AD303500FD8D3F /* JCDirectoryViewController.h */,
+				2751591E18AD303500FD8D3F /* JCDirectoryViewController.m */,
+				91260EDB18B2965900704670 /* JCDirectoryDetailViewController.h */,
+				91260EDC18B2965900704670 /* JCDirectoryDetailViewController.m */,
+				F2459BB018C67FC000AF56CF /* JCGroupSelectorViewController.h */,
+				F2459BB118C67FC000AF56CF /* JCGroupSelectorViewController.m */,
+				F258589018BD3A420020AF34 /* JCDirectoryGroupViewController.h */,
+				F258589118BD3A420020AF34 /* JCDirectoryGroupViewController.m */,
+			);
+			name = Deprecated;
 			sourceTree = "<group>";
 		};
 		5DDE651019F0C29900B90B55 /* Call History */ = {
@@ -2568,7 +2576,7 @@
 				272B61DD18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */,
 				274493B918D0E98C002744CB /* Presence.m in Sources */,
 				2700987F18F4714100B6BC2F /* JSMessagesViewController.m in Sources */,
-				2747F1661A07E0F300E3FE73 /* JCContactsHomeViewController.m in Sources */,
+				2747F1661A07E0F300E3FE73 /* JCContactsViewController.m in Sources */,
 				274493CB18D0E98D002744CB /* PersonMeta.m in Sources */,
 				2700987618F4714100B6BC2F /* UIImage+JSMessagesView.m in Sources */,
 				27F1F2E1191C171300AEAFD7 /* UALocationDemoAnnotation.m in Sources */,

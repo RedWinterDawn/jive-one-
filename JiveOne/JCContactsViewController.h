@@ -6,13 +6,10 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 
+@interface JCContactsViewController : UIViewController <UITabBarDelegate>
 
-
-@interface JCContactsHomeViewController : UIViewController <UITabBarDelegate>
-@property (weak, nonatomic) IBOutlet UITabBar *tabBar;
-
-
+@property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
 
 @end
