@@ -18,6 +18,13 @@
 
 @implementation JCContactsViewController
 
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.tabBar.selectedItem = [self.tabBar.items objectAtIndex:0];
+}
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     UIViewController *viewController = segue.destinationViewController;

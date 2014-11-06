@@ -84,6 +84,7 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="searchBar" destination="5ds-mG-BrS" id="eKU-3I-hhY"/>
+                        <outlet property="tabBar" destination="KQN-3R-ma5" id="wBh-2d-BJB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ozR-aT-h5B" sceneMemberID="firstResponder"/>
