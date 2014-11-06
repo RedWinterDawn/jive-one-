@@ -32,7 +32,7 @@ NSString *const kIncomingCallEntityName = @"IncomingCall";
 
 +(void)addIncommingCallWithLineSession:(JCLineSession *)session
 {
-    [IncomingCall addCallEntity:kIncomingCallEntityName lineSession:session];
+    [IncomingCall addCallEntity:kIncomingCallEntityName lineSession:session read:YES];
 }
 
 @end

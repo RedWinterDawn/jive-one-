@@ -73,7 +73,7 @@ static inline double radians (double degrees) { return degrees * M_PI/180; }
 
 +(NSDate *)dateFromTimestamp:(NSNumber *)timestamp
 {
-    NSTimeInterval timeInterval = [timestamp longLongValue]/1000;
+    NSTimeInterval timeInterval = [timestamp longLongValue];
     NSDate *date = [[NSDate alloc]initWithTimeIntervalSince1970: timeInterval];
     return date;
 }

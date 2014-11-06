@@ -30,7 +30,7 @@ NSString *const kOutgoingCallEntityName = @"OutgoingCall";
 
 +(void)addOutgoingCallWithLineSession:(JCLineSession *)session
 {
-    [OutgoingCall addCallEntity:kOutgoingCallEntityName lineSession:session];
+    [OutgoingCall addCallEntity:kOutgoingCallEntityName lineSession:session read:YES];
 }
 
 @end

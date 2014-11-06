@@ -12,15 +12,14 @@
 #import "JCCallHistoryViewController.h"
 #import "JCVoicemailViewController.h"
 
+#import "JCPhoneTabBarControllerDelegate.h"
+
 #import "Voicemail.h"
 #import "Call.h"
 
 NSString *const kApplicationSwitcherLastSelectedViewControllerIdentifierKey = @"applicationSwitcherLastSelected";
 
 NSString *const kApplicationSwitcherPhoneRestorationIdentifier = @"PhoneTabBarController";
-NSString *const kApplicationSwitcherDialerRestorationIdentifier = @"DialerNavigationController";
-NSString *const kApplicationSwitcherCallHistoryRestorationIdentifier = @"CallHistoryNavigationController";
-NSString *const kApplicationSwitcherVoicemailRestorationIdentifier = @"VoicemailNavigationController";
 
 @interface JCApplicationSwitcherDelegate ()
 
@@ -67,6 +66,26 @@ NSString *const kApplicationSwitcherVoicemailRestorationIdentifier = @"Voicemail
     return [[JCMenuBarButtonItem alloc] initWithTarget:controller action:@selector(showMenu:)];
 }
 
+-(UITableViewCell *)applicationSwitcherController:(JCApplicationSwitcherViewController *)controller tableView:(UITableView *)tableView cellForTabBarItem:(UITabBarItem *)tabBarItem identifier:(NSString *)identifier
+{
+    if ([identifier isEqualToString:kApplicationSwitcherPhoneRestorationIdentifier]) {
+        static NSString *resueIdentifier = @"PhoneCell";
+        UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:resueIdentifier];
+        cell.textLabel.text = tabBarItem.title;
+        cell.imageView.image = tabBarItem.image;
+        
+        return cell;
+    }
+    
+    
+    static NSString *resueIdentifier = @"MenuCell";
+    UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:resueIdentifier];
+    cell.textLabel.text = tabBarItem.title;
+    cell.imageView.image = tabBarItem.image;
+    
+    return cell;
+}
+
 -(UIViewController *)applicationSwitcherLastSelectedViewController:(JCApplicationSwitcherViewController *)controller
 {
     NSString *identifier = self.lastSelectedViewControllerIdentifier;
@@ -104,10 +123,10 @@ NSString *const kApplicationSwitcherVoicemailRestorationIdentifier = @"Voicemail
         if ([controller.restorationIdentifier isEqualToString:restorationIdentifier]) {
             tabBarController.selectedViewController = controller;
             
-            if ([controller.restorationIdentifier isEqualToString:kApplicationSwitcherCallHistoryRestorationIdentifier] && [recentEvent isKindOfClass:[Call class]]) {
+            if ([controller.restorationIdentifier isEqualToString:kJCPhoneTabBarControllerCallHistoryRestorationIdentifier] && [recentEvent isKindOfClass:[Call class]]) {
                 [self navigateHistoryViewController:controller toRecentEvent:(Call *)recentEvent];
             }
-            else if ([controller.restorationIdentifier isEqualToString:kApplicationSwitcherVoicemailRestorationIdentifier] && [recentEvent isKindOfClass:[Voicemail class]]) {
+            else if ([controller.restorationIdentifier isEqualToString:kJCPhoneTabBarControllerVoicemailRestorationIdentifier] && [recentEvent isKindOfClass:[Voicemail class]]) {
                 [self navigateVoicemailViewController:controller toRecentEvent:(Voicemail *)recentEvent];
             }
             
@@ -152,10 +171,10 @@ NSString *const kApplicationSwitcherVoicemailRestorationIdentifier = @"Voicemail
 -(NSString *)phoneTabBarControllerRestorationIdentifierForRecentEvent:(RecentEvent *)recentEvent
 {
     if ([recentEvent isKindOfClass:[Voicemail class]]) {
-        return kApplicationSwitcherVoicemailRestorationIdentifier;
+        return kJCPhoneTabBarControllerVoicemailRestorationIdentifier;
     }
     else if ([recentEvent isKindOfClass:[Call class]]){
-        return kApplicationSwitcherCallHistoryRestorationIdentifier;
+        return kJCPhoneTabBarControllerCallHistoryRestorationIdentifier;
     }
     return nil;
 }
@@ -167,7 +186,7 @@ NSString *const kApplicationSwitcherVoicemailRestorationIdentifier = @"Voicemail
         if ([viewController isKindOfClass:[UITabBarController class]]) {
             UITabBarController *phoneTabBarController = (UITabBarController *)viewController;
             for (UIViewController *controller in phoneTabBarController.viewControllers) {
-                if ([controller.restorationIdentifier isEqualToString:kApplicationSwitcherDialerRestorationIdentifier]) {
+                if ([controller.restorationIdentifier isEqualToString:kJCPhoneTabBarControllerDialerRestorationIdentifier]) {
                     phoneTabBarController.selectedViewController = controller;
                 }
             }

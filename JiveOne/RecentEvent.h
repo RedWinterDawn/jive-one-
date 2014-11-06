@@ -20,6 +20,9 @@
 // Represent the date of the event.
 @property (nonatomic, strong) NSDate *date;
 
+// Indicates whether the event has been read.
+@property (nonatomic, getter=isRead) bool read;
+
 // Transient Properties.
 @property (nonatomic, weak) NSNumber *timestamp;
 @property (nonatomic, readonly) NSString *formattedModifiedShortDate;

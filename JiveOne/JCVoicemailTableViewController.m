@@ -43,8 +43,6 @@
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(updateVoiceTable:) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
-	
-    [Voicemail fetchVoicemailInBackground];
 }
 
 #pragma mark - Getters -
@@ -53,9 +51,9 @@
 {
 	if (!_fetchedResultsController) {
 		
-//		NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Voicemail"];
-//		fetchRequest.predicate = [NSPredicate predicateWithFormat:@"markForDeletion ==[c] %@", [NSNumber numberWithBool:NO]];
-//		fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO]];
+		/*NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Voicemail"];
+		fetchRequest.predicate = [NSPredicate predicateWithFormat:@"markForDeletion ==[c] %@", [NSNumber numberWithBool:NO]];
+		fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO]];*/
 		
 		NSFetchRequest *fetchRequest = [Voicemail MR_requestAllSortedBy:@"date" ascending:NO withPredicate:[NSPredicate predicateWithFormat:@"markForDeletion ==[c] %@", [NSNumber numberWithBool:NO]]];
 		fetchRequest.fetchBatchSize = 10;
@@ -139,9 +137,9 @@
 
 -(void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-	Voicemail *voicemail = [self objectAtIndexPath:indexPath];
-	JCVoicemailPlaybackCell *voiceCell = (JCVoicemailPlaybackCell *)cell;
-	[self configureCell:cell withObject:voicemail];
+    [super configureCell:cell atIndexPath:indexPath];
+    
+    JCVoicemailPlaybackCell *voiceCell = (JCVoicemailPlaybackCell *)cell;
 	voiceCell.indexPath = indexPath;
 	BOOL isSelected = [self.selectedIndexPaths containsObject:indexPath];
 	if (isSelected)
@@ -169,8 +167,7 @@
 	
 	Voicemail *voicemail = [self objectAtIndexPath:indexPath];
 	[Voicemail markVoicemailForDeletion:voicemail.jrn managedContext:nil];
-	[(JCAppDelegate *)[UIApplication sharedApplication].delegate decrementBadgeCountForVoicemail:voicemail.jrn];
-	[self deleteVoicemailsInBackground];
+	[Voicemail deleteVoicemailsInBackground];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -223,30 +220,6 @@
 	[self deleteObjectAtIndexPath:indexPath];
 }
 
-- (void)deleteVoicemailsInBackground
-{
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"markForDeletion ==[c] %@", [NSNumber numberWithBool:YES]];
-    NSArray *deletedVoicemails = [NSMutableArray arrayWithArray:[Voicemail MR_findAllWithPredicate:predicate]];
-    
-    if (deletedVoicemails.count > 0) {
-        for (Voicemail *voice in deletedVoicemails) {
-            if(voice.url_self){
-                [[JCVoicemailClient sharedClient] deleteVoicemail:voice.url_self completed:^(BOOL succeeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-                    if (succeeded) {
-                        [Voicemail deleteVoicemail:voice.jrn managedContext:nil];
-                    }
-                    else {
-                        NSLog(@"Error Deleting Voicemail: %@", error);
-                    }
-                }];
-            }
-            else{
-                [Flurry logError:@"Voicemail Service" message:@"url_self is nil to delete" error:nil];
-            }
-        }
-    }
-}
-
 - (void)addOrRemoveSelectedIndexPath:(NSIndexPath *)indexPath
 {
     if (!self.selectedIndexPaths) {
@@ -284,31 +257,6 @@
     [self.tableView reloadRowsAtIndexPaths:indexPaths
                           withRowAnimation:UITableViewRowAnimationFade];
     
-}
-
-- (void)markVoicemailAsRead
-{
-    self.selectedCell.voicemail.read = [NSNumber numberWithBool:YES];
-    
-    if (!context) {
-        context = [NSManagedObjectContext MR_contextForCurrentThread];
-    }
-    // save to local storage
-    [context MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
-        if (success) {
-            [self.selectedCell  performSelectorOnMainThread:@selector(styleCellForRead) withObject:nil waitUntilDone:NO];
-            // now send update to server
-            [[JCVoicemailClient sharedClient] updateVoicemailToRead:self.selectedCell.voicemail completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-                if(suceeded){
-                      NSLog(@"Success Updating Read On Server");
-                }else{
-                    NSString*errorMessage = @"Failed Updating Read On Server";
-                    NSLog(@"%@", errorMessage);
-                    [Flurry logError:@"Voicmail-11" message:errorMessage error:error];
-                }
-            }];
-        }
-    }];
 }
 
 
@@ -354,7 +302,7 @@
     self.selectedCell = (JCVoicemailPlaybackCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     
     NSError *error;
-    player = [[AVAudioPlayer alloc] initWithData:self.selectedCell.voicemail.voicemail fileTypeHint:AVFileTypeWAVE error:&error];
+    player = [[AVAudioPlayer alloc] initWithData:self.selectedCell.voicemail.data fileTypeHint:AVFileTypeWAVE error:&error];
     if (player) {
         [self setupSpeaker];
         player.delegate = self;
@@ -380,10 +328,7 @@
         
         [self startProgressTimerForVoicemail];
         self.selectedCell.playPauseButton.selected = TRUE;
-        [(JCAppDelegate *)[UIApplication sharedApplication].delegate decrementBadgeCountForVoicemail:self.selectedCell.voicemail.jrn];
-        if (![self.selectedCell.voicemail.read boolValue]) {
-            [self markVoicemailAsRead];
-        }
+        [self.selectedCell.voicemail markAsRead];
     }
 }
 

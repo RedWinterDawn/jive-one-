@@ -9,6 +9,10 @@
 #import "RecentEvent.h"
 #import "Common.h"
 
+#import "NSManagedObject+JCCoreDataAdditions.h"
+
+NSString *const kRecentEventReadKey = @"read";
+
 @implementation RecentEvent
 
 @dynamic name;
@@ -25,6 +29,11 @@
 -(void)setTimestamp:(NSNumber *)timestamp
 {
     self.date = [Common dateFromTimestamp:timestamp];
+}
+
+-(void)setRead:(bool)read
+{
+    [self setPrimitiveValueFromBoolValue:read forKey:kRecentEventReadKey];
 }
 
 #pragma mark - Getters -
@@ -65,6 +74,11 @@
         return nil;
     }
     return self.number;
+}
+
+-(bool)isRead
+{
+    return [self boolValueFromPrimitiveValueForKey:kRecentEventReadKey];
 }
 
 @end

@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "JCApplicationSwitcherViewController.h"
 
+extern NSString *const kApplicationSwitcherPhoneRestorationIdentifier;
+
 @interface JCApplicationSwitcherDelegate : NSObject <JCApplicationSwitcherDelegate>
 
 +(void)reset;

@@ -25,10 +25,12 @@
 
 #import "JCCallCardManager.h"
 #import "JCCallerViewController.h"
+#import "JCBadgeManager.h"
 
-@interface JCAppDelegate () <JCCallerViewControllerDelegate>
+@interface JCAppDelegate () <JCCallerViewControllerDelegate, UAPushNotificationDelegate, UARegistrationDelegate>
 {
     JCCallerViewController *_presentedCallerViewController;
+    bool _didNotify;
 }
 
 @property (nonatomic) UIStoryboard* storyboard;
@@ -38,7 +40,6 @@
 
 
 @implementation JCAppDelegate
-int didNotify;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -59,8 +60,7 @@ int didNotify;
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultPreferences];
     
     //check if we are using a iphone or ipad
-    self.deviceIsIPhone = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? NO : YES;
-	[self tabBarViewController];
+    [self tabBarViewController];
 	[self loginViewController];
 
     
@@ -118,20 +118,17 @@ int didNotify;
     [center addObserver:self selector:@selector(didReceiveIncomingCall:) name:kJCCallCardManagerAddedCallNotification object:callCardManager];
     [center addObserver:self selector:@selector(stopRingtone) name:kJCCallCardManagerAnswerCallNotification object:callCardManager];
     
-    [self refreshTabBadges:NO];    
-    if (![[JCAuthenticationManager sharedInstance] userAuthenticated] || ![[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {
+    // Launches the Badge manager. Should be launched after Mangical record has initialized.
+    [[JCBadgeManager sharedManager] initialize];
+    
+    // Authentication
+    JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
+    if (!authenticationManager.userAuthenticated || !authenticationManager.userLoadedMininumData) {
         [self changeRootViewController:JCRootLoginViewController];
     }
     
     return YES;
 }
-
--(void)configureLogging
-{
-    
-}
-
-
 
 - (void)didLogInSoCanRegisterForPushNotifications
 {
@@ -139,10 +136,8 @@ int didNotify;
 
     //[UAPush shared].pushNotificationDelegate = self;
     // Request a custom set of notification types
-    [[UAPush shared] registerForRemoteNotifications];
-    [UAPush shared].notificationTypes = (UIRemoteNotificationTypeBadge |
-                                         UIRemoteNotificationTypeSound |
-                                         UIRemoteNotificationTypeAlert);
+    //[[UAPush shared] registerForRemoteNotifications];
+    //[UAPush shared].notificationTypes = (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert);
 }
 
 - (void)didLogOutSoUnRegisterForPushNotifications
@@ -219,7 +214,7 @@ int didNotify;
 //        currentInstallation.badge = 0;
 //        [currentInstallation saveEventually];
 //    }
-    didNotify = 0;
+    _didNotify = false;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(alertUserToUpdate:) name:@"AppIsOutdated" object:nil];
     [[JCVersion sharedClient] getVersion];
     
@@ -231,7 +226,7 @@ int didNotify;
 {
     LOG_Info();
     
-    if ([[notification name] isEqualToString:@"AppIsOutdated"] && (didNotify < 1))
+    if ([[notification name] isEqualToString:@"AppIsOutdated"] && (!_didNotify))
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update Required"
                                                         message:@"Please download the latest version of JiveApp Beta."
@@ -240,7 +235,7 @@ int didNotify;
                                               otherButtonTitles:@"Download", nil];
         [alert show];
     }
-    didNotify = 1;
+    _didNotify = true;
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
@@ -257,7 +252,7 @@ int didNotify;
     
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     [MagicalRecord cleanUp];
-    didNotify = 0;
+    _didNotify = false;
 }
 
 - (void)startSocket:(BOOL)inBackground
@@ -280,8 +275,7 @@ int didNotify;
     [[JasmineSocket sharedInstance] closeSocketWithReason:@"Entering background"];
 }
 
-#pragma mark - PushNotifications
-
+#pragma mark - Push Notifications Handling
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
@@ -310,72 +304,31 @@ int didNotify;
 	NSLog(@"APPDELEGATE - Failed to get token, error: %@", error);
 }
 
-
-- (NSInteger)currentBadgeCount
-{
-    LOG_Info();
-    
-    NSDictionary * badgeDictionary = [[NSUserDefaults standardUserDefaults] objectForKey:@"badges"];
-    NSMutableDictionary *_badges = nil;
-    if (badgeDictionary) {
-        _badges = [NSMutableDictionary dictionaryWithDictionary:badgeDictionary];
-        int count = 0;
-        for (NSString *key in _badges.allKeys)
-        {
-            NSRange rangeConversation = [key rangeOfString:@"conversations"];
-            NSRange rangeRooms = [key rangeOfString:@"permanentrooms"];
-            if (rangeConversation.location != NSNotFound || rangeRooms.location != NSNotFound) {
-            NSMutableDictionary *conversations = [_badges[key] mutableCopy];
-                if (conversations) {
-                    count += conversations.count;
-                }
-            }
-            else {
-                count++;
-            }
-        }
-        
-        return count;
-    }
-    else
-    {
-        return 0;
-    }
-}
-
-
-// foreground
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     LOG_Info();
-//    [[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
-
+    // [[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
     completionHandler([self BackgroundPerformFetchWithCompletionHandler]);
 }
-
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     LOG_Info();
-//    [[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
-
+    // [[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
     completionHandler([self BackgroundPerformFetchWithCompletionHandler]);
 }
 
-#pragma mark - Background Fetch
 - (void)receivedForegroundNotification:(NSDictionary *)notification fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     LOG_Info();
-//    [[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
-
+    // [[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
     completionHandler([self BackgroundPerformFetchWithCompletionHandler]);
 }
 
 - (void)receivedBackgroundNotification:(NSDictionary *)notification fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     LOG_Info();
-//    [[JCSocketDispatch sharedInstance] setStartedInBackground:YES];
-
+    // [[JCSocketDispatch sharedInstance] setStartedInBackground:YES];
     completionHandler([self BackgroundPerformFetchWithCompletionHandler]);
 }
 
@@ -392,29 +345,26 @@ int didNotify;
     
     NSLog(@"APPDELEGATE - performFetchWithCompletionHandler");
     __block UIBackgroundFetchResult fetchResult = UIBackgroundFetchResultFailed;
-    if ([JasmineSocket sharedInstance].socket.readyState != SR_OPEN) {
-        //[[JCAuthenticationManager sharedInstance] checkForTokenValidity];
-        __block UIBackgroundFetchResult fetchResult = UIBackgroundFetchResultFailed;
-        
+    if ([JasmineSocket sharedInstance].socket.readyState != SR_OPEN)
+    {
         @try {
-            
             TRVSMonitor *monitor = [TRVSMonitor monitor];
-            NSInteger previousCount = [self currentBadgeCount];
+            JCBadgeManager *badgeManger = [JCBadgeManager sharedManager];
+            [badgeManger startBackgroundUpdates];
 
-            // V5 only provides voicemail through REST. So re make a REST Call
-            [[JCVoicemailClient sharedClient] getVoicemails:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-                if (suceeded) {
+            // Fetch Voicemails in the background.
+            [Voicemail fetchVoicemailsInBackground:^(BOOL success, NSError *error) {
+                if (success) {
                     NSLog(@"Success Done with Block");
                     LogMessage(@"socket", 4, @"Successful Rest Call In Background");
-                    
                 }
                 else {
                     NSLog(@"Error Done With Block %@", error);
                     LogMessage(@"socket", 4, @"Failed Rest Call In Background");
                 }
-                
                 [monitor signal];
-            }];            
+            }];
+            
 // No Socket for now.
 //            [[JCSocketDispatch sharedInstance] startPoolingFromSocketWithCompletion:^(BOOL success, NSError *error) {
 //                if (success) {
@@ -430,15 +380,12 @@ int didNotify;
 //            }];
             
             [monitor waitWithTimeout:25];
-            
-            NSInteger afterCount = [self currentBadgeCount];
-            
-            if (afterCount == 0 || (afterCount == previousCount)) {
-                fetchResult = UIBackgroundFetchResultNoData;
-            }
-            else if (afterCount > previousCount) {
+            NSUInteger badgeUpdateEvents = [badgeManger endBackgroundUpdates];
+            if (badgeUpdateEvents != 0) {
                 fetchResult = UIBackgroundFetchResultNewData;
-                [self refreshTabBadges:YES];
+            }
+            else {
+                fetchResult = UIBackgroundFetchResultNoData;
             }
         }
         @catch (NSException *exception) {
@@ -451,7 +398,6 @@ int didNotify;
 
                     [self stopSocket];
                 }
-
             }
             
         }
@@ -459,231 +405,6 @@ int didNotify;
     
     return fetchResult;
 }
-
-
-#pragma mark - Tabbar Badges
-
-- (void)incrementBadgeCountForConversation:(NSString *)conversationId entryId:(NSString *)entryId
-{
-    LOG_Info();
-    
-    //
-    NSMutableDictionary *_badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
-    if (!_badges) {
-    LOG_Info();
-        _badges = [[NSMutableDictionary alloc] init];
-    }
-    
-    NSMutableDictionary *conversationDictionary = [[_badges objectForKey:conversationId] mutableCopy];
-    if (!conversationDictionary) {
-        conversationDictionary = [[NSMutableDictionary alloc] init];
-    }
-    
-    // new conversation
-    NSNumber *read = [NSNumber numberWithBool:NO];
-    [conversationDictionary setObject:read forKey:entryId];
-    
-    [_badges setValue:conversationDictionary forKey:conversationId];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:[_badges copy] forKey:@"badges"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    [self refreshTabBadges:NO];
-}
-
-- (void)incrementBadgeCountForVoicemail:(NSString *)jrn
-{
-    LOG_Info();
-    
-    NSMutableDictionary *_badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
-    if (!_badges) {
-        _badges = [[NSMutableDictionary alloc] init];
-    }
-    
-    // new voicemail
-    NSNumber *read = [NSNumber numberWithBool:NO];
-    [_badges setObject:read forKey:jrn];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:[_badges copy] forKey:@"badges"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    [self refreshTabBadges:NO];
-}
-
-- (void) decrementBadgeCountForVoicemail:(NSString *)voicemailId;
-{
-    LOG_Info();
-    
-    NSMutableDictionary *_badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
-    if (!_badges) {
-        _badges = [[NSMutableDictionary alloc] init];
-    }
-    
-    if (_badges) {
-        NSNumber *read = _badges[voicemailId];
-        if (read) {
-            [_badges removeObjectForKey:voicemailId];
-            
-            [[NSUserDefaults standardUserDefaults] setObject:[_badges copy] forKey:@"badges"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            [self refreshTabBadges:NO];
-        }
-    }
-    
-    
-}
-
-- (void)clearBadgeCountForConversation:(NSString *)conversationId
-{
-    LOG_Info();
-    
-    NSMutableDictionary *_badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
-    if (!_badges) {
-        _badges = [[NSMutableDictionary alloc] init];
-    }
-    
-    [_badges removeObjectForKey:conversationId];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:[_badges copy] forKey:@"badges"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    [self refreshTabBadges:NO];
-}
-
-- (void)clearBadgeCountForVoicemail
-{
-    LOG_Info();
-    
-    NSMutableDictionary *_badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
-    if (!_badges) {
-        _badges = [[NSMutableDictionary alloc] init];
-    }
-    
-    NSNumber *number = [_badges objectForKey:@"voicemail"];
-    
-    NSLog(@"%@", number);
-    
-    number = [NSNumber numberWithInteger:0];
-    [_badges setObject:number forKey:@"voicemail"];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:[_badges copy] forKey:@"badges"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    [self refreshTabBadges:NO];
-}
-
-- (void)refreshTabBadges:(BOOL)fromRemoteNotification
-{
-    LOG_Info();
-    
-    UITabBarController *tabController = (UITabBarController *)self.window.rootViewController;
-    if ([tabController isKindOfClass:[UITabBarController class]]) {
-        
-        NSMutableDictionary *_badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
-        if (_badges) {
-            
-            int voicemailCount = 0;
-            int conversationCount = 0;
-            
-            for (NSString *key in _badges) {
-                
-                NSRange rangeConversation = [key rangeOfString:@"conversations"];
-                NSRange rangeRooms = [key rangeOfString:@"permanentrooms"];
-                if (rangeConversation.location != NSNotFound || rangeRooms.location != NSNotFound) {
-                    conversationCount++;
-                }
-                
-                NSRange rangeVoicemail = [key rangeOfString:@"voicemails"];
-                if (rangeVoicemail.location != NSNotFound ) {
-                    voicemailCount++;
-                }
-            }
-            
-//            [tabController.viewControllers[2] tabBarItem].badgeValue = conversationCount == 0 ? nil : [NSString stringWithFormat:@"%i", conversationCount];//TODO: reenable for chat
-            [tabController.viewControllers[0] tabBarItem].badgeValue = voicemailCount == 0 ? nil : [NSString stringWithFormat:@"%i", voicemailCount];
-            
-            int appCount = conversationCount + voicemailCount;
-            [UIApplication sharedApplication].applicationIconBadgeNumber = appCount;
-            
-            if (fromRemoteNotification) {
-                if (conversationCount != 0 || voicemailCount != 0) {
-                    [self setNotification:voicemailCount conversation:conversationCount];
-                }
-            }
-        }
-    }
-}
-
-#pragma mark - Local Notifications
-- (void)setNotification:(NSInteger)voicemailCount conversation:(NSInteger)conversationCount {
-    LOG_Info();
-    
-    //if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive)  {
-        
-        NSMutableDictionary *_badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
-    
-    
-        [_badges enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-            NSRange rangeConversation = [key rangeOfString:@"conversations"];
-            NSRange rangeRooms = [key rangeOfString:@"permanentrooms"];
-            if (rangeConversation.location != NSNotFound || rangeRooms.location != NSNotFound) {
-                NSMutableDictionary *convCopy = nil;
-                if ([_badges[key] isKindOfClass:[NSDictionary class]]) {
-                    NSMutableDictionary *conversations = [_badges[key] mutableCopy];
-                    if (conversations) {
-                        convCopy = [[conversations copy] mutableCopy];
-                        for (NSString *entry in conversations) {
-                            NSNumber *shown = conversations[entry];
-                            if (![shown boolValue]) {
-                                
-                                ConversationEntry *lastEntry = [ConversationEntry MR_findFirstByAttribute:@"entryId" withValue:entry];
-                                PersonEntities *person = [PersonEntities MR_findFirstByAttribute:@"entityId" withValue:lastEntry.entityId];
-                                NSString *alertMessage = [NSString stringWithFormat:@"%@: \"%@\"", person.firstName, lastEntry.message[@"raw"]];
-                                
-                                [self showLocalNotificationWithType:@"conversation" alertMessage:alertMessage];
-                                [convCopy setObject:[NSNumber numberWithBool:YES] forKey:entry];
-                                
-                                
-                            }
-                        }
-                        [_badges setObject:convCopy forKey:key];
-                    }
-                }
-                
-            }
-            
-            NSRange rangeVoicemail = [key rangeOfString:@"jrn"];
-            if (rangeVoicemail.location != NSNotFound ) {
-                NSNumber *notified = _badges[key];
-                if (![notified boolValue]) {
-                    notified = [NSNumber numberWithBool:YES];
-                    Voicemail *lastEntry = [Voicemail MR_findFirstByAttribute:@"jrn" withValue:key];
-                    if (lastEntry) {
-                        NSString *alertMessage = lastEntry.name ? [NSString stringWithFormat:@"New voicemail from %@", lastEntry.number]  : @"Unknown";
-                        [self showLocalNotificationWithType:@"voicemail" alertMessage:alertMessage];
-                    }
-                }
-                _badges[key] = notified;
-                //[[NSUserDefaults standardUserDefaults] setObject:[_badges copy] forKey:@"badges"];
-                //[[NSUserDefaults standardUserDefaults] synchronize];
-            }
-
-        }];
-    
-        [[NSUserDefaults standardUserDefaults] setObject:[_badges copy] forKey:@"badges"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-
-}
-
-- (void) showLocalNotificationWithType:(NSString *)alertType alertMessage:(NSString *)alertMessage
-{
-    LOG_Info();
-    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-    localNotification.alertBody = alertMessage;
-    localNotification.soundName = UILocalNotificationDefaultSoundName;
-    //NSInteger currentAppBadge = [UIApplication sharedApplication].applicationIconBadgeNumber;
-    //currentAppBadge++;
-    //localNotification.applicationIconBadgeNumber = currentAppBadge;
-    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
-}
-
-
 
 -(BOOL)seenTutorial
 {
@@ -702,7 +423,7 @@ int didNotify;
     return _storyboard;
 }
 
-- (UIWindow*)window
+- (UIWindow *)window
 {
     LOG_Info();
     if (!_window) {
@@ -730,6 +451,7 @@ int didNotify;
 }
 
 #pragma mark - Change Root ViewController
+
 - (void)logout
 {
     LOG_Info();

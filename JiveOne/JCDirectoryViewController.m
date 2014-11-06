@@ -169,8 +169,6 @@ static NSString *CellIdentifier = @"DirectoryCell";
     if (self.searchTableIsActive) {
         [self.searchDisplayController.searchBar resignFirstResponder];
     }
-    
-    [(JCAppDelegate *)[UIApplication sharedApplication].delegate refreshTabBadges:NO];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
