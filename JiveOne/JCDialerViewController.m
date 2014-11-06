@@ -54,7 +54,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
         JCCallerViewController *callerViewController = (JCCallerViewController *)viewController;
         callerViewController.dialString = self.dialStringLabel.dialString;
         callerViewController.delegate = self;
-        self.dialStringLabel.text = nil;
+        self.dialStringLabel.dialString = nil;
     }
 }
 

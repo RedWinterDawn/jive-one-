@@ -171,13 +171,9 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
                 [self startTimer];
                 break;
             }
-            case JCNoCall:
-            case JCInvite:
-            case JCCallRinging:
+            default:
                 [self hideHoldButton:NO];
                 self.elapsedTimeLabel.text = NSLocalizedString(@"RINGING", nil);
-                break;
-            default:
                 break;
         }
     }
