@@ -31,11 +31,10 @@
     BOOL fastConnection;
 	BOOL loginCanceled;
     MBProgressHUD *hud;
-	NSTimer *loginTimer;
-	
 }
 
 @property (nonatomic, strong) NSError *errorOccurred;
+@property (nonatomic, strong) NSTimer *loginTimer;
 
 @end
 
@@ -236,14 +235,15 @@
 
         }];
 		
-		// start timer
-		loginTimer = [NSTimer scheduledTimerWithTimeInterval:120
-													  target:self
-													selector:@selector(loginIsTakingTooLong)
-													userInfo:nil
-													 repeats:NO];
-		
-		[[NSRunLoop currentRunLoop] addTimer:loginTimer forMode:NSDefaultRunLoopMode];
+		dispatch_async(dispatch_get_main_queue(), ^{
+            self.loginTimer = [NSTimer scheduledTimerWithTimeInterval:40
+                                                          target:self
+                                                        selector:@selector(loginIsTakingTooLong)
+                                                        userInfo:nil
+                                                         repeats:NO];
+            
+            [[NSRunLoop currentRunLoop] addTimer:self.loginTimer forMode:NSDefaultRunLoopMode];
+        });
 
 		
     }
@@ -260,9 +260,12 @@
 
 - (void) invalidateLoginTimer
 {
-	if (loginTimer) {
-		[loginTimer invalidate];
-	}
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.loginTimer) {
+            [self.loginTimer invalidate];
+            self.loginTimer = nil;
+        }
+    });
 }
 
 -(void)alertStatus:(NSString*)title message:(NSString*)message
@@ -310,12 +313,12 @@
 
 - (void)checkIfLoadingHasFinished:(NSNotification *)notification
 {
-	_userIsDoneWithTutorial = [[NSUserDefaults standardUserDefaults] boolForKey:@"seenAppTutorial"];
-	if (notification && [[notification name] isEqualToString:@"AppTutorialDismissed"]) {
-		_userIsDoneWithTutorial = YES;
-		[[NSUserDefaults standardUserDefaults] setBool:self.userIsDoneWithTutorial forKey:@"seenAppTutorial"];
-		[[NSNotificationCenter defaultCenter] removeObserver:self name:@"AppTutorialDismissed" object:nil];
-	}
+//	_userIsDoneWithTutorial = [[NSUserDefaults standardUserDefaults] boolForKey:@"seenAppTutorial"];
+//	if (notification && [[notification name] isEqualToString:@"AppTutorialDismissed"]) {
+//		_userIsDoneWithTutorial = YES;
+//		[[NSUserDefaults standardUserDefaults] setBool:self.userIsDoneWithTutorial forKey:@"seenAppTutorial"];
+//		[[NSNotificationCenter defaultCenter] removeObserver:self name:@"AppTutorialDismissed" object:nil];
+//	}
 	
         NSLog (@"Successfully received the AppTutorialDismissed notification!");
         if (!self.doneLoadingContent) {
@@ -326,7 +329,7 @@
 	            [self showHudWithTitle:@"One Moment Please" detail:@"Preparing for first use"];
 			}
         }
-        else if (_userIsDoneWithTutorial)
+        else //if (_userIsDoneWithTutorial)
         {
 			[self goToApplication];
 			
@@ -342,20 +345,21 @@
 
 - (void)tokenValidityPassed:(NSNotification*)notification
 {
-	[self fetchMyMailboxes];
-    if (!self.seenTutorial) {
-        [Flurry logEvent:@"First Login"];
-        [self hideHud];
-//		JCAppIntro *introVC = [self.storyboard instantiateViewControllerWithIdentifier:@"JCAppIntro"];
-//		[self presentViewController:introVC animated:YES completion:^{
-//			//present
-//		}];
-        [self performSegueWithIdentifier: @"AppTutorialSegue" sender:self];
-    }
-    else
-    {
+//	[self fetchMyMailboxes];
+//    if (!self.seenTutorial) {
+//        [Flurry logEvent:@"First Login"];
+//        [self hideHud];
+////		JCAppIntro *introVC = [self.storyboard instantiateViewControllerWithIdentifier:@"JCAppIntro"];
+////		[self presentViewController:introVC animated:YES completion:^{
+////			//present
+////		}];
+//        [self performSegueWithIdentifier: @"AppTutorialSegue" sender:self];
+//    }
+//    else
+//    {
         [self showHudWithTitle:@"One Moment Please" detail:@"Loading data"];
-    }
+    [self fetchMyMailboxes];
+//    }
 }
 
 #pragma mark - Fetch initial data
@@ -413,10 +417,10 @@
 			// fetch the provisioning file again...but then...do we store user creentials?
 			self.doneLoadingContent = YES;
 			[[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
-			[self checkIfLoadingHasFinished:nil];
 			//[self goToApplication];
 			[self fetchVoicemailsMetadata];
 			[self fetchContacts];
+            [self checkIfLoadingHasFinished:nil];
 			
 		}
 		else {

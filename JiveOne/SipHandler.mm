@@ -403,6 +403,10 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     int error = [_mPortSIPSDK answerCall:lineSession.mSessionId videoCall:FALSE];
     if(error == 0)
     {
+        if (lineSession.mRecvCallState) {
+            [IncomingCall addIncommingCallWithLineSession:lineSession];
+        }
+        
         [lineSession setMSessionState:true];
         [lineSession setMRecvCallState:false];
         [lineSession setMVideoState:false];
@@ -433,7 +437,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         else
         {
             if (completion != NULL) {
-                completion(false, [NSError errorWithDomain:@"Error Trying to Hange up" code:error userInfo:nil]);
+                completion(false, [NSError errorWithDomain:@"Error T=r0yin0g to Hange up" code:error userInfo:nil]);
             }
         }
     }
@@ -444,6 +448,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             if (completion != NULL) {
                 completion(true, nil);
             }
+            [MissedCall addMissedCallWithLineSession:lineSession];
             [lineSession reset];
         }
         else
@@ -650,9 +655,17 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     if (!lineSession)
         return;
     
+    
     NSLog(@"%@ Session Id: %ld", event, lineSession.mSessionId);
     switch (state)
     {
+        case JCTransferSuccess:
+            lineSession.sessionState = state;
+            if (_transferCompleted) {
+                _transferCompleted(YES, error);
+                _transferCompleted = nil;
+            }
+            break;
         case JCCallCanceled:
         {
             if (lineSession.mRecvCallState)
@@ -662,23 +675,20 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         }
         case JCInviteFailure:
         case JCCallFailed:
-        case JCTransferSuccess:
-            if (_transferCompleted) {
-                _transferCompleted(YES, error);
-            }
-            break;
         case JCTransferFailed:
             if (_transferCompleted) {
                 _transferCompleted(NO, error);
+                _transferCompleted = nil;
             }
-//            [self.delegate removeLineSession:lineSession];
-//            [lineSession reset];
+            else {
+                [self.delegate removeLineSession:lineSession];
+                [lineSession reset];
+            }
             break;
         default:
             lineSession.sessionState = state;
             break;
     }
-    
 }
 
 -(void)setSessionState:(JCLineSessionState)state forSessionId:(long)sessionId event:(NSString *)event error:(NSError *)error
@@ -761,9 +771,6 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     NSRange finalrange = NSMakeRange(4, newDetail.length-4);
     newDetail = [newDetail substringWithRange:finalrange];
     [idleLine setCallDetail:newDetail];
-    
-    // Add to Core data
-    [IncomingCall addIncommingCallWithLineSession:idleLine];
     
     // Notify delegate to add a line session.
     [self.delegate addLineSession:idleLine];
@@ -967,7 +974,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 - (void)onACTVTransferSuccess:(long)sessionId
 {
-    [self setSessionState:JCTransferSuccess forSessionId:sessionId event:@"onACTVTransferSuccess" error:nil];
+    //[self setSessionState:JCTransferSuccess forSessionId:sessionId event:@"onACTVTransferSuccess" error:nil];
 }
 
 - (void)onACTVTransferFailure:(long)sessionId reason:(char*)reason code:(int)code
@@ -986,6 +993,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 - (void)onReferAccepted:(long)sessionId
 {
     NSLog(@"%li", sessionId);
+    [self setSessionState:JCTransferSuccess forSessionId:sessionId event:@"onACTVTransferSuccess" error:nil];
 }
 
 - (void)onReferRejected:(long)sessionId reason:(char*)reason code:(int)code
