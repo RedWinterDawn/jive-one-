@@ -651,47 +651,89 @@
         <scene sceneID="842-84-rzD">
             <objects>
                 <tableViewController id="c3p-aT-jcP" customClass="JCContactsTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="pel-iU-N6o">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" id="pel-iU-N6o">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="411"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="zaA-J6-Ptg" customClass="JCPersonCell">
-                            <rect key="frame" x="0.0" y="82" width="320" height="60"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            <subviews>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="name" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kbp-js-aK1">
-                                    <rect key="frame" x="33" y="8" width="222" height="21"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Imk-Vj-t20" customClass="JCPresenceView">
-                                    <rect key="frame" x="10" y="11" width="15" height="15"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                </view>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TBH-my-sze">
-                                    <rect key="frame" x="33" y="30" width="222" height="21"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fpX-p1-9pC">
-                                    <rect key="frame" x="260" y="8" width="44" height="45"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                    <state key="normal" title="★"/>
-                                    <connections>
-                                        <action selector="toggleFavoriteStatus:" destination="zaA-J6-Ptg" eventType="touchUpInside" id="sfw-sM-OC2"/>
-                                    </connections>
-                                </button>
-                            </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                            <connections>
-                                <outlet property="favoriteBut" destination="fpX-p1-9pC" id="X3g-NN-mT2"/>
-                                <outlet property="personDetailLabel" destination="TBH-my-sze" id="ll6-d1-fSx"/>
-                                <outlet property="personNameLabel" destination="Kbp-js-aK1" id="Znj-mb-Yh8"/>
-                                <outlet property="personPresenceView" destination="Imk-Vj-t20" id="tzd-Vn-83T"/>
-                            </connections>
-                        </view>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PersonCell" rowHeight="60" id="k8v-WG-cnz" customClass="JCPersonCell">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="k8v-WG-cnz" id="5wf-Vt-FwV">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zaA-J6-Ptg">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="16" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kbp-js-aK1">
+                                                    <rect key="frame" x="33" y="8" width="222" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="DnF-6e-GYb"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Imk-Vj-t20" customClass="JCPresenceView">
+                                                    <rect key="frame" x="10" y="11" width="15" height="15"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="15" id="6Qr-Ov-pST"/>
+                                                        <constraint firstAttribute="width" constant="15" id="cYC-3h-wXN"/>
+                                                    </constraints>
+                                                </view>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TBH-my-sze">
+                                                    <rect key="frame" x="33" y="30" width="222" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="YNL-Kl-96F"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fpX-p1-9pC">
+                                                    <rect key="frame" x="260" y="8" width="44" height="45"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="45" id="afl-6V-VTQ"/>
+                                                        <constraint firstAttribute="width" constant="44" id="ver-pL-18U"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                    <state key="normal" title="★"/>
+                                                    <connections>
+                                                        <action selector="toggleFavoriteStatus:" destination="k8v-WG-cnz" eventType="touchUpInside" id="iw4-dP-ZCv"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstItem="TBH-my-sze" firstAttribute="leading" secondItem="zaA-J6-Ptg" secondAttribute="leading" constant="33" id="2iT-Sz-f5y"/>
+                                                <constraint firstItem="fpX-p1-9pC" firstAttribute="leading" secondItem="Kbp-js-aK1" secondAttribute="trailing" constant="5" id="8gj-FC-Xf4"/>
+                                                <constraint firstItem="Kbp-js-aK1" firstAttribute="top" secondItem="zaA-J6-Ptg" secondAttribute="top" constant="8" id="Dgh-1B-rel"/>
+                                                <constraint firstItem="Imk-Vj-t20" firstAttribute="leading" secondItem="zaA-J6-Ptg" secondAttribute="leading" constant="10" id="Hdo-nH-lbG"/>
+                                                <constraint firstAttribute="bottom" secondItem="TBH-my-sze" secondAttribute="bottom" constant="9" id="TWD-PF-1K8"/>
+                                                <constraint firstItem="Kbp-js-aK1" firstAttribute="leading" secondItem="Imk-Vj-t20" secondAttribute="trailing" constant="8" id="gyx-1R-Gmh"/>
+                                                <constraint firstItem="fpX-p1-9pC" firstAttribute="top" secondItem="zaA-J6-Ptg" secondAttribute="top" constant="8" id="iZU-NY-hnG"/>
+                                                <constraint firstAttribute="trailing" secondItem="fpX-p1-9pC" secondAttribute="trailing" constant="16" id="oEU-JV-YS4"/>
+                                                <constraint firstItem="fpX-p1-9pC" firstAttribute="leading" secondItem="TBH-my-sze" secondAttribute="trailing" constant="5" id="vm5-F6-sHW"/>
+                                                <constraint firstItem="Imk-Vj-t20" firstAttribute="top" secondItem="zaA-J6-Ptg" secondAttribute="top" constant="11" id="yCd-DM-isv"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="zaA-J6-Ptg" firstAttribute="leading" secondItem="5wf-Vt-FwV" secondAttribute="leading" id="Mtd-kr-hCe"/>
+                                        <constraint firstAttribute="bottom" secondItem="zaA-J6-Ptg" secondAttribute="bottom" constant="-0.5" id="b6G-26-W32"/>
+                                        <constraint firstItem="zaA-J6-Ptg" firstAttribute="top" secondItem="5wf-Vt-FwV" secondAttribute="top" id="pza-ny-RAi"/>
+                                        <constraint firstAttribute="trailing" secondItem="zaA-J6-Ptg" secondAttribute="trailing" id="zIa-iO-o0a"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="favoriteBut" destination="fpX-p1-9pC" id="e7i-u8-wBP"/>
+                                    <outlet property="personDetailLabel" destination="TBH-my-sze" id="ESN-Lz-BaH"/>
+                                    <outlet property="personNameLabel" destination="Kbp-js-aK1" id="TD4-a1-U0E"/>
+                                    <outlet property="personPresenceView" destination="Imk-Vj-t20" id="ikn-7G-qxK"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="c3p-aT-jcP" id="njb-zL-RLk"/>
                             <outlet property="delegate" destination="c3p-aT-jcP" id="3gs-zc-1ic"/>

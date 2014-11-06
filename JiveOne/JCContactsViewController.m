@@ -23,7 +23,8 @@
     UIViewController *viewController = segue.destinationViewController;
     if ([viewController isKindOfClass:[JCContactsTableViewController class]]) {
         _contactsTableViewController = (JCContactsTableViewController *)viewController;
-        [_contactsTableViewController changeContactType:JCContactFilterAll];
+        _contactsTableViewController.filterType = JCContactFilterAll;
+        self.searchBar.delegate = _contactsTableViewController;
     }
 }
 
@@ -35,11 +36,11 @@
 {
     switch (tabBar.selectedItem.tag) {
         case 1:
-            [_contactsTableViewController changeContactType:JCContactFilterFavorites];
+            _contactsTableViewController.filterType = JCContactFilterFavorites;
             break;
             
         default:
-            [_contactsTableViewController changeContactType:JCContactFilterAll];
+            _contactsTableViewController.filterType = JCContactFilterAll;
             break;
     }
 }

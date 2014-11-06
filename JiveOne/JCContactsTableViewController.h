@@ -6,17 +6,16 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "JCFetchedResultsTableViewController.h"
-#import "JCPersonCell.h"
 
 typedef NS_ENUM(NSInteger, JCContactFilter) {
     JCContactFilterAll,
-    JCContactFilterFavorites
+    JCContactFilterFavorites,
+    JCContactFilterGrouped,
 };
 
-@interface JCContactsTableViewController : JCFetchedResultsTableViewController <UIScrollViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate>
+@interface JCContactsTableViewController : JCFetchedResultsTableViewController <UISearchBarDelegate>
 
-- (void)changeContactType:(JCContactFilter)type;
+@property (nonatomic) JCContactFilter filterType;
 
 @end
