@@ -15,6 +15,7 @@
 @interface JCPresenceManager : NSObject
 
 -(JCLinePresence *)linePresenceForContact:(Contact *)contact;
+-(JCLinePresence *)linePresenceForIdentifier:(NSString *)identifier;
 
 @end
 
