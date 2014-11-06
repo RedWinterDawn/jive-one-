@@ -35,7 +35,7 @@
         <!--Contacts View Controller-->
         <scene sceneID="elR-ka-Apv">
             <objects>
-                <viewController extendedLayoutIncludesOpaqueBars="YES" id="Xmp-ga-Z9j" userLabel="Contacts View Controller" customClass="JCContactsHomeViewController" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" id="Xmp-ga-Z9j" userLabel="Contacts View Controller" customClass="JCContactsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wQr-PL-DFN"/>
                         <viewControllerLayoutGuide type="bottom" id="Gtf-8V-jLv"/>
@@ -48,9 +48,6 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="Xmp-ga-Z9j" id="gRn-pB-lW0"/>
-                                </connections>
                             </searchBar>
                             <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ta4-0u-d9a">
                                 <rect key="frame" x="0.0" y="44" width="320" height="411"/>
@@ -69,6 +66,9 @@
                                     <tabBarItem tag="1" systemItem="favorites" id="plA-OB-q0o"/>
                                 </items>
                                 <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Xmp-ga-Z9j" id="rCM-1r-fQ2"/>
+                                </connections>
                             </tabBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -83,8 +83,7 @@
                     <navigationItem key="navigationItem" title="Contacts" id="oEe-KQ-NpU"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="container" destination="Ta4-0u-d9a" id="sUV-Je-OCn"/>
-                        <outlet property="tabBar" destination="KQN-3R-ma5" id="17t-wy-IHT"/>
+                        <outlet property="searchBar" destination="5ds-mG-BrS" id="eKU-3I-hhY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ozR-aT-h5B" sceneMemberID="firstResponder"/>
