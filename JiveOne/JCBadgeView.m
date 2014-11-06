@@ -17,7 +17,7 @@
  - No frame, shadow or shining */
 + (instancetype) defaultStyle {
     id instance = [[super alloc] init];
-    [instance setBadgeFontType:BadgeStyleFontTypeHelveticaNeueLight];
+    [instance setBadgeFontType:BadgeStyleFontTypeHelveticaNeueMedium];
     [instance setBadgeTextColor:[UIColor whiteColor]];
     [instance setBadgeInsetColor:[UIColor redColor]];
     [instance setBadgeFrameColor:nil];
@@ -114,7 +114,7 @@
     }
     
     if ([self.badgeText length]>0) {
-        CGFloat sizeOfFont = 13.5;
+        CGFloat sizeOfFont = 10;
         if ([self.badgeText length]<2) {
             sizeOfFont += sizeOfFont * 0.20f;
         }
@@ -225,7 +225,7 @@
 - (void)autoBadgeSizeWithString:(NSString *)badgeString
 {
     CGFloat newWidth = _defaultWidth;
-    NSDictionary *fontAttr = @{ NSFontAttributeName : [self fontForBadgeWithSize:12] };
+    NSDictionary *fontAttr = @{ NSFontAttributeName : [self fontForBadgeWithSize:10] };
     if (badgeString.length >= 2)
     {
         newWidth = _defaultWidth + ([badgeString sizeWithAttributes:fontAttr].width + badgeString.length);
