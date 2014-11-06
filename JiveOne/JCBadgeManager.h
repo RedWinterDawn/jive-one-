@@ -6,7 +6,8 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-@import Foundation;
+#import <Foundation/Foundation.h>
+// Getting 'Use of '@import' when modules are disabled' when it's obviously enabled.
 
 extern NSString *const kJCBadgeManagerInsertedIdentifierNotification;
 extern NSString *const kJCBadgeManagerDeletedIdentifierNotification;
@@ -19,7 +20,7 @@ extern NSString *const kJCBadgeManagerIdentifierKey;
 @property (nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
 
 // Individual recent event types.
-@property (nonatomic, readonly) NSUInteger voicemails;
+@property (nonatomic) NSUInteger voicemails;
 @property (nonatomic, readonly) NSUInteger missedCalls;
 @property (nonatomic, readonly) NSUInteger conversations;
 
