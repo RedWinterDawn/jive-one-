@@ -50,7 +50,7 @@
 @property (nonatomic) BOOL subscribedToPresence;
 
 
-@property (strong, nonatomic) JCSearchBar *searchBar;
+@property (strong, nonatomic) UISearchBar *searchBar;
 
 @end
 
@@ -353,10 +353,10 @@ static NSString *CellIdentifier = @"DirectoryCell";
     return _searchBarView;
 }
 
--(JCSearchBar *)searchBar
+-(UISearchBar *)searchBar
 {
     if (!_searchBar) {
-        _searchBar = [[JCSearchBar alloc]initWithFrame:CGRectMake(0,0, self.searchBarView.frame.size.width, self.searchBarView.frame.size.height)];
+        _searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0,0, self.searchBarView.frame.size.width, self.searchBarView.frame.size.height)];
         [_searchBar setBarTintColor:[UIColor whiteColor]];
         [_searchBar layoutSubviews];
         self.scrollViewOffsetReference = -64;

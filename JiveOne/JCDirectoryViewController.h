@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import <AddressBook/AddressBook.h>
-#import "JCSearchBar.h"
 #import "JCPersonCell.h"
 
 

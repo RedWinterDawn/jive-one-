@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "JCFetchedResultsTableViewController.h"
-#import "JCSearchBar.h"
 #import "JCPersonCell.h"
 
 typedef NS_ENUM(NSInteger, JCContactFilter) {
