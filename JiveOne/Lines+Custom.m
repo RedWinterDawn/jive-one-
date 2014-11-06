@@ -10,6 +10,7 @@
 #import "ContactGroup.h"
 #import "LineGroup.h"
 #import "Common.h"
+#import "PBX.h"
 
 @implementation Lines (Custom)
 
@@ -36,6 +37,23 @@
     
     return [result uppercaseString];
 }
+
+-(NSString *)detailText
+{
+    NSString * detailText = self.externsionNumber;
+    PBX *pbx = [PBX MR_findFirstByAttribute:@"pbxId" withValue:self.pbxId];
+    if (pbx) {
+        NSString *name = pbx.name;
+        if (![Common stringIsNilOrEmpty:name]) {
+            detailText = [NSString stringWithFormat:@"%@ on %@", self.externsionNumber, name];
+        }
+        else {
+            detailText = [NSString stringWithFormat:@"%@", self.externsionNumber];
+        }
+    }
+    return detailText;
+}
+
 
 + (void)addLines:(NSArray *)lines pbxId:(NSString *)pbxId userName:(NSString *)userName completed:(void (^)(BOOL success))completed
 {

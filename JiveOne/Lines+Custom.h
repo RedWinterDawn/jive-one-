@@ -12,6 +12,8 @@
 
 @property (nonatomic, readonly) NSString *firstLetter;
 
+@property (nonatomic, readonly) NSString *detailText;
+
 
 + (void)addLines:(NSArray *)lines pbxId:(NSString *)pbxId userName:(NSString *)userName completed:(void (^)(BOOL success))completed;;
 + (Lines *)addLine:(NSDictionary *)line pbxId:(NSString *)pbxId userName:(NSString *)userName withManagedContext:(NSManagedObjectContext *)context sender:(id)sender;

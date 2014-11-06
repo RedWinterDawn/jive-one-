@@ -6,28 +6,21 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
+
 #import "JCPresenceView.h"
 #import "Lines+Custom.h"
 
-@class JCPersonCell;
-
-@protocol JCPersonCellDelegate <NSObject>
--(void)updateTableViewCell:(JCPersonCell*)cell;
-@end
-
 @interface JCPersonCell : UITableViewCell
+
+@property (nonatomic, weak) IBOutlet UILabel *personNameLabel;
+@property (nonatomic, weak) IBOutlet UILabel *personDetailLabel;
+@property (nonatomic, weak) IBOutlet UIButton *favoriteBut;
+@property (nonatomic, weak) IBOutlet JCPresenceView *personPresenceView;
+
+@property (nonatomic) Lines *line;
 
 - (IBAction)toggleFavoriteStatus:(id)sender;
 
-@property (weak,nonatomic) id<JCPersonCellDelegate> delegate;
-
-
-@property (weak, nonatomic) IBOutlet UILabel *personNameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *personDetailLabel;
-@property (strong, nonatomic) IBOutlet UIButton *favoriteBut;
-@property (weak, nonatomic) IBOutlet UIImageView *personPicture;
-@property (weak, nonatomic) IBOutlet JCPresenceView *personPresenceView;
-@property (nonatomic) Lines *line;
 @end
 
