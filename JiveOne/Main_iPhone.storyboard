@@ -35,7 +35,7 @@
         <!--Contacts View Controller-->
         <scene sceneID="elR-ka-Apv">
             <objects>
-                <viewController id="Xmp-ga-Z9j" userLabel="Contacts View Controller" customClass="JCContactsHomeViewController" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" id="Xmp-ga-Z9j" userLabel="Contacts View Controller" customClass="JCContactsHomeViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wQr-PL-DFN"/>
                         <viewControllerLayoutGuide type="bottom" id="Gtf-8V-jLv"/>
@@ -44,6 +44,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <searchBar contentMode="redraw" fixedFrame="YES" placeholder="Search                                                      " translatesAutoresizingMaskIntoConstraints="NO" id="5ds-mG-BrS">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Xmp-ga-Z9j" id="gRn-pB-lW0"/>
+                                </connections>
+                            </searchBar>
+                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ta4-0u-d9a">
+                                <rect key="frame" x="0.0" y="44" width="320" height="411"/>
+                                <connections>
+                                    <segue destination="c3p-aT-jcP" kind="embed" id="Lh0-dF-r62"/>
+                                </connections>
+                            </containerView>
                             <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KQN-3R-ma5">
                                 <rect key="frame" x="0.0" y="455" width="320" height="49"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -56,19 +70,6 @@
                                 </items>
                                 <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </tabBar>
-                            <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5ds-mG-BrS">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="Xmp-ga-Z9j" id="gRn-pB-lW0"/>
-                                </connections>
-                            </searchBar>
-                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ta4-0u-d9a">
-                                <rect key="frame" x="0.0" y="44" width="320" height="411"/>
-                                <connections>
-                                    <segue destination="c3p-aT-jcP" kind="embed" id="Lh0-dF-r62"/>
-                                </connections>
-                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -77,26 +78,16 @@
                             <constraint firstAttribute="trailing" secondItem="KQN-3R-ma5" secondAttribute="trailing" id="rMQ-wZ-Cnm"/>
                         </constraints>
                     </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <tabBarItem key="tabBarItem" title="Contacts" image="second" id="j3y-6c-YEc"/>
                     <navigationItem key="navigationItem" title="Contacts" id="oEe-KQ-NpU"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="container" destination="Ta4-0u-d9a" id="sUV-Je-OCn"/>
-                        <outlet property="searchDisplayController" destination="lJt-hh-ES1" id="GEK-Un-Yet"/>
                         <outlet property="tabBar" destination="KQN-3R-ma5" id="17t-wy-IHT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ozR-aT-h5B" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="lJt-hh-ES1">
-                    <connections>
-                        <outlet property="delegate" destination="Xmp-ga-Z9j" id="Mxc-aU-2f7"/>
-                        <outlet property="searchBar" destination="5ds-mG-BrS" id="aZz-6r-1gd"/>
-                        <outlet property="searchContentsController" destination="Xmp-ga-Z9j" id="JXx-hX-KWR"/>
-                        <outlet property="searchResultsDataSource" destination="Xmp-ga-Z9j" id="4cX-em-dXH"/>
-                        <outlet property="searchResultsDelegate" destination="Xmp-ga-Z9j" id="7nM-8l-uSC"/>
-                    </connections>
-                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="752" y="790"/>
         </scene>
@@ -105,6 +96,7 @@
             <objects>
                 <navigationController storyboardIdentifier="ContactsNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="3E5-0Q-2Rs" userLabel="Contacts Navigation Controller" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Contacts" image="black-avatar" id="yqu-Rh-YHg"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="l9h-UT-ItF">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -664,44 +656,53 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="411"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" id="W3n-Mz-bQK" customClass="JCSearchBar">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <textInputTraits key="textInputTraits"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="zaA-J6-Ptg" customClass="JCPersonCell">
+                            <rect key="frame" x="0.0" y="82" width="320" height="60"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="name" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kbp-js-aK1">
+                                    <rect key="frame" x="33" y="8" width="222" height="21"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Imk-Vj-t20" customClass="JCPresenceView">
+                                    <rect key="frame" x="10" y="11" width="15" height="15"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                </view>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TBH-my-sze">
+                                    <rect key="frame" x="33" y="30" width="222" height="21"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fpX-p1-9pC">
+                                    <rect key="frame" x="260" y="8" width="44" height="45"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                    <state key="normal" title="★"/>
+                                    <connections>
+                                        <action selector="toggleFavoriteStatus:" destination="zaA-J6-Ptg" eventType="touchUpInside" id="sfw-sM-OC2"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             <connections>
-                                <outlet property="delegate" destination="c3p-aT-jcP" id="5e3-rl-46R"/>
+                                <outlet property="favoriteBut" destination="fpX-p1-9pC" id="X3g-NN-mT2"/>
+                                <outlet property="personDetailLabel" destination="TBH-my-sze" id="ll6-d1-fSx"/>
+                                <outlet property="personNameLabel" destination="Kbp-js-aK1" id="Znj-mb-Yh8"/>
+                                <outlet property="personPresenceView" destination="Imk-Vj-t20" id="tzd-Vn-83T"/>
                             </connections>
-                        </searchBar>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DirectoryCell" rowHeight="60" id="Pmc-Ul-858" customClass="JCPersonCell">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pmc-Ul-858" id="xB1-af-Too">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
+                        </view>
                         <connections>
                             <outlet property="dataSource" destination="c3p-aT-jcP" id="njb-zL-RLk"/>
                             <outlet property="delegate" destination="c3p-aT-jcP" id="3gs-zc-1ic"/>
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="Fwb-iT-l8D"/>
-                    <connections>
-                        <outlet property="searchDisplayController" destination="B4j-Ni-mxF" id="7gM-sP-A6v"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fLZ-A1-vk7" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="B4j-Ni-mxF">
-                    <connections>
-                        <outlet property="delegate" destination="c3p-aT-jcP" id="nY5-xB-HSH"/>
-                        <outlet property="searchBar" destination="W3n-Mz-bQK" id="db6-bb-0TL"/>
-                        <outlet property="searchContentsController" destination="c3p-aT-jcP" id="09H-Ub-NRS"/>
-                        <outlet property="searchResultsDataSource" destination="c3p-aT-jcP" id="7My-ST-6av"/>
-                        <outlet property="searchResultsDelegate" destination="c3p-aT-jcP" id="cMy-7Z-GRX"/>
-                    </connections>
-                </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="1164" y="789.5"/>
+            <point key="canvasLocation" x="1164" y="822.5"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="uDf-PG-NB6">

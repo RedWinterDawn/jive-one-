@@ -159,7 +159,6 @@
 		279E4CB1192273E5002A556C /* MBContactCollectionViewPromptCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E4CA4192273E5002A556C /* MBContactCollectionViewPromptCell.m */; };
 		279E4CB3192273E5002A556C /* MBContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E4CA6192273E5002A556C /* MBContactModel.m */; };
 		279E4CB5192273E5002A556C /* MBContactPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E4CA8192273E5002A556C /* MBContactPicker.m */; };
-		279E602418C8C59900C5CC9F /* JCPersonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 279E602318C8C59900C5CC9F /* JCPersonCell.xib */; };
 		27A0160A192EBCA70073C824 /* libFlurry_5.0.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27A01609192EBCA70073C824 /* libFlurry_5.0.0.a */; };
 		27A0160C192EEA830073C824 /* conversation.json in Resources */ = {isa = PBXBuildFile; fileRef = 27A0160B192EEA830073C824 /* conversation.json */; };
 		27A0160E192EEF6F0073C824 /* entities.json in Resources */ = {isa = PBXBuildFile; fileRef = 27A0160D192EEF6F0073C824 /* entities.json */; };
@@ -296,9 +295,6 @@
 		91915738195B209D004BDE26 /* JCAppIntro.m in Sources */ = {isa = PBXBuildFile; fileRef = 91915737195B209D004BDE26 /* JCAppIntro.m */; };
 		919DD29D1922E2C90039205E /* JCPopoverSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 919DD29C1922E2C90039205E /* JCPopoverSlider.m */; };
 		919DD2A11922E3570039205E /* JCPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 919DD2A01922E3570039205E /* JCPopoverView.m */; };
-		91B7CFC5192ABDF800927DDD /* JCSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B7CFC4192ABDF800927DDD /* JCSearchBar.m */; };
-		91B7CFCB192AD5B900927DDD /* search2.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7CFCA192AD5B900927DDD /* search2.png */; };
-		91B7CFCE192AD78B00927DDD /* searchGray2.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B7CFCD192AD78B00927DDD /* searchGray2.png */; };
 		91CAE6751961C4FD004A28FD /* Alpine Script.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 91CAE6741961C4FD004A28FD /* Alpine Script.ttf */; };
 		91CAE67A1961D485004A28FD /* JCJiveLogoWhite.m in Sources */ = {isa = PBXBuildFile; fileRef = 91CAE6791961D485004A28FD /* JCJiveLogoWhite.m */; };
 		91CAE67E1961E47F004A28FD /* JCVoicemailIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 91CAE67D1961E47F004A28FD /* JCVoicemailIcon.m */; };
@@ -571,7 +567,6 @@
 		279E4CA6192273E5002A556C /* MBContactModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBContactModel.m; sourceTree = "<group>"; };
 		279E4CA7192273E5002A556C /* MBContactPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBContactPicker.h; sourceTree = "<group>"; };
 		279E4CA8192273E5002A556C /* MBContactPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBContactPicker.m; sourceTree = "<group>"; };
-		279E602318C8C59900C5CC9F /* JCPersonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCPersonCell.xib; sourceTree = "<group>"; };
 		27A01608192EBCA70073C824 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		27A01609192EBCA70073C824 /* libFlurry_5.0.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_5.0.0.a; sourceTree = "<group>"; };
 		27A0160B192EEA830073C824 /* conversation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = conversation.json; sourceTree = "<group>"; };
@@ -875,10 +870,6 @@
 		919DD29F1922E3570039205E /* JCPopoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPopoverView.h; sourceTree = "<group>"; };
 		919DD2A01922E3570039205E /* JCPopoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPopoverView.m; sourceTree = "<group>"; };
 		91B4A53319427A9C00DC7459 /* JiveOneEnterprise-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "JiveOneEnterprise-Info.plist"; sourceTree = "<group>"; };
-		91B7CFC3192ABDF800927DDD /* JCSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSearchBar.h; sourceTree = "<group>"; };
-		91B7CFC4192ABDF800927DDD /* JCSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSearchBar.m; sourceTree = "<group>"; };
-		91B7CFCA192AD5B900927DDD /* search2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search2.png; sourceTree = "<group>"; };
-		91B7CFCD192AD78B00927DDD /* searchGray2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = searchGray2.png; sourceTree = "<group>"; };
 		91CAE6741961C4FD004A28FD /* Alpine Script.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Alpine Script.ttf"; path = "../Alpine Script.ttf"; sourceTree = "<group>"; };
 		91CAE6781961D485004A28FD /* JCJiveLogoWhite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCJiveLogoWhite.h; sourceTree = SOURCE_ROOT; };
 		91CAE6791961D485004A28FD /* JCJiveLogoWhite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCJiveLogoWhite.m; sourceTree = SOURCE_ROOT; };
@@ -1542,7 +1533,6 @@
 		277F093B18FECE5E00EEF0E3 /* Contacts */ = {
 			isa = PBXGroup;
 			children = (
-				91B7CFC2192ABBEF00927DDD /* SearchBar */,
 				919004CE196D9C9C00BEB11C /* PeopleDetailCell */,
 				919004CD196D9C8500BEB11C /* PersonCell */,
 				2751591D18AD303500FD8D3F /* JCDirectoryViewController.h */,
@@ -2079,7 +2069,6 @@
 			children = (
 				2736698018BD441D0069B4B3 /* JCPersonCell.h */,
 				2736698118BD441D0069B4B3 /* JCPersonCell.m */,
-				279E602318C8C59900C5CC9F /* JCPersonCell.xib */,
 			);
 			name = PersonCell;
 			sourceTree = "<group>";
@@ -2105,17 +2094,6 @@
 				9136FF211925D48D0040B367 /* slider_maximum@2x.png */,
 			);
 			name = JCPopoverSlider;
-			sourceTree = "<group>";
-		};
-		91B7CFC2192ABBEF00927DDD /* SearchBar */ = {
-			isa = PBXGroup;
-			children = (
-				91B7CFC3192ABDF800927DDD /* JCSearchBar.h */,
-				91B7CFC4192ABDF800927DDD /* JCSearchBar.m */,
-				91B7CFCD192AD78B00927DDD /* searchGray2.png */,
-				91B7CFCA192AD5B900927DDD /* search2.png */,
-			);
-			name = SearchBar;
 			sourceTree = "<group>";
 		};
 		91CAE6761961CDE9004A28FD /* Fonts */ = {
@@ -2343,11 +2321,9 @@
 				27F1F2FF191C171300AEAFD7 /* UAPushSettingsUserInfoView.xib in Resources */,
 				2700988B18F4714100B6BC2F /* bubble-classic-selected@2x.png in Resources */,
 				914B3985195B727100334579 /* VoicemailCell.png in Resources */,
-				91B7CFCB192AD5B900927DDD /* search2.png in Resources */,
 				2700989C18F4714100B6BC2F /* bubble-tailless.png in Resources */,
 				2700989318F4714100B6BC2F /* bubble-classic-square-selected@2x.png in Resources */,
 				27EA5DB2190888AD008C7590 /* Draft_iPhone.storyboard in Resources */,
-				91B7CFCE192AD78B00927DDD /* searchGray2.png in Resources */,
 				5DA80B6819E4EB0200620630 /* IncomingCallViewCell.xib in Resources */,
 				27F1F2F2191C171300AEAFD7 /* middle-detail@2x.png in Resources */,
 				275158FC18AD10BB00FD8D3F /* main-logo.png in Resources */,
@@ -2400,7 +2376,6 @@
 				270098C718F5EA9300B6BC2F /* nav-people.png in Resources */,
 				27F1F2F9191C171300AEAFD7 /* UAPushSettingsAddTagViewController.xib in Resources */,
 				5DF1D1C419E4C6E1005EDCD5 /* CurrentCallViewCell.xib in Resources */,
-				279E602418C8C59900C5CC9F /* JCPersonCell.xib in Resources */,
 				2700988918F4714100B6BC2F /* bubble-classic-green@2x.png in Resources */,
 				270098C218F5EA9300B6BC2F /* nav-conv@2x.png in Resources */,
 				F59AE2C9192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png in Resources */,
@@ -2673,7 +2648,6 @@
 				2787911318CF79DC004DE651 /* JCPresenceView.m in Sources */,
 				2700987C18F4714100B6BC2F /* JSMessage.m in Sources */,
 				276215211912AA7400CFBCC8 /* NSString+URLEncoding.m in Sources */,
-				91B7CFC5192ABDF800927DDD /* JCSearchBar.m in Sources */,
 				27F1F2D4191C171300AEAFD7 /* UADateUtils.m in Sources */,
 				279E4CAF192273E5002A556C /* MBContactCollectionViewFlowLayout.m in Sources */,
 				5DBBDCC919DDA0A300A4DB96 /* JCCallCard.m in Sources */,
