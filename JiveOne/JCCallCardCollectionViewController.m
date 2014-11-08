@@ -45,19 +45,6 @@ NSString *const kJCCallCardCollectionConferenceCallCellReuseIdentifier = @"Confe
     [self.collectionView registerNib:[UINib nibWithNibName:@"ConferenceCallViewCell" bundle:bundle] forCellWithReuseIdentifier:kJCCallCardCollectionConferenceCallCellReuseIdentifier];
 }
 
--(void)viewWillLayoutSubviews
-{
-    [super viewWillLayoutSubviews];
-    [self performSelector:@selector(refreshLayout) withObject:nil afterDelay:0];
-}
-
--(void)refreshLayout
-{
-    if (self.collectionViewLayout) {
-        [self.collectionViewLayout invalidateLayout];
-    }
-}
-
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -65,7 +52,7 @@ NSString *const kJCCallCardCollectionConferenceCallCellReuseIdentifier = @"Confe
 
 -(void)addedCall:(NSNotification *)notification
 {
-    NSDictionary *userInfo = notification.userInfo;
+    /*NSDictionary *userInfo = notification.userInfo;
     int count = [[userInfo objectForKey:kJCCallCardManagerPriorUpdateCount] intValue];
     if (count < 1)
         return;
@@ -77,25 +64,29 @@ NSString *const kJCCallCardCollectionConferenceCallCellReuseIdentifier = @"Confe
     __unsafe_unretained UICollectionView *collectionView = self.collectionView;
     [collectionView performBatchUpdates:^{
         [collectionView insertItemsAtIndexPaths:@[indexPath]];
-    } completion:nil];
+    } completion:nil];*/
+    
+    [self.collectionView reloadData];
 }
 
 -(void)updateCall:(NSNotification *)notification
 {
     // When we transition a call from an incoming call to a current call the update gets triggered, and we reload the
     // cell the coresponds to the index of that call that was answered.
-    NSDictionary *userInfo = notification.userInfo;
+    /*NSDictionary *userInfo = notification.userInfo;
     NSInteger index = [[userInfo objectForKey:kJCCallCardManagerUpdatedIndex] integerValue];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
     __unsafe_unretained UICollectionView *collectionView = self.collectionView;
     [collectionView performBatchUpdates:^{
         [collectionView reloadItemsAtIndexPaths:@[indexPath]];
-    } completion:nil];
+    } completion:nil];*/
+    
+    [self.collectionView reloadData];
 }
 
 -(void)removedCall:(NSNotification *)notification
 {
-    NSDictionary *userInfo = notification.userInfo;
+    /*NSDictionary *userInfo = notification.userInfo;
     int count = [[userInfo objectForKey:kJCCallCardManagerUpdateCount] intValue];
     if (count < 1)
         return;
@@ -105,7 +96,11 @@ NSString *const kJCCallCardCollectionConferenceCallCellReuseIdentifier = @"Confe
     __unsafe_unretained UICollectionView *collectionView = self.collectionView;
     [collectionView performBatchUpdates:^{
         [collectionView deleteItemsAtIndexPaths:@[indexPath]];
-    } completion:nil];
+    } completion:nil];*/
+    
+    
+    
+    [self.collectionView reloadData];
 }
 
 -(void)addedConferenceCallNotification:(NSNotification *)notification

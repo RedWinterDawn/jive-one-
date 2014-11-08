@@ -29,13 +29,14 @@ NSString *const kJCCallCardStatusChangeKey = @"status";
     {
         _lineSession = lineSession;
         [_lineSession addObserver:self forKeyPath:kJCLineSessionStateKey options:0 context:NULL];
+        [_lineSession addObserver:self forKeyPath:@"hold" options:0 context:NULL];
     }
     return self;
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if ([keyPath isEqualToString:kJCLineSessionStateKey])
+    if ([keyPath isEqualToString:kJCLineSessionStateKey] || [keyPath isEqualToString:@"hold"])
     {
         [self willChangeValueForKey:kJCCallCardStatusChangeKey];
         [self didChangeValueForKey:kJCCallCardStatusChangeKey];
@@ -45,6 +46,7 @@ NSString *const kJCCallCardStatusChangeKey = @"status";
 -(void)dealloc
 {
     [self.lineSession removeObserver:self forKeyPath:kJCLineSessionStateKey];
+    [self.lineSession removeObserver:self forKeyPath:@"hold"];
 }
 
 #pragma mark - Actions -
@@ -64,6 +66,13 @@ NSString *const kJCCallCardStatusChangeKey = @"status";
 -(void)setHold:(bool)hold
 {
     [self.delegate setCallHold:hold forCall:self];
+    if (hold) {
+        self.holdStarted = [NSDate date];
+    }
+    else
+    {
+        self.holdStarted = nil;
+    }
 }
 
 

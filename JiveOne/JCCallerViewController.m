@@ -271,12 +271,14 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 {
     _callOptionsViewOriginYConstraint.constant = 10;
     [self.view setNeedsUpdateConstraints];
+    
     __unsafe_unretained UIView *weakView = self.view;
     [UIView animateWithDuration:animated ? _callOptionTransitionAnimationDuration : 0
                      animations:^{
                          [weakView layoutIfNeeded];
                      } completion:^(BOOL finished) {
                          _showingCallOptions = false;
+                         [_callCardCollectionViewController.collectionViewLayout invalidateLayout];
                      }];
 }
 
@@ -290,7 +292,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     
     _callOptionsViewOriginYConstraint.constant = _defaultCallOptionViewConstraint;
     [self.view setNeedsUpdateConstraints];
-    [_callCardCollectionViewController.collectionView reloadData];
+    
     __unsafe_unretained UIView *weakView = self.view;
     [UIView animateWithDuration:animated ? 0.1 : 0
                      animations:^{
@@ -304,6 +306,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
                     animations:NULL
                     completion:^(BOOL finished) {
                         _showingCallOptions = true;
+                        [_callCardCollectionViewController.collectionViewLayout invalidateLayout];
                     }];
 }
 
@@ -453,7 +456,6 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
             switch (controller.transferCallType) {
                 case JCCallCardDialBlindTransfer:
                 {
-                    [[JCCallCardManager sharedManager] terminateSessionsOnTransferSuccess];
                     [weakSelf dismissTransferViewControllerAnimated:NO];
                     [weakSelf closeCallerViewController];
                     break;

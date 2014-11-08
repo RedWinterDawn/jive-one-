@@ -49,8 +49,8 @@ extern NSString *const kSipHandlerRegisteredSelectorKey;
 
 - (bool)setConference:(bool)conference;
 //- (void) hangUpCall;
-- (void) referCall:(NSString*)referTo completion:(void (^)(bool success, NSError *error))completion;        // Blind Transfer
-- (void) attendedRefer:(NSString*)referTo completion:(void (^)(bool success, NSError *error))completion;    // warm Transfer
+- (void) blindTransferToNumber:(NSString*)referTo completion:(void (^)(bool success, NSError *error))completion;   // Blind Transfer
+- (void) warmTransferToNumber:(NSString*)referTo completion:(void (^)(bool success, NSError *error))completion;    // warm Transfer
 - (void) muteCall:(BOOL)mute;
 - (void) setLoudspeakerStatus:(BOOL)enable;
 

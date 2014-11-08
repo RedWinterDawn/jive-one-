@@ -11,40 +11,48 @@
 extern NSString *const kJCLineSessionStateKey;
 
 typedef enum {
-    JCNoCall,
-    JCInvite,
-    JCInviteTrying,
-    JCInviteProgress,
-    JCInviteFailure,
-    JCCallRinging,
-    JCCallCanceled,
-    JCCallConnected,
-    JCCallAnswered,
-    JCCallFailed,
+    JCNoCall,               // Idle line state.
+    JCCallIncoming,         // Incoming call
+    JCCallTrying,           // Outgoing call request is processed.
+    JCCallProgress,         // Notification of early media and if audio or video exists.
+    JCCallRinging,          // Outgoing call rang
+    JCCallAnswered,         // Outgoing call was answered
+    JCCallConnected,        // Outgoing call fully connected.
+    JCCallFailed,           // Outgoing call failed.
+    JCCallCanceled,         // Call Was Canceled.
+    JCTransferIncoming,     // Incoming Transfer Call
+    JCTransferAccepted,     // Tranfer Accepted.
+    JCTransferRejected,     // Transfer Rejected;
+    JCTransferTrying,
+    JCTransferRinging,
     JCTransferSuccess,
     JCTransferFailed,
-    JCCallPutOnHold,
-    JCCallPutOffHold
 } JCLineSessionState;
 
 @interface JCLineSession : NSObject
 
-@property (nonatomic) long mSessionId;
-@property (nonatomic, getter=isHolding) bool hold;
-@property (nonatomic) bool mSessionState;
-@property (nonatomic) bool mConferenceState;
-@property (nonatomic) bool mRecvCallState;
-@property (nonatomic) bool mIsReferCall;
-@property (nonatomic) long mOriginCallSessionId;
-@property (nonatomic) bool mExistEarlyMedia;
-@property (nonatomic) bool mVideoState;
-@property (nonatomic) JCLineSessionState sessionState;
 @property (nonatomic) NSString *callTitle;
 @property (nonatomic) NSString *callDetail;
 
-- (BOOL) isReferCall;
-- (long) getOriginalCallSessionId;
-- (void) setReferCall:(BOOL)referCall originalCallSessionId:(long)originalCallSessionId;
+// State
+@property (nonatomic) JCLineSessionState sessionState;
+
+// Identifiers
+@property (nonatomic) long mSessionId;
+@property (nonatomic, getter=getOriginalCallSessionId) long mOriginCallSessionId;
+
+// Flags
+@property (nonatomic, getter=isActive) BOOL active;
+@property (nonatomic, getter=isHolding) BOOL hold;
+@property (nonatomic, getter=isUpdatable) BOOL updatable;
+//@property (nonatomic) bool mSessionState;
+@property (nonatomic) bool mConferenceState;
+@property (nonatomic) bool mRecvCallState;
+@property (nonatomic, getter=isReferCall) bool mIsReferCall;
+@property (nonatomic) bool mExistEarlyMedia;
+@property (nonatomic) bool mVideoState;
+
+- (void)setReferCall:(BOOL)referCall originalCallSessionId:(long)originalCallSessionId;
 - (void)reset;
 
 @end

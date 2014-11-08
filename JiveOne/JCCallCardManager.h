@@ -62,8 +62,6 @@ typedef enum : NSUInteger {
 // Finish a transfer
 -(void)finishWarmTransfer:(void (^)(bool success))completion;
 
-- (void)terminateSessionsOnTransferSuccess;
-
 @end
 
 

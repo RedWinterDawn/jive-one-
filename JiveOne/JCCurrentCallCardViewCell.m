@@ -83,7 +83,7 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
 
 -(IBAction)toggleHold:(id)sender
 {
-    self.callCard.hold = !self.callCard.hold;
+    self.callCard.hold = !self.callCard.isHolding;
 }
 
 
@@ -142,7 +142,7 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
         _holdTimer = nil;
     }
     
-    if (self.callCard.hold) {
+    if (self.callCard.isHolding) {
         [self showHoldStateAnimated:animated];
     }
     else {
@@ -172,10 +172,11 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
                 break;
             }
             case JCNoCall:
-            case JCInvite:
-            case JCInviteTrying:
-            case JCInviteProgress:
+            case JCCallIncoming:
+            case JCCallTrying:
+            case JCCallProgress:
             case JCCallRinging:
+            case JCCallAnswered:
                 [self hideHoldButton:NO];
                 self.elapsedTimeLabel.text = NSLocalizedString(@"RINGING", nil);
                 break;

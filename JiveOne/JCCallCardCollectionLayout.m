@@ -20,8 +20,6 @@ static NSString * const JSCallCardLayoutCellKind = @"CallCardCell";
 @property (nonatomic, strong) NSMutableArray *insertIndexPaths;
 @property (nonatomic, strong) NSDictionary *layoutInfo;
 
-@property (nonatomic, readonly) CGFloat cellHeight;
-
 @end
 
 @implementation JCCallCardCollectionLayout
@@ -52,10 +50,10 @@ static NSString * const JSCallCardLayoutCellKind = @"CallCardCell";
 
 #pragma mark - Properties -
 
--(CGFloat)cellHeight
+-(CGFloat)cellHeightForSection:(NSUInteger)section
 {
     CGFloat height = self.collectionView.bounds.size.height;
-    NSUInteger calls = [JCCallCardManager sharedManager].calls.count;
+    NSUInteger calls = [self.collectionView numberOfItemsInSection:section];
     if(calls == 2)
         height = ((height - _interItemSpacingY) / 2 );
     else if(calls > 2)
@@ -78,7 +76,7 @@ static NSString * const JSCallCardLayoutCellKind = @"CallCardCell";
         NSInteger itemCount = [self.collectionView numberOfItemsInSection:section];
         if (itemCount > 0)
         {
-            CGFloat height = self.cellHeight;
+            CGFloat height = [self cellHeightForSection:section];
             CGFloat width = self.collectionView.bounds.size.width - (_itemInsets.left + _itemInsets.right);
             CGFloat x = _itemInsets.left;
             for (NSInteger item = 0; item < itemCount; item++)
@@ -99,11 +97,14 @@ static NSString * const JSCallCardLayoutCellKind = @"CallCardCell";
 
 -(CGSize)collectionViewContentSize
 {
+    NSLog(@"collentionViewContentSize");
+    
+    
     NSArray *array = self.layoutInfo[JSCallCardLayoutCellKind];
     NSInteger rowCount = array.count;
-    CGFloat height = self.itemInsets.top + (rowCount * self.cellHeight) + (rowCount - 1) * _interItemSpacingY + _itemInsets.bottom;
+    CGFloat height = self.itemInsets.top + (rowCount * [self cellHeightForSection:0]) + (rowCount - 1) * _interItemSpacingY + _itemInsets.bottom;
     
-    return CGSizeMake(self.collectionView.bounds.size.width, height);
+    return CGSizeMake(320, height);
 }
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect

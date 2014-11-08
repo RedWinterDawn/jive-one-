@@ -81,7 +81,8 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 -(void)finishWarmTransfer:(void (^)(bool success))completion
 {
 	if (_warmTransferNumber) {
-		[_sipHandler attendedRefer:_warmTransferNumber completion:^(bool success, NSError *error) {
+		[_sipHandler  warmTransferToNumber:_warmTransferNumber completion:^(bool success, NSError *error) {
+            _warmTransferNumber = nil;
             completion(success);
             if (error) {
                 NSLog(@"%@", [error description]);
@@ -144,7 +145,10 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 -(void)internal_dialNumber:(NSString *)dialNumber type:(JCCallCardDialTypes)dialType completion:(void (^)(bool success, NSDictionary *callInfo))completion
 {
     if (dialType == JCCallCardDialBlindTransfer) {
-        [_sipHandler referCall:dialNumber completion:^(bool success, NSError *error) {
+        [_sipHandler blindTransferToNumber:dialNumber completion:^(bool success, NSError *error) {
+            if (success) {
+                [self hangUpAll];
+            }
             
             if (completion != NULL)
                 completion(success, @{});
@@ -156,7 +160,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     }
     
     JCLineSession *session = [_sipHandler makeCall:dialNumber videoCall:NO contactName:[self getContactNameByNumber:dialNumber]];
-    if (session.mSessionState)
+    if (session.isActive)
     {
         JCCallCard *transferedCall = self.calls.lastObject;
         JCCallCard *callCard = [[JCCallCard alloc] initWithLineSession:session];
@@ -310,10 +314,10 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
                                                                  }];
 }
 
-- (void)terminateSessionsOnTransferSuccess
+- (void)hangUpAll
 {
     for (JCCallCard *call in self.calls) {
-        if (call.lineSession.mSessionState) {
+        if (call.lineSession.isActive) {
             [self hangUpCall:call];
         }
     }
@@ -408,8 +412,11 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 -(void)removeLineSession:(JCLineSession *)session
 {
     for (JCCallCard *callCard in self.calls) {
-        if ([callCard.lineSession isEqual:session])
+        if (callCard.lineSession.mSessionId == session.mSessionId)
+        {
             [self removeCall:callCard];
+            break;
+        }
     }
 }
 
