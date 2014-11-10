@@ -1,4 +1,4 @@
-//
+    //
 //  SipHandler.m
 //  JiveOne
 //
@@ -195,7 +195,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     [_mPortSIPSDK setSrtpPolicy:SRTP_POLICY_NONE];
     
     // Try to register the default identity
-    [_mPortSIPSDK registerServer:120 retryTimes:3];
+    [_mPortSIPSDK registerServer:120 retryTimes:9];
 }
 
 -(void)disconnect

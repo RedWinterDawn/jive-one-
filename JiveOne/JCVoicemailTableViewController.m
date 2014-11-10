@@ -13,7 +13,7 @@
 
 #import "JCVoicemailTableViewController.h"
 #import "JCVoicemailPlaybackCell.h"
-#import "JCVoicemailClient.h"
+#import "JCV5ApiClient.h"
 
 #import "JCMessagesViewController.h"
 #import "JCAppDelegate.h"
@@ -73,7 +73,7 @@
     requestTimeout = [NSTimer timerWithTimeInterval:20 target:self selector:@selector(requestDidTimedOut) userInfo:nil repeats:NO];
     [[NSRunLoop currentRunLoop] addTimer:requestTimeout forMode:NSRunLoopCommonModes];
  
-    [[JCVoicemailClient sharedClient] getVoicemails:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+    [[JCV5ApiClient sharedClient] getVoicemails:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
         if(suceeded){
             if ([requestTimeout isValid]) {
                 [requestTimeout invalidate];

@@ -7,7 +7,6 @@
 //
 
 #import "JCVoicemailPlaybackCell.h"
-#import "JCVoicemailClient.h"
 #import "JCRecentActivityTableViewController.h"
 
 @interface JCVoicemailTableViewController : JCRecentActivityTableViewController
