@@ -126,6 +126,13 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     _sipURL = [[NSString alloc] initWithFormat:@"sip:%@:%@", kSipUserName, kSIPServer];
 	
 	bool isSimulator = FALSE;
+    PORTSIP_LOG_LEVEL LOG_LEVEL;
+#if DEBUG
+    LOG_LEVEL = PORTSIP_LOG_DEBUG;
+#else
+    LOG_LEVEL = PORTSIP_LOG_NONE;
+#endif
+    
 #if TARGET_IPHONE_SIMULATOR
 	isSimulator = TRUE;
 #elif TARGET_OS_IPHONE
@@ -134,7 +141,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     
     // Initialized the SIP SDK
     int ret = [_mPortSIPSDK initialize:TRANSPORT_UDP
-                              loglevel:PORTSIP_LOG_DEBUG
+                              loglevel:LOG_LEVEL
                                logPath:NULL
                                maxLine:MAX_LINES
                                  agent:kSipHandlerServerAgentname

@@ -95,7 +95,7 @@
 	NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
 	NSString *url = [NSString stringWithFormat:@"/contacts/2014-07/jiveuser/info/jiveid/%@", username];
 	
-	NSLog(@"%@", url);
+	//NSLog(@"%@", url);
 	
 	[_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 		

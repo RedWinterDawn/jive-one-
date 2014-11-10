@@ -355,7 +355,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
             }
             else {
                 if (tokenData[@"error"]) {
-                    NSLog(@"%@", tokenData);
+                    //NSLog(@"%@", tokenData);
                     [self sendCompletionBlock:NO errorMessage:tokenData[@"error"]];
                 }
                 else {
@@ -421,7 +421,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     
     if (theConnection) {
         receivedData = [[NSMutableData alloc] init];
-        NSLog(@"%@",receivedData);
+        //NSLog(@"%@",receivedData);
     }
 }
 
