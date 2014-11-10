@@ -207,6 +207,8 @@
             [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil) detail:NSLocalizedString(@"Logging In", nil)];
         }];
         
+        [[JCOmniPresence sharedInstance] truncateAllTablesAtLogout];
+        
         [[JCAuthenticationManager sharedInstance] loginWithUsername:self.usernameTextField.text password:self.passwordTextField.text completed:^(BOOL success, NSError *error) {
             self.doneLoadingContent = NO;
             if (success) {
@@ -236,7 +238,7 @@
         }];
 		
 		dispatch_async(dispatch_get_main_queue(), ^{
-            self.loginTimer = [NSTimer scheduledTimerWithTimeInterval:40
+            self.loginTimer = [NSTimer scheduledTimerWithTimeInterval:80
                                                           target:self
                                                         selector:@selector(loginIsTakingTooLong)
                                                         userInfo:nil

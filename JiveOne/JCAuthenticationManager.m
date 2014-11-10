@@ -274,6 +274,8 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 // IBAction method for logout is in the JCAccountViewController.m
 - (void)logout:(UIViewController *)viewController {
     
+    JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
+    
     [self.keychainWrapper resetKeychainItem];
     
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"authToken"];
@@ -288,14 +290,14 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     }
 	
 	[[JCV5ApiClient sharedClient] stopAllOperations];
+    [[SipHandler sharedHandler] disconnect];
     [[JCOmniPresence sharedInstance] truncateAllTablesAtLogout];
-	[[SipHandler sharedHandler] disconnect];
 
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
 	[JCApplicationSwitcherDelegate reset];
     [[JCBadgeManager sharedManager] reset];
 	
-    JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
+    
     [delegate didLogOutSoUnRegisterForPushNotifications];
     [delegate stopSocket];
 	[delegate changeRootViewController:JCRootLoginViewController];

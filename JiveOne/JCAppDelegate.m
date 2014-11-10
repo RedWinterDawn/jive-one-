@@ -11,18 +11,16 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import "AFNetworkActivityIndicatorManager.h"
 #import "JasmineSocket.h"
-#import "JCRESTClient.h"
-#import "JCVoicemailClient.h"
 #import "PersonEntities.h"
 #import "NotificationView.h"
 #import "JCLoginViewController.h"
 #import "Common.h"
 #import "TRVSMonitor.h"
-#import "TestFlight.h"
 #import "JCVersion.h"
 #import "LoggerClient.h"
 #import "SipHandler.h"
 
+#import "Voicemail+Custom.h"
 #import "JCCallCardManager.h"
 #import "JCCallerViewController.h"
 #import "JCBadgeManager.h"
@@ -74,12 +72,6 @@
     [Flurry startSession:@"JCMVPQDYJZNCZVCJQ59P"];
     
     /*
-     * TESTFLIGHT
-     */
-    // start of your application:didFinishLaunchingWithOptions // ...
-    [TestFlight takeOff:@"a48098ef-e65e-40b9-8609-e995adc426ac"];
-    
-    /*
      * AFNETWORKING
      */
 	[AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
@@ -93,7 +85,8 @@
     /*
      * MAGICALRECORD
      */
-    [MagicalRecord setupCoreDataStackWithStoreNamed:@"MyJiveDatabase.sqlite"];
+    [self setupDatabase];
+
     
     //Register for background fetches
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
@@ -125,6 +118,9 @@
     JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
     if (!authenticationManager.userAuthenticated || !authenticationManager.userLoadedMininumData) {
         [self changeRootViewController:JCRootLoginViewController];
+    }
+    else {
+        [self startSocket:NO];
     }
     
     return YES;
@@ -273,6 +269,43 @@
     LOG_Info();
     
     [[JasmineSocket sharedInstance] closeSocketWithReason:@"Entering background"];
+}
+
+#pragma mark - Magical Record Setup
+- (void)setupDatabase
+{
+    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:kCoreDataDatabase];
+}
+
+- (void)cleanAndResetDatabase
+{
+    [MagicalRecord cleanUp];
+    
+    NSString *dbStore = [MagicalRecord defaultStoreName];
+    
+    NSURL *storeURL = [NSPersistentStore MR_urlForStoreName:dbStore];
+    NSURL *walURL = [[storeURL URLByDeletingPathExtension] URLByAppendingPathExtension:@"sqlite-wal"];
+    NSURL *shmURL = [[storeURL URLByDeletingPathExtension] URLByAppendingPathExtension:@"sqlite-shm"];
+    
+    NSError *error = nil;
+    BOOL result = YES;
+    
+    for (NSURL *url in @[storeURL, walURL, shmURL]) {
+        @try {
+            if ([[NSFileManager defaultManager] fileExistsAtPath:url.path]) {
+                result = [[NSFileManager defaultManager] removeItemAtURL:url error:&error];
+            }
+        }
+        @catch (NSException *exception) {
+            NSLog(@"%@", exception);
+        }
+    }
+    
+    if (result) {
+        [self setupDatabase];
+    } else {
+        NSLog(@"An error has occurred while deleting %@ error %@", dbStore, error);
+    }
 }
 
 #pragma mark - Push Notifications Handling
@@ -465,6 +498,10 @@
 	if (type == JCRootLoginViewController && [self.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
 		return;
 	}
+    
+    if (type == JCRootTabbarViewController) {
+        [self startSocket:NO];
+    }
  
 	[UIView transitionWithView:self.window
 					  duration:0.5
