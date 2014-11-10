@@ -9,10 +9,13 @@
 #import "JCContactsTableViewController.h"
 #import "Lines+Custom.h"
 #import "JCPersonCell.h"
+#import "JasmineSocket.h"
+
 
 @interface JCContactsTableViewController()
 {
     NSString *_searchText;
+    NSMutableDictionary *lineSubcription;
 }
 
 @property (nonatomic, weak) NSPredicate *predicate;
@@ -20,6 +23,19 @@
 @end
 
 @implementation JCContactsTableViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(subscribeToLinePresence:) name:kSocketDidOpen object:nil];
+    
+    if ([JasmineSocket sharedInstance].socket.readyState == SR_OPEN) {
+        [self subscribeToLinePresence:nil];
+    }
+    else {
+        [[JasmineSocket sharedInstance] initSocket];
+    }
+}
 
 - (void)configureCell:(UITableViewCell *)cell withObject:(id<NSObject>)object
 {
@@ -150,5 +166,34 @@
     if (searchBar.text == nil)
         self.predicate = nil;
 }
+
+- (NSMutableDictionary *)lineSubscription
+{
+    if (!lineSubcription) {
+        lineSubcription = [[NSUserDefaults standardUserDefaults] objectForKey:@"lineSub"];
+        if (!lineSubcription) {
+            lineSubcription = [NSMutableDictionary new];
+        }
+    }
+    
+    return lineSubcription;
+}
+
+#pragma mark - Socket Events
+- (void)subscribeToLinePresence:(NSNotification *)notification
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        for (Lines *line in [self.fetchedResultsController fetchedObjects]) {
+            
+            if (self.lineSubscription[line.jrn] && [self.lineSubscription[line.jrn] boolValue]) {
+                continue;
+            }
+            
+            [[JasmineSocket sharedInstance] postSubscriptionsToSocketWithId:line.jrn entity:line.jrn type:@"dialog"];
+            [self.lineSubscription setObject:@YES forKey:line.jrn];
+        }
+    });
+}
+
 
 @end
