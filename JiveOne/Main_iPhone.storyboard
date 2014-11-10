@@ -481,17 +481,28 @@
                         <sections>
                             <tableViewSection id="gK9-9V-Vvs">
                                 <cells>
-                                    <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="xls-oh-XMo" rowHeight="55" style="IBUITableViewCellStyleDefault" id="ex3-5e-QG2">
+                                    <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="88" id="ex3-5e-QG2">
                                         <rect key="frame" x="0.0" y="99" width="320" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ex3-5e-QG2" id="jqi-aL-RJC">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="55"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Username" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xls-oh-XMo">
-                                                    <rect key="frame" x="15" y="0.0" width="290" height="55"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mJH-zG-lwm">
+                                                    <rect key="frame" x="22" y="8" width="290" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dMe-0K-zEu">
+                                                    <rect key="frame" x="22" y="37" width="290" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0xL-3Y-RhU">
+                                                    <rect key="frame" x="22" y="66" width="290" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -631,8 +642,9 @@
                     <navigationItem key="navigationItem" title="Settings" id="QcP-Te-2pB"/>
                     <connections>
                         <outlet property="buildNumber" destination="iY3-3e-PXh" id="EtB-Tc-G3x"/>
-                        <outlet property="selectedLineLabel" destination="Efw-Qd-mHZ" id="Wjh-jw-vnV"/>
-                        <outlet property="userNameDetail" destination="xls-oh-XMo" id="Rvl-F7-Hhf"/>
+                        <outlet property="userDisplayName" destination="mJH-zG-lwm" id="cTw-Q2-3AB"/>
+                        <outlet property="userExternsionNumber" destination="dMe-0K-zEu" id="05a-nR-RI4"/>
+                        <outlet property="userPBX" destination="0xL-3Y-RhU" id="3zd-A5-61h"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kOb-K3-keP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1686,7 +1698,7 @@
                     <navigationItem key="navigationItem" id="32D-gV-RmW">
                         <nil key="title"/>
                         <view key="titleView" contentMode="scaleToFill" id="hvF-R3-hJB" userLabel="t">
-                            <rect key="frame" x="96" y="6" width="128" height="33"/>
+                            <rect key="frame" x="96" y="5.5" width="128" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IFW-et-Pls">

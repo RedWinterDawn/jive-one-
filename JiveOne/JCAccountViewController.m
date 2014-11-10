@@ -20,13 +20,15 @@
 #import "UIImage+ImageEffects.h"
 #import "JCAppDelegate.h"
 #import "Lines+Custom.h"
+#import "LineConfiguration+Custom.h"
+
 //#import "JCStyleKit.h"
 
 #import "JCCallCardManager.h"
 
 @interface JCAccountViewController () <MFMailComposeViewControllerDelegate, NSFileManagerDelegate>
 {
-    PersonEntities *me;
+//    PersonEntities *me;
     NSMutableArray *presenceValues;
     BOOL isPickerDisplay;
 }
@@ -51,13 +53,10 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    if (!me) {
-        me = [[JCOmniPresence sharedInstance] me];
-        
-        if (!me.entityCompany) {
-            [self retrieveCompany:me.resourceGroupName];
-        }
-    }
+    
+//    if (!me) {
+//        me = [[JCOmniPresence sharedInstance] me];
+//    }
 	
 	_managedContext = [NSManagedObjectContext MR_contextForCurrentThread];
     
@@ -78,17 +77,28 @@
 {
 //    self.userNameDetail.text = me.firstLastName;
     NSString * jiveId = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
-    self.userNameDetail.text = jiveId;
+    self.userUsername.text = jiveId;
+    
+    Lines *line = [Lines MR_findFirst];
+    if (line) {
+        self.userDisplayName.text = line.displayName;
+        self.userExternsionNumber.text = [NSString stringWithFormat:@"Ext. %@", line.externsionNumber];
+    }
+    
+    PBX *pbx = [PBX MR_findFirst];
+    if (pbx) {        
+        self.userPBX.text = [NSString stringWithFormat:@"%@ PBX on %@", pbx.name, [pbx.v5 boolValue] ? @"V5" : @"V4"];
+    }
 	
-	_selectedLine = [Lines MR_findFirstByAttribute:@"inUse" withValue:[NSNumber numberWithBool:YES] inContext:self.managedContext];
-	if (_selectedLine) {
-		self.selectedLineLabel.text = self.selectedLine.externsionNumber;
-        self.ext.text = self.selectedLine.externsionNumber;
-	}
-	else {
-		self.selectedLineLabel.text = @"No line selected";
-        self.ext.text = self.selectedLine.externsionNumber;
-	}
+//	_selectedLine = [Lines MR_findFirstByAttribute:@"inUse" withValue:[NSNumber numberWithBool:YES] inContext:self.managedContext];
+//	if (_selectedLine) {
+//		self.selectedLineLabel.text = self.selectedLine.externsionNumber;
+//        self.ext.text = self.selectedLine.externsionNumber;
+//	}
+//	else {
+//		self.selectedLineLabel.text = @"No line selected";
+//        self.ext.text = self.selectedLine.externsionNumber;
+//	}
 	
 
 //    self.userMoodDetail.text = @"I'm not in the mood today";
@@ -113,68 +123,15 @@
 {
     [super viewWillAppear:animated];
     [Flurry logEvent:@"Account View"];
-    if (!me) {
-        me = [[JCOmniPresence sharedInstance] me];
-    }
+//    if (!me) {
+//        me = [[JCOmniPresence sharedInstance] me];
+//    }
     
 //    [self.presenceDetail setText:[self getPresence:me.entityPresence.interactions[@"chat"][@"code"]]];
     
 
 }
 
-- (void)updateAccountInformation
-{
-//    [[JCRESTClient sharedClient] RetrieveMyEntitity:^(id JSON, id operation) {
-//        
-//        NSDictionary *entity = (NSDictionary*)JSON;
-//        
-//        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
-//        me.presence = entity[@"presence"];
-//        me.email = entity[@"email"];
-//        me.externalId = entity[@"externalId"];
-//        me.resourceGroupName = entity[@"company"];
-//        me.location = entity[@"location"];
-//        me.firstLastName = entity[@"name"][@"firstLast"];
-//        me.groups = entity[@"groups"];
-//        me.urn = entity[@"urn"];
-//        me.id = entity[@"id"];
-//        me.picture = entity[@"picture"];
-//
-//        [localContext MR_saveToPersistentStoreAndWait];
-//        
-//        //TODO: using company id, query to get PBX?
-//        [self retrieveCompany:[JSON objectForKey:@"company"]];
-//        
-//        [self loadViews];
-//        
-//    } failure:^(NSError *err, id operation) {
-//        NSLog(@"%@", err);
-//    }];
-}
-
--(void) retrieveCompany:(NSString*)companyURL{
-//    [[JCRESTClient sharedClient] RetrieveMyCompany:companyURL:^(id JSON) {
-//        
-//        NSManagedObjectContext *localContext = [NSManagedObjectContext MR_contextForCurrentThread];
-//        Company *company = [Company MR_createInContext:localContext];
-//        company.lastModified = JSON[@"lastModified"];
-//        company.pbxId = JSON[@"pbxId"];
-//        company.timezone = JSON[@"timezone"];
-//        company.name = JSON[@"name"];
-//        company.urn = JSON[@"urn"];
-//        company.companyId = JSON[@"id"];
-//        
-//        me.entityCompany = company;
-//        
-//        [localContext MR_saveToPersistentStoreAndWait];
-//        
-//        [self performSelectorOnMainThread:@selector(loadViews) withObject:nil waitUntilDone:YES];
-//        
-//    } failure:^(NSError *err) {
-//        NSLog(@"%@", err);
-//    }];
-//    
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -234,7 +191,6 @@
 #pragma mark - Table Actions
 - (void) logoutButtonPress{
     [[JCAuthenticationManager sharedInstance] logout:self];
-    //[self.tabBarController performSegueWithIdentifier:@"logoutSegue" sender:self.tabBarController];
     [Flurry logEvent:@"Log out"];
 }
 

@@ -86,7 +86,6 @@
 		271EBDAF1910525E00421BA9 /* GTalkNotify.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 271EBDAE1910525E00421BA9 /* GTalkNotify.aiff */; };
 		271F4622198082EB00455BFB /* Default~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 271F4621198082EB00455BFB /* Default~iphone.png */; };
 		272580F0192120500027887C /* people-start-conv.png in Resources */ = {isa = PBXBuildFile; fileRef = 272580EF192120500027887C /* people-start-conv.png */; };
-		2727003F197DE7A100A2D7AF /* JCContactsClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2799757C195A1FC4001425CC /* JCContactsClient.m */; };
 		272B61DD18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */; };
 		272B61DE18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */; };
 		2736698218BD441D0069B4B3 /* JCPersonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2736698118BD441D0069B4B3 /* JCPersonCell.m */; };
@@ -141,7 +140,6 @@
 		27997571195A12B7001425CC /* Membership+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 27997570195A12B7001425CC /* Membership+Custom.m */; };
 		27997574195A12C5001425CC /* PBX+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 27997573195A12C5001425CC /* PBX+Custom.m */; };
 		27997577195A12D7001425CC /* Lines+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 27997576195A12D7001425CC /* Lines+Custom.m */; };
-		2799757D195A1FC4001425CC /* JCContactsClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2799757C195A1FC4001425CC /* JCContactsClient.m */; };
 		279975F2195B1BCD001425CC /* Membership.m in Sources */ = {isa = PBXBuildFile; fileRef = 279975F1195B1BCD001425CC /* Membership.m */; };
 		279A4E0819DA86F600E8AB7B /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279A4E0719DA86F600E8AB7B /* CoreAudio.framework */; };
 		279A4E0A19DA86FC00E8AB7B /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279A4E0919DA86FC00E8AB7B /* CoreVideo.framework */; };
@@ -303,8 +301,6 @@
 		91DDB19D193500B500550F10 /* JCDeleteButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DDB19C193500B500550F10 /* JCDeleteButton.m */; };
 		DD28DA5218AEC4F5003BFC44 /* JCAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DD28DA5118AEC4F5003BFC44 /* JCAccountViewController.m */; };
 		DD3BD9F418DCB1740080318E /* Voicemail+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = DD3BD9F318DCB1740080318E /* Voicemail+Custom.m */; };
-		DD54A056195B894E001A34F3 /* JCVoicemailClient.m in Sources */ = {isa = PBXBuildFile; fileRef = DD54A055195B894E001A34F3 /* JCVoicemailClient.m */; };
-		DD54A05F195CE271001A34F3 /* JCJifClient.m in Sources */ = {isa = PBXBuildFile; fileRef = DD54A05E195CE271001A34F3 /* JCJifClient.m */; };
 		DD577D531940DC6C008DAB46 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD577D521940DC6C008DAB46 /* icomoon.ttf */; };
 		DDCADB6D197D75D800483D98 /* UTDirectoryVCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DDCADB6C197D75D800483D98 /* UTDirectoryVCTests.m */; };
 		DDCE1E8718F3561D003A6615 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E8618F3561D003A6615 /* AudioToolbox.framework */; };
@@ -539,8 +535,6 @@
 		27997573195A12C5001425CC /* PBX+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PBX+Custom.m"; sourceTree = "<group>"; };
 		27997575195A12D7001425CC /* Lines+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Lines+Custom.h"; sourceTree = "<group>"; };
 		27997576195A12D7001425CC /* Lines+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Lines+Custom.m"; sourceTree = "<group>"; };
-		2799757B195A1FC4001425CC /* JCContactsClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCContactsClient.h; sourceTree = "<group>"; };
-		2799757C195A1FC4001425CC /* JCContactsClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCContactsClient.m; sourceTree = "<group>"; };
 		279975F0195B1BCD001425CC /* Membership.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Membership.h; sourceTree = "<group>"; };
 		279975F1195B1BCD001425CC /* Membership.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Membership.m; sourceTree = "<group>"; };
 		279A4E0719DA86F600E8AB7B /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
@@ -892,10 +886,6 @@
 		DD28DA5118AEC4F5003BFC44 /* JCAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAccountViewController.m; sourceTree = "<group>"; };
 		DD3BD9F218DCB1740080318E /* Voicemail+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Voicemail+Custom.h"; sourceTree = "<group>"; };
 		DD3BD9F318DCB1740080318E /* Voicemail+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Voicemail+Custom.m"; sourceTree = "<group>"; };
-		DD54A054195B894E001A34F3 /* JCVoicemailClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVoicemailClient.h; sourceTree = "<group>"; };
-		DD54A055195B894E001A34F3 /* JCVoicemailClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoicemailClient.m; sourceTree = "<group>"; };
-		DD54A05D195CE271001A34F3 /* JCJifClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCJifClient.h; sourceTree = "<group>"; };
-		DD54A05E195CE271001A34F3 /* JCJifClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCJifClient.m; sourceTree = "<group>"; };
 		DD577D521940DC6C008DAB46 /* icomoon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = icomoon.ttf; path = ../icomoon.ttf; sourceTree = "<group>"; };
 		DDCADB6C197D75D800483D98 /* UTDirectoryVCTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UTDirectoryVCTests.m; sourceTree = "<group>"; };
 		DDCE1E8418F355FE003A6615 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
@@ -1364,12 +1354,6 @@
 				913786F6194A22E200002DD3 /* LoggerClient.m */,
 				9145E31D191D842500840D66 /* JCVersion.h */,
 				9145E31E191D842500840D66 /* JCVersion.m */,
-				2799757B195A1FC4001425CC /* JCContactsClient.h */,
-				2799757C195A1FC4001425CC /* JCContactsClient.m */,
-				DD54A054195B894E001A34F3 /* JCVoicemailClient.h */,
-				DD54A055195B894E001A34F3 /* JCVoicemailClient.m */,
-				DD54A05D195CE271001A34F3 /* JCJifClient.h */,
-				DD54A05E195CE271001A34F3 /* JCJifClient.m */,
 				27EB18BD19DE045900C1503B /* JCV5ApiClient.h */,
 				27EB18BE19DE045900C1503B /* JCV5ApiClient.m */,
 			);
@@ -2593,7 +2577,6 @@
 				5D7339A71A03F2E700339DC6 /* NSManagedObject+JCCoreDataAdditions.m in Sources */,
 				279E4CAD192273E5002A556C /* MBContactCollectionViewEntryCell.m in Sources */,
 				27D2C1F7196F030C005285FF /* JCLineSelectorViewController.m in Sources */,
-				DD54A056195B894E001A34F3 /* JCVoicemailClient.m in Sources */,
 				5DB0BFC71A0033B5006737D7 /* JCView.m in Sources */,
 				27F1F2D6191C171300AEAFD7 /* UAInboxMessageListCell.m in Sources */,
 				27EA1DFD1900A83D0075CAEE /* JCVoicemailTableViewController.m in Sources */,
@@ -2602,7 +2585,6 @@
 				27F1F2E2191C171300AEAFD7 /* UALocationSettingsViewController.m in Sources */,
 				913786F7194A22E200002DD3 /* LoggerClient.m in Sources */,
 				5DB0BFC119FFF3FE006737D7 /* JCTableViewCell.m in Sources */,
-				DD54A05F195CE271001A34F3 /* JCJifClient.m in Sources */,
 				DD28DA5218AEC4F5003BFC44 /* JCAccountViewController.m in Sources */,
 				91743AA0191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m in Sources */,
 				2762151E1912AA2500CFBCC8 /* NSDictionary+QueryString.m in Sources */,
@@ -2641,7 +2623,6 @@
 				277A1F8018F88987009A41F7 /* JCLoginViewController.m in Sources */,
 				5DBCB93919FE9300001C7157 /* JCConferenceCallCard.m in Sources */,
 				270152C61901D1FF00F271CE /* PersonEntities+Custom.m in Sources */,
-				2799757D195A1FC4001425CC /* JCContactsClient.m in Sources */,
 				276CFEAB196AF45F00C30B30 /* JasmineSocket.m in Sources */,
 				5DA5A1B219DAFEAD00968F7D /* JCDialStringLabel.m in Sources */,
 				5D35479819FF4B85009E3CB4 /* JCApplicationSwitcherDelegate.m in Sources */,
@@ -2688,7 +2669,6 @@
 			files = (
 				2751591218AD174F00FD8D3F /* KeychainItemWrapper.m in Sources */,
 				2751591418AD174F00FD8D3F /* JCAuthenticationManager.m in Sources */,
-				2727003F197DE7A100A2D7AF /* JCContactsClient.m in Sources */,
 				2762C45918B4177D00885918 /* JCOmniPresence.m in Sources */,
 				2751591818AD300B00FD8D3F /* OsgiData.xcdatamodel in Sources */,
 				276CFEAC196AF45F00C30B30 /* JasmineSocket.m in Sources */,
