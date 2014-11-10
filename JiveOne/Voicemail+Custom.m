@@ -9,7 +9,7 @@
 #import "Voicemail+Custom.h"
 #import "VoicemailETag.h"
 
-#import "JCVoicemailClient.h"
+#import "JCV5ApiClient.h"
 #import "NSDictionary+Validations.h"
 
 @implementation Voicemail (Custom)
@@ -61,7 +61,7 @@
 + (void)fetchVoicemailsInBackground:(void(^)(BOOL success, NSError *error))completed
 {
     // V5 only provides voicemail through REST. So re make a REST Call
-    [[JCVoicemailClient sharedClient] getVoicemails:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+    [[JCV5ApiClient sharedClient] getVoicemails:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
         if (completed != nil) {
             if (suceeded && completed != NULL) {
                 completed(true, nil);
@@ -83,6 +83,7 @@
         }
     } completion:^(BOOL success, NSError *error) {
         completed(success);
+        [self fetchAllVoicemailDataInBackground];
     }];
 }
 
@@ -92,33 +93,31 @@
         NSArray *voicemails = [Voicemail MR_findAllWithPredicate:[NSPredicate predicateWithFormat:@"data == nil"] inContext:[NSManagedObjectContext MR_contextForCurrentThread]];
         for (Voicemail *voicemail in voicemails)
         {
-            [voicemail fetchData];
+            @try {
+                
+                NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+                request.URL = [NSURL URLWithString:voicemail.url_download];
+                request.HTTPMethod = @"GET";
+                [request setValue:[[JCAuthenticationManager sharedInstance] getAuthenticationToken] forHTTPHeaderField:@"Authorization"];
+                
+                __autoreleasing NSURLResponse *response;
+                __autoreleasing NSError *error;
+                NSData *voiceData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+                if (voiceData) {
+                    voicemail.data = voiceData;
+                    [voicemail.managedObjectContext MR_saveToPersistentStoreAndWait];
+                }
+                
+            }
+            @catch (NSException *exception) {
+                NSLog(@"%@", exception);
+            }
         }
     });
 }
 
-- (void)fetchData
-{
-    @try {
-        
-        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-        request.URL = [NSURL URLWithString:self.url_download];
-        request.HTTPMethod = @"GET";
-        [request setValue:[[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"] forHTTPHeaderField:@"Authorization"];
-        
-        __autoreleasing NSURLResponse *response;
-        __autoreleasing NSError *error;
-        NSData *voiceData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-        if (voiceData) {
-            self.data = voiceData;
-            [self.managedObjectContext MR_saveToPersistentStoreAndWait];
-        }
-        
-    }
-    @catch (NSException *exception) {
-        NSLog(@"%@", exception);
-    }
-}
+
+
 
 #pragma mark Private
 
@@ -157,7 +156,7 @@ NSString *const kVoicemailResponseSelfMailboxKey        = @"self_mailbox";
     
     if (!voicemail.data) {
         dispatch_async(dispatch_queue_create("load_voicemail", NULL), ^{
-            [voicemail fetchData]; // Async kicks off a load of the voicemail data download.
+            [self fetchAllVoicemailDataInBackground]; // Async kicks off a load of the voicemail data download.
         });
     }
     
@@ -183,7 +182,7 @@ NSString *const kVoicemailResponseSelfMailboxKey        = @"self_mailbox";
         if (success)
         {
             // now send update to server
-            [[JCVoicemailClient sharedClient] updateVoicemailToRead:self completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+            [[JCV5ApiClient sharedClient] updateVoicemailToRead:self completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
                 if(error)
                 {
                     NSString *errorMessage = @"Failed Updating Voicemail Read Status On Server, Aborting";
@@ -205,7 +204,7 @@ NSString *const kVoicemailResponseSelfMailboxKey        = @"self_mailbox";
     if (deletedVoicemails.count > 0) {
         for (Voicemail *voice in deletedVoicemails) {
             if(voice.url_self){
-                [[JCVoicemailClient sharedClient] deleteVoicemail:voice.url_self completed:^(BOOL succeeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+                [[JCV5ApiClient sharedClient] deleteVoicemail:voice.url_self completed:^(BOOL succeeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
                     if (succeeded) {
                         [Voicemail deleteVoicemail:voice.jrn managedContext:nil];
                     }
