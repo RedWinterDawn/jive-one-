@@ -68,11 +68,18 @@
 #define kPresenceInvisible      @"Invisible"
 #define kPresenceOffline        @"Offline"
 
+#pragma mark - Constants
+#define kCoreDataDatabase   @"MyJiveDatabase.sqlite"
+
 #pragma mark - KVO Constants
 #define kPresenceKeyPathForClientEntity     @"entityPresence"
 #define kPresenceKeyPathForLineEntity       @"state"
 #define kLastMofiedKeyPathForConversation   @"lastModified"
 #define kVoicemailKeyPathForVoicemal        @"voicemail"
+
+#pragma mark - Socket Events
+#define kSocketDidOpen  @"socketDidOpen"
+#define kSocketEventForLine     @"socketEventForLine"
 
 #pragma mark - Socket Message Types
 #define kSocketPresence         @"presence"
