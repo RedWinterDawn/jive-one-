@@ -154,11 +154,12 @@ NSString *const kVoicemailResponseSelfMailboxKey        = @"self_mailbox";
     voicemail.mailboxUrl        = [dictionary stringValueForKey:kVoicemailResponseSelfMailboxKey];
     voicemail.unixTimestamp     = [dictionary integerValueForKey:kVoicemailResponseTimestampKey];
     
-    if (!voicemail.data) {
+    // Removing. Should not be used as is without fixing the concurrency problems.
+    /*if (!voicemail.data) {
         dispatch_async(dispatch_queue_create("load_voicemail", NULL), ^{
             [self fetchAllVoicemailDataInBackground]; // Async kicks off a load of the voicemail data download.
         });
-    }
+    }*/
     
     if (sender != self) {
         [voicemail.managedObjectContext MR_saveToPersistentStoreAndWait];
