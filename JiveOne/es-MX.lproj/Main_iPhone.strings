@@ -39,7 +39,7 @@
 "BF1-XV-Z7b.text" = "Cancelar";
 
 /* Class = "IBUILabel"; text = "Voicemail:"; ObjectID = "BhM-7z-evk"; */
-"BhM-7z-evk.text" = "Voicemail:";
+"BhM-7z-evk.text" = "Buzón voz:";
 
 /* Class = "IBUILabel"; text = "Merge Calls"; ObjectID = "C17-8W-dR3"; */
 "C17-8W-dR3.text" = "Merge Calls";
@@ -63,7 +63,7 @@
 "Hvu-aR-OOp.text" = "Agregar llamada";
 
 /* Class = "IBUINavigationItem"; title = "Recent Activity"; ObjectID = "JYv-VQ-bNP"; */
-"JYv-VQ-bNP.title" = "Recent Activity";
+"JYv-VQ-bNP.title" = "Actividad Reciente";
 
 /* Class = "IBUIViewController"; title = "Transfer"; ObjectID = "Jhp-k4-hWJ"; */
 "Jhp-k4-hWJ.title" = "Transferir";
@@ -78,7 +78,7 @@
 "Kbp-js-aK1.text" = "nombre";
 
 /* Class = "IBUINavigationItem"; title = "Voicemail"; ObjectID = "LA4-gt-zUJ"; */
-"LA4-gt-zUJ.title" = "Mensaje de voz";
+"LA4-gt-zUJ.title" = "Buzón voz";
 
 /* Class = "IBUIButton"; accessibilityLabel = "Cancel Button"; ObjectID = "LP1-U3-wbS"; */
 "LP1-U3-wbS.accessibilityLabel" = "Cancel Button";
@@ -120,7 +120,7 @@
 "Xd1-F6-dWo.text" = "0.05";
 
 /* Class = "IBUILabel"; text = "Missed:"; ObjectID = "XiM-TR-LPH"; */
-"XiM-TR-LPH.text" = "Missed:";
+"XiM-TR-LPH.text" = "Perdidas:";
 
 /* Class = "IBUILabel"; text = "TRANSFERRED TO"; ObjectID = "Zey-Qd-g8J"; */
 "Zey-Qd-g8J.text" = "TRANSFERRED TO";
@@ -177,7 +177,7 @@
 "iY3-3e-PXh.accessibilityLabel" = "Desconectarse";
 
 /* Class = "IBUITabBarItem"; title = "Keypad"; ObjectID = "idj-mu-viK"; */
-"idj-mu-viK.title" = "Teclado numérico";
+"idj-mu-viK.title" = "Teclado";
 
 /* Class = "IBUITabBarItem"; title = "Contacts"; ObjectID = "j3y-6c-YEc"; */
 "j3y-6c-YEc.title" = "Contactos";
@@ -192,7 +192,7 @@
 "k9u-JK-Ejv.title" = "Transferir";
 
 /* Class = "IBUINavigationItem"; title = "Voicemail"; ObjectID = "kwW-Qp-UuE"; */
-"kwW-Qp-UuE.title" = "Mensaje de voz";
+"kwW-Qp-UuE.title" = "Buzón voz";
 
 /* Class = "IBUILabel"; accessibilityLabel = "Another Callers "; ObjectID = "lS3-iw-nlZ"; */
 "lS3-iw-nlZ.accessibilityLabel" = "Another Callers ";
@@ -225,10 +225,10 @@
 "qr5-fZ-Kx4.title" = "Elemento";
 
 /* Class = "IBUINavigationController"; title = "Keypad"; ObjectID = "vrQ-kc-2ec"; */
-"vrQ-kc-2ec.title" = "Teclado numérico";
+"vrQ-kc-2ec.title" = "Teclado";
 
 /* Class = "IBUINavigationController"; title = "Voicemail"; ObjectID = "wLV-k9-4Pz"; */
-"wLV-k9-4Pz.title" = "Mensaje de voz";
+"wLV-k9-4Pz.title" = "Buzón voz";
 
 /* Class = "IBUILabel"; text = "817-343-9239"; ObjectID = "wy5-2x-2pe"; */
 "wy5-2x-2pe.text" = "817-343-9239";
@@ -237,13 +237,13 @@
 "xbE-Wj-ANr.text" = "817-343-9239";
 
 /* Class = "IBUITabBarItem"; title = "Voicemail"; ObjectID = "yfS-ds-xyB"; */
-"yfS-ds-xyB.title" = "Mensaje de voz";
+"yfS-ds-xyB.title" = "Buzón voz";
 
 /* Class = "IBUITabBarItem"; title = "Contacts"; ObjectID = "yqu-Rh-YHg"; */
 "yqu-Rh-YHg.title" = "Contactos";
 
 /* Class = "IBUILabel"; text = "Keypad"; ObjectID = "zcs-la-vSZ"; */
-"zcs-la-vSZ.text" = "Teclado numérico";
+"zcs-la-vSZ.text" = "Teclado";
 
 /* Class = "IBUILabel"; text = "Finish Transfer"; ObjectID = "zpq-3o-7Gs"; */
 "zpq-3o-7Gs.text" = "Finish Transfer";
