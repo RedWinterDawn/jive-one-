@@ -3581,7 +3581,7 @@
         <image name="nav-dial-black" width="70" height="70"/>
         <image name="nav-hist-black" width="25" height="25"/>
         <image name="nav-voicemail-black" width="33" height="16"/>
-        <image name="second" width="640" height="1136"/>
+        <image name="second" width="11" height="12"/>
         <image name="white-arrow" width="30" height="31"/>
         <image name="white-arrow-outline" width="30" height="31"/>
         <image name="white-check" width="30" height="30"/>
