@@ -7,12 +7,14 @@
 //
 
 #import "JCContactsTableViewController.h"
+#import "JCCallerViewController.h"
+
 #import "Lines+Custom.h"
 #import "JCPersonCell.h"
 #import "JasmineSocket.h"
 
 
-@interface JCContactsTableViewController()
+@interface JCContactsTableViewController()  <JCCallerViewControllerDelegate>
 {
     NSString *_searchText;
     NSMutableDictionary *lineSubcription;
@@ -35,6 +37,28 @@
     else {
         [[JasmineSocket sharedInstance] initSocket];
     }
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    UIViewController *viewController = segue.destinationViewController;
+    if ([viewController isKindOfClass:[JCCallerViewController class]]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        id object = [self objectAtIndexPath:indexPath];
+        if ([object isKindOfClass:[Lines class]]) {
+            Lines *line = (Lines *)object;
+            JCCallerViewController *callerViewController = (JCCallerViewController *)viewController;
+            callerViewController.delegate = self;
+            callerViewController.dialString = line.externsionNumber;
+        }
+    }
+}
+
+-(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController
+{
+    [self dismissViewControllerAnimated:NO completion:^{
+        
+    }];
 }
 
 - (void)configureCell:(UITableViewCell *)cell withObject:(id<NSObject>)object

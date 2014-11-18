@@ -745,6 +745,7 @@
                                     <outlet property="personDetailLabel" destination="TBH-my-sze" id="ESN-Lz-BaH"/>
                                     <outlet property="personNameLabel" destination="Kbp-js-aK1" id="TD4-a1-U0E"/>
                                     <outlet property="personPresenceView" destination="Imk-Vj-t20" id="ikn-7G-qxK"/>
+                                    <segue destination="ph3-lT-GBI" kind="modal" identifier="ContactsClickToCall" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" animates="NO" id="voi-Tt-SuU"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -3600,7 +3601,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="qpb-jz-IY5"/>
+        <segue reference="voi-Tt-SuU"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29803921570000003" green="0.44705882349999998" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
 </document>
