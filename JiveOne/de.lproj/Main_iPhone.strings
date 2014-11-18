@@ -27,7 +27,7 @@
 "5Sc-JQ-q86.text" = "Telefon";
 
 /* Class = "IBUISearchBar"; placeholder = "Search                                                      "; ObjectID = "5ds-mG-BrS"; */
-"5ds-mG-BrS.placeholder" = "Search                                                      ";
+"5ds-mG-BrS.placeholder" = "Suchen                                                      ";
 
 /* Class = "IBUILabel"; text = "Mute"; ObjectID = "7Kp-Io-fyp"; */
 "7Kp-Io-fyp.text" = "Stumm";
@@ -81,7 +81,7 @@
 "LA4-gt-zUJ.title" = "Voicemail";
 
 /* Class = "IBUIButton"; accessibilityLabel = "Cancel Button"; ObjectID = "LP1-U3-wbS"; */
-"LP1-U3-wbS.accessibilityLabel" = "Cancel Button";
+"LP1-U3-wbS.accessibilityLabel" = "Abbrechen Button";
 
 /* Class = "IBUINavigationItem"; title = "Call History"; ObjectID = "Lhi-Ie-TBG"; */
 "Lhi-Ie-TBG.title" = "Anrufliste";
@@ -114,7 +114,7 @@
 "VOs-kP-Qid.text" = "3:03 PM";
 
 /* Class = "IBUILabel"; text = "Transferd Number"; ObjectID = "W9Q-fu-t2u"; */
-"W9Q-fu-t2u.text" = "Transferd Number";
+"W9Q-fu-t2u.text" = "Transferred Number";
 
 /* Class = "IBUILabel"; text = "0.05"; ObjectID = "Xd1-F6-dWo"; */
 "Xd1-F6-dWo.text" = "0.05";
