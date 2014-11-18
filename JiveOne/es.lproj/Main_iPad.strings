@@ -1,0 +1,144 @@
+
+/* Class = "IBUILabel"; text = "Last Socket Events"; ObjectID = "0kh-qc-WfI"; */
+"0kh-qc-WfI.text" = "Last Socket Events";
+
+/* Class = "IBUILabel"; text = "Mobile"; ObjectID = "1eE-By-mjG"; */
+"1eE-By-mjG.text" = "Mobile";
+
+/* Class = "IBUILabel"; text = "Terms of Service"; ObjectID = "2S3-Go-rBA"; */
+"2S3-Go-rBA.text" = "Condiciones de servicio";
+
+/* Class = "IBUILabel"; text = "Detail"; ObjectID = "3qk-lx-qG5"; */
+"3qk-lx-qG5.text" = "Detalles";
+
+/* Class = "IBUILabel"; text = "Email"; ObjectID = "3yJ-FR-IRc"; */
+"3yJ-FR-IRc.text" = "Enviar por correo";
+
+/* Class = "IBUILabel"; text = "Socket Status"; ObjectID = "4Jm-fZ-n9Y"; */
+"4Jm-fZ-n9Y.text" = "Socket Status";
+
+/* Class = "IBUINavigationController"; title = "Voicemail"; ObjectID = "9bn-7y-sBQ"; */
+"9bn-7y-sBQ.title" = "Buzón de voz";
+
+/* Class = "IBUILabel"; text = "Invalid Credentials. Please try again. "; ObjectID = "D5S-lp-U55"; */
+"D5S-lp-U55.text" = "Invalid Credentials. Please try again. ";
+
+/* Class = "IBUILabel"; text = "Title"; ObjectID = "DHa-YI-KIp"; */
+"DHa-YI-KIp.text" = "Título";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "DOB-7D-iil"; */
+"DOB-7D-iil.text" = "Etiqueta";
+
+/* Class = "IBUITableViewSection"; headerTitle = "Other"; ObjectID = "EYN-EL-gZe"; */
+"EYN-EL-gZe.headerTitle" = "Otro";
+
+/* Class = "IBUIBarButtonItem"; title = "Status"; ObjectID = "FSt-t0-kzI"; */
+"FSt-t0-kzI.title" = "Estado";
+
+/* Class = "IBUILabel"; text = "Status"; ObjectID = "IXE-LQ-XsN"; */
+"IXE-LQ-XsN.text" = "Estado";
+
+/* Class = "IBUITextField"; placeholder = "email"; ObjectID = "JR8-hb-maU"; */
+"JR8-hb-maU.placeholder" = "correo";
+
+/* Class = "IBUIBarButtonItem"; title = "Refesh"; ObjectID = "Jh2-oU-VTV"; */
+"Jh2-oU-VTV.title" = "Refesh";
+
+/* Class = "IBUINavigationItem"; title = "Voicemail"; ObjectID = "JuC-uP-hk2"; */
+"JuC-uP-hk2.title" = "Buzón de voz";
+
+/* Class = "IBUILabel"; text = "Jive Messenger"; ObjectID = "Kh8-S4-3SL"; */
+"Kh8-S4-3SL.text" = "Jive Messenger";
+
+/* Class = "IBUILabel"; text = "Title"; ObjectID = "Khq-II-eJU"; */
+"Khq-II-eJU.text" = "Título";
+
+/* Class = "IBUILabel"; text = "EULA"; ObjectID = "Lag-ZT-wCs"; */
+"Lag-ZT-wCs.text" = "EULA";
+
+/* Class = "IBUIButton"; normalTitle = "Start Chat"; ObjectID = "O6n-6O-iB6"; */
+"O6n-6O-iB6.normalTitle" = "Start Chat";
+
+/* Class = "IBUINavigationItem"; title = "Groups"; ObjectID = "PIH-7t-W8x"; */
+"PIH-7t-W8x.title" = "Grupos";
+
+/* Class = "IBUITabBarItem"; title = "Conversations"; ObjectID = "QNU-fH-Fv6"; */
+"QNU-fH-Fv6.title" = "Conversaciones";
+
+/* Class = "IBUILabel"; text = "Subtitle"; ObjectID = "UeL-6G-gYt"; */
+"UeL-6G-gYt.text" = "Subtítulo";
+
+/* Class = "IBUINavigationItem"; title = "Conversations"; ObjectID = "UkW-TH-Q8u"; */
+"UkW-TH-Q8u.title" = "Conversaciones";
+
+/* Class = "IBUILabel"; text = "April Summers"; ObjectID = "WcV-um-tSk"; */
+"WcV-um-tSk.text" = "April Summers";
+
+/* Class = "IBUILabel"; text = "Jive ID"; ObjectID = "Wwa-1a-Syh"; */
+"Wwa-1a-Syh.text" = "Jive ID";
+
+/* Class = "IBUILabel"; text = "my.email@jive.com"; ObjectID = "Xer-c3-USK"; */
+"Xer-c3-USK.text" = "my.email@jive.com";
+
+/* Class = "IBUILabel"; text = "b.hennis@greentag.com"; ObjectID = "ZBI-Pz-KHN"; */
+"ZBI-Pz-KHN.text" = "b.hennis@greentag.com";
+
+/* Class = "IBUINavigationItem"; title = "Create Group"; ObjectID = "awg-Zv-a21"; */
+"awg-Zv-a21.title" = "Create Group";
+
+/* Class = "IBUILabel"; text = "(801) 109-2389"; ObjectID = "bfX-fV-yQ5"; */
+"bfX-fV-yQ5.text" = "(801) 109-2389";
+
+/* Class = "IBUIBarButtonItem"; title = "Groups"; ObjectID = "dnh-LT-Evu"; */
+"dnh-LT-Evu.title" = "Grupos";
+
+/* Class = "IBUINavigationItem"; title = "People"; ObjectID = "e6i-od-nx2"; */
+"e6i-od-nx2.title" = "Personas";
+
+/* Class = "IBUITabBarItem"; title = "Voicemail"; ObjectID = "ibP-3d-gTf"; */
+"ibP-3d-gTf.title" = "Buzón de voz";
+
+/* Class = "IBUINavigationItem"; title = "Account"; ObjectID = "j8q-yl-Kmk"; */
+"j8q-yl-Kmk.title" = "Cuenta";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "jFs-vR-O8m"; */
+"jFs-vR-O8m.text" = "Etiqueta";
+
+/* Class = "IBUIBarButtonItem"; title = "Logout"; ObjectID = "jdO-3p-aAq"; */
+"jdO-3p-aAq.title" = "Logout";
+
+/* Class = "IBUILabel"; text = "801-801-8018"; ObjectID = "kmg-QN-rrX"; */
+"kmg-QN-rrX.text" = "801-801-8018";
+
+/* Class = "IBUITableViewSection"; headerTitle = "Presence"; ObjectID = "lci-1U-4Cw"; */
+"lci-1U-4Cw.headerTitle" = "Presence";
+
+/* Class = "IBUILabel"; text = "Title"; ObjectID = "lql-ro-bDX"; */
+"lql-ro-bDX.text" = "Título";
+
+/* Class = "IBUITableViewSection"; headerTitle = "My Info"; ObjectID = "mku-m6-TKH"; */
+"mku-m6-TKH.headerTitle" = "Mis datos";
+
+/* Class = "IBUILabel"; text = "Email (work)"; ObjectID = "pVE-Mb-oUK"; */
+"pVE-Mb-oUK.text" = "Email (work)";
+
+/* Class = "IBUILabel"; text = "Device Token"; ObjectID = "pXW-P1-4j3"; */
+"pXW-P1-4j3.text" = "Device Token";
+
+/* Class = "IBUITabBarItem"; title = "More"; ObjectID = "rX9-Eo-Lpa"; */
+"rX9-Eo-Lpa.title" = "Más";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "rn4-nF-ndN"; */
+"rn4-nF-ndN.text" = "Etiqueta";
+
+/* Class = "IBUITabBarItem"; title = "People"; ObjectID = "vD2-Ar-uls"; */
+"vD2-Ar-uls.title" = "Personas";
+
+/* Class = "IBUITextField"; placeholder = "password"; ObjectID = "y0L-HK-caB"; */
+"y0L-HK-caB.placeholder" = "contraseña";
+
+/* Class = "IBUIBarButtonItem"; title = "Poll"; ObjectID = "z0p-w7-fdZ"; */
+"z0p-w7-fdZ.title" = "Poll";
+
+/* Class = "IBUILabel"; text = "my.email@jive.com"; ObjectID = "ztU-uu-sgE"; */
+"ztU-uu-sgE.text" = "my.email@jive.com";

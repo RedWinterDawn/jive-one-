@@ -1,0 +1,24 @@
+
+/* Class = "IBUILabel"; text = "ON HOLD"; ObjectID = "4Oj-D7-F4v"; */
+"4Oj-D7-F4v.text" = "ON HOLD";
+
+/* Class = "IBUILabel"; text = "Katerina Illiov"; ObjectID = "H4z-0p-bTI"; */
+"H4z-0p-bTI.text" = "Katerina Illiov";
+
+/* Class = "IBUILabel"; accessibilityLabel = "Callers Number"; ObjectID = "ijK-Po-99E"; */
+"ijK-Po-99E.accessibilityLabel" = "Callers Number";
+
+/* Class = "IBUILabel"; text = "(801) 238-9090"; ObjectID = "ijK-Po-99E"; */
+"ijK-Po-99E.text" = "(801) 238-9090";
+
+/* Class = "IBUIView"; accessibilityHint = "callStateView"; ObjectID = "rkJ-cf-ec6"; */
+"rkJ-cf-ec6.accessibilityHint" = "callStateView";
+
+/* Class = "IBUIView"; accessibilityLabel = "callStateView"; ObjectID = "rkJ-cf-ec6"; */
+"rkJ-cf-ec6.accessibilityLabel" = "callStateView";
+
+/* Class = "IBUILabel"; text = "1:03"; ObjectID = "vAI-dZ-8vN"; */
+"vAI-dZ-8vN.text" = "1:03";
+
+/* Class = "IBUILabel"; text = "CANCELED"; ObjectID = "zQp-R0-cci"; */
+"zQp-R0-cci.text" = "CANCELED";
