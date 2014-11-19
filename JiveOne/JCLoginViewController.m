@@ -23,9 +23,6 @@
 #import "JCLineSelectorViewController.h"
 #import <XMLDictionary/XMLDictionary.h>
 
-
-
-
 @interface JCLoginViewController () <NSFileManagerDelegate>
 {
     BOOL fastConnection;
@@ -40,17 +37,6 @@
 
 @implementation JCLoginViewController
 
-- (id)init {
-    if (self = [super init]) {
-    }
-    return self;
-}
-
-
-//- (void)setClient:(JCRESTClient *)client
-//{
-//    _client = client;
-//}
 //@peter This hadles when you touch anywhere else on the screen the key board is dismissed.
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     [self.view endEditing:YES];
@@ -60,8 +46,6 @@
 {
     [super viewDidLoad];
     [self.passwordTextField fixSecureTextFieldFont];
-    //[self setClient:[JCRESTClient sharedClient]];
-    
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"seenAppTutorial"]) {
         self.userIsDoneWithTutorial = YES;
@@ -73,14 +57,13 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshAuthenticationCredentials:) name:kAuthenticationFromTokenFailed object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshAuthenticationCredentials:) name:kAuthenticationFromTokenFailedWithTimeout object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tokenValidityPassed:) name:kAuthenticationFromTokenSucceeded object:nil];
-    self.usernameTextField.returnKeyType = UIReturnKeyNext;
     
+    self.usernameTextField.returnKeyType = UIReturnKeyNext;
     self.usernameTextField.returnKeyType = UIReturnKeyNext;
     self.passwordTextField.returnKeyType = UIReturnKeyGo;
     
     self.usernameTextField.delegate = self;
     self.passwordTextField.delegate = self;
-    
     
     NSString* fontName = @"Avenir-Book";
     NSString* boldFontName = @"Avenir-Black";
@@ -111,8 +94,6 @@
     self.loginViewContainer.layer.cornerRadius = 5;
     [self.loginViewContainer.layer setCornerRadius:5];
     
-    
-    
     UIView* leftView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 20)];
     self.passwordTextField.leftViewMode = UITextFieldViewModeAlways;
     self.passwordTextField.leftView = leftView2;
@@ -124,27 +105,14 @@
     
 }
 
-- (void)viewDidDisappear:(BOOL)animated
+-(void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAuthenticationFromTokenFailed object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAuthenticationFromTokenFailedWithTimeout object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAuthenticationFromTokenSucceeded object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAuthenticationFromTokenFailed object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAuthenticationFromTokenSucceeded object:nil];
-    
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-	[super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-//    if (self.view.frame.size.height <= 560){
-//        
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
-//    }
     
+    [super viewWillAppear:animated];
     
     if ([[JCAuthenticationManager sharedInstance] getRememberMe]) {
         NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
@@ -153,12 +121,6 @@
     }
     
     [Flurry logEvent:@"Login View"];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
