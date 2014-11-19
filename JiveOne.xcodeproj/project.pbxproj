@@ -251,6 +251,7 @@
 		5D7339CB1A0826CD00339DC6 /* JCPhoneTabBarControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7339CA1A0826CC00339DC6 /* JCPhoneTabBarControllerDelegate.m */; };
 		5D895EAF1A0AB7270015368D /* JCPhoneMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D895EAE1A0AB7270015368D /* JCPhoneMenuCell.m */; };
 		5D895EB21A0AC66B0015368D /* JCBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D895EB11A0AC66B0015368D /* JCBadgeView.m */; };
+		5DA566441A1D454D00286BA5 /* JCSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA566431A1D454D00286BA5 /* JCSettingsTableViewController.m */; };
 		5DA5A1AF19DAF91400968F7D /* JCCallerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA5A1AE19DAF91400968F7D /* JCCallerViewController.m */; };
 		5DA5A1B219DAFEAD00968F7D /* JCDialStringLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA5A1B119DAFEAD00968F7D /* JCDialStringLabel.m */; };
 		5DA80B6819E4EB0200620630 /* IncomingCallViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DA80B6719E4EB0200620630 /* IncomingCallViewCell.xib */; };
@@ -782,6 +783,8 @@
 		5D895EAE1A0AB7270015368D /* JCPhoneMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneMenuCell.m; sourceTree = "<group>"; };
 		5D895EB01A0AC66B0015368D /* JCBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCBadgeView.h; sourceTree = "<group>"; };
 		5D895EB11A0AC66B0015368D /* JCBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCBadgeView.m; sourceTree = "<group>"; };
+		5DA566421A1D454D00286BA5 /* JCSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSettingsTableViewController.h; sourceTree = "<group>"; };
+		5DA566431A1D454D00286BA5 /* JCSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSettingsTableViewController.m; sourceTree = "<group>"; };
 		5DA5A1AD19DAF91400968F7D /* JCCallerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCallerViewController.h; sourceTree = "<group>"; };
 		5DA5A1AE19DAF91400968F7D /* JCCallerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallerViewController.m; sourceTree = "<group>"; };
 		5DA5A1B019DAFEAD00968F7D /* JCDialStringLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDialStringLabel.h; sourceTree = "<group>"; };
@@ -1527,6 +1530,8 @@
 				2784BA6B1940390100389F5F /* JCTableViewCellWithInset.m */,
 				27D2C1F5196F030C005285FF /* JCLineSelectorViewController.h */,
 				27D2C1F6196F030C005285FF /* JCLineSelectorViewController.m */,
+				5DA566421A1D454D00286BA5 /* JCSettingsTableViewController.h */,
+				5DA566431A1D454D00286BA5 /* JCSettingsTableViewController.m */,
 			);
 			name = Account;
 			sourceTree = "<group>";
@@ -2546,6 +2551,7 @@
 				DD28DA5218AEC4F5003BFC44 /* JCAccountViewController.m in Sources */,
 				91743AA0191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m in Sources */,
 				2762151E1912AA2500CFBCC8 /* NSDictionary+QueryString.m in Sources */,
+				5DA566441A1D454D00286BA5 /* JCSettingsTableViewController.m in Sources */,
 				5D35479B19FF4BB7009E3CB4 /* JCMenuBarButtonItem.m in Sources */,
 				27997577195A12D7001425CC /* Lines+Custom.m in Sources */,
 				91CAE67A1961D485004A28FD /* JCJiveLogoWhite.m in Sources */,
