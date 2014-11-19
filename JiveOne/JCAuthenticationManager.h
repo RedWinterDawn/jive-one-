@@ -9,6 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "KeychainItemWrapper.h"
 
+#import "PBX+Custom.h"
+#import "Lines+Custom.h"
+#import "LineConfiguration+Custom.h"
+
 @class JCAuthenticationManager;
 
 @interface JCAuthenticationManager : NSObject <UIWebViewDelegate>
@@ -27,6 +31,17 @@ typedef void (^CompletionBlock) (BOOL success, NSError *error);
 - (void)setRememberMe:(BOOL)remember;
 - (BOOL)getRememberMe;
 - (void)checkForTokenValidity;
-- (void)logout:(UIViewController *)viewController;
+- (void)logout;
 - (NSString *)getAuthenticationToken;
+
+@property (nonatomic, readonly) PBX *pbx;
+@property (nonatomic, readonly) Lines *line;
+@property (nonatomic, readonly) LineConfiguration *lineConfiguration;
+
+@property (nonatomic, readonly) NSString *userName;
+@property (nonatomic, readonly) NSString *lineDisplayName;
+@property (nonatomic, readonly) NSString *lineExtension;
+@property (nonatomic, readonly) NSString *pbxName;
+
+
 @end

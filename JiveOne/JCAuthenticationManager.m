@@ -272,9 +272,11 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 }
 
 // IBAction method for logout is in the JCAccountViewController.m
-- (void)logout:(UIViewController *)viewController {
+- (void)logout {
     
     JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
+    
+    [Flurry logEvent:@"Log out"];
     
     [self.keychainWrapper resetKeychainItem];
     
@@ -303,6 +305,52 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 	[delegate changeRootViewController:JCRootLoginViewController];
     
 	
+}
+
+#pragma mark - Getters -
+
+-(PBX *)pbx
+{
+    // TODO: When we are able to handle multiple PBX's return selected PBX, until then, returh the first.
+    
+    return [PBX MR_findFirst];
+}
+
+-(Lines *)line
+{
+    // TODO: When we are able to handle multiple Lines return selected Line, until then, returh the first.
+    
+    return [Lines MR_findFirst];
+}
+
+-(LineConfiguration *)lineConfiguration
+{
+    // TODO: When we are able to handle multiple Line configurations return selected Line configuration, until then, returh the first.
+    
+    return [LineConfiguration MR_findFirst];
+}
+
+-(NSString *)userName
+{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
+}
+
+-(NSString *)lineDisplayName
+{
+    return self.line.displayName;
+}
+
+-(NSString *)lineExtension
+{
+    return self.line.externsionNumber;
+}
+
+-(NSString *)pbxName
+{
+    PBX *pbx = self.pbx;
+    if (pbx)
+        return [NSString stringWithFormat:@"%@ PBX on %@", pbx.name, [pbx.v5 boolValue] ? @"V5" : @"V4"];
+    return nil;
 }
 
 #pragma mark - UIWebview Delegates

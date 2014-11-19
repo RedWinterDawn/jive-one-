@@ -671,7 +671,7 @@
 		[self alertStatus:title message:message];
 	}
 	
-    [[JCAuthenticationManager sharedInstance] logout:self];
+    [[JCAuthenticationManager sharedInstance] logout];
 	
 }
 

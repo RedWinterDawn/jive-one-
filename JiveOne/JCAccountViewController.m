@@ -190,8 +190,7 @@
 
 #pragma mark - Table Actions
 - (void) logoutButtonPress{
-    [[JCAuthenticationManager sharedInstance] logout:self];
-    [Flurry logEvent:@"Log out"];
+    [[JCAuthenticationManager sharedInstance] logout];
 }
 
 #pragma mark - Mail Delegate
