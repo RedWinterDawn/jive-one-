@@ -702,11 +702,6 @@
     }
 }
 
-
-- (IBAction)termsAndConditionsButton:(id)sender {
-    [self performSegueWithIdentifier: @"TCSegue" sender: self];
-}
-
 - (IBAction)rememberMe:(id)sender {
     
     [[JCAuthenticationManager sharedInstance] setRememberMe:((UISwitch *)sender).on];
