@@ -7,3 +7,11 @@
 */
 
 "Voicemail" = "Buzón voz";
+
+// Login Errors
+"Invalid Parameters" = "Parámetros no válidos";
+"Username/Password Cannot Be Empty" = "Nombre de usuario / contraseña no puede estar vacío";
+
+"No PBX" = "No PBX";
+"Multiple PBXs" = "Múltiple PBXs";
+"Server Unavailable" = "Servidor No Disponible";

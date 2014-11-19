@@ -1,24 +1,12 @@
 
-/* Class = "IBUILabel"; text = "Label"; ObjectID = "0xL-3Y-RhU"; */
-"0xL-3Y-RhU.text" = "Etiqueta";
-
 /* Class = "IBUIView"; accessibilityLabel = "End User License Agreement"; ObjectID = "1xp-K8-Zse"; */
-"1xp-K8-Zse.accessibilityLabel" = "End User License Agreement";
-
-/* Class = "IBUILabel"; accessibilityLabel = "Callers Number"; ObjectID = "2fs-lR-lrx"; */
-"2fs-lR-lrx.accessibilityLabel" = "Callers Number";
-
-/* Class = "IBUILabel"; text = "Callers Number"; ObjectID = "2fs-lR-lrx"; */
-"2fs-lR-lrx.text" = "Callers Number";
+"1xp-K8-Zse.accessibilityLabel" = "Acuerdo de licencia de usuario";
 
 /* Class = "IBUITabBarItem"; title = "Settings"; ObjectID = "30a-yD-tba"; */
 "30a-yD-tba.title" = "Configuración";
 
 /* Class = "IBUIButton"; normalTitle = "Terms and Conditions."; ObjectID = "3bm-z6-yMp"; */
-"3bm-z6-yMp.normalTitle" = "Terms and Conditions.";
-
-/* Class = "IBUILabel"; text = "(801) 349-7643"; ObjectID = "3hb-FL-acB"; */
-"3hb-FL-acB.text" = "(801) 349-7643";
+"3bm-z6-yMp.normalTitle" = "Con la firma de la aceptación de nuestros Términos y Condiciones.";
 
 /* Class = "IBUIButton"; normalTitle = "Call Voicemail"; ObjectID = "53q-MK-pw7"; */
 "53q-MK-pw7.normalTitle" = "Llamar al buzón de voz";
@@ -27,7 +15,7 @@
 "5Sc-JQ-q86.text" = "Teléfono";
 
 /* Class = "IBUISearchBar"; placeholder = "Search                                                      "; ObjectID = "5ds-mG-BrS"; */
-"5ds-mG-BrS.placeholder" = "Search                                                      ";
+"5ds-mG-BrS.placeholder" = "Búsqueda                                                  ";
 
 /* Class = "IBUILabel"; text = "Mute"; ObjectID = "7Kp-Io-fyp"; */
 "7Kp-Io-fyp.text" = "Silencio";
@@ -53,11 +41,8 @@
 /* Class = "IBUILabel"; text = "3302/Jive Communications, Inc"; ObjectID = "Efw-Qd-mHZ"; */
 "Efw-Qd-mHZ.text" = "3302/Jive Communications, Inc";
 
-/* Class = "IBUILabel"; text = "Current Caller's Name"; ObjectID = "GKd-Ca-PWO"; */
-"GKd-Ca-PWO.text" = "Current Caller's Name";
-
 /* Class = "IBUILabel"; text = "Remember me"; ObjectID = "HlT-GQ-JCc"; */
-"HlT-GQ-JCc.text" = "Remember me";
+"HlT-GQ-JCc.text" = "Acuérdate de mí";
 
 /* Class = "IBUILabel"; text = "Add Call"; ObjectID = "Hvu-aR-OOp"; */
 "Hvu-aR-OOp.text" = "Agregar llamada";
@@ -129,7 +114,7 @@
 "aTR-Bp-dDz.text" = "Swap Calls";
 
 /* Class = "IBUILabel"; text = "By signing in you agree to our"; ObjectID = "bxS-qG-c0L"; */
-"bxS-qG-c0L.text" = "By signing in you agree to our";
+"bxS-qG-c0L.text" = "Con la firma de la aceptación de nuestros \nTérminos y Condiciones.";
 
 /* Class = "IBUINavigationController"; title = "History"; ObjectID = "cIE-ip-pRf"; */
 "cIE-ip-pRf.title" = "Historial";
