@@ -42,26 +42,20 @@ NSString *const kLineConfigurationResponseSipPasswordKey        = @"password";
 	[MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
 		
 		NSArray *dataArray = [config valueForKeyPath:@"branding.settings_data.core_data_list.account_list.account.data"];
-        for (id object in dataArray) {
-            if ([object isKindOfClass:[NSArray class]])
-            {
-                // Normalize Data into Key/value pairs.
-                NSMutableDictionary *lineData = [NSMutableDictionary dictionary];
-                [(NSArray *)object enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                    NSDictionary *lineDataItem = (NSDictionary*)obj;
-                    NSString *key = [lineDataItem stringValueForKey:kLineConfigurationResponseKey];
-                    NSString *value = [lineDataItem stringValueForKey:kLineConfigurationResponseValue];
-                    [lineData setObject:value forKey:key];
-                }];
-                
-                
-                NSString *identifier = [lineData stringValueForKey:kLineConfigurationResponseIdentifierKey];
-                LineConfiguration *lineConfiguration = [LineConfiguration lineConfigurationForIdentifier:identifier context:localContext];
-                
-                lineConfiguration.registrationHost  = [lineData stringValueForKey:kLineConfigurationResponseRegistrationHostKey];
-                lineConfiguration.outboundProxy     = [lineData stringValueForKey:kLineConfigurationResponseOutboundProxyKey];
-                lineConfiguration.sipUsername       = [lineData stringValueForKey:kLineConfigurationResponseSipUsernameKey];
-                lineConfiguration.sipPassword       = [lineData stringValueForKey:kLineConfigurationResponseSipPasswordKey];
+        NSDictionary *data = [LineConfiguration normalizeDictionaryFromArray:dataArray keyIdentifier:kLineConfigurationResponseKey valueIdentifier:kLineConfigurationResponseValue];
+        if (data) {
+            [LineConfiguration addLineConfiguration:data managedObjectContext:localContext];
+        }
+        else
+        {
+            for (id object in dataArray) {
+                if ([object isKindOfClass:[NSArray class]])
+                {
+                    NSDictionary *data = [LineConfiguration normalizeDictionaryFromArray:(NSArray *)object keyIdentifier:kLineConfigurationResponseKey valueIdentifier:kLineConfigurationResponseValue];
+                    if (data) {
+                        [LineConfiguration addLineConfiguration:data managedObjectContext:localContext];
+                    }
+                }
             }
         }
 		
@@ -70,4 +64,32 @@ NSString *const kLineConfigurationResponseSipPasswordKey        = @"password";
 	}];
 
 }
+
++ (NSDictionary *)normalizeDictionaryFromArray:(NSArray *)array keyIdentifier:(NSString *)keyIdentifier valueIdentifier:(NSString *)valueIdentifier
+{
+    // Normalize Data into Key/value pairs.
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+    [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        if ([obj isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *item = (NSDictionary*)obj;
+            NSString *key = [item stringValueForKey:keyIdentifier];
+            NSString *value = [item stringValueForKey:valueIdentifier];
+            [dictionary setObject:value forKey:key];
+        }
+    }];
+    
+    return (dictionary.count > 0) ? dictionary : nil;
+}
+
++ (void)addLineConfiguration:(NSDictionary *)data managedObjectContext:(NSManagedObjectContext *)context
+{
+    NSString *identifier = [data stringValueForKey:kLineConfigurationResponseIdentifierKey];
+    LineConfiguration *lineConfiguration = [LineConfiguration lineConfigurationForIdentifier:identifier context:context];
+    
+    lineConfiguration.registrationHost  = [data stringValueForKey:kLineConfigurationResponseRegistrationHostKey];
+    lineConfiguration.outboundProxy     = [data stringValueForKey:kLineConfigurationResponseOutboundProxyKey];
+    lineConfiguration.sipUsername       = [data stringValueForKey:kLineConfigurationResponseSipUsernameKey];
+    lineConfiguration.sipPassword       = [data stringValueForKey:kLineConfigurationResponseSipPasswordKey];
+}
+
 @end
