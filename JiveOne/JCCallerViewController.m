@@ -209,18 +209,19 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         if (button.selected) {
             [[JCCallCardManager sharedManager] mergeCalls:^(bool success) {
 				if (success) {
-					self.mergeLabel.text = @"Split Calls";
+					self.mergeLabel.text = NSLocalizedString(@"Split Calls", nil);
 				}
 				else
 				{
 					button.selected = !button.selected;
-					[self showHudWithTitle:@"Oh-oh" detail:@"Failed to Create Conference"];
+					[self showHudWithTitle:NSLocalizedString(@"Oh-oh", nil)
+                                    detail:NSLocalizedString(@"Failed to Create Conference", nil)];
 				}
 			}];
 			
         } else {
             [[JCCallCardManager sharedManager] splitCalls];
-            self.mergeLabel.text = @"Merge Calls";
+            self.mergeLabel.text = NSLocalizedString(@"Merge Calls", nil);
         }
     }
 }
@@ -232,7 +233,8 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
             [self showTransferSuccess];
         }
         else {
-            [self showHudWithTitle:@"Oh-oh" detail:@"Failed to finish transfer"];
+            [self showHudWithTitle:NSLocalizedString(@"Oh-oh", nil)
+                            detail:NSLocalizedString(@"Failed to finish transfer", nil)];
             [self.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];
         }
     }];

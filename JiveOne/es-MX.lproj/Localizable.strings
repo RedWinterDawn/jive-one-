@@ -6,7 +6,20 @@
   Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 */
 
-"Voicemail" = "Buzón voz";
+"Voicemail"     = "Buzón voz";
+"RINGING"       = "RESONANTE";
+"CANCELED"      = "CANCELADO";
+"Unregistered"  = "No Registrado";
+"Conference"    = "Conferencia";
+"Call Failed"   = "Llame Error";
+"Oh-oh"         = "Oh-oh";
+
+"Split Calls"   = "Las llamadas de Split";
+"Merge Calls"   = "Combinar llamadas";
+
+"Unable to create call" = "No se puede crear Llamar";
+"Failed to finish transfer" = "No se pudo terminar la transferencia";
+"Failed to Create Conference" = "Error al Crear Conferencia";
 
 ////////////////////////
 // Login View Controller
