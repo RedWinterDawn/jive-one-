@@ -359,7 +359,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
                     [self sendCompletionBlock:NO errorMessage:tokenData[@"error"]];
                 }
                 else {
-                    [self sendCompletionBlock:NO errorMessage:NSLocalizedString(@"An Error Has Occured, Please Try Again",  nil)];
+                    [self sendCompletionBlock:NO errorMessage:NSLocalizedString(@"An Error Has Occurred, Please Try Again",  nil)];
                 }
             }
 //            NSString *data = [NSString stringWithFormat:@"code=%@&client_id=%@&client_secret=%@&redirect_uri=%@&grant_type=authorization_code", verifier, kOAuthClientId, kOAuthClientSecret, kURLSchemeCallback];
@@ -378,7 +378,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     else {
         [webView stopLoading];
         loginAttempts = 0;
-        [self sendCompletionBlock:NO errorMessage:NSLocalizedString(@"Invalid Username/Password. Please try again.",  nil)];
+        [self sendCompletionBlock:NO errorMessage:NSLocalizedString(@"Invalid username/password. Please try again.",  nil)];
         //[[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenFailed object:nil];
     }
 }
@@ -386,7 +386,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     NSLog(@"Did Fail Load With Error");
-    [self sendCompletionBlock:NO errorMessage:NSLocalizedString(@"An Error Has Occured, Please Try Again",  nil)];
+    [self sendCompletionBlock:NO errorMessage:NSLocalizedString(@"An Error Has Occurred, Please Try Again",  nil)];
 }
 
 #pragma mark - Set CompletionBlock
@@ -472,7 +472,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 {
     [webview stopLoading];
     //[[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenFailed object:nil];
-    [self sendCompletionBlock:NO errorMessage:NSLocalizedString(@"An Error Has Occured, Please Try Again",  nil)];
+    [self sendCompletionBlock:NO errorMessage:NSLocalizedString(@"An Error Has Occurred, Please Try Again",  nil)];
 }
 
 

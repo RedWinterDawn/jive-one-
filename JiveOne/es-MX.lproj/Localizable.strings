@@ -8,10 +8,32 @@
 
 "Voicemail" = "Buzón voz";
 
-// Login Errors
-"Invalid Parameters" = "Parámetros no válidos";
-"Username/Password Cannot Be Empty" = "Nombre de usuario / contraseña no puede estar vacío";
+////////////////////////
+// Login View Controller
 
-"No PBX" = "No PBX";
-"Multiple PBXs" = "Múltiple PBXs";
-"Server Unavailable" = "Servidor No Disponible";
+// Prompt Titles
+"Login Timeout"                             = "Tiempo de espera de inicio de sesión";
+"Login Timed Out"                           = "Inicia sesión Tiempo de espera agotado";
+"An error has occurred"                     = "Se ha producido un error";
+"Error"                                     = "Error";
+"One Moment Please"                         = "Un momento por favor";
+"Authentication Error"                      = "Error De Autenticación";
+"Invalid Parameters"                        = "Parámetros no válidos";
+"No PBX"                                    = "No PBX";
+"Multiple PBXs"                             = "Múltiple PBXs";
+"Server Unavailable"                        = "Servidor No Disponible";
+"OK"                                        = "OK";
+
+// Messages
+"Login could not be completed at this time. Please try again later." = "Entrar No se pudo completar en este momento. Por favor, inténtelo de nuevo más tarde.";
+"This is taking longer than expected. Please check your connection and try again" = "Esto está tomando más tiempo de lo esperado. Por favor, compruebe la conexión y vuelva a intentarlo.";
+"Invalid username/password" = "Nombre de usuario no válido / contraseña";
+"An Unknown Error has Occurred, please try again" = "Un error desconocido ha ocurrido, por favor intente de nuevo";
+"Logging In" = "Inicio de sesión";
+"Loading Data" = "Cargando datos";
+"Preparing for first use" = "Preparación para el uso";
+"UserName/Password Cannot Be Empty" = "Nombre de usuario / contraseña no puede estar vacío";
+"This username is not associated with any PBX. Please contact your Administrator" = "Este nombre de usuario no está asociado con cualquier PBX. Por favor, póngase en contacto con su administrador.";
+"This app does not support account with multiple PBXs at this time" = "Esta aplicación no soporta cuenta con varias centrales en este momento.";
+"We could not reach the server at this time. Please check your connection" = "No hemos podido alcanzar el servidor en este momento. Por favor, compruebe su conexión";
+"An Error Has Occurred, Please Try Again"   = "Un error ha ocurrido, inténtalo de nuevo";

@@ -164,7 +164,8 @@
         } completion: ^(BOOL finished){
             if(finished) {
             }
-            [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil) detail:NSLocalizedString(@"Logging In", nil)];
+            [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil)
+                            detail:NSLocalizedString(@"Logging In", nil)];
         }];
         
         [[JCOmniPresence sharedInstance] truncateAllTablesAtLogout];
@@ -175,24 +176,16 @@
                 [self tokenValidityPassed:nil];
             }
             else {
-                if (error.userInfo[@"error"]) {
-                    [self alertStatus:NSLocalizedString(@"Authentication Error", nil) message:error.userInfo[@"error"]];
-                    NSLog(@"Authentication error: %@", error);
-                    [self hideHud];
-                    [UIView animateWithDuration:0.50 animations:^{
-                        [self.coverImageView setAlpha:0.0];
-                    } completion: ^(BOOL finished){
-                    }];
-                }
-                else {
-                    [self alertStatus:NSLocalizedString(@"Authentication Error", nil) message:error.localizedDescription];
-                    NSLog(@"Authentication error: %@", error);
-                    [self hideHud];
-                    [UIView animateWithDuration:0.50 animations:^{
-                        [self.coverImageView setAlpha:0.0];
-                    } completion: ^(BOOL finished){
-                    }];
-                }
+                [self alertStatus:NSLocalizedString(@"Authentication Error", nil)
+                          message:error.userInfo[@"error"] ? NSLocalizedString(error.userInfo[@"error"], nil) : error.localizedDescription];
+                
+                NSLog(@"Authentication error: %@", error);
+                [self hideHud];
+                [UIView animateWithDuration:0.50
+                                 animations:^{
+                                     [self.coverImageView setAlpha:0.0];
+                                 }
+                                 completion:NULL];
             }
 
         }];
@@ -211,13 +204,17 @@
     }
     else
     {
-        [self alertStatus:NSLocalizedString(@"Invalid Parameters", nil) message: NSLocalizedString(@"UserName/Password Cannot Be Empty", nil)];
+        [self alertStatus:NSLocalizedString(@"Invalid Parameters", nil)
+                  message:NSLocalizedString(@"UserName/Password Cannot Be Empty", nil)];
     }
 }
 
 - (void) loginIsTakingTooLong
 {
-	[self errorInitializingApp:nil useError:NO title:NSLocalizedString(@"Login Timed Out", nil) message:NSLocalizedString(@"This is taking longer than expected. Please check your connection and try again", nil)];
+	[self errorInitializingApp:nil
+                      useError:NO
+                         title:NSLocalizedString(@"Login Timed Out", nil)
+                       message:NSLocalizedString(@"This is taking longer than expected. Please check your connection and try again", nil)];
 }
 
 - (void) invalidateLoginTimer
@@ -243,7 +240,11 @@
     [self hideHud];
     
     if (notification.object != nil && [kAuthenticationFromTokenFailedWithTimeout isEqualToString:(NSString *)notification.object]) {
-        UIAlertView *alertview = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Login Timeout", nil) message:NSLocalizedString(@"Login could not be completed at this time. Please try again later.", nil) delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        UIAlertView *alertview = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Login Timeout", nil)
+                                                            message:NSLocalizedString(@"Login could not be completed at this time. Please try again later.", nil)
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"Ok"
+                                                  otherButtonTitles:nil, nil];
         [alertview show];
     }
     else {
@@ -285,10 +286,14 @@
         NSLog (@"Successfully received the AppTutorialDismissed notification!");
         if (!self.doneLoadingContent) {
 			if (self.errorOccurred) {
-				[self errorInitializingApp:self.errorOccurred useError:NO title:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"An Unknown Error has Occurred, please try again", nil)];
+				[self errorInitializingApp:self.errorOccurred
+                                  useError:NO
+                                     title:NSLocalizedString(@"Error", nil)
+                                   message:NSLocalizedString(@"An Unknown Error has Occurred, please try again", nil)];
 			}
 			else {
-	            [self showHudWithTitle:@"One Moment Please" detail:@"Preparing for first use"];
+	            [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil)
+                                detail:NSLocalizedString(@"Preparing for first use", nil)];
 			}
         }
         else //if (_userIsDoneWithTutorial)
@@ -319,7 +324,8 @@
 //    }
 //    else
 //    {
-        [self showHudWithTitle:@"One Moment Please" detail:@"Loading data"];
+    [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil)
+                    detail:NSLocalizedString(@"Loading data", nil)];
     [self fetchMyMailboxes];
 //    }
 }
@@ -400,17 +406,27 @@
         if(suceeded){
 			NSArray *pbxs = [PBX MR_findAll];
 			if (pbxs.count == 0) {
-				[self errorInitializingApp:error useError:NO title:NSLocalizedString(@"No PBX", nil)	message:NSLocalizedString(@"This username is not associated with any PBX. Please contact your Administrator", nil)];
+				[self errorInitializingApp:error
+                                  useError:NO
+                                     title:NSLocalizedString(@"No PBX", nil)
+                                   message:NSLocalizedString(@"This username is not associated with any PBX. Please contact your Administrator", nil)];
 			}
 			else if (pbxs.count > 1) {
-				[self errorInitializingApp:error useError:NO title:NSLocalizedString(@"Multiple PBXs", nil)	message:NSLocalizedString(@"This app does not support account with multiple PBXs at this time", nil)];			}
+				[self errorInitializingApp:error
+                                  useError:NO
+                                     title:NSLocalizedString(@"Multiple PBXs", nil)
+                                   message:NSLocalizedString(@"This app does not support account with multiple PBXs at this time", nil)];
+            }
 			else {
 				[self fetchProvisioningConfig];
 			}
         }
 		else {
             self.errorOccurred = error;
-			[self errorInitializingApp:error useError:NO title:NSLocalizedString(@"Server Unavailable", nil) message:NSLocalizedString(@"We could not reach the server at this time. Please check your connection", nil)];
+			[self errorInitializingApp:error
+                              useError:NO
+                                 title:NSLocalizedString(@"Server Unavailable", nil)
+                               message:NSLocalizedString(@"We could not reach the server at this time. Please check your connection", nil)];
 		}
     }];
 }
@@ -625,7 +641,8 @@
     [self hideHud];
 	
 	if (useError) {
-		[self alertStatus:NSLocalizedString(@"An error has occurred", nil) message:err.localizedDescription];
+		[self alertStatus:NSLocalizedString(@"An error has occurred", nil)
+                  message:err.localizedDescription];
 	}
 	else {
 		[self alertStatus:title message:message];
