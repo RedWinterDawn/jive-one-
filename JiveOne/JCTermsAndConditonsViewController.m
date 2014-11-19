@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCTermsAndConditonsVCViewController.h"
+#import "JCTermsAndConditonsViewController.h"
 
-@implementation JCTermsAndConditonsVCViewController
+@implementation JCTermsAndConditonsViewController
 
 - (void)viewDidLoad
 {

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -864,10 +863,10 @@
             </objects>
             <point key="canvasLocation" x="-2618" y="-1380"/>
         </scene>
-        <!--Terms And ConditonsVC View Controller-->
+        <!--Terms And Conditons View Controller-->
         <scene sceneID="zrd-iB-Kwq">
             <objects>
-                <viewController id="qkA-TN-d1M" customClass="JCTermsAndConditonsVCViewController" sceneMemberID="viewController">
+                <viewController id="qkA-TN-d1M" customClass="JCTermsAndConditonsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jXC-se-TAb"/>
                         <viewControllerLayoutGuide type="bottom" id="AiG-Lb-b2c"/>

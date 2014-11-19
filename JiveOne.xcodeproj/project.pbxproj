@@ -287,7 +287,7 @@
 		9154947819366C54003DCED4 /* JCPlayPauseButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9154947719366C54003DCED4 /* JCPlayPauseButton.m */; };
 		91634C2F19630A3B0079A823 /* JCGetStartedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 91634C2E19630A3B0079A823 /* JCGetStartedButton.m */; };
 		9172AD5C19192A1500481B01 /* UserDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9172AD5B19192A1500481B01 /* UserDefaults.plist */; };
-		91743AA0191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91743A9F191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m */; };
+		91743AA0191182CF00FF8A09 /* JCTermsAndConditonsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91743A9F191182CF00FF8A09 /* JCTermsAndConditonsViewController.m */; };
 		91869D871959E5CF007743CE /* JCTOSButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91869D861959E5CF007743CE /* JCTOSButtonView.m */; };
 		91915732195A2DC0004BDE26 /* JCLeaveFeedbackButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 91915731195A2DC0004BDE26 /* JCLeaveFeedbackButton.m */; };
 		91915735195A30F6004BDE26 /* JCLogOutButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 91915734195A30F6004BDE26 /* JCLogOutButton.m */; };
@@ -862,8 +862,8 @@
 		91634C2D19630A3B0079A823 /* JCGetStartedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCGetStartedButton.h; sourceTree = SOURCE_ROOT; };
 		91634C2E19630A3B0079A823 /* JCGetStartedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCGetStartedButton.m; sourceTree = SOURCE_ROOT; };
 		9172AD5B19192A1500481B01 /* UserDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = UserDefaults.plist; sourceTree = "<group>"; };
-		91743A9E191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTermsAndConditonsVCViewController.h; sourceTree = "<group>"; };
-		91743A9F191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTermsAndConditonsVCViewController.m; sourceTree = "<group>"; };
+		91743A9E191182CF00FF8A09 /* JCTermsAndConditonsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTermsAndConditonsViewController.h; sourceTree = "<group>"; };
+		91743A9F191182CF00FF8A09 /* JCTermsAndConditonsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTermsAndConditonsViewController.m; sourceTree = "<group>"; };
 		91869D861959E5CF007743CE /* JCTOSButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTOSButtonView.m; sourceTree = SOURCE_ROOT; };
 		91915731195A2DC0004BDE26 /* JCLeaveFeedbackButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JCLeaveFeedbackButton.m; path = JiveOne/JCLeaveFeedbackButton.m; sourceTree = SOURCE_ROOT; };
 		91915734195A30F6004BDE26 /* JCLogOutButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCLogOutButton.m; sourceTree = SOURCE_ROOT; };
@@ -1629,8 +1629,8 @@
 			children = (
 				277A1F7E18F88987009A41F7 /* JCLoginViewController.h */,
 				277A1F7F18F88987009A41F7 /* JCLoginViewController.m */,
-				91743A9E191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.h */,
-				91743A9F191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m */,
+				91743A9E191182CF00FF8A09 /* JCTermsAndConditonsViewController.h */,
+				91743A9F191182CF00FF8A09 /* JCTermsAndConditonsViewController.m */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -2655,7 +2655,7 @@
 				913786F7194A22E200002DD3 /* LoggerClient.m in Sources */,
 				5DB0BFC119FFF3FE006737D7 /* JCTableViewCell.m in Sources */,
 				DD28DA5218AEC4F5003BFC44 /* JCAccountViewController.m in Sources */,
-				91743AA0191182CF00FF8A09 /* JCTermsAndConditonsVCViewController.m in Sources */,
+				91743AA0191182CF00FF8A09 /* JCTermsAndConditonsViewController.m in Sources */,
 				2762151E1912AA2500CFBCC8 /* NSDictionary+QueryString.m in Sources */,
 				5D35479B19FF4BB7009E3CB4 /* JCMenuBarButtonItem.m in Sources */,
 				27997577195A12D7001425CC /* Lines+Custom.m in Sources */,

@@ -8,7 +8,7 @@
 
 @import UIKit;
 
-@interface JCTermsAndConditonsVCViewController : UIViewController <UIWebViewDelegate>
+@interface JCTermsAndConditonsViewController : UIViewController <UIWebViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 

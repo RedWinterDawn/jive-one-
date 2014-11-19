@@ -12,7 +12,7 @@
 #import "PersonEntities.h"
 #import "Company.h"
 #import <AudioToolbox/AudioToolbox.h>
-#import "JCTermsAndConditonsVCViewController.h"
+#import "JCTermsAndConditonsViewController.h"
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
 #import "JCPresenceViewController.h"
