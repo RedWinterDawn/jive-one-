@@ -10,9 +10,6 @@
 #import "Common.h"
 
 @implementation JCV5ApiClient
-{
-	KeychainItemWrapper *keyChainWrapper;
-}
 
 #pragma mark - class methods
 
@@ -32,8 +29,6 @@
 	_manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
 	_manager.responseSerializer = [AFJSONResponseSerializer serializer];
 	_manager.requestSerializer = [AFJSONRequestSerializer serializer];
-	
-	keyChainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
 	
 	NSLog(@"About to go into debug mode for server certificate");
 #if DEBUG

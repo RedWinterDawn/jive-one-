@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "KeychainItemWrapper.h"
 
 #import "PBX+Custom.h"
 #import "Lines+Custom.h"

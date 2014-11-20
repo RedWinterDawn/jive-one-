@@ -13,7 +13,6 @@
 
 @implementation JCV4ProvisioningClient
 {
-	KeychainItemWrapper *keyChainWrapper;
 	NSManagedObjectContext *localContext;
 }
 + (JCV4ProvisioningClient*)sharedClient {

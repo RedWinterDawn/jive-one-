@@ -24,6 +24,7 @@
 #endif
 
 @interface JCAuthenticationManager ()
+#import "KeychainItemWrapper.h"
 
 #define kUserAuthenticated @"keyuserauthenticated"
 #define kUserLoadedMinimumData @"keyuserloadedminimumdata"
