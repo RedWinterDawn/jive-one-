@@ -6,7 +6,7 @@
 "30a-yD-tba.title" = "Configuración";
 
 /* Class = "IBUIButton"; normalTitle = "Terms and Conditions."; ObjectID = "3bm-z6-yMp"; */
-"3bm-z6-yMp.normalTitle" = "Con la firma de la aceptación de nuestros Términos y Condiciones.";
+"3bm-z6-yMp.normalTitle" = "Términos y Condiciones.";
 
 /* Class = "IBUIButton"; normalTitle = "Call Voicemail"; ObjectID = "53q-MK-pw7"; */
 "53q-MK-pw7.normalTitle" = "Llamar al buzón de voz";
@@ -30,7 +30,7 @@
 "BhM-7z-evk.text" = "Buzón voz:";
 
 /* Class = "IBUILabel"; text = "Merge Calls"; ObjectID = "C17-8W-dR3"; */
-"C17-8W-dR3.text" = "Merge Calls";
+"C17-8W-dR3.text" = "Unir Calls";
 
 /* Class = "IBUILabel"; text = "Label"; ObjectID = "De6-51-GXi"; */
 "De6-51-GXi.text" = "Etiqueta";
@@ -42,7 +42,7 @@
 "Efw-Qd-mHZ.text" = "3302/Jive Communications, Inc";
 
 /* Class = "IBUILabel"; text = "Remember me"; ObjectID = "HlT-GQ-JCc"; */
-"HlT-GQ-JCc.text" = "Acuérdate de mí";
+"HlT-GQ-JCc.text" = "Recordarme";
 
 /* Class = "IBUILabel"; text = "Add Call"; ObjectID = "Hvu-aR-OOp"; */
 "Hvu-aR-OOp.text" = "Agregar llamada";
@@ -78,7 +78,7 @@
 "OzV-9h-pmX.accessibilityLabel" = "emailTextField";
 
 /* Class = "IBUITextField"; placeholder = "email"; ObjectID = "OzV-9h-pmX"; */
-"OzV-9h-pmX.placeholder" = "correo";
+"OzV-9h-pmX.placeholder" = "correo electronico”;
 
 /* Class = "IBUILabel"; text = "Transfer"; ObjectID = "PLC-2m-6mE"; */
 "PLC-2m-6mE.text" = "Transferir";
@@ -141,7 +141,7 @@
 "fpX-p1-9pC.normalTitle" = "★";
 
 /* Class = "IBUILabel"; text = "Call History Cell"; ObjectID = "gQB-DU-RKy"; */
-"gQB-DU-RKy.text" = "Call History Cell";
+"gQB-DU-RKy.text" = "celda de historial de llamadas";
 
 /* Class = "IBUILabel"; text = "3:03 PM"; ObjectID = "gtd-8g-MGS"; */
 "gtd-8g-MGS.text" = "3:03 PM";
@@ -156,7 +156,7 @@
 "hn5-ub-HBZ.title" = "Teléfono";
 
 /* Class = "IBUILabel"; text = "Warm Transfer"; ObjectID = "hoV-Az-hVc"; */
-"hoV-Az-hVc.text" = "Transferencia caliente";
+"hoV-Az-hVc.text" = "Transferencia Asistida”;
 
 /* Class = "IBUIView"; accessibilityLabel = "Sign Out"; ObjectID = "iY3-3e-PXh"; */
 "iY3-3e-PXh.accessibilityLabel" = "Desconectarse";
@@ -180,7 +180,7 @@
 "kwW-Qp-UuE.title" = "Buzón voz";
 
 /* Class = "IBUILabel"; accessibilityLabel = "Another Callers "; ObjectID = "lS3-iw-nlZ"; */
-"lS3-iw-nlZ.accessibilityLabel" = "anouther de llamadas ";
+"lS3-iw-nlZ.accessibilityLabel" = "otras llamadas ";
 
 /* Class = "IBUILabel"; text = "Callers Number"; ObjectID = "lS3-iw-nlZ"; */
 "lS3-iw-nlZ.text" = "Número de personas que llaman";
@@ -192,7 +192,7 @@
 "mn4-Dh-Ebu.text" = "Línea seleccionada";
 
 /* Class = "IBUILabel"; text = "Build Number is"; ObjectID = "mox-PU-WhR"; */
-"mox-PU-WhR.text" = "Construir Número es";
+"mox-PU-WhR.text" = "Número de compilación es”;
 
 /* Class = "IBUINavigationItem"; title = "Contacts"; ObjectID = "oEe-KQ-NpU"; */
 "oEe-KQ-NpU.title" = "Contactos";
@@ -231,4 +231,4 @@
 "zcs-la-vSZ.text" = "Teclado";
 
 /* Class = "IBUILabel"; text = "Finish Transfer"; ObjectID = "zpq-3o-7Gs"; */
-"zpq-3o-7Gs.text" = "Transferencia Finalizar";
+"zpq-3o-7Gs.text" = "Finalizar la transferencia";
