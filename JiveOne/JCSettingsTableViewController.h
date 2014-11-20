@@ -14,6 +14,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *extensionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *pbxLabel;
+@property (weak, nonatomic) IBOutlet UILabel *appLabel;
+@property (weak, nonatomic) IBOutlet UILabel *buildLabel;
 
 @property (weak, nonatomic) IBOutlet UITableViewCell *logoutCell;
 

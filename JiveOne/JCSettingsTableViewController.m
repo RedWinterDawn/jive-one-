@@ -14,7 +14,6 @@
 #import "JCTermsAndConditonsVCViewController.h"
 
 #import "JCAuthenticationManager.h"
-#import "JCLogoutIcon.h"
 
 NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Description of feedback:</strong> <br><br><br><br><br><hr><strong>Device Specs</strong><br>Model: %@ <br> System Version: %@ <br> App Version: %@ <br> Country: %@";
 
@@ -31,15 +30,22 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Descrip
     [super viewDidLoad];
     
     _authenticationManager = [JCAuthenticationManager sharedInstance];
+    
+    /*NSDictionary *localizedDictionary = [[NSBundle mainBundle] localizedInfoDictionary];
+    self.appLabel.text = [localizedDictionary objectForKey:@"CFBundleDisplayName"];*/
+    
+    NSBundle *bundle = [NSBundle mainBundle];
+    self.appLabel.text = [bundle objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+    self.buildLabel.text = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
 }
 
-- (void)awakeFromNib
+-(void)awakeFromNib
 {
     [super awakeFromNib];
     
-    JCLogoutIcon *icon = [[JCLogoutIcon alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
-    icon.backgroundColor = [UIColor redColor];
-    [self.logoutCell setAccessoryView:icon];
+    #ifndef DEBUG
+    self.navigationItem.rightBarButtonItem = nil;
+    #endif
 }
 
 - (void)viewWillAppear:(BOOL)animated
