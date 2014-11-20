@@ -8,7 +8,7 @@
 
 #import "JCLoginViewController.h"
 #import "JCAuthenticationManager.h"
-#import "JCAppDelegate.h"
+
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import "Common.h"
 #import "Company.h"
@@ -148,7 +148,7 @@
 //    }
     
     
-    if ([[JCAuthenticationManager sharedInstance] getRememberMe]) {
+    if ([JCAuthenticationManager sharedInstance].rememberMe) {
         NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
         self.usernameTextField.text = username;
         self.rememberMeSwitch.on = YES;
@@ -333,7 +333,10 @@
         }
         else //if (_userIsDoneWithTutorial)
         {
-			[self goToApplication];
+            if (!loginCanceled) {
+                [self hideHud];
+                [self invalidateLoginTimer];
+            }
 			
 // Re-add this when user can select line again
 //			Lines *line = [Lines MR_findFirstByAttribute:@"inUse" withValue:[NSNumber numberWithBool:YES]];
@@ -418,7 +421,7 @@
 			// should still be able to access the rest of the app (directory, VM, etc) and be given a change to
 			// fetch the provisioning file again...but then...do we store user creentials?
 			self.doneLoadingContent = YES;
-			[[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
+            [JCAuthenticationManager sharedInstance].userLoadedMininumData = TRUE;
 			//[self goToApplication];
 			[self fetchVoicemailsMetadata];
 			[self fetchContacts];
@@ -645,18 +648,6 @@
 //    }];
 }
 
-- (void)goToApplication
-{
-	if (!loginCanceled) {
-		[self hideHud];
-		[self invalidateLoginTimer];
-		JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
-		[delegate changeRootViewController:JCRootTabbarViewController];
-	}
-}
-
-
-
 - (void)errorInitializingApp:(NSError*)err useError:(BOOL)useError title:(NSString *)title message:(NSString *)message
 {
     NSLog(@"errorInitializingApp: %@",err);
@@ -696,7 +687,6 @@
 
 - (void)hideHud
 {
-//    self.doneLoadingContent = YES;
     if (hud) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         [hud removeFromSuperview];
@@ -710,23 +700,7 @@
 }
 
 - (IBAction)rememberMe:(id)sender {
-    
     [[JCAuthenticationManager sharedInstance] setRememberMe:((UISwitch *)sender).on];
-    
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-	if ([segue.identifier isEqualToString:@"SelectLineLoginSegue"]) {
-		UIView *view = ((JCAppDelegate *)[UIApplication sharedApplication].delegate).window;
-        UIImage *underlyingView = [Common imageFromView:view];
-        underlyingView = [underlyingView applyBlurWithRadius:5 tintColor:[[UIColor blackColor] colorWithAlphaComponent:0.5] saturationDeltaFactor:1.3 maskImage:nil];
-		
-		
-		[segue.destinationViewController setBluredBackgroundImage:underlyingView];
-		[segue.destinationViewController setDelegate:self];
-		[segue.destinationViewController setHidesBottomBarWhenPushed:YES];
-	}
 }
 
 @end

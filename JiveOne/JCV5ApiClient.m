@@ -41,14 +41,10 @@
 
 - (void)setRequestAuthHeader:(BOOL) demandsBearer
 {
-	NSString *token = [[JCAuthenticationManager sharedInstance] getAuthenticationToken];
+	NSString *token = [JCAuthenticationManager sharedInstance].authToken;
 	
 	[self clearCookies];
-	
-	if (!token) {
-		token = (NSString*)[[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"];
-	}
-	
+    
 	_manager.requestSerializer = [AFJSONRequestSerializer serializer];
 	[_manager.requestSerializer clearAuthorizationHeader];
 	[_manager.requestSerializer setValue:[NSString stringWithFormat:@"%@%@", demandsBearer? @"Bearer " : @"", token] forHTTPHeaderField:@"Authorization"];

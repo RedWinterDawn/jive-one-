@@ -24,6 +24,10 @@
 #import "JCCallCardManager.h"
 #import "JCCallerViewController.h"
 #import "JCBadgeManager.h"
+#import "JCApplicationSwitcherDelegate.h"
+#import "JCV5ApiClient.h"
+#import "JCSocketDispatch.h"
+#import "SipHandler.h"
 
 @interface JCAppDelegate () <JCCallerViewControllerDelegate, UAPushNotificationDelegate, UARegistrationDelegate>
 {
@@ -87,22 +91,13 @@
      */
     [self setupDatabase];
 
-    
     //Register for background fetches
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     
     //Start monitor for Reachability
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     
-    // Populate AirshipConfig.plist with your app's info from https://go.urbanairship.com
-    // or set runtime properties here.
     UAConfig *config = [UAConfig defaultConfig];
-    
-    // You can also programmatically override the plist values:
-    // config.developmentAppKey = @"YourKey";
-    // etc.
-    
-    // Call takeOff (which creates the UAirship singleton)
     [UAirship takeOff:config];
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
@@ -116,33 +111,18 @@
     
     // Authentication
     JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
+    [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];
+    [center addObserver:self selector:@selector(userDidLogin:) name:kJCAuthenticationManagerUserAuthenticatedNotification object:authenticationManager];
+    [center addObserver:self selector:@selector(userDataReady:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:authenticationManager];
+    
     if (!authenticationManager.userAuthenticated || !authenticationManager.userLoadedMininumData) {
         [self changeRootViewController:JCRootLoginViewController];
     }
     else {
         [self startSocket:NO];
     }
-    
     return YES;
 }
-
-- (void)didLogInSoCanRegisterForPushNotifications
-{
-    LOG_Info();
-
-    //[UAPush shared].pushNotificationDelegate = self;
-    // Request a custom set of notification types
-    //[[UAPush shared] registerForRemoteNotifications];
-    //[UAPush shared].notificationTypes = (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert);
-}
-
-- (void)didLogOutSoUnRegisterForPushNotifications
-{
-    LOG_Info();
-
-    [[UIApplication sharedApplication] unregisterForRemoteNotifications];
-}
-
 
 /**
  * Sent when the application is about to move from active to inactive state. This can occur for certain types of 
@@ -213,10 +193,59 @@
     _didNotify = false;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(alertUserToUpdate:) name:@"AppIsOutdated" object:nil];
     [[JCVersion sharedClient] getVersion];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"kApplicationDidBecomeActive" object:nil];
-    
 }
+
+#pragma mark - Notification Handlers -
+
+#pragma mark JCAuthenticationManager
+
+-(void)userDidLogin:(NSNotification *)notification
+{
+    LOG_Info();
+    
+    // TODO: Kick off Sync.
+}
+
+-(void)userDataReady:(NSNotification *)notification
+{
+    LOG_Info();
+    
+    [self changeRootViewController:JCRootTabbarViewController];
+    [self startSocket:NO];
+    
+    //[UAPush shared].pushNotificationDelegate = self;
+    // Request a custom set of notification types
+    //[[UAPush shared] registerForRemoteNotifications];
+    //[UAPush shared].notificationTypes = (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert);
+}
+
+-(void)userDidLogout:(NSNotification *)notification
+{
+    LOG_Info();
+    [Flurry logEvent:@"Log out"];
+    
+    [self stopSocket];
+    
+    [[JCV5ApiClient sharedClient] stopAllOperations];
+    [[SipHandler sharedHandler] disconnect];
+    [[JCOmniPresence sharedInstance] truncateAllTablesAtLogout];
+    
+    [JCApplicationSwitcherDelegate reset];
+    [[JCBadgeManager sharedManager] reset];
+    
+    [self changeRootViewController:JCRootLoginViewController];
+    
+    [[UIApplication sharedApplication] unregisterForRemoteNotifications];
+}
+
+
+#pragma mark - Private -
+
+
+
+
+
+
 
 -(void)alertUserToUpdate:(NSNotification *)notification
 {
@@ -265,7 +294,7 @@
 - (void)stopSocket
 {
     LogMessage(@"socket", 4, @"Calling stopSocket From AppDelegate");
-
+    
     LOG_Info();
     
     [[JasmineSocket sharedInstance] closeSocketWithReason:@"Entering background"];

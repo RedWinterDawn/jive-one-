@@ -12,26 +12,16 @@
 #import "Lines+Custom.h"
 #import "LineConfiguration+Custom.h"
 
-@class JCAuthenticationManager;
+extern NSString *const kJCAuthenticationManagerUserLoggedOutNotification;
+extern NSString *const kJCAuthenticationManagerUserAuthenticatedNotification;
+extern NSString *const kJCAuthenticationManagerUserLoadedMinimumDataNotification;
 
-@interface JCAuthenticationManager : NSObject <UIWebViewDelegate>
 typedef void (^CompletionBlock) (BOOL success, NSError *error);
-@property (strong, nonatomic) KeychainItemWrapper *keychainWrapper;
-@property (nonatomic, copy) CompletionBlock completionBlock;
-+ (JCAuthenticationManager*)sharedInstance;
+
+@interface JCAuthenticationManager : NSObject 
 
 - (void)loginWithUsername:(NSString *)username password:(NSString*)password completed:(CompletionBlock)completed;
-
-
-- (void)didReceiveAuthenticationToken:(NSDictionary *)token;
-- (BOOL)userAuthenticated;
-- (BOOL)userLoadedMininumData;
-- (void)setUserLoadedMinimumData:(BOOL)loaded;
-- (void)setRememberMe:(BOOL)remember;
-- (BOOL)getRememberMe;
-- (void)checkForTokenValidity;
 - (void)logout;
-- (NSString *)getAuthenticationToken;
 
 @property (nonatomic, readonly) PBX *pbx;
 @property (nonatomic, readonly) Lines *line;
@@ -42,5 +32,17 @@ typedef void (^CompletionBlock) (BOOL success, NSError *error);
 @property (nonatomic, readonly) NSString *lineExtension;
 @property (nonatomic, readonly) NSString *pbxName;
 
+@property (nonatomic, readonly) NSString *authToken;
+@property (nonatomic, readonly) NSString *refreshToken;
+
+@property (nonatomic, readonly) BOOL userAuthenticated;
+@property (nonatomic, readwrite) BOOL userLoadedMininumData;
+@property (nonatomic) BOOL rememberMe;
+
+@end
+
+@interface JCAuthenticationManager (Singleton)
+
++ (JCAuthenticationManager*)sharedInstance;
 
 @end

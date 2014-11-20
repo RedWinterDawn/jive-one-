@@ -16,11 +16,7 @@
 @property (nonatomic, strong) UIWindow *window;
 @property (nonatomic) BOOL seenTutorial;
 
-- (void)changeRootViewController:(JCRootViewControllerType)type;
 - (void)startSocket:(BOOL)inBackground;
-- (void)stopSocket;
-- (void)didLogInSoCanRegisterForPushNotifications;
-- (void)didLogOutSoUnRegisterForPushNotifications;
 
 - (void)stopRingtone;
 

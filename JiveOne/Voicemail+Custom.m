@@ -98,7 +98,7 @@
                 NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
                 request.URL = [NSURL URLWithString:voicemail.url_download];
                 request.HTTPMethod = @"GET";
-                [request setValue:[[JCAuthenticationManager sharedInstance] getAuthenticationToken] forHTTPHeaderField:@"Authorization"];
+                [request setValue:[JCAuthenticationManager sharedInstance].authToken forHTTPHeaderField:@"Authorization"];
                 
                 __autoreleasing NSURLResponse *response;
                 __autoreleasing NSError *error;
