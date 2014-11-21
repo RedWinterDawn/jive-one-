@@ -25,9 +25,10 @@
 
 @interface JCLoginViewController () <NSFileManagerDelegate>
 {
-    BOOL fastConnection;
 	BOOL loginCanceled;
     MBProgressHUD *hud;
+    
+    JCAuthenticationManager *_authenticationManager;
 }
 
 @property (nonatomic, strong) NSError *errorOccurred;
@@ -37,72 +38,55 @@
 
 @implementation JCLoginViewController
 
-//@peter This hadles when you touch anywhere else on the screen the key board is dismissed.
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-    [self.view endEditing:YES];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self.passwordTextField fixSecureTextFieldFont];
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"seenAppTutorial"]) {
-        self.userIsDoneWithTutorial = YES;
-    }
-    else
-    {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkIfLoadingHasFinished:) name:@"AppTutorialDismissed" object:nil];
-    }
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshAuthenticationCredentials:) name:kAuthenticationFromTokenFailed object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshAuthenticationCredentials:) name:kAuthenticationFromTokenFailedWithTimeout object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tokenValidityPassed:) name:kAuthenticationFromTokenSucceeded object:nil];
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    _authenticationManager = [JCAuthenticationManager sharedInstance];
     
-    self.usernameTextField.returnKeyType = UIReturnKeyNext;
-    self.usernameTextField.returnKeyType = UIReturnKeyNext;
-    self.passwordTextField.returnKeyType = UIReturnKeyGo;
+    [center addObserver:self selector:@selector(refreshAuthenticationCredentialsFailed:) name:kAuthenticationFromTokenFailed object:nil];
+    [center addObserver:self selector:@selector(refreshAuthenticationCredentialsFailed:) name:kAuthenticationFromTokenFailedWithTimeout object:nil];
+    [center addObserver:self selector:@selector(authenticated:) name:kAuthenticationFromTokenSucceeded object:nil];
     
-    self.usernameTextField.delegate = self;
-    self.passwordTextField.delegate = self;
+    [center addObserver:self selector:@selector(userMinimumDataLoaded:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:_authenticationManager];
     
-    NSString* fontName = @"Avenir-Book";
-    NSString* boldFontName = @"Avenir-Black";
-    
-    self.usernameTextField.font = [UIFont fontWithName:fontName size:16.0f];
     self.usernameTextField.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:0.7].CGColor;
     self.usernameTextField.layer.borderWidth = 1.0f;
     
-    UIView* leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 20)];
     self.usernameTextField.leftViewMode = UITextFieldViewModeAlways;
-    self.usernameTextField.leftView = leftView;
+    self.usernameTextField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 20)];
     
-    self.passwordTextField.font = [UIFont fontWithName:fontName size:16.0f];
     self.passwordTextField.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:0.7].CGColor;
     self.passwordTextField.layer.borderWidth = 1.0f;
     
-#if DEBUG
-    self.usernameTextField.text = @"jivetesting@gmail.com";
-    self.passwordTextField.text = @"testing12";
-    [self.passwordTextField becomeFirstResponder];
-#endif
-    
-    // @Pete Adding rounded corners for the elements on login screen
     self.passwordTextField.layer.cornerRadius = 5;
     self.passwordTextField.layer.masksToBounds = YES;
     self.usernameTextField.layer.cornerRadius = 5;
     self.usernameTextField.layer.masksToBounds = YES;
-    self.loginViewContainer.layer.cornerRadius = 5;
-    [self.loginViewContainer.layer setCornerRadius:5];
     
-    UIView* leftView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 20)];
     self.passwordTextField.leftViewMode = UITextFieldViewModeAlways;
-    self.passwordTextField.leftView = leftView2;
+    self.passwordTextField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 20)];
     
-    _loginStatusLabel.font = [UIFont fontWithName:boldFontName size:16.0f];
-    // Do any additional setup after loading the view.
-    fastConnection = [Common IsConnectionFast];
-//    self.moreiconimageview.image= [JCStyleKit imageOfMoreIconLoginWithFrame:CGRectMake(0, 0, self.moreiconimageview.frame.size.width, self.moreiconimageview.frame.size.height)];
     
+    self.rememberMeSwitch.on = _authenticationManager.rememberMe;
+    if (_authenticationManager.rememberMe) {
+        self.usernameTextField.text = _authenticationManager.userName;
+    } else {
+#if DEBUG
+        self.usernameTextField.text = @"jivetesting@gmail.com";
+        self.passwordTextField.text = @"testing12";
+#endif
+        [self.usernameTextField becomeFirstResponder];
+    }
+    
+    [Flurry logEvent:@"Login View"];
+}
+
+//@peter This hadles when you touch anywhere else on the screen the key board is dismissed.
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
 }
 
 -(void)dealloc
@@ -110,18 +94,42 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
--(void)viewWillAppear:(BOOL)animated{
-    
-    [super viewWillAppear:animated];
-    
-    if ([JCAuthenticationManager sharedInstance].rememberMe) {
-        NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
-        self.usernameTextField.text = username;
-        self.rememberMeSwitch.on = YES;
+#pragma mark - Notification Handlers -
+
+
+-(void)userMinimumDataLoaded:(NSNotification *)notification
+{
+    JCV5ApiClient *client = [JCV5ApiClient sharedClient];
+    if (_authenticationManager.pbx.v5.boolValue) {
+        [client getVoicemails:nil];
     }
+    [client RetrieveContacts:nil];
     
-    [Flurry logEvent:@"Login View"];
+    if (!_authenticationManager.userLoadedMininumData) {
+        if (self.errorOccurred) {
+            [self errorInitializingApp:self.errorOccurred
+                              useError:NO
+                                 title:NSLocalizedString(@"Error", nil)
+                               message:NSLocalizedString(@"An Unknown Error has Occurred, please try again", nil)];
+        }
+        else {
+            [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil)
+                            detail:NSLocalizedString(@"Preparing for first use", nil)];
+        }
+    }
+    else
+    {
+        if (!loginCanceled) {
+            [self hideHud];
+            [self invalidateLoginTimer];
+        }
+    }
 }
+
+
+#pragma mark - Delegate Handlers -
+
+#pragma mark UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -136,23 +144,21 @@
     }
 }
 
-- (UIImage *) screenshot {
-    UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, NO, [UIScreen mainScreen].scale);
-    
-    [self.view drawViewHierarchyInRect:self.view.bounds afterScreenUpdates:YES];
-    
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return image;
-}
+//- (UIImage *) screenshot {
+//    UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, NO, [UIScreen mainScreen].scale);
+//    
+//    [self.view drawViewHierarchyInRect:self.view.bounds afterScreenUpdates:YES];
+//    
+//    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+//    UIGraphicsEndImageContext();
+//    return image;
+//}
 
 - (void)validateFields
 {
-	loginCanceled = NO;
-    self.loginStatusLabel.text = @"";
     if([self.usernameTextField.text length] != 0 && [self.passwordTextField.text length] != 0)
     {
-        UIImage *coverImage = [self screenshot];
+        /*UIImage *coverImage = [self screenshot];
         coverImage = [coverImage applyBlurWithRadius:15.0 tintColor:[[UIColor darkGrayColor] colorWithAlphaComponent:.3] saturationDeltaFactor:.88 maskImage:nil];
         [self.coverImageView setAlpha:0.0];
         self.coverImageView.image = coverImage;
@@ -163,32 +169,29 @@
             [self.coverImageView setAlpha:1.0];
         } completion: ^(BOOL finished){
             if(finished) {
-            }
-            [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil)
-                            detail:NSLocalizedString(@"Logging In", nil)];
-        }];
+            }*/
+        
+        //}];
+        
+        [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil)
+                        detail:NSLocalizedString(@"Logging In", nil)];
         
         [[JCOmniPresence sharedInstance] truncateAllTablesAtLogout];
         
-        [[JCAuthenticationManager sharedInstance] loginWithUsername:self.usernameTextField.text password:self.passwordTextField.text completed:^(BOOL success, NSError *error) {
-            self.doneLoadingContent = NO;
-            if (success) {
-                [self tokenValidityPassed:nil];
-            }
-            else {
-                [self alertStatus:NSLocalizedString(@"Authentication Error", nil)
-                          message:error.userInfo[@"error"] ? NSLocalizedString(error.userInfo[@"error"], nil) : error.localizedDescription];
-                
-                NSLog(@"Authentication error: %@", error);
-                [self hideHud];
-                [UIView animateWithDuration:0.50
-                                 animations:^{
-                                     [self.coverImageView setAlpha:0.0];
-                                 }
-                                 completion:NULL];
-            }
-
-        }];
+        
+        
+        [_authenticationManager loginWithUsername:self.usernameTextField.text
+                                         password:self.passwordTextField.text
+                                        completed:^(BOOL success, NSError *error) {
+                                            if (success) {
+                                                [self authenticated:nil];
+                                            }
+                                            else {
+                                                [self alertStatus:NSLocalizedString(@"Authentication Error", nil)
+                                                          message:error.userInfo[@"error"] ? NSLocalizedString(error.userInfo[@"error"], nil) : error.localizedDescription];
+                                                [self hideHud];
+                                            }
+                                        }];
 		
 		dispatch_async(dispatch_get_main_queue(), ^{
             self.loginTimer = [NSTimer scheduledTimerWithTimeInterval:80
@@ -199,8 +202,6 @@
             
             [[NSRunLoop currentRunLoop] addTimer:self.loginTimer forMode:NSDefaultRunLoopMode];
         });
-
-		
     }
     else
     {
@@ -208,6 +209,8 @@
                   message:NSLocalizedString(@"UserName/Password Cannot Be Empty", nil)];
     }
 }
+
+#pragma mark - Private -
 
 - (void) loginIsTakingTooLong
 {
@@ -229,181 +232,40 @@
 
 -(void)alertStatus:(NSString*)title message:(NSString*)message
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    NSLog(@"%@: %@", title, message);
     
-    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                    message:message
+                                                   delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil, nil];
     [alert show];
 }
 
-- (void)refreshAuthenticationCredentials:(NSNotification*)notification
+- (void)refreshAuthenticationCredentialsFailed:(NSNotification*)notification
 {
     [self hideHud];
     
-    if (notification.object != nil && [kAuthenticationFromTokenFailedWithTimeout isEqualToString:(NSString *)notification.object]) {
-        UIAlertView *alertview = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Login Timeout", nil)
-                                                            message:NSLocalizedString(@"Login could not be completed at this time. Please try again later.", nil)
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"Ok"
-                                                  otherButtonTitles:nil, nil];
-        [alertview show];
-    }
-    else {
-    
-        _loginStatusLabel.text = NSLocalizedString(@"Invalid username/password", @"Invalid username/password");
-        _loginStatusLabel.hidden = NO;
-    }
+    [self alertStatus:NSLocalizedString(@"Login Timeout", nil)
+              message:NSLocalizedString(@"Login could not be completed at this time. Please try again later.", nil)];
 }
 
--(BOOL)seenTutorial
+- (void)authenticated:(NSNotification*)notification
 {
-    return _seenTutorial = [[NSUserDefaults standardUserDefaults] boolForKey:@"seenAppTutorial"];
-}
-
--(BOOL)doneLoadingContent
-{
-    if (!_doneLoadingContent) {
-        _doneLoadingContent = NO;
-    }
-    return _doneLoadingContent;
-}
--(BOOL)userIsDoneWithTutorial
-{
-    if (!_userIsDoneWithTutorial) {
-        _userIsDoneWithTutorial = YES;
-    }
-    return _userIsDoneWithTutorial;
-}
-
-- (void)checkIfLoadingHasFinished:(NSNotification *)notification
-{
-//	_userIsDoneWithTutorial = [[NSUserDefaults standardUserDefaults] boolForKey:@"seenAppTutorial"];
-//	if (notification && [[notification name] isEqualToString:@"AppTutorialDismissed"]) {
-//		_userIsDoneWithTutorial = YES;
-//		[[NSUserDefaults standardUserDefaults] setBool:self.userIsDoneWithTutorial forKey:@"seenAppTutorial"];
-//		[[NSNotificationCenter defaultCenter] removeObserver:self name:@"AppTutorialDismissed" object:nil];
-//	}
-	
-        NSLog (@"Successfully received the AppTutorialDismissed notification!");
-        if (!self.doneLoadingContent) {
-			if (self.errorOccurred) {
-				[self errorInitializingApp:self.errorOccurred
-                                  useError:NO
-                                     title:NSLocalizedString(@"Error", nil)
-                                   message:NSLocalizedString(@"An Unknown Error has Occurred, please try again", nil)];
-			}
-			else {
-	            [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil)
-                                detail:NSLocalizedString(@"Preparing for first use", nil)];
-			}
-        }
-        else //if (_userIsDoneWithTutorial)
-        {
-            if (!loginCanceled) {
-                [self hideHud];
-                [self invalidateLoginTimer];
-            }
-			
-// Re-add this when user can select line again
-//			Lines *line = [Lines MR_findFirstByAttribute:@"inUse" withValue:[NSNumber numberWithBool:YES]];
-//			if (line) {
-//			}
-//			else {
-//				[self performSegueWithIdentifier:@"SelectLineLoginSegue" sender:self];
-//			}
-        }    
-}
-
-- (void)tokenValidityPassed:(NSNotification*)notification
-{
-//	[self fetchMyMailboxes];
-//    if (!self.seenTutorial) {
-//        [Flurry logEvent:@"First Login"];
-//        [self hideHud];
-////		JCAppIntro *introVC = [self.storyboard instantiateViewControllerWithIdentifier:@"JCAppIntro"];
-////		[self presentViewController:introVC animated:YES completion:^{
-////			//present
-////		}];
-//        [self performSegueWithIdentifier: @"AppTutorialSegue" sender:self];
-//    }
-//    else
-//    {
     [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil)
                     detail:NSLocalizedString(@"Loading data", nil)];
-    [self fetchMyMailboxes];
-//    }
+    
+    [self fetchMyLine];
 }
+
+NSString *const kJCLoginViewControllerProvisioningRequestString = @"<login \n user=\"%@\" \n password=\"%@\" \n man=\"Apple\" \n device=\"%@\" \n os=\"%@\" \n loc=\"%@\" \n lang=\"%@\" \n uuid=\"%@\" \n spid=\"cpc\" \n build=\"%@\" \n type=\"%@\" />";
 
 #pragma mark - Fetch initial data
-//provisioning
-- (void)fetchProvisioningConfig
-{
-	
-	
-	NSString *language = [[[NSBundle mainBundle] preferredLocalizations] objectAtIndex:0];
-	NSString *locale = [NSLocale currentLocale].localeIdentifier;
-	NSString * appBuildString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
-	NSString *model = [UIDevice currentDevice].model;
-	NSString *os = [UIDevice currentDevice].systemVersion;
-	NSString *uuid = [UIDevice currentDevice].identifierForVendor.UUIDString;
-	NSString *type = [UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone ? @"ios.jive.phone" : @"ios.jive.tablet";
-	
-//	NSDictionary *userInformation = @{@"user": self.usernameTextField.text,
-//									  @"password" : self.passwordTextField.text,
-//									  @"man" : @"Apple",
-//									  @"device" : [UIDevice currentDevice].model,
-//									  @"os" : [UIDevice currentDevice].systemVersion,
-//									  @"loc" : locale,
-//									  @"lan" : language,
-//									  @"uuid" : [UIDevice currentDevice].identifierForVendor.UUIDString,
-//									  @"spid" : @"cpc",
-//									  @"build" : appBuildString,
-//									  @"type" :	[UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone ? @"ios.jive.phone" : @"ios.jive.tablet"};
-//	NSString *test = [userInformation XMLString];
 
-	
-
-	
-	
-	//TODO: capture information to create the following structure
-	
-		
-	NSString *xml = [NSString stringWithFormat:@"<login \n user=\"%@\" \n password=\"%@\" \n man=\"Apple\" \n device=\"%@\" \n os=\"%@\" \n loc=\"%@\" \n lang=\"%@\" \n uuid=\"%@\" \n spid=\"cpc\" \n build=\"%@\" \n type=\"%@\" />",
-					 self.usernameTextField.text,
-					 self.passwordTextField.text,
-					 model,
-					 os,
-					 locale,
-					 language,
-					 uuid,
-					 appBuildString,
-					 type
-					 ];
-	 
-	 
-	
-	[[JCV4ProvisioningClient sharedClient] requestProvisioningFile:xml completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-		if(suceeded){
-			//TODO: talk about logic. We should not prevent the user to get into the app if this fails. They
-			// should still be able to access the rest of the app (directory, VM, etc) and be given a change to
-			// fetch the provisioning file again...but then...do we store user creentials?
-			self.doneLoadingContent = YES;
-            [JCAuthenticationManager sharedInstance].userLoadedMininumData = TRUE;
-			//[self goToApplication];
-			[self fetchVoicemailsMetadata];
-			[self fetchContacts];
-            [self checkIfLoadingHasFinished:nil];
-			
-		}
-		else {
-			[self errorInitializingApp:error useError:YES title:nil message:nil];
-		}
-			
-	}];
-}
 
 
 //voicemail
--(void)fetchMyMailboxes{
+-(void)fetchMyLine{
     NSString * jiveId = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
     [[JCV5ApiClient sharedClient] getMailboxReferencesForUser:jiveId completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
         if(suceeded){
@@ -434,64 +296,41 @@
     }];
 }
 
-- (void)fetchVoicemailsMetadata
+//provisioning
+- (void)fetchProvisioningConfig
 {
-//    NSPredicate *linesWithUrlNotNil = [NSPredicate predicateWithFormat:@"mailboxUrl != nil"];
-//    NSArray* lines = [Lines MR_findAllWithPredicate:linesWithUrlNotNil];
-	
-//	NSTimer *timer = [NSTimer timerWithTimeInterval:5 target:self selector:@selector(fetchMyContact) userInfo:nil repeats:NO];
-//	[[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-	
-//	__block int count = 0;
-	
-	[[JCV5ApiClient sharedClient] getVoicemails:nil];
-
-//    [[JCV5ApiClient sharedClient] getVoicemails:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-//
-//		
-//        if(suceeded) {
-//            [[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
-//        }
-//		
-//		if (count == lines.count) {
-//			[timer invalidate];
-//			[self fetchMyContact];
-//		}
-//		
-//		NSLog(@"Count is now: %i, Line count is %lu", count, (unsigned long)lines.count);
-//		
-//    }];
-	
-	
-}
-
-
-//Contacts
-- (void)fetchMyContact
-{
-		[[JCV5ApiClient sharedClient] RetrieveMyInformation:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-			[self fetchContacts];
-		}];
-	
-}
-
-- (void)fetchContacts
-{
-	[[JCV5ApiClient sharedClient] RetrieveContacts:nil];
-	
-//	if (!alreadyMakingContactsRequest) {
-//		alreadyMakingContactsRequest = YES;
-//		[[JCV5ApiClient sharedClient] RetrieveContacts:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-//			if (suceeded) {
-//				_doneLoadingContent = YES;
-//				[self hideHud];
-//				if (self.userIsDoneWithTutorial) {
-//					[self goToApplication];
-//				}
-//			}
-//		}];
-//	}
-	
+    NSString *language = [[[NSBundle mainBundle] preferredLocalizations] objectAtIndex:0];
+    NSString *locale = [NSLocale currentLocale].localeIdentifier;
+    NSString * appBuildString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
+    NSString *model = [UIDevice currentDevice].model;
+    NSString *os = [UIDevice currentDevice].systemVersion;
+    NSString *uuid = [UIDevice currentDevice].identifierForVendor.UUIDString;
+    NSString *type = [UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone ? @"ios.jive.phone" : @"ios.jive.tablet";
+    
+    NSString *xml = [NSString stringWithFormat:kJCLoginViewControllerProvisioningRequestString,
+                     self.usernameTextField.text,
+                     self.passwordTextField.text,
+                     model,
+                     os,
+                     locale,
+                     language,
+                     uuid,
+                     appBuildString,
+                     type
+                     ];
+    
+    [[JCV4ProvisioningClient sharedClient] requestProvisioningFile:xml completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+        if(suceeded){
+            _authenticationManager.userLoadedMininumData = TRUE;
+            
+            
+            
+        }
+        else {
+            [self errorInitializingApp:error useError:YES title:nil message:nil];
+        }
+        
+    }];
 }
 
 //- (void)fetchPBXInformation
@@ -646,7 +485,7 @@
 #pragma mark - Line selection update
 - (void)didChangeLine:(Lines *)selectedLine
 {
-	[self checkIfLoadingHasFinished:nil];
+	[self checkIfLoadingHasFinished];
 }
 
 #pragma -mark HUD Operations

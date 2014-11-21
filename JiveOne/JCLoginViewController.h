@@ -16,13 +16,6 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
-@property (weak, nonatomic) IBOutlet UILabel *loginStatusLabel;
-@property (nonatomic) BOOL seenTutorial;
-@property (nonatomic) BOOL doneLoadingContent;
-@property (nonatomic) BOOL userIsDoneWithTutorial;
-@property (weak, nonatomic) IBOutlet UIView *loginViewContainer;
-@property (weak, nonatomic) IBOutlet UIView *logo;
-@property (weak, nonatomic) IBOutlet UIImageView *coverImageView;
 @property (weak, nonatomic) IBOutlet UISwitch *rememberMeSwitch;
 
 - (IBAction)rememberMe:(id)sender;
