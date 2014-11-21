@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -778,10 +779,10 @@
                                     <constraint firstAttribute="width" constant="320" id="WOr-N1-yFp"/>
                                 </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4eD-kO-dKs" customClass="JCJiveLogoBlack">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4eD-kO-dKs" customClass="JCJiveLogoBlack">
                                 <rect key="frame" x="84" y="20" width="152" height="144"/>
                             </view>
-                            <view clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tkS-ur-xyq">
+                            <view clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tkS-ur-xyq">
                                 <rect key="frame" x="20" y="191" width="280" height="156"/>
                                 <subviews>
                                     <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" image="iPhone2XnewBlurSmall.png" translatesAutoresizingMaskIntoConstraints="NO" id="0aQ-JG-StG">
@@ -815,7 +816,7 @@
                                     </label>
                                 </subviews>
                             </view>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6mC-zr-a8O">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6mC-zr-a8O">
                                 <rect key="frame" x="0.0" y="523" width="320" height="45"/>
                                 <subviews>
                                     <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" image="iPhone2XnewBlurSmall.png" translatesAutoresizingMaskIntoConstraints="NO" id="Hxv-ol-0ds">
@@ -840,7 +841,18 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="4eD-kO-dKs" secondAttribute="bottom" constant="404" id="0B6-kH-8iQ"/>
+                            <constraint firstItem="4eD-kO-dKs" firstAttribute="centerX" secondItem="tkS-ur-xyq" secondAttribute="centerX" id="2SN-lY-BdL"/>
+                            <constraint firstItem="tkS-ur-xyq" firstAttribute="top" secondItem="4eD-kO-dKs" secondAttribute="bottom" constant="27" id="8bJ-9B-2Jz"/>
                             <constraint firstAttribute="centerX" secondItem="4eD-kO-dKs" secondAttribute="centerX" id="8l2-pg-M0w"/>
+                            <constraint firstItem="UCb-QX-ZXn" firstAttribute="leading" secondItem="6mC-zr-a8O" secondAttribute="leading" id="LfL-3J-kiP"/>
+                            <constraint firstItem="UCb-QX-ZXn" firstAttribute="top" secondItem="VoB-Ef-4tt" secondAttribute="topMargin" constant="-74" id="M70-Ae-vac"/>
+                            <constraint firstItem="4eD-kO-dKs" firstAttribute="centerX" secondItem="6mC-zr-a8O" secondAttribute="centerX" id="SAc-0m-Kn2"/>
+                            <constraint firstAttribute="bottom" secondItem="tkS-ur-xyq" secondAttribute="bottom" constant="221" id="URK-qh-lp0"/>
+                            <constraint firstItem="tkS-ur-xyq" firstAttribute="leading" secondItem="VoB-Ef-4tt" secondAttribute="leadingMargin" constant="4" id="aTZ-GQ-gLZ"/>
+                            <constraint firstItem="tkS-ur-xyq" firstAttribute="centerX" secondItem="6mC-zr-a8O" secondAttribute="centerX" id="bzP-Ux-N5q"/>
+                            <constraint firstItem="4eD-kO-dKs" firstAttribute="centerX" secondItem="UCb-QX-ZXn" secondAttribute="centerX" id="dGg-lb-ddJ"/>
+                            <constraint firstItem="4eD-kO-dKs" firstAttribute="leading" secondItem="VoB-Ef-4tt" secondAttribute="leadingMargin" constant="68" id="j5D-gE-ILq"/>
                             <constraint firstItem="4eD-kO-dKs" firstAttribute="top" secondItem="CDZ-cC-VRh" secondAttribute="bottom" id="xJb-j3-ded"/>
                         </constraints>
                     </view>

@@ -78,7 +78,7 @@
 "OzV-9h-pmX.accessibilityLabel" = "emailTextField";
 
 /* Class = "IBUITextField"; placeholder = "email"; ObjectID = "OzV-9h-pmX"; */
-"OzV-9h-pmX.placeholder" = "correo electronico”;
+"OzV-9h-pmX.placeholder" = "correo electronico";
 
 /* Class = "IBUILabel"; text = "Transfer"; ObjectID = "PLC-2m-6mE"; */
 "PLC-2m-6mE.text" = "Transferir";
@@ -156,7 +156,7 @@
 "hn5-ub-HBZ.title" = "Teléfono";
 
 /* Class = "IBUILabel"; text = "Warm Transfer"; ObjectID = "hoV-Az-hVc"; */
-"hoV-Az-hVc.text" = "Transferencia Asistida”;
+"hoV-Az-hVc.text" = "Transferencia Asistida";
 
 /* Class = "IBUIView"; accessibilityLabel = "Sign Out"; ObjectID = "iY3-3e-PXh"; */
 "iY3-3e-PXh.accessibilityLabel" = "Desconectarse";
@@ -192,7 +192,7 @@
 "mn4-Dh-Ebu.text" = "Línea seleccionada";
 
 /* Class = "IBUILabel"; text = "Build Number is"; ObjectID = "mox-PU-WhR"; */
-"mox-PU-WhR.text" = "Número de compilación es”;
+"mox-PU-WhR.text" = "Número de compilación es";
 
 /* Class = "IBUINavigationItem"; title = "Contacts"; ObjectID = "oEe-KQ-NpU"; */
 "oEe-KQ-NpU.title" = "Contactos";

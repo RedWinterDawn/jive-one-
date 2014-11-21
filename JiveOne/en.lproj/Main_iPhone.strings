@@ -129,7 +129,7 @@
 "aTR-Bp-dDz.text" = "Swap Calls";
 
 /* Class = "IBUILabel"; text = "By signing in you agree to our"; ObjectID = "bxS-qG-c0L"; */
-"bxS-qG-c0L.text" = "By signing in you agree to our";
+"bxS-qG-c0L.text" = "By signing in you agree to our Terms and Conditions.";
 
 /* Class = "IBUINavigationController"; title = "History"; ObjectID = "cIE-ip-pRf"; */
 "cIE-ip-pRf.title" = "History";
