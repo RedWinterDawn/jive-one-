@@ -11,7 +11,7 @@
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
 
-#import "JCTermsAndConditonsVCViewController.h"
+#import "JCTermsAndConditonsViewController.h"
 
 #import "JCAuthenticationManager.h"
 
@@ -71,7 +71,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Descrip
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     UIViewController *controller = segue.destinationViewController;
-    if ([controller isKindOfClass:[JCTermsAndConditonsVCViewController class]]) {
+    if ([controller isKindOfClass:[JCTermsAndConditonsViewController class]]) {
         controller.navigationItem.leftBarButtonItem = nil;
     }
 }
