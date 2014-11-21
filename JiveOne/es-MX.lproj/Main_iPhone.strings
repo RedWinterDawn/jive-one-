@@ -1,12 +1,8 @@
-
-/* Class = "IBUIView"; accessibilityLabel = "End User License Agreement"; ObjectID = "1xp-K8-Zse"; */
-"1xp-K8-Zse.accessibilityLabel" = "Acuerdo de licencia de usuario";
+/* Class = "IBUILabel"; text = "PBX:"; ObjectID = "1M5-NQ-q2C"; */
+"1M5-NQ-q2C.text" = "PBX:";
 
 /* Class = "IBUITabBarItem"; title = "Settings"; ObjectID = "30a-yD-tba"; */
 "30a-yD-tba.title" = "Configuración";
-
-/* Class = "IBUIButton"; normalTitle = "Terms and Conditions."; ObjectID = "3bm-z6-yMp"; */
-"3bm-z6-yMp.normalTitle" = "Términos y Condiciones.";
 
 /* Class = "IBUIButton"; normalTitle = "Call Voicemail"; ObjectID = "53q-MK-pw7"; */
 "53q-MK-pw7.normalTitle" = "Llamar al buzón de voz";
@@ -86,8 +82,8 @@
 /* Class = "IBUILabel"; text = "Speaker"; ObjectID = "QMQ-Qw-Dkd"; */
 "QMQ-Qw-Dkd.text" = "Altavoz";
 
-/* Class = "IBUINavigationItem"; title = "Settings"; ObjectID = "QcP-Te-2pB"; */
-"QcP-Te-2pB.title" = "Configuración";
+/* Class = "IBUINavigationItem"; title = "Settings"; ObjectID = "Ngt-9V-IXb"; */
+"Ngt-9V-IXb.title" = "Configuración";
 
 /* Class = "IBUILabel"; text = "Label"; ObjectID = "TBH-my-sze"; */
 "TBH-my-sze.text" = "Etiqueta";
@@ -149,9 +145,6 @@
 /* Class = "IBUILabel"; text = "Today, 10:57 PM"; ObjectID = "h9G-CI-v9C"; */
 "h9G-CI-v9C.text" = "Today, 10:57 PM";
 
-/* Class = "IBUIView"; accessibilityLabel = "Leave Feedback"; ObjectID = "hYm-sc-hSA"; */
-"hYm-sc-hSA.accessibilityLabel" = "Deja Un Comentario";
-
 /* Class = "IBUITabBarItem"; title = "Phone"; ObjectID = "hn5-ub-HBZ"; */
 "hn5-ub-HBZ.title" = "Teléfono";
 
@@ -200,14 +193,8 @@
 /* Class = "IBUILabel"; text = "3:03 PM"; ObjectID = "oiS-bx-elM"; */
 "oiS-bx-elM.text" = "3:03 PM";
 
-/* Class = "IBUILabel"; text = "1006"; ObjectID = "qTo-LN-C26"; */
-"qTo-LN-C26.text" = "1006";
-
-/* Class = "IBUILabel"; text = "Bob Seger"; ObjectID = "qgE-Wi-v1i"; */
-"qgE-Wi-v1i.text" = "Bob Seger";
-
-/* Class = "IBUITabBarItem"; title = "Item"; ObjectID = "qr5-fZ-Kx4"; */
-"qr5-fZ-Kx4.title" = "Elemento";
+/* Class = "IBUILabel"; text = "End User License Agreement"; ObjectID = "nNw-aj-1ph"; */
+"nNw-aj-1ph.text" = "Acuerdo de licencia de usuario";
 
 /* Class = "IBUINavigationController"; title = "Keypad"; ObjectID = "vrQ-kc-2ec"; */
 "vrQ-kc-2ec.title" = "Teclado";
@@ -232,3 +219,28 @@
 
 /* Class = "IBUILabel"; text = "Finish Transfer"; ObjectID = "zpq-3o-7Gs"; */
 "zpq-3o-7Gs.text" = "Finalizar la transferencia";
+
+/* Class = "IBUILabel"; text = "Extension:"; ObjectID = "Tj6-BS-QA2"; */
+"Tj6-BS-QA2.text" = "Extensión:";
+
+/* Class = "IBUILabel"; text = "Logout"; ObjectID = "Trv-py-X4f"; */
+"Trv-py-X4f.text" = "Finalizar la sesión";
+
+/* Class = "IBUILabel"; text = "User:"; ObjectID = "i1A-sz-Qdg"; */
+"i1A-sz-Qdg.text" = "Usuario:";
+
+/* Class = "IBUILabel"; text = "Build  Label"; ObjectID = "UjK-HA-EeS"; */
+"UjK-HA-EeS.text" = "Build  Label";
+
+/* Class = "IBUITableViewSection"; headerTitle = "Application"; ObjectID = "aSD-9F-7Ze"; */
+"aSD-9F-7Ze.headerTitle" = "Aplicación";
+
+/* Class = "IBUITableViewSection"; headerTitle = "Account"; ObjectID = "bw0-5L-SgE"; */
+"bw0-5L-SgE.headerTitle" = "Cuenta";
+
+/* Class = "IBUILabel"; text = "Leave Feedback"; ObjectID = "ya5-Sj-oDI"; */
+"ya5-Sj-oDI.text" = "Deja Un Comentario";
+
+
+
+
