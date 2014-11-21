@@ -43,7 +43,7 @@
 "Invalid username/password" = "Nombre de usuario/contraseña no válidos ";
 "An Unknown Error has Occurred, please try again" = "Un error desconocido ha ocurrido, por favor intente de nuevo";
 "Logging In" = "Inicio de sesión";
-"Loading Data" = "Cargando datos";
+"Loading data" = "Cargando datos";
 "Preparing for first use" = "Preparación para primer uso";
 "UserName/Password Cannot Be Empty" = "Nombre de usuario / contraseña no puede estar vacío";
 "This username is not associated with any PBX. Please contact your Administrator" = "Este nombre de usuario no está asociado con nonagon PBX. Por favor, contacte a su administrador.";
