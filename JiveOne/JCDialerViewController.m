@@ -142,7 +142,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 
 -(void)updateResgistrationStatus
 {
-    NSString *prompt = @"Unregistered";
+    NSString *prompt = NSLocalizedString(@"Unregistered", nil);
     if (_sipHandler.isRegistered)
     {
         _callBtn.selected = false;

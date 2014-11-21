@@ -195,7 +195,7 @@
     <resources>
         <image name="black-hold" width="30" height="30"/>
         <image name="gray-callbutton" width="58" height="58"/>
-        <image name="grayed-phone" width="37" height="30"/>
+        <image name="grayed-phone" width="37" height="12"/>
         <image name="red-phone" width="37" height="30"/>
         <image name="transfer-onhold-mini-blackish" width="11" height="12"/>
     </resources>

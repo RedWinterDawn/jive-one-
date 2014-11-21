@@ -6,6 +6,10 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-@interface JCTermsAndConditonsVCViewController : UIViewController <UIWebViewDelegate, UIActionSheetDelegate>
+@import UIKit;
+
+@interface JCTermsAndConditonsViewController : UIViewController <UIWebViewDelegate>
+
+@property (weak, nonatomic) IBOutlet UIWebView *webView;
+
 @end

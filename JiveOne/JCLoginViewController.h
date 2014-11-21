@@ -25,6 +25,5 @@
 @property (weak, nonatomic) IBOutlet UIImageView *coverImageView;
 @property (weak, nonatomic) IBOutlet UISwitch *rememberMeSwitch;
 
-- (IBAction)termsAndConditionsButton:(id)sender;
 - (IBAction)rememberMe:(id)sender;
 @end

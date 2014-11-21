@@ -781,7 +781,7 @@
     </scenes>
     <resources>
         <image name="avatar.png" width="176" height="159"/>
-        <image name="launch.png" width="640" height="1136"/>
+        <image name="launch.png" width="11" height="12"/>
         <image name="nav-conv.png" width="30" height="30"/>
         <image name="nav-more.png" width="44" height="44"/>
         <image name="nav-people.png" width="44" height="44"/>

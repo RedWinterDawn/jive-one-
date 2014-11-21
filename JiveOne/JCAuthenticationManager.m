@@ -445,7 +445,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
                     [self sendCompletionBlock:NO errorMessage:tokenData[@"error"]];
                 }
                 else {
-                    [self sendCompletionBlock:NO errorMessage:NSLocalizedString(@"An Error Has Occured, Please Try Again",  nil)];
+                    [self sendCompletionBlock:NO errorMessage:NSLocalizedString(@"An Error Has Occurred, Please Try Again",  nil)];
                 }
             }
         }
@@ -456,7 +456,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     NSLog(@"Did Fail Load With Error");
-    [self sendCompletionBlock:NO errorMessage:NSLocalizedString(@"An Error Has Occured, Please Try Again",  nil)];
+    [self sendCompletionBlock:NO errorMessage:NSLocalizedString(@"An Error Has Occurred, Please Try Again",  nil)];
 }
 
 /*

@@ -23,9 +23,6 @@
 #import "JCLineSelectorViewController.h"
 #import <XMLDictionary/XMLDictionary.h>
 
-
-
-
 @interface JCLoginViewController () <NSFileManagerDelegate>
 {
     BOOL fastConnection;
@@ -40,17 +37,6 @@
 
 @implementation JCLoginViewController
 
-- (id)init {
-    if (self = [super init]) {
-    }
-    return self;
-}
-
-
-//- (void)setClient:(JCRESTClient *)client
-//{
-//    _client = client;
-//}
 //@peter This hadles when you touch anywhere else on the screen the key board is dismissed.
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     [self.view endEditing:YES];
@@ -60,8 +46,6 @@
 {
     [super viewDidLoad];
     [self.passwordTextField fixSecureTextFieldFont];
-    //[self setClient:[JCRESTClient sharedClient]];
-    
     
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"seenAppTutorial"]) {
         self.userIsDoneWithTutorial = YES;
@@ -73,19 +57,17 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshAuthenticationCredentials:) name:kAuthenticationFromTokenFailed object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshAuthenticationCredentials:) name:kAuthenticationFromTokenFailedWithTimeout object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tokenValidityPassed:) name:kAuthenticationFromTokenSucceeded object:nil];
-    self.usernameTextField.returnKeyType = UIReturnKeyNext;
     
+    self.usernameTextField.returnKeyType = UIReturnKeyNext;
     self.usernameTextField.returnKeyType = UIReturnKeyNext;
     self.passwordTextField.returnKeyType = UIReturnKeyGo;
     
     self.usernameTextField.delegate = self;
     self.passwordTextField.delegate = self;
     
-    
     NSString* fontName = @"Avenir-Book";
     NSString* boldFontName = @"Avenir-Black";
     
-    self.usernameTextField.placeholder =  NSLocalizedString(@"Email Address", nil);
     self.usernameTextField.font = [UIFont fontWithName:fontName size:16.0f];
     self.usernameTextField.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:0.7].CGColor;
     self.usernameTextField.layer.borderWidth = 1.0f;
@@ -94,7 +76,6 @@
     self.usernameTextField.leftViewMode = UITextFieldViewModeAlways;
     self.usernameTextField.leftView = leftView;
     
-    self.passwordTextField.placeholder =  NSLocalizedString(@"Password", nil);
     self.passwordTextField.font = [UIFont fontWithName:fontName size:16.0f];
     self.passwordTextField.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:0.7].CGColor;
     self.passwordTextField.layer.borderWidth = 1.0f;
@@ -113,8 +94,6 @@
     self.loginViewContainer.layer.cornerRadius = 5;
     [self.loginViewContainer.layer setCornerRadius:5];
     
-    
-    
     UIView* leftView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 20)];
     self.passwordTextField.leftViewMode = UITextFieldViewModeAlways;
     self.passwordTextField.leftView = leftView2;
@@ -126,27 +105,14 @@
     
 }
 
-- (void)viewDidDisappear:(BOOL)animated
+-(void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAuthenticationFromTokenFailed object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAuthenticationFromTokenFailedWithTimeout object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAuthenticationFromTokenSucceeded object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAuthenticationFromTokenFailed object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kAuthenticationFromTokenSucceeded object:nil];
-    
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-	[super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-//    if (self.view.frame.size.height <= 560){
-//        
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
-//    }
     
+    [super viewWillAppear:animated];
     
     if ([JCAuthenticationManager sharedInstance].rememberMe) {
         NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
@@ -155,12 +121,6 @@
     }
     
     [Flurry logEvent:@"Login View"];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -204,7 +164,8 @@
         } completion: ^(BOOL finished){
             if(finished) {
             }
-            [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil) detail:NSLocalizedString(@"Logging In", nil)];
+            [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil)
+                            detail:NSLocalizedString(@"Logging In", nil)];
         }];
         
         [[JCOmniPresence sharedInstance] truncateAllTablesAtLogout];
@@ -215,24 +176,16 @@
                 [self tokenValidityPassed:nil];
             }
             else {
-                if (error.userInfo[@"error"]) {
-                    [self alertStatus:NSLocalizedString(@"Authentication Error", nil) message:error.userInfo[@"error"]];
-                    NSLog(@"Authentication error: %@", error);
-                    [self hideHud];
-                    [UIView animateWithDuration:0.50 animations:^{
-                        [self.coverImageView setAlpha:0.0];
-                    } completion: ^(BOOL finished){
-                    }];
-                }
-                else {
-                    [self alertStatus:NSLocalizedString(@"Authentication Error", nil) message:error.localizedDescription];
-                    NSLog(@"Authentication error: %@", error);
-                    [self hideHud];
-                    [UIView animateWithDuration:0.50 animations:^{
-                        [self.coverImageView setAlpha:0.0];
-                    } completion: ^(BOOL finished){
-                    }];
-                }
+                [self alertStatus:NSLocalizedString(@"Authentication Error", nil)
+                          message:error.userInfo[@"error"] ? NSLocalizedString(error.userInfo[@"error"], nil) : error.localizedDescription];
+                
+                NSLog(@"Authentication error: %@", error);
+                [self hideHud];
+                [UIView animateWithDuration:0.50
+                                 animations:^{
+                                     [self.coverImageView setAlpha:0.0];
+                                 }
+                                 completion:NULL];
             }
 
         }];
@@ -251,13 +204,17 @@
     }
     else
     {
-        [self alertStatus:NSLocalizedString(@"Invalid Parameters", nil) message: NSLocalizedString(@"UserName/Password Cannot Be Empty", nil)];
+        [self alertStatus:NSLocalizedString(@"Invalid Parameters", nil)
+                  message:NSLocalizedString(@"UserName/Password Cannot Be Empty", nil)];
     }
 }
 
 - (void) loginIsTakingTooLong
 {
-	[self errorInitializingApp:nil useError:NO title:NSLocalizedString(@"Login Timed Out", nil) message:NSLocalizedString(@"This is taking longer than expected. Please check your connection and try again", nil)];
+	[self errorInitializingApp:nil
+                      useError:NO
+                         title:NSLocalizedString(@"Login Timed Out", nil)
+                       message:NSLocalizedString(@"This is taking longer than expected. Please check your connection and try again", nil)];
 }
 
 - (void) invalidateLoginTimer
@@ -283,7 +240,11 @@
     [self hideHud];
     
     if (notification.object != nil && [kAuthenticationFromTokenFailedWithTimeout isEqualToString:(NSString *)notification.object]) {
-        UIAlertView *alertview = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Login Timeout", nil) message:NSLocalizedString(@"Login could not be completed at this time. Please try again later.", nil) delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        UIAlertView *alertview = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Login Timeout", nil)
+                                                            message:NSLocalizedString(@"Login could not be completed at this time. Please try again later.", nil)
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"Ok"
+                                                  otherButtonTitles:nil, nil];
         [alertview show];
     }
     else {
@@ -325,10 +286,14 @@
         NSLog (@"Successfully received the AppTutorialDismissed notification!");
         if (!self.doneLoadingContent) {
 			if (self.errorOccurred) {
-				[self errorInitializingApp:self.errorOccurred useError:NO title:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"An Unknown Error has Occurred, please try again", nil)];
+				[self errorInitializingApp:self.errorOccurred
+                                  useError:NO
+                                     title:NSLocalizedString(@"Error", nil)
+                                   message:NSLocalizedString(@"An Unknown Error has Occurred, please try again", nil)];
 			}
 			else {
-	            [self showHudWithTitle:@"One Moment Please" detail:@"Preparing for first use"];
+	            [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil)
+                                detail:NSLocalizedString(@"Preparing for first use", nil)];
 			}
         }
         else //if (_userIsDoneWithTutorial)
@@ -362,7 +327,8 @@
 //    }
 //    else
 //    {
-        [self showHudWithTitle:@"One Moment Please" detail:@"Loading data"];
+    [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil)
+                    detail:NSLocalizedString(@"Loading data", nil)];
     [self fetchMyMailboxes];
 //    }
 }
@@ -443,17 +409,27 @@
         if(suceeded){
 			NSArray *pbxs = [PBX MR_findAll];
 			if (pbxs.count == 0) {
-				[self errorInitializingApp:error useError:NO title:NSLocalizedString(@"No PBX", nil)	message:NSLocalizedString(@"This username is not associated with any PBX. Please contact your Administrator", nil)];
+				[self errorInitializingApp:error
+                                  useError:NO
+                                     title:NSLocalizedString(@"No PBX", nil)
+                                   message:NSLocalizedString(@"This username is not associated with any PBX. Please contact your Administrator", nil)];
 			}
 			else if (pbxs.count > 1) {
-				[self errorInitializingApp:error useError:NO title:NSLocalizedString(@"Multiple PBXs", nil)	message:NSLocalizedString(@"This app does not support account with multiple PBXs at this time", nil)];			}
+				[self errorInitializingApp:error
+                                  useError:NO
+                                     title:NSLocalizedString(@"Multiple PBXs", nil)
+                                   message:NSLocalizedString(@"This app does not support account with multiple PBXs at this time", nil)];
+            }
 			else {
 				[self fetchProvisioningConfig];
 			}
         }
 		else {
             self.errorOccurred = error;
-			[self errorInitializingApp:error useError:NO title:NSLocalizedString(@"Server Unavailable", nil) message:NSLocalizedString(@"We could not reach the server at this time. Please check your connection", nil)];
+			[self errorInitializingApp:error
+                              useError:NO
+                                 title:NSLocalizedString(@"Server Unavailable", nil)
+                               message:NSLocalizedString(@"We could not reach the server at this time. Please check your connection", nil)];
 		}
     }];
 }
@@ -656,7 +632,8 @@
     [self hideHud];
 	
 	if (useError) {
-		[self alertStatus:NSLocalizedString(@"An error has occurred", nil) message:err.localizedDescription];
+		[self alertStatus:NSLocalizedString(@"An error has occurred", nil)
+                  message:err.localizedDescription];
 	}
 	else {
 		[self alertStatus:title message:message];
@@ -692,11 +669,6 @@
         [hud removeFromSuperview];
         hud = nil;
     }
-}
-
-
-- (IBAction)termsAndConditionsButton:(id)sender {
-    [self performSegueWithIdentifier: @"TCSegue" sender: self];
 }
 
 - (IBAction)rememberMe:(id)sender {
