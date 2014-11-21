@@ -24,6 +24,6 @@
 @property (weak, nonatomic) IBOutlet UIView *logo;
 @property (weak, nonatomic) IBOutlet UIImageView *coverImageView;
 @property (weak, nonatomic) IBOutlet UISwitch *rememberMeSwitch;
-- (void)goToApplication;
+
 - (IBAction)rememberMe:(id)sender;
 @end
