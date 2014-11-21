@@ -1654,17 +1654,6 @@
                                     <constraint firstItem="nsS-HF-huE" firstAttribute="top" secondItem="meF-1G-p2k" secondAttribute="top" id="tUf-tZ-dWN"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="center" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="igS-G2-NfM">
-                                <rect key="frame" x="280" y="65" width="40" height="50"/>
-                                <gestureRecognizers/>
-                                <state key="normal" image="delete-black">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="backspace:" destination="3A8-R9-IcP" eventType="touchUpInside" id="u4v-jd-jVh"/>
-                                    <outletCollection property="gestureRecognizers" destination="9YZ-qe-5Z7" appends="YES" id="cye-6U-PNK"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0XG-qH-giP" customClass="JCDialStringLabel">
                                 <rect key="frame" x="40" y="65" width="242" height="50"/>
                                 <constraints>
@@ -1691,13 +1680,30 @@
                                     <action selector="initiateCall:" destination="3A8-R9-IcP" eventType="touchUpInside" id="CI4-Nv-yH0"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="igS-G2-NfM">
+                                <rect key="frame" x="280" y="65" width="40" height="50"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="UmO-1l-TGZ"/>
+                                    <constraint firstAttribute="height" constant="50" id="sgb-hj-lbI"/>
+                                </constraints>
+                                <state key="normal" image="delete-black">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="backspace:" destination="3A8-R9-IcP" eventType="touchUpInside" id="u4v-jd-jVh"/>
+                                    <outletCollection property="gestureRecognizers" destination="9YZ-qe-5Z7" appends="YES" id="cye-6U-PNK"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="3FV-p4-tnZ" firstAttribute="leading" secondItem="Rfg-zK-3ym" secondAttribute="leading" constant="130" id="1tM-mH-6A3"/>
                             <constraint firstItem="meF-1G-p2k" firstAttribute="top" secondItem="iWl-PB-GRi" secondAttribute="bottom" constant="50" id="2FL-Dj-dS6"/>
                             <constraint firstAttribute="trailing" secondItem="meF-1G-p2k" secondAttribute="trailing" id="63p-n1-iDB"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="igS-G2-NfM" secondAttribute="trailing" constant="-16" id="6CA-XT-NNr"/>
                             <constraint firstItem="3FV-p4-tnZ" firstAttribute="top" secondItem="meF-1G-p2k" secondAttribute="bottom" constant="17" id="FwS-yD-CUH"/>
+                            <constraint firstItem="igS-G2-NfM" firstAttribute="top" secondItem="iWl-PB-GRi" secondAttribute="bottom" constant="1" id="Gdx-IR-5RZ"/>
                             <constraint firstItem="0XG-qH-giP" firstAttribute="leading" secondItem="Rfg-zK-3ym" secondAttribute="leading" constant="40" id="TwQ-K6-s7i"/>
                             <constraint firstItem="0XG-qH-giP" firstAttribute="top" relation="lessThanOrEqual" secondItem="Rfg-zK-3ym" secondAttribute="top" constant="65" id="UZb-Vl-Gkx"/>
                             <constraint firstItem="0XG-qH-giP" firstAttribute="top" secondItem="meF-1G-p2k" secondAttribute="top" constant="-49" id="pHq-h7-Bgs"/>
