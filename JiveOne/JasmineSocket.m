@@ -7,15 +7,16 @@
 //
 
 #import "JasmineSocket.h"
-#import "JCContactsClient.h"
 #import "Common.h"
+#import "JCV5ApiClient.h"
 
 @implementation JasmineSocket
 {
 	NSTimer *breakSocketTimer;
+    NSDictionary *sessionDictionary;
 }
 
-static NSInteger SocketCloseCode = 1001;
+//static NSInteger SocketCloseCode = 1001;
 static BOOL closedSocketOnPurpose;
 
 + (JasmineSocket *)sharedInstance
@@ -44,7 +45,7 @@ static BOOL closedSocketOnPurpose;
 {
 	[self cleanup];
 	
-    [[JCContactsClient sharedClient] RequestSocketSession:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+    [[JCV5ApiClient sharedClient] RequestSocketSession:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
         if (suceeded) {
             _webSocketUrl = responseObject[@"ws"];
             _subscriptionUrl = responseObject[@"subscriptions"];
@@ -107,8 +108,6 @@ static BOOL closedSocketOnPurpose;
 		
 }
 
-
-
 #pragma mark - PSWebSocketDelegate
 
 
@@ -116,8 +115,9 @@ static BOOL closedSocketOnPurpose;
     NSLog(@"The websocket handshake completed and is now open!");
     [[NSNotificationCenter defaultCenter] postNotificationName:@"socketDidOpen" object:nil];
 }
+
 - (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message {
-    NSLog(@"The websocket received a message: %@", message);
+//    NSLog(@"The websocket received a message: %@", message);
     
     NSData *data = [message dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *messageDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
@@ -159,6 +159,8 @@ static BOOL closedSocketOnPurpose;
 #pragma mark - Subscriptions
 - (void)postSubscriptionsToSocketWithId:(NSString *)ident entity:(NSString *)entity type:(NSString *)type
 {
+    
+    
 	if (![Common stringIsNilOrEmpty:ident] && ![Common stringIsNilOrEmpty:entity]) {
 		
 		NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:@{@"id": ident, @"entity": entity}];
@@ -167,14 +169,15 @@ static BOOL closedSocketOnPurpose;
 			[params setObject:type forKey:@"type"];
 		}
 		
-		[[JCContactsClient sharedClient] SubscribeToSocketEvents:self.subscriptionUrl dataDictionary:params];
+		[[JCV5ApiClient sharedClient] SubscribeToSocketEvents:self.subscriptionUrl dataDictionary:params];
 	}
     
 }
 
 - (void) processMessage:(NSDictionary *)message
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"eventForLine" object:message];
+    [self eventForLine:message];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"eventForLine" object:message];
 }
 
 #pragma mark - Background socket connection
@@ -192,6 +195,39 @@ static BOOL closedSocketOnPurpose;
        
     }
 }
+
+#pragma mark - process presence
+- (void) eventForLine:(NSDictionary *)message
+{
+    
+    NSString *type = message[@"type"];
+    NSString *subId = message[@"subId"];
+    NSString *state;
+    
+    if (![message[@"data"] isKindOfClass:[NSNull class]]) {
+        state = message[@"data"][@"state"];
+    }
+    
+    
+    // right now we only care about withdraws and confirmeds
+    if ([type isEqualToString:@"withdraw"] || (state && [state isEqualToString:@"confirmed"])) {
+        
+        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+            Lines *line = [Lines MR_findFirstByAttribute:@"jrn" withValue:subId inContext:localContext];
+            
+            if (line) {
+                if (state && [state isEqualToString:@"confirmed"]) {
+                    line.state = [NSNumber numberWithInt:(int) JCPresenceTypeDoNotDisturb];
+                }
+                else if (type && [type isEqualToString:@"withdraw"]) {
+                    line.state = [NSNumber numberWithInt:(int) JCPresenceTypeAvailable];
+                }
+            }
+            
+        }];
+    }
+}
+
 
 
 

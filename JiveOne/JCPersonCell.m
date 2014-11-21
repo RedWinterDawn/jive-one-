@@ -16,68 +16,12 @@
 
 //NSString *const kCustomCellPersonPresenceTypeKeyPath = @"entityPresence";
 @interface JCPersonCell ()
-@property (nonatomic) NSManagedObjectContext* managedContext;
+
 @end
+
 @implementation JCPersonCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        NSArray *bundleArray = [[NSBundle mainBundle] loadNibNamed:@"JCPersonCell" owner:self options:nil];
-        self = bundleArray[0];
-        
-    }
-    return self;
-}
-
-- (NSManagedObjectContext*)managedContext
-{
-    if (!_managedContext) {
-        _managedContext = [NSManagedObjectContext MR_contextForCurrentThread];
-    }
-    return _managedContext;
-}
-
 - (void)awakeFromNib
-{
-    // Initialization code
-    [self bringSubviewToFront:self.favoriteBut];
-}
-
-
--(void)setLine:(Lines *)line
-{
-	if ([line isKindOfClass:[Lines class]])
-	{
-		_line = line;
-		[self.personNameLabel setNumberOfLines:0];
-		self.personNameLabel.text = line.displayName;
-		[self.personNameLabel sizeToFit];
-		[self configureFavoriteStatus];
-		NSString * detailText = line.externsionNumber;
-
-		PBX *pbx = [PBX MR_findFirstByAttribute:@"pbxId" withValue:line.pbxId];
-		if (pbx) {
-			NSString *name = pbx.name;
-			if (![Common stringIsNilOrEmpty:name]) {
-				detailText = [NSString stringWithFormat:@"%@ on %@", line.externsionNumber, name];
-			}
-			else {
-				detailText = [NSString stringWithFormat:@"%@", line.externsionNumber];
-			}
-		}
-		
-		self.personDetailLabel.text = detailText;
-		
-		self.personPresenceView.presenceType = (JCPresenceType) [line.state integerValue];
-		[line addObserver:self forKeyPath:kPresenceKeyPathForLineEntity options:NSKeyValueObservingOptionNew context:NULL];
-		
-	}
-
-}
-
-- (void)configureFavoriteStatus
 {
     //selected star should be yellow unselected star should be gray
     UIColor *selectedStarColor = [UIColor colorWithRed:255.0/255.0 green:212.0/255.0 blue:0.0/255.0 alpha:1.0];
@@ -87,29 +31,23 @@
     NSMutableAttributedString *unselectedAttributedStarSelectedState = [[NSMutableAttributedString alloc]initWithString:@"★" attributes:@{NSForegroundColorAttributeName : unselectedStarColor}];
     [self.favoriteBut setAttributedTitle:selectedAttributedStarSelectedState forState:UIControlStateSelected];
     [self.favoriteBut setAttributedTitle:unselectedAttributedStarSelectedState forState:UIControlStateNormal];
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    Lines *line = self.line;
+    self.personNameLabel.text = line.displayName;
+    self.personDetailLabel.text = line.detailText;
+    
+    self.personPresenceView.presenceType = (JCPresenceType) [line.state integerValue];
     
     if ([self.line.isFavorite  isEqual: @1]) {
         [self.favoriteBut setSelected:YES];
     }else{
         [self.favoriteBut setSelected:NO];
     }
-}
-
-- (void)prepareForReuse
-{
-    [super prepareForReuse];
-    [self removeObservers];
-}
-
-- (void)removeObservers
-{
-    if (_line)
-        [_line removeObserver:self forKeyPath:kPresenceKeyPathForLineEntity];
-}
-
-- (void)dealloc
-{
-    [self removeObservers];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -120,22 +58,75 @@
     }
 }
 
-- (JCPresenceType)extractPresenceType:(PersonEntities *)person
+- (void)prepareForReuse
 {
-    if (person) {
-        if (person.entityPresence) {
-            if (person.entityPresence.interactions) {
-                if (person.entityPresence.interactions[@"chat"]) {
-                    if (person.entityPresence.interactions[@"chat"][@"code"]) {
-                        return (int)[person.entityPresence.interactions[@"chat"][@"code"] integerValue];
-                    }
-                }
-            }
-        }
+    [super prepareForReuse];
+    [self removeObservers];
+}
+
+- (void)dealloc
+{
+    [self removeObservers];
+}
+
+#pragma mark - Setters -
+
+-(void)setLine:(Lines *)line
+{
+    if ([line isKindOfClass:[Lines class]])
+    {
+        _line = line;
+        [line addObserver:self forKeyPath:kPresenceKeyPathForLineEntity options:NSKeyValueObservingOptionNew context:NULL];
+    }
+}
+
+#pragma mark - Private -
+
+- (void)removeObservers
+{
+    if (_line)
+        [_line removeObserver:self forKeyPath:kPresenceKeyPathForLineEntity];
+}
+
+- (IBAction)toggleFavoriteStatus:(id)sender {
+    
+    if ([self.line.isFavorite  isEqual: @1])
+    {
+        self.line.isFavorite = @0;
+    }else{
+        self.line.isFavorite = @1;
     }
     
-    return 0;
+    [self.line.managedObjectContext MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
+        [self setNeedsLayout];
+    }];
 }
+
+/*- (void)createGroupRelationship
+{
+	ContactGroup *group = [ContactGroup MR_findFirstByAttribute:@"groupName" withValue:@"Favorites"];
+	if (!group) {
+		group = [ContactGroup MR_createInContext:self.line.managedObjectContext];
+		group.groupId = [[NSUUID UUID] UUIDString];
+		group.groupName = @"Favorites";
+	}
+    
+	// create relationship
+	NSPredicate *pred = [NSPredicate predicateWithFormat:@"(groupId == %@) AND (lineId == %@)", group.groupId, self.line.jrn];
+	LineGroup *lg = [LineGroup MR_findFirstWithPredicate:pred];
+	if (!lg && [self.line.isFavorite boolValue]) {
+		lg = [LineGroup MR_createInContext:self.line.managedObjectContext];
+		lg.lineId = self.line.jrn;
+		lg.groupId = group.groupId;
+	}
+	else  if (lg && ![self.line.isFavorite boolValue])
+	{
+		[lg MR_deleteEntity];
+	}
+}*/
+
+@end
+
 
 
 /**
@@ -145,63 +136,14 @@
  * mutable array that is shared by all instaces of the initialsImage. We use the
  * dispatch once to ensure that it is only ever instanced once.
  */
-+ (NSMutableDictionary *)chachedInitialsImages {
+/*+ (NSMutableDictionary *)chachedInitialsImages {
     static NSMutableDictionary *cachedPresenceImages = nil;
     static dispatch_once_t oncePredicate;
     dispatch_once(&oncePredicate, ^{
         cachedPresenceImages = [NSMutableDictionary new];
     });
     return cachedPresenceImages;
-}
-
--(void)updateTableViewCell:(JCPersonCell*)cell
-{
-    [self.delegate updateTableViewCell:cell];
-}
-
-- (IBAction)toggleFavoriteStatus:(id)sender {
-    
-	_managedContext = [self managedContext];
-		
-    if ([self.line.isFavorite  isEqual: @1]) {
-        self.line.isFavorite = @0;
-        [self.favoriteBut setSelected:NO];
-    }else{
-        self.line.isFavorite = @1;
-        [self.favoriteBut setSelected:YES];
-    }
-    NSLog(@"self.line.isFavorite:%@",self.line.isFavorite);
-    
-    [self createGroupRelationship];
-    [_managedContext MR_saveToPersistentStoreAndWait];
-    [self updateTableViewCell:self];
-}
-
-- (void)createGroupRelationship
-{
-	ContactGroup *group = [ContactGroup MR_findFirstByAttribute:@"groupName" withValue:@"Favorites"];
-	if (!group) {
-		group = [ContactGroup MR_createInContext:_managedContext];
-		group.groupId = [[NSUUID UUID] UUIDString];
-		group.groupName = @"Favorites";
-	}
-    
-	// create relationship
-	NSPredicate *pred = [NSPredicate predicateWithFormat:@"(groupId == %@) AND (lineId == %@)", group.groupId, self.line.jrn];
-	LineGroup *lg = [LineGroup MR_findFirstWithPredicate:pred];
-	if (!lg && [self.line.isFavorite boolValue]) {
-		lg = [LineGroup MR_createInContext:_managedContext];
-		lg.lineId = self.line.jrn;
-		lg.groupId = group.groupId;
-	}
-	else  if (lg && ![self.line.isFavorite boolValue])
-	{
-		[lg MR_deleteEntity];
-	}
-}
-
-@end
-
+}*/
 
 
 //- (void)setPersonImage

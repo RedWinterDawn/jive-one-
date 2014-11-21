@@ -10,8 +10,50 @@
 #import "ContactGroup.h"
 #import "LineGroup.h"
 #import "Common.h"
+#import "PBX.h"
 
 @implementation Lines (Custom)
+
+
+- (NSString *)firstLetter
+{
+    [self willChangeValueForKey:@"firstLetter"];
+    NSString *result = @"";
+//    if ([self.isFavorite boolValue]) {
+//        result = @"\u2605";
+//    } else {
+//        if (self.displayName.length == 0) {
+//            result = @"";
+//        }
+//        else if (self.displayName.length == 1) {
+//            result = self.displayName;
+//        }
+//        else {
+            result = [self.displayName substringToIndex:1];
+//        }
+//    }
+    
+    [self didChangeValueForKey:@"firstLetter"];
+    
+    return [result uppercaseString];
+}
+
+-(NSString *)detailText
+{
+    NSString * detailText = self.externsionNumber;
+    PBX *pbx = [PBX MR_findFirstByAttribute:@"pbxId" withValue:self.pbxId];
+    if (pbx) {
+        NSString *name = pbx.name;
+        if (![Common stringIsNilOrEmpty:name]) {
+            detailText = [NSString stringWithFormat:@"%@ on %@", self.externsionNumber, name];
+        }
+        else {
+            detailText = [NSString stringWithFormat:@"%@", self.externsionNumber];
+        }
+    }
+    return detailText;
+}
+
 
 + (void)addLines:(NSArray *)lines pbxId:(NSString *)pbxId userName:(NSString *)userName completed:(void (^)(BOOL success))completed
 {

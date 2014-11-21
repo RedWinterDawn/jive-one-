@@ -31,9 +31,9 @@
     }
     
     NSString *self_url = pbx[@"self_pbx"] ? pbx[@"self_pbx"] : pbx[@"self"] ? pbx[@"self"] : @"";
-	NSString *pbxId = pbx[@"id"] ? pbx[@"id"] : nil;
+	NSString *pbxId = pbx[@"pbxId"] ? pbx[@"pbxId"] : nil;
     if ([Common stringIsNilOrEmpty:self_url]) {
-        if (pbx[@"id"]) {
+        if (pbxId) {
             self_url = [NSString stringWithFormat:@"https://api.jive.com/jif/v1/pbx/id/%@", pbx[@"id"]];
         }
     }
@@ -53,19 +53,12 @@
     else {
         
         c_pbx = [PBX MR_createInContext:context];
-        c_pbx.pbxId = pbx[@"id"] ? pbx[@"id"] : pbxId;
+        c_pbx.pbxId = pbx[@"pbxId"] ? pbx[@"pbxId"] : pbxId;
         c_pbx.name = pbx[@"name"] ? pbx[@"name"] : @"";
         c_pbx.jrn = pbx[@"jrn"] ? pbx[@"jrn"] : @"";
         c_pbx.v5 = pbx[@"v5"] ? [NSNumber numberWithBool:[pbx[@"v5"] boolValue]] : false;
         c_pbx.selfUrl = self_url;
     }
-    
-//    NSArray *mailboxes = pbx[@"extensions"];
-//    if (mailboxes && mailboxes.count > 0) {
-//        for (NSDictionary *mailbox in mailboxes) {
-//            [Mailbox addMailbox:mailbox pbxUrl:self_url withManagedContext:context sender:nil];
-//        }
-//    }
     
     NSArray *lines = pbx[@"lines"];
     if (lines && lines.count > 0) {
@@ -88,7 +81,13 @@
     pbx.pbxId = new_pbx[@"jrn"] ? new_pbx[@"jrn"] : new_pbx[@"id"] ;
     pbx.name = new_pbx[@"name"] ? new_pbx[@"name"] : @"";
     pbx.jrn = new_pbx[@"jrn"] ? new_pbx[@"jrn"] : new_pbx[@"id"];
-    pbx.v5 = new_pbx[@"v5"] ? [NSNumber numberWithBool:[new_pbx[@"v5"] boolValue]] : false;
+    pbx.v5 = new_pbx[@"v5"] ? [NSNumber numberWithBool:[new_pbx[@"v5"] boolValue]] : pbx.v5;
+}
+
++ (PBX *)fetchFirstPBX
+{
+    Lines *mailbox = [Lines MR_findFirst];
+    return [PBX MR_findFirstByAttribute:@"pbxId" withValue:mailbox.pbxId];
 }
 
 @end

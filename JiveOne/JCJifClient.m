@@ -81,11 +81,12 @@
 - (void)getMailboxReferencesForUser:(NSString*)jiveId completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
 {
     [self setRequestAuthHeader];
-    NSString* url = [NSString stringWithFormat:@"user/jiveId/%@", jiveId];
+    NSString* url = [NSString stringWithFormat:@"user/jiveId/%@?depth=1", jiveId];
 	
     [_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //parse list of mailbox references
-        [PBX addPBXs:responseObject[@"userPbxs"] userName:nil completed:^(BOOL success) {
+		NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
+        [PBX addPBXs:responseObject[@"userPbxs"] userName:username completed:^(BOOL success) {
             completed(YES, responseObject, operation, nil);
         }];
         

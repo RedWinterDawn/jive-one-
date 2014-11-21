@@ -121,20 +121,20 @@
 }
 
 //download actual voicemail
--(void)downloadVoicemailEntry:(Voicemail*)voicemail completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
-{
-    [self setRequestAuthHeader];
-    
-	if (![Common stringIsNilOrEmpty:voicemail.url_changeStatus]) {
-		[_manager GET:voicemail.url_download parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-			
-			[Voicemail fetchVoicemailInBackground];
-			
-		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-			completed(NO, nil, operation, error);
-		}];
-	}
-}
+//-(void)downloadVoicemailEntry:(Voicemail*)voicemail completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
+//{
+//    [self setRequestAuthHeader];
+//    
+//	if (![Common stringIsNilOrEmpty:voicemail.url_changeStatus]) {
+//		[_manager GET:voicemail.url_download parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//			
+//			[Voicemail fetchAllVoicemailDataInBackground];
+//			
+//		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//			completed(NO, nil, operation, error);
+//		}];
+//	}
+//}
 
 //update voicemail to read
 -(void)updateVoicemailToRead:(Voicemail*)voicemail completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed{

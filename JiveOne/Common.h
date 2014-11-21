@@ -19,10 +19,14 @@
 
 @interface Common : NSObject
 
++(NSDate *)dateFromTimestamp:(NSNumber *)timestamp;
 
-+(NSString *) shortDateFromTimestamp:(NSNumber *)timestamp;
-+(NSString *) longDateFromTimestamp:(NSNumber *)timestamp;
-+(NSDate *)NSDateFromTimestap:(NSNumber *)timestamp;
++(NSString *)formattedModifiedShortDate:(NSDate *)date;
++(NSString *)formattedModifiedShortDateFromTimestamp:(NSNumber *)timestamp;
++(NSString *)formattedLongDate:(NSDate *)date;
++(NSString *)formattedLongDateFromTimestamp:(NSNumber *)timestamp;
+
+
 + (BOOL) isEqualToDateIgnoringTime: (NSDate *) aDate;
 + (BOOL) isEarlierThanDate: (NSDate *) aDate;
 + (BOOL) isLaterThanDate: (NSDate *) aDate;
@@ -52,5 +56,8 @@
 
 #pragma mark - Telephony Utils
 + (BOOL) IsConnectionFast;
+
+#pragma mark - Create NSError Util
++ (NSError *)createErrorWithDescription:(NSString *)description reason:(NSString *)reason code:(NSInteger)code;
 
 @end

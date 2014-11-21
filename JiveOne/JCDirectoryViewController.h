@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import <AddressBook/AddressBook.h>
-#import "JCSearchBar.h"
 #import "JCPersonCell.h"
 
 
@@ -21,7 +20,7 @@
 
 @end
 
-@interface JCDirectoryViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchDisplayDelegate, JCPersonCellDelegate>
+@interface JCDirectoryViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchDisplayDelegate>
 {
     NSMutableArray *localContacts;
 }

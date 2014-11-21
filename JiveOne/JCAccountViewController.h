@@ -13,15 +13,20 @@
 
 @interface JCAccountViewController : UITableViewController <UIActionSheetDelegate, JCPresenceDelegate, JCLineSelectorDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *userNameDetail;
-@property (weak, nonatomic) IBOutlet UILabel *userTitleDetail;
+@property (weak, nonatomic) IBOutlet UILabel *userDisplayName;
+@property (weak, nonatomic) IBOutlet UILabel *userUsername;
+@property (weak, nonatomic) IBOutlet UILabel *userExternsionNumber;
+@property (weak, nonatomic) IBOutlet UILabel *userPBX;
+
 @property (weak, nonatomic) IBOutlet UILabel *presenceDetail;
+@property (weak, nonatomic) IBOutlet UILabel *ext;
 @property (weak, nonatomic) IBOutlet JCPresenceView *presenceDetailView;
 @property (weak, nonatomic) IBOutlet UIImageView *userImage;
 @property (weak, nonatomic) IBOutlet UITextField *userMoodDetail;
 @property (weak, nonatomic) IBOutlet UIImageView *logoutImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *eulaImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *feedbackImageView;
-
+@property (weak, nonatomic) IBOutlet UIView *buildNumber;
 @property (weak, nonatomic) IBOutlet UIView *presenceAccessory;
+
 @end

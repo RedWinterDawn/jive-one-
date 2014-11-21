@@ -70,6 +70,10 @@ curl -X POST -u "PBJUc1sXQTaAk1YwnWzlKQ:P0-eJ93JR1Ov7OmltF5XDw"
 	}'
 https://go.urbanairship.com/api/push/
 ```
+OR
+<code>
+https://www.getpostman.com/collections/7dfcf8a716b5f833c39e
+</code>
 
 How to SSH to API Server and Tail the Output
 ==========

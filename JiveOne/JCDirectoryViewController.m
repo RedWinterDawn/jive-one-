@@ -50,7 +50,7 @@
 @property (nonatomic) BOOL subscribedToPresence;
 
 
-@property (strong, nonatomic) JCSearchBar *searchBar;
+@property (strong, nonatomic) UISearchBar *searchBar;
 
 @end
 
@@ -169,8 +169,6 @@ static NSString *CellIdentifier = @"DirectoryCell";
     if (self.searchTableIsActive) {
         [self.searchDisplayController.searchBar resignFirstResponder];
     }
-    
-    [(JCAppDelegate *)[UIApplication sharedApplication].delegate refreshTabBadges:NO];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -355,10 +353,10 @@ static NSString *CellIdentifier = @"DirectoryCell";
     return _searchBarView;
 }
 
--(JCSearchBar *)searchBar
+-(UISearchBar *)searchBar
 {
     if (!_searchBar) {
-        _searchBar = [[JCSearchBar alloc]initWithFrame:CGRectMake(0,0, self.searchBarView.frame.size.width, self.searchBarView.frame.size.height)];
+        _searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0,0, self.searchBarView.frame.size.width, self.searchBarView.frame.size.height)];
         [_searchBar setBarTintColor:[UIColor whiteColor]];
         [_searchBar layoutSubviews];
         self.scrollViewOffsetReference = -64;
@@ -565,7 +563,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
         cell.line = line;
         [cell.personNameLabel sizeToFit];
         [cell.personNameLabel setNumberOfLines:1];
-        ((JCPersonCell *)cell).delegate = self;
+        //((JCPersonCell *)cell).delegate = self;
     }
 
     return cell;

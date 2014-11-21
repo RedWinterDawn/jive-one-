@@ -7,14 +7,15 @@
 //
 
 #import "JCAuthenticationManager.h"
-#import "JCContactsClient.h"
 #import "JCAppDelegate.h"
 #import "JCAccountViewController.h"
 #import "JCLoginViewController.h"
 #import "Common.h"
 #import "JCSocketDispatch.h"
-#import "JCJifClient.h"
-#import "JCVoicemailClient.h"
+#import "SipHandler.h"
+#import "JCApplicationSwitcherDelegate.h"
+#import "JCV5ApiClient.h"
+#import "JCBadgeManager.h"
 
 #if DEBUG
 @interface NSURLRequest(Private)
@@ -84,7 +85,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     webview.delegate = self;
     [webview loadRequest:[NSURLRequest requestWithURL:url]];
 
-    
+/* IF WE CAN EVER HIT AN API AGAIN, THIS IS WHAT WE WOULD USE
 //    [self.client OAuthLoginWithUsername:username password:password success:^(AFHTTPRequestOperation *operation, id JSON) {
 //        
 //        if (JSON[@"access_token"]) {
@@ -129,8 +130,9 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 //        }
 //        
 //        completed(NO, error);
-//    }];
-    
+    }];
+ */
+ 
 }
 
 - (BOOL)userAuthenticated {
@@ -229,7 +231,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     //Rolling back to hack
     //[self verifyToken];
     NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
-    [[JCJifClient sharedClient] getMailboxReferencesForUser:username completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+    [[JCV5ApiClient sharedClient] getMailboxReferencesForUser:username completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
         if (suceeded) {
             JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
             if (![delegate.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
@@ -251,7 +253,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
                 //                {
                 JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
                 if (![delegate.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
-                    [delegate changeRootViewController:JCRootLoginViewController];
+                    //[delegate changeRootViewController:JCRootLoginViewController];
                 }
                 else {
                     [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenFailed object:nil];
@@ -272,6 +274,8 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 // IBAction method for logout is in the JCAccountViewController.m
 - (void)logout:(UIViewController *)viewController {
     
+    JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
+    
     [self.keychainWrapper resetKeychainItem];
     
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"authToken"];
@@ -284,20 +288,21 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     if (![self getRememberMe]) {
         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kUserName];
     }
-    
-    [[JCVoicemailClient sharedClient] clearCookies];
-	[[JCContactsClient sharedClient] clearCookies];
+	
+	[[JCV5ApiClient sharedClient] stopAllOperations];
+    [[SipHandler sharedHandler] disconnect];
     [[JCOmniPresence sharedInstance] truncateAllTablesAtLogout];
-    
+
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+	[JCApplicationSwitcherDelegate reset];
+    [[JCBadgeManager sharedManager] reset];
+	
     
-    JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
     [delegate didLogOutSoUnRegisterForPushNotifications];
     [delegate stopSocket];
+	[delegate changeRootViewController:JCRootLoginViewController];
     
-    if(![viewController isKindOfClass:[JCLoginViewController class]]){
-        [delegate changeRootViewController:JCRootLoginViewController];
-    }
+	
 }
 
 #pragma mark - UIWebview Delegates
@@ -350,7 +355,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
             }
             else {
                 if (tokenData[@"error"]) {
-                    NSLog(@"%@", tokenData);
+                    //NSLog(@"%@", tokenData);
                     [self sendCompletionBlock:NO errorMessage:tokenData[@"error"]];
                 }
                 else {
@@ -416,7 +421,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     
     if (theConnection) {
         receivedData = [[NSMutableData alloc] init];
-        NSLog(@"%@",receivedData);
+        //NSLog(@"%@",receivedData);
     }
 }
 

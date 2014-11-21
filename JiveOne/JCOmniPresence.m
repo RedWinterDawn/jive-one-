@@ -19,6 +19,8 @@
 #import "PBX+Custom.h"
 #import "LineGroup.h"
 #import "Lines.h"
+#import "LineConfiguration.h"
+#import "Call.h"
 
 
 @implementation JCOmniPresence
@@ -65,6 +67,8 @@
 	[PBX MR_truncateAllInContext:localContext];
 	[LineGroup MR_truncateAllInContext:localContext];
 	[Lines MR_truncateAllInContext:localContext];
+	[LineConfiguration MR_truncateAllInContext:localContext];
+    [Call MR_truncateAllInContext:localContext];
 	
     [localContext MR_saveToPersistentStoreAndWait];
 }

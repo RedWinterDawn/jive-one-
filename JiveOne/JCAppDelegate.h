@@ -11,28 +11,19 @@
 #import "UAConfig.h"
 #import "UAPush.h"
 
-@interface JCAppDelegate : UIResponder <UIApplicationDelegate, UAPushNotificationDelegate, UARegistrationDelegate>
-{
-    NSInteger previousBadgeCount;
-    NSInteger afterBadgeCount;
-}
+@interface JCAppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
-@property BOOL deviceIsIPhone;
+@property (nonatomic, strong) UIWindow *window;
 @property (nonatomic) BOOL seenTutorial;
+
 - (void)changeRootViewController:(JCRootViewControllerType)type;
 - (void)startSocket:(BOOL)inBackground;
 - (void)stopSocket;
 - (void)didLogInSoCanRegisterForPushNotifications;
 - (void)didLogOutSoUnRegisterForPushNotifications;
 
-#pragma mark - Badge Updates
-- (void)incrementBadgeCountForConversation:(NSString *)conversationId entryId:(NSString *)entryId;
-- (void)incrementBadgeCountForVoicemail:(NSString *)voicemailId;
-//- (void)decrementBadgeCountForConversation:(NSString *)conversationId;
-- (void)decrementBadgeCountForVoicemail:(NSString *)voicemailId;
-- (void)clearBadgeCountForVoicemail;
-- (void)clearBadgeCountForConversation:(NSString *)conversationId;
-- (void)refreshTabBadges:(BOOL)fromRemoteNotification;
+- (void)stopRingtone;
+
+- (void)cleanAndResetDatabase;
 
 @end

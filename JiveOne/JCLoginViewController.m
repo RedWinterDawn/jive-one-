@@ -14,27 +14,27 @@
 #import "Company.h"
 #import <MBProgressHUD.h>
 #import "JCStyleKit.h"
-#import "JCContactsClient.h"
-#import "JCVoicemailClient.h"
-#import "JCJifClient.h"
+#import "JCV5ApiClient.h"
+#import "JCV4ProvisioningClient.h"
 #import "JCAppIntro.h"
 #import "UIImage+ImageEffects.h"
 #import "UITextField+ELFixSecureTextFieldFont.h"
 #import "Lines+Custom.h"
 #import "JCLineSelectorViewController.h"
+#import <XMLDictionary/XMLDictionary.h>
 
 
 
 
-@interface JCLoginViewController ()
+@interface JCLoginViewController () <NSFileManagerDelegate>
 {
     BOOL fastConnection;
+	BOOL loginCanceled;
     MBProgressHUD *hud;
-	BOOL alreadyMakingMyContactRequest;
-	BOOL alreadyMakingContactsRequest;
 }
 
 @property (nonatomic, strong) NSError *errorOccurred;
+@property (nonatomic, strong) NSTimer *loginTimer;
 
 @end
 
@@ -100,7 +100,7 @@
     self.passwordTextField.layer.borderWidth = 1.0f;
     
 #if DEBUG
-    self.usernameTextField.text = @"jivetesting12@gmail.com";
+    self.usernameTextField.text = @"jivetesting@gmail.com";
     self.passwordTextField.text = @"testing12";
     [self.passwordTextField becomeFirstResponder];
 #endif
@@ -138,8 +138,6 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
 	[super viewWillDisappear:animated];
-	alreadyMakingContactsRequest = NO;
-	alreadyMakingMyContactRequest = NO;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -190,6 +188,7 @@
 
 - (void)validateFields
 {
+	loginCanceled = NO;
     self.loginStatusLabel.text = @"";
     if([self.usernameTextField.text length] != 0 && [self.passwordTextField.text length] != 0)
     {
@@ -205,8 +204,10 @@
         } completion: ^(BOOL finished){
             if(finished) {
             }
-            [self showHudWithTitle:@"One Moment Please" detail:@"Logging In"];
+            [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil) detail:NSLocalizedString(@"Logging In", nil)];
         }];
+        
+        [[JCOmniPresence sharedInstance] truncateAllTablesAtLogout];
         
         [[JCAuthenticationManager sharedInstance] loginWithUsername:self.usernameTextField.text password:self.passwordTextField.text completed:^(BOOL success, NSError *error) {
             self.doneLoadingContent = NO;
@@ -215,7 +216,7 @@
             }
             else {
                 if (error.userInfo[@"error"]) {
-                    [self alertStatus:@"Authentication Error" message:error.userInfo[@"error"]];
+                    [self alertStatus:NSLocalizedString(@"Authentication Error", nil) message:error.userInfo[@"error"]];
                     NSLog(@"Authentication error: %@", error);
                     [self hideHud];
                     [UIView animateWithDuration:0.50 animations:^{
@@ -224,7 +225,7 @@
                     }];
                 }
                 else {
-                    [self alertStatus:@"Authentication Error" message:error.localizedDescription];
+                    [self alertStatus:NSLocalizedString(@"Authentication Error", nil) message:error.localizedDescription];
                     NSLog(@"Authentication error: %@", error);
                     [self hideHud];
                     [UIView animateWithDuration:0.50 animations:^{
@@ -235,11 +236,38 @@
             }
 
         }];
+		
+		dispatch_async(dispatch_get_main_queue(), ^{
+            self.loginTimer = [NSTimer scheduledTimerWithTimeInterval:80
+                                                          target:self
+                                                        selector:@selector(loginIsTakingTooLong)
+                                                        userInfo:nil
+                                                         repeats:NO];
+            
+            [[NSRunLoop currentRunLoop] addTimer:self.loginTimer forMode:NSDefaultRunLoopMode];
+        });
+
+		
     }
     else
     {
         [self alertStatus:NSLocalizedString(@"Invalid Parameters", nil) message: NSLocalizedString(@"UserName/Password Cannot Be Empty", nil)];
     }
+}
+
+- (void) loginIsTakingTooLong
+{
+	[self errorInitializingApp:nil useError:NO title:NSLocalizedString(@"Login Timed Out", nil) message:NSLocalizedString(@"This is taking longer than expected. Please check your connection and try again", nil)];
+}
+
+- (void) invalidateLoginTimer
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.loginTimer) {
+            [self.loginTimer invalidate];
+            self.loginTimer = nil;
+        }
+    });
 }
 
 -(void)alertStatus:(NSString*)title message:(NSString*)message
@@ -287,98 +315,173 @@
 
 - (void)checkIfLoadingHasFinished:(NSNotification *)notification
 {
-    self.userIsDoneWithTutorial = YES;
-    [[NSUserDefaults standardUserDefaults] setBool:self.userIsDoneWithTutorial forKey:@"seenAppTutorial"];
-    if ([[notification name] isEqualToString:@"AppTutorialDismissed"])
-    {
+//	_userIsDoneWithTutorial = [[NSUserDefaults standardUserDefaults] boolForKey:@"seenAppTutorial"];
+//	if (notification && [[notification name] isEqualToString:@"AppTutorialDismissed"]) {
+//		_userIsDoneWithTutorial = YES;
+//		[[NSUserDefaults standardUserDefaults] setBool:self.userIsDoneWithTutorial forKey:@"seenAppTutorial"];
+//		[[NSNotificationCenter defaultCenter] removeObserver:self name:@"AppTutorialDismissed" object:nil];
+//	}
+	
         NSLog (@"Successfully received the AppTutorialDismissed notification!");
         if (!self.doneLoadingContent) {
 			if (self.errorOccurred) {
-				[self errorInitializingApp:self.errorOccurred];
+				[self errorInitializingApp:self.errorOccurred useError:NO title:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"An Unknown Error has Occurred, please try again", nil)];
 			}
 			else {
 	            [self showHudWithTitle:@"One Moment Please" detail:@"Preparing for first use"];
 			}
-
         }
-        else
+        else //if (_userIsDoneWithTutorial)
         {
-//			Lines *line = [Lines MR_findFirstByAttribute:@"inUse" withValue:[NSNumber numberWithBool:YES]];
+			[self goToApplication];
 			
+// Re-add this when user can select line again
+//			Lines *line = [Lines MR_findFirstByAttribute:@"inUse" withValue:[NSNumber numberWithBool:YES]];
 //			if (line) {
-				[self goToApplication];
 //			}
 //			else {
 //				[self performSegueWithIdentifier:@"SelectLineLoginSegue" sender:self];
-//			} 
-			
-            
-        }
-    }
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"seenAppTutorial"]) {
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:@"AppTutorialDismissed" object:nil];
-    }
-    
+//			}
+        }    
 }
 
 - (void)tokenValidityPassed:(NSNotification*)notification
 {
-    if (!self.seenTutorial) {
-        [Flurry logEvent:@"First Login"];
-        [self hideHud];
-        [self performSegueWithIdentifier: @"AppTutorialSegue" sender:self];
-    }
-    else
-    {
+//	[self fetchMyMailboxes];
+//    if (!self.seenTutorial) {
+//        [Flurry logEvent:@"First Login"];
+//        [self hideHud];
+////		JCAppIntro *introVC = [self.storyboard instantiateViewControllerWithIdentifier:@"JCAppIntro"];
+////		[self presentViewController:introVC animated:YES completion:^{
+////			//present
+////		}];
+//        [self performSegueWithIdentifier: @"AppTutorialSegue" sender:self];
+//    }
+//    else
+//    {
         [self showHudWithTitle:@"One Moment Please" detail:@"Loading data"];
-    }
-
-	[self fetchMyMailboxes];
+    [self fetchMyMailboxes];
+//    }
 }
 
 #pragma mark - Fetch initial data
+//provisioning
+- (void)fetchProvisioningConfig
+{
+	
+	
+	NSString *language = [[[NSBundle mainBundle] preferredLocalizations] objectAtIndex:0];
+	NSString *locale = [NSLocale currentLocale].localeIdentifier;
+	NSString * appBuildString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
+	NSString *model = [UIDevice currentDevice].model;
+	NSString *os = [UIDevice currentDevice].systemVersion;
+	NSString *uuid = [UIDevice currentDevice].identifierForVendor.UUIDString;
+	NSString *type = [UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone ? @"ios.jive.phone" : @"ios.jive.tablet";
+	
+//	NSDictionary *userInformation = @{@"user": self.usernameTextField.text,
+//									  @"password" : self.passwordTextField.text,
+//									  @"man" : @"Apple",
+//									  @"device" : [UIDevice currentDevice].model,
+//									  @"os" : [UIDevice currentDevice].systemVersion,
+//									  @"loc" : locale,
+//									  @"lan" : language,
+//									  @"uuid" : [UIDevice currentDevice].identifierForVendor.UUIDString,
+//									  @"spid" : @"cpc",
+//									  @"build" : appBuildString,
+//									  @"type" :	[UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone ? @"ios.jive.phone" : @"ios.jive.tablet"};
+//	NSString *test = [userInformation XMLString];
+
+	
+
+	
+	
+	//TODO: capture information to create the following structure
+	
+		
+	NSString *xml = [NSString stringWithFormat:@"<login \n user=\"%@\" \n password=\"%@\" \n man=\"Apple\" \n device=\"%@\" \n os=\"%@\" \n loc=\"%@\" \n lang=\"%@\" \n uuid=\"%@\" \n spid=\"cpc\" \n build=\"%@\" \n type=\"%@\" />",
+					 self.usernameTextField.text,
+					 self.passwordTextField.text,
+					 model,
+					 os,
+					 locale,
+					 language,
+					 uuid,
+					 appBuildString,
+					 type
+					 ];
+	 
+	 
+	
+	[[JCV4ProvisioningClient sharedClient] requestProvisioningFile:xml completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+		if(suceeded){
+			//TODO: talk about logic. We should not prevent the user to get into the app if this fails. They
+			// should still be able to access the rest of the app (directory, VM, etc) and be given a change to
+			// fetch the provisioning file again...but then...do we store user creentials?
+			self.doneLoadingContent = YES;
+			[[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
+			//[self goToApplication];
+			[self fetchVoicemailsMetadata];
+			[self fetchContacts];
+            [self checkIfLoadingHasFinished:nil];
+			
+		}
+		else {
+			[self errorInitializingApp:error useError:YES title:nil message:nil];
+		}
+			
+	}];
+}
+
+
 //voicemail
 -(void)fetchMyMailboxes{
     NSString * jiveId = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
-    [[JCJifClient sharedClient] getMailboxReferencesForUser:jiveId completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+    [[JCV5ApiClient sharedClient] getMailboxReferencesForUser:jiveId completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
         if(suceeded){
-            [self fetchVoicemailsMetadata];
+			NSArray *pbxs = [PBX MR_findAll];
+			if (pbxs.count == 0) {
+				[self errorInitializingApp:error useError:NO title:NSLocalizedString(@"No PBX", nil)	message:NSLocalizedString(@"This username is not associated with any PBX. Please contact your Administrator", nil)];
+			}
+			else if (pbxs.count > 1) {
+				[self errorInitializingApp:error useError:NO title:NSLocalizedString(@"Multiple PBXs", nil)	message:NSLocalizedString(@"This app does not support account with multiple PBXs at this time", nil)];			}
+			else {
+				[self fetchProvisioningConfig];
+			}
         }
 		else {
-			self.errorOccurred = error;
-			[self errorInitializingApp:error];
+            self.errorOccurred = error;
+			[self errorInitializingApp:error useError:NO title:NSLocalizedString(@"Server Unavailable", nil) message:NSLocalizedString(@"We could not reach the server at this time. Please check your connection", nil)];
 		}
     }];
 }
 
 - (void)fetchVoicemailsMetadata
 {
-    NSPredicate *linesWithUrlNotNil = [NSPredicate predicateWithFormat:@"mailboxUrl != nil"];
-    NSArray* lines = [Lines MR_findAllWithPredicate:linesWithUrlNotNil];
+//    NSPredicate *linesWithUrlNotNil = [NSPredicate predicateWithFormat:@"mailboxUrl != nil"];
+//    NSArray* lines = [Lines MR_findAllWithPredicate:linesWithUrlNotNil];
 	
-	NSTimer *timer = [NSTimer timerWithTimeInterval:5 target:self selector:@selector(fetchMyContact) userInfo:nil repeats:NO];
-	[[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+//	NSTimer *timer = [NSTimer timerWithTimeInterval:5 target:self selector:@selector(fetchMyContact) userInfo:nil repeats:NO];
+//	[[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
 	
-	__block int count = 0;
+//	__block int count = 0;
+	
+	[[JCV5ApiClient sharedClient] getVoicemails:nil];
 
-    [[JCVoicemailClient sharedClient] getVoicemails:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-
-		
-        if(suceeded) {
-            [[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
-        }
-		else {
-			//maybe one of the mailboxes failed or it's v4; in any case, we don't want the app to fail here.
-		}
-		
-		if (count == lines.count) {
-			[timer invalidate];
-			[self fetchMyContact];
-		}
-		
-		NSLog(@"Count is now: %i, Line count is %i", count, lines.count);
-		
-    }];
+//    [[JCV5ApiClient sharedClient] getVoicemails:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+//
+//		
+//        if(suceeded) {
+//            [[JCAuthenticationManager sharedInstance] setUserLoadedMinimumData:YES];
+//        }
+//		
+//		if (count == lines.count) {
+//			[timer invalidate];
+//			[self fetchMyContact];
+//		}
+//		
+//		NSLog(@"Count is now: %i, Line count is %lu", count, (unsigned long)lines.count);
+//		
+//    }];
 	
 	
 }
@@ -387,55 +490,44 @@
 //Contacts
 - (void)fetchMyContact
 {
-	if (!alreadyMakingMyContactRequest) {
-		alreadyMakingMyContactRequest = YES;
-		[[JCContactsClient sharedClient] RetrieveMyInformation:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-			if (suceeded) {
-				[self fetchContacts];
-			}
-			else {
-				self.errorOccurred = error;
-				[self errorInitializingApp:error];
-			}
+		[[JCV5ApiClient sharedClient] RetrieveMyInformation:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+			[self fetchContacts];
 		}];
-	}
+	
 }
 
 - (void)fetchContacts
 {
-	if (!alreadyMakingContactsRequest) {
-		alreadyMakingContactsRequest = YES;
-		[[JCContactsClient sharedClient] RetrieveContacts:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-			if (suceeded) {
-				_doneLoadingContent = YES;
-				[self hideHud];
-				if (self.userIsDoneWithTutorial) {
-					[self goToApplication];
-				}
-				[self fetchPBXInformation];
-			}
-			else {
-				self.errorOccurred = error;
-				[self errorInitializingApp:error];
-			}
-		}];
-	}
-    
+	[[JCV5ApiClient sharedClient] RetrieveContacts:nil];
+	
+//	if (!alreadyMakingContactsRequest) {
+//		alreadyMakingContactsRequest = YES;
+//		[[JCV5ApiClient sharedClient] RetrieveContacts:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+//			if (suceeded) {
+//				_doneLoadingContent = YES;
+//				[self hideHud];
+//				if (self.userIsDoneWithTutorial) {
+//					[self goToApplication];
+//				}
+//			}
+//		}];
+//	}
+	
 }
 
-- (void)fetchPBXInformation
-{
-    NSArray *mailboxes = [Lines MR_findAll];
-    
-    for (Lines *box in mailboxes) {
-		
-		PBX *pbx = [PBX MR_findFirstByAttribute:@"pbxId" withValue:box.pbxId];
-		
-        [[JCJifClient sharedClient] getPbxInformationFromUrl:pbx.selfUrl completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-            //[self fetchMyContact];
-        }];
-    }
-}
+//- (void)fetchPBXInformation
+//{
+//    NSArray *mailboxes = [Lines MR_findAll];
+//    
+//    for (Lines *box in mailboxes) {
+//		
+//		PBX *pbx = [PBX MR_findFirstByAttribute:@"pbxId" withValue:box.pbxId];
+//		
+//        [[JCV5ApiClient sharedClient] getPbxInformationFromUrl:pbx.selfUrl completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+//            //[self fetchMyContact];
+//        }];
+//    }
+//}
 
 
 
@@ -555,22 +647,32 @@
 
 - (void)goToApplication
 {
-	alreadyMakingMyContactRequest = NO;
-	alreadyMakingContactsRequest = NO;
-    [self performSegueWithIdentifier: @"LoginToTabBarSegue" sender: self];
-    //[(JCAppDelegate *)[UIApplication sharedApplication].delegate changeRootViewController:JCRootTabbarViewController];
+	if (!loginCanceled) {
+		[self hideHud];
+		[self invalidateLoginTimer];
+		JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
+		[delegate changeRootViewController:JCRootTabbarViewController];
+	}
 }
 
 
 
-- (void)errorInitializingApp:(NSError*)err
+- (void)errorInitializingApp:(NSError*)err useError:(BOOL)useError title:(NSString *)title message:(NSString *)message
 {
     NSLog(@"errorInitializingApp: %@",err);
+	loginCanceled = YES;
+	[self invalidateLoginTimer];
     [self hideHud];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: NSLocalizedString(@"Server Unavailable", nil) message: NSLocalizedString(@"We could not connect to the server at this time. Please try again", nil) delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-    
-    [alert show];
+	
+	if (useError) {
+		[self alertStatus:NSLocalizedString(@"An error has occurred", nil) message:err.localizedDescription];
+	}
+	else {
+		[self alertStatus:title message:message];
+	}
+	
     [[JCAuthenticationManager sharedInstance] logout:self];
+	
 }
 
 #pragma mark - Line selection update
