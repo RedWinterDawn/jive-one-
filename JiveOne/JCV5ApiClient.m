@@ -10,9 +10,6 @@
 #import "Common.h"
 
 @implementation JCV5ApiClient
-{
-	KeychainItemWrapper *keyChainWrapper;
-}
 
 #pragma mark - class methods
 
@@ -33,8 +30,6 @@
 	_manager.responseSerializer = [AFJSONResponseSerializer serializer];
 	_manager.requestSerializer = [AFJSONRequestSerializer serializer];
 	
-	keyChainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
-	
 	NSLog(@"About to go into debug mode for server certificate");
 #if DEBUG
 	NSLog(@"Debug mode active");
@@ -46,14 +41,10 @@
 
 - (void)setRequestAuthHeader:(BOOL) demandsBearer
 {
-	NSString *token = [[JCAuthenticationManager sharedInstance] getAuthenticationToken];
+	NSString *token = [JCAuthenticationManager sharedInstance].authToken;
 	
 	[self clearCookies];
-	
-	if (!token) {
-		token = (NSString*)[[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"];
-	}
-	
+    
 	_manager.requestSerializer = [AFJSONRequestSerializer serializer];
 	[_manager.requestSerializer clearAuthorizationHeader];
 	[_manager.requestSerializer setValue:[NSString stringWithFormat:@"%@%@", demandsBearer? @"Bearer " : @"", token] forHTTPHeaderField:@"Authorization"];
