@@ -19,7 +19,6 @@
 
 @end
 
-
 @implementation JCPhoneMenuCell
 
 // Since overwritting build in properties, need to synthsize
@@ -80,8 +79,10 @@
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ([keyPath isEqualToString:@"voicemails"] || [keyPath isEqualToString:@"missedCalls"]) {
-        [self setNeedsLayout];
-        [self setNeedsUpdateConstraints];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self setNeedsLayout];
+            [self setNeedsUpdateConstraints];
+        });
     }
 }
 
