@@ -25,6 +25,10 @@ static inline double radians (double degrees) { return degrees * M_PI/180; }
 
 +(NSString *)formattedModifiedShortDate:(NSDate *)date
 {
+    if (!date) {
+        return nil;
+    }
+    
     static NSDateFormatter *shortDateFormatter;
     static dispatch_once_t pred;        // Lock
     dispatch_once(&pred, ^{             // This code is called at most once per app
@@ -57,6 +61,10 @@ static inline double radians (double degrees) { return degrees * M_PI/180; }
 
 +(NSString *)formattedLongDate:(NSDate *)date
 {
+    if (!date) {
+        return nil;
+    }
+    
     static NSDateFormatter *longDateFormatter;
     static dispatch_once_t pred;
     dispatch_once(&pred, ^{
