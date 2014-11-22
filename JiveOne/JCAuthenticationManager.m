@@ -109,15 +109,15 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     _webview.delegate = self;
     [_webview loadRequest:[NSURLRequest requestWithURL:url]];
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        _timeoutTimer = [NSTimer scheduledTimerWithTimeInterval:80
-                                                         target:self
-                                                       selector:@selector(loginTimout)
-                                                       userInfo:nil
-                                                        repeats:NO];
-     
-        [[NSRunLoop currentRunLoop] addTimer:_timeoutTimer forMode:NSDefaultRunLoopMode];
-     });
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        _timeoutTimer = [NSTimer scheduledTimerWithTimeInterval:80
+//                                                         target:self
+//                                                       selector:@selector(loginTimeout)
+//                                                       userInfo:nil
+//                                                        repeats:NO];
+//     
+//        [[NSRunLoop currentRunLoop] addTimer:_timeoutTimer forMode:NSDefaultRunLoopMode];
+//     });
 }
 
 - (void)logout
@@ -292,10 +292,10 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 #pragma mark - Private -
 
-- (void)loginTimeout
-{
-    [self reportError:TimeoutError description:@"This is taking longer than expected. Please check your connection and try again"];
-}
+//- (void)loginTimeout
+//{
+//    [self reportError:TimeoutError description:@"This is taking longer than expected. Please check your connection and try again"];
+//}
 
 -(void)receivedAccessTokenFromURL:(NSURL *)url
 {
@@ -356,7 +356,6 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 -(void)reportError:(JCAuthenticationManagerErrorType)type description:(NSString *)description
 {
-    [self invalidateLoginTimeoutTimer];
     NSError *error = [JCAuthenticationManagerError errorWithType:type description:description];
     [self completionBlock:false error:error];
     _loginAttempts = 0;
@@ -367,7 +366,6 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 -(void)reportSuccess
 {
-    [self invalidateLoginTimeoutTimer];
     [self completionBlock:YES error:nil];
     self.userAuthenticated = TRUE;
     
@@ -382,15 +380,15 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     _completionBlock = nil;
 }
 
-- (void)invalidateLoginTimeoutTimer
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if (_timeoutTimer) {
-            [_timeoutTimer invalidate];
-            _timeoutTimer = nil;
-        }
-    });
-}
+//- (void)invalidateLoginTimeoutTimer
+//{
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        if (_timeoutTimer) {
+//            [_timeoutTimer invalidate];
+//            _timeoutTimer = nil;
+//        }
+//    });
+//}
 
 -(NSDictionary *)tokenDataFromURL:(NSURL *)url
 {
