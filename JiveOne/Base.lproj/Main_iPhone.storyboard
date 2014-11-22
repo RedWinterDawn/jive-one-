@@ -1308,9 +1308,9 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="0XG-qH-giP" secondAttribute="bottom" id="3Mz-jP-ENM"/>
+                                    <constraint firstAttribute="trailing" secondItem="igS-G2-NfM" secondAttribute="trailing" id="5eo-mm-7Bc"/>
                                     <constraint firstItem="igS-G2-NfM" firstAttribute="top" secondItem="3rw-yx-NFK" secondAttribute="top" id="8Gu-q2-TNk"/>
                                     <constraint firstItem="0XG-qH-giP" firstAttribute="top" secondItem="3rw-yx-NFK" secondAttribute="top" id="C6B-2M-Geg"/>
-                                    <constraint firstItem="igS-G2-NfM" firstAttribute="leading" secondItem="0XG-qH-giP" secondAttribute="trailing" constant="-1" id="SeX-k3-L28"/>
                                     <constraint firstItem="0XG-qH-giP" firstAttribute="leading" secondItem="3rw-yx-NFK" secondAttribute="leading" constant="39" id="Ytl-wM-pRi"/>
                                     <constraint firstAttribute="height" constant="50" id="d8N-VB-tGx"/>
                                     <constraint firstAttribute="bottom" secondItem="igS-G2-NfM" secondAttribute="bottom" id="hvi-29-7gA"/>
@@ -1856,7 +1856,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" image="incall-background" translatesAutoresizingMaskIntoConstraints="NO" id="tSQ-18-0Px">
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="incall-background" translatesAutoresizingMaskIntoConstraints="NO" id="tSQ-18-0Px">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
                             <containerView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AIn-Um-NXd">
@@ -2157,16 +2157,17 @@
                             <constraint firstItem="T5I-ze-dYa" firstAttribute="top" secondItem="AIn-Um-NXd" secondAttribute="bottom" constant="-1" id="IA5-6S-Vng"/>
                             <constraint firstItem="T5I-ze-dYa" firstAttribute="leading" secondItem="iLc-8x-FhM" secondAttribute="leading" id="LCw-9n-T84"/>
                             <constraint firstItem="AIn-Um-NXd" firstAttribute="leading" secondItem="iLc-8x-FhM" secondAttribute="leading" id="MeX-hK-h8G"/>
-                            <constraint firstItem="eCX-gY-NnK" firstAttribute="top" secondItem="tSQ-18-0Px" secondAttribute="bottom" id="MoK-XL-WxD"/>
+                            <constraint firstItem="tSQ-18-0Px" firstAttribute="top" secondItem="iLc-8x-FhM" secondAttribute="topMargin" id="RUi-RO-sP0"/>
                             <constraint firstAttribute="trailing" secondItem="T5I-ze-dYa" secondAttribute="trailing" id="Rvm-PK-EEk"/>
                             <constraint firstItem="tSQ-18-0Px" firstAttribute="leading" secondItem="iLc-8x-FhM" secondAttribute="leading" id="YQR-No-tFc"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="tSQ-18-0Px" secondAttribute="bottom" constant="-88" id="tRh-X1-IKU"/>
                             <constraint firstItem="AIn-Um-NXd" firstAttribute="top" secondItem="q42-OL-z6o" secondAttribute="bottom" constant="4" id="wBW-NU-ox7"/>
                             <constraint firstAttribute="trailing" secondItem="AIn-Um-NXd" secondAttribute="trailing" id="wSl-Md-Nva"/>
                             <constraint firstAttribute="trailing" secondItem="tSQ-18-0Px" secondAttribute="trailing" id="xxy-Za-i5e"/>
-                            <constraint firstItem="tSQ-18-0Px" firstAttribute="top" secondItem="q42-OL-z6o" secondAttribute="bottom" id="z0g-5c-oXh"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Kwk-NC-fNH"/>
+                    <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="callOptionsView" destination="T5I-ze-dYa" id="jCb-Vb-WgF"/>
                         <outlet property="callOptionsViewOriginYConstraint" destination="9FD-JK-27t" id="6uT-sh-U7w"/>
