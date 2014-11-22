@@ -27,6 +27,11 @@ NSString *const kJCAuthenticationManagerRememberMeAttributeKey = @"userLoadedMin
 NSString *const kJCAuthenticationManagerUserLoggedOutNotification = @"userLoggedOut";
 NSString *const kJCAuthenticationManagerUserAuthenticatedNotification = @"userAuthenticated";
 NSString *const kJCAuthenticationManagerUserLoadedMinimumDataNotification = @"userLoadedMinimumData";
+NSString *const kJCAuthenticationManagerAuthenticationFailedNotification = @"authenticationFailed";
+
+// Javascript
+NSString *const kJCAuthenticationManagerJavascriptString = @"document.getElementById('username').value = '%@';document.getElementById('password').value = '%@';document.getElementById('go-button').click()";
+
 
 static int MAX_LOGIN_ATTEMPTS = 2;
 
@@ -48,8 +53,6 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     NSString *_username;
     NSString *_password;
     UIWebView *_webview;
-    
-    BOOL _useWebView;
 }
 
 @property (nonatomic, readwrite) NSString *userName;
@@ -66,7 +69,6 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     self = [super init];
     if (self) {
         _keychainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJCAuthenticationManagerKeychainStoreIdentifier accessGroup:nil];
-        _useWebView = TRUE;
     }
     return self;
 }
@@ -87,7 +89,11 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     NSLog(@"AUTH PATH: %@", url_path);
 #endif
     
-    [self requestAuthenticationUsingWebview:url];
+    if (!_webview) {
+        _webview = [[UIWebView alloc] init];
+    }
+    _webview.delegate = self;
+    [_webview loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
 - (void)logout
@@ -260,204 +266,163 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 #pragma mark - Private -
 
--(void)requestAuthenticationUsingWebview:(NSURL *)url
+-(void)reportError:(NSString *)string
 {
-    if (!_webview) {
-        _webview = [[UIWebView alloc] init];
-    }
-    _webview.delegate = self;
-    [_webview loadRequest:[NSURLRequest requestWithURL:url]];
+    [self sendCompletionBlock:false reason:string];
+    loginAttempts = 0;
+    _webview = nil;
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kJCAuthenticationManagerAuthenticationFailedNotification object:nil];
 }
 
-/**
- * IF WE CAN EVER HIT AN API AGAIN, THIS IS WHAT WE WOULD USE
- */
--(void)requestAuthenticationUsingWebservice:(NSURL *)url
+-(void)reportSuccess
 {
-    //[self.client OAuthLoginWithUsername:username password:password success:^(AFHTTPRequestOperation *operation, id JSON) {
-        //
-        //        if (JSON[@"access_token"]) {
-        //
-        //            [self didReceiveAuthenticationToken:JSON];
-        //            completed(YES, nil);
-        //
-        //        }
-        //        else {
-        //
-        //            NSInteger statusCode = 0;
-        //            if (operation.response) {
-        //                statusCode = operation.response.statusCode;
-        //            }
-        //
-        //            NSError *error;
-        //            if (JSON[@"error"]) {
-        //                error = [NSError errorWithDomain:@"com.jive.JiveOne" code:statusCode userInfo:JSON];
-        //            }
-        //            else {
-        //                NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"An Unknown Error has occurred. Please try again. If the problem persists contact support", nil), @"error", nil];
-        //                error = [NSError errorWithDomain:@"com.jive.JiveOne" code:statusCode userInfo:dictionary];
-        //            }
-        //
-        //            completed(NO, error);
-        //        }
-        //
-        //    } failure:^(AFHTTPRequestOperation *operation, NSError *err) {
-        //
-        //        NSInteger statusCode = 0;
-        //        if (operation.response) {
-        //            statusCode = operation.response.statusCode;
-        //        }
-        //
-        //        NSError *error;
-        //        if (operation.responseObject[@"error"]) {
-        //            error = [NSError errorWithDomain:@"com.jive.JiveOne" code:statusCode userInfo:operation.responseObject];
-        //        }
-        //        else {
-        //            NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"An Unknown Error has occurred. Please try again. If the problem persists contact support", nil), @"error", nil];
-        //            error = [NSError errorWithDomain:@"com.jive.JiveOne" code:statusCode userInfo:dictionary];
-        //        }
-        //        
-        //        completed(NO, error);
-    //}];
-}
-
-- (void)didReceiveAuthenticationToken:(NSDictionary *)token
-{
-    self.authToken      = token[@"access_token"];
-    self.refreshToken   = token[@"refresh_token"];
-    self.userName       = token[@"username"];
+    [self sendCompletionBlock:YES reason:nil];
     self.userAuthenticated = TRUE;
-    
-    //[(JCAppDelegate *)[UIApplication sharedApplication].delegate didLogInSoCanRegisterForPushNotifications];
+    _webview = nil;
 }
 
-- (void)checkForTokenValidity
+-(void)sendCompletionBlock:(BOOL)success reason:(NSString *)reason
 {
-    //Rolling back to hack
-    //[self verifyToken];
-    NSString *username = self.userName;
-    [[JCV5ApiClient sharedClient] getMailboxReferencesForUser:username completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-        if (suceeded) {
-            //JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
-            //if (![delegate.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenSucceeded object:responseObject];
-            //}
-        }
-        else {
-            NSLog(@"%@", error);
-            
-            NSInteger status = operation.response.statusCode;
-            
-            if ((status >= 400 && status <= 417) || status == 200) {
-                // Since we're not keeping the user logged in with a verifyToken,
-                // this code has been commentend. This will change, however, so leave it here.
-                //                if ([self userAuthenticated]) {
-                //                    [self refreshToken];
-                //                }
-                //                else
-                //                {
-                [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenFailed object:nil];
-                //                }
-            }
-            else {
-                NSLog(@"%@", operation.response);
-            }
-        }
-
-    }];
-    
-
-
-}
-
--(void)sendCompletionBlock:(BOOL)success errorMessage:(NSString *)errorMessage {
-    
     NSError *error = nil;
-    if (!success) {
-        NSMutableDictionary *detail = [NSMutableDictionary dictionary];
-        [detail setValue:errorMessage forKey:NSLocalizedDescriptionKey];
-        error = [[NSError alloc] initWithDomain:@"auth" code:500 userInfo:detail];
+    if (reason){
+        error = [NSError errorWithDomain:@"auth" code:500 userInfo:@{NSLocalizedDescriptionKey:NSLocalizedString(reason, nil)}];
     }
     
     if (_completionBlock) {
         _completionBlock(success, error);
     }
-    
-    // done with block
     _completionBlock = nil;
+}
+
+-(NSDictionary *)tokenDataFromURL:(NSURL *)url
+{
+    NSString *stringURL = [url description];
+    NSArray *topLevel =  [stringURL componentsSeparatedByString:@"#"];
+    NSArray *urlParams = [topLevel[1] componentsSeparatedByString:@"&"];
     
+    NSMutableDictionary *data = [NSMutableDictionary dictionary];
+    for (NSString *param in urlParams)
+    {
+        NSArray *keyValue = [param componentsSeparatedByString:@"="];
+        NSString *key = [keyValue objectAtIndex:0];
+        NSString *value = [keyValue objectAtIndex:1];
+        [data setObject:value forKey:key];
+    }
+    
+    return data;
+}
+
+-(void)receivedAccessTokenFromURL:(NSURL *)url
+{
+    NSDictionary *tokenData = [self tokenDataFromURL:url];
+    if (tokenData && tokenData.count > 0)
+    {
+        if ([tokenData objectForKey:@"access_token"]) {
+            self.authToken      = tokenData[@"access_token"];
+            self.refreshToken   = tokenData[@"refresh_token"];
+            self.userName       = tokenData[@"username"];
+            [self reportSuccess];
+        }
+        else {
+            if (tokenData[@"error"]) {
+                [self reportError:tokenData[@"error"]];
+            }
+            else {
+                [self reportError:@"An Error Has Occurred, Please Try Again"];
+            }
+        }
+    }
 }
 
 #pragma mark - Delegate Handlers -
 
 #pragma mark UIWebviewDelegate
 
+
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     if (loginAttempts < MAX_LOGIN_ATTEMPTS) {
-        [webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"document.getElementById('username').value = '%@';document.getElementById('password').value = '%@';document.getElementById('go-button').click()", _username, _password]];
+        NSString *javascript = [NSString stringWithFormat:kJCAuthenticationManagerJavascriptString, _username, _password];
+        [webView stringByEvaluatingJavaScriptFromString:javascript];
         loginAttempts++;
     }
     else {
         [webView stopLoading];
-        loginAttempts = 0;
-        [self sendCompletionBlock:NO errorMessage:NSLocalizedString(@"Invalid Username/Password. Please try again.",  nil)];
-        //[[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenFailed object:nil];
+        
+        [self reportError:@"Invalid Username/Password. Please try again."];
     }
 }
 
-- (BOOL)webView:(UIWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType {
+- (BOOL)webView:(UIWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    #if DEBUG
+        NSLog(@"%@", [request description]);
+    #endif
     
-#if DEBUG
-    NSLog(@"%@", [request description]);
-#endif
-    
-    if ([[[request URL] scheme] isEqualToString:@"jiveclient"])
-    {
-        
-        NSString *stringURL = [[request URL] description];
-        NSArray *topLevel =  [stringURL componentsSeparatedByString:@"#"];
-        NSArray *urlParams = [topLevel[1] componentsSeparatedByString:@"&"];
-        
-        NSMutableDictionary *tokenData = nil;
-        
-        for (NSString *param in urlParams) {
-            
-            if (!tokenData) {
-                tokenData = [[NSMutableDictionary alloc] init];
-            }
-            
-            NSArray* keyValue = [param componentsSeparatedByString:@"="];
-            NSString* key = [keyValue objectAtIndex:0];
-            NSString* value = [keyValue objectAtIndex:1];
-            
-            [tokenData setObject:value forKey:key];
-        }
-        
-        if (tokenData && tokenData.count > 0)
-        {
-            if ([tokenData objectForKey:@"access_token"]) {
-                [self didReceiveAuthenticationToken:tokenData];
-                [self sendCompletionBlock:YES errorMessage:nil];
-            }
-            else {
-                if (tokenData[@"error"]) {
-                    [self sendCompletionBlock:NO errorMessage:tokenData[@"error"]];
-                }
-                else {
-                    [self sendCompletionBlock:NO errorMessage:NSLocalizedString(@"An Error Has Occurred, Please Try Again",  nil)];
-                }
-            }
-        }
+    if ([request.URL.scheme isEqualToString:@"jiveclient"]) {
+        [self receivedAccessTokenFromURL:request.URL];
     }
     return YES;
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    NSLog(@"Did Fail Load With Error");
-    [self sendCompletionBlock:NO errorMessage:NSLocalizedString(@"An Error Has Occurred, Please Try Again",  nil)];
+    [self reportError:@"An Error Has Occurred, Please Try Again"];
 }
+
+/**
+ * IF WE CAN EVER HIT AN API AGAIN, THIS IS WHAT WE WOULD USE
+ */
+//-(void)requestAuthenticationUsingWebservice:(NSURL *)url
+//{
+    //[self.client OAuthLoginWithUsername:username password:password success:^(AFHTTPRequestOperation *operation, id JSON) {
+    //
+    //        if (JSON[@"access_token"]) {
+    //
+    //            [self didReceiveAuthenticationToken:JSON];
+    //            completed(YES, nil);
+    //
+    //        }
+    //        else {
+    //
+    //            NSInteger statusCode = 0;
+    //            if (operation.response) {
+    //                statusCode = operation.response.statusCode;
+    //            }
+    //
+    //            NSError *error;
+    //            if (JSON[@"error"]) {
+    //                error = [NSError errorWithDomain:@"com.jive.JiveOne" code:statusCode userInfo:JSON];
+    //            }
+    //            else {
+    //                NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"An Unknown Error has occurred. Please try again. If the problem persists contact support", nil), @"error", nil];
+    //                error = [NSError errorWithDomain:@"com.jive.JiveOne" code:statusCode userInfo:dictionary];
+    //            }
+    //
+    //            completed(NO, error);
+    //        }
+    //
+    //    } failure:^(AFHTTPRequestOperation *operation, NSError *err) {
+    //
+    //        NSInteger statusCode = 0;
+    //        if (operation.response) {
+    //            statusCode = operation.response.statusCode;
+    //        }
+    //
+    //        NSError *error;
+    //        if (operation.responseObject[@"error"]) {
+    //            error = [NSError errorWithDomain:@"com.jive.JiveOne" code:statusCode userInfo:operation.responseObject];
+    //        }
+    //        else {
+    //            NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"An Unknown Error has occurred. Please try again. If the problem persists contact support", nil), @"error", nil];
+    //            error = [NSError errorWithDomain:@"com.jive.JiveOne" code:statusCode userInfo:dictionary];
+    //        }
+    //
+    //        completed(NO, error);
+    //}];
+//}
+
 
 /*
 //#pragma mark - NSURLConnectionDelegate
@@ -637,6 +602,42 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 //    [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenFailedWithTimeout object:kAuthenticationFromTokenFailedWithTimeout];
 //}
  */
+
+//- (void)checkForTokenValidity
+//{
+//    //Rolling back to hack
+//    //[self verifyToken];
+//    NSString *username = self.userName;
+//    [[JCV5ApiClient sharedClient] getMailboxReferencesForUser:username completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+//        if (suceeded) {
+//            [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenSucceeded object:responseObject];
+//        }
+//        else {
+//            NSLog(@"%@", error);
+//
+//            NSInteger status = operation.response.statusCode;
+//
+//            if ((status >= 400 && status <= 417) || status == 200) {
+//                // Since we're not keeping the user logged in with a verifyToken,
+//                // this code has been commentend. This will change, however, so leave it here.
+//                //                if ([self userAuthenticated]) {
+//                //                    [self refreshToken];
+//                //                }
+//                //                else
+//                //                {
+//                [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenFailed object:nil];
+//                //                }
+//            }
+//            else {
+//                NSLog(@"%@", operation.response);
+//            }
+//        }
+//
+//    }];
+//
+//
+//
+//}
 @end
 
 
