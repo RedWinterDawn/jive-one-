@@ -1262,10 +1262,10 @@
             </objects>
             <point key="canvasLocation" x="1531" y="-1109"/>
         </scene>
-        <!--Item-->
+        <!--Dialer-->
         <scene sceneID="GNC-gS-V56">
             <objects>
-                <viewController id="3A8-R9-IcP" customClass="JCDialerViewController" sceneMemberID="viewController">
+                <viewController id="3A8-R9-IcP" userLabel="Dialer" customClass="JCDialerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="iWl-PB-GRi"/>
                         <viewControllerLayoutGuide type="bottom" id="D7Y-Ur-CEJ"/>
@@ -1277,7 +1277,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3rw-yx-NFK" userLabel="Phone Number">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                                 <subviews>
-                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="" textAlignment="center" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0XG-qH-giP" customClass="JCDialStringLabel">
+                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0XG-qH-giP" customClass="JCDialStringLabel">
                                         <rect key="frame" x="39" y="0.0" width="242" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="tFG-Ym-QtI"/>
@@ -1289,7 +1289,7 @@
                                             <outlet property="delegate" destination="3A8-R9-IcP" id="3qR-WB-EA9"/>
                                         </connections>
                                     </label>
-                                    <button opaque="NO" contentMode="center" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="igS-G2-NfM">
+                                    <button opaque="NO" contentMode="center" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="igS-G2-NfM">
                                         <rect key="frame" x="280" y="0.0" width="40" height="50"/>
                                         <gestureRecognizers/>
                                         <constraints>
@@ -1311,10 +1311,10 @@
                                     <constraint firstItem="igS-G2-NfM" firstAttribute="top" secondItem="3rw-yx-NFK" secondAttribute="top" id="8Gu-q2-TNk"/>
                                     <constraint firstItem="0XG-qH-giP" firstAttribute="top" secondItem="3rw-yx-NFK" secondAttribute="top" id="C6B-2M-Geg"/>
                                     <constraint firstItem="igS-G2-NfM" firstAttribute="leading" secondItem="0XG-qH-giP" secondAttribute="trailing" constant="-1" id="SeX-k3-L28"/>
-                                    <constraint firstItem="0XG-qH-giP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3rw-yx-NFK" secondAttribute="leading" constant="39" id="Ytl-wM-pRi"/>
+                                    <constraint firstItem="0XG-qH-giP" firstAttribute="leading" secondItem="3rw-yx-NFK" secondAttribute="leading" constant="39" id="Ytl-wM-pRi"/>
                                     <constraint firstAttribute="height" constant="50" id="d8N-VB-tGx"/>
                                     <constraint firstAttribute="bottom" secondItem="igS-G2-NfM" secondAttribute="bottom" id="hvi-29-7gA"/>
-                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0XG-qH-giP" secondAttribute="trailing" constant="39" id="znZ-as-bto"/>
+                                    <constraint firstAttribute="trailing" secondItem="0XG-qH-giP" secondAttribute="trailing" constant="39" id="znZ-as-bto"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="meF-1G-p2k" userLabel="Keypad">
@@ -1772,8 +1772,8 @@
                                     <constraint firstItem="nsS-HF-huE" firstAttribute="top" secondItem="meF-1G-p2k" secondAttribute="top" id="tUf-tZ-dWN"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3FV-p4-tnZ" userLabel="Dial Button">
-                                <rect key="frame" x="130" y="295" width="60" height="60"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3FV-p4-tnZ" userLabel="Dial Button">
+                                <rect key="frame" x="130" y="294" width="60" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="92I-k9-IUS"/>
                                     <constraint firstAttribute="height" constant="60" id="dS5-Nt-8Or"/>
@@ -1794,8 +1794,7 @@
                             <constraint firstItem="3rw-yx-NFK" firstAttribute="top" secondItem="iWl-PB-GRi" secondAttribute="bottom" id="VXo-HC-bk4"/>
                             <constraint firstAttribute="centerX" secondItem="3FV-p4-tnZ" secondAttribute="centerX" id="c2U-xo-qw2"/>
                             <constraint firstItem="meF-1G-p2k" firstAttribute="top" relation="greaterThanOrEqual" secondItem="3rw-yx-NFK" secondAttribute="bottom" id="gbB-Zb-hJc"/>
-                            <constraint firstItem="3FV-p4-tnZ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="meF-1G-p2k" secondAttribute="bottom" constant="7" id="pmi-Ye-Kzi"/>
-                            <constraint firstItem="D7Y-Ur-CEJ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="3FV-p4-tnZ" secondAttribute="bottom" priority="750" constant="11" id="qrB-YV-Xnx"/>
+                            <constraint firstItem="D7Y-Ur-CEJ" firstAttribute="top" secondItem="3FV-p4-tnZ" secondAttribute="bottom" priority="750" constant="13" id="qrB-YV-Xnx"/>
                             <constraint firstAttribute="centerY" secondItem="meF-1G-p2k" secondAttribute="centerY" constant="14.5" id="s8P-Uu-tkH"/>
                             <constraint firstItem="3rw-yx-NFK" firstAttribute="leading" secondItem="Rfg-zK-3ym" secondAttribute="leading" id="yI8-2t-1ZP"/>
                         </constraints>
