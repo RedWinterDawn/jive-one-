@@ -33,6 +33,7 @@
 {
     JCCallerViewController *_presentedCallerViewController;
     JCAuthenticationManager *_authenticationManager;
+    JCCallCardManager *_phoneManager;
     
     bool _didNotify;
 }
@@ -112,6 +113,7 @@
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:_authenticationManager];
     [center addObserver:self selector:@selector(userDataReady:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:_authenticationManager];
+    [center addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
     
     if (!_authenticationManager.userAuthenticated || !_authenticationManager.userLoadedMininumData) {
         [self changeRootViewController:JCRootLoginViewController];
@@ -198,21 +200,24 @@
 {
     LOG_Info();
     
-    [self changeRootViewController:JCRootTabbarViewController];
+    if (notification) {
+        [self changeRootViewController:JCRootTabbarViewController];
+    }
     
+    // Sync Data
     JCV5ApiClient *client = [JCV5ApiClient sharedClient];
     if (_authenticationManager.pbx.v5.boolValue) {
         [client getVoicemails:nil];
     }
     [client RetrieveContacts:nil];
     
+    // Start Phone Manager
     if (_authenticationManager.lineConfiguration)
     {
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-        JCCallCardManager *callCardManager = [JCCallCardManager sharedManager];
-        [center addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
-        [center addObserver:self selector:@selector(didReceiveIncomingCall:) name:kJCCallCardManagerAddedCallNotification object:callCardManager];
-        [center addObserver:self selector:@selector(stopRingtone) name:kJCCallCardManagerAnswerCallNotification object:callCardManager];
+        _phoneManager = [JCCallCardManager sharedManager];
+        [center addObserver:self selector:@selector(didReceiveIncomingCall:) name:kJCCallCardManagerAddedCallNotification object:_phoneManager];
+        [center addObserver:self selector:@selector(stopRingtone) name:kJCCallCardManagerAnswerCallNotification object:_phoneManager];
     }
 }
 
@@ -235,6 +240,8 @@
     
     [[UIApplication sharedApplication] unregisterForRemoteNotifications];
 }
+
+
 
 #pragma mark - Private -
 
