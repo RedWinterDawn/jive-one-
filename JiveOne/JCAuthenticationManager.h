@@ -27,7 +27,7 @@ typedef void (^CompletionBlock) (BOOL success, NSError *error);
 @property (nonatomic, readonly) Lines *line;
 @property (nonatomic, readonly) LineConfiguration *lineConfiguration;
 
-@property (nonatomic, readonly) NSString *userName;
+@property (nonatomic, readonly) NSString *jiveUserId;
 @property (nonatomic, readonly) NSString *lineDisplayName;
 @property (nonatomic, readonly) NSString *lineExtension;
 @property (nonatomic, readonly) NSString *pbxName;

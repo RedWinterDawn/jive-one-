@@ -6,8 +6,22 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
+
+typedef enum : NSUInteger {
+    InvalidAuthenticationParameters,
+    AutheticationError,
+    NetworkError,
+    TimeoutError,
+    NoPbx,
+    MultiplePbx,
+    ProvisioningFailure,
+    
+} JCAuthenticationManagerErrorType;
 
 @interface JCAuthenticationManagerError : NSError
+
++(instancetype)errorWithType:(JCAuthenticationManagerErrorType)type
+                 description:(NSString *)reason;
 
 @end

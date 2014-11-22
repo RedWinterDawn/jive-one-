@@ -6,13 +6,9 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import "JCRESTClient.h"
-#import "JCIconViews.h"
-#import "JCStyleKit.h"
-#import "JCLineSelectorViewController.h"
+@import UIKit;
 
-@interface JCLoginViewController : UIViewController <UITextFieldDelegate, JCLineSelectorDelegate>
+@interface JCLoginViewController : UIViewController <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;

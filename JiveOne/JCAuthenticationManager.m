@@ -9,8 +9,10 @@
 #import "JCAuthenticationManager.h"
 #import "Common.h"
 
-#import "JCV5ApiClient.h"
 #import "KeychainItemWrapper.h"
+#import "JCV5ApiClient.h"
+#import "JCV4ProvisioningClient.h"
+#import "JCAuthenticationManagerError.h"
 
 #define kUserAuthenticated @"keyuserauthenticated"
 #define kUserLoadedMinimumData @"keyuserloadedminimumdata"
@@ -32,7 +34,6 @@ NSString *const kJCAuthenticationManagerAuthenticationFailedNotification = @"aut
 // Javascript
 NSString *const kJCAuthenticationManagerJavascriptString = @"document.getElementById('username').value = '%@';document.getElementById('password').value = '%@';document.getElementById('go-button').click()";
 
-
 static int MAX_LOGIN_ATTEMPTS = 2;
 
 #if DEBUG
@@ -43,9 +44,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 @interface JCAuthenticationManager () <UIWebViewDelegate>
 {
-    NSMutableData *receivedData;
-    
-    int loginAttempts;
+    int _loginAttempts;
     
     KeychainItemWrapper *_keychainWrapper;
     CompletionBlock _completionBlock;
@@ -53,9 +52,11 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     NSString *_username;
     NSString *_password;
     UIWebView *_webview;
+    
+    NSTimer *_timeoutTimer;
 }
 
-@property (nonatomic, readwrite) NSString *userName;
+@property (nonatomic, readwrite) NSString *jiveUserId;
 @property (nonatomic, readwrite) NSString *authToken;
 @property (nonatomic, readwrite) NSString *refreshToken;
 @property (nonatomic, readwrite) BOOL userAuthenticated;
@@ -78,8 +79,21 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 - (void)loginWithUsername:(NSString *)username password:(NSString *)password completed:(CompletionBlock)completed
 {
     _completionBlock = completed;
-    _username = [username stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    _password = [password stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    _loginAttempts = 0;
+    
+    username = [username stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    password = [password stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    
+    // Validation
+    if(username.length == 0 || password.length == 0){
+        [self reportError:InvalidAuthenticationParameters description:@"UserName/Password Cannot Be Empty"];
+        return;
+    }
+    
+    [[JCOmniPresence sharedInstance] truncateAllTablesAtLogout];
+    
+    _username = username;
+    _password = password;
     
     NSString *url_path = [NSString stringWithFormat:kOsgiAuthURL, kOAuthClientId, kScopeProfile, kURLSchemeCallback];
     NSURL *url = [NSURL URLWithString:url_path];
@@ -94,6 +108,16 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     }
     _webview.delegate = self;
     [_webview loadRequest:[NSURLRequest requestWithURL:url]];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        _timeoutTimer = [NSTimer scheduledTimerWithTimeInterval:80
+                                                         target:self
+                                                       selector:@selector(loginTimout)
+                                                       userInfo:nil
+                                                        repeats:NO];
+     
+        [[NSRunLoop currentRunLoop] addTimer:_timeoutTimer forMode:NSDefaultRunLoopMode];
+     });
 }
 
 - (void)logout
@@ -107,11 +131,13 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     self.userAuthenticated = false;
     
     if (!self.rememberMe) {
-        self.userName = false;
+        self.jiveUserId = false;
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kJCAuthenticationManagerUserLoggedOutNotification object:self userInfo:nil];
 }
+
+
 
 #pragma mark - Setters -
 
@@ -170,7 +196,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     [defaults synchronize];
 }
 
--(void)setUserName:(NSString *)userName
+-(void)setJiveUserId:(NSString *)userName
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:userName forKey:kUserName];
@@ -220,7 +246,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     return [[NSUserDefaults standardUserDefaults] valueForKey:@"refreshToken"];
 }
 
--(NSString *)userName
+-(NSString *)jiveUserId
 {
     return [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
 }
@@ -266,10 +292,74 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 #pragma mark - Private -
 
--(void)reportError:(NSString *)string
+- (void)loginTimeout
 {
-    [self sendCompletionBlock:false reason:string];
-    loginAttempts = 0;
+    [self reportError:TimeoutError description:@"This is taking longer than expected. Please check your connection and try again"];
+}
+
+-(void)receivedAccessTokenFromURL:(NSURL *)url
+{
+    NSDictionary *tokenData = [self tokenDataFromURL:url];
+    if (tokenData.count > 0)
+    {
+        if ([tokenData objectForKey:@"access_token"]) {
+            self.authToken      = tokenData[@"access_token"];
+            self.refreshToken   = tokenData[@"refresh_token"];
+            self.jiveUserId       = tokenData[@"username"];
+            self.userAuthenticated = true;
+            [self requestAccount];
+        }
+        else {
+            if (tokenData[@"error"]) {
+                [self reportError:AutheticationError description:tokenData[@"error"]];
+            }
+            else {
+                [self reportError:AutheticationError description:@"An Error Has Occurred, Please Try Again"];
+            }
+        }
+    }
+}
+
+-(void)requestAccount
+{
+    NSString *jiveId = self.jiveUserId;
+    [[JCV5ApiClient sharedClient] getMailboxReferencesForUser:jiveId completed:^(BOOL success, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+        if(success){
+            NSArray *pbxs = [PBX MR_findAll];
+            if (pbxs.count == 0) {
+                [self reportError:NoPbx description:@"This username is not associated with any PBX. Please contact your Administrator"];
+            }
+            else if (pbxs.count > 1) {
+                [self reportError:MultiplePbx description:@"This app does not support account with multiple PBXs at this time"];
+            }
+            else {
+                [self requestProvisioning];
+            }
+        }
+        else {
+            [self reportError:NetworkError description:@"We could not reach the server at this time. Please check your connection"];
+        }
+    }];
+}
+
+- (void)requestProvisioning
+{
+    [JCV4ProvisioningClient requestProvisioningForUser:_username password:_password completed:^(BOOL success, NSError *error) {
+        if (success) {
+            self.userLoadedMininumData = TRUE;
+        }
+        else {
+            [self reportError:ProvisioningFailure description:error.localizedFailureReason];
+        }
+    }];
+}
+
+-(void)reportError:(JCAuthenticationManagerErrorType)type description:(NSString *)description
+{
+    [self invalidateLoginTimeoutTimer];
+    NSError *error = [JCAuthenticationManagerError errorWithType:type description:description];
+    [self completionBlock:false error:error];
+    _loginAttempts = 0;
     _webview = nil;
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kJCAuthenticationManagerAuthenticationFailedNotification object:nil];
@@ -277,22 +367,29 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 -(void)reportSuccess
 {
-    [self sendCompletionBlock:YES reason:nil];
+    [self invalidateLoginTimeoutTimer];
+    [self completionBlock:YES error:nil];
     self.userAuthenticated = TRUE;
+    
     _webview = nil;
 }
 
--(void)sendCompletionBlock:(BOOL)success reason:(NSString *)reason
+-(void)completionBlock:(BOOL)success error:(NSError *)error
 {
-    NSError *error = nil;
-    if (reason){
-        error = [NSError errorWithDomain:@"auth" code:500 userInfo:@{NSLocalizedDescriptionKey:NSLocalizedString(reason, nil)}];
-    }
-    
     if (_completionBlock) {
         _completionBlock(success, error);
     }
     _completionBlock = nil;
+}
+
+- (void)invalidateLoginTimeoutTimer
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (_timeoutTimer) {
+            [_timeoutTimer invalidate];
+            _timeoutTimer = nil;
+        }
+    });
 }
 
 -(NSDictionary *)tokenDataFromURL:(NSURL *)url
@@ -313,43 +410,20 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     return data;
 }
 
--(void)receivedAccessTokenFromURL:(NSURL *)url
-{
-    NSDictionary *tokenData = [self tokenDataFromURL:url];
-    if (tokenData && tokenData.count > 0)
-    {
-        if ([tokenData objectForKey:@"access_token"]) {
-            self.authToken      = tokenData[@"access_token"];
-            self.refreshToken   = tokenData[@"refresh_token"];
-            self.userName       = tokenData[@"username"];
-            [self reportSuccess];
-        }
-        else {
-            if (tokenData[@"error"]) {
-                [self reportError:tokenData[@"error"]];
-            }
-            else {
-                [self reportError:@"An Error Has Occurred, Please Try Again"];
-            }
-        }
-    }
-}
-
 #pragma mark - Delegate Handlers -
 
 #pragma mark UIWebviewDelegate
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    if (loginAttempts < MAX_LOGIN_ATTEMPTS) {
+    if (_loginAttempts < MAX_LOGIN_ATTEMPTS) {
         NSString *javascript = [NSString stringWithFormat:kJCAuthenticationManagerJavascriptString, _username, _password];
         [webView stringByEvaluatingJavaScriptFromString:javascript];
-        loginAttempts++;
+        _loginAttempts++;
     }
     else {
         [webView stopLoading];
-        
-        [self reportError:@"Invalid Username/Password. Please try again."];
+        [self reportError:InvalidAuthenticationParameters description:@"Invalid Username/Password. Please try again."];
     }
 }
 
@@ -361,13 +435,17 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     
     if ([request.URL.scheme isEqualToString:@"jiveclient"]) {
         [self receivedAccessTokenFromURL:request.URL];
+        return NO;
     }
     return YES;
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    [self reportError:@"An Error Has Occurred, Please Try Again"];
+    if (self.userAuthenticated)
+        return;
+    
+    [self reportError:NetworkError description:@"An Error Has Occurred, Please Try Again"];
 }
 
 @end
