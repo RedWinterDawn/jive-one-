@@ -11,7 +11,6 @@
 @interface JCSettingsTableViewController : UITableViewController
 
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *extensionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *pbxLabel;
 @property (weak, nonatomic) IBOutlet UILabel *appLabel;
