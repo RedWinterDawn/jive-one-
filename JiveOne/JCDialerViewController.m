@@ -11,6 +11,7 @@
 #import "Call.h"
 #import "SipHandler.h"
 #import "Lines+Custom.h"
+#import "JCAuthenticationManager.h"
 
 NSString *const kJCDialerViewController911String = @"911";
 NSString *const kJCDialerViewController411String = @"411";
@@ -161,9 +162,8 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     if (_sipHandler.isRegistered)
     {
         _callBtn.selected = false;
-        NSString * jiveId = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
-        Lines *line = [Lines MR_findFirstByAttribute:@"userName" withValue:jiveId];
-        prompt = [NSString stringWithFormat:@"Ext: %@", line.externsionNumber];
+        LineConfiguration *lineConfiguration = [JCAuthenticationManager sharedInstance].lineConfiguration;
+        prompt = lineConfiguration.display;
     }
     else
         _callBtn.selected = true;

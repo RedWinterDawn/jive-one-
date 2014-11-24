@@ -16,6 +16,8 @@
 #import "Common.h"
 #import "JCBadgeManager.h"
 
+#import "JCAuthenticationManager.h"
+
 #import "LineConfiguration+Custom.h"
 #import "Lines+Custom.h"
 #import "PBX+Custom.h"
@@ -112,16 +114,19 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
  */
 -(void)login
 {
-    LineConfiguration *config = [LineConfiguration MR_findFirst];
-    if (!config)
+    JCAuthenticationManager *authentication = [JCAuthenticationManager sharedInstance];
+    
+    
+    LineConfiguration *lineConfiguration = authentication.lineConfiguration;
+    if (!lineConfiguration)
         [NSException raise:NSInvalidArgumentException format:kSipHandlerFetchLineConfigurationErrorMessage];
     
-    PBX *pbx = [PBX MR_findFirst];
+    PBX *pbx = authentication.pbx;
     if (!pbx)
         [NSException raise:NSInvalidArgumentException format:kSipHandlerFetchPBXErrorMessage];
     
-    NSString *kSipUserName  = config.sipUsername;
-    NSString *kSIPServer    = ([pbx.v5 boolValue]) ? config.outboundProxy : config.registrationHost;
+    NSString *kSipUserName  = lineConfiguration.sipUsername;
+    NSString *kSIPServer    = ([pbx.v5 boolValue]) ? lineConfiguration.outboundProxy : lineConfiguration.registrationHost;
     
     _sipURL = [[NSString alloc] initWithFormat:@"sip:%@:%@", kSipUserName, kSIPServer];
 	
@@ -152,9 +157,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         [NSException raise:NSInvalidArgumentException format:@"initializeSDK failure ErrorCode = %d",ret];
     
     ret = [_mPortSIPSDK setUser:kSipUserName
-                    displayName:config.display
+                    displayName:lineConfiguration.display
                        authName:kSipUserName
-                       password:config.sipPassword
+                       password:lineConfiguration.sipPassword
                         localIP:@"0.0.0.0"                      // Auto select IP address
                    localSIPPort:(10000 + arc4random()%1000)     // Generate a random port in the 10,000 range
                      userDomain:@""
@@ -162,7 +167,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
                   SIPServerPort:OUTBOUND_SIP_SERVER_PORT
                      STUNServer:@""
                  STUNServerPort:0
-                 outboundServer:config.outboundProxy
+                 outboundServer:lineConfiguration.outboundProxy
              outboundServerPort:OUTBOUND_SIP_SERVER_PORT];
     
     if(ret != 0)
@@ -1077,7 +1082,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 			  newMessageCount:(int)newMessageCount
 			  oldMessageCount:(int)oldMessageCount
 {
-    PBX *pbx = [PBX MR_findFirst];
+    PBX *pbx = [JCAuthenticationManager sharedInstance].pbx;
     if (pbx && ![pbx.v5 boolValue]) {
         [JCBadgeManager sharedManager].voicemails = newMessageCount;
     }    
