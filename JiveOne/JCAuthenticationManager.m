@@ -258,28 +258,11 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     return [PBX MR_findFirst];
 }
 
--(Lines *)line
-{
-    // TODO: When we are able to handle multiple Lines return selected Line, until then, returh the first.
-    
-    return [Lines MR_findFirst];
-}
-
 -(LineConfiguration *)lineConfiguration
 {
     // TODO: When we are able to handle multiple Line configurations return selected Line configuration, until then, returh the first.
     
     return [LineConfiguration MR_findFirst];
-}
-
--(NSString *)lineDisplayName
-{
-    return self.line.displayName;
-}
-
--(NSString *)lineExtension
-{
-    return self.line.externsionNumber;
 }
 
 -(NSString *)pbxName

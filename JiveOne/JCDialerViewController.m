@@ -11,6 +11,10 @@
 #import "Call.h"
 #import "SipHandler.h"
 #import "Lines+Custom.h"
+#import "JCAuthenticationManager.h"
+
+NSString *const kJCDialerViewController911String = @"911";
+NSString *const kJCDialerViewController411String = @"411";
 
 NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCall";
 
@@ -106,6 +110,18 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
         return;
     }
     
+    
+    if ([string isEqualToString:kJCDialerViewController911String]) {
+#ifdef DEBUG
+        string = kJCDialerViewController411String;
+       NSLog(@"CANNOT CALL 911 In this APP");
+#endif
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", string]];
+        [[UIApplication sharedApplication] openURL:url];
+        
+        return;
+    }
+    
     // Check if we are registered. If we are registered, perform segue to initiate the call.
     if (_sipHandler.isRegistered)
     {
@@ -146,9 +162,8 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     if (_sipHandler.isRegistered)
     {
         _callBtn.selected = false;
-        NSString * jiveId = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
-        Lines *line = [Lines MR_findFirstByAttribute:@"userName" withValue:jiveId];
-        prompt = [NSString stringWithFormat:@"Ext: %@", line.externsionNumber];
+        LineConfiguration *lineConfiguration = [JCAuthenticationManager sharedInstance].lineConfiguration;
+        prompt = lineConfiguration.display;
     }
     else
         _callBtn.selected = true;

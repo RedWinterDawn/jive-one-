@@ -42,6 +42,7 @@ NSString *const kJCVoiceNonVisualViewControllerIdentifier = @"VoiceNonVisualView
             UIViewController *nonVisualViewController = [self.storyboard instantiateViewControllerWithIdentifier:kJCVoiceNonVisualViewControllerIdentifier];
             [self addChildViewController:nonVisualViewController];
             [self.containerView addSubview:nonVisualViewController.view];
+            nonVisualViewController.view.frame = self.containerView.bounds;
         }
         @catch (NSException *exception) {
             NSLog(@"Non Visual Voicmail View Controller was unable to to loaded from the storyboard, was expecting identifier: %@", kJCVoiceNonVisualViewControllerIdentifier);
