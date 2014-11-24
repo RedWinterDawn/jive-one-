@@ -45,7 +45,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" placeholder="Search                                                      " translatesAutoresizingMaskIntoConstraints="NO" id="5ds-mG-BrS">
+                            <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="5ds-mG-BrS">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="Fzy-id-923"/>
@@ -3746,7 +3746,7 @@
         <image name="nav-hist-black" width="25" height="25"/>
         <image name="nav-voicemail-black" width="33" height="16"/>
         <image name="power" width="100" height="100"/>
-        <image name="second" width="640" height="1136"/>
+        <image name="second" width="30" height="30"/>
         <image name="white-arrow" width="30" height="31"/>
         <image name="white-arrow-outline" width="30" height="31"/>
         <image name="white-check" width="30" height="30"/>
@@ -3766,7 +3766,7 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="Uqi-bD-GAX"/>
-        <segue reference="Cw0-XI-zbd"/>
+        <segue reference="qaE-xG-axE"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29803921570000003" green="0.44705882349999998" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
 </document>

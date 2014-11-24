@@ -10,8 +10,8 @@
 /* Class = "IBUILabel"; text = "Phone"; ObjectID = "5Sc-JQ-q86"; */
 "5Sc-JQ-q86.text" = "Teléfono";
 
-/* Class = "IBUISearchBar"; placeholder = "Search                                                      "; ObjectID = "5ds-mG-BrS"; */
-"5ds-mG-BrS.placeholder" = "Búsqueda                                                  ";
+/* Class = "IBUISearchBar"; placeholder = "Search"; ObjectID = "5ds-mG-BrS"; */
+"5ds-mG-BrS.placeholder" = "Búsqueda";
 
 /* Class = "IBUILabel"; text = "Mute"; ObjectID = "7Kp-Io-fyp"; */
 "7Kp-Io-fyp.text" = "Silencio";
