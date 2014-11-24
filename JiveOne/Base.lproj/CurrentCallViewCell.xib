@@ -118,9 +118,6 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dim-MR-5Mi" userLabel="Hold">
                                 <rect key="frame" x="150" y="0.0" width="150" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="150" id="d6e-F6-9mX"/>
-                                </constraints>
                                 <state key="normal" image="black-hold">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -130,7 +127,6 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fMI-EZ-LsX" userLabel="HangUp">
                                 <rect key="frame" x="0.0" y="0.0" width="150" height="50"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="gtd-cR-yRD"/>
                                 </constraints>
@@ -154,6 +150,7 @@
                             <constraint firstItem="fMI-EZ-LsX" firstAttribute="height" secondItem="dim-MR-5Mi" secondAttribute="height" id="Bhv-43-PtJ"/>
                             <constraint firstAttribute="bottom" secondItem="fMI-EZ-LsX" secondAttribute="bottom" id="OLL-Lt-UHt"/>
                             <constraint firstItem="fMI-EZ-LsX" firstAttribute="top" secondItem="yUi-Hn-q9R" secondAttribute="top" id="OTC-Uu-GTG"/>
+                            <constraint firstAttribute="trailing" secondItem="dim-MR-5Mi" secondAttribute="trailing" id="fAs-rb-i2g"/>
                             <constraint firstItem="fMI-EZ-LsX" firstAttribute="leading" secondItem="yUi-Hn-q9R" secondAttribute="leading" id="fHi-NA-ePF"/>
                             <constraint firstItem="dim-MR-5Mi" firstAttribute="top" secondItem="yUi-Hn-q9R" secondAttribute="top" id="gWg-RB-Tfc"/>
                             <constraint firstItem="fMI-EZ-LsX" firstAttribute="leading" secondItem="yUi-Hn-q9R" secondAttribute="leading" id="pz7-Af-bx7"/>
