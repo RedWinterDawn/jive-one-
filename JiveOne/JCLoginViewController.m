@@ -58,17 +58,17 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshAuthenticationCredentials:) name:kAuthenticationFromTokenFailedWithTimeout object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tokenValidityPassed:) name:kAuthenticationFromTokenSucceeded object:nil];
     
-    self.usernameTextField.returnKeyType = UIReturnKeyNext;
-    self.usernameTextField.returnKeyType = UIReturnKeyNext;
-    self.passwordTextField.returnKeyType = UIReturnKeyGo;
+//    self.usernameTextField.returnKeyType = UIReturnKeyNext;
+//    self.usernameTextField.returnKeyType = UIReturnKeyNext;
+//    self.passwordTextField.returnKeyType = UIReturnKeyGo;
+//    
+//    self.usernameTextField.delegate = self;
+//    self.passwordTextField.delegate = self;
     
-    self.usernameTextField.delegate = self;
-    self.passwordTextField.delegate = self;
+    //NSString* fontName = @"Avenir-Book";
+    //NSString* boldFontName = @"Avenir-Black";
     
-    NSString* fontName = @"Avenir-Book";
-    NSString* boldFontName = @"Avenir-Black";
-    
-    self.usernameTextField.font = [UIFont fontWithName:fontName size:16.0f];
+    //self.usernameTextField.font = [UIFont fontWithName:fontName size:16.0f];
     self.usernameTextField.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:0.7].CGColor;
     self.usernameTextField.layer.borderWidth = 1.0f;
     
@@ -76,7 +76,7 @@
     self.usernameTextField.leftViewMode = UITextFieldViewModeAlways;
     self.usernameTextField.leftView = leftView;
     
-    self.passwordTextField.font = [UIFont fontWithName:fontName size:16.0f];
+    //self.passwordTextField.font = [UIFont fontWithName:fontName size:16.0f];
     self.passwordTextField.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:0.7].CGColor;
     self.passwordTextField.layer.borderWidth = 1.0f;
     
@@ -91,14 +91,14 @@
     self.passwordTextField.layer.masksToBounds = YES;
     self.usernameTextField.layer.cornerRadius = 5;
     self.usernameTextField.layer.masksToBounds = YES;
-    self.loginViewContainer.layer.cornerRadius = 5;
-    [self.loginViewContainer.layer setCornerRadius:5];
+    //self.loginViewContainer.layer.cornerRadius = 5;
+    //[self.loginViewContainer.layer setCornerRadius:5];
     
     UIView* leftView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 20)];
     self.passwordTextField.leftViewMode = UITextFieldViewModeAlways;
     self.passwordTextField.leftView = leftView2;
     
-    _loginStatusLabel.font = [UIFont fontWithName:boldFontName size:16.0f];
+    //_loginStatusLabel.font = [UIFont fontWithName:boldFontName size:16.0f];
     // Do any additional setup after loading the view.
     fastConnection = [Common IsConnectionFast];
 //    self.moreiconimageview.image= [JCStyleKit imageOfMoreIconLoginWithFrame:CGRectMake(0, 0, self.moreiconimageview.frame.size.width, self.moreiconimageview.frame.size.height)];
