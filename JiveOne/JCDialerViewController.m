@@ -13,6 +13,9 @@
 #import "Lines+Custom.h"
 #import "JCAuthenticationManager.h"
 
+NSString *const kJCDialerViewController911String = @"911";
+NSString *const kJCDialerViewController411String = @"411";
+
 NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCall";
 
 @interface JCDialerViewController () <JCCallerViewControllerDelegate>
@@ -104,6 +107,18 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     
     // You cannot dial an empty string or null string.
     if (!string || [string isEqualToString:@""]) {
+        return;
+    }
+    
+    
+    if ([string isEqualToString:kJCDialerViewController911String]) {
+#ifdef DEBUG
+        string = kJCDialerViewController411String;
+       NSLog(@"CANNOT CALL 911 In this APP");
+#endif
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", string]];
+        [[UIApplication sharedApplication] openURL:url];
+        
         return;
     }
     
