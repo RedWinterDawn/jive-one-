@@ -183,10 +183,6 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     [_keychainWrapper setObject:(__bridge id)kSecAttrAccessibleAlways forKey:(__bridge id)kSecValueData];
     [_keychainWrapper setObject:[NSString stringWithFormat:@"%@", authToken] forKey:(__bridge id)(kSecAttrAccount)];
     [_keychainWrapper setObject:[NSString stringWithFormat:@"%@", authToken] forKey:(__bridge id)(kSecValueData)];
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:authToken forKey:@"authToken"];
-    [defaults synchronize];
 }
 
 -(void)setRefreshToken:(NSString *)refreshToken
@@ -232,10 +228,6 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     
     if ([Common stringIsNilOrEmpty:token]) {
         token = [_keychainWrapper objectForKey:(__bridge id)(kSecValueData)];
-    }
-    
-    if ([Common stringIsNilOrEmpty:token]){
-        token = [[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"];
     }
     
     return token;
