@@ -145,6 +145,9 @@
 		279A4E1019DA876500E8AB7B /* PortSIPLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279A4E0F19DA876500E8AB7B /* PortSIPLib.framework */; };
 		279A4E1219DA87DA00E8AB7B /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 279A4E1119DA87DA00E8AB7B /* libstdc++.dylib */; };
 		279A4E2C19DA91E100E8AB7B /* SipHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 279A4E2B19DA91E100E8AB7B /* SipHandler.mm */; };
+		279CB9D41A1F21ED0037601F /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 279CB9D21A1F21ED0037601F /* Default@2x.png */; };
+		279CB9D51A1F21ED0037601F /* Detault-568@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 279CB9D31A1F21ED0037601F /* Detault-568@2x.png */; };
+		279CB9D71A1F30490037601F /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 279CB9D61A1F30490037601F /* Default-568h@2x.png */; };
 		279E4C6D19226FA3002A556C /* people-search-nofocus.png in Resources */ = {isa = PBXBuildFile; fileRef = 279E4C6C19226FA3002A556C /* people-search-nofocus.png */; };
 		279E4C7019226FAC002A556C /* people-search.png in Resources */ = {isa = PBXBuildFile; fileRef = 279E4C6F19226FAC002A556C /* people-search.png */; };
 		279E4CA9192273E5002A556C /* MBContactCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 279E4C9C192273E5002A556C /* MBContactCollectionView.m */; };
@@ -532,6 +535,9 @@
 		279A4E1119DA87DA00E8AB7B /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		279A4E2A19DA91E100E8AB7B /* SipHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SipHandler.h; sourceTree = "<group>"; };
 		279A4E2B19DA91E100E8AB7B /* SipHandler.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SipHandler.mm; sourceTree = "<group>"; };
+		279CB9D21A1F21ED0037601F /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		279CB9D31A1F21ED0037601F /* Detault-568@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Detault-568@2x.png"; sourceTree = "<group>"; };
+		279CB9D61A1F30490037601F /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		279E4C6C19226FA3002A556C /* people-search-nofocus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "people-search-nofocus.png"; sourceTree = "<group>"; };
 		279E4C6F19226FAC002A556C /* people-search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "people-search.png"; sourceTree = "<group>"; };
 		279E4C9B192273E5002A556C /* MBContactCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBContactCollectionView.h; sourceTree = "<group>"; };
@@ -1420,6 +1426,7 @@
 		275F4A4518AD0FBC00D2F069 = {
 			isa = PBXGroup;
 			children = (
+				279CB9D61A1F30490037601F /* Default-568h@2x.png */,
 				275F4A5718AD0FBC00D2F069 /* JiveOne */,
 				275F4A7C18AD0FBC00D2F069 /* JiveOneTests */,
 				275F4A5018AD0FBC00D2F069 /* Frameworks */,
@@ -1498,6 +1505,8 @@
 		275F4A5818AD0FBC00D2F069 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				279CB9D21A1F21ED0037601F /* Default@2x.png */,
+				279CB9D31A1F21ED0037601F /* Detault-568@2x.png */,
 				27EA5DB1190888AD008C7590 /* Draft_iPhone.storyboard */,
 				91CAE6761961CDE9004A28FD /* Fonts */,
 				271EBDAE1910525E00421BA9 /* GTalkNotify.aiff */,
@@ -2396,6 +2405,7 @@
 				5D0199BD1A1BBBF400F4CF13 /* CurrentCallViewCell.xib in Resources */,
 				2700988918F4714100B6BC2F /* bubble-classic-green@2x.png in Resources */,
 				270098C218F5EA9300B6BC2F /* nav-conv@2x.png in Resources */,
+				279CB9D71A1F30490037601F /* Default-568h@2x.png in Resources */,
 				F59AE2C9192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png in Resources */,
 				2700989818F4714100B6BC2F /* bubble-stroked-tailless.png in Resources */,
 				27F1F2DF191C171300AEAFD7 /* UAInboxMessageListController.xib in Resources */,
@@ -2411,6 +2421,7 @@
 				2700988318F4714100B6BC2F /* avatar-placeholder@2x.png in Resources */,
 				27FE96F919802D81009C6C67 /* arrow-back.png in Resources */,
 				27F1F2F7191C171300AEAFD7 /* UAPushLocalization.bundle in Resources */,
+				279CB9D51A1F21ED0037601F /* Detault-568@2x.png in Resources */,
 				2700989518F4714100B6BC2F /* bubble-min-tailless@2x.png in Resources */,
 				270098C118F5EA9300B6BC2F /* conv-compose.png in Resources */,
 				275F4A5C18AD0FBC00D2F069 /* InfoPlist.strings in Resources */,
@@ -2420,6 +2431,7 @@
 				2700988618F4714100B6BC2F /* bubble-classic-gray.png in Resources */,
 				27F1F2DD191C171300AEAFD7 /* UAInboxLocalization.bundle in Resources */,
 				27F1F2FB191C171300AEAFD7 /* UAPushSettingsChannelInfoViewController.xib in Resources */,
+				279CB9D41A1F21ED0037601F /* Default@2x.png in Resources */,
 				270098A518F4714100B6BC2F /* send-button-pressed@2x.png in Resources */,
 				27F1F2EF191C171300AEAFD7 /* bottom-detail.png in Resources */,
 				270098AB18F4714100B6BC2F /* input-bar-flat@2x.png in Resources */,
@@ -2926,6 +2938,7 @@
 			baseConfigurationReference = 1B209FFD8576BB760529B3CA /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = Default;
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -2965,6 +2978,7 @@
 			baseConfigurationReference = 27364B6C977955C61C47BA59 /* Pods.enterprise.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = Default;
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -3090,6 +3104,7 @@
 			baseConfigurationReference = 43C81F9C015A20BD2322B787 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = Default;
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
