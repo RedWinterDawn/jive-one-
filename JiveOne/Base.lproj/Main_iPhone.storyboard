@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
@@ -3352,6 +3352,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="centerX" secondItem="53q-MK-pw7" secondAttribute="centerX" id="2x5-Ja-FCi"/>
                             <constraint firstItem="53q-MK-pw7" firstAttribute="leading" secondItem="SPT-Oc-8G5" secondAttribute="leading" constant="14" id="P9o-AZ-rvw"/>
                             <constraint firstItem="53q-MK-pw7" firstAttribute="top" secondItem="kFk-2I-0KB" secondAttribute="bottom" constant="20" id="Ve0-dn-Dfp"/>
                             <constraint firstAttribute="trailing" secondItem="53q-MK-pw7" secondAttribute="trailing" constant="14" id="a41-ed-WXP"/>
@@ -3377,7 +3378,6 @@
                     </navigationBar>
                     <connections>
                         <segue destination="Koj-vL-83I" kind="relationship" relationship="rootViewController" id="9gN-pz-5JS"/>
-                        <segue destination="uGc-fk-52J" kind="modal" identifier="nonVisualVoicemailViewController" id="quq-Hl-MxM"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xlZ-Jc-shm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3768,8 +3768,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Uqi-bD-GAX"/>
-        <segue reference="qaE-xG-axE"/>
+        <segue reference="Cw0-XI-zbd"/>
+        <segue reference="xxt-tb-rPs"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29803921570000003" green="0.44705882349999998" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
 </document>
