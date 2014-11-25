@@ -2855,10 +2855,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NKq-zF-3UM" userLabel="Keypad" customClass="JCRoundedView">
-                                <rect key="frame" x="10" y="24" width="300" height="216"/>
+                                <rect key="frame" x="10" y="10" width="300" height="230"/>
                                 <subviews>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gPO-SR-5Lk">
-                                        <rect key="frame" x="-10" y="40" width="97" height="39"/>
+                                        <rect key="frame" x="-5" y="50" width="100" height="40"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
@@ -2890,7 +2890,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="675-5i-6mS">
-                                        <rect key="frame" x="102" y="40" width="96" height="39"/>
+                                        <rect key="frame" x="100" y="50" width="100" height="40"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
@@ -2922,7 +2922,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="3" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VtF-OY-4WO">
-                                        <rect key="frame" x="203" y="40" width="97" height="39"/>
+                                        <rect key="frame" x="200" y="50" width="100" height="40"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
@@ -2954,7 +2954,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="4" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gDH-fH-ufG">
-                                        <rect key="frame" x="-10" y="84" width="97" height="38"/>
+                                        <rect key="frame" x="-5" y="95" width="100" height="40"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
@@ -2986,7 +2986,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="5" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zqW-JI-NSh">
-                                        <rect key="frame" x="102" y="84" width="96" height="38"/>
+                                        <rect key="frame" x="100" y="95" width="100" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="zqW-JI-NSh" secondAttribute="height" multiplier="5:2" id="4FE-CK-hPb"/>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="hpG-o8-JGt"/>
@@ -3024,7 +3024,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="6" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qei-Q1-jJW">
-                                        <rect key="frame" x="203" y="84" width="97" height="38"/>
+                                        <rect key="frame" x="200" y="95" width="100" height="40"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
@@ -3056,7 +3056,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="7" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tv1-OQ-CW7">
-                                        <rect key="frame" x="-10" y="127" width="97" height="40"/>
+                                        <rect key="frame" x="-5" y="140" width="100" height="40"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
@@ -3081,7 +3081,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="8" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gra-X4-HLF">
-                                        <rect key="frame" x="102" y="127" width="96" height="39"/>
+                                        <rect key="frame" x="100" y="140" width="100" height="40"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
@@ -3113,7 +3113,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="9" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WMx-Nu-3Jb">
-                                        <rect key="frame" x="203" y="127" width="97" height="40"/>
+                                        <rect key="frame" x="200" y="140" width="100" height="40"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
@@ -3138,7 +3138,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="10" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NRn-BA-KhK">
-                                        <rect key="frame" x="-10" y="171" width="97" height="39"/>
+                                        <rect key="frame" x="-5" y="185" width="100" height="40"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
@@ -3170,7 +3170,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CZR-uP-cO5">
-                                        <rect key="frame" x="102" y="171" width="96" height="39"/>
+                                        <rect key="frame" x="100" y="185" width="100" height="40"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
@@ -3202,7 +3202,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="11" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h4q-eW-N8H">
-                                        <rect key="frame" x="203" y="171" width="97" height="39"/>
+                                        <rect key="frame" x="200" y="185" width="100" height="40"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
@@ -3234,7 +3234,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cD4-GV-TuE">
-                                        <rect key="frame" x="50" y="0.0" width="200" height="40"/>
+                                        <rect key="frame" x="50" y="5" width="200" height="40"/>
                                         <color key="backgroundColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="LeU-OE-25X"/>
@@ -3268,7 +3268,7 @@
                                     <constraint firstItem="zqW-JI-NSh" firstAttribute="width" secondItem="675-5i-6mS" secondAttribute="width" id="JLd-4q-d96"/>
                                     <constraint firstItem="WMx-Nu-3Jb" firstAttribute="centerY" secondItem="Gra-X4-HLF" secondAttribute="centerY" id="MRc-Ja-g5q"/>
                                     <constraint firstItem="qei-Q1-jJW" firstAttribute="centerY" secondItem="zqW-JI-NSh" secondAttribute="centerY" id="Nol-oq-axw"/>
-                                    <constraint firstItem="cD4-GV-TuE" firstAttribute="top" secondItem="NKq-zF-3UM" secondAttribute="top" id="QW9-ZC-wb6"/>
+                                    <constraint firstItem="cD4-GV-TuE" firstAttribute="top" secondItem="NKq-zF-3UM" secondAttribute="top" constant="5" id="QW9-ZC-wb6"/>
                                     <constraint firstItem="CZR-uP-cO5" firstAttribute="centerX" secondItem="Gra-X4-HLF" secondAttribute="centerX" id="RB9-a6-dcQ"/>
                                     <constraint firstItem="gDH-fH-ufG" firstAttribute="centerX" secondItem="NRn-BA-KhK" secondAttribute="centerX" id="Ra3-PA-oVX"/>
                                     <constraint firstItem="gPO-SR-5Lk" firstAttribute="centerX" secondItem="gDH-fH-ufG" secondAttribute="centerX" id="Rbn-0v-Loz"/>
@@ -3315,7 +3315,7 @@
                             <constraint firstItem="ToH-Y2-5cd" firstAttribute="top" relation="greaterThanOrEqual" secondItem="NKq-zF-3UM" secondAttribute="bottom" constant="240" id="G1N-Ak-NVJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="NKq-zF-3UM" secondAttribute="trailing" constant="-6" id="abG-vl-UHH"/>
                             <constraint firstAttribute="centerX" secondItem="NKq-zF-3UM" secondAttribute="centerX" id="sjo-0d-om6"/>
-                            <constraint firstItem="NKq-zF-3UM" firstAttribute="top" relation="greaterThanOrEqual" secondItem="VAd-yF-IML" secondAttribute="bottom" constant="24" id="wcS-eM-x3m"/>
+                            <constraint firstItem="NKq-zF-3UM" firstAttribute="top" relation="greaterThanOrEqual" secondItem="VAd-yF-IML" secondAttribute="bottom" constant="10" id="wcS-eM-x3m"/>
                             <constraint firstItem="ToH-Y2-5cd" firstAttribute="top" relation="lessThanOrEqual" secondItem="NKq-zF-3UM" secondAttribute="bottom" constant="250" id="yK4-Ib-45D"/>
                         </constraints>
                         <connections>
