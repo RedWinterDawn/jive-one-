@@ -122,7 +122,7 @@
         [self changeRootViewController:JCRootLoginViewController];
     }
     else {
-        //[self startSocket:NO];
+        [self startSocket:NO];
     }
     return YES;
 }
@@ -147,10 +147,9 @@
  */
 -(void)applicationDidEnterBackground:(UIApplication *)application
 {
-    /*LOG_Info();
+    LOG_Info();
     LogMessage(@"socket", 4, @"Will Call CloseSocket");
     [self stopSocket];
-	*/
 }
 
 /**
@@ -166,7 +165,7 @@
     //[[NotificationView sharedInstance] didChangeConnection:nil];
     if ([[JCAuthenticationManager sharedInstance] userAuthenticated] && [[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {
         LogMessage(@"socket", 4, @"Will Call requestSession");
-        //[self startSocket:NO];
+        [self startSocket:NO];
     }
 }
 
