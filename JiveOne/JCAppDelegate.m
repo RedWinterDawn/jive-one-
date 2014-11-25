@@ -9,6 +9,7 @@
 #import "JCAppDelegate.h"
 #import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
 #import <AudioToolbox/AudioToolbox.h>
+#import <AVFoundation/AVFoundation.h>
 #import "AFNetworkActivityIndicatorManager.h"
 #import "JasmineSocket.h"
 #import "PersonEntities.h"
@@ -100,6 +101,8 @@
     UAConfig *config = [UAConfig defaultConfig];
     [UAirship takeOff:config];
     
+    [self enableBluetooth];
+
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     JCCallCardManager *callCardManager = [JCCallCardManager sharedManager];
     [center addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
@@ -119,9 +122,34 @@
         [self changeRootViewController:JCRootLoginViewController];
     }
     else {
-        [self startSocket:NO];
+        //[self startSocket:NO];
     }
     return YES;
+}
+
+-(void)enableBluetooth
+{
+    // deactivate session
+    BOOL success = [[AVAudioSession sharedInstance] setActive:NO error: nil];
+    if (!success) {
+        NSLog(@"deactivationError");
+    }
+    
+    // set audio session category AVAudioSessionCategoryPlayAndRecord options AVAudioSessionCategoryOptionAllowBluetooth
+    success = [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth error:nil];
+    if (!success) {
+        NSLog(@"setCategoryError");
+    }
+    
+    // activate audio session
+    success = [[AVAudioSession sharedInstance] setActive:YES error: nil];
+    if (!success) {
+        NSLog(@"activationError");
+    }
+    
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(myInterruptionSelector:) name:AVAudioSessionInterruptionNotification object:nil];
+    [center addObserver:self selector:@selector(myRouteChangeSelector:) name:AVAudioSessionRouteChangeNotification object:nil];
 }
 
 /**
@@ -238,6 +266,27 @@
     [[UIApplication sharedApplication] unregisterForRemoteNotifications];
 }
 
+#pragma mark AVAudioSession
+
+- (void)myRouteChangeSelector:(NSNotification*)notification {
+    AVAudioSessionRouteDescription *currentRoute = [[AVAudioSession sharedInstance] currentRoute];
+    NSArray *inputsForRoute = currentRoute.inputs;
+    NSArray *outputsForRoute = currentRoute.outputs;
+    AVAudioSessionPortDescription *outPortDesc = [outputsForRoute objectAtIndex:0];
+    NSLog(@"current outport type %@", outPortDesc.portType);
+    AVAudioSessionPortDescription *inPortDesc = [inputsForRoute objectAtIndex:0];
+    NSLog(@"current inPort type %@", inPortDesc.portType);
+}
+
+- (void)myInterruptionSelector:(NSNotification *)notification {
+    AVAudioSessionRouteDescription *currentRoute = [[AVAudioSession sharedInstance] currentRoute];
+    NSArray *inputsForRoute = currentRoute.inputs;
+    NSArray *outputsForRoute = currentRoute.outputs;
+    AVAudioSessionPortDescription *outPortDesc = [outputsForRoute objectAtIndex:0];
+    NSLog(@"current outport type %@", outPortDesc.portType);
+    AVAudioSessionPortDescription *inPortDesc = [inputsForRoute objectAtIndex:0];
+    NSLog(@"current inPort type %@", inPortDesc.portType);
+}
 
 #pragma mark - Private -
 
