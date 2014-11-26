@@ -45,6 +45,8 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     KeychainItemWrapper *_keychainWrapper;
     CompletionBlock _completionBlock;
     
+    LineConfiguration *_lineConfiguration;
+    
     NSString *_username;
     NSString *_password;
     UIWebView *_webview;
@@ -226,11 +228,21 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     return [PBX MR_findFirst];
 }
 
+/**
+ * Return the active line configuration. If there is no active line configuration, we ret the first line line 
+ * configuration in the database.
+ */
 -(LineConfiguration *)lineConfiguration
 {
-    // TODO: When we are able to handle multiple Line configurations return selected Line configuration, until then, returh the first.
+    if (_lineConfiguration)
+        return _lineConfiguration;
     
-    return [LineConfiguration MR_findFirst];
+    _lineConfiguration = [LineConfiguration MR_findFirstByAttribute:@"active" withValue:@YES];
+    if (_lineConfiguration)
+        return _lineConfiguration;
+    
+    _lineConfiguration = [LineConfiguration MR_findFirst];
+    return _lineConfiguration;
 }
 
 -(NSString *)pbxName

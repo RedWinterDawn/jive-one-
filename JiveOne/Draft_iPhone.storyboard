@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="s23-a1-P1H">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="s23-a1-P1H">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
     <scenes>
         <!--Create Group-->
@@ -637,10 +636,10 @@
             </objects>
             <point key="canvasLocation" x="3150" y="63"/>
         </scene>
-        <!--Line Selector View Controller-->
+        <!--Line Configuration Selector View Controller-->
         <scene sceneID="Hvb-tg-0fD">
             <objects>
-                <tableViewController storyboardIdentifier="JCLineSelectorViewController" id="2lz-xZ-R2g" customClass="JCLineSelectorViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="JCLineSelectorViewController" id="2lz-xZ-R2g" customClass="JCLineConfigurationSelectorViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="grouped" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="11" id="UYZ-Ln-KlX">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -10,9 +10,8 @@
 #import "JCRESTClient.h"
 #import "JCIconViews.h"
 #import "JCStyleKit.h"
-#import "JCLineSelectorViewController.h"
 
-@interface JCLoginViewController : UIViewController <UITextFieldDelegate, JCLineSelectorDelegate>
+@interface JCLoginViewController : UIViewController <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;

@@ -7,7 +7,6 @@
 //
 
 #import "JCPresenceViewController.h"
-#import "JCTableViewCellWithInset.h"
 #import "JCPresenceView.h"
 
 @interface JCPresenceViewController ()
@@ -89,7 +88,7 @@
 }
 
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+/*- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     JCTableViewCellWithInset *cell = (JCTableViewCellWithInset *)[super tableView:tableView cellForRowAtIndexPath:indexPath];
     if (indexPath.section == 0 && indexPath.row == 0) {
@@ -113,7 +112,7 @@
     
     return cell;
 
-}
+}*/
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
