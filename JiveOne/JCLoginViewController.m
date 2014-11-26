@@ -20,7 +20,7 @@
 #import "UIImage+ImageEffects.h"
 #import "UITextField+ELFixSecureTextFieldFont.h"
 #import "Lines+Custom.h"
-#import "JCLineSelectorViewController.h"
+#import "JCLineConfigurationSelectorViewController.h"
 #import <XMLDictionary/XMLDictionary.h>
 
 @interface JCLoginViewController () <NSFileManagerDelegate>

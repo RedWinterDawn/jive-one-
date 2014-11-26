@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
@@ -536,7 +536,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="Tj6-BS-QA2" detailTextLabel="SCG-SS-mwf" style="IBUITableViewCellStyleValue1" id="bGr-0c-mgj">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="Tj6-BS-QA2" detailTextLabel="SCG-SS-mwf" style="IBUITableViewCellStyleValue1" id="bGr-0c-mgj">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bGr-0c-mgj" id="wgI-BG-ZHq">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -555,6 +555,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="fPm-Id-TEE" kind="push" id="mgf-k5-F7u"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="1M5-NQ-q2C" detailTextLabel="7RL-so-6fF" style="IBUITableViewCellStyleValue1" id="CqL-Px-6Ku">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -676,6 +679,41 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="679" y="2085"/>
+        </scene>
+        <!--Select Line-->
+        <scene sceneID="5q7-sS-1jV">
+            <objects>
+                <tableViewController id="fPm-Id-TEE" customClass="JCLineConfigurationSelectorViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="cmY-nb-mwJ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="sUF-Ow-zVA" style="IBUITableViewCellStyleDefault" id="a91-PI-CCz">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="a91-PI-CCz" id="W5c-AQ-K2r">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sUF-Ow-zVA">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="fPm-Id-TEE" id="Uie-o2-dbg"/>
+                            <outlet property="delegate" destination="fPm-Id-TEE" id="ALk-gL-GWT"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Select Line" id="K0c-El-0hB"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7CT-HS-qG7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1176" y="2085"/>
         </scene>
         <!--Contacts Table View Controller-->
         <scene sceneID="842-84-rzD">
@@ -3749,7 +3787,7 @@
         <image name="nav-hist-black" width="25" height="25"/>
         <image name="nav-voicemail-black" width="33" height="16"/>
         <image name="power" width="100" height="100"/>
-        <image name="second" width="30" height="30"/>
+        <image name="second" width="265" height="154"/>
         <image name="white-arrow" width="30" height="31"/>
         <image name="white-arrow-outline" width="30" height="31"/>
         <image name="white-check" width="30" height="30"/>
@@ -3768,8 +3806,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="Uqi-bD-GAX"/>
         <segue reference="Cw0-XI-zbd"/>
-        <segue reference="xxt-tb-rPs"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29803921570000003" green="0.44705882349999998" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
 </document>
