@@ -13,6 +13,8 @@
 #import <MBProgressHUD.h>
 
 #import "JCConferenceCallCard.h"
+#import "JCAuthenticationManager.h"
+#import "JCBluetoothManager.h"
 
 NSString *const kJCCallCardManagerAddedCallNotification      = @"addedCall";
 NSString *const kJCCallCardManagerAnswerCallNotification     = @"answerCall";
@@ -35,6 +37,8 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 
 @interface JCCallCardManager ()<SipHandlerDelegate, JCCallCardDelegate>
 {
+    JCAuthenticationManager *_authenticationManager;
+    JCBluetoothManager *_bluetoothManager;
     SipHandler *_sipHandler;
 	NSString *_warmTransferNumber;
 }
@@ -48,11 +52,28 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     self = [super init];
     if (self)
     {
-        _sipHandler = [SipHandler sharedHandler];
-        _sipHandler.delegate = self;
+        _bluetoothManager = [[JCBluetoothManager alloc] init];
+        
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+        [center addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
+        [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:nil];
+        [center addObserver:self selector:@selector(userDidLoadMinimunData:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:nil];
+        
+        if (self.calls.count == 0 && self.authenticationManager.userAuthenticated && self.authenticationManager.userLoadedMininumData)
+        {
+            _sipHandler = [SipHandler sharedHandler];
+            _sipHandler.delegate = self;
+        }
     }
     return self;
 }
+
+
+
+
+
+
 
 /**
  * Dial an number. 
@@ -81,7 +102,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 -(void)finishWarmTransfer:(void (^)(bool success))completion
 {
 	if (_warmTransferNumber) {
-		[_sipHandler  warmTransferToNumber:_warmTransferNumber completion:^(bool success, NSError *error) {
+		[_sipHandler warmTransferToNumber:_warmTransferNumber completion:^(bool success, NSError *error) {
             _warmTransferNumber = nil;
             completion(success);
             if (error) {
@@ -121,13 +142,21 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     inactiveCall.hold = false;
 }
 
-#pragma mark - Properties -
+#pragma mark - Getters -
 
 - (NSMutableArray *)calls
 {
 	if (!_calls)
 		_calls = [NSMutableArray array];
 	return _calls;
+}
+
+-(JCAuthenticationManager *)authenticationManager
+{
+    if (!_authenticationManager) {
+        _authenticationManager = [JCAuthenticationManager sharedInstance];
+    }
+    return _authenticationManager;
 }
 
 #pragma mark - Private -
@@ -199,7 +228,6 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     }
 }
 
-
 - (NSString *)getContactNameByNumber:(NSString *)number
 {
     Lines *contact = [Lines MR_findFirstByAttribute:@"externsionNumber" withValue:number];
@@ -210,7 +238,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     return nil;
 }
 
--(void)addCall:(JCCallCard *)callCard
+- (void)addCall:(JCCallCard *)callCard
 {
     if ([self.calls containsObject:callCard])
         return;
@@ -233,7 +261,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
                                                                  }];
 }
 
--(void)removeCall:(JCCallCard *)callCard
+- (void)removeCall:(JCCallCard *)callCard
 {
     if (![self.calls containsObject:callCard])
         return;
@@ -248,9 +276,15 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
                                                                  kJCCallCardManagerPriorUpdateCount:[NSNumber numberWithInteger:priorCount],
                                                                  kJCCallCardManagerUpdateCount:[NSNumber numberWithInteger:self.calls.count]
                                                                  }];
+    
+    // If when removing the call we are backgrounded, we tell the sip handler to operate in background mode.
+    UIApplicationState state = [[UIApplication sharedApplication] applicationState];
+    if ((state == UIApplicationStateBackground || state == UIApplicationStateInactive) && self.calls.count == 0) {
+        [_sipHandler startKeepAwake];
+    }
 }
 
--(void)addConferenceCallWithCallArray:(NSArray *)callCards
+- (void)addConferenceCallWithCallArray:(NSArray *)callCards
 {
     if (!callCards || callCards.count < 2)
         return;
@@ -284,7 +318,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
                                                                  }];
 }
 
--(void)removeConferenceCall:(JCConferenceCallCard *)conferenceCallCard
+- (void)removeConferenceCall:(JCConferenceCallCard *)conferenceCallCard
 {
     if (![self.calls containsObject:conferenceCallCard]) {
         return;
@@ -321,6 +355,48 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
             [self hangUpCall:call];
         }
     }
+}
+
+#pragma mark - Notification Selectors -
+
+#pragma mark UIApplication
+
+-(void)applicationDidEnterBackground:(NSNotification *)notification
+{
+    if (_sipHandler && self.calls.count == 0) {
+        [_sipHandler startKeepAwake];
+    }
+}
+
+-(void)applicationWillEnterForeground:(NSNotification *)notification
+{
+    if (_sipHandler) {
+        
+        [_sipHandler stopKeepAwake];
+        if (self.calls.count == 0) {
+            [_sipHandler disconnect];
+            [_bluetoothManager enableBluetoothAudio];
+            [_sipHandler connect:NULL];
+        }
+        else if(self.calls.count == 1 && ((JCCallCard *)self.calls.lastObject).isIncoming)
+        {
+            [_bluetoothManager enableBluetoothAudio];
+        }
+    }
+}
+
+#pragma mark JCAuthenticationManager
+
+-(void)userDidLoadMinimunData:(NSNotification *)notification
+{
+    _sipHandler = [SipHandler sharedHandler];
+    _sipHandler.delegate = self;
+}
+
+-(void)userDidLogout:(NSNotification *)notification
+{
+    [_sipHandler disconnect];
+    _sipHandler = nil;
 }
 
 #pragma mark - Delegate Handlers -
