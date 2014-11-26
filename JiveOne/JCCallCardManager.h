@@ -41,8 +41,6 @@ typedef enum : NSUInteger {
 
 @property (nonatomic, strong) NSMutableArray *calls;
 
-@property (nonatomic, strong) JCAuthenticationManager *authenticationManager;
-
 // Attempts to dial a passed string following the dial type directive. When the dial operation was completed, we are
 // notified. If the dial action resulted in the creation of a dial card, an kJCCallCardManagerAddedCallNotification is
 // broadcasted through the notification center.

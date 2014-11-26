@@ -47,16 +47,24 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     LineConfiguration *lineConfiguration = [self objectAtIndexPath:indexPath];
-    lineConfiguration.active = TRUE;
-    if (lineConfiguration.managedObjectContext.hasChanges) {
-        __autoreleasing NSError *error;
-        if([lineConfiguration.managedObjectContext save:&error])
-            NSLog(@"%@", [error description]);
+    
+    // Mark line config as active, and all others inactive.
+    NSArray *lineConfigurations = self.fetchedResultsController.fetchedObjects;
+    for (LineConfiguration *lineConfig in lineConfigurations) {
+        if (lineConfiguration == lineConfig){
+            lineConfig.active = TRUE;
+        }
+        else{
+            lineConfig.active = FALSE;
+        }
     }
     
-    JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
-    if ([lineConfiguration isEqual:authenticationManager.lineConfiguration]) {
-        authenticationManager.lineConfiguration = lineConfiguration;
+    // If we have changes, save them.
+    if (lineConfiguration.managedObjectContext.hasChanges) {
+        [JCAuthenticationManager sharedInstance].lineConfiguration = lineConfiguration;
+        __autoreleasing NSError *error;
+        if(![lineConfiguration.managedObjectContext save:&error])
+            NSLog(@"%@", [error description]);
     }
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(lineConfigurationViewController:didSelectLineConfiguration:)]) {

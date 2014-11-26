@@ -60,7 +60,10 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
         [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:nil];
         [center addObserver:self selector:@selector(userDidLoadMinimunData:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:nil];
         
-        if (self.calls.count == 0 && self.authenticationManager.userAuthenticated && self.authenticationManager.userLoadedMininumData)
+        JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
+        [authenticationManager addObserver:self forKeyPath:@"lineConfiguration" options:NSKeyValueObservingOptionInitial context:NULL];
+        
+        if (self.calls.count == 0 && authenticationManager.userAuthenticated && authenticationManager.userLoadedMininumData)
         {
             _sipHandler = [SipHandler sharedHandler];
             _sipHandler.delegate = self;
@@ -69,11 +72,13 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     return self;
 }
 
-
-
-
-
-
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    // If the line configuration changes, reconnect the sip handler.
+    if ([keyPath isEqualToString:@"lineConfiguration"] && _sipHandler) {
+        [_sipHandler connect:NULL];
+    }
+}
 
 /**
  * Dial an number. 
@@ -151,14 +156,6 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 	return _calls;
 }
 
--(JCAuthenticationManager *)authenticationManager
-{
-    if (!_authenticationManager) {
-        _authenticationManager = [JCAuthenticationManager sharedInstance];
-    }
-    return _authenticationManager;
-}
-
 #pragma mark - Private -
 
 -(JCCallCard *)findInactiveCallCard
@@ -215,9 +212,6 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
                                    kJCCallCardManagerUpdatedIndex: [NSNumber numberWithInteger:index],
                                    });
             }
-            
-            
-            
         }
     }
     else
