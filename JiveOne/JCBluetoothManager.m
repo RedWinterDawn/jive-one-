@@ -40,14 +40,14 @@
     if (self) {
         [self enableBluetoothAudio];
         
-        _bluetoothCentralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+//        _bluetoothCentralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
         
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         [center addObserver:self selector:@selector(myInterruptionSelector:) name:AVAudioSessionInterruptionNotification object:nil];
         [center addObserver:self selector:@selector(audioSessionRouteChangeSelector:) name:AVAudioSessionRouteChangeNotification object:nil];
         [center addObserver:self selector:@selector(audioSessionMediaServicesWereLostSelector:) name:AVAudioSessionMediaServicesWereLostNotification object:nil];
         [center addObserver:self selector:@selector(audioSessionMediaServicesWereResetSelector:) name:AVAudioSessionMediaServicesWereResetNotification object:nil];
-        [center addObserver:self selector:@selector(audioSessionSilenceSecondaryAudioHintSelector:) name:AVAudioSessionSilenceSecondaryAudioHintNotification object:nil];
+//        [center addObserver:self selector:@selector(audioSessionSilenceSecondaryAudioHintSelector:) name:AVAudioSessionSilenceSecondaryAudioHintNotification object:nil];
     }
     return self;
 }
