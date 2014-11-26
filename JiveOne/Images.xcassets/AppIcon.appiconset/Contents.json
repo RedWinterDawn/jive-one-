@@ -3,91 +3,73 @@
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "jive76.png",
-      "scale" : "1x"
-    },
-    {
-      "size" : "29x29",
-      "idiom" : "iphone",
-      "filename" : "jive152-3.png",
+      "filename" : "green_logo2X.png",
       "scale" : "2x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "jive180-1.png",
+      "filename" : "green_logo3X.png",
       "scale" : "3x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "jive152-4.png",
+      "filename" : "green_logo40@2X.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "jive180-2.png",
+      "filename" : "green_logo40@3X.png",
       "scale" : "3x"
     },
     {
-      "size" : "57x57",
+      "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "jive76-1.png",
-      "scale" : "1x"
-    },
-    {
-      "size" : "57x57",
-      "idiom" : "iphone",
-      "filename" : "jive120.png",
+      "filename" : "green_logo60@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "jive120-1.png",
-      "scale" : "2x"
-    },
-    {
-      "size" : "60x60",
-      "idiom" : "iphone",
-      "filename" : "jive180.png",
+      "filename" : "green_logo60@3x.png",
       "scale" : "3x"
     },
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "jive76-2.png",
+      "filename" : "green_logo-1.png",
       "scale" : "1x"
     },
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "jive152.png",
+      "filename" : "green_logo2X-1.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "jive76-3.png",
+      "filename" : "green_logo40-1X.png",
       "scale" : "1x"
     },
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "jive152-1.png",
+      "filename" : "green_logo40@2X-1.png",
       "scale" : "2x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "jive76-4.png",
+      "filename" : "green_logo76@1.png",
       "scale" : "1x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "jive152-2.png",
+      "filename" : "green_logo76@2.png",
       "scale" : "2x"
     }
   ],
