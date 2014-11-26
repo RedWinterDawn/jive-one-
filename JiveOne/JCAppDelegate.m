@@ -81,8 +81,8 @@
      */
 	[AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
 #if DEBUG
-    //[[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
-    //[[AFNetworkActivityLogger sharedLogger] startLogging];
+    [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
+    [[AFNetworkActivityLogger sharedLogger] startLogging];
 #else
 	[[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelOff];
 #endif
@@ -98,11 +98,9 @@
     //Start monitor for Reachability
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     
-    //UAConfig *config = [UAConfig defaultConfig];
-    //[UAirship takeOff:config];
+    UAConfig *config = [UAConfig defaultConfig];
+    [UAirship takeOff:config];
     
-    
-
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     JCCallCardManager *callCardManager = [JCCallCardManager sharedManager];
     [center addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
