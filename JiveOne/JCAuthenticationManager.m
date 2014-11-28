@@ -14,25 +14,34 @@
 #import "JCV4ProvisioningClient.h"
 #import "JCAuthenticationManagerError.h"
 
-#define kUserAuthenticated @"keyuserauthenticated"
-#define kUserLoadedMinimumData @"keyuserloadedminimumdata"
+// Notifications
+NSString *const kJCAuthenticationManagerUserLoggedOutNotification           = @"userLoggedOut";
+NSString *const kJCAuthenticationManagerUserAuthenticatedNotification       = @"userAuthenticated";
+NSString *const kJCAuthenticationManagerUserLoadedMinimumDataNotification   = @"userLoadedMinimumData";
+NSString *const kJCAuthenticationManagerAuthenticationFailedNotification    = @"authenticationFailed";
 
 // Keychain
-NSString *const kJCAuthenticationManagerKeychainStoreIdentifier = @"keyjiveauthstore";
+NSString *const kJCAuthenticationManagerKeychainStoreIdentifier             = @"keyjiveauthstore";
 
-// KVO Keys
-NSString *const kJCAuthenticationManagerUserAutheticatedAttributeKey = @"userAuthenticated";
-NSString *const kJCAuthenticationManagerUserLoadedMinimumDataAttributeKey = @"userLoadedMinimumData";
-NSString *const kJCAuthenticationManagerRememberMeAttributeKey = @"userLoadedMinimumData";
+// KVO and NSUserDefaults Keys
+NSString *const kJCAuthenticationManagerUserAutheticatedAttributeKey        = @"userAuthenticated";
+NSString *const kJCAuthenticationManagerUserLoadedMinimumDataAttributeKey   = @"userLoadedMinimumData";
+NSString *const kJCAuthenticationManagerRememberMeAttributeKey              = @"rememberMe";
+NSString *const kJCAuthenticationManagerRefreshTokenAttributeKey            = @"refreshToken";
+NSString *const kJCAuthenticationManagerJiveUserIdKey                       = @"jiveUserId";
 
-// Notifications
-NSString *const kJCAuthenticationManagerUserLoggedOutNotification = @"userLoggedOut";
-NSString *const kJCAuthenticationManagerUserAuthenticatedNotification = @"userAuthenticated";
-NSString *const kJCAuthenticationManagerUserLoadedMinimumDataNotification = @"userLoadedMinimumData";
-NSString *const kJCAuthenticationManagerAuthenticationFailedNotification = @"authenticationFailed";
 
 // Javascript
-NSString *const kJCAuthenticationManagerJavascriptString = @"document.getElementById('username').value = '%@';document.getElementById('password').value = '%@';document.getElementById('go-button').click()";
+NSString *const kJCAuthenticationManagerJavascriptString    = @"document.getElementById('username').value = '%@';document.getElementById('password').value = '%@';document.getElementById('go-button').click()";
+
+// OAuth
+NSString *const kJCAuthenticationManagerAccessTokenUrl      = @"https://auth.jive.com/oauth2/v2/grant?client_id=%@&response_type=token&scope=%@&redirect_uri=%@";
+NSString *const kJCAuthenticationManagerRefreshTokenUrl     = @"https://auth.jive.com/oauth2/v2/token";
+NSString *const kJCAuthenticationManagerScopeProfile        = @"contacts.v1.profile.read";
+NSString *const kJCAuthenticationManagerRefreshTokenData    = @"refresh_token=%@&client_id=%@&redirect_uri=%@&grant_type=refresh_token";
+NSString *const kJCAuthenticationManagerClientId            = @"f62d7f80-3749-11e3-9b37-542696d7c505";
+NSString *const kJCAuthenticationManagerClientSecret        = @"enXabnU5KuVm4XRSWGkU";
+NSString *const kJCAuthenticationManagerURLSchemeCallback   = @"jiveclient://token";
 
 static int MAX_LOGIN_ATTEMPTS = 2;
 
@@ -97,7 +106,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     _username = username;
     _password = password;
     
-    NSString *url_path = [NSString stringWithFormat:kOsgiAuthURL, kOAuthClientId, kScopeProfile, kURLSchemeCallback];
+    NSString *url_path = [NSString stringWithFormat:kJCAuthenticationManagerAccessTokenUrl, kJCAuthenticationManagerClientId, kJCAuthenticationManagerScopeProfile, kJCAuthenticationManagerURLSchemeCallback];
     NSURL *url = [NSURL URLWithString:url_path];
     
 #if DEBUG
@@ -147,7 +156,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 {
     [self willChangeValueForKey:kJCAuthenticationManagerUserAutheticatedAttributeKey];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setBool:YES forKey:kUserAuthenticated];
+    [defaults setBool:YES forKey:kJCAuthenticationManagerUserAutheticatedAttributeKey];
     [defaults synchronize];
     [self didChangeValueForKey:kJCAuthenticationManagerUserAutheticatedAttributeKey];
     
@@ -161,7 +170,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 {
     [self willChangeValueForKey:kJCAuthenticationManagerUserLoadedMinimumDataAttributeKey];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setBool:userLoadedMininumData forKey:kUserLoadedMinimumData];
+    [defaults setBool:userLoadedMininumData forKey:kJCAuthenticationManagerUserLoadedMinimumDataAttributeKey];
     [defaults synchronize];
     [self didChangeValueForKey:kJCAuthenticationManagerUserLoadedMinimumDataAttributeKey];
     
@@ -174,7 +183,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 {
     [self willChangeValueForKey:kJCAuthenticationManagerRememberMeAttributeKey];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setBool:remember forKey:kRememberMe];
+    [defaults setBool:remember forKey:kJCAuthenticationManagerRememberMeAttributeKey];
     [defaults synchronize];
     [self didChangeValueForKey:kJCAuthenticationManagerRememberMeAttributeKey];
 }
@@ -189,33 +198,37 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 -(void)setRefreshToken:(NSString *)refreshToken
 {
+    [self willChangeValueForKey:kJCAuthenticationManagerRefreshTokenAttributeKey];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:refreshToken forKey:@"refreshToken"];
+    [defaults setObject:refreshToken forKey:kJCAuthenticationManagerRefreshTokenAttributeKey];
     [defaults synchronize];
+    [self didChangeValueForKey:kJCAuthenticationManagerRefreshTokenAttributeKey];
 }
 
 -(void)setJiveUserId:(NSString *)userName
 {
+    [self willChangeValueForKey:kJCAuthenticationManagerJiveUserIdKey];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:userName forKey:kUserName];
+    [defaults setObject:userName forKey:kJCAuthenticationManagerJiveUserIdKey];
     [defaults synchronize];
+    [self didChangeValueForKey:kJCAuthenticationManagerJiveUserIdKey];
 }
 
 #pragma mark - Getters -
 
 - (BOOL)userAuthenticated
 {
-    return [[NSUserDefaults standardUserDefaults]  boolForKey:kUserAuthenticated];
+    return [[NSUserDefaults standardUserDefaults]  boolForKey:kJCAuthenticationManagerUserAutheticatedAttributeKey];
 }
 
 - (BOOL)userLoadedMininumData
 {
-    return [[NSUserDefaults standardUserDefaults]  boolForKey:kUserLoadedMinimumData];
+    return [[NSUserDefaults standardUserDefaults]  boolForKey:kJCAuthenticationManagerUserLoadedMinimumDataAttributeKey];
 }
 
 - (BOOL)rememberMe
 {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:kRememberMe];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kJCAuthenticationManagerRememberMeAttributeKey];
 }
 
 -(NSString *)authToken
@@ -237,12 +250,12 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 -(NSString *)refreshToken
 {
-    return [[NSUserDefaults standardUserDefaults] valueForKey:@"refreshToken"];
+    return [[NSUserDefaults standardUserDefaults] valueForKey:kJCAuthenticationManagerRefreshTokenAttributeKey];
 }
 
 -(NSString *)jiveUserId
 {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:kJCAuthenticationManagerJiveUserIdKey];
 }
 
 -(PBX *)pbx
