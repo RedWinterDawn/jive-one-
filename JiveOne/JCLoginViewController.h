@@ -15,4 +15,5 @@
 @property (weak, nonatomic) IBOutlet UISwitch *rememberMeSwitch;
 
 - (IBAction)rememberMe:(id)sender;
+
 @end

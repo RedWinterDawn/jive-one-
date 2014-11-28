@@ -8,13 +8,13 @@
 
 #import "JCLoginViewController.h"
 #import "JCAuthenticationManager.h"
-#import <MBProgressHUD.h>
 #import "UITextField+ELFixSecureTextFieldFont.h"
+
+#import "UIViewController+HUD.h"
 
 @interface JCLoginViewController () <NSFileManagerDelegate>
 {
     JCAuthenticationManager *_authenticationManager;
-    MBProgressHUD *_hud;
 }
 @end
 
@@ -49,6 +49,7 @@
     self.rememberMeSwitch.on = _authenticationManager.rememberMe;
     if (_authenticationManager.rememberMe) {
         self.usernameTextField.text = _authenticationManager.jiveUserId;
+        [self.passwordTextField becomeFirstResponder];
     } else {
 #if DEBUG
         self.usernameTextField.text = @"jivetesting@gmail.com";
@@ -60,7 +61,6 @@
     [Flurry logEvent:@"Login View"];
 }
 
-//@peter This hadles when you touch anywhere else on the screen the key board is dismissed.
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     [self.view endEditing:YES];
 }
@@ -73,65 +73,35 @@
 #pragma mark - IBActions -
 
 - (IBAction)rememberMe:(id)sender {
-    [[JCAuthenticationManager sharedInstance] setRememberMe:((UISwitch *)sender).on];
+    if ([sender isKindOfClass:[UISwitch class]]) {
+        _authenticationManager.rememberMe = ((UISwitch *)sender).on;
+    }
 }
 
 #pragma mark - Private - 
 
 - (void)login
 {
-    [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil)
-                    detail:NSLocalizedString(@"Logging In", nil)];
+    [self showHudWithTitle:@"One Moment Please"
+                    detail:@"Logging In"];
     
     [_authenticationManager loginWithUsername:self.usernameTextField.text
                                      password:self.passwordTextField.text
                                     completed:^(BOOL success, NSError *error) {
                                         [self hideHud];
                                         if (error) {
-                                            [self alertStatus:error.localizedFailureReason message:error.localizedDescription];
+                                            [self showSimpleAlert:error.localizedFailureReason
+                                                          message:error.localizedDescription];
                                         }
                                     }];
-}
-
-- (void)showHudWithTitle:(NSString*)title detail:(NSString*)detail
-{
-    if (!_hud) {
-        _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        _hud.mode = MBProgressHUDModeIndeterminate;
-    }
-    
-    _hud.labelText = title;
-    _hud.detailsLabelText = detail;
-    [_hud show:YES];
-}
-
-- (void)hideHud
-{
-    if (_hud) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        [_hud removeFromSuperview];
-        _hud = nil;
-    }
-}
-
--(void)alertStatus:(NSString*)title message:(NSString*)message
-{
-    NSLog(@"%@: %@", title, message);
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-                                                    message:message
-                                                   delegate:self
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil, nil];
-    [alert show];
 }
 
 #pragma mark - Notification Handlers -
 
 - (void)authenticated:(NSNotification*)notification
 {
-    [self showHudWithTitle:NSLocalizedString(@"One Moment Please", nil)
-                    detail:NSLocalizedString(@"Loading data", nil)];
+    [self showHudWithTitle:@"One Moment Please"
+                    detail:@"Loading data"];
 }
 
 #pragma mark - Delegate Handlers -

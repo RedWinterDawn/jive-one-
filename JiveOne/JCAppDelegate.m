@@ -18,7 +18,6 @@
 #import "TRVSMonitor.h"
 #import "JCVersion.h"
 #import "LoggerClient.h"
-#import "SipHandler.h"
 
 #import "Voicemail+Custom.h"
 #import "JCCallCardManager.h"
@@ -27,7 +26,6 @@
 #import "JCApplicationSwitcherDelegate.h"
 #import "JCV5ApiClient.h"
 #import "JCSocketDispatch.h"
-#import "SipHandler.h"
 
 @interface JCAppDelegate () <JCCallerViewControllerDelegate, UAPushNotificationDelegate, UARegistrationDelegate>
 {
@@ -95,7 +93,7 @@
     [self setupDatabase];
 
     //Register for background fetches
-    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+    [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     
     //Start monitor for Reachability
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
@@ -145,14 +143,8 @@
 -(void)applicationDidEnterBackground:(UIApplication *)application
 {
     LOG_Info();
-    
-    if (_authenticationManager.userAuthenticated && _authenticationManager.userLoadedMininumData) {
-    
-        LogMessage(@"socket", 4, @"Will Call CloseSocket");
-        [self stopSocket];
-	
-        [[SipHandler sharedHandler] startKeepAwake];
-    }
+    LogMessage(@"socket", 4, @"Will Call CloseSocket");
+    [self stopSocket];
 }
 
 /**
@@ -165,11 +157,10 @@
 
     [Flurry logEvent:@"Resumed Session"];
     
-    if (_authenticationManager.userAuthenticated && _authenticationManager.userLoadedMininumData) {
+    //[[NotificationView sharedInstance] didChangeConnection:nil];
+    if ([[JCAuthenticationManager sharedInstance] userAuthenticated] && [[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {
         LogMessage(@"socket", 4, @"Will Call requestSession");
         [self startSocket:NO];
-        
-        [[SipHandler sharedHandler] stopKeepAwake];
     }
 }
 
@@ -180,12 +171,11 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     LOG_Info();
-    
-    _didNotify = false;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(alertUserToUpdate:) name:@"AppIsOutdated" object:nil];
-    [[JCVersion sharedClient] getVersion];
 }
 
+/**
+ * Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+ */
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     LOG_Info();
@@ -230,7 +220,7 @@
     [self stopSocket];
     
     [[JCV5ApiClient sharedClient] stopAllOperations];
-    [[SipHandler sharedHandler] disconnect];
+    
     [[JCOmniPresence sharedInstance] truncateAllTablesAtLogout];
     
     [JCApplicationSwitcherDelegate reset];
@@ -241,35 +231,7 @@
     [[UIApplication sharedApplication] unregisterForRemoteNotifications];
 }
 
-
-
 #pragma mark - Private -
-
--(void)alertUserToUpdate:(NSNotification *)notification
-{
-    LOG_Info();
-    
-    if ([[notification name] isEqualToString:@"AppIsOutdated"] && (!_didNotify))
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update Required"
-                                                        message:@"Please download the latest version of JiveApp Beta."
-                                                       delegate:self
-                                              cancelButtonTitle:@"Maybe later"
-                                              otherButtonTitles:@"Download", nil];
-        [alert show];
-    }
-    _didNotify = true;
-}
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    LOG_Info();
-    
-    if (buttonIndex > 0) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-services://?action=download-manifest&url=https://jiveios.local/JiveOne.plist"]];
-    }
-}
-
 
 - (void)startSocket:(BOOL)inBackground
 {
