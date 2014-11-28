@@ -299,7 +299,11 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 -(void)receivedAccessTokenFromURL:(NSURL *)url
 {
-    NSDictionary *tokenData = [self tokenDataFromURL:url];
+    [self recievedAccessTokenData:[self tokenDataFromURL:url]];
+}
+
+-(void)recievedAccessTokenData:(NSDictionary *)tokenData
+{
     if (tokenData.count > 0)
     {
         if ([tokenData objectForKey:@"access_token"]) {
@@ -406,6 +410,83 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     }
     
     return data;
+}
+
+#pragma mark - Token Refresh -
+
+/*- (void)checkForTokenValidity
+{
+    //Rolling back to hack
+    //[self verifyToken];
+    NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
+    [[JCV5ApiClient sharedClient] getMailboxReferencesForUser:username completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+        if (suceeded) {
+            JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
+            if (![delegate.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenSucceeded object:responseObject];
+            }
+        }
+        else {
+            NSLog(@"%@", error);
+            
+            NSInteger status = operation.response.statusCode;
+            
+            if ((status >= 400 && status <= 417) || status == 200) {
+                // Since we're not keeping the user logged in with a verifyToken,
+                // this code has been commentend. This will change, however, so leave it here.
+                //                if ([self userAuthenticated]) {
+                //                    [self requestTokenRefresh];
+                //                }
+                //                else
+                //                {
+                JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
+                if (![delegate.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
+                    //[delegate changeRootViewController:JCRootLoginViewController];
+                }
+                else {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenFailed object:nil];
+                }
+                //                }
+            }
+            else {
+                NSLog(@"%@", operation.response);
+            }
+        }
+    }];
+}*/
+
+- (void)requestTokenRefresh
+{
+    NSString *refreshToken = self.refreshToken;
+    if (refreshToken.isEmpty) {
+        return;
+    }
+    
+    NSURL *url = [NSURL URLWithString:kJCAuthenticationManagerRefreshTokenUrl];
+    NSString *data = [NSString stringWithFormat:kJCAuthenticationManagerRefreshTokenData, refreshToken, kJCAuthenticationManagerClientId, kJCAuthenticationManagerURLSchemeCallback];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:[data dataUsingEncoding:NSUTF8StringEncoding]];
+    NSString* basicAuth = [@"Basic " stringByAppendingString:[Common encodeStringToBase64:[NSString stringWithFormat:@"%@:%@", kJCAuthenticationManagerClientId, kJCAuthenticationManagerClientSecret]]];
+    [request setValue:basicAuth forHTTPHeaderField:@"Authorization"];
+    
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                               if (data) {
+                                   __autoreleasing NSError *dataError;
+                                   NSDictionary *tokenData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&dataError];
+                                   if ([tokenData objectForKey:@"access_token"]) {
+                                       [self recievedAccessTokenData:tokenData];
+                                   }
+                                   else {
+                                       [self reportError:AutheticationError description:@"An Error Has Occurred, Please Try Again"];
+                                   }
+                               } else {
+                                   [self reportError:NetworkError description:@"An Error Has Occurred, Please Try Again"];
+                               }
+                           }];
 }
 
 #pragma mark - Delegate Handlers -
