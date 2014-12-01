@@ -402,6 +402,16 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 
 #pragma mark SipHanglerDelegate
 
+- (void)answerAutoCall:(JCLineSession *)session
+{
+	for (JCCallCard *callCard in self.calls) {
+		if (callCard.lineSession.mSessionId == session.mSessionId)
+		{
+			[self answerCall:callCard];
+		}
+	}
+}
+
 -(void)addLineSession:(JCLineSession *)session
 {
     JCCallCard *callCard = [[JCCallCard alloc] initWithLineSession:session];

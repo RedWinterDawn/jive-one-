@@ -32,6 +32,11 @@
 #define ALERT_TAG_REFER 100
 #define OUTBOUND_SIP_SERVER_PORT 5061
 
+#define AUTO_ANSWER_CHECK_COUNT 3
+#define AUTO_ANSWER_VERIFY0 @"Answer-Mode: auto"
+#define AUTO_ANSWER_VERIFY1 @"Alert-Info: Intercom"
+#define AUTO_ANSWER_VERIFY2 @"answer-after=0"
+
 
 NSString *const kSipHandlerServerAgentname = @"Jive iOS Client";
 NSString *const kSipHandlerFetchLineConfigurationErrorMessage = @"Unable to fetch the line configuration";
@@ -45,6 +50,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     AFNetworkReachabilityStatus _previousNetworkStatus;
 	VideoViewController *_videoController;
 	bool inConference;
+	bool autoAnswer;
 }
 
 @property (nonatomic) NSMutableArray *lineSessions;
@@ -319,6 +325,10 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	}
     
 	return lineSession;
+}
+
+- (void)answerSession:(JCLineSession *)lineSession {
+	[self answerSession:lineSession completion:nil];
 }
 
 - (void)answerSession:(JCLineSession *)lineSession completion:(CompletionHandler)completion
@@ -745,7 +755,13 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     [idleLine setMVideoState:existsVideo];                                                          // Flag if video call.
 	[idleLine setCallTitle:[NSString stringWithUTF8String:callerDisplayName]];                      // Get Call Title
 	[idleLine setCallDetail:[self formatCallDetail:[NSString stringWithUTF8String:caller]]];        // Get Call Detail.
+	
     [self setSessionState:JCCallIncoming forSession:idleLine event:@"onInviteIncoming" error:nil];  // Set the session state.
+	
+	if (autoAnswer) {
+		autoAnswer = false;
+		[self.delegate answerAutoCall:idleLine];
+	}
 	
     // If we are backgrounded, push out a local notification
 	if ([UIApplication sharedApplication].applicationState ==  UIApplicationStateBackground) {
@@ -1062,10 +1078,16 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 - (void)onReceivedSignaling:(long)sessionId message:(char*)message
 {
-	// TODO: Implement.
-    
-    // This event will be fired when the SDK received a SIP message
-	// you can use signaling to access the SIP message.
+	NSString *sipMessage = [NSString stringWithUTF8String:message];
+	
+	if ([sipMessage rangeOfString:AUTO_ANSWER_VERIFY0].location != NSNotFound &&
+		[sipMessage rangeOfString:AUTO_ANSWER_VERIFY1].location != NSNotFound &&
+		[sipMessage rangeOfString:AUTO_ANSWER_VERIFY2].location != NSNotFound) {
+	
+		autoAnswer = true;
+	}
+	
+	
 }
 
 - (void)onSendingSignaling:(long)sessionId message:(char*)message

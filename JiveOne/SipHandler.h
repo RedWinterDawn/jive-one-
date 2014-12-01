@@ -16,6 +16,7 @@ extern NSString *const kSipHandlerRegisteredSelectorKey;
 
 @protocol SipHandlerDelegate <NSObject>
 
+-(void)answerAutoCall:(JCLineSession *)session;
 -(void)addLineSession:(JCLineSession *)session;
 -(void)removeLineSession:(JCLineSession *)session;
 
