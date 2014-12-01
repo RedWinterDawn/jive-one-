@@ -1308,14 +1308,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="meF-1G-p2k" userLabel="Keypad">
-                                <rect key="frame" x="0.0" y="-7" width="320" height="298"/>
+                                <rect key="frame" x="0.0" y="1" width="320" height="297"/>
                                 <subviews>
                                     <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0XG-qH-giP" customClass="JCDialStringLabel">
-                                        <rect key="frame" x="60" y="0.0" width="200" height="60"/>
-                                        <color key="backgroundColor" red="0.12941176469999999" green="0.44705882349999998" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
+                                        <rect key="frame" x="50" y="0.0" width="220" height="53"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="J3N-Vb-lVj"/>
-                                            <constraint firstAttribute="width" secondItem="0XG-qH-giP" secondAttribute="height" multiplier="10:3" id="oTN-pN-6YW"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="30"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -1325,8 +1323,11 @@
                                         </connections>
                                     </label>
                                     <button opaque="NO" contentMode="center" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="igS-G2-NfM">
-                                        <rect key="frame" x="268" y="0.0" width="52" height="60"/>
+                                        <rect key="frame" x="270" y="0.0" width="50" height="53"/>
                                         <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="1TT-Ku-ddJ"/>
+                                        </constraints>
                                         <state key="normal" image="delete-black">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -1336,9 +1337,9 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nsS-HF-huE">
-                                        <rect key="frame" x="0.0" y="59" width="107" height="60"/>
+                                        <rect key="frame" x="0.0" y="68" width="107" height="54"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="nsS-HF-huE" secondAttribute="height" multiplier="25:14" id="POJ-Wh-2w9"/>
+                                            <constraint firstAttribute="width" secondItem="nsS-HF-huE" secondAttribute="height" multiplier="2:1" id="POJ-Wh-2w9"/>
                                         </constraints>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -1371,9 +1372,9 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7br-ug-lFI">
-                                        <rect key="frame" x="107" y="60" width="106" height="59"/>
+                                        <rect key="frame" x="107" y="68" width="106" height="54"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="7br-ug-lFI" secondAttribute="height" multiplier="25:14" id="S45-pP-9rf"/>
+                                            <constraint firstAttribute="width" secondItem="7br-ug-lFI" secondAttribute="height" multiplier="2:1" id="S45-pP-9rf"/>
                                         </constraints>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -1406,9 +1407,9 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Bh-Zq-F0d">
-                                        <rect key="frame" x="213" y="59" width="107" height="60"/>
+                                        <rect key="frame" x="213" y="68" width="107" height="54"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="8Bh-Zq-F0d" secondAttribute="height" multiplier="25:14" id="AQf-xH-OhI"/>
+                                            <constraint firstAttribute="width" secondItem="8Bh-Zq-F0d" secondAttribute="height" multiplier="2:1" id="AQf-xH-OhI"/>
                                         </constraints>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -1441,9 +1442,9 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vTE-Gq-ApS">
-                                        <rect key="frame" x="0.0" y="117" width="107" height="64"/>
+                                        <rect key="frame" x="0.0" y="122" width="107" height="53"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="vTE-Gq-ApS" secondAttribute="height" multiplier="5:3" id="g8v-8n-RH2"/>
+                                            <constraint firstAttribute="width" secondItem="vTE-Gq-ApS" secondAttribute="height" multiplier="2:1" id="g8v-8n-RH2"/>
                                         </constraints>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -1476,10 +1477,10 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IKI-cG-rUa">
-                                        <rect key="frame" x="107" y="119" width="106" height="60"/>
+                                        <rect key="frame" x="107" y="122" width="106" height="53"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="dD1-jI-ZYf"/>
-                                            <constraint firstAttribute="width" secondItem="IKI-cG-rUa" secondAttribute="height" multiplier="25:14" id="fs6-Ht-p54"/>
+                                            <constraint firstAttribute="width" secondItem="IKI-cG-rUa" secondAttribute="height" multiplier="2:1" id="Gu4-5e-taQ"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="dD1-jI-ZYf"/>
                                         </constraints>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -1512,9 +1513,9 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YzY-zZ-v3g">
-                                        <rect key="frame" x="213" y="117" width="107" height="64"/>
+                                        <rect key="frame" x="213" y="121" width="107" height="54"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="YzY-zZ-v3g" secondAttribute="height" multiplier="5:3" id="vHg-I3-e5l"/>
+                                            <constraint firstAttribute="width" secondItem="YzY-zZ-v3g" secondAttribute="height" multiplier="2:1" id="vHg-I3-e5l"/>
                                         </constraints>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -1547,9 +1548,9 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gPW-Ap-sqH">
-                                        <rect key="frame" x="0.0" y="179" width="107" height="64"/>
+                                        <rect key="frame" x="0.0" y="175" width="107" height="53"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="gPW-Ap-sqH" secondAttribute="height" multiplier="5:3" id="28B-Ax-Bf5"/>
+                                            <constraint firstAttribute="width" secondItem="gPW-Ap-sqH" secondAttribute="height" multiplier="2:1" id="28B-Ax-Bf5"/>
                                         </constraints>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -1575,9 +1576,9 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="9" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="utg-cS-vHJ">
-                                        <rect key="frame" x="213" y="180" width="107" height="64"/>
+                                        <rect key="frame" x="213" y="175" width="107" height="53"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="utg-cS-vHJ" secondAttribute="height" multiplier="5:3" id="0Vh-5w-qjp"/>
+                                            <constraint firstAttribute="width" secondItem="utg-cS-vHJ" secondAttribute="height" multiplier="2:1" id="0Vh-5w-qjp"/>
                                         </constraints>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -1602,10 +1603,10 @@
                                             <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="eym-Eb-npR"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="8" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ggV-Gf-26E">
-                                        <rect key="frame" x="107" y="179" width="106" height="65"/>
+                                    <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ggV-Gf-26E">
+                                        <rect key="frame" x="107" y="175" width="106" height="53"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="ggV-Gf-26E" secondAttribute="height" multiplier="5:3" id="FOK-nD-QzH"/>
+                                            <constraint firstAttribute="width" secondItem="ggV-Gf-26E" secondAttribute="height" multiplier="2:1" id="FOK-nD-QzH"/>
                                         </constraints>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -1637,45 +1638,10 @@
                                             <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="PL4-5B-9ap"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="10" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZJt-14-a51">
-                                        <rect key="frame" x="0.0" y="244" width="107" height="59"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="ZJt-14-a51" secondAttribute="height" multiplier="25:14" id="OWe-L0-G4W"/>
-                                        </constraints>
-                                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
-                                        <state key="normal">
-                                            <attributedString key="attributedTitle">
-                                                <fragment content="*">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <font key="NSFont" size="35" name="HelveticaNeue-Thin"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                                <fragment content=" ">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
-                                                        <font key="NSFont" size="12" name=".LucidaGrandeUI"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                                <fragment content="ABC">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="0.0" colorSpace="deviceRGB"/>
-                                                        <font key="NSFont" size="12" name="HelveticaNeue-Medium"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
-                                        </state>
-                                        <connections>
-                                            <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="TWd-HV-yYy"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b2R-GS-nch">
-                                        <rect key="frame" x="107" y="244" width="106" height="59"/>
+                                        <rect key="frame" x="107" y="228" width="106" height="53"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="b2R-GS-nch" secondAttribute="height" multiplier="25:14" id="IOa-Wj-Ujn"/>
+                                            <constraint firstAttribute="width" secondItem="b2R-GS-nch" secondAttribute="height" multiplier="2:1" id="IOa-Wj-Ujn"/>
                                         </constraints>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -1708,9 +1674,9 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="11" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uSH-QK-bW1">
-                                        <rect key="frame" x="213" y="244" width="107" height="59"/>
+                                        <rect key="frame" x="213" y="228" width="107" height="53"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="uSH-QK-bW1" secondAttribute="height" multiplier="25:14" id="Q7Y-dh-CCi"/>
+                                            <constraint firstAttribute="width" secondItem="uSH-QK-bW1" secondAttribute="height" multiplier="2:1" id="Q7Y-dh-CCi"/>
                                         </constraints>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -1742,15 +1708,53 @@
                                             <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="EIJ-dA-OgE"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" tag="10" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZJt-14-a51">
+                                        <rect key="frame" x="0.0" y="228" width="107" height="53"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="ZJt-14-a51" secondAttribute="height" multiplier="2:1" id="OWe-L0-G4W"/>
+                                        </constraints>
+                                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="*">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <font key="NSFont" size="35" name="HelveticaNeue-Thin"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content=" ">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
+                                                        <font key="NSFont" size="12" name=".LucidaGrandeUI"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content="ABC">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="0.0" colorSpace="deviceRGB"/>
+                                                        <font key="NSFont" size="12" name="HelveticaNeue-Medium"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <connections>
+                                            <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="TWd-HV-yYy"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="IKI-cG-rUa" firstAttribute="width" secondItem="gPW-Ap-sqH" secondAttribute="width" id="14v-Nh-s9r"/>
                                     <constraint firstItem="nsS-HF-huE" firstAttribute="centerY" secondItem="7br-ug-lFI" secondAttribute="centerY" id="1zP-f0-zvq"/>
-                                    <constraint firstItem="igS-G2-NfM" firstAttribute="top" secondItem="meF-1G-p2k" secondAttribute="top" id="5fd-KZ-vS1"/>
+                                    <constraint firstItem="igS-G2-NfM" firstAttribute="top" relation="greaterThanOrEqual" secondItem="meF-1G-p2k" secondAttribute="top" id="5fd-KZ-vS1"/>
                                     <constraint firstItem="vTE-Gq-ApS" firstAttribute="leading" secondItem="meF-1G-p2k" secondAttribute="leading" id="7H4-0O-JwA"/>
                                     <constraint firstItem="ggV-Gf-26E" firstAttribute="centerY" secondItem="gPW-Ap-sqH" secondAttribute="centerY" id="AXO-hg-Yg0"/>
+                                    <constraint firstItem="igS-G2-NfM" firstAttribute="leading" secondItem="0XG-qH-giP" secondAttribute="trailing" id="CLJ-l6-9Ii"/>
                                     <constraint firstItem="IKI-cG-rUa" firstAttribute="centerX" secondItem="7br-ug-lFI" secondAttribute="centerX" id="CiT-g9-y5I"/>
+                                    <constraint firstItem="0XG-qH-giP" firstAttribute="leading" relation="lessThanOrEqual" secondItem="meF-1G-p2k" secondAttribute="leading" constant="50" id="D43-RT-IRX"/>
+                                    <constraint firstItem="0XG-qH-giP" firstAttribute="centerY" secondItem="igS-G2-NfM" secondAttribute="centerY" id="EOW-o1-X4I"/>
                                     <constraint firstItem="IKI-cG-rUa" firstAttribute="top" secondItem="7br-ug-lFI" secondAttribute="bottom" id="ER4-Qs-YxC"/>
                                     <constraint firstItem="b2R-GS-nch" firstAttribute="centerX" secondItem="IKI-cG-rUa" secondAttribute="centerX" id="FP3-71-lqb"/>
                                     <constraint firstItem="0XG-qH-giP" firstAttribute="top" relation="greaterThanOrEqual" secondItem="meF-1G-p2k" secondAttribute="top" id="Fbs-o3-ojb"/>
@@ -1759,11 +1763,11 @@
                                     <constraint firstAttribute="trailing" secondItem="YzY-zZ-v3g" secondAttribute="trailing" id="HFk-Vs-enT"/>
                                     <constraint firstAttribute="centerY" secondItem="IKI-cG-rUa" secondAttribute="centerY" id="HbF-KR-HFA"/>
                                     <constraint firstItem="YzY-zZ-v3g" firstAttribute="centerY" secondItem="IKI-cG-rUa" secondAttribute="centerY" id="I3d-yn-QEc"/>
-                                    <constraint firstItem="igS-G2-NfM" firstAttribute="leading" secondItem="0XG-qH-giP" secondAttribute="trailing" constant="8" id="IBc-xs-GmN"/>
                                     <constraint firstItem="7br-ug-lFI" firstAttribute="top" secondItem="0XG-qH-giP" secondAttribute="bottom" priority="1" id="IUS-7x-aBy"/>
                                     <constraint firstItem="0XG-qH-giP" firstAttribute="top" relation="lessThanOrEqual" secondItem="meF-1G-p2k" secondAttribute="top" constant="30" id="IVa-D7-5k0"/>
                                     <constraint firstAttribute="centerX" secondItem="IKI-cG-rUa" secondAttribute="centerX" id="J1U-M4-WH9"/>
                                     <constraint firstAttribute="trailing" secondItem="igS-G2-NfM" secondAttribute="trailing" id="Kfb-qK-XJp"/>
+                                    <constraint firstItem="IKI-cG-rUa" firstAttribute="height" secondItem="igS-G2-NfM" secondAttribute="height" id="Nmw-gI-E9U"/>
                                     <constraint firstAttribute="centerX" secondItem="0XG-qH-giP" secondAttribute="centerX" id="Oim-oO-Gvu"/>
                                     <constraint firstItem="vTE-Gq-ApS" firstAttribute="centerX" secondItem="gPW-Ap-sqH" secondAttribute="centerX" id="OxN-7u-xMv"/>
                                     <constraint firstItem="0XG-qH-giP" firstAttribute="top" secondItem="meF-1G-p2k" secondAttribute="top" priority="250" id="QQo-v6-swR"/>
@@ -1771,14 +1775,14 @@
                                     <constraint firstItem="IKI-cG-rUa" firstAttribute="width" secondItem="nsS-HF-huE" secondAttribute="width" id="Tn7-lf-WqF"/>
                                     <constraint firstItem="8Bh-Zq-F0d" firstAttribute="width" secondItem="IKI-cG-rUa" secondAttribute="width" id="Usd-nJ-ZY7"/>
                                     <constraint firstItem="YzY-zZ-v3g" firstAttribute="width" secondItem="IKI-cG-rUa" secondAttribute="width" id="Wbh-XC-62j"/>
-                                    <constraint firstItem="IKI-cG-rUa" firstAttribute="height" secondItem="igS-G2-NfM" secondAttribute="height" id="XPT-Vw-ZFc"/>
                                     <constraint firstItem="uSH-QK-bW1" firstAttribute="width" secondItem="IKI-cG-rUa" secondAttribute="width" id="Xus-Kq-xYD"/>
                                     <constraint firstItem="ZJt-14-a51" firstAttribute="centerY" secondItem="b2R-GS-nch" secondAttribute="centerY" id="YqW-vF-VJB"/>
                                     <constraint firstItem="ZJt-14-a51" firstAttribute="width" secondItem="IKI-cG-rUa" secondAttribute="width" id="Zpu-RW-lXo"/>
                                     <constraint firstItem="utg-cS-vHJ" firstAttribute="centerX" secondItem="YzY-zZ-v3g" secondAttribute="centerX" id="aIW-by-J6d"/>
                                     <constraint firstItem="7br-ug-lFI" firstAttribute="width" secondItem="IKI-cG-rUa" secondAttribute="width" id="dH4-Lq-dbW"/>
                                     <constraint firstItem="uSH-QK-bW1" firstAttribute="centerY" secondItem="b2R-GS-nch" secondAttribute="centerY" id="dzm-6Y-Hll"/>
-                                    <constraint firstItem="utg-cS-vHJ" firstAttribute="centerY" secondItem="ggV-Gf-26E" secondAttribute="centerY" constant="1" id="gam-lH-9ol"/>
+                                    <constraint firstItem="0XG-qH-giP" firstAttribute="height" secondItem="igS-G2-NfM" secondAttribute="height" id="edP-bh-IO3"/>
+                                    <constraint firstItem="utg-cS-vHJ" firstAttribute="centerY" secondItem="ggV-Gf-26E" secondAttribute="centerY" id="gam-lH-9ol"/>
                                     <constraint firstItem="uSH-QK-bW1" firstAttribute="centerX" secondItem="YzY-zZ-v3g" secondAttribute="centerX" id="hTI-yN-E2W"/>
                                     <constraint firstItem="ggV-Gf-26E" firstAttribute="width" secondItem="IKI-cG-rUa" secondAttribute="width" id="hZd-8g-Zhd"/>
                                     <constraint firstItem="YzY-zZ-v3g" firstAttribute="leading" secondItem="IKI-cG-rUa" secondAttribute="trailing" id="iXH-WG-uRn"/>
@@ -1791,11 +1795,10 @@
                                     <constraint firstItem="IKI-cG-rUa" firstAttribute="width" secondItem="vTE-Gq-ApS" secondAttribute="width" id="vEX-Tr-ryP"/>
                                     <constraint firstItem="IKI-cG-rUa" firstAttribute="leading" secondItem="vTE-Gq-ApS" secondAttribute="trailing" id="vNG-Os-QWr"/>
                                     <constraint firstItem="ggV-Gf-26E" firstAttribute="top" secondItem="IKI-cG-rUa" secondAttribute="bottom" id="wL3-fq-pI0"/>
-                                    <constraint firstItem="0XG-qH-giP" firstAttribute="height" secondItem="igS-G2-NfM" secondAttribute="height" id="wnY-uS-NpS"/>
                                     <constraint firstItem="ZJt-14-a51" firstAttribute="centerX" secondItem="vTE-Gq-ApS" secondAttribute="centerX" id="zoG-Qo-9dH"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3FV-p4-tnZ" userLabel="Dial Button">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3FV-p4-tnZ" userLabel="Dial Button">
                                 <rect key="frame" x="130" y="294" width="60" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="3FV-p4-tnZ" secondAttribute="height" multiplier="1:1" id="TIH-3A-2rC"/>
