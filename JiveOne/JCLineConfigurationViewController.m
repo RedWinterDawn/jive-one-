@@ -10,6 +10,7 @@
 
 #import "LineConfiguration.h"
 #import "JCAuthenticationManager.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface JCLineConfigurationViewController ()
 {
@@ -30,6 +31,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[self.lineSelection layer] setBorderWidth:1.0f];
+    [[self.lineSelection layer] setBorderColor:[UIColor lightGrayColor].CGColor];
+    [[self.lineSelection layer] setCornerRadius:2.0f];
     
     self.lineConfigurations = [LineConfiguration MR_findAllSortedBy:@"display" ascending:YES];
     
