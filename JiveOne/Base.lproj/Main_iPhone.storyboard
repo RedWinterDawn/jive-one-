@@ -1230,8 +1230,8 @@ Cg
                             <view opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="23F-O6-dwE" userLabel="allYoLines">
                                 <rect key="frame" x="0.0" y="252" width="320" height="252"/>
                                 <subviews>
-                                    <pickerView contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GHJ-Ok-PFS">
-                                        <rect key="frame" x="0.0" y="17" width="320" height="216"/>
+                                    <pickerView contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GHJ-Ok-PFS">
+                                        <rect key="frame" x="0.0" y="18" width="320" height="216"/>
                                         <connections>
                                             <outlet property="dataSource" destination="e8o-Sx-Cyb" id="zyP-3Y-MC5"/>
                                             <outlet property="delegate" destination="e8o-Sx-Cyb" id="Ll6-iO-QGM"/>
