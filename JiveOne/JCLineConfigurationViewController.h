@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JCLineConfigurationViewController : UIViewController
+@interface JCLineConfigurationViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource>
+@property (weak, nonatomic) IBOutlet UISwitch *makeDefaultLineSwitch;
+@property (weak, nonatomic) IBOutlet UIButton *lineSelection;
+@property (weak, nonatomic) IBOutlet UIPickerView *lineList;
+- (IBAction)lineSelectionAction:(id)sender;
 
 @end

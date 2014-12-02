@@ -20,5 +20,6 @@
 
 -(IBAction)leaveFeedback:(id)sender;
 -(IBAction)logout:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *lineConfigpage;
 
 @end
