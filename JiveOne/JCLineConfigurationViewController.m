@@ -15,6 +15,8 @@
 @interface JCLineConfigurationViewController ()
 {
     JCAuthenticationManager *_authenticationManger;
+    BOOL _pickerVisible;
+    NSInteger _verticalSpacing;
 }
 
 
@@ -31,6 +33,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+  
     [[self.lineSelection layer] setBorderWidth:1.0f];
     [[self.lineSelection layer] setBorderColor:[UIColor lightGrayColor].CGColor];
     [[self.lineSelection layer] setCornerRadius:2.0f];
@@ -50,7 +53,14 @@
 //    This is the line we have selected and we want to start the selection list on this line.
     [self.lineSelection setTitle:currentLine forState:UIControlStateNormal];
     
+    _pickerVisible = TRUE;
+    [self hidePicker:false];
+    
    
+}
+
+-(void)awakeFromNib{
+       _verticalSpacing = self.lineListBottomConstraint.constant;
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
@@ -105,11 +115,50 @@
     }
     
     _authenticationManger.lineConfiguration = lineConfiguration;
+    [self hidePicker:YES];
     
+}
+-(void)showPicker:(BOOL)animated{
+    if (_pickerVisible) {
+        return;
+    }
+    __unsafe_unretained JCLineConfigurationViewController *weakSelf = self;
+    _lineListBottomConstraint.constant = 0;
+    [self.view setNeedsUpdateConstraints];
+    [UIView animateWithDuration:(animated ? 0.6 : 0.0)
+                     animations:^{
+                         
+                         [weakSelf.view layoutIfNeeded];
+                     }
+                     completion:^(BOOL finished) {
+                         _pickerVisible = true;
+                     }];
+}
+
+-(void)hidePicker:(BOOL)animated{
+    if(!_pickerVisible) {
+        return;
+    }
+    __unsafe_unretained JCLineConfigurationViewController *weakSelf = self;
+     _lineListBottomConstraint.constant = -_lineListHeightConstraint.constant;
+    [self.view setNeedsUpdateConstraints];
+    [UIView animateWithDuration:(animated ? 0.6 : 0.0)
+                     animations:^{
+                         [weakSelf.view layoutIfNeeded];
+                     }
+                     completion:^(BOOL finished) {
+                         _pickerVisible = false;
+                     }];
 }
 
 - (IBAction)lineSelectionAction:(id)sender {
     //add animating in and out upon selection
-    
+    if(_pickerVisible) {
+        [self hidePicker:true];
+    } else {
+        [self showPicker:true];
+    }
+        
+        
    }
 @end
