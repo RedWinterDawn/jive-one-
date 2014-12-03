@@ -18,5 +18,6 @@
 
 
 - (IBAction)lineSelectionAction:(id)sender;
+- (IBAction)doneButton:(id)sender;
 
 @end
