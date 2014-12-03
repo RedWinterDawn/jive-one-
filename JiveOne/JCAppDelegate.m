@@ -6,12 +6,9 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-@import CoreBluetooth;
-
 #import "JCAppDelegate.h"
 #import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
 #import <AudioToolbox/AudioToolbox.h>
-#import <AVFoundation/AVFoundation.h>
 #import "AFNetworkActivityIndicatorManager.h"
 #import "JasmineSocket.h"
 #import "PersonEntities.h"
@@ -33,6 +30,9 @@
 @interface JCAppDelegate () <JCCallerViewControllerDelegate, UAPushNotificationDelegate, UARegistrationDelegate>
 {
     JCCallerViewController *_presentedCallerViewController;
+    JCAuthenticationManager *_authenticationManager;
+    JCCallCardManager *_phoneManager;
+    
     bool _didNotify;
 }
 
@@ -101,26 +101,23 @@
     UAConfig *config = [UAConfig defaultConfig];
     [UAirship takeOff:config];
     
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    JCCallCardManager *callCardManager = [JCCallCardManager sharedManager];
-    [center addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
-    [center addObserver:self selector:@selector(didReceiveIncomingCall:) name:kJCCallCardManagerAddedCallNotification object:callCardManager];
-    [center addObserver:self selector:@selector(stopRingtone) name:kJCCallCardManagerAnswerCallNotification object:callCardManager];
+    
     
     // Launches the Badge manager. Should be launched after Mangical record has initialized.
     [[JCBadgeManager sharedManager] initialize];
     
     // Authentication
-    JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
-    [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];
-    [center addObserver:self selector:@selector(userDidLogin:) name:kJCAuthenticationManagerUserAuthenticatedNotification object:authenticationManager];
-    [center addObserver:self selector:@selector(userDataReady:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:authenticationManager];
+    _authenticationManager = [JCAuthenticationManager sharedInstance];
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:_authenticationManager];
+    [center addObserver:self selector:@selector(userDataReady:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:_authenticationManager];
+    [center addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
     
-    if (!authenticationManager.userAuthenticated || !authenticationManager.userLoadedMininumData) {
+    if (!_authenticationManager.userAuthenticated || !_authenticationManager.userLoadedMininumData) {
         [self changeRootViewController:JCRootLoginViewController];
     }
     else {
-        [self startSocket:NO];
+        [self userDataReady:NO];
     }
     return YES;
 }
@@ -176,42 +173,48 @@
     LOG_Info();
 }
 
+/**
+ * Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+ */
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     LOG_Info();
-    
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     [MagicalRecord cleanUp];
-    _didNotify = false;
 }
 
 #pragma mark - Notification Handlers -
 
 #pragma mark JCAuthenticationManager
 
--(void)userDidLogin:(NSNotification *)notification
-{
-    LOG_Info();
-    
-    // TODO: Kick off Sync.
-}
-
 -(void)userDataReady:(NSNotification *)notification
 {
     LOG_Info();
     
-    [self changeRootViewController:JCRootTabbarViewController];
-    [self startSocket:NO];
+    if (notification) {
+        [self changeRootViewController:JCRootTabbarViewController];
+    }
     
-    //[UAPush shared].pushNotificationDelegate = self;
-    // Request a custom set of notification types
-    //[[UAPush shared] registerForRemoteNotifications];
-    //[UAPush shared].notificationTypes = (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert);
+    // Sync Data
+    JCV5ApiClient *client = [JCV5ApiClient sharedClient];
+    if (_authenticationManager.pbx.v5.boolValue) {
+        [client getVoicemails:nil];
+    }
+    [client RetrieveContacts:nil];
+    
+    // Start Phone Manager
+    if (_authenticationManager.lineConfiguration)
+    {
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        _phoneManager = [JCCallCardManager sharedManager];
+        [center addObserver:self selector:@selector(didReceiveIncomingCall:) name:kJCCallCardManagerAddedCallNotification object:_phoneManager];
+        [center addObserver:self selector:@selector(stopRingtone) name:kJCCallCardManagerAnswerCallNotification object:_phoneManager];
+    }
 }
 
 -(void)userDidLogout:(NSNotification *)notification
 {
     LOG_Info();
+    
     [Flurry logEvent:@"Log out"];
     
     [self stopSocket];
