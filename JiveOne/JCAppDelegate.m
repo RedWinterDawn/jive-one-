@@ -193,6 +193,7 @@
     if (notification) {
         [self changeRootViewController:JCRootTabbarViewController];
     }
+    _loginViewController = nil;
     
     // Sync Data
     JCV5ApiClient *client = [JCV5ApiClient sharedClient];
@@ -226,6 +227,7 @@
     [JCApplicationSwitcherDelegate reset];
     [[JCBadgeManager sharedManager] reset];
     
+    _loginViewController = nil;
     [self changeRootViewController:JCRootLoginViewController];
     
     [[UIApplication sharedApplication] unregisterForRemoteNotifications];
