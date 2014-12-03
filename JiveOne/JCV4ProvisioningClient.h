@@ -9,8 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface JCV4ProvisioningClient : NSObject
-@property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
-+ (instancetype)sharedClient;
 
-- (void) requestProvisioningFile:(NSString *)payload completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed;
++(void)requestProvisioningForUser:(NSString *)user password:(NSString *)password completed:(void (^)(BOOL suceeded, NSError *error))completed;
+
++(NSString *)xmlProvisioningRequestFor:(NSString *)userName password:(NSString *)password;
+
 @end
