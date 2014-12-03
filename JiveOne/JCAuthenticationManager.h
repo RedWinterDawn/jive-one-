@@ -26,7 +26,7 @@ typedef void (^CompletionBlock) (BOOL success, NSError *error);
 @property (nonatomic, readonly) PBX *pbx;
 @property (nonatomic, strong) LineConfiguration *lineConfiguration;
 
-@property (nonatomic, readonly) NSString *userName;
+@property (nonatomic, readonly) NSString *jiveUserId;
 @property (nonatomic, readonly) NSString *pbxName;
 
 @property (nonatomic, readonly) NSString *authToken;

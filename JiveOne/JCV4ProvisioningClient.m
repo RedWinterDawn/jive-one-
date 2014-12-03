@@ -11,109 +11,73 @@
 #import "LineConfiguration+Custom.h"
 #import <XMLDictionary/XMLDictionary.h>
 
+NSString *const kJCV4ProvisioningClientRequestUrl = @"https://pbx.onjive.com/p/mobility/mobileusersettings";
+
+NSString *const kJCV4ProvisioningClientRequestString = @"<login \n user=\"%@\" \n password=\"%@\" \n man=\"Apple\" \n device=\"%@\" \n os=\"%@\" \n loc=\"%@\" \n lang=\"%@\" \n uuid=\"%@\" \n spid=\"cpc\" \n build=\"%@\" \n type=\"%@\" />";
+
 @implementation JCV4ProvisioningClient
+
++(NSString *)xmlProvisioningRequestFor:(NSString *)userName password:(NSString *)password
 {
-	NSManagedObjectContext *localContext;
-}
-+ (JCV4ProvisioningClient*)sharedClient {
-	static JCV4ProvisioningClient *_sharedClient = nil;
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		_sharedClient = [[super alloc] init];
-	});
-	return _sharedClient;
+    NSBundle *bundle = [NSBundle mainBundle];
+    NSLocale *local = [NSLocale currentLocale];
+    UIDevice *device = [UIDevice currentDevice];
+    
+    
+    NSString *language          = [[bundle preferredLocalizations] objectAtIndex:0];
+    NSString *locale            = local.localeIdentifier;
+    NSString *appBuildString    = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
+    NSString *model             = device.model;
+    NSString *os                = device.systemVersion;
+    NSString *uuid              = device.identifierForVendor.UUIDString;
+    NSString *type              = device.userInterfaceIdiom == UIUserInterfaceIdiomPhone ? @"ios.jive.phone" : @"ios.jive.tablet";
+    
+    return  [NSString stringWithFormat:kJCV4ProvisioningClientRequestString,
+             userName,
+             password,
+             model,
+             os,
+             locale,
+             language,
+             uuid,
+             appBuildString,
+             type
+             ];
 }
 
-//- (void)initialize
-//{
-//	
-//	NSURL *baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@", kv4Provisioning]];
-//	_manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
-//	_manager.responseSerializer = [AFJSONResponseSerializer serializer];
-//	
-//	KeychainItemWrapper* _keychainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
-//	localContext  = [NSManagedObjectContext MR_contextForCurrentThread];
-//	
-//	NSLog(@"About to go into debug mode for server certificate");
-//#if DEBUG
-//	NSLog(@"Debug mode active");
-//	_manager.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
-//	_manager.securityPolicy.allowInvalidCertificates = YES;
-//#endif
-//}
-//
-//- (void)setRequestAuthHeader
-//{
-//	
-//	KeychainItemWrapper* _keychainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJiveAuthStore accessGroup:nil];
-//	NSString *token = [_keychainWrapper objectForKey:(__bridge id)(kSecAttrAccount)];
-//	
-//	[self clearCookies];
-//	
-//	if (!token) {
-//		token = (NSString*)[[NSUserDefaults standardUserDefaults] objectForKey:@"authToken"];
-//	}
-//	
-//	_manager.responseSerializer = [AFXMLParserResponseSerializer serializer];
-//	[_manager.requestSerializer clearAuthorizationHeader];
-//	[_manager.requestSerializer setValue:token forHTTPHeaderField:@"Authorization"];
-//	[_manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-//}
-//
-//- (void)clearCookies {
-//	
-//	//This will delete ALL cookies.
-//	NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-//	
-//	for (NSHTTPCookie *cookie in [cookieJar cookies]) {
-//		[[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
-//	}
-//	
-//}po
-
-- (void) requestProvisioningFile:(NSString *)payload completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed;
++(void)requestProvisioningForUser:(NSString *)user password:(NSString *)password completed:(void (^)(BOOL suceeded, NSError *error))completed
 {
-	NSURL *url = [NSURL URLWithString:kv4Provisioning];
-	NSData *postData = [payload dataUsingEncoding:NSUTF8StringEncoding];
-	
-	// Create the request
-	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-	[request setHTTPMethod:@"POST"];
-	[request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)postData.length] forHTTPHeaderField:@"Content-Length"];
-	//[request setValue:@"application/xml" forHTTPHeaderField:@"Content-Type"];
-	[request setHTTPBody:postData];
-	
-	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-		// Peform the request
-		NSURLResponse *response;
-		NSError *error = nil;
-		NSData *receivedData = [NSURLConnection sendSynchronousRequest:request
-													 returningResponse:&response
-																 error:&error];
-		if (error) {
-			// Deal with error
-			if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
-				NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*)response;
-				//NSLog(@"HTTP Error: %ld %@", (long)httpResponse.statusCode, error);
-			}
-			//NSLog(@"Error %@", error);
-			completed(NO, nil, nil, error);
-			return;
-		}
-		
-		
-		
-		@try {
-			NSDictionary *response = [NSDictionary dictionaryWithXMLData:receivedData];
-			
-			[LineConfiguration addConfiguration:response completed:^(BOOL success) {
-				completed(YES, response, nil, nil);
-			}];
-		}
-		@catch (NSException *exception) {
-			completed(NO, nil, nil, [NSError errorWithDomain:exception.reason code:0 userInfo:nil]);
-		}
-	});
+    NSString *payload = [JCV4ProvisioningClient xmlProvisioningRequestFor:user password:password];
+    NSData *postData = [payload dataUsingEncoding:NSUTF8StringEncoding];
+    
+    NSURL *url = [NSURL URLWithString:kJCV4ProvisioningClientRequestUrl];
+    
+    // Create the request
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)postData.length] forHTTPHeaderField:@"Content-Length"];
+    [request setHTTPBody:postData];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        // Peform the request
+        __autoreleasing NSURLResponse *response;
+        __autoreleasing NSError *error = nil;
+        NSData *receivedData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+        if (error) {
+            return;
+        }
+        
+        @try {
+            NSDictionary *response = [NSDictionary dictionaryWithXMLData:receivedData];
+            [LineConfiguration addConfiguration:response completed:^(BOOL success) {
+                completed(YES, nil);
+            }];
+        }
+        @catch (NSException *exception) {
+            completed(NO, [NSError errorWithDomain:exception.reason code:0 userInfo:nil]);
+        }
+    });
 }
 
 @end

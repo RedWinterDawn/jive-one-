@@ -6,14 +6,7 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#pragma mark - Keychain Store
-#define kJiveAuthStore      @"keyjiveauthstore"
-
-#pragma mark - URL Scheme Auth Callback 
-#define kURLSchemeCallback  @"jiveclient://token"
-
 #pragma mark - Miscellaneous
-#define kEulaSite           @"https://s3.amazonaws.com/jive.com-website/iOS+eula/jive-eula.html"
 #define kVersionURL         @"http://jiveios.local/LatestVersion"
 #define kFeedbackEmail      @"MobileApps+ios@jive.com"
 //https://api.jive.com/voicemail/v1/mailbox/id/0144096f-17a0-b3a5-b5e8-000100620002/voicemail/id/6882/liste
@@ -28,7 +21,7 @@
 
 
 #pragma mark - Authentication Manager
-#define kOsgiAuthURL                                @"https://auth.jive.com/oauth2/v2/grant?client_id=%@&response_type=token&scope=%@&redirect_uri=%@"
+
 #define kAuthenticationFromTokenSucceeded           @"keyauthenticationfortokensucceeded"
 #define kAuthenticationFromTokenFailed              @"keyauthenticationfortokenfailed"
 #define kAuthenticationFromTokenFailedWithTimeout   @"keyauthenticationfortokenfailedwithtimeout"
@@ -42,11 +35,6 @@
 
 #pragma mark - Global Call Notification
 #define kIncomingCallNotification @"keyincomingcallnotification"
-
-#pragma mark - OAuth Credentials
-#define kOAuthClientSecret  @"enXabnU5KuVm4XRSWGkU"
-#define kOAuthClientId      @"f62d7f80-3749-11e3-9b37-542696d7c505"
-#define kTestAuthKey        @"f1c7adf0-786e-404e-a107-2921fc040d4a"
 
 #pragma -mark Scopes
 #define kScopeProfile       @"contacts.v1.profile.read"
@@ -103,9 +91,8 @@
 //change to @"YesUseAWSPlaceholderURL" to toggle AWS Voicemail wav file
 
 #pragma mark - NSUserDefaults
-#define kUserName       @"username"
 #define UDdeviceToken   @"deviceToken"
-#define kRememberMe     @"keyrememberme"
+
 
 #pragma mark - Misc
 #define kTAGStar		10

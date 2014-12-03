@@ -370,8 +370,8 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" misplaced="YES" text="Missed:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XiM-TR-LPH">
-                                            <rect key="frame" x="135" y="16" width="50" height="20"/>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Missed:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XiM-TR-LPH">
+                                            <rect key="frame" x="127" y="16" width="58" height="20"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="58" id="IXn-Sf-HUd"/>
                                                 <constraint firstAttribute="height" constant="20" id="QOB-M9-kxv"/>
@@ -1008,10 +1008,10 @@
                         <viewControllerLayoutGuide type="bottom" id="AiG-Lb-b2c"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="vw4-gr-jHe">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4nq-wa-FF2">
+                            <webView contentMode="scaleToFill" misplaced="YES" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4nq-wa-FF2">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -1343,8 +1343,8 @@ Cg
                         <rect key="frame" x="0.0" y="0.0" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" image="main-logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="NGE-g2-8v3">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="main-logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="NGE-g2-8v3">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                             </imageView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qs5-Lk-1Ub">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="455"/>
@@ -1556,16 +1556,16 @@ Cg
                         <viewControllerLayoutGuide type="bottom" id="D7Y-Ur-CEJ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Rfg-zK-3ym">
-                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3rw-yx-NFK" userLabel="Phone Number">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="meF-1G-p2k" userLabel="Keypad">
+                                <rect key="frame" x="0.0" y="1" width="320" height="297"/>
                                 <subviews>
                                     <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0XG-qH-giP" customClass="JCDialStringLabel">
-                                        <rect key="frame" x="39" y="0.0" width="242" height="50"/>
+                                        <rect key="frame" x="50" y="0.0" width="220" height="53"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="tFG-Ym-QtI"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="J3N-Vb-lVj"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="30"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -1575,11 +1575,10 @@ Cg
                                         </connections>
                                     </label>
                                     <button opaque="NO" contentMode="center" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="igS-G2-NfM">
-                                        <rect key="frame" x="280" y="0.0" width="40" height="50"/>
+                                        <rect key="frame" x="270" y="0.0" width="50" height="53"/>
                                         <gestureRecognizers/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="40" id="UmO-1l-TGZ"/>
-                                            <constraint firstAttribute="height" constant="50" id="sgb-hj-lbI"/>
+                                            <constraint firstAttribute="width" constant="50" id="1TT-Ku-ddJ"/>
                                         </constraints>
                                         <state key="normal" image="delete-black">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -1589,27 +1588,10 @@ Cg
                                             <outletCollection property="gestureRecognizers" destination="9YZ-qe-5Z7" appends="YES" id="cye-6U-PNK"/>
                                         </connections>
                                     </button>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="0XG-qH-giP" secondAttribute="bottom" id="3Mz-jP-ENM"/>
-                                    <constraint firstAttribute="trailing" secondItem="igS-G2-NfM" secondAttribute="trailing" id="5eo-mm-7Bc"/>
-                                    <constraint firstItem="igS-G2-NfM" firstAttribute="top" secondItem="3rw-yx-NFK" secondAttribute="top" id="8Gu-q2-TNk"/>
-                                    <constraint firstItem="0XG-qH-giP" firstAttribute="top" secondItem="3rw-yx-NFK" secondAttribute="top" id="C6B-2M-Geg"/>
-                                    <constraint firstItem="0XG-qH-giP" firstAttribute="leading" secondItem="3rw-yx-NFK" secondAttribute="leading" constant="39" id="Ytl-wM-pRi"/>
-                                    <constraint firstAttribute="height" constant="50" id="d8N-VB-tGx"/>
-                                    <constraint firstAttribute="bottom" secondItem="igS-G2-NfM" secondAttribute="bottom" id="hvi-29-7gA"/>
-                                    <constraint firstAttribute="trailing" secondItem="0XG-qH-giP" secondAttribute="trailing" constant="39" id="znZ-as-bto"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="meF-1G-p2k" userLabel="Keypad">
-                                <rect key="frame" x="0.0" y="94" width="320" height="238"/>
-                                <subviews>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nsS-HF-huE">
-                                        <rect key="frame" x="0.0" y="0.0" width="107" height="60"/>
+                                        <rect key="frame" x="0.0" y="68" width="107" height="54"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="107" id="iEO-W0-Lye"/>
-                                            <constraint firstAttribute="height" constant="60" id="toe-RF-bpp"/>
+                                            <constraint firstAttribute="width" secondItem="nsS-HF-huE" secondAttribute="height" multiplier="2:1" id="POJ-Wh-2w9"/>
                                         </constraints>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -1641,11 +1623,80 @@ Cg
                                             <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="qbb-YW-777"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vTE-Gq-ApS">
-                                        <rect key="frame" x="0.0" y="59" width="107" height="60"/>
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7br-ug-lFI">
+                                        <rect key="frame" x="107" y="68" width="106" height="54"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="107" id="PAD-Ob-Md7"/>
-                                            <constraint firstAttribute="height" constant="60" id="hCn-2F-aaL"/>
+                                            <constraint firstAttribute="width" secondItem="7br-ug-lFI" secondAttribute="height" multiplier="2:1" id="S45-pP-9rf"/>
+                                        </constraints>
+                                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="2">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <font key="NSFont" size="35" name="HelveticaNeue-Thin"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content=" ">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
+                                                        <font key="NSFont" size="12" name=".LucidaGrandeUI"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content="ABC">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
+                                                        <font key="NSFont" size="12" name="HelveticaNeue-Medium"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <connections>
+                                            <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="7YJ-nY-WUp"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Bh-Zq-F0d">
+                                        <rect key="frame" x="213" y="68" width="107" height="54"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="8Bh-Zq-F0d" secondAttribute="height" multiplier="2:1" id="AQf-xH-OhI"/>
+                                        </constraints>
+                                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="3">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <font key="NSFont" size="35" name="HelveticaNeue-Thin"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content=" ">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
+                                                        <font key="NSFont" size="12" name=".LucidaGrandeUI"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content="DEF ">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
+                                                        <font key="NSFont" size="12" name="HelveticaNeue-Medium"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <connections>
+                                            <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="Nwf-kW-NnX"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vTE-Gq-ApS">
+                                        <rect key="frame" x="0.0" y="122" width="107" height="53"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="vTE-Gq-ApS" secondAttribute="height" multiplier="2:1" id="g8v-8n-RH2"/>
                                         </constraints>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -1678,10 +1729,10 @@ Cg
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IKI-cG-rUa">
-                                        <rect key="frame" x="106" y="59" width="107" height="60"/>
+                                        <rect key="frame" x="107" y="122" width="106" height="53"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="GJV-rw-Wdc"/>
-                                            <constraint firstAttribute="width" constant="107" id="gg6-Md-oQA"/>
+                                            <constraint firstAttribute="width" secondItem="IKI-cG-rUa" secondAttribute="height" multiplier="2:1" id="Gu4-5e-taQ"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="dD1-jI-ZYf"/>
                                         </constraints>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -1713,249 +1764,10 @@ Cg
                                             <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="maJ-nY-vxO"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gPW-Ap-sqH">
-                                        <rect key="frame" x="0.0" y="118" width="107" height="60"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="107" id="I6f-xX-CBv"/>
-                                            <constraint firstAttribute="height" constant="60" id="QUB-2Y-a8t"/>
-                                        </constraints>
-                                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
-                                        <state key="normal">
-                                            <attributedString key="attributedTitle">
-                                                <fragment content="7">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <font key="NSFont" size="35" name="HelveticaNeue-Thin"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                                <fragment content="PQRS">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
-                                                        <font key="NSFont" size="12" name="HelveticaNeue-Medium"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
-                                        </state>
-                                        <connections>
-                                            <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="bca-Gh-lCe"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ggV-Gf-26E">
-                                        <rect key="frame" x="106" y="118" width="107" height="60"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="n58-v2-iuz"/>
-                                            <constraint firstAttribute="width" constant="107" id="yA3-eO-e4Q"/>
-                                        </constraints>
-                                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
-                                        <state key="normal">
-                                            <attributedString key="attributedTitle">
-                                                <fragment content="8">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <font key="NSFont" size="35" name="HelveticaNeue-Thin"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                                <fragment content=" ">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
-                                                        <font key="NSFont" size="12" name=".LucidaGrandeUI"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                                <fragment content="TUV">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
-                                                        <font key="NSFont" size="12" name="HelveticaNeue-Medium"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
-                                        </state>
-                                        <connections>
-                                            <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="PL4-5B-9ap"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZJt-14-a51">
-                                        <rect key="frame" x="0.0" y="177" width="107" height="60"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="fsb-1f-1oP"/>
-                                            <constraint firstAttribute="width" constant="107" id="yqn-33-JwX"/>
-                                        </constraints>
-                                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
-                                        <state key="normal">
-                                            <attributedString key="attributedTitle">
-                                                <fragment content="*">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <font key="NSFont" size="35" name="HelveticaNeue-Thin"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                                <fragment content=" ">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
-                                                        <font key="NSFont" size="12" name=".LucidaGrandeUI"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                                <fragment content="ABC">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="0.0" colorSpace="deviceRGB"/>
-                                                        <font key="NSFont" size="12" name="HelveticaNeue-Medium"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
-                                        </state>
-                                        <connections>
-                                            <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="TWd-HV-yYy"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="9" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="utg-cS-vHJ">
-                                        <rect key="frame" x="212" y="118" width="107" height="60"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="107" id="eOt-dk-upT"/>
-                                            <constraint firstAttribute="height" constant="60" id="qeb-Pw-TsS"/>
-                                        </constraints>
-                                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
-                                        <state key="normal">
-                                            <attributedString key="attributedTitle">
-                                                <fragment content="9">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <font key="NSFont" size="35" name="HelveticaNeue-Thin"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                                <fragment content="WXYZ">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
-                                                        <font key="NSFont" size="12" name="HelveticaNeue-Medium"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
-                                        </state>
-                                        <connections>
-                                            <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="eym-Eb-npR"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uSH-QK-bW1">
-                                        <rect key="frame" x="212" y="177" width="107" height="60"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="107" id="IYN-rW-Ley"/>
-                                            <constraint firstAttribute="height" constant="60" id="N1Z-U2-5iH"/>
-                                        </constraints>
-                                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
-                                        <state key="normal">
-                                            <attributedString key="attributedTitle">
-                                                <fragment content="#">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <font key="NSFont" size="35" name="HelveticaNeue-Thin"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                                <fragment content=" ">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
-                                                        <font key="NSFont" size="12" name=".LucidaGrandeUI"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                                <fragment content="ABC">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="0.0" colorSpace="deviceRGB"/>
-                                                        <font key="NSFont" size="12" name="HelveticaNeue-Medium"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
-                                        </state>
-                                        <connections>
-                                            <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="EIJ-dA-OgE"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b2R-GS-nch">
-                                        <rect key="frame" x="106" y="177" width="107" height="60"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="107" id="8wz-JY-iyu"/>
-                                            <constraint firstAttribute="height" constant="60" id="guw-fu-c6r"/>
-                                        </constraints>
-                                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
-                                        <state key="normal">
-                                            <attributedString key="attributedTitle">
-                                                <fragment content="0">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <font key="NSFont" size="35" name="HelveticaNeue-Thin"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                                <fragment content=" +">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
-                                                        <font key="NSFont" size="12" name=".LucidaGrandeUI"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                                <fragment content="BC">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="0.0" colorSpace="deviceRGB"/>
-                                                        <font key="NSFont" size="12" name="HelveticaNeue-Medium"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
-                                        </state>
-                                        <connections>
-                                            <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="q0D-HQ-a7j"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Bh-Zq-F0d">
-                                        <rect key="frame" x="212" y="0.0" width="107" height="60"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="I6X-lj-Tl5"/>
-                                            <constraint firstAttribute="width" constant="107" id="XWI-7l-nbk"/>
-                                        </constraints>
-                                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
-                                        <state key="normal">
-                                            <attributedString key="attributedTitle">
-                                                <fragment content="3">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <font key="NSFont" size="35" name="HelveticaNeue-Thin"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                                <fragment content=" ">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
-                                                        <font key="NSFont" size="12" name=".LucidaGrandeUI"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                                <fragment content="DEF ">
-                                                    <attributes>
-                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
-                                                        <font key="NSFont" size="12" name="HelveticaNeue-Medium"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
-                                        </state>
-                                        <connections>
-                                            <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="Nwf-kW-NnX"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YzY-zZ-v3g">
-                                        <rect key="frame" x="212" y="59" width="107" height="60"/>
+                                        <rect key="frame" x="213" y="121" width="107" height="54"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="jjS-iu-AN0"/>
-                                            <constraint firstAttribute="width" constant="107" id="o6T-4x-e98"/>
+                                            <constraint firstAttribute="width" secondItem="YzY-zZ-v3g" secondAttribute="height" multiplier="2:1" id="vHg-I3-e5l"/>
                                         </constraints>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -1987,16 +1799,141 @@ Cg
                                             <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="8XX-bV-7O7"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7br-ug-lFI">
-                                        <rect key="frame" x="106" y="0.0" width="107" height="60"/>
+                                    <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gPW-Ap-sqH">
+                                        <rect key="frame" x="0.0" y="175" width="107" height="53"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="Iim-Tn-qmv"/>
-                                            <constraint firstAttribute="width" constant="107" id="IrZ-ac-Qcu"/>
+                                            <constraint firstAttribute="width" secondItem="gPW-Ap-sqH" secondAttribute="height" multiplier="2:1" id="28B-Ax-Bf5"/>
                                         </constraints>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
                                             <attributedString key="attributedTitle">
-                                                <fragment content="2">
+                                                <fragment content="7">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <font key="NSFont" size="35" name="HelveticaNeue-Thin"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content="PQRS">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
+                                                        <font key="NSFont" size="12" name="HelveticaNeue-Medium"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <connections>
+                                            <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="bca-Gh-lCe"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="9" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="utg-cS-vHJ">
+                                        <rect key="frame" x="213" y="175" width="107" height="53"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="utg-cS-vHJ" secondAttribute="height" multiplier="2:1" id="0Vh-5w-qjp"/>
+                                        </constraints>
+                                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="9">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <font key="NSFont" size="35" name="HelveticaNeue-Thin"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content="WXYZ">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
+                                                        <font key="NSFont" size="12" name="HelveticaNeue-Medium"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <connections>
+                                            <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="eym-Eb-npR"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ggV-Gf-26E">
+                                        <rect key="frame" x="107" y="175" width="106" height="53"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="ggV-Gf-26E" secondAttribute="height" multiplier="2:1" id="FOK-nD-QzH"/>
+                                        </constraints>
+                                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="8">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <font key="NSFont" size="35" name="HelveticaNeue-Thin"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content=" ">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
+                                                        <font key="NSFont" size="12" name=".LucidaGrandeUI"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content="TUV">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
+                                                        <font key="NSFont" size="12" name="HelveticaNeue-Medium"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <connections>
+                                            <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="PL4-5B-9ap"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b2R-GS-nch">
+                                        <rect key="frame" x="107" y="228" width="106" height="53"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="b2R-GS-nch" secondAttribute="height" multiplier="2:1" id="IOa-Wj-Ujn"/>
+                                        </constraints>
+                                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="0">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <font key="NSFont" size="35" name="HelveticaNeue-Thin"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content=" +">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
+                                                        <font key="NSFont" size="12" name=".LucidaGrandeUI"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content="BC">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="0.0" colorSpace="deviceRGB"/>
+                                                        <font key="NSFont" size="12" name="HelveticaNeue-Medium"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <connections>
+                                            <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="q0D-HQ-a7j"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="11" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uSH-QK-bW1">
+                                        <rect key="frame" x="213" y="228" width="107" height="53"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="uSH-QK-bW1" secondAttribute="height" multiplier="2:1" id="Q7Y-dh-CCi"/>
+                                        </constraints>
+                                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="#">
                                                     <attributes>
                                                         <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <font key="NSFont" size="35" name="HelveticaNeue-Thin"/>
@@ -2012,7 +1949,7 @@ Cg
                                                 </fragment>
                                                 <fragment content="ABC">
                                                     <attributes>
-                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
+                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="0.0" colorSpace="deviceRGB"/>
                                                         <font key="NSFont" size="12" name="HelveticaNeue-Medium"/>
                                                         <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                                     </attributes>
@@ -2020,48 +1957,103 @@ Cg
                                             </attributedString>
                                         </state>
                                         <connections>
-                                            <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="7YJ-nY-WUp"/>
+                                            <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="EIJ-dA-OgE"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="10" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZJt-14-a51">
+                                        <rect key="frame" x="0.0" y="228" width="107" height="53"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="ZJt-14-a51" secondAttribute="height" multiplier="2:1" id="OWe-L0-G4W"/>
+                                        </constraints>
+                                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="*">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <font key="NSFont" size="35" name="HelveticaNeue-Thin"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content=" ">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="deviceRGB"/>
+                                                        <font key="NSFont" size="12" name=".LucidaGrandeUI"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content="ABC">
+                                                    <attributes>
+                                                        <color key="NSColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="0.0" colorSpace="deviceRGB"/>
+                                                        <font key="NSFont" size="12" name="HelveticaNeue-Medium"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                        <connections>
+                                            <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="TWd-HV-yYy"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="gPW-Ap-sqH" firstAttribute="leading" secondItem="nsS-HF-huE" secondAttribute="leading" id="1fX-Pd-lbc"/>
-                                    <constraint firstItem="nsS-HF-huE" firstAttribute="leading" secondItem="meF-1G-p2k" secondAttribute="leading" id="2dk-t1-2Ra"/>
-                                    <constraint firstItem="ggV-Gf-26E" firstAttribute="leading" secondItem="7br-ug-lFI" secondAttribute="leading" id="3Sh-ag-v4h"/>
-                                    <constraint firstItem="YzY-zZ-v3g" firstAttribute="leading" secondItem="8Bh-Zq-F0d" secondAttribute="leading" id="7eS-mw-Osd"/>
-                                    <constraint firstItem="nsS-HF-huE" firstAttribute="leading" secondItem="ZJt-14-a51" secondAttribute="leading" id="7ij-GF-yvB"/>
-                                    <constraint firstItem="7br-ug-lFI" firstAttribute="top" secondItem="meF-1G-p2k" secondAttribute="top" id="7kU-Rf-D6e"/>
-                                    <constraint firstItem="8Bh-Zq-F0d" firstAttribute="leading" secondItem="uSH-QK-bW1" secondAttribute="leading" id="9Ot-UK-Ixj"/>
-                                    <constraint firstAttribute="width" constant="320" id="9TU-Xb-GBQ"/>
-                                    <constraint firstItem="vTE-Gq-ApS" firstAttribute="top" secondItem="nsS-HF-huE" secondAttribute="bottom" constant="-1" id="BXI-KJ-c3N"/>
-                                    <constraint firstItem="nsS-HF-huE" firstAttribute="centerX" secondItem="ZJt-14-a51" secondAttribute="centerX" id="Dgi-YU-bwM"/>
-                                    <constraint firstItem="vTE-Gq-ApS" firstAttribute="leading" secondItem="nsS-HF-huE" secondAttribute="leading" id="FMy-Jg-Od2"/>
-                                    <constraint firstItem="YzY-zZ-v3g" firstAttribute="top" secondItem="8Bh-Zq-F0d" secondAttribute="bottom" constant="-1" id="JJM-wC-0YF"/>
-                                    <constraint firstItem="ZJt-14-a51" firstAttribute="top" secondItem="nsS-HF-huE" secondAttribute="bottom" constant="117" id="OcK-0Y-5gg"/>
-                                    <constraint firstAttribute="height" constant="238" id="QxJ-dY-MdX"/>
-                                    <constraint firstItem="7br-ug-lFI" firstAttribute="leading" secondItem="IKI-cG-rUa" secondAttribute="leading" id="SAW-bV-YCk"/>
-                                    <constraint firstItem="uSH-QK-bW1" firstAttribute="top" secondItem="8Bh-Zq-F0d" secondAttribute="bottom" constant="117" id="Ska-K8-gDO"/>
-                                    <constraint firstItem="vTE-Gq-ApS" firstAttribute="centerX" secondItem="nsS-HF-huE" secondAttribute="centerX" id="Tn5-mN-z8I"/>
-                                    <constraint firstItem="7br-ug-lFI" firstAttribute="leading" secondItem="b2R-GS-nch" secondAttribute="leading" id="VEd-tb-aXW"/>
-                                    <constraint firstItem="YzY-zZ-v3g" firstAttribute="leading" secondItem="utg-cS-vHJ" secondAttribute="leading" id="WPi-gL-Z42"/>
-                                    <constraint firstItem="gPW-Ap-sqH" firstAttribute="top" secondItem="nsS-HF-huE" secondAttribute="bottom" constant="58" id="YLA-em-b0U"/>
-                                    <constraint firstItem="gPW-Ap-sqH" firstAttribute="centerX" secondItem="nsS-HF-huE" secondAttribute="centerX" id="YlX-rL-8q0"/>
-                                    <constraint firstItem="IKI-cG-rUa" firstAttribute="top" secondItem="7br-ug-lFI" secondAttribute="bottom" constant="-1" id="YwA-gU-kDZ"/>
-                                    <constraint firstItem="8Bh-Zq-F0d" firstAttribute="top" secondItem="meF-1G-p2k" secondAttribute="top" id="ZkZ-9D-4Ha"/>
-                                    <constraint firstAttribute="centerX" secondItem="7br-ug-lFI" secondAttribute="centerX" id="aSv-mI-yU8"/>
-                                    <constraint firstItem="utg-cS-vHJ" firstAttribute="top" secondItem="8Bh-Zq-F0d" secondAttribute="bottom" constant="58" id="e2M-zh-e0O"/>
-                                    <constraint firstItem="ggV-Gf-26E" firstAttribute="top" secondItem="7br-ug-lFI" secondAttribute="bottom" constant="58" id="gAj-Vd-rvg"/>
-                                    <constraint firstItem="b2R-GS-nch" firstAttribute="top" secondItem="7br-ug-lFI" secondAttribute="bottom" constant="117" id="mC7-gn-IcB"/>
-                                    <constraint firstAttribute="trailing" secondItem="8Bh-Zq-F0d" secondAttribute="trailing" constant="1" id="sDq-Ou-HwG"/>
-                                    <constraint firstItem="nsS-HF-huE" firstAttribute="top" secondItem="meF-1G-p2k" secondAttribute="top" id="tUf-tZ-dWN"/>
+                                    <constraint firstItem="IKI-cG-rUa" firstAttribute="width" secondItem="gPW-Ap-sqH" secondAttribute="width" id="14v-Nh-s9r"/>
+                                    <constraint firstItem="nsS-HF-huE" firstAttribute="centerY" secondItem="7br-ug-lFI" secondAttribute="centerY" id="1zP-f0-zvq"/>
+                                    <constraint firstItem="igS-G2-NfM" firstAttribute="top" relation="greaterThanOrEqual" secondItem="meF-1G-p2k" secondAttribute="top" id="5fd-KZ-vS1"/>
+                                    <constraint firstItem="vTE-Gq-ApS" firstAttribute="leading" secondItem="meF-1G-p2k" secondAttribute="leading" id="7H4-0O-JwA"/>
+                                    <constraint firstItem="ggV-Gf-26E" firstAttribute="centerY" secondItem="gPW-Ap-sqH" secondAttribute="centerY" id="AXO-hg-Yg0"/>
+                                    <constraint firstItem="igS-G2-NfM" firstAttribute="leading" secondItem="0XG-qH-giP" secondAttribute="trailing" id="CLJ-l6-9Ii"/>
+                                    <constraint firstItem="IKI-cG-rUa" firstAttribute="centerX" secondItem="7br-ug-lFI" secondAttribute="centerX" id="CiT-g9-y5I"/>
+                                    <constraint firstItem="0XG-qH-giP" firstAttribute="leading" relation="lessThanOrEqual" secondItem="meF-1G-p2k" secondAttribute="leading" constant="50" id="D43-RT-IRX"/>
+                                    <constraint firstItem="0XG-qH-giP" firstAttribute="centerY" secondItem="igS-G2-NfM" secondAttribute="centerY" id="EOW-o1-X4I"/>
+                                    <constraint firstItem="IKI-cG-rUa" firstAttribute="top" secondItem="7br-ug-lFI" secondAttribute="bottom" id="ER4-Qs-YxC"/>
+                                    <constraint firstItem="b2R-GS-nch" firstAttribute="centerX" secondItem="IKI-cG-rUa" secondAttribute="centerX" id="FP3-71-lqb"/>
+                                    <constraint firstItem="0XG-qH-giP" firstAttribute="top" relation="greaterThanOrEqual" secondItem="meF-1G-p2k" secondAttribute="top" id="Fbs-o3-ojb"/>
+                                    <constraint firstItem="b2R-GS-nch" firstAttribute="width" secondItem="IKI-cG-rUa" secondAttribute="width" id="FmL-ui-Yf0"/>
+                                    <constraint firstItem="7br-ug-lFI" firstAttribute="top" relation="lessThanOrEqual" secondItem="0XG-qH-giP" secondAttribute="bottom" constant="20" id="Gen-UI-y0S"/>
+                                    <constraint firstAttribute="trailing" secondItem="YzY-zZ-v3g" secondAttribute="trailing" id="HFk-Vs-enT"/>
+                                    <constraint firstAttribute="centerY" secondItem="IKI-cG-rUa" secondAttribute="centerY" id="HbF-KR-HFA"/>
+                                    <constraint firstItem="YzY-zZ-v3g" firstAttribute="centerY" secondItem="IKI-cG-rUa" secondAttribute="centerY" id="I3d-yn-QEc"/>
+                                    <constraint firstItem="7br-ug-lFI" firstAttribute="top" secondItem="0XG-qH-giP" secondAttribute="bottom" priority="1" id="IUS-7x-aBy"/>
+                                    <constraint firstItem="0XG-qH-giP" firstAttribute="top" relation="lessThanOrEqual" secondItem="meF-1G-p2k" secondAttribute="top" constant="30" id="IVa-D7-5k0"/>
+                                    <constraint firstAttribute="centerX" secondItem="IKI-cG-rUa" secondAttribute="centerX" id="J1U-M4-WH9"/>
+                                    <constraint firstAttribute="trailing" secondItem="igS-G2-NfM" secondAttribute="trailing" id="Kfb-qK-XJp"/>
+                                    <constraint firstItem="IKI-cG-rUa" firstAttribute="height" secondItem="igS-G2-NfM" secondAttribute="height" id="Nmw-gI-E9U"/>
+                                    <constraint firstAttribute="centerX" secondItem="0XG-qH-giP" secondAttribute="centerX" id="Oim-oO-Gvu"/>
+                                    <constraint firstItem="vTE-Gq-ApS" firstAttribute="centerX" secondItem="gPW-Ap-sqH" secondAttribute="centerX" id="OxN-7u-xMv"/>
+                                    <constraint firstItem="0XG-qH-giP" firstAttribute="top" secondItem="meF-1G-p2k" secondAttribute="top" priority="250" id="QQo-v6-swR"/>
+                                    <constraint firstItem="8Bh-Zq-F0d" firstAttribute="centerY" secondItem="7br-ug-lFI" secondAttribute="centerY" id="R8h-1Y-USs"/>
+                                    <constraint firstItem="IKI-cG-rUa" firstAttribute="width" secondItem="nsS-HF-huE" secondAttribute="width" id="Tn7-lf-WqF"/>
+                                    <constraint firstItem="8Bh-Zq-F0d" firstAttribute="width" secondItem="IKI-cG-rUa" secondAttribute="width" id="Usd-nJ-ZY7"/>
+                                    <constraint firstItem="YzY-zZ-v3g" firstAttribute="width" secondItem="IKI-cG-rUa" secondAttribute="width" id="Wbh-XC-62j"/>
+                                    <constraint firstItem="uSH-QK-bW1" firstAttribute="width" secondItem="IKI-cG-rUa" secondAttribute="width" id="Xus-Kq-xYD"/>
+                                    <constraint firstItem="ZJt-14-a51" firstAttribute="centerY" secondItem="b2R-GS-nch" secondAttribute="centerY" id="YqW-vF-VJB"/>
+                                    <constraint firstItem="ZJt-14-a51" firstAttribute="width" secondItem="IKI-cG-rUa" secondAttribute="width" id="Zpu-RW-lXo"/>
+                                    <constraint firstItem="utg-cS-vHJ" firstAttribute="centerX" secondItem="YzY-zZ-v3g" secondAttribute="centerX" id="aIW-by-J6d"/>
+                                    <constraint firstItem="7br-ug-lFI" firstAttribute="width" secondItem="IKI-cG-rUa" secondAttribute="width" id="dH4-Lq-dbW"/>
+                                    <constraint firstItem="uSH-QK-bW1" firstAttribute="centerY" secondItem="b2R-GS-nch" secondAttribute="centerY" id="dzm-6Y-Hll"/>
+                                    <constraint firstItem="0XG-qH-giP" firstAttribute="height" secondItem="igS-G2-NfM" secondAttribute="height" id="edP-bh-IO3"/>
+                                    <constraint firstItem="utg-cS-vHJ" firstAttribute="centerY" secondItem="ggV-Gf-26E" secondAttribute="centerY" id="gam-lH-9ol"/>
+                                    <constraint firstItem="uSH-QK-bW1" firstAttribute="centerX" secondItem="YzY-zZ-v3g" secondAttribute="centerX" id="hTI-yN-E2W"/>
+                                    <constraint firstItem="ggV-Gf-26E" firstAttribute="width" secondItem="IKI-cG-rUa" secondAttribute="width" id="hZd-8g-Zhd"/>
+                                    <constraint firstItem="YzY-zZ-v3g" firstAttribute="leading" secondItem="IKI-cG-rUa" secondAttribute="trailing" id="iXH-WG-uRn"/>
+                                    <constraint firstItem="ggV-Gf-26E" firstAttribute="centerX" secondItem="IKI-cG-rUa" secondAttribute="centerX" id="k25-eQ-kXy"/>
+                                    <constraint firstItem="utg-cS-vHJ" firstAttribute="width" secondItem="IKI-cG-rUa" secondAttribute="width" id="k9F-BA-kkb"/>
+                                    <constraint firstItem="b2R-GS-nch" firstAttribute="top" secondItem="ggV-Gf-26E" secondAttribute="bottom" id="lWh-MD-Ufd"/>
+                                    <constraint firstItem="YzY-zZ-v3g" firstAttribute="centerX" secondItem="8Bh-Zq-F0d" secondAttribute="centerX" id="lYM-6u-qxd"/>
+                                    <constraint firstItem="IKI-cG-rUa" firstAttribute="centerY" secondItem="vTE-Gq-ApS" secondAttribute="centerY" id="ozx-ac-aR8"/>
+                                    <constraint firstItem="nsS-HF-huE" firstAttribute="centerX" secondItem="vTE-Gq-ApS" secondAttribute="centerX" id="sd4-co-v2J"/>
+                                    <constraint firstItem="IKI-cG-rUa" firstAttribute="width" secondItem="vTE-Gq-ApS" secondAttribute="width" id="vEX-Tr-ryP"/>
+                                    <constraint firstItem="IKI-cG-rUa" firstAttribute="leading" secondItem="vTE-Gq-ApS" secondAttribute="trailing" id="vNG-Os-QWr"/>
+                                    <constraint firstItem="ggV-Gf-26E" firstAttribute="top" secondItem="IKI-cG-rUa" secondAttribute="bottom" id="wL3-fq-pI0"/>
+                                    <constraint firstItem="ZJt-14-a51" firstAttribute="centerX" secondItem="vTE-Gq-ApS" secondAttribute="centerX" id="zoG-Qo-9dH"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3FV-p4-tnZ" userLabel="Dial Button">
-                                <rect key="frame" x="130" y="382" width="60" height="60"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3FV-p4-tnZ" userLabel="Dial Button">
+                                <rect key="frame" x="130" y="294" width="60" height="60"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="60" id="92I-k9-IUS"/>
-                                    <constraint firstAttribute="height" constant="60" id="dS5-Nt-8Or"/>
+                                    <constraint firstAttribute="width" secondItem="3FV-p4-tnZ" secondAttribute="height" multiplier="1:1" id="TIH-3A-2rC"/>
                                 </constraints>
                                 <state key="normal" image="dialer-callButton-green">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -2074,14 +2066,13 @@ Cg
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="meF-1G-p2k" secondAttribute="centerX" id="99f-Ch-eLI"/>
-                            <constraint firstAttribute="trailing" secondItem="3rw-yx-NFK" secondAttribute="trailing" id="D1C-vb-f3o"/>
-                            <constraint firstItem="3rw-yx-NFK" firstAttribute="top" secondItem="iWl-PB-GRi" secondAttribute="bottom" id="VXo-HC-bk4"/>
-                            <constraint firstAttribute="centerX" secondItem="3FV-p4-tnZ" secondAttribute="centerX" id="c2U-xo-qw2"/>
-                            <constraint firstItem="meF-1G-p2k" firstAttribute="top" relation="greaterThanOrEqual" secondItem="3rw-yx-NFK" secondAttribute="bottom" id="gbB-Zb-hJc"/>
-                            <constraint firstItem="D7Y-Ur-CEJ" firstAttribute="top" secondItem="3FV-p4-tnZ" secondAttribute="bottom" priority="750" constant="13" id="qrB-YV-Xnx"/>
-                            <constraint firstAttribute="centerY" secondItem="meF-1G-p2k" secondAttribute="centerY" constant="14.5" id="s8P-Uu-tkH"/>
-                            <constraint firstItem="3rw-yx-NFK" firstAttribute="leading" secondItem="Rfg-zK-3ym" secondAttribute="leading" id="yI8-2t-1ZP"/>
+                            <constraint firstItem="IKI-cG-rUa" firstAttribute="height" secondItem="3FV-p4-tnZ" secondAttribute="height" id="Hbr-kz-s58"/>
+                            <constraint firstItem="meF-1G-p2k" firstAttribute="top" relation="lessThanOrEqual" secondItem="iWl-PB-GRi" secondAttribute="bottom" constant="1" id="Hfx-I8-qCI"/>
+                            <constraint firstItem="D7Y-Ur-CEJ" firstAttribute="top" secondItem="3FV-p4-tnZ" secondAttribute="bottom" constant="13" id="Pz8-cf-7kO"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="meF-1G-p2k" secondAttribute="trailing" constant="-16" id="U5Z-Vz-DlY"/>
+                            <constraint firstItem="3FV-p4-tnZ" firstAttribute="top" secondItem="meF-1G-p2k" secondAttribute="bottom" constant="3" id="ckG-gO-08r"/>
+                            <constraint firstItem="meF-1G-p2k" firstAttribute="leading" secondItem="Rfg-zK-3ym" secondAttribute="leadingMargin" constant="-16" id="drY-m5-CBg"/>
+                            <constraint firstAttribute="centerX" secondItem="3FV-p4-tnZ" secondAttribute="centerX" id="jdR-Xo-yrT"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
@@ -2110,7 +2101,7 @@ Cg
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="backspaceBtn" destination="igS-G2-NfM" id="wDy-AT-aQ1"/>
                         <outlet property="callBtn" destination="3FV-p4-tnZ" id="3jF-3r-giT"/>
@@ -2138,20 +2129,20 @@ Cg
                         <viewControllerLayoutGuide type="bottom" id="eCX-gY-NnK"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="iLc-8x-FhM">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="incall-background" translatesAutoresizingMaskIntoConstraints="NO" id="tSQ-18-0Px">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="656"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
                             <containerView clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AIn-Um-NXd">
-                                <rect key="frame" x="0.0" y="4" width="320" height="336"/>
+                                <rect key="frame" x="0.0" y="4" width="320" height="248"/>
                                 <connections>
                                     <segue destination="1Io-pQ-qUd" kind="embed" identifier="CallerCollectionView" id="MUQ-NU-NHH"/>
                                 </connections>
                             </containerView>
                             <view clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T5I-ze-dYa" customClass="JCCallOptionsView">
-                                <rect key="frame" x="0.0" y="339" width="320" height="228"/>
+                                <rect key="frame" x="0.0" y="251" width="320" height="228"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="249" verticalCompressionResistancePriority="251" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JGQ-cX-3bl" userLabel="Mute Button" customClass="JCRoundedButton">
                                         <rect key="frame" x="32" y="22" width="60" height="60"/>
@@ -2181,8 +2172,8 @@ Cg
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" placeholderIntrinsicWidth="40" placeholderIntrinsicHeight="40" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5bp-16-Yhx" userLabel="Keyboard Button" customClass="JCRoundedButton">
-                                        <rect key="frame" x="130" y="22" width="60" height="60"/>
+                                    <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="40" placeholderIntrinsicHeight="40" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5bp-16-Yhx" userLabel="Keyboard Button" customClass="JCRoundedButton">
+                                        <rect key="frame" x="130" y="21" width="60" height="60"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="60" id="o5b-5u-NdO"/>
@@ -2470,7 +2461,7 @@ Cg
             <objects>
                 <collectionViewController id="1Io-pQ-qUd" customClass="JCCallCardCollectionViewController" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="CSs-ad-Lqn">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="336"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="248"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3487,7 +3478,7 @@ Cg
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cD4-GV-TuE">
                                         <rect key="frame" x="50" y="5" width="200" height="40"/>
-                                        <color key="backgroundColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="LeU-OE-25X"/>
                                         </constraints>
@@ -3679,14 +3670,14 @@ Cg
                         <viewControllerLayoutGuide type="bottom" id="SoL-9Y-eyi"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="TC8-6u-kzO">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" image="incall-background" translatesAutoresizingMaskIntoConstraints="NO" id="9C2-Xx-ecb">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lg7-3g-Bk3">
-                                <rect key="frame" x="130" y="480" width="60" height="60"/>
+                                <rect key="frame" x="130" y="392" width="60" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="eDG-3P-XlZ"/>
                                     <constraint firstAttribute="height" constant="60" id="zm7-fk-y4C"/>
@@ -4035,7 +4026,7 @@ Cg
         <image name="nav-hist-black" width="25" height="25"/>
         <image name="nav-voicemail-black" width="33" height="16"/>
         <image name="power" width="100" height="100"/>
-        <image name="second" width="265" height="154"/>
+        <image name="second" width="11" height="12"/>
         <image name="white-arrow" width="30" height="31"/>
         <image name="white-arrow-outline" width="30" height="31"/>
         <image name="white-check" width="30" height="30"/>
@@ -4054,8 +4045,8 @@ Cg
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Uqi-bD-GAX"/>
         <segue reference="qaE-xG-axE"/>
+        <segue reference="xxt-tb-rPs"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29803921570000003" green="0.44705882349999998" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
 </document>

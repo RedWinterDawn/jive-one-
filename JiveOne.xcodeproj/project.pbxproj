@@ -260,6 +260,7 @@
 		5D895EB21A0AC66B0015368D /* JCBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D895EB11A0AC66B0015368D /* JCBadgeView.m */; };
 		5D9A5E221A24E30A00E8274C /* JCBluetoothManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9A5E211A24E30A00E8274C /* JCBluetoothManager.m */; };
 		5DA566441A1D454D00286BA5 /* JCSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA566431A1D454D00286BA5 /* JCSettingsTableViewController.m */; };
+		5DA566491A20543500286BA5 /* JCAuthenticationManagerError.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA566481A20543500286BA5 /* JCAuthenticationManagerError.m */; };
 		5DA5A1AF19DAF91400968F7D /* JCCallerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA5A1AE19DAF91400968F7D /* JCCallerViewController.m */; };
 		5DA5A1B219DAFEAD00968F7D /* JCDialStringLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA5A1B119DAFEAD00968F7D /* JCDialStringLabel.m */; };
 		5DB0BFC119FFF3FE006737D7 /* JCTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB0BFC019FFF3FE006737D7 /* JCTableViewCell.m */; };
@@ -268,6 +269,8 @@
 		5DB0BFCA1A00AB29006737D7 /* JCRecentActivityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB0BFC91A00AB29006737D7 /* JCRecentActivityTableViewController.m */; };
 		5DB0BFCD1A00BAB3006737D7 /* JCVoicemailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB0BFCC1A00BAB3006737D7 /* JCVoicemailCell.m */; };
 		5DB0BFD01A013982006737D7 /* JCRecentEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB0BFCF1A013982006737D7 /* JCRecentEventCell.m */; };
+		5DBABCD11A281F7900B09783 /* UIViewController+HUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBABCD01A281F7900B09783 /* UIViewController+HUD.m */; };
+		5DBABCD41A283DA500B09783 /* NSString+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBABCD31A283DA500B09783 /* NSString+Custom.m */; };
 		5DBBDCC319DCB29100A4DB96 /* JCCallCardCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBBDCC219DCB29100A4DB96 /* JCCallCardCollectionViewController.m */; };
 		5DBBDCC619DD9A4100A4DB96 /* JCCallCardManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBBDCC519DD9A4100A4DB96 /* JCCallCardManager.m */; };
 		5DBBDCC919DDA0A300A4DB96 /* JCCallCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBBDCC819DDA0A300A4DB96 /* JCCallCard.m */; };
@@ -804,6 +807,8 @@
 		5DA566421A1D454D00286BA5 /* JCSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSettingsTableViewController.h; sourceTree = "<group>"; };
 		5DA566431A1D454D00286BA5 /* JCSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSettingsTableViewController.m; sourceTree = "<group>"; };
 		5DA566461A1EEEFF00286BA5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
+		5DA566471A20543500286BA5 /* JCAuthenticationManagerError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAuthenticationManagerError.h; sourceTree = "<group>"; };
+		5DA566481A20543500286BA5 /* JCAuthenticationManagerError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthenticationManagerError.m; sourceTree = "<group>"; };
 		5DA5A1AD19DAF91400968F7D /* JCCallerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCallerViewController.h; sourceTree = "<group>"; };
 		5DA5A1AE19DAF91400968F7D /* JCCallerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallerViewController.m; sourceTree = "<group>"; };
 		5DA5A1B019DAFEAD00968F7D /* JCDialStringLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDialStringLabel.h; sourceTree = "<group>"; };
@@ -820,6 +825,10 @@
 		5DB0BFCC1A00BAB3006737D7 /* JCVoicemailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoicemailCell.m; sourceTree = "<group>"; };
 		5DB0BFCE1A013982006737D7 /* JCRecentEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCRecentEventCell.h; sourceTree = "<group>"; };
 		5DB0BFCF1A013982006737D7 /* JCRecentEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCRecentEventCell.m; sourceTree = "<group>"; };
+		5DBABCCF1A281F7900B09783 /* UIViewController+HUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+HUD.h"; sourceTree = "<group>"; };
+		5DBABCD01A281F7900B09783 /* UIViewController+HUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+HUD.m"; sourceTree = "<group>"; };
+		5DBABCD21A283DA500B09783 /* NSString+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Custom.h"; sourceTree = "<group>"; };
+		5DBABCD31A283DA500B09783 /* NSString+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Custom.m"; sourceTree = "<group>"; };
 		5DBBDCC119DCB29100A4DB96 /* JCCallCardCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCallCardCollectionViewController.h; sourceTree = "<group>"; };
 		5DBBDCC219DCB29100A4DB96 /* JCCallCardCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallCardCollectionViewController.m; sourceTree = "<group>"; };
 		5DBBDCC419DD9A4100A4DB96 /* JCCallCardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCallCardManager.h; sourceTree = "<group>"; };
@@ -1291,6 +1300,8 @@
 				2762C45718B4177D00885918 /* JCOmniPresence.m */,
 				2751590F18AD174F00FD8D3F /* JCAuthenticationManager.h */,
 				2751591018AD174F00FD8D3F /* JCAuthenticationManager.m */,
+				5DA566471A20543500286BA5 /* JCAuthenticationManagerError.h */,
+				5DA566481A20543500286BA5 /* JCAuthenticationManagerError.m */,
 				272B61DB18B2A4DD00EB8ED5 /* TRVSMonitor.h */,
 				272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */,
 				5DB0BFC219FFF97A006737D7 /* JCDrawing.h */,
@@ -1382,6 +1393,8 @@
 				91743F351965B7EA003CD5E4 /* Status */,
 				5DB0BFC81A00AB29006737D7 /* JCRecentActivityTableViewController.h */,
 				5DB0BFC91A00AB29006737D7 /* JCRecentActivityTableViewController.m */,
+				5DBABCCF1A281F7900B09783 /* UIViewController+HUD.h */,
+				5DBABCD01A281F7900B09783 /* UIViewController+HUD.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1637,6 +1650,8 @@
 				5D7339A61A03F2E700339DC6 /* NSManagedObject+JCCoreDataAdditions.m */,
 				5D6AE3651A094A9C002BDAAF /* NSDictionary+Validations.h */,
 				5D6AE3661A094A9C002BDAAF /* NSDictionary+Validations.m */,
+				5DBABCD21A283DA500B09783 /* NSString+Custom.h */,
+				5DBABCD31A283DA500B09783 /* NSString+Custom.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -2626,6 +2641,7 @@
 				5DA566441A1D454D00286BA5 /* JCSettingsTableViewController.m in Sources */,
 				5D35479B19FF4BB7009E3CB4 /* JCMenuBarButtonItem.m in Sources */,
 				27997577195A12D7001425CC /* Lines+Custom.m in Sources */,
+				5DBABCD41A283DA500B09783 /* NSString+Custom.m in Sources */,
 				91CAE67A1961D485004A28FD /* JCJiveLogoWhite.m in Sources */,
 				2700987518F4714100B6BC2F /* UIColor+JSMessagesView.m in Sources */,
 				279E4CB5192273E5002A556C /* MBContactPicker.m in Sources */,
@@ -2668,6 +2684,7 @@
 				91915732195A2DC0004BDE26 /* JCLeaveFeedbackButton.m in Sources */,
 				5D629BB019D9CE4500F5744E /* JCVoiceNonVisualViewController.m in Sources */,
 				2788F143190EACD20099348D /* VoicemailETag.m in Sources */,
+				5DBABCD11A281F7900B09783 /* UIViewController+HUD.m in Sources */,
 				27F1F2EA191C171300AEAFD7 /* UAPushSettingsTagsViewController.m in Sources */,
 				27997574195A12C5001425CC /* PBX+Custom.m in Sources */,
 				2787911318CF79DC004DE651 /* JCPresenceView.m in Sources */,
@@ -2693,6 +2710,7 @@
 				27B8152618D93F1A00516BF6 /* NotificationView.m in Sources */,
 				27F1F2D5191C171300AEAFD7 /* UAInboxAlertHandler.m in Sources */,
 				91CAE67E1961E47F004A28FD /* JCVoicemailIcon.m in Sources */,
+				5DA566491A20543500286BA5 /* JCAuthenticationManagerError.m in Sources */,
 				2700987418F4714100B6BC2F /* NSString+JSMessagesView.m in Sources */,
 				27BE503D19DCF6A800B725ED /* JCLineSession.m in Sources */,
 				278E858619EC6B6E0087649D /* VideoViewController.mm in Sources */,
@@ -2988,8 +3006,8 @@
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: JIVE COMMUNICATIONS, INC";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: JIVE COMMUNICATIONS, INC";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JiveOne/JiveOne-Prefix.pch";
@@ -3013,7 +3031,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "67484742-081A-4414-B9DC-92217E283B70";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -3114,8 +3132,8 @@
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Jive Communications, Inc (5NE3JJD5L3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jive Communications, Inc (5NE3JJD5L3)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JiveOne/JiveOne-Prefix.pch";
@@ -3139,7 +3157,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9112a712-96e2-4bb0-9f22-871ba65c8e04";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
