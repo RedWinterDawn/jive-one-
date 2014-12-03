@@ -50,11 +50,12 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     JCBluetoothManager *_bluetoothManager;
     SipHandler *_sipHandler;
 	NSString *_warmTransferNumber;
-    CTCallCenter *_callCenter;
+    CTCallCenter *_externalCallCenter;
 }
 
 @property (copy)void (^externalCallCompletionHandler)(BOOL connected);
 @property (nonatomic) BOOL externalCallConnected;
+@property (nonatomic) BOOL externalCallDisconnected;
 
 @property (nonatomic, readwrite, getter=isConnected) BOOL connected;
 
@@ -145,10 +146,20 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
         // Configure event handling to observe the iPhone Dialer. If we are connected, flagged that we ar connected for
         // later use.
         self.externalCallConnected = false;
-        _callCenter = [[CTCallCenter alloc] init];
-        [_callCenter setCallEventHandler:^(CTCall *call){
+        self.externalCallDisconnected = false;
+        _externalCallCenter = [[CTCallCenter alloc] init];
+        [_externalCallCenter setCallEventHandler:^(CTCall *call){
             if ([call.callState isEqualToString: CTCallStateConnected]) {
                 weakSelf.externalCallConnected = TRUE;
+                NSLog(@"call connected");
+            }
+            else if ([call.callState isEqualToString:CTCallStateDialing]) {
+                weakSelf.externalCallDisconnected = FALSE;
+                NSLog(@"call dialing");
+            }
+            else if ([call.callState isEqualToString:CTCallStateDisconnected]) {
+                NSLog(@"call disconnected");
+                weakSelf.externalCallDisconnected = TRUE;
             }
         }];
         
@@ -500,11 +511,16 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 
 -(void)applicationDidBecomeActive:(NSNotification *)notification
 {
-    BOOL connected = self.externalCallConnected;
-    if (self.externalCallCompletionHandler != NULL) {
-        self.externalCallCompletionHandler(connected);
+    NSLog(@"application did become active");
+    if (self.externalCallDisconnected)
+    {
+        NSLog(@"deregistering did become active, and processing call");
+        
+        if (self.externalCallCompletionHandler != NULL) {
+            self.externalCallCompletionHandler(self.externalCallConnected);
+        }
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
     }
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 -(void)applicationDidEnterBackground:(NSNotification *)notification
