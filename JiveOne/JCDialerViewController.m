@@ -7,42 +7,47 @@
 //
 
 #import "JCDialerViewController.h"
-#import "JCCallerViewController.h"
-#import "Call.h"
-#import "SipHandler.h"
-#import "Lines+Custom.h"
-#import "JCAuthenticationManager.h"
-
-NSString *const kJCDialerViewController911String = @"911";
-NSString *const kJCDialerViewController411String = @"411";
+#import "JCCallCardManager.h"
 
 NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCall";
 
-@interface JCDialerViewController () <JCCallerViewControllerDelegate>
+@interface JCDialerViewController ()
 {
-    SipHandler *_sipHandler;
+    JCCallCardManager *_phoneManager;
+    BOOL _initiatingCall;
 }
 
 @end
 
-
 @implementation JCDialerViewController
 
+/**
+ * Override to get the Phone Manager and add observers to watch for connected status so we can display the registration 
+ * state, we also set the views initial state for displaying state.
+ */
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.backspaceBtn.alpha = 0;
     
-    _sipHandler = [SipHandler sharedHandler];
-    [_sipHandler addObserver:self forKeyPath:kSipHandlerRegisteredSelectorKey options:NSKeyValueObservingOptionNew context:NULL];
-    [self updateResgistrationStatus];
+    _phoneManager = [JCCallCardManager sharedManager];
+    [_phoneManager addObserver:self forKeyPath:@"connected" options:NSKeyValueObservingOptionNew context:NULL];
+    [self updateRegistrationStatus];
+    
+    self.backspaceBtn.alpha = 0;
 }
 
+/**
+ * Override so that if the phone manager is not yet connected when the view appears, try to connect. If we are logged
+ * out, or have network connectivity problems it will fail, otherwise we should succeed and register if we were not 
+ * already registered.
+ */
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if (!_sipHandler.isRegistered) {
-        [_sipHandler connect:^(bool success, NSError *error) {
+    
+    if(!_phoneManager.isConnected)
+    {
+        [_phoneManager connect:^(bool success, NSError *error) {
             if (error) {
                 NSLog(@"%@", [error description]);
             }
@@ -50,95 +55,54 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     }
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (void)dealloc
 {
-    UIViewController *viewController = segue.destinationViewController;
-    if ([viewController isKindOfClass:[JCCallerViewController class]])
-    {
-        JCCallerViewController *callerViewController = (JCCallerViewController *)viewController;
-        callerViewController.dialString = self.dialStringLabel.dialString;
-        callerViewController.delegate = self;
-        self.dialStringLabel.dialString = nil;
-    }
+    [_phoneManager removeObserver:self forKeyPath:@"connected"];
 }
+
+#pragma mark - KVO -
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if ([keyPath isEqualToString:kSipHandlerRegisteredSelectorKey])
-        [self updateResgistrationStatus];
-}
-
-- (void)dealloc
-{
-    [_sipHandler removeObserver:self forKeyPath:kSipHandlerRegisteredSelectorKey];
+    if ([keyPath isEqualToString:@"connected"])
+        [self updateRegistrationStatus];
 }
 
 #pragma mark - IBActions -
 
+/**
+ * Tell the phone manager that a keypad number was pressed. Uses the tag property of the sender to identify which key, 
+ * and the phone manager converts int into the DTMF tone for the phone.
+ */
 -(IBAction)numPadPressed:(id)sender
 {
     if ([sender isKindOfClass:[UIButton class]])
     {
         UIButton *button = (UIButton *)sender;
         [self.dialStringLabel append:[self characterFromNumPadTag:(int)button.tag]];
-		
-		NSInteger tag = [[self characterFromNumPadTag:(int)button.tag] integerValue];
-		char dtmf = tag;
-		switch (tag) {
-			case kTAGStar:
-			{
-				dtmf = 10;
-				break;
-			}
-			case kTAGSharp:
-			{
-				dtmf = 11;
-				break;
-			}
-		}
-		
-		[[SipHandler sharedHandler] pressNumpadButton:dtmf];
+        [_phoneManager numberPadPressedWithInteger:button.tag];
     }
 }
 
 -(IBAction)initiateCall:(id)sender
 {
     NSString *string = self.dialStringLabel.text;
-    
-    // You cannot dial an empty string or null string.
     if (!string || [string isEqualToString:@""]) {
         return;
     }
     
-    
-    if ([string isEqualToString:kJCDialerViewController911String]) {
-#ifdef DEBUG
-        string = kJCDialerViewController411String;
-       NSLog(@"CANNOT CALL 911 In this APP");
-#endif
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", string]];
-        [[UIApplication sharedApplication] openURL:url];
-        
+    // If we are already initiating a call, do not try the call again. Prevents double tapping errors that might cause
+    // two calls to be triggered.
+    if (_initiatingCall) {
         return;
     }
-    
-    // Check if we are registered. If we are registered, perform segue to initiate the call.
-    if (_sipHandler.isRegistered)
-    {
-        [self performSegueWithIdentifier:kJCDialerViewControllerCallerStoryboardIdentifier sender:self];
-        return;
-    }
-        
-    // If we are not registered, try to register before we perform the seque. if we successfully register, perform
-    // segue initiate the call.
-    [_sipHandler connect:^(bool success, NSError *error) {
-        if (success) {
+    _initiatingCall = TRUE;
+    [_phoneManager dialNumber:string type:JCCallCardDialSingle completion:^(bool success, NSDictionary *callInfo) {
+        if (success){
             [self performSegueWithIdentifier:kJCDialerViewControllerCallerStoryboardIdentifier sender:self];
+            self.dialStringLabel.dialString = nil;
         }
-        
-        if (error) {
-            NSLog(@"%@", [error description]);
-        }
+        _initiatingCall = false;
     }];
 }
 
@@ -152,18 +116,14 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     [self.dialStringLabel clear];
 }
 
-
-
 #pragma mark - Private -
 
--(void)updateResgistrationStatus
+-(void)updateRegistrationStatus
 {
     NSString *prompt = NSLocalizedString(@"Unregistered", nil);
-    if (_sipHandler.isRegistered)
-    {
+    if (_phoneManager.isConnected) {
         _callBtn.selected = false;
-        LineConfiguration *lineConfiguration = [JCAuthenticationManager sharedInstance].lineConfiguration;
-        prompt = lineConfiguration.display;
+        prompt = _phoneManager.lineConfiguration.display;
     }
     else
         _callBtn.selected = true;
@@ -203,15 +163,6 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
      
                          }];
     }
-}
-
-#pragma mark - Delegate Handlers -
-
-#pragma mark JCCallerViewController
-
--(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController
-{
-    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 @end

@@ -7,14 +7,23 @@
 //
 
 #import "JCCallCardManager.h"
-#import "SipHandler.h"
-#import "JCLineSession.h"
-#import "Lines+Custom.h"
-#import <MBProgressHUD.h>
 
-#import "JCConferenceCallCard.h"
+// Managers
 #import "JCAuthenticationManager.h"
 #import "JCBluetoothManager.h"
+#import "SipHandler.h"
+
+// Objects
+#import "JCLineSession.h"
+#import "JCConferenceCallCard.h"
+
+// Categories
+#import "UIDevice+CellularData.h"
+
+@import CoreTelephony;
+
+NSString *const kJCCallCardManager911String = @"911";
+NSString *const kJCCallCardManager611String = @"611";
 
 NSString *const kJCCallCardManagerAddedCallNotification      = @"addedCall";
 NSString *const kJCCallCardManagerAnswerCallNotification     = @"answerCall";
@@ -41,7 +50,14 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     JCBluetoothManager *_bluetoothManager;
     SipHandler *_sipHandler;
 	NSString *_warmTransferNumber;
+    CTCallCenter *_externalCallCenter;
 }
+
+@property (copy)void (^externalCallCompletionHandler)(BOOL connected);
+@property (nonatomic) BOOL externalCallConnected;
+@property (nonatomic) BOOL externalCallDisconnected;
+
+@property (nonatomic, readwrite, getter=isConnected) BOOL connected;
 
 @end
 
@@ -52,61 +68,116 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     self = [super init];
     if (self)
     {
+        // Open bluetooth manager to turn on audio support for bluetooth before we get started.
         _bluetoothManager = [[JCBluetoothManager alloc] init];
         
+        // Register for app notifications
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         [center addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
         [center addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
-        [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:nil];
-        [center addObserver:self selector:@selector(userDidLoadMinimunData:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:nil];
         
-        JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
-        [authenticationManager addObserver:self forKeyPath:@"lineConfiguration" options:NSKeyValueObservingOptionInitial context:NULL];
-        
-        if (self.calls.count == 0 && authenticationManager.userAuthenticated && authenticationManager.userLoadedMininumData)
+        // Access the Authetication Manager and register for observer and notification events.
+        _authenticationManager = [JCAuthenticationManager sharedInstance];
+        [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:_authenticationManager];
+        [center addObserver:self selector:@selector(userDidLoadMinimunData:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:_authenticationManager];
+        [_authenticationManager addObserver:self forKeyPath:@"lineConfiguration" options:NSKeyValueObservingOptionInitial context:NULL];
+        if (self.calls.count == 0 && _authenticationManager.userAuthenticated && _authenticationManager.userLoadedMininumData)
         {
             _sipHandler = [SipHandler sharedHandler];
+            [_sipHandler addObserver:self forKeyPath:kSipHandlerRegisteredSelectorKey options:NSKeyValueObservingOptionNew context:NULL];
             _sipHandler.delegate = self;
         }
     }
     return self;
 }
 
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+-(void)dealloc
 {
-    // If the line configuration changes, reconnect the sip handler.
-    if ([keyPath isEqualToString:@"lineConfiguration"] && _sipHandler) {
-        [_sipHandler connect:NULL];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [_authenticationManager removeObserver:self forKeyPath:@"lineConfiguration"];
+    [_sipHandler removeObserver:self forKeyPath:kSipHandlerRegisteredSelectorKey];
+}
+
+#pragma mark - Public Methods -
+
+-(void)connect:(CompletionHandler)completion
+{
+    if (_sipHandler) {
+        [_sipHandler connect:completion];
+    } else {
+        if (completion != NULL) {
+            completion(false, [NSError errorWithDomain:@"Not logged in." code:0 userInfo:nil]);
+        }
     }
 }
 
 /**
- * Dial an number. 
+ * Dial a given number string. Notify Caller on completion in block.
  *
- * If the SIP hsndler is not registered, try to reconnect before dialing number. If fails with error, returns error 
- * state.
+ * Do 911 call detection. If the number matches an emergency number, and the device can make a call try to call. If we 
+ * get a connected or dialing. Handle 911 call detection event if there is no sip handler.
+ *
+ *  If we are not an emergency number, then try to connect and dial. If already connected, will dial immediately, 
+ *  otherwise tries to register, then dial. If we are uable to connect, we call completion handler with success being 
+ *  false;
  */
--(void)dialNumber:(NSString *)dialNumber type:(JCCallCardDialTypes)dialType completion:(void (^)(bool success, NSDictionary *callInfo))completion
+-(void)dialNumber:(NSString *)dialString type:(JCCallCardDialTypes)dialType completion:(void (^)(bool success, NSDictionary *callInfo))completion
 {
-    if(!_sipHandler.isRegistered)
-    {
-        [_sipHandler connect:^(bool success, NSError *error) {
-            if (success)
-                [self internal_dialNumber:dialNumber type:dialType completion:completion];
-            else
+    if ([self isEmergencyNumber:dialString] && [UIDevice currentDevice].canMakeCall) {
+        
+        #ifdef DEBUG
+        dialString = kJCCallCardManager611String;
+        #endif
+        
+        // Add notification observing of the application active event. We only observed this in this one event, since we
+        // know we are causing the application to loose focus, we want to handle events when we return.
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+        
+        __unsafe_unretained JCCallCardManager *weakSelf = self;
+        self.externalCallCompletionHandler = ^(BOOL connected){
+            if (connected) {
                 completion(false, nil);
-            
-            if (error)
-                NSLog(@"%@", [error description]);
+            }
+            else{
+                [weakSelf connectAndDial:dialString type:dialType completion:completion];
+            }
+        };
+        
+        // Configure event handling to observe the iPhone Dialer. If we are connected, flagged that we ar connected for
+        // later use.
+        self.externalCallConnected = false;
+        self.externalCallDisconnected = false;
+        _externalCallCenter = [[CTCallCenter alloc] init];
+        [_externalCallCenter setCallEventHandler:^(CTCall *call){
+            if ([call.callState isEqualToString: CTCallStateConnected]) {
+                weakSelf.externalCallConnected = TRUE;
+                NSLog(@"call connected");
+            }
+            else if ([call.callState isEqualToString:CTCallStateDialing]) {
+                weakSelf.externalCallDisconnected = FALSE;
+                NSLog(@"call dialing");
+            }
+            else if ([call.callState isEqualToString:CTCallStateDisconnected]) {
+                NSLog(@"call disconnected");
+                weakSelf.externalCallDisconnected = TRUE;
+            }
         }];
+        
+        // Initiate call using the iPhone's dialer.
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", dialString]]];
     }
-    else
-        [self internal_dialNumber:dialNumber type:dialType completion:completion];
+    else {
+        [self connectAndDial:dialString type:dialType completion:completion];
+    }
 }
 
 -(void)finishWarmTransfer:(void (^)(bool success))completion
 {
-	if (_warmTransferNumber) {
+    if (!_sipHandler) {
+        return;
+    }
+    
+    if (_warmTransferNumber) {
 		[_sipHandler warmTransferToNumber:_warmTransferNumber completion:^(bool success, NSError *error) {
             _warmTransferNumber = nil;
             completion(success);
@@ -119,7 +190,11 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 
 -(void)mergeCalls:(void (^)(bool success))completion
 {
-	bool inConference = [_sipHandler setConference:true];
+    if (!_sipHandler) {
+        return;
+    }
+    
+    bool inConference = [_sipHandler setConference:true];
 	if (inConference)
     {
 		NSArray *calls = self.calls;
@@ -130,6 +205,10 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 
 -(void)splitCalls
 {
+    if (!_sipHandler) {
+        return;
+    }
+    
     // Since we are only supporting two line sessions at a time, if we have a conference call, it should be the only
     // object in the array;
     JCCallCard *callCard = [self.calls objectAtIndex:0];
@@ -143,20 +222,59 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 
 -(void)swapCalls
 {
+    if (!_sipHandler) {
+        return;
+    }
+    
     JCCallCard *inactiveCall = [self findInactiveCallCard];
     inactiveCall.hold = false;
 }
 
+-(void)numberPadPressedWithInteger:(NSInteger)numberPadNumber
+{
+    if(!_sipHandler) {
+        return;
+    }
+    
+    char dtmf = numberPadNumber;
+    switch (numberPadNumber) {
+        case kTAGStar:
+        {
+            dtmf = 10;
+            break;
+        }
+        case kTAGSharp:
+        {
+            dtmf = 11;
+            break;
+        }
+    }
+    
+    [_sipHandler pressNumpadButton:dtmf];
+}
+
 #pragma mark - Getters -
 
-- (NSMutableArray *)calls
+-(NSMutableArray *)calls
 {
 	if (!_calls)
 		_calls = [NSMutableArray array];
 	return _calls;
 }
 
+-(LineConfiguration *)lineConfiguration
+{
+    return _authenticationManager.lineConfiguration;
+}
+
 #pragma mark - Private -
+
+-(BOOL)isEmergencyNumber:(NSString *)dialString
+{
+    return [dialString isEqualToString:kJCCallCardManager911String];
+    
+    // TODO: Localization, detecting the emergency number based on localization for the device and cellular positioning for the carrier device.
+}
 
 -(JCCallCard *)findInactiveCallCard
 {
@@ -168,7 +286,30 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     return nil;
 }
 
--(void)internal_dialNumber:(NSString *)dialNumber type:(JCCallCardDialTypes)dialType completion:(void (^)(bool success, NSDictionary *callInfo))completion
+-(void)connectAndDial:(NSString *)dialString type:(JCCallCardDialTypes)dialType completion:(void (^)(bool success, NSDictionary *callInfo))completion
+{
+    // If we are not logged in and do not have a sip handler, we must fail.
+    if (!_sipHandler) {
+        completion(false, nil);
+    }
+    
+    if(!_sipHandler.isRegistered)
+    {
+        [_sipHandler connect:^(bool success, NSError *error) {
+            if (success)
+                [self dial:dialString type:dialType completion:completion];
+            else
+                completion(false, nil);
+            
+            if (error)
+                NSLog(@"%@", [error description]);
+        }];
+    }
+    else
+        [self dial:dialString type:dialType completion:completion];
+}
+
+-(void)dial:(NSString *)dialNumber type:(JCCallCardDialTypes)dialType completion:(void (^)(bool success, NSDictionary *callInfo))completion
 {
     if (dialType == JCCallCardDialBlindTransfer) {
         [_sipHandler blindTransferToNumber:dialNumber completion:^(bool success, NSError *error) {
@@ -222,7 +363,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     }
 }
 
-- (NSString *)getContactNameByNumber:(NSString *)number
+-(NSString *)getContactNameByNumber:(NSString *)number
 {
     Lines *contact = [Lines MR_findFirstByAttribute:@"externsionNumber" withValue:number];
     if (contact) {
@@ -232,7 +373,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     return nil;
 }
 
-- (void)addCall:(JCCallCard *)callCard
+-(void)addCall:(JCCallCard *)callCard
 {
     if ([self.calls containsObject:callCard])
         return;
@@ -255,7 +396,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
                                                                  }];
 }
 
-- (void)removeCall:(JCCallCard *)callCard
+-(void)removeCall:(JCCallCard *)callCard
 {
     if (![self.calls containsObject:callCard])
         return;
@@ -278,7 +419,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     }
 }
 
-- (void)addConferenceCallWithCallArray:(NSArray *)callCards
+-(void)addConferenceCallWithCallArray:(NSArray *)callCards
 {
     if (!callCards || callCards.count < 2)
         return;
@@ -312,7 +453,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
                                                                  }];
 }
 
-- (void)removeConferenceCall:(JCConferenceCallCard *)conferenceCallCard
+-(void)removeConferenceCall:(JCConferenceCallCard *)conferenceCallCard
 {
     if (![self.calls containsObject:conferenceCallCard]) {
         return;
@@ -342,7 +483,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
                                                                  }];
 }
 
-- (void)hangUpAll
+-(void)hangUpAll
 {
     for (JCCallCard *call in self.calls) {
         if (call.lineSession.isActive) {
@@ -351,9 +492,36 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     }
 }
 
+#pragma mark - KVO -
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    // If the line configuration changes, reconnect the sip handler.
+    if ([keyPath isEqualToString:@"lineConfiguration"] && _sipHandler) {
+        [_sipHandler connect:NULL];
+    }
+    else if ([keyPath isEqualToString:kSipHandlerRegisteredSelectorKey]) {
+        self.connected = TRUE;
+    }
+}
+
 #pragma mark - Notification Selectors -
 
 #pragma mark UIApplication
+
+-(void)applicationDidBecomeActive:(NSNotification *)notification
+{
+    NSLog(@"application did become active");
+    if (self.externalCallDisconnected)
+    {
+        NSLog(@"deregistering did become active, and processing call");
+        
+        if (self.externalCallCompletionHandler != NULL) {
+            self.externalCallCompletionHandler(self.externalCallConnected);
+        }
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+    }
+}
 
 -(void)applicationDidEnterBackground:(NSNotification *)notification
 {
@@ -492,13 +660,11 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 
 @end
 
-
-static JCCallCardManager *singleton = nil;
-
 @implementation JCCallCardManager (Singleton)
 
 +(JCCallCardManager *)sharedManager
 {
+    static JCCallCardManager *singleton = nil;
     if (singleton != nil)
         return singleton;
     
@@ -506,7 +672,6 @@ static JCCallCardManager *singleton = nil;
     static dispatch_once_t pred;        // Lock
     dispatch_once(&pred, ^{             // This code is called at most once per app
         singleton = [[JCCallCardManager alloc] init];
-		
     });
     
     return singleton;

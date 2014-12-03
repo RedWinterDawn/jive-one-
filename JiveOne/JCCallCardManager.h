@@ -30,6 +30,7 @@ extern NSString *const kJCCallCardManagerIncomingCall;
 extern NSString *const kJCCallCardManagerNewCall;
 extern NSString *const kJCCallCardManagerTransferedCall;
 
+typedef void(^CompletionHandler)(bool success, NSError *error);
 
 typedef enum : NSUInteger {
     JCCallCardDialSingle = 0,
@@ -41,14 +42,17 @@ typedef enum : NSUInteger {
 
 @property (nonatomic, strong) NSMutableArray *calls;
 
+@property (nonatomic, readonly) LineConfiguration *lineConfiguration;
+@property (nonatomic, readonly, getter=isConnected) BOOL connected;
+
+-(void)connect:(CompletionHandler)connected;
+
 // Attempts to dial a passed string following the dial type directive. When the dial operation was completed, we are
 // notified. If the dial action resulted in the creation of a dial card, an kJCCallCardManagerAddedCallNotification is
 // broadcasted through the notification center.
 -(void)dialNumber:(NSString *)dialNumber
              type:(JCCallCardDialTypes)dialType
        completion:(void (^)(bool success, NSDictionary *callInfo))completion;
-
-
 
 // Merges two existing calls into a conference call. Requires there to be two current calls to be merged.
 -(void)mergeCalls:(void (^)(bool success))completion;
@@ -62,8 +66,10 @@ typedef enum : NSUInteger {
 // Finish a transfer
 -(void)finishWarmTransfer:(void (^)(bool success))completion;
 
-@end
+// NumberPad
+-(void)numberPadPressedWithInteger:(NSInteger)numberPad;
 
+@end
 
 @interface JCCallCardManager (Singleton)
 
