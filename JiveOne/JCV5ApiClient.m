@@ -83,8 +83,7 @@
 {
 	[self setRequestAuthHeader:YES];
 	
-	NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:kUserName];
-	NSString *url = [NSString stringWithFormat:@"/contacts/2014-07/jiveuser/info/jiveid/%@", username];
+	NSString *url = [NSString stringWithFormat:@"/contacts/2014-07/jiveuser/info/jiveid/%@", [JCAuthenticationManager sharedInstance].jiveUserId];
 	
 	//NSLog(@"%@", url);
 	
@@ -107,7 +106,7 @@
 	
 	for (PBX *pbx in pbxs) {
 		
-		NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
+		NSString *username = [JCAuthenticationManager sharedInstance].jiveUserId;
 		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(pbxId == %@) AND (userName == %@)", pbx.pbxId, username];
 		
 		Lines *line = [Lines MR_findFirstWithPredicate:predicate];
@@ -267,7 +266,7 @@
 	
 	[_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 		//parse list of mailbox references
-		NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
+		NSString *username = [JCAuthenticationManager sharedInstance].jiveUserId;
 		[PBX addPBXs:responseObject[@"userPbxs"] userName:username completed:^(BOOL success) {
 			completed(YES, responseObject, operation, nil);
 		}];

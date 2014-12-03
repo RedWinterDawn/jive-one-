@@ -21,3 +21,5 @@
     #import "JCAuthenticationManager.h"
     #import "Flurry.h"
 #endif
+
+#import "NSString+Custom.h"
