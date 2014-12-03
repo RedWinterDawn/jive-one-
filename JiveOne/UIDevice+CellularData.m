@@ -47,17 +47,7 @@
     {
         canMakeCall = hasCellular || canOpenURL;
     }
-    
-    
-    
-    
-    if (!canOpenURL)
-        return false;
-    
-    
-    
-    
-    return true;
+    return canMakeCall;
 }
 
 - (bool) hasCellular {
