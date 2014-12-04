@@ -12,6 +12,8 @@
 
 @interface LineConfiguration : NSManagedObject
 
+@property (nonatomic, getter=isActive) BOOL active;
+
 @property (nonatomic, retain) NSString * display;
 @property (nonatomic, retain) NSString * outboundProxy;
 @property (nonatomic, retain) NSString * registrationHost;

@@ -63,7 +63,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Descrip
 {
     [super viewWillLayoutSubviews];
     
-    self.userNameLabel.text     = _authenticationManager.userName;
+    self.userNameLabel.text     = _authenticationManager.jiveUserId;
     self.extensionLabel.text    = _authenticationManager.lineConfiguration.display;
     self.pbxLabel.text          = _authenticationManager.pbxName;
 }

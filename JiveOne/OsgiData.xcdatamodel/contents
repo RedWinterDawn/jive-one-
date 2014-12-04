@@ -49,6 +49,7 @@
     </entity>
     <entity name="IncomingCall" representedClassName="IncomingCall" parentEntity="Call" syncable="YES"/>
     <entity name="LineConfiguration" representedClassName="LineConfiguration" syncable="YES">
+        <attribute name="active" optional="YES" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
         <attribute name="display" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="outboundProxy" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="registrationHost" optional="YES" attributeType="String" syncable="YES"/>
@@ -153,13 +154,13 @@
         <element name="Conversation" positionX="-758" positionY="126" width="128" height="180"/>
         <element name="ConversationEntry" positionX="-605" positionY="126" width="128" height="270"/>
         <element name="ConversationETag" positionX="-441" positionY="207" width="128" height="60"/>
-        <element name="IncomingCall" positionX="-243" positionY="-153" width="128" height="45"/>
-        <element name="LineConfiguration" positionX="736" positionY="207" width="128" height="120"/>
+        <element name="IncomingCall" positionX="-243" positionY="-153" width="128" height="43"/>
+        <element name="LineConfiguration" positionX="52" positionY="6" width="128" height="133"/>
         <element name="LineGroup" positionX="736" positionY="-162" width="128" height="75"/>
         <element name="Lines" positionX="738" positionY="-63" width="128" height="225"/>
         <element name="Membership" positionX="565" positionY="-90" width="128" height="90"/>
-        <element name="MissedCall" positionX="-243" positionY="27" width="128" height="45"/>
-        <element name="OutgoingCall" positionX="-243" positionY="-81" width="128" height="45"/>
+        <element name="MissedCall" positionX="-243" positionY="27" width="128" height="43"/>
+        <element name="OutgoingCall" positionX="-243" positionY="-81" width="128" height="43"/>
         <element name="PBX" positionX="45" positionY="204" width="128" height="120"/>
         <element name="PersonEntities" positionX="270" positionY="171" width="128" height="360"/>
         <element name="PersonMeta" positionX="394" positionY="-63" width="128" height="150"/>

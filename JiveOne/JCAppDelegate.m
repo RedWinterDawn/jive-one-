@@ -18,7 +18,6 @@
 #import "TRVSMonitor.h"
 #import "JCVersion.h"
 #import "LoggerClient.h"
-#import "SipHandler.h"
 
 #import "Voicemail+Custom.h"
 #import "JCCallCardManager.h"
@@ -27,11 +26,13 @@
 #import "JCApplicationSwitcherDelegate.h"
 #import "JCV5ApiClient.h"
 #import "JCSocketDispatch.h"
-#import "SipHandler.h"
 
 @interface JCAppDelegate () <JCCallerViewControllerDelegate, UAPushNotificationDelegate, UARegistrationDelegate>
 {
     JCCallerViewController *_presentedCallerViewController;
+    JCAuthenticationManager *_authenticationManager;
+    JCCallCardManager *_phoneManager;
+    
     bool _didNotify;
 }
 
@@ -92,7 +93,7 @@
     [self setupDatabase];
 
     //Register for background fetches
-    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+    [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     
     //Start monitor for Reachability
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
@@ -100,26 +101,23 @@
     UAConfig *config = [UAConfig defaultConfig];
     [UAirship takeOff:config];
     
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    JCCallCardManager *callCardManager = [JCCallCardManager sharedManager];
-    [center addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
-    [center addObserver:self selector:@selector(didReceiveIncomingCall:) name:kJCCallCardManagerAddedCallNotification object:callCardManager];
-    [center addObserver:self selector:@selector(stopRingtone) name:kJCCallCardManagerAnswerCallNotification object:callCardManager];
+    
     
     // Launches the Badge manager. Should be launched after Mangical record has initialized.
     [[JCBadgeManager sharedManager] initialize];
     
     // Authentication
-    JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
-    [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];
-    [center addObserver:self selector:@selector(userDidLogin:) name:kJCAuthenticationManagerUserAuthenticatedNotification object:authenticationManager];
-    [center addObserver:self selector:@selector(userDataReady:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:authenticationManager];
+    _authenticationManager = [JCAuthenticationManager sharedInstance];
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:_authenticationManager];
+    [center addObserver:self selector:@selector(userDataReady:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:_authenticationManager];
+    [center addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
     
-    if (!authenticationManager.userAuthenticated || !authenticationManager.userLoadedMininumData) {
+    if (!_authenticationManager.userAuthenticated || !_authenticationManager.userLoadedMininumData) {
         [self changeRootViewController:JCRootLoginViewController];
     }
     else {
-        [self startSocket:NO];
+        [self userDataReady:NO];
     }
     return YES;
 }
@@ -145,11 +143,8 @@
 -(void)applicationDidEnterBackground:(UIApplication *)application
 {
     LOG_Info();
-    
     LogMessage(@"socket", 4, @"Will Call CloseSocket");
     [self stopSocket];
-	
-	[[SipHandler sharedHandler] startKeepAwake];
 }
 
 /**
@@ -164,17 +159,9 @@
     
     //[[NotificationView sharedInstance] didChangeConnection:nil];
     if ([[JCAuthenticationManager sharedInstance] userAuthenticated] && [[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {
-        //[[JCAuthenticationManager sharedInstance] checkForTokenValidity];
-//        [[JCRESTClient sharedClient] RetrieveEntitiesPresence:^(BOOL updated) {
-//            //do nothing;
-//        } failure:^(NSError *err) {
-//            //do nothing;
-//        }];
         LogMessage(@"socket", 4, @"Will Call requestSession");
         [self startSocket:NO];
     }
-	
-	[[SipHandler sharedHandler] stopKeepAwake];
 }
 
 /**
@@ -184,101 +171,69 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     LOG_Info();
-    
-//    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-//    if (currentInstallation.badge != 0) {
-//        currentInstallation.badge = 0;
-//        [currentInstallation saveEventually];
-//    }
-    _didNotify = false;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(alertUserToUpdate:) name:@"AppIsOutdated" object:nil];
-    [[JCVersion sharedClient] getVersion];
+}
+
+/**
+ * Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+ */
+- (void)applicationWillTerminate:(UIApplication *)application
+{
+    LOG_Info();
+    [MagicalRecord cleanUp];
 }
 
 #pragma mark - Notification Handlers -
 
 #pragma mark JCAuthenticationManager
 
--(void)userDidLogin:(NSNotification *)notification
-{
-    LOG_Info();
-    
-    // TODO: Kick off Sync.
-}
-
 -(void)userDataReady:(NSNotification *)notification
 {
     LOG_Info();
     
-    [self changeRootViewController:JCRootTabbarViewController];
-    [self startSocket:NO];
+    if (notification) {
+        [self changeRootViewController:JCRootTabbarViewController];
+    }
+    _loginViewController = nil;
     
-    //[UAPush shared].pushNotificationDelegate = self;
-    // Request a custom set of notification types
-    //[[UAPush shared] registerForRemoteNotifications];
-    //[UAPush shared].notificationTypes = (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert);
+    // Sync Data
+    JCV5ApiClient *client = [JCV5ApiClient sharedClient];
+    if (_authenticationManager.pbx.v5.boolValue) {
+        [client getVoicemails:nil];
+    }
+    [client RetrieveContacts:nil];
+    
+    // Start Phone Manager
+    if (_authenticationManager.lineConfiguration)
+    {
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        _phoneManager = [JCCallCardManager sharedManager];
+        [center addObserver:self selector:@selector(didReceiveIncomingCall:) name:kJCCallCardManagerAddedCallNotification object:_phoneManager];
+        [center addObserver:self selector:@selector(stopRingtone) name:kJCCallCardManagerAnswerCallNotification object:_phoneManager];
+    }
 }
 
 -(void)userDidLogout:(NSNotification *)notification
 {
     LOG_Info();
+    
     [Flurry logEvent:@"Log out"];
     
     [self stopSocket];
     
     [[JCV5ApiClient sharedClient] stopAllOperations];
-    [[SipHandler sharedHandler] disconnect];
+    
     [[JCOmniPresence sharedInstance] truncateAllTablesAtLogout];
     
     [JCApplicationSwitcherDelegate reset];
     [[JCBadgeManager sharedManager] reset];
     
+    _loginViewController = nil;
     [self changeRootViewController:JCRootLoginViewController];
     
     [[UIApplication sharedApplication] unregisterForRemoteNotifications];
 }
 
-
 #pragma mark - Private -
-
-
-
-
-
-
-
--(void)alertUserToUpdate:(NSNotification *)notification
-{
-    LOG_Info();
-    
-    if ([[notification name] isEqualToString:@"AppIsOutdated"] && (!_didNotify))
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update Required"
-                                                        message:@"Please download the latest version of JiveApp Beta."
-                                                       delegate:self
-                                              cancelButtonTitle:@"Maybe later"
-                                              otherButtonTitles:@"Download", nil];
-        [alert show];
-    }
-    _didNotify = true;
-}
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    LOG_Info();
-    
-    if (buttonIndex > 0) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-services://?action=download-manifest&url=https://jiveios.local/JiveOne.plist"]];
-    }
-}
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-    LOG_Info();
-    
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    [MagicalRecord cleanUp];
-    _didNotify = false;
-}
 
 - (void)startSocket:(BOOL)inBackground
 {

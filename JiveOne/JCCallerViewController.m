@@ -332,6 +332,8 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 {
     if (_delegate && [_delegate respondsToSelector:@selector(shouldDismissCallerViewController:)])
         [_delegate shouldDismissCallerViewController:self];
+    else
+        [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 -(void)presentKeyboardViewController:(UIViewController *)viewController
@@ -341,7 +343,11 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     
     _presentedKeyboardViewController = viewController;
     [self addChildViewController:viewController];
-    CGRect bounds = self.view.bounds;
+    
+    
+    
+    
+    CGRect bounds = (self.view.bounds);
     CGRect frame = self.view.frame;
     frame.origin.y = -frame.size.height;
     viewController.view.frame = frame;
