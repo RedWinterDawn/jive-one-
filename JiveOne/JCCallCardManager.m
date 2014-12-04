@@ -229,6 +229,20 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     JCCallCard *inactiveCall = [self findInactiveCallCard];
     inactiveCall.hold = false;
 }
+-(void)muteCall:(BOOL)mute {
+    if (!_sipHandler) {
+        return;
+    }
+    
+    [_sipHandler muteCall:mute];
+}
+
+-(void)setLoudspeakerStatus:(BOOL)speaker {
+    if (!_sipHandler) {
+        return;
+    }
+    [_sipHandler setLoudspeakerStatus:speaker];
+}
 
 -(void)numberPadPressedWithInteger:(NSInteger)numberPadNumber
 {

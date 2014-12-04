@@ -45,6 +45,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     bool _showingCallOptions;
     
     JCCallCardCollectionViewController *_callCardCollectionViewController;
+    JCCallCardManager *_phoneManager;
 }
 
 @property (nonatomic, strong) NSDictionary *warmTransferInfo;
@@ -63,9 +64,9 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         _keyboardAnimationDuration             = KEYBOARD_ANIMATION_DURATION;
         
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-        JCCallCardManager *manager = [JCCallCardManager sharedManager];
-        [center addObserver:self selector:@selector(answeredCall:) name:kJCCallCardManagerAnswerCallNotification object:manager];
-        [center addObserver:self selector:@selector(removedCall:) name:kJCCallCardManagerRemoveCallNotification object:manager];
+        _phoneManager = [JCCallCardManager sharedManager];
+        [center addObserver:self selector:@selector(answeredCall:) name:kJCCallCardManagerAnswerCallNotification object:_phoneManager];
+        [center addObserver:self selector:@selector(removedCall:) name:kJCCallCardManagerRemoveCallNotification object:_phoneManager];
     }
     return self;
 }
@@ -139,7 +140,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     {
         UIButton *button = (UIButton *)sender;
         button.selected = !button.selected;
-        [[SipHandler sharedHandler] muteCall:button.selected];
+        [_phoneManager muteCall:button.selected];
     }
 }
 
@@ -167,7 +168,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     {
         UIButton *button = (UIButton *)sender;
         button.selected = !button.selected;
-        [[SipHandler sharedHandler] setLoudspeakerStatus:button.selected];
+        [_phoneManager setLoudspeakerStatus:button.selected];
     }
 }
 
@@ -197,7 +198,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(IBAction)swapCall:(id)sender
 {
-    [[JCCallCardManager sharedManager] swapCalls];
+    [_phoneManager swapCalls];
 }
 
 -(IBAction)mergeCall:(id)sender
@@ -448,9 +449,9 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 #pragma mark JCKeyboardViewController
 
--(void)keypadViewController:(JCKeypadViewController *)controller didTypeDTMF:(char)dtmf
+-(void)keypadViewController:(JCKeypadViewController *)controller didTypeNumber:(NSInteger)number
 {
-    [[SipHandler sharedHandler] pressNumpadButton:dtmf];
+    [_phoneManager numberPadPressedWithInteger:number];
 }
 
 #pragma mark JCTransferViewController

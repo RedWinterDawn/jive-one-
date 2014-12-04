@@ -63,6 +63,10 @@ typedef enum : NSUInteger {
 // Switches the active call to be on hold, and unholding the inactive call.
 -(void)swapCalls;
 
+// Umm mutes the call :)
+-(void)muteCall:(BOOL)mute;
+-(void)setLoudspeakerStatus:(BOOL)speaker;
+
 // Finish a transfer
 -(void)finishWarmTransfer:(void (^)(bool success))completion;
 
