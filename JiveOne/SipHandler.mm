@@ -207,7 +207,10 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     [_mPortSIPSDK setSrtpPolicy:SRTP_POLICY_NONE];
     
     // Try to register the default identity
-    [_mPortSIPSDK registerServer:120 retryTimes:9];
+    [_mPortSIPSDK registerServer:3600 retryTimes:9];
+	
+	//set RTC keep alives
+	[_mPortSIPSDK setRtpKeepAlive:true keepAlivePayloadType:126 deltaTransmitTimeMS:30000];
 }
 
 -(void)disconnect
