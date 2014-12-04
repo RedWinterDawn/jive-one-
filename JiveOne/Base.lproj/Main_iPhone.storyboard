@@ -856,9 +856,13 @@
                             <view clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tkS-ur-xyq" userLabel="Login Prompt" customClass="JCRoundedView">
                                 <rect key="frame" x="20" y="190" width="280" height="156"/>
                                 <subviews>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="iPhone2XnewBlurSmall.png" translatesAutoresizingMaskIntoConstraints="NO" id="0aQ-JG-StG">
-                                        <rect key="frame" x="0.0" y="0.0" width="280" height="231"/>
-                                    </imageView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qiO-74-sU0" customClass="JCVisualEffectsView">
+                                        <rect key="frame" x="0.0" y="0.0" width="280" height="156"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="backgroundView" destination="VoB-Ef-4tt" id="Yf7-aD-GeH"/>
+                                        </connections>
+                                    </view>
                                     <textField clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="password" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="k5B-9E-t78">
                                         <rect key="frame" x="20" y="72" width="240" height="40"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
@@ -908,21 +912,21 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="HlT-GQ-JCc" firstAttribute="leading" secondItem="v6D-EQ-qKa" secondAttribute="trailing" constant="13" id="0aG-tb-rKr"/>
-                                    <constraint firstItem="0aQ-JG-StG" firstAttribute="leading" secondItem="tkS-ur-xyq" secondAttribute="leading" id="4vS-P9-bwP"/>
                                     <constraint firstItem="OzV-9h-pmX" firstAttribute="leading" secondItem="tkS-ur-xyq" secondAttribute="leading" constant="20" id="B6F-cG-efC"/>
                                     <constraint firstItem="k5B-9E-t78" firstAttribute="top" secondItem="OzV-9h-pmX" secondAttribute="bottom" constant="11" id="ECn-a7-gzG"/>
                                     <constraint firstItem="k5B-9E-t78" firstAttribute="leading" secondItem="tkS-ur-xyq" secondAttribute="leading" constant="20" id="G9z-4e-4TJ"/>
+                                    <constraint firstAttribute="bottom" secondItem="qiO-74-sU0" secondAttribute="bottom" id="JJp-CK-Ovp"/>
                                     <constraint firstAttribute="trailing" secondItem="HlT-GQ-JCc" secondAttribute="trailing" constant="21" id="K7N-om-ZXp"/>
+                                    <constraint firstAttribute="trailing" secondItem="qiO-74-sU0" secondAttribute="trailing" id="TgA-jM-eGr"/>
                                     <constraint firstItem="OzV-9h-pmX" firstAttribute="top" secondItem="tkS-ur-xyq" secondAttribute="top" constant="21" id="dGA-C1-rSQ"/>
                                     <constraint firstItem="v6D-EQ-qKa" firstAttribute="top" secondItem="k5B-9E-t78" secondAttribute="bottom" constant="7" id="fhd-cw-ls8"/>
                                     <constraint firstItem="HlT-GQ-JCc" firstAttribute="top" secondItem="k5B-9E-t78" secondAttribute="bottom" constant="13" id="fz4-Pg-I9v"/>
-                                    <constraint firstAttribute="trailing" secondItem="0aQ-JG-StG" secondAttribute="trailing" id="kEZ-10-ixD"/>
                                     <constraint firstItem="v6D-EQ-qKa" firstAttribute="leading" secondItem="tkS-ur-xyq" secondAttribute="leading" constant="20" id="nbC-2d-9kM"/>
                                     <constraint firstAttribute="trailing" secondItem="k5B-9E-t78" secondAttribute="trailing" constant="20" id="pf0-l0-qpO"/>
+                                    <constraint firstItem="qiO-74-sU0" firstAttribute="leading" secondItem="tkS-ur-xyq" secondAttribute="leading" id="pwV-DH-wwA"/>
                                     <constraint firstAttribute="height" constant="156" id="rRx-fA-aI3"/>
-                                    <constraint firstAttribute="bottom" secondItem="0aQ-JG-StG" secondAttribute="bottom" constant="-75" id="uo2-2S-P48"/>
+                                    <constraint firstItem="qiO-74-sU0" firstAttribute="top" secondItem="tkS-ur-xyq" secondAttribute="top" id="tU6-7f-Lo0"/>
                                     <constraint firstAttribute="trailing" secondItem="OzV-9h-pmX" secondAttribute="trailing" constant="20" id="vNA-8M-D3i"/>
-                                    <constraint firstItem="0aQ-JG-StG" firstAttribute="top" secondItem="tkS-ur-xyq" secondAttribute="top" id="xvS-aj-Xhn"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -933,12 +937,13 @@
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6mC-zr-a8O" userLabel="Terms &amp; Conditions">
                                 <rect key="frame" x="0.0" y="523" width="320" height="45"/>
                                 <subviews>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.94999999999999996" contentMode="scaleToFill" image="iPhone2XnewBlurSmall.png" translatesAutoresizingMaskIntoConstraints="NO" id="Hxv-ol-0ds">
-                                        <rect key="frame" x="0.0" y="-523" width="320" height="568"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="568" id="dmb-2t-LsC"/>
-                                        </constraints>
-                                    </imageView>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mFx-Mu-esg" customClass="JCVisualEffectsView">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="backgroundView" destination="VoB-Ef-4tt" id="naL-1S-vwY"/>
+                                        </connections>
+                                    </view>
                                     <label opaque="NO" clipsSubviews="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By signing in you agree to our Terms &amp; Conditions." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="6" preferredMaxLayoutWidth="171" translatesAutoresizingMaskIntoConstraints="NO" id="bxS-qG-c0L">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
                                         <gestureRecognizers/>
@@ -952,13 +957,10 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="Hxv-ol-0ds" secondAttribute="trailing" id="0OP-9C-fG0"/>
                                     <constraint firstAttribute="height" constant="45" id="0cA-L3-II4"/>
                                     <constraint firstAttribute="bottom" secondItem="bxS-qG-c0L" secondAttribute="bottom" id="NWf-rO-IVh"/>
                                     <constraint firstItem="bxS-qG-c0L" firstAttribute="leading" secondItem="6mC-zr-a8O" secondAttribute="leading" id="Vul-lA-1Li"/>
-                                    <constraint firstItem="Hxv-ol-0ds" firstAttribute="leading" secondItem="6mC-zr-a8O" secondAttribute="leading" id="XjQ-A9-wx9"/>
                                     <constraint firstAttribute="trailing" secondItem="bxS-qG-c0L" secondAttribute="trailing" id="vZJ-gL-LEp"/>
-                                    <constraint firstAttribute="bottom" secondItem="Hxv-ol-0ds" secondAttribute="bottom" id="xiU-Sa-pwy"/>
                                     <constraint firstItem="bxS-qG-c0L" firstAttribute="top" secondItem="6mC-zr-a8O" secondAttribute="top" id="zTh-gG-Eh4"/>
                                 </constraints>
                             </view>
@@ -1619,7 +1621,7 @@ Cg
                                             <outletCollection property="gestureRecognizers" destination="9YZ-qe-5Z7" appends="YES" id="cye-6U-PNK"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nsS-HF-huE">
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nsS-HF-huE">
                                         <rect key="frame" x="0.0" y="68" width="107" height="54"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="nsS-HF-huE" secondAttribute="height" multiplier="2:1" id="POJ-Wh-2w9"/>
@@ -1654,7 +1656,7 @@ Cg
                                             <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="qbb-YW-777"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7br-ug-lFI">
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7br-ug-lFI">
                                         <rect key="frame" x="107" y="68" width="106" height="54"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="7br-ug-lFI" secondAttribute="height" multiplier="2:1" id="S45-pP-9rf"/>
@@ -1689,7 +1691,7 @@ Cg
                                             <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="7YJ-nY-WUp"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Bh-Zq-F0d">
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Bh-Zq-F0d">
                                         <rect key="frame" x="213" y="68" width="107" height="54"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="8Bh-Zq-F0d" secondAttribute="height" multiplier="2:1" id="AQf-xH-OhI"/>
@@ -1759,7 +1761,7 @@ Cg
                                             <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="4rc-3c-cxj"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IKI-cG-rUa">
+                                    <button opaque="NO" tag="5" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IKI-cG-rUa">
                                         <rect key="frame" x="107" y="122" width="106" height="53"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="IKI-cG-rUa" secondAttribute="height" multiplier="2:1" id="Gu4-5e-taQ"/>
@@ -1886,7 +1888,7 @@ Cg
                                             <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="eym-Eb-npR"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ggV-Gf-26E">
+                                    <button opaque="NO" tag="8" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ggV-Gf-26E">
                                         <rect key="frame" x="107" y="175" width="106" height="53"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="ggV-Gf-26E" secondAttribute="height" multiplier="2:1" id="FOK-nD-QzH"/>
@@ -1956,7 +1958,7 @@ Cg
                                             <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="q0D-HQ-a7j"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="11" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uSH-QK-bW1">
+                                    <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uSH-QK-bW1">
                                         <rect key="frame" x="213" y="228" width="107" height="53"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="uSH-QK-bW1" secondAttribute="height" multiplier="2:1" id="Q7Y-dh-CCi"/>
@@ -1991,7 +1993,7 @@ Cg
                                             <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="EIJ-dA-OgE"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="10" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZJt-14-a51">
+                                    <button opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZJt-14-a51">
                                         <rect key="frame" x="0.0" y="228" width="107" height="53"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="ZJt-14-a51" secondAttribute="height" multiplier="2:1" id="OWe-L0-G4W"/>
@@ -4048,7 +4050,6 @@ Cg
         <image name="down_arrow" width="19" height="12"/>
         <image name="gray-callbutton" width="58" height="58"/>
         <image name="green-check" width="58" height="58"/>
-        <image name="iPhone2XnewBlurSmall.png" width="320" height="480"/>
         <image name="incall-background" width="320" height="568"/>
         <image name="login-background" width="640" height="1136"/>
         <image name="loginlogo" width="376" height="380"/>
