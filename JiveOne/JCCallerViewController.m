@@ -17,14 +17,14 @@
 
 // Managers
 #import "JCCallCardManager.h"   // Handles call cards, and managed calls
-#import "SipHandler.h"          // Direct access to the lower level sip manager.
-#import <MBProgressHUD.h>
 
 // Presented View Controllers
 #import "JCTransferViewController.h"                // Shows dial pad to dial for blind, warm transfer and additional call.
 #import "JCKeypadViewController.h"                  // Numberpad
 #import "JCTransferConfirmationViewController.h"    // Transfer confimation view controller
 #import "JCCallCardCollectionViewController.h"
+
+#import "UIViewController+HUD.h"
 
 #define CALL_OPTIONS_ANIMATION_DURATION 0.6
 #define TRANSFER_ANIMATION_DURATION 0.3
@@ -40,7 +40,6 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     UIViewController *_presentedTransferViewController;
     UIViewController *_presentedKeyboardViewController;
     NSTimeInterval _defaultCallOptionViewConstraint;
-	MBProgressHUD *hud;
 	
     bool _showingCallOptions;
     
@@ -77,7 +76,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
     NSString *dialString = self.dialString;
     if (dialString)
-        [[JCCallCardManager sharedManager] dialNumber:dialString type:JCCallCardDialSingle completion:^(bool success, NSDictionary *callInfo) {
+        [_phoneManager dialNumber:dialString type:JCCallCardDialSingle completion:^(bool success, NSDictionary *callInfo) {
             if (!success)
                 [self performSelector:@selector(closeCallerViewController) withObject:nil afterDelay:0];
         }];
@@ -208,7 +207,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         button.selected = !button.selected;
         
         if (button.selected) {
-            [[JCCallCardManager sharedManager] mergeCalls:^(bool success) {
+            [_phoneManager mergeCalls:^(bool success) {
 				if (success) {
 					self.mergeLabel.text = NSLocalizedString(@"Split Calls", nil);
 				}
@@ -221,7 +220,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 			}];
 			
         } else {
-            [[JCCallCardManager sharedManager] splitCalls];
+            [_phoneManager splitCalls];
             self.mergeLabel.text = NSLocalizedString(@"Merge Calls", nil);
         }
     }
@@ -229,7 +228,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(IBAction)finishTransfer:(id)sender
 {
-    [[JCCallCardManager sharedManager] finishWarmTransfer:^(bool success) {
+    [_phoneManager finishWarmTransfer:^(bool success) {
         if (success) {
             [self showTransferSuccess];
         }
@@ -239,30 +238,6 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
             [self.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];
         }
     }];
-}
-
-#pragma -mark HUD Operations
-- (void)showHudWithTitle:(NSString*)title detail:(NSString*)detail
-{
-	if (!hud) {
-		hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-		hud.mode = MBProgressHUDModeText;
-			}
-	
-	hud.labelText = title;
-	hud.detailsLabelText = detail;
-	[hud hide:YES afterDelay:2.0];
-	[hud show:YES];
-}
-
-- (void)hideHud
-{
-	//    self.doneLoadingContent = YES;
-	if (hud) {
-		[MBProgressHUD hideHUDForView:self.view animated:YES];
-		[hud removeFromSuperview];
-		hud = nil;
-	}
 }
 
 #pragma mark - Private -
@@ -459,7 +434,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 -(void)transferViewController:(JCTransferViewController *)controller shouldDialNumber:(NSString *)dialString
 {
     __unsafe_unretained JCCallerViewController *weakSelf = self;
-    [[JCCallCardManager sharedManager] dialNumber:dialString type:controller.transferCallType completion:^(bool success, NSDictionary *callInfo) {
+    [_phoneManager dialNumber:dialString type:controller.transferCallType completion:^(bool success, NSDictionary *callInfo) {
         if (success)
         {
             switch (controller.transferCallType) {
