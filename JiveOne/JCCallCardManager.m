@@ -83,9 +83,9 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
         [_authenticationManager addObserver:self forKeyPath:@"lineConfiguration" options:NSKeyValueObservingOptionInitial context:NULL];
         if (self.calls.count == 0 && _authenticationManager.userAuthenticated && _authenticationManager.userLoadedMininumData)
         {
-            _sipHandler = [SipHandler sharedHandler];
-            [_sipHandler addObserver:self forKeyPath:kSipHandlerRegisteredSelectorKey options:NSKeyValueObservingOptionNew context:NULL];
-            _sipHandler.delegate = self;
+            [self userDidLoadMinimunData:nil];
+            
+            
         }
     }
     return self;
@@ -228,6 +228,20 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     
     JCCallCard *inactiveCall = [self findInactiveCallCard];
     inactiveCall.hold = false;
+}
+-(void)muteCall:(BOOL)mute {
+    if (!_sipHandler) {
+        return;
+    }
+    
+    [_sipHandler muteCall:mute];
+}
+
+-(void)setLoudspeakerStatus:(BOOL)speaker {
+    if (!_sipHandler) {
+        return;
+    }
+    [_sipHandler setLoudspeakerStatus:speaker];
 }
 
 -(void)numberPadPressedWithInteger:(NSInteger)numberPadNumber
@@ -533,7 +547,6 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 -(void)applicationWillEnterForeground:(NSNotification *)notification
 {
     if (_sipHandler) {
-        
         [_sipHandler stopKeepAwake];
         if (self.calls.count == 0) {
             [_sipHandler disconnect];
@@ -551,13 +564,19 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 
 -(void)userDidLoadMinimunData:(NSNotification *)notification
 {
-    _sipHandler = [SipHandler sharedHandler];
-    _sipHandler.delegate = self;
+    if (_sipHandler) {
+        [_sipHandler disconnect];
+        [_sipHandler removeObserver:self forKeyPath:kSipHandlerRegisteredSelectorKey];
+    }
+    
+    _sipHandler = [[SipHandler alloc] initWithPbx:_authenticationManager.pbx lineConfiguration:_authenticationManager.lineConfiguration delegate:self];
+    [_sipHandler addObserver:self forKeyPath:kSipHandlerRegisteredSelectorKey options:NSKeyValueObservingOptionNew context:NULL];
 }
 
 -(void)userDidLogout:(NSNotification *)notification
 {
     [_sipHandler disconnect];
+    [_sipHandler removeObserver:self forKeyPath:kSipHandlerRegisteredSelectorKey];
     _sipHandler = nil;
 }
 
@@ -570,6 +589,10 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
  */
 -(void)answerCall:(JCCallCard *)callCard
 {
+    if (!_sipHandler) {
+        return;
+    }
+    
     [_sipHandler answerSession:callCard.lineSession completion:^(bool success, NSError *error) {
         if (success)
         {
@@ -591,6 +614,10 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 
 -(void)hangUpCall:(JCCallCard *)callCard
 {
+    if (!_sipHandler) {
+        return;
+    }
+    
     if ([callCard isKindOfClass:[JCConferenceCallCard class]]) {
         JCConferenceCallCard *conferenceCall = (JCConferenceCallCard *)callCard;
         for (JCCallCard *call in conferenceCall.calls) {
@@ -609,6 +636,10 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 
 -(void)setCallHold:(bool)hold forCall:(JCCallCard *)callCard
 {
+    if (!_sipHandler) {
+        return;
+    }
+    
     // If we are in a conference call, all the child cards show recieve the hold call state.
     if ([callCard isKindOfClass:[JCConferenceCallCard class]])
     {

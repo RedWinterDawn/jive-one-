@@ -13,8 +13,7 @@
 @protocol JCKeypadViewControllerDelegate <NSObject>
 
 @optional
--(void)keypadViewController:(JCKeypadViewController *)controller didTypeDTMF:(char)dtmf;
--(void)keypadViewController:(JCKeypadViewController *)controller didTypeNumber:(NSString *)typedNumber;
+-(void)keypadViewController:(JCKeypadViewController *)controller didTypeNumber:(NSInteger)number;
 
 @end
 
