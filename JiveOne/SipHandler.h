@@ -35,6 +35,8 @@ extern NSString *const kSipHandlerRegisteredSelectorKey;
 
 @property (nonatomic, copy) TransferCompletionHandler transferCompleted;
 
+- (instancetype)initWithPbx:(PBX *)pbx lineConfiguration:(LineConfiguration *)lineConfiguration delegate:(id<SipHandlerDelegate>)delegate;
+
 // "Registers" the application to the SIP service via the Port SIP SDK.
 - (void)connect:(CompletionHandler)completion;
 
@@ -63,12 +65,5 @@ extern NSString *const kSipHandlerRegisteredSelectorKey;
 //- (void) switchSessionLine;
 - (void)startKeepAwake;
 - (void)stopKeepAwake;
-
-@end
-
-
-@interface SipHandler (Singleton)
-
-+ (instancetype) sharedHandler;
 
 @end

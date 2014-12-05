@@ -16,13 +16,10 @@
 #import "Common.h"
 #import "JCBadgeManager.h"
 
-#import "JCAuthenticationManager.h"
-
 #import "LineConfiguration+Custom.h"
 #import "Lines+Custom.h"
 #import "PBX+Custom.h"
 #import "VideoViewController.h"
-
 
 #ifdef __APPLE__
 #include "TargetConditionals.h"
@@ -45,6 +42,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 @interface SipHandler() <PortSIPEventDelegate>
 {
+    LineConfiguration *_lineConfiguration;
+    PBX *_pbx;
     PortSIPSDK *_mPortSIPSDK;
     CompletionHandler _connectionCompletionHandler;
     AFNetworkReachabilityStatus _previousNetworkStatus;
@@ -61,15 +60,20 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 @implementation SipHandler
 
--(id)init
+-(instancetype)initWithPbx:(PBX *)pbx lineConfiguration:(LineConfiguration *)lineConfiguration delegate:(id<SipHandlerDelegate>)delegate
 {
     self = [super init];
     if (self)
     {
-        if (_registered)
-        {
-            return self;
-        }
+        if (!lineConfiguration)
+            [NSException raise:NSInvalidArgumentException format:kSipHandlerFetchLineConfigurationErrorMessage];
+        
+        if (!pbx)
+            [NSException raise:NSInvalidArgumentException format:kSipHandlerFetchPBXErrorMessage];
+        
+        _pbx = pbx;
+        _lineConfiguration = lineConfiguration;
+        _delegate = delegate;
     
         _lineSessions = [NSMutableArray new];
         for (int i = 0; i < MAX_LINES; i++)
@@ -81,8 +85,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 		_videoController = [VideoViewController new];
         
         // Register to listen for AFNetworkReachability Changes.
-        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-        [center addObserver:self selector:@selector(networkConnectivityChanged:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(networkConnectivityChanged:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
         _previousNetworkStatus = [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
         
         [self connect:NULL];
@@ -120,19 +123,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
  */
 -(void)login
 {
-    JCAuthenticationManager *authentication = [JCAuthenticationManager sharedInstance];
-    
-    
-    LineConfiguration *lineConfiguration = authentication.lineConfiguration;
-    if (!lineConfiguration)
-        [NSException raise:NSInvalidArgumentException format:kSipHandlerFetchLineConfigurationErrorMessage];
-    
-    PBX *pbx = authentication.pbx;
-    if (!pbx)
-        [NSException raise:NSInvalidArgumentException format:kSipHandlerFetchPBXErrorMessage];
-    
-    NSString *kSipUserName  = lineConfiguration.sipUsername;
-    NSString *kSIPServer    = ([pbx.v5 boolValue]) ? lineConfiguration.outboundProxy : lineConfiguration.registrationHost;
+    NSString *kSipUserName  = _lineConfiguration.sipUsername;
+    NSString *kSIPServer    = ([_pbx.v5 boolValue]) ? _lineConfiguration.outboundProxy : _lineConfiguration.registrationHost;
     
     _sipURL = [[NSString alloc] initWithFormat:@"sip:%@:%@", kSipUserName, kSIPServer];
 	
@@ -163,9 +155,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         [NSException raise:NSInvalidArgumentException format:@"initializeSDK failure ErrorCode = %d",ret];
     
     ret = [_mPortSIPSDK setUser:kSipUserName
-                    displayName:lineConfiguration.display
+                    displayName:_lineConfiguration.display
                        authName:kSipUserName
-                       password:lineConfiguration.sipPassword
+                       password:_lineConfiguration.sipPassword
                         localIP:@"0.0.0.0"                      // Auto select IP address
                    localSIPPort:(10000 + arc4random()%1000)     // Generate a random port in the 10,000 range
                      userDomain:@""
@@ -173,7 +165,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
                   SIPServerPort:OUTBOUND_SIP_SERVER_PORT
                      STUNServer:@""
                  STUNServerPort:0
-                 outboundServer:lineConfiguration.outboundProxy
+                 outboundServer:_lineConfiguration.outboundProxy
              outboundServerPort:OUTBOUND_SIP_SERVER_PORT];
     
     if(ret != 0)
@@ -213,7 +205,10 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     [_mPortSIPSDK setSrtpPolicy:SRTP_POLICY_NONE];
     
     // Try to register the default identity
-    [_mPortSIPSDK registerServer:120 retryTimes:9];
+    [_mPortSIPSDK registerServer:3600 retryTimes:9];
+	
+	//set RTC keep alives
+	[_mPortSIPSDK setRtpKeepAlive:true keepAlivePayloadType:126 deltaTransmitTimeMS:30000];
 }
 
 -(void)disconnect
@@ -1332,25 +1327,6 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	 other code which will spend long time, you should post a message to main thread(main window) or other thread,
 	 let the thread to call SDK API functions or other code.
 	 */
-}
-
-@end
-
-@implementation SipHandler (Singleton)
-
-+ (instancetype) sharedHandler
-{
-    static SipHandler *handler = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        handler = [[self alloc] init];
-    });
-    return handler;
-}
-
-+ (id)copyWithZone:(NSZone *)zone
-{
-    return self;
 }
 
 @end

@@ -15,33 +15,10 @@
     if ([sender isKindOfClass:[UIButton class]])
     {
         UIButton *button = (UIButton *)sender;
-        NSString *typedChar = [self characterFromNumPadTag:(int)button.tag];
-        self.outputLabel.text =  [NSString stringWithFormat:@"%@%@", self.outputLabel.text, typedChar];
+        self.outputLabel.text =  [NSString stringWithFormat:@"%@%@", self.outputLabel.text, [self characterFromNumPadTag:(int)button.tag]];
         if (_delegate && [_delegate respondsToSelector:@selector(keypadViewController:didTypeNumber:)])
-            [_delegate keypadViewController:self didTypeNumber:typedChar];
-        else if (_delegate && [_delegate respondsToSelector:@selector(keypadViewController:didTypeDTMF:)])
-            [_delegate keypadViewController:self didTypeDTMF:[self dtmfFromString:typedChar]];
+            [_delegate keypadViewController:self didTypeNumber:button.tag];
     }
-}
-
--(char)dtmfFromString:(NSString *)string
-{
-    NSInteger tag = [string integerValue];
-    char dtmf = tag;
-    switch (tag) {
-        case kTAGStar:
-        {
-            dtmf = 10;
-            break;
-        }
-        case kTAGSharp:
-        {
-            dtmf = 11;
-            break;
-        }
-    }
-
-    return dtmf;
 }
 
 @end

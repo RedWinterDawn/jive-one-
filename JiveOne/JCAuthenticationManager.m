@@ -140,6 +140,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     self.refreshToken = nil;
     self.userLoadedMininumData = false;
     self.userAuthenticated = false;
+    self.lineConfiguration = nil;
     
     if (!self.rememberMe) {
         self.jiveUserId = false;
