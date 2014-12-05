@@ -118,11 +118,6 @@ typedef enum {
 } JCMessageType;
 
 typedef enum {
-    JCRootLoginViewController,
-    JCRootTabbarViewController
-} JCRootViewControllerType;
-
-typedef enum {
     Regesterd,
     Regestering,
     NotRegesterd

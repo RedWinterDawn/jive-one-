@@ -232,3 +232,35 @@ static BOOL closedSocketOnPurpose;
 
 
 @end
+
+@implementation JasmineSocket (Singleton)
+
++ (JasmineSocket *)sharedInstance
+{
+    static JasmineSocket* sharedObject = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedObject = [[JasmineSocket alloc] init];
+    });
+    return sharedObject;
+}
+
++ (void)startSocket
+{
+    JCAuthenticationManager *authManager = [JCAuthenticationManager sharedInstance];
+    JasmineSocket *socket = [JasmineSocket sharedInstance];
+    if (authManager.userAuthenticated && authManager.userLoadedMininumData) {
+        if (socket.socket.readyState != SR_OPEN) {
+            [socket restartSocket];
+        }
+    }
+}
+
++ (void)stopSocket
+{
+    [[JasmineSocket sharedInstance] closeSocketWithReason:@"Entering background"];
+}
+
+@end
+
+

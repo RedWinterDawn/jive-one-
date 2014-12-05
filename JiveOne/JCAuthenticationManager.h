@@ -36,10 +36,14 @@ typedef void (^CompletionBlock) (BOOL success, NSError *error);
 @property (nonatomic, readwrite) BOOL userLoadedMininumData;
 @property (nonatomic) BOOL rememberMe;
 
+-(void)checkAuthenticationStatus;
+
 @end
 
 @interface JCAuthenticationManager (Singleton)
 
 + (JCAuthenticationManager*)sharedInstance;
+
++ (void)reset;
 
 @end

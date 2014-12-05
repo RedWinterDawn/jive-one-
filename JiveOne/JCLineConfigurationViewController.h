@@ -6,9 +6,20 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
+
+@class JCLineConfigurationViewController;
+
+@protocol JCLineConfigurationViewControllerDelegate <NSObject>
+
+-(void)lineConfigurationViewControllerShouldDismiss:(JCLineConfigurationViewController *)controller;
+
+@end
 
 @interface JCLineConfigurationViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource>
+
+@property (weak, nonatomic) IBOutlet id <JCLineConfigurationViewControllerDelegate> delegate;
+
 @property (weak, nonatomic) IBOutlet UISwitch *makeDefaultLineSwitch;
 @property (weak, nonatomic) IBOutlet UIView *lineListContainer;
 @property (weak, nonatomic) IBOutlet UIButton *lineSelection;
@@ -16,8 +27,6 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *lineListHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *lineListBottomConstraint;
 
-
-- (IBAction)lineSelectionAction:(id)sender;
-- (IBAction)doneButton:(id)sender;
+-(IBAction)close:(id)sender;
 
 @end

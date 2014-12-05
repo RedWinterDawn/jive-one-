@@ -27,337 +27,148 @@
 #import "JCV5ApiClient.h"
 #import "JCSocketDispatch.h"
 
-@interface JCAppDelegate () <JCCallerViewControllerDelegate, UAPushNotificationDelegate, UARegistrationDelegate>
+#import "UAirship.h"
+#import "UAConfig.h"
+#import "UAPush.h"
+
+#import "JCLineConfigurationViewController.h"
+
+@interface JCAppDelegate () <JCCallerViewControllerDelegate, UAPushNotificationDelegate, UARegistrationDelegate, JCLineConfigurationViewControllerDelegate>
 {
     JCCallerViewController *_presentedCallerViewController;
     JCAuthenticationManager *_authenticationManager;
     JCCallCardManager *_phoneManager;
     
+    UINavigationController *_navigationController;
+    UIViewController *_appSwitcherViewController;
+    
     bool _didNotify;
 }
 
-@property (nonatomic) UIStoryboard* storyboard;
-@property (strong, nonatomic) UIViewController *tabBarViewController;
-@property (strong, nonatomic) JCLoginViewController *loginViewController;
 @end
-
 
 @implementation JCAppDelegate
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+/**
+ * Loads all the singletons nessary when the application is loaded.
+ */
+-(void)initialializeApplication
 {
-    LOG_Info();
-    NSLog(LOGGER_TARGET);
+    _appSwitcherViewController = self.window.rootViewController;
     
-//    [[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
+    [self configureNetworking];
+    [self loadUserDefaults];
     
+    // Load Core Data
+    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:kCoreDataDatabase];
+    
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    
+    // Phone Manager.
+    _phoneManager = [JCCallCardManager sharedManager];
+    [center addObserver:self selector:@selector(didReceiveIncomingCall:) name:kJCCallCardManagerAddedCallNotification object:_phoneManager];
+    [center addObserver:self selector:@selector(stopRingtone) name:kJCCallCardManagerAnswerCallNotification object:_phoneManager];
+    
+    // Authentication
+    _authenticationManager = [JCAuthenticationManager sharedInstance];
+    [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:_authenticationManager];
+    [center addObserver:self selector:@selector(userDataReady:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:_authenticationManager];
+    [_authenticationManager checkAuthenticationStatus];
+}
+
+/**
+ *  We predominately use the AFNetworking Networking stack to handle data request between the App and Jive Servers for
+ *  data requests. Here we configure caching, logging and monitoring indication for AFNetoworking.
+ */
+-(void)configureNetworking
+{
     //Create a sharedCache for AFNetworking
     NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:2 * 1024 * 1024
                                                             diskCapacity:100 * 1024 * 1024
                                                                 diskPath:nil];
     [NSURLCache setSharedURLCache:sharedCache];
     
-    //set UserDefaults
-    NSString *defaultPrefsFile = [[NSBundle mainBundle] pathForResource:@"UserDefaults" ofType:@"plist"];
-    NSDictionary *defaultPreferences = [NSDictionary dictionaryWithContentsOfFile:defaultPrefsFile];
-    [[NSUserDefaults standardUserDefaults] registerDefaults:defaultPreferences];
-    
-    //check if we are using a iphone or ipad
-    [self tabBarViewController];
-	[self loginViewController];
-
-    
-    /*
-     * FLURRY
-     */
-    //note: iOS only allows one crash reporting tool per app; if using another, set to: NO
-    [Flurry setCrashReportingEnabled:YES];
-    
-    // Replace YOUR_API_KEY with the api key in the downloaded package
-    [Flurry startSession:@"JCMVPQDYJZNCZVCJQ59P"];
-    
     /*
      * AFNETWORKING
      */
-	[AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
+    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
 #if DEBUG
     [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
     [[AFNetworkActivityLogger sharedLogger] startLogging];
 #else
-	[[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelOff];
+    [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelOff];
 #endif
     
-    /*
-     * MAGICALRECORD
-     */
-    [self setupDatabase];
-
-    //Register for background fetches
-    [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
     
     //Start monitor for Reachability
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
-    
-    UAConfig *config = [UAConfig defaultConfig];
-    [UAirship takeOff:config];
-    
-    
-    
-    // Launches the Badge manager. Should be launched after Mangical record has initialized.
-    [[JCBadgeManager sharedManager] initialize];
-    
-    // Authentication
-    _authenticationManager = [JCAuthenticationManager sharedInstance];
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:_authenticationManager];
-    [center addObserver:self selector:@selector(userDataReady:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:_authenticationManager];
-    [center addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
-    
-    if (!_authenticationManager.userAuthenticated || !_authenticationManager.userLoadedMininumData) {
-        [self changeRootViewController:JCRootLoginViewController];
-    }
-    else {
-        [self userDataReady:NO];
-    }
-    return YES;
 }
 
 /**
- * Sent when the application is about to move from active to inactive state. This can occur for certain types of 
- * temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it
- * begins the transition to the background state. Use this method to pause ongoing tasks, disable timers, and throttle 
- * down OpenGL ES frame rates. Games should use this method to pause the game.
+ * Loads a default set of defaults into NSUserDefaults to be used on first load. If a default is not set by code, it is 
+ * read from the default set. If the default then becomes set, it overrides the default.
  */
-- (void)applicationWillResignActive:(UIApplication *)application
+-(void)loadUserDefaults
 {
-    LOG_Info();
-    
-    [Flurry logEvent:@"Left Application"];
+    //set UserDefaults
+    NSString *defaultPrefsFile = [[NSBundle mainBundle] pathForResource:@"UserDefaults" ofType:@"plist"];
+    NSDictionary *defaultPreferences = [NSDictionary dictionaryWithContentsOfFile:defaultPrefsFile];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:defaultPreferences];
 }
 
-/**
- * Use this method to release shared resources, save user data, invalidate timers, and store enough application state 
- * information to restore your application to its current state in case it is terminated later. If your application 
- * supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
- */
--(void)applicationDidEnterBackground:(UIApplication *)application
+#pragma mark Login Workflow
+
+-(void)presentLoginViewController:(BOOL)animated
 {
-    LOG_Info();
-    LogMessage(@"socket", 4, @"Will Call CloseSocket");
-    [self stopSocket];
+    UIViewController *loginViewController = [_appSwitcherViewController.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+    _navigationController = [[UINavigationController alloc] initWithRootViewController:loginViewController];
+    [_navigationController setNavigationBarHidden:TRUE];
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"login-background"]];
+    imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    imageView.frame = _navigationController.view.bounds;
+    [_navigationController.view addSubview:imageView];
+    [_navigationController.view sendSubviewToBack:imageView];
+    
+    [UIView transitionWithView:self.window
+                      duration:animated? 0.5 : 0
+                       options:UIViewAnimationOptionTransitionFlipFromLeft
+                    animations:^{
+                        self.window.rootViewController = _navigationController;
+                    }
+                    completion:nil];
 }
 
-/**
- * Called as part of the transition from the background to the inactive state; here you can undo many of the changes 
- * made on entering the background.
- */
-- (void)applicationWillEnterForeground:(UIApplication *)application
+-(void)presentLineConfigurationViewController:(BOOL)animated
 {
-    LOG_Info();
-
-    [Flurry logEvent:@"Resumed Session"];
-    
-    //[[NotificationView sharedInstance] didChangeConnection:nil];
-    if ([[JCAuthenticationManager sharedInstance] userAuthenticated] && [[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {
-        LogMessage(@"socket", 4, @"Will Call requestSession");
-        [self startSocket:NO];
-    }
-}
-
-/**
- * Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was 
- * previously in the background, optionally refresh the user interface.
- */
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    LOG_Info();
-}
-
-/**
- * Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
- */
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-    LOG_Info();
-    [MagicalRecord cleanUp];
-}
-
-#pragma mark - Notification Handlers -
-
-#pragma mark JCAuthenticationManager
-
--(void)userDataReady:(NSNotification *)notification
-{
-    LOG_Info();
-    
-    if (notification) {
-        [self changeRootViewController:JCRootTabbarViewController];
-    }
-    _loginViewController = nil;
-    
-    // Sync Data
-    JCV5ApiClient *client = [JCV5ApiClient sharedClient];
-    if (_authenticationManager.pbx.v5.boolValue) {
-        [client getVoicemails:nil];
-    }
-    [client RetrieveContacts:nil];
-    
-    // Start Phone Manager
-    if (_authenticationManager.lineConfiguration)
-    {
-        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-        _phoneManager = [JCCallCardManager sharedManager];
-        [center addObserver:self selector:@selector(didReceiveIncomingCall:) name:kJCCallCardManagerAddedCallNotification object:_phoneManager];
-        [center addObserver:self selector:@selector(stopRingtone) name:kJCCallCardManagerAnswerCallNotification object:_phoneManager];
-    }
-}
-
--(void)userDidLogout:(NSNotification *)notification
-{
-    LOG_Info();
-    
-    [Flurry logEvent:@"Log out"];
-    
-    [self stopSocket];
-    
-    [[JCV5ApiClient sharedClient] stopAllOperations];
-    
-    [[JCOmniPresence sharedInstance] truncateAllTablesAtLogout];
-    
-    [JCApplicationSwitcherDelegate reset];
-    [[JCBadgeManager sharedManager] reset];
-    
-    _loginViewController = nil;
-    [self changeRootViewController:JCRootLoginViewController];
-    
-    [[UIApplication sharedApplication] unregisterForRemoteNotifications];
-}
-
-#pragma mark - Private -
-
-- (void)startSocket:(BOOL)inBackground
-{
-    LOG_Info();
-    LogMessage(@"socket", 4, @"Calling requestSession From AppDelegate");
-	if ([[JCAuthenticationManager sharedInstance] userAuthenticated] && [[JCAuthenticationManager sharedInstance] userLoadedMininumData]) {
-		if ([JasmineSocket sharedInstance].socket.readyState != SR_OPEN) {
-			[[JasmineSocket sharedInstance] restartSocket];
-		}
-	}
-}
-
-- (void)stopSocket
-{
-    LogMessage(@"socket", 4, @"Calling stopSocket From AppDelegate");
-    
-    LOG_Info();
-    
-    [[JasmineSocket sharedInstance] closeSocketWithReason:@"Entering background"];
-}
-
-#pragma mark - Magical Record Setup
-- (void)setupDatabase
-{
-    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:kCoreDataDatabase];
-}
-
-- (void)cleanAndResetDatabase
-{
-    [MagicalRecord cleanUp];
-    
-    NSString *dbStore = [MagicalRecord defaultStoreName];
-    
-    NSURL *storeURL = [NSPersistentStore MR_urlForStoreName:dbStore];
-    NSURL *walURL = [[storeURL URLByDeletingPathExtension] URLByAppendingPathExtension:@"sqlite-wal"];
-    NSURL *shmURL = [[storeURL URLByDeletingPathExtension] URLByAppendingPathExtension:@"sqlite-shm"];
-    
-    NSError *error = nil;
-    BOOL result = YES;
-    
-    for (NSURL *url in @[storeURL, walURL, shmURL]) {
-        @try {
-            if ([[NSFileManager defaultManager] fileExistsAtPath:url.path]) {
-                result = [[NSFileManager defaultManager] removeItemAtURL:url error:&error];
-            }
-        }
-        @catch (NSException *exception) {
-            NSLog(@"%@", exception);
-        }
+    if (!_navigationController) {
+        return;
     }
     
-    if (result) {
-        [self setupDatabase];
-    } else {
-        NSLog(@"An error has occurred while deleting %@ error %@", dbStore, error);
-    }
+    JCLineConfigurationViewController *lineConfigurationViewController = (JCLineConfigurationViewController *)[_appSwitcherViewController.storyboard instantiateViewControllerWithIdentifier:@"LineConfigurationViewController"];
+    lineConfigurationViewController.delegate = self;
+    [_navigationController pushViewController:lineConfigurationViewController animated:animated];
 }
 
-#pragma mark - Push Notifications Handling
-
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+-(void)dismissLoginViewController:(BOOL)animated
 {
-    LOG_Info();
-    
-//    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-//    [currentInstallation setDeviceTokenFromData:deviceToken];
-//    [currentInstallation saveInBackground];
-    
-    NSString *newToken = [deviceToken description];
-	newToken = [newToken stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
-	newToken = [newToken stringByReplacingOccurrencesOfString:@" " withString:@""];
-    
-//	NSLog(@"APPDELEGATE - My token is: %@", newToken);
-    [[NSUserDefaults standardUserDefaults] setObject:newToken forKey:UDdeviceToken];
-    LogMessage(@"socket", 4, @"Will Call requestSession");
-    [self startSocket:NO];
+    [UIView transitionWithView:self.window
+                      duration:animated? 0.5 : 0
+                       options:UIViewAnimationOptionTransitionFlipFromRight
+                    animations:^{
+                        self.window.rootViewController = _appSwitcherViewController;
+                    }
+                    completion:^(BOOL finished) {
+                        _navigationController = nil;
+                    }];
 }
 
-- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
+- (UIBackgroundFetchResult)backgroundPerformFetchWithCompletionHandler
 {
     LOG_Info();
-    LogMessage(@"socket", 4, @"Will Call requestSession");
-
-    [self startSocket:NO];
-	NSLog(@"APPDELEGATE - Failed to get token, error: %@", error);
-}
-
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
-{
-    LOG_Info();
-    // [[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
-    completionHandler([self BackgroundPerformFetchWithCompletionHandler]);
-}
-
-- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
-{
-    LOG_Info();
-    // [[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
-    completionHandler([self BackgroundPerformFetchWithCompletionHandler]);
-}
-
-- (void)receivedForegroundNotification:(NSDictionary *)notification fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
-{
-    LOG_Info();
-    // [[JCSocketDispatch sharedInstance] setStartedInBackground:NO];
-    completionHandler([self BackgroundPerformFetchWithCompletionHandler]);
-}
-
-- (void)receivedBackgroundNotification:(NSDictionary *)notification fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
-{
-    LOG_Info();
-    // [[JCSocketDispatch sharedInstance] setStartedInBackground:YES];
-    completionHandler([self BackgroundPerformFetchWithCompletionHandler]);
-}
-
-
-- (UIBackgroundFetchResult)BackgroundPerformFetchWithCompletionHandler
-{
-    LOG_Info();
-//    [[JCSocketDispatch sharedInstance] setStartedInBackground:YES];
-    
     // If we are not a V5 PBX, we do not have a voicemail data to go fetch, and return with a no data callback.
-    PBX *pbx = [PBX fetchFirstPBX];
-    if (!pbx.v5)
+    if (!_authenticationManager.pbx.v5.boolValue)
         return UIBackgroundFetchResultNoData;
     
     NSLog(@"APPDELEGATE - performFetchWithCompletionHandler");
@@ -368,7 +179,7 @@
             TRVSMonitor *monitor = [TRVSMonitor monitor];
             JCBadgeManager *badgeManger = [JCBadgeManager sharedManager];
             [badgeManger startBackgroundUpdates];
-
+            
             // Fetch Voicemails in the background.
             [Voicemail fetchVoicemailsInBackground:^(BOOL success, NSError *error) {
                 if (success) {
@@ -382,19 +193,19 @@
                 [monitor signal];
             }];
             
-// No Socket for now.
-//            [[JCSocketDispatch sharedInstance] startPoolingFromSocketWithCompletion:^(BOOL success, NSError *error) {
-//                if (success) {
-//                    NSLog(@"Success Done with Block");
-//                    LogMessage(@"socket", 4, @"Success pooling from socket");
-//                }
-//                else {
-//                    NSLog(@"Error Done With Block %@", error);
-//                    LogMessage(@"socket", 4, @"Error pooling from socket");
-//
-//                }
-//                [monitor signal];
-//            }];
+            // No Socket for now.
+            //            [[JCSocketDispatch sharedInstance] startPoolingFromSocketWithCompletion:^(BOOL success, NSError *error) {
+            //                if (success) {
+            //                    NSLog(@"Success Done with Block");
+            //                    LogMessage(@"socket", 4, @"Success pooling from socket");
+            //                }
+            //                else {
+            //                    NSLog(@"Error Done With Block %@", error);
+            //                    LogMessage(@"socket", 4, @"Error pooling from socket");
+            //
+            //                }
+            //                [monitor signal];
+            //            }];
             
             [monitor waitWithTimeout:25];
             NSUInteger badgeUpdateEvents = [badgeManger endBackgroundUpdates];
@@ -412,8 +223,8 @@
             if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground ) {
                 if ([JasmineSocket sharedInstance].socket.readyState == SR_OPEN) {
                     LogMessage(@"socket", 4, @"Will Call closeSocket");
-
-                    [self stopSocket];
+                    
+                    [JasmineSocket stopSocket];
                 }
             }
             
@@ -423,80 +234,93 @@
     return fetchResult;
 }
 
--(BOOL)seenTutorial
+#pragma mark - Notification Handlers -
+
+#pragma mark JCAuthenticationManager
+
+-(void)userDataReady:(NSNotification *)notification
+{
+    UAConfig *config = [UAConfig defaultConfig];
+    [UAirship takeOff:config];
+    
+    // Launches the Badge manager. Should be launched after core data has been loaded.
+    [[JCBadgeManager sharedManager] initialize];
+    
+    // Sync Data
+    JCV5ApiClient *client = [JCV5ApiClient sharedClient];
+    if (_authenticationManager.pbx.v5.boolValue) {
+        [client getVoicemails:nil];
+    }
+    [client RetrieveContacts:nil];
+    
+    NSInteger lines = [LineConfiguration MR_countOfEntities];
+    if (lines > 1) {
+        [self presentLineConfigurationViewController:YES];
+    }
+    else
+    {
+        [self dismissLoginViewController:YES];
+    }
+}
+
+-(void)userDidLogout:(NSNotification *)notification
 {
     LOG_Info();
     
-    return _seenTutorial = [[NSUserDefaults standardUserDefaults] boolForKey:@"seenAppTutorial"];
-}
-
-- (UIStoryboard *)storyboard
-{
-    LOG_Info();
-    if (!_storyboard) {
-//        _storyboard = self.deviceIsIPhone ? [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil] : [UIStoryboard storyboardWithName:@"Main_iPad" bundle:nil];
-        _storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
-    }
-    return _storyboard;
-}
-
-- (UIWindow *)window
-{
-    LOG_Info();
-    if (!_window) {
-        _window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
-    }
-    return _window;
-}
-
-- (JCLoginViewController*)loginViewController
-{
-    LOG_Info();
-    if (!_loginViewController) {
-        _loginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"JCLoginViewController"];
-    }
-    return _loginViewController;
-}
-
-- (UIViewController*)tabBarViewController
-{
-    LOG_Info();
-    if (!_tabBarViewController) {
-		_tabBarViewController = self.window.rootViewController;
-    }
-    return _tabBarViewController;
-}
-
-#pragma mark - Change Root ViewController
-
-- (void)logout
-{
-    LOG_Info();
-    [self.tabBarViewController performSegueWithIdentifier:@"logoutSegue" sender:self.tabBarViewController];
-}
-
-- (void)changeRootViewController:(JCRootViewControllerType)type
-{
-    LOG_Info();
-	
-	if (type == JCRootLoginViewController && [self.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
-		return;
-	}
+    [Flurry logEvent:@"Log out"];
     
-    if (type == JCRootTabbarViewController) {
-        [self startSocket:NO];
-    }
- 
-	[UIView transitionWithView:self.window
-					  duration:0.5
-					   options:type == JCRootTabbarViewController ? UIViewAnimationOptionTransitionFlipFromRight : UIViewAnimationOptionTransitionFlipFromLeft
-					animations:^{ self.window.rootViewController = (type == JCRootTabbarViewController ? self.tabBarViewController : self.loginViewController); }
-					completion:nil];
-	
-    [self.window makeKeyAndVisible];
+    [JasmineSocket stopSocket];
+    [[JCV5ApiClient sharedClient] stopAllOperations];
+    [[JCOmniPresence sharedInstance] truncateAllTablesAtLogout];
+    [JCApplicationSwitcherDelegate reset];
+    [[JCBadgeManager sharedManager] reset];
+    
+    [self presentLoginViewController:YES];
+    
+    [[UIApplication sharedApplication] unregisterForRemoteNotifications];
 }
 
-//#pragma mark - Reachability
+#pragma mark JCCallCardManager
+
+/**
+ * Responds to a notification dispatched by the JCCallCardManager when a incoming call occurs. Presents an instance of
+ * the CallerViewController modaly with ourselves set up as the delegate responder to the view controller.
+ */
+-(void)didReceiveIncomingCall:(NSNotification *)notification
+{
+    [self startVibration];
+    
+    NSDictionary *userInfo = notification.userInfo;
+    BOOL incoming = [[userInfo objectForKey:kJCCallCardManagerIncomingCall] boolValue];
+    int priorCount = [[userInfo objectForKey:kJCCallCardManagerPriorUpdateCount] intValue];
+    if (!incoming || priorCount > 0)
+        return;
+    
+    [self startRingtone];
+    
+    _presentedCallerViewController = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"CallerViewController"];
+    _presentedCallerViewController.delegate = self;
+    _presentedCallerViewController.callOptionsHidden = true;
+    _presentedCallerViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    
+    [self.window.rootViewController presentViewController:_presentedCallerViewController animated:YES completion:NULL];
+}
+
+/**
+ * Delegate rsponder to remove the the presented modal view controller when an incomming callerver view controller is
+ * dismissed. Used only if the caller was presented from the app delegate.
+ */
+-(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController
+{
+    [self.window.rootViewController dismissViewControllerAnimated:FALSE completion:^{
+        _presentedCallerViewController = nil;
+        [self stopRingtone];
+        [self stopVibration];
+    }];
+}
+
+#pragma mark AFNetworkReachabilityManager
+
 - (void)didChangeConnection:(NSNotification *)notification
 {
     LOG_Info();
@@ -539,44 +363,141 @@
     }
 }
 
+#pragma mark - Delegate Handlers -
+
+-(void)lineConfigurationViewControllerShouldDismiss:(JCLineConfigurationViewController *)controller
+{
+    [self dismissLoginViewController:YES];
+}
+
+#pragma mark UIApplicationDelegate
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    LOG_Info();
+    NSLog(LOGGER_TARGET);
+    
+    /*
+     * FLURRY
+     */
+    //note: iOS only allows one crash reporting tool per app; if using another, set to: NO
+    [Flurry setCrashReportingEnabled:YES];
+    
+    // Replace YOUR_API_KEY with the api key in the downloaded package
+    [Flurry startSession:@"JCMVPQDYJZNCZVCJQ59P"];
+    
+    //Register for background fetches
+    [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+    
+    [self initialializeApplication];
+    return YES;
+}
+
+/**
+ * Sent when the application is about to move from active to inactive state. This can occur for certain types of 
+ * temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it
+ * begins the transition to the background state. Use this method to pause ongoing tasks, disable timers, and throttle 
+ * down OpenGL ES frame rates. Games should use this method to pause the game.
+ */
+- (void)applicationWillResignActive:(UIApplication *)application
+{
+    LOG_Info();
+    
+    [Flurry logEvent:@"Left Application"];
+}
+
+/**
+ * Use this method to release shared resources, save user data, invalidate timers, and store enough application state 
+ * information to restore your application to its current state in case it is terminated later. If your application 
+ * supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+ */
+-(void)applicationDidEnterBackground:(UIApplication *)application
+{
+    LOG_Info();
+    LogMessage(@"socket", 4, @"Will Call CloseSocket");
+    [JasmineSocket stopSocket];
+}
+
+/**
+ * Called as part of the transition from the background to the inactive state; here you can undo many of the changes 
+ * made on entering the background.
+ */
+- (void)applicationWillEnterForeground:(UIApplication *)application
+{
+    LOG_Info();
+
+    [Flurry logEvent:@"Resumed Session"];
+    [JasmineSocket startSocket];
+}
+
+/**
+ * Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was 
+ * previously in the background, optionally refresh the user interface.
+ */
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    LOG_Info();
+}
+
+/**
+ * Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+ */
+- (void)applicationWillTerminate:(UIApplication *)application
+{
+    LOG_Info();
+    [MagicalRecord cleanUp];
+}
+
+#pragma mark Notifications Handling
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    LOG_Info();
+    
+    NSString *newToken = [deviceToken description];
+	newToken = [newToken stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+	newToken = [newToken stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:newToken forKey:UDdeviceToken];
+    LogMessage(@"socket", 4, @"Will Call requestSession");
+    [JasmineSocket startSocket];
+}
+
+- (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
+{
+    LOG_Info();
+    LogMessage(@"socket", 4, @"Will Call requestSession");
+    [JasmineSocket startSocket];
+	NSLog(@"APPDELEGATE - Failed to get token, error: %@", error);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    completionHandler([self backgroundPerformFetchWithCompletionHandler]);
+}
+
+- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    completionHandler([self backgroundPerformFetchWithCompletionHandler]);
+}
+
+- (void)receivedForegroundNotification:(NSDictionary *)notification fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    completionHandler([self backgroundPerformFetchWithCompletionHandler]);
+}
+
+- (void)receivedBackgroundNotification:(NSDictionary *)notification fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    completionHandler([self backgroundPerformFetchWithCompletionHandler]);
+}
+
+
+//#pragma mark - Reachability
+
+
 #pragma mark - Incoming Calls -
 
-/**
- * Responds to a notification dispatched by the JCCallCardManager when a incoming call occurs. Presents an instance of 
- * the CallerViewController modaly with ourselves set up as the delegate responder to the view controller.
- */
--(void)didReceiveIncomingCall:(NSNotification *)notification
-{
-    [self startVibration];
-    
-    NSDictionary *userInfo = notification.userInfo;
-    BOOL incoming = [[userInfo objectForKey:kJCCallCardManagerIncomingCall] boolValue];
-    int priorCount = [[userInfo objectForKey:kJCCallCardManagerPriorUpdateCount] intValue];
-    if (!incoming || priorCount > 0)
-        return;
-    
-    [self startRingtone];
-    
-    _presentedCallerViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CallerViewController"];
-    _presentedCallerViewController.delegate = self;
-    _presentedCallerViewController.callOptionsHidden = true;
-    _presentedCallerViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    
-    [self.window.rootViewController presentViewController:_presentedCallerViewController animated:YES completion:NULL];
-}
 
-/**
- * Delegate rsponder to remove the the presented modal view controller when an incomming callerver view controller is 
- * dismissed. Used only if the caller was presented from the app delegate.
- */
--(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController
-{
-    [self.window.rootViewController dismissViewControllerAnimated:FALSE completion:^{
-        _presentedCallerViewController = nil;
-        [self stopRingtone];
-        [self stopVibration];
-    }];
-}
 
 #pragma mark - Ringing
 

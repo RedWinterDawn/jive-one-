@@ -11,8 +11,6 @@
 
 @interface JasmineSocket : NSObject <SRWebSocketDelegate>
 
-+ (JasmineSocket *)sharedInstance;
-
 typedef void (^CompletionBlock) (BOOL success, NSError *error);
 @property (nonatomic, copy) CompletionBlock completionBlock;
 @property (nonatomic, strong) SRWebSocket *socket;
@@ -23,7 +21,17 @@ typedef void (^CompletionBlock) (BOOL success, NSError *error);
 - (void)initSocket;
 - (void)postSubscriptionsToSocketWithId:(NSString *)ident entity:(NSString *)entity type:(NSString *)type;
 - (void)startPoolingFromSocketWithCompletion:(CompletionBlock)completed;
-- (void) closeSocketWithReason:(NSString *)reason;
+- (void)closeSocketWithReason:(NSString *)reason;
 - (void)restartSocket;
+
+@end
+
+
+@interface JasmineSocket (Singleton)
+
++ (JasmineSocket *)sharedInstance;
+
++ (void)startSocket;
++ (void)stopSocket;
 
 @end

@@ -81,12 +81,6 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
         [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:_authenticationManager];
         [center addObserver:self selector:@selector(userDidLoadMinimunData:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:_authenticationManager];
         [_authenticationManager addObserver:self forKeyPath:@"lineConfiguration" options:NSKeyValueObservingOptionInitial context:NULL];
-        if (self.calls.count == 0 && _authenticationManager.userAuthenticated && _authenticationManager.userLoadedMininumData)
-        {
-            [self userDidLoadMinimunData:nil];
-            
-            
-        }
     }
     return self;
 }
@@ -695,17 +689,12 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 
 +(JCCallCardManager *)sharedManager
 {
-    static JCCallCardManager *singleton = nil;
-    if (singleton != nil)
-        return singleton;
-    
-    // Makes the startup of this singleton thread safe.
-    static dispatch_once_t pred;        // Lock
-    dispatch_once(&pred, ^{             // This code is called at most once per app
-        singleton = [[JCCallCardManager alloc] init];
+    static JCCallCardManager *phoneManagerSingleton = nil;
+    static dispatch_once_t phoneManagerLoaded;
+    dispatch_once(&phoneManagerLoaded, ^{
+        phoneManagerSingleton = [[JCCallCardManager alloc] init];
     });
-    
-    return singleton;
+    return phoneManagerSingleton;
 }
 
 + (id)copyWithZone:(NSZone *)zone

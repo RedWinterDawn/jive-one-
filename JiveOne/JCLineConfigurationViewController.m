@@ -19,17 +19,11 @@
     NSInteger _verticalSpacing;
 }
 
-
-
 @property (strong, nonatomic) NSArray *lineConfigurations;
 
 @end
 
 @implementation JCLineConfigurationViewController
-
-
-
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -41,7 +35,6 @@
     self.lineConfigurations = [LineConfiguration MR_findAllSortedBy:@"display" ascending:YES];
     
     _authenticationManger = [JCAuthenticationManager sharedInstance];
-//    KVO subscription
     [_authenticationManger addObserver:self forKeyPath:NSStringFromSelector(@selector(lineConfiguration)) options:0 context:NULL];
     
     LineConfiguration *currentLineConfiguration = _authenticationManger.lineConfiguration;
@@ -50,17 +43,15 @@
     NSInteger index = [self.lineConfigurations indexOfObject:currentLineConfiguration];
     [self.lineList selectRow:index inComponent:0 animated:NO];
     
-//    This is the line we have selected and we want to start the selection list on this line.
+    // This is the line we have selected and we want to start the selection list on this line.
     [self.lineSelection setTitle:currentLine forState:UIControlStateNormal];
     
     _pickerVisible = TRUE;
     [self hidePicker:false];
-    
-   
 }
 
 -(void)awakeFromNib{
-       _verticalSpacing = self.lineListBottomConstraint.constant;
+    _verticalSpacing = self.lineListBottomConstraint.constant;
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
@@ -70,14 +61,76 @@
         
     }
 }
-//  KVO Unsubscribe
+
 -(void)dealloc{
     [_authenticationManger removeObserver:self forKeyPath:NSStringFromSelector(@selector(lineConfiguration))];
 }
 
+#pragma mark - IBActions -
 
-#pragma mark Picker data source Methods
-//  Only One collum
+-(IBAction)close:(id)sender {
+    if (_delegate && [_delegate respondsToSelector:@selector(lineConfigurationViewControllerShouldDismiss:)]) {
+        [_delegate lineConfigurationViewControllerShouldDismiss:self];
+    }
+    else
+    {
+        [self dismissViewControllerAnimated:YES completion:NULL];
+    }
+}
+
+- (IBAction)lineSelectionAction:(id)sender {
+    if(_pickerVisible) {
+        [self hidePicker:true];
+    } else {
+        [self showPicker:true];
+    }
+}
+
+- (IBAction)doneButton:(id)sender {
+    [self hidePicker:TRUE];
+}
+
+#pragma mark - Private -
+
+-(void)showPicker:(BOOL)animated{
+    if (_pickerVisible) {
+        return;
+    }
+    __unsafe_unretained JCLineConfigurationViewController *weakSelf = self;
+    _lineListBottomConstraint.constant = 0;
+    [self.view setNeedsUpdateConstraints];
+    [UIView animateWithDuration:(animated ? 0.6 : 0.0)
+                     animations:^{
+                         
+                         [weakSelf.view layoutIfNeeded];
+                     }
+                     completion:^(BOOL finished) {
+                         _pickerVisible = true;
+                     }];
+}
+
+-(void)hidePicker:(BOOL)animated{
+    if(!_pickerVisible) {
+        return;
+    }
+    __unsafe_unretained JCLineConfigurationViewController *weakSelf = self;
+    _lineListBottomConstraint.constant = -_lineListHeightConstraint.constant;
+    [self.view setNeedsUpdateConstraints];
+    [UIView animateWithDuration:(animated ? 0.6 : 0.0)
+                     animations:^{
+                         [weakSelf.view layoutIfNeeded];
+                     }
+                     completion:^(BOOL finished) {
+                         _pickerVisible = false;
+                     }];
+}
+
+
+
+#pragma mark - Delegate Handlers -
+
+#pragma mark UIPickerDataSource Methods
+
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
     return 1;
 }
@@ -86,7 +139,8 @@
     return [_lineConfigurations count];
 }
 
-#pragma mark Picker Delegate Methods
+#pragma mark UIPickerDelegate Methods
+
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     LineConfiguration *lineConfiguration = [_lineConfigurations objectAtIndex:row];
     return lineConfiguration.display;
@@ -118,52 +172,5 @@
     [self hidePicker:YES];
     
 }
--(void)showPicker:(BOOL)animated{
-    if (_pickerVisible) {
-        return;
-    }
-    __unsafe_unretained JCLineConfigurationViewController *weakSelf = self;
-    _lineListBottomConstraint.constant = 0;
-    [self.view setNeedsUpdateConstraints];
-    [UIView animateWithDuration:(animated ? 0.6 : 0.0)
-                     animations:^{
-                         
-                         [weakSelf.view layoutIfNeeded];
-                     }
-                     completion:^(BOOL finished) {
-                         _pickerVisible = true;
-                     }];
-}
 
--(void)hidePicker:(BOOL)animated{
-    if(!_pickerVisible) {
-        return;
-    }
-    __unsafe_unretained JCLineConfigurationViewController *weakSelf = self;
-     _lineListBottomConstraint.constant = -_lineListHeightConstraint.constant;
-    [self.view setNeedsUpdateConstraints];
-    [UIView animateWithDuration:(animated ? 0.6 : 0.0)
-                     animations:^{
-                         [weakSelf.view layoutIfNeeded];
-                     }
-                     completion:^(BOOL finished) {
-                         _pickerVisible = false;
-                     }];
-}
-
-- (IBAction)lineSelectionAction:(id)sender {
-    //add animating in and out upon selection
-    if(_pickerVisible) {
-        [self hidePicker:true];
-    } else {
-        [self showPicker:true];
-    }
-        
-        
-   }
-
-- (IBAction)doneButton:(id)sender {
-    [self hidePicker:TRUE];
-    return;
-}
 @end

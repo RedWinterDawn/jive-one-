@@ -8,17 +8,8 @@
 
 #import "JCFetchedResultsTableViewController.h"
 
-@class JCLineConfigurationSelectorViewController;
 @class LineConfiguration;
 
-@protocol JCLineConfigurationSelectorViewControllerDelegate <NSObject>
-
-- (void)lineConfigurationViewController:(JCLineConfigurationSelectorViewController *)controller didSelectLineConfiguration:(LineConfiguration *)selectedLineConfiguration;
-
-@end
-
 @interface JCLineConfigurationSelectorViewController : JCFetchedResultsTableViewController
-
-@property (nonatomic, assign) id<JCLineConfigurationSelectorViewControllerDelegate> delegate;
 
 @end

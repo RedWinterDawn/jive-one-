@@ -87,6 +87,14 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 #pragma mark - Class methods
 
+-(void)checkAuthenticationStatus
+{
+    if (!self.userAuthenticated || !self.userLoadedMininumData)
+        [self logout];
+    else
+        self.userLoadedMininumData = TRUE;
+}
+
 - (void)loginWithUsername:(NSString *)username password:(NSString *)password completed:(CompletionBlock)completed
 {
     _completionBlock = completed;
@@ -530,16 +538,18 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 @end
 
+
+static JCAuthenticationManager *authenticationManager = nil;
+static dispatch_once_t authenticationManagerOnceToken;
+
 @implementation JCAuthenticationManager (Singleton)
 
 + (instancetype)sharedInstance
 {
-    static JCAuthenticationManager* autheticationManager = nil;
-    static dispatch_once_t autheticationManagerOnceToken;
-    dispatch_once(&autheticationManagerOnceToken, ^{
-        autheticationManager = [[JCAuthenticationManager alloc] init];
+    dispatch_once(&authenticationManagerOnceToken, ^{
+        authenticationManager = [[JCAuthenticationManager alloc] init];
     });
-    return autheticationManager;
+    return authenticationManager;
 }
 
 @end

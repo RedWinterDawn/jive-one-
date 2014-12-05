@@ -66,10 +66,6 @@
         if(![lineConfiguration.managedObjectContext save:&error])
             NSLog(@"%@", [error description]);
     }
-    
-    if (self.delegate && [self.delegate respondsToSelector:@selector(lineConfigurationViewController:didSelectLineConfiguration:)]) {
-        [self.delegate lineConfigurationViewController:self didSelectLineConfiguration:lineConfiguration];
-    }
 }
 
 @end
