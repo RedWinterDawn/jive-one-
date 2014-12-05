@@ -8,6 +8,7 @@
 
 #import "JCDialerViewController.h"
 #import "JCCallCardManager.h"
+#import "OutgoingCall.h"
 
 NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCall";
 
@@ -86,9 +87,12 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 
 -(IBAction)initiateCall:(id)sender
 {
-    NSString *string = self.dialStringLabel.text; //here is where the magic happens
+    NSString *string = self.dialStringLabel.text;
     if (!string || [string isEqualToString:@""]) {
-//        get history 
+
+        OutgoingCall *call = [OutgoingCall MR_findFirstOrderedByAttribute:@"date" ascending:false];
+        
+        self.dialStringLabel.dialString = call.number;
         return;
     }
     
