@@ -287,7 +287,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     if (_lineConfiguration)
         return _lineConfiguration;
     
-    _lineConfiguration = [LineConfiguration MR_findFirst];
+    _lineConfiguration = [LineConfiguration MR_findFirstOrderedByAttribute:@"display" ascending:YES];
     return _lineConfiguration;
 }
 
