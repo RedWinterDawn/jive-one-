@@ -694,6 +694,10 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         case JCCallIncoming:
             lineSession.sessionState = state;               // Set the session state.
             [self.delegate addLineSession:lineSession];     // Notify the delegate to add a line.
+            if (autoAnswer) {
+                autoAnswer = false;
+                [self.delegate answerAutoCall:lineSession];
+            }
             break;
         
         case JCCallConnected:
@@ -752,11 +756,6 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	[idleLine setCallDetail:[self formatCallDetail:[NSString stringWithUTF8String:caller]]];        // Get Call Detail.
 	
     [self setSessionState:JCCallIncoming forSession:idleLine event:@"onInviteIncoming" error:nil];  // Set the session state.
-	
-	if (autoAnswer) {
-		autoAnswer = false;
-		[self.delegate answerAutoCall:idleLine];
-	}
 	
     // If we are backgrounded, push out a local notification
 	if ([UIApplication sharedApplication].applicationState ==  UIApplicationStateBackground) {
@@ -1075,7 +1074,10 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 {
 	NSString *sipMessage = [NSString stringWithUTF8String:message];
 	
-	if ([sipMessage rangeOfString:AUTO_ANSWER_VERIFY0].location != NSNotFound &&
+    NSLog(@"%@", sipMessage);
+    
+	if (
+        [sipMessage rangeOfString:AUTO_ANSWER_VERIFY0].location != NSNotFound &&
 		[sipMessage rangeOfString:AUTO_ANSWER_VERIFY1].location != NSNotFound &&
 		[sipMessage rangeOfString:AUTO_ANSWER_VERIFY2].location != NSNotFound) {
 	
