@@ -86,8 +86,9 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 
 -(IBAction)initiateCall:(id)sender
 {
-    NSString *string = self.dialStringLabel.text;
+    NSString *string = self.dialStringLabel.text; //here is where the magic happens
     if (!string || [string isEqualToString:@""]) {
+//        get history 
         return;
     }
     
