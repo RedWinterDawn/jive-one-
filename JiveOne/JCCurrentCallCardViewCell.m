@@ -306,7 +306,7 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
 
 -(void)hideHoldButton:(bool)animated
 {
-    _endCallButtonWidthConstraint.constant = self.bounds.size.width;
+    _endCallButtonWidthConstraint.constant = (self.bounds.size.width / 2);
     [_actionView setNeedsUpdateConstraints];
     [UIView animateWithDuration:animated ? 0.3 : 0
                      animations:^{

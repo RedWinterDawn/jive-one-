@@ -1925,10 +1925,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="incall-background" translatesAutoresizingMaskIntoConstraints="NO" id="tSQ-18-0Px">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                             </imageView>
                             <containerView clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AIn-Um-NXd">
-                                <rect key="frame" x="0.0" y="4" width="320" height="248"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="251"/>
                                 <connections>
                                     <segue destination="1Io-pQ-qUd" kind="embed" identifier="CallerCollectionView" id="MUQ-NU-NHH"/>
                                 </connections>
@@ -1936,8 +1936,8 @@
                             <view clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T5I-ze-dYa" customClass="JCCallOptionsView">
                                 <rect key="frame" x="0.0" y="251" width="320" height="228"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="249" verticalCompressionResistancePriority="251" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JGQ-cX-3bl" userLabel="Mute Button" customClass="JCRoundedButton">
-                                        <rect key="frame" x="32" y="22" width="60" height="60"/>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="249" verticalCompressionResistancePriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JGQ-cX-3bl" userLabel="Mute Button" customClass="JCRoundedButton">
+                                        <rect key="frame" x="32" y="20" width="60" height="60"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
                                         <rect key="contentStretch" x="0.5" y="0.5" width="1" height="1"/>
                                         <constraints>
@@ -1954,8 +1954,8 @@
                                             <action selector="mute:" destination="ph3-lT-GBI" eventType="touchUpInside" id="TkF-cU-Nmg"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="252" misplaced="YES" text="Mute" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Kp-Io-fyp" userLabel="Mute Label">
-                                        <rect key="frame" x="32" y="87" width="60" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="252" text="Mute" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Kp-Io-fyp" userLabel="Mute Label">
+                                        <rect key="frame" x="32" y="85" width="60" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="Mip-ns-HjQ"/>
                                             <constraint firstAttribute="width" constant="60" id="h34-8y-NAN"/>
@@ -1965,7 +1965,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="40" placeholderIntrinsicHeight="40" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5bp-16-Yhx" userLabel="Keyboard Button" customClass="JCRoundedButton">
-                                        <rect key="frame" x="130" y="21" width="60" height="60"/>
+                                        <rect key="frame" x="130" y="20" width="60" height="60"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="60" id="o5b-5u-NdO"/>
@@ -2223,14 +2223,14 @@
                         <constraints>
                             <constraint firstItem="5bp-16-Yhx" firstAttribute="top" secondItem="AIn-Um-NXd" secondAttribute="bottom" constant="20" id="2bt-qC-cxl"/>
                             <constraint firstItem="eCX-gY-NnK" firstAttribute="top" secondItem="T5I-ze-dYa" secondAttribute="top" constant="229" id="9FD-JK-27t"/>
-                            <constraint firstItem="T5I-ze-dYa" firstAttribute="top" secondItem="AIn-Um-NXd" secondAttribute="bottom" constant="-1" id="IA5-6S-Vng"/>
+                            <constraint firstItem="AIn-Um-NXd" firstAttribute="top" secondItem="q42-OL-z6o" secondAttribute="bottom" id="F80-2V-nkf"/>
+                            <constraint firstItem="T5I-ze-dYa" firstAttribute="top" secondItem="AIn-Um-NXd" secondAttribute="bottom" id="IA5-6S-Vng"/>
                             <constraint firstItem="T5I-ze-dYa" firstAttribute="leading" secondItem="iLc-8x-FhM" secondAttribute="leading" id="LCw-9n-T84"/>
                             <constraint firstItem="AIn-Um-NXd" firstAttribute="leading" secondItem="iLc-8x-FhM" secondAttribute="leading" id="MeX-hK-h8G"/>
-                            <constraint firstItem="tSQ-18-0Px" firstAttribute="top" secondItem="iLc-8x-FhM" secondAttribute="topMargin" id="RUi-RO-sP0"/>
+                            <constraint firstItem="tSQ-18-0Px" firstAttribute="top" secondItem="q42-OL-z6o" secondAttribute="top" id="Oel-F7-8kf"/>
                             <constraint firstAttribute="trailing" secondItem="T5I-ze-dYa" secondAttribute="trailing" id="Rvm-PK-EEk"/>
                             <constraint firstItem="tSQ-18-0Px" firstAttribute="leading" secondItem="iLc-8x-FhM" secondAttribute="leading" id="YQR-No-tFc"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="tSQ-18-0Px" secondAttribute="bottom" constant="-88" id="tRh-X1-IKU"/>
-                            <constraint firstItem="AIn-Um-NXd" firstAttribute="top" secondItem="q42-OL-z6o" secondAttribute="bottom" constant="4" id="wBW-NU-ox7"/>
+                            <constraint firstAttribute="bottom" secondItem="tSQ-18-0Px" secondAttribute="bottom" id="tRh-X1-IKU"/>
                             <constraint firstAttribute="trailing" secondItem="AIn-Um-NXd" secondAttribute="trailing" id="wSl-Md-Nva"/>
                             <constraint firstAttribute="trailing" secondItem="tSQ-18-0Px" secondAttribute="trailing" id="xxy-Za-i5e"/>
                         </constraints>
@@ -2253,7 +2253,7 @@
             <objects>
                 <collectionViewController id="1Io-pQ-qUd" customClass="JCCallCardCollectionViewController" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="CSs-ad-Lqn">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="248"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="251"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2892,7 +2892,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NKq-zF-3UM" userLabel="Keypad" customClass="JCRoundedView">
                                 <rect key="frame" x="10" y="10" width="300" height="230"/>
                                 <subviews>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="1000" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gPO-SR-5Lk">
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="1000" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gPO-SR-5Lk">
                                         <rect key="frame" x="-5" y="50" width="100" height="40"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -2924,7 +2924,7 @@
                                             <action selector="numPadPressed:" destination="k9u-JK-Ejv" eventType="touchUpInside" id="ELI-BU-VzE"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="1000" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="675-5i-6mS">
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="1000" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="675-5i-6mS">
                                         <rect key="frame" x="100" y="50" width="100" height="40"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -2956,7 +2956,7 @@
                                             <action selector="numPadPressed:" destination="k9u-JK-Ejv" eventType="touchUpInside" id="Br4-wV-ANS"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="3" contentMode="scaleToFill" horizontalHuggingPriority="1000" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VtF-OY-4WO">
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" horizontalHuggingPriority="1000" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VtF-OY-4WO">
                                         <rect key="frame" x="200" y="50" width="100" height="40"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -2988,7 +2988,7 @@
                                             <action selector="numPadPressed:" destination="k9u-JK-Ejv" eventType="touchUpInside" id="wWm-YE-Wqe"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="4" contentMode="scaleToFill" horizontalHuggingPriority="1000" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gDH-fH-ufG">
+                                    <button opaque="NO" tag="4" contentMode="scaleToFill" horizontalHuggingPriority="1000" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gDH-fH-ufG">
                                         <rect key="frame" x="-5" y="95" width="100" height="40"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -3090,7 +3090,7 @@
                                             <action selector="numPadPressed:" destination="k9u-JK-Ejv" eventType="touchUpInside" id="gk1-hp-4Su"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="7" contentMode="scaleToFill" horizontalHuggingPriority="1000" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tv1-OQ-CW7">
+                                    <button opaque="NO" tag="7" contentMode="scaleToFill" horizontalHuggingPriority="1000" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tv1-OQ-CW7">
                                         <rect key="frame" x="-5" y="140" width="100" height="40"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -3172,7 +3172,7 @@
                                             <action selector="numPadPressed:" destination="k9u-JK-Ejv" eventType="touchUpInside" id="MZb-Ql-JG0"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="10" contentMode="scaleToFill" horizontalHuggingPriority="1000" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NRn-BA-KhK">
+                                    <button opaque="NO" tag="10" contentMode="scaleToFill" horizontalHuggingPriority="1000" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NRn-BA-KhK">
                                         <rect key="frame" x="-5" y="185" width="100" height="40"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
