@@ -15,6 +15,7 @@
 extern NSString *const kJCAuthenticationManagerUserLoggedOutNotification;
 extern NSString *const kJCAuthenticationManagerUserAuthenticatedNotification;
 extern NSString *const kJCAuthenticationManagerUserLoadedMinimumDataNotification;
+extern NSString *const kJCAuthenticationManagerLineConfigurationChangedNotification;
 
 typedef void (^CompletionBlock) (BOOL success, NSError *error);
 
@@ -43,7 +44,5 @@ typedef void (^CompletionBlock) (BOOL success, NSError *error);
 @interface JCAuthenticationManager (Singleton)
 
 + (JCAuthenticationManager*)sharedInstance;
-
-+ (void)reset;
 
 @end

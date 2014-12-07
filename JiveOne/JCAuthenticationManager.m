@@ -15,10 +15,11 @@
 #import "JCAuthenticationManagerError.h"
 
 // Notifications
-NSString *const kJCAuthenticationManagerUserLoggedOutNotification           = @"userLoggedOut";
-NSString *const kJCAuthenticationManagerUserAuthenticatedNotification       = @"userAuthenticated";
-NSString *const kJCAuthenticationManagerUserLoadedMinimumDataNotification   = @"userLoadedMinimumData";
-NSString *const kJCAuthenticationManagerAuthenticationFailedNotification    = @"authenticationFailed";
+NSString *const kJCAuthenticationManagerUserLoggedOutNotification               = @"userLoggedOut";
+NSString *const kJCAuthenticationManagerUserAuthenticatedNotification           = @"userAuthenticated";
+NSString *const kJCAuthenticationManagerUserLoadedMinimumDataNotification       = @"userLoadedMinimumData";
+NSString *const kJCAuthenticationManagerAuthenticationFailedNotification        = @"authenticationFailed";
+NSString *const kJCAuthenticationManagerLineConfigurationChangedNotification    = @"lineConfigurationChanged";
 
 // Keychain
 NSString *const kJCAuthenticationManagerKeychainStoreIdentifier             = @"keyjiveauthstore";
@@ -221,6 +222,19 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     [defaults setObject:userName forKey:kJCAuthenticationManagerJiveUserIdKey];
     [defaults synchronize];
     [self didChangeValueForKey:kJCAuthenticationManagerJiveUserIdKey];
+}
+
+-(void)setLineConfiguration:(LineConfiguration *)lineConfiguration
+{
+    // if its the same line configuration and that configuration is not nil, then we do no need to broadcast it.
+    if (_lineConfiguration == lineConfiguration) {
+        return;
+    }
+    
+    [self willChangeValueForKey:NSStringFromSelector(@selector(lineConfiguration))];
+    _lineConfiguration = lineConfiguration;
+    [self didChangeValueForKey:NSStringFromSelector(@selector(lineConfiguration))];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kJCAuthenticationManagerLineConfigurationChangedNotification object:self];
 }
 
 #pragma mark - Getters -
