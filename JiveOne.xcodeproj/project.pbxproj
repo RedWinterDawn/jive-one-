@@ -542,7 +542,7 @@
 		279A4E2B19DA91E100E8AB7B /* SipHandler.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SipHandler.mm; sourceTree = "<group>"; };
 		279CB9D21A1F21ED0037601F /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		279CB9D31A1F21ED0037601F /* Detault-568@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Detault-568@2x.png"; sourceTree = "<group>"; };
-		279CB9D61A1F30490037601F /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		279CB9D61A1F30490037601F /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
 		279E4C6C19226FA3002A556C /* people-search-nofocus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "people-search-nofocus.png"; sourceTree = "<group>"; };
 		279E4C6F19226FAC002A556C /* people-search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "people-search.png"; sourceTree = "<group>"; };
 		279E4C9B192273E5002A556C /* MBContactCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBContactCollectionView.h; sourceTree = "<group>"; };
@@ -1457,7 +1457,6 @@
 		275F4A4518AD0FBC00D2F069 = {
 			isa = PBXGroup;
 			children = (
-				279CB9D61A1F30490037601F /* Default-568h@2x.png */,
 				275F4A5718AD0FBC00D2F069 /* JiveOne */,
 				275F4A7C18AD0FBC00D2F069 /* JiveOneTests */,
 				275F4A5018AD0FBC00D2F069 /* Frameworks */,
@@ -1536,6 +1535,7 @@
 		275F4A5818AD0FBC00D2F069 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				279CB9D61A1F30490037601F /* Default-568h@2x.png */,
 				279CB9D21A1F21ED0037601F /* Default@2x.png */,
 				279CB9D31A1F21ED0037601F /* Detault-568@2x.png */,
 				27EA5DB1190888AD008C7590 /* Draft_iPhone.storyboard */,
