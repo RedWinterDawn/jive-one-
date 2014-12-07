@@ -9,7 +9,6 @@
 #import "JCCallCardManager.h"
 
 // Managers
-#import "JCAuthenticationManager.h"
 #import "JCBluetoothManager.h"
 #import "SipHandler.h"
 
@@ -46,7 +45,6 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 
 @interface JCCallCardManager ()<SipHandlerDelegate, JCCallCardDelegate>
 {
-    JCAuthenticationManager *_authenticationManager;
     JCBluetoothManager *_bluetoothManager;
     SipHandler *_sipHandler;
 	NSString *_warmTransferNumber;
@@ -75,12 +73,6 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         [center addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
         [center addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
-        
-        // Access the Authetication Manager and register for observer and notification events.
-        _authenticationManager = [JCAuthenticationManager sharedInstance];
-        [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:_authenticationManager];
-        [center addObserver:self selector:@selector(userDidLoadMinimunData:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:_authenticationManager];
-        [_authenticationManager addObserver:self forKeyPath:@"lineConfiguration" options:NSKeyValueObservingOptionInitial context:NULL];
     }
     return self;
 }
@@ -88,13 +80,22 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [_authenticationManager removeObserver:self forKeyPath:@"lineConfiguration"];
     [_sipHandler removeObserver:self forKeyPath:kSipHandlerRegisteredSelectorKey];
 }
 
 #pragma mark - Public Methods -
 
--(void)connect:(CompletionHandler)completion
+-(void)connectToPbx:(PBX *)pbx withLineConfiguration:(LineConfiguration *)lineConfiguration
+{
+    if (_sipHandler) {
+        [self disconnect];
+    }
+    
+    _sipHandler = [[SipHandler alloc] initWithPbx:pbx lineConfiguration:lineConfiguration delegate:self];
+    [_sipHandler addObserver:self forKeyPath:kSipHandlerRegisteredSelectorKey options:NSKeyValueObservingOptionNew context:NULL];
+}
+
+-(void)reconnect:(CompletionHandler)completion
 {
     if (_sipHandler) {
         [_sipHandler connect:completion];
@@ -103,6 +104,13 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
             completion(false, [NSError errorWithDomain:@"Not logged in." code:0 userInfo:nil]);
         }
     }
+}
+
+-(void)disconnect
+{
+    [_sipHandler disconnect];
+    [_sipHandler removeObserver:self forKeyPath:kSipHandlerRegisteredSelectorKey];
+    _sipHandler = nil;
 }
 
 /**
@@ -268,11 +276,6 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 	if (!_calls)
 		_calls = [NSMutableArray array];
 	return _calls;
-}
-
--(LineConfiguration *)lineConfiguration
-{
-    return _authenticationManager.lineConfiguration;
 }
 
 #pragma mark - Private -
@@ -506,7 +509,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 {
     // If the line configuration changes, reconnect the sip handler.
     if ([keyPath isEqualToString:@"lineConfiguration"] && _sipHandler) {
-        [_sipHandler connect:NULL];
+        //[self connect];
     }
     else if ([keyPath isEqualToString:kSipHandlerRegisteredSelectorKey]) {
         self.connected = TRUE;
@@ -552,26 +555,6 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
             [_bluetoothManager enableBluetoothAudio];
         }
     }
-}
-
-#pragma mark JCAuthenticationManager
-
--(void)userDidLoadMinimunData:(NSNotification *)notification
-{
-    if (_sipHandler) {
-        [_sipHandler disconnect];
-        [_sipHandler removeObserver:self forKeyPath:kSipHandlerRegisteredSelectorKey];
-    }
-    
-    _sipHandler = [[SipHandler alloc] initWithPbx:_authenticationManager.pbx lineConfiguration:_authenticationManager.lineConfiguration delegate:self];
-    [_sipHandler addObserver:self forKeyPath:kSipHandlerRegisteredSelectorKey options:NSKeyValueObservingOptionNew context:NULL];
-}
-
--(void)userDidLogout:(NSNotification *)notification
-{
-    [_sipHandler disconnect];
-    [_sipHandler removeObserver:self forKeyPath:kSipHandlerRegisteredSelectorKey];
-    _sipHandler = nil;
 }
 
 #pragma mark - Delegate Handlers -
@@ -700,6 +683,16 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 + (id)copyWithZone:(NSZone *)zone
 {
     return self;
+}
+
++ (void)connectToPbx:(PBX *)pbx withLineConfiguration:(LineConfiguration *)lineConfiguration
+{
+    [[JCCallCardManager sharedManager] connectToPbx:pbx withLineConfiguration:lineConfiguration];
+}
+
++ (void)disconnect
+{
+    [[JCCallCardManager sharedManager] disconnect];
 }
 
 @end

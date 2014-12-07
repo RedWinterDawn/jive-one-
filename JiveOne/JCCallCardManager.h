@@ -8,7 +8,7 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 #import "JCCallCard.h"
 
@@ -45,7 +45,9 @@ typedef enum : NSUInteger {
 @property (nonatomic, readonly) LineConfiguration *lineConfiguration;
 @property (nonatomic, readonly, getter=isConnected) BOOL connected;
 
--(void)connect:(CompletionHandler)connected;
+-(void)connectToPbx:(PBX *)pbx withLineConfiguration:(LineConfiguration *)lineConfiguration;
+-(void)reconnect:(CompletionHandler)connected;
+-(void)disconnect;
 
 // Attempts to dial a passed string following the dial type directive. When the dial operation was completed, we are
 // notified. If the dial action resulted in the creation of a dial card, an kJCCallCardManagerAddedCallNotification is
@@ -78,5 +80,8 @@ typedef enum : NSUInteger {
 @interface JCCallCardManager (Singleton)
 
 + (JCCallCardManager *)sharedManager;
+
++ (void)connectToPbx:(PBX *)pbx withLineConfiguration:(LineConfiguration *)lineConfiguration;
++ (void)disconnect;
 
 @end
