@@ -16,6 +16,8 @@
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * pbxId;
 @property (nonatomic, retain) NSString * selfUrl;
-@property (nonatomic, retain) NSNumber * v5;
+
+@property (nonatomic, getter=isV5) BOOL v5;
+@property (nonatomic, getter=isActive) BOOL active;
 
 @end

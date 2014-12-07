@@ -309,7 +309,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 {
     PBX *pbx = self.pbx;
     if (pbx)
-        return [NSString stringWithFormat:@"%@ PBX on %@", pbx.name, [pbx.v5 boolValue] ? @"V5" : @"V4"];
+        return [NSString stringWithFormat:@"%@ PBX on %@", pbx.name, pbx.isV5 ? @"V5" : @"V4"];
     return nil;
 }
 

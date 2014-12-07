@@ -31,8 +31,7 @@ NSString *const kJCVoiceNonVisualViewControllerIdentifier = @"VoiceNonVisualView
 {
     [super viewWillLayoutSubviews];
     
-    PBX *pbx = [PBX fetchFirstPBX];
-    if (![pbx.v5 boolValue])
+    if (![JCAuthenticationManager sharedInstance].pbx.isV5)
     {
         [_voicemailTableViewController.view removeFromSuperview];
         [_voicemailTableViewController removeFromParentViewController];

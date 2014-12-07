@@ -185,7 +185,7 @@
     
     // Sync Data
     JCV5ApiClient *client = [JCV5ApiClient sharedClient];
-    if (_authenticationManager.pbx.v5.boolValue) {
+    if (_authenticationManager.pbx.isV5) {
         [client getVoicemails:nil];
     }
     [client RetrieveContacts:nil];
@@ -195,7 +195,7 @@
 {
     LOG_Info();
     // If we are not a V5 PBX, we do not have a voicemail data to go fetch, and return with a no data callback.
-    if (!_authenticationManager.pbx.v5.boolValue)
+    if (!_authenticationManager.pbx.isV5)
         return UIBackgroundFetchResultNoData;
     
     NSLog(@"APPDELEGATE - performFetchWithCompletionHandler");

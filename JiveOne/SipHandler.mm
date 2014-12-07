@@ -117,7 +117,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 -(void)login
 {
     NSString *kSipUserName  = _lineConfiguration.sipUsername;
-    NSString *kSIPServer    = ([_pbx.v5 boolValue]) ? _lineConfiguration.outboundProxy : _lineConfiguration.registrationHost;
+    NSString *kSIPServer    = _pbx.isV5 ? _lineConfiguration.outboundProxy : _lineConfiguration.registrationHost;
     
     _sipURL = [[NSString alloc] initWithFormat:@"sip:%@:%@", kSipUserName, kSIPServer];
 	
@@ -1076,8 +1076,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 			  newMessageCount:(int)newMessageCount
 			  oldMessageCount:(int)oldMessageCount
 {
-    PBX *pbx = [JCAuthenticationManager sharedInstance].pbx;
-    if (pbx && ![pbx.v5 boolValue]) {
+    if (_pbx.isV5) {
         [JCBadgeManager sharedManager].voicemails = newMessageCount;
     }    
 }
