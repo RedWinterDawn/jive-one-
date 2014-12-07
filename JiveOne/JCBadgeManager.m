@@ -531,4 +531,19 @@ static JCBadgeManager *badgeManager = nil;
     return self;
 }
 
++ (void)initialize
+{
+    [[JCBadgeManager sharedManager] initialize];
+}
+
++ (void)update
+{
+    [[JCBadgeManager sharedManager] update];
+}
+
++ (void)reset
+{
+    [[JCBadgeManager sharedManager] reset];
+}
+
 @end
