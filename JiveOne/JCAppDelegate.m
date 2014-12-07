@@ -41,8 +41,6 @@
     
     UINavigationController *_navigationController;
     UIViewController *_appSwitcherViewController;
-    
-    bool _didNotify;
 }
 
 @end
@@ -62,17 +60,12 @@
     // Load Core Data
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:kCoreDataDatabase];
     
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    
-    // Phone Manager.
-    _phoneManager = [JCCallCardManager sharedManager];
-    [center addObserver:self selector:@selector(didReceiveIncomingCall:) name:kJCCallCardManagerAddedCallNotification object:_phoneManager];
-    [center addObserver:self selector:@selector(stopRingtone) name:kJCCallCardManagerAnswerCallNotification object:_phoneManager];
-    
     // Authentication
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     _authenticationManager = [JCAuthenticationManager sharedInstance];
     [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:_authenticationManager];
     [center addObserver:self selector:@selector(userDataReady:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:_authenticationManager];
+    [center addObserver:self selector:@selector(lineConfigurationChanged:) name:kJCAuthenticationManagerLineConfigurationChangedNotification object:_authenticationManager];
     [_authenticationManager checkAuthenticationStatus];
 }
 
@@ -119,6 +112,13 @@
 
 #pragma mark Login Workflow
 
+/**
+ * Presents the User Login form.
+ *
+ * Creates a navigation controller and places the login view controller as its root view controller. It is then switched
+ * in as the root view controller, with the app switcher being stored in a local variable. The login view is presented 
+ * with a flip a animation.
+ */
 -(void)presentLoginViewController:(BOOL)animated
 {
     UIViewController *loginViewController = [_appSwitcherViewController.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
@@ -140,6 +140,13 @@
                     completion:nil];
 }
 
+
+/**
+ * Present the Line Configuration View Controller
+ *
+ * Pushes the line configuration view controller onto the navigation controller instancing it from the storyboard. 
+ * Registers us as the delegate to respond the transitioning to the next step
+ */
 -(void)presentLineConfigurationViewController:(BOOL)animated
 {
     if (!_navigationController) {
@@ -151,6 +158,10 @@
     [_navigationController pushViewController:lineConfigurationViewController animated:animated];
 }
 
+/**
+ * Removes the nagivation controller for the login and app configuration/tutorial, and replaces it as the root view 
+ * controller with the app delegate.
+ */
 -(void)dismissLoginViewController:(BOOL)animated
 {
     [UIView transitionWithView:self.window
@@ -162,6 +173,22 @@
                     completion:^(BOOL finished) {
                         _navigationController = nil;
                     }];
+}
+
+- (void)startDataSyncInBackground
+{
+    UAConfig *config = [UAConfig defaultConfig];
+    [UAirship takeOff:config];
+    
+    // Launches the Badge manager. Should be launched after core data has been loaded, but before we start syncing data.
+    [JCBadgeManager initialize];
+    
+    // Sync Data
+    JCV5ApiClient *client = [JCV5ApiClient sharedClient];
+    if (_authenticationManager.pbx.v5.boolValue) {
+        [client getVoicemails:nil];
+    }
+    [client RetrieveContacts:nil];
 }
 
 - (UIBackgroundFetchResult)backgroundPerformFetchWithCompletionHandler
@@ -238,31 +265,41 @@
 
 #pragma mark JCAuthenticationManager
 
+/**
+ * Notification of user authentications and loading of minimum required data has occured.
+ */
 -(void)userDataReady:(NSNotification *)notification
 {
-    UAConfig *config = [UAConfig defaultConfig];
-    [UAirship takeOff:config];
+    [self startDataSyncInBackground];
     
-    // Launches the Badge manager. Should be launched after core data has been loaded.
-    [[JCBadgeManager sharedManager] initialize];
-    
-    // Sync Data
-    JCV5ApiClient *client = [JCV5ApiClient sharedClient];
-    if (_authenticationManager.pbx.v5.boolValue) {
-        [client getVoicemails:nil];
+    // If we have not already, initialize the phone manager singleton, store a reference to it and register for notifications.
+    if (!_phoneManager) {
+        _phoneManager = [JCCallCardManager sharedManager];
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self selector:@selector(didReceiveIncomingCall:) name:kJCCallCardManagerAddedCallNotification object:_phoneManager];
+        [center addObserver:self selector:@selector(stopRingtone) name:kJCCallCardManagerAnswerCallNotification object:_phoneManager];
     }
-    [client RetrieveContacts:nil];
     
+    // TODO: MULTI-PBX Support.
+    
+    // If the user has multiple line configurations, we prompt them to select which line they would like to connect with. When
+    // selected, the authentication manager will notify that they have changed their selected line.
     NSInteger lines = [LineConfiguration MR_countOfEntities];
     if (lines > 1) {
         [self presentLineConfigurationViewController:YES];
     }
-    else
-    {
+    
+    // If the User has one line, then we select that line. We are done, so we
+    else if (lines == 1) {
+        JCAuthenticationManager *authenticationManager = notification.object;
+        [_phoneManager connectToPbx:authenticationManager.pbx withLineConfiguration:authenticationManager.lineConfiguration];
         [self dismissLoginViewController:YES];
     }
 }
 
+/**
+ * Notification of user inititated logout.
+ */
 -(void)userDidLogout:(NSNotification *)notification
 {
     LOG_Info();
@@ -272,12 +309,28 @@
     [JasmineSocket stopSocket];
     [[JCV5ApiClient sharedClient] stopAllOperations];
     [[JCOmniPresence sharedInstance] truncateAllTablesAtLogout];
-    [JCApplicationSwitcherDelegate reset];
-    [[JCBadgeManager sharedManager] reset];
     
+    [JCApplicationSwitcherDelegate reset];      // Resets the App Switcher to be
+    [JCBadgeManager reset];
+    
+    [JCCallCardManager disconnect];
     [self presentLoginViewController:YES];
     
     [[UIApplication sharedApplication] unregisterForRemoteNotifications];
+}
+
+/**
+ * Notification when the line configuration has changes. 
+ *
+ * When it changes we need to make the phone manager reconnect with new credentials. If we do not have credentials
+ * from the authentication manager we disconnect.
+ */
+-(void)lineConfigurationChanged:(NSNotification *)notification
+{
+    JCAuthenticationManager *authenticationManager = notification.object;
+    if (authenticationManager.pbx && authenticationManager.lineConfiguration) {
+        [_phoneManager connectToPbx:authenticationManager.pbx withLineConfiguration:authenticationManager.lineConfiguration];
+    }
 }
 
 #pragma mark JCCallCardManager
