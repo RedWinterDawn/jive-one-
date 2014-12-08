@@ -1083,6 +1083,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	
 		autoAnswer = true;
 	}
+	else {
+		autoAnswer = false;
+	}
 	
 	
 }
