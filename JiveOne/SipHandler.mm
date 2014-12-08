@@ -30,10 +30,10 @@
 #define OUTBOUND_SIP_SERVER_PORT 5061
 
 #define AUTO_ANSWER_CHECK_COUNT 3
-#define AUTO_ANSWER_HEADER0 @"Answer-Mode: auto"
-#define AUTO_ANSWER_HEADER1 @"Alert-Info: Intercom"
-#define AUTO_ANSWER_HEADER2 @"answer-after=0"
 
+NSString *const kSipHandlerAutoAnswerModeAutoHeader = @"Answer-Mode: auto";
+NSString *const kSipHandlerAutoAnswerInfoIntercomHeader = @"Alert-Info: Intercom";
+NSString *const kSipHandlerAutoAnswerAfterIntervalHeader = @"answer-after=0";
 
 NSString *const kSipHandlerServerAgentname = @"Jive iOS Client";
 NSString *const kSipHandlerFetchLineConfigurationErrorMessage = @"Unable to fetch the line configuration";
@@ -1073,21 +1073,15 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 - (void)onReceivedSignaling:(long)sessionId message:(char*)message
 {
 	NSString *sipMessage = [NSString stringWithUTF8String:message];
-	
-    NSLog(@"%@", sipMessage);
-    
 	if (
-        [sipMessage rangeOfString:AUTO_ANSWER_HEADER0].location != NSNotFound ||
-		[sipMessage rangeOfString:AUTO_ANSWER_HEADER1].location != NSNotFound ||
-		[sipMessage rangeOfString:AUTO_ANSWER_HEADER2].location != NSNotFound) {
-	
+        [sipMessage rangeOfString:kSipHandlerAutoAnswerModeAutoHeader].location != NSNotFound ||
+		[sipMessage rangeOfString:kSipHandlerAutoAnswerInfoIntercomHeader].location != NSNotFound ||
+		[sipMessage rangeOfString:kSipHandlerAutoAnswerAfterIntervalHeader].location != NSNotFound) {
 		autoAnswer = true;
 	}
 	else {
 		autoAnswer = false;
 	}
-	
-	
 }
 
 - (void)onSendingSignaling:(long)sessionId message:(char*)message
