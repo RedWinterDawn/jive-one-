@@ -25,6 +25,7 @@
 #import "JCCallCardCollectionViewController.h"
 
 #import "UIViewController+HUD.h"
+#import "NSString+Custom.h"
 
 #define CALL_OPTIONS_ANIMATION_DURATION 0.6
 #define TRANSFER_ANIMATION_DURATION 0.3
@@ -73,14 +74,23 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     NSString *dialString = self.dialString;
-    if (dialString)
-        [_phoneManager dialNumber:dialString type:JCCallCardDialSingle completion:^(bool success, NSDictionary *callInfo) {
-            if (!success)
-                [self performSelector:@selector(closeCallerViewController) withObject:nil afterDelay:0];
-        }];
-	
+    if (!dialString || dialString.isEmpty) {
+        return;
+    }
+    
+    [_phoneManager dialNumber:dialString type:JCCallCardDialSingle completion:^(bool success, NSDictionary *callInfo) {
+        if (!success) {
+            [self performSelector:@selector(closeCallerViewController) withObject:nil afterDelay:0];
+        }
+    }];
+}
+
+-(void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    
     [self setCallOptionsHidden:_callOptionsHidden animated:NO];
 }
 
