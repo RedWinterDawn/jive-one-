@@ -20,6 +20,7 @@
 #import "Lines+Custom.h"
 #import "PBX+Custom.h"
 #import "VideoViewController.h"
+#import "JCAppSettings.h"
 
 #ifdef __APPLE__
 #include "TargetConditionals.h"
@@ -696,7 +697,11 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             [self.delegate addLineSession:lineSession];     // Notify the delegate to add a line.
             if (autoAnswer) {
                 autoAnswer = false;
-                [self.delegate answerAutoCall:lineSession];
+                
+                // Only answer the call in auto answer mode if the intercom is enabled.
+                if ([JCAppSettings sharedSettings].isIntercomEnabled) {
+                    [self.delegate answerAutoCall:lineSession];
+                }
             }
             break;
         
