@@ -8,7 +8,7 @@
 
 #import "JCAppSettings.h"
 
-NSString *const kJCAppSettingsIntercomeEnabledAttribute = @"intercomEnabled";
+NSString *const kJCAppSettingsIntercomEnabledAttribute = @"intercomEnabled";
 
 @implementation JCAppSettings
 
@@ -16,14 +16,14 @@ NSString *const kJCAppSettingsIntercomeEnabledAttribute = @"intercomEnabled";
 
 -(void)setIntercomEnabled:(BOOL)intercomEnabled
 {
-    [self setSettingBoolValue:intercomEnabled forKey:kJCAppSettingsIntercomeEnabledAttribute];
+    [self setSettingBoolValue:intercomEnabled forKey:kJCAppSettingsIntercomEnabledAttribute];
 }
 
 #pragma mark - Getters -
 
 -(BOOL)isIntercomEnabled
 {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:kJCAppSettingsIntercomeEnabledAttribute];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kJCAppSettingsIntercomEnabledAttribute];
 }
 
 #pragma mark - Private -
