@@ -244,6 +244,7 @@
 		5D1FAC5F19DDD68000899915 /* JCCallCardViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FAC5E19DDD68000899915 /* JCCallCardViewCell.m */; };
 		5D1FAC6219DDFF5300899915 /* JCCallCardCollectionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FAC6119DDFF5300899915 /* JCCallCardCollectionLayout.m */; };
 		5D1FAC6519DF376B00899915 /* JCKeypadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FAC6419DF376B00899915 /* JCKeypadViewController.m */; };
+		5D241FC81A36339D008B498A /* JCAppSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FC71A36339D008B498A /* JCAppSettings.m */; };
 		5D34446519F02F1C00315230 /* JCCurrentCallCardViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D34446419F02F1C00315230 /* JCCurrentCallCardViewCell.m */; };
 		5D35479519FF4B6E009E3CB4 /* JCApplicationSwitcherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D35479419FF4B6E009E3CB4 /* JCApplicationSwitcherViewController.m */; };
 		5D35479819FF4B85009E3CB4 /* JCApplicationSwitcherDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D35479719FF4B85009E3CB4 /* JCApplicationSwitcherDelegate.m */; };
@@ -776,6 +777,8 @@
 		5D1FAC6119DDFF5300899915 /* JCCallCardCollectionLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallCardCollectionLayout.m; sourceTree = "<group>"; };
 		5D1FAC6319DF376B00899915 /* JCKeypadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCKeypadViewController.h; sourceTree = "<group>"; };
 		5D1FAC6419DF376B00899915 /* JCKeypadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCKeypadViewController.m; sourceTree = "<group>"; };
+		5D241FC61A36339D008B498A /* JCAppSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAppSettings.h; sourceTree = "<group>"; };
+		5D241FC71A36339D008B498A /* JCAppSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAppSettings.m; sourceTree = "<group>"; };
 		5D34446319F02F1C00315230 /* JCCurrentCallCardViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCurrentCallCardViewCell.h; sourceTree = "<group>"; };
 		5D34446419F02F1C00315230 /* JCCurrentCallCardViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCurrentCallCardViewCell.m; sourceTree = "<group>"; };
 		5D35479319FF4B6E009E3CB4 /* JCApplicationSwitcherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCApplicationSwitcherViewController.h; sourceTree = "<group>"; };
@@ -1371,6 +1374,8 @@
 				5D7339CA1A0826CC00339DC6 /* JCPhoneTabBarControllerDelegate.m */,
 				5D9A5E201A24E30A00E8274C /* JCBluetoothManager.h */,
 				5D9A5E211A24E30A00E8274C /* JCBluetoothManager.m */,
+				5D241FC61A36339D008B498A /* JCAppSettings.h */,
+				5D241FC71A36339D008B498A /* JCAppSettings.m */,
 			);
 			name = Application;
 			sourceTree = "<group>";
@@ -2622,6 +2627,7 @@
 				5D6AE3671A094A9C002BDAAF /* NSDictionary+Validations.m in Sources */,
 				27F1F2E7191C171300AEAFD7 /* UAPushSettingsAliasViewController.m in Sources */,
 				279A4E2C19DA91E100E8AB7B /* SipHandler.mm in Sources */,
+				5D241FC81A36339D008B498A /* JCAppSettings.m in Sources */,
 				27B6F23D19DDC676007E80DA /* JCDialerViewController.m in Sources */,
 				279E4CB3192273E5002A556C /* MBContactModel.m in Sources */,
 				5D7339A71A03F2E700339DC6 /* NSManagedObject+JCCoreDataAdditions.m in Sources */,
