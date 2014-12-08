@@ -12,25 +12,24 @@
 #import "Lines+Custom.h"
 #import "JCPersonCell.h"
 #import "JasmineSocket.h"
-@import AddressBook;
+#import <AddressBook/AddressBook.h>
+#import <AddressBookUI/AddressBookUI.h>
 
 
-@interface JCContactsTableViewController()  <JCCallerViewControllerDelegate>
+@interface JCContactsTableViewController()  <JCCallerViewControllerDelegate, ABPeoplePickerNavigationControllerDelegate, ABPersonViewControllerDelegate>
 {
     NSString *_searchText;
     NSMutableDictionary *lineSubcription;
 }
 
+
 @property (nonatomic, weak) NSPredicate *predicate;
-- (ABAddressBookRef)addressBook;
-- (void)setAddressBook:(ABAddressBookRef)newAddressBook;
+@property (nonatomic, assign) ABAddressBookRef addressBook;
 
 @end
 
 @implementation JCContactsTableViewController
-{
-    ABAddressBookRef _addressBook;
-}
+
 
 - (void)viewDidLoad
 {
@@ -43,10 +42,68 @@
     else {
         [[JasmineSocket sharedInstance] initSocket];
     }
+    _addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+    [self checkAddressBookAccess];
     
-    //Request For address book acces TODO: add toggle switch for this also add it to settings
-    [self requestAddressBookAccess];
 }
+
+#pragma mark Address Book Access
+// Check the authorization status of our application for Address Book
+-(void)checkAddressBookAccess
+{
+    switch (ABAddressBookGetAuthorizationStatus())
+    {
+            // Update our UI if the user has granted access to their Contacts
+        case  kABAuthorizationStatusAuthorized:
+            [self accessGrantedForAddressBook];
+            break;
+            // Prompt the user for access to Contacts if there is no definitive answer
+        case  kABAuthorizationStatusNotDetermined :
+            [self requestAddressBookAccess];
+            break;
+            // Display a message if the user has denied or restricted access to Contacts
+        case  kABAuthorizationStatusDenied:
+        case  kABAuthorizationStatusRestricted:
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Privacy Warning"
+                                                            message:@"Permission was not granted for Contacts."
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+// Prompt the user for access to their Address Book data
+-(void)requestAddressBookAccess
+{
+    JCContactsTableViewController * __weak weakSelf = self;
+    
+    ABAddressBookRequestAccessWithCompletion(self.addressBook, ^(bool granted, CFErrorRef error)
+                                             {
+                                                 if (granted)
+                                                 {
+                                                     dispatch_async(dispatch_get_main_queue(), ^{
+                                                         [weakSelf accessGrantedForAddressBook];
+                                                         
+                                                     });
+                                                 }
+                                             });
+}
+
+// This method is called when the user has granted access to their address book data.
+-(void)accessGrantedForAddressBook
+{
+    // Load data from the plist file
+//    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"Menu" ofType:@"plist"];
+//    self.menuArray = [NSMutableArray arrayWithContentsOfFile:plistPath];
+    [self.tableView reloadData];
+}
+
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -150,7 +207,26 @@
     if (_filterType == JCContactFilterFavorites) {
         return [NSPredicate predicateWithFormat:@"isFavorite == 1"];
     }
+    else if (_filterType == JCContactFilterLocalContacts){
+        [self checkAddressBookAccess];
+        [self showPeoplePickerController];
+    }
     return nil;
+}
+
+-(void)showPeoplePickerController
+{
+    ABPeoplePickerNavigationController *picker = [[ABPeoplePickerNavigationController alloc] init];
+    picker.peoplePickerDelegate = self;
+    // Display only a person's phone, email, and birthdate
+    NSArray *displayedItems = [NSArray arrayWithObjects:[NSNumber numberWithInt:kABPersonPhoneProperty],
+                               [NSNumber numberWithInt:kABPersonEmailProperty],
+                               [NSNumber numberWithInt:kABPersonBirthdayProperty], nil];
+    
+    
+    picker.displayedProperties = displayedItems;
+    // Show the picker
+    [self presentViewController:picker animated:YES completion:nil];
 }
 
 #pragma mark - Delegate handlers -
@@ -228,98 +304,5 @@
         }
     });
 }
-#pragma mark - Helper methods
-
-- (void)alertViewWithDataClass:(JCContactFilter)class status:(NSString *)status {
-    NSString *formatString = NSLocalizedString(@"ACCESS_LEVEL", @"");
-    NSString *message = [NSString stringWithFormat:formatString, [self stringForDataClass:class], status];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"REQUEST_STATUS", @"") message:message delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
-    [alertView show];
-}
-
-- (NSString *)stringForDataClass:(JCContactFilter)class {
-    if(class == Contacts) {
-        return kDataClassContacts;
-    }
-    return nil;
-}
-#pragma mark - UITableViewDelegate methods
-
-- (void)dealloc {
-    if(_addressBook) {
-        ABAddressBookUnregisterExternalChangeCallback(_addressBook, handleAddressBookChange, (__bridge void *)(self));
-        CFRelease(_addressBook);
-    }
-    
-}
-
-#pragma mark - Contacts methods
-
-- (void)checkAddressBookAccess {
-    /*
-     We can ask the address book ahead of time what the authorization status is for our bundle and take the appropriate action.
-     */
-    ABAuthorizationStatus status = ABAddressBookGetAuthorizationStatus();
-    if(status == kABAuthorizationStatusNotDetermined) {
-        [self alertViewWithDataClass:Contacts status:NSLocalizedString(@"UNDETERMINED", @"")];
-    }
-    else if(status == kABAuthorizationStatusRestricted) {
-        [self alertViewWithDataClass:Contacts status:NSLocalizedString(@"RESTRICTED", @"")];
-    }
-    else if(status == kABAuthorizationStatusDenied) {
-        [self alertViewWithDataClass:Contacts status:NSLocalizedString(@"DENIED", @"")];
-    }
-    else if(status == kABAuthorizationStatusAuthorized) {
-        [self alertViewWithDataClass:Contacts status:NSLocalizedString(@"GRANTED", @"")];
-    }
-}
-
-void handleAddressBookChange(ABAddressBookRef addressBook, CFDictionaryRef info, void *context) {
-    /*
-     Do something with changed addres book data...
-     */
-}
-
-- (void)requestAddressBookAccess {
-    
-    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
-    
-    if(addressBook) {
-        self.addressBook = CFAutorelease(addressBook);
-        /*
-         Register for a callback if the addressbook data changes this is important to be notified of new data when the user grants access to the contacts. the application should also be able to handle a nil object being returned as well if the user denies access to the address book.
-         */
-        ABAddressBookRegisterExternalChangeCallback(self.addressBook, handleAddressBookChange, (__bridge void *)(self));
-        
-        /*
-         When the application requests to receive address book data that is when the user is presented with a consent dialog.
-         */
-        ABAddressBookRequestAccessWithCompletion(self.addressBook, ^(bool granted, CFErrorRef error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self alertViewWithDataClass:Contacts status:(granted) ? NSLocalizedString(@"GRANTED", @"") : NSLocalizedString(@"DENIED", @"")];
-            });
-        });
-    }
-}
-
-
-- (ABAddressBookRef)addressBook {
-    return _addressBook;
-}
-
-- (void)setAddressBook:(ABAddressBookRef)newAddressBook {
-    if (_addressBook != newAddressBook) {
-        if (_addressBook != NULL) {
-            CFRelease(_addressBook);
-        }
-        if (newAddressBook != NULL) {
-            CFRetain(newAddressBook);
-        }
-        _addressBook = newAddressBook;
-    }
-}
-
-
-
 
 @end

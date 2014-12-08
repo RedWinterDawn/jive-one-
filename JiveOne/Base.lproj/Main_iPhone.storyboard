@@ -68,6 +68,7 @@
                                 <items>
                                     <tabBarItem systemItem="contacts" id="qRU-ek-73r"/>
                                     <tabBarItem tag="1" systemItem="favorites" id="plA-OB-q0o"/>
+                                    <tabBarItem tag="2" title="Local Contacts" image="black-avatar" id="25K-ui-BV6" userLabel="LocalDirctory"/>
                                 </items>
                                 <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -77,9 +78,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Gtf-8V-jLv" firstAttribute="top" secondItem="KQN-3R-ma5" secondAttribute="bottom" id="5p1-bD-RN5"/>
+                            <constraint firstItem="KQN-3R-ma5" firstAttribute="top" secondItem="Ta4-0u-d9a" secondAttribute="bottom" id="Dvq-XJ-B76"/>
                             <constraint firstItem="Ta4-0u-d9a" firstAttribute="leading" secondItem="0RX-8x-sb0" secondAttribute="leading" id="Ibw-7N-XjQ"/>
-                            <constraint firstItem="Gtf-8V-jLv" firstAttribute="top" secondItem="KQN-3R-ma5" secondAttribute="bottom" id="UDh-2S-jvB"/>
-                            <constraint firstItem="KQN-3R-ma5" firstAttribute="top" secondItem="Ta4-0u-d9a" secondAttribute="bottom" id="Y7M-SB-qv6"/>
                             <constraint firstItem="KQN-3R-ma5" firstAttribute="leading" secondItem="0RX-8x-sb0" secondAttribute="leading" id="YFS-ec-ZAm"/>
                             <constraint firstItem="Ta4-0u-d9a" firstAttribute="top" secondItem="5ds-mG-BrS" secondAttribute="bottom" id="eo2-KK-lbP"/>
                             <constraint firstAttribute="trailing" secondItem="Ta4-0u-d9a" secondAttribute="trailing" id="rJY-gF-YbO"/>
@@ -997,10 +998,10 @@
                         <viewControllerLayoutGuide type="bottom" id="AiG-Lb-b2c"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="vw4-gr-jHe">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4nq-wa-FF2">
+                            <webView contentMode="scaleToFill" misplaced="YES" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4nq-wa-FF2">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
