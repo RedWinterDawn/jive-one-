@@ -181,7 +181,7 @@
     [UAirship takeOff:config];
     
     // Launches the Badge manager. Should be launched after core data has been loaded, but before we start syncing data.
-    [JCBadgeManager initialize];
+    [[JCBadgeManager sharedManager] initialize];
     
     // Sync Data
     JCV5ApiClient *client = [JCV5ApiClient sharedClient];
