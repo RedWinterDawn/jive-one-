@@ -27,15 +27,14 @@ extern NSString *const kJCBadgeManagerIdentifierKey;
 @property (nonatomic, readonly) BOOL canSendNotifications;
 
 -(void)initialize;
-
-// Manually trigger an update.
 -(void)update;
+-(void)reset;
 
 // Manually tring an update from a background refresh.
 -(void)startBackgroundUpdates;
 -(NSUInteger)endBackgroundUpdates;
 
--(void)reset;
+
 
 @end
 
@@ -43,5 +42,9 @@ extern NSString *const kJCBadgeManagerIdentifierKey;
 @interface JCBadgeManager (Singleton)
 
 + (JCBadgeManager *)sharedManager;
+
++ (void)initialize;
++ (void)update;
++ (void)reset;
 
 @end

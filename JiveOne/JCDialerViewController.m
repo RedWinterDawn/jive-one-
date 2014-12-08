@@ -48,7 +48,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     
     if(!_phoneManager.isConnected)
     {
-        [_phoneManager connect:^(bool success, NSError *error) {
+        [_phoneManager reconnect:^(bool success, NSError *error) {
             if (error) {
                 NSLog(@"%@", [error description]);
             }
