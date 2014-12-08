@@ -8,10 +8,13 @@
 
 #import "JCFetchedResultsTableViewController.h"
 
+#define kDataClassContacts NSLocalizedString(@"CONTACTS_SERVICE", @"")
+
 typedef NS_ENUM(NSInteger, JCContactFilter) {
     JCContactFilterAll,
     JCContactFilterFavorites,
     JCContactFilterGrouped,
+    Contacts
 };
 
 @interface JCContactsTableViewController : JCFetchedResultsTableViewController <UISearchBarDelegate>

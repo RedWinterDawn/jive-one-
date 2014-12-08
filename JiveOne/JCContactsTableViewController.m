@@ -12,6 +12,7 @@
 #import "Lines+Custom.h"
 #import "JCPersonCell.h"
 #import "JasmineSocket.h"
+@import AddressBook;
 
 
 @interface JCContactsTableViewController()  <JCCallerViewControllerDelegate>
@@ -21,10 +22,15 @@
 }
 
 @property (nonatomic, weak) NSPredicate *predicate;
+- (ABAddressBookRef)addressBook;
+- (void)setAddressBook:(ABAddressBookRef)newAddressBook;
 
 @end
 
 @implementation JCContactsTableViewController
+{
+    ABAddressBookRef _addressBook;
+}
 
 - (void)viewDidLoad
 {
@@ -37,6 +43,9 @@
     else {
         [[JasmineSocket sharedInstance] initSocket];
     }
+    
+    //Request For address book acces TODO: add toggle switch for this also add it to settings
+    [self requestAddressBookAccess];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -63,6 +72,7 @@
 
 - (void)configureCell:(UITableViewCell *)cell withObject:(id<NSObject>)object
 {
+    
     if ([object isKindOfClass:[Lines class]] && [cell isKindOfClass:[JCPersonCell class]]) {
         ((JCPersonCell *)cell).line = (Lines *)object;
     }
@@ -218,6 +228,98 @@
         }
     });
 }
+#pragma mark - Helper methods
+
+- (void)alertViewWithDataClass:(JCContactFilter)class status:(NSString *)status {
+    NSString *formatString = NSLocalizedString(@"ACCESS_LEVEL", @"");
+    NSString *message = [NSString stringWithFormat:formatString, [self stringForDataClass:class], status];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"REQUEST_STATUS", @"") message:message delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
+    [alertView show];
+}
+
+- (NSString *)stringForDataClass:(JCContactFilter)class {
+    if(class == Contacts) {
+        return kDataClassContacts;
+    }
+    return nil;
+}
+#pragma mark - UITableViewDelegate methods
+
+- (void)dealloc {
+    if(_addressBook) {
+        ABAddressBookUnregisterExternalChangeCallback(_addressBook, handleAddressBookChange, (__bridge void *)(self));
+        CFRelease(_addressBook);
+    }
+    
+}
+
+#pragma mark - Contacts methods
+
+- (void)checkAddressBookAccess {
+    /*
+     We can ask the address book ahead of time what the authorization status is for our bundle and take the appropriate action.
+     */
+    ABAuthorizationStatus status = ABAddressBookGetAuthorizationStatus();
+    if(status == kABAuthorizationStatusNotDetermined) {
+        [self alertViewWithDataClass:Contacts status:NSLocalizedString(@"UNDETERMINED", @"")];
+    }
+    else if(status == kABAuthorizationStatusRestricted) {
+        [self alertViewWithDataClass:Contacts status:NSLocalizedString(@"RESTRICTED", @"")];
+    }
+    else if(status == kABAuthorizationStatusDenied) {
+        [self alertViewWithDataClass:Contacts status:NSLocalizedString(@"DENIED", @"")];
+    }
+    else if(status == kABAuthorizationStatusAuthorized) {
+        [self alertViewWithDataClass:Contacts status:NSLocalizedString(@"GRANTED", @"")];
+    }
+}
+
+void handleAddressBookChange(ABAddressBookRef addressBook, CFDictionaryRef info, void *context) {
+    /*
+     Do something with changed addres book data...
+     */
+}
+
+- (void)requestAddressBookAccess {
+    
+    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+    
+    if(addressBook) {
+        self.addressBook = CFAutorelease(addressBook);
+        /*
+         Register for a callback if the addressbook data changes this is important to be notified of new data when the user grants access to the contacts. the application should also be able to handle a nil object being returned as well if the user denies access to the address book.
+         */
+        ABAddressBookRegisterExternalChangeCallback(self.addressBook, handleAddressBookChange, (__bridge void *)(self));
+        
+        /*
+         When the application requests to receive address book data that is when the user is presented with a consent dialog.
+         */
+        ABAddressBookRequestAccessWithCompletion(self.addressBook, ^(bool granted, CFErrorRef error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self alertViewWithDataClass:Contacts status:(granted) ? NSLocalizedString(@"GRANTED", @"") : NSLocalizedString(@"DENIED", @"")];
+            });
+        });
+    }
+}
+
+
+- (ABAddressBookRef)addressBook {
+    return _addressBook;
+}
+
+- (void)setAddressBook:(ABAddressBookRef)newAddressBook {
+    if (_addressBook != newAddressBook) {
+        if (_addressBook != NULL) {
+            CFRelease(_addressBook);
+        }
+        if (newAddressBook != NULL) {
+            CFRetain(newAddressBook);
+        }
+        _addressBook = newAddressBook;
+    }
+}
+
+
 
 
 @end
