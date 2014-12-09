@@ -281,6 +281,9 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     return [[NSUserDefaults standardUserDefaults] objectForKey:kJCAuthenticationManagerJiveUserIdKey];
 }
 
+/**
+ * Returns the active PBX configuration
+ */
 -(PBX *)pbx
 {
     // TODO: When we are able to handle multiple PBX's return selected PBX, until then, returh the first.
@@ -290,7 +293,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 /**
  * Return the active line configuration. If there is no active line configuration, we ret the first line line 
- * configuration in the database.
+ * configuration in the database sorted by the display name.
  */
 -(LineConfiguration *)lineConfiguration
 {
