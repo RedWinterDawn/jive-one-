@@ -25,7 +25,11 @@
 
 @property (nonatomic, weak) NSPredicate *predicate;
 @property (nonatomic, assign) ABAddressBookRef addressBook;
+@property (nonatomic, strong) NSMutableArray *LocalContacts;
 
+@property (nonatomic, strong) ABPeoplePickerNavigationController *addressBookController;
+
+-(void)showAddressBook;
 @end
 
 @implementation JCContactsTableViewController
@@ -35,16 +39,106 @@
 {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(subscribeToLinePresence:) name:kSocketDidOpen object:nil];
-    
     if ([JasmineSocket sharedInstance].socket.readyState == SR_OPEN) {
         [self subscribeToLinePresence:nil];
     }
     else {
         [[JasmineSocket sharedInstance] initSocket];
     }
-    _addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
-    [self checkAddressBookAccess];
+//    _addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
+//    [self checkAddressBookAccess];
     
+}
+
+
+-(void)showAddressBook{
+    _addressBookController = [[ABPeoplePickerNavigationController alloc] init];
+    [_addressBookController setPeoplePickerDelegate:self];
+    [self presentViewController:_addressBookController animated:YES completion:nil];
+}
+
+-(BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person{
+    NSMutableDictionary *contactInfoDict = [[NSMutableDictionary alloc]
+                                            initWithObjects:@[@"", @"", @"", @"", @"", @"", @"", @"", @""]
+                                            forKeys:@[@"firstName", @"lastName", @"mobileNumber", @"homeNumber", @"homeEmail", @"workEmail", @"address", @"zipCode", @"city"]];
+    
+    CFTypeRef generalCFObject;
+    generalCFObject = ABRecordCopyValue(person, kABPersonFirstNameProperty);
+    //get first name of contact if it exsists
+    if (generalCFObject) {
+        [contactInfoDict setObject:(__bridge NSString *)generalCFObject forKey:@"firstName"];
+        CFRelease(generalCFObject);
+    }
+    //get last name if exsists
+    generalCFObject = ABRecordCopyValue(person, kABPersonLastNameProperty);
+    if (generalCFObject) {
+        [contactInfoDict setObject:(__bridge NSString *)generalCFObject forKey:@"lastName"];
+        CFRelease(generalCFObject);
+    }
+    
+    ABMultiValueRef phonesRef = ABRecordCopyValue(person, kABPersonPhoneProperty);
+    // get all phone numbers accociated with this contact
+    for (int i=0; i < ABMultiValueGetCount(phonesRef); i++) {
+        CFStringRef currentPhoneLabel = ABMultiValueCopyLabelAtIndex(phonesRef, i);
+        CFStringRef currentPhoneValue = ABMultiValueCopyValueAtIndex(phonesRef, i);
+        
+        if (CFStringCompare(currentPhoneLabel, kABPersonPhoneMobileLabel, 0) == kCFCompareEqualTo) {
+            [contactInfoDict setObject:(__bridge NSString *)currentPhoneValue forKey:@"mobileNumber"];
+        }
+        
+        if (CFStringCompare(currentPhoneLabel, kABHomeLabel, 0) == kCFCompareEqualTo) {
+            [contactInfoDict setObject:(__bridge NSString *)currentPhoneValue forKey:@"homeNumber"];
+        }
+        
+        CFRelease(currentPhoneLabel);
+        CFRelease(currentPhoneValue);
+    }
+    CFRelease(phonesRef);
+    
+    //Get the emails
+    ABMultiValueRef emailsRef = ABRecordCopyValue(person, kABPersonEmailProperty);
+    for (int i=0; i<ABMultiValueGetCount(emailsRef); i++) {
+        CFStringRef currentEmailLabel = ABMultiValueCopyLabelAtIndex(emailsRef, i);
+        CFStringRef currentEmailValue = ABMultiValueCopyValueAtIndex(emailsRef, i);
+        
+        if (CFStringCompare(currentEmailLabel, kABHomeLabel, 0) == kCFCompareEqualTo) {
+            [contactInfoDict setObject:(__bridge NSString *)currentEmailValue forKey:@"homeEmail"];
+        }
+        
+        if (CFStringCompare(currentEmailLabel, kABWorkLabel, 0) == kCFCompareEqualTo) {
+            [contactInfoDict setObject:(__bridge NSString *)currentEmailValue forKey:@"workEmail"];
+        }
+        
+        CFRelease(currentEmailLabel);
+        CFRelease(currentEmailValue);
+    }
+    CFRelease(emailsRef);
+    
+    //Get their contac Img
+    if (ABPersonHasImageData(person)) {
+        NSData *contactImageData = (__bridge NSData *)ABPersonCopyImageDataWithFormat(person, kABPersonImageFormatThumbnail);
+        
+        [contactInfoDict setObject:contactImageData forKey:@"image"];
+    }
+    
+    if (_LocalContacts == nil) {
+        _LocalContacts = [[NSMutableArray alloc] init];
+    }
+    [_LocalContacts addObject:contactInfoDict];
+    
+    [self.tableView reloadData];
+    
+    [_addressBookController dismissViewControllerAnimated:YES completion:nil];
+    
+    return NO;
+}
+
+-(void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker{
+    [_addressBookController dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier{
+    return NO;
 }
 
 #pragma mark Address Book Access
@@ -208,8 +302,7 @@
         return [NSPredicate predicateWithFormat:@"isFavorite == 1"];
     }
     else if (_filterType == JCContactFilterLocalContacts){
-        [self checkAddressBookAccess];
-        [self showPeoplePickerController];
+        [self showAddressBook];
     }
     return nil;
 }

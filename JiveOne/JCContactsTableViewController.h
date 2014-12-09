@@ -14,8 +14,7 @@ typedef NS_ENUM(NSInteger, JCContactFilter) {
     JCContactFilterAll,
     JCContactFilterFavorites,
     JCContactFilterLocalContacts,
-    JCContactFilterGrouped,
-    Contacts
+    JCContactFilterGrouped
 };
 
 @interface JCContactsTableViewController : JCFetchedResultsTableViewController <UISearchBarDelegate>
