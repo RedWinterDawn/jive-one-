@@ -67,6 +67,8 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         _phoneManager = [JCCallCardManager sharedManager];
         [center addObserver:self selector:@selector(answeredCall:) name:kJCCallCardManagerAnswerCallNotification object:_phoneManager];
         [center addObserver:self selector:@selector(removedCall:) name:kJCCallCardManagerRemoveCallNotification object:_phoneManager];
+        [_phoneManager addObserver:self forKeyPath:@"outputType" options:NSKeyValueObservingOptionNew context:NULL];
+        
     }
     return self;
 }
@@ -92,6 +94,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     [super viewWillLayoutSubviews];
     
     [self setCallOptionsHidden:_callOptionsHidden animated:NO];
+    self.speakerBtn.selected = (_phoneManager.outputType == JCPhoneManagerOutputSpeaker);
 }
 
 -(UIStatusBarStyle)preferredStatusBarStyle
@@ -118,9 +121,18 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     }
 }
 
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"outputType"]) {
+        JCCallCardManager *manager = object;
+        self.speakerBtn.selected = (manager.outputType == JCPhoneManagerOutputSpeaker);
+    }
+}
+
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [_phoneManager removeObserver:self forKeyPath:@"outputType"];
 }
 
 #pragma mark - Setters -
@@ -173,12 +185,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(IBAction)speaker:(id)sender
 {
-    if ([sender isKindOfClass:[UIButton class]])
-    {
-        UIButton *button = (UIButton *)sender;
-        button.selected = !button.selected;
-        [_phoneManager setLoudspeakerStatus:button.selected];
-    }
+    [_phoneManager setLoudSpeakerEnabled:(_phoneManager.outputType != JCPhoneManagerOutputSpeaker)];
 }
 
 -(IBAction)blindTransfer:(id)sender

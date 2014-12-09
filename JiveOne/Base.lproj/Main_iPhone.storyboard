@@ -2274,6 +2274,7 @@
                         <outlet property="callOptionsView" destination="T5I-ze-dYa" id="jCb-Vb-WgF"/>
                         <outlet property="callOptionsViewOriginYConstraint" destination="9FD-JK-27t" id="6uT-sh-U7w"/>
                         <outlet property="mergeLabel" destination="C17-8W-dR3" id="59Y-ze-I53"/>
+                        <outlet property="speakerBtn" destination="Bf6-vA-5bi" id="qC6-wV-dSM"/>
                         <segue destination="H5p-Pr-pGE" kind="modal" identifier="blindTransferComplete" animates="NO" id="5G9-TH-HLg"/>
                     </connections>
                 </viewController>

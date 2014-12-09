@@ -10,6 +10,8 @@
 
 #import <PortSIPLib/PortSIPSDK.h>
 #import <AFNetworking/AFNetworkReachabilityManager.h>
+#import <AVFoundation/AVFoundation.h>
+
 #import "IncomingCall.h"
 #import "MissedCall.h"
 #import "OutgoingCall.h"
@@ -546,9 +548,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	return inConference;
 }
 
-- (void)setLoudspeakerStatus:(BOOL)enable
+-(void)setLoudSpeakerEnabled:(BOOL)loudSpeakerEnabled
 {
-	[_mPortSIPSDK setLoudspeakerStatus:enable];
+    [_mPortSIPSDK setLoudspeakerStatus:loudSpeakerEnabled];
 }
 
 - (void) pressNumpadButton:(char )dtmf
@@ -701,6 +703,19 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
                 // Only answer the call in auto answer mode if the intercom is enabled.
                 if ([JCAppSettings sharedSettings].isIntercomEnabled) {
                     [self.delegate answerAutoCall:lineSession];
+                    
+                    // Determine if the speaker should be turned on. If we are on the built in reciever, it means we are
+                    // not on Bluetooth, or Airplay, etc., and are on the internal built in speaker, so we can, and
+                    // should enable speaker mode.
+                    BOOL shouldTurnOnSpeaker = FALSE;
+                    NSArray *currentOutputs = [AVAudioSession sharedInstance].currentRoute.outputs;
+                    for( AVAudioSessionPortDescription *port in currentOutputs ){
+                        if ([port.portType isEqualToString:AVAudioSessionPortBuiltInReceiver]) {
+                            shouldTurnOnSpeaker = TRUE;
+                        }
+                    }
+                    
+                    self.loudSpeakerEnabled = shouldTurnOnSpeaker;
                 }
             }
             break;
