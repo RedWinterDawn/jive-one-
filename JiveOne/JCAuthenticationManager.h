@@ -15,6 +15,7 @@
 extern NSString *const kJCAuthenticationManagerUserLoggedOutNotification;
 extern NSString *const kJCAuthenticationManagerUserAuthenticatedNotification;
 extern NSString *const kJCAuthenticationManagerUserLoadedMinimumDataNotification;
+extern NSString *const kJCAuthenticationManagerPbxChangedNotification;
 extern NSString *const kJCAuthenticationManagerLineConfigurationChangedNotification;
 
 typedef void (^CompletionBlock) (BOOL success, NSError *error);

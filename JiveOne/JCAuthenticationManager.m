@@ -19,6 +19,7 @@ NSString *const kJCAuthenticationManagerUserLoggedOutNotification               
 NSString *const kJCAuthenticationManagerUserAuthenticatedNotification           = @"userAuthenticated";
 NSString *const kJCAuthenticationManagerUserLoadedMinimumDataNotification       = @"userLoadedMinimumData";
 NSString *const kJCAuthenticationManagerAuthenticationFailedNotification        = @"authenticationFailed";
+NSString *const kJCAuthenticationManagerPbxChangedNotification                  = @"pbxChanged";
 NSString *const kJCAuthenticationManagerLineConfigurationChangedNotification    = @"lineConfigurationChanged";
 
 // Keychain
@@ -59,6 +60,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     KeychainItemWrapper *_keychainWrapper;
     CompletionBlock _completionBlock;
     
+    PBX *_pbx;
     LineConfiguration *_lineConfiguration;
     
     NSString *_username;
@@ -224,6 +226,20 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     [self didChangeValueForKey:kJCAuthenticationManagerJiveUserIdKey];
 }
 
+-(void)setPbx:(PBX *)pbx
+{
+    if (_pbx == pbx) {
+        return;
+    }
+    
+    [self willChangeValueForKey:NSStringFromSelector(@selector(pbx))];
+    _pbx = pbx;
+    [self didChangeValueForKey:NSStringFromSelector(@selector(pbx))];
+    
+    self.lineConfiguration = nil; // Blow away the current line configuration, it is now dirty.
+    [[NSNotificationCenter defaultCenter] postNotificationName:kJCAuthenticationManagerPbxChangedNotification object:self];
+}
+
 -(void)setLineConfiguration:(LineConfiguration *)lineConfiguration
 {
     // if its the same line configuration and that configuration is not nil, then we do no need to broadcast it.
@@ -343,7 +359,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
         if ([tokenData objectForKey:@"access_token"]) {
             self.authToken      = tokenData[@"access_token"];
             self.refreshToken   = tokenData[@"refresh_token"];
-            self.jiveUserId       = tokenData[@"username"];
+            self.jiveUserId     = tokenData[@"username"];
             self.userAuthenticated = true;
             [self requestAccount];
         }
