@@ -286,9 +286,17 @@ static int MAX_LOGIN_ATTEMPTS = 2;
  */
 -(PBX *)pbx
 {
-    // TODO: When we are able to handle multiple PBX's return selected PBX, until then, returh the first.
+    if (_pbx) {
+        return _pbx;
+    }
     
-    return [PBX MR_findFirst];
+    _pbx = [PBX MR_findFirstByAttribute:@"active" withValue:@YES];
+    if (_pbx) {
+        return _pbx;
+    }
+    
+    _pbx = [PBX MR_findFirstOrderedByAttribute:@"name" ascending:YES];
+    return _pbx;
 }
 
 /**
