@@ -14,6 +14,7 @@
 #import "JCTermsAndConditonsViewController.h"
 
 #import "JCAuthenticationManager.h"
+#import "JCAppSettings.h"
 
 NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Description of feedback:</strong> <br><br><br><br><br><hr><strong>Device Specs</strong><br>Model: %@ <br> System Version: %@ <br> App Version: %@ <br> Country: %@";
 
@@ -37,6 +38,8 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Descrip
     NSBundle *bundle = [NSBundle mainBundle];
     self.appLabel.text = [bundle objectForInfoDictionaryKey:@"CFBundleDisplayName"];
     self.buildLabel.text = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
+    
+    self.intercomEnabled.on = [JCAppSettings sharedSettings].intercomEnabled;
 }
 
 -(void)awakeFromNib
@@ -101,6 +104,16 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Descrip
 -(IBAction)logout:(id)sender
 {
     [_authenticationManager logout];
+}
+
+-(IBAction)toggleIntercomeEnabled:(id)sender
+{
+    if ([sender isKindOfClass:[UISwitch class]]) {
+        UISwitch *switchBtn = (UISwitch *)sender;
+        JCAppSettings *settings = [JCAppSettings sharedSettings];
+        settings.intercomEnabled = !settings.isIntercomEnabled;
+        switchBtn.on = settings.isIntercomEnabled;
+    }
 }
 
 #pragma mark - Delegate Handlers -

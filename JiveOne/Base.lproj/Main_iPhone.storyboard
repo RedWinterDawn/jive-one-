@@ -579,12 +579,46 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="Trv-py-X4f" style="IBUITableViewCellStyleDefault" id="tkM-st-Ca2">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="tkM-st-Ca2">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tkM-st-Ca2" id="rkB-WG-dWQ">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Logout" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Trv-py-X4f">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Allow Intercom:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="unk-sI-EzS">
+                                                    <rect key="frame" x="15" y="12" width="113" height="19.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="19.5" id="5uK-2H-qqt"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="hWN-sv-srO">
+                                                    <rect key="frame" x="254" y="7" width="51" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="31" id="N3O-Eo-0Sy"/>
+                                                        <constraint firstAttribute="width" constant="49" id="OpU-NI-MpM"/>
+                                                    </constraints>
+                                                    <connections>
+                                                        <action selector="toggleIntercomeEnabled:" destination="BBd-7J-jmI" eventType="valueChanged" id="7Oo-62-IhT"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="hWN-sv-srO" secondAttribute="trailing" constant="9" id="Ct0-v6-L0O"/>
+                                                <constraint firstItem="unk-sI-EzS" firstAttribute="leading" secondItem="rkB-WG-dWQ" secondAttribute="leadingMargin" constant="7" id="Soh-4o-D1X"/>
+                                                <constraint firstItem="unk-sI-EzS" firstAttribute="top" secondItem="rkB-WG-dWQ" secondAttribute="topMargin" constant="4" id="YdP-U2-EfH"/>
+                                                <constraint firstItem="hWN-sv-srO" firstAttribute="top" secondItem="rkB-WG-dWQ" secondAttribute="topMargin" constant="-1" id="eyO-Us-zn5"/>
+                                                <constraint firstItem="hWN-sv-srO" firstAttribute="leading" secondItem="unk-sI-EzS" secondAttribute="trailing" constant="126" id="sOk-PY-tCx"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="SOB-aA-7Rz" style="IBUITableViewCellStyleDefault" id="daE-uY-xBH">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="daE-uY-xBH" id="j5f-lV-dRb">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Logout" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="SOB-aA-7Rz">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <gestureRecognizers/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -594,8 +628,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="accessoryView" destination="UGP-09-2Aw" id="BlP-AF-oAI"/>
-                                            <outletCollection property="gestureRecognizers" destination="ye7-Wd-AUc" appends="YES" id="5lq-3b-XxE"/>
+                                            <outlet property="accessoryView" destination="UGP-09-2Aw" id="a1w-oQ-vIQ"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -657,7 +690,7 @@
                         <outlet property="appLabel" destination="r0i-CD-OoY" id="kFO-U9-cCh"/>
                         <outlet property="buildLabel" destination="UjK-HA-EeS" id="jwm-RA-hC8"/>
                         <outlet property="extensionLabel" destination="SCG-SS-mwf" id="ote-dI-OWx"/>
-                        <outlet property="logoutCell" destination="tkM-st-Ca2" id="qZz-jT-fBJ"/>
+                        <outlet property="intercomEnabled" destination="hWN-sv-srO" id="OTb-5s-RLd"/>
                         <outlet property="pbxLabel" destination="7RL-so-6fF" id="3ZT-DO-Ldn"/>
                         <outlet property="userNameLabel" destination="Ha4-sQ-nx4" id="T5D-Dz-uVO"/>
                     </connections>
@@ -1380,7 +1413,7 @@
                                             <outletCollection property="gestureRecognizers" destination="9YZ-qe-5Z7" appends="YES" id="cye-6U-PNK"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nsS-HF-huE">
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nsS-HF-huE">
                                         <rect key="frame" x="0.0" y="68" width="107" height="54"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="nsS-HF-huE" secondAttribute="height" multiplier="2:1" id="POJ-Wh-2w9"/>
@@ -1415,7 +1448,7 @@
                                             <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="qbb-YW-777"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7br-ug-lFI">
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7br-ug-lFI">
                                         <rect key="frame" x="107" y="68" width="106" height="54"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="7br-ug-lFI" secondAttribute="height" multiplier="2:1" id="S45-pP-9rf"/>
@@ -1450,7 +1483,7 @@
                                             <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="7YJ-nY-WUp"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Bh-Zq-F0d">
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Bh-Zq-F0d">
                                         <rect key="frame" x="213" y="68" width="107" height="54"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="8Bh-Zq-F0d" secondAttribute="height" multiplier="2:1" id="AQf-xH-OhI"/>
@@ -1520,7 +1553,7 @@
                                             <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="4rc-3c-cxj"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IKI-cG-rUa">
+                                    <button opaque="NO" tag="5" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IKI-cG-rUa">
                                         <rect key="frame" x="107" y="122" width="106" height="53"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="IKI-cG-rUa" secondAttribute="height" multiplier="2:1" id="Gu4-5e-taQ"/>
@@ -1647,7 +1680,7 @@
                                             <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="eym-Eb-npR"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ggV-Gf-26E">
+                                    <button opaque="NO" tag="8" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ggV-Gf-26E">
                                         <rect key="frame" x="107" y="175" width="106" height="53"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="ggV-Gf-26E" secondAttribute="height" multiplier="2:1" id="FOK-nD-QzH"/>
@@ -1717,7 +1750,7 @@
                                             <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="q0D-HQ-a7j"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="11" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uSH-QK-bW1">
+                                    <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uSH-QK-bW1">
                                         <rect key="frame" x="213" y="228" width="107" height="53"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="uSH-QK-bW1" secondAttribute="height" multiplier="2:1" id="Q7Y-dh-CCi"/>
@@ -1752,7 +1785,7 @@
                                             <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="EIJ-dA-OgE"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="10" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZJt-14-a51">
+                                    <button opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZJt-14-a51">
                                         <rect key="frame" x="0.0" y="228" width="107" height="53"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="ZJt-14-a51" secondAttribute="height" multiplier="2:1" id="OWe-L0-G4W"/>
@@ -2241,6 +2274,7 @@
                         <outlet property="callOptionsView" destination="T5I-ze-dYa" id="jCb-Vb-WgF"/>
                         <outlet property="callOptionsViewOriginYConstraint" destination="9FD-JK-27t" id="6uT-sh-U7w"/>
                         <outlet property="mergeLabel" destination="C17-8W-dR3" id="59Y-ze-I53"/>
+                        <outlet property="speakerBtn" destination="Bf6-vA-5bi" id="qC6-wV-dSM"/>
                         <segue destination="H5p-Pr-pGE" kind="modal" identifier="blindTransferComplete" animates="NO" id="5G9-TH-HLg"/>
                     </connections>
                 </viewController>
@@ -2924,7 +2958,7 @@
                                             <action selector="numPadPressed:" destination="k9u-JK-Ejv" eventType="touchUpInside" id="ELI-BU-VzE"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="1000" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="675-5i-6mS">
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="1000" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="675-5i-6mS">
                                         <rect key="frame" x="100" y="50" width="100" height="40"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -2956,7 +2990,7 @@
                                             <action selector="numPadPressed:" destination="k9u-JK-Ejv" eventType="touchUpInside" id="Br4-wV-ANS"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="3" contentMode="scaleToFill" horizontalHuggingPriority="1000" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VtF-OY-4WO">
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" horizontalHuggingPriority="1000" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VtF-OY-4WO">
                                         <rect key="frame" x="200" y="50" width="100" height="40"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
@@ -3837,7 +3871,7 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="qaE-xG-axE"/>
-        <segue reference="xxt-tb-rPs"/>
+        <segue reference="Uqi-bD-GAX"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29803921570000003" green="0.44705882349999998" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
 </document>
