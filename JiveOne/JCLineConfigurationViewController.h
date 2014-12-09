@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-@import UIKit;
+#import "JCPickerViewController.h"
 
 @class JCLineConfigurationViewController;
 
@@ -16,17 +16,8 @@
 
 @end
 
-@interface JCLineConfigurationViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource>
+@interface JCLineConfigurationViewController : JCPickerViewController
 
 @property (weak, nonatomic) IBOutlet id <JCLineConfigurationViewControllerDelegate> delegate;
-
-@property (weak, nonatomic) IBOutlet UISwitch *makeDefaultLineSwitch;
-@property (weak, nonatomic) IBOutlet UIView *lineListContainer;
-@property (weak, nonatomic) IBOutlet UIButton *lineSelection;
-@property (weak, nonatomic) IBOutlet UIPickerView *lineList;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lineListHeightConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lineListBottomConstraint;
-
--(IBAction)close:(id)sender;
 
 @end

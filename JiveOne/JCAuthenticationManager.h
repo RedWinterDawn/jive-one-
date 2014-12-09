@@ -24,7 +24,7 @@ typedef void (^CompletionBlock) (BOOL success, NSError *error);
 - (void)loginWithUsername:(NSString *)username password:(NSString*)password completed:(CompletionBlock)completed;
 - (void)logout;
 
-@property (nonatomic, readonly) PBX *pbx;
+@property (nonatomic, strong) PBX *pbx;
 @property (nonatomic, strong) LineConfiguration *lineConfiguration;
 
 @property (nonatomic, readonly) NSString *jiveUserId;

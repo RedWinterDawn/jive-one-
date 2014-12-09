@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -1116,7 +1115,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="lineSelectionAction:" destination="e8o-Sx-Cyb" eventType="touchUpInside" id="VWT-Xt-Hj9"/>
+                                            <action selector="select:" destination="e8o-Sx-Cyb" eventType="touchUpInside" id="7pz-6a-3SZ"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1311,7 +1310,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="lineSelectionAction:" destination="e8o-Sx-Cyb" eventType="touchUpInside" id="WaB-RJ-CLe"/>
+                                            <action selector="select:" destination="e8o-Sx-Cyb" eventType="touchUpInside" id="23N-vf-i8B"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1430,10 +1429,10 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="lineList" destination="GHJ-Ok-PFS" id="yuQ-r2-GLa"/>
-                        <outlet property="lineListContainer" destination="23F-O6-dwE" id="wFF-PW-zC9"/>
-                        <outlet property="lineListHeightConstraint" destination="0ym-Kr-wXd" id="Q7b-fM-L50"/>
-                        <outlet property="lineSelection" destination="gRx-8z-M5N" id="uDw-9F-odD"/>
+                        <outlet property="pickerContainer" destination="23F-O6-dwE" id="Q8f-Kb-EbU"/>
+                        <outlet property="pickerContainerHeightConstraint" destination="0ym-Kr-wXd" id="BcG-mD-WgM"/>
+                        <outlet property="pickerView" destination="GHJ-Ok-PFS" id="YFI-rp-ROf"/>
+                        <outlet property="selectBtn" destination="gRx-8z-M5N" id="7Kn-0R-gda"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mtl-a5-Z0t" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1746,7 +1745,7 @@
                                             <outletCollection property="gestureRecognizers" destination="9YZ-qe-5Z7" appends="YES" id="cye-6U-PNK"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nsS-HF-huE">
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nsS-HF-huE">
                                         <rect key="frame" x="0.0" y="68" width="107" height="54"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="nsS-HF-huE" secondAttribute="height" multiplier="2:1" id="POJ-Wh-2w9"/>
@@ -1781,7 +1780,7 @@
                                             <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="qbb-YW-777"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7br-ug-lFI">
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7br-ug-lFI">
                                         <rect key="frame" x="107" y="68" width="106" height="54"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="7br-ug-lFI" secondAttribute="height" multiplier="2:1" id="S45-pP-9rf"/>
@@ -1816,7 +1815,7 @@
                                             <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="7YJ-nY-WUp"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Bh-Zq-F0d">
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Bh-Zq-F0d">
                                         <rect key="frame" x="213" y="68" width="107" height="54"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="8Bh-Zq-F0d" secondAttribute="height" multiplier="2:1" id="AQf-xH-OhI"/>
@@ -1886,7 +1885,7 @@
                                             <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="4rc-3c-cxj"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IKI-cG-rUa">
+                                    <button opaque="NO" tag="5" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IKI-cG-rUa">
                                         <rect key="frame" x="107" y="122" width="106" height="53"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="IKI-cG-rUa" secondAttribute="height" multiplier="2:1" id="Gu4-5e-taQ"/>
@@ -2013,7 +2012,7 @@
                                             <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="eym-Eb-npR"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ggV-Gf-26E">
+                                    <button opaque="NO" tag="8" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ggV-Gf-26E">
                                         <rect key="frame" x="107" y="175" width="106" height="53"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="ggV-Gf-26E" secondAttribute="height" multiplier="2:1" id="FOK-nD-QzH"/>
@@ -2083,7 +2082,7 @@
                                             <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="q0D-HQ-a7j"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="11" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uSH-QK-bW1">
+                                    <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uSH-QK-bW1">
                                         <rect key="frame" x="213" y="228" width="107" height="53"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="uSH-QK-bW1" secondAttribute="height" multiplier="2:1" id="Q7Y-dh-CCi"/>
@@ -2118,7 +2117,7 @@
                                             <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="EIJ-dA-OgE"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="10" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZJt-14-a51">
+                                    <button opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZJt-14-a51">
                                         <rect key="frame" x="0.0" y="228" width="107" height="53"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="ZJt-14-a51" secondAttribute="height" multiplier="2:1" id="OWe-L0-G4W"/>
