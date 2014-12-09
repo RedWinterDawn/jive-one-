@@ -359,9 +359,6 @@ static int MAX_LOGIN_ATTEMPTS = 2;
             if (pbxs.count == 0) {
                 [self reportError:NoPbx description:@"This username is not associated with any PBX. Please contact your Administrator"];
             }
-            else if (pbxs.count > 1) {
-                [self reportError:MultiplePbx description:@"This app does not support account with multiple PBXs at this time"];
-            }
             else {
                 [self requestV4Provisioning];
             }
