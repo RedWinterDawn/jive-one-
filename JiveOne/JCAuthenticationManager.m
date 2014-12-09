@@ -363,7 +363,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
                 [self reportError:MultiplePbx description:@"This app does not support account with multiple PBXs at this time"];
             }
             else {
-                [self requestProvisioning];
+                [self requestV4Provisioning];
             }
         }
         else {
@@ -372,7 +372,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     }];
 }
 
-- (void)requestProvisioning
+- (void)requestV4Provisioning
 {
     [JCV4ProvisioningClient requestProvisioningForUser:_username password:_password completed:^(BOOL success, NSError *error) {
         if (success) {
