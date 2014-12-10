@@ -8,12 +8,12 @@
 
 #import "PBX.h"
 
+@class User;
 
 @interface PBX (Custom)
 
-+ (void)addPBXs:(NSArray *)pbxs userName:(NSString *)userName  completed:(void (^)(BOOL success))completed;;
-+ (PBX *)addPBX:(NSDictionary *)pbx userName:(NSString *)userName  withManagedContext:(NSManagedObjectContext *)context sender:(id)sender;
++ (void)addPBXs:(NSArray *)pbxsData user:(User *)user completed:(void (^)(BOOL success, NSArray *pbxs, NSError *error))completed;
 
-+ (PBX *)fetchFirstPBX;
++ (PBX *)addPBX:(NSDictionary *)data user:(User *)user context:(NSManagedObjectContext *)context;
 
 @end

@@ -380,7 +380,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
         if ([clientArrayCopy[0] isEqual:sortedArr]) {
             continue;
         }
-        for (Lines *line in sortedArr) {
+        for (Line *line in sortedArr) {
             if ([line.displayName isEqualToString:cell.personNameLabel.text]) {
                 //assuming this is set here
                 [self.tableView beginUpdates];
@@ -419,11 +419,11 @@ static NSString *CellIdentifier = @"DirectoryCell";
         if (i == 0) {
             // handle favorites
             NSPredicate *favoritePredicate = [NSPredicate predicateWithFormat:@"isFavorite == %@", [NSNumber numberWithBool:YES]];
-            sectionArray = [Lines MR_findAllWithPredicate:favoritePredicate];
+            sectionArray = [Line MR_findAllWithPredicate:favoritePredicate];
         }else{
         // retrieve entities where first name starts with letter of alphabet
         NSPredicate *pred = [NSPredicate predicateWithFormat:@"(displayName BEGINSWITH[c] %@)", section];
-        sectionArray = [Lines MR_findAllWithPredicate:pred];
+        sectionArray = [Line MR_findAllWithPredicate:pred];
         }
         
 
@@ -540,7 +540,7 @@ static NSString *CellIdentifier = @"DirectoryCell";
 {
     JCPersonCell *cell;
     //PersonEntities *person;
-    Lines *line;
+    Line *line;
     if(tableView == self.tableView){//redundant, but easier than rearranging all the if statements below.
         //only instantiate the cell this way, if it is not part of the searchResutls Table view.
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
@@ -672,14 +672,14 @@ shouldReloadTableForSearchString:(NSString *)searchString
     return YES;
 }
 
-- (Lines *)getLineFromListByLineId:(NSString *)lineId
+- (Line *)getLineFromListByLineId:(NSString *)lineId
 {
     for (NSArray *section in self.clientEntitiesArray) {
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"lineId ==[c] %@", lineId];
         NSArray *result = [section filteredArrayUsingPredicate:predicate];
         
         if (result.count > 0) {
-            Lines *line = result[0];
+            Line *line = result[0];
             return line;
         }
     }
@@ -755,7 +755,7 @@ shouldReloadTableForSearchString:(NSString *)searchString
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 		for (NSArray * letterArray in copyOfArray)
 		{
-			for (Lines *line in letterArray) {
+			for (Line *line in letterArray) {
 				[[JasmineSocket sharedInstance] postSubscriptionsToSocketWithId:line.jrn entity:line.jrn type:@"dialog"];
 			}
 		}
@@ -797,7 +797,7 @@ shouldReloadTableForSearchString:(NSString *)searchString
     if ([type isEqualToString:@"withdraw"] || [state isEqualToString:@"confirmed"]) {
 		
 		[MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-			Lines *line = [Lines MR_findFirstByAttribute:@"jrn" withValue:subId inContext:localContext];
+			Line *line = [Line MR_findFirstByAttribute:@"jrn" withValue:subId inContext:localContext];
 			
 			if (line) {
 				if (state && [state isEqualToString:@"confirmed"]) {

@@ -8,86 +8,69 @@
 
 #import "PBX+Custom.h"
 #import "Lines+Custom.h"
-#import "Common.h"
+#import "NSDictionary+Validations.h"
+#import "User.h"
+
+NSString *const kPBXResponseIdentifierKey = @"pbxId";
+NSString *const kPBXResponseNameKey       = @"name";
+NSString *const kPBXResponseV5Key         = @"v5";
+NSString *const kPBXResponseLinesKey      = @"lines";
 
 @implementation PBX (Custom)
 
-+ (void)addPBXs:(NSArray *)pbxs userName:(NSString *)userName completed:(void (^)(BOOL success))completed
+/**
+ * Recieves an array of PBXs and iterates over them, saving them to core data and returning an array of added PBXs.
+ */
++ (void)addPBXs:(NSArray *)pbxsData user:(User *)user completed:(void (^)(BOOL success, NSArray *pbxs, NSError *error))completed
 {
+    __block NSMutableArray *pbxs = [NSMutableArray arrayWithCapacity:pbxsData.count];
     [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-        for (NSDictionary *pbx in pbxs) {
-            if ([pbx isKindOfClass:[NSDictionary class]]) {
-                [self addPBX:pbx userName:userName withManagedContext:localContext sender:self];
+        for (NSDictionary *pbxData in pbxsData) {
+            if ([pbxData isKindOfClass:[NSDictionary class]]) {
+                PBX *pbx = [self addPBX:pbxData user:(User *)[localContext objectWithID:user.objectID] context:localContext];
+                if (pbx) {
+                    [pbxs addObject:pbx];
+                }
             }
         }
     } completion:^(BOOL success, NSError *error) {
-        completed(success);
+        completed(success, pbxs, error);
     }];
 }
-+ (PBX *)addPBX:(NSDictionary *)pbx userName:(NSString *)userName withManagedContext:(NSManagedObjectContext *)context sender:(id)sender
+
++ (PBX *)addPBX:(NSDictionary *)data user:(User *)user context:(NSManagedObjectContext *)context
 {
-    if (!context) {
-        context = [NSManagedObjectContext MR_contextForCurrentThread];
-    }
+    NSString *pbxId = [data stringValueForKey:kPBXResponseIdentifierKey];
+    PBX *pbx = [PBX pbxForPbxId:pbxId user:user context:context];
+    pbx.name    = [data stringValueForKey:kPBXResponseNameKey];
+    pbx.v5      = [data boolValueForKey:kPBXResponseV5Key];
     
-    NSString *self_url = pbx[@"self_pbx"] ? pbx[@"self_pbx"] : pbx[@"self"] ? pbx[@"self"] : @"";
-	NSString *pbxId = pbx[@"pbxId"] ? pbx[@"pbxId"] : nil;
-    if ([Common stringIsNilOrEmpty:self_url]) {
-        if (pbxId) {
-            self_url = [NSString stringWithFormat:@"https://api.jive.com/jif/v1/pbx/id/%@", pbx[@"id"]];
+    id object = data[kPBXResponseLinesKey];
+    if ([object isKindOfClass:[NSArray class]])
+    {
+        NSArray *lines = (NSArray *)object;
+        if (lines && lines.count > 0) {
+            for (id lineObject in lines) {
+                if ([lineObject isKindOfClass:[NSDictionary class]]) {
+                    NSDictionary *lineData = (NSDictionary *)lineObject;
+                    [Line addLine:lineData pbx:pbx context:context];
+                }
+            }
         }
     }
-	
-	if (!pbxId)
-	{
-		//https://api.jive.com/jif/v1/pbx/id/01471162-f384-24f5-9351-000100420005
-		NSArray *pbxArray = [self_url componentsSeparatedByString:@"jif/v1/pbx/id/"];
-		pbxId = pbxArray[1];
-	}
-    
-    PBX *c_pbx = [PBX MR_findFirstByAttribute:@"pbxId" withValue:pbxId inContext:context];
-    
-    if (c_pbx) {
-        [self updatePBX:c_pbx new_pbx:pbx];
-    }
-    else {
-        
-        c_pbx = [PBX MR_createInContext:context];
-        c_pbx.pbxId = pbx[@"pbxId"] ? pbx[@"pbxId"] : pbxId;
-        c_pbx.name = pbx[@"name"] ? pbx[@"name"] : @"";
-        c_pbx.jrn = pbx[@"jrn"] ? pbx[@"jrn"] : @"";
-        c_pbx.v5 = pbx[@"v5"] ? [NSNumber numberWithBool:[pbx[@"v5"] boolValue]] : false;
-        c_pbx.selfUrl = self_url;
-    }
-    
-    NSArray *lines = pbx[@"lines"];
-    if (lines && lines.count > 0) {
-        for (NSDictionary *line in lines) {
-            [Lines addLine:line pbxId:c_pbx.pbxId userName:userName withManagedContext:context sender:nil];
-        }
-    }
-    
-    if (sender != self) {
-        //[context MR_saveToPersistentStoreAndWait];
-        return c_pbx;
-    }
-    else {
-        return nil;
-    }
+    return pbx;
 }
 
-+ (void)updatePBX:(PBX *)pbx new_pbx:(NSDictionary *)new_pbx
++(PBX *)pbxForPbxId:(NSString *)pbxId user:(User *)user context:(NSManagedObjectContext *)context
 {
-    pbx.pbxId = new_pbx[@"jrn"] ? new_pbx[@"jrn"] : new_pbx[@"id"] ;
-    pbx.name = new_pbx[@"name"] ? new_pbx[@"name"] : @"";
-    pbx.jrn = new_pbx[@"jrn"] ? new_pbx[@"jrn"] : new_pbx[@"id"];
-    pbx.v5 = new_pbx[@"v5"] ? [new_pbx[@"v5"] boolValue] : pbx.v5;
-}
-
-+ (PBX *)fetchFirstPBX
-{
-    Lines *mailbox = [Lines MR_findFirst];
-    return [PBX MR_findFirstByAttribute:@"pbxId" withValue:mailbox.pbxId];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"user = %@ and pbxId = %@", user, pbxId];
+    PBX *pbx = [PBX MR_findFirstWithPredicate:predicate inContext:context];
+    if (!pbx) {
+        pbx = [PBX MR_createInContext:context];
+        pbx.pbxId = pbxId;
+        pbx.user = user;
+    }
+    return pbx;
 }
 
 @end

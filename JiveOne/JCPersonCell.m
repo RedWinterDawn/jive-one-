@@ -37,7 +37,7 @@
 {
     [super layoutSubviews];
     
-    Lines *line = self.line;
+    Line *line = self.line;
     self.personNameLabel.text = line.displayName;
     self.personDetailLabel.text = line.detailText;
     
@@ -53,7 +53,7 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ([keyPath isEqualToString:kPresenceKeyPathForLineEntity]) {
-        Lines *line = (Lines *)object;
+        Line *line = (Line *)object;
         self.personPresenceView.presenceType = (JCPresenceType)[line.state integerValue];
     }
 }
@@ -71,9 +71,9 @@
 
 #pragma mark - Setters -
 
--(void)setLine:(Lines *)line
+-(void)setLine:(Line *)line
 {
-    if ([line isKindOfClass:[Lines class]])
+    if ([line isKindOfClass:[Line class]])
     {
         _line = line;
         [line addObserver:self forKeyPath:kPresenceKeyPathForLineEntity options:NSKeyValueObservingOptionNew context:NULL];

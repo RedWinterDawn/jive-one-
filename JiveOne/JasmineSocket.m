@@ -213,7 +213,7 @@ static BOOL closedSocketOnPurpose;
     if ([type isEqualToString:@"withdraw"] || (state && [state isEqualToString:@"confirmed"])) {
         
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-            Lines *line = [Lines MR_findFirstByAttribute:@"jrn" withValue:subId inContext:localContext];
+            Line *line = [Line MR_findFirstByAttribute:@"jrn" withValue:subId inContext:localContext];
             
             if (line) {
                 if (state && [state isEqualToString:@"confirmed"]) {

@@ -45,8 +45,8 @@
     if ([viewController isKindOfClass:[JCCallerViewController class]]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         id object = [self objectAtIndexPath:indexPath];
-        if ([object isKindOfClass:[Lines class]]) {
-            Lines *line = (Lines *)object;
+        if ([object isKindOfClass:[Line class]]) {
+            Line *line = (Line *)object;
             JCCallerViewController *callerViewController = (JCCallerViewController *)viewController;
             callerViewController.delegate = self;
             callerViewController.dialString = line.externsionNumber;
@@ -63,14 +63,14 @@
 
 - (void)configureCell:(UITableViewCell *)cell withObject:(id<NSObject>)object
 {
-    if ([object isKindOfClass:[Lines class]] && [cell isKindOfClass:[JCPersonCell class]]) {
-        ((JCPersonCell *)cell).line = (Lines *)object;
+    if ([object isKindOfClass:[Line class]] && [cell isKindOfClass:[JCPersonCell class]]) {
+        ((JCPersonCell *)cell).line = (Line *)object;
     }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForObject:(id<NSObject>)object atIndexPath:(NSIndexPath *)indexPath
 {
-    if ([object isKindOfClass:[Lines class]]) {
+    if ([object isKindOfClass:[Line class]]) {
         JCPersonCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PersonCell"];
         [self configureCell:cell withObject:object];
         return cell;
@@ -118,7 +118,7 @@
 {
     if (!_fetchedResultsController)
     {
-        NSFetchRequest *fetchRequest = [Lines MR_requestAllWithPredicate:self.predicate inContext:self.managedObjectContext];
+        NSFetchRequest *fetchRequest = [Line MR_requestAllWithPredicate:self.predicate inContext:self.managedObjectContext];
         fetchRequest.fetchBatchSize = 10;
         fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"displayName" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
         super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"firstLetter" cacheName:nil];
@@ -207,7 +207,7 @@
 - (void)subscribeToLinePresence:(NSNotification *)notification
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        for (Lines *line in [self.fetchedResultsController fetchedObjects]) {
+        for (Line *line in [self.fetchedResultsController fetchedObjects]) {
             
             if (self.lineSubscription[line.jrn] && [self.lineSubscription[line.jrn] boolValue]) {
                 continue;

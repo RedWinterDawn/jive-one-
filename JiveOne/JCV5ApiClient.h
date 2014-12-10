@@ -38,6 +38,7 @@
 - (void)deleteVoicemail:(NSString *)url completed:(void (^)(BOOL succeeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed;
 
 #pragma mark - JIF API Calls
-- (void)getMailboxReferencesForUser:(NSString*)jiveId completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed;
-- (void)getPbxInformationFromUrl:(NSString *)url completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed;
+
++ (void)getPbxInformationForUser:(User *)user completed:(void(^)(BOOL success, NSArray *pbxs, NSError *error))completion;
+
 @end

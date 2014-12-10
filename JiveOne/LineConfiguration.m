@@ -29,4 +29,6 @@ NSString *const kLineConfigurationActiveAttribute = @"active";
 @dynamic sipUsername;
 @dynamic sipPassword;
 
+@dynamic line;
+
 @end

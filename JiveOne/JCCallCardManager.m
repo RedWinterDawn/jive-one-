@@ -376,7 +376,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 
 -(NSString *)getContactNameByNumber:(NSString *)number
 {
-    Lines *contact = [Lines MR_findFirstByAttribute:@"externsionNumber" withValue:number];
+    Line *contact = [Line MR_findFirstByAttribute:@"externsionNumber" withValue:number];
     if (contact) {
         return contact.displayName;
     }

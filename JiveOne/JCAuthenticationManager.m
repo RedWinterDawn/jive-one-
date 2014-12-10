@@ -13,6 +13,7 @@
 #import "JCV5ApiClient.h"
 #import "JCV4ProvisioningClient.h"
 #import "JCAuthenticationManagerError.h"
+#import "User+Custom.h"
 
 // Notifications
 NSString *const kJCAuthenticationManagerUserLoggedOutNotification               = @"userLoggedOut";
@@ -60,6 +61,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     KeychainItemWrapper *_keychainWrapper;
     CompletionBlock _completionBlock;
     
+    User *_user;
     PBX *_pbx;
     LineConfiguration *_lineConfiguration;
     
@@ -361,7 +363,11 @@ static int MAX_LOGIN_ATTEMPTS = 2;
             self.refreshToken   = tokenData[@"refresh_token"];
             self.jiveUserId     = tokenData[@"username"];
             self.userAuthenticated = true;
-            [self requestAccount];
+            
+            // Fetch User
+            NSString *jiveUserId = tokenData[@"username"];
+            _user = [User userForJiveUserId:jiveUserId context:[NSManagedObjectContext MR_contextForCurrentThread]];
+            [self requestPbxInformationForUser:_user];
         }
         else {
             if (tokenData[@"error"]) {
@@ -374,36 +380,35 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     }
 }
 
--(void)requestAccount
+-(void)requestPbxInformationForUser:(User *)user
 {
-    NSString *jiveId = self.jiveUserId;
-    [[JCV5ApiClient sharedClient] getMailboxReferencesForUser:jiveId completed:^(BOOL success, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-        if(success){
-            NSArray *pbxs = [PBX MR_findAll];
-            if (pbxs.count == 0) {
+    [JCV5ApiClient getPbxInformationForUser:user completed:^(BOOL success, NSArray *pbxs, NSError *error) {
+        if (success) {
+            if (pbxs.count < 1) {
                 [self reportError:NoPbx description:@"This username is not associated with any PBX. Please contact your Administrator"];
             }
             else {
-                [self requestV4Provisioning];
+                self.userLoadedMininumData = TRUE;
             }
         }
         else {
+            NSLog(@"%@", [error description]);
             [self reportError:NetworkError description:@"We could not reach the server at this time. Please check your connection"];
         }
     }];
 }
 
-- (void)requestV4Provisioning
-{
-    [JCV4ProvisioningClient requestProvisioningForUser:_username password:_password completed:^(BOOL success, NSError *error) {
-        if (success) {
-            self.userLoadedMininumData = TRUE;
-        }
-        else {
-            [self reportError:ProvisioningFailure description:error.localizedFailureReason];
-        }
-    }];
-}
+//- (void)requestV4Provisioning
+//{
+//    [JCV4ProvisioningClient requestProvisioningForUser:_username password:_password completed:^(BOOL success, NSError *error) {
+//        if (success) {
+//            self.userLoadedMininumData = TRUE;
+//        }
+//        else {
+//            [self reportError:ProvisioningFailure description:error.localizedFailureReason];
+//        }
+//    }];
+//}
 
 -(void)reportError:(JCAuthenticationManagerErrorType)type description:(NSString *)description
 {

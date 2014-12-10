@@ -18,7 +18,7 @@
 @property (nonatomic, weak) IBOutlet UIButton *favoriteBut;
 @property (nonatomic, weak) IBOutlet JCPresenceView *personPresenceView;
 
-@property (nonatomic) Lines *line;
+@property (nonatomic) Line *line;
 
 - (IBAction)toggleFavoriteStatus:(id)sender;
 

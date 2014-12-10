@@ -77,14 +77,14 @@
 	
 	if (self.groupEdit) {
 		for (LineGroup *lg in lineGroups) {
-			Lines *line = [Lines MR_findFirstByAttribute:@"jrn" withValue:lg.lineId];
+			Line *line = [Line MR_findFirstByAttribute:@"jrn" withValue:lg.lineId];
 			if (line) {
 				[lineList addObject:line];
 			}
 		}
 	}
 	else if (self.pbxEdit) {
-		lineList = [NSMutableArray arrayWithArray:[Lines MR_findByAttribute:@"pbxId" withValue:self.pbxEdit.pbxId]];
+		lineList = [NSMutableArray arrayWithArray:[Line MR_findByAttribute:@"pbxId" withValue:self.pbxEdit.pbxId]];
 	}
 	
 	
@@ -148,7 +148,7 @@
     
     if (section.count != 0) {
 //        NSLog(@"Section: %ld Row: %ld", indexPath.section, (long)indexPath.row);
-        Lines *line = section[indexPath.row];
+        Line *line = section[indexPath.row];
         cell.line = line;
         cell.favoriteBut.hidden = YES;
 //        if(existingEntities)

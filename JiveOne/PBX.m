@@ -19,6 +19,8 @@ NSString *const kPBXActiveAttributeKey = @"active";
 @dynamic name;
 @dynamic pbxId;
 @dynamic selfUrl;
+@dynamic user;
+@dynamic lines;
 
 #pragma mark - Setters -
 
@@ -43,6 +45,5 @@ NSString *const kPBXActiveAttributeKey = @"active";
 {
     return [self boolValueFromPrimitiveValueForKey:kPBXActiveAttributeKey];
 }
-
 
 @end

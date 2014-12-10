@@ -7,7 +7,7 @@
 //
 
 #import "Voicemail.h"
-#import "Lines.h"
+#import "Line.h"
 #import "PBX.h"
 #import "Common.h"
 
@@ -52,7 +52,7 @@ NSString *const kVoicemailDataAttributeKey = @"data";
 -(NSString *)displayExtension
 {
     NSString *extension = self.number;
-    Lines *mailbox = [Lines MR_findFirstByAttribute:@"mailboxUrl" withValue:self.mailboxUrl];
+    Line *mailbox = [Line MR_findFirstByAttribute:@"mailboxUrl" withValue:self.mailboxUrl];
     if (mailbox)
     {
         PBX *pbx = [PBX MR_findFirstByAttribute:@"pbxId" withValue:mailbox.pbxId];

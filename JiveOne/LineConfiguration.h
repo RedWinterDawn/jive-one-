@@ -9,15 +9,19 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class Line;
 
 @interface LineConfiguration : NSManagedObject
 
+// Attributes
 @property (nonatomic, getter=isActive) BOOL active;
-
 @property (nonatomic, retain) NSString * display;
 @property (nonatomic, retain) NSString * outboundProxy;
 @property (nonatomic, retain) NSString * registrationHost;
 @property (nonatomic, retain) NSString * sipUsername;
 @property (nonatomic, retain) NSString * sipPassword;
+
+// Relationships
+@property (nonatomic, retain) Line *line;
 
 @end

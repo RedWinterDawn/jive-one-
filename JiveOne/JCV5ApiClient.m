@@ -9,6 +9,8 @@
 #import "JCV5ApiClient.h"
 #import "Common.h"
 
+#import "User.h"
+
 @implementation JCV5ApiClient
 
 #pragma mark - class methods
@@ -104,12 +106,13 @@
 	
 	NSArray *pbxs = [PBX MR_findAll];
 	
-	for (PBX *pbx in pbxs) {
+	for (PBX *pbx in pbxs)
+    {
 		
 		NSString *username = [JCAuthenticationManager sharedInstance].jiveUserId;
 		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(pbxId == %@) AND (userName == %@)", pbx.pbxId, username];
 		
-		Lines *line = [Lines MR_findFirstWithPredicate:predicate];
+		Line *line = [Line MR_findFirstWithPredicate:predicate];
 		
 		if (line) {
 			NSString *url = [NSString stringWithFormat:@"/contacts/2014-07/%@/line/id/%@", line.pbxId, line.lineId];
@@ -117,7 +120,7 @@
 			[_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 				NSArray *contactArray = (NSArray *)responseObject;
 				if (contactArray) {
-					[Lines addLines:contactArray pbxId:line.pbxId userName:nil completed:^(BOOL succeeded) {
+					[Line addLines:contactArray pbx:pbx completed:^(BOOL succeeded) {
 						if (completed) {
 							completed(YES, responseObject, operation, nil);
 						}
@@ -175,12 +178,12 @@
 	[self setRequestAuthHeader:NO];
 	
 	NSPredicate *linesWithUrlNotNil = [NSPredicate predicateWithFormat:@"mailboxUrl != nil"];
-	NSArray* lines = [Lines MR_findAllWithPredicate:linesWithUrlNotNil];
+	NSArray* lines = [Line MR_findAllWithPredicate:linesWithUrlNotNil];
 	__block BOOL succeededGettingAtLeastOne = NO;
 	
 	[lines enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 		
-		Lines *line = (Lines *)obj;
+		Line *line = (Line *)obj;
 		
 		if (line.mailboxUrl && ![Common stringIsNilOrEmpty:line.mailboxUrl]) {
 			[_manager GET:line.mailboxUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -258,48 +261,43 @@
 	}];
 }
 
-#pragma mark - JIF API Calls
-- (void)getMailboxReferencesForUser:(NSString*)jiveId completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
+#pragma mark - JIF API Calls -
+
+NSString *const JCV5ApiClientUserPbxInfoRequestPath = @"/jif/v1/user/jiveId/%@?depth=1";
+NSString *const JCV5APIClientUserPbxInfoRequestResultKey = @"userPbxs";
+
++ (void)getPbxInformationForUser:(User *)user completed:(void(^)(BOOL success, NSArray *pbxs, NSError *error))completion
 {
-	[self setRequestAuthHeader:NO];
-	NSString* url = [NSString stringWithFormat:@"/jif/v1/user/jiveId/%@?depth=1", jiveId];
-	
-	[_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-		//parse list of mailbox references
-		NSString *username = [JCAuthenticationManager sharedInstance].jiveUserId;
-		[PBX addPBXs:responseObject[@"userPbxs"] userName:username completed:^(BOOL success) {
-			completed(YES, responseObject, operation, nil);
-		}];
-		
-	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		completed(NO, nil, operation, error);
-	}];
-	
+    if (!user) {
+        [NSException raise:NSInvalidArgumentException format:@"User is Nil"];
+    }
+    
+    JCV5ApiClient *client = [JCV5ApiClient sharedClient];
+    [client setRequestAuthHeader:NO];
+    [client.manager GET:[NSString stringWithFormat:JCV5ApiClientUserPbxInfoRequestPath, user.jiveUserId]
+             parameters:nil
+                success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                    if ([responseObject isKindOfClass:[NSDictionary class]])
+                    {
+                        NSDictionary *result = (NSDictionary *)responseObject;
+                        id object = [result objectForKey:JCV5APIClientUserPbxInfoRequestResultKey];
+                        if ([object isKindOfClass:[NSArray class]])
+                        {
+                            [PBX addPBXs:(NSArray *)object user:user completed:completion];
+                        }
+                        else {
+                            completion(NO, nil, [NSError errorWithDomain:NSInvalidArgumentException code:0 userInfo:nil]);
+                        }
+                    }
+                    else
+                    {
+                        completion(NO, nil, [NSError errorWithDomain:NSInvalidArgumentException code:0 userInfo:nil]);
+                    }
+                }
+                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                    completion(NO, nil, error);
+                }];
 }
-
-- (void)getPbxInformationFromUrl:(NSString *)url completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
-{
-	[self setRequestAuthHeader:NO];
-	
-	//    if ([url rangeOfString:@"api.jive.com"].location != NSNotFound) {
-	//        NSArray *urlSplit = [url componentsSeparatedByString:@".com/jif/v1/"];
-	//        url = urlSplit[1];
-	//    }
-	
-	if (![Common stringIsNilOrEmpty:url]) {
-		[_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-			//parse list of mailbox references
-			[PBX addPBX:responseObject userName:nil withManagedContext:nil sender:nil];
-			
-		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-			completed(NO, nil, operation, error);
-		}];
-	}
-	
-}
-
-
-
 
 
 @end

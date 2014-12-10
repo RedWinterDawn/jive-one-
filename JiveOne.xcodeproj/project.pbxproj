@@ -227,7 +227,7 @@
 		27F1F300191C171300AEAFD7 /* UAPushSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27F1F2D1191C171300AEAFD7 /* UAPushSettingsView.xib */; };
 		27F1F308191C1A7300AEAFD7 /* AirshipConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 27F1F307191C1A7300AEAFD7 /* AirshipConfig.plist */; };
 		27F64D5919772CCE00F772AA /* PBX.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F64D5819772CCE00F772AA /* PBX.m */; };
-		27F64D5C19772CCF00F772AA /* Lines.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F64D5B19772CCF00F772AA /* Lines.m */; };
+		27F64D5C19772CCF00F772AA /* Line.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F64D5B19772CCF00F772AA /* Line.m */; };
 		27F64D6219772D6A00F772AA /* Voicemail.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F64D6119772D6A00F772AA /* Voicemail.m */; };
 		27FE96F919802D81009C6C67 /* arrow-back.png in Resources */ = {isa = PBXBuildFile; fileRef = 27FE96F819802D81009C6C67 /* arrow-back.png */; };
 		42A1D3B90E844E0DA4AB6197 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86ED89B2764949AC9BCC0C7B /* libPods.a */; };
@@ -246,6 +246,8 @@
 		5D1FAC6519DF376B00899915 /* JCKeypadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FAC6419DF376B00899915 /* JCKeypadViewController.m */; };
 		5D241FCB1A36AE12008B498A /* JCPbxConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FCA1A36AE12008B498A /* JCPbxConfigurationViewController.m */; };
 		5D241FCE1A36AF2C008B498A /* JCPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FCD1A36AF2C008B498A /* JCPickerViewController.m */; };
+		5D241FD11A37F511008B498A /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FD01A37F511008B498A /* User.m */; };
+		5D241FD41A382241008B498A /* User+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FD31A382241008B498A /* User+Custom.m */; };
 		5D2B2C081A30D8AE00938D76 /* JCVisualEffectsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2B2C051A30D8AE00938D76 /* JCVisualEffectsView.m */; };
 		5D2B2C091A30D8AE00938D76 /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2B2C071A30D8AE00938D76 /* FXBlurView.m */; };
 		5D34446519F02F1C00315230 /* JCCurrentCallCardViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D34446419F02F1C00315230 /* JCCurrentCallCardViewCell.m */; };
@@ -749,8 +751,8 @@
 		27F1F307191C1A7300AEAFD7 /* AirshipConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AirshipConfig.plist; sourceTree = "<group>"; };
 		27F64D5719772CCE00F772AA /* PBX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBX.h; sourceTree = "<group>"; };
 		27F64D5819772CCE00F772AA /* PBX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBX.m; sourceTree = "<group>"; };
-		27F64D5A19772CCF00F772AA /* Lines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lines.h; sourceTree = "<group>"; };
-		27F64D5B19772CCF00F772AA /* Lines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Lines.m; sourceTree = "<group>"; };
+		27F64D5A19772CCF00F772AA /* Line.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Line.h; sourceTree = "<group>"; };
+		27F64D5B19772CCF00F772AA /* Line.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Line.m; sourceTree = "<group>"; };
 		27F64D6019772D6A00F772AA /* Voicemail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Voicemail.h; sourceTree = "<group>"; };
 		27F64D6119772D6A00F772AA /* Voicemail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Voicemail.m; sourceTree = "<group>"; };
 		27FE96F819802D81009C6C67 /* arrow-back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-back.png"; sourceTree = "<group>"; };
@@ -785,6 +787,10 @@
 		5D241FCA1A36AE12008B498A /* JCPbxConfigurationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPbxConfigurationViewController.m; sourceTree = "<group>"; };
 		5D241FCC1A36AF2C008B498A /* JCPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPickerViewController.h; sourceTree = "<group>"; };
 		5D241FCD1A36AF2C008B498A /* JCPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPickerViewController.m; sourceTree = "<group>"; };
+		5D241FCF1A37F511008B498A /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		5D241FD01A37F511008B498A /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		5D241FD21A382241008B498A /* User+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "User+Custom.h"; sourceTree = "<group>"; };
+		5D241FD31A382241008B498A /* User+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "User+Custom.m"; sourceTree = "<group>"; };
 		5D2B2C041A30D8AE00938D76 /* JCVisualEffectsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVisualEffectsView.h; sourceTree = "<group>"; };
 		5D2B2C051A30D8AE00938D76 /* JCVisualEffectsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVisualEffectsView.m; sourceTree = "<group>"; };
 		5D2B2C061A30D8AE00938D76 /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
@@ -1268,9 +1274,15 @@
 		270152C71901D77A00F271CE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				2751591618AD300B00FD8D3F /* OsgiData.xcdatamodel */,
+				5D241FCF1A37F511008B498A /* User.h */,
+				5D241FD01A37F511008B498A /* User.m */,
+				27F64D5A19772CCF00F772AA /* Line.h */,
+				27F64D5B19772CCF00F772AA /* Line.m */,
+				27F64D5719772CCE00F772AA /* PBX.h */,
+				27F64D5819772CCE00F772AA /* PBX.m */,
 				27EB18C019DF194E00C1503B /* LineConfiguration.h */,
 				27EB18C119DF194E00C1503B /* LineConfiguration.m */,
-				2751591618AD300B00FD8D3F /* OsgiData.xcdatamodel */,
 				5D1BBE5C19EDE481006526B2 /* Events */,
 				270559A6196DD11800A7AF35 /* LineGroup.h */,
 				270559A7196DD11800A7AF35 /* LineGroup.m */,
@@ -1286,10 +1298,6 @@
 				274493C718D0E98D002744CB /* Conversation.m */,
 				279975F0195B1BCD001425CC /* Membership.h */,
 				279975F1195B1BCD001425CC /* Membership.m */,
-				27F64D5A19772CCF00F772AA /* Lines.h */,
-				27F64D5B19772CCF00F772AA /* Lines.m */,
-				27F64D5719772CCE00F772AA /* PBX.h */,
-				27F64D5819772CCE00F772AA /* PBX.m */,
 				DDEC37CE1910126900E166CC /* ConversationEntry.h */,
 				DDEC37CF1910126900E166CC /* ConversationEntry.m */,
 				2788F144190EACD20099348D /* ConversationETag.h */,
@@ -1456,6 +1464,8 @@
 				27997573195A12C5001425CC /* PBX+Custom.m */,
 				27997575195A12D7001425CC /* Lines+Custom.h */,
 				27997576195A12D7001425CC /* Lines+Custom.m */,
+				5D241FD21A382241008B498A /* User+Custom.h */,
+				5D241FD31A382241008B498A /* User+Custom.m */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -2641,6 +2651,7 @@
 				274493CB18D0E98D002744CB /* PersonMeta.m in Sources */,
 				2700987618F4714100B6BC2F /* UIImage+JSMessagesView.m in Sources */,
 				27F1F2E1191C171300AEAFD7 /* UALocationDemoAnnotation.m in Sources */,
+				5D241FD41A382241008B498A /* User+Custom.m in Sources */,
 				5DB0BFCA1A00AB29006737D7 /* JCRecentActivityTableViewController.m in Sources */,
 				2700988018F4714100B6BC2F /* JSMessageTableView.m in Sources */,
 				5DB0BFD01A013982006737D7 /* JCRecentEventCell.m in Sources */,
@@ -2659,7 +2670,7 @@
 				27F1F2D6191C171300AEAFD7 /* UAInboxMessageListCell.m in Sources */,
 				27EA1DFD1900A83D0075CAEE /* JCVoicemailTableViewController.m in Sources */,
 				2700987718F4714100B6BC2F /* JSAvatarImageFactory.m in Sources */,
-				27F64D5C19772CCF00F772AA /* Lines.m in Sources */,
+				27F64D5C19772CCF00F772AA /* Line.m in Sources */,
 				27F1F2E2191C171300AEAFD7 /* UALocationSettingsViewController.m in Sources */,
 				913786F7194A22E200002DD3 /* LoggerClient.m in Sources */,
 				5DB0BFC119FFF3FE006737D7 /* JCTableViewCell.m in Sources */,
@@ -2729,6 +2740,7 @@
 				91869D871959E5CF007743CE /* JCTOSButtonView.m in Sources */,
 				5DB0BFCD1A00BAB3006737D7 /* JCVoicemailCell.m in Sources */,
 				2710E40F18CEC8C300152C91 /* ConversationEntry+Custom.m in Sources */,
+				5D241FD11A37F511008B498A /* User.m in Sources */,
 				91634C2F19630A3B0079A823 /* JCGetStartedButton.m in Sources */,
 				279E4CB1192273E5002A556C /* MBContactCollectionViewPromptCell.m in Sources */,
 				2751591F18AD303500FD8D3F /* JCDirectoryViewController.m in Sources */,

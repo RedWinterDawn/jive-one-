@@ -9,27 +9,25 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class Line;
+
 @interface RecentEvent : NSManagedObject
 
-// Represent the name of the event, typically the Caller ID, or name of person creating the event.
-@property (nonatomic, strong) NSString * name;
+// Attributes
+@property (nonatomic, strong) NSString * name;      // Represent the name of the event, typically the Caller ID, or name of person creating the event.
+@property (nonatomic, strong) NSString * number;    // Represents the number the event came from.
+@property (nonatomic, strong) NSDate *date;         // Represent the date of the event.
+@property (nonatomic, getter=isRead) bool read;     // Indicates whether the event has been read.
 
-// Represents the number the event came from.
-@property (nonatomic, strong) NSString * number;
-
-// Represent the date of the event.
-@property (nonatomic, strong) NSDate *date;
-
-// Indicates whether the event has been read.
-@property (nonatomic, getter=isRead) bool read;
-
-// Transient Properties.
+// Transient Attributes.
 @property (nonatomic, weak) NSNumber *timestamp;
 @property (nonatomic, readonly) NSString *formattedModifiedShortDate;
 @property (nonatomic, readonly) NSString *formattedLongDate;
 @property (nonatomic) long long unixTimestamp;
-
 @property (nonatomic, readonly) NSString *displayName;
 @property (nonatomic, readonly) NSString *displayNumber;
+
+// Relationships
+@property (nonatomic, retain) Line *line;
 
 @end
