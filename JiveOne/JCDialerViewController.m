@@ -128,7 +128,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     NSString *prompt = NSLocalizedString(@"Unregistered", nil);
     if (_phoneManager.isConnected) {
         _callBtn.selected = false;
-        prompt = _phoneManager.lineConfiguration.display;
+        prompt = _phoneManager.line.extension;
     }
     else
         _callBtn.selected = true;

@@ -183,7 +183,7 @@
     
     // Sync Data
     JCV5ApiClient *client = [JCV5ApiClient sharedClient];
-    if (_authenticationManager.pbx.isV5) {
+    if (_authenticationManager.line.pbx.isV5) {
         [client getVoicemails:nil];
     }
     [client RetrieveContacts:nil];
@@ -193,7 +193,7 @@
 {
     LOG_Info();
     // If we are not a V5 PBX, we do not have a voicemail data to go fetch, and return with a no data callback.
-    if (!_authenticationManager.pbx.isV5)
+    if (!_authenticationManager.line.pbx.isV5)
         return UIBackgroundFetchResultNoData;
     
     NSLog(@"APPDELEGATE - performFetchWithCompletionHandler");
@@ -290,7 +290,7 @@
     // If the User has one line, then we select that line. We are done, so we
     else if (lines == 1) {
         JCAuthenticationManager *authenticationManager = notification.object;
-        [_phoneManager connectToPbx:authenticationManager.pbx withLineConfiguration:authenticationManager.lineConfiguration];
+        [_phoneManager connectToLine:authenticationManager.line];
         [self dismissLoginViewController:YES];
     }
 }
@@ -326,9 +326,7 @@
 -(void)lineConfigurationChanged:(NSNotification *)notification
 {
     JCAuthenticationManager *authenticationManager = notification.object;
-    if (authenticationManager.pbx && authenticationManager.lineConfiguration) {
-        [_phoneManager connectToPbx:authenticationManager.pbx withLineConfiguration:authenticationManager.lineConfiguration];
-    }
+    [_phoneManager connectToLine:authenticationManager.line];
 }
 
 #pragma mark JCCallCardManager

@@ -11,6 +11,7 @@
 @import Foundation;
 
 #import "JCCallCard.h"
+#import "Line.h"
 
 extern NSString *const kJCCallCardManagerAddedCallNotification;
 extern NSString *const kJCCallCardManagerAnswerCallNotification;
@@ -42,10 +43,10 @@ typedef enum : NSUInteger {
 
 @property (nonatomic, strong) NSMutableArray *calls;
 
-@property (nonatomic, readonly) LineConfiguration *lineConfiguration;
+@property (nonatomic, readonly) Line *line;
 @property (nonatomic, readonly, getter=isConnected) BOOL connected;
 
--(void)connectToPbx:(PBX *)pbx withLineConfiguration:(LineConfiguration *)lineConfiguration;
+-(void)connectToLine:(Line *)line;
 -(void)reconnect:(CompletionHandler)connected;
 -(void)disconnect;
 
@@ -81,7 +82,7 @@ typedef enum : NSUInteger {
 
 + (JCCallCardManager *)sharedManager;
 
-+ (void)connectToPbx:(PBX *)pbx withLineConfiguration:(LineConfiguration *)lineConfiguration;
++ (void)connectToLine:(Line *)line;
 + (void)disconnect;
 
 @end

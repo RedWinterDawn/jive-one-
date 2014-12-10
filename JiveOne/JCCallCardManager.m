@@ -86,13 +86,13 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 
 #pragma mark - Public Methods -
 
--(void)connectToPbx:(PBX *)pbx withLineConfiguration:(LineConfiguration *)lineConfiguration
+-(void)connectToLine:(Line *)line
 {
     if (_sipHandler) {
         [self disconnect];
     }
-    
-    _sipHandler = [[SipHandler alloc] initWithPbx:pbx lineConfiguration:lineConfiguration delegate:self];
+ 
+    _sipHandler = [[SipHandler alloc] initWithPbx:line.pbx lineConfiguration:line.lineConfiguration delegate:self];
     [_sipHandler addObserver:self forKeyPath:kSipHandlerRegisteredSelectorKey options:NSKeyValueObservingOptionNew context:NULL];
 }
 
@@ -686,9 +686,9 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     return self;
 }
 
-+ (void)connectToPbx:(PBX *)pbx withLineConfiguration:(LineConfiguration *)lineConfiguration
++ (void)connectToLine:(Line *)line
 {
-    [[JCCallCardManager sharedManager] connectToPbx:pbx withLineConfiguration:lineConfiguration];
+    [[JCCallCardManager sharedManager] connectToLine:line];
 }
 
 + (void)disconnect
