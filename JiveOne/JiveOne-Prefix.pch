@@ -23,3 +23,4 @@
 #endif
 
 #import "NSString+Custom.h"
+#import "NSDictionary+Validations.h"

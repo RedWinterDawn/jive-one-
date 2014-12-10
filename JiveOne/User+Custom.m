@@ -13,7 +13,7 @@
 + (User *)userForJiveUserId:(NSString *)jiveUserId context:(NSManagedObjectContext *)context
 {
     // Try to find the user, if the user does not exist, truncate all the user data, and create a new user.
-    User *user = [User MR_findFirstByAttribute:@"jiveUserId" withValue:jiveUserId];
+    User *user = [User MR_findFirstByAttribute:NSStringFromSelector(@selector(jiveUserId)) withValue:jiveUserId];
     if (!user) {
         [User MR_truncateAllInContext:context];
         user = [User MR_createInContext:context];

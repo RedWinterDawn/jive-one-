@@ -7,13 +7,6 @@
 //
 
 #import "Lines+Custom.h"
-#import "ContactGroup.h"
-#import "LineGroup.h"
-#import "Common.h"
-#import "PBX.h"
-#import "User.h"
-
-#import "NSDictionary+Validations.h"
 
 NSString *const kLineResponseIdentifierKey      = @"id";
 NSString *const kLineResponseLineNameKey        = @"lineName";
@@ -44,6 +37,10 @@ NSString *const kLineResponseMailboxJrnKey      = @"mailbox_jrn";
 + (Line *)addLine:(NSDictionary *)data pbx:(PBX *)pbx context:(NSManagedObjectContext *)context
 {
     NSString *jrn = [data stringValueForKey:kLineResponseJrnKey];
+    if (!jrn) {
+        return nil;
+    }
+    
     Line *line = [Line lineForJrn:jrn pbx:pbx context:context];
     line.displayName        = [data stringValueForKey:kLineResponseLineNameKey];
     line.externsionNumber   = [data stringValueForKey:kLineResponseLineNumberKey];
@@ -67,8 +64,8 @@ NSString *const kLineResponseMailboxJrnKey      = @"mailbox_jrn";
         // Deprecated
         NSArray *elements = [jrn componentsSeparatedByString:@":"];
         line.lineId = elements.lastObject;
-        line.pbxId = pbx.pbxId;
-        line.userName = pbx.user.jiveUserId;
+        //line.pbxId = pbx.pbxId;
+        //line.userName = pbx.user.jiveUserId;
     }
     return line;
 }

@@ -8,7 +8,6 @@
 
 #import "PBX+Custom.h"
 #import "Lines+Custom.h"
-#import "NSDictionary+Validations.h"
 #import "User.h"
 
 NSString *const kPBXResponseIdentifierKey = @"pbxId";
