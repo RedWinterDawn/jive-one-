@@ -18,6 +18,7 @@
 #import "TRVSMonitor.h"
 #import "JCVersion.h"
 #import "LoggerClient.h"
+#import "JCLinePickerViewController.h"
 
 #import "Voicemail+Custom.h"
 #import "JCCallCardManager.h"
@@ -29,8 +30,6 @@
 #import "UAirship.h"
 #import "UAConfig.h"
 #import "UAPush.h"
-
-#import "JCLineConfigurationViewController.h"
 
 @interface JCAppDelegate () <JCCallerViewControllerDelegate, UAPushNotificationDelegate, UARegistrationDelegate, JCPickerViewControllerDelegate>
 {
@@ -152,9 +151,9 @@
         return;
     }
     
-    JCLineConfigurationViewController *lineConfigurationViewController = (JCLineConfigurationViewController *)[_appSwitcherViewController.storyboard instantiateViewControllerWithIdentifier:@"LineConfigurationViewController"];
-    lineConfigurationViewController.delegate = self;
-    [_navigationController pushViewController:lineConfigurationViewController animated:animated];
+    JCLinePickerViewController *linePickerViewController = (JCLinePickerViewController *)[_appSwitcherViewController.storyboard instantiateViewControllerWithIdentifier:@"LinePickerViewController"];
+    linePickerViewController.delegate = self;
+    [_navigationController pushViewController:linePickerViewController animated:animated];
 }
 
 /**
@@ -417,7 +416,7 @@
 
 #pragma mark - Delegate Handlers -
 
--(void)lineConfigurationViewControllerShouldDismiss:(JCLineConfigurationViewController *)controller
+-(void)pickerViewControllerShouldDismiss:(JCPickerViewController *)controller
 {
     [self dismissLoginViewController:YES];
 }
@@ -542,14 +541,6 @@
 {
     completionHandler([self backgroundPerformFetchWithCompletionHandler]);
 }
-
-
-//#pragma mark - Reachability
-
-
-#pragma mark - Incoming Calls -
-
-
 
 #pragma mark - Ringing
 
