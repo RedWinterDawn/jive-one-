@@ -115,7 +115,7 @@
 		Line *line = [Line MR_findFirstWithPredicate:predicate];
 		
 		if (line) {
-			NSString *url = [NSString stringWithFormat:@"/contacts/2014-07/%@/line/id/%@", line.pbxId, line.lineId];
+			NSString *url = [NSString stringWithFormat:@"/contacts/2014-07/%@/line/id/%@", line.pbx.pbxId, line.lineId];
 			
 			[_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 				NSArray *contactArray = (NSArray *)responseObject;

@@ -18,6 +18,7 @@
 #import "TRVSMonitor.h"
 #import "JCVersion.h"
 #import "LoggerClient.h"
+#import "JCLinePickerViewController.h"
 
 #import "Voicemail+Custom.h"
 #import "JCCallCardManager.h"
@@ -25,13 +26,10 @@
 #import "JCBadgeManager.h"
 #import "JCApplicationSwitcherDelegate.h"
 #import "JCV5ApiClient.h"
-#import "JCSocketDispatch.h"
 
 #import "UAirship.h"
 #import "UAConfig.h"
 #import "UAPush.h"
-
-#import "JCLineConfigurationViewController.h"
 
 @interface JCAppDelegate () <JCCallerViewControllerDelegate, UAPushNotificationDelegate, UARegistrationDelegate, JCPickerViewControllerDelegate>
 {
@@ -153,9 +151,9 @@
         return;
     }
     
-    JCLineConfigurationViewController *lineConfigurationViewController = (JCLineConfigurationViewController *)[_appSwitcherViewController.storyboard instantiateViewControllerWithIdentifier:@"LineConfigurationViewController"];
-    lineConfigurationViewController.delegate = self;
-    [_navigationController pushViewController:lineConfigurationViewController animated:animated];
+    JCLinePickerViewController *linePickerViewController = (JCLinePickerViewController *)[_appSwitcherViewController.storyboard instantiateViewControllerWithIdentifier:@"LinePickerViewController"];
+    linePickerViewController.delegate = self;
+    [_navigationController pushViewController:linePickerViewController animated:animated];
 }
 
 /**
@@ -270,7 +268,7 @@
  */
 -(void)userDataReady:(NSNotification *)notification
 {
-    [self startDataSyncInBackground];
+    //[self startDataSyncInBackground];
     
     // If we have not already, initialize the phone manager singleton, store a reference to it and register for notifications.
     if (!_phoneManager) {
@@ -418,7 +416,7 @@
 
 #pragma mark - Delegate Handlers -
 
--(void)lineConfigurationViewControllerShouldDismiss:(JCLineConfigurationViewController *)controller
+-(void)pickerViewControllerShouldDismiss:(JCPickerViewController *)controller
 {
     [self dismissLoginViewController:YES];
 }
@@ -543,14 +541,6 @@
 {
     completionHandler([self backgroundPerformFetchWithCompletionHandler]);
 }
-
-
-//#pragma mark - Reachability
-
-
-#pragma mark - Incoming Calls -
-
-
 
 #pragma mark - Ringing
 

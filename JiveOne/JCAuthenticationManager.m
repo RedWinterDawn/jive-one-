@@ -308,12 +308,12 @@ static int MAX_LOGIN_ATTEMPTS = 2;
         return _pbx;
     }
     
-    _pbx = [PBX MR_findFirstByAttribute:@"active" withValue:@YES];
-    if (_pbx) {
-        return _pbx;
-    }
-    
-    _pbx = [PBX MR_findFirstOrderedByAttribute:@"name" ascending:YES];
+//    _pbx = [PBX MR_findFirstByAttribute:@"active" withValue:@YES];
+//    if (_pbx) {
+//        return _pbx;
+//    }
+//    
+//    _pbx = [PBX MR_findFirstOrderedByAttribute:@"name" ascending:YES];
     return _pbx;
 }
 
@@ -323,14 +323,14 @@ static int MAX_LOGIN_ATTEMPTS = 2;
  */
 -(LineConfiguration *)lineConfiguration
 {
-    if (_lineConfiguration)
-        return _lineConfiguration;
-    
-    _lineConfiguration = [LineConfiguration MR_findFirstByAttribute:@"active" withValue:@YES];
-    if (_lineConfiguration)
-        return _lineConfiguration;
-    
-    _lineConfiguration = [LineConfiguration MR_findFirstOrderedByAttribute:@"display" ascending:YES];
+//    if (_lineConfiguration)
+//        return _lineConfiguration;
+//    
+//    _lineConfiguration = [LineConfiguration MR_findFirstByAttribute:@"active" withValue:@YES];
+//    if (_lineConfiguration)
+//        return _lineConfiguration;
+//    
+//    _lineConfiguration = [LineConfiguration MR_findFirstOrderedByAttribute:@"display" ascending:YES];
     return _lineConfiguration;
 }
 

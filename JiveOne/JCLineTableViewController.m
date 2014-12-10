@@ -18,8 +18,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.name.text = self.line.displayName;
-    self.extension.text = self.line.externsionNumber;
+    self.name.text = self.line.name;
+    self.extension.text = self.line.extension;
     self.jrn.text = self.line.jrn;
     self.mailbaxJrn.text = self.line.mailboxJrn;
     self.mailboxUrl.text = self.line.mailboxUrl;

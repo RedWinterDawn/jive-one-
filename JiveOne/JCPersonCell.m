@@ -7,12 +7,6 @@
 //
 
 #import "JCPersonCell.h"
-#import "JCPresenceView.h"
-#import <SDWebImage/UIImageView+WebCache.h>
-#import "Common.h"
-#import "LineGroup.h"
-#import "ContactGroup.h"
-#import "PBX+Custom.h"
 
 //NSString *const kCustomCellPersonPresenceTypeKeyPath = @"entityPresence";
 @interface JCPersonCell ()
@@ -21,86 +15,56 @@
 
 @implementation JCPersonCell
 
-- (void)awakeFromNib
-{
-    //selected star should be yellow unselected star should be gray
-    UIColor *selectedStarColor = [UIColor colorWithRed:255.0/255.0 green:212.0/255.0 blue:0.0/255.0 alpha:1.0];
-    NSMutableAttributedString *selectedAttributedStarSelectedState = [[NSMutableAttributedString alloc]initWithString:@"★" attributes:@{NSForegroundColorAttributeName : selectedStarColor}];
-    UIColor *unselectedStarColor = [UIColor colorWithRed:208.0/255.0 green:208.0/255.0 blue:208.0/255.0 alpha:1.0];
-    
-    NSMutableAttributedString *unselectedAttributedStarSelectedState = [[NSMutableAttributedString alloc]initWithString:@"★" attributes:@{NSForegroundColorAttributeName : unselectedStarColor}];
-    [self.favoriteBut setAttributedTitle:selectedAttributedStarSelectedState forState:UIControlStateSelected];
-    [self.favoriteBut setAttributedTitle:unselectedAttributedStarSelectedState forState:UIControlStateNormal];
-}
-
 - (void)layoutSubviews
 {
     [super layoutSubviews];
     
-    Line *line = self.line;
-    self.personNameLabel.text = line.displayName;
-    self.personDetailLabel.text = line.detailText;
+    Person *person = self.person;
+    self.personNameLabel.text = person.name;
+    self.personDetailLabel.text = person.detailText;
     
-    self.personPresenceView.presenceType = (JCPresenceType) [line.state integerValue];
-    
-    if ([self.line.isFavorite  isEqual: @1]) {
-        [self.favoriteBut setSelected:YES];
-    }else{
-        [self.favoriteBut setSelected:NO];
-    }
+    //self.personPresenceView.presenceType = (JCPresenceType) [line.state integerValue];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if ([keyPath isEqualToString:kPresenceKeyPathForLineEntity]) {
-        Line *line = (Line *)object;
-        self.personPresenceView.presenceType = (JCPresenceType)[line.state integerValue];
-    }
+//    if ([keyPath isEqualToString:kPresenceKeyPathForLineEntity]) {
+//        Line *line = (Line *)object;
+//        self.personPresenceView.presenceType = (JCPresenceType)[line.state integerValue];
+//    }
 }
 
-- (void)prepareForReuse
-{
-    [super prepareForReuse];
-    [self removeObservers];
-}
-
-- (void)dealloc
-{
-    [self removeObservers];
-}
+//- (void)prepareForReuse
+//{
+//    [super prepareForReuse];
+//    [self removeObservers];
+//}
+//
+//- (void)dealloc
+//{
+//    [self removeObservers];
+//}
 
 #pragma mark - Setters -
 
--(void)setLine:(Line *)line
-{
-    if ([line isKindOfClass:[Line class]])
-    {
-        _line = line;
-        [line addObserver:self forKeyPath:kPresenceKeyPathForLineEntity options:NSKeyValueObservingOptionNew context:NULL];
-    }
-}
+//-(void)setLine:(Line *)line
+//{
+//    if ([line isKindOfClass:[Line class]])
+//    {
+//        _line = line;
+//        [line addObserver:self forKeyPath:kPresenceKeyPathForLineEntity options:NSKeyValueObservingOptionNew context:NULL];
+//    }
+//}
 
 #pragma mark - Private -
 
-- (void)removeObservers
-{
-    if (_line)
-        [_line removeObserver:self forKeyPath:kPresenceKeyPathForLineEntity];
-}
+//- (void)removeObservers
+//{
+//    if (_line)
+//        [_line removeObserver:self forKeyPath:kPresenceKeyPathForLineEntity];
+//}
 
-- (IBAction)toggleFavoriteStatus:(id)sender {
-    
-    if ([self.line.isFavorite  isEqual: @1])
-    {
-        self.line.isFavorite = @0;
-    }else{
-        self.line.isFavorite = @1;
-    }
-    
-    [self.line.managedObjectContext MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
-        [self setNeedsLayout];
-    }];
-}
+
 
 /*- (void)createGroupRelationship
 {

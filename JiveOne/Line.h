@@ -6,33 +6,21 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
+#import "Person.h"
 
 @class RecentEvent;
 @class LineConfiguration;
 @class PBX;
 
-@interface Line : NSManagedObject
+@interface Line : Person
 
 // Attributes
-@property (nonatomic, retain) NSString * displayName;
-@property (nonatomic, retain) NSString * externsionNumber;
-@property (nonatomic, retain) id groups;
-@property (nonatomic, retain) NSNumber * inUse;
-@property (nonatomic, retain) NSNumber * isFavorite;
-@property (nonatomic, retain) NSString * jrn;
-@property (nonatomic, retain) NSString * lineId;
-@property (nonatomic, retain) NSString * pbxId;
-@property (nonatomic, retain) NSNumber * state;
-@property (nonatomic, retain) NSString * userName;
 @property (nonatomic, retain) NSString * mailboxJrn;
 @property (nonatomic, retain) NSString * mailboxUrl;
 @property (nonatomic, getter=isActive) BOOL active;
 
-// Transient Attributes
-@property (nonatomic, readonly) NSString *firstLetter;
-@property (nonatomic, readonly) NSString *detailText;
+// Transient Properties
+@property (nonatomic, readonly) NSString * lineId;
 
 // Relationships
 @property (nonatomic, retain) NSSet *events;

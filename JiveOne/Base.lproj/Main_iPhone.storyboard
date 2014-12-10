@@ -1209,7 +1209,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PersonCell" rowHeight="60" id="k8v-WG-cnz" customClass="JCPersonCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ContactCell" rowHeight="60" id="k8v-WG-cnz" userLabel="ContactCell" customClass="JCContactCell">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="k8v-WG-cnz" id="5wf-Vt-FwV">
@@ -1280,11 +1280,87 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="favoriteBut" destination="fpX-p1-9pC" id="e7i-u8-wBP"/>
+                                    <outlet property="favoriteBtn" destination="fpX-p1-9pC" id="cLy-hW-fmr"/>
                                     <outlet property="personDetailLabel" destination="TBH-my-sze" id="ESN-Lz-BaH"/>
                                     <outlet property="personNameLabel" destination="Kbp-js-aK1" id="TD4-a1-U0E"/>
                                     <outlet property="personPresenceView" destination="Imk-Vj-t20" id="ikn-7G-qxK"/>
                                     <segue destination="ph3-lT-GBI" kind="modal" identifier="ContactsClickToCall" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" animates="NO" id="voi-Tt-SuU"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LineCell" rowHeight="60" id="2td-vl-Ngo" customClass="JCLineCell">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2td-vl-Ngo" id="RJ5-UI-AVZ">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="asI-jE-Iz6">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="16" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OwV-S4-lMz">
+                                                    <rect key="frame" x="33" y="8" width="222" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="zqA-M1-wDL"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IJp-7B-E4i" customClass="JCPresenceView">
+                                                    <rect key="frame" x="10" y="11" width="15" height="15"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="15" id="ZB0-jz-yYB"/>
+                                                        <constraint firstAttribute="height" constant="15" id="fIn-g1-HCz"/>
+                                                    </constraints>
+                                                </view>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tpx-qk-Eby">
+                                                    <rect key="frame" x="33" y="30" width="222" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="6V8-GE-nY6"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WMY-2m-tJl">
+                                                    <rect key="frame" x="260" y="8" width="44" height="45"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="44" id="3Sc-zh-Ly1"/>
+                                                        <constraint firstAttribute="height" constant="45" id="tKl-6E-6p9"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                    <state key="normal" title="★"/>
+                                                    <connections>
+                                                        <action selector="toggleFavoriteStatus:" destination="2td-vl-Ngo" eventType="touchUpInside" id="DJu-Hw-00M"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="tpx-qk-Eby" secondAttribute="bottom" constant="9" id="0cV-Xk-40U"/>
+                                                <constraint firstItem="tpx-qk-Eby" firstAttribute="leading" secondItem="asI-jE-Iz6" secondAttribute="leading" constant="33" id="4Ph-Xd-sDa"/>
+                                                <constraint firstItem="WMY-2m-tJl" firstAttribute="top" secondItem="asI-jE-Iz6" secondAttribute="top" constant="8" id="IZo-MD-EUJ"/>
+                                                <constraint firstAttribute="trailing" secondItem="WMY-2m-tJl" secondAttribute="trailing" constant="16" id="Mlx-u2-JWC"/>
+                                                <constraint firstItem="OwV-S4-lMz" firstAttribute="leading" secondItem="IJp-7B-E4i" secondAttribute="trailing" constant="8" id="Vbi-AP-tCd"/>
+                                                <constraint firstItem="WMY-2m-tJl" firstAttribute="leading" secondItem="OwV-S4-lMz" secondAttribute="trailing" constant="5" id="frP-xD-aCi"/>
+                                                <constraint firstItem="IJp-7B-E4i" firstAttribute="top" secondItem="asI-jE-Iz6" secondAttribute="top" constant="11" id="jK3-Wf-nGA"/>
+                                                <constraint firstItem="OwV-S4-lMz" firstAttribute="top" secondItem="asI-jE-Iz6" secondAttribute="top" constant="8" id="mg7-bq-0jN"/>
+                                                <constraint firstItem="IJp-7B-E4i" firstAttribute="leading" secondItem="asI-jE-Iz6" secondAttribute="leading" constant="10" id="pM2-Ow-geZ"/>
+                                                <constraint firstItem="WMY-2m-tJl" firstAttribute="leading" secondItem="tpx-qk-Eby" secondAttribute="trailing" constant="5" id="tU7-xH-owP"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="asI-jE-Iz6" secondAttribute="trailing" id="7rl-X3-JEv"/>
+                                        <constraint firstItem="asI-jE-Iz6" firstAttribute="top" secondItem="RJ5-UI-AVZ" secondAttribute="top" id="F8b-fp-KIB"/>
+                                        <constraint firstAttribute="bottom" secondItem="asI-jE-Iz6" secondAttribute="bottom" constant="-0.5" id="NdG-aY-St8"/>
+                                        <constraint firstItem="asI-jE-Iz6" firstAttribute="leading" secondItem="RJ5-UI-AVZ" secondAttribute="leading" id="rJ0-TL-rhc"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="personDetailLabel" destination="tpx-qk-Eby" id="e1r-YE-xu7"/>
+                                    <outlet property="personNameLabel" destination="OwV-S4-lMz" id="Pah-dt-rU8"/>
+                                    <outlet property="personPresenceView" destination="IJp-7B-E4i" id="Ovr-b6-Pck"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -2606,8 +2682,8 @@
                                     <segue destination="1Io-pQ-qUd" kind="embed" identifier="CallerCollectionView" id="MUQ-NU-NHH"/>
                                 </connections>
                             </containerView>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T5I-ze-dYa" customClass="JCCallOptionsView">
-                                <rect key="frame" x="0.0" y="339" width="320" height="227"/>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T5I-ze-dYa" customClass="JCCallOptionsView">
+                                <rect key="frame" x="0.0" y="339" width="320" height="228"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="249" verticalCompressionResistancePriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JGQ-cX-3bl" userLabel="Mute Button" customClass="JCRoundedButton">
                                         <rect key="frame" x="32" y="20" width="60" height="60"/>
