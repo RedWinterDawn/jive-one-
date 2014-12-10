@@ -7,11 +7,9 @@
 //
 
 #import "PBX.h"
-
 #import "NSManagedObject+JCCoreDataAdditions.h"
 
 NSString *const kPBXV5AttributeKey = @"v5";
-NSString *const kPBXActiveAttributeKey = @"active";
 
 @implementation PBX
 
@@ -29,21 +27,11 @@ NSString *const kPBXActiveAttributeKey = @"active";
     [self setPrimitiveValueFromBoolValue:v5 forKey:kPBXV5AttributeKey];
 }
 
--(void)setActive:(BOOL)active
-{
-    [self setPrimitiveValueFromBoolValue:active forKey:kPBXActiveAttributeKey];
-}
-
 #pragma mark - Getters -
 
 -(BOOL)isV5
 {
     return [self boolValueFromPrimitiveValueForKey:kPBXV5AttributeKey];
-}
-
--(BOOL)isActive
-{
-    return [self boolValueFromPrimitiveValueForKey:kPBXActiveAttributeKey];
 }
 
 @end

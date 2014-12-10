@@ -33,7 +33,7 @@
 
 #import "JCLineConfigurationViewController.h"
 
-@interface JCAppDelegate () <JCCallerViewControllerDelegate, UAPushNotificationDelegate, UARegistrationDelegate, JCLineConfigurationViewControllerDelegate>
+@interface JCAppDelegate () <JCCallerViewControllerDelegate, UAPushNotificationDelegate, UARegistrationDelegate, JCPickerViewControllerDelegate>
 {
     JCCallerViewController *_presentedCallerViewController;
     JCAuthenticationManager *_authenticationManager;

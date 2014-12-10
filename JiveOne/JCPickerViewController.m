@@ -67,7 +67,12 @@
 }
 
 -(IBAction)close:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:NULL];
+    if (_delegate && [_delegate respondsToSelector:@selector(pickerViewControllerShouldDismiss:)]) {
+        [_delegate pickerViewControllerShouldDismiss:self];
+    }
+    else {
+        [self dismissViewControllerAnimated:YES completion:NULL];
+    }
 }
 
 #pragma mark - Private -
@@ -104,6 +109,8 @@
                          _pickerVisible = false;
                      }];
 }
+
+
 
 #pragma mark - Delegate Handlers -
 

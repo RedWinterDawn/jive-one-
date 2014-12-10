@@ -63,18 +63,6 @@
     return [_lineConfigurations count];
 }
 
-#pragma mark - IBActions -
-
--(IBAction)close:(id)sender {
-    if (_delegate && [_delegate respondsToSelector:@selector(lineConfigurationViewControllerShouldDismiss:)]) {
-        [_delegate lineConfigurationViewControllerShouldDismiss:self];
-    }
-    else
-    {
-        [super close:sender];
-    }
-}
-
 #pragma mark - Delegate Handlers -
 
 #pragma mark UIPickerDelegate Methods

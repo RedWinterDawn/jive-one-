@@ -7,21 +7,8 @@
 //
 
 #import "LineConfiguration.h"
-#import "NSManagedObject+JCCoreDataAdditions.h"
-
-NSString *const kLineConfigurationActiveAttribute = @"active";
 
 @implementation LineConfiguration
-
--(void)setActive:(BOOL)active
-{
-    [self setPrimitiveValueFromBoolValue:active forKey:kLineConfigurationActiveAttribute];
-}
-
--(BOOL)isActive
-{
-    return [self boolValueFromPrimitiveValueForKey:kLineConfigurationActiveAttribute];
-}
 
 @dynamic display;
 @dynamic outboundProxy;

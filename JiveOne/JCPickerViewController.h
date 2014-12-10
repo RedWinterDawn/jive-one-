@@ -8,7 +8,17 @@
 
 @import UIKit;
 
+@class JCPickerViewController;
+
+@protocol JCPickerViewControllerDelegate <NSObject>
+
+-(void)pickerViewControllerShouldDismiss:(JCPickerViewController *)controller;
+
+@end
+
 @interface JCPickerViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource>
+
+@property (weak, nonatomic) IBOutlet id <JCPickerViewControllerDelegate> delegate;
 
 @property (weak, nonatomic) IBOutlet UIView *pickerContainer;
 @property (weak, nonatomic) IBOutlet UIButton *selectBtn;

@@ -49,6 +49,7 @@
     </entity>
     <entity name="IncomingCall" representedClassName="IncomingCall" parentEntity="Call" syncable="YES"/>
     <entity name="Line" representedClassName="Line" syncable="YES">
+        <attribute name="active" optional="YES" attributeType="Boolean" indexed="YES" syncable="YES"/>
         <attribute name="displayName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="externsionNumber" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="groups" optional="YES" attributeType="Transformable" syncable="YES"/>
@@ -66,7 +67,6 @@
         <relationship name="pbx" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PBX" inverseName="lines" inverseEntity="PBX" syncable="YES"/>
     </entity>
     <entity name="LineConfiguration" representedClassName="LineConfiguration" syncable="YES">
-        <attribute name="active" optional="YES" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
         <attribute name="display" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="outboundProxy" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="registrationHost" optional="YES" attributeType="String" syncable="YES"/>
@@ -86,7 +86,6 @@
     <entity name="MissedCall" representedClassName="MissedCall" parentEntity="Call" syncable="YES"/>
     <entity name="OutgoingCall" representedClassName="OutgoingCall" parentEntity="Call" syncable="YES"/>
     <entity name="PBX" representedClassName="PBX" syncable="YES">
-        <attribute name="active" optional="YES" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
         <attribute name="jrn" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="pbxId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
@@ -167,13 +166,13 @@
         <element name="ConversationEntry" positionX="-605" positionY="126" width="128" height="270"/>
         <element name="ConversationETag" positionX="-441" positionY="207" width="128" height="60"/>
         <element name="IncomingCall" positionX="448" positionY="-405" width="128" height="43"/>
-        <element name="LineConfiguration" positionX="160" positionY="-94" width="128" height="148"/>
+        <element name="LineConfiguration" positionX="160" positionY="-94" width="128" height="133"/>
         <element name="LineGroup" positionX="-99" positionY="519" width="128" height="75"/>
-        <element name="Line" positionX="-83" positionY="-286" width="128" height="268"/>
+        <element name="Line" positionX="-83" positionY="-286" width="128" height="283"/>
         <element name="Membership" positionX="619" positionY="567" width="128" height="90"/>
         <element name="MissedCall" positionX="448" positionY="-277" width="128" height="43"/>
         <element name="OutgoingCall" positionX="448" positionY="-340" width="128" height="43"/>
-        <element name="PBX" positionX="-281" positionY="-234" width="128" height="163"/>
+        <element name="PBX" positionX="-281" positionY="-220" width="128" height="148"/>
         <element name="PersonEntities" positionX="430" positionY="837" width="128" height="360"/>
         <element name="PersonMeta" positionX="448" positionY="594" width="128" height="150"/>
         <element name="Presence" positionX="612" positionY="717" width="128" height="120"/>

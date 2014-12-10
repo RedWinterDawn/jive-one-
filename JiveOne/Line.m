@@ -8,6 +8,9 @@
 
 #import "Line.h"
 #import "NSString+Custom.h"
+#import "NSManagedObject+JCCoreDataAdditions.h"
+
+NSString *const kLineActiveAttribute = @"active";
 
 @implementation Line
 
@@ -27,6 +30,16 @@
 @dynamic events;
 @dynamic lineConfiguration;
 @dynamic pbx;
+
+-(void)setActive:(BOOL)active
+{
+    [self setPrimitiveValueFromBoolValue:active forKey:kLineActiveAttribute];
+}
+
+-(BOOL)isActive
+{
+    return [self boolValueFromPrimitiveValueForKey:kLineActiveAttribute];
+}
 
 #pragma mark - Transient Attributes -
 

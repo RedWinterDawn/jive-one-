@@ -28,6 +28,7 @@
 @property (nonatomic, retain) NSString * userName;
 @property (nonatomic, retain) NSString * mailboxJrn;
 @property (nonatomic, retain) NSString * mailboxUrl;
+@property (nonatomic, getter=isActive) BOOL active;
 
 // Transient Attributes
 @property (nonatomic, readonly) NSString *firstLetter;
