@@ -17,8 +17,6 @@
 
 NSString *const kLineResponseIdentifierKey      = @"id";
 NSString *const kLineResponseLineNameKey        = @"lineName";
-NSString *const kLineResponseDisplayNameKey     = @"displayName";
-NSString *const kLineResponseExtensionNumberKey = @"extensionNumber";
 NSString *const kLineResponseLineNumberKey      = @"lineNumber";
 NSString *const kLineResponseJrnKey             = @"jrn";
 NSString *const kLineResponseMailboxUrlKey      = @"self_mailbox";
@@ -32,7 +30,7 @@ NSString *const kLineResponseMailboxJrnKey      = @"mailbox_jrn";
         for (id object in linesData)
         {
             if ([object isKindOfClass:[NSDictionary class]]) {
-                [self addLine:(NSDictionary *)object pbx:pbx context:localContext];
+                [self addLine:(NSDictionary *)object pbx:(PBX *)[localContext objectWithID:pbx.objectID] context:localContext];
             }
             else {
                 completed(false);
@@ -45,41 +43,30 @@ NSString *const kLineResponseMailboxJrnKey      = @"mailbox_jrn";
 
 + (Line *)addLine:(NSDictionary *)data pbx:(PBX *)pbx context:(NSManagedObjectContext *)context
 {
-    NSString *lineId = [data stringValueForKey:kLineResponseIdentifierKey];
-    Line *line = [Line lineForLineId:lineId pbx:pbx context:context];
-    
-    NSString *displayName = [data stringValueForKey:kLineResponseLineNameKey];
-    if (!displayName || displayName.isEmpty) {
-        displayName = [data stringValueForKey:kLineResponseDisplayNameKey];
-    }
-    
-    line.displayName = displayName;
-    
-    NSString *extensionNumber = [data stringValueForKey:kLineResponseExtensionNumberKey];
-    if (!extensionNumber || extensionNumber.isEmpty) {
-        extensionNumber = [data stringValueForKey:kLineResponseLineNumberKey];
-    }
-    
-    line.externsionNumber = extensionNumber;
-    line.jrn        = [data stringValueForKey:kLineResponseJrnKey];
-    line.mailboxUrl = [data stringValueForKey:kLineResponseMailboxUrlKey];
-    line.mailboxJrn = [data stringValueForKey:kLineResponseMailboxJrnKey];
-    line.state      = [NSNumber numberWithInt:(int)JCPresenceTypeAvailable];
+    NSString *jrn = [data stringValueForKey:kLineResponseJrnKey];
+    Line *line = [Line lineForJrn:jrn pbx:pbx context:context];
+    line.displayName        = [data stringValueForKey:kLineResponseLineNameKey];
+    line.externsionNumber   = [data stringValueForKey:kLineResponseLineNumberKey];
+    line.mailboxUrl         = [data stringValueForKey:kLineResponseMailboxUrlKey];
+    line.mailboxJrn         = [data stringValueForKey:kLineResponseMailboxJrnKey];
+    line.state              = [NSNumber numberWithInt:(int)JCPresenceTypeAvailable];
     
     return line;
 }
 
-+ (Line *)lineForLineId:(NSString *)lineId pbx:(PBX *)pbx context:(NSManagedObjectContext *)context
++ (Line *)lineForJrn:(NSString *)jrn pbx:(PBX *)pbx context:(NSManagedObjectContext *)context
 {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx = %@ and lineId = %@", pbx, lineId];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx = %@ and jrn = %@", pbx, jrn];
     Line *line = [Line MR_findFirstWithPredicate:predicate inContext:context];
     if(!line)
     {
         line = [Line MR_createInContext:context];
-        line.lineId = lineId;
+        line.jrn = jrn;
         line.pbx = pbx;
         
         // Deprecated
+        NSArray *elements = [jrn componentsSeparatedByString:@":"];
+        line.lineId = elements.lastObject;
         line.pbxId = pbx.pbxId;
         line.userName = pbx.user.jiveUserId;
     }
