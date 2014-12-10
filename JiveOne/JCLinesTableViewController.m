@@ -15,12 +15,7 @@
 -(NSFetchedResultsController *)fetchedResultsController
 {
     if (!_fetchedResultsController) {
-        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Line"];
-        fetchRequest.includesSubentities = true;
-        
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"displayName" ascending:YES];
-        fetchRequest.sortDescriptors = @[sortDescriptor];
-        
+        NSFetchRequest *fetchRequest = [Line MR_requestAllSortedBy:@"name" ascending:YES];
         super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                              managedObjectContext:self.managedObjectContext
                                                                                sectionNameKeyPath:nil
@@ -40,8 +35,8 @@
 
 -(void)configureCell:(UITableViewCell *)cell withObject:(Line *)line
 {
-    cell.textLabel.text = line.displayName;
-    cell.detailTextLabel.text = line.externsionNumber;
+    cell.textLabel.text = line.name;
+    cell.detailTextLabel.text = line.extension;
 }
 
 @end

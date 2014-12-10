@@ -9,10 +9,12 @@
 #import "JCContactsTableViewController.h"
 #import "JCCallerViewController.h"
 
-#import "Lines+Custom.h"
-#import "JCPersonCell.h"
+#import "JCContactCell.h"
+#import "JCLineCell.h"
+
 #import "JasmineSocket.h"
 
+#import "Contact.h"
 
 @interface JCContactsTableViewController()  <JCCallerViewControllerDelegate>
 {
@@ -45,33 +47,39 @@
     if ([viewController isKindOfClass:[JCCallerViewController class]]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         id object = [self objectAtIndexPath:indexPath];
-        if ([object isKindOfClass:[Line class]]) {
-            Line *line = (Line *)object;
+        if ([object isKindOfClass:[Contact class]]) {
+            Contact *contact = (Contact *)object;
             JCCallerViewController *callerViewController = (JCCallerViewController *)viewController;
             callerViewController.delegate = self;
-            callerViewController.dialString = line.externsionNumber;
+            callerViewController.dialString = contact.extension;
         }
     }
 }
 
 -(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController
 {
-    [self dismissViewControllerAnimated:NO completion:^{
-        
-    }];
+    [self dismissViewControllerAnimated:NO completion:NULL];
 }
 
 - (void)configureCell:(UITableViewCell *)cell withObject:(id<NSObject>)object
 {
-    if ([object isKindOfClass:[Line class]] && [cell isKindOfClass:[JCPersonCell class]]) {
-        ((JCPersonCell *)cell).line = (Line *)object;
+    if ([object isKindOfClass:[Contact class]] && [cell isKindOfClass:[JCContactCell class]]) {
+        ((JCContactCell *)cell).contact = (Contact *)object;
+    }
+    else if ([object isKindOfClass:[Line class]] && [cell isKindOfClass:[JCLineCell class]]) {
+        ((JCLineCell *)cell).line = (Line *)object;
     }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForObject:(id<NSObject>)object atIndexPath:(NSIndexPath *)indexPath
 {
-    if ([object isKindOfClass:[Line class]]) {
-        JCPersonCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PersonCell"];
+    if ([object isKindOfClass:[Contact class]]) {
+        JCContactCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactCell"];
+        [self configureCell:cell withObject:object];
+        return cell;
+    }
+    else if ([object isKindOfClass:[Line class]]) {
+        JCLineCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LineCell"];
         [self configureCell:cell withObject:object];
         return cell;
     }
@@ -118,9 +126,10 @@
 {
     if (!_fetchedResultsController)
     {
-        NSFetchRequest *fetchRequest = [Line MR_requestAllWithPredicate:self.predicate inContext:self.managedObjectContext];
+        NSFetchRequest *fetchRequest = [Person MR_requestAllWithPredicate:self.predicate inContext:self.managedObjectContext];
+        fetchRequest.includesSubentities = TRUE;
         fetchRequest.fetchBatchSize = 10;
-        fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"displayName" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
+        fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
         super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"firstLetter" cacheName:nil];
     }
     return _fetchedResultsController;

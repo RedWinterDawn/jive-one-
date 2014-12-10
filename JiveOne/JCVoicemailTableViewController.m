@@ -15,7 +15,6 @@
 #import "JCVoicemailPlaybackCell.h"
 #import "JCV5ApiClient.h"
 
-#import "JCMessagesViewController.h"
 #import "JCAppDelegate.h"
 #import "Voicemail+Custom.h"
 

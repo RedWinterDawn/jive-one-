@@ -18,6 +18,7 @@
 
 // Categories
 #import "UIDevice+CellularData.h"
+#import "Contact.h"
 
 @import CoreTelephony;
 
@@ -376,9 +377,9 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 
 -(NSString *)getContactNameByNumber:(NSString *)number
 {
-    Line *contact = [Line MR_findFirstByAttribute:@"externsionNumber" withValue:number];
+    Contact *contact = [Contact MR_findFirstByAttribute:@"extension" withValue:number];
     if (contact) {
-        return contact.displayName;
+        return contact.name;
     }
     
     return nil;

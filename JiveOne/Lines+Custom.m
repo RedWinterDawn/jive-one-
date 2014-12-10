@@ -42,11 +42,11 @@ NSString *const kLineResponseMailboxJrnKey      = @"mailbox_jrn";
     }
     
     Line *line = [Line lineForJrn:jrn pbx:pbx context:context];
-    line.displayName        = [data stringValueForKey:kLineResponseLineNameKey];
-    line.externsionNumber   = [data stringValueForKey:kLineResponseLineNumberKey];
-    line.mailboxUrl         = [data stringValueForKey:kLineResponseMailboxUrlKey];
-    line.mailboxJrn         = [data stringValueForKey:kLineResponseMailboxJrnKey];
-    line.state              = [NSNumber numberWithInt:(int)JCPresenceTypeAvailable];
+    line.name        = [data stringValueForKey:kLineResponseLineNameKey];
+    line.extension   = [data stringValueForKey:kLineResponseLineNumberKey];
+    line.mailboxUrl  = [data stringValueForKey:kLineResponseMailboxUrlKey];
+    line.mailboxJrn  = [data stringValueForKey:kLineResponseMailboxJrnKey];
+    //line.state       = [NSNumber numberWithInt:(int)JCPresenceTypeAvailable];
     
     return line;
 }
@@ -60,12 +60,6 @@ NSString *const kLineResponseMailboxJrnKey      = @"mailbox_jrn";
         line = [Line MR_createInContext:context];
         line.jrn = jrn;
         line.pbx = pbx;
-        
-        // Deprecated
-        NSArray *elements = [jrn componentsSeparatedByString:@":"];
-        line.lineId = elements.lastObject;
-        //line.pbxId = pbx.pbxId;
-        //line.userName = pbx.user.jiveUserId;
     }
     return line;
 }

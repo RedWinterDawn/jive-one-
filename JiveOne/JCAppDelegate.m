@@ -25,7 +25,6 @@
 #import "JCBadgeManager.h"
 #import "JCApplicationSwitcherDelegate.h"
 #import "JCV5ApiClient.h"
-#import "JCSocketDispatch.h"
 
 #import "UAirship.h"
 #import "UAConfig.h"
@@ -270,7 +269,7 @@
  */
 -(void)userDataReady:(NSNotification *)notification
 {
-    [self startDataSyncInBackground];
+    //[self startDataSyncInBackground];
     
     // If we have not already, initialize the phone manager singleton, store a reference to it and register for notifications.
     if (!_phoneManager) {

@@ -213,16 +213,16 @@ static BOOL closedSocketOnPurpose;
     if ([type isEqualToString:@"withdraw"] || (state && [state isEqualToString:@"confirmed"])) {
         
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-            Line *line = [Line MR_findFirstByAttribute:@"jrn" withValue:subId inContext:localContext];
-            
-            if (line) {
-                if (state && [state isEqualToString:@"confirmed"]) {
-                    line.state = [NSNumber numberWithInt:(int) JCPresenceTypeDoNotDisturb];
-                }
-                else if (type && [type isEqualToString:@"withdraw"]) {
-                    line.state = [NSNumber numberWithInt:(int) JCPresenceTypeAvailable];
-                }
-            }
+//            Line *line = [Line MR_findFirstByAttribute:@"jrn" withValue:subId inContext:localContext];
+//            
+//            if (line) {
+//                if (state && [state isEqualToString:@"confirmed"]) {
+//                    line.state = [NSNumber numberWithInt:(int) JCPresenceTypeDoNotDisturb];
+//                }
+//                else if (type && [type isEqualToString:@"withdraw"]) {
+//                    line.state = [NSNumber numberWithInt:(int) JCPresenceTypeAvailable];
+//                }
+//            }
             
         }];
     }

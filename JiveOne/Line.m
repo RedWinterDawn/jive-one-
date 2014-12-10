@@ -14,16 +14,6 @@ NSString *const kLineActiveAttribute = @"active";
 
 @implementation Line
 
-@dynamic displayName;
-@dynamic externsionNumber;
-@dynamic groups;
-@dynamic inUse;
-@dynamic isFavorite;
-@dynamic jrn;
-@dynamic lineId;
-@dynamic pbxId;
-@dynamic state;
-@dynamic userName;
 @dynamic mailboxJrn;
 @dynamic mailboxUrl;
 
@@ -41,28 +31,25 @@ NSString *const kLineActiveAttribute = @"active";
     return [self boolValueFromPrimitiveValueForKey:kLineActiveAttribute];
 }
 
-#pragma mark - Transient Attributes -
-
-- (NSString *)firstLetter
-{
-    NSString *result = [self.displayName substringToIndex:1];
-    return [result uppercaseString];
-}
-
 -(NSString *)detailText
 {
-    NSString * detailText = self.externsionNumber;
-    PBX *pbx = [PBX MR_findFirstByAttribute:@"pbxId" withValue:self.pbxId];
-    if (pbx) {
-        NSString *name = pbx.name;
+    NSString * detailText = super.detailText;
+    if (self.pbx) {
+        NSString *name = self.pbx.name;
         if (name && !name.isEmpty) {
-            detailText = [NSString stringWithFormat:@"%@ on %@", self.externsionNumber, name];
+            detailText = [NSString stringWithFormat:@"%@ on %@", self.extension, name];
         }
         else {
-            detailText = [NSString stringWithFormat:@"%@", self.externsionNumber];
+            detailText = [NSString stringWithFormat:@"%@", self.extension];
         }
     }
     return detailText;
+}
+
+-(NSString *)lineId
+{
+    NSArray *elements = [self.jrn componentsSeparatedByString:@":"];
+    return elements.lastObject;
 }
 
 @end
