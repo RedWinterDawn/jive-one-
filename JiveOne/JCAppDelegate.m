@@ -8,6 +8,7 @@
 
 #import "JCAppDelegate.h"
 #import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
+#import <MBProgressHUD/MBProgressHUD.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import "AFNetworkActivityIndicatorManager.h"
 #import "JasmineSocket.h"
@@ -265,20 +266,16 @@
 
 -(void)registerPhoneToLine:(Line *)line
 {
+    __unsafe_unretained UIViewController *rootViewController = self.window.rootViewController;
     [JCCallCardManager connectToLine:line
                              started:^{
-                                 [self.window.rootViewController showHudWithTitle:@"Registering" detail:@"Selecting Line"];
+                                 [rootViewController showHudWithTitle:@"Registering" detail:@"Selecting Line..."];
                              }
                            completed:^(BOOL success, NSError *error) {
-                               [self.window.rootViewController hideHud];
-                               if (success) {
-                                   
+                               [rootViewController hideHud];
+                               if (!success) {
+                                   [rootViewController showSimpleAlert:@"Registration" message:@"Unable to connect to this line at this time. Please Try again." code:error.code];
                                }
-                               else {
-                                   
-                               }
-                               
-                               
                             }];
 }
 

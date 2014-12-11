@@ -9,6 +9,7 @@
 #import "JCDialerViewController.h"
 #import "JCCallCardManager.h"
 #import "OutgoingCall.h"
+#import "UIViewController+HUD.h"
 
 NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCall";
 
@@ -48,11 +49,14 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     
     if(!_phoneManager.isConnected)
     {
-        [_phoneManager reconnect:^(bool success, NSError *error) {
-            if (error) {
-                NSLog(@"%@", [error description]);
-            }
-        }];
+        __unsafe_unretained UIViewController *weakSelf = self;
+        [_phoneManager reconnectToLine:[JCAuthenticationManager sharedInstance].line
+                               started:^{
+                                   [weakSelf showHudWithTitle:@"Registering" detail:@"Selecting Line..."];
+                               }
+                            completion:^(bool success, NSError *error) {
+                                [weakSelf hideHud];
+                            }];
     }
 }
 

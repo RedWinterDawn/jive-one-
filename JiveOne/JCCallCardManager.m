@@ -97,14 +97,12 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     [_sipHandler addObserver:self forKeyPath:kSipHandlerRegisteredSelectorKey options:NSKeyValueObservingOptionNew context:NULL];
 }
 
--(void)reconnect:(CompletionHandler)completion
+-(void)reconnectToLine:(Line *)line started:(void(^)())started  completion:(CompletionHandler)completion
 {
     if (_sipHandler) {
         [_sipHandler connect:completion];
     } else {
-        if (completion != NULL) {
-            completion(false, [NSError errorWithDomain:@"Not logged in." code:0 userInfo:nil]);
-        }
+        [JCCallCardManager connectToLine:line started:started completed:completion];
     }
 }
 

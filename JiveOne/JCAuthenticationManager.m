@@ -285,6 +285,16 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     return [[NSUserDefaults standardUserDefaults] objectForKey:kJCAuthenticationManagerJiveUserIdKey];
 }
 
+-(User *)user
+{
+    if (_user) {
+        return _user;
+    }
+    
+    _user = [User MR_findFirstByAttribute:@"jiveUserId" withValue:self.jiveUserId];
+    return _user;
+}
+
 -(Line *)line
 {
     if (_line) {

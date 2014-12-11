@@ -8,8 +8,6 @@
 
 #import "JCFetchedResultsTableViewController.h"
 
-@class LineConfiguration;
-
-@interface JCLineConfigurationSelectorViewController : JCFetchedResultsTableViewController
+@interface JCLineSelectorTableViewController : JCFetchedResultsTableViewController
 
 @end

@@ -38,10 +38,24 @@ static MBProgressHUD *progressHud;
 {
     NSLog(@"%@: %@", title, message);
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(title, nil)
+                                                    message:NSLocalizedString(message, nil)
+                                                   delegate:self
+                                          cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                          otherButtonTitles:nil, nil];
+    [alert show];
+}
+
+-(void)showSimpleAlert:(NSString *)title message:(NSString *)message code:(NSInteger)code
+{
+    NSLog(@"%@: %@ (-%li)", title, message, code);
+    message = [NSString stringWithFormat:@"%@ (-%li)", NSLocalizedString(message, nil), (long)code];
+    
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(title, nil)
                                                     message:message
                                                    delegate:self
-                                          cancelButtonTitle:@"OK"
+                                          cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                           otherButtonTitles:nil, nil];
     [alert show];
 }
