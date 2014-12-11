@@ -21,6 +21,8 @@
 @property (nonatomic, retain) NSString * selfUrl;
 @property (nonatomic, getter=isV5) BOOL v5;
 
+@property (nonatomic, readonly) NSString * displayName;
+
 // Relationships
 @property (nonatomic, retain) User * user;
 @property (nonatomic, retain) NSSet * lines;

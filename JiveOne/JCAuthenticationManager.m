@@ -20,8 +20,7 @@ NSString *const kJCAuthenticationManagerUserLoggedOutNotification               
 NSString *const kJCAuthenticationManagerUserAuthenticatedNotification           = @"userAuthenticated";
 NSString *const kJCAuthenticationManagerUserLoadedMinimumDataNotification       = @"userLoadedMinimumData";
 NSString *const kJCAuthenticationManagerAuthenticationFailedNotification        = @"authenticationFailed";
-NSString *const kJCAuthenticationManagerPbxChangedNotification                  = @"pbxChanged";
-NSString *const kJCAuthenticationManagerLineConfigurationChangedNotification    = @"lineConfigurationChanged";
+NSString *const kJCAuthenticationManagerLineChangedNotification                 = @"lineChanged";
 
 // Keychain
 NSString *const kJCAuthenticationManagerKeychainStoreIdentifier             = @"keyjiveauthstore";
@@ -62,8 +61,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     CompletionBlock _completionBlock;
     
     User *_user;
-    PBX *_pbx;
-    LineConfiguration *_lineConfiguration;
+    Line *_line;
     
     NSString *_username;
     NSString *_password;
@@ -153,7 +151,9 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     self.refreshToken = nil;
     self.userLoadedMininumData = false;
     self.userAuthenticated = false;
-    self.lineConfiguration = nil;
+    
+    self.user = nil;
+    self.line = nil;
     
     if (!self.rememberMe) {
         self.jiveUserId = false;
@@ -228,31 +228,17 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     [self didChangeValueForKey:kJCAuthenticationManagerJiveUserIdKey];
 }
 
--(void)setPbx:(PBX *)pbx
+-(void)setLine:(Line *)line
 {
-    if (_pbx == pbx) {
+    if (_line == line) {
         return;
     }
     
     [self willChangeValueForKey:NSStringFromSelector(@selector(pbx))];
-    _pbx = pbx;
+    _line = line;
     [self didChangeValueForKey:NSStringFromSelector(@selector(pbx))];
     
-    self.lineConfiguration = nil; // Blow away the current line configuration, it is now dirty.
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCAuthenticationManagerPbxChangedNotification object:self];
-}
-
--(void)setLineConfiguration:(LineConfiguration *)lineConfiguration
-{
-    // if its the same line configuration and that configuration is not nil, then we do no need to broadcast it.
-    if (_lineConfiguration == lineConfiguration) {
-        return;
-    }
-    
-    [self willChangeValueForKey:NSStringFromSelector(@selector(lineConfiguration))];
-    _lineConfiguration = lineConfiguration;
-    [self didChangeValueForKey:NSStringFromSelector(@selector(lineConfiguration))];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCAuthenticationManagerLineConfigurationChangedNotification object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kJCAuthenticationManagerLineChangedNotification object:self];
 }
 
 #pragma mark - Getters -
@@ -299,47 +285,21 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     return [[NSUserDefaults standardUserDefaults] objectForKey:kJCAuthenticationManagerJiveUserIdKey];
 }
 
-/**
- * Returns the active PBX configuration
- */
--(PBX *)pbx
+-(Line *)line
 {
-    if (_pbx) {
-        return _pbx;
+    if (_line) {
+        return _line;
     }
     
-//    _pbx = [PBX MR_findFirstByAttribute:@"active" withValue:@YES];
-//    if (_pbx) {
-//        return _pbx;
-//    }
-//    
-//    _pbx = [PBX MR_findFirstOrderedByAttribute:@"name" ascending:YES];
-    return _pbx;
-}
-
-/**
- * Return the active line configuration. If there is no active line configuration, we ret the first line line 
- * configuration in the database sorted by the display name.
- */
--(LineConfiguration *)lineConfiguration
-{
-//    if (_lineConfiguration)
-//        return _lineConfiguration;
-//    
-//    _lineConfiguration = [LineConfiguration MR_findFirstByAttribute:@"active" withValue:@YES];
-//    if (_lineConfiguration)
-//        return _lineConfiguration;
-//    
-//    _lineConfiguration = [LineConfiguration MR_findFirstOrderedByAttribute:@"display" ascending:YES];
-    return _lineConfiguration;
-}
-
--(NSString *)pbxName
-{
-    PBX *pbx = self.pbx;
-    if (pbx)
-        return [NSString stringWithFormat:@"%@ PBX on %@", pbx.name, pbx.isV5 ? @"V5" : @"V4"];
-    return nil;
+    // If we do not yet have a line, look for a line for our user that is marked as active.
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx.user = %@ and active = %@", self.user, @YES];
+    _line = [Line MR_findFirstWithPredicate:predicate];
+    if (_line) {
+        return _line;
+    }
+    
+    _line = [Line MR_findFirstOrderedByAttribute:@"extension" ascending:YES];
+    return _line;
 }
 
 #pragma mark - Private -

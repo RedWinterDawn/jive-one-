@@ -8,10 +8,29 @@
 
 #import <Foundation/Foundation.h>
 
+#import "User.h"
+
+@interface JCV4ProvisioningRequest : NSMutableURLRequest
+
++(NSMutableURLRequest *)requestWithLine:(Line *)line;
+
+@end
+
 @interface JCV4ProvisioningClient : NSObject
 
-+(void)requestProvisioningForUser:(NSString *)user password:(NSString *)password completed:(void (^)(BOOL suceeded, NSError *error))completed;
++(void)requestProvisioningForLine:(Line *)line completed:(void (^)(BOOL suceeded, NSError *error))completed;
 
-+(NSString *)xmlProvisioningRequestFor:(NSString *)userName password:(NSString *)password;
+@end
+
+typedef enum : NSUInteger {
+    UnknownProvisioningError = 0,
+    InvalidRequestParametersError,
+    RequestResponseError,
+    ResponseParseError
+} JCV4ProvisioningErrorType;
+
+@interface JCV4ProvisioningError : NSError
+
++(instancetype)errorWithType:(JCV4ProvisioningErrorType)type reason:(NSString *)reason;
 
 @end

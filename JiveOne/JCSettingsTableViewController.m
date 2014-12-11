@@ -15,6 +15,8 @@
 
 #import "JCAuthenticationManager.h"
 
+#import "PBX.h"
+
 NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Description of feedback:</strong> <br><br><br><br><br><hr><strong>Device Specs</strong><br>Model: %@ <br> System Version: %@ <br> App Version: %@ <br> Country: %@";
 
 @interface JCSettingsTableViewController () <MFMailComposeViewControllerDelegate>
@@ -63,9 +65,9 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Descrip
 {
     [super viewWillLayoutSubviews];
     
-    self.userNameLabel.text     = _authenticationManager.jiveUserId;
-    self.extensionLabel.text    = _authenticationManager.lineConfiguration.display;
-    self.pbxLabel.text          = _authenticationManager.pbxName;
+    self.userNameLabel.text     = _authenticationManager.line.pbx.user.jiveUserId;
+    self.extensionLabel.text    = _authenticationManager.line.extension;
+    self.pbxLabel.text          = _authenticationManager.line.pbx.displayName;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

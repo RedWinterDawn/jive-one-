@@ -7,8 +7,8 @@
 //
 
 #import "Line.h"
-#import "NSString+Custom.h"
 #import "NSManagedObject+JCCoreDataAdditions.h"
+#import "PBX.h"
 
 NSString *const kLineActiveAttribute = @"active";
 

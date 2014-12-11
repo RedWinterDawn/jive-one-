@@ -30,6 +30,7 @@
 #import "UAirship.h"
 #import "UAConfig.h"
 #import "UAPush.h"
+#import "UIViewController+HUD.h"
 
 @interface JCAppDelegate () <JCCallerViewControllerDelegate, UAPushNotificationDelegate, UARegistrationDelegate, JCPickerViewControllerDelegate>
 {
@@ -63,7 +64,7 @@
     _authenticationManager = [JCAuthenticationManager sharedInstance];
     [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:_authenticationManager];
     [center addObserver:self selector:@selector(userDataReady:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:_authenticationManager];
-    [center addObserver:self selector:@selector(lineConfigurationChanged:) name:kJCAuthenticationManagerLineConfigurationChangedNotification object:_authenticationManager];
+    [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:_authenticationManager];
     [_authenticationManager checkAuthenticationStatus];
 }
 
@@ -160,7 +161,7 @@
  * Removes the nagivation controller for the login and app configuration/tutorial, and replaces it as the root view 
  * controller with the app delegate.
  */
--(void)dismissLoginViewController:(BOOL)animated
+-(void)dismissLoginViewController:(BOOL)animated completed:(void (^)(BOOL finished))completed
 {
     [UIView transitionWithView:self.window
                       duration:animated? 0.5 : 0
@@ -170,6 +171,9 @@
                     }
                     completion:^(BOOL finished) {
                         _navigationController = nil;
+                        if (completed != NULL) {
+                            completed(finished);
+                        }
                     }];
 }
 
@@ -259,6 +263,25 @@
     return fetchResult;
 }
 
+-(void)registerPhoneToLine:(Line *)line
+{
+    [JCCallCardManager connectToLine:line
+                             started:^{
+                                 [self.window.rootViewController showHudWithTitle:@"Registering" detail:@"Selecting Line"];
+                             }
+                           completed:^(BOOL success, NSError *error) {
+                               [self.window.rootViewController hideHud];
+                               if (success) {
+                                   
+                               }
+                               else {
+                                   
+                               }
+                               
+                               
+                            }];
+}
+
 #pragma mark - Notification Handlers -
 
 #pragma mark JCAuthenticationManager
@@ -278,22 +301,31 @@
         [center addObserver:self selector:@selector(stopRingtone) name:kJCCallCardManagerAnswerCallNotification object:_phoneManager];
     }
     
-    // TODO: MULTI-PBX Support.
-    
     // If the user has multiple line configurations, we prompt them to select which line they would like to connect with. When
     // selected, the authentication manager will notify that they have changed their selected line.
-    NSInteger lines = [LineConfiguration MR_countOfEntities];
+    NSInteger lines = [Line MR_countOfEntities];
     if (lines > 1) {
         [self presentLineConfigurationViewController:YES];
+        return;
     }
     
-    // If the User has one line, then we select that line. We are done, so we
-    else if (lines == 1) {
+    [self dismissLoginViewController:YES completed:^(BOOL finished) {
         JCAuthenticationManager *authenticationManager = notification.object;
-        [_phoneManager connectToLine:authenticationManager.line];
-        [self dismissLoginViewController:YES];
-    }
+        [self registerPhoneToLine:authenticationManager.line];
+    }];
 }
+
+/**
+ * Notification when the line has changes.
+ *
+ * When it changes we need to make the phone manager reconnect with new credentials.
+ */
+-(void)lineChanged:(NSNotification *)notification
+{
+    JCAuthenticationManager *authenticationManager = notification.object;
+    [self registerPhoneToLine:authenticationManager.line];
+}
+
 
 /**
  * Notification of user inititated logout.
@@ -304,30 +336,17 @@
     
     [Flurry logEvent:@"Log out"];
     
-    [JasmineSocket stopSocket];
-    [[JCV5ApiClient sharedClient] stopAllOperations];
-    [[JCOmniPresence sharedInstance] truncateAllTablesAtLogout];
-    
-    [JCApplicationSwitcherDelegate reset];      // Resets the App Switcher to be
-    [JCBadgeManager reset];
-    
-    [JCCallCardManager disconnect];
-    [self presentLoginViewController:YES];
+    [JasmineSocket stopSocket];                         // Kill any socket connections.
+    [[JCV5ApiClient sharedClient] stopAllOperations];   // Kill any netowrk operations.
+    [JCApplicationSwitcherDelegate reset];              // Resets the App Switcher to be
+    [JCBadgeManager reset];                             // Resets the Badge Manager.
+    [JCCallCardManager disconnect];                     // Dissconnect the
+    [self presentLoginViewController:YES];              // Present the login view.
     
     [[UIApplication sharedApplication] unregisterForRemoteNotifications];
 }
 
-/**
- * Notification when the line configuration has changes. 
- *
- * When it changes we need to make the phone manager reconnect with new credentials. If we do not have credentials
- * from the authentication manager we disconnect.
- */
--(void)lineConfigurationChanged:(NSNotification *)notification
-{
-    JCAuthenticationManager *authenticationManager = notification.object;
-    [_phoneManager connectToLine:authenticationManager.line];
-}
+
 
 #pragma mark JCCallCardManager
 
@@ -416,7 +435,7 @@
 
 -(void)pickerViewControllerShouldDismiss:(JCPickerViewController *)controller
 {
-    [self dismissLoginViewController:YES];
+    [self dismissLoginViewController:YES completed:NULL];
 }
 
 #pragma mark UIApplicationDelegate

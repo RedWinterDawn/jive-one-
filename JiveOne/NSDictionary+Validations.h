@@ -31,3 +31,10 @@
 -(NSURL *)urlValueForKey:(NSString *)key;
 
 @end
+
+
+@interface NSDictionary (Normalization)
+
++ (NSDictionary *)normalizeDictionaryFromArray:(NSArray *)array keyIdentifier:(NSString *)keyIdentifier valueIdentifier:(NSString *)valueIdentifier;
+
+@end

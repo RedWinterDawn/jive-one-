@@ -7,6 +7,7 @@
 //
 
 #import "Lines+Custom.h"
+#import "PBX.h"
 
 NSString *const kLineResponseIdentifierKey      = @"id";
 NSString *const kLineResponseLineNameKey        = @"lineName";

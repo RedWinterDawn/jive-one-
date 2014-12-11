@@ -1659,11 +1659,11 @@
 				277A1F7E18F88987009A41F7 /* JCLoginViewController.h */,
 				277A1F7F18F88987009A41F7 /* JCLoginViewController.m */,
 				91743A9E191182CF00FF8A09 /* JCTermsAndConditonsViewController.h */,
-				91743A9F191182CF00FF8A09 /* JCTermsAndConditonsViewController.m */,
 				F8A0FEE71A2D3C1F0009EE0A /* JCLineConfigurationViewController.h */,
 				F8A0FEE81A2D3C1F0009EE0A /* JCLineConfigurationViewController.m */,
 				5D241FC91A36AE12008B498A /* JCLinePickerViewController.h */,
 				5D241FCA1A36AE12008B498A /* JCLinePickerViewController.m */,
+				91743A9F191182CF00FF8A09 /* JCTermsAndConditonsViewController.m */,
 				5D241FCC1A36AF2C008B498A /* JCPickerViewController.h */,
 				5D241FCD1A36AF2C008B498A /* JCPickerViewController.m */,
 			);

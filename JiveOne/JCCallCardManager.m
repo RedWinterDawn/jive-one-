@@ -11,6 +11,7 @@
 // Managers
 #import "JCBluetoothManager.h"
 #import "SipHandler.h"
+#import "JCV4ProvisioningClient.h"
 
 // Objects
 #import "JCLineSession.h"
@@ -92,7 +93,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
         [self disconnect];
     }
  
-    _sipHandler = [[SipHandler alloc] initWithPbx:line.pbx lineConfiguration:line.lineConfiguration delegate:self];
+    _sipHandler = [[SipHandler alloc] initWithLine:line delegate:self];
     [_sipHandler addObserver:self forKeyPath:kSipHandlerRegisteredSelectorKey options:NSKeyValueObservingOptionNew context:NULL];
 }
 
@@ -686,9 +687,24 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     return self;
 }
 
-+ (void)connectToLine:(Line *)line
++ (void)connectToLine:(Line *)line started:(void(^)())started completed:(void (^)(BOOL success, NSError *error))completed
 {
-    [[JCCallCardManager sharedManager] connectToLine:line];
+    if (line.lineConfiguration) {
+        [[JCCallCardManager sharedManager] connectToLine:line];
+        completed(YES, nil);
+    }
+    else
+    {
+        if (started != NULL) {
+            started();
+        }
+        [JCV4ProvisioningClient requestProvisioningForLine:line completed:^(BOOL success, NSError *error) {
+            if (success) {
+                [[JCCallCardManager sharedManager] connectToLine:line];
+            }
+            completed(success, error);
+        }];
+    }
 }
 
 + (void)disconnect

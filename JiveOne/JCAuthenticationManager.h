@@ -8,17 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-#import "PBX+Custom.h"
-#import "Lines+Custom.h"
-#import "LineConfiguration+Custom.h"
 #import "User.h"
 #import "Line.h"
 
 extern NSString *const kJCAuthenticationManagerUserLoggedOutNotification;
 extern NSString *const kJCAuthenticationManagerUserAuthenticatedNotification;
 extern NSString *const kJCAuthenticationManagerUserLoadedMinimumDataNotification;
-extern NSString *const kJCAuthenticationManagerPbxChangedNotification;
-extern NSString *const kJCAuthenticationManagerLineConfigurationChangedNotification;
+extern NSString *const kJCAuthenticationManagerLineChangedNotification;
 
 typedef void (^CompletionBlock) (BOOL success, NSError *error);
 
@@ -30,13 +26,15 @@ typedef void (^CompletionBlock) (BOOL success, NSError *error);
 @property (nonatomic, strong) User *user;
 @property (nonatomic, strong) Line *line;
 
+@property (nonatomic, readonly) NSString *username;
+@property (nonatomic, readonly) NSString *password;
 @property (nonatomic, readonly) NSString *authToken;
 @property (nonatomic, readonly) NSString *refreshToken;
+@property (nonatomic, readonly) NSString *jiveUserId;
 
 // Deprecated Attributes
 @property (nonatomic, strong) PBX *pbx __deprecated;
 @property (nonatomic, strong) LineConfiguration *lineConfiguration __deprecated;
-@property (nonatomic, readonly) NSString *jiveUserId __deprecated;
 @property (nonatomic, readonly) NSString *pbxName __deprecated;
 
 @property (nonatomic, readonly) BOOL userAuthenticated;

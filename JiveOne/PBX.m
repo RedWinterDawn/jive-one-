@@ -34,4 +34,9 @@ NSString *const kPBXV5AttributeKey = @"v5";
     return [self boolValueFromPrimitiveValueForKey:kPBXV5AttributeKey];
 }
 
+-(NSString *)displayName
+{
+    return [NSString stringWithFormat:@"%@ PBX on %@", self.name, self.isV5 ? @"V5" : @"V4"];
+}
+
 @end
