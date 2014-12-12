@@ -14,6 +14,7 @@
 #import "JCV4ProvisioningClient.h"
 #import "JCAuthenticationManagerError.h"
 #import "User+Custom.h"
+#import "PBX+Custom.h"
 
 // Notifications
 NSString *const kJCAuthenticationManagerUserLoggedOutNotification               = @"userLoggedOut";
@@ -352,9 +353,9 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 -(void)requestPbxInformationForUser:(User *)user
 {
-    [JCV5ApiClient getPbxInformationForUser:user completed:^(BOOL success, NSArray *pbxs, NSError *error) {
+    [PBX downloadPbxInfoForUser:user completed:^(BOOL success, NSInteger count, NSError *error) {
         if (success) {
-            if (pbxs.count < 1) {
+            if (count < 1) {
                 [self reportError:NoPbx description:@"This username is not associated with any PBX. Please contact your Administrator"];
             }
             else {
@@ -367,18 +368,6 @@ static int MAX_LOGIN_ATTEMPTS = 2;
         }
     }];
 }
-
-//- (void)requestV4Provisioning
-//{
-//    [JCV4ProvisioningClient requestProvisioningForUser:_username password:_password completed:^(BOOL success, NSError *error) {
-//        if (success) {
-//            self.userLoadedMininumData = TRUE;
-//        }
-//        else {
-//            [self reportError:ProvisioningFailure description:error.localizedFailureReason];
-//        }
-//    }];
-//}
 
 -(void)reportError:(JCAuthenticationManagerErrorType)type description:(NSString *)description
 {

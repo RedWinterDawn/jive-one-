@@ -28,6 +28,13 @@
 #import "JCApplicationSwitcherDelegate.h"
 #import "JCV5ApiClient.h"
 
+#import "PBX.h"
+#import "Line.h"
+#import "User.h"
+
+#import "Voicemail+Custom.h"
+#import "Contact+Custom.h"
+
 #import "UAirship.h"
 #import "UAConfig.h"
 #import "UAPush.h"
@@ -59,6 +66,11 @@
     
     // Load Core Data
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:kCoreDataDatabase];
+    
+    // Badging
+    [[JCBadgeManager sharedManager] initialize];
+    UAConfig *config = [UAConfig defaultConfig];
+    [UAirship takeOff:config];
     
     // Authentication
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
@@ -180,18 +192,16 @@
 
 - (void)startDataSyncInBackground
 {
-    UAConfig *config = [UAConfig defaultConfig];
-    [UAirship takeOff:config];
     
-    // Launches the Badge manager. Should be launched after core data has been loaded, but before we start syncing data.
-    [[JCBadgeManager sharedManager] initialize];
+    
+    
     
     // Sync Data
-    JCV5ApiClient *client = [JCV5ApiClient sharedClient];
+    /*JCV5ApiClient *client = [JCV5ApiClient sharedClient];
     if (_authenticationManager.line.pbx.isV5) {
-        [client getVoicemails:nil];
+        [JCV5ApiClient getVoicemailsForLine:_authenticationManager.line completed:NULL];
     }
-    [client RetrieveContacts:nil];
+    [client RetrieveContacts:nil];*/
 }
 
 - (UIBackgroundFetchResult)backgroundPerformFetchWithCompletionHandler
@@ -210,16 +220,8 @@
             JCBadgeManager *badgeManger = [JCBadgeManager sharedManager];
             [badgeManger startBackgroundUpdates];
             
-            // Fetch Voicemails in the background.
-            [Voicemail fetchVoicemailsInBackground:^(BOOL success, NSError *error) {
-                if (success) {
-                    NSLog(@"Success Done with Block");
-                    LogMessage(@"socket", 4, @"Successful Rest Call In Background");
-                }
-                else {
-                    NSLog(@"Error Done With Block %@", error);
-                    LogMessage(@"socket", 4, @"Failed Rest Call In Background");
-                }
+            Line *line = [JCAuthenticationManager sharedInstance].line;
+            [Voicemail downloadVoicemailsForLine:line complete:^(BOOL suceeded, NSError *error) {
                 [monitor signal];
             }];
             
@@ -264,19 +266,25 @@
     return fetchResult;
 }
 
--(void)registerPhoneToLine:(Line *)line
+-(void)registerServicesToLine:(Line *)line
 {
-    __unsafe_unretained UIViewController *rootViewController = self.window.rootViewController;
-    [JCCallCardManager connectToLine:line
-                             started:^{
-                                 [rootViewController showHudWithTitle:@"Registering" detail:@"Selecting Line..."];
-                             }
-                           completed:^(BOOL success, NSError *error) {
-                               [rootViewController hideHud];
-                               if (!success) {
-                                   [rootViewController showSimpleAlert:@"Registration" message:@"Unable to connect to this line at this time. Please Try again." code:error.code];
-                               }
-                            }];
+//    // Register the Phone.
+//    UIViewController *rootViewController = self.window.rootViewController;
+//    [JCCallCardManager connectToLine:line
+//                             started:^{
+//                                 [rootViewController showHudWithTitle:@"" detail:@"Selecting Line..."];
+//                             }
+//                           completed:^(BOOL success, NSError *error) {
+//                               [rootViewController hideHud];
+//                               if (!success) {
+//                                   [rootViewController showSimpleAlert:@"" message:@"Unable to connect to this line at this time. Please Try again." code:error.code];
+//                               }
+//                            }];
+    // Get Contacts
+    [Contact downloadContactsForLine:line complete:NULL];
+    
+    // Get Voicemails
+    [Voicemail downloadVoicemailsForLine:line complete:NULL];
 }
 
 #pragma mark - Notification Handlers -
@@ -288,8 +296,6 @@
  */
 -(void)userDataReady:(NSNotification *)notification
 {
-    //[self startDataSyncInBackground];
-    
     // If we have not already, initialize the phone manager singleton, store a reference to it and register for notifications.
     if (!_phoneManager) {
         _phoneManager = [JCCallCardManager sharedManager];
@@ -308,7 +314,7 @@
     
     [self dismissLoginViewController:YES completed:^(BOOL finished) {
         JCAuthenticationManager *authenticationManager = notification.object;
-        [self registerPhoneToLine:authenticationManager.line];
+        [self registerServicesToLine:authenticationManager.line];
     }];
 }
 
@@ -320,7 +326,7 @@
 -(void)lineChanged:(NSNotification *)notification
 {
     JCAuthenticationManager *authenticationManager = notification.object;
-    [self registerPhoneToLine:authenticationManager.line];
+    [self registerServicesToLine:authenticationManager.line];
 }
 
 

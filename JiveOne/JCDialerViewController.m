@@ -31,11 +31,11 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 {
     [super viewDidLoad];
     
-    _phoneManager = [JCCallCardManager sharedManager];
-    [_phoneManager addObserver:self forKeyPath:@"connected" options:NSKeyValueObservingOptionNew context:NULL];
-    [self updateRegistrationStatus];
-    
-    self.backspaceBtn.alpha = 0;
+//    _phoneManager = [JCCallCardManager sharedManager];
+//    [_phoneManager addObserver:self forKeyPath:@"connected" options:NSKeyValueObservingOptionNew context:NULL];
+//    [self updateRegistrationStatus];
+//    
+//    self.backspaceBtn.alpha = 0;
 }
 
 /**
@@ -47,17 +47,17 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 {
     [super viewWillAppear:animated];
     
-    if(!_phoneManager.isConnected)
-    {
-        __unsafe_unretained UIViewController *weakSelf = self;
-        [_phoneManager reconnectToLine:[JCAuthenticationManager sharedInstance].line
-                               started:^{
-                                   [weakSelf showHudWithTitle:@"Registering" detail:@"Selecting Line..."];
-                               }
-                            completion:^(bool success, NSError *error) {
-                                [weakSelf hideHud];
-                            }];
-    }
+//    if(!_phoneManager.isConnected)
+//    {
+//        __unsafe_unretained UIViewController *weakSelf = self;
+//        [_phoneManager reconnectToLine:[JCAuthenticationManager sharedInstance].line
+//                               started:^{
+//                                   [weakSelf showHudWithTitle:@"Registering" detail:@"Selecting Line..."];
+//                               }
+//                            completion:^(bool success, NSError *error) {
+//                                [weakSelf hideHud];
+//                            }];
+//    }
 }
 
 - (void)dealloc
