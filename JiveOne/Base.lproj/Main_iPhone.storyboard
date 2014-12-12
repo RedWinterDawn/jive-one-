@@ -68,6 +68,7 @@
                                 <items>
                                     <tabBarItem systemItem="contacts" id="qRU-ek-73r"/>
                                     <tabBarItem tag="1" systemItem="favorites" id="plA-OB-q0o"/>
+                                    <tabBarItem tag="1" systemItem="search" id="iPf-8b-ucL" userLabel="External Contacts"/>
                                 </items>
                                 <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -1363,7 +1364,7 @@
                                     <outlet property="personPresenceView" destination="IJp-7B-E4i" id="Ovr-b6-Pck"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Txe-VD-fMN">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Txe-VD-fMN" customClass="JCExternalContactCell">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Txe-VD-fMN" id="xvq-2H-cxu">
@@ -1386,6 +1387,11 @@
                                         </imageView>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="externalImage" destination="tMb-G3-88U" id="Rn6-YY-g6Y"/>
+                                    <outlet property="externalNameLabel" destination="zFN-Lt-yXb" id="VBv-Y2-0DL"/>
+                                    <outlet property="externalNumberLebel" destination="cg4-tf-aaI" id="71A-7D-gGt"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

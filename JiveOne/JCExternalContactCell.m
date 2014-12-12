@@ -8,13 +8,22 @@
 
 #import "JCExternalContactCell.h"
 
-@implementation UITableViewCell
+@implementation JCExternalContactCell
 
 -(void)layoutSubviews
 {
     [super layoutSubviews];
     
-    
+}
+
+-(void)SetExternalContactName:(NSString *)name{
+    self.externalNameLabel.text = name;
+}
+-(void)SetExternalContactNumber:(NSString *)number{
+    self.externalNumberLebel.text = number;
+}
+-(void)SetExternalface:(UIImage *)face{
+    self.externalImage.image = face;
 }
 
 @end

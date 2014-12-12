@@ -11,4 +11,6 @@
 
 @property (nonatomic, weak) IBOutlet UILabel *externalNameLabel;
 @property (nonatomic, weak) IBOutlet UILabel *externalNumberLebel;
+@property (weak, nonatomic) IBOutlet UIImageView *externalImage;
+
 @end
