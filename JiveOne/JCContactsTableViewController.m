@@ -11,6 +11,7 @@
 
 #import "JCContactCell.h"
 #import "JCLineCell.h"
+#import "JCExternalContactCell.h"
 
 #import "JasmineSocket.h"
 
@@ -69,6 +70,9 @@
     else if ([object isKindOfClass:[Line class]] && [cell isKindOfClass:[JCLineCell class]]) {
         ((JCLineCell *)cell).line = (Line *)object;
     }
+    else if ([object isKindOfClass:[UITableViewCell class]] && [cell isKindOfClass:[JCExternalContactCell class]]) {
+        ((JCExternalContactCell *)cell).externalNameLabel = (JCExternalContactCell *)object;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForObject:(id<NSObject>)object atIndexPath:(NSIndexPath *)indexPath
@@ -80,6 +84,11 @@
     }
     else if ([object isKindOfClass:[Line class]]) {
         JCLineCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LineCell"];
+        [self configureCell:cell withObject:object];
+        return cell;
+    }
+    else if ([object isKindOfClass:[UITableViewCell class]]) {
+        JCExternalContactCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ExternalContactCell"];
         [self configureCell:cell withObject:object];
         return cell;
     }
@@ -108,10 +117,10 @@
         else if(filterPredicate)
             predicate = filterPredicate;
     }
-        
     if (_fetchedResultsController)
     {
         _fetchedResultsController.fetchRequest.predicate = predicate;
+        NSLog(@"predicate : %@",predicate);
         __autoreleasing NSError *error = nil;
         if ([self.fetchedResultsController performFetch:&error])
         {

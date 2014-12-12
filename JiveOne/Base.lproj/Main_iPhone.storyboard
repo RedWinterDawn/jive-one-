@@ -68,6 +68,7 @@
                                 <items>
                                     <tabBarItem systemItem="contacts" id="qRU-ek-73r"/>
                                     <tabBarItem tag="1" systemItem="favorites" id="plA-OB-q0o"/>
+                                    <tabBarItem tag="1" systemItem="search" id="iPf-8b-ucL" userLabel="External Contacts"/>
                                 </items>
                                 <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -1454,6 +1455,35 @@
                                     <outlet property="personPresenceView" destination="IJp-7B-E4i" id="Ovr-b6-Pck"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Txe-VD-fMN" customClass="JCExternalContactCell">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Txe-VD-fMN" id="xvq-2H-cxu">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zFN-Lt-yXb">
+                                            <rect key="frame" x="60" y="11" width="206" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cg4-tf-aaI">
+                                            <rect key="frame" x="60" y="32" width="206" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tMb-G3-88U">
+                                            <rect key="frame" x="8" y="8" width="44" height="45"/>
+                                        </imageView>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="externalImage" destination="tMb-G3-88U" id="Rn6-YY-g6Y"/>
+                                    <outlet property="externalNameLabel" destination="zFN-Lt-yXb" id="VBv-Y2-0DL"/>
+                                    <outlet property="externalNumberLebel" destination="cg4-tf-aaI" id="71A-7D-gGt"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="c3p-aT-jcP" id="njb-zL-RLk"/>
@@ -1464,25 +1494,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fLZ-A1-vk7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1164" y="822.5"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="aQZ-Ns-eht">
-            <objects>
-                <viewController id="2Qy-5m-QAh" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="eZZ-Ge-wbl"/>
-                        <viewControllerLayoutGuide type="bottom" id="sJl-C3-OZv"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="esY-SA-DhI">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="drz-fb-22I" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1895" y="856"/>
+            <point key="canvasLocation" x="1164" y="813.5"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="uDf-PG-NB6">
@@ -1648,7 +1660,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="559" y="3359"/>
+            <point key="canvasLocation" x="437" y="3359"/>
         </scene>
         <!--Terms And Conditons View Controller-->
         <scene sceneID="zrd-iB-Kwq">
@@ -1931,7 +1943,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hXS-bk-AXt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="988" y="3359"/>
+            <point key="canvasLocation" x="823" y="3359"/>
         </scene>
         <!--Phone-->
         <scene sceneID="m60-zF-4Od">
@@ -2177,7 +2189,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U9g-em-KGD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1531" y="-1109.5"/>
+            <point key="canvasLocation" x="1584" y="-1115.5"/>
         </scene>
         <!--Dialer-->
         <scene sceneID="GNC-gS-V56">
@@ -4706,8 +4718,7 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="voi-Tt-SuU"/>
-        <segue reference="Uqi-bD-GAX"/>
-        <segue reference="Jb7-iw-Z2s"/>
+        <segue reference="xxt-tb-rPs"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29803921570000003" green="0.44705882349999998" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
 </document>
