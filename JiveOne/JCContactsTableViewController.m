@@ -122,7 +122,7 @@
         _fetchedResultsController.fetchRequest.predicate = predicate;
         NSLog(@"predicate : %@",predicate);
         __autoreleasing NSError *error = nil;
-        if ([self.fetchedResultsController performFetch:&error])
+//        if ([self.fetchedResultsController performFetch:&error])
         {
             [self.tableView reloadData];
         }
@@ -158,7 +158,15 @@
     if (_filterType == JCContactFilterFavorites) {
         return [NSPredicate predicateWithFormat:@"isFavorite == 1"];
     }
+    else if (_filterType == JCContactFilterLocalContacts){
+        [NSPredicate predicateWithFormat:@"ExternalContacts == 2"];
+        [self showAddressBook];
+    }
     return nil;
+}
+
+-(void)showAddressBook{
+    return;
 }
 
 #pragma mark - Delegate handlers -

@@ -16,14 +16,6 @@
     
 }
 
--(void)SetExternalContactName:(NSString *)name{
-    self.externalNameLabel.text = name;
-}
--(void)SetExternalContactNumber:(NSString *)number{
-    self.externalNumberLebel.text = number;
-}
--(void)SetExternalface:(UIImage *)face{
-    self.externalImage.image = face;
-}
+
 
 @end

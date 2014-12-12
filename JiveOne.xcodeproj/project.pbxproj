@@ -341,6 +341,7 @@
 		F8C9A7E519EC36340049A715 /* RecentEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C9A7E419EC36340049A715 /* RecentEvent.m */; };
 		F8C9A7E919EC5F4C0049A715 /* JCCallHistoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C9A7E819EC5F4C0049A715 /* JCCallHistoryTableViewController.m */; };
 		F8C9A7EC19EC691C0049A715 /* JCCallHistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F8C9A7EB19EC691C0049A715 /* JCCallHistoryCell.m */; };
+		F8F2796C1A3B8C5C00ED41B0 /* JCExternalCOntactTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8F2796B1A3B8C5C00ED41B0 /* JCExternalCOntactTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1025,6 +1026,8 @@
 		F8C9A7E819EC5F4C0049A715 /* JCCallHistoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallHistoryTableViewController.m; sourceTree = "<group>"; };
 		F8C9A7EA19EC691C0049A715 /* JCCallHistoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCallHistoryCell.h; sourceTree = "<group>"; };
 		F8C9A7EB19EC691C0049A715 /* JCCallHistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallHistoryCell.m; sourceTree = "<group>"; };
+		F8F2796A1A3B8C5C00ED41B0 /* JCExternalCOntactTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCExternalCOntactTableViewController.h; sourceTree = "<group>"; };
+		F8F2796B1A3B8C5C00ED41B0 /* JCExternalCOntactTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCExternalCOntactTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1616,6 +1619,8 @@
 				2747F1651A07E0F300E3FE73 /* JCContactsViewController.m */,
 				276E06781A0293BC00CD2827 /* JCContactsTableViewController.h */,
 				276E06791A0293BC00CD2827 /* JCContactsTableViewController.m */,
+				F8F2796A1A3B8C5C00ED41B0 /* JCExternalCOntactTableViewController.h */,
+				F8F2796B1A3B8C5C00ED41B0 /* JCExternalCOntactTableViewController.m */,
 			);
 			name = Contacts;
 			sourceTree = "<group>";
@@ -2671,6 +2676,7 @@
 				27F1F2E7191C171300AEAFD7 /* UAPushSettingsAliasViewController.m in Sources */,
 				279A4E2C19DA91E100E8AB7B /* SipHandler.mm in Sources */,
 				27B6F23D19DDC676007E80DA /* JCDialerViewController.m in Sources */,
+				F8F2796C1A3B8C5C00ED41B0 /* JCExternalCOntactTableViewController.m in Sources */,
 				279E4CB3192273E5002A556C /* MBContactModel.m in Sources */,
 				5D7339A71A03F2E700339DC6 /* NSManagedObject+JCCoreDataAdditions.m in Sources */,
 				279E4CAD192273E5002A556C /* MBContactCollectionViewEntryCell.m in Sources */,

@@ -12,5 +12,6 @@
 @property (nonatomic, weak) IBOutlet UILabel *externalNameLabel;
 @property (nonatomic, weak) IBOutlet UILabel *externalNumberLebel;
 @property (weak, nonatomic) IBOutlet UIImageView *externalImage;
+@property (nonatomic, strong) IBOutlet NSString *ID;
 
 @end

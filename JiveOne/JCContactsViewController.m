@@ -45,10 +45,7 @@
         case 1:
             _contactsTableViewController.filterType = JCContactFilterFavorites;
             break;
-        case 2:
-            _contactsTableViewController.filterType = JCExternalContacts;
-            break;
-            
+    
         default:
             _contactsTableViewController.filterType = JCContactFilterAll;
             break;
