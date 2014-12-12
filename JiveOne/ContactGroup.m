@@ -12,6 +12,8 @@
 @implementation ContactGroup
 
 @dynamic groupId;
-@dynamic groupName;
+@dynamic name;
+
+@dynamic contacts;
 
 @end

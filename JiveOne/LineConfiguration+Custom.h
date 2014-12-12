@@ -9,5 +9,7 @@
 #import "LineConfiguration.h"
 
 @interface LineConfiguration (Custom)
-+ (void)addConfiguration:(NSDictionary *)config line:(Line *)line completed:(void (^)(BOOL success, NSError *error))completed;
+
++ (void)addLineConfigurations:(NSArray *)data line:(Line *)line completed:(void (^)(BOOL success, NSError *error))completed;
+
 @end

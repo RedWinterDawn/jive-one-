@@ -14,6 +14,8 @@ NSString *kContacktFavoriteAttribute = @"favorite";
 
 @implementation Contact
 
+@dynamic jiveUserId;
+
 -(void)setFavorite:(BOOL)favorite
 {
     [self setPrimitiveValueFromBoolValue:favorite forKey:kContacktFavoriteAttribute];
@@ -40,5 +42,6 @@ NSString *kContacktFavoriteAttribute = @"favorite";
 }
 
 @dynamic pbx;
+@dynamic groups;
 
 @end

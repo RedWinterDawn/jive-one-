@@ -12,8 +12,7 @@
 
 @interface PBX (Custom)
 
-+ (void)addPBXs:(NSArray *)pbxsData user:(User *)user completed:(void (^)(BOOL success, NSArray *pbxs, NSError *error))completed;
-
-+ (PBX *)addPBX:(NSDictionary *)data user:(User *)user context:(NSManagedObjectContext *)context;
+// Retrives the information for all PBXs and Lines attached to the user.
++ (void)downloadPbxInfoForUser:(User *)user completed:(void(^)(BOOL success, NSInteger count, NSError *error))completion;
 
 @end

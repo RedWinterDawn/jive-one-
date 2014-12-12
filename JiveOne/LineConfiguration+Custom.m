@@ -7,7 +7,6 @@
 //
 
 #import "LineConfiguration+Custom.h"
-#import <XMLDictionary/XMLDictionary.h>
 
 NSString *const kLineConfigurationResponseKey = @"_name";
 NSString *const kLineConfigurationResponseValue = @"_value";
@@ -20,18 +19,18 @@ NSString *const kLineConfigurationResponseSipPasswordKey        = @"password";
 
 @implementation LineConfiguration (Custom)
 
-+ (void)addConfiguration:(NSDictionary *)config line:(Line *)line completed:(void (^)(BOOL success, NSError *error))completed
++ (void)addLineConfigurations:(NSArray *)array line:(Line *)line completed:(void (^)(BOOL success, NSError *error))completed
 {
     [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
         
         Line *localLine = (Line *)[localContext objectWithID:line.objectID];
-        NSArray *dataArray = [config valueForKeyPath:@"branding.settings_data.core_data_list.account_list.account.data"];
-        NSDictionary *data = [NSDictionary normalizeDictionaryFromArray:dataArray keyIdentifier:kLineConfigurationResponseKey valueIdentifier:kLineConfigurationResponseValue];
+    
+        NSDictionary *data = [NSDictionary normalizeDictionaryFromArray:array keyIdentifier:kLineConfigurationResponseKey valueIdentifier:kLineConfigurationResponseValue];
         if (data) {
             [LineConfiguration addLineConfiguration:data line:localLine managedObjectContext:localContext];
         }
         else {
-            for (id object in dataArray) {
+            for (id object in array) {
                 if ([object isKindOfClass:[NSArray class]]) {
                     NSDictionary *data = [NSDictionary normalizeDictionaryFromArray:(NSArray *)object keyIdentifier:kLineConfigurationResponseKey valueIdentifier:kLineConfigurationResponseValue];
                     if (data) {

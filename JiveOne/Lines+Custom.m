@@ -18,31 +18,32 @@ NSString *const kLineResponseMailboxJrnKey      = @"mailbox_jrn";
 
 @implementation Line (Custom)
 
-+ (void)addLines:(NSArray *)linesData pbx:(PBX *)pbx completed:(void (^)(BOOL success))completed
++ (void)addLines:(NSArray *)linesData pbx:(PBX *)pbx completed:(void (^)(BOOL success, NSError *error))completed
 {
+    __block NSManagedObjectID *objectId = pbx.objectID;
     [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+        PBX *localPbx = (PBX *)[localContext objectWithID:objectId];
         for (id object in linesData)
         {
             if ([object isKindOfClass:[NSDictionary class]]) {
-                [self addLine:(NSDictionary *)object pbx:(PBX *)[localContext objectWithID:pbx.objectID] context:localContext];
-            }
-            else {
-                completed(false);
+                [self addLine:(NSDictionary *)object pbx:localPbx];
             }
         }
     } completion:^(BOOL success, NSError *error) {
-        completed(success);
+        if (completed) {
+            completed(success, error);
+        }
     }];
 }
 
-+ (Line *)addLine:(NSDictionary *)data pbx:(PBX *)pbx context:(NSManagedObjectContext *)context
++ (Line *)addLine:(NSDictionary *)data pbx:(PBX *)pbx
 {
     NSString *jrn = [data stringValueForKey:kLineResponseJrnKey];
     if (!jrn) {
         return nil;
     }
     
-    Line *line = [Line lineForJrn:jrn pbx:pbx context:context];
+    Line *line = [Line lineForJrn:jrn pbx:pbx];
     line.name        = [data stringValueForKey:kLineResponseLineNameKey];
     line.extension   = [data stringValueForKey:kLineResponseLineNumberKey];
     line.mailboxUrl  = [data stringValueForKey:kLineResponseMailboxUrlKey];
@@ -52,13 +53,13 @@ NSString *const kLineResponseMailboxJrnKey      = @"mailbox_jrn";
     return line;
 }
 
-+ (Line *)lineForJrn:(NSString *)jrn pbx:(PBX *)pbx context:(NSManagedObjectContext *)context
++ (Line *)lineForJrn:(NSString *)jrn pbx:(PBX *)pbx
 {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx = %@ and jrn = %@", pbx, jrn];
-    Line *line = [Line MR_findFirstWithPredicate:predicate inContext:context];
+    Line *line = [Line MR_findFirstWithPredicate:predicate inContext:pbx.managedObjectContext];
     if(!line)
     {
-        line = [Line MR_createInContext:context];
+        line = [Line MR_createInContext:pbx.managedObjectContext];
         line.jrn = jrn;
         line.pbx = pbx;
     }

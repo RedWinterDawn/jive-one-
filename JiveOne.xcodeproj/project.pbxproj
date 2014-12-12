@@ -78,7 +78,6 @@
 		270152C61901D1FF00F271CE /* PersonEntities+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 270152C51901D1FF00F271CE /* PersonEntities+Custom.m */; };
 		270152CB1901D86700F271CE /* JCContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 270152CA1901D86700F271CE /* JCContactModel.m */; };
 		270559A5196DD11700A7AF35 /* ContactGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 270559A4196DD11700A7AF35 /* ContactGroup.m */; };
-		270559A8196DD11800A7AF35 /* LineGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 270559A7196DD11800A7AF35 /* LineGroup.m */; };
 		2710E40C18CE873000152C91 /* Conversation+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 2710E40B18CE873000152C91 /* Conversation+Custom.m */; };
 		2710E40F18CEC8C300152C91 /* ConversationEntry+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 2710E40E18CEC8C300152C91 /* ConversationEntry+Custom.m */; };
 		271EBDAF1910525E00421BA9 /* GTalkNotify.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 271EBDAE1910525E00421BA9 /* GTalkNotify.aiff */; };
@@ -255,6 +254,7 @@
 		5D241FEA1A38C4CE008B498A /* JCLineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FE91A38C4CE008B498A /* JCLineCell.m */; };
 		5D2B2C081A30D8AE00938D76 /* JCVisualEffectsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2B2C051A30D8AE00938D76 /* JCVisualEffectsView.m */; };
 		5D2B2C091A30D8AE00938D76 /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2B2C071A30D8AE00938D76 /* FXBlurView.m */; };
+		5D2EDB7E1A3ADFAF0031F7AD /* Contact+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2EDB7D1A3ADFAF0031F7AD /* Contact+Custom.m */; };
 		5D34446519F02F1C00315230 /* JCCurrentCallCardViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D34446419F02F1C00315230 /* JCCurrentCallCardViewCell.m */; };
 		5D35479519FF4B6E009E3CB4 /* JCApplicationSwitcherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D35479419FF4B6E009E3CB4 /* JCApplicationSwitcherViewController.m */; };
 		5D35479819FF4B85009E3CB4 /* JCApplicationSwitcherDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D35479719FF4B85009E3CB4 /* JCApplicationSwitcherDelegate.m */; };
@@ -443,8 +443,6 @@
 		270152CA1901D86700F271CE /* JCContactModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCContactModel.m; sourceTree = "<group>"; };
 		270559A3196DD11700A7AF35 /* ContactGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactGroup.h; sourceTree = "<group>"; };
 		270559A4196DD11700A7AF35 /* ContactGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactGroup.m; sourceTree = "<group>"; };
-		270559A6196DD11800A7AF35 /* LineGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineGroup.h; sourceTree = "<group>"; };
-		270559A7196DD11800A7AF35 /* LineGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineGroup.m; sourceTree = "<group>"; };
 		2710E40A18CE873000152C91 /* Conversation+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Conversation+Custom.h"; sourceTree = "<group>"; };
 		2710E40B18CE873000152C91 /* Conversation+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Conversation+Custom.m"; sourceTree = "<group>"; };
 		2710E40D18CEC8C300152C91 /* ConversationEntry+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConversationEntry+Custom.h"; sourceTree = "<group>"; };
@@ -805,6 +803,8 @@
 		5D2B2C051A30D8AE00938D76 /* JCVisualEffectsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVisualEffectsView.m; sourceTree = "<group>"; };
 		5D2B2C061A30D8AE00938D76 /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
 		5D2B2C071A30D8AE00938D76 /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
+		5D2EDB7C1A3ADFAF0031F7AD /* Contact+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Contact+Custom.h"; sourceTree = "<group>"; };
+		5D2EDB7D1A3ADFAF0031F7AD /* Contact+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Contact+Custom.m"; sourceTree = "<group>"; };
 		5D34446319F02F1C00315230 /* JCCurrentCallCardViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCurrentCallCardViewCell.h; sourceTree = "<group>"; };
 		5D34446419F02F1C00315230 /* JCCurrentCallCardViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCurrentCallCardViewCell.m; sourceTree = "<group>"; };
 		5D35479319FF4B6E009E3CB4 /* JCApplicationSwitcherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCApplicationSwitcherViewController.h; sourceTree = "<group>"; };
@@ -1286,11 +1286,9 @@
 				5D241FE01A38B4EB008B498A /* Person.m */,
 				5D241FE21A38BAD5008B498A /* Contact.h */,
 				5D241FE31A38BAD5008B498A /* Contact.m */,
-				5D1BBE5C19EDE481006526B2 /* Events */,
-				270559A6196DD11800A7AF35 /* LineGroup.h */,
-				270559A7196DD11800A7AF35 /* LineGroup.m */,
 				270559A3196DD11700A7AF35 /* ContactGroup.h */,
 				270559A4196DD11700A7AF35 /* ContactGroup.m */,
+				5D1BBE5C19EDE481006526B2 /* Events */,
 				DDEC37D4191029B800E166CC /* PersonEntities.h */,
 				DDEC37D5191029B800E166CC /* PersonEntities.m */,
 				274493C918D0E98D002744CB /* PersonMeta.h */,
@@ -1469,6 +1467,8 @@
 				DD3BD9F318DCB1740080318E /* Voicemail+Custom.m */,
 				2799756F195A12B7001425CC /* Membership+Custom.h */,
 				27997570195A12B7001425CC /* Membership+Custom.m */,
+				5D2EDB7C1A3ADFAF0031F7AD /* Contact+Custom.h */,
+				5D2EDB7D1A3ADFAF0031F7AD /* Contact+Custom.m */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -2691,7 +2691,6 @@
 				F8BC82C319E44A2E00340BA1 /* JCKeypadOverlayView.m in Sources */,
 				275F4A6218AD0FBC00D2F069 /* JCAppDelegate.m in Sources */,
 				5D03649119DC5A450090CC21 /* JCTransferViewController.m in Sources */,
-				270559A8196DD11800A7AF35 /* LineGroup.m in Sources */,
 				DDEC37D6191029B800E166CC /* PersonEntities.m in Sources */,
 				2788F14A190EB1260099348D /* NSNull+IntValue.m in Sources */,
 				5D241FE71A38BE5A008B498A /* JCContactCell.m in Sources */,
@@ -2757,6 +2756,7 @@
 				5DA566491A20543500286BA5 /* JCAuthenticationManagerError.m in Sources */,
 				2700987418F4714100B6BC2F /* NSString+JSMessagesView.m in Sources */,
 				27BE503D19DCF6A800B725ED /* JCLineSession.m in Sources */,
+				5D2EDB7E1A3ADFAF0031F7AD /* Contact+Custom.m in Sources */,
 				278E858619EC6B6E0087649D /* VideoViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

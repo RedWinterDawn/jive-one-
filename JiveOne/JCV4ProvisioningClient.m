@@ -25,7 +25,7 @@
         request = [JCV4ProvisioningURLRequest requestWithLine:line];
     }
     @catch (NSException *exception) {
-        completed(false, [JCV4ProvisioningError errorWithType:InvalidRequestParametersError reason:exception.reason]);
+        completed(false, [JCV4ProvisioningError errorWithType:JCV4ProvisioningInvalidRequestParametersError reason:exception.reason]);
         return;
     }
     
@@ -36,19 +36,37 @@
         __autoreleasing NSError *error = nil;
         NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
         if (error) {
-            completed(false, [JCV4ProvisioningError errorWithType:RequestResponseError reason:error.localizedFailureReason]);
+            completed(false, [JCV4ProvisioningError errorWithType:JCV4ProvisioningRequestResponseError reason:error.localizedDescription]);
             return;
         }
         
         // Process Response Data
         @try {
-            NSDictionary *response = [NSDictionary dictionaryWithXMLData:data];
-            [LineConfiguration addConfiguration:response line:line completed:^(BOOL success, NSError *error) {
+            NSDictionary *result = [NSDictionary dictionaryWithXMLData:data];
+            if (!result) {
+                completed(false, [JCV4ProvisioningError errorWithType:JCV4ProvisioningRequestResponseError reason:@"Response is Empty"]);
+                return;
+            }
+            
+            NSDictionary *status = [result valueForKeyPath:@"login_response.status"];
+            BOOL success = [status boolValueForKey:@"_success"];
+            if (!success) {
+                completed(false, [JCV4ProvisioningError errorWithType:JCV4ProvisioningRequestResponseError reason:[status stringValueForKey:@"_error_text"]]);
+                return;
+            }
+            
+            NSArray *array = [result valueForKeyPath:@"branding.settings_data.core_data_list.account_list.account.data"];
+            if (!array || array.count == 0) {
+                completed(false, [JCV4ProvisioningError errorWithType:JCV4ProvisioningRequestResponseError reason:@"No Line Configuration present"]);
+                return;
+            }
+            
+            [LineConfiguration addLineConfigurations:array line:line completed:^(BOOL success, NSError *error) {
                 completed(success, error);
             }];
         }
         @catch (NSException *exception) {
-            completed(NO, [JCV4ProvisioningError errorWithType:ResponseParseError reason:exception.reason]);
+            completed(NO, [JCV4ProvisioningError errorWithType:JCV4ProvisioningResponseParseError reason:exception.reason]);
         }
     });
 }
@@ -57,7 +75,7 @@
 
 #pragma mark - JCV4ProvisioningRequest -
 
-NSString *const kJCV4ProvisioningClientRequestString = @"<login user=\"%@\" password=\"%@\" token=\"%@\" pbxid=\"%@\" extension=\"%@\" man=\"Apple\" device=\"%@\" os=\"%@\" loc=\"%@\" lang=\"%@\" uuid=\"%@\" spid=\"cpc\" build=\"%@\" type=\"%@\" />";
+NSString *const kJCV4ProvisioningClientRequestString = @"<login user=\"%@\" password=\"%@\" token=\"%@\" pbxid=\"%@\" line=\"%@\" man=\"Apple\" device=\"%@\" os=\"%@\" loc=\"%@\" lang=\"%@\" uuid=\"%@\" spid=\"cpc\" build=\"%@\" type=\"%@\" />";
 
 @implementation JCV4ProvisioningRequest
 
@@ -147,7 +165,7 @@ NSString *const kJCV4ProvisioningClientRequestString = @"<login user=\"%@\" pass
 
 #pragma mark - JCV4ProvisioningURLRequest -
 
-NSString *const kJCV4ProvisioningClientRequestUrl = @"https://pbx.onjive.com/p/mobility/mobileusersettings";
+NSString *const kJCV4ProvisioningClientRequestUrl = @"http://10.20.150.168:8080/provisioning/mobility/mobileusersettings"; //@"https://pbx.onjive.com/p/mobility/mobileusersettings";
 
 @implementation JCV4ProvisioningURLRequest
 
