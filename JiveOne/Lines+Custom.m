@@ -36,11 +36,11 @@ NSString *const kLineResponseMailboxJrnKey      = @"mailbox_jrn";
     }];
 }
 
-+ (Line *)addLine:(NSDictionary *)data pbx:(PBX *)pbx
++ (void)addLine:(NSDictionary *)data pbx:(PBX *)pbx
 {
     NSString *jrn = [data stringValueForKey:kLineResponseJrnKey];
     if (!jrn) {
-        return nil;
+        return;
     }
     
     Line *line = [Line lineForJrn:jrn pbx:pbx];
@@ -50,7 +50,7 @@ NSString *const kLineResponseMailboxJrnKey      = @"mailbox_jrn";
     line.mailboxJrn  = [data stringValueForKey:kLineResponseMailboxJrnKey];
     //line.state       = [NSNumber numberWithInt:(int)JCPresenceTypeAvailable];
     
-    return line;
+    return;
 }
 
 + (Line *)lineForJrn:(NSString *)jrn pbx:(PBX *)pbx

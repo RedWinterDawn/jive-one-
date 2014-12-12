@@ -13,6 +13,6 @@
 @interface PBX (Custom)
 
 // Retrives the information for all PBXs and Lines attached to the user.
-+ (void)downloadPbxInfoForUser:(User *)user completed:(void(^)(BOOL success, NSInteger count, NSError *error))completion;
++ (void)downloadPbxInfoForUser:(User *)user completed:(void(^)(BOOL success, NSError *error))completion;
 
 @end

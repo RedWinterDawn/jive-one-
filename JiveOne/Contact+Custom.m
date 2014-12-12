@@ -7,6 +7,7 @@
 //
 
 #import "Contact+Custom.h"
+#import "ContactGroup.h"
 #import "PBX.h"
 
 NSString *const kContactResponseIdentifierKey   = @"id";
@@ -82,12 +83,26 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
     
     Contact *contact = [Contact contactForJrn:jrn pbx:pbx];
     contact.name        = [data stringValueForKey:kContactResponseNameKey];
-    //line.extension   = [data stringValueForKey:kLineResponseLineNumberKey];
-    //line.mailboxUrl  = [data stringValueForKey:kLineResponseMailboxUrlKey];
-    //line.mailboxJrn  = [data stringValueForKey:kLineResponseMailboxJrnKey];
-    //line.state       = [NSNumber numberWithInt:(int)JCPresenceTypeAvailable];
+    contact.extension   = [data stringValueForKey:kContactResponseExtensionKey];
+    contact.jiveUserId  = [data stringValueForKey:kContactResponseJiveIdKey];
     
+    id object = [data objectForKey:kContactResponseGroupKey];
+    if ([object isKindOfClass:[NSArray class]]){
+        [Contact updateContactGroupsForContact:contact data:(NSArray *)object];
+    }
     return contact;
+}
+
++(void)updateContactGroupsForContact:(Contact *)contact data:(NSArray *)data
+{
+    for(id object in data) {
+        if ([object isKindOfClass:[NSDictionary class]]){
+            NSDictionary *groupData = (NSDictionary *)object;
+            NSString *identifer = [groupData stringValueForKey:kContactResponseGroupIdKey];
+            ContactGroup *group = [Contact contactGroupForIdentifier:identifer contact:contact];
+            group.name = [groupData stringValueForKey:kContactResponseGroupNameKey];
+        }
+    }
 }
 
 + (Contact *)contactForJrn:(NSString *)jrn pbx:(PBX *)pbx
@@ -101,6 +116,20 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
         contact.pbx = pbx;
     }
     return contact;
+}
+
++ (ContactGroup *)contactGroupForIdentifier:(NSString *)identifer contact:(Contact *)contact
+{
+    ContactGroup *group = [ContactGroup MR_findFirstByAttribute:@"groupId" withValue:identifer inContext:contact.managedObjectContext];
+    if (!group) {
+        group = [ContactGroup MR_createInContext:contact.managedObjectContext];
+        group.groupId = identifer;
+    }
+    
+    if (![group.contacts containsObject:contact]) {
+        [group addContactsObject:contact];
+    }
+    return group;
 }
 
 

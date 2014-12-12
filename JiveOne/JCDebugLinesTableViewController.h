@@ -8,6 +8,6 @@
 
 #import "JCFetchedResultsTableViewController.h"
 
-@interface JCLinesTableViewController : JCFetchedResultsTableViewController
+@interface JCDebugLinesTableViewController : JCFetchedResultsTableViewController
 
 @end

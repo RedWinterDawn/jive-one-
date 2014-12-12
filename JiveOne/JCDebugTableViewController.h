@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 
 @interface JCDebugTableViewController : UITableViewController
 
@@ -17,5 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *events;
 @property (weak, nonatomic) IBOutlet UILabel *missed;
 @property (weak, nonatomic) IBOutlet UILabel *voicemails;
+@property (weak, nonatomic) IBOutlet UILabel *contacts;
+@property (weak, nonatomic) IBOutlet UILabel *contactGroups;
 
 @end

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JCLineTableViewController : UITableViewController
+@interface JCDebugLineTableViewController : UITableViewController
 
 @property (nonatomic, strong) Line *line;
 
