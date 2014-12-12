@@ -35,13 +35,6 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Descrip
     [super viewDidLoad];
     
     _authenticationManager = [JCAuthenticationManager sharedInstance];
-    size_t size;
-    sysctlbyname("hw.machine", NULL, &size, NULL, 0);
-    char *machine = malloc(size);
-    sysctlbyname("hw.machine", machine, &size, NULL, 0);
-    NSString *platform = [NSString stringWithCString:machine encoding:NSUTF8StringEncoding];
-    NSLog(@"iPhone Device%@",[self platformType:platform]);
-    free(machine);
     
     /*NSDictionary *localizedDictionary = [[NSBundle mainBundle] localizedInfoDictionary];
     self.appLabel.text = [localizedDictionary objectForKey:@"CFBundleDisplayName"];*/
@@ -97,9 +90,20 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Descrip
         [mailViewController setToRecipients:[NSArray arrayWithObject:kFeedbackEmail]];
         [mailViewController setSubject:@"Feedback"];
         
+        
+        size_t size;
+        sysctlbyname("hw.machine", NULL, &size, NULL, 0);
+        char *machine = malloc(size);
+        sysctlbyname("hw.machine", machine, &size, NULL, 0);
+        NSString *platform = [NSString stringWithCString:machine encoding:NSUTF8StringEncoding];
+        NSLog(@"iPhone Device%@",[self platformType:platform]);
+        free(machine);
+        
+        
+        
         //get device specs
         UIDevice *currentDevice = [UIDevice currentDevice];
-        NSString *model         = [currentDevice model];
+        NSString *model         = [self platformType:platform];
         NSString *systemVersion = [currentDevice systemVersion];
         NSString *appVersion    = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
         NSString *country       = [[NSLocale currentLocale] localeIdentifier];
