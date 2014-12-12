@@ -15,6 +15,8 @@
 #import "MissedCall.h"
 #import "Voicemail.h"
 #import "PBX.h"
+#import "Contact.h"
+#import "ContactGroup.h"
 
 @interface JCDebugTableViewController ()
 
@@ -32,6 +34,9 @@
     self.events.text = [NSString stringWithFormat:@"%lu", (unsigned long)[RecentEvent MR_countOfEntities]];
     self.missed.text = [NSString stringWithFormat:@"%lu", (unsigned long)[MissedCall MR_countOfEntities]];
     self.voicemails.text = [NSString stringWithFormat:@"%lu", (unsigned long)[Voicemail MR_countOfEntities]];
+    
+    self.contacts.text = [NSString stringWithFormat:@"%lu", (unsigned long)[Contact MR_countOfEntities]];
+    self.contactGroups.text = [NSString stringWithFormat:@"%lu", (unsigned long)[ContactGroup MR_countOfEntities]];
 }
 
 @end

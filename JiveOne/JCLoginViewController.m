@@ -27,7 +27,7 @@
     
     _authenticationManager = [JCAuthenticationManager sharedInstance];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(authenticated:) name:kJCAuthenticationManagerUserAuthenticatedNotification object:_authenticationManager];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadedUserData:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:_authenticationManager];
+    /*[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadedUserData:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:_authenticationManager];*/
     
     self.usernameTextField.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:0.7].CGColor;
     self.usernameTextField.layer.borderWidth = 1.0f;

@@ -13,6 +13,6 @@
 @interface Line (Custom)
 
 + (void)addLines:(NSArray *)linesData pbx:(PBX *)pbx completed:(void (^)(BOOL success, NSError *error))completed;
-+ (Line *)addLine:(NSDictionary *)lineData pbx:(PBX *)pbx;
++ (void)addLine:(NSDictionary *)lineData pbx:(PBX *)pbx;
 
 @end

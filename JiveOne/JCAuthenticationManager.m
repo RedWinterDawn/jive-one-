@@ -353,14 +353,14 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 -(void)requestPbxInformationForUser:(User *)user
 {
-    [PBX downloadPbxInfoForUser:user completed:^(BOOL success, NSInteger count, NSError *error) {
+    [PBX downloadPbxInfoForUser:user completed:^(BOOL success, NSError *error) {
         if (success) {
-            if (count < 1) {
-                [self reportError:NoPbx description:@"This username is not associated with any PBX. Please contact your Administrator"];
-            }
-            else {
-                self.userLoadedMininumData = TRUE;
-            }
+//            if (count < 1) {
+//                [self reportError:NoPbx description:@"This username is not associated with any PBX. Please contact your Administrator"];
+//            }
+//            else {
+                    self.userLoadedMininumData = TRUE;
+            //}
         }
         else {
             NSLog(@"%@", [error description]);

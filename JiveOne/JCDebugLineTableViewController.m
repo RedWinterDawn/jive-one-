@@ -6,14 +6,14 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCLineTableViewController.h"
+#import "JCDebugLineTableViewController.h"
 #import "PBX.h"
 
-@interface JCLineTableViewController ()
+@interface JCDebugLineTableViewController ()
 
 @end
 
-@implementation JCLineTableViewController
+@implementation JCDebugLineTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

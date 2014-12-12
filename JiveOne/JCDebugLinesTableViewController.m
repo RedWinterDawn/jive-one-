@@ -6,11 +6,11 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCLinesTableViewController.h"
+#import "JCDebugLinesTableViewController.h"
 #import "Line.h"
-#import "JCLineTableViewController.h"
+#import "JCDebugLineTableViewController.h"
 
-@implementation JCLinesTableViewController
+@implementation JCDebugLinesTableViewController
 
 -(NSFetchedResultsController *)fetchedResultsController
 {
@@ -27,9 +27,9 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     UIViewController *viewController = segue.destinationViewController;
-    if ([viewController isKindOfClass:[JCLineTableViewController class]]) {
+    if ([viewController isKindOfClass:[JCDebugLineTableViewController class]]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        ((JCLineTableViewController *)viewController).line = [self objectAtIndexPath:indexPath];
+        ((JCDebugLineTableViewController *)viewController).line = [self objectAtIndexPath:indexPath];
     }
 }
 
