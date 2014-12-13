@@ -16,6 +16,9 @@
 #import "JasmineSocket.h"
 
 #import "Contact.h"
+#import "Line.h"
+#import "PBX.h"
+#import "User.h"
 
 @interface JCContactsTableViewController()  <JCCallerViewControllerDelegate>
 {
@@ -23,7 +26,8 @@
     NSMutableDictionary *lineSubcription;
 }
 
-@property (nonatomic, weak) NSPredicate *predicate;
+@property (nonatomic, strong) NSFetchRequest *fetchRequest;
+@property (nonatomic, strong) NSPredicate *predicate;
 
 @end
 
@@ -57,10 +61,7 @@
     }
 }
 
--(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController
-{
-    [self dismissViewControllerAnimated:NO completion:NULL];
-}
+
 
 - (void)configureCell:(UITableViewCell *)cell withObject:(id<NSObject>)object
 {
@@ -70,9 +71,9 @@
     else if ([object isKindOfClass:[Line class]] && [cell isKindOfClass:[JCLineCell class]]) {
         ((JCLineCell *)cell).line = (Line *)object;
     }
-    else if ([object isKindOfClass:[UITableViewCell class]] && [cell isKindOfClass:[JCExternalContactCell class]]) {
-        ((JCExternalContactCell *)cell).externalNameLabel = (JCExternalContactCell *)object;
-    }
+//    else if ([object isKindOfClass:[UITableViewCell class]] && [cell isKindOfClass:[JCExternalContactCell class]]) {
+//        ((JCExternalContactCell *)cell).externalNameLabel = (JCExternalContactCell *)object;
+//    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForObject:(id<NSObject>)object atIndexPath:(NSIndexPath *)indexPath
@@ -87,11 +88,11 @@
         [self configureCell:cell withObject:object];
         return cell;
     }
-    else if ([object isKindOfClass:[UITableViewCell class]]) {
-        JCExternalContactCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ExternalContactCell"];
-        [self configureCell:cell withObject:object];
-        return cell;
-    }
+//    else if ([object isKindOfClass:[UITableViewCell class]]) {
+//        JCExternalContactCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ExternalContactCell"];
+//        [self configureCell:cell withObject:object];
+//        return cell;
+//    }
     return nil;
 }
 
@@ -100,33 +101,7 @@
 -(void)setFilterType:(JCContactFilter)filterType
 {
     _filterType = filterType;
-    self.predicate = nil;
-}
-
--(void)setPredicate:(NSPredicate *)predicate
-{
-    if (!predicate) {
-        
-        if (_searchText && ![_searchText isEqualToString:@""]) {
-            predicate = [NSPredicate predicateWithFormat:@"(displayName contains[cd] %@) OR (externsionNumber contains[cd] %@)", _searchText, _searchText];
-        }
-        
-        NSPredicate *filterPredicate = [self predicateFromFilterType];
-        if (filterPredicate && predicate)
-            predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, filterPredicate]];
-        else if(filterPredicate)
-            predicate = filterPredicate;
-    }
-    if (_fetchedResultsController)
-    {
-        _fetchedResultsController.fetchRequest.predicate = predicate;
-        NSLog(@"predicate : %@",predicate);
-        __autoreleasing NSError *error = nil;
-//        if ([self.fetchedResultsController performFetch:&error])
-        {
-            [self.tableView reloadData];
-        }
-    }
+    [self reloadTable];
 }
 
 #pragma mark - Getters -
@@ -135,41 +110,60 @@
 {
     if (!_fetchedResultsController)
     {
-        NSFetchRequest *fetchRequest = [Person MR_requestAllWithPredicate:self.predicate inContext:self.managedObjectContext];
-        fetchRequest.includesSubentities = TRUE;
-        fetchRequest.fetchBatchSize = 10;
-        fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
-        super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"firstLetter" cacheName:nil];
+        super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:self.fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"firstLetter" cacheName:nil];
     }
     return _fetchedResultsController;
 }
 
-- (NSPredicate *)predicate
+- (NSFetchRequest *)fetchRequest
 {
-    if (_fetchedResultsController)
-        return _fetchedResultsController.fetchRequest.predicate;
-    return [self predicateFromFilterType];
+    if (!_fetchRequest) {
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx = %@", [JCAuthenticationManager sharedInstance].line.pbx];
+        if (_searchText && ![_searchText isEqualToString:@""]) {
+            NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"(name contains[cd] %@) OR (extension contains[cd] %@)", _searchText, _searchText];
+            predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, searchPredicate]];
+        }
+        
+        if (_filterType == JCContactFilterFavorites) {
+            NSPredicate *favoritePredicate =[NSPredicate predicateWithFormat:@"favorite == 1"];
+            if (predicate) {
+                predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, favoritePredicate]];
+            }
+            else {
+                predicate = favoritePredicate;
+            }
+            _fetchRequest = [Contact MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
+        }
+        else {
+            _fetchRequest = [Contact MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
+            _fetchRequest.includesSubentities = TRUE;
+        }
+        _fetchRequest.fetchBatchSize = 10;
+        _fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
+    }
+    return _fetchRequest;
 }
 
 #pragma mark - Private -
 
--(NSPredicate *)predicateFromFilterType
+-(void)reloadTable
 {
-    if (_filterType == JCContactFilterFavorites) {
-        return [NSPredicate predicateWithFormat:@"isFavorite == 1"];
-    }
-    else if (_filterType == JCContactFilterLocalContacts){
-        [NSPredicate predicateWithFormat:@"ExternalContacts == 2"];
-        [self showAddressBook];
-    }
-    return nil;
+    _fetchedResultsController = nil;
+    _fetchRequest = nil;
+    [self.tableView reloadData];
 }
 
--(void)showAddressBook{
-    return;
-}
+//-(void)showAddressBook{
+//    return;
+//}
 
 #pragma mark - Delegate handlers -
+
+-(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController
+{
+    [self dismissViewControllerAnimated:NO completion:NULL];
+}
 
 #pragma mark - Table view data source
 
@@ -188,7 +182,7 @@
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     _searchText = searchText;
-    self.predicate = nil;
+    [self reloadTable];
 }
 
 -(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
@@ -202,7 +196,7 @@
     [searchBar setShowsCancelButton:NO animated:YES];
     searchBar.text = nil;
     _searchText = nil;
-    self.predicate = nil;
+    [self reloadTable];
 }
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
@@ -214,7 +208,9 @@
 {
     [searchBar resignFirstResponder];
     if (searchBar.text == nil)
-        self.predicate = nil;
+    {
+        [self reloadTable];
+    }
 }
 
 - (NSMutableDictionary *)lineSubscription
