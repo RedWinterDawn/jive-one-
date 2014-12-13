@@ -299,7 +299,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 		
 		[lineSession setCallTitle:contactName ? contactName : dialString];
 		[lineSession setCallDetail:dialString];
-        [OutgoingCall addOutgoingCallWithLineSession:lineSession];
+        [OutgoingCall addOutgoingCallWithLineSession:lineSession line:_line];
 	}
 	else
 	{
@@ -319,7 +319,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     if(error == 0)
     {
         if (lineSession.mRecvCallState) {
-            [IncomingCall addIncommingCallWithLineSession:lineSession];
+            [IncomingCall addIncommingCallWithLineSession:lineSession line:_line];
         }
         
         [lineSession setMRecvCallState:false];
@@ -667,7 +667,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             NSLog(@"%@", [self.lineSessions description]);
             if (lineSession.mRecvCallState)
             {
-                [MissedCall addMissedCallWithLineSession:lineSession];
+                [MissedCall addMissedCallWithLineSession:lineSession line:_line];
             }
             [self.delegate removeLineSession:lineSession];
             [lineSession reset];
