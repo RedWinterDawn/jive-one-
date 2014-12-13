@@ -26,7 +26,7 @@ NSString *const kLineResponseMailboxJrnKey      = @"mailbox_jrn";
         for (id object in linesData)
         {
             if ([object isKindOfClass:[NSDictionary class]]) {
-                [self addLine:(NSDictionary *)object pbx:localPbx];
+                [Line addLine:(NSDictionary *)object pbx:localPbx];
             }
         }
     } completion:^(BOOL success, NSError *error) {
