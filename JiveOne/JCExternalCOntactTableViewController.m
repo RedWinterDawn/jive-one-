@@ -184,7 +184,7 @@ ABNewPersonViewControllerDelegate, ABUnknownPersonViewControllerDelegate>
                                 property:(ABPropertyID)property
                               identifier:(ABMultiValueIdentifier)identifier
 {
-    NSLog(@"******************************************************DIALSTRINGRETURNING ******************************************************");
+    NSLog(@"******************************************************DIALSTRINGRETURNING ******************************************************@%");
     
     
 }
