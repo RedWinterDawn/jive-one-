@@ -62,6 +62,7 @@ NSString *const kLineResponseMailboxJrnKey      = @"mailbox_jrn";
         line = [Line MR_createInContext:pbx.managedObjectContext];
         line.jrn = jrn;
         line.pbx = pbx;
+        line.pbxId = pbx.pbxId;
     }
     return line;
 }

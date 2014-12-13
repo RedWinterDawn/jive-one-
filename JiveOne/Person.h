@@ -15,6 +15,7 @@
 @property (nonatomic, retain) NSString * jrn;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * extension;
+@property (nonatomic, retain) NSString * pbxId;
 
 // Transient Attributes
 @property (nonatomic, readonly) NSString *firstLetter;

@@ -13,6 +13,7 @@
 @dynamic jrn;
 @dynamic name;
 @dynamic extension;
+@dynamic pbxId;
 
 - (NSString *)firstLetter
 {

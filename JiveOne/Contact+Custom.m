@@ -123,6 +123,7 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
         contact = [Contact MR_createInContext:pbx.managedObjectContext];
         contact.jrn = jrn;
         contact.pbx = pbx;
+        contact.pbxId = pbx.pbxId;
     }
     return contact;
 }

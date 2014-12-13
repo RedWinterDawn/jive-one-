@@ -119,7 +119,7 @@
 {
     if (!_fetchRequest) {
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx = %@", [JCAuthenticationManager sharedInstance].line.pbx];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbxId = %@", [JCAuthenticationManager sharedInstance].line.pbx.pbxId];
         if (_searchText && ![_searchText isEqualToString:@""]) {
             NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"(name contains[cd] %@) OR (extension contains[cd] %@)", _searchText, _searchText];
             predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, searchPredicate]];
@@ -136,9 +136,10 @@
             _fetchRequest = [Contact MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
         }
         else {
-            _fetchRequest = [Contact MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
+            _fetchRequest = [Person MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
             _fetchRequest.includesSubentities = TRUE;
         }
+        _fetchRequest.resultType = NSManagedObjectResultType;
         _fetchRequest.fetchBatchSize = 10;
         _fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
     }
