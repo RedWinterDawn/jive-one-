@@ -74,23 +74,32 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
     }];
 }
 
-+ (Contact *)updateContact:(NSDictionary *)data pbx:(PBX *)pbx
++ (void)updateContact:(NSDictionary *)data pbx:(PBX *)pbx
 {
+    // If we do not have a jrn, we do not have its primary key, so we cannot match it to a entity,
+    // so we ignore it as being a non valid response.
     NSString *jrn = [data stringValueForKey:kContactResponseIdentifierKey];
     if (!jrn) {
-        return nil;
+        return;
+    }
+    
+    // If the jive user id is the same as the logged in user, do not create the contact, since it is
+    // already in the Lines and will be shown in contacts.
+    NSString *jiveUserId = [data stringValueForKey:kContactResponseJiveIdKey];
+    if ([jiveUserId isEqualToString:pbx.user.jiveUserId]) {
+        return;
     }
     
     Contact *contact = [Contact contactForJrn:jrn pbx:pbx];
     contact.name        = [data stringValueForKey:kContactResponseNameKey];
     contact.extension   = [data stringValueForKey:kContactResponseExtensionKey];
-    contact.jiveUserId  = [data stringValueForKey:kContactResponseJiveIdKey];
+    contact.jiveUserId  = jiveUserId;
     
     id object = [data objectForKey:kContactResponseGroupKey];
     if ([object isKindOfClass:[NSArray class]]){
         [Contact updateContactGroupsForContact:contact data:(NSArray *)object];
     }
-    return contact;
+    return;
 }
 
 +(void)updateContactGroupsForContact:(Contact *)contact data:(NSArray *)data
