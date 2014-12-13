@@ -49,16 +49,14 @@
 -(NSFetchedResultsController *)fetchedResultsController
 {
 	if (!_fetchedResultsController) {
-		
-		/*NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"Voicemail"];
-		fetchRequest.predicate = [NSPredicate predicateWithFormat:@"markForDeletion ==[c] %@", [NSNumber numberWithBool:NO]];
-		fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO]];*/
-		
-		NSFetchRequest *fetchRequest = [Voicemail MR_requestAllSortedBy:@"date" ascending:NO withPredicate:[NSPredicate predicateWithFormat:@"markForDeletion ==[c] %@", [NSNumber numberWithBool:NO]]];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"markForDeletion ==[c] %@", @NO];
+		NSFetchRequest *fetchRequest = [Voicemail MR_requestAllSortedBy:@"date" ascending:NO withPredicate:predicate];
 		fetchRequest.fetchBatchSize = 10;
 		
-		super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
-		
+		super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+                                                                             managedObjectContext:self.managedObjectContext
+                                                                               sectionNameKeyPath:@"line"
+                                                                                        cacheName:nil];
 	}
 	return _fetchedResultsController;
 }
@@ -72,14 +70,13 @@
     requestTimeout = [NSTimer timerWithTimeInterval:20 target:self selector:@selector(requestDidTimedOut) userInfo:nil repeats:NO];
     [[NSRunLoop currentRunLoop] addTimer:requestTimeout forMode:NSRunLoopCommonModes];
  
-    /*[[JCV5ApiClient sharedClient] getVoicemails:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-        if(suceeded){
-            if ([requestTimeout isValid]) {
-                [requestTimeout invalidate];
-            }
-            [self.refreshControl endRefreshing];
+    Line *line = [JCAuthenticationManager sharedInstance].line;
+    [Voicemail downloadVoicemailsForLine:line complete:^(bool success, NSError *error) {
+        if ([requestTimeout isValid]) {
+            [requestTimeout invalidate];
         }
-    }];*/
+        [self.refreshControl endRefreshing];
+    }];
 }
 
 - (void)requestDidTimedOut
