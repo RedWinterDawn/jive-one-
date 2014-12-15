@@ -7,7 +7,7 @@
 //
 
 #import "Voicemail.h"
-#import "Lines.h"
+#import "Line.h"
 #import "PBX.h"
 #import "Common.h"
 
@@ -52,20 +52,19 @@ NSString *const kVoicemailDataAttributeKey = @"data";
 -(NSString *)displayExtension
 {
     NSString *extension = self.number;
-    Lines *mailbox = [Lines MR_findFirstByAttribute:@"mailboxUrl" withValue:self.mailboxUrl];
-    if (mailbox)
+    Line *line = self.line;
+    if (line)
     {
-        PBX *pbx = [PBX MR_findFirstByAttribute:@"pbxId" withValue:mailbox.pbxId];
-        if (pbx) {
-            if ([Common stringIsNilOrEmpty:pbx.name]) {
-                extension = [NSString stringWithFormat:@"%@ on %@", mailbox.externsionNumber, pbx.name];
+        if (line.pbx) {
+            if (!line.pbx.name.isEmpty) {
+                extension = [NSString stringWithFormat:@"%@ on %@", line.extension, line.pbx.name];
             }
             else {
-                extension = [NSString stringWithFormat:@"%@", mailbox.externsionNumber];
+                extension = [NSString stringWithFormat:@"%@", line.extension];
             }
         }
         else {
-            extension = [NSString stringWithFormat:@"%@", mailbox.externsionNumber];
+            extension = [NSString stringWithFormat:@"%@", line.extension];
         }
     }
     

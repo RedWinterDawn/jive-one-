@@ -13,12 +13,15 @@
 #import "JCV5ApiClient.h"
 #import "JCV4ProvisioningClient.h"
 #import "JCAuthenticationManagerError.h"
+#import "User+Custom.h"
+#import "PBX+Custom.h"
 
 // Notifications
-NSString *const kJCAuthenticationManagerUserLoggedOutNotification           = @"userLoggedOut";
-NSString *const kJCAuthenticationManagerUserAuthenticatedNotification       = @"userAuthenticated";
-NSString *const kJCAuthenticationManagerUserLoadedMinimumDataNotification   = @"userLoadedMinimumData";
-NSString *const kJCAuthenticationManagerAuthenticationFailedNotification    = @"authenticationFailed";
+NSString *const kJCAuthenticationManagerUserLoggedOutNotification               = @"userLoggedOut";
+NSString *const kJCAuthenticationManagerUserAuthenticatedNotification           = @"userAuthenticated";
+NSString *const kJCAuthenticationManagerUserLoadedMinimumDataNotification       = @"userLoadedMinimumData";
+NSString *const kJCAuthenticationManagerAuthenticationFailedNotification        = @"authenticationFailed";
+NSString *const kJCAuthenticationManagerLineChangedNotification                 = @"lineChanged";
 
 // Keychain
 NSString *const kJCAuthenticationManagerKeychainStoreIdentifier             = @"keyjiveauthstore";
@@ -58,7 +61,8 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     KeychainItemWrapper *_keychainWrapper;
     CompletionBlock _completionBlock;
     
-    LineConfiguration *_lineConfiguration;
+    User *_user;
+    Line *_line;
     
     NSString *_username;
     NSString *_password;
@@ -86,6 +90,14 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 }
 
 #pragma mark - Class methods
+
+-(void)checkAuthenticationStatus
+{
+    if (!self.userAuthenticated || !self.userLoadedMininumData)
+        [self logout];
+    else
+        self.userLoadedMininumData = TRUE;
+}
 
 - (void)loginWithUsername:(NSString *)username password:(NSString *)password completed:(CompletionBlock)completed
 {
@@ -140,7 +152,9 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     self.refreshToken = nil;
     self.userLoadedMininumData = false;
     self.userAuthenticated = false;
-    self.lineConfiguration = nil;
+    
+    self.user = nil;
+    self.line = nil;
     
     if (!self.rememberMe) {
         self.jiveUserId = false;
@@ -215,6 +229,19 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     [self didChangeValueForKey:kJCAuthenticationManagerJiveUserIdKey];
 }
 
+-(void)setLine:(Line *)line
+{
+    if (_line == line) {
+        return;
+    }
+    
+    [self willChangeValueForKey:NSStringFromSelector(@selector(pbx))];
+    _line = line;
+    [self didChangeValueForKey:NSStringFromSelector(@selector(pbx))];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kJCAuthenticationManagerLineChangedNotification object:self];
+}
+
 #pragma mark - Getters -
 
 - (BOOL)userAuthenticated
@@ -259,36 +286,31 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     return [[NSUserDefaults standardUserDefaults] objectForKey:kJCAuthenticationManagerJiveUserIdKey];
 }
 
--(PBX *)pbx
+-(User *)user
 {
-    // TODO: When we are able to handle multiple PBX's return selected PBX, until then, returh the first.
+    if (_user) {
+        return _user;
+    }
     
-    return [PBX MR_findFirst];
+    _user = [User MR_findFirstByAttribute:@"jiveUserId" withValue:self.jiveUserId];
+    return _user;
 }
 
-/**
- * Return the active line configuration. If there is no active line configuration, we ret the first line line 
- * configuration in the database.
- */
--(LineConfiguration *)lineConfiguration
+-(Line *)line
 {
-    if (_lineConfiguration)
-        return _lineConfiguration;
+    if (_line) {
+        return _line;
+    }
     
-    _lineConfiguration = [LineConfiguration MR_findFirstByAttribute:@"active" withValue:@YES];
-    if (_lineConfiguration)
-        return _lineConfiguration;
+    // If we do not yet have a line, look for a line for our user that is marked as active.
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx.user = %@ and active = %@", self.user, @YES];
+    _line = [Line MR_findFirstWithPredicate:predicate];
+    if (_line) {
+        return _line;
+    }
     
-    _lineConfiguration = [LineConfiguration MR_findFirst];
-    return _lineConfiguration;
-}
-
--(NSString *)pbxName
-{
-    PBX *pbx = self.pbx;
-    if (pbx)
-        return [NSString stringWithFormat:@"%@ PBX on %@", pbx.name, [pbx.v5 boolValue] ? @"V5" : @"V4"];
-    return nil;
+    _line = [Line MR_findFirstOrderedByAttribute:@"extension" ascending:YES];
+    return _line;
 }
 
 #pragma mark - Private -
@@ -310,9 +332,13 @@ static int MAX_LOGIN_ATTEMPTS = 2;
         if ([tokenData objectForKey:@"access_token"]) {
             self.authToken      = tokenData[@"access_token"];
             self.refreshToken   = tokenData[@"refresh_token"];
-            self.jiveUserId       = tokenData[@"username"];
+            self.jiveUserId     = tokenData[@"username"];
             self.userAuthenticated = true;
-            [self requestAccount];
+            
+            // Fetch User
+            NSString *jiveUserId = tokenData[@"username"];
+            _user = [User userForJiveUserId:jiveUserId context:[NSManagedObjectContext MR_contextForCurrentThread]];
+            [self requestPbxInformationForUser:_user];
         }
         else {
             if (tokenData[@"error"]) {
@@ -325,36 +351,20 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     }
 }
 
--(void)requestAccount
+-(void)requestPbxInformationForUser:(User *)user
 {
-    NSString *jiveId = self.jiveUserId;
-    [[JCV5ApiClient sharedClient] getMailboxReferencesForUser:jiveId completed:^(BOOL success, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-        if(success){
-            NSArray *pbxs = [PBX MR_findAll];
-            if (pbxs.count == 0) {
-                [self reportError:NoPbx description:@"This username is not associated with any PBX. Please contact your Administrator"];
-            }
-            else if (pbxs.count > 1) {
-                [self reportError:MultiplePbx description:@"This app does not support account with multiple PBXs at this time"];
-            }
-            else {
-                [self requestProvisioning];
-            }
-        }
-        else {
-            [self reportError:NetworkError description:@"We could not reach the server at this time. Please check your connection"];
-        }
-    }];
-}
-
-- (void)requestProvisioning
-{
-    [JCV4ProvisioningClient requestProvisioningForUser:_username password:_password completed:^(BOOL success, NSError *error) {
+    [PBX downloadPbxInfoForUser:user completed:^(BOOL success, NSError *error) {
         if (success) {
-            self.userLoadedMininumData = TRUE;
+//            if (count < 1) {
+//                [self reportError:NoPbx description:@"This username is not associated with any PBX. Please contact your Administrator"];
+//            }
+//            else {
+                    self.userLoadedMininumData = TRUE;
+            //}
         }
         else {
-            [self reportError:ProvisioningFailure description:error.localizedFailureReason];
+            NSLog(@"%@", [error description]);
+            [self reportError:NetworkError description:@"We could not reach the server at this time. Please check your connection"];
         }
     }];
 }
@@ -530,16 +540,18 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 @end
 
+
+static JCAuthenticationManager *authenticationManager = nil;
+static dispatch_once_t authenticationManagerOnceToken;
+
 @implementation JCAuthenticationManager (Singleton)
 
 + (instancetype)sharedInstance
 {
-    static JCAuthenticationManager* autheticationManager = nil;
-    static dispatch_once_t autheticationManagerOnceToken;
-    dispatch_once(&autheticationManagerOnceToken, ^{
-        autheticationManager = [[JCAuthenticationManager alloc] init];
+    dispatch_once(&authenticationManagerOnceToken, ^{
+        authenticationManager = [[JCAuthenticationManager alloc] init];
     });
-    return autheticationManager;
+    return authenticationManager;
 }
 
 @end

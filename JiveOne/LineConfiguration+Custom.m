@@ -7,9 +7,6 @@
 //
 
 #import "LineConfiguration+Custom.h"
-#import <XMLDictionary/XMLDictionary.h>
-
-#import "NSDictionary+Validations.h"
 
 NSString *const kLineConfigurationResponseKey = @"_name";
 NSString *const kLineConfigurationResponseValue = @"_value";
@@ -22,70 +19,42 @@ NSString *const kLineConfigurationResponseSipPasswordKey        = @"password";
 
 @implementation LineConfiguration (Custom)
 
-+(LineConfiguration *)lineConfigurationForIdentifier:(NSString *)identifier context:(NSManagedObjectContext *)context
++ (void)addLineConfigurations:(NSArray *)array line:(Line *)line completed:(void (^)(BOOL success, NSError *error))completed
 {
-    if (!context) {
-        context = [NSManagedObjectContext MR_contextForCurrentThread];
-    }
+    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+        
+        Line *localLine = (Line *)[localContext objectWithID:line.objectID];
     
-    LineConfiguration *lineConfiguration = [LineConfiguration MR_findFirstByAttribute:@"display" withValue:identifier inContext:context];
-    if (!lineConfiguration) {
-        lineConfiguration = [LineConfiguration MR_createInContext:context];
-        lineConfiguration.display = identifier;
-    }
-    
-    return lineConfiguration;
-}
-
-+ (void)addConfiguration:(NSDictionary *)config completed:(void (^)(BOOL success))completed
-{
-	[MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-		
-		NSArray *dataArray = [config valueForKeyPath:@"branding.settings_data.core_data_list.account_list.account.data"];
-        NSDictionary *data = [LineConfiguration normalizeDictionaryFromArray:dataArray keyIdentifier:kLineConfigurationResponseKey valueIdentifier:kLineConfigurationResponseValue];
+        NSDictionary *data = [NSDictionary normalizeDictionaryFromArray:array keyIdentifier:kLineConfigurationResponseKey valueIdentifier:kLineConfigurationResponseValue];
         if (data) {
-            [LineConfiguration addLineConfiguration:data managedObjectContext:localContext];
+            [LineConfiguration addLineConfiguration:data line:localLine managedObjectContext:localContext];
         }
-        else
-        {
-            for (id object in dataArray) {
-                if ([object isKindOfClass:[NSArray class]])
-                {
-                    NSDictionary *data = [LineConfiguration normalizeDictionaryFromArray:(NSArray *)object keyIdentifier:kLineConfigurationResponseKey valueIdentifier:kLineConfigurationResponseValue];
+        else {
+            for (id object in array) {
+                if ([object isKindOfClass:[NSArray class]]) {
+                    NSDictionary *data = [NSDictionary normalizeDictionaryFromArray:(NSArray *)object keyIdentifier:kLineConfigurationResponseKey valueIdentifier:kLineConfigurationResponseValue];
                     if (data) {
-                        [LineConfiguration addLineConfiguration:data managedObjectContext:localContext];
+                        [LineConfiguration addLineConfiguration:data line:localLine managedObjectContext:localContext];
                     }
                 }
             }
         }
-		
-	} completion:^(BOOL success, NSError *error) {
-		completed(success);
-	}];
-
-}
-
-+ (NSDictionary *)normalizeDictionaryFromArray:(NSArray *)array keyIdentifier:(NSString *)keyIdentifier valueIdentifier:(NSString *)valueIdentifier
-{
-    // Normalize Data into Key/value pairs.
-    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
-    [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        if ([obj isKindOfClass:[NSDictionary class]]) {
-            NSDictionary *item = (NSDictionary*)obj;
-            NSString *key = [item stringValueForKey:keyIdentifier];
-            NSString *value = [item stringValueForKey:valueIdentifier];
-            [dictionary setObject:value forKey:key];
-        }
+    } completion:^(BOOL success, NSError *error) {
+        completed(success, error);;
     }];
-    
-    return (dictionary.count > 0) ? dictionary : nil;
 }
 
-+ (void)addLineConfiguration:(NSDictionary *)data managedObjectContext:(NSManagedObjectContext *)context
+#pragma mark - Private -
+
++ (void)addLineConfiguration:(NSDictionary *)data line:(Line *)line managedObjectContext:(NSManagedObjectContext *)context
 {
-    NSString *identifier = [data stringValueForKey:kLineConfigurationResponseIdentifierKey];
-    LineConfiguration *lineConfiguration = [LineConfiguration lineConfigurationForIdentifier:identifier context:context];
+    LineConfiguration *lineConfiguration = line.lineConfiguration;
+    if (!lineConfiguration) {
+        lineConfiguration = [LineConfiguration MR_createInContext:context];
+        lineConfiguration.line = line;
+    }
     
+    lineConfiguration.display           = [data stringValueForKey:kLineConfigurationResponseIdentifierKey];
     lineConfiguration.registrationHost  = [data stringValueForKey:kLineConfigurationResponseRegistrationHostKey];
     lineConfiguration.outboundProxy     = [data stringValueForKey:kLineConfigurationResponseOutboundProxyKey];
     lineConfiguration.sipUsername       = [data stringValueForKey:kLineConfigurationResponseSipUsernameKey];

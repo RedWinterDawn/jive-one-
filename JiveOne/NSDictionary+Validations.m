@@ -147,4 +147,26 @@ static NSDateFormatter *timeFormatter = nil;
     return nil;
 }
 
+
+
+@end
+
+@implementation NSDictionary (Normalization)
+
++ (NSDictionary *)normalizeDictionaryFromArray:(NSArray *)array keyIdentifier:(NSString *)keyIdentifier valueIdentifier:(NSString *)valueIdentifier
+{
+    // Normalize Data into Key/value pairs.
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+    [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        if ([obj isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *item = (NSDictionary*)obj;
+            NSString *key = [item stringValueForKey:keyIdentifier];
+            NSString *value = [item stringValueForKey:valueIdentifier];
+            [dictionary setObject:value forKey:key];
+        }
+    }];
+    
+    return (dictionary.count > 0) ? dictionary : nil;
+}
+
 @end

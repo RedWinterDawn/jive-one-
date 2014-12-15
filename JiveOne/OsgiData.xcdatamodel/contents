@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="14A389" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6254" systemVersion="14B25" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Call" representedClassName="Call" isAbstract="YES" parentEntity="RecentEvent" syncable="YES">
         <attribute name="extension" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
@@ -12,9 +12,16 @@
         <attribute name="timezone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="urn" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="Contact" representedClassName="Contact" parentEntity="Person" syncable="YES">
+        <attribute name="favorite" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="jiveUserId" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="groups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ContactGroup" inverseName="contacts" inverseEntity="ContactGroup" syncable="YES"/>
+        <relationship name="pbx" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PBX" inverseName="contacts" inverseEntity="PBX" syncable="YES"/>
+    </entity>
     <entity name="ContactGroup" representedClassName="ContactGroup" syncable="YES">
         <attribute name="groupId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="groupName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="contacts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Contact" inverseName="groups" inverseEntity="Contact" syncable="YES"/>
     </entity>
     <entity name="Conversation" representedClassName="Conversation" syncable="YES">
         <attribute name="conversationId" optional="YES" attributeType="String" syncable="YES"/>
@@ -48,31 +55,21 @@
         <attribute name="etag" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="IncomingCall" representedClassName="IncomingCall" parentEntity="Call" syncable="YES"/>
+    <entity name="Line" representedClassName="Line" parentEntity="Person" syncable="YES">
+        <attribute name="active" optional="YES" attributeType="Boolean" indexed="YES" syncable="YES"/>
+        <attribute name="mailboxJrn" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mailboxUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="events" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="RecentEvent" inverseName="line" inverseEntity="RecentEvent" syncable="YES"/>
+        <relationship name="lineConfiguration" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="LineConfiguration" inverseName="line" inverseEntity="LineConfiguration" syncable="YES"/>
+        <relationship name="pbx" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PBX" inverseName="lines" inverseEntity="PBX" syncable="YES"/>
+    </entity>
     <entity name="LineConfiguration" representedClassName="LineConfiguration" syncable="YES">
-        <attribute name="active" optional="YES" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
         <attribute name="display" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="outboundProxy" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="registrationHost" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sipPassword" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sipUsername" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
-    <entity name="LineGroup" representedClassName="LineGroup" syncable="YES">
-        <attribute name="groupId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="lineId" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
-    <entity name="Lines" representedClassName="Lines" syncable="YES">
-        <attribute name="displayName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="externsionNumber" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="groups" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="inUse" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="isFavorite" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="jrn" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="lineId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="mailboxJrn" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="mailboxUrl" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="pbxId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="state" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="line" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Line" inverseName="lineConfiguration" inverseEntity="Line" syncable="YES"/>
     </entity>
     <entity name="Membership" representedClassName="Membership" syncable="YES">
         <attribute name="jiveId" optional="YES" attributeType="String" syncable="YES"/>
@@ -83,10 +80,19 @@
     <entity name="OutgoingCall" representedClassName="OutgoingCall" parentEntity="Call" syncable="YES"/>
     <entity name="PBX" representedClassName="PBX" syncable="YES">
         <attribute name="jrn" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="pbxId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="pbxId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="selfUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="v5" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <relationship name="contacts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Contact" inverseName="pbx" inverseEntity="Contact" syncable="YES"/>
+        <relationship name="lines" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Line" inverseName="pbx" inverseEntity="Line" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="pbxs" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="Person" representedClassName="Person" isAbstract="YES" syncable="YES">
+        <attribute name="extension" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="jrn" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pbxId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
     </entity>
     <entity name="PersonEntities" representedClassName="PersonEntities" syncable="YES">
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
@@ -132,6 +138,11 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="read" optional="YES" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
+        <relationship name="line" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Line" inverseName="events" inverseEntity="Line" syncable="YES"/>
+    </entity>
+    <entity name="User" representedClassName="User" syncable="YES">
+        <attribute name="jiveUserId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <relationship name="pbxs" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PBX" inverseName="user" inverseEntity="PBX" syncable="YES"/>
     </entity>
     <entity name="Voicemail" representedClassName="Voicemail" parentEntity="RecentEvent" syncable="YES">
         <attribute name="data" optional="YES" attributeType="Binary" syncable="YES"/>
@@ -144,29 +155,27 @@
         <attribute name="url_pbx" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url_self" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="VoicemailETag" representedClassName="VoicemailETag" syncable="YES">
-        <attribute name="etag" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-    </entity>
     <elements>
-        <element name="Call" positionX="52" positionY="-81" width="128" height="58"/>
-        <element name="Company" positionX="97" positionY="507" width="128" height="150"/>
-        <element name="ContactGroup" positionX="-441" positionY="324" width="128" height="75"/>
+        <element name="Call" positionX="241" positionY="-346" width="128" height="58"/>
+        <element name="Company" positionX="-110" positionY="720" width="128" height="150"/>
+        <element name="Contact" positionX="-81" positionY="-319" width="128" height="103"/>
+        <element name="ContactGroup" positionX="-279" positionY="-369" width="128" height="88"/>
         <element name="Conversation" positionX="-758" positionY="126" width="128" height="180"/>
         <element name="ConversationEntry" positionX="-605" positionY="126" width="128" height="270"/>
-        <element name="ConversationETag" positionX="-441" positionY="207" width="128" height="60"/>
-        <element name="IncomingCall" positionX="-243" positionY="-153" width="128" height="43"/>
-        <element name="LineConfiguration" positionX="52" positionY="6" width="128" height="133"/>
-        <element name="LineGroup" positionX="736" positionY="-162" width="128" height="75"/>
-        <element name="Lines" positionX="738" positionY="-63" width="128" height="225"/>
-        <element name="Membership" positionX="565" positionY="-90" width="128" height="90"/>
-        <element name="MissedCall" positionX="-243" positionY="27" width="128" height="43"/>
-        <element name="OutgoingCall" positionX="-243" positionY="-81" width="128" height="43"/>
-        <element name="PBX" positionX="45" positionY="204" width="128" height="120"/>
-        <element name="PersonEntities" positionX="270" positionY="171" width="128" height="360"/>
-        <element name="PersonMeta" positionX="394" positionY="-63" width="128" height="150"/>
-        <element name="Presence" positionX="558" positionY="60" width="128" height="120"/>
-        <element name="RecentEvent" positionX="52" positionY="-295" width="128" height="105"/>
-        <element name="Voicemail" positionX="-236" positionY="-459" width="128" height="180"/>
-        <element name="VoicemailETag" positionX="-441" positionY="102" width="128" height="60"/>
+        <element name="ConversationETag" positionX="-666" positionY="432" width="128" height="60"/>
+        <element name="IncomingCall" positionX="448" positionY="-405" width="128" height="28"/>
+        <element name="Line" positionX="-83" positionY="-63" width="128" height="133"/>
+        <element name="LineConfiguration" positionX="162" positionY="-45" width="128" height="133"/>
+        <element name="Membership" positionX="619" positionY="567" width="128" height="90"/>
+        <element name="MissedCall" positionX="448" positionY="-277" width="128" height="28"/>
+        <element name="OutgoingCall" positionX="448" positionY="-340" width="128" height="28"/>
+        <element name="PBX" positionX="-288" positionY="-162" width="128" height="163"/>
+        <element name="Person" positionX="-83" positionY="-189" width="128" height="103"/>
+        <element name="PersonEntities" positionX="430" positionY="837" width="128" height="360"/>
+        <element name="PersonMeta" positionX="448" positionY="594" width="128" height="150"/>
+        <element name="Presence" positionX="612" positionY="717" width="128" height="120"/>
+        <element name="RecentEvent" positionX="160" positionY="-249" width="128" height="118"/>
+        <element name="User" positionX="-497" positionY="-198" width="128" height="73"/>
+        <element name="Voicemail" positionX="448" positionY="-180" width="128" height="180"/>
     </elements>
 </model>

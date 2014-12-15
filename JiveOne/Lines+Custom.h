@@ -6,16 +6,13 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "Lines.h"
+#import "Line.h"
 
-@interface Lines (Custom)
+@class PBX;
 
-@property (nonatomic, readonly) NSString *firstLetter;
+@interface Line (Custom)
 
-@property (nonatomic, readonly) NSString *detailText;
-
-
-+ (void)addLines:(NSArray *)lines pbxId:(NSString *)pbxId userName:(NSString *)userName completed:(void (^)(BOOL success))completed;;
-+ (Lines *)addLine:(NSDictionary *)line pbxId:(NSString *)pbxId userName:(NSString *)userName withManagedContext:(NSManagedObjectContext *)context sender:(id)sender;
++ (void)addLines:(NSArray *)linesData pbx:(PBX *)pbx completed:(void (^)(BOOL success, NSError *error))completed;
++ (void)addLine:(NSDictionary *)lineData pbx:(PBX *)pbx;
 
 @end

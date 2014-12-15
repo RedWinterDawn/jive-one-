@@ -15,5 +15,6 @@
 - (void)hideHud;
 
 - (void)showSimpleAlert:(NSString *)title message:(NSString *)message;
+- (void)showSimpleAlert:(NSString *)title message:(NSString *)message code:(NSInteger)code;
 
 @end

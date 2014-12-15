@@ -508,16 +508,14 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
 
 @end
 
-static JCBadgeManager *badgeManager = nil;
+
 
 @implementation JCBadgeManager (Singleton)
 
 +(JCBadgeManager *)sharedManager
 {
-    if (badgeManager != nil)
-        return badgeManager;
-    
     // Makes the startup of this singleton thread safe.
+    static JCBadgeManager *badgeManager = nil;
     static dispatch_once_t pred;        // Lock
     dispatch_once(&pred, ^{             // This code is called at most once per app
         badgeManager = [[JCBadgeManager alloc] initWithManagedObjectContext:[NSManagedObjectContext MR_rootSavingContext]];
@@ -529,6 +527,16 @@ static JCBadgeManager *badgeManager = nil;
 + (id)copyWithZone:(NSZone *)zone
 {
     return self;
+}
+
++ (void)update
+{
+    [[JCBadgeManager sharedManager] update];
+}
+
++ (void)reset
+{
+    [[JCBadgeManager sharedManager] reset];
 }
 
 @end

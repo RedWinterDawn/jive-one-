@@ -7,149 +7,101 @@
 //
 
 #import "Lines+Custom.h"
-#import "ContactGroup.h"
-#import "LineGroup.h"
-#import "Common.h"
 #import "PBX.h"
 
-@implementation Lines (Custom)
+NSString *const kLineResponseIdentifierKey      = @"id";
+NSString *const kLineResponseLineNameKey        = @"lineName";
+NSString *const kLineResponseLineNumberKey      = @"lineNumber";
+NSString *const kLineResponseJrnKey             = @"jrn";
+NSString *const kLineResponseMailboxUrlKey      = @"self_mailbox";
+NSString *const kLineResponseMailboxJrnKey      = @"mailbox_jrn";
 
+@implementation Line (Custom)
 
-- (NSString *)firstLetter
++ (void)addLines:(NSArray *)linesData pbx:(PBX *)pbx completed:(void (^)(BOOL success, NSError *error))completed
 {
-    [self willChangeValueForKey:@"firstLetter"];
-    NSString *result = @"";
-//    if ([self.isFavorite boolValue]) {
-//        result = @"\u2605";
-//    } else {
-//        if (self.displayName.length == 0) {
-//            result = @"";
-//        }
-//        else if (self.displayName.length == 1) {
-//            result = self.displayName;
-//        }
-//        else {
-            result = [self.displayName substringToIndex:1];
-//        }
-//    }
-    
-    [self didChangeValueForKey:@"firstLetter"];
-    
-    return [result uppercaseString];
-}
-
--(NSString *)detailText
-{
-    NSString * detailText = self.externsionNumber;
-    PBX *pbx = [PBX MR_findFirstByAttribute:@"pbxId" withValue:self.pbxId];
-    if (pbx) {
-        NSString *name = pbx.name;
-        if (![Common stringIsNilOrEmpty:name]) {
-            detailText = [NSString stringWithFormat:@"%@ on %@", self.externsionNumber, name];
-        }
-        else {
-            detailText = [NSString stringWithFormat:@"%@", self.externsionNumber];
-        }
-    }
-    return detailText;
-}
-
-
-+ (void)addLines:(NSArray *)lines pbxId:(NSString *)pbxId userName:(NSString *)userName completed:(void (^)(BOOL success))completed
-{
+    __block NSManagedObjectID *objectId = pbx.objectID;
     [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-        for (NSDictionary *line in lines) {
-            if ([line isKindOfClass:[NSDictionary class]]) {
-                [self addLine:line pbxId:pbxId userName:userName withManagedContext:localContext sender:self];
+        PBX *localPbx = (PBX *)[localContext objectWithID:objectId];
+        for (id object in linesData)
+        {
+            if ([object isKindOfClass:[NSDictionary class]]) {
+                [Line addLine:(NSDictionary *)object pbx:localPbx];
             }
         }
     } completion:^(BOOL success, NSError *error) {
-        completed(success);
+        if (completed) {
+            completed(success, error);
+        }
     }];
 }
 
-
-+ (Lines *)addLine:(NSDictionary *)line pbxId:(NSString *)pbxId userName:(NSString *)userName withManagedContext:(NSManagedObjectContext *)context sender:(id)sender
++ (void)addLine:(NSDictionary *)data pbx:(PBX *)pbx
 {
-    if (!context) {
-        context = [NSManagedObjectContext MR_contextForCurrentThread];
+    NSString *jrn = [data stringValueForKey:kLineResponseJrnKey];
+    if (!jrn) {
+        return;
     }
     
-    NSString *lineId = line[@"id"];
-    NSString *lineJrn = line[@"jrn"];
-    if ([lineId rangeOfString:@"jrn"].location == NSNotFound) {
-        lineJrn = [NSString stringWithFormat:@"jrn:line::jive:%@:%@", pbxId, lineId];
-    }
-    else {
-		if (lineId) {
-			lineJrn = lineId;
-		}
-		
-		NSArray *jrnExploded = [lineJrn componentsSeparatedByString:@":"];
-		lineId = jrnExploded[jrnExploded.count - 1];
-	}
+    Line *line = [Line lineForJrn:jrn pbx:pbx];
+    line.name        = [data stringValueForKey:kLineResponseLineNameKey];
+    line.extension   = [data stringValueForKey:kLineResponseLineNumberKey];
+    line.mailboxUrl  = [data stringValueForKey:kLineResponseMailboxUrlKey];
+    line.mailboxJrn  = [data stringValueForKey:kLineResponseMailboxJrnKey];
+    //line.state       = [NSNumber numberWithInt:(int)JCPresenceTypeAvailable];
     
-    Lines *c_line = [Lines MR_findFirstByAttribute:@"jrn" withValue:lineJrn inContext:context];
-    if (c_line) {
-        [self updateLine:c_line pbxId:pbxId userName:userName new_line:line];
-    }
-    else {
-        
-        c_line = [Lines MR_createInContext:context];
-        c_line.pbxId = pbxId;
-        c_line.displayName = line[@"lineName"] ? line[@"lineName"] : line[@"displayName"] ? line[@"displayName"] : @"";
-        c_line.userName = userName;
-        c_line.groups = line[@"groups"];
-        c_line.externsionNumber = line[@"extensionNumber"] ? line[@"extensionNumber"] : line[@"lineNumber"] ? line[@"lineNumber"] : @"";
-        c_line.jrn = lineJrn;
-        c_line.lineId = lineId;
-		c_line.mailboxUrl = line[@"self_mailbox"];
-		c_line.mailboxJrn = line[@"mailbox_jrn"];
-        c_line.state = [NSNumber numberWithInt:(int)JCPresenceTypeAvailable];
-		
-		if (line[@"groups"]) {
-			NSArray *groups = (NSArray *)line[@"groups"];
-			if (groups && groups.count > 0) {
-				for (NSDictionary *gr in groups) {
-					
-					ContactGroup *cg = [ContactGroup MR_findFirstByAttribute:@"groupId" withValue:gr[@"id"] inContext:context];
-					if (cg) {
-						if (![cg.groupName isEqualToString:gr[@"name"]]) {
-							cg.groupName = gr[@"name"];
-						}
-					}
-					else {
-						cg = [ContactGroup MR_createInContext:context];
-						cg.groupId = gr[@"id"];
-						cg.groupName = gr[@"name"];
-					}
-									
-					NSPredicate *pred = [NSPredicate predicateWithFormat:@"(groupId == %@) AND (lineId == %@)", cg.groupId, lineJrn];
-					LineGroup *lg = [LineGroup MR_findFirstWithPredicate:pred];
-					if (!lg) {
-						lg = [LineGroup MR_createInContext:context];
-						lg.lineId = c_line.jrn;
-						lg.groupId = cg.groupId;
-					}				
-				}
-			}
-		}
-    }
-    
-    return c_line;
+    return;
 }
 
-+ (void)updateLine:(Lines *)line pbxId:(NSString *)pbxId userName:(NSString *)userName new_line:(NSDictionary *)new_line
++ (Line *)lineForJrn:(NSString *)jrn pbx:(PBX *)pbx
 {
-    if ([Common stringIsNilOrEmpty:line.userName] && ![Common stringIsNilOrEmpty:userName]) {
-		line.userName = userName;
-	}
-	
-	if ([Common stringIsNilOrEmpty:line.userName]) {
-		line.displayName = new_line[@"displayName"];
-	}
-	
-    line.groups = new_line[@"groups"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx = %@ and jrn = %@", pbx, jrn];
+    Line *line = [Line MR_findFirstWithPredicate:predicate inContext:pbx.managedObjectContext];
+    if(!line)
+    {
+        line = [Line MR_createInContext:pbx.managedObjectContext];
+        line.jrn = jrn;
+        line.pbx = pbx;
+        line.pbxId = pbx.pbxId;
+    }
+    return line;
 }
 
 @end
+
+// Line Grouping.
+//+ (Line *)addLine:(NSDictionary *)line pbxId:(NSString *)pbxId userName:(NSString *)userName withManagedContext:(NSManagedObjectContext *)context sender:(id)sender
+//{
+//        c_line.groups = line[@"groups"];
+//
+//		if (line[@"groups"]) {
+//			NSArray *groups = (NSArray *)line[@"groups"];
+//			if (groups && groups.count > 0) {
+//				for (NSDictionary *gr in groups) {
+//
+//					ContactGroup *cg = [ContactGroup MR_findFirstByAttribute:@"groupId" withValue:gr[@"id"] inContext:context];
+//					if (cg) {
+//						if (![cg.groupName isEqualToString:gr[@"name"]]) {
+//							cg.groupName = gr[@"name"];
+//						}
+//					}
+//					else {
+//						cg = [ContactGroup MR_createInContext:context];
+//						cg.groupId = gr[@"id"];
+//						cg.groupName = gr[@"name"];
+//					}
+//
+//					NSPredicate *pred = [NSPredicate predicateWithFormat:@"(groupId == %@) AND (lineId == %@)", cg.groupId, lineJrn];
+//					LineGroup *lg = [LineGroup MR_findFirstWithPredicate:pred];
+//					if (!lg) {
+//						lg = [LineGroup MR_createInContext:context];
+//						lg.lineId = c_line.jrn;
+//						lg.groupId = cg.groupId;
+//					}
+//				}
+//			}
+//		}
+//    //}
+//
+//    //return c_line;
+//}

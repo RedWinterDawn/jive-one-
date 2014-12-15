@@ -23,12 +23,11 @@
 
 -(BOOL)canMakeCall
 {
-    CTTelephonyNetworkInfo *networkInfo = [[CTTelephonyNetworkInfo alloc] init];
-    CTCarrier *carrier = [networkInfo subscriberCellularProvider];
-    
-    NSString *carrierName = carrier.carrierName;
-    BOOL allowsVoip = carrier.allowsVOIP;
-    NSString *mobileNetworkCode = carrier.mobileNetworkCode;
+//    CTTelephonyNetworkInfo *networkInfo = [[CTTelephonyNetworkInfo alloc] init];
+//    CTCarrier *carrier = [networkInfo subscriberCellularProvider];
+//    NSString *carrierName = carrier.carrierName;
+//    BOOL allowsVoip = carrier.allowsVOIP;
+//    NSString *mobileNetworkCode = carrier.mobileNetworkCode;
     
     
     BOOL hasCellular = [self hasCellular];

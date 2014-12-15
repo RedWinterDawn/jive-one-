@@ -81,4 +81,6 @@ NSString *const kRecentEventReadKey = @"read";
     return [self boolValueFromPrimitiveValueForKey:kRecentEventReadKey];
 }
 
+@dynamic line;
+
 @end

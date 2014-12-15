@@ -8,13 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-#import "PBX+Custom.h"
-#import "Lines+Custom.h"
-#import "LineConfiguration+Custom.h"
+#import "User.h"
+#import "Line.h"
 
 extern NSString *const kJCAuthenticationManagerUserLoggedOutNotification;
 extern NSString *const kJCAuthenticationManagerUserAuthenticatedNotification;
 extern NSString *const kJCAuthenticationManagerUserLoadedMinimumDataNotification;
+extern NSString *const kJCAuthenticationManagerLineChangedNotification;
 
 typedef void (^CompletionBlock) (BOOL success, NSError *error);
 
@@ -23,18 +23,19 @@ typedef void (^CompletionBlock) (BOOL success, NSError *error);
 - (void)loginWithUsername:(NSString *)username password:(NSString*)password completed:(CompletionBlock)completed;
 - (void)logout;
 
-@property (nonatomic, readonly) PBX *pbx;
-@property (nonatomic, strong) LineConfiguration *lineConfiguration;
+@property (nonatomic, strong) User *user;
+@property (nonatomic, strong) Line *line;
 
-@property (nonatomic, readonly) NSString *jiveUserId;
-@property (nonatomic, readonly) NSString *pbxName;
-
+@property (nonatomic, readonly) NSString *username;
+@property (nonatomic, readonly) NSString *password;
 @property (nonatomic, readonly) NSString *authToken;
 @property (nonatomic, readonly) NSString *refreshToken;
-
+@property (nonatomic, readonly) NSString *jiveUserId;
 @property (nonatomic, readonly) BOOL userAuthenticated;
 @property (nonatomic, readwrite) BOOL userLoadedMininumData;
 @property (nonatomic) BOOL rememberMe;
+
+-(void)checkAuthenticationStatus;
 
 @end
 

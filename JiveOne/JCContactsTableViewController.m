@@ -9,195 +9,42 @@
 #import "JCContactsTableViewController.h"
 #import "JCCallerViewController.h"
 
-#import "Lines+Custom.h"
-#import "JCPersonCell.h"
+#import "JCContactCell.h"
+#import "JCLineCell.h"
+#import "JCExternalContactCell.h"
+
 #import "JasmineSocket.h"
-#import <AddressBook/AddressBook.h>
-#import <AddressBookUI/AddressBookUI.h>
 
+#import "Contact.h"
+#import "Line.h"
+#import "PBX.h"
+#import "User.h"
 
-@interface JCContactsTableViewController()  <JCCallerViewControllerDelegate, ABPeoplePickerNavigationControllerDelegate, ABPersonViewControllerDelegate>
+@interface JCContactsTableViewController()  <JCCallerViewControllerDelegate>
 {
     NSString *_searchText;
     NSMutableDictionary *lineSubcription;
 }
 
+@property (nonatomic, strong) NSFetchRequest *fetchRequest;
+@property (nonatomic, strong) NSPredicate *predicate;
 
-@property (nonatomic, weak) NSPredicate *predicate;
-@property (nonatomic, assign) ABAddressBookRef addressBook;
-@property (nonatomic, strong) NSMutableArray *LocalContacts;
-
-@property (nonatomic, strong) ABPeoplePickerNavigationController *addressBookController;
-
--(void)showAddressBook;
 @end
 
 @implementation JCContactsTableViewController
-
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(subscribeToLinePresence:) name:kSocketDidOpen object:nil];
+    
     if ([JasmineSocket sharedInstance].socket.readyState == SR_OPEN) {
         [self subscribeToLinePresence:nil];
     }
     else {
         [[JasmineSocket sharedInstance] initSocket];
     }
-//    _addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
-//    [self checkAddressBookAccess];
-    
 }
-
-
--(void)showAddressBook{
-    _addressBookController = [[ABPeoplePickerNavigationController alloc] init];
-    [_addressBookController setPeoplePickerDelegate:self];
-    [self presentViewController:_addressBookController animated:YES completion:nil];
-}
-
--(BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person{
-    NSMutableDictionary *contactInfoDict = [[NSMutableDictionary alloc]
-                                            initWithObjects:@[@"", @"", @"", @"", @"", @"", @"", @"", @""]
-                                            forKeys:@[@"firstName", @"lastName", @"mobileNumber", @"homeNumber", @"homeEmail", @"workEmail", @"address", @"zipCode", @"city"]];
-    
-    CFTypeRef generalCFObject;
-    generalCFObject = ABRecordCopyValue(person, kABPersonFirstNameProperty);
-    //get first name of contact if it exsists
-    if (generalCFObject) {
-        [contactInfoDict setObject:(__bridge NSString *)generalCFObject forKey:@"firstName"];
-        CFRelease(generalCFObject);
-    }
-    //get last name if exsists
-    generalCFObject = ABRecordCopyValue(person, kABPersonLastNameProperty);
-    if (generalCFObject) {
-        [contactInfoDict setObject:(__bridge NSString *)generalCFObject forKey:@"lastName"];
-        CFRelease(generalCFObject);
-    }
-    
-    ABMultiValueRef phonesRef = ABRecordCopyValue(person, kABPersonPhoneProperty);
-    // get all phone numbers accociated with this contact
-    for (int i=0; i < ABMultiValueGetCount(phonesRef); i++) {
-        CFStringRef currentPhoneLabel = ABMultiValueCopyLabelAtIndex(phonesRef, i);
-        CFStringRef currentPhoneValue = ABMultiValueCopyValueAtIndex(phonesRef, i);
-        
-        if (CFStringCompare(currentPhoneLabel, kABPersonPhoneMobileLabel, 0) == kCFCompareEqualTo) {
-            [contactInfoDict setObject:(__bridge NSString *)currentPhoneValue forKey:@"mobileNumber"];
-        }
-        
-        if (CFStringCompare(currentPhoneLabel, kABHomeLabel, 0) == kCFCompareEqualTo) {
-            [contactInfoDict setObject:(__bridge NSString *)currentPhoneValue forKey:@"homeNumber"];
-        }
-        
-        CFRelease(currentPhoneLabel);
-        CFRelease(currentPhoneValue);
-    }
-    CFRelease(phonesRef);
-    
-    //Get the emails
-    ABMultiValueRef emailsRef = ABRecordCopyValue(person, kABPersonEmailProperty);
-    for (int i=0; i<ABMultiValueGetCount(emailsRef); i++) {
-        CFStringRef currentEmailLabel = ABMultiValueCopyLabelAtIndex(emailsRef, i);
-        CFStringRef currentEmailValue = ABMultiValueCopyValueAtIndex(emailsRef, i);
-        
-        if (CFStringCompare(currentEmailLabel, kABHomeLabel, 0) == kCFCompareEqualTo) {
-            [contactInfoDict setObject:(__bridge NSString *)currentEmailValue forKey:@"homeEmail"];
-        }
-        
-        if (CFStringCompare(currentEmailLabel, kABWorkLabel, 0) == kCFCompareEqualTo) {
-            [contactInfoDict setObject:(__bridge NSString *)currentEmailValue forKey:@"workEmail"];
-        }
-        
-        CFRelease(currentEmailLabel);
-        CFRelease(currentEmailValue);
-    }
-    CFRelease(emailsRef);
-    
-    //Get their contac Img
-    if (ABPersonHasImageData(person)) {
-        NSData *contactImageData = (__bridge NSData *)ABPersonCopyImageDataWithFormat(person, kABPersonImageFormatThumbnail);
-        
-        [contactInfoDict setObject:contactImageData forKey:@"image"];
-    }
-    
-    if (_LocalContacts == nil) {
-        _LocalContacts = [[NSMutableArray alloc] init];
-    }
-    [_LocalContacts addObject:contactInfoDict];
-    
-    [self.tableView reloadData];
-    
-    [_addressBookController dismissViewControllerAnimated:YES completion:nil];
-    
-    return NO;
-}
-
--(void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker{
-    [_addressBookController dismissViewControllerAnimated:YES completion:nil];
-}
-
--(BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier{
-    return NO;
-}
-
-#pragma mark Address Book Access
-// Check the authorization status of our application for Address Book
--(void)checkAddressBookAccess
-{
-    switch (ABAddressBookGetAuthorizationStatus())
-    {
-            // Update our UI if the user has granted access to their Contacts
-        case  kABAuthorizationStatusAuthorized:
-            [self accessGrantedForAddressBook];
-            break;
-            // Prompt the user for access to Contacts if there is no definitive answer
-        case  kABAuthorizationStatusNotDetermined :
-            [self requestAddressBookAccess];
-            break;
-            // Display a message if the user has denied or restricted access to Contacts
-        case  kABAuthorizationStatusDenied:
-        case  kABAuthorizationStatusRestricted:
-        {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Privacy Warning"
-                                                            message:@"Permission was not granted for Contacts."
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-            [alert show];
-        }
-            break;
-        default:
-            break;
-    }
-}
-
-// Prompt the user for access to their Address Book data
--(void)requestAddressBookAccess
-{
-    JCContactsTableViewController * __weak weakSelf = self;
-    
-    ABAddressBookRequestAccessWithCompletion(self.addressBook, ^(bool granted, CFErrorRef error)
-                                             {
-                                                 if (granted)
-                                                 {
-                                                     dispatch_async(dispatch_get_main_queue(), ^{
-                                                         [weakSelf accessGrantedForAddressBook];
-                                                         
-                                                     });
-                                                 }
-                                             });
-}
-
-// This method is called when the user has granted access to their address book data.
--(void)accessGrantedForAddressBook
-{
-    // Load data from the plist file
-//    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"Menu" ofType:@"plist"];
-//    self.menuArray = [NSMutableArray arrayWithContentsOfFile:plistPath];
-    [self.tableView reloadData];
-}
-
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -205,37 +52,47 @@
     if ([viewController isKindOfClass:[JCCallerViewController class]]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         id object = [self objectAtIndexPath:indexPath];
-        if ([object isKindOfClass:[Lines class]]) {
-            Lines *line = (Lines *)object;
+        if ([object isKindOfClass:[Contact class]]) {
+            Contact *contact = (Contact *)object;
             JCCallerViewController *callerViewController = (JCCallerViewController *)viewController;
             callerViewController.delegate = self;
-            callerViewController.dialString = line.externsionNumber;
+            callerViewController.dialString = contact.extension;
         }
     }
 }
 
--(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController
-{
-    [self dismissViewControllerAnimated:NO completion:^{
-        
-    }];
-}
+
 
 - (void)configureCell:(UITableViewCell *)cell withObject:(id<NSObject>)object
 {
-    
-    if ([object isKindOfClass:[Lines class]] && [cell isKindOfClass:[JCPersonCell class]]) {
-        ((JCPersonCell *)cell).line = (Lines *)object;
+    if ([object isKindOfClass:[Contact class]] && [cell isKindOfClass:[JCContactCell class]]) {
+        ((JCContactCell *)cell).contact = (Contact *)object;
     }
+    else if ([object isKindOfClass:[Line class]] && [cell isKindOfClass:[JCLineCell class]]) {
+        ((JCLineCell *)cell).line = (Line *)object;
+    }
+//    else if ([object isKindOfClass:[UITableViewCell class]] && [cell isKindOfClass:[JCExternalContactCell class]]) {
+//        ((JCExternalContactCell *)cell).externalNameLabel = (JCExternalContactCell *)object;
+//    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForObject:(id<NSObject>)object atIndexPath:(NSIndexPath *)indexPath
 {
-    if ([object isKindOfClass:[Lines class]]) {
-        JCPersonCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PersonCell"];
+    if ([object isKindOfClass:[Contact class]]) {
+        JCContactCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactCell"];
         [self configureCell:cell withObject:object];
         return cell;
     }
+    else if ([object isKindOfClass:[Line class]]) {
+        JCLineCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LineCell"];
+        [self configureCell:cell withObject:object];
+        return cell;
+    }
+//    else if ([object isKindOfClass:[UITableViewCell class]]) {
+//        JCExternalContactCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ExternalContactCell"];
+//        [self configureCell:cell withObject:object];
+//        return cell;
+//    }
     return nil;
 }
 
@@ -244,33 +101,7 @@
 -(void)setFilterType:(JCContactFilter)filterType
 {
     _filterType = filterType;
-    self.predicate = nil;
-}
-
--(void)setPredicate:(NSPredicate *)predicate
-{
-    if (!predicate) {
-        
-        if (_searchText && ![_searchText isEqualToString:@""]) {
-            predicate = [NSPredicate predicateWithFormat:@"(displayName contains[cd] %@) OR (externsionNumber contains[cd] %@)", _searchText, _searchText];
-        }
-        
-        NSPredicate *filterPredicate = [self predicateFromFilterType];
-        if (filterPredicate && predicate)
-            predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, filterPredicate]];
-        else if(filterPredicate)
-            predicate = filterPredicate;
-    }
-        
-    if (_fetchedResultsController)
-    {
-        _fetchedResultsController.fetchRequest.predicate = predicate;
-        __autoreleasing NSError *error = nil;
-        if ([self.fetchedResultsController performFetch:&error])
-        {
-            [self.tableView reloadData];
-        }
-    }
+    [self reloadTable];
 }
 
 #pragma mark - Getters -
@@ -279,50 +110,61 @@
 {
     if (!_fetchedResultsController)
     {
-        NSFetchRequest *fetchRequest = [Lines MR_requestAllWithPredicate:self.predicate inContext:self.managedObjectContext];
-        fetchRequest.fetchBatchSize = 10;
-        fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"displayName" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
-        super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"firstLetter" cacheName:nil];
+        super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:self.fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"firstLetter" cacheName:nil];
     }
     return _fetchedResultsController;
 }
 
-- (NSPredicate *)predicate
+- (NSFetchRequest *)fetchRequest
 {
-    if (_fetchedResultsController)
-        return _fetchedResultsController.fetchRequest.predicate;
-    return [self predicateFromFilterType];
+    if (!_fetchRequest) {
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbxId = %@", [JCAuthenticationManager sharedInstance].line.pbx.pbxId];
+        if (_searchText && ![_searchText isEqualToString:@""]) {
+            NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"(name contains[cd] %@) OR (extension contains[cd] %@)", _searchText, _searchText];
+            predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, searchPredicate]];
+        }
+        
+        if (_filterType == JCContactFilterFavorites) {
+            NSPredicate *favoritePredicate =[NSPredicate predicateWithFormat:@"favorite == 1"];
+            if (predicate) {
+                predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, favoritePredicate]];
+            }
+            else {
+                predicate = favoritePredicate;
+            }
+            _fetchRequest = [Contact MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
+        }
+        else {
+            _fetchRequest = [Person MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
+            _fetchRequest.includesSubentities = TRUE;
+        }
+        _fetchRequest.resultType = NSManagedObjectResultType;
+        _fetchRequest.fetchBatchSize = 10;
+        _fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
+    }
+    return _fetchRequest;
 }
 
 #pragma mark - Private -
 
--(NSPredicate *)predicateFromFilterType
+-(void)reloadTable
 {
-    if (_filterType == JCContactFilterFavorites) {
-        return [NSPredicate predicateWithFormat:@"isFavorite == 1"];
-    }
-    else if (_filterType == JCContactFilterLocalContacts){
-        [self showAddressBook];
-    }
-    return nil;
+    _fetchedResultsController = nil;
+    _fetchRequest = nil;
+    [self.tableView reloadData];
 }
 
--(void)showPeoplePickerController
-{
-    ABPeoplePickerNavigationController *picker = [[ABPeoplePickerNavigationController alloc] init];
-    picker.peoplePickerDelegate = self;
-    // Display only a person's phone, email, and birthdate
-    NSArray *displayedItems = [NSArray arrayWithObjects:[NSNumber numberWithInt:kABPersonPhoneProperty],
-                               [NSNumber numberWithInt:kABPersonEmailProperty],
-                               [NSNumber numberWithInt:kABPersonBirthdayProperty], nil];
-    
-    
-    picker.displayedProperties = displayedItems;
-    // Show the picker
-    [self presentViewController:picker animated:YES completion:nil];
-}
+//-(void)showAddressBook{
+//    return;
+//}
 
 #pragma mark - Delegate handlers -
+
+-(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController
+{
+    [self dismissViewControllerAnimated:NO completion:NULL];
+}
 
 #pragma mark - Table view data source
 
@@ -341,7 +183,7 @@
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     _searchText = searchText;
-    self.predicate = nil;
+    [self reloadTable];
 }
 
 -(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
@@ -355,7 +197,7 @@
     [searchBar setShowsCancelButton:NO animated:YES];
     searchBar.text = nil;
     _searchText = nil;
-    self.predicate = nil;
+    [self reloadTable];
 }
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
@@ -367,7 +209,9 @@
 {
     [searchBar resignFirstResponder];
     if (searchBar.text == nil)
-        self.predicate = nil;
+    {
+        [self reloadTable];
+    }
 }
 
 - (NSMutableDictionary *)lineSubscription
@@ -386,7 +230,7 @@
 - (void)subscribeToLinePresence:(NSNotification *)notification
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        for (Lines *line in [self.fetchedResultsController fetchedObjects]) {
+        for (Line *line in [self.fetchedResultsController fetchedObjects]) {
             
             if (self.lineSubscription[line.jrn] && [self.lineSubscription[line.jrn] boolValue]) {
                 continue;
@@ -397,5 +241,6 @@
         }
     });
 }
+
 
 @end

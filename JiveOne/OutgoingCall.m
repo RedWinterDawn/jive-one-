@@ -28,9 +28,9 @@ NSString *const kOutgoingCallEntityName = @"OutgoingCall";
 
 @implementation OutgoingCall (MagicalRecord)
 
-+(void)addOutgoingCallWithLineSession:(JCLineSession *)session
++(void)addOutgoingCallWithLineSession:(JCLineSession *)session line:(Line *)line
 {
-    [OutgoingCall addCallEntity:kOutgoingCallEntityName lineSession:session read:YES];
+    [OutgoingCall addCallEntity:kOutgoingCallEntityName line:line lineSession:session read:YES];
 }
 
 @end

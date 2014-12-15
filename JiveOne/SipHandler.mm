@@ -30,14 +30,13 @@
 #define OUTBOUND_SIP_SERVER_PORT 5061
 
 NSString *const kSipHandlerServerAgentname = @"Jive iOS Client";
-NSString *const kSipHandlerFetchLineConfigurationErrorMessage = @"Unable to fetch the line configuration";
+NSString *const kSipHandlerLineErrorMessage = @"Unable to fetch the line configuration";
 NSString *const kSipHandlerFetchPBXErrorMessage = @"Unable to fetch the line configuration";
 NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 @interface SipHandler() <PortSIPEventDelegate>
 {
-    LineConfiguration *_lineConfiguration;
-    PBX *_pbx;
+    Line *_line;
     PortSIPSDK *_mPortSIPSDK;
     CompletionHandler _connectionCompletionHandler;
     AFNetworkReachabilityStatus _previousNetworkStatus;
@@ -53,19 +52,15 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 @implementation SipHandler
 
--(instancetype)initWithPbx:(PBX *)pbx lineConfiguration:(LineConfiguration *)lineConfiguration delegate:(id<SipHandlerDelegate>)delegate
+-(instancetype)initWithLine:(Line *)line delegate:(id<SipHandlerDelegate>)delegate
 {
     self = [super init];
     if (self)
     {
-        if (!lineConfiguration)
-            [NSException raise:NSInvalidArgumentException format:kSipHandlerFetchLineConfigurationErrorMessage];
+        if (!_line)
+            [NSException raise:NSInvalidArgumentException format:kSipHandlerLineErrorMessage];
         
-        if (!pbx)
-            [NSException raise:NSInvalidArgumentException format:kSipHandlerFetchPBXErrorMessage];
-        
-        _pbx = pbx;
-        _lineConfiguration = lineConfiguration;
+        _line = line;
         _delegate = delegate;
     
         _lineSessions = [NSMutableArray new];
@@ -116,8 +111,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
  */
 -(void)login
 {
-    NSString *kSipUserName  = _lineConfiguration.sipUsername;
-    NSString *kSIPServer    = ([_pbx.v5 boolValue]) ? _lineConfiguration.outboundProxy : _lineConfiguration.registrationHost;
+    NSString *kSipUserName  = _line.lineConfiguration.sipUsername;
+    NSString *kSIPServer    = _line.pbx.isV5 ? _line.lineConfiguration.outboundProxy : _line.lineConfiguration.registrationHost;
     
     _sipURL = [[NSString alloc] initWithFormat:@"sip:%@:%@", kSipUserName, kSIPServer];
 	
@@ -148,9 +143,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         [NSException raise:NSInvalidArgumentException format:@"initializeSDK failure ErrorCode = %d",ret];
     
     ret = [_mPortSIPSDK setUser:kSipUserName
-                    displayName:_lineConfiguration.display
+                    displayName:_line.lineConfiguration.display
                        authName:kSipUserName
-                       password:_lineConfiguration.sipPassword
+                       password:_line.lineConfiguration.sipPassword
                         localIP:@"0.0.0.0"                      // Auto select IP address
                    localSIPPort:(10000 + arc4random()%1000)     // Generate a random port in the 10,000 range
                      userDomain:@""
@@ -158,7 +153,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
                   SIPServerPort:OUTBOUND_SIP_SERVER_PORT
                      STUNServer:@""
                  STUNServerPort:0
-                 outboundServer:_lineConfiguration.outboundProxy
+                 outboundServer:_line.lineConfiguration.outboundProxy
              outboundServerPort:OUTBOUND_SIP_SERVER_PORT];
     
     if(ret != 0)
@@ -304,7 +299,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 		
 		[lineSession setCallTitle:contactName ? contactName : dialString];
 		[lineSession setCallDetail:dialString];
-        [OutgoingCall addOutgoingCallWithLineSession:lineSession];
+        [OutgoingCall addOutgoingCallWithLineSession:lineSession line:_line];
 	}
 	else
 	{
@@ -324,7 +319,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     if(error == 0)
     {
         if (lineSession.mRecvCallState) {
-            [IncomingCall addIncommingCallWithLineSession:lineSession];
+            [IncomingCall addIncommingCallWithLineSession:lineSession line:_line];
         }
         
         [lineSession setMRecvCallState:false];
@@ -672,7 +667,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             NSLog(@"%@", [self.lineSessions description]);
             if (lineSession.mRecvCallState)
             {
-                [MissedCall addMissedCallWithLineSession:lineSession];
+                [MissedCall addMissedCallWithLineSession:lineSession line:_line];
             }
             [self.delegate removeLineSession:lineSession];
             [lineSession reset];
@@ -1076,8 +1071,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 			  newMessageCount:(int)newMessageCount
 			  oldMessageCount:(int)oldMessageCount
 {
-    PBX *pbx = [JCAuthenticationManager sharedInstance].pbx;
-    if (pbx && ![pbx.v5 boolValue]) {
+    if (_line.pbx.isV5) {
         [JCBadgeManager sharedManager].voicemails = newMessageCount;
     }    
 }
