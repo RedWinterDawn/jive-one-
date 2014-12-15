@@ -78,7 +78,10 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     if (dialString)
         [_phoneManager dialNumber:dialString type:JCCallCardDialSingle completion:^(bool success, NSDictionary *callInfo) {
             if (!success)
+            {
+                [self showSimpleAlert:@"Warning" message:@"Unable to complete call at this time."];
                 [self performSelector:@selector(closeCallerViewController) withObject:nil afterDelay:0];
+            }
         }];
 	
     [self setCallOptionsHidden:_callOptionsHidden animated:NO];

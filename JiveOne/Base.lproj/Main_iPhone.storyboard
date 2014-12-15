@@ -56,17 +56,11 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ta4-0u-d9a">
                                 <rect key="frame" x="0.0" y="44" width="320" height="411"/>
                                 <connections>
-                                    <segue destination="c3p-aT-jcP" kind="embed" id="Lh0-dF-r62"/>
+                                    <segue destination="c3p-aT-jcP" kind="embed" id="NV4-rr-lnW"/>
                                 </connections>
                             </containerView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pKN-VJ-S7h">
-                                <rect key="frame" x="251" y="455" width="69" height="49"/>
-                                <state key="normal" title="Local">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KQN-3R-ma5">
-                                <rect key="frame" x="0.0" y="455" width="251" height="49"/>
+                            <tabBar contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KQN-3R-ma5">
+                                <rect key="frame" x="0.0" y="455" width="320" height="49"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="49" id="Cf8-lu-Xam"/>
@@ -84,17 +78,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottomMargin" secondItem="pKN-VJ-S7h" secondAttribute="bottom" id="ILM-M7-fgo"/>
                             <constraint firstItem="Ta4-0u-d9a" firstAttribute="leading" secondItem="0RX-8x-sb0" secondAttribute="leading" id="Ibw-7N-XjQ"/>
-                            <constraint firstItem="pKN-VJ-S7h" firstAttribute="leading" secondItem="KQN-3R-ma5" secondAttribute="trailing" id="QU9-hP-dnI"/>
                             <constraint firstItem="KQN-3R-ma5" firstAttribute="top" secondItem="Ta4-0u-d9a" secondAttribute="bottom" id="Y7M-SB-qv6"/>
                             <constraint firstItem="KQN-3R-ma5" firstAttribute="leading" secondItem="0RX-8x-sb0" secondAttribute="leading" id="YFS-ec-ZAm"/>
-                            <constraint firstItem="pKN-VJ-S7h" firstAttribute="top" secondItem="Ta4-0u-d9a" secondAttribute="bottom" id="dLJ-8g-hqS"/>
                             <constraint firstItem="Ta4-0u-d9a" firstAttribute="top" secondItem="5ds-mG-BrS" secondAttribute="bottom" id="eo2-KK-lbP"/>
-                            <constraint firstAttribute="trailing" secondItem="pKN-VJ-S7h" secondAttribute="trailing" id="iau-VU-ua6"/>
                             <constraint firstAttribute="trailing" secondItem="Ta4-0u-d9a" secondAttribute="trailing" id="rJY-gF-YbO"/>
                             <constraint firstItem="KQN-3R-ma5" firstAttribute="bottom" secondItem="0RX-8x-sb0" secondAttribute="bottomMargin" id="rLL-cX-IRJ"/>
-                            <constraint firstItem="pKN-VJ-S7h" firstAttribute="leading" secondItem="0RX-8x-sb0" secondAttribute="leadingMargin" constant="235" id="tBZ-mD-IgZ"/>
                             <constraint firstItem="5ds-mG-BrS" firstAttribute="top" secondItem="wQr-PL-DFN" secondAttribute="bottom" id="tyy-Pg-B0t"/>
                             <constraint firstItem="5ds-mG-BrS" firstAttribute="leading" secondItem="0RX-8x-sb0" secondAttribute="leading" id="umb-b0-6m1"/>
                             <constraint firstAttribute="trailing" secondItem="5ds-mG-BrS" secondAttribute="trailing" id="y1Q-cL-hVa"/>
@@ -107,6 +96,7 @@
                     <connections>
                         <outlet property="searchBar" destination="5ds-mG-BrS" id="eKU-3I-hhY"/>
                         <outlet property="tabBar" destination="KQN-3R-ma5" id="wBh-2d-BJB"/>
+                        <segue destination="ph3-lT-GBI" kind="modal" identifier="LocalContactsClickToCall" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" animates="NO" id="u61-Zl-F4Y"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ozR-aT-h5B" sceneMemberID="firstResponder"/>
@@ -1762,7 +1752,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7hq-rR-r2m" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1674" y="901"/>
+            <point key="canvasLocation" x="1912" y="859"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="uDf-PG-NB6">
@@ -5020,12 +5010,12 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="voi-Tt-SuU"/>
-        <segue reference="Uqi-bD-GAX"/>
-        <segue reference="2yK-HA-Lah"/>
         <segue reference="UvZ-f2-OIn"/>
-        <segue reference="01X-YE-vYS"/>
+        <segue reference="2yK-HA-Lah"/>
+        <segue reference="u61-Zl-F4Y"/>
+        <segue reference="Uqi-bD-GAX"/>
         <segue reference="Jb7-iw-Z2s"/>
+        <segue reference="01X-YE-vYS"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29803921570000003" green="0.44705882349999998" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
 </document>

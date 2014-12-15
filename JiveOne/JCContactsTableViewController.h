@@ -11,7 +11,6 @@
 typedef NS_ENUM(NSInteger, JCContactFilter) {
     JCContactFilterAll,
     JCContactFilterFavorites,
-    JCContactFilterLocalContacts,
     JCContactFilterGrouped
 };
 
