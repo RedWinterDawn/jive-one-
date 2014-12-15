@@ -43,7 +43,6 @@ extern NSString *const kJCBadgeManagerIdentifierKey;
 
 + (JCBadgeManager *)sharedManager;
 
-+ (void)initialize;
 + (void)update;
 + (void)reset;
 

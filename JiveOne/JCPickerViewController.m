@@ -44,7 +44,7 @@
 
 -(NSString *)titleForRow:(NSInteger)row
 {
-    return [NSString stringWithFormat:@"Row %i", row];
+    return [NSString stringWithFormat:@"Row %li", (long)row];
 }
 
 -(NSInteger)numberOfRows

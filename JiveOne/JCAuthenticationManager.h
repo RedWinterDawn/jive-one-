@@ -31,12 +31,6 @@ typedef void (^CompletionBlock) (BOOL success, NSError *error);
 @property (nonatomic, readonly) NSString *authToken;
 @property (nonatomic, readonly) NSString *refreshToken;
 @property (nonatomic, readonly) NSString *jiveUserId;
-
-// Deprecated Attributes
-@property (nonatomic, strong) PBX *pbx __deprecated;
-@property (nonatomic, strong) LineConfiguration *lineConfiguration __deprecated;
-@property (nonatomic, readonly) NSString *pbxName __deprecated;
-
 @property (nonatomic, readonly) BOOL userAuthenticated;
 @property (nonatomic, readwrite) BOOL userLoadedMininumData;
 @property (nonatomic) BOOL rememberMe;

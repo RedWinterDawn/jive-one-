@@ -201,7 +201,7 @@ static BOOL closedSocketOnPurpose;
 {
     
     NSString *type = message[@"type"];
-    NSString *subId = message[@"subId"];
+    //NSString *subId = message[@"subId"];
     NSString *state;
     
     if (![message[@"data"] isKindOfClass:[NSNull class]]) {
