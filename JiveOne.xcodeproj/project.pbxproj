@@ -234,6 +234,10 @@
 		5D0199C21A1BBC0500F4CF13 /* IncomingCallViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D0199C41A1BBC0500F4CF13 /* IncomingCallViewCell.xib */; };
 		5D0199C71A1BBC1500F4CF13 /* ConferenceCallViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D0199C91A1BBC1500F4CF13 /* ConferenceCallViewCell.xib */; };
 		5D0199EC1A1BF4BC00F4CF13 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5D0199EE1A1BF4BC00F4CF13 /* Localizable.strings */; };
+		5D02750A1A3F7FF40077A37B /* UIDevice+InstallationIdentifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0275091A3F7FF40077A37B /* UIDevice+InstallationIdentifier.m */; };
+		5D02750D1A3F81060077A37B /* JCEncryptionTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D02750C1A3F81060077A37B /* JCEncryptionTransformer.m */; };
+		5D0275101A3F81FF0077A37B /* NSData+AESAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D02750F1A3F81FF0077A37B /* NSData+AESAddition.m */; };
+		5D0275131A3F836A0077A37B /* JCStringEncryptionTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0275121A3F836A0077A37B /* JCStringEncryptionTransformer.m */; };
 		5D03649119DC5A450090CC21 /* JCTransferViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D03649019DC5A450090CC21 /* JCTransferViewController.m */; };
 		5D15AF2B19DB271500E86116 /* NSString+DialString.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D15AF2819DB271500E86116 /* NSString+DialString.m */; };
 		5D15AF2C19DB271500E86116 /* NSString+IsNumeric.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D15AF2A19DB271500E86116 /* NSString+IsNumeric.m */; };
@@ -769,6 +773,14 @@
 		5D0199EF1A1BF4C100F4CF13 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		5D0199F01A1BF4C200F4CF13 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		5D0199F11A1BF4C300F4CF13 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5D0275081A3F7FF40077A37B /* UIDevice+InstallationIdentifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+InstallationIdentifier.h"; sourceTree = "<group>"; };
+		5D0275091A3F7FF40077A37B /* UIDevice+InstallationIdentifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+InstallationIdentifier.m"; sourceTree = "<group>"; };
+		5D02750B1A3F81060077A37B /* JCEncryptionTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCEncryptionTransformer.h; sourceTree = "<group>"; };
+		5D02750C1A3F81060077A37B /* JCEncryptionTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCEncryptionTransformer.m; sourceTree = "<group>"; };
+		5D02750E1A3F81FF0077A37B /* NSData+AESAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+AESAddition.h"; sourceTree = "<group>"; };
+		5D02750F1A3F81FF0077A37B /* NSData+AESAddition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+AESAddition.m"; sourceTree = "<group>"; };
+		5D0275111A3F836A0077A37B /* JCStringEncryptionTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCStringEncryptionTransformer.h; sourceTree = "<group>"; };
+		5D0275121A3F836A0077A37B /* JCStringEncryptionTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCStringEncryptionTransformer.m; sourceTree = "<group>"; };
 		5D03648F19DC5A450090CC21 /* JCTransferViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTransferViewController.h; sourceTree = "<group>"; };
 		5D03649019DC5A450090CC21 /* JCTransferViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTransferViewController.m; sourceTree = "<group>"; };
 		5D15AF2719DB271500E86116 /* NSString+DialString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+DialString.h"; sourceTree = "<group>"; };
@@ -1350,6 +1362,10 @@
 				5DB0BFC319FFF97A006737D7 /* JCDrawing.m */,
 				5D7339A81A03FF9700339DC6 /* JCBadgeManager.h */,
 				5D7339A91A03FF9700339DC6 /* JCBadgeManager.m */,
+				5D02750B1A3F81060077A37B /* JCEncryptionTransformer.h */,
+				5D02750C1A3F81060077A37B /* JCEncryptionTransformer.m */,
+				5D0275111A3F836A0077A37B /* JCStringEncryptionTransformer.h */,
+				5D0275121A3F836A0077A37B /* JCStringEncryptionTransformer.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -1708,6 +1724,10 @@
 				5D6742A01A2D19AA00E1A60D /* UIDevice+CellularData.m */,
 				5DBABCD21A283DA500B09783 /* NSString+Custom.h */,
 				5DBABCD31A283DA500B09783 /* NSString+Custom.m */,
+				5D0275081A3F7FF40077A37B /* UIDevice+InstallationIdentifier.h */,
+				5D0275091A3F7FF40077A37B /* UIDevice+InstallationIdentifier.m */,
+				5D02750E1A3F81FF0077A37B /* NSData+AESAddition.h */,
+				5D02750F1A3F81FF0077A37B /* NSData+AESAddition.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -2661,6 +2681,7 @@
 				5D7339CB1A0826CD00339DC6 /* JCPhoneTabBarControllerDelegate.m in Sources */,
 				5D2EDB841A3BAA800031F7AD /* JCDebugContactsTableViewController.m in Sources */,
 				5D7339AA1A03FF9700339DC6 /* JCBadgeManager.m in Sources */,
+				5D0275101A3F81FF0077A37B /* NSData+AESAddition.m in Sources */,
 				5D34446519F02F1C00315230 /* JCCurrentCallCardViewCell.m in Sources */,
 				2700987E18F4714100B6BC2F /* JSMessageSoundEffect.m in Sources */,
 				5D1FAC5F19DDD68000899915 /* JCCallCardViewCell.m in Sources */,
@@ -2668,8 +2689,10 @@
 				5D241FDE1A383837008B498A /* JCDebugLineTableViewController.m in Sources */,
 				27F64D6219772D6A00F772AA /* Voicemail.m in Sources */,
 				274493CE18D13538002744CB /* Common.m in Sources */,
+				5D02750A1A3F7FF40077A37B /* UIDevice+InstallationIdentifier.m in Sources */,
 				27F1F2D8191C171300AEAFD7 /* UAInboxMessageViewController.m in Sources */,
 				919DD2A11922E3570039205E /* JCPopoverView.m in Sources */,
+				5D0275131A3F836A0077A37B /* JCStringEncryptionTransformer.m in Sources */,
 				5D241FE11A38B4EB008B498A /* Person.m in Sources */,
 				5D1FAC6219DDFF5300899915 /* JCCallCardCollectionLayout.m in Sources */,
 				2700987B18F4714100B6BC2F /* JSDismissiveTextView.m in Sources */,
@@ -2738,6 +2761,7 @@
 				91CAE6811961EA6A004A28FD /* JCJiveLogoBlack.m in Sources */,
 				5D895EB21A0AC66B0015368D /* JCBadgeView.m in Sources */,
 				2751591718AD300B00FD8D3F /* OsgiData.xcdatamodel in Sources */,
+				5D02750D1A3F81060077A37B /* JCEncryptionTransformer.m in Sources */,
 				91DDB19D193500B500550F10 /* JCDeleteButton.m in Sources */,
 				2751591118AD174F00FD8D3F /* KeychainItemWrapper.m in Sources */,
 				91DDB1991935008A00550F10 /* JCSpeakerButton.m in Sources */,
