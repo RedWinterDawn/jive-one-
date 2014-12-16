@@ -98,7 +98,7 @@
      */
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
 #if DEBUG
-    [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
+    //[[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
     [[AFNetworkActivityLogger sharedLogger] startLogging];
 #else
     [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelOff];
@@ -183,25 +183,11 @@
                         self.window.rootViewController = _appSwitcherViewController;
                     }
                     completion:^(BOOL finished) {
-                        _navigationController = nil;
                         if (completed != NULL) {
                             completed(finished);
                         }
+                        _navigationController = nil;
                     }];
-}
-
-- (void)startDataSyncInBackground
-{
-    
-    
-    
-    
-    // Sync Data
-    /*JCV5ApiClient *client = [JCV5ApiClient sharedClient];
-    if (_authenticationManager.line.pbx.isV5) {
-        [JCV5ApiClient getVoicemailsForLine:_authenticationManager.line completed:NULL];
-    }
-    [client RetrieveContacts:nil];*/
 }
 
 - (UIBackgroundFetchResult)backgroundPerformFetchWithCompletionHandler
@@ -328,7 +314,6 @@
     JCAuthenticationManager *authenticationManager = notification.object;
     [self registerServicesToLine:authenticationManager.line];
 }
-
 
 /**
  * Notification of user inititated logout.

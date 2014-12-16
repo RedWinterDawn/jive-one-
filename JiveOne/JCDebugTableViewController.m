@@ -27,6 +27,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
+    self.jiveUserId.text = authenticationManager.jiveUserId;
+    self.accessToken.text = authenticationManager.authToken;
+    
     self.users.text = [NSString stringWithFormat:@"%lu", (unsigned long)[User MR_countOfEntities]];
     self.pbxs.text = [NSString stringWithFormat:@"%lu", (unsigned long)[PBX MR_countOfEntities]];
     self.lines.text = [NSString stringWithFormat:@"%lu", (unsigned long)[Line MR_countOfEntities]];

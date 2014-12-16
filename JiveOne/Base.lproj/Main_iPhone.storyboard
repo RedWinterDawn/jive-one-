@@ -734,7 +734,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7CT-HS-qG7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1259" y="1808"/>
+            <point key="canvasLocation" x="1253" y="1808"/>
         </scene>
         <!--Debug-->
         <scene sceneID="HPp-NQ-8Tt">
@@ -762,6 +762,26 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="fK3-L1-cSS" detailTextLabel="ytQ-py-sga" style="IBUITableViewCellStyleSubtitle" id="L0d-92-TCm">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="L0d-92-TCm" id="Nib-WS-KhP">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="accessToken" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fK3-L1-cSS">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ytQ-py-sga">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -958,9 +978,11 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Debug" id="rcZ-gm-7j5"/>
                     <connections>
+                        <outlet property="accessToken" destination="ytQ-py-sga" id="8h0-8o-sgf"/>
                         <outlet property="contactGroups" destination="Qdf-Sn-kf8" id="Joe-sU-ela"/>
                         <outlet property="contacts" destination="4dr-fP-Tr8" id="axD-qo-aWM"/>
                         <outlet property="events" destination="kaR-bY-yza" id="4Qt-Ku-kxP"/>
+                        <outlet property="jiveUserId" destination="44p-Vq-15w" id="FaS-Lo-nJe"/>
                         <outlet property="lineConfigurations" destination="JJI-0C-20p" id="LXp-1c-NC0"/>
                         <outlet property="lines" destination="3Yg-JI-TXO" id="0hX-cu-KOl"/>
                         <outlet property="pbxs" destination="6ic-0i-SVi" id="mbh-FU-qcs"/>
@@ -1866,7 +1888,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="36" y="3931"/>
+            <point key="canvasLocation" x="112" y="3187"/>
         </scene>
         <!--Terms And Conditons View Controller-->
         <scene sceneID="zrd-iB-Kwq">
@@ -1877,10 +1899,10 @@
                         <viewControllerLayoutGuide type="bottom" id="AiG-Lb-b2c"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="vw4-gr-jHe">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4nq-wa-FF2">
+                            <webView contentMode="scaleToFill" misplaced="YES" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4nq-wa-FF2">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -1910,7 +1932,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ApA-So-K39" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1425" y="3359"/>
+            <point key="canvasLocation" x="1323" y="2925"/>
         </scene>
         <!--Line Picker View Controller-->
         <scene sceneID="Ipy-YT-3NT">
@@ -1927,9 +1949,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PJQ-b3-euV" customClass="JCVisualEffectsView">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="backgroundView" destination="0vo-PH-rDJ" id="iI7-fZ-s6F"/>
-                                </connections>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hhq-s3-oQT">
                                 <rect key="frame" x="190" y="500" width="120" height="48"/>
@@ -1944,7 +1963,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="close:" destination="e8o-Sx-Cyb" eventType="touchUpInside" id="vQG-N9-jDF"/>
+                                    <action selector="close:" destination="e8o-Sx-Cyb" eventType="touchUpInside" id="syK-fy-B2T"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xbK-XO-rJ8">
@@ -2001,7 +2020,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="select:" destination="e8o-Sx-Cyb" eventType="touchUpInside" id="ZO9-hj-bUh"/>
+                                            <action selector="select:" destination="e8o-Sx-Cyb" eventType="touchUpInside" id="ozH-gx-n7X"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -2030,15 +2049,12 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="23F-O6-dwE" userLabel="allYoLines">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="23F-O6-dwE" userLabel="Picker View Container">
                                 <rect key="frame" x="0.0" y="333" width="320" height="235"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Alt-lS-7wK" customClass="JCVisualEffectsView">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="235"/>
                                         <color key="backgroundColor" red="0.81568627450980391" green="0.81568627450980391" blue="0.81568627450980391" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <connections>
-                                            <outlet property="backgroundView" destination="0vo-PH-rDJ" id="2Ua-T3-VY5"/>
-                                        </connections>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eGI-eP-3bp" userLabel="Bar">
                                         <rect key="frame" x="0.0" y="-5" width="320" height="40"/>
@@ -2053,7 +2069,7 @@
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="done:" destination="e8o-Sx-Cyb" eventType="touchUpInside" id="9Lg-YQ-rjf"/>
+                                                    <action selector="done:" destination="e8o-Sx-Cyb" eventType="touchUpInside" id="sGw-Oc-foF"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -2067,12 +2083,9 @@
                                     </view>
                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GHJ-Ok-PFS">
                                         <rect key="frame" x="0.0" y="45" width="320" height="180"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="200" id="Zdz-Tr-4sX"/>
-                                        </constraints>
                                         <connections>
-                                            <outlet property="dataSource" destination="e8o-Sx-Cyb" id="jR8-5s-Eep"/>
-                                            <outlet property="delegate" destination="e8o-Sx-Cyb" id="ZKZ-KL-z5h"/>
+                                            <outlet property="dataSource" destination="e8o-Sx-Cyb" id="9QB-yb-zhv"/>
+                                            <outlet property="delegate" destination="e8o-Sx-Cyb" id="ceb-Gq-db9"/>
                                         </connections>
                                     </pickerView>
                                 </subviews>
@@ -2109,7 +2122,7 @@
                             <constraint firstAttribute="trailing" secondItem="PJQ-b3-euV" secondAttribute="trailing" id="f8P-nB-pl0"/>
                             <constraint firstItem="hhq-s3-oQT" firstAttribute="top" relation="greaterThanOrEqual" secondItem="u9R-oi-zj0" secondAttribute="bottom" constant="10" id="g5Q-mN-ajd"/>
                             <constraint firstItem="hhq-s3-oQT" firstAttribute="top" relation="lessThanOrEqual" secondItem="u9R-oi-zj0" secondAttribute="bottom" constant="188" id="kLc-An-UeG"/>
-                            <constraint firstItem="23F-O6-dwE" firstAttribute="bottom" secondItem="0vo-PH-rDJ" secondAttribute="bottomMargin" id="pfW-xx-drb"/>
+                            <constraint firstItem="23F-O6-dwE" firstAttribute="bottom" secondItem="0vo-PH-rDJ" secondAttribute="bottom" id="pfW-xx-drb"/>
                             <constraint firstItem="7hC-mg-TlP" firstAttribute="top" secondItem="PJQ-b3-euV" secondAttribute="bottom" id="sko-qY-0Np"/>
                             <constraint firstItem="PJQ-b3-euV" firstAttribute="leading" secondItem="0vo-PH-rDJ" secondAttribute="leading" id="vEf-Av-ZLI"/>
                             <constraint firstAttribute="trailing" secondItem="u9R-oi-zj0" secondAttribute="trailing" constant="10" id="zb8-l3-Yy0"/>
@@ -2120,12 +2133,10 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="delegate" destination="GHJ-Ok-PFS" id="6CF-J0-Sfk"/>
-                        <outlet property="pickerContainer" destination="23F-O6-dwE" id="Khh-9a-klX"/>
-                        <outlet property="pickerContainerBottomConstraint" destination="pfW-xx-drb" id="Uq9-U0-77g"/>
-                        <outlet property="pickerContainerHeightConstraint" destination="0ym-Kr-wXd" id="VRG-zw-TWx"/>
-                        <outlet property="pickerView" destination="GHJ-Ok-PFS" id="AxI-97-VEn"/>
-                        <outlet property="selectBtn" destination="gRx-8z-M5N" id="rcw-5W-5z0"/>
+                        <outlet property="pickerContainerBottomConstraint" destination="pfW-xx-drb" id="s9R-Dy-63E"/>
+                        <outlet property="pickerContainerHeightConstraint" destination="0ym-Kr-wXd" id="mwR-8w-iEJ"/>
+                        <outlet property="pickerView" destination="GHJ-Ok-PFS" id="r5d-dM-Gi5"/>
+                        <outlet property="selectBtn" destination="gRx-8z-M5N" id="P0e-tj-vNq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mtl-a5-Z0t" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2149,7 +2160,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hXS-bk-AXt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="453" y="3945"/>
+            <point key="canvasLocation" x="547" y="3187"/>
         </scene>
         <!--Phone-->
         <scene sceneID="m60-zF-4Od">
@@ -4958,12 +4969,12 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="voi-Tt-SuU"/>
-        <segue reference="Uqi-bD-GAX"/>
+        <segue reference="Tth-R2-xu6"/>
+        <segue reference="x1v-U1-NC6"/>
+        <segue reference="5C3-Di-Qgq"/>
         <segue reference="2yK-HA-Lah"/>
-        <segue reference="UvZ-f2-OIn"/>
-        <segue reference="01X-YE-vYS"/>
-        <segue reference="Jb7-iw-Z2s"/>
+        <segue reference="voi-Tt-SuU"/>
+        <segue reference="xxt-tb-rPs"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29803921570000003" green="0.44705882349999998" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
 </document>

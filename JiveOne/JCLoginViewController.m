@@ -27,7 +27,6 @@
     
     _authenticationManager = [JCAuthenticationManager sharedInstance];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(authenticated:) name:kJCAuthenticationManagerUserAuthenticatedNotification object:_authenticationManager];
-    /*[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadedUserData:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:_authenticationManager];*/
     
     self.usernameTextField.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:0.7].CGColor;
     self.usernameTextField.layer.borderWidth = 1.0f;
@@ -49,7 +48,7 @@
     
     self.rememberMeSwitch.on = _authenticationManager.rememberMe;
     if (_authenticationManager.rememberMe) {
-        self.usernameTextField.text = _authenticationManager.jiveUserId;
+        self.usernameTextField.text = _authenticationManager.rememberMeUser;
         [self.passwordTextField becomeFirstResponder];
     } else {
 #if DEBUG
@@ -103,11 +102,6 @@
 {
     [self showHudWithTitle:@"One Moment Please"
                     detail:@"Loading data"];
-}
-
-- (void)loadedUserData:(NSNotification *)notification
-{
-    [self hideHud];
 }
 
 #pragma mark - Delegate Handlers -

@@ -249,7 +249,7 @@ static BOOL closedSocketOnPurpose;
 {
     JCAuthenticationManager *authManager = [JCAuthenticationManager sharedInstance];
     JasmineSocket *socket = [JasmineSocket sharedInstance];
-    if (authManager.userAuthenticated && authManager.userLoadedMininumData) {
+    if (authManager.userAuthenticated && authManager.userLoadedMinimumData) {
         if (socket.socket.readyState != SR_OPEN) {
             [socket restartSocket];
         }
