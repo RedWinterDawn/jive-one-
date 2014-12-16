@@ -20,22 +20,21 @@ typedef void (^CompletionBlock) (BOOL success, NSError *error);
 
 @interface JCAuthenticationManager : NSObject 
 
+- (void)checkAuthenticationStatus;
 - (void)loginWithUsername:(NSString *)username password:(NSString*)password completed:(CompletionBlock)completed;
 - (void)logout;
 
-@property (nonatomic, strong) User *user;
 @property (nonatomic, strong) Line *line;
+@property (nonatomic, readonly) User *user;
 
-@property (nonatomic, readonly) NSString *username;
-@property (nonatomic, readonly) NSString *password;
 @property (nonatomic, readonly) NSString *authToken;
-@property (nonatomic, readonly) NSString *refreshToken;
 @property (nonatomic, readonly) NSString *jiveUserId;
 @property (nonatomic, readonly) BOOL userAuthenticated;
-@property (nonatomic, readwrite) BOOL userLoadedMininumData;
-@property (nonatomic) BOOL rememberMe;
+@property (nonatomic, readonly) BOOL userLoadedMinimumData;
 
--(void)checkAuthenticationStatus;
+// Remember Me
+@property (nonatomic) BOOL rememberMe;
+@property (nonatomic, readonly) NSString *rememberMeUser;
 
 @end
 

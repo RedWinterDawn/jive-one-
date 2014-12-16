@@ -7,9 +7,10 @@
 //
 
 #import "JCAuthenticationManager.h"
+#import "JCAuthenticationStore.h"
+
 #import "Common.h"
 
-#import "KeychainItemWrapper.h"
 #import "JCV5ApiClient.h"
 #import "JCV4ProvisioningClient.h"
 #import "JCAuthenticationManagerError.h"
@@ -23,16 +24,9 @@ NSString *const kJCAuthenticationManagerUserLoadedMinimumDataNotification       
 NSString *const kJCAuthenticationManagerAuthenticationFailedNotification        = @"authenticationFailed";
 NSString *const kJCAuthenticationManagerLineChangedNotification                 = @"lineChanged";
 
-// Keychain
-NSString *const kJCAuthenticationManagerKeychainStoreIdentifier             = @"keyjiveauthstore";
-
 // KVO and NSUserDefaults Keys
-NSString *const kJCAuthenticationManagerUserAutheticatedAttributeKey        = @"userAuthenticated";
-NSString *const kJCAuthenticationManagerUserLoadedMinimumDataAttributeKey   = @"userLoadedMinimumData";
-NSString *const kJCAuthenticationManagerRememberMeAttributeKey              = @"rememberMe";
-NSString *const kJCAuthenticationManagerRefreshTokenAttributeKey            = @"refreshToken";
-NSString *const kJCAuthenticationManagerJiveUserIdKey                       = @"jiveUserId";
-
+NSString *const kJCAuthenticationManagerRememberMeAttributeKey  = @"rememberMe";
+NSString *const kJCAuthenticationManagerJiveUserIdKey           = @"username";
 
 // Javascript
 NSString *const kJCAuthenticationManagerJavascriptString    = @"document.getElementById('username').value = '%@';document.getElementById('password').value = '%@';document.getElementById('go-button').click()";
@@ -56,25 +50,18 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 @interface JCAuthenticationManager () <UIWebViewDelegate>
 {
-    int _loginAttempts;
+    JCAuthenticationStore *_authenticationStore;
     
-    KeychainItemWrapper *_keychainWrapper;
+    NSInteger _loginAttempts;
     CompletionBlock _completionBlock;
-    
-    User *_user;
     Line *_line;
+    UIWebView *_webview;
     
     NSString *_username;
     NSString *_password;
-    UIWebView *_webview;
-    
-    NSTimer *_timeoutTimer;
 }
 
-@property (nonatomic, readwrite) NSString *jiveUserId;
-@property (nonatomic, readwrite) NSString *authToken;
-@property (nonatomic, readwrite) NSString *refreshToken;
-@property (nonatomic, readwrite) BOOL userAuthenticated;
+@property (nonatomic, readwrite) NSString *rememberMeUser;
 
 @end
 
@@ -84,46 +71,64 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 {
     self = [super init];
     if (self) {
-        _keychainWrapper = [[KeychainItemWrapper alloc] initWithIdentifier:kJCAuthenticationManagerKeychainStoreIdentifier accessGroup:nil];
+        _authenticationStore = [[JCAuthenticationStore alloc] init];
     }
     return self;
 }
 
 #pragma mark - Class methods
 
+/**
+ * Checks the authentication status of the user.
+ *
+ * Retrieves from the authentication store if the user has authenticated, and tries to load the user 
+ * object using the user stored in the authenctication store.
+ *
+ */
 -(void)checkAuthenticationStatus
 {
-    if (!self.userAuthenticated || !self.userLoadedMininumData)
-        [self logout];
-    else
-        self.userLoadedMininumData = TRUE;
+    // Check to see if we are autheticiated. If we are not, notify that we are logged out.
+    if (!_authenticationStore.isAuthenticated) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kJCAuthenticationManagerUserLoggedOutNotification object:self userInfo:nil];
+        return;
+    }
+    
+    // Check to see if we have data using the authentication store to retrive the user id.
+    NSString *jiveUserId = _authenticationStore.jiveUserId;
+    _user = [User MR_findFirstByAttribute:@"jiveUserId" withValue:jiveUserId];
+    if (_user && _user.pbxs) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:self userInfo:nil];
+    }
+    else {
+        [self logout]; // Nuke it, we need to relogin.
+    }
 }
 
 - (void)loginWithUsername:(NSString *)username password:(NSString *)password completed:(CompletionBlock)completed
 {
     _completionBlock = completed;
     _loginAttempts = 0;
-    
+
+    // Validation
     username = [username stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     password = [password stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    
-    // Validation
     if(username.length == 0 || password.length == 0){
         [self reportError:InvalidAuthenticationParameters description:@"UserName/Password Cannot Be Empty"];
         return;
     }
-    
-    [[JCOmniPresence sharedInstance] truncateAllTablesAtLogout];
-    
     _username = username;
     _password = password;
     
-    NSString *url_path = [NSString stringWithFormat:kJCAuthenticationManagerAccessTokenUrl, kJCAuthenticationManagerClientId, kJCAuthenticationManagerScopeProfile, kJCAuthenticationManagerURLSchemeCallback];
-    NSURL *url = [NSURL URLWithString:url_path];
+    // Clears stored credentials.
+    [_authenticationStore logout];
+    _user = nil;
+    _line = nil;
+           
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kJCAuthenticationManagerAccessTokenUrl, kJCAuthenticationManagerClientId, kJCAuthenticationManagerScopeProfile, kJCAuthenticationManagerURLSchemeCallback]];
     
 #if DEBUG
-    [NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
-    NSLog(@"AUTH PATH: %@", url_path);
+    [NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:url.host];
+    NSLog(@"AUTH PATH: %@", url.absoluteString);
 #endif
     
     if (!_webview) {
@@ -131,68 +136,20 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     }
     _webview.delegate = self;
     [_webview loadRequest:[NSURLRequest requestWithURL:url]];
-    
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        _timeoutTimer = [NSTimer scheduledTimerWithTimeInterval:80
-//                                                         target:self
-//                                                       selector:@selector(loginTimeout)
-//                                                       userInfo:nil
-//                                                        repeats:NO];
-//     
-//        [[NSRunLoop currentRunLoop] addTimer:_timeoutTimer forMode:NSDefaultRunLoopMode];
-//     });
 }
 
 - (void)logout
 {
-    [_keychainWrapper resetKeychainItem];
-    
-    // Clear out all the saved data.
-    self.authToken = nil;
-    self.refreshToken = nil;
-    self.userLoadedMininumData = false;
-    self.userAuthenticated = false;
-    
-    self.user = nil;
-    self.line = nil;
-    
+    [_authenticationStore logout];
+    _user = nil;
+    _line = nil;
     if (!self.rememberMe) {
-        self.jiveUserId = false;
+        self.rememberMeUser = nil;
     }
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:kJCAuthenticationManagerUserLoggedOutNotification object:self userInfo:nil];
 }
 
-
-
 #pragma mark - Setters -
-
--(void)setUserAuthenticated:(BOOL)userAuthenticated
-{
-    [self willChangeValueForKey:kJCAuthenticationManagerUserAutheticatedAttributeKey];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setBool:YES forKey:kJCAuthenticationManagerUserAutheticatedAttributeKey];
-    [defaults synchronize];
-    [self didChangeValueForKey:kJCAuthenticationManagerUserAutheticatedAttributeKey];
-    
-    if (userAuthenticated)
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kJCAuthenticationManagerUserAuthenticatedNotification object:self userInfo:nil];
-    }
-}
-
--(void)setUserLoadedMininumData:(BOOL)userLoadedMininumData
-{
-    [self willChangeValueForKey:kJCAuthenticationManagerUserLoadedMinimumDataAttributeKey];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setBool:userLoadedMininumData forKey:kJCAuthenticationManagerUserLoadedMinimumDataAttributeKey];
-    [defaults synchronize];
-    [self didChangeValueForKey:kJCAuthenticationManagerUserLoadedMinimumDataAttributeKey];
-    
-    if (userLoadedMininumData) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:self userInfo:nil];
-    }
-}
 
 -(void)setRememberMe:(BOOL)remember
 {
@@ -203,28 +160,11 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     [self didChangeValueForKey:kJCAuthenticationManagerRememberMeAttributeKey];
 }
 
--(void)setAuthToken:(NSString *)authToken
-{
-    [_keychainWrapper setObject:(__bridge id)kSecAttrAccessibleAlways forKey:(__bridge id)kSecAttrAccount];
-    [_keychainWrapper setObject:(__bridge id)kSecAttrAccessibleAlways forKey:(__bridge id)kSecValueData];
-    [_keychainWrapper setObject:[NSString stringWithFormat:@"%@", authToken] forKey:(__bridge id)(kSecAttrAccount)];
-    [_keychainWrapper setObject:[NSString stringWithFormat:@"%@", authToken] forKey:(__bridge id)(kSecValueData)];
-}
-
--(void)setRefreshToken:(NSString *)refreshToken
-{
-    [self willChangeValueForKey:kJCAuthenticationManagerRefreshTokenAttributeKey];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:refreshToken forKey:kJCAuthenticationManagerRefreshTokenAttributeKey];
-    [defaults synchronize];
-    [self didChangeValueForKey:kJCAuthenticationManagerRefreshTokenAttributeKey];
-}
-
--(void)setJiveUserId:(NSString *)userName
+-(void)setRememberMeUser:(NSString *)rememberMeUser
 {
     [self willChangeValueForKey:kJCAuthenticationManagerJiveUserIdKey];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:userName forKey:kJCAuthenticationManagerJiveUserIdKey];
+    [defaults setObject:rememberMeUser forKey:kJCAuthenticationManagerJiveUserIdKey];
     [defaults synchronize];
     [self didChangeValueForKey:kJCAuthenticationManagerJiveUserIdKey];
 }
@@ -235,10 +175,9 @@ static int MAX_LOGIN_ATTEMPTS = 2;
         return;
     }
     
-    [self willChangeValueForKey:NSStringFromSelector(@selector(pbx))];
+    [self willChangeValueForKey:NSStringFromSelector(@selector(line))];
     _line = line;
-    [self didChangeValueForKey:NSStringFromSelector(@selector(pbx))];
-    
+    [self didChangeValueForKey:NSStringFromSelector(@selector(line))];
     [[NSNotificationCenter defaultCenter] postNotificationName:kJCAuthenticationManagerLineChangedNotification object:self];
 }
 
@@ -246,12 +185,22 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 - (BOOL)userAuthenticated
 {
-    return [[NSUserDefaults standardUserDefaults]  boolForKey:kJCAuthenticationManagerUserAutheticatedAttributeKey];
+    return _authenticationStore.isAuthenticated;
 }
 
-- (BOOL)userLoadedMininumData
+- (BOOL)userLoadedMinimumData
 {
-    return [[NSUserDefaults standardUserDefaults]  boolForKey:kJCAuthenticationManagerUserLoadedMinimumDataAttributeKey];
+    return (_user && _user.pbxs);
+}
+
+-(NSString *)authToken
+{
+    return _authenticationStore.accessToken;
+}
+
+-(NSString *)jiveUserId
+{
+    return _authenticationStore.jiveUserId;
 }
 
 - (BOOL)rememberMe
@@ -259,41 +208,9 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     return [[NSUserDefaults standardUserDefaults] boolForKey:kJCAuthenticationManagerRememberMeAttributeKey];
 }
 
--(NSString *)authToken
+-(NSString *)rememberMeUser
 {
-    NSString *token = [_keychainWrapper objectForKey:(__bridge id)(kSecAttrAccount)];
-    NSString *bgToken = [_keychainWrapper objectForKey:(__bridge id)(kSecValueData)];
-    
-    if (![bgToken isEqualToString:token] && ![Common stringIsNilOrEmpty:token]) {
-        [_keychainWrapper setObject:[NSString stringWithFormat:@"%@", token] forKey:(__bridge id)(kSecValueData)];
-        return token;
-    }
-    
-    if ([Common stringIsNilOrEmpty:token]) {
-        token = [_keychainWrapper objectForKey:(__bridge id)(kSecValueData)];
-    }
-    
-    return token;
-}
-
--(NSString *)refreshToken
-{
-    return [[NSUserDefaults standardUserDefaults] valueForKey:kJCAuthenticationManagerRefreshTokenAttributeKey];
-}
-
--(NSString *)jiveUserId
-{
-    return [[NSUserDefaults standardUserDefaults] objectForKey:kJCAuthenticationManagerJiveUserIdKey];
-}
-
--(User *)user
-{
-    if (_user) {
-        return _user;
-    }
-    
-    _user = [User MR_findFirstByAttribute:@"jiveUserId" withValue:self.jiveUserId];
-    return _user;
+    return [[NSUserDefaults standardUserDefaults] valueForKey:kJCAuthenticationManagerJiveUserIdKey];
 }
 
 -(Line *)line
@@ -302,108 +219,84 @@ static int MAX_LOGIN_ATTEMPTS = 2;
         return _line;
     }
     
+    // If we do not have a user loaded, we cannot select the line.
+    if (!_user) {
+        return nil;
+    }
+    
     // If we do not yet have a line, look for a line for our user that is marked as active.
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx.user = %@ and active = %@", self.user, @YES];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx.user = %@ and active = %@", _user, @YES];
     _line = [Line MR_findFirstWithPredicate:predicate];
     if (_line) {
         return _line;
     }
     
-    _line = [Line MR_findFirstOrderedByAttribute:@"extension" ascending:YES];
+    predicate = [NSPredicate predicateWithFormat:@"pbx.user = %@", _user];
+    _line = [Line MR_findFirstWithPredicate:predicate sortedBy:@"extension" ascending:YES];
     return _line;
 }
 
 #pragma mark - Private -
 
-//- (void)loginTimeout
-//{
-//    [self reportError:TimeoutError description:@"This is taking longer than expected. Please check your connection and try again"];
-//}
-
--(void)receivedAccessTokenFromURL:(NSURL *)url
+-(void)receivedAccessTokenData:(NSDictionary *)tokenData
 {
-    [self recievedAccessTokenData:[self tokenDataFromURL:url]];
-}
-
--(void)recievedAccessTokenData:(NSDictionary *)tokenData
-{
-    if (tokenData.count > 0)
-    {
-        if ([tokenData objectForKey:@"access_token"]) {
-            self.authToken      = tokenData[@"access_token"];
-            self.refreshToken   = tokenData[@"refresh_token"];
-            self.jiveUserId     = tokenData[@"username"];
-            self.userAuthenticated = true;
-            
-            // Fetch User
-            NSString *jiveUserId = tokenData[@"username"];
-            _user = [User userForJiveUserId:jiveUserId context:[NSManagedObjectContext MR_contextForCurrentThread]];
-            [self requestPbxInformationForUser:_user];
+    @try {
+        if (!tokenData || tokenData.count < 1) {
+            [NSException raise:NSInvalidArgumentException format:@"Token Data is NULL"];
         }
-        else {
-            if (tokenData[@"error"]) {
-                [self reportError:AutheticationError description:tokenData[@"error"]];
+        
+        if (tokenData[@"error"]) {
+            [NSException raise:NSInvalidArgumentException format:@"%@", tokenData[@"error"]];
+        }
+        
+        [_authenticationStore setAuthToken:tokenData];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kJCAuthenticationManagerUserAuthenticatedNotification object:self userInfo:nil];
+        _user = [User userForJiveUserId:_authenticationStore.jiveUserId context:[NSManagedObjectContext MR_contextForCurrentThread]];
+        
+        if(self.rememberMe)
+            self.rememberMeUser = _authenticationStore.jiveUserId;
+        
+        [PBX downloadPbxInfoForUser:_user completed:^(BOOL success, NSError *error) {
+            if (success) {
+                [self notifyCompletionBlock:YES error:nil];
             }
             else {
-                [self reportError:AutheticationError description:@"An Error Has Occurred, Please Try Again"];
+                NSLog(@"%@", [error description]);
+                [self reportError:NetworkError description:@"We could not reach the server at this time. Please check your connection"];
             }
-        }
+        }];
     }
-}
-
--(void)requestPbxInformationForUser:(User *)user
-{
-    [PBX downloadPbxInfoForUser:user completed:^(BOOL success, NSError *error) {
-        if (success) {
-//            if (count < 1) {
-//                [self reportError:NoPbx description:@"This username is not associated with any PBX. Please contact your Administrator"];
-//            }
-//            else {
-                    self.userLoadedMininumData = TRUE;
-            //}
-        }
-        else {
-            NSLog(@"%@", [error description]);
-            [self reportError:NetworkError description:@"We could not reach the server at this time. Please check your connection"];
-        }
-    }];
+    @catch (NSException *exception) {
+        [self reportError:AutheticationError description:exception.reason];
+    }
 }
 
 -(void)reportError:(JCAuthenticationManagerErrorType)type description:(NSString *)description
 {
-    NSError *error = [JCAuthenticationManagerError errorWithType:type description:description];
-    [self completionBlock:false error:error];
+    [self notifyCompletionBlock:NO error:[JCAuthenticationManagerError errorWithType:type description:description]];
+}
+
+-(void)notifyCompletionBlock:(BOOL)success error:(NSError *)error
+{
+    _completionBlock = nil;
     _loginAttempts = 0;
     _webview = nil;
+    _username = nil;
+    _password = nil;
+    _line = nil;
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCAuthenticationManagerAuthenticationFailedNotification object:nil];
-}
-
--(void)reportSuccess
-{
-    [self completionBlock:YES error:nil];
-    self.userAuthenticated = TRUE;
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    if (success){
+        [center postNotificationName:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:self userInfo:nil];
+    } else {
+        [self logout];
+        [center postNotificationName:kJCAuthenticationManagerAuthenticationFailedNotification object:self userInfo:nil];
+    }
     
-    _webview = nil;
-}
-
--(void)completionBlock:(BOOL)success error:(NSError *)error
-{
     if (_completionBlock) {
         _completionBlock(success, error);
     }
-    _completionBlock = nil;
 }
-
-//- (void)invalidateLoginTimeoutTimer
-//{
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        if (_timeoutTimer) {
-//            [_timeoutTimer invalidate];
-//            _timeoutTimer = nil;
-//        }
-//    });
-//}
 
 -(NSDictionary *)tokenDataFromURL:(NSURL *)url
 {
@@ -421,83 +314,6 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     }
     
     return data;
-}
-
-#pragma mark - Token Refresh -
-
-/*- (void)checkForTokenValidity
-{
-    //Rolling back to hack
-    //[self verifyToken];
-    NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
-    [[JCV5ApiClient sharedClient] getMailboxReferencesForUser:username completed:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-        if (suceeded) {
-            JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
-            if (![delegate.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenSucceeded object:responseObject];
-            }
-        }
-        else {
-            NSLog(@"%@", error);
-            
-            NSInteger status = operation.response.statusCode;
-            
-            if ((status >= 400 && status <= 417) || status == 200) {
-                // Since we're not keeping the user logged in with a verifyToken,
-                // this code has been commentend. This will change, however, so leave it here.
-                //                if ([self userAuthenticated]) {
-                //                    [self requestTokenRefresh];
-                //                }
-                //                else
-                //                {
-                JCAppDelegate *delegate = (JCAppDelegate *)[UIApplication sharedApplication].delegate;
-                if (![delegate.window.rootViewController isKindOfClass:[JCLoginViewController class]]) {
-                    //[delegate changeRootViewController:JCRootLoginViewController];
-                }
-                else {
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticationFromTokenFailed object:nil];
-                }
-                //                }
-            }
-            else {
-                NSLog(@"%@", operation.response);
-            }
-        }
-    }];
-}*/
-
-- (void)requestTokenRefresh
-{
-    NSString *refreshToken = self.refreshToken;
-    if (refreshToken.isEmpty) {
-        return;
-    }
-    
-    NSURL *url = [NSURL URLWithString:kJCAuthenticationManagerRefreshTokenUrl];
-    NSString *data = [NSString stringWithFormat:kJCAuthenticationManagerRefreshTokenData, refreshToken, kJCAuthenticationManagerClientId, kJCAuthenticationManagerURLSchemeCallback];
-    
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
-    [request setHTTPMethod:@"POST"];
-    [request setHTTPBody:[data dataUsingEncoding:NSUTF8StringEncoding]];
-    NSString* basicAuth = [@"Basic " stringByAppendingString:[Common encodeStringToBase64:[NSString stringWithFormat:@"%@:%@", kJCAuthenticationManagerClientId, kJCAuthenticationManagerClientSecret]]];
-    [request setValue:basicAuth forHTTPHeaderField:@"Authorization"];
-    
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-                               if (data) {
-                                   __autoreleasing NSError *dataError;
-                                   NSDictionary *tokenData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&dataError];
-                                   if ([tokenData objectForKey:@"access_token"]) {
-                                       [self recievedAccessTokenData:tokenData];
-                                   }
-                                   else {
-                                       [self reportError:AutheticationError description:@"An Error Has Occurred, Please Try Again"];
-                                   }
-                               } else {
-                                   [self reportError:NetworkError description:@"An Error Has Occurred, Please Try Again"];
-                               }
-                           }];
 }
 
 #pragma mark - Delegate Handlers -
@@ -519,12 +335,8 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 - (BOOL)webView:(UIWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    #if DEBUG
-        NSLog(@"%@", [request description]);
-    #endif
-    
     if ([request.URL.scheme isEqualToString:@"jiveclient"]) {
-        [self receivedAccessTokenFromURL:request.URL];
+        [self receivedAccessTokenData:[self tokenDataFromURL:request.URL]];
         return NO;
     }
     return YES;
@@ -532,10 +344,10 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    if (self.userAuthenticated)
+    if (_authenticationStore.isAuthenticated) {
         return;
-    
-    [self reportError:NetworkError description:@"An Error Has Occurred, Please Try Again"];
+    }
+    [self reportError:NetworkError description:error.localizedDescription];
 }
 
 @end
@@ -555,3 +367,4 @@ static dispatch_once_t authenticationManagerOnceToken;
 }
 
 @end
+

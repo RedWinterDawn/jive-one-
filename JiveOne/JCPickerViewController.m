@@ -17,7 +17,6 @@
 @interface JCPickerViewController ()
 {
     BOOL _pickerVisible;
-    NSInteger _verticalSpacing;
 }
 
 @end
@@ -32,14 +31,8 @@
     _selectBtn.layer.cornerRadius = PICKER_SELECT_BUTTON_CORNER_RADIUS;
     _selectBtn.layer.masksToBounds = true;
     
-    
     _pickerVisible = TRUE;
     [self hidePicker:false];
-    // Do any additional setup after loading the view.
-}
-
--(void)awakeFromNib{
-    _verticalSpacing = self.pickerContainerBottomConstraint.constant;
 }
 
 -(NSString *)titleForRow:(NSInteger)row
@@ -56,9 +49,9 @@
 
 - (IBAction)select:(id)sender {
     if(_pickerVisible) {
-        [self hidePicker:true];
+        [self hidePicker:TRUE];
     } else {
-        [self showPicker:true];
+        [self showPicker:TRUE];
     }
 }
 
@@ -90,7 +83,7 @@
                          [weakSelf.view layoutIfNeeded];
                      }
                      completion:^(BOOL finished) {
-                         _pickerVisible = true;
+                         _pickerVisible = TRUE;
                      }];
 }
 
@@ -99,14 +92,14 @@
         return;
     }
     __unsafe_unretained JCPickerViewController *weakSelf = self;
-    _pickerContainerBottomConstraint.constant = -_pickerContainerHeightConstraint.constant;
+    _pickerContainerBottomConstraint.constant = _pickerContainerHeightConstraint.constant;
     [self.view setNeedsUpdateConstraints];
     [UIView animateWithDuration:(animated ? 0.6 : 0.0)
                      animations:^{
                          [weakSelf.view layoutIfNeeded];
                      }
                      completion:^(BOOL finished) {
-                         _pickerVisible = false;
+                         _pickerVisible = FALSE;
                      }];
 }
 
@@ -131,7 +124,7 @@
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
-    [self hidePicker:YES];
+    
 }
 
 @end
