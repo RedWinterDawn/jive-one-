@@ -8,13 +8,14 @@
 
 #import "JCDebugUsersTableViewController.h"
 #import "JCDebugUserTableViewController.h"
+#import "User.h"
 
 @implementation JCDebugUsersTableViewController
 
 -(NSFetchedResultsController *)fetchedResultsController
 {
     if (!_fetchedResultsController) {
-        NSFetchRequest *fetchRequest = [Line MR_requestAllSortedBy:@"name" ascending:YES];
+        NSFetchRequest *fetchRequest = [User MR_requestAllSortedBy:@"jiveUserId" ascending:YES];
         super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                              managedObjectContext:self.managedObjectContext
                                                                                sectionNameKeyPath:nil
@@ -28,14 +29,13 @@
     UIViewController *viewController = segue.destinationViewController;
     if ([viewController isKindOfClass:[JCDebugUserTableViewController class]]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        //((JCDebugUserTableViewController *)viewController).line = [self objectAtIndexPath:indexPath];
+        ((JCDebugUserTableViewController *)viewController).user = [self objectAtIndexPath:indexPath];
     }
 }
 
--(void)configureCell:(UITableViewCell *)cell withObject:(Line *)line
+-(void)configureCell:(UITableViewCell *)cell withObject:(User *)user
 {
-    cell.textLabel.text = line.name;
-    cell.detailTextLabel.text = line.extension;
+    cell.textLabel.text = user.jiveUserId;
 }
 
 @end

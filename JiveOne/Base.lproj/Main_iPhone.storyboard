@@ -59,14 +59,8 @@
                                     <segue destination="c3p-aT-jcP" kind="embed" id="Lh0-dF-r62"/>
                                 </connections>
                             </containerView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pKN-VJ-S7h">
-                                <rect key="frame" x="251" y="455" width="69" height="49"/>
-                                <state key="normal" title="Local">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
                             <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KQN-3R-ma5">
-                                <rect key="frame" x="0.0" y="455" width="251" height="49"/>
+                                <rect key="frame" x="0.0" y="455" width="320" height="49"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="49" id="Cf8-lu-Xam"/>
@@ -83,17 +77,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottomMargin" secondItem="pKN-VJ-S7h" secondAttribute="bottom" id="ILM-M7-fgo"/>
+                            <constraint firstItem="KQN-3R-ma5" firstAttribute="top" secondItem="Ta4-0u-d9a" secondAttribute="bottom" id="A5S-uR-ZG5"/>
                             <constraint firstItem="Ta4-0u-d9a" firstAttribute="leading" secondItem="0RX-8x-sb0" secondAttribute="leading" id="Ibw-7N-XjQ"/>
-                            <constraint firstItem="pKN-VJ-S7h" firstAttribute="leading" secondItem="KQN-3R-ma5" secondAttribute="trailing" id="QU9-hP-dnI"/>
-                            <constraint firstItem="KQN-3R-ma5" firstAttribute="top" secondItem="Ta4-0u-d9a" secondAttribute="bottom" id="Y7M-SB-qv6"/>
                             <constraint firstItem="KQN-3R-ma5" firstAttribute="leading" secondItem="0RX-8x-sb0" secondAttribute="leading" id="YFS-ec-ZAm"/>
-                            <constraint firstItem="pKN-VJ-S7h" firstAttribute="top" secondItem="Ta4-0u-d9a" secondAttribute="bottom" id="dLJ-8g-hqS"/>
                             <constraint firstItem="Ta4-0u-d9a" firstAttribute="top" secondItem="5ds-mG-BrS" secondAttribute="bottom" id="eo2-KK-lbP"/>
-                            <constraint firstAttribute="trailing" secondItem="pKN-VJ-S7h" secondAttribute="trailing" id="iau-VU-ua6"/>
+                            <constraint firstAttribute="trailing" secondItem="KQN-3R-ma5" secondAttribute="trailing" id="nk4-2t-b0S"/>
                             <constraint firstAttribute="trailing" secondItem="Ta4-0u-d9a" secondAttribute="trailing" id="rJY-gF-YbO"/>
                             <constraint firstItem="KQN-3R-ma5" firstAttribute="bottom" secondItem="0RX-8x-sb0" secondAttribute="bottomMargin" id="rLL-cX-IRJ"/>
-                            <constraint firstItem="pKN-VJ-S7h" firstAttribute="leading" secondItem="0RX-8x-sb0" secondAttribute="leadingMargin" constant="235" id="tBZ-mD-IgZ"/>
                             <constraint firstItem="5ds-mG-BrS" firstAttribute="top" secondItem="wQr-PL-DFN" secondAttribute="bottom" id="tyy-Pg-B0t"/>
                             <constraint firstItem="5ds-mG-BrS" firstAttribute="leading" secondItem="0RX-8x-sb0" secondAttribute="leading" id="umb-b0-6m1"/>
                             <constraint firstAttribute="trailing" secondItem="5ds-mG-BrS" secondAttribute="trailing" id="y1Q-cL-hVa"/>
@@ -996,13 +986,13 @@
         <!--PBXs-->
         <scene sceneID="NQ6-Ea-fqu">
             <objects>
-                <tableViewController id="xBj-1w-vkN" sceneMemberID="viewController">
+                <tableViewController id="xBj-1w-vkN" customClass="JCDebugPbxsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Xja-ij-CGS">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="VVg-d2-m3M" style="IBUITableViewCellStyleDefault" id="Sto-pN-Bcg">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="VVg-d2-m3M" style="IBUITableViewCellStyleDefault" id="Sto-pN-Bcg">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Sto-pN-Bcg" id="iup-BC-djg">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -1147,7 +1137,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="GB4-e7-w5Y" style="IBUITableViewCellStyleDefault" id="Elq-EQ-Rva">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="GB4-e7-w5Y" style="IBUITableViewCellStyleDefault" id="Elq-EQ-Rva">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Elq-EQ-Rva" id="nk2-fF-HCb">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -1243,6 +1233,10 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="User" id="Xdu-kb-3Tx"/>
+                    <connections>
+                        <outlet property="jiveUserId" destination="RsO-7H-9PB" id="3ie-2C-dXa"/>
+                        <outlet property="pbxs" destination="0BS-eb-qYZ" id="Vzl-eS-add"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kzV-tu-sPM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -4969,11 +4963,11 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Tth-R2-xu6"/>
-        <segue reference="x1v-U1-NC6"/>
-        <segue reference="5C3-Di-Qgq"/>
-        <segue reference="2yK-HA-Lah"/>
         <segue reference="voi-Tt-SuU"/>
+        <segue reference="x1v-U1-NC6"/>
+        <segue reference="Tth-R2-xu6"/>
+        <segue reference="2yK-HA-Lah"/>
+        <segue reference="UvZ-f2-OIn"/>
         <segue reference="xxt-tb-rPs"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29803921570000003" green="0.44705882349999998" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>

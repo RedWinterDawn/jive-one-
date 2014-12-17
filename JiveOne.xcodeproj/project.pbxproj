@@ -236,6 +236,7 @@
 		5D0199EC1A1BF4BC00F4CF13 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5D0199EE1A1BF4BC00F4CF13 /* Localizable.strings */; };
 		5D03649119DC5A450090CC21 /* JCTransferViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D03649019DC5A450090CC21 /* JCTransferViewController.m */; };
 		5D112DDA1A4094340097223C /* JCAuthenticationStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D112DD91A4094340097223C /* JCAuthenticationStore.m */; };
+		5D112DDD1A4161220097223C /* JCDebugPbxsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D112DDC1A4161220097223C /* JCDebugPbxsTableViewController.m */; };
 		5D15AF2B19DB271500E86116 /* NSString+DialString.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D15AF2819DB271500E86116 /* NSString+DialString.m */; };
 		5D15AF2C19DB271500E86116 /* NSString+IsNumeric.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D15AF2A19DB271500E86116 /* NSString+IsNumeric.m */; };
 		5D1BBE5B19EDC9EF006526B2 /* JCMergeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1BBE5A19EDC9EF006526B2 /* JCMergeButton.m */; };
@@ -774,6 +775,8 @@
 		5D03649019DC5A450090CC21 /* JCTransferViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTransferViewController.m; sourceTree = "<group>"; };
 		5D112DD81A4094340097223C /* JCAuthenticationStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAuthenticationStore.h; sourceTree = "<group>"; };
 		5D112DD91A4094340097223C /* JCAuthenticationStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthenticationStore.m; sourceTree = "<group>"; };
+		5D112DDB1A4161220097223C /* JCDebugPbxsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDebugPbxsTableViewController.h; sourceTree = "<group>"; };
+		5D112DDC1A4161220097223C /* JCDebugPbxsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDebugPbxsTableViewController.m; sourceTree = "<group>"; };
 		5D15AF2719DB271500E86116 /* NSString+DialString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+DialString.h"; sourceTree = "<group>"; };
 		5D15AF2819DB271500E86116 /* NSString+DialString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DialString.m"; sourceTree = "<group>"; };
 		5D15AF2919DB271500E86116 /* NSString+IsNumeric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+IsNumeric.h"; sourceTree = "<group>"; };
@@ -2110,6 +2113,8 @@
 				5D2EDB861A3CEBE80031F7AD /* JCDebugUsersTableViewController.m */,
 				5D2EDB881A3CEC060031F7AD /* JCDebugUserTableViewController.h */,
 				5D2EDB891A3CEC060031F7AD /* JCDebugUserTableViewController.m */,
+				5D112DDB1A4161220097223C /* JCDebugPbxsTableViewController.h */,
+				5D112DDC1A4161220097223C /* JCDebugPbxsTableViewController.m */,
 			);
 			name = Debug;
 			sourceTree = "<group>";
@@ -2695,6 +2700,7 @@
 				5D241FD41A382241008B498A /* User+Custom.m in Sources */,
 				5DB0BFCA1A00AB29006737D7 /* JCRecentActivityTableViewController.m in Sources */,
 				2700988018F4714100B6BC2F /* JSMessageTableView.m in Sources */,
+				5D112DDD1A4161220097223C /* JCDebugPbxsTableViewController.m in Sources */,
 				F88289EC1A3B6A4E00D0A762 /* JCExternalContactCell.m in Sources */,
 				5DB0BFD01A013982006737D7 /* JCRecentEventCell.m in Sources */,
 				27EB18BF19DE045900C1503B /* JCV5ApiClient.m in Sources */,
