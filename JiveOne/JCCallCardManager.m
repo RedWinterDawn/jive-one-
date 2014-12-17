@@ -8,6 +8,8 @@
 
 #import "JCCallCardManager.h"
 
+#import <AVFoundation/AVFoundation.h>
+
 // Managers
 #import "JCBluetoothManager.h"
 #import "SipHandler.h"
@@ -58,6 +60,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 @property (nonatomic) BOOL externalCallDisconnected;
 
 @property (nonatomic, readwrite, getter=isConnected) BOOL connected;
+@property (nonatomic, readwrite) JCPhoneManagerOutputType outputType;
 
 @end
 
@@ -75,6 +78,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         [center addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
         [center addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
+        [center addObserver:self selector:@selector(audioSessionRouteChangeSelector:) name:AVAudioSessionRouteChangeNotification object:nil];
     }
     return self;
 }
@@ -247,11 +251,12 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     [_sipHandler muteCall:mute];
 }
 
--(void)setLoudspeakerStatus:(BOOL)speaker {
+-(void)setLoudSpeakerEnabled:(BOOL)loudSpeakerEnabled
+{
     if (!_sipHandler) {
         return;
     }
-    [_sipHandler setLoudspeakerStatus:speaker];
+    [_sipHandler setLoudSpeakerEnabled:loudSpeakerEnabled];
 }
 
 -(void)numberPadPressedWithInteger:(NSInteger)numberPadNumber
@@ -522,6 +527,37 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     }
 }
 
+-(JCPhoneManagerOutputType)outputTypeFromString:(NSString *)type
+{
+    if ([type isEqualToString:AVAudioSessionPortLineOut]) {
+        return JCPhoneManagerOutputLineOut;
+        
+    } else if ([type isEqualToString:AVAudioSessionPortHeadphones]) {
+        return JCPhoneManagerOutputHeadphones;
+        
+    } else if ([type isEqualToString:AVAudioSessionPortHeadphones]) {
+        return JCPhoneManagerOutputHeadphones;
+        
+    } else if ([type isEqualToString:AVAudioSessionPortBluetoothA2DP] ||
+               [type isEqualToString:AVAudioSessionPortBluetoothLE]) {
+        return JCPhoneManagerOutputBluetooth;
+        
+    } else if ([type isEqualToString:AVAudioSessionPortBuiltInReceiver]) {
+        return JCPhoneManagerOutputReceiver;
+        
+    } else if ([type isEqualToString:AVAudioSessionPortBuiltInSpeaker]) {
+        return JCPhoneManagerOutputSpeaker;
+        
+    } else if ([type isEqualToString:AVAudioSessionPortHDMI]) {
+        return JCPhoneManagerOutputHDMI;
+        
+    } else if ([type isEqualToString:AVAudioSessionPortAirPlay]) {
+        return JCPhoneManagerOutputAirPlay;
+    } else {
+        return JCPhoneManagerOutputUnknown;
+    }
+}
+
 #pragma mark - Notification Selectors -
 
 #pragma mark UIApplication
@@ -561,6 +597,16 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
             [_bluetoothManager enableBluetoothAudio];
         }
     }
+}
+
+#pragma mark VAAudioSession
+
+-(void)audioSessionRouteChangeSelector:(NSNotification *)notification
+{
+    AVAudioSession *audioSession = notification.object;
+    NSArray *outputs = audioSession.currentRoute.outputs;
+    AVAudioSessionPortDescription *port = [outputs lastObject];
+    self.outputType = [self outputTypeFromString:port.portType];
 }
 
 #pragma mark - Delegate Handlers -
@@ -663,6 +709,16 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 {
     self.connected = sipHandler.registered;
     NSLog(@"%@", [error description]);
+}
+
+- (void)answerAutoCall:(JCLineSession *)session
+{
+	for (JCCallCard *callCard in self.calls) {
+		if (callCard.lineSession.mSessionId == session.mSessionId)
+		{
+			[self answerCall:callCard];
+		}
+	}
 }
 
 -(void)addLineSession:(JCLineSession *)session

@@ -39,12 +39,24 @@ typedef enum : NSUInteger {
     JCCallCardDialWarmTransfer,
 } JCCallCardDialTypes;
 
+typedef enum : NSUInteger {
+    JCPhoneManagerOutputUnknown = 0,
+    JCPhoneManagerOutputLineOut,
+    JCPhoneManagerOutputHeadphones,
+    JCPhoneManagerOutputBluetooth,
+    JCPhoneManagerOutputReceiver,
+    JCPhoneManagerOutputSpeaker,
+    JCPhoneManagerOutputHDMI,
+    JCPhoneManagerOutputAirPlay
+} JCPhoneManagerOutputType;
+
 @interface JCCallCardManager : NSObject
 
 @property (nonatomic, strong) NSMutableArray *calls;
 
 @property (nonatomic, readonly) Line *line;
 @property (nonatomic, readonly, getter=isConnected) BOOL connected;
+@property (nonatomic, readonly) JCPhoneManagerOutputType outputType;
 
 -(void)connectToLine:(Line *)line started:(void(^)())started completed:(CompletionHandler)completed;
 -(void)reconnectToLine:(Line *)line started:(void(^)())started completion:(CompletionHandler)completion;
@@ -68,13 +80,14 @@ typedef enum : NSUInteger {
 
 // Umm mutes the call :)
 -(void)muteCall:(BOOL)mute;
--(void)setLoudspeakerStatus:(BOOL)speaker;
 
 // Finish a transfer
 -(void)finishWarmTransfer:(void (^)(bool success))completion;
 
 // NumberPad
 -(void)numberPadPressedWithInteger:(NSInteger)numberPad;
+
+-(void)setLoudSpeakerEnabled:(BOOL)loudSpeakerEnabled;
 
 @end
 

@@ -21,7 +21,7 @@ extern NSString *const kSipHandlerRegisteredSelectorKey;
 
 -(void)sipHandlerDidRegister:(SipHandler *)sipHandler;
 -(void)sipHandlerDidFailToRegister:(SipHandler *)sipHandler error:(NSError *)error;
-
+-(void)answerAutoCall:(JCLineSession *)session;
 -(void)addLineSession:(JCLineSession *)session;
 -(void)removeLineSession:(JCLineSession *)session;
 
@@ -60,7 +60,7 @@ extern NSString *const kSipHandlerRegisteredSelectorKey;
 - (void) blindTransferToNumber:(NSString*)referTo completion:(void (^)(bool success, NSError *error))completion;   // Blind Transfer
 - (void) warmTransferToNumber:(NSString*)referTo completion:(void (^)(bool success, NSError *error))completion;    // warm Transfer
 - (void) muteCall:(BOOL)mute;
-- (void) setLoudspeakerStatus:(BOOL)enable;
+- (void) setLoudSpeakerEnabled:(BOOL)loudSpeakerEnabled;
 
 // Directly sets the hold state of a call session.
 - (void)setHoldCallState:(bool)holdState forSessionId:(long)sessionId;

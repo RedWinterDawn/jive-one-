@@ -23,6 +23,7 @@
 @property (nonatomic, weak) IBOutlet id<JCCallerViewControllerDelegate> delegate;
 @property (nonatomic, weak) IBOutlet JCCallOptionsView *callOptionsView;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *callOptionsViewOriginYConstraint;
+@property (nonatomic, weak) IBOutlet UIButton *speakerBtn;
 
 @property (nonatomic, weak) IBOutlet UILabel *mergeLabel;
 

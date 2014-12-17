@@ -35,6 +35,8 @@
     [super layoutSubviews];
     self.layer.cornerRadius = self.bounds.size.width/2;
     self.layer.masksToBounds = true;
+    
+    self.selected = self.selected;
 }
 
 -(void)setSelected:(BOOL)selected
