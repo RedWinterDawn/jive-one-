@@ -7,7 +7,6 @@
 //
 
 #import "JCVoicemailCell.h"
-#import "Lines.h"
 #import "PBX.h"
 #import "Common.h"
 

@@ -9,64 +9,67 @@
 #import "JCV5ApiClient.h"
 #import "Common.h"
 
+#import "User.h"
+#import "PBX+Custom.h"
+#import "Membership+Custom.h"
+#import "Lines+Custom.h"
+#import "Voicemail+Custom.h"
+
+NSString *const kV5BaseUrl = @"https://api.jive.com/";
+
 @implementation JCV5ApiClient
 
 #pragma mark - class methods
 
 + (instancetype)sharedClient {
-	static JCV5ApiClient *_sharedClient = nil;
+	static JCV5ApiClient *sharedClient = nil;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		_sharedClient = [[super alloc] init];
-		[_sharedClient initialize];
+		sharedClient = [[super alloc] init];
 	});
-	return _sharedClient;
+	return sharedClient;
 }
 
--(void)initialize
-{
-	NSURL *baseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@", kV5BaseUrl]];
-	_manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
-	_manager.responseSerializer = [AFJSONResponseSerializer serializer];
-	_manager.requestSerializer = [AFJSONRequestSerializer serializer];
-	
-	NSLog(@"About to go into debug mode for server certificate");
-#if DEBUG
-	NSLog(@"Debug mode active");
-	_manager.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
-	_manager.securityPolicy.allowInvalidCertificates = YES;
-#endif
+-(instancetype)init {
+    self = [super init];
+    if (self) {
+        _manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:kV5BaseUrl]];
+        _manager.responseSerializer = [AFJSONResponseSerializer serializer];
+        _manager.requestSerializer = [AFJSONRequestSerializer serializer];
+        #if DEBUG
+        _manager.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
+        _manager.securityPolicy.allowInvalidCertificates = YES;
+        #endif
+    }
+    return self;
 }
 
 
 - (void)setRequestAuthHeader:(BOOL) demandsBearer
 {
-	NSString *token = [JCAuthenticationManager sharedInstance].authToken;
-	
 	[self clearCookies];
     
 	_manager.requestSerializer = [AFJSONRequestSerializer serializer];
 	[_manager.requestSerializer clearAuthorizationHeader];
+    
+    NSString *token = [JCAuthenticationManager sharedInstance].authToken;
 	[_manager.requestSerializer setValue:[NSString stringWithFormat:@"%@%@", demandsBearer? @"Bearer " : @"", token] forHTTPHeaderField:@"Authorization"];
 	[_manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
 }
 
 - (void)clearCookies {
-	
-	//This will delete ALL cookies.
 	NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-	
 	for (NSHTTPCookie *cookie in [cookieJar cookies]) {
 		[[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
 	}
 }
 
-- (void) stopAllOperations
+- (void)stopAllOperations
 {
 	[_manager.operationQueue cancelAllOperations];
 }
 
-- (BOOL) isOperationRunning:(NSString *)operationName
+- (BOOL)isOperationRunning:(NSString *)operationName
 {
 	NSArray *operations = [_manager.operationQueue operations];
 	for (AFHTTPRequestOperation *op in operations) {
@@ -74,67 +77,11 @@
 			return op.isExecuting;
 		}
 	}
-	
 	return NO;
 }
 
-#pragma mark - Contact API Calls
-- (void)RetrieveMyInformation:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
-{
-	[self setRequestAuthHeader:YES];
-	
-	NSString *url = [NSString stringWithFormat:@"/contacts/2014-07/jiveuser/info/jiveid/%@", [JCAuthenticationManager sharedInstance].jiveUserId];
-	
-	//NSLog(@"%@", url);
-	
-	[_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-		
-		[Membership addMemberships:responseObject completed:^(BOOL suceeded) {
-			completed(YES, responseObject, operation, nil);
-		}];
-		
-	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		completed(NO, nil, operation, error);
-	}];
-}
-
-- (void)RetrieveContacts:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
-{
-	[self setRequestAuthHeader:YES];
-	
-	NSArray *pbxs = [PBX MR_findAll];
-	
-	for (PBX *pbx in pbxs) {
-		
-		NSString *username = [JCAuthenticationManager sharedInstance].jiveUserId;
-		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(pbxId == %@) AND (userName == %@)", pbx.pbxId, username];
-		
-		Lines *line = [Lines MR_findFirstWithPredicate:predicate];
-		
-		if (line) {
-			NSString *url = [NSString stringWithFormat:@"/contacts/2014-07/%@/line/id/%@", line.pbxId, line.lineId];
-			
-			[_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-				NSArray *contactArray = (NSArray *)responseObject;
-				if (contactArray) {
-					[Lines addLines:contactArray pbxId:line.pbxId userName:nil completed:^(BOOL succeeded) {
-						if (completed) {
-							completed(YES, responseObject, operation, nil);
-						}
-					}];
-				}
-			} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-				if (completed) {
-					completed(NO, nil, operation, error);
-				}
-				
-			}];
-		}
-		
-	}
-}
-
 #pragma mark - Socket API Calls
+
 - (void)SubscribeToSocketEvents:(NSString *)subscriptionURL dataDictionary:(NSDictionary *)dataDictionary
 {
 	[self setRequestAuthHeader:NO];
@@ -151,7 +98,6 @@
 
 - (void) RequestSocketSession:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
 {
-	
 	[self setRequestAuthHeader:NO];
 	
 	NSString *deviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:UDdeviceToken];
@@ -169,137 +115,44 @@
 	}];
 }
 
-#pragma mark - Voicemail API Calls
--(void)getVoicemails :(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
-{
-	[self setRequestAuthHeader:NO];
-	
-	NSPredicate *linesWithUrlNotNil = [NSPredicate predicateWithFormat:@"mailboxUrl != nil"];
-	NSArray* lines = [Lines MR_findAllWithPredicate:linesWithUrlNotNil];
-	__block BOOL succeededGettingAtLeastOne = NO;
-	
-	[lines enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-		
-		Lines *line = (Lines *)obj;
-		
-		if (line.mailboxUrl && ![Common stringIsNilOrEmpty:line.mailboxUrl]) {
-			[_manager GET:line.mailboxUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-				[Voicemail addVoicemails:responseObject mailboxUrl:line.mailboxUrl completed:^(BOOL suceeded) {
-					succeededGettingAtLeastOne = YES;
-					if (completed) {
-						completed(YES, responseObject, operation, nil);
-					}
-				}];
-				
-				
-			} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-				if ((lines.count -1) == idx) {
-					if (succeededGettingAtLeastOne) {
-						if (completed) {
-							completed(YES, nil, operation, error);
-						}
-					}
-					else {
-						if (completed) {
-							completed(NO, nil, operation, error);
-						}
-					}
-				}
-			}];
-		}
-	}];
-}
-
-//download actual voicemail
-//-(void)downloadVoicemailEntry:(Voicemail*)voicemail completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
-//{
-//	[self setRequestAuthHeader:NO];
-//	
-//	if (![Common stringIsNilOrEmpty:voicemail.url_changeStatus]) {
-//		[_manager GET:voicemail.url_download parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//			
-//			[Voicemail fetchAllVoicemailDataInBackground];
-//			
-//		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//			completed(NO, nil, operation, error);
-//		}];
-//	}
-//}
-
 //update voicemail to read
 -(void)updateVoicemailToRead:(Voicemail*)voicemail completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed{
-	
-	[self setRequestAuthHeader:NO];
-	
-	NSString *url = [NSString stringWithFormat:@"%@", voicemail.url_changeStatus];
-	NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-	[params setObject:@"true" forKey:@"read"];
-	
-	if (![Common stringIsNilOrEmpty:url]) {
-		[self.manager PUT:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-			completed(YES, responseObject, operation, nil);
-		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-			NSLog(@"%@", error);
-			completed(NO, nil, nil, error);
-		}];
-	}
+    
+    [self setRequestAuthHeader:NO];
+    
+    NSString *url = [NSString stringWithFormat:@"%@", voicemail.url_changeStatus];
+    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+    [params setObject:@"true" forKey:@"read"];
+    
+    if (![Common stringIsNilOrEmpty:url]) {
+        [self.manager PUT:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            completed(YES, responseObject, operation, nil);
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"%@", error);
+            completed(NO, nil, nil, error);
+        }];
+    }
 }
 
-- (void)deleteVoicemail:(NSString *)url completed:(void (^)(BOOL succeeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
+- (void)deleteVoicemail:(NSString *)url completed:(void (^)(BOOL succeeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed {
+    
+    [self setRequestAuthHeader:NO];
+    
+    
+    [_manager DELETE:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        completed(YES, responseObject, operation, nil);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        completed(NO, nil, operation, error);
+    }];
+}
+
+@end
+
+@implementation JCV5ApiClientError
+
++(instancetype)errorWithCode:(JCV5ApiClientErrorCode)code reason:(NSString *)reason
 {
-	
-	[self setRequestAuthHeader:NO];
-	
-	
-	[_manager DELETE:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-		completed(YES, responseObject, operation, nil);
-	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		completed(NO, nil, operation, error);
-	}];
+    return [JCV5ApiClientError errorWithDomain:@"JCV5ApiClientError" code:code userInfo:@{NSLocalizedDescriptionKey: reason}];
 }
-
-#pragma mark - JIF API Calls
-- (void)getMailboxReferencesForUser:(NSString*)jiveId completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
-{
-	[self setRequestAuthHeader:NO];
-	NSString* url = [NSString stringWithFormat:@"/jif/v1/user/jiveId/%@?depth=1", jiveId];
-	
-	[_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-		//parse list of mailbox references
-		NSString *username = [JCAuthenticationManager sharedInstance].jiveUserId;
-		[PBX addPBXs:responseObject[@"userPbxs"] userName:username completed:^(BOOL success) {
-			completed(YES, responseObject, operation, nil);
-		}];
-		
-	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		completed(NO, nil, operation, error);
-	}];
-	
-}
-
-- (void)getPbxInformationFromUrl:(NSString *)url completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
-{
-	[self setRequestAuthHeader:NO];
-	
-	//    if ([url rangeOfString:@"api.jive.com"].location != NSNotFound) {
-	//        NSArray *urlSplit = [url componentsSeparatedByString:@".com/jif/v1/"];
-	//        url = urlSplit[1];
-	//    }
-	
-	if (![Common stringIsNilOrEmpty:url]) {
-		[_manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-			//parse list of mailbox references
-			[PBX addPBX:responseObject userName:nil withManagedContext:nil sender:nil];
-			
-		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-			completed(NO, nil, operation, error);
-		}];
-	}
-	
-}
-
-
-
-
 
 @end

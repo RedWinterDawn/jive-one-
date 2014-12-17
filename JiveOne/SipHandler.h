@@ -8,14 +8,19 @@
 
 #import <Foundation/Foundation.h>
 #import "JCLineSession.h"
+#import "Line.h"
 
 typedef void(^CompletionHandler)(bool success, NSError *error);
 typedef void(^TransferCompletionHandler)(bool success, NSError *error);
 
 extern NSString *const kSipHandlerRegisteredSelectorKey;
 
+@class SipHandler;
+
 @protocol SipHandlerDelegate <NSObject>
 
+-(void)sipHandlerDidRegister:(SipHandler *)sipHandler;
+-(void)sipHandlerDidFailToRegister:(SipHandler *)sipHandler error:(NSError *)error;
 -(void)answerAutoCall:(JCLineSession *)session;
 -(void)addLineSession:(JCLineSession *)session;
 -(void)removeLineSession:(JCLineSession *)session;
@@ -35,7 +40,7 @@ extern NSString *const kSipHandlerRegisteredSelectorKey;
 
 @property (nonatomic, copy) TransferCompletionHandler transferCompleted;
 
-- (instancetype)initWithPbx:(PBX *)pbx lineConfiguration:(LineConfiguration *)lineConfiguration delegate:(id<SipHandlerDelegate>)delegate;
+- (instancetype)initWithLine:(Line *)line delegate:(id<SipHandlerDelegate>)delegate;
 
 // "Registers" the application to the SIP service via the Port SIP SDK.
 - (void)connect:(CompletionHandler)completion;

@@ -30,9 +30,9 @@ NSString *const kIncomingCallEntityName = @"IncomingCall";
 
 @implementation IncomingCall (MagicalRecord)
 
-+(void)addIncommingCallWithLineSession:(JCLineSession *)session
++(void)addIncommingCallWithLineSession:(JCLineSession *)session line:(Line *)line
 {
-    [IncomingCall addCallEntity:kIncomingCallEntityName lineSession:session read:YES];
+    [IncomingCall addCallEntity:kIncomingCallEntityName line:line lineSession:session read:YES];
 }
 
 @end

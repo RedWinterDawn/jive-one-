@@ -9,6 +9,7 @@
 #import "JCDialerViewController.h"
 #import "JCCallCardManager.h"
 #import "OutgoingCall.h"
+#import "UIViewController+HUD.h"
 
 NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCall";
 
@@ -46,14 +47,17 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 {
     [super viewWillAppear:animated];
     
-    if(!_phoneManager.isConnected)
-    {
-        [_phoneManager connect:^(bool success, NSError *error) {
-            if (error) {
-                NSLog(@"%@", [error description]);
-            }
-        }];
-    }
+//    if(!_phoneManager.isConnected)
+//    {
+//        __unsafe_unretained UIViewController *weakSelf = self;
+//        [_phoneManager reconnectToLine:[JCAuthenticationManager sharedInstance].line
+//                               started:^{
+//                                   [weakSelf showHudWithTitle:@"Registering" detail:@"Selecting Line..."];
+//                               }
+//                            completion:^(bool success, NSError *error) {
+//                                [weakSelf hideHud];
+//                            }];
+//    }
 }
 
 - (void)dealloc
@@ -128,7 +132,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     NSString *prompt = NSLocalizedString(@"Unregistered", nil);
     if (_phoneManager.isConnected) {
         _callBtn.selected = false;
-        prompt = _phoneManager.lineConfiguration.display;
+        prompt = _phoneManager.line.extension;
     }
     else
         _callBtn.selected = true;

@@ -11,9 +11,9 @@
 #import <AVFoundation/AVFoundation.h>
 
 // Managers
-#import "JCAuthenticationManager.h"
 #import "JCBluetoothManager.h"
 #import "SipHandler.h"
+#import "JCV4ProvisioningClient.h"
 
 // Objects
 #import "JCLineSession.h"
@@ -21,6 +21,7 @@
 
 // Categories
 #import "UIDevice+CellularData.h"
+#import "Contact.h"
 
 @import CoreTelephony;
 
@@ -48,7 +49,6 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 
 @interface JCCallCardManager ()<SipHandlerDelegate, JCCallCardDelegate>
 {
-    JCAuthenticationManager *_authenticationManager;
     JCBluetoothManager *_bluetoothManager;
     SipHandler *_sipHandler;
 	NSString *_warmTransferNumber;
@@ -79,19 +79,6 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
         [center addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
         [center addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
         [center addObserver:self selector:@selector(audioSessionRouteChangeSelector:) name:AVAudioSessionRouteChangeNotification object:nil];
-        
-        
-        // Access the Authetication Manager and register for observer and notification events.
-        _authenticationManager = [JCAuthenticationManager sharedInstance];
-        [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:_authenticationManager];
-        [center addObserver:self selector:@selector(userDidLoadMinimunData:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:_authenticationManager];
-        [_authenticationManager addObserver:self forKeyPath:@"lineConfiguration" options:NSKeyValueObservingOptionInitial context:NULL];
-        if (self.calls.count == 0 && _authenticationManager.userAuthenticated && _authenticationManager.userLoadedMininumData)
-        {
-            [self userDidLoadMinimunData:nil];
-            
-            
-        }
     }
     return self;
 }
@@ -99,21 +86,43 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [_authenticationManager removeObserver:self forKeyPath:@"lineConfiguration"];
-    [_sipHandler removeObserver:self forKeyPath:kSipHandlerRegisteredSelectorKey];
 }
 
 #pragma mark - Public Methods -
 
--(void)connect:(CompletionHandler)completion
+-(void)connectToLine:(Line *)line started:(void(^)())started completed:(CompletionHandler)completed
 {
-    if (_sipHandler) {
+    if (line.lineConfiguration) {
+        [self connectToLine:line];
+        completed(YES, nil);
+    }
+    else {
+        if (started != NULL) {
+            started();
+        }
+        [JCV4ProvisioningClient requestProvisioningForLine:line completed:^(BOOL success, NSError *error) {
+            if (success) {
+                [self connectToLine:line];
+            }
+            completed(success, error);
+        }];
+    }
+}
+
+-(void)reconnectToLine:(Line *)line started:(void(^)())started completion:(CompletionHandler)completion
+{
+    if (_sipHandler && (_line == line)) {
         [_sipHandler connect:completion];
     } else {
-        if (completion != NULL) {
-            completion(false, [NSError errorWithDomain:@"Not logged in." code:0 userInfo:nil]);
-        }
+        [self connectToLine:line started:started completed:completion];
     }
+}
+
+-(void)disconnect
+{
+    [_sipHandler disconnect];
+    _sipHandler = nil;
+    self.connected = FALSE;
 }
 
 /**
@@ -282,12 +291,18 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 	return _calls;
 }
 
--(LineConfiguration *)lineConfiguration
-{
-    return _authenticationManager.lineConfiguration;
-}
-
 #pragma mark - Private -
+
+-(void)connectToLine:(Line *)line
+{
+    // If we have a sip handler, disconnect the current registration.
+    if (_sipHandler && _line != line) {
+        [self disconnect];
+    }
+    
+    _line = line;
+    _sipHandler = [[SipHandler alloc] initWithLine:line delegate:self];
+}
 
 -(BOOL)isEmergencyNumber:(NSString *)dialString
 {
@@ -385,9 +400,9 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 
 -(NSString *)getContactNameByNumber:(NSString *)number
 {
-    Lines *contact = [Lines MR_findFirstByAttribute:@"externsionNumber" withValue:number];
+    Contact *contact = [Contact MR_findFirstByAttribute:@"extension" withValue:number];
     if (contact) {
-        return contact.displayName;
+        return contact.name;
     }
     
     return nil;
@@ -512,7 +527,6 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     }
 }
 
-
 -(JCPhoneManagerOutputType)outputTypeFromString:(NSString *)type
 {
     if ([type isEqualToString:AVAudioSessionPortLineOut]) {
@@ -541,19 +555,6 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
         return JCPhoneManagerOutputAirPlay;
     } else {
         return JCPhoneManagerOutputUnknown;
-    }
-}
-
-#pragma mark - KVO -
-
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    // If the line configuration changes, reconnect the sip handler.
-    if ([keyPath isEqualToString:@"lineConfiguration"] && _sipHandler) {
-        [_sipHandler connect:NULL];
-    }
-    else if ([keyPath isEqualToString:kSipHandlerRegisteredSelectorKey]) {
-        self.connected = TRUE;
     }
 }
 
@@ -606,26 +607,6 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     NSArray *outputs = audioSession.currentRoute.outputs;
     AVAudioSessionPortDescription *port = [outputs lastObject];
     self.outputType = [self outputTypeFromString:port.portType];
-}
-
-#pragma mark JCAuthenticationManager
-
--(void)userDidLoadMinimunData:(NSNotification *)notification
-{
-    if (_sipHandler) {
-        [_sipHandler disconnect];
-        [_sipHandler removeObserver:self forKeyPath:kSipHandlerRegisteredSelectorKey];
-    }
-    
-    _sipHandler = [[SipHandler alloc] initWithPbx:_authenticationManager.pbx lineConfiguration:_authenticationManager.lineConfiguration delegate:self];
-    [_sipHandler addObserver:self forKeyPath:kSipHandlerRegisteredSelectorKey options:NSKeyValueObservingOptionNew context:NULL];
-}
-
--(void)userDidLogout:(NSNotification *)notification
-{
-    [_sipHandler disconnect];
-    [_sipHandler removeObserver:self forKeyPath:kSipHandlerRegisteredSelectorKey];
-    _sipHandler = nil;
 }
 
 #pragma mark - Delegate Handlers -
@@ -719,6 +700,17 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 
 #pragma mark SipHanglerDelegate
 
+-(void)sipHandlerDidRegister:(SipHandler *)sipHandler
+{
+    self.connected = sipHandler.registered;
+}
+
+-(void)sipHandlerDidFailToRegister:(SipHandler *)sipHandler error:(NSError *)error
+{
+    self.connected = sipHandler.registered;
+    NSLog(@"%@", [error description]);
+}
+
 - (void)answerAutoCall:(JCLineSession *)session
 {
 	for (JCCallCard *callCard in self.calls) {
@@ -753,22 +745,32 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 
 +(JCCallCardManager *)sharedManager
 {
-    static JCCallCardManager *singleton = nil;
-    if (singleton != nil)
-        return singleton;
-    
-    // Makes the startup of this singleton thread safe.
-    static dispatch_once_t pred;        // Lock
-    dispatch_once(&pred, ^{             // This code is called at most once per app
-        singleton = [[JCCallCardManager alloc] init];
+    static JCCallCardManager *phoneManagerSingleton = nil;
+    static dispatch_once_t phoneManagerLoaded;
+    dispatch_once(&phoneManagerLoaded, ^{
+        phoneManagerSingleton = [[JCCallCardManager alloc] init];
     });
-    
-    return singleton;
+    return phoneManagerSingleton;
 }
 
 + (id)copyWithZone:(NSZone *)zone
 {
     return self;
+}
+
++ (void)connectToLine:(Line *)line started:(void(^)())started completed:(CompletionHandler)completed
+{
+    [[JCCallCardManager sharedManager] connectToLine:line started:started completed:completed];
+}
+
++ (void)reconnectToLine:(Line *)line started:(void(^)())started completion:(CompletionHandler)completed
+{
+    [[JCCallCardManager sharedManager] reconnectToLine:line started:started completion:completed];
+}
+
++ (void)disconnect
+{
+    [[JCCallCardManager sharedManager] disconnect];
 }
 
 @end

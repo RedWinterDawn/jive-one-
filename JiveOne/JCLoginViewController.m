@@ -48,7 +48,7 @@
     
     self.rememberMeSwitch.on = _authenticationManager.rememberMe;
     if (_authenticationManager.rememberMe) {
-        self.usernameTextField.text = _authenticationManager.jiveUserId;
+        self.usernameTextField.text = _authenticationManager.rememberMeUser;
         [self.passwordTextField becomeFirstResponder];
     } else {
 #if DEBUG
@@ -98,7 +98,7 @@
 
 #pragma mark - Notification Handlers -
 
-- (void)authenticated:(NSNotification*)notification
+- (void)authenticated:(NSNotification *)notification
 {
     [self showHudWithTitle:@"One Moment Please"
                     detail:@"Loading data"];

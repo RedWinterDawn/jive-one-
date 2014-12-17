@@ -45,7 +45,7 @@
         case 1:
             _contactsTableViewController.filterType = JCContactFilterFavorites;
             break;
-            
+    
         default:
             _contactsTableViewController.filterType = JCContactFilterAll;
             break;

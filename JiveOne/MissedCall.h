@@ -17,6 +17,6 @@ extern NSString *const kMissedCallEntityName;
 
 @interface MissedCall (MagicalRecord)
 
-+(void)addMissedCallWithLineSession:(JCLineSession *)session;
++(void)addMissedCallWithLineSession:(JCLineSession *)session line:(Line *)line;
 
 @end

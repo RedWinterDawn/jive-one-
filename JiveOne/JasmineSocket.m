@@ -201,7 +201,7 @@ static BOOL closedSocketOnPurpose;
 {
     
     NSString *type = message[@"type"];
-    NSString *subId = message[@"subId"];
+    //NSString *subId = message[@"subId"];
     NSString *state;
     
     if (![message[@"data"] isKindOfClass:[NSNull class]]) {
@@ -213,16 +213,16 @@ static BOOL closedSocketOnPurpose;
     if ([type isEqualToString:@"withdraw"] || (state && [state isEqualToString:@"confirmed"])) {
         
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-            Lines *line = [Lines MR_findFirstByAttribute:@"jrn" withValue:subId inContext:localContext];
-            
-            if (line) {
-                if (state && [state isEqualToString:@"confirmed"]) {
-                    line.state = [NSNumber numberWithInt:(int) JCPresenceTypeDoNotDisturb];
-                }
-                else if (type && [type isEqualToString:@"withdraw"]) {
-                    line.state = [NSNumber numberWithInt:(int) JCPresenceTypeAvailable];
-                }
-            }
+//            Line *line = [Line MR_findFirstByAttribute:@"jrn" withValue:subId inContext:localContext];
+//            
+//            if (line) {
+//                if (state && [state isEqualToString:@"confirmed"]) {
+//                    line.state = [NSNumber numberWithInt:(int) JCPresenceTypeDoNotDisturb];
+//                }
+//                else if (type && [type isEqualToString:@"withdraw"]) {
+//                    line.state = [NSNumber numberWithInt:(int) JCPresenceTypeAvailable];
+//                }
+//            }
             
         }];
     }
@@ -232,3 +232,35 @@ static BOOL closedSocketOnPurpose;
 
 
 @end
+
+@implementation JasmineSocket (Singleton)
+
++ (JasmineSocket *)sharedInstance
+{
+    static JasmineSocket* sharedObject = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedObject = [[JasmineSocket alloc] init];
+    });
+    return sharedObject;
+}
+
++ (void)startSocket
+{
+    JCAuthenticationManager *authManager = [JCAuthenticationManager sharedInstance];
+    JasmineSocket *socket = [JasmineSocket sharedInstance];
+    if (authManager.userAuthenticated && authManager.userLoadedMinimumData) {
+        if (socket.socket.readyState != SR_OPEN) {
+            [socket restartSocket];
+        }
+    }
+}
+
++ (void)stopSocket
+{
+    [[JasmineSocket sharedInstance] closeSocketWithReason:@"Entering background"];
+}
+
+@end
+
+

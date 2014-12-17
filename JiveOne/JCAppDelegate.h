@@ -6,20 +6,12 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import "UAirship.h"
-#import "UAConfig.h"
-#import "UAPush.h"
+@import UIKit;
 
 @interface JCAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (nonatomic, strong) UIWindow *window;
-@property (nonatomic) BOOL seenTutorial;
-
-- (void)startSocket:(BOOL)inBackground;
 
 - (void)stopRingtone;
-
-- (void)cleanAndResetDatabase;
 
 @end

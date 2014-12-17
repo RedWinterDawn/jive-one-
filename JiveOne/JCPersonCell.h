@@ -9,18 +9,16 @@
 @import UIKit;
 
 #import "JCPresenceView.h"
-#import "Lines+Custom.h"
+#import "Person.h"
 
 @interface JCPersonCell : UITableViewCell
 
 @property (nonatomic, weak) IBOutlet UILabel *personNameLabel;
 @property (nonatomic, weak) IBOutlet UILabel *personDetailLabel;
-@property (nonatomic, weak) IBOutlet UIButton *favoriteBut;
+
 @property (nonatomic, weak) IBOutlet JCPresenceView *personPresenceView;
 
-@property (nonatomic) Lines *line;
-
-- (IBAction)toggleFavoriteStatus:(id)sender;
+@property (nonatomic) Person *person;
 
 @end
 

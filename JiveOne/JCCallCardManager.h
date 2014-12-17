@@ -8,9 +8,10 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 #import "JCCallCard.h"
+#import "Line.h"
 
 extern NSString *const kJCCallCardManagerAddedCallNotification;
 extern NSString *const kJCCallCardManagerAnswerCallNotification;
@@ -53,11 +54,13 @@ typedef enum : NSUInteger {
 
 @property (nonatomic, strong) NSMutableArray *calls;
 
-@property (nonatomic, readonly) LineConfiguration *lineConfiguration;
+@property (nonatomic, readonly) Line *line;
 @property (nonatomic, readonly, getter=isConnected) BOOL connected;
 @property (nonatomic, readonly) JCPhoneManagerOutputType outputType;
 
--(void)connect:(CompletionHandler)connected;
+-(void)connectToLine:(Line *)line started:(void(^)())started completed:(CompletionHandler)completed;
+-(void)reconnectToLine:(Line *)line started:(void(^)())started completion:(CompletionHandler)completion;
+-(void)disconnect;
 
 // Attempts to dial a passed string following the dial type directive. When the dial operation was completed, we are
 // notified. If the dial action resulted in the creation of a dial card, an kJCCallCardManagerAddedCallNotification is
@@ -91,5 +94,9 @@ typedef enum : NSUInteger {
 @interface JCCallCardManager (Singleton)
 
 + (JCCallCardManager *)sharedManager;
+
++ (void)connectToLine:(Line *)line started:(void(^)())started completed:(CompletionHandler)completed;
++ (void)reconnectToLine:(Line *)line started:(void(^)())started completion:(CompletionHandler)completion;
++ (void)disconnect;
 
 @end

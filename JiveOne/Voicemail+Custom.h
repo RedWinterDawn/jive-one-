@@ -7,22 +7,12 @@
 //
 
 #import "Voicemail.h"
+#import "JCV5ApiClient.h"
 
 @interface Voicemail (Custom)
 
-// Core Data Helper functions
-+ (Voicemail *)voicemailForIdentifier:(NSString *)identifier context:(NSManagedObjectContext *)context;
-+ (void)saveVoicemailEtag:(NSInteger)etag managedContext:(NSManagedObjectContext*)context;
-+ (NSInteger)getVoicemailEtag;
-
-// Initiiates a V5 voicemail Fetch.
-+ (void)fetchVoicemailsInBackground:(void(^)(BOOL success, NSError *error))completed;
-
-// Used by the V5 Client.
-+ (void)addVoicemails:(NSDictionary *)entryArray mailboxUrl:(NSString *)mailboxUrl completed:(void (^)(BOOL success))completed;
-
-// Gets list of all voicemails that do not have data yet, and request the data asyncronously.
-+ (void)fetchAllVoicemailDataInBackground;
+// Retrives all voicemails for a line.
++ (void)downloadVoicemailsForLine:(Line *)line complete:(CompletionHandler)completed;
 
 // Synchronous Requests the Voicmail data using the download url.
 - (void)fetchData;

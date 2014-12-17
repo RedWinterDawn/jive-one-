@@ -17,8 +17,7 @@
 #import "Company.h"
 #import "Membership+Custom.h"
 #import "PBX+Custom.h"
-#import "LineGroup.h"
-#import "Lines.h"
+#import "Line.h"
 #import "LineConfiguration.h"
 #import "Call.h"
 
@@ -65,8 +64,7 @@
 	[Voicemail MR_truncateAllInContext:localContext];
 	[Membership MR_truncateAllInContext:localContext];
 	[PBX MR_truncateAllInContext:localContext];
-	[LineGroup MR_truncateAllInContext:localContext];
-	[Lines MR_truncateAllInContext:localContext];
+	[Line MR_truncateAllInContext:localContext];
 	[LineConfiguration MR_truncateAllInContext:localContext];
     [Call MR_truncateAllInContext:localContext];
 	

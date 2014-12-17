@@ -1,0 +1,1220 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
+  <file original="JiveOne/Base.lproj/ConferenceCallViewCell.xib" source-language="en" datatype="plaintext" target-language="pt">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.1.1" build-num="6A2008a"/>
+    </header>
+    <body>
+      <trans-unit id="3tE-5t-IUF.accessibilityHint">
+        <source>callStateView</source>
+        <target>callStateView</target>
+        <note>Class = "IBUIView"; accessibilityHint = "callStateView"; ObjectID = "3tE-5t-IUF";</note>
+      </trans-unit>
+      <trans-unit id="3tE-5t-IUF.accessibilityLabel">
+        <source>callStateView</source>
+        <target>callStateView</target>
+        <note>Class = "IBUIView"; accessibilityLabel = "callStateView"; ObjectID = "3tE-5t-IUF";</note>
+      </trans-unit>
+      <trans-unit id="5Ts-vU-ZOh.accessibilityLabel">
+        <source>Callers Number</source>
+        <target>Callers Number</target>
+        <note>Class = "IBUILabel"; accessibilityLabel = "Callers Number"; ObjectID = "5Ts-vU-ZOh";</note>
+      </trans-unit>
+      <trans-unit id="5Ts-vU-ZOh.text">
+        <source>Callers Number</source>
+        <target>Callers Number</target>
+        <note>Class = "IBUILabel"; text = "Callers Number"; ObjectID = "5Ts-vU-ZOh";</note>
+      </trans-unit>
+      <trans-unit id="DyB-N9-NeR.text">
+        <source>ON HOLD</source>
+        <target>ON HOLD</target>
+        <note>Class = "IBUILabel"; text = "ON HOLD"; ObjectID = "DyB-N9-NeR";</note>
+      </trans-unit>
+      <trans-unit id="Trt-IP-BJb.text">
+        <source>CANCELED</source>
+        <target>CANCELED</target>
+        <note>Class = "IBUILabel"; text = "CANCELED"; ObjectID = "Trt-IP-BJb";</note>
+      </trans-unit>
+      <trans-unit id="cuQ-l6-1Vo.text">
+        <source>1:03</source>
+        <target>1:03</target>
+        <note>Class = "IBUILabel"; text = "1:03"; ObjectID = "cuQ-l6-1Vo";</note>
+      </trans-unit>
+      <trans-unit id="qfp-g2-efF.text">
+        <source>Conference</source>
+        <target>Conference</target>
+        <note>Class = "IBUILabel"; text = "Conference"; ObjectID = "qfp-g2-efF";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="JiveOne/Base.lproj/CurrentCallViewCell.xib" source-language="en" datatype="plaintext" target-language="pt">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.1.1" build-num="6A2008a"/>
+    </header>
+    <body>
+      <trans-unit id="4Oj-D7-F4v.text">
+        <source>ON HOLD</source>
+        <target>ON HOLD</target>
+        <note>Class = "IBUILabel"; text = "ON HOLD"; ObjectID = "4Oj-D7-F4v";</note>
+      </trans-unit>
+      <trans-unit id="H4z-0p-bTI.text">
+        <source>Katerina Illiov</source>
+        <target>Katerina Illiov</target>
+        <note>Class = "IBUILabel"; text = "Katerina Illiov"; ObjectID = "H4z-0p-bTI";</note>
+      </trans-unit>
+      <trans-unit id="ijK-Po-99E.accessibilityLabel">
+        <source>Callers Number</source>
+        <target>Callers Number</target>
+        <note>Class = "IBUILabel"; accessibilityLabel = "Callers Number"; ObjectID = "ijK-Po-99E";</note>
+      </trans-unit>
+      <trans-unit id="ijK-Po-99E.text">
+        <source>(801) 238-9090</source>
+        <target>(801) 238-9090</target>
+        <note>Class = "IBUILabel"; text = "(801) 238-9090"; ObjectID = "ijK-Po-99E";</note>
+      </trans-unit>
+      <trans-unit id="rkJ-cf-ec6.accessibilityHint">
+        <source>callStateView</source>
+        <target>callStateView</target>
+        <note>Class = "IBUIView"; accessibilityHint = "callStateView"; ObjectID = "rkJ-cf-ec6";</note>
+      </trans-unit>
+      <trans-unit id="rkJ-cf-ec6.accessibilityLabel">
+        <source>callStateView</source>
+        <target>callStateView</target>
+        <note>Class = "IBUIView"; accessibilityLabel = "callStateView"; ObjectID = "rkJ-cf-ec6";</note>
+      </trans-unit>
+      <trans-unit id="vAI-dZ-8vN.text">
+        <source>1:03</source>
+        <target>1:03</target>
+        <note>Class = "IBUILabel"; text = "1:03"; ObjectID = "vAI-dZ-8vN";</note>
+      </trans-unit>
+      <trans-unit id="zQp-R0-cci.text">
+        <source>CANCELED</source>
+        <target>CANCELED</target>
+        <note>Class = "IBUILabel"; text = "CANCELED"; ObjectID = "zQp-R0-cci";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="JiveOne/Base.lproj/IncomingCallViewCell.xib" source-language="en" datatype="plaintext" target-language="pt">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.1.1" build-num="6A2008a"/>
+    </header>
+    <body>
+      <trans-unit id="5rL-pd-NyF.accessibilityLabel">
+        <source>Callers Number</source>
+        <target>Callers Number</target>
+        <note>Class = "IBUILabel"; accessibilityLabel = "Callers Number"; ObjectID = "5rL-pd-NyF";</note>
+      </trans-unit>
+      <trans-unit id="5rL-pd-NyF.text">
+        <source>Callers Number</source>
+        <target>Callers Number</target>
+        <note>Class = "IBUILabel"; text = "Callers Number"; ObjectID = "5rL-pd-NyF";</note>
+      </trans-unit>
+      <trans-unit id="FT8-wZ-Uc2.text">
+        <source>Callers Nagme</source>
+        <target>Callers Nagme</target>
+        <note>Class = "IBUILabel"; text = "Callers Nagme"; ObjectID = "FT8-wZ-Uc2";</note>
+      </trans-unit>
+      <trans-unit id="xbc-N2-nOI.text">
+        <source>INCOMING CALL</source>
+        <target>INCOMING CALL</target>
+        <note>Class = "IBUILabel"; text = "INCOMING CALL"; ObjectID = "xbc-N2-nOI";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="JiveOne/Base.lproj/Main_iPad.storyboard" source-language="en" datatype="plaintext" target-language="pt">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.1.1" build-num="6A2008a"/>
+    </header>
+    <body>
+      <trans-unit id="0kh-qc-WfI.text">
+        <source>Last Socket Events</source>
+        <target>Last Socket Events</target>
+        <note>Class = "IBUILabel"; text = "Last Socket Events"; ObjectID = "0kh-qc-WfI";</note>
+      </trans-unit>
+      <trans-unit id="1eE-By-mjG.text">
+        <source>Mobile</source>
+        <target>Mobile</target>
+        <note>Class = "IBUILabel"; text = "Mobile"; ObjectID = "1eE-By-mjG";</note>
+      </trans-unit>
+      <trans-unit id="2S3-Go-rBA.text">
+        <source>Terms of Service</source>
+        <target>Terms of Service</target>
+        <note>Class = "IBUILabel"; text = "Terms of Service"; ObjectID = "2S3-Go-rBA";</note>
+      </trans-unit>
+      <trans-unit id="3qk-lx-qG5.text">
+        <source>Detail</source>
+        <target>Detail</target>
+        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "3qk-lx-qG5";</note>
+      </trans-unit>
+      <trans-unit id="3yJ-FR-IRc.text">
+        <source>Email</source>
+        <target>Email</target>
+        <note>Class = "IBUILabel"; text = "Email"; ObjectID = "3yJ-FR-IRc";</note>
+      </trans-unit>
+      <trans-unit id="4Jm-fZ-n9Y.text">
+        <source>Socket Status</source>
+        <target>Socket Status</target>
+        <note>Class = "IBUILabel"; text = "Socket Status"; ObjectID = "4Jm-fZ-n9Y";</note>
+      </trans-unit>
+      <trans-unit id="9bn-7y-sBQ.title">
+        <source>Voicemail</source>
+        <target>Voicemail</target>
+        <note>Class = "IBUINavigationController"; title = "Voicemail"; ObjectID = "9bn-7y-sBQ";</note>
+      </trans-unit>
+      <trans-unit id="D5S-lp-U55.text">
+        <source>Invalid Credentials. Please try again. </source>
+        <target>Invalid Credentials. Please try again. </target>
+        <note>Class = "IBUILabel"; text = "Invalid Credentials. Please try again. "; ObjectID = "D5S-lp-U55";</note>
+      </trans-unit>
+      <trans-unit id="DHa-YI-KIp.text">
+        <source>Title</source>
+        <target>Title</target>
+        <note>Class = "IBUILabel"; text = "Title"; ObjectID = "DHa-YI-KIp";</note>
+      </trans-unit>
+      <trans-unit id="DOB-7D-iil.text">
+        <source>Label</source>
+        <target>Label</target>
+        <note>Class = "IBUILabel"; text = "Label"; ObjectID = "DOB-7D-iil";</note>
+      </trans-unit>
+      <trans-unit id="EYN-EL-gZe.headerTitle">
+        <source>Other</source>
+        <target>Other</target>
+        <note>Class = "IBUITableViewSection"; headerTitle = "Other"; ObjectID = "EYN-EL-gZe";</note>
+      </trans-unit>
+      <trans-unit id="FSt-t0-kzI.title">
+        <source>Status</source>
+        <target>Status</target>
+        <note>Class = "IBUIBarButtonItem"; title = "Status"; ObjectID = "FSt-t0-kzI";</note>
+      </trans-unit>
+      <trans-unit id="IXE-LQ-XsN.text">
+        <source>Status</source>
+        <target>Status</target>
+        <note>Class = "IBUILabel"; text = "Status"; ObjectID = "IXE-LQ-XsN";</note>
+      </trans-unit>
+      <trans-unit id="JR8-hb-maU.placeholder">
+        <source>email</source>
+        <target>email</target>
+        <note>Class = "IBUITextField"; placeholder = "email"; ObjectID = "JR8-hb-maU";</note>
+      </trans-unit>
+      <trans-unit id="Jh2-oU-VTV.title">
+        <source>Refesh</source>
+        <target>Refesh</target>
+        <note>Class = "IBUIBarButtonItem"; title = "Refesh"; ObjectID = "Jh2-oU-VTV";</note>
+      </trans-unit>
+      <trans-unit id="JuC-uP-hk2.title">
+        <source>Voicemail</source>
+        <target>Voicemail</target>
+        <note>Class = "IBUINavigationItem"; title = "Voicemail"; ObjectID = "JuC-uP-hk2";</note>
+      </trans-unit>
+      <trans-unit id="Kh8-S4-3SL.text">
+        <source>Jive Messenger</source>
+        <target>Jive Messenger</target>
+        <note>Class = "IBUILabel"; text = "Jive Messenger"; ObjectID = "Kh8-S4-3SL";</note>
+      </trans-unit>
+      <trans-unit id="Khq-II-eJU.text">
+        <source>Title</source>
+        <target>Title</target>
+        <note>Class = "IBUILabel"; text = "Title"; ObjectID = "Khq-II-eJU";</note>
+      </trans-unit>
+      <trans-unit id="Lag-ZT-wCs.text">
+        <source>EULA</source>
+        <target>EULA</target>
+        <note>Class = "IBUILabel"; text = "EULA"; ObjectID = "Lag-ZT-wCs";</note>
+      </trans-unit>
+      <trans-unit id="O6n-6O-iB6.normalTitle">
+        <source>Start Chat</source>
+        <target>Start Chat</target>
+        <note>Class = "IBUIButton"; normalTitle = "Start Chat"; ObjectID = "O6n-6O-iB6";</note>
+      </trans-unit>
+      <trans-unit id="PIH-7t-W8x.title">
+        <source>Groups</source>
+        <target>Groups</target>
+        <note>Class = "IBUINavigationItem"; title = "Groups"; ObjectID = "PIH-7t-W8x";</note>
+      </trans-unit>
+      <trans-unit id="QNU-fH-Fv6.title">
+        <source>Conversations</source>
+        <target>Conversations</target>
+        <note>Class = "IBUITabBarItem"; title = "Conversations"; ObjectID = "QNU-fH-Fv6";</note>
+      </trans-unit>
+      <trans-unit id="UeL-6G-gYt.text">
+        <source>Subtitle</source>
+        <target>Subtitle</target>
+        <note>Class = "IBUILabel"; text = "Subtitle"; ObjectID = "UeL-6G-gYt";</note>
+      </trans-unit>
+      <trans-unit id="UkW-TH-Q8u.title">
+        <source>Conversations</source>
+        <target>Conversations</target>
+        <note>Class = "IBUINavigationItem"; title = "Conversations"; ObjectID = "UkW-TH-Q8u";</note>
+      </trans-unit>
+      <trans-unit id="WcV-um-tSk.text">
+        <source>April Summers</source>
+        <target>April Summers</target>
+        <note>Class = "IBUILabel"; text = "April Summers"; ObjectID = "WcV-um-tSk";</note>
+      </trans-unit>
+      <trans-unit id="Wwa-1a-Syh.text">
+        <source>Jive ID</source>
+        <target>Jive ID</target>
+        <note>Class = "IBUILabel"; text = "Jive ID"; ObjectID = "Wwa-1a-Syh";</note>
+      </trans-unit>
+      <trans-unit id="Xer-c3-USK.text">
+        <source>my.email@jive.com</source>
+        <target>my.email@jive.com</target>
+        <note>Class = "IBUILabel"; text = "my.email@jive.com"; ObjectID = "Xer-c3-USK";</note>
+      </trans-unit>
+      <trans-unit id="ZBI-Pz-KHN.text">
+        <source>b.hennis@greentag.com</source>
+        <target>b.hennis@greentag.com</target>
+        <note>Class = "IBUILabel"; text = "b.hennis@greentag.com"; ObjectID = "ZBI-Pz-KHN";</note>
+      </trans-unit>
+      <trans-unit id="awg-Zv-a21.title">
+        <source>Create Group</source>
+        <target>Create Group</target>
+        <note>Class = "IBUINavigationItem"; title = "Create Group"; ObjectID = "awg-Zv-a21";</note>
+      </trans-unit>
+      <trans-unit id="bfX-fV-yQ5.text">
+        <source>(801) 109-2389</source>
+        <target>(801) 109-2389</target>
+        <note>Class = "IBUILabel"; text = "(801) 109-2389"; ObjectID = "bfX-fV-yQ5";</note>
+      </trans-unit>
+      <trans-unit id="dnh-LT-Evu.title">
+        <source>Groups</source>
+        <target>Groups</target>
+        <note>Class = "IBUIBarButtonItem"; title = "Groups"; ObjectID = "dnh-LT-Evu";</note>
+      </trans-unit>
+      <trans-unit id="e6i-od-nx2.title">
+        <source>People</source>
+        <target>People</target>
+        <note>Class = "IBUINavigationItem"; title = "People"; ObjectID = "e6i-od-nx2";</note>
+      </trans-unit>
+      <trans-unit id="ibP-3d-gTf.title">
+        <source>Voicemail</source>
+        <target>Voicemail</target>
+        <note>Class = "IBUITabBarItem"; title = "Voicemail"; ObjectID = "ibP-3d-gTf";</note>
+      </trans-unit>
+      <trans-unit id="j8q-yl-Kmk.title">
+        <source>Account</source>
+        <target>Account</target>
+        <note>Class = "IBUINavigationItem"; title = "Account"; ObjectID = "j8q-yl-Kmk";</note>
+      </trans-unit>
+      <trans-unit id="jFs-vR-O8m.text">
+        <source>Label</source>
+        <target>Label</target>
+        <note>Class = "IBUILabel"; text = "Label"; ObjectID = "jFs-vR-O8m";</note>
+      </trans-unit>
+      <trans-unit id="jdO-3p-aAq.title">
+        <source>Logout</source>
+        <target>Logout</target>
+        <note>Class = "IBUIBarButtonItem"; title = "Logout"; ObjectID = "jdO-3p-aAq";</note>
+      </trans-unit>
+      <trans-unit id="kmg-QN-rrX.text">
+        <source>801-801-8018</source>
+        <target>801-801-8018</target>
+        <note>Class = "IBUILabel"; text = "801-801-8018"; ObjectID = "kmg-QN-rrX";</note>
+      </trans-unit>
+      <trans-unit id="lci-1U-4Cw.headerTitle">
+        <source>Presence</source>
+        <target>Presence</target>
+        <note>Class = "IBUITableViewSection"; headerTitle = "Presence"; ObjectID = "lci-1U-4Cw";</note>
+      </trans-unit>
+      <trans-unit id="lql-ro-bDX.text">
+        <source>Title</source>
+        <target>Title</target>
+        <note>Class = "IBUILabel"; text = "Title"; ObjectID = "lql-ro-bDX";</note>
+      </trans-unit>
+      <trans-unit id="mku-m6-TKH.headerTitle">
+        <source>My Info</source>
+        <target>My Info</target>
+        <note>Class = "IBUITableViewSection"; headerTitle = "My Info"; ObjectID = "mku-m6-TKH";</note>
+      </trans-unit>
+      <trans-unit id="pVE-Mb-oUK.text">
+        <source>Email (work)</source>
+        <target>Email (work)</target>
+        <note>Class = "IBUILabel"; text = "Email (work)"; ObjectID = "pVE-Mb-oUK";</note>
+      </trans-unit>
+      <trans-unit id="pXW-P1-4j3.text">
+        <source>Device Token</source>
+        <target>Device Token</target>
+        <note>Class = "IBUILabel"; text = "Device Token"; ObjectID = "pXW-P1-4j3";</note>
+      </trans-unit>
+      <trans-unit id="rX9-Eo-Lpa.title">
+        <source>More</source>
+        <target>More</target>
+        <note>Class = "IBUITabBarItem"; title = "More"; ObjectID = "rX9-Eo-Lpa";</note>
+      </trans-unit>
+      <trans-unit id="rn4-nF-ndN.text">
+        <source>Label</source>
+        <target>Label</target>
+        <note>Class = "IBUILabel"; text = "Label"; ObjectID = "rn4-nF-ndN";</note>
+      </trans-unit>
+      <trans-unit id="vD2-Ar-uls.title">
+        <source>People</source>
+        <target>People</target>
+        <note>Class = "IBUITabBarItem"; title = "People"; ObjectID = "vD2-Ar-uls";</note>
+      </trans-unit>
+      <trans-unit id="y0L-HK-caB.placeholder">
+        <source>password</source>
+        <target>password</target>
+        <note>Class = "IBUITextField"; placeholder = "password"; ObjectID = "y0L-HK-caB";</note>
+      </trans-unit>
+      <trans-unit id="z0p-w7-fdZ.title">
+        <source>Poll</source>
+        <target>Poll</target>
+        <note>Class = "IBUIBarButtonItem"; title = "Poll"; ObjectID = "z0p-w7-fdZ";</note>
+      </trans-unit>
+      <trans-unit id="ztU-uu-sgE.text">
+        <source>my.email@jive.com</source>
+        <target>my.email@jive.com</target>
+        <note>Class = "IBUILabel"; text = "my.email@jive.com"; ObjectID = "ztU-uu-sgE";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="JiveOne/Base.lproj/Main_iPhone.storyboard" source-language="en" datatype="plaintext" target-language="pt">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.1.1" build-num="6A2008a"/>
+    </header>
+    <body>
+      <trans-unit id="0BS-eb-qYZ.text">
+        <source>Detail</source>
+        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "0BS-eb-qYZ";</note>
+      </trans-unit>
+      <trans-unit id="0lo-Rp-1Wd.text">
+        <source>Title</source>
+        <note>Class = "IBUILabel"; text = "Title"; ObjectID = "0lo-Rp-1Wd";</note>
+      </trans-unit>
+      <trans-unit id="1M5-NQ-q2C.text">
+        <source>PBX:</source>
+        <note>Class = "IBUILabel"; text = "PBX:"; ObjectID = "1M5-NQ-q2C";</note>
+      </trans-unit>
+      <trans-unit id="2fs-lR-lrx.accessibilityLabel">
+        <source>Callers Number</source>
+        <target>Callers Number</target>
+        <note>Class = "IBUILabel"; accessibilityLabel = "Callers Number"; ObjectID = "2fs-lR-lrx";</note>
+      </trans-unit>
+      <trans-unit id="2fs-lR-lrx.text">
+        <source>Callers Number</source>
+        <target>Callers Number</target>
+        <note>Class = "IBUILabel"; text = "Callers Number"; ObjectID = "2fs-lR-lrx";</note>
+      </trans-unit>
+      <trans-unit id="3Yg-JI-TXO.text">
+        <source>Detail</source>
+        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "3Yg-JI-TXO";</note>
+      </trans-unit>
+      <trans-unit id="3hb-FL-acB.text">
+        <source>(801) 349-7643</source>
+        <target>(801) 349-7643</target>
+        <note>Class = "IBUILabel"; text = "(801) 349-7643"; ObjectID = "3hb-FL-acB";</note>
+      </trans-unit>
+      <trans-unit id="4dr-fP-Tr8.text">
+        <source>Detail</source>
+        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "4dr-fP-Tr8";</note>
+      </trans-unit>
+      <trans-unit id="4gy-wV-lhl.normalTitle">
+        <source>Line Picker</source>
+        <note>Class = "IBUIButton"; normalTitle = "Line Picker"; ObjectID = "4gy-wV-lhl";</note>
+      </trans-unit>
+      <trans-unit id="5RR-0w-M0h.text">
+        <source>line configuration:</source>
+        <note>Class = "IBUILabel"; text = "line configuration:"; ObjectID = "5RR-0w-M0h";</note>
+      </trans-unit>
+      <trans-unit id="5Sc-JQ-q86.text">
+        <source>Phone</source>
+        <target>Phone</target>
+        <note>Class = "IBUILabel"; text = "Phone"; ObjectID = "5Sc-JQ-q86";</note>
+      </trans-unit>
+      <trans-unit id="5ds-mG-BrS.placeholder">
+        <source>Search</source>
+        <target>Search</target>
+        <note>Class = "IBUISearchBar"; placeholder = "Search"; ObjectID = "5ds-mG-BrS";</note>
+      </trans-unit>
+      <trans-unit id="5fa-fd-uoX.text">
+        <source>Title</source>
+        <note>Class = "IBUILabel"; text = "Title"; ObjectID = "5fa-fd-uoX";</note>
+      </trans-unit>
+      <trans-unit id="6ic-0i-SVi.text">
+        <source>Detail</source>
+        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "6ic-0i-SVi";</note>
+      </trans-unit>
+      <trans-unit id="7Kp-Io-fyp.text">
+        <source>Mute</source>
+        <target>Mute</target>
+        <note>Class = "IBUILabel"; text = "Mute"; ObjectID = "7Kp-Io-fyp";</note>
+      </trans-unit>
+      <trans-unit id="7RL-so-6fF.text">
+        <source>Detail</source>
+        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "7RL-so-6fF";</note>
+      </trans-unit>
+      <trans-unit id="7bn-xL-lXt.headerTitle">
+        <source>Attributes</source>
+        <note>Class = "IBUITableViewSection"; headerTitle = "Attributes"; ObjectID = "7bn-xL-lXt";</note>
+      </trans-unit>
+      <trans-unit id="7nu-7k-t4d.text">
+        <source>Contacts</source>
+        <note>Class = "IBUILabel"; text = "Contacts"; ObjectID = "7nu-7k-t4d";</note>
+      </trans-unit>
+      <trans-unit id="8Re-eZ-aiX.text">
+        <source>Title</source>
+        <target>Title</target>
+        <note>Class = "IBUILabel"; text = "Title"; ObjectID = "8Re-eZ-aiX";</note>
+      </trans-unit>
+      <trans-unit id="30a-yD-tba.title">
+        <source>Settings</source>
+        <target>Settings</target>
+        <note>Class = "IBUITabBarItem"; title = "Settings"; ObjectID = "30a-yD-tba";</note>
+      </trans-unit>
+      <trans-unit id="44p-Vq-15w.text">
+        <source>Detail</source>
+        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "44p-Vq-15w";</note>
+      </trans-unit>
+      <trans-unit id="53q-MK-pw7.normalTitle">
+        <source>Call Voicemail</source>
+        <target>Call Voicemail</target>
+        <note>Class = "IBUIButton"; normalTitle = "Call Voicemail"; ObjectID = "53q-MK-pw7";</note>
+      </trans-unit>
+      <trans-unit id="ALp-8Y-kom.text">
+        <source>Select a line extension to continue</source>
+        <note>Class = "IBUILabel"; text = "Select a line extension to continue"; ObjectID = "ALp-8Y-kom";</note>
+      </trans-unit>
+      <trans-unit id="AOP-ZF-EfS.text">
+        <source>Lines:</source>
+        <note>Class = "IBUILabel"; text = "Lines:"; ObjectID = "AOP-ZF-EfS";</note>
+      </trans-unit>
+      <trans-unit id="BF1-XV-Z7b.text">
+        <source>Cancel</source>
+        <target>Cancel</target>
+        <note>Class = "IBUILabel"; text = "Cancel"; ObjectID = "BF1-XV-Z7b";</note>
+      </trans-unit>
+      <trans-unit id="BhM-7z-evk.text">
+        <source>Voicemail:</source>
+        <target>Voicemail:</target>
+        <note>Class = "IBUILabel"; text = "Voicemail:"; ObjectID = "BhM-7z-evk";</note>
+      </trans-unit>
+      <trans-unit id="C17-8W-dR3.text">
+        <source>Merge Calls</source>
+        <target>Merge Calls</target>
+        <note>Class = "IBUILabel"; text = "Merge Calls"; ObjectID = "C17-8W-dR3";</note>
+      </trans-unit>
+      <trans-unit id="CK1-kx-O9B.title">
+        <source>PBXs</source>
+        <note>Class = "IBUINavigationItem"; title = "PBXs"; ObjectID = "CK1-kx-O9B";</note>
+      </trans-unit>
+      <trans-unit id="Dq7-oS-hNz.text">
+        <source>0:00</source>
+        <target>0:00</target>
+        <note>Class = "IBUILabel"; text = "0:00"; ObjectID = "Dq7-oS-hNz";</note>
+      </trans-unit>
+      <trans-unit id="EN4-dU-16e.text">
+        <source>name:</source>
+        <note>Class = "IBUILabel"; text = "name:"; ObjectID = "EN4-dU-16e";</note>
+      </trans-unit>
+      <trans-unit id="Eaq-EZ-Cd0.text">
+        <source>Lines</source>
+        <note>Class = "IBUILabel"; text = "Lines"; ObjectID = "Eaq-EZ-Cd0";</note>
+      </trans-unit>
+      <trans-unit id="FaG-4W-nqO.text">
+        <source>PBXs:</source>
+        <note>Class = "IBUILabel"; text = "PBXs:"; ObjectID = "FaG-4W-nqO";</note>
+      </trans-unit>
+      <trans-unit id="GB4-e7-w5Y.text">
+        <source>Title</source>
+        <note>Class = "IBUILabel"; text = "Title"; ObjectID = "GB4-e7-w5Y";</note>
+      </trans-unit>
+      <trans-unit id="GKd-Ca-PWO.text">
+        <source>Current Caller's Name</source>
+        <target>Current Caller's Name</target>
+        <note>Class = "IBUILabel"; text = "Current Caller's Name"; ObjectID = "GKd-Ca-PWO";</note>
+      </trans-unit>
+      <trans-unit id="GL0-QI-CnK.title">
+        <source>Lines</source>
+        <note>Class = "IBUINavigationItem"; title = "Lines"; ObjectID = "GL0-QI-CnK";</note>
+      </trans-unit>
+      <trans-unit id="Ha4-sQ-nx4.text">
+        <source>Detail</source>
+        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "Ha4-sQ-nx4";</note>
+      </trans-unit>
+      <trans-unit id="Hcz-jb-6dn.title">
+        <source>PBX</source>
+        <note>Class = "IBUINavigationItem"; title = "PBX"; ObjectID = "Hcz-jb-6dn";</note>
+      </trans-unit>
+      <trans-unit id="HlT-GQ-JCc.text">
+        <source>Remember me</source>
+        <target>Remember me</target>
+        <note>Class = "IBUILabel"; text = "Remember me"; ObjectID = "HlT-GQ-JCc";</note>
+      </trans-unit>
+      <trans-unit id="Hvu-aR-OOp.text">
+        <source>Add Call</source>
+        <target>Add Call</target>
+        <note>Class = "IBUILabel"; text = "Add Call"; ObjectID = "Hvu-aR-OOp";</note>
+      </trans-unit>
+      <trans-unit id="Im7-gb-8fG.text">
+        <source>mailbox jrn:</source>
+        <note>Class = "IBUILabel"; text = "mailbox jrn:"; ObjectID = "Im7-gb-8fG";</note>
+      </trans-unit>
+      <trans-unit id="JJI-0C-20p.text">
+        <source>Detail</source>
+        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "JJI-0C-20p";</note>
+      </trans-unit>
+      <trans-unit id="JYv-VQ-bNP.title">
+        <source>Recent Activity</source>
+        <target>Recent Activity</target>
+        <note>Class = "IBUINavigationItem"; title = "Recent Activity"; ObjectID = "JYv-VQ-bNP";</note>
+      </trans-unit>
+      <trans-unit id="Jca-Th-Lgp.text">
+        <source>User</source>
+        <note>Class = "IBUILabel"; text = "User"; ObjectID = "Jca-Th-Lgp";</note>
+      </trans-unit>
+      <trans-unit id="Jhp-k4-hWJ.title">
+        <source>Transfer</source>
+        <target>Transfer</target>
+        <note>Class = "IBUIViewController"; title = "Transfer"; ObjectID = "Jhp-k4-hWJ";</note>
+      </trans-unit>
+      <trans-unit id="JyO-Cf-e0j.title">
+        <source>Apps</source>
+        <target>Apps</target>
+        <note>Class = "IBUINavigationItem"; title = "Apps"; ObjectID = "JyO-Cf-e0j";</note>
+      </trans-unit>
+      <trans-unit id="K0b-DH-0nY.title">
+        <source>Debug</source>
+        <note>Class = "IBUIBarButtonItem"; title = "Debug"; ObjectID = "K0b-DH-0nY";</note>
+      </trans-unit>
+      <trans-unit id="K0c-El-0hB.title">
+        <source>Select Line</source>
+        <note>Class = "IBUINavigationItem"; title = "Select Line"; ObjectID = "K0c-El-0hB";</note>
+      </trans-unit>
+      <trans-unit id="KVp-sT-UM5.text">
+        <source>Phone</source>
+        <target>Phone</target>
+        <note>Class = "IBUILabel"; text = "Phone"; ObjectID = "KVp-sT-UM5";</note>
+      </trans-unit>
+      <trans-unit id="Kbp-js-aK1.text">
+        <source>name</source>
+        <target>name</target>
+        <note>Class = "IBUILabel"; text = "name"; ObjectID = "Kbp-js-aK1";</note>
+      </trans-unit>
+      <trans-unit id="LA4-gt-zUJ.title">
+        <source>Voicemail</source>
+        <target>Voicemail</target>
+        <note>Class = "IBUINavigationItem"; title = "Voicemail"; ObjectID = "LA4-gt-zUJ";</note>
+      </trans-unit>
+      <trans-unit id="LP1-U3-wbS.accessibilityLabel">
+        <source>Cancel Button</source>
+        <target>Cancel Button</target>
+        <note>Class = "IBUIButton"; accessibilityLabel = "Cancel Button"; ObjectID = "LP1-U3-wbS";</note>
+      </trans-unit>
+      <trans-unit id="LdI-cv-Q0n.text">
+        <source>Title</source>
+        <note>Class = "IBUILabel"; text = "Title"; ObjectID = "LdI-cv-Q0n";</note>
+      </trans-unit>
+      <trans-unit id="Lhi-Ie-TBG.title">
+        <source>Call History</source>
+        <target>Call History</target>
+        <note>Class = "IBUINavigationItem"; title = "Call History"; ObjectID = "Lhi-Ie-TBG";</note>
+      </trans-unit>
+      <trans-unit id="Lsq-5H-Udv.text">
+        <source>Voicemail Cell</source>
+        <target>Voicemail Cell</target>
+        <note>Class = "IBUILabel"; text = "Voicemail Cell"; ObjectID = "Lsq-5H-Udv";</note>
+      </trans-unit>
+      <trans-unit id="MPB-jF-gYC.text">
+        <source>Detail</source>
+        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "MPB-jF-gYC";</note>
+      </trans-unit>
+      <trans-unit id="Ngt-9V-IXb.title">
+        <source>Settings</source>
+        <note>Class = "IBUINavigationItem"; title = "Settings"; ObjectID = "Ngt-9V-IXb";</note>
+      </trans-unit>
+      <trans-unit id="OwV-S4-lMz.text">
+        <source>name</source>
+        <note>Class = "IBUILabel"; text = "name"; ObjectID = "OwV-S4-lMz";</note>
+      </trans-unit>
+      <trans-unit id="OzV-9h-pmX.accessibilityLabel">
+        <source>emailTextField</source>
+        <target>emailTextField</target>
+        <note>Class = "IBUITextField"; accessibilityLabel = "emailTextField"; ObjectID = "OzV-9h-pmX";</note>
+      </trans-unit>
+      <trans-unit id="OzV-9h-pmX.placeholder">
+        <source>email</source>
+        <target>email</target>
+        <note>Class = "IBUITextField"; placeholder = "email"; ObjectID = "OzV-9h-pmX";</note>
+      </trans-unit>
+      <trans-unit id="P7L-EJ-UPG.headerTitle">
+        <source>Account</source>
+        <note>Class = "IBUITableViewSection"; headerTitle = "Account"; ObjectID = "P7L-EJ-UPG";</note>
+      </trans-unit>
+      <trans-unit id="PLC-2m-6mE.text">
+        <source>Transfer</source>
+        <target>Transfer</target>
+        <note>Class = "IBUILabel"; text = "Transfer"; ObjectID = "PLC-2m-6mE";</note>
+      </trans-unit>
+      <trans-unit id="Pt8-Iw-P7v.normalTitle">
+        <source>Line Picker</source>
+        <note>Class = "IBUIButton"; normalTitle = "Line Picker"; ObjectID = "Pt8-Iw-P7v";</note>
+      </trans-unit>
+      <trans-unit id="QMQ-Qw-Dkd.text">
+        <source>Speaker</source>
+        <target>Speaker</target>
+        <note>Class = "IBUILabel"; text = "Speaker"; ObjectID = "QMQ-Qw-Dkd";</note>
+      </trans-unit>
+      <trans-unit id="Qdf-Sn-kf8.text">
+        <source>Detail</source>
+        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "Qdf-Sn-kf8";</note>
+      </trans-unit>
+      <trans-unit id="RNm-Vm-m5D.normalTitle">
+        <source>Line Picker</source>
+        <note>Class = "IBUIButton"; normalTitle = "Line Picker"; ObjectID = "RNm-Vm-m5D";</note>
+      </trans-unit>
+      <trans-unit id="RiQ-i7-NIb.text">
+        <source>ContactGroups:</source>
+        <note>Class = "IBUILabel"; text = "ContactGroups:"; ObjectID = "RiQ-i7-NIb";</note>
+      </trans-unit>
+      <trans-unit id="RsO-7H-9PB.text">
+        <source>Detail</source>
+        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "RsO-7H-9PB";</note>
+      </trans-unit>
+      <trans-unit id="Rzz-Tf-qPQ.text">
+        <source>Subtitle</source>
+        <note>Class = "IBUILabel"; text = "Subtitle"; ObjectID = "Rzz-Tf-qPQ";</note>
+      </trans-unit>
+      <trans-unit id="SCG-SS-mwf.text">
+        <source>Detail</source>
+        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "SCG-SS-mwf";</note>
+      </trans-unit>
+      <trans-unit id="SOB-aA-7Rz.text">
+        <source>Logout</source>
+        <note>Class = "IBUILabel"; text = "Logout"; ObjectID = "SOB-aA-7Rz";</note>
+      </trans-unit>
+      <trans-unit id="TBH-my-sze.text">
+        <source>Label</source>
+        <target>Label</target>
+        <note>Class = "IBUILabel"; text = "Label"; ObjectID = "TBH-my-sze";</note>
+      </trans-unit>
+      <trans-unit id="Tj6-BS-QA2.text">
+        <source>Extension:</source>
+        <note>Class = "IBUILabel"; text = "Extension:"; ObjectID = "Tj6-BS-QA2";</note>
+      </trans-unit>
+      <trans-unit id="TmI-c8-kkS.text">
+        <source>Dan Leonard</source>
+        <target>Dan Leonard</target>
+        <note>Class = "IBUILabel"; text = "Dan Leonard"; ObjectID = "TmI-c8-kkS";</note>
+      </trans-unit>
+      <trans-unit id="Trv-py-X4f.text">
+        <source>Logout</source>
+      </trans-unit>
+      <trans-unit id="UjK-HA-EeS.text">
+        <source>Build  Label</source>
+        <note>Class = "IBUILabel"; text = "Build  Label"; ObjectID = "UjK-HA-EeS";</note>
+      </trans-unit>
+      <trans-unit id="VOs-kP-Qid.text">
+        <source>3:03 PM</source>
+        <target>3:03 PM</target>
+        <note>Class = "IBUILabel"; text = "3:03 PM"; ObjectID = "VOs-kP-Qid";</note>
+      </trans-unit>
+      <trans-unit id="VVg-d2-m3M.text">
+        <source>Title</source>
+        <note>Class = "IBUILabel"; text = "Title"; ObjectID = "VVg-d2-m3M";</note>
+      </trans-unit>
+      <trans-unit id="VXy-JP-34P.text">
+        <source>Detail</source>
+        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "VXy-JP-34P";</note>
+      </trans-unit>
+      <trans-unit id="W9Q-fu-t2u.text">
+        <source>Transferd Number</source>
+        <target>Transferd Number</target>
+        <note>Class = "IBUILabel"; text = "Transferd Number"; ObjectID = "W9Q-fu-t2u";</note>
+      </trans-unit>
+      <trans-unit id="WMY-2m-tJl.normalTitle">
+        <source>★</source>
+        <note>Class = "IBUIButton"; normalTitle = "★"; ObjectID = "WMY-2m-tJl";</note>
+      </trans-unit>
+      <trans-unit id="XMX-qK-sSJ.text">
+        <source>Contacts:</source>
+        <note>Class = "IBUILabel"; text = "Contacts:"; ObjectID = "XMX-qK-sSJ";</note>
+      </trans-unit>
+      <trans-unit id="Xd1-F6-dWo.text">
+        <source>0.05</source>
+        <target>0.05</target>
+        <note>Class = "IBUILabel"; text = "0.05"; ObjectID = "Xd1-F6-dWo";</note>
+      </trans-unit>
+      <trans-unit id="Xdu-kb-3Tx.title">
+        <source>User</source>
+        <note>Class = "IBUINavigationItem"; title = "User"; ObjectID = "Xdu-kb-3Tx";</note>
+      </trans-unit>
+      <trans-unit id="XiM-TR-LPH.text">
+        <source>Missed:</source>
+        <target>Missed:</target>
+        <note>Class = "IBUILabel"; text = "Missed:"; ObjectID = "XiM-TR-LPH";</note>
+      </trans-unit>
+      <trans-unit id="YkC-FT-3rj.text">
+        <source>Detail</source>
+        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "YkC-FT-3rj";</note>
+      </trans-unit>
+      <trans-unit id="ZUf-yY-biO.text">
+        <source>pbx:</source>
+        <note>Class = "IBUILabel"; text = "pbx:"; ObjectID = "ZUf-yY-biO";</note>
+      </trans-unit>
+      <trans-unit id="Zey-Qd-g8J.text">
+        <source>TRANSFERRED TO</source>
+        <target>TRANSFERRED TO</target>
+        <note>Class = "IBUILabel"; text = "TRANSFERRED TO"; ObjectID = "Zey-Qd-g8J";</note>
+      </trans-unit>
+      <trans-unit id="ZhL-2w-2Q2.normalTitle">
+        <source>Done</source>
+        <note>Class = "IBUIButton"; normalTitle = "Done"; ObjectID = "ZhL-2w-2Q2";</note>
+      </trans-unit>
+      <trans-unit id="aSD-9F-7Ze.headerTitle">
+        <source>Application</source>
+        <note>Class = "IBUITableViewSection"; headerTitle = "Application"; ObjectID = "aSD-9F-7Ze";</note>
+      </trans-unit>
+      <trans-unit id="aTR-Bp-dDz.text">
+        <source>Swap Calls</source>
+        <target>Swap Calls</target>
+        <note>Class = "IBUILabel"; text = "Swap Calls"; ObjectID = "aTR-Bp-dDz";</note>
+      </trans-unit>
+      <trans-unit id="bso-cm-GH5.text">
+        <source>Detail</source>
+        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "bso-cm-GH5";</note>
+      </trans-unit>
+      <trans-unit id="bw0-5L-SgE.headerTitle">
+        <source>Account</source>
+        <note>Class = "IBUITableViewSection"; headerTitle = "Account"; ObjectID = "bw0-5L-SgE";</note>
+      </trans-unit>
+      <trans-unit id="bxS-qG-c0L.text">
+        <source>By signing in you agree to our Terms &amp; Conditions.</source>
+        <target>By signing in you agree to our</target>
+        <note>Class = "IBUILabel"; text = "By signing in you agree to our Terms &amp; Conditions."; ObjectID = "bxS-qG-c0L";</note>
+      </trans-unit>
+      <trans-unit id="cIE-ip-pRf.title">
+        <source>History</source>
+        <target>History</target>
+        <note>Class = "IBUINavigationController"; title = "History"; ObjectID = "cIE-ip-pRf";</note>
+      </trans-unit>
+      <trans-unit id="caX-mv-WKC.text">
+        <source>extension:</source>
+        <note>Class = "IBUILabel"; text = "extension:"; ObjectID = "caX-mv-WKC";</note>
+      </trans-unit>
+      <trans-unit id="dD6-su-8pK.title">
+        <source>Line</source>
+        <note>Class = "IBUINavigationItem"; title = "Line"; ObjectID = "dD6-su-8pK";</note>
+      </trans-unit>
+      <trans-unit id="dp8-7e-BVH.segmentTitles[0]">
+        <source>All</source>
+        <target>All</target>
+        <note>Class = "IBUISegmentedControl"; dp8-7e-BVH.segmentTitles[0] = "All"; ObjectID = "dp8-7e-BVH";</note>
+      </trans-unit>
+      <trans-unit id="dp8-7e-BVH.segmentTitles[1]">
+        <source>Missed</source>
+        <target>Missed</target>
+        <note>Class = "IBUISegmentedControl"; dp8-7e-BVH.segmentTitles[1] = "Missed"; ObjectID = "dp8-7e-BVH";</note>
+      </trans-unit>
+      <trans-unit id="dvD-nl-dwM.title">
+        <source>History</source>
+        <target>History</target>
+        <note>Class = "IBUITabBarItem"; title = "History"; ObjectID = "dvD-nl-dwM";</note>
+      </trans-unit>
+      <trans-unit id="dzg-Dh-pCO.text">
+        <source>Detail</source>
+        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "dzg-Dh-pCO";</note>
+      </trans-unit>
+      <trans-unit id="fCM-G3-oYg.text">
+        <source>Events:</source>
+        <note>Class = "IBUILabel"; text = "Events:"; ObjectID = "fCM-G3-oYg";</note>
+      </trans-unit>
+      <trans-unit id="fEO-AB-gx9.text">
+        <source>817-343-9239</source>
+        <target>817-343-9239</target>
+        <note>Class = "IBUILabel"; text = "817-343-9239"; ObjectID = "fEO-AB-gx9";</note>
+      </trans-unit>
+      <trans-unit id="fK3-L1-cSS.text">
+        <source>accessToken</source>
+        <note>Class = "IBUILabel"; text = "accessToken"; ObjectID = "fK3-L1-cSS";</note>
+      </trans-unit>
+      <trans-unit id="fbo-cf-77R.text">
+        <source>JiveUserId:</source>
+        <note>Class = "IBUILabel"; text = "JiveUserId:"; ObjectID = "fbo-cf-77R";</note>
+      </trans-unit>
+      <trans-unit id="fhB-Vd-U5R.headerTitle">
+        <source>Relationships</source>
+        <note>Class = "IBUITableViewSection"; headerTitle = "Relationships"; ObjectID = "fhB-Vd-U5R";</note>
+      </trans-unit>
+      <trans-unit id="fpX-p1-9pC.normalTitle">
+        <source>★</source>
+        <target>★</target>
+        <note>Class = "IBUIButton"; normalTitle = "★"; ObjectID = "fpX-p1-9pC";</note>
+      </trans-unit>
+      <trans-unit id="gQB-DU-RKy.text">
+        <source>Call History Cell</source>
+        <target>Call History Cell</target>
+        <note>Class = "IBUILabel"; text = "Call History Cell"; ObjectID = "gQB-DU-RKy";</note>
+      </trans-unit>
+      <trans-unit id="gRx-8z-M5N.normalTitle">
+        <source>5555 (Polycom)</source>
+        <note>Class = "IBUIButton"; normalTitle = "5555 (Polycom)"; ObjectID = "gRx-8z-M5N";</note>
+      </trans-unit>
+      <trans-unit id="gU9-Ry-bGH.text">
+        <source>Detail</source>
+        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "gU9-Ry-bGH";</note>
+      </trans-unit>
+      <trans-unit id="gtd-8g-MGS.text">
+        <source>3:03 PM</source>
+        <target>3:03 PM</target>
+        <note>Class = "IBUILabel"; text = "3:03 PM"; ObjectID = "gtd-8g-MGS";</note>
+      </trans-unit>
+      <trans-unit id="h9G-CI-v9C.text">
+        <source>Today, 10:57 PM</source>
+        <target>Today, 10:57 PM</target>
+        <note>Class = "IBUILabel"; text = "Today, 10:57 PM"; ObjectID = "h9G-CI-v9C";</note>
+      </trans-unit>
+      <trans-unit id="hCx-lr-KsW.text">
+        <source>Line Configurations:</source>
+        <note>Class = "IBUILabel"; text = "Line Configurations:"; ObjectID = "hCx-lr-KsW";</note>
+      </trans-unit>
+      <trans-unit id="hhq-s3-oQT.normalTitle">
+        <source>CONTINUE</source>
+        <note>Class = "IBUIButton"; normalTitle = "CONTINUE"; ObjectID = "hhq-s3-oQT";</note>
+      </trans-unit>
+      <trans-unit id="hjO-33-08L.text">
+        <source>Detail</source>
+        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "hjO-33-08L";</note>
+      </trans-unit>
+      <trans-unit id="hn5-ub-HBZ.title">
+        <source>Phone</source>
+        <target>Phone</target>
+        <note>Class = "IBUITabBarItem"; title = "Phone"; ObjectID = "hn5-ub-HBZ";</note>
+      </trans-unit>
+      <trans-unit id="hoV-Az-hVc.text">
+        <source>Warm Transfer</source>
+        <target>Warm Transfer</target>
+        <note>Class = "IBUILabel"; text = "Warm Transfer"; ObjectID = "hoV-Az-hVc";</note>
+      </trans-unit>
+      <trans-unit id="i1A-sz-Qdg.text">
+        <source>User:</source>
+        <note>Class = "IBUILabel"; text = "User:"; ObjectID = "i1A-sz-Qdg";</note>
+      </trans-unit>
+      <trans-unit id="idj-mu-viK.title">
+        <source>Keypad</source>
+        <target>Keypad</target>
+        <note>Class = "IBUITabBarItem"; title = "Keypad"; ObjectID = "idj-mu-viK";</note>
+      </trans-unit>
+      <trans-unit id="iut-I0-S4b.headerTitle">
+        <source>Core Data</source>
+        <note>Class = "IBUITableViewSection"; headerTitle = "Core Data"; ObjectID = "iut-I0-S4b";</note>
+      </trans-unit>
+      <trans-unit id="j3y-6c-YEc.title">
+        <source>Contacts</source>
+        <target>Contacts</target>
+        <note>Class = "IBUITabBarItem"; title = "Contacts"; ObjectID = "j3y-6c-YEc";</note>
+      </trans-unit>
+      <trans-unit id="k5B-9E-t78.accessibilityLabel">
+        <source>passwordTextField</source>
+        <target>passwordTextField</target>
+        <note>Class = "IBUITextField"; accessibilityLabel = "passwordTextField"; ObjectID = "k5B-9E-t78";</note>
+      </trans-unit>
+      <trans-unit id="k5B-9E-t78.placeholder">
+        <source>password</source>
+        <target>password</target>
+        <note>Class = "IBUITextField"; placeholder = "password"; ObjectID = "k5B-9E-t78";</note>
+      </trans-unit>
+      <trans-unit id="k9u-JK-Ejv.title">
+        <source>Transfer</source>
+        <target>Transfer</target>
+        <note>Class = "IBUIViewController"; title = "Transfer"; ObjectID = "k9u-JK-Ejv";</note>
+      </trans-unit>
+      <trans-unit id="kIb-eP-P8e.text">
+        <source>Users:</source>
+        <note>Class = "IBUILabel"; text = "Users:"; ObjectID = "kIb-eP-P8e";</note>
+      </trans-unit>
+      <trans-unit id="kaR-bY-yza.text">
+        <source>Detail</source>
+        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "kaR-bY-yza";</note>
+      </trans-unit>
+      <trans-unit id="kwW-Qp-UuE.title">
+        <source>Voicemail</source>
+        <target>Voicemail</target>
+        <note>Class = "IBUINavigationItem"; title = "Voicemail"; ObjectID = "kwW-Qp-UuE";</note>
+      </trans-unit>
+      <trans-unit id="lS3-iw-nlZ.accessibilityLabel">
+        <source>Another Callers </source>
+        <target>Another Callers </target>
+        <note>Class = "IBUILabel"; accessibilityLabel = "Another Callers "; ObjectID = "lS3-iw-nlZ";</note>
+      </trans-unit>
+      <trans-unit id="lS3-iw-nlZ.text">
+        <source>Callers Number</source>
+        <target>Callers Number</target>
+        <note>Class = "IBUILabel"; text = "Callers Number"; ObjectID = "lS3-iw-nlZ";</note>
+      </trans-unit>
+      <trans-unit id="nNw-aj-1ph.text">
+        <source>End User License Agreement</source>
+        <note>Class = "IBUILabel"; text = "End User License Agreement"; ObjectID = "nNw-aj-1ph";</note>
+      </trans-unit>
+      <trans-unit id="oEe-KQ-NpU.title">
+        <source>Contacts</source>
+        <target>Contacts</target>
+        <note>Class = "IBUINavigationItem"; title = "Contacts"; ObjectID = "oEe-KQ-NpU";</note>
+      </trans-unit>
+      <trans-unit id="oJu-kp-uaF.text">
+        <source>jrn:</source>
+        <note>Class = "IBUILabel"; text = "jrn:"; ObjectID = "oJu-kp-uaF";</note>
+      </trans-unit>
+      <trans-unit id="oWD-fA-wIb.text">
+        <source>Detail</source>
+        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "oWD-fA-wIb";</note>
+      </trans-unit>
+      <trans-unit id="oiS-bx-elM.text">
+        <source>3:03 PM</source>
+        <target>3:03 PM</target>
+        <note>Class = "IBUILabel"; text = "3:03 PM"; ObjectID = "oiS-bx-elM";</note>
+      </trans-unit>
+      <trans-unit id="pGt-gR-ef8.text">
+        <source>jiveUserId</source>
+        <note>Class = "IBUILabel"; text = "jiveUserId"; ObjectID = "pGt-gR-ef8";</note>
+      </trans-unit>
+      <trans-unit id="qG7-eu-aoo.normalTitle">
+        <source>Line Picker</source>
+        <note>Class = "IBUIButton"; normalTitle = "Line Picker"; ObjectID = "qG7-eu-aoo";</note>
+      </trans-unit>
+      <trans-unit id="qTo-LN-C26.text">
+        <source>1006</source>
+        <target>1006</target>
+        <note>Class = "IBUILabel"; text = "1006"; ObjectID = "qTo-LN-C26";</note>
+      </trans-unit>
+      <trans-unit id="qgE-Wi-v1i.text">
+        <source>Bob Seger</source>
+        <target>Bob Seger</target>
+        <note>Class = "IBUILabel"; text = "Bob Seger"; ObjectID = "qgE-Wi-v1i";</note>
+      </trans-unit>
+      <trans-unit id="qr5-fZ-Kx4.title">
+        <source>Item</source>
+        <target>Item</target>
+        <note>Class = "IBUITabBarItem"; title = "Item"; ObjectID = "qr5-fZ-Kx4";</note>
+      </trans-unit>
+      <trans-unit id="r0V-Ez-6Bj.text">
+        <source>Detail</source>
+        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "r0V-Ez-6Bj";</note>
+      </trans-unit>
+      <trans-unit id="r0i-CD-OoY.text">
+        <source>App Label</source>
+        <note>Class = "IBUILabel"; text = "App Label"; ObjectID = "r0i-CD-OoY";</note>
+      </trans-unit>
+      <trans-unit id="rSu-ju-Krc.text">
+        <source>Detail</source>
+        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "rSu-ju-Krc";</note>
+      </trans-unit>
+      <trans-unit id="rcZ-gm-7j5.title">
+        <source>Debug</source>
+        <note>Class = "IBUINavigationItem"; title = "Debug"; ObjectID = "rcZ-gm-7j5";</note>
+      </trans-unit>
+      <trans-unit id="rv7-ds-TZe.text">
+        <source>Pbxs</source>
+        <note>Class = "IBUILabel"; text = "Pbxs"; ObjectID = "rv7-ds-TZe";</note>
+      </trans-unit>
+      <trans-unit id="sUF-Ow-zVA.text">
+        <source>Title</source>
+        <note>Class = "IBUILabel"; text = "Title"; ObjectID = "sUF-Ow-zVA";</note>
+      </trans-unit>
+      <trans-unit id="tmr-h2-d5h.text">
+        <source>Detail</source>
+        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "tmr-h2-d5h";</note>
+      </trans-unit>
+      <trans-unit id="tpx-qk-Eby.text">
+        <source>Label</source>
+        <note>Class = "IBUILabel"; text = "Label"; ObjectID = "tpx-qk-Eby";</note>
+      </trans-unit>
+      <trans-unit id="unk-sI-EzS.text">
+        <source>Allow Intercom:</source>
+        <note>Class = "IBUILabel"; text = "Allow Intercom:"; ObjectID = "unk-sI-EzS";</note>
+      </trans-unit>
+      <trans-unit id="vEc-HQ-Xnf.title">
+        <source>Users</source>
+        <note>Class = "IBUINavigationItem"; title = "Users"; ObjectID = "vEc-HQ-Xnf";</note>
+      </trans-unit>
+      <trans-unit id="vqB-Nx-EVk.normalTitle">
+        <source>Line Picker</source>
+        <note>Class = "IBUIButton"; normalTitle = "Line Picker"; ObjectID = "vqB-Nx-EVk";</note>
+      </trans-unit>
+      <trans-unit id="vrQ-kc-2ec.title">
+        <source>Keypad</source>
+        <target>Keypad</target>
+        <note>Class = "IBUINavigationController"; title = "Keypad"; ObjectID = "vrQ-kc-2ec";</note>
+      </trans-unit>
+      <trans-unit id="vvf-7y-EoN.text">
+        <source>mailbox url:</source>
+        <note>Class = "IBUILabel"; text = "mailbox url:"; ObjectID = "vvf-7y-EoN";</note>
+      </trans-unit>
+      <trans-unit id="wLV-k9-4Pz.title">
+        <source>Voicemail</source>
+        <target>Voicemail</target>
+        <note>Class = "IBUINavigationController"; title = "Voicemail"; ObjectID = "wLV-k9-4Pz";</note>
+      </trans-unit>
+      <trans-unit id="wy5-2x-2pe.text">
+        <source>817-343-9239</source>
+        <target>817-343-9239</target>
+        <note>Class = "IBUILabel"; text = "817-343-9239"; ObjectID = "wy5-2x-2pe";</note>
+      </trans-unit>
+      <trans-unit id="xbE-Wj-ANr.text">
+        <source>817-343-9239</source>
+        <target>817-343-9239</target>
+        <note>Class = "IBUILabel"; text = "817-343-9239"; ObjectID = "xbE-Wj-ANr";</note>
+      </trans-unit>
+      <trans-unit id="ya5-Sj-oDI.text">
+        <source>Leave Feedback</source>
+        <note>Class = "IBUILabel"; text = "Leave Feedback"; ObjectID = "ya5-Sj-oDI";</note>
+      </trans-unit>
+      <trans-unit id="yfS-ds-xyB.title">
+        <source>Voicemail</source>
+        <target>Voicemail</target>
+        <note>Class = "IBUITabBarItem"; title = "Voicemail"; ObjectID = "yfS-ds-xyB";</note>
+      </trans-unit>
+      <trans-unit id="yqu-Rh-YHg.title">
+        <source>Contacts</source>
+        <target>Contacts</target>
+        <note>Class = "IBUITabBarItem"; title = "Contacts"; ObjectID = "yqu-Rh-YHg";</note>
+      </trans-unit>
+      <trans-unit id="ytQ-py-sga.text">
+        <source>Detail</source>
+        <note>Class = "IBUILabel"; text = "Detail"; ObjectID = "ytQ-py-sga";</note>
+      </trans-unit>
+      <trans-unit id="zcs-la-vSZ.text">
+        <source>Keypad</source>
+        <target>Keypad</target>
+        <note>Class = "IBUILabel"; text = "Keypad"; ObjectID = "zcs-la-vSZ";</note>
+      </trans-unit>
+      <trans-unit id="zpq-3o-7Gs.text">
+        <source>Finish Transfer</source>
+        <target>Finish Transfer</target>
+        <note>Class = "IBUILabel"; text = "Finish Transfer"; ObjectID = "zpq-3o-7Gs";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="JiveOne/JiveOne-Info.plist" source-language="en" datatype="plaintext" target-language="pt">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.1.1" build-num="6A2008a"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleDisplayName">
+        <source>Jive</source>
+      </trans-unit>
+      <trans-unit id="CFBundleName">
+        <source>${PRODUCT_NAME}</source>
+      </trans-unit>
+      <trans-unit id="CFBundleShortVersionString">
+        <source>1.0.2</source>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="JiveOne/en.lproj/Localizable.strings" source-language="en" datatype="plaintext" target-language="pt">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.1.1" build-num="6A2008a"/>
+    </header>
+    <body>
+      <trans-unit id="Blind Transfer failed">
+        <source>Blind Transfer failed</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="CANCELED">
+        <source>CANCELED</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Call Failed">
+        <source>Call Failed</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Conference">
+        <source>Conference</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Could not check for voicemails at this moment. Please try again.">
+        <source>Could not check for voicemails at this moment. Please try again.</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Failed to Create Conference">
+        <source>Failed to Create Conference</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Failed to finish transfer">
+        <source>Failed to finish transfer</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Jive Mobile EULA">
+        <source>Jive Mobile EULA</source>
+        <note>Terms and Conditions EULA title</note>
+      </trans-unit>
+      <trans-unit id="MBContactPickerPrompt">
+        <source>MBContactPickerPrompt</source>
+        <note>Prompt text shown in the prompt cell</note>
+      </trans-unit>
+      <trans-unit id="Merge Calls">
+        <source>Merge Calls</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="No Connection">
+        <source>No Connection</source>
+        <note>No Connection</note>
+      </trans-unit>
+      <trans-unit id="OK">
+        <source>OK</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Oh-oh">
+        <source>Oh-oh</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="RINGING">
+        <source>RINGING</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Send">
+        <source>Send</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Server Not Reachable">
+        <source>Server Not Reachable</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Split Calls">
+        <source>Split Calls</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Unable make transfer">
+        <source>Unable make transfer</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Unable to create call">
+        <source>Unable to create call</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Unable to make blind transfer">
+        <source>Unable to make blind transfer</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Unregistered">
+        <source>Unregistered</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Voicemail">
+        <source>Voicemail</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Warm Transfer failed">
+        <source>Warm Transfer failed</source>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Yesterday">
+        <source>Yesterday</source>
+        <note>Yesterday</note>
+      </trans-unit>
+      <trans-unit id="please verify your internet connection">
+        <source>please verify your internet connection</source>
+        <note>please verify your internet connection</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="JiveOneTests/JiveOneTests-Info.plist" source-language="en" datatype="plaintext" target-language="pt">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="6.1.1" build-num="6A2008a"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleShortVersionString">
+        <source>1.0</source>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

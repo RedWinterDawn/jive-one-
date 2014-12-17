@@ -9,10 +9,16 @@
 #import "JCContactsTableViewController.h"
 #import "JCCallerViewController.h"
 
-#import "Lines+Custom.h"
-#import "JCPersonCell.h"
+#import "JCContactCell.h"
+#import "JCLineCell.h"
+#import "JCExternalContactCell.h"
+
 #import "JasmineSocket.h"
 
+#import "Contact.h"
+#import "Line.h"
+#import "PBX.h"
+#import "User.h"
 
 @interface JCContactsTableViewController()  <JCCallerViewControllerDelegate>
 {
@@ -20,7 +26,8 @@
     NSMutableDictionary *lineSubcription;
 }
 
-@property (nonatomic, weak) NSPredicate *predicate;
+@property (nonatomic, strong) NSFetchRequest *fetchRequest;
+@property (nonatomic, strong) NSPredicate *predicate;
 
 @end
 
@@ -29,14 +36,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(subscribeToLinePresence:) name:kSocketDidOpen object:nil];
     
-    if ([JasmineSocket sharedInstance].socket.readyState == SR_OPEN) {
-        [self subscribeToLinePresence:nil];
-    }
-    else {
-        [[JasmineSocket sharedInstance] initSocket];
-    }
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+//    [center addObserver:self selector:@selector(subscribeToLinePresence:) name:kSocketDidOpen object:[JasmineSocket sharedInstance]];
+    [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:[JCAuthenticationManager sharedInstance]];
+    
+//    if ([JasmineSocket sharedInstance].socket.readyState == SR_OPEN) {
+//        [self subscribeToLinePresence:nil];
+//    }
+//    else {
+//        [[JasmineSocket sharedInstance] initSocket];
+//    }
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -45,33 +55,34 @@
     if ([viewController isKindOfClass:[JCCallerViewController class]]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         id object = [self objectAtIndexPath:indexPath];
-        if ([object isKindOfClass:[Lines class]]) {
-            Lines *line = (Lines *)object;
+        if ([object isKindOfClass:[Contact class]]) {
+            Contact *contact = (Contact *)object;
             JCCallerViewController *callerViewController = (JCCallerViewController *)viewController;
             callerViewController.delegate = self;
-            callerViewController.dialString = line.externsionNumber;
+            callerViewController.dialString = contact.extension;
         }
     }
 }
 
--(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController
-{
-    [self dismissViewControllerAnimated:NO completion:^{
-        
-    }];
-}
-
 - (void)configureCell:(UITableViewCell *)cell withObject:(id<NSObject>)object
 {
-    if ([object isKindOfClass:[Lines class]] && [cell isKindOfClass:[JCPersonCell class]]) {
-        ((JCPersonCell *)cell).line = (Lines *)object;
+    if ([object isKindOfClass:[Contact class]] && [cell isKindOfClass:[JCContactCell class]]) {
+        ((JCContactCell *)cell).contact = (Contact *)object;
+    }
+    else if ([object isKindOfClass:[Line class]] && [cell isKindOfClass:[JCLineCell class]]) {
+        ((JCLineCell *)cell).line = (Line *)object;
     }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForObject:(id<NSObject>)object atIndexPath:(NSIndexPath *)indexPath
 {
-    if ([object isKindOfClass:[Lines class]]) {
-        JCPersonCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PersonCell"];
+    if ([object isKindOfClass:[Contact class]]) {
+        JCContactCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactCell"];
+        [self configureCell:cell withObject:object];
+        return cell;
+    }
+    else if ([object isKindOfClass:[Line class]]) {
+        JCLineCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LineCell"];
         [self configureCell:cell withObject:object];
         return cell;
     }
@@ -83,33 +94,7 @@
 -(void)setFilterType:(JCContactFilter)filterType
 {
     _filterType = filterType;
-    self.predicate = nil;
-}
-
--(void)setPredicate:(NSPredicate *)predicate
-{
-    if (!predicate) {
-        
-        if (_searchText && ![_searchText isEqualToString:@""]) {
-            predicate = [NSPredicate predicateWithFormat:@"(displayName contains[cd] %@) OR (externsionNumber contains[cd] %@)", _searchText, _searchText];
-        }
-        
-        NSPredicate *filterPredicate = [self predicateFromFilterType];
-        if (filterPredicate && predicate)
-            predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, filterPredicate]];
-        else if(filterPredicate)
-            predicate = filterPredicate;
-    }
-        
-    if (_fetchedResultsController)
-    {
-        _fetchedResultsController.fetchRequest.predicate = predicate;
-        __autoreleasing NSError *error = nil;
-        if ([self.fetchedResultsController performFetch:&error])
-        {
-            [self.tableView reloadData];
-        }
-    }
+    [self reloadTable];
 }
 
 #pragma mark - Getters -
@@ -118,32 +103,94 @@
 {
     if (!_fetchedResultsController)
     {
-        NSFetchRequest *fetchRequest = [Lines MR_requestAllWithPredicate:self.predicate inContext:self.managedObjectContext];
-        fetchRequest.fetchBatchSize = 10;
-        fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"displayName" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
-        super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"firstLetter" cacheName:nil];
+        super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:self.fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"firstLetter" cacheName:nil];
     }
     return _fetchedResultsController;
 }
 
-- (NSPredicate *)predicate
+- (NSFetchRequest *)fetchRequest
 {
-    if (_fetchedResultsController)
-        return _fetchedResultsController.fetchRequest.predicate;
-    return [self predicateFromFilterType];
+    if (!_fetchRequest) {
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbxId = %@", [JCAuthenticationManager sharedInstance].line.pbx.pbxId];
+        if (_searchText && ![_searchText isEqualToString:@""]) {
+            NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"(name contains[cd] %@) OR (extension contains[cd] %@)", _searchText, _searchText];
+            predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, searchPredicate]];
+        }
+        
+        if (_filterType == JCContactFilterFavorites) {
+            NSPredicate *favoritePredicate =[NSPredicate predicateWithFormat:@"favorite == 1"];
+            if (predicate) {
+                predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, favoritePredicate]];
+            }
+            else {
+                predicate = favoritePredicate;
+            }
+            _fetchRequest = [Contact MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
+        }
+        else {
+            _fetchRequest = [Person MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
+            _fetchRequest.includesSubentities = TRUE;
+        }
+        _fetchRequest.resultType = NSManagedObjectResultType;
+        _fetchRequest.fetchBatchSize = 10;
+        _fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)]];
+    }
+    return _fetchRequest;
 }
 
 #pragma mark - Private -
 
--(NSPredicate *)predicateFromFilterType
+-(void)reloadTable
 {
-    if (_filterType == JCContactFilterFavorites) {
-        return [NSPredicate predicateWithFormat:@"isFavorite == 1"];
-    }
-    return nil;
+    _fetchedResultsController = nil;
+    _fetchRequest = nil;
+    [self.tableView reloadData];
+}
+
+#pragma mark - Notification handlers -
+
+#pragma mark Socket Events
+
+//- (void)subscribeToLinePresence:(NSNotification *)notification
+//{
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        for (Line *line in [self.fetchedResultsController fetchedObjects]) {
+//            
+//            if (self.lineSubscription[line.jrn] && [self.lineSubscription[line.jrn] boolValue]) {
+//                continue;
+//            }
+//            
+//            [[JasmineSocket sharedInstance] postSubscriptionsToSocketWithId:line.jrn entity:line.jrn type:@"dialog"];
+//            [self.lineSubscription setObject:@YES forKey:line.jrn];
+//        }
+//    });
+//}
+//
+//- (NSMutableDictionary *)lineSubscription
+//{
+//    if (!lineSubcription) {
+//        lineSubcription = [[NSUserDefaults standardUserDefaults] objectForKey:@"lineSub"];
+//        if (!lineSubcription) {
+//            lineSubcription = [NSMutableDictionary new];
+//        }
+//    }
+//    return lineSubcription;
+//}
+
+#pragma mark JCAuthenticationManager
+
+-(void)lineChanged:(NSNotification *)notification
+{
+    [self reloadTable];
 }
 
 #pragma mark - Delegate handlers -
+
+-(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController
+{
+    [self dismissViewControllerAnimated:NO completion:NULL];
+}
 
 #pragma mark - Table view data source
 
@@ -162,7 +209,7 @@
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     _searchText = searchText;
-    self.predicate = nil;
+    [self reloadTable];
 }
 
 -(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
@@ -176,7 +223,7 @@
     [searchBar setShowsCancelButton:NO animated:YES];
     searchBar.text = nil;
     _searchText = nil;
-    self.predicate = nil;
+    [self reloadTable];
 }
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
@@ -188,36 +235,9 @@
 {
     [searchBar resignFirstResponder];
     if (searchBar.text == nil)
-        self.predicate = nil;
-}
-
-- (NSMutableDictionary *)lineSubscription
-{
-    if (!lineSubcription) {
-        lineSubcription = [[NSUserDefaults standardUserDefaults] objectForKey:@"lineSub"];
-        if (!lineSubcription) {
-            lineSubcription = [NSMutableDictionary new];
-        }
+    {
+        [self reloadTable];
     }
-    
-    return lineSubcription;
 }
-
-#pragma mark - Socket Events
-- (void)subscribeToLinePresence:(NSNotification *)notification
-{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        for (Lines *line in [self.fetchedResultsController fetchedObjects]) {
-            
-            if (self.lineSubscription[line.jrn] && [self.lineSubscription[line.jrn] boolValue]) {
-                continue;
-            }
-            
-            [[JasmineSocket sharedInstance] postSubscriptionsToSocketWithId:line.jrn entity:line.jrn type:@"dialog"];
-            [self.lineSubscription setObject:@YES forKey:line.jrn];
-        }
-    });
-}
-
 
 @end
