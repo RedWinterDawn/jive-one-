@@ -254,18 +254,19 @@
 
 -(void)registerServicesToLine:(Line *)line
 {
-//    // Register the Phone.
-//    UIViewController *rootViewController = self.window.rootViewController;
-//    [JCCallCardManager connectToLine:line
-//                             started:^{
-//                                 [rootViewController showHudWithTitle:@"" detail:@"Selecting Line..."];
-//                             }
-//                           completed:^(BOOL success, NSError *error) {
-//                               [rootViewController hideHud];
-//                               if (!success) {
-//                                   [rootViewController showSimpleAlert:@"" message:@"Unable to connect to this line at this time. Please Try again." code:error.code];
-//                               }
-//                            }];
+    // Register the Phone.
+    UIViewController *rootViewController = self.window.rootViewController;
+    [JCCallCardManager connectToLine:line
+                             started:^{
+                                 [rootViewController showHudWithTitle:@"" detail:@"Selecting Line..."];
+                             }
+                           completed:^(BOOL success, NSError *error) {
+                               [rootViewController hideHud];
+                               if (!success) {
+                                   [rootViewController showSimpleAlert:@"" message:@"Unable to connect to this line at this time. Please Try again." code:error.code];
+                               }
+                            }];
+    
     // Get Contacts
     [Contact downloadContactsForLine:line complete:NULL];
     
