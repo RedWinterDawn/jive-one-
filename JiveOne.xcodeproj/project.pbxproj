@@ -243,6 +243,7 @@
 		5D1FAC5F19DDD68000899915 /* JCCallCardViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FAC5E19DDD68000899915 /* JCCallCardViewCell.m */; };
 		5D1FAC6219DDFF5300899915 /* JCCallCardCollectionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FAC6119DDFF5300899915 /* JCCallCardCollectionLayout.m */; };
 		5D1FAC6519DF376B00899915 /* JCKeypadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FAC6419DF376B00899915 /* JCKeypadViewController.m */; };
+		5D241FC81A36339D008B498A /* JCAppSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FC71A36339D008B498A /* JCAppSettings.m */; };
 		5D241FCB1A36AE12008B498A /* JCLinePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FCA1A36AE12008B498A /* JCLinePickerViewController.m */; };
 		5D241FCE1A36AF2C008B498A /* JCPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FCD1A36AF2C008B498A /* JCPickerViewController.m */; };
 		5D241FD11A37F511008B498A /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FD01A37F511008B498A /* User.m */; };
@@ -261,12 +262,18 @@
 		5D2EDB841A3BAA800031F7AD /* JCDebugContactsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2EDB831A3BAA800031F7AD /* JCDebugContactsTableViewController.m */; };
 		5D2EDB871A3CEBE80031F7AD /* JCDebugUsersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2EDB861A3CEBE80031F7AD /* JCDebugUsersTableViewController.m */; };
 		5D2EDB8A1A3CEC060031F7AD /* JCDebugUserTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2EDB891A3CEC060031F7AD /* JCDebugUserTableViewController.m */; };
-		5D241FC81A36339D008B498A /* JCAppSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FC71A36339D008B498A /* JCAppSettings.m */; };
 		5D34446519F02F1C00315230 /* JCCurrentCallCardViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D34446419F02F1C00315230 /* JCCurrentCallCardViewCell.m */; };
 		5D35479519FF4B6E009E3CB4 /* JCApplicationSwitcherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D35479419FF4B6E009E3CB4 /* JCApplicationSwitcherViewController.m */; };
 		5D35479819FF4B85009E3CB4 /* JCApplicationSwitcherDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D35479719FF4B85009E3CB4 /* JCApplicationSwitcherDelegate.m */; };
 		5D35479B19FF4BB7009E3CB4 /* JCMenuBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D35479A19FF4BB7009E3CB4 /* JCMenuBarButtonItem.m */; };
 		5D36B7AB19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D36B7AA19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m */; };
+		5D3CC62A1A4226D300DA374B /* de.xliff in Resources */ = {isa = PBXBuildFile; fileRef = 5D3CC6231A4226D300DA374B /* de.xliff */; };
+		5D3CC62B1A4226D300DA374B /* en-GB.xliff in Resources */ = {isa = PBXBuildFile; fileRef = 5D3CC6241A4226D300DA374B /* en-GB.xliff */; };
+		5D3CC62C1A4226D300DA374B /* es-MX.xliff in Resources */ = {isa = PBXBuildFile; fileRef = 5D3CC6251A4226D300DA374B /* es-MX.xliff */; };
+		5D3CC62D1A4226D300DA374B /* es.xliff in Resources */ = {isa = PBXBuildFile; fileRef = 5D3CC6261A4226D300DA374B /* es.xliff */; };
+		5D3CC62E1A4226D300DA374B /* fr.xliff in Resources */ = {isa = PBXBuildFile; fileRef = 5D3CC6271A4226D300DA374B /* fr.xliff */; };
+		5D3CC62F1A4226D300DA374B /* it.xliff in Resources */ = {isa = PBXBuildFile; fileRef = 5D3CC6281A4226D300DA374B /* it.xliff */; };
+		5D3CC6301A4226D400DA374B /* pt.xliff in Resources */ = {isa = PBXBuildFile; fileRef = 5D3CC6291A4226D300DA374B /* pt.xliff */; };
 		5D629BAD19D9C41900F5744E /* JCVoicemailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D629BAC19D9C41900F5744E /* JCVoicemailViewController.m */; };
 		5D629BB019D9CE4500F5744E /* JCVoiceNonVisualViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D629BAF19D9CE4500F5744E /* JCVoiceNonVisualViewController.m */; };
 		5D6742A11A2D19AA00E1A60D /* UIDevice+CellularData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D6742A01A2D19AA00E1A60D /* UIDevice+CellularData.m */; };
@@ -789,6 +796,8 @@
 		5D1FAC6119DDFF5300899915 /* JCCallCardCollectionLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallCardCollectionLayout.m; sourceTree = "<group>"; };
 		5D1FAC6319DF376B00899915 /* JCKeypadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCKeypadViewController.h; sourceTree = "<group>"; };
 		5D1FAC6419DF376B00899915 /* JCKeypadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCKeypadViewController.m; sourceTree = "<group>"; };
+		5D241FC61A36339D008B498A /* JCAppSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAppSettings.h; sourceTree = "<group>"; };
+		5D241FC71A36339D008B498A /* JCAppSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAppSettings.m; sourceTree = "<group>"; };
 		5D241FC91A36AE12008B498A /* JCLinePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCLinePickerViewController.h; sourceTree = "<group>"; };
 		5D241FCA1A36AE12008B498A /* JCLinePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCLinePickerViewController.m; sourceTree = "<group>"; };
 		5D241FCC1A36AF2C008B498A /* JCPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPickerViewController.h; sourceTree = "<group>"; };
@@ -825,8 +834,6 @@
 		5D2EDB861A3CEBE80031F7AD /* JCDebugUsersTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDebugUsersTableViewController.m; sourceTree = "<group>"; };
 		5D2EDB881A3CEC060031F7AD /* JCDebugUserTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDebugUserTableViewController.h; sourceTree = "<group>"; };
 		5D2EDB891A3CEC060031F7AD /* JCDebugUserTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDebugUserTableViewController.m; sourceTree = "<group>"; };
-		5D241FC61A36339D008B498A /* JCAppSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAppSettings.h; sourceTree = "<group>"; };
-		5D241FC71A36339D008B498A /* JCAppSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAppSettings.m; sourceTree = "<group>"; };
 		5D34446319F02F1C00315230 /* JCCurrentCallCardViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCurrentCallCardViewCell.h; sourceTree = "<group>"; };
 		5D34446419F02F1C00315230 /* JCCurrentCallCardViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCurrentCallCardViewCell.m; sourceTree = "<group>"; };
 		5D35479319FF4B6E009E3CB4 /* JCApplicationSwitcherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCApplicationSwitcherViewController.h; sourceTree = "<group>"; };
@@ -837,6 +844,13 @@
 		5D35479A19FF4BB7009E3CB4 /* JCMenuBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMenuBarButtonItem.m; sourceTree = "<group>"; };
 		5D36B7A919F8674E0024A0E7 /* JCFetchedResultsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCFetchedResultsTableViewController.h; sourceTree = "<group>"; };
 		5D36B7AA19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCFetchedResultsTableViewController.m; sourceTree = "<group>"; };
+		5D3CC6231A4226D300DA374B /* de.xliff */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = de.xliff; sourceTree = "<group>"; };
+		5D3CC6241A4226D300DA374B /* en-GB.xliff */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "en-GB.xliff"; sourceTree = "<group>"; };
+		5D3CC6251A4226D300DA374B /* es-MX.xliff */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "es-MX.xliff"; sourceTree = "<group>"; };
+		5D3CC6261A4226D300DA374B /* es.xliff */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = es.xliff; sourceTree = "<group>"; };
+		5D3CC6271A4226D300DA374B /* fr.xliff */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = fr.xliff; sourceTree = "<group>"; };
+		5D3CC6281A4226D300DA374B /* it.xliff */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = it.xliff; sourceTree = "<group>"; };
+		5D3CC6291A4226D300DA374B /* pt.xliff */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = pt.xliff; sourceTree = "<group>"; };
 		5D629BAB19D9C41900F5744E /* JCVoicemailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVoicemailViewController.h; sourceTree = "<group>"; };
 		5D629BAC19D9C41900F5744E /* JCVoicemailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoicemailViewController.m; sourceTree = "<group>"; };
 		5D629BAE19D9CE4500F5744E /* JCVoiceNonVisualViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVoiceNonVisualViewController.h; sourceTree = "<group>"; };
@@ -1506,6 +1520,7 @@
 			children = (
 				279CB9D61A1F30490037601F /* Default-568h@2x.png */,
 				275F4A5718AD0FBC00D2F069 /* JiveOne */,
+				5D3CC6211A4226D300DA374B /* JiveOne Localization Import Files */,
 				275F4A7C18AD0FBC00D2F069 /* JiveOneTests */,
 				275F4A5018AD0FBC00D2F069 /* Frameworks */,
 				275F4A4F18AD0FBC00D2F069 /* Products */,
@@ -2119,6 +2134,29 @@
 			name = Debug;
 			sourceTree = "<group>";
 		};
+		5D3CC6211A4226D300DA374B /* JiveOne Localization Import Files */ = {
+			isa = PBXGroup;
+			children = (
+				5D3CC6221A4226D300DA374B /* JiveOne */,
+			);
+			name = "JiveOne Localization Import Files";
+			path = "JiveOne Translations";
+			sourceTree = "<group>";
+		};
+		5D3CC6221A4226D300DA374B /* JiveOne */ = {
+			isa = PBXGroup;
+			children = (
+				5D3CC6231A4226D300DA374B /* de.xliff */,
+				5D3CC6241A4226D300DA374B /* en-GB.xliff */,
+				5D3CC6251A4226D300DA374B /* es-MX.xliff */,
+				5D3CC6261A4226D300DA374B /* es.xliff */,
+				5D3CC6271A4226D300DA374B /* fr.xliff */,
+				5D3CC6281A4226D300DA374B /* it.xliff */,
+				5D3CC6291A4226D300DA374B /* pt.xliff */,
+			);
+			path = JiveOne;
+			sourceTree = "<group>";
+		};
 		5DDE651019F0C29900B90B55 /* Call History */ = {
 			isa = PBXGroup;
 			children = (
@@ -2442,6 +2480,7 @@
 				2700989118F4714100B6BC2F /* bubble-classic-square-gray@2x.png in Resources */,
 				27F1F2F8191C171300AEAFD7 /* UAPushMoreSettingsView.xib in Resources */,
 				2700989218F4714100B6BC2F /* bubble-classic-square-selected.png in Resources */,
+				5D3CC62F1A4226D300DA374B /* it.xliff in Resources */,
 				27F1779318FDEECE0073C6AD /* TestFlightREADME.md in Resources */,
 				27F1F2F1191C171300AEAFD7 /* middle-detail.png in Resources */,
 				2700988C18F4714100B6BC2F /* bubble-classic-typing.png in Resources */,
@@ -2472,6 +2511,7 @@
 				27F1F2E0191C171300AEAFD7 /* UAInboxMessageViewController.xib in Resources */,
 				27F1F2FA191C171300AEAFD7 /* UAPushSettingsAliasView.xib in Resources */,
 				27F1F2FE191C171300AEAFD7 /* UAPushSettingsTokenView.xib in Resources */,
+				5D3CC6301A4226D400DA374B /* pt.xliff in Resources */,
 				27C3715218EDE9A000F159EF /* first_message.png in Resources */,
 				270098C818F5EA9300B6BC2F /* avatar.png in Resources */,
 				2700989918F4714100B6BC2F /* bubble-stroked-tailless@2x.png in Resources */,
@@ -2482,18 +2522,21 @@
 				2700989B18F4714100B6BC2F /* bubble-stroked@2x.png in Resources */,
 				270098A318F4714100B6BC2F /* input-field-cover@2x.png in Resources */,
 				27F1779418FDEECE0073C6AD /* release_notes.md in Resources */,
+				5D3CC62A1A4226D300DA374B /* de.xliff in Resources */,
 				275F4A6818AD0FBC00D2F069 /* Main_iPad.storyboard in Resources */,
 				2700988518F4714100B6BC2F /* bubble-classic-blue@2x.png in Resources */,
 				272580F0192120500027887C /* people-start-conv.png in Resources */,
 				27B8153618D94E9C00516BF6 /* close_notification.png in Resources */,
 				271EBDAF1910525E00421BA9 /* GTalkNotify.aiff in Resources */,
 				270098AC18F4714100B6BC2F /* message-received.aiff in Resources */,
+				5D3CC62D1A4226D300DA374B /* es.xliff in Resources */,
 				270098A018F4714100B6BC2F /* input-bar-background.png in Resources */,
 				27F1F2F4191C171300AEAFD7 /* top-detail@2x.png in Resources */,
 				2700989718F4714100B6BC2F /* bubble-min@2x.png in Resources */,
 				9172AD5C19192A1500481B01 /* UserDefaults.plist in Resources */,
 				2700988F18F4714100B6BC2F /* bubble-classic-square-blue@2x.png in Resources */,
 				2700989618F4714100B6BC2F /* bubble-min.png in Resources */,
+				5D3CC62B1A4226D300DA374B /* en-GB.xliff in Resources */,
 				27F1F2F5191C171300AEAFD7 /* UALocationSettingsViewController.xib in Resources */,
 				2700988D18F4714100B6BC2F /* bubble-classic-typing@2x.png in Resources */,
 				279E4C7019226FAC002A556C /* people-search.png in Resources */,
@@ -2518,6 +2561,7 @@
 				2700988E18F4714100B6BC2F /* bubble-classic-square-blue.png in Resources */,
 				2700988318F4714100B6BC2F /* avatar-placeholder@2x.png in Resources */,
 				27FE96F919802D81009C6C67 /* arrow-back.png in Resources */,
+				5D3CC62C1A4226D300DA374B /* es-MX.xliff in Resources */,
 				27F1F2F7191C171300AEAFD7 /* UAPushLocalization.bundle in Resources */,
 				279CB9D51A1F21ED0037601F /* Detault-568@2x.png in Resources */,
 				2700989518F4714100B6BC2F /* bubble-min-tailless@2x.png in Resources */,
@@ -2533,6 +2577,7 @@
 				270098A518F4714100B6BC2F /* send-button-pressed@2x.png in Resources */,
 				27F1F2EF191C171300AEAFD7 /* bottom-detail.png in Resources */,
 				270098AB18F4714100B6BC2F /* input-bar-flat@2x.png in Resources */,
+				5D3CC62E1A4226D300DA374B /* fr.xliff in Resources */,
 				270098A618F4714100B6BC2F /* send-button.png in Resources */,
 				270098A118F4714100B6BC2F /* input-bar-background@2x.png in Resources */,
 				270098CA18F5EA9300B6BC2F /* people-star.png in Resources */,

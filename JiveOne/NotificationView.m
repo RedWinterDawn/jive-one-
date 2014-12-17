@@ -136,7 +136,7 @@ CGFloat panelWidth = 320;
     AFNetworkReachabilityStatus status = [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
     switch (status) {
         case AFNetworkReachabilityStatusNotReachable:
-            [self showWithTitle:NSLocalizedString(@"No Connection", @"No Connection") snippet:NSLocalizedString(@"please vefify your internet connection", @"please verify your internet connection") showProgress:NO];
+            [self showWithTitle:NSLocalizedString(@"No Connection", @"No Connection") snippet:NSLocalizedString(@"please verify your internet connection", @"please verify your internet connection") showProgress:NO];
             break;
         case AFNetworkReachabilityStatusReachableViaWiFi:
             NSLog(@"WIFI");
@@ -148,7 +148,7 @@ CGFloat panelWidth = 320;
             break;
         default:
             NSLog(@"Unkown network status");
-            [self showWithTitle:NSLocalizedString(@"No Connection", @"No Connection") snippet:NSLocalizedString(@"please vefify your internet connection", @"please verify your internet connection") showProgress:NO];
+            [self showWithTitle:NSLocalizedString(@"No Connection", @"No Connection") snippet:NSLocalizedString(@"please verify your internet connection", @"please verify your internet connection") showProgress:NO];
             break;
             
             [[AFNetworkReachabilityManager sharedManager] startMonitoring];

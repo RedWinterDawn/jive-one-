@@ -460,7 +460,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     _transferCompleted = completion;
     int result = [_mPortSIPSDK attendedRefer:receivingSession.mSessionId replaceSessionId:sessionToTransfer.mSessionId referTo:number];
     if (result != 0) {
-        NSString *msg = NSLocalizedString(@"Warm Tranfer failed", nil);
+        NSString *msg = NSLocalizedString(@"Warm Transfer failed", nil);
         NSError *error = [Common createErrorWithDescription:msg reason:NSLocalizedString(@"Unable make transfer", nil) code:result];
         [self setSessionState:JCTransferFailed forSession:receivingSession event:msg error:error];
         completion(false, error);
