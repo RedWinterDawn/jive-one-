@@ -417,7 +417,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     }
 }
 
-- (void)blindTransferToNumber:(NSString *)number completion:(void (^)(bool, NSError *))completion
+- (void)blindTransferToNumber:(NSString *)number completion:(void (^)(BOOL, NSError *))completion
 {
     // Find the active line. It is the one we will be refering to the number passed.
 	JCLineSession *lineSession = [self findActiveLine];
@@ -442,7 +442,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     return;
 }
 
-- (void)warmTransferToNumber:(NSString *)number completion:(void (^)(bool success, NSError *error))completion
+- (void)warmTransferToNumber:(NSString *)number completion:(void (^)(BOOL success, NSError *error))completion
 {
 	JCLineSession *receivingSession = [self findActiveLine];
     if (!receivingSession || !receivingSession.isActive)

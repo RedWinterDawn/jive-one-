@@ -12,7 +12,7 @@
 @class Line;
 @class User;
 
-typedef void(^CompletionHandler)(bool success, NSError *error);
+typedef void(^CompletionHandler)(BOOL success, NSError *error);
 
 @interface JCV5ApiClient : NSObject
 

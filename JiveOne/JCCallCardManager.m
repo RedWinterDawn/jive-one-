@@ -135,7 +135,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
  *  otherwise tries to register, then dial. If we are uable to connect, we call completion handler with success being 
  *  false;
  */
--(void)dialNumber:(NSString *)dialString type:(JCCallCardDialTypes)dialType completion:(void (^)(bool success, NSDictionary *callInfo))completion
+-(void)dialNumber:(NSString *)dialString type:(JCCallCardDialTypes)dialType completion:(void (^)(BOOL success, NSDictionary *callInfo))completion
 {
     if ([self isEmergencyNumber:dialString] && [UIDevice currentDevice].canMakeCall) {
         
@@ -192,7 +192,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     }
     
     if (_warmTransferNumber) {
-		[_sipHandler warmTransferToNumber:_warmTransferNumber completion:^(bool success, NSError *error) {
+		[_sipHandler warmTransferToNumber:_warmTransferNumber completion:^(BOOL success, NSError *error) {
             _warmTransferNumber = nil;
             completion(success);
             if (error) {
@@ -321,7 +321,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     return nil;
 }
 
--(void)connectAndDial:(NSString *)dialString type:(JCCallCardDialTypes)dialType completion:(void (^)(bool success, NSDictionary *callInfo))completion
+-(void)connectAndDial:(NSString *)dialString type:(JCCallCardDialTypes)dialType completion:(void (^)(BOOL success, NSDictionary *callInfo))completion
 {
     // If we are not logged in and do not have a sip handler, we must fail.
     if (!_sipHandler) {
@@ -330,7 +330,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     
     if(!_sipHandler.isRegistered)
     {
-        [_sipHandler connect:^(bool success, NSError *error) {
+        [_sipHandler connect:^(BOOL success, NSError *error) {
             if (success)
                 [self dial:dialString type:dialType completion:completion];
             else
@@ -344,10 +344,10 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
         [self dial:dialString type:dialType completion:completion];
 }
 
--(void)dial:(NSString *)dialNumber type:(JCCallCardDialTypes)dialType completion:(void (^)(bool success, NSDictionary *callInfo))completion
+-(void)dial:(NSString *)dialNumber type:(JCCallCardDialTypes)dialType completion:(void (^)(BOOL success, NSDictionary *callInfo))completion
 {
     if (dialType == JCCallCardDialBlindTransfer) {
-        [_sipHandler blindTransferToNumber:dialNumber completion:^(bool success, NSError *error) {
+        [_sipHandler blindTransferToNumber:dialNumber completion:^(BOOL success, NSError *error) {
             if (success) {
                 [self hangUpAll];
             }
@@ -622,7 +622,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
         return;
     }
     
-    [_sipHandler answerSession:callCard.lineSession completion:^(bool success, NSError *error) {
+    [_sipHandler answerSession:callCard.lineSession completion:^(BOOL success, NSError *error) {
         if (success)
         {
             callCard.started = [NSDate date];
@@ -657,7 +657,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     }
     else
     {
-        [_sipHandler hangUpSession:callCard.lineSession completion:^(bool success, NSError *error) {
+        [_sipHandler hangUpSession:callCard.lineSession completion:^(BOOL success, NSError *error) {
             [self removeCall:callCard];
         }];
     }

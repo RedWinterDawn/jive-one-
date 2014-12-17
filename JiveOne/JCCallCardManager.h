@@ -31,7 +31,7 @@ extern NSString *const kJCCallCardManagerIncomingCall;
 extern NSString *const kJCCallCardManagerNewCall;
 extern NSString *const kJCCallCardManagerTransferedCall;
 
-typedef void(^CompletionHandler)(bool success, NSError *error);
+typedef void(^CompletionHandler)(BOOL success, NSError *error);
 
 typedef enum : NSUInteger {
     JCCallCardDialSingle = 0,
