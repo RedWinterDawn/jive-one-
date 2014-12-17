@@ -23,13 +23,13 @@ NSString *const kCallEntityName = @"Call";
 +(void)addCallEntity:(NSString *)entityName line:(Line *)line lineSession:(JCLineSession *)session read:(BOOL)read
 {
     [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-        
+        Line *localLine = (Line *)[localContext objectWithID:line.objectID];
         Call *call = [NSEntityDescription insertNewObjectForEntityForName:entityName inManagedObjectContext:localContext];
         call.date = [NSDate date];
         call.name = session.callTitle;
         call.number = session.callDetail;
         call.read = read;
-        call.line = line;
+        call.line = localLine;
         
     } completion:^(BOOL success, NSError *error) {
         if (error) {

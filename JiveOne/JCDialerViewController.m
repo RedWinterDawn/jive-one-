@@ -31,11 +31,11 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 {
     [super viewDidLoad];
     
-//    _phoneManager = [JCCallCardManager sharedManager];
-//    [_phoneManager addObserver:self forKeyPath:@"connected" options:NSKeyValueObservingOptionNew context:NULL];
-//    [self updateRegistrationStatus];
-//    
-//    self.backspaceBtn.alpha = 0;
+    _phoneManager = [JCCallCardManager sharedManager];
+    [_phoneManager addObserver:self forKeyPath:@"connected" options:NSKeyValueObservingOptionNew context:NULL];
+    [self updateRegistrationStatus];
+    
+    self.backspaceBtn.alpha = 0;
 }
 
 /**
@@ -62,16 +62,16 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 
 - (void)dealloc
 {
-    //[_phoneManager removeObserver:self forKeyPath:@"connected"];
+    [_phoneManager removeObserver:self forKeyPath:@"connected"];
 }
 
 #pragma mark - KVO -
 
-//- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-//{
-//    if ([keyPath isEqualToString:@"connected"])
-//        [self updateRegistrationStatus];
-//}
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"connected"])
+        [self updateRegistrationStatus];
+}
 
 #pragma mark - IBActions -
 

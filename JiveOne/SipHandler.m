@@ -218,21 +218,27 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 - (void)onRegisterSuccess:(char*) statusText statusCode:(int)statusCode
 {
-    [self willChangeValueForKey:kSipHandlerRegisteredSelectorKey];
     _registered = TRUE;
     if (_connectionCompletionHandler != NULL)
         _connectionCompletionHandler(true, nil);
-    [self didChangeValueForKey:kSipHandlerRegisteredSelectorKey];
+    
+    if (_delegate && [_delegate respondsToSelector:@selector(sipHandlerDidRegister:)]) {
+        [_delegate sipHandlerDidRegister:self];
+    }
 };
 
 - (void)onRegisterFailure:(char*) statusText statusCode:(int)statusCode
 {
-    [self willChangeValueForKey:kSipHandlerRegisteredSelectorKey];
     _registered = FALSE;
-    NSString *errorMessage = [NSString stringWithFormat:@"%@ code:(%i)", [NSString stringWithUTF8String:statusText], statusCode];
+    NSString *message = [NSString stringWithFormat:@"%@ code:(%i)", [NSString stringWithUTF8String:statusText], statusCode];
+    NSError *error = [NSError errorWithDomain:@"SipHandlerError" code:0 userInfo:@{NSLocalizedDescriptionKey: message}];
+    
     if (_connectionCompletionHandler != NULL)
-        _connectionCompletionHandler(false, [NSError errorWithDomain:errorMessage code:0 userInfo:nil]);
-    [self didChangeValueForKey:kSipHandlerRegisteredSelectorKey];
+        _connectionCompletionHandler(false, error);
+    
+    if (_delegate && [_delegate respondsToSelector:@selector(sipHandlerDidFailToRegister:error:)]) {
+        [_delegate sipHandlerDidFailToRegister:self error:error];
+    }
 };
 
 #pragma mark NetworkConnectivity

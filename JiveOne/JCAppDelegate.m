@@ -254,6 +254,14 @@
 
 -(void)registerServicesToLine:(Line *)line
 {
+    // If we have not already, initialize the phone manager singleton, store a reference to it and register for notifications.
+    if (!_phoneManager) {
+        _phoneManager = [JCCallCardManager sharedManager];
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self selector:@selector(didReceiveIncomingCall:) name:kJCCallCardManagerAddedCallNotification object:_phoneManager];
+        [center addObserver:self selector:@selector(stopRingtone) name:kJCCallCardManagerAnswerCallNotification object:_phoneManager];
+    }
+    
     // Register the Phone.
     UIViewController *rootViewController = self.window.rootViewController;
     [JCCallCardManager connectToLine:line
@@ -283,24 +291,25 @@
  */
 -(void)userDataReady:(NSNotification *)notification
 {
-    // If we have not already, initialize the phone manager singleton, store a reference to it and register for notifications.
-    if (!_phoneManager) {
-        _phoneManager = [JCCallCardManager sharedManager];
-        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-        [center addObserver:self selector:@selector(didReceiveIncomingCall:) name:kJCCallCardManagerAddedCallNotification object:_phoneManager];
-        [center addObserver:self selector:@selector(stopRingtone) name:kJCCallCardManagerAnswerCallNotification object:_phoneManager];
-    }
-    
-    // If the user has multiple line configurations, we prompt them to select which line they would like to connect with. When
-    // selected, the authentication manager will notify that they have changed their selected line.
-    NSInteger lines = [Line MR_countOfEntities];
-    if (lines > 1) {
-        [self presentLineConfigurationViewController:YES];
+    // If navigation controller is not null, the login page is still present, and needs to either be
+    // dismissed or should transition to requesting that they select a line.
+    JCAuthenticationManager *authenticationManager = notification.object;
+    Line *line = authenticationManager.line;
+    if (!_navigationController){
+        [self registerServicesToLine:line];
         return;
     }
     
+    // If the user has multiple line configurations, we prompt them to select which line they
+    // would like to connect with. When selected, the authentication manager will notify that
+    // they have changed their selected line.
+    NSInteger lines = [Line MR_countOfEntities];
+    if (lines > 1 && !line.active) {
+        [self presentLineConfigurationViewController:YES];
+        return;
+    }
+        
     [self dismissLoginViewController:YES completed:^(BOOL finished) {
-        JCAuthenticationManager *authenticationManager = notification.object;
         [self registerServicesToLine:authenticationManager.line];
     }];
 }

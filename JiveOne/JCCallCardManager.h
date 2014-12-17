@@ -46,7 +46,9 @@ typedef enum : NSUInteger {
 @property (nonatomic, readonly) Line *line;
 @property (nonatomic, readonly, getter=isConnected) BOOL connected;
 
+-(void)connectToLine:(Line *)line started:(void(^)())started completed:(CompletionHandler)completed;
 -(void)reconnectToLine:(Line *)line started:(void(^)())started completion:(CompletionHandler)completion;
+-(void)disconnect;
 
 // Attempts to dial a passed string following the dial type directive. When the dial operation was completed, we are
 // notified. If the dial action resulted in the creation of a dial card, an kJCCallCardManagerAddedCallNotification is
@@ -80,7 +82,8 @@ typedef enum : NSUInteger {
 
 + (JCCallCardManager *)sharedManager;
 
-+ (void)connectToLine:(Line *)line started:(void(^)())started completed:(void (^)(BOOL success, NSError *error))completed;
++ (void)connectToLine:(Line *)line started:(void(^)())started completed:(CompletionHandler)completed;
++ (void)reconnectToLine:(Line *)line started:(void(^)())started completion:(CompletionHandler)completion;
 + (void)disconnect;
 
 @end

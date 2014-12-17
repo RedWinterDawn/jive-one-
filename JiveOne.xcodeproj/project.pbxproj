@@ -140,7 +140,7 @@
 		279A4E0E19DA873200E8AB7B /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279A4E0D19DA873200E8AB7B /* OpenGLES.framework */; };
 		279A4E1019DA876500E8AB7B /* PortSIPLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279A4E0F19DA876500E8AB7B /* PortSIPLib.framework */; };
 		279A4E1219DA87DA00E8AB7B /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 279A4E1119DA87DA00E8AB7B /* libstdc++.dylib */; };
-		279A4E2C19DA91E100E8AB7B /* SipHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 279A4E2B19DA91E100E8AB7B /* SipHandler.mm */; };
+		279A4E2C19DA91E100E8AB7B /* SipHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 279A4E2B19DA91E100E8AB7B /* SipHandler.m */; };
 		279CB9D41A1F21ED0037601F /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 279CB9D21A1F21ED0037601F /* Default@2x.png */; };
 		279CB9D51A1F21ED0037601F /* Detault-568@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 279CB9D31A1F21ED0037601F /* Detault-568@2x.png */; };
 		279CB9D71A1F30490037601F /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 279CB9D61A1F30490037601F /* Default-568h@2x.png */; };
@@ -545,7 +545,7 @@
 		279A4E0F19DA876500E8AB7B /* PortSIPLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PortSIPLib.framework; sourceTree = "<group>"; };
 		279A4E1119DA87DA00E8AB7B /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		279A4E2A19DA91E100E8AB7B /* SipHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SipHandler.h; sourceTree = "<group>"; };
-		279A4E2B19DA91E100E8AB7B /* SipHandler.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SipHandler.mm; sourceTree = "<group>"; };
+		279A4E2B19DA91E100E8AB7B /* SipHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SipHandler.m; sourceTree = "<group>"; };
 		279CB9D21A1F21ED0037601F /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		279CB9D31A1F21ED0037601F /* Detault-568@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Detault-568@2x.png"; sourceTree = "<group>"; };
 		279CB9D61A1F30490037601F /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -1724,7 +1724,7 @@
 			isa = PBXGroup;
 			children = (
 				279A4E2A19DA91E100E8AB7B /* SipHandler.h */,
-				279A4E2B19DA91E100E8AB7B /* SipHandler.mm */,
+				279A4E2B19DA91E100E8AB7B /* SipHandler.m */,
 				278E858419EC6B6E0087649D /* VideoViewController.h */,
 				278E858519EC6B6E0087649D /* VideoViewController.mm */,
 				27BE503B19DCF6A800B725ED /* JCLineSession.h */,
@@ -2707,7 +2707,7 @@
 				274493BC18D0E98C002744CB /* Company.m in Sources */,
 				5D6AE3671A094A9C002BDAAF /* NSDictionary+Validations.m in Sources */,
 				27F1F2E7191C171300AEAFD7 /* UAPushSettingsAliasViewController.m in Sources */,
-				279A4E2C19DA91E100E8AB7B /* SipHandler.mm in Sources */,
+				279A4E2C19DA91E100E8AB7B /* SipHandler.m in Sources */,
 				27B6F23D19DDC676007E80DA /* JCDialerViewController.m in Sources */,
 				F8F2796C1A3B8C5C00ED41B0 /* JCExternalCOntactTableViewController.m in Sources */,
 				279E4CB3192273E5002A556C /* MBContactModel.m in Sources */,

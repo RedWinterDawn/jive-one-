@@ -15,7 +15,12 @@ typedef void(^TransferCompletionHandler)(bool success, NSError *error);
 
 extern NSString *const kSipHandlerRegisteredSelectorKey;
 
+@class SipHandler;
+
 @protocol SipHandlerDelegate <NSObject>
+
+-(void)sipHandlerDidRegister:(SipHandler *)sipHandler;
+-(void)sipHandlerDidFailToRegister:(SipHandler *)sipHandler error:(NSError *)error;
 
 -(void)addLineSession:(JCLineSession *)session;
 -(void)removeLineSession:(JCLineSession *)session;

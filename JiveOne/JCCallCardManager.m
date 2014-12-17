@@ -82,35 +82,43 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [_sipHandler removeObserver:self forKeyPath:kSipHandlerRegisteredSelectorKey];
 }
 
 #pragma mark - Public Methods -
 
--(void)connectToLine:(Line *)line
+-(void)connectToLine:(Line *)line started:(void(^)())started completed:(CompletionHandler)completed
 {
-    if (_sipHandler) {
-        [self disconnect];
+    if (line.lineConfiguration) {
+        [self connectToLine:line];
+        completed(YES, nil);
     }
- 
-    _sipHandler = [[SipHandler alloc] initWithLine:line delegate:self];
-    [_sipHandler addObserver:self forKeyPath:kSipHandlerRegisteredSelectorKey options:NSKeyValueObservingOptionNew context:NULL];
+    else {
+        if (started != NULL) {
+            started();
+        }
+        [JCV4ProvisioningClient requestProvisioningForLine:line completed:^(BOOL success, NSError *error) {
+            if (success) {
+                [self connectToLine:line];
+            }
+            completed(success, error);
+        }];
+    }
 }
 
--(void)reconnectToLine:(Line *)line started:(void(^)())started  completion:(CompletionHandler)completion
+-(void)reconnectToLine:(Line *)line started:(void(^)())started completion:(CompletionHandler)completion
 {
-    if (_sipHandler) {
+    if (_sipHandler && (_line == line)) {
         [_sipHandler connect:completion];
     } else {
-        [JCCallCardManager connectToLine:line started:started completed:completion];
+        [self connectToLine:line started:started completed:completion];
     }
 }
 
 -(void)disconnect
 {
     [_sipHandler disconnect];
-    [_sipHandler removeObserver:self forKeyPath:kSipHandlerRegisteredSelectorKey];
     _sipHandler = nil;
+    self.connected = FALSE;
 }
 
 /**
@@ -279,6 +287,17 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 }
 
 #pragma mark - Private -
+
+-(void)connectToLine:(Line *)line
+{
+    // If we have a sip handler, disconnect the current registration.
+    if (_sipHandler && _line != line) {
+        [self disconnect];
+    }
+    
+    _line = line;
+    _sipHandler = [[SipHandler alloc] initWithLine:line delegate:self];
+}
 
 -(BOOL)isEmergencyNumber:(NSString *)dialString
 {
@@ -503,19 +522,6 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     }
 }
 
-#pragma mark - KVO -
-
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    // If the line configuration changes, reconnect the sip handler.
-    if ([keyPath isEqualToString:@"lineConfiguration"] && _sipHandler) {
-        //[self connect];
-    }
-    else if ([keyPath isEqualToString:kSipHandlerRegisteredSelectorKey]) {
-        self.connected = TRUE;
-    }
-}
-
 #pragma mark - Notification Selectors -
 
 #pragma mark UIApplication
@@ -648,6 +654,17 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 
 #pragma mark SipHanglerDelegate
 
+-(void)sipHandlerDidRegister:(SipHandler *)sipHandler
+{
+    self.connected = sipHandler.registered;
+}
+
+-(void)sipHandlerDidFailToRegister:(SipHandler *)sipHandler error:(NSError *)error
+{
+    self.connected = sipHandler.registered;
+    NSLog(@"%@", [error description]);
+}
+
 -(void)addLineSession:(JCLineSession *)session
 {
     JCCallCard *callCard = [[JCCallCard alloc] initWithLineSession:session];
@@ -685,24 +702,14 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     return self;
 }
 
-+ (void)connectToLine:(Line *)line started:(void(^)())started completed:(void (^)(BOOL success, NSError *error))completed
++ (void)connectToLine:(Line *)line started:(void(^)())started completed:(CompletionHandler)completed
 {
-    if (line.lineConfiguration) {
-        [[JCCallCardManager sharedManager] connectToLine:line];
-        completed(YES, nil);
-    }
-    else
-    {
-        if (started != NULL) {
-            started();
-        }
-        [JCV4ProvisioningClient requestProvisioningForLine:line completed:^(BOOL success, NSError *error) {
-            if (success) {
-                [[JCCallCardManager sharedManager] connectToLine:line];
-            }
-            completed(success, error);
-        }];
-    }
+    [[JCCallCardManager sharedManager] connectToLine:line started:started completed:completed];
+}
+
++ (void)reconnectToLine:(Line *)line started:(void(^)())started completion:(CompletionHandler)completed
+{
+    [[JCCallCardManager sharedManager] reconnectToLine:line started:started completion:completed];
 }
 
 + (void)disconnect
