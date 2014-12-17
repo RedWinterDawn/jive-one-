@@ -80,7 +80,7 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
 {
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         NSUInteger recentEvents = self.recentEvents;
-        if (self.canSendNotifications && recentEvents > 0 && recentEvents != [UIApplication sharedApplication].applicationIconBadgeNumber)
+        if (self.canSendNotifications && recentEvents != [UIApplication sharedApplication].applicationIconBadgeNumber)
         {
             NSLog(@"recentEvents: %lu", (unsigned long)recentEvents);
             [UIApplication sharedApplication].applicationIconBadgeNumber = recentEvents;
