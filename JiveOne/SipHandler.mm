@@ -57,7 +57,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     self = [super init];
     if (self)
     {
-        if (!_line)
+        if (!line)
             [NSException raise:NSInvalidArgumentException format:kSipHandlerLineErrorMessage];
         
         _line = line;
