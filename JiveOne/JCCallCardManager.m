@@ -8,6 +8,8 @@
 
 #import "JCCallCardManager.h"
 
+#import <AVFoundation/AVFoundation.h>
+
 // Managers
 #import "JCBluetoothManager.h"
 #import "SipHandler.h"
@@ -58,6 +60,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 @property (nonatomic) BOOL externalCallDisconnected;
 
 @property (nonatomic, readwrite, getter=isConnected) BOOL connected;
+@property (nonatomic, readwrite) JCPhoneManagerOutputType outputType;
 
 @end
 
@@ -75,6 +78,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         [center addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
         [center addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
+        [center addObserver:self selector:@selector(audioSessionRouteChangeSelector:) name:AVAudioSessionRouteChangeNotification object:nil];
     }
     return self;
 }
@@ -82,35 +86,43 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [_sipHandler removeObserver:self forKeyPath:kSipHandlerRegisteredSelectorKey];
 }
 
 #pragma mark - Public Methods -
 
--(void)connectToLine:(Line *)line
+-(void)connectToLine:(Line *)line started:(void(^)())started completed:(CompletionHandler)completed
 {
-    if (_sipHandler) {
-        [self disconnect];
+    if (line.lineConfiguration) {
+        [self connectToLine:line];
+        completed(YES, nil);
     }
- 
-    _sipHandler = [[SipHandler alloc] initWithLine:line delegate:self];
-    [_sipHandler addObserver:self forKeyPath:kSipHandlerRegisteredSelectorKey options:NSKeyValueObservingOptionNew context:NULL];
+    else {
+        if (started != NULL) {
+            started();
+        }
+        [JCV4ProvisioningClient requestProvisioningForLine:line completed:^(BOOL success, NSError *error) {
+            if (success) {
+                [self connectToLine:line];
+            }
+            completed(success, error);
+        }];
+    }
 }
 
--(void)reconnectToLine:(Line *)line started:(void(^)())started  completion:(CompletionHandler)completion
+-(void)reconnectToLine:(Line *)line started:(void(^)())started completion:(CompletionHandler)completion
 {
-    if (_sipHandler) {
+    if (_sipHandler && (_line == line)) {
         [_sipHandler connect:completion];
     } else {
-        [JCCallCardManager connectToLine:line started:started completed:completion];
+        [self connectToLine:line started:started completed:completion];
     }
 }
 
 -(void)disconnect
 {
     [_sipHandler disconnect];
-    [_sipHandler removeObserver:self forKeyPath:kSipHandlerRegisteredSelectorKey];
     _sipHandler = nil;
+    self.connected = FALSE;
 }
 
 /**
@@ -239,11 +251,12 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     [_sipHandler muteCall:mute];
 }
 
--(void)setLoudspeakerStatus:(BOOL)speaker {
+-(void)setLoudSpeakerEnabled:(BOOL)loudSpeakerEnabled
+{
     if (!_sipHandler) {
         return;
     }
-    [_sipHandler setLoudspeakerStatus:speaker];
+    [_sipHandler setLoudSpeakerEnabled:loudSpeakerEnabled];
 }
 
 -(void)numberPadPressedWithInteger:(NSInteger)numberPadNumber
@@ -279,6 +292,17 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 }
 
 #pragma mark - Private -
+
+-(void)connectToLine:(Line *)line
+{
+    // If we have a sip handler, disconnect the current registration.
+    if (_sipHandler && _line != line) {
+        [self disconnect];
+    }
+    
+    _line = line;
+    _sipHandler = [[SipHandler alloc] initWithLine:line delegate:self];
+}
 
 -(BOOL)isEmergencyNumber:(NSString *)dialString
 {
@@ -503,16 +527,34 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     }
 }
 
-#pragma mark - KVO -
-
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+-(JCPhoneManagerOutputType)outputTypeFromString:(NSString *)type
 {
-    // If the line configuration changes, reconnect the sip handler.
-    if ([keyPath isEqualToString:@"lineConfiguration"] && _sipHandler) {
-        //[self connect];
-    }
-    else if ([keyPath isEqualToString:kSipHandlerRegisteredSelectorKey]) {
-        self.connected = TRUE;
+    if ([type isEqualToString:AVAudioSessionPortLineOut]) {
+        return JCPhoneManagerOutputLineOut;
+        
+    } else if ([type isEqualToString:AVAudioSessionPortHeadphones]) {
+        return JCPhoneManagerOutputHeadphones;
+        
+    } else if ([type isEqualToString:AVAudioSessionPortHeadphones]) {
+        return JCPhoneManagerOutputHeadphones;
+        
+    } else if ([type isEqualToString:AVAudioSessionPortBluetoothA2DP] ||
+               [type isEqualToString:AVAudioSessionPortBluetoothLE]) {
+        return JCPhoneManagerOutputBluetooth;
+        
+    } else if ([type isEqualToString:AVAudioSessionPortBuiltInReceiver]) {
+        return JCPhoneManagerOutputReceiver;
+        
+    } else if ([type isEqualToString:AVAudioSessionPortBuiltInSpeaker]) {
+        return JCPhoneManagerOutputSpeaker;
+        
+    } else if ([type isEqualToString:AVAudioSessionPortHDMI]) {
+        return JCPhoneManagerOutputHDMI;
+        
+    } else if ([type isEqualToString:AVAudioSessionPortAirPlay]) {
+        return JCPhoneManagerOutputAirPlay;
+    } else {
+        return JCPhoneManagerOutputUnknown;
     }
 }
 
@@ -555,6 +597,16 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
             [_bluetoothManager enableBluetoothAudio];
         }
     }
+}
+
+#pragma mark VAAudioSession
+
+-(void)audioSessionRouteChangeSelector:(NSNotification *)notification
+{
+    AVAudioSession *audioSession = notification.object;
+    NSArray *outputs = audioSession.currentRoute.outputs;
+    AVAudioSessionPortDescription *port = [outputs lastObject];
+    self.outputType = [self outputTypeFromString:port.portType];
 }
 
 #pragma mark - Delegate Handlers -
@@ -648,6 +700,27 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 
 #pragma mark SipHanglerDelegate
 
+-(void)sipHandlerDidRegister:(SipHandler *)sipHandler
+{
+    self.connected = sipHandler.registered;
+}
+
+-(void)sipHandlerDidFailToRegister:(SipHandler *)sipHandler error:(NSError *)error
+{
+    self.connected = sipHandler.registered;
+    NSLog(@"%@", [error description]);
+}
+
+- (void)answerAutoCall:(JCLineSession *)session
+{
+	for (JCCallCard *callCard in self.calls) {
+		if (callCard.lineSession.mSessionId == session.mSessionId)
+		{
+			[self answerCall:callCard];
+		}
+	}
+}
+
 -(void)addLineSession:(JCLineSession *)session
 {
     JCCallCard *callCard = [[JCCallCard alloc] initWithLineSession:session];
@@ -685,24 +758,14 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     return self;
 }
 
-+ (void)connectToLine:(Line *)line started:(void(^)())started completed:(void (^)(BOOL success, NSError *error))completed
++ (void)connectToLine:(Line *)line started:(void(^)())started completed:(CompletionHandler)completed
 {
-    if (line.lineConfiguration) {
-        [[JCCallCardManager sharedManager] connectToLine:line];
-        completed(YES, nil);
-    }
-    else
-    {
-        if (started != NULL) {
-            started();
-        }
-        [JCV4ProvisioningClient requestProvisioningForLine:line completed:^(BOOL success, NSError *error) {
-            if (success) {
-                [[JCCallCardManager sharedManager] connectToLine:line];
-            }
-            completed(success, error);
-        }];
-    }
+    [[JCCallCardManager sharedManager] connectToLine:line started:started completed:completed];
+}
+
++ (void)reconnectToLine:(Line *)line started:(void(^)())started completion:(CompletionHandler)completed
+{
+    [[JCCallCardManager sharedManager] reconnectToLine:line started:started completion:completed];
 }
 
 + (void)disconnect
