@@ -31,11 +31,11 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 {
     [super viewDidLoad];
     
-//    _phoneManager = [JCCallCardManager sharedManager];
-//    [_phoneManager addObserver:self forKeyPath:@"connected" options:NSKeyValueObservingOptionNew context:NULL];
-//    [self updateRegistrationStatus];
-//    
-//    self.backspaceBtn.alpha = 0;
+    _phoneManager = [JCCallCardManager sharedManager];
+    [_phoneManager addObserver:self forKeyPath:@"connected" options:NSKeyValueObservingOptionNew context:NULL];
+    [self updateRegistrationStatus];
+    
+    self.backspaceBtn.alpha = 0;
 }
 
 /**

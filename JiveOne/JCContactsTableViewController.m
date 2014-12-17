@@ -36,14 +36,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(subscribeToLinePresence:) name:kSocketDidOpen object:nil];
     
-    if ([JasmineSocket sharedInstance].socket.readyState == SR_OPEN) {
-        [self subscribeToLinePresence:nil];
-    }
-    else {
-        [[JasmineSocket sharedInstance] initSocket];
-    }
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+//    [center addObserver:self selector:@selector(subscribeToLinePresence:) name:kSocketDidOpen object:[JasmineSocket sharedInstance]];
+    [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:[JCAuthenticationManager sharedInstance]];
+    
+//    if ([JasmineSocket sharedInstance].socket.readyState == SR_OPEN) {
+//        [self subscribeToLinePresence:nil];
+//    }
+//    else {
+//        [[JasmineSocket sharedInstance] initSocket];
+//    }
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -61,8 +64,6 @@
     }
 }
 
-
-
 - (void)configureCell:(UITableViewCell *)cell withObject:(id<NSObject>)object
 {
     if ([object isKindOfClass:[Contact class]] && [cell isKindOfClass:[JCContactCell class]]) {
@@ -71,9 +72,6 @@
     else if ([object isKindOfClass:[Line class]] && [cell isKindOfClass:[JCLineCell class]]) {
         ((JCLineCell *)cell).line = (Line *)object;
     }
-//    else if ([object isKindOfClass:[UITableViewCell class]] && [cell isKindOfClass:[JCExternalContactCell class]]) {
-//        ((JCExternalContactCell *)cell).externalNameLabel = (JCExternalContactCell *)object;
-//    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForObject:(id<NSObject>)object atIndexPath:(NSIndexPath *)indexPath
@@ -88,11 +86,6 @@
         [self configureCell:cell withObject:object];
         return cell;
     }
-//    else if ([object isKindOfClass:[UITableViewCell class]]) {
-//        JCExternalContactCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ExternalContactCell"];
-//        [self configureCell:cell withObject:object];
-//        return cell;
-//    }
     return nil;
 }
 
@@ -155,9 +148,42 @@
     [self.tableView reloadData];
 }
 
-//-(void)showAddressBook{
-//    return;
+#pragma mark - Notification handlers -
+
+#pragma mark Socket Events
+
+//- (void)subscribeToLinePresence:(NSNotification *)notification
+//{
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        for (Line *line in [self.fetchedResultsController fetchedObjects]) {
+//            
+//            if (self.lineSubscription[line.jrn] && [self.lineSubscription[line.jrn] boolValue]) {
+//                continue;
+//            }
+//            
+//            [[JasmineSocket sharedInstance] postSubscriptionsToSocketWithId:line.jrn entity:line.jrn type:@"dialog"];
+//            [self.lineSubscription setObject:@YES forKey:line.jrn];
+//        }
+//    });
 //}
+//
+//- (NSMutableDictionary *)lineSubscription
+//{
+//    if (!lineSubcription) {
+//        lineSubcription = [[NSUserDefaults standardUserDefaults] objectForKey:@"lineSub"];
+//        if (!lineSubcription) {
+//            lineSubcription = [NSMutableDictionary new];
+//        }
+//    }
+//    return lineSubcription;
+//}
+
+#pragma mark JCAuthenticationManager
+
+-(void)lineChanged:(NSNotification *)notification
+{
+    [self reloadTable];
+}
 
 #pragma mark - Delegate handlers -
 
@@ -213,34 +239,5 @@
         [self reloadTable];
     }
 }
-
-- (NSMutableDictionary *)lineSubscription
-{
-    if (!lineSubcription) {
-        lineSubcription = [[NSUserDefaults standardUserDefaults] objectForKey:@"lineSub"];
-        if (!lineSubcription) {
-            lineSubcription = [NSMutableDictionary new];
-        }
-    }
-    
-    return lineSubcription;
-}
-
-#pragma mark - Socket Events
-- (void)subscribeToLinePresence:(NSNotification *)notification
-{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        for (Line *line in [self.fetchedResultsController fetchedObjects]) {
-            
-            if (self.lineSubscription[line.jrn] && [self.lineSubscription[line.jrn] boolValue]) {
-                continue;
-            }
-            
-            [[JasmineSocket sharedInstance] postSubscriptionsToSocketWithId:line.jrn entity:line.jrn type:@"dialog"];
-            [self.lineSubscription setObject:@YES forKey:line.jrn];
-        }
-    });
-}
-
 
 @end

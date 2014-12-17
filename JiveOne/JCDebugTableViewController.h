@@ -10,6 +10,9 @@
 
 @interface JCDebugTableViewController : UITableViewController
 
+@property (weak, nonatomic) IBOutlet UILabel *jiveUserId;
+@property (weak, nonatomic) IBOutlet UILabel *accessToken;
+
 @property (weak, nonatomic) IBOutlet UILabel *users;
 @property (weak, nonatomic) IBOutlet UILabel *pbxs;
 @property (weak, nonatomic) IBOutlet UILabel *lines;

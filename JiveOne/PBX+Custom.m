@@ -68,7 +68,7 @@ NSString *const kPBXResponseLinesKey      = @"lines";
         }
     } completion:^(BOOL success, NSError *error) {
         if (complete) {
-            complete(success, error);
+            complete(error ? NO : YES, error);
         }
     }];
 }

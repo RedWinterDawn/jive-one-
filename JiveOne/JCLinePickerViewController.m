@@ -12,9 +12,6 @@
 #import "Line.h"
 
 @interface JCLinePickerViewController ()
-{
-    JCAuthenticationManager *_authenticationManger;
-}
 
 @property (strong, nonatomic) NSArray *lines;
 
@@ -25,26 +22,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _authenticationManger = [JCAuthenticationManager sharedInstance];
-    self.lines = [Line MR_findByAttribute:@"pbx.user" withValue:_authenticationManger.user andOrderBy:@"name" ascending:YES];
-    [_authenticationManger addObserver:self forKeyPath:NSStringFromSelector(@selector(line)) options:0 context:NULL];
-    Line *line = _authenticationManger.line;
+     JCAuthenticationManager *authenticationManger = [JCAuthenticationManager sharedInstance];
+    User *user = authenticationManger.user;
+    Line *line = authenticationManger.line;
     
-    [self.pickerView selectRow:[self.lines indexOfObject:line] inComponent:0 animated:NO];
+    self.lines = [Line MR_findByAttribute:@"pbx.user" withValue:user andOrderBy:@"name" ascending:YES];
+    [self.selectBtn setTitle:[self titleForLine:line] forState:UIControlStateNormal];
     
-    NSString *name = [self titleForLine:line];
-    [self.selectBtn setTitle:name forState:UIControlStateNormal];
-}
-
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
-    if ([keyPath isEqualToString:NSStringFromSelector(@selector(pbx))]) {
-        JCAuthenticationManager *manager =  (JCAuthenticationManager *)object;
-        [self.selectBtn setTitle:[self titleForLine:manager.line] forState:UIControlStateNormal];
+    // Select the line that is currently selected by the authentication manager.
+    if (line && [_lines containsObject:line]) {
+        NSInteger index = [_lines indexOfObject:line];
+        [self.pickerView selectRow:index inComponent:0 animated:NO];
     }
-}
-
--(void)dealloc{
-    [_authenticationManger removeObserver:self forKeyPath:NSStringFromSelector(@selector(pbx))];
 }
 
 -(NSString *)titleForLine:(Line *)line
@@ -63,13 +52,18 @@
     return [_lines count];
 }
 
-#pragma mark - Delegate Handlers -
-
-#pragma mark UIPickerDelegate Methods
-
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
-    Line *line  = [_lines objectAtIndex:row];
+- (IBAction)done:(id)sender {
+    [super done:sender];
     
+    NSInteger row = [self.pickerView selectedRowInComponent:0];
+    Line *line  = [_lines objectAtIndex:row];
+    [self.selectBtn setTitle:[self titleForLine:line] forState:UIControlStateNormal];
+}
+
+-(IBAction)close:(id)sender {
+    
+    NSInteger row = [self.pickerView selectedRowInComponent:0];
+    Line *line  = [_lines objectAtIndex:row];
     NSArray *lines = _lines;
     for (Line *item in lines) {
         if (line == item){
@@ -87,9 +81,8 @@
             NSLog(@"%@", [error description]);
     }
     
-    _authenticationManger.line = line;
-    
-    [super pickerView:pickerView didSelectRow:row inComponent:component];
+    [JCAuthenticationManager sharedInstance].line = line;
+    [super close:sender];
 }
 
 @end

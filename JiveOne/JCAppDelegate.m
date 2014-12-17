@@ -98,7 +98,7 @@
      */
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
 #if DEBUG
-    [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
+    //[[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
     [[AFNetworkActivityLogger sharedLogger] startLogging];
 #else
     [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelOff];
@@ -183,25 +183,11 @@
                         self.window.rootViewController = _appSwitcherViewController;
                     }
                     completion:^(BOOL finished) {
-                        _navigationController = nil;
                         if (completed != NULL) {
                             completed(finished);
                         }
+                        _navigationController = nil;
                     }];
-}
-
-- (void)startDataSyncInBackground
-{
-    
-    
-    
-    
-    // Sync Data
-    /*JCV5ApiClient *client = [JCV5ApiClient sharedClient];
-    if (_authenticationManager.line.pbx.isV5) {
-        [JCV5ApiClient getVoicemailsForLine:_authenticationManager.line completed:NULL];
-    }
-    [client RetrieveContacts:nil];*/
 }
 
 - (UIBackgroundFetchResult)backgroundPerformFetchWithCompletionHandler
@@ -268,18 +254,27 @@
 
 -(void)registerServicesToLine:(Line *)line
 {
-//    // Register the Phone.
-//    UIViewController *rootViewController = self.window.rootViewController;
-//    [JCCallCardManager connectToLine:line
-//                             started:^{
-//                                 [rootViewController showHudWithTitle:@"" detail:@"Selecting Line..."];
-//                             }
-//                           completed:^(BOOL success, NSError *error) {
-//                               [rootViewController hideHud];
-//                               if (!success) {
-//                                   [rootViewController showSimpleAlert:@"" message:@"Unable to connect to this line at this time. Please Try again." code:error.code];
-//                               }
-//                            }];
+    // If we have not already, initialize the phone manager singleton, store a reference to it and register for notifications.
+    if (!_phoneManager) {
+        _phoneManager = [JCCallCardManager sharedManager];
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self selector:@selector(didReceiveIncomingCall:) name:kJCCallCardManagerAddedCallNotification object:_phoneManager];
+        [center addObserver:self selector:@selector(stopRingtone) name:kJCCallCardManagerAnswerCallNotification object:_phoneManager];
+    }
+    
+    // Register the Phone.
+    UIViewController *rootViewController = self.window.rootViewController;
+    [JCCallCardManager connectToLine:line
+                             started:^{
+                                 [rootViewController showHudWithTitle:@"" detail:@"Selecting Line..."];
+                             }
+                           completed:^(BOOL success, NSError *error) {
+                               [rootViewController hideHud];
+                               if (!success) {
+                                   [rootViewController showSimpleAlert:@"" message:@"Unable to connect to this line at this time. Please Try again." code:error.code];
+                               }
+                            }];
+    
     // Get Contacts
     [Contact downloadContactsForLine:line complete:NULL];
     
@@ -296,24 +291,25 @@
  */
 -(void)userDataReady:(NSNotification *)notification
 {
-    // If we have not already, initialize the phone manager singleton, store a reference to it and register for notifications.
-    if (!_phoneManager) {
-        _phoneManager = [JCCallCardManager sharedManager];
-        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-        [center addObserver:self selector:@selector(didReceiveIncomingCall:) name:kJCCallCardManagerAddedCallNotification object:_phoneManager];
-        [center addObserver:self selector:@selector(stopRingtone) name:kJCCallCardManagerAnswerCallNotification object:_phoneManager];
-    }
-    
-    // If the user has multiple line configurations, we prompt them to select which line they would like to connect with. When
-    // selected, the authentication manager will notify that they have changed their selected line.
-    NSInteger lines = [Line MR_countOfEntities];
-    if (lines > 1) {
-        [self presentLineConfigurationViewController:YES];
+    // If navigation controller is not null, the login page is still present, and needs to either be
+    // dismissed or should transition to requesting that they select a line.
+    JCAuthenticationManager *authenticationManager = notification.object;
+    Line *line = authenticationManager.line;
+    if (!_navigationController){
+        [self registerServicesToLine:line];
         return;
     }
     
+    // If the user has multiple line configurations, we prompt them to select which line they
+    // would like to connect with. When selected, the authentication manager will notify that
+    // they have changed their selected line.
+    NSInteger lines = [Line MR_countOfEntities];
+    if (lines > 1 && !line.active) {
+        [self presentLineConfigurationViewController:YES];
+        return;
+    }
+        
     [self dismissLoginViewController:YES completed:^(BOOL finished) {
-        JCAuthenticationManager *authenticationManager = notification.object;
         [self registerServicesToLine:authenticationManager.line];
     }];
 }
@@ -328,7 +324,6 @@
     JCAuthenticationManager *authenticationManager = notification.object;
     [self registerServicesToLine:authenticationManager.line];
 }
-
 
 /**
  * Notification of user inititated logout.

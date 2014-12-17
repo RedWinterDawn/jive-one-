@@ -49,8 +49,8 @@
             }
             
             NSDictionary *status = [result valueForKeyPath:@"login_response.status"];
-            BOOL success = [status boolValueForKey:@"_success"];
-            if (!success) {
+            NSString *success = [status stringValueForKey:@"_success"];
+            if ([success isEqualToString:@"false"]) {
                 completed(false, [JCV4ProvisioningError errorWithType:JCV4ProvisioningRequestResponseError reason:[status stringValueForKey:@"_error_text"]]);
                 return;
             }
@@ -165,7 +165,7 @@ NSString *const kJCV4ProvisioningClientRequestString = @"<login user=\"%@\" pass
 
 #pragma mark - JCV4ProvisioningURLRequest -
 
-NSString *const kJCV4ProvisioningClientRequestUrl = @"http://10.20.150.168:8080/provisioning/mobility/mobileusersettings"; //@"https://pbx.onjive.com/p/mobility/mobileusersettings";
+NSString *const kJCV4ProvisioningClientRequestUrl = @"https://pbx.onjive.com/p/mobility/mobileusersettings";
 
 @implementation JCV4ProvisioningURLRequest
 

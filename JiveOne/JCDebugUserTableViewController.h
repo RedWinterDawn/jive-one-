@@ -7,7 +7,13 @@
 //
 
 #import "JCFetchedResultsTableViewController.h"
+#import "User.h"
 
-@interface JCDebugUserTableViewController : JCFetchedResultsTableViewController
+@interface JCDebugUserTableViewController : UITableViewController
+
+@property (nonatomic, strong) User *user;
+
+@property (weak, nonatomic) IBOutlet UILabel *jiveUserId;
+@property (weak, nonatomic) IBOutlet UILabel *pbxs;
 
 @end
