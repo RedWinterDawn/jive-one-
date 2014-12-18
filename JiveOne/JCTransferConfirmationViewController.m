@@ -7,15 +7,15 @@
 //
 
 #import "JCTransferConfirmationViewController.h"
-#import "JCCallCardManager.h"
+#import "JCPhoneManager.h"
 
 @implementation JCTransferConfirmationViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    JCCallCard *call = [self.transferInfo objectForKey:kJCCallCardManagerTransferedCall];
-    JCCallCard *transferCall = [self.transferInfo objectForKey:kJCCallCardManagerNewCall];
+    JCCallCard *call = [self.transferInfo objectForKey:kJCPhoneManagerTransferedCall];
+    JCCallCard *transferCall = [self.transferInfo objectForKey:kJCPhoneManagerNewCall];
     
     self.currentCallersName.text = call.callerId;
     self.currentCallersNumber.text = call.dialNumber;

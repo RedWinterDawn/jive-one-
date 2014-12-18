@@ -1,5 +1,5 @@
 //
-//  JCCallManager.h
+//  JCPhoneManager.h
 //  JiveOne
 //
 //  Singleton Manager that interfaces the UI/UX with the back end call architecture.
@@ -13,31 +13,31 @@
 #import "JCCallCard.h"
 #import "Line.h"
 
-extern NSString *const kJCCallCardManagerAddedCallNotification;
-extern NSString *const kJCCallCardManagerAnswerCallNotification;
-extern NSString *const kJCCallCardManagerRemoveCallNotification;
+extern NSString *const kJCPhoneManagerAddedCallNotification;
+extern NSString *const kJCPhoneManagerAnswerCallNotification;
+extern NSString *const kJCPhoneManagerRemoveCallNotification;
 
-extern NSString *const kJCCallCardManagerAddedConferenceCallNotification;
-extern NSString *const kJCCallCardManagerRemoveConferenceCallNotification;
+extern NSString *const kJCPhoneManagerAddedConferenceCallNotification;
+extern NSString *const kJCPhoneManagerRemoveConferenceCallNotification;
 
-extern NSString *const kJCCallCardManagerUpdatedIndex;
-extern NSString *const kJCCallCardManagerPriorUpdateCount;
-extern NSString *const kJCCallCardManagerUpdateCount;
-extern NSString *const kJCCallCardManagerRemovedCells;
-extern NSString *const kJCCallCardManagerAddedCells;
-extern NSString *const kJCCallCardManagerLastCallState;
-extern NSString *const kJCCallCardManagerIncomingCall;
+extern NSString *const kJCPhoneManagerUpdatedIndex;
+extern NSString *const kJCPhoneManagerPriorUpdateCount;
+extern NSString *const kJCPhoneManagerUpdateCount;
+extern NSString *const kJCPhoneManagerRemovedCells;
+extern NSString *const kJCPhoneManagerAddedCells;
+extern NSString *const kJCPhoneManagerLastCallState;
+extern NSString *const kJCPhoneManagerIncomingCall;
 
-extern NSString *const kJCCallCardManagerNewCall;
-extern NSString *const kJCCallCardManagerTransferedCall;
+extern NSString *const kJCPhoneManagerNewCall;
+extern NSString *const kJCPhoneManagerTransferedCall;
 
 typedef void(^CompletionHandler)(BOOL success, NSError *error);
 
 typedef enum : NSUInteger {
-    JCCallCardDialSingle = 0,
-    JCCallCardDialBlindTransfer,
-    JCCallCardDialWarmTransfer,
-} JCCallCardDialTypes;
+    JCPhoneManagerSingleDial = 0,
+    JCPhoneManagerBlindTransfer,
+    JCPhoneManagerWarmTransfer,
+} JCPhoneManagerDialType;
 
 typedef enum : NSUInteger {
     JCPhoneManagerOutputUnknown = 0,
@@ -50,7 +50,7 @@ typedef enum : NSUInteger {
     JCPhoneManagerOutputAirPlay
 } JCPhoneManagerOutputType;
 
-@interface JCCallCardManager : NSObject
+@interface JCPhoneManager : NSObject
 
 @property (nonatomic, strong) NSMutableArray *calls;
 
@@ -66,11 +66,11 @@ typedef enum : NSUInteger {
 // notified. If the dial action resulted in the creation of a dial card, an kJCCallCardManagerAddedCallNotification is
 // broadcasted through the notification center.
 -(void)dialNumber:(NSString *)dialNumber
-             type:(JCCallCardDialTypes)dialType
-       completion:(void (^)(bool success, NSDictionary *callInfo))completion;
+             type:(JCPhoneManagerDialType)dialType
+       completion:(void (^)(BOOL success, NSDictionary *callInfo))completion;
 
 // Merges two existing calls into a conference call. Requires there to be two current calls to be merged.
--(void)mergeCalls:(void (^)(bool success))completion;
+-(void)mergeCalls:(void (^)(BOOL success))completion;
 
 // Splits a conference call into it calls.
 -(void)splitCalls;
@@ -82,7 +82,7 @@ typedef enum : NSUInteger {
 -(void)muteCall:(BOOL)mute;
 
 // Finish a transfer
--(void)finishWarmTransfer:(void (^)(bool success))completion;
+-(void)finishWarmTransfer:(void (^)(BOOL success))completion;
 
 // NumberPad
 -(void)numberPadPressedWithInteger:(NSInteger)numberPad;
@@ -91,9 +91,9 @@ typedef enum : NSUInteger {
 
 @end
 
-@interface JCCallCardManager (Singleton)
+@interface JCPhoneManager (Singleton)
 
-+ (JCCallCardManager *)sharedManager;
++ (JCPhoneManager *)sharedManager;
 
 + (void)connectToLine:(Line *)line started:(void(^)())started completed:(CompletionHandler)completed;
 + (void)reconnectToLine:(Line *)line started:(void(^)())started completion:(CompletionHandler)completion;

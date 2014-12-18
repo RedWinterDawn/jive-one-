@@ -7,7 +7,7 @@
 //
 
 #import "JCDialerViewController.h"
-#import "JCCallCardManager.h"
+#import "JCPhoneManager.h"
 #import "OutgoingCall.h"
 #import "UIViewController+HUD.h"
 
@@ -15,7 +15,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 
 @interface JCDialerViewController ()
 {
-    JCCallCardManager *_phoneManager;
+    JCPhoneManager *_phoneManager;
     BOOL _initiatingCall;
 }
 
@@ -31,7 +31,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 {
     [super viewDidLoad];
     
-    _phoneManager = [JCCallCardManager sharedManager];
+    _phoneManager = [JCPhoneManager sharedManager];
     [_phoneManager addObserver:self forKeyPath:@"connected" options:NSKeyValueObservingOptionNew context:NULL];
     [self updateRegistrationStatus];
     
@@ -106,7 +106,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
         return;
     }
     _initiatingCall = TRUE;
-    [_phoneManager dialNumber:string type:JCCallCardDialSingle completion:^(bool success, NSDictionary *callInfo) {
+    [_phoneManager dialNumber:string type:JCPhoneManagerSingleDial completion:^(BOOL success, NSDictionary *callInfo) {
         if (success){
             [self performSegueWithIdentifier:kJCDialerViewControllerCallerStoryboardIdentifier sender:self];
             self.dialStringLabel.dialString = nil;

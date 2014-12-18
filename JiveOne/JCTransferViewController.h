@@ -7,7 +7,7 @@
 //
 
 #import "JCDialerViewController.h"
-#import "JCCallCardManager.h"
+#import "JCPhoneManager.h"
 
 @class JCTransferViewController;
 
@@ -21,7 +21,7 @@
 @interface JCTransferViewController : JCDialerViewController
 
 @property (nonatomic, weak) id <JCTransferViewControllerDelegate> delegate;
-@property (nonatomic) JCCallCardDialTypes transferCallType;
+@property (nonatomic) JCPhoneManagerDialType transferCallType;
 
 -(IBAction)cancel:(id)sender;
 

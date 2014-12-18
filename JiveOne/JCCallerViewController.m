@@ -16,7 +16,7 @@
 #import "JCCallerViewController.h"
 
 // Managers
-#import "JCCallCardManager.h"   // Handles call cards, and managed calls
+#import "JCPhoneManager.h"   // Handles call cards, and managed calls
 
 // Presented View Controllers
 #import "JCTransferViewController.h"                // Shows dial pad to dial for blind, warm transfer and additional call.
@@ -45,7 +45,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     bool _showingCallOptions;
     
     JCCallCardCollectionViewController *_callCardCollectionViewController;
-    JCCallCardManager *_phoneManager;
+    JCPhoneManager *_phoneManager;
 }
 
 @property (nonatomic, strong) NSDictionary *warmTransferInfo;
@@ -64,9 +64,9 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         _keyboardAnimationDuration             = KEYBOARD_ANIMATION_DURATION;
         
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-        _phoneManager = [JCCallCardManager sharedManager];
-        [center addObserver:self selector:@selector(answeredCall:) name:kJCCallCardManagerAnswerCallNotification object:_phoneManager];
-        [center addObserver:self selector:@selector(removedCall:) name:kJCCallCardManagerRemoveCallNotification object:_phoneManager];
+        _phoneManager = [JCPhoneManager sharedManager];
+        [center addObserver:self selector:@selector(answeredCall:) name:kJCPhoneManagerAnswerCallNotification object:_phoneManager];
+        [center addObserver:self selector:@selector(removedCall:) name:kJCPhoneManagerRemoveCallNotification object:_phoneManager];
         [_phoneManager addObserver:self forKeyPath:@"outputType" options:NSKeyValueObservingOptionNew context:NULL];
         
     }
@@ -82,7 +82,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         return;
     }
     
-    [_phoneManager dialNumber:dialString type:JCCallCardDialSingle completion:^(bool success, NSDictionary *callInfo) {
+    [_phoneManager dialNumber:dialString type:JCPhoneManagerSingleDial completion:^(BOOL success, NSDictionary *callInfo) {
         if (!success) {
             [self performSelector:@selector(closeCallerViewController) withObject:nil afterDelay:0];
         }
@@ -124,7 +124,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ([keyPath isEqualToString:@"outputType"]) {
-        JCCallCardManager *manager = object;
+        JCPhoneManager *manager = object;
         self.speakerBtn.selected = (manager.outputType == JCPhoneManagerOutputSpeaker);
     }
 }
@@ -191,7 +191,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 -(IBAction)blindTransfer:(id)sender
 {
     JCTransferViewController *transferViewController = [self.storyboard instantiateViewControllerWithIdentifier:kJCCallerViewControllerTransferStoryboardIdentifier];
-    transferViewController.transferCallType = JCCallCardDialBlindTransfer;
+    transferViewController.transferCallType = JCPhoneManagerBlindTransfer;
     transferViewController.delegate = self;
     [self presentTransferViewController:transferViewController];
 }
@@ -199,7 +199,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 -(IBAction)warmTransfer:(id)sender
 {
     JCTransferViewController *transferViewController = [self.storyboard instantiateViewControllerWithIdentifier:kJCCallerViewControllerTransferStoryboardIdentifier];
-    transferViewController.transferCallType = JCCallCardDialWarmTransfer;
+    transferViewController.transferCallType = JCPhoneManagerWarmTransfer;
     transferViewController.delegate = self;
     [self presentTransferViewController:transferViewController];
 }
@@ -207,7 +207,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 -(IBAction)addCall:(id)sender
 {
     JCTransferViewController *transferViewController = [self.storyboard instantiateViewControllerWithIdentifier:kJCCallerViewControllerTransferStoryboardIdentifier];
-    transferViewController.transferCallType = JCCallCardDialSingle;
+    transferViewController.transferCallType = JCPhoneManagerSingleDial;
     transferViewController.delegate = self;
     [self presentTransferViewController:transferViewController];
 }
@@ -224,7 +224,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         button.selected = !button.selected;
         
         if (button.selected) {
-            [_phoneManager mergeCalls:^(bool success) {
+            [_phoneManager mergeCalls:^(BOOL success) {
 				if (success) {
 					self.mergeLabel.text = NSLocalizedString(@"Split Calls", nil);
 				}
@@ -245,7 +245,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(IBAction)finishTransfer:(id)sender
 {
-    [_phoneManager finishWarmTransfer:^(bool success) {
+    [_phoneManager finishWarmTransfer:^(BOOL success) {
         if (success) {
             [self showTransferSuccess];
         }
@@ -262,7 +262,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 /**
  * Hides the call options card.
  */
--(void)hideCallOptionsAnimated:(bool)animated
+-(void)hideCallOptionsAnimated:(BOOL)animated
 {
     _callOptionsViewOriginYConstraint.constant = 10;
     [self.view setNeedsUpdateConstraints];
@@ -280,7 +280,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 /**
  * Shows the call option card.
  */
--(void)showCallOptionsAnimated:(bool)animated
+-(void)showCallOptionsAnimated:(BOOL)animated
 {
     if (_showingCallOptions)
         return;
@@ -417,7 +417,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     if (!_showingCallOptions)
         self.callOptionsHidden = false;
     
-    NSInteger count = [[notification.userInfo objectForKey:kJCCallCardManagerUpdateCount] integerValue];
+    NSInteger count = [[notification.userInfo objectForKey:kJCPhoneManagerUpdateCount] integerValue];
     if (count > 1)
         [self.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];
 }
@@ -428,7 +428,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
  */
 -(void)removedCall:(NSNotification *)notification
 {
-    NSInteger count = [[notification.userInfo objectForKey:kJCCallCardManagerUpdateCount] integerValue];
+    NSInteger count = [[notification.userInfo objectForKey:kJCPhoneManagerUpdateCount] integerValue];
     if(count == 0)
         [self closeCallerViewController];
     else if (count == 1)
@@ -451,17 +451,17 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 -(void)transferViewController:(JCTransferViewController *)controller shouldDialNumber:(NSString *)dialString
 {
     __unsafe_unretained JCCallerViewController *weakSelf = self;
-    [_phoneManager dialNumber:dialString type:controller.transferCallType completion:^(bool success, NSDictionary *callInfo) {
+    [_phoneManager dialNumber:dialString type:controller.transferCallType completion:^(BOOL success, NSDictionary *callInfo) {
         if (success)
         {
             switch (controller.transferCallType) {
-                case JCCallCardDialBlindTransfer:
+                case JCPhoneManagerBlindTransfer:
                 {
                     [weakSelf dismissTransferViewControllerAnimated:NO];
                     [weakSelf closeCallerViewController];
                     break;
                 }
-                case JCCallCardDialWarmTransfer:
+                case JCPhoneManagerWarmTransfer:
                 {
                     [weakSelf dismissTransferViewControllerAnimated:YES];
                     [weakSelf.callOptionsView setState:JCCallOptionViewFinishTransferState animated:YES];

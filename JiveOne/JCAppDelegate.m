@@ -22,7 +22,7 @@
 #import "JCLinePickerViewController.h"
 
 #import "Voicemail+Custom.h"
-#import "JCCallCardManager.h"
+#import "JCPhoneManager.h"
 #import "JCCallerViewController.h"
 #import "JCBadgeManager.h"
 #import "JCApplicationSwitcherDelegate.h"
@@ -44,7 +44,7 @@
 {
     JCCallerViewController *_presentedCallerViewController;
     JCAuthenticationManager *_authenticationManager;
-    JCCallCardManager *_phoneManager;
+    JCPhoneManager *_phoneManager;
     
     UINavigationController *_navigationController;
     UIViewController *_appSwitcherViewController;
@@ -256,15 +256,15 @@
 {
     // If we have not already, initialize the phone manager singleton, store a reference to it and register for notifications.
     if (!_phoneManager) {
-        _phoneManager = [JCCallCardManager sharedManager];
+        _phoneManager = [JCPhoneManager sharedManager];
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-        [center addObserver:self selector:@selector(didReceiveIncomingCall:) name:kJCCallCardManagerAddedCallNotification object:_phoneManager];
-        [center addObserver:self selector:@selector(stopRingtone) name:kJCCallCardManagerAnswerCallNotification object:_phoneManager];
+        [center addObserver:self selector:@selector(didReceiveIncomingCall:) name:kJCPhoneManagerAddedCallNotification object:_phoneManager];
+        [center addObserver:self selector:@selector(stopRingtone) name:kJCPhoneManagerAnswerCallNotification object:_phoneManager];
     }
     
     // Register the Phone.
     UIViewController *rootViewController = self.window.rootViewController;
-    [JCCallCardManager connectToLine:line
+    [JCPhoneManager connectToLine:line
                              started:^{
                                  [rootViewController showHudWithTitle:@"" detail:@"Selecting Line..."];
                              }
@@ -338,7 +338,7 @@
     [[JCV5ApiClient sharedClient] stopAllOperations];   // Kill any netowrk operations.
     [JCApplicationSwitcherDelegate reset];              // Resets the App Switcher to be
     [JCBadgeManager reset];                             // Resets the Badge Manager.
-    [JCCallCardManager disconnect];                     // Dissconnect the
+    [JCPhoneManager disconnect];                     // Dissconnect the
     [self presentLoginViewController:YES];              // Present the login view.
     
     [[UIApplication sharedApplication] unregisterForRemoteNotifications];
@@ -357,8 +357,8 @@
     [self startVibration];
     
     NSDictionary *userInfo = notification.userInfo;
-    BOOL incoming = [[userInfo objectForKey:kJCCallCardManagerIncomingCall] boolValue];
-    int priorCount = [[userInfo objectForKey:kJCCallCardManagerPriorUpdateCount] intValue];
+    BOOL incoming = [[userInfo objectForKey:kJCPhoneManagerIncomingCall] boolValue];
+    int priorCount = [[userInfo objectForKey:kJCPhoneManagerPriorUpdateCount] intValue];
     if (!incoming || priorCount > 0)
         return;
     
