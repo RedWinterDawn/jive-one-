@@ -336,9 +336,8 @@
     
     [JasmineSocket stopSocket];                         // Kill any socket connections.
     [[JCV5ApiClient sharedClient] stopAllOperations];   // Kill any netowrk operations.
-    [JCApplicationSwitcherDelegate reset];              // Resets the App Switcher to be
     [JCBadgeManager reset];                             // Resets the Badge Manager.
-    [JCPhoneManager disconnect];                     // Dissconnect the
+    [JCPhoneManager disconnect];                        // Dissconnect the
     [self presentLoginViewController:YES];              // Present the login view.
     
     [[UIApplication sharedApplication] unregisterForRemoteNotifications];

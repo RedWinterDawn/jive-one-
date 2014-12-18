@@ -21,7 +21,7 @@
 #import "JCConferenceCallCard.h"
 
 // Categories
-#import "UIDevice+CellularData.h"
+#import "UIDevice+Custom.h"
 #import "Contact.h"
 
 NSString *const kJCPhoneManager911String = @"911";
