@@ -33,7 +33,7 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    UIViewController *viewController = segue.destinationViewController;
+//    UIViewController *viewController = segue.destinationViewController;
 //    if ([viewController isKindOfClass:[JCDebugUserTableViewController class]]) {
 //        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
 //        ((JCDebugUserTableViewController *)viewController).user = [self objectAtIndexPath:indexPath];

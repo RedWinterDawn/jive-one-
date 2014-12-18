@@ -59,7 +59,7 @@
                                     <segue destination="c3p-aT-jcP" kind="embed" id="NV4-rr-lnW"/>
                                 </connections>
                             </containerView>
-                            <tabBar contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KQN-3R-ma5">
+                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KQN-3R-ma5">
                                 <rect key="frame" x="0.0" y="455" width="320" height="49"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -5061,12 +5061,12 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Uqi-bD-GAX"/>
-        <segue reference="Tth-R2-xu6"/>
-        <segue reference="x1v-U1-NC6"/>
-        <segue reference="2yK-HA-Lah"/>
         <segue reference="UvZ-f2-OIn"/>
-        <segue reference="voi-Tt-SuU"/>
+        <segue reference="2yK-HA-Lah"/>
+        <segue reference="u61-Zl-F4Y"/>
+        <segue reference="Uqi-bD-GAX"/>
+        <segue reference="x1v-U1-NC6"/>
+        <segue reference="Tth-R2-xu6"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29803921570000003" green="0.44705882349999998" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
 </document>

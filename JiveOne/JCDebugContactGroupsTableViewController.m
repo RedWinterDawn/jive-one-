@@ -35,7 +35,7 @@
 
 -(void)configureCell:(UITableViewCell *)cell withObject:(ContactGroup *)contactGroup
 {
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ (%lu)", contactGroup.name, contactGroup.contacts.count];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ (%lu)", contactGroup.name, (unsigned long)contactGroup.contacts.count];
     cell.detailTextLabel.text = contactGroup.groupId;
 }
 

@@ -11,7 +11,6 @@
 
 #import "JCContactCell.h"
 #import "JCLineCell.h"
-#import "JCExternalContactCell.h"
 
 #import "JasmineSocket.h"
 
