@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <AddressBook/AddressBook.h>
-#import <AddressBookUI/AddressBookUI.h>
+@import AddressBook;
+@import AddressBookUI;
 
 #import "JCContactsViewController.h"
 #import "JCContactsTableViewController.h"
@@ -30,6 +30,14 @@
     self.tabBar.selectedItem = [self.tabBar.items objectAtIndex:0];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if (_dialString) {
+        [self performSegueWithIdentifier:@"LocalContactsClickToCall" sender:self];
+    }
+}
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     UIViewController *viewController = segue.destinationViewController;
@@ -42,6 +50,7 @@
     {
         JCCallerViewController *caller = (JCCallerViewController *)viewController;
         caller.dialString = _dialString;
+        _dialString = nil;
     }
 }
 
@@ -89,7 +98,6 @@
     }
     
     _dialString = phoneNumber;
-    [self performSegueWithIdentifier:@"LocalContactsClickToCall" sender:self];
 }
 
 #pragma mark - Delegate Handlers -
@@ -114,7 +122,6 @@
 
 #pragma mark Show all contacts
 
-
 #pragma mark ABPeoplePickerNavigationControllerDelegate methods
 
 // On iOS 8.0, a selected person and property is returned with this method.
@@ -123,11 +130,11 @@
     [self didSelectPerson:person identifier:identifier];
 }
 
-#pragma clang diagnostic ignored "-Wdeprecated-implementations"
+#pragma clang diagnostic ignored "-Wdeprecated-implementations" // iOS 7 backwards compatibility.
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier
 {
     [self didSelectPerson:person identifier:identifier];
-    [peoplePicker dismissViewControllerAnimated:YES completion:nil];
+    [peoplePicker dismissViewControllerAnimated:YES completion:NULL];
     return NO;
 }
 
