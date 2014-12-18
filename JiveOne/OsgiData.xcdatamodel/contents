@@ -67,8 +67,8 @@
         <attribute name="display" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="outboundProxy" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="registrationHost" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="sipPassword" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="sipUsername" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sipPassword" optional="YES" attributeType="Transformable" valueTransformerName="JCStringEncryptionTransformer" syncable="YES"/>
+        <attribute name="sipUsername" optional="YES" attributeType="Transformable" valueTransformerName="JCStringEncryptionTransformer" syncable="YES"/>
         <relationship name="line" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Line" inverseName="lineConfiguration" inverseEntity="Line" syncable="YES"/>
     </entity>
     <entity name="Membership" representedClassName="Membership" syncable="YES">
@@ -163,12 +163,12 @@
         <element name="Conversation" positionX="-758" positionY="126" width="128" height="180"/>
         <element name="ConversationEntry" positionX="-605" positionY="126" width="128" height="270"/>
         <element name="ConversationETag" positionX="-666" positionY="432" width="128" height="60"/>
-        <element name="IncomingCall" positionX="448" positionY="-405" width="128" height="28"/>
+        <element name="IncomingCall" positionX="448" positionY="-405" width="128" height="45"/>
         <element name="Line" positionX="-83" positionY="-63" width="128" height="133"/>
         <element name="LineConfiguration" positionX="162" positionY="-45" width="128" height="133"/>
         <element name="Membership" positionX="619" positionY="567" width="128" height="90"/>
-        <element name="MissedCall" positionX="448" positionY="-277" width="128" height="28"/>
-        <element name="OutgoingCall" positionX="448" positionY="-340" width="128" height="28"/>
+        <element name="MissedCall" positionX="448" positionY="-277" width="128" height="45"/>
+        <element name="OutgoingCall" positionX="448" positionY="-340" width="128" height="45"/>
         <element name="PBX" positionX="-288" positionY="-162" width="128" height="163"/>
         <element name="Person" positionX="-83" positionY="-189" width="128" height="103"/>
         <element name="PersonEntities" positionX="430" positionY="837" width="128" height="360"/>
