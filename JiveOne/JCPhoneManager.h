@@ -59,8 +59,8 @@ typedef enum : NSUInteger {
 @property (nonatomic, readonly, getter=isConnecting) BOOL connecting;
 @property (nonatomic, readonly) JCPhoneManagerOutputType outputType;
 
--(void)connectToLine:(Line *)line loading:(void(^)())loading completion:(CompletionHandler)completion;
--(void)reconnectToLine:(Line *)line loading:(void(^)())loading completion:(CompletionHandler)completion;
+-(void)connectToLine:(Line *)line completion:(CompletionHandler)completion;
+-(void)reconnectToLine:(Line *)line completion:(CompletionHandler)completion;
 -(void)disconnect;
 
 // Attempts to dial a passed string following the dial type directive. When the dial operation was completed, we are
@@ -68,7 +68,6 @@ typedef enum : NSUInteger {
 // broadcasted through the notification center.
 -(void)dialNumber:(NSString *)dialNumber
              type:(JCPhoneManagerDialType)dialType
-          loading:(void(^)())loading
        completion:(void(^)(BOOL success, NSDictionary *callInfo))completion;
 
 // Merges two existing calls into a conference call. Requires there to be two current calls to be merged.
@@ -97,8 +96,8 @@ typedef enum : NSUInteger {
 
 + (JCPhoneManager *)sharedManager;
 
-+ (void)connectToLine:(Line *)line loading:(void(^)())loading completion:(CompletionHandler)completion;
-+ (void)reconnectToLine:(Line *)line loading:(void(^)())loading completion:(CompletionHandler)completion;
++ (void)connectToLine:(Line *)line completion:(CompletionHandler)completion;
++ (void)reconnectToLine:(Line *)line completion:(CompletionHandler)completion;
 + (void)disconnect;
 
 @end

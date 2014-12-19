@@ -84,11 +84,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     
     [_phoneManager dialNumber:dialString
                          type:JCPhoneManagerSingleDial
-                      loading:^{
-                          [self showHudWithTitle:@"" detail:@"Selecting Line..."];
-                      }
                    completion:^(BOOL success, NSDictionary *callInfo) {
-                       [self hideHud];
                        if (!success) {
                            [self performSelector:@selector(closeCallerViewController) withObject:nil afterDelay:0];
                        }
@@ -459,11 +455,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     __unsafe_unretained JCCallerViewController *weakSelf = self;
     [_phoneManager dialNumber:dialString
                          type:controller.transferCallType
-                      loading:^{
-                          [self showHudWithTitle:@"" detail:@"Selecting Line..."];
-                      }
                    completion:^(BOOL success, NSDictionary *callInfo) {
-                       [self hideHud];
                        if (success)
                        {
                            switch (controller.transferCallType) {

@@ -48,14 +48,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     [super viewWillAppear:animated];
     
     if (_phoneManager.line && !_phoneManager.isConnected && !_phoneManager.isConnecting) {
-        __unsafe_unretained UIViewController *weakSelf = self;
-        [_phoneManager reconnectToLine:_phoneManager.line
-                               loading:^{
-                                   [weakSelf showHudWithTitle:@"" detail:@"Selecting Line..."];
-                               }
-                            completion:^(BOOL success, NSError *error) {
-                                [weakSelf hideHud];
-                            }];
+        [_phoneManager reconnectToLine:_phoneManager.line completion:NULL];
     }
 }
 
@@ -91,11 +84,11 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 -(IBAction)initiateCall:(id)sender
 {
     NSString *string = self.dialStringLabel.dialString;
+    
+    // If the string is empty, we polulate the dial string with the most recent item in call history.
     if (!string || [string isEqualToString:@""]) {
-
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"line = %@", _phoneManager.line];
         OutgoingCall *call = [OutgoingCall MR_findFirstWithPredicate:predicate sortedBy:@"date" ascending:false];
-        
         self.dialStringLabel.dialString = call.number;
         return;
     }
@@ -105,14 +98,11 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     if (_initiatingCall) {
         return;
     }
+    
     _initiatingCall = TRUE;
     [_phoneManager dialNumber:string
                          type:JCPhoneManagerSingleDial
-                      loading:^{
-                          [self showHudWithTitle:@"" detail:@"Selecting Line..."];
-                      }
                    completion:^(BOOL success, NSDictionary *callInfo) {
-                       [self hideHud];
                        if (success){
                            [self performSegueWithIdentifier:kJCDialerViewControllerCallerStoryboardIdentifier sender:self];
                            self.dialStringLabel.dialString = nil;

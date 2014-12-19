@@ -23,6 +23,7 @@
 // Categories
 #import "UIDevice+Custom.h"
 #import "Contact.h"
+#import "UIViewController+HUD.h"
 
 NSString *const kJCPhoneManager911String = @"911";
 NSString *const kJCPhoneManager611String = @"611";
@@ -52,7 +53,6 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
     SipHandler *_sipHandler;
 	NSString *_warmTransferNumber;
     CTCallCenter *_externalCallCenter;
-    
     BOOL _connecting;
 }
 
@@ -92,40 +92,49 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
 
 #pragma mark - Public Methods -
 
--(void)connectToLine:(Line *)line loading:(void(^)())started completion:(CompletionHandler)completed
+/**
+ *  Registers the phone manager to a particualar line.
+ *
+ *  If we are already connecting, we limit them so that they can not make multiple concurrent
+ *  reconnect events at the same time.
+ */
+-(void)connectToLine:(Line *)line completion:(CompletionHandler)completion
 {
     if (_connecting) {
         return;
     }
     
     _connecting = TRUE;
-    if (line.lineConfiguration) {
-        [self connectToLine:line completion:completed];
-        if (completed) {
-            completed(YES, nil);
-        }
+    _completion = completion;
+    
+    // If we have a line configuration for the line, try to register it.
+    if (line.lineConfiguration){
+        [self registerToLine:line];
+        return;
     }
-    else {
-        if (started != NULL) {
-            started();
+    
+    // If we do not have a line configuration, we need to request it.
+    [UIApplication showHudWithTitle:@"" message:@"Selecting Line..."];
+    [JCV4ProvisioningClient requestProvisioningForLine:line completed:^(BOOL success, NSError *error) {
+        [UIApplication hideHud];
+        if (success) {
+            [self registerToLine:line];
+            return;
         }
-        [JCV4ProvisioningClient requestProvisioningForLine:line completed:^(BOOL success, NSError *error) {
-            if (success) {
-                [self connectToLine:line completion:completed];
-            }
-            if (completed) {
-                completed(success, error);
-            }
-        }];
-    }
+        
+        [UIApplication showSimpleAlert:@"" message:@"Unable to connect to this line at this time. Please Try again." code:error.code];
+        if (completion) {
+            completion(success, error);
+        }
+    }];
 }
 
--(void)reconnectToLine:(Line *)line loading:(void(^)())started completion:(CompletionHandler)completion
+-(void)reconnectToLine:(Line *)line completion:(CompletionHandler)completion
 {
     if (_sipHandler && (_line == line)) {
         [_sipHandler connect:completion];
     } else {
-        [self connectToLine:line loading:started completion:completion];
+        [self connectToLine:line completion:completion];
     }
 }
 
@@ -137,63 +146,24 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
 }
 
 /**
- * Dial a given number string. Notify Caller on completion in block.
+ *  Dial a given number string. Notify Caller on completion in block.
  *
- * Do 911 call detection. If the number matches an emergency number, and the device can make a call try to call. If we 
- * get a connected or dialing. Handle 911 call detection event if there is no sip handler.
+ *  Do 911 call detection. If the number matches an emergency number, and the device can make a call 
+ *  try to call. If we get a connected or dialing. Handle 911 call detection event if there is no 
+ *  sip handler.
  *
- *  If we are not an emergency number, then try to connect and dial. If already connected, will dial immediately, 
- *  otherwise tries to register, then dial. If we are uable to connect, we call completion handler with success being 
- *  false;
+ *  If we are not an emergency number, then try to connect and dial. If already connected, will dial
+ *  immediately, otherwise tries to register, then dial. If we are uable to connect, we call 
+ *  completion handler with success being false.
  */
--(void)dialNumber:(NSString *)dialString type:(JCPhoneManagerDialType)dialType loading:(void (^)())loading completion:(void (^)(BOOL, NSDictionary *))completion
+-(void)dialNumber:(NSString *)dialString type:(JCPhoneManagerDialType)dialType completion:(void (^)(BOOL, NSDictionary *))completion
 {
     if ([self isEmergencyNumber:dialString] && [UIDevice currentDevice].canMakeCall) {
-        
-        #ifdef DEBUG
-        dialString = kJCPhoneManager611String;
-        #endif
-        
-        // Add notification observing of the application active event. We only observed this in this one event, since we
-        // know we are causing the application to loose focus, we want to handle events when we return.
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
-        
-        __unsafe_unretained JCPhoneManager *weakSelf = self;
-        self.externalCallCompletionHandler = ^(BOOL connected){
-            if (connected) {
-                completion(false, nil);
-            }
-            else{
-                [weakSelf connectAndDial:dialString type:dialType loading:loading completion:completion];
-            }
-        };
-        
-        // Configure event handling to observe the iPhone Dialer. If we are connected, flagged that we ar connected for
-        // later use.
-        self.externalCallConnected = false;
-        self.externalCallDisconnected = false;
-        _externalCallCenter = [[CTCallCenter alloc] init];
-        [_externalCallCenter setCallEventHandler:^(CTCall *call){
-            if ([call.callState isEqualToString: CTCallStateConnected]) {
-                weakSelf.externalCallConnected = TRUE;
-                NSLog(@"call connected");
-            }
-            else if ([call.callState isEqualToString:CTCallStateDialing]) {
-                weakSelf.externalCallDisconnected = FALSE;
-                NSLog(@"call dialing");
-            }
-            else if ([call.callState isEqualToString:CTCallStateDisconnected]) {
-                NSLog(@"call disconnected");
-                weakSelf.externalCallDisconnected = TRUE;
-            }
-        }];
-        
-        // Initiate call using the iPhone's dialer.
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", dialString]]];
+        [self dialEmergencyNumber:dialString type:dialType completion:completion];
+        return;
     }
-    else {
-        [self connectAndDial:dialString type:dialType loading:loading completion:completion];
-    }
+    
+    [self connectAndDial:dialString type:dialType completion:completion];
 }
 
 -(void)finishWarmTransfer:(void (^)(BOOL success))completion
@@ -254,7 +224,9 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
     JCCallCard *inactiveCall = [self findInactiveCallCard];
     inactiveCall.hold = false;
 }
--(void)muteCall:(BOOL)mute {
+
+-(void)muteCall:(BOOL)mute
+{
     if (!_sipHandler) {
         return;
     }
@@ -304,7 +276,7 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
 
 #pragma mark - Private -
 
--(void)connectToLine:(Line *)line completion:(CompletionHandler)completion
+-(void)registerToLine:(Line *)line
 {
     // If we have a sip handler, disconnect the current registration.
     if (_sipHandler && _line != line) {
@@ -312,48 +284,28 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
     }
     
     _line = line;
-    _completion = completion;
     _sipHandler = [[SipHandler alloc] initWithLine:line delegate:self];
 }
 
--(BOOL)isEmergencyNumber:(NSString *)dialString
+-(void)connectAndDial:(NSString *)dialString type:(JCPhoneManagerDialType)dialType completion:(void (^)(BOOL success, NSDictionary *callInfo))completion
 {
-    return [dialString isEqualToString:kJCPhoneManager911String];
-    
-    // TODO: Localization, detecting the emergency number based on localization for the device and cellular positioning for the carrier device.
-}
-
--(JCCallCard *)findInactiveCallCard
-{
-    for (JCCallCard *callCard in self.calls) {
-        if (callCard.lineSession.isHolding == TRUE) {
-            return callCard;
-        }
-    }
-    return nil;
-}
-
--(void)connectAndDial:(NSString *)dialString type:(JCPhoneManagerDialType)dialType loading:(void (^)())loading completion:(void (^)(BOOL success, NSDictionary *callInfo))completion
-{
-    if(!self.connected)
-    {
-        [self reconnectToLine:_line
-                      loading:loading
-                   completion:^(BOOL success, NSError *error) {
-                       if (success)
-                       {
-                           [self dial:dialString type:dialType completion:completion];
-                       }else{
-                           if (completion) {
-                               completion(false, nil);
-                           }
-                           NSLog(@"%@", [error description]);
-                       }
-                           
-        }];
-    }
-    else
+    // If we are connected, we should be able to place a phone call.
+    if (_connected) {
         [self dial:dialString type:dialType completion:completion];
+        return;
+    }
+    
+    [self reconnectToLine:_line
+               completion:^(BOOL success, NSError *error) {
+                   if (success){
+                       [self dial:dialString type:dialType completion:completion];
+                       return;
+                   }
+                   
+                   if (completion) {
+                        completion(false, nil);
+                    }
+               }];
 }
 
 -(void)dial:(NSString *)dialNumber type:(JCPhoneManagerDialType)dialType completion:(void (^)(BOOL success, NSDictionary *callInfo))completion
@@ -409,10 +361,70 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
     }
     else
     {
-         NSLog(@"Error Making Call");
+        NSLog(@"Error Making Call");
         if (completion != NULL)
             completion(false, @{});
     }
+}
+
+#pragma mark Emergency Numbers
+
+-(BOOL)isEmergencyNumber:(NSString *)dialString
+{
+    return [dialString isEqualToString:kJCPhoneManager911String];
+    
+    // TODO: Localization, detecting the emergency number based on localization for the device and cellular positioning for the carrier device.
+}
+
+-(void)dialEmergencyNumber:(NSString *)emergencyNumber type:(JCPhoneManagerDialType)dialType completion:(void (^)(BOOL, NSDictionary *))completion
+{
+    #ifdef DEBUG
+        emergencyNumber = kJCPhoneManager611String;
+    #endif
+    
+    // Add notification observing of the application active event. We only observed this in this one event, since we
+    // know we are causing the application to loose focus, we want to handle events when we return.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+    
+    __unsafe_unretained JCPhoneManager *weakSelf = self;
+    self.externalCallCompletionHandler = ^(BOOL connected){
+        if (connected) {
+            completion(false, nil);
+        }
+        else{
+            [weakSelf connectAndDial:emergencyNumber type:dialType completion:completion];
+        }
+    };
+    
+    // Configure event handling to observe the iPhone Dialer. If we are connected, flagged that we ar connected for
+    // later use.
+    self.externalCallConnected = false;
+    self.externalCallDisconnected = false;
+    _externalCallCenter = [[CTCallCenter alloc] init];
+    [_externalCallCenter setCallEventHandler:^(CTCall *call){
+        if ([call.callState isEqualToString: CTCallStateConnected]) {
+            weakSelf.externalCallConnected = TRUE;
+        }
+        else if ([call.callState isEqualToString:CTCallStateDialing]) {
+            weakSelf.externalCallDisconnected = FALSE;
+        }
+        else if ([call.callState isEqualToString:CTCallStateDisconnected]) {
+            weakSelf.externalCallDisconnected = TRUE;
+        }
+    }];
+    
+    // Initiate call using the iPhone's dialer.
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", emergencyNumber]]];
+}
+
+-(JCCallCard *)findInactiveCallCard
+{
+    for (JCCallCard *callCard in self.calls) {
+        if (callCard.lineSession.isHolding == TRUE) {
+            return callCard;
+        }
+    }
+    return nil;
 }
 
 -(NSString *)getContactNameByNumber:(NSString *)number
@@ -424,6 +436,8 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
     
     return nil;
 }
+
+#pragma mark Call Card Management
 
 -(void)addCall:(JCCallCard *)callCard
 {
@@ -783,14 +797,14 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
     return self;
 }
 
-+ (void)connectToLine:(Line *)line loading:(void(^)())loading completion:(CompletionHandler)completed
++ (void)connectToLine:(Line *)line completion:(CompletionHandler)completed
 {
-    [[JCPhoneManager sharedManager] connectToLine:line loading:loading completion:completed];
+    [[JCPhoneManager sharedManager] connectToLine:line completion:completed];
 }
 
-+ (void)reconnectToLine:(Line *)line loading:(void(^)())loading completion:(CompletionHandler)completed
++ (void)reconnectToLine:(Line *)line completion:(CompletionHandler)completed
 {
-    [[JCPhoneManager sharedManager] reconnectToLine:line loading:loading completion:completed];
+    [[JCPhoneManager sharedManager] reconnectToLine:line completion:completed];
 }
 
 + (void)disconnect
