@@ -125,6 +125,17 @@
             }
         }
     }
+    else {
+        [_selectedViewController viewWillAppear:animated];
+    }
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if (_selectedViewController) {
+        [_selectedViewController viewDidAppear:animated];
+    }
 }
 
 -(void)viewWillLayoutSubviews
