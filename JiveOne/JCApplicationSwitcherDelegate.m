@@ -137,7 +137,7 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
         viewController = ((UINavigationController *)viewController).topViewController;
         if ([viewController isKindOfClass:[JCVoicemailViewController class]]) {
             JCVoicemailViewController *voicemailViewController = (JCVoicemailViewController *)viewController;
-            [voicemailViewController loadVoicemail:recentEvent];
+            voicemailViewController.voicemail = recentEvent;
         }
     }
 }

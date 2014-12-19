@@ -55,7 +55,7 @@
 		
 		super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                              managedObjectContext:self.managedObjectContext
-                                                                               sectionNameKeyPath:@"line"
+                                                                               sectionNameKeyPath:nil
                                                                                         cacheName:nil];
 	}
 	return _fetchedResultsController;
