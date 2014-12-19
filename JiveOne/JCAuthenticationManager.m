@@ -289,7 +289,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     if (success){
         [center postNotificationName:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:self userInfo:nil];
     } else {
-        [self logout];
+        [_authenticationStore logout];
         [center postNotificationName:kJCAuthenticationManagerAuthenticationFailedNotification object:self userInfo:nil];
     }
     

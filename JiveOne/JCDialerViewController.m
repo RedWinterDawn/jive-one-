@@ -47,17 +47,24 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 {
     [super viewWillAppear:animated];
     
-//    if(!_phoneManager.isConnected)
-//    {
-//        __unsafe_unretained UIViewController *weakSelf = self;
-//        [_phoneManager reconnectToLine:[JCAuthenticationManager sharedInstance].line
-//                               started:^{
-//                                   [weakSelf showHudWithTitle:@"Registering" detail:@"Selecting Line..."];
-//                               }
-//                            completion:^(bool success, NSError *error) {
-//                                [weakSelf hideHud];
-//                            }];
-//    }
+    JCAuthenticationManager *manager = [JCAuthenticationManager sharedInstance];
+    if(!_phoneManager.isConnected && manager.user)
+    {
+        Line *line = manager.line;
+        if (!line) {
+            return;
+        }
+        
+        __unsafe_unretained UIViewController *weakSelf = self;
+        [_phoneManager reconnectToLine:line
+                               started:^{
+                                   [weakSelf showHudWithTitle:@"Registering" detail:@"Selecting Line..."];
+                               }
+                            completion:^(BOOL success, NSError *error) {
+                                [weakSelf hideHud];
+                                
+                            }];
+    }
 }
 
 - (void)dealloc
@@ -91,7 +98,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 
 -(IBAction)initiateCall:(id)sender
 {
-    NSString *string = self.dialStringLabel.text;
+    NSString *string = self.dialStringLabel.dialString;
     if (!string || [string isEqualToString:@""]) {
 
         OutgoingCall *call = [OutgoingCall MR_findFirstOrderedByAttribute:@"date" ascending:false];
