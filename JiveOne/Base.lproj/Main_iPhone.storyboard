@@ -11,6 +11,7 @@
         <scene sceneID="yl2-sM-qoP">
             <objects>
                 <tabBarController storyboardIdentifier="AppSwitcherViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="49e-Tb-3d3" customClass="JCApplicationSwitcherViewController" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
@@ -3831,8 +3832,8 @@
                                             <action selector="numPadPressed:" destination="Jhp-k4-hWJ" eventType="touchUpInside" id="r4u-Lp-OEK"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="btO-Oq-plE">
-                                        <rect key="frame" x="101" y="182" width="102" height="40"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="btO-Oq-plE">
+                                        <rect key="frame" x="107" y="188" width="106" height="43"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="btO-Oq-plE" secondAttribute="height" multiplier="5:2" id="BuA-Da-dUs"/>
                                         </constraints>
@@ -3867,8 +3868,8 @@
                                             <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="pSP-II-xR3"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="11" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0q4-MP-UNQ">
-                                        <rect key="frame" x="203" y="182" width="101" height="40"/>
+                                    <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0q4-MP-UNQ">
+                                        <rect key="frame" x="213" y="188" width="107" height="43"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="0q4-MP-UNQ" secondAttribute="height" multiplier="5:2" id="zqJ-Ys-i2w"/>
                                         </constraints>
@@ -3903,8 +3904,8 @@
                                             <action selector="numPadPressed:" destination="Jhp-k4-hWJ" eventType="touchUpInside" id="rnv-ao-diy"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="10" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qas-Pb-3oh">
-                                        <rect key="frame" x="0.0" y="182" width="101" height="40"/>
+                                    <button opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qas-Pb-3oh">
+                                        <rect key="frame" x="0.0" y="188" width="107" height="43"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="qas-Pb-3oh" secondAttribute="height" multiplier="5:2" id="8D6-Ip-7Wd"/>
                                         </constraints>
