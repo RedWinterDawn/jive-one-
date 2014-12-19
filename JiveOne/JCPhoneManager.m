@@ -183,7 +183,7 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
     }
 }
 
--(void)finishWarmTransfer:(void (^)(bool success))completion
+-(void)finishWarmTransfer:(void (^)(BOOL success))completion
 {
     if (!_sipHandler) {
         return;
@@ -200,7 +200,7 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
 	}
 }
 
--(void)mergeCalls:(void (^)(bool success))completion
+-(void)mergeCalls:(void (^)(BOOL success))completion
 {
     if (!_sipHandler) {
         return;
