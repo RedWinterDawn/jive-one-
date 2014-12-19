@@ -89,15 +89,17 @@
                 index = ABMultiValueGetIndexForIdentifier(phones, identifier);
             }
             phoneNumber = CFBridgingRelease(ABMultiValueCopyValueAtIndex(phones, index));
-            phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@"-" withString:@""];
-            phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@"(" withString:@""];
-            phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@")" withString:@""];
-            phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@" " withString:@""];
+
+            NSString *strippedString = [[phoneNumber componentsSeparatedByCharactersInSet:[[NSCharacterSet characterSetWithCharactersInString:@"1234567890*"] invertedSet]]componentsJoinedByString:@""];
+            phoneNumber = strippedString;
+
+            NSLog(@"phoneNumber: %@", phoneNumber);
         }
         CFRelease(phones);
     }
     
     _dialString = phoneNumber;
+    NSLog(@"%@", _dialString);
 }
 
 #pragma mark - Delegate Handlers -
