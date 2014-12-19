@@ -7,7 +7,6 @@
 //
 
 #import "JCCallCardViewCell.h"
-#import "JCCallCardManager.h"
 #import "NSString+IsNumeric.h"
 
 @implementation JCCallCardViewCell

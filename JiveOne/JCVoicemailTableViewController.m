@@ -71,7 +71,7 @@
     [[NSRunLoop currentRunLoop] addTimer:requestTimeout forMode:NSRunLoopCommonModes];
  
     Line *line = [JCAuthenticationManager sharedInstance].line;
-    [Voicemail downloadVoicemailsForLine:line complete:^(bool success, NSError *error) {
+    [Voicemail downloadVoicemailsForLine:line complete:^(BOOL success, NSError *error) {
         if ([requestTimeout isValid]) {
             [requestTimeout invalidate];
         }

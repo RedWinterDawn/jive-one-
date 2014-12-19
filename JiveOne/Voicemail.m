@@ -85,7 +85,7 @@ NSString *const kVoicemailDataAttributeKey = @"data";
 
 -(NSString *)displayDuration
 {
-    return  [NSString stringWithFormat:@"%ld:%02ld", self.duration / 60, self.duration % 60, nil];
+    return  [NSString stringWithFormat:@"%ld:%02ld", (long)self.duration / 60, (long)self.duration % 60, nil];
 }
 
 @end

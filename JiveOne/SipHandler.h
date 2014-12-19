@@ -10,8 +10,8 @@
 #import "JCLineSession.h"
 #import "Line.h"
 
-typedef void(^CompletionHandler)(bool success, NSError *error);
-typedef void(^TransferCompletionHandler)(bool success, NSError *error);
+typedef void(^CompletionHandler)(BOOL success, NSError *error);
+typedef void(^TransferCompletionHandler)(BOOL success, NSError *error);
 
 extern NSString *const kSipHandlerRegisteredSelectorKey;
 
@@ -57,8 +57,8 @@ extern NSString *const kSipHandlerRegisteredSelectorKey;
 
 - (bool)setConference:(bool)conference;
 //- (void) hangUpCall;
-- (void) blindTransferToNumber:(NSString*)referTo completion:(void (^)(bool success, NSError *error))completion;   // Blind Transfer
-- (void) warmTransferToNumber:(NSString*)referTo completion:(void (^)(bool success, NSError *error))completion;    // warm Transfer
+- (void) blindTransferToNumber:(NSString*)referTo completion:(void (^)(BOOL success, NSError *error))completion;   // Blind Transfer
+- (void) warmTransferToNumber:(NSString*)referTo completion:(void (^)(BOOL success, NSError *error))completion;    // warm Transfer
 - (void) muteCall:(BOOL)mute;
 - (void) setLoudSpeakerEnabled:(BOOL)loudSpeakerEnabled;
 

@@ -7,7 +7,7 @@
 //
 
 #import "JCDialerViewController.h"
-#import "JCCallCardManager.h"
+#import "JCPhoneManager.h"
 #import "OutgoingCall.h"
 #import "UIViewController+HUD.h"
 
@@ -15,7 +15,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 
 @interface JCDialerViewController ()
 {
-    JCCallCardManager *_phoneManager;
+    JCPhoneManager *_phoneManager;
     BOOL _initiatingCall;
 }
 
@@ -31,7 +31,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 {
     [super viewDidLoad];
     
-    _phoneManager = [JCCallCardManager sharedManager];
+    _phoneManager = [JCPhoneManager sharedManager];
     [_phoneManager addObserver:self forKeyPath:@"connected" options:NSKeyValueObservingOptionNew context:NULL];
     [self updateRegistrationStatus];
     
@@ -47,17 +47,24 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 {
     [super viewWillAppear:animated];
     
-//    if(!_phoneManager.isConnected)
-//    {
-//        __unsafe_unretained UIViewController *weakSelf = self;
-//        [_phoneManager reconnectToLine:[JCAuthenticationManager sharedInstance].line
-//                               started:^{
-//                                   [weakSelf showHudWithTitle:@"Registering" detail:@"Selecting Line..."];
-//                               }
-//                            completion:^(bool success, NSError *error) {
-//                                [weakSelf hideHud];
-//                            }];
-//    }
+    JCAuthenticationManager *manager = [JCAuthenticationManager sharedInstance];
+    if(!_phoneManager.isConnected && manager.user)
+    {
+        Line *line = manager.line;
+        if (!line) {
+            return;
+        }
+        
+        __unsafe_unretained UIViewController *weakSelf = self;
+        [_phoneManager reconnectToLine:line
+                               started:^{
+                                   [weakSelf showHudWithTitle:@"Registering" detail:@"Selecting Line..."];
+                               }
+                            completion:^(BOOL success, NSError *error) {
+                                [weakSelf hideHud];
+                                
+                            }];
+    }
 }
 
 - (void)dealloc
@@ -91,10 +98,11 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 
 -(IBAction)initiateCall:(id)sender
 {
-    NSString *string = self.dialStringLabel.text;
+    NSString *string = self.dialStringLabel.dialString;
     if (!string || [string isEqualToString:@""]) {
 
-        OutgoingCall *call = [OutgoingCall MR_findFirstOrderedByAttribute:@"date" ascending:false];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"line = %@", _phoneManager.line];
+        OutgoingCall *call = [OutgoingCall MR_findFirstWithPredicate:predicate sortedBy:@"date" ascending:false];
         
         self.dialStringLabel.dialString = call.number;
         return;
@@ -106,7 +114,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
         return;
     }
     _initiatingCall = TRUE;
-    [_phoneManager dialNumber:string type:JCCallCardDialSingle completion:^(bool success, NSDictionary *callInfo) {
+    [_phoneManager dialNumber:string type:JCPhoneManagerSingleDial completion:^(BOOL success, NSDictionary *callInfo) {
         if (success){
             [self performSegueWithIdentifier:kJCDialerViewControllerCallerStoryboardIdentifier sender:self];
             self.dialStringLabel.dialString = nil;

@@ -1,14 +1,15 @@
 //
-//  JCCallManager.m
+//  JCPhoneManager.m
 //  JiveOne
 //
 //  Created by Robert Barclay on 10/2/14.
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCCallCardManager.h"
+@import AVFoundation;
+@import CoreTelephony;
 
-#import <AVFoundation/AVFoundation.h>
+#import "JCPhoneManager.h"
 
 // Managers
 #import "JCBluetoothManager.h"
@@ -20,34 +21,31 @@
 #import "JCConferenceCallCard.h"
 
 // Categories
-#import "UIDevice+CellularData.h"
+#import "UIDevice+Custom.h"
 #import "Contact.h"
 
-@import CoreTelephony;
+NSString *const kJCPhoneManager911String = @"911";
+NSString *const kJCPhoneManager611String = @"611";
 
-NSString *const kJCCallCardManager911String = @"911";
-NSString *const kJCCallCardManager611String = @"611";
+NSString *const kJCPhoneManagerAddedCallNotification            = @"addedCall";
+NSString *const kJCPhoneManagerAnswerCallNotification           = @"answerCall";
+NSString *const kJCPhoneManagerRemoveCallNotification           = @"removedCall";
+NSString *const kJCPhoneManagerAddedConferenceCallNotification  = @"addedConferenceCall";
+NSString *const kJCPhoneManagerRemoveConferenceCallNotification = @"removeConferenceCall";
 
-NSString *const kJCCallCardManagerAddedCallNotification      = @"addedCall";
-NSString *const kJCCallCardManagerAnswerCallNotification     = @"answerCall";
-NSString *const kJCCallCardManagerRemoveCallNotification     = @"removedCall";
+NSString *const kJCPhoneManagerUpdatedIndex      = @"index";
+NSString *const kJCPhoneManagerPriorUpdateCount  = @"priorCount";
+NSString *const kJCPhoneManagerUpdateCount       = @"updateCount";
+NSString *const kJCPhoneManagerRemovedCells      = @"removedCells";
+NSString *const kJCPhoneManagerAddedCells        = @"addedCells";
+NSString *const kJCPhoneManagerLastCallState     = @"lastCallState";
 
-NSString *const kJCCallCardManagerAddedConferenceCallNotification   = @"addedConferenceCall";
-NSString *const kJCCallCardManagerRemoveConferenceCallNotification  = @"removeConferenceCall";
+NSString *const kJCPhoneManagerNewCall           = @"newCall";
+NSString *const kJCPhoneManagerActiveCall        = @"activeCall";
+NSString *const kJCPhoneManagerIncomingCall      = @"incomingCall";
+NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
 
-NSString *const kJCCallCardManagerUpdatedIndex      = @"index";
-NSString *const kJCCallCardManagerPriorUpdateCount  = @"priorCount";
-NSString *const kJCCallCardManagerUpdateCount       = @"updateCount";
-NSString *const kJCCallCardManagerRemovedCells      = @"removedCells";
-NSString *const kJCCallCardManagerAddedCells        = @"addedCells";
-NSString *const kJCCallCardManagerLastCallState     = @"lastCallState";
-
-NSString *const kJCCallCardManagerNewCall           = @"newCall";
-NSString *const kJCCallCardManagerActiveCall        = @"activeCall";
-NSString *const kJCCallCardManagerIncomingCall      = @"incomingCall";
-NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
-
-@interface JCCallCardManager ()<SipHandlerDelegate, JCCallCardDelegate>
+@interface JCPhoneManager ()<SipHandlerDelegate, JCCallCardDelegate>
 {
     JCBluetoothManager *_bluetoothManager;
     SipHandler *_sipHandler;
@@ -64,7 +62,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 
 @end
 
-@implementation JCCallCardManager
+@implementation JCPhoneManager
 
 -(id)init
 {
@@ -135,19 +133,19 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
  *  otherwise tries to register, then dial. If we are uable to connect, we call completion handler with success being 
  *  false;
  */
--(void)dialNumber:(NSString *)dialString type:(JCCallCardDialTypes)dialType completion:(void (^)(bool success, NSDictionary *callInfo))completion
+-(void)dialNumber:(NSString *)dialString type:(JCPhoneManagerDialType)dialType completion:(void (^)(BOOL success, NSDictionary *callInfo))completion
 {
     if ([self isEmergencyNumber:dialString] && [UIDevice currentDevice].canMakeCall) {
         
         #ifdef DEBUG
-        dialString = kJCCallCardManager611String;
+        dialString = kJCPhoneManager611String;
         #endif
         
         // Add notification observing of the application active event. We only observed this in this one event, since we
         // know we are causing the application to loose focus, we want to handle events when we return.
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
         
-        __unsafe_unretained JCCallCardManager *weakSelf = self;
+        __unsafe_unretained JCPhoneManager *weakSelf = self;
         self.externalCallCompletionHandler = ^(BOOL connected){
             if (connected) {
                 completion(false, nil);
@@ -192,7 +190,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     }
     
     if (_warmTransferNumber) {
-		[_sipHandler warmTransferToNumber:_warmTransferNumber completion:^(bool success, NSError *error) {
+		[_sipHandler warmTransferToNumber:_warmTransferNumber completion:^(BOOL success, NSError *error) {
             _warmTransferNumber = nil;
             completion(success);
             if (error) {
@@ -306,7 +304,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 
 -(BOOL)isEmergencyNumber:(NSString *)dialString
 {
-    return [dialString isEqualToString:kJCCallCardManager911String];
+    return [dialString isEqualToString:kJCPhoneManager911String];
     
     // TODO: Localization, detecting the emergency number based on localization for the device and cellular positioning for the carrier device.
 }
@@ -321,7 +319,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     return nil;
 }
 
--(void)connectAndDial:(NSString *)dialString type:(JCCallCardDialTypes)dialType completion:(void (^)(bool success, NSDictionary *callInfo))completion
+-(void)connectAndDial:(NSString *)dialString type:(JCPhoneManagerDialType)dialType completion:(void (^)(BOOL success, NSDictionary *callInfo))completion
 {
     // If we are not logged in and do not have a sip handler, we must fail.
     if (!_sipHandler) {
@@ -330,7 +328,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     
     if(!_sipHandler.isRegistered)
     {
-        [_sipHandler connect:^(bool success, NSError *error) {
+        [_sipHandler connect:^(BOOL success, NSError *error) {
             if (success)
                 [self dial:dialString type:dialType completion:completion];
             else
@@ -344,10 +342,10 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
         [self dial:dialString type:dialType completion:completion];
 }
 
--(void)dial:(NSString *)dialNumber type:(JCCallCardDialTypes)dialType completion:(void (^)(bool success, NSDictionary *callInfo))completion
+-(void)dial:(NSString *)dialNumber type:(JCPhoneManagerDialType)dialType completion:(void (^)(BOOL success, NSDictionary *callInfo))completion
 {
-    if (dialType == JCCallCardDialBlindTransfer) {
-        [_sipHandler blindTransferToNumber:dialNumber completion:^(bool success, NSError *error) {
+    if (dialType == JCPhoneManagerBlindTransfer) {
+        [_sipHandler blindTransferToNumber:dialNumber completion:^(BOOL success, NSError *error) {
             if (success) {
                 [self hangUpAll];
             }
@@ -372,20 +370,20 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
         NSUInteger index = [self.calls indexOfObject:callCard];
         if (completion != NULL)
         {
-            if (dialType == JCCallCardDialWarmTransfer) {
+            if (dialType == JCPhoneManagerWarmTransfer) {
                 _warmTransferNumber = dialNumber;
                 
                 completion(true, @{
-                                   kJCCallCardManagerTransferedCall: transferedCall,
-                                   kJCCallCardManagerNewCall: callCard,
-                                   kJCCallCardManagerUpdatedIndex: [NSNumber numberWithInteger:index],
+                                   kJCPhoneManagerTransferedCall: transferedCall,
+                                   kJCPhoneManagerNewCall: callCard,
+                                   kJCPhoneManagerUpdatedIndex: [NSNumber numberWithInteger:index],
                                    });
             }
             else
             {
                 completion(true, @{
-                                   kJCCallCardManagerNewCall: callCard,
-                                   kJCCallCardManagerUpdatedIndex: [NSNumber numberWithInteger:index],
+                                   kJCPhoneManagerNewCall: callCard,
+                                   kJCPhoneManagerUpdatedIndex: [NSNumber numberWithInteger:index],
                                    });
             }
         }
@@ -421,13 +419,13 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     [self.calls sortUsingDescriptors:@[sortDescriptor]];
     
     NSUInteger newIndex = [self.calls indexOfObject:callCard];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerAddedCallNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName:kJCPhoneManagerAddedCallNotification
                                                         object:self
                                                       userInfo:@{
-                                                                 kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:newIndex],
-                                                                 kJCCallCardManagerPriorUpdateCount:[NSNumber numberWithInteger:priorCount],
-                                                                 kJCCallCardManagerUpdateCount: [NSNumber numberWithInteger:self.calls.count],
-                                                                 kJCCallCardManagerIncomingCall: [NSNumber numberWithBool:callCard.isIncoming]
+                                                                 kJCPhoneManagerUpdatedIndex:[NSNumber numberWithInteger:newIndex],
+                                                                 kJCPhoneManagerPriorUpdateCount:[NSNumber numberWithInteger:priorCount],
+                                                                 kJCPhoneManagerUpdateCount: [NSNumber numberWithInteger:self.calls.count],
+                                                                 kJCPhoneManagerIncomingCall: [NSNumber numberWithBool:callCard.isIncoming]
                                                                  }];
 }
 
@@ -439,12 +437,12 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     NSUInteger index = [self.calls indexOfObject:callCard];
     NSUInteger priorCount = self.calls.count;
     [self.calls removeObject:callCard];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerRemoveCallNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName:kJCPhoneManagerRemoveCallNotification
                                                         object:self
                                                       userInfo:@{
-                                                                 kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:index],
-                                                                 kJCCallCardManagerPriorUpdateCount:[NSNumber numberWithInteger:priorCount],
-                                                                 kJCCallCardManagerUpdateCount:[NSNumber numberWithInteger:self.calls.count]
+                                                                 kJCPhoneManagerUpdatedIndex:[NSNumber numberWithInteger:index],
+                                                                 kJCPhoneManagerPriorUpdateCount:[NSNumber numberWithInteger:priorCount],
+                                                                 kJCPhoneManagerUpdateCount:[NSNumber numberWithInteger:self.calls.count]
                                                                  }];
     
     // If when removing the call we are backgrounded, we tell the sip handler to operate in background mode.
@@ -478,13 +476,13 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     [self.calls addObject:conferenceCall];
     NSNumber *index = [NSNumber numberWithInteger:[self.calls indexOfObject:conferenceCall]];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerAddedConferenceCallNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName:kJCPhoneManagerAddedConferenceCallNotification
                                                         object:self
                                                       userInfo:@{
-                                                                 kJCCallCardManagerUpdatedIndex : index,
-                                                                 kJCCallCardManagerPriorUpdateCount : [NSNumber numberWithInteger:priorCount],
-                                                                 kJCCallCardManagerUpdateCount : [NSNumber numberWithInteger:self.calls.count],
-                                                                 kJCCallCardManagerRemovedCells : removeCells
+                                                                 kJCPhoneManagerUpdatedIndex : index,
+                                                                 kJCPhoneManagerPriorUpdateCount : [NSNumber numberWithInteger:priorCount],
+                                                                 kJCPhoneManagerUpdateCount : [NSNumber numberWithInteger:self.calls.count],
+                                                                 kJCPhoneManagerRemovedCells : removeCells
                                                                  }];
 }
 
@@ -508,13 +506,13 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     }
     self.calls = calls;
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerRemoveConferenceCallNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName:kJCPhoneManagerRemoveConferenceCallNotification
                                                         object:self
                                                       userInfo:@{
-                                                                 kJCCallCardManagerUpdatedIndex : [NSNumber numberWithInteger:removeIndex],
-                                                                 kJCCallCardManagerPriorUpdateCount : [NSNumber numberWithInteger:priorCount],
-                                                                 kJCCallCardManagerUpdateCount : [NSNumber numberWithInteger:self.calls.count],
-                                                                 kJCCallCardManagerAddedCells : addCalls
+                                                                 kJCPhoneManagerUpdatedIndex : [NSNumber numberWithInteger:removeIndex],
+                                                                 kJCPhoneManagerPriorUpdateCount : [NSNumber numberWithInteger:priorCount],
+                                                                 kJCPhoneManagerUpdateCount : [NSNumber numberWithInteger:self.calls.count],
+                                                                 kJCPhoneManagerAddedCells : addCalls
                                                                  }];
 }
 
@@ -622,17 +620,17 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
         return;
     }
     
-    [_sipHandler answerSession:callCard.lineSession completion:^(bool success, NSError *error) {
+    [_sipHandler answerSession:callCard.lineSession completion:^(BOOL success, NSError *error) {
         if (success)
         {
             callCard.started = [NSDate date];
             callCard.hold = false;
             
-            NSDictionary *userInfo = @{kJCCallCardManagerUpdatedIndex:[NSNumber numberWithInteger:[self.calls indexOfObject:callCard]],
-                                       kJCCallCardManagerIncomingCall: [NSNumber numberWithBool:callCard.isIncoming],
-                                       kJCCallCardManagerLastCallState:[NSNumber numberWithInt:callCard.callState]};
+            NSDictionary *userInfo = @{kJCPhoneManagerUpdatedIndex:[NSNumber numberWithInteger:[self.calls indexOfObject:callCard]],
+                                       kJCPhoneManagerIncomingCall: [NSNumber numberWithBool:callCard.isIncoming],
+                                       kJCPhoneManagerLastCallState:[NSNumber numberWithInt:callCard.callState]};
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:kJCCallCardManagerAnswerCallNotification object:self userInfo:userInfo];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kJCPhoneManagerAnswerCallNotification object:self userInfo:userInfo];
         }
         else
         {
@@ -657,7 +655,7 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
     }
     else
     {
-        [_sipHandler hangUpSession:callCard.lineSession completion:^(bool success, NSError *error) {
+        [_sipHandler hangUpSession:callCard.lineSession completion:^(BOOL success, NSError *error) {
             [self removeCall:callCard];
         }];
     }
@@ -741,14 +739,14 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 
 @end
 
-@implementation JCCallCardManager (Singleton)
+@implementation JCPhoneManager (Singleton)
 
-+(JCCallCardManager *)sharedManager
++(JCPhoneManager *)sharedManager
 {
-    static JCCallCardManager *phoneManagerSingleton = nil;
+    static JCPhoneManager *phoneManagerSingleton = nil;
     static dispatch_once_t phoneManagerLoaded;
     dispatch_once(&phoneManagerLoaded, ^{
-        phoneManagerSingleton = [[JCCallCardManager alloc] init];
+        phoneManagerSingleton = [[JCPhoneManager alloc] init];
     });
     return phoneManagerSingleton;
 }
@@ -760,17 +758,17 @@ NSString *const kJCCallCardManagerTransferedCall    = @"transferedCall";
 
 + (void)connectToLine:(Line *)line started:(void(^)())started completed:(CompletionHandler)completed
 {
-    [[JCCallCardManager sharedManager] connectToLine:line started:started completed:completed];
+    [[JCPhoneManager sharedManager] connectToLine:line started:started completed:completed];
 }
 
 + (void)reconnectToLine:(Line *)line started:(void(^)())started completion:(CompletionHandler)completed
 {
-    [[JCCallCardManager sharedManager] reconnectToLine:line started:started completion:completed];
+    [[JCPhoneManager sharedManager] reconnectToLine:line started:started completion:completed];
 }
 
 + (void)disconnect
 {
-    [[JCCallCardManager sharedManager] disconnect];
+    [[JCPhoneManager sharedManager] disconnect];
 }
 
 @end

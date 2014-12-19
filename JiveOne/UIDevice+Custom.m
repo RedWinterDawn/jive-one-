@@ -6,7 +6,22 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "UIDevice+CellularData.h"
+#import "UIDevice+Custom.h"
+
+@implementation UIDevice (Compatibility)
+
+-(BOOL)iOS8
+{
+    return !([self.systemVersion floatValue] < 8.0f);
+}
+
++(BOOL)iOS8
+{
+    return [UIDevice currentDevice].iOS8;
+}
+
+@end
+
 #import <ifaddrs.h>
 
 @import CoreTelephony;
@@ -67,5 +82,19 @@
     }
     return found;
 }
+
+/*
+ 
+ CTTelephonyNetworkInfo *telephonyInfo = [CTTelephonyNetworkInfo new];
+ NSLog(@"Current Radio Access Technology: %@", telephonyInfo.currentRadioAccessTechnology);
+ [NSNotificationCenter.defaultCenter addObserverForName:CTRadioAccessTechnologyDidChangeNotification
+ object:nil
+ queue:nil
+ usingBlock:^(NSNotification *note)
+ {
+ NSLog(@"New Radio Access Technology: %@", telephonyInfo.currentRadioAccessTechnology);
+ }];
+ 
+ */
 
 @end

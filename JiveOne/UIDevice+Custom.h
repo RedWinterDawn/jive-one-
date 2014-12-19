@@ -8,13 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
+@interface UIDevice (Compatibility)
+
+@property (nonatomic, readonly) BOOL iOS8;
+
++(BOOL)iOS8;
+
+@end
+
 @interface UIDevice (CellularData)
 
 @property (nonatomic, readonly) BOOL canMakeCall;
 @property (nonatomic, readonly) BOOL carrierAllowsVOIP;
 
 -(BOOL)carrierAllowsVOIP;
-
 -(BOOL)canMakeCall;
 
 @end

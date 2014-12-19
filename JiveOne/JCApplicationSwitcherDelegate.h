@@ -13,6 +13,4 @@ extern NSString *const kApplicationSwitcherPhoneRestorationIdentifier;
 
 @interface JCApplicationSwitcherDelegate : NSObject <JCApplicationSwitcherDelegate>
 
-+(void)reset;
-
 @end

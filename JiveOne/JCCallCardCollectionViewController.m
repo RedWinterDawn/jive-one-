@@ -7,7 +7,7 @@
 //
 
 #import "JCCallCardCollectionViewController.h"
-#import "JCCallCardManager.h"
+#import "JCPhoneManager.h"
 #import "JCCallCardViewCell.h"
 
 #import "JCConferenceCallCard.h"
@@ -23,14 +23,14 @@ NSString *const kJCCallCardCollectionConferenceCallCellReuseIdentifier = @"Confe
     self = [super initWithCoder:aDecoder];
     if (self) {
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-        JCCallCardManager *callCardManager = [JCCallCardManager sharedManager];
+        JCPhoneManager *phoneManager = [JCPhoneManager sharedManager];
         
-        [center addObserver:self selector:@selector(addedCall:) name:kJCCallCardManagerAddedCallNotification object:callCardManager];
-        [center addObserver:self selector:@selector(removedCall:) name:kJCCallCardManagerRemoveCallNotification object:callCardManager];
-        [center addObserver:self selector:@selector(updateCall:) name:kJCCallCardManagerAnswerCallNotification object:callCardManager];
+        [center addObserver:self selector:@selector(addedCall:) name:kJCPhoneManagerAddedCallNotification object:phoneManager];
+        [center addObserver:self selector:@selector(removedCall:) name:kJCPhoneManagerRemoveCallNotification object:phoneManager];
+        [center addObserver:self selector:@selector(updateCall:) name:kJCPhoneManagerAnswerCallNotification object:phoneManager];
         
-        [center addObserver:self selector:@selector(addedConferenceCallNotification:) name:kJCCallCardManagerAddedConferenceCallNotification object:callCardManager];
-        [center addObserver:self selector:@selector(removeConferenceCallNotification:) name:kJCCallCardManagerRemoveConferenceCallNotification object:callCardManager];
+        [center addObserver:self selector:@selector(addedConferenceCallNotification:) name:kJCPhoneManagerAddedConferenceCallNotification object:phoneManager];
+        [center addObserver:self selector:@selector(removeConferenceCallNotification:) name:kJCPhoneManagerRemoveConferenceCallNotification object:phoneManager];
     }
     return self;
 }
@@ -133,12 +133,12 @@ NSString *const kJCCallCardCollectionConferenceCallCellReuseIdentifier = @"Confe
 
 -(NSUInteger)numberOfCallsForSection:(NSUInteger)section
 {
-    return [JCCallCardManager sharedManager].calls.count;
+    return [JCPhoneManager sharedManager].calls.count;
 }
 
 -(JCCallCard *)callCardForIndexPath:(NSIndexPath *)indexPath
 {
-    return [[JCCallCardManager sharedManager].calls objectAtIndex:indexPath.row];
+    return [[JCPhoneManager sharedManager].calls objectAtIndex:indexPath.row];
 }
 
 #pragma mark - Delegate Handlers -
