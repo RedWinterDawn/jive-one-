@@ -33,6 +33,9 @@ static KeychainItemWrapper *keychain;
         CFRelease(uuidString);
         CFRelease(uuidObj);
         
+        NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+        [keychain setObject:appName forKey:(__bridge id)kSecAttrService];
+        [keychain setObject:(__bridge id)(kSecAttrAccessibleAfterFirstUnlock) forKey:(__bridge id)(kSecAttrAccessible)];
         [keychain setObject:string forKey:(__bridge id)(kSecValueData)];
     }
     return string;
