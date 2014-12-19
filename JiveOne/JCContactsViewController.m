@@ -112,6 +112,7 @@
             break;
         case 2:
             [self showPeoplePickerController];
+            tabBar.selectedItem = nil;
             break;
             
         default:

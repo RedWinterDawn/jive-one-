@@ -9,6 +9,8 @@
 #import "JCApplicationSwitcherDelegate.h"
 #import "JCMenuBarButtonItem.h"
 
+// View Controllers
+#import "JCApplicationSwitcherViewController.h"
 #import "JCCallHistoryViewController.h"
 #import "JCVoicemailViewController.h"
 
@@ -16,24 +18,46 @@
 
 #import "Voicemail.h"
 #import "Call.h"
+#import "JCAuthenticationManager.h"
 
 NSString *const kApplicationSwitcherLastSelectedViewControllerIdentifierKey = @"applicationSwitcherLastSelected";
 
-NSString *const kApplicationSwitcherPhoneRestorationIdentifier = @"PhoneTabBarController";
+NSString *const kApplicationSwitcherPhoneRestorationIdentifier      = @"PhoneTabBarController";
+NSString *const kApplicationSwitcherContactsRestorationIdentifier   = @"ContactsNavigationController";
+NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"SettingsNavigationController";
 
 @interface JCApplicationSwitcherDelegate ()
+{
+    JCApplicationSwitcherViewController *_applicationSwitcher;
+}
 
 @property (nonatomic, strong) NSString *lastSelectedViewControllerIdentifier;
 
 @end
 
-
 @implementation JCApplicationSwitcherDelegate
 
-+(void)reset
+-(instancetype)init
 {
-    JCApplicationSwitcherDelegate *obj = [[JCApplicationSwitcherDelegate alloc] init];
-    obj.lastSelectedViewControllerIdentifier = nil;
+    self = [super init];
+    if (self) {
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self selector:@selector(reset:) name:kJCAuthenticationManagerUserLoggedOutNotification object:[JCAuthenticationManager sharedInstance]];
+    }
+    return self;
+}
+
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+-(void)reset:(NSNotification *)notification
+{
+    self.lastSelectedViewControllerIdentifier = nil;
+    if (_applicationSwitcher) {
+        _applicationSwitcher.selectedViewController = nil;
+    }
 }
 
 #pragma mark - Setters -
@@ -52,67 +76,25 @@ NSString *const kApplicationSwitcherPhoneRestorationIdentifier = @"PhoneTabBarCo
     return [[NSUserDefaults standardUserDefaults] valueForKey:kApplicationSwitcherLastSelectedViewControllerIdentifierKey];
 }
 
-#pragma mark - Delegate Handlers -
+#pragma mark - Privete -
 
-#pragma mark JCApplicationSwitcherViewControllerDelegate
-
--(NSArray *)applicationSwitcherController:(JCApplicationSwitcherViewController *)controller willLoadViewControllers:(NSArray *)viewControllers
+-(NSString *)applicationSwitcherRestorationIdentifierForRecentEvent:(RecentEvent *)recentEvent
 {
-    return viewControllers;
-}
-
--(UIBarButtonItem *)applicationSwitcherController:(JCApplicationSwitcherViewController *)controller identifier:(NSString *)identifier;
-{
-    return [[JCMenuBarButtonItem alloc] initWithTarget:controller action:@selector(showMenu:)];
-}
-
--(UITableViewCell *)applicationSwitcherController:(JCApplicationSwitcherViewController *)controller tableView:(UITableView *)tableView cellForTabBarItem:(UITabBarItem *)tabBarItem identifier:(NSString *)identifier
-{
-    if ([identifier isEqualToString:kApplicationSwitcherPhoneRestorationIdentifier]) {
-        static NSString *resueIdentifier = @"PhoneCell";
-        UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:resueIdentifier];
-        cell.textLabel.text = tabBarItem.title;
-        cell.imageView.image = tabBarItem.image;
-        
-        return cell;
-    }
-    
-    
-    static NSString *resueIdentifier = @"MenuCell";
-    UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:resueIdentifier];
-    cell.textLabel.text = tabBarItem.title;
-    cell.imageView.image = tabBarItem.image;
-    
-    return cell;
-}
-
--(UIViewController *)applicationSwitcherLastSelectedViewController:(JCApplicationSwitcherViewController *)controller
-{
-    NSString *identifier = self.lastSelectedViewControllerIdentifier;
-    for (UIViewController *viewController in controller.viewControllers) {
-        if ([viewController.restorationIdentifier isEqualToString:identifier]) {
-            return viewController;
-        }
+    if ([recentEvent isKindOfClass:[Voicemail class]] || [recentEvent isKindOfClass:[Call class]]) {
+        return kApplicationSwitcherPhoneRestorationIdentifier;
     }
     return nil;
 }
 
--(void)applicationSwitcher:(JCApplicationSwitcherViewController *)controller shouldNavigateToRecentEvent:(RecentEvent *)recentEvent
+-(NSString *)phoneTabBarControllerRestorationIdentifierForRecentEvent:(RecentEvent *)recentEvent
 {
-    NSString *restorationIdentifier = [self applicationSwitcherRestorationIdentifierForRecentEvent:recentEvent];
-    if (restorationIdentifier) {
-        for (UIViewController *viewController in controller.viewControllers) {
-            if ([viewController.restorationIdentifier isEqualToString:restorationIdentifier]) {
-                controller.selectedViewController = viewController;
-                
-                // Logic for Phone Recent Events.
-                if ([restorationIdentifier isEqualToString:kApplicationSwitcherPhoneRestorationIdentifier] && [viewController isKindOfClass:[UITabBarController class]]){
-                    [self navigatePhoneViewController:(UITabBarController *)viewController forRecentEvent:recentEvent];
-                }
-                break;
-            }
-        }
+    if ([recentEvent isKindOfClass:[Voicemail class]]) {
+        return kJCPhoneTabBarControllerVoicemailRestorationIdentifier;
     }
+    else if ([recentEvent isKindOfClass:[Call class]]){
+        return kJCPhoneTabBarControllerCallHistoryRestorationIdentifier;
+    }
+    return nil;
 }
 
 -(void)navigatePhoneViewController:(UITabBarController *)tabBarController forRecentEvent:(RecentEvent *)recentEvent
@@ -160,25 +142,60 @@ NSString *const kApplicationSwitcherPhoneRestorationIdentifier = @"PhoneTabBarCo
     }
 }
 
--(NSString *)applicationSwitcherRestorationIdentifierForRecentEvent:(RecentEvent *)recentEvent
+#pragma mark - Delegate Handlers -
+
+#pragma mark JCApplicationSwitcherViewControllerDelegate
+
+-(NSArray *)applicationSwitcherController:(JCApplicationSwitcherViewController *)controller
+                  willLoadViewControllers:(NSArray *)viewControllers
 {
-    if ([recentEvent isKindOfClass:[Voicemail class]] || [recentEvent isKindOfClass:[Call class]]) {
-        return kApplicationSwitcherPhoneRestorationIdentifier;
+    _applicationSwitcher = controller;
+    return viewControllers;
+}
+
+-(UIBarButtonItem *)applicationSwitcherController:(JCApplicationSwitcherViewController *)controller
+                                       identifier:(NSString *)identifier;
+{
+    return [[JCMenuBarButtonItem alloc] initWithTarget:controller action:@selector(showMenu:)];
+}
+
+-(UITableViewCell *)applicationSwitcherController:(JCApplicationSwitcherViewController *)controller
+                                        tableView:(UITableView *)tableView
+                                cellForTabBarItem:(UITabBarItem *)tabBarItem
+                                       identifier:(NSString *)identifier
+{
+    if ([identifier isEqualToString:kApplicationSwitcherPhoneRestorationIdentifier]) {
+        static NSString *phoneResueIdentifier = @"PhoneCell";
+        UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:phoneResueIdentifier];
+        cell.textLabel.text = tabBarItem.title;
+        cell.imageView.image = tabBarItem.image;
+        return cell;
+    }
+    
+    static NSString *resueIdentifier = @"MenuCell";
+    UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:resueIdentifier];
+    cell.textLabel.text = tabBarItem.title;
+    cell.imageView.image = tabBarItem.image;
+    return cell;
+}
+
+/**
+ * From the list of view controllers, select the last selected view controller.
+ */
+-(UIViewController *)applicationSwitcherLastSelectedViewController:(JCApplicationSwitcherViewController *)controller
+{
+    NSString *identifier = self.lastSelectedViewControllerIdentifier;
+    for (UIViewController *viewController in controller.viewControllers) {
+        if ([viewController.restorationIdentifier isEqualToString:identifier]) {
+            return viewController;
+        }
     }
     return nil;
 }
 
--(NSString *)phoneTabBarControllerRestorationIdentifierForRecentEvent:(RecentEvent *)recentEvent
-{
-    if ([recentEvent isKindOfClass:[Voicemail class]]) {
-        return kJCPhoneTabBarControllerVoicemailRestorationIdentifier;
-    }
-    else if ([recentEvent isKindOfClass:[Call class]]){
-        return kJCPhoneTabBarControllerCallHistoryRestorationIdentifier;
-    }
-    return nil;
-}
-
+/**
+ *  Asked right before an application switcher view controller is selected.
+ */
 -(BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
 {
     // Default select the Dialer view if the phone controller is selected from the application switcher;
@@ -195,10 +212,37 @@ NSString *const kApplicationSwitcherPhoneRestorationIdentifier = @"PhoneTabBarCo
     return YES;
 }
 
+/**
+ *  Delegate Method called when application switcher view controller was selected. If the view 
+ *  controller has a restoration identifier, we save the restoration identifer, remebering which 
+ *  view controller was last selected.
+ */
 -(void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
     if (viewController.restorationIdentifier) {
         self.lastSelectedViewControllerIdentifier = viewController.restorationIdentifier;
+    }
+}
+
+/**
+ *  Delegate method notifying us that the application switcher should respond to a recent event
+ *  selection.
+ */
+-(void)applicationSwitcher:(JCApplicationSwitcherViewController *)controller shouldNavigateToRecentEvent:(RecentEvent *)recentEvent
+{
+    NSString *restorationIdentifier = [self applicationSwitcherRestorationIdentifierForRecentEvent:recentEvent];
+    if (restorationIdentifier) {
+        for (UIViewController *viewController in controller.viewControllers) {
+            if ([viewController.restorationIdentifier isEqualToString:restorationIdentifier]) {
+                controller.selectedViewController = viewController;
+                
+                // Logic for Phone Recent Events.
+                if ([restorationIdentifier isEqualToString:kApplicationSwitcherPhoneRestorationIdentifier] && [viewController isKindOfClass:[UITabBarController class]]){
+                    [self navigatePhoneViewController:(UITabBarController *)viewController forRecentEvent:recentEvent];
+                }
+                break;
+            }
+        }
     }
 }
 

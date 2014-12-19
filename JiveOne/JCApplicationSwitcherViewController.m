@@ -20,7 +20,7 @@
     
     UIViewController *_activityViewController;
     
-    bool _showingMenu;
+    BOOL _showingMenu;
 }
 
 @end
@@ -33,7 +33,7 @@
  */
 -(void)awakeFromNib
 {
-    // grab the view controllers, which were loaded by the nib and put them into an array. if the data source has method
+    // Grab the view controllers, which were loaded by the nib and put them into an array. if the data source has method
     // implemented, give it a chance to the data source to re-order the pages, or add and remove any before they get
     // fully read and populated as child view controllers.
     NSArray *viewControllers = super.viewControllers;
@@ -65,12 +65,13 @@
     view.autoresizesSubviews = true;
     view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     
-    // Create the transition view.
+    // Create the transition view. This will hold our child view controllers. We want it towards the
+    // very back of the view subview stack.
     _transitionViewController = [[UIViewController alloc] initWithNibName:nil bundle:[NSBundle mainBundle]];
     [super addChildViewController:_transitionViewController];
     [view addSubview:_transitionViewController.view];
     
-    // Instance the menu view controller
+    // Instance the menu view controller.
     UIViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:self.menuViewControllerStoryboardIdentifier];
     if ([viewController isKindOfClass:[UINavigationController class]]) {
         _menuNavigationController = (UINavigationController *)viewController;
@@ -81,23 +82,16 @@
             _menuTableViewController.tableView.delegate = self;
         }
     }
-    [super addChildViewController:_menuNavigationController];
-    [view addSubview:_menuNavigationController.view];
     
     // Instance the activity view controller
     _activityViewController = [self.storyboard instantiateViewControllerWithIdentifier:self.activityViewControllerStoryboardIdentifier];
-    [super addChildViewController:_activityViewController];
     
-    // Register us as a delegate of the Recent Activity Table View Controller
     if ([_activityViewController isKindOfClass:[UINavigationController class]]) {
         UIViewController *controller = ((UINavigationController *)_activityViewController).topViewController;
         if ([controller isKindOfClass:[JCRecentActivityTableViewController class]]) {
             ((JCRecentActivityTableViewController *)controller).delegate = self;
         }
     }
-    
-    [view addSubview:_activityViewController.view];
-    
     self.view = view;
 }
 
@@ -110,80 +104,74 @@
     [super viewDidLoad];
     
     [self addMenuBarButtonItemToViewController:_menuNavigationController];
-    
-    [self hideMenuAnimated:NO];
     for (UIViewController *viewController in _viewControllers)
         [self addMenuBarButtonItemToViewController:viewController];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    // If _selectedViewController is nil, it means we have not yet selected a view controller, and
+    // are in our initial state. We need to ask our delegate if it has a last selected view
+    // controller, and if that last selected view controller is different from the default view
+    // controller being requested to be loaded. if it is different, we override to show the last
+    // selected view controller. If the last selected view controller comes back null, it means we
+    // need to load our default state.
+    if (!_selectedViewController) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(applicationSwitcherLastSelectedViewController:)]) {
+            UIViewController *lastSelectedViewController = [self.delegate applicationSwitcherLastSelectedViewController:self];
+            if (lastSelectedViewController != nil) {
+                self.selectedViewController = lastSelectedViewController;
+                [self hideMenuAnimated:NO];
+            }
+        }
+    }
+    else {
+        [_selectedViewController viewWillAppear:animated];
+    }
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if (_selectedViewController) {
+        [_selectedViewController viewDidAppear:animated];
+    }
 }
 
 -(void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
     
-    if (!_selectedViewController)
-    {
+    // Size the menu view controller.
+    if(_menuNavigationController.view.superview == nil) {
+        [super addChildViewController:_menuNavigationController];
+        [self.view addSubview:_menuNavigationController.view];
+        [_menuNavigationController.view layoutIfNeeded];
         CGRect navBarFrame = _menuNavigationController.navigationBar.frame;
+        CGFloat tableHeight = [UIApplication sharedApplication].statusBarFrame.size.height + navBarFrame.origin.y + navBarFrame.size.height + [_menuTableViewController.tableView contentSize].height;
         
         // @!^$#$ Apple! Seriously!
-        CGFloat tableHeight;
-        if ([[UIDevice currentDevice].systemVersion floatValue] < 8.0f)
-        {
+        if (![UIDevice iOS8]) {
             CGSize textViewSize = [_menuTableViewController.tableView sizeThatFits:CGSizeMake(_menuTableViewController.tableView.frame.size.width, FLT_MAX)];
             tableHeight = [UIApplication sharedApplication].statusBarFrame.size.height + navBarFrame.origin.y + navBarFrame.size.height + textViewSize.height;
         }
-        else
-        {
-            tableHeight = navBarFrame.origin.y + navBarFrame.size.height + [_menuTableViewController.tableView contentSize].height;
-        }
         
         CGRect frame = self.view.bounds;
-        CGFloat viewHeight = frame.size.height;
         frame.size.height = tableHeight;
         _menuNavigationController.view.frame = frame;
         _menuNavigationController.view.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
-        
-        frame.size.height = viewHeight - tableHeight;
-        frame.origin.y = tableHeight;
+        _showingMenu = TRUE;
+    }
+    
+    // Size the Activity View controller.
+    if (_activityViewController.view.superview == nil) {
+        [super addChildViewController:_activityViewController];
+        CGRect menuFrame = _menuNavigationController.view.frame;
+        CGRect frame = self.view.bounds;
+        frame.size.height = frame.size.height - menuFrame.size.height;
+        frame.origin.y = menuFrame.origin.y + menuFrame.size.height;
         _activityViewController.view.frame = frame;
-        
-        // When first loading, ask the dataSource if we have a saved view controller;
-        if (self.delegate && [self.delegate respondsToSelector:@selector(applicationSwitcherLastSelectedViewController:)])
-        {
-            UIViewController *viewController = [self.delegate applicationSwitcherLastSelectedViewController:self];
-            if (!viewController)
-            {
-                [self showMenuAnimated:FALSE];
-            }
-            else
-            {
-                self.selectedViewController = viewController;
-                [self hideMenuAnimated:FALSE];
-            }
-        }
-    }
-}
-
--(void)addMenuBarButtonItemToViewController:(UIViewController *)viewController
-{
-    if ([viewController isKindOfClass:[UINavigationController class]])
-    {
-        UINavigationController *navigationController = (UINavigationController *)viewController;
-        viewController = [navigationController.viewControllers lastObject];
-        
-        UIBarButtonItem *menuBarButtonItem;
-        if (self.delegate && [self.delegate respondsToSelector:@selector(applicationSwitcherController:identifier:)]) {
-            menuBarButtonItem = [self.delegate applicationSwitcherController:self identifier:viewController.restorationIdentifier];
-            viewController.navigationItem.leftBarButtonItem = menuBarButtonItem;
-        }
-    }
-    else if ([viewController isKindOfClass:[UITabBarController class]])
-    {
-        UITabBarController *tabBarController = (UITabBarController *)viewController;
-        NSArray *viewControllers = tabBarController.viewControllers;
-        for (UIViewController *viewController in viewControllers) {
-            [self addMenuBarButtonItemToViewController:viewController];
-        }
-        
+        [self.view addSubview:_activityViewController.view];
     }
 }
 
@@ -203,23 +191,19 @@
 
 -(void)setSelectedViewController:(UIViewController *)selectedViewController
 {
-    // When first loading, ask the dataSource if we have a saved view controller;
-    if (_selectedViewController == nil && selectedViewController == nil && self.delegate && [self.delegate respondsToSelector:@selector(applicationSwitcherLastSelectedViewController:)])
-        selectedViewController = [self.delegate applicationSwitcherLastSelectedViewController:self];
-    
+    // Ask the delegate permission to show the selected view controller.
     if (self.delegate && [self.delegate respondsToSelector:@selector(tabBarController:shouldSelectViewController:)]) {
         if (![self.delegate tabBarController:self shouldSelectViewController:selectedViewController]) {
             return;
         }
     }
     
+    // Transition to the selected view controller.
     [self transitionFromViewController:_selectedViewController
                       toViewController:selectedViewController
                               duration:0
                                options:UIViewAnimationOptionAllowAnimatedContent
-                            animations:^{
-                                
-                            }
+                            animations:NULL
                             completion:^(BOOL finished) {
                                 if (finished)
                                 {
@@ -257,21 +241,50 @@
 
 #pragma mark - Private -
 
+/**
+ * Takes a given view controller and asks the delegate for a menu button for that view.
+ *
+ * Checks to see if the view controller is a navigation controller, and adds it as the lefb bar 
+ * button item. If the view controller is a tabBarController, it recursively goes through each of 
+ * the tabBarViewController's child view controllers.
+ */
+-(void)addMenuBarButtonItemToViewController:(UIViewController *)viewController
+{
+    if ([viewController isKindOfClass:[UINavigationController class]])
+    {
+        UINavigationController *navigationController = (UINavigationController *)viewController;
+        viewController = [navigationController.viewControllers lastObject];
+        
+        UIBarButtonItem *menuBarButtonItem;
+        if (self.delegate && [self.delegate respondsToSelector:@selector(applicationSwitcherController:identifier:)]) {
+            menuBarButtonItem = [self.delegate applicationSwitcherController:self identifier:viewController.restorationIdentifier];
+            viewController.navigationItem.leftBarButtonItem = menuBarButtonItem;
+        }
+    }
+    else if ([viewController isKindOfClass:[UITabBarController class]])
+    {
+        UITabBarController *tabBarController = (UITabBarController *)viewController;
+        NSArray *viewControllers = tabBarController.viewControllers;
+        for (UIViewController *viewController in viewControllers) {
+            [self addMenuBarButtonItemToViewController:viewController];
+        }
+    }
+}
+
 -(void)showMenuAnimated:(bool)animated
 {
+    // Determine the origin of the frame. In iOS 8, we do not need to take into account the status
+    // bar height, where on iOS 7 we do need to.
+    [self.view layoutIfNeeded];
     CGRect menuFrame = _menuNavigationController.view.frame;
-    
-    if ([[UIDevice currentDevice].systemVersion floatValue] < 8.0f)
-    {
+    if (![UIDevice iOS8]){
         menuFrame.origin.y = [UIApplication sharedApplication].statusBarFrame.size.height;
     }
-    else
-    {
+    else {
         menuFrame.origin.y = 0;
     }
     
     CGRect activityFrame = _activityViewController.view.frame;
-    
     activityFrame.origin.y = menuFrame.origin.y + menuFrame.size.height;
     
     [UIView animateWithDuration:(animated ? 0.3 : 0)
@@ -280,10 +293,8 @@
                      animations:^{
                          _menuNavigationController.view.frame = menuFrame;
                          _activityViewController.view.frame = activityFrame;
-                         
-                         if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0f)
+                         if ([UIDevice iOS8])
                              _transitionViewController.view.alpha = 0.2;
-                         
                      }
                      completion:^(BOOL finished) {
                          _showingMenu = true;
@@ -292,6 +303,7 @@
 
 -(void)hideMenuAnimated:(bool)animated
 {
+    [self.view layoutIfNeeded];
     CGRect menuFrame = _menuNavigationController.view.frame;
     menuFrame.origin.y = -menuFrame.size.height - [UIApplication sharedApplication].statusBarFrame.size.height;
     
@@ -331,14 +343,18 @@
                      animations:^{
                          [fromViewController.view removeFromSuperview];
                          [controller.view addSubview:toViewController.view];
-                         animations();
+                         if (animations) {
+                             animations();
+                         }
                      }
                      completion:^(BOOL finished) {
                          if (finished)
                          {
                              [fromViewController removeFromParentViewController];
                              [controller addChildViewController:toViewController];
-                             completion(true);
+                             if (completion) {
+                                 completion(finished);
+                             }
                          }
                      }];
 }
@@ -386,16 +402,13 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UIViewController *viewController = [self.viewControllers objectAtIndex:indexPath.row];
-    bool shouldShow = TRUE;
     if (self.delegate && [self.delegate respondsToSelector:@selector(tabBarController:shouldSelectViewController:)]) {
-        shouldShow = [self.delegate tabBarController:self shouldSelectViewController:viewController];
+        BOOL shouldShow = [self.delegate tabBarController:self shouldSelectViewController:viewController];
+        if (!shouldShow) {
+            return;
+        }
     }
 
-    if (!shouldShow)
-    {
-        return;
-    }
-    
     self.selectedViewController = viewController;
     [self hideMenuAnimated:YES];
 }

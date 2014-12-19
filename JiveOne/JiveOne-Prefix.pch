@@ -24,3 +24,4 @@
 
 #import "NSString+Custom.h"
 #import "NSDictionary+Validations.h"
+#import "UIDevice+Custom.h"
