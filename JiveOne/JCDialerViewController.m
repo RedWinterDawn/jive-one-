@@ -47,22 +47,14 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 {
     [super viewWillAppear:animated];
     
-    JCAuthenticationManager *manager = [JCAuthenticationManager sharedInstance];
-    if(!_phoneManager.isConnected && manager.user)
-    {
-        Line *line = manager.line;
-        if (!line) {
-            return;
-        }
-        
+    if (_phoneManager.line && !_phoneManager.isConnected && !_phoneManager.isConnecting) {
         __unsafe_unretained UIViewController *weakSelf = self;
-        [_phoneManager reconnectToLine:line
-                               started:^{
-                                   [weakSelf showHudWithTitle:@"Registering" detail:@"Selecting Line..."];
+        [_phoneManager reconnectToLine:_phoneManager.line
+                               loading:^{
+                                   [weakSelf showHudWithTitle:@"" detail:@"Selecting Line..."];
                                }
                             completion:^(BOOL success, NSError *error) {
                                 [weakSelf hideHud];
-                                
                             }];
     }
 }
@@ -114,13 +106,19 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
         return;
     }
     _initiatingCall = TRUE;
-    [_phoneManager dialNumber:string type:JCPhoneManagerSingleDial completion:^(BOOL success, NSDictionary *callInfo) {
-        if (success){
-            [self performSegueWithIdentifier:kJCDialerViewControllerCallerStoryboardIdentifier sender:self];
-            self.dialStringLabel.dialString = nil;
-        }
-        _initiatingCall = false;
-    }];
+    [_phoneManager dialNumber:string
+                         type:JCPhoneManagerSingleDial
+                      loading:^{
+                          [self showHudWithTitle:@"" detail:@"Selecting Line..."];
+                      }
+                   completion:^(BOOL success, NSDictionary *callInfo) {
+                       [self hideHud];
+                       if (success){
+                           [self performSegueWithIdentifier:kJCDialerViewControllerCallerStoryboardIdentifier sender:self];
+                           self.dialStringLabel.dialString = nil;
+                       }
+                       _initiatingCall = false;
+                   }];
 }
 
 -(IBAction)backspace:(id)sender

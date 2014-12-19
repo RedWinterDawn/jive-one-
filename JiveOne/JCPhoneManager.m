@@ -47,10 +47,13 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
 
 @interface JCPhoneManager ()<SipHandlerDelegate, JCCallCardDelegate>
 {
+    CompletionHandler _completion;
     JCBluetoothManager *_bluetoothManager;
     SipHandler *_sipHandler;
 	NSString *_warmTransferNumber;
     CTCallCenter *_externalCallCenter;
+    
+    BOOL _connecting;
 }
 
 @property (copy)void (^externalCallCompletionHandler)(BOOL connected);
@@ -58,6 +61,7 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
 @property (nonatomic) BOOL externalCallDisconnected;
 
 @property (nonatomic, readwrite, getter=isConnected) BOOL connected;
+@property (nonatomic, readwrite, getter=isConnecting) BOOL connecting;
 @property (nonatomic, readwrite) JCPhoneManagerOutputType outputType;
 
 @end
@@ -88,11 +92,18 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
 
 #pragma mark - Public Methods -
 
--(void)connectToLine:(Line *)line started:(void(^)())started completed:(CompletionHandler)completed
+-(void)connectToLine:(Line *)line loading:(void(^)())started completion:(CompletionHandler)completed
 {
+    if (_connecting) {
+        return;
+    }
+    
+    _connecting = TRUE;
     if (line.lineConfiguration) {
-        [self connectToLine:line];
-        completed(YES, nil);
+        [self connectToLine:line completion:completed];
+        if (completed) {
+            completed(YES, nil);
+        }
     }
     else {
         if (started != NULL) {
@@ -100,19 +111,21 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
         }
         [JCV4ProvisioningClient requestProvisioningForLine:line completed:^(BOOL success, NSError *error) {
             if (success) {
-                [self connectToLine:line];
+                [self connectToLine:line completion:completed];
             }
-            completed(success, error);
+            if (completed) {
+                completed(success, error);
+            }
         }];
     }
 }
 
--(void)reconnectToLine:(Line *)line started:(void(^)())started completion:(CompletionHandler)completion
+-(void)reconnectToLine:(Line *)line loading:(void(^)())started completion:(CompletionHandler)completion
 {
     if (_sipHandler && (_line == line)) {
         [_sipHandler connect:completion];
     } else {
-        [self connectToLine:line started:started completed:completion];
+        [self connectToLine:line loading:started completion:completion];
     }
 }
 
@@ -133,7 +146,7 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
  *  otherwise tries to register, then dial. If we are uable to connect, we call completion handler with success being 
  *  false;
  */
--(void)dialNumber:(NSString *)dialString type:(JCPhoneManagerDialType)dialType completion:(void (^)(BOOL success, NSDictionary *callInfo))completion
+-(void)dialNumber:(NSString *)dialString type:(JCPhoneManagerDialType)dialType loading:(void (^)())loading completion:(void (^)(BOOL, NSDictionary *))completion
 {
     if ([self isEmergencyNumber:dialString] && [UIDevice currentDevice].canMakeCall) {
         
@@ -151,7 +164,7 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
                 completion(false, nil);
             }
             else{
-                [weakSelf connectAndDial:dialString type:dialType completion:completion];
+                [weakSelf connectAndDial:dialString type:dialType loading:loading completion:completion];
             }
         };
         
@@ -179,7 +192,7 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", dialString]]];
     }
     else {
-        [self connectAndDial:dialString type:dialType completion:completion];
+        [self connectAndDial:dialString type:dialType loading:loading completion:completion];
     }
 }
 
@@ -291,7 +304,7 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
 
 #pragma mark - Private -
 
--(void)connectToLine:(Line *)line
+-(void)connectToLine:(Line *)line completion:(CompletionHandler)completion
 {
     // If we have a sip handler, disconnect the current registration.
     if (_sipHandler && _line != line) {
@@ -299,6 +312,7 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
     }
     
     _line = line;
+    _completion = completion;
     _sipHandler = [[SipHandler alloc] initWithLine:line delegate:self];
 }
 
@@ -319,23 +333,23 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
     return nil;
 }
 
--(void)connectAndDial:(NSString *)dialString type:(JCPhoneManagerDialType)dialType completion:(void (^)(BOOL success, NSDictionary *callInfo))completion
+-(void)connectAndDial:(NSString *)dialString type:(JCPhoneManagerDialType)dialType loading:(void (^)())loading completion:(void (^)(BOOL success, NSDictionary *callInfo))completion
 {
-    // If we are not logged in and do not have a sip handler, we must fail.
-    if (!_sipHandler) {
-        completion(false, nil);
-    }
-    
-    if(!_sipHandler.isRegistered)
+    if(!self.connected)
     {
-        [_sipHandler connect:^(BOOL success, NSError *error) {
-            if (success)
-                [self dial:dialString type:dialType completion:completion];
-            else
-                completion(false, nil);
-            
-            if (error)
-                NSLog(@"%@", [error description]);
+        [self reconnectToLine:_line
+                      loading:loading
+                   completion:^(BOOL success, NSError *error) {
+                       if (success)
+                       {
+                           [self dial:dialString type:dialType completion:completion];
+                       }else{
+                           if (completion) {
+                               completion(false, nil);
+                           }
+                           NSLog(@"%@", [error description]);
+                       }
+                           
         }];
     }
     else
@@ -344,6 +358,11 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
 
 -(void)dial:(NSString *)dialNumber type:(JCPhoneManagerDialType)dialType completion:(void (^)(BOOL success, NSDictionary *callInfo))completion
 {
+    // If we are not logged in and do not have a sip handler, we must fail.
+    if (!_sipHandler) {
+        completion(false, nil);
+    }
+    
     if (dialType == JCPhoneManagerBlindTransfer) {
         [_sipHandler blindTransferToNumber:dialNumber completion:^(BOOL success, NSError *error) {
             if (success) {
@@ -700,12 +719,20 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
 
 -(void)sipHandlerDidRegister:(SipHandler *)sipHandler
 {
+    self.connecting = FALSE;
     self.connected = sipHandler.registered;
+    if (_completion) {
+        _completion(true, nil);
+    }
 }
 
 -(void)sipHandlerDidFailToRegister:(SipHandler *)sipHandler error:(NSError *)error
 {
+    self.connecting = FALSE;
     self.connected = sipHandler.registered;
+    if (_completion) {
+        _completion(FALSE, error);
+    }
     NSLog(@"%@", [error description]);
 }
 
@@ -756,14 +783,14 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
     return self;
 }
 
-+ (void)connectToLine:(Line *)line started:(void(^)())started completed:(CompletionHandler)completed
++ (void)connectToLine:(Line *)line loading:(void(^)())loading completion:(CompletionHandler)completed
 {
-    [[JCPhoneManager sharedManager] connectToLine:line started:started completed:completed];
+    [[JCPhoneManager sharedManager] connectToLine:line loading:loading completion:completed];
 }
 
-+ (void)reconnectToLine:(Line *)line started:(void(^)())started completion:(CompletionHandler)completed
++ (void)reconnectToLine:(Line *)line loading:(void(^)())loading completion:(CompletionHandler)completed
 {
-    [[JCPhoneManager sharedManager] reconnectToLine:line started:started completion:completed];
+    [[JCPhoneManager sharedManager] reconnectToLine:line loading:loading completion:completed];
 }
 
 + (void)disconnect

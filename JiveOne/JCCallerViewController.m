@@ -82,11 +82,17 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         return;
     }
     
-    [_phoneManager dialNumber:dialString type:JCPhoneManagerSingleDial completion:^(BOOL success, NSDictionary *callInfo) {
-        if (!success) {
-            [self performSelector:@selector(closeCallerViewController) withObject:nil afterDelay:0];
-        }
-    }];
+    [_phoneManager dialNumber:dialString
+                         type:JCPhoneManagerSingleDial
+                      loading:^{
+                          [self showHudWithTitle:@"" detail:@"Selecting Line..."];
+                      }
+                   completion:^(BOOL success, NSDictionary *callInfo) {
+                       [self hideHud];
+                       if (!success) {
+                           [self performSelector:@selector(closeCallerViewController) withObject:nil afterDelay:0];
+                       }
+                   }];
 }
 
 -(void)viewWillLayoutSubviews
@@ -451,32 +457,38 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 -(void)transferViewController:(JCTransferViewController *)controller shouldDialNumber:(NSString *)dialString
 {
     __unsafe_unretained JCCallerViewController *weakSelf = self;
-    [_phoneManager dialNumber:dialString type:controller.transferCallType completion:^(BOOL success, NSDictionary *callInfo) {
-        if (success)
-        {
-            switch (controller.transferCallType) {
-                case JCPhoneManagerBlindTransfer:
-                {
-                    [weakSelf dismissTransferViewControllerAnimated:NO];
-                    [weakSelf closeCallerViewController];
-                    break;
-                }
-                case JCPhoneManagerWarmTransfer:
-                {
-                    [weakSelf dismissTransferViewControllerAnimated:YES];
-                    [weakSelf.callOptionsView setState:JCCallOptionViewFinishTransferState animated:YES];
-                    weakSelf.warmTransferInfo = callInfo;
-                    break;
-                }
-                default:
-                {
-                    [weakSelf dismissTransferViewControllerAnimated:YES];
-                    [weakSelf.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];
-                    break;
-                }
-            }
-        }
-    }];
+    [_phoneManager dialNumber:dialString
+                         type:controller.transferCallType
+                      loading:^{
+                          [self showHudWithTitle:@"" detail:@"Selecting Line..."];
+                      }
+                   completion:^(BOOL success, NSDictionary *callInfo) {
+                       [self hideHud];
+                       if (success)
+                       {
+                           switch (controller.transferCallType) {
+                               case JCPhoneManagerBlindTransfer:
+                               {
+                                   [weakSelf dismissTransferViewControllerAnimated:NO];
+                                   [weakSelf closeCallerViewController];
+                                   break;
+                               }
+                               case JCPhoneManagerWarmTransfer:
+                               {
+                                   [weakSelf dismissTransferViewControllerAnimated:YES];
+                                   [weakSelf.callOptionsView setState:JCCallOptionViewFinishTransferState animated:YES];
+                                   weakSelf.warmTransferInfo = callInfo;
+                                   break;
+                               }
+                               default:
+                               {
+                                   [weakSelf dismissTransferViewControllerAnimated:YES];
+                                   [weakSelf.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];
+                                   break;
+                               }
+                           }
+                       }
+                   }];
 }
 
 -(void)shouldCancelTransferViewController:(JCTransferViewController *)controller

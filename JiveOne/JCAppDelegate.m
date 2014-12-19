@@ -265,10 +265,10 @@
     // Register the Phone.
     UIViewController *rootViewController = self.window.rootViewController;
     [JCPhoneManager connectToLine:line
-                             started:^{
+                             loading:^{
                                  [rootViewController showHudWithTitle:@"" detail:@"Selecting Line..."];
                              }
-                           completed:^(BOOL success, NSError *error) {
+                           completion:^(BOOL success, NSError *error) {
                                [rootViewController hideHud];
                                if (!success) {
                                    [rootViewController showSimpleAlert:@"" message:@"Unable to connect to this line at this time. Please Try again." code:error.code];
