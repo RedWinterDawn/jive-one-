@@ -111,7 +111,6 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
             else if ([controller.restorationIdentifier isEqualToString:kJCPhoneTabBarControllerVoicemailRestorationIdentifier] && [recentEvent isKindOfClass:[Voicemail class]]) {
                 [self navigateVoicemailViewController:controller toRecentEvent:(Voicemail *)recentEvent];
             }
-            
             break;
         }
     }
