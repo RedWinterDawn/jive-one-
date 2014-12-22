@@ -12,6 +12,11 @@
 
 + (User *)userForJiveUserId:(NSString *)jiveUserId context:(NSManagedObjectContext *)context
 {
+    if(!jiveUserId || jiveUserId.length == 0)
+    {
+        return nil;
+    }
+    
     // Try to find the user, if the user does not exist, truncate all the user data, and create a new user.
     User *user = [User MR_findFirstByAttribute:NSStringFromSelector(@selector(jiveUserId)) withValue:jiveUserId];
     if (!user) {

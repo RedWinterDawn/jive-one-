@@ -14,6 +14,8 @@
 #import "Voicemail.h"
 #import "Conversation.h"
 
+#import "JCBadgeManagerBatchOperation.h"
+
 static const UIUserNotificationType USER_NOTIFICATION_TYPES_REQUIRED = UIRemoteNotificationTypeBadge | UIUserNotificationTypeAlert | UIUserNotificationTypeSound;
 static const UIRemoteNotificationType REMOTE_NOTIFICATION_TYPES_REQUIRED = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
 
@@ -32,9 +34,10 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
 @interface JCBadgeManager ()
 {
     NSMutableDictionary *_batchBadges;
+    NSOperationQueue *_operationQueue;
 }
 
-@property (nonatomic, strong) NSMutableDictionary *badges;
+@property (nonatomic, readonly) NSString *currentLineIdentifier;
 
 @end
 
@@ -47,6 +50,9 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
         _managedObjectContext = managedObjectContext;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(managedObjectContextUpdated:) name:NSManagedObjectContextDidSaveNotification object:_managedObjectContext];
         [self addObserver:self forKeyPath:kJCBadgeManagerBadgesKey options:NSKeyValueObservingOptionNew context:nil];
+        
+        _operationQueue = [[NSOperationQueue alloc] init];
+        _operationQueue.maxConcurrentOperationCount = 1;
     }
     return self;
 }
@@ -90,16 +96,18 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
 
 -(void)startBackgroundUpdates
 {
-    NSArray *keys = [self.badges allKeys];
-    for (NSString *key in keys)
-    {
-        NSMutableDictionary *identifiers = [self identifiersForKey:key];
-        NSArray *identifierKeys = [identifiers allKeys];
-        for (NSString *identifier in identifierKeys)
-        {
-            [self setIdentifier:identifier forKey:key displayed:YES];
-        }
-    }
+//    NSString *lineIdentifier = self.currentLineIdentifier;
+//    NSMutableDictionary *lineIdentifiers = [self identifiersForLine:lineIdentifier];
+//    NSArray *keys = [lineIdentifiers allKeys];
+//    for (NSString *key in keys)
+//    {
+//        NSMutableDictionary *identifiers = [self identifiersForKey:key line:lineIdentifier];
+//        NSArray *identifierKeys = [identifiers allKeys];
+//        for (NSString *identifier in identifierKeys)
+//        {
+//            [self setIdentifier:identifier forKey:key line:lineIdentifier displayed:YES];
+//        }
+//    }
 }
 
 -(NSUInteger)endBackgroundUpdates
@@ -113,27 +121,43 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
 
 -(void)reset
 {
+    [self willChangeValueForKey:kJCBadgeManagerMissedCallsKey];
+    [self willChangeValueForKey:kJCBadgeManagerVoicemailsKey];
+    [self willChangeValueForKey:kJCBadgeManagerConversationsKey];
+    
     self.badges = nil;
+    
+    [self didChangeValueForKey:kJCBadgeManagerMissedCallsKey];
+    [self didChangeValueForKey:kJCBadgeManagerVoicemailsKey];
+    [self didChangeValueForKey:kJCBadgeManagerConversationsKey];
 }
 
 #pragma mark - Setters -
 
 -(void)setBadges:(NSMutableDictionary *)badges
 {
+    [self willChangeValueForKey:kJCBadgeManagerMissedCallsKey];
+    [self willChangeValueForKey:kJCBadgeManagerVoicemailsKey];
+    [self willChangeValueForKey:kJCBadgeManagerConversationsKey];
     [self willChangeValueForKey:kJCBadgeManagerBadgesKey];
+    
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:badges forKey:kJCBadgeManagerBadgesKey];
     [userDefaults synchronize];
     [self didChangeValueForKey:kJCBadgeManagerBadgesKey];
+    
+    [self didChangeValueForKey:kJCBadgeManagerMissedCallsKey];
+    [self didChangeValueForKey:kJCBadgeManagerVoicemailsKey];
+    [self didChangeValueForKey:kJCBadgeManagerConversationsKey];
 }
 
 -(void)setVoicemails:(NSUInteger)voicemails
 {
     [self willChangeValueForKey:kJCBadgeManagerVoicemailsKey];
-    
-    NSMutableDictionary *badges = self.badges;
-    [badges setObject:[NSNumber numberWithInteger:voicemails] forKey:kJCBadgeManagerV4VoicemailKey];
-    self.badges = badges;
+    NSString *line = [JCAuthenticationManager sharedInstance].line.jrn;
+    NSMutableDictionary *eventTypes = [self eventTypesForLine:line];
+    [eventTypes setObject:[NSNumber numberWithInteger:voicemails] forKey:kJCBadgeManagerV4VoicemailKey];
+    [self setEventTypes:eventTypes line:line];
     [self didChangeValueForKey:kJCBadgeManagerVoicemailsKey];
 }
 
@@ -157,21 +181,19 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
 
 - (NSUInteger)recentEvents
 {
-    NSDictionary *badges = self.badges;
-    NSArray *keys = badges.allKeys;
+    NSString *line = [JCAuthenticationManager sharedInstance].line.jrn;
+    NSDictionary *eventTypes = [self eventTypesForLine:line];
+    NSArray *keys = eventTypes.allKeys;
     int total = 0;
-    for (NSString *key in keys)
-    {
-        if ([key isEqualToString:kJCBadgeManagerV4VoicemailKey])
-        {
-            id object = [badges objectForKey:key];
+    for (NSString *key in keys){
+        if ([key isEqualToString:kJCBadgeManagerV4VoicemailKey]){
+            id object = [eventTypes objectForKey:key];
             if ([object isKindOfClass:[NSNumber class]]) {
                 total += ((NSNumber *)object).integerValue;
             }
         }
-        else
-        {
-            total += [self badgeCountForKey:key];
+        else {
+            total += [self countForEventType:key];
         }
     }
     return total;
@@ -179,246 +201,49 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
 
 - (NSUInteger)voicemails
 {
+    NSString *line = [JCAuthenticationManager sharedInstance].line.jrn;
     NSUInteger total = 0;
-    NSDictionary *badges = self.badges;
-    id object = [badges objectForKey:kJCBadgeManagerV4VoicemailKey];
+    NSDictionary *eventTypes = [self eventTypesForLine:line];
+    id object = [eventTypes objectForKey:kJCBadgeManagerV4VoicemailKey];
     if (object && [object isKindOfClass:[NSNumber class]]) {
         total += ((NSNumber *)object).integerValue;
     }
     
-    total += [self badgeCountForKey:kJCBadgeManagerVoicemailsKey];
+    total += [self countForEventType:kJCBadgeManagerVoicemailsKey];
     return total;
 }
 
 - (NSUInteger)missedCalls
 {
-    return [self badgeCountForKey:kJCBadgeManagerMissedCallsKey];
+    return [self countForEventType:kJCBadgeManagerMissedCallsKey];
 }
 
 - (NSUInteger)conversations
 {
-    return [self badgeCountForKey:kJCBadgeManagerConversationsKey];
+    return [self countForEventType:kJCBadgeManagerConversationsKey];
 }
 
 #pragma mark - Notification Handlers -
 
 -(void)managedObjectContextUpdated:(NSNotification *)notification
 {
-    // Take a snap shot of our current badges. We will add and remove objects from the snap shot, and then post process
-    // the sanpshot into the badges data store.
-    [self batchUpdate:notification.userInfo];
+    __block NSDictionary *userInfo = notification.userInfo;
+    __unsafe_unretained NSOperationQueue *weakOperationQueue = _operationQueue;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_operationQueue addOperation:[[JCBadgeManagerBatchOperation alloc] initWithDictionaryUpdate:userInfo]];
+    });
 }
 
 #pragma mark - Private -
 
-#pragma mark Badging
-
-/**
- * Returns a identifier key for a given recent event.
- *
- * The Identifier key returned is used thoughout the badge system to categorize a recent event into a bucket. The bucket
- * count provides us the badge numbers for a given key.
- */
--(NSString *)badgeKeyFromRecentEvent:(RecentEvent *)recentEvent
-{
-    if ([recentEvent isKindOfClass:[MissedCall class]]) {
-        return kJCBadgeManagerMissedCallsKey;
-    }
-    else if ([recentEvent isKindOfClass:[Voicemail class]])
-    {
-        return kJCBadgeManagerVoicemailsKey;
-    }
-    else if ([recentEvent isKindOfClass:[Conversation class]])
-    {
-        return kJCBadgeManagerConversationsKey;
-    }
-    return nil;
-}
-
 /**
  * Gets the badge count of a badge category key.
  */
--(NSUInteger)badgeCountForKey:(NSString *)key
+-(NSUInteger)countForEventType:(NSString *)eventType
 {
-    NSDictionary *identifiers = [self identifiersForKey:key];
-    return [identifiers allKeys].count;
-}
-
-/**
- * Inserts a badge event identifier into the badge system for the badge category bucket by its key.
- *
- * Only inserts on if it does not contain one. The identifier is stored as the key in a dictionary with a boolean value
- * representing if it has been "read". The read state is used during a background refresh to identifiy which ones have
- * generated a local notification for.
- */
--(void)setIdentifier:(NSString *)identifier forKey:(NSString *)key displayed:(BOOL)displayed
-{
-    NSMutableDictionary *identifiers = [self identifiersForKey:key];
-    [identifiers setObject:[NSNumber numberWithBool:displayed] forKey:identifier];
-    [self setIdentifiers:identifiers forKey:key];
-}
-
-/**
- *  Returns if we have an identifier stored for the given key in badges.
- */
--(BOOL)containsIdentifier:(NSString *)identifier forKey:(NSString *)key
-{
-    NSDictionary *identifiers = [self.badges objectForKey:key];
-    id object = [identifiers objectForKey:identifiers];
-    if (object) {
-        return true;
-    }
-    return false;
-}
-
-/**
- * Returns a dictionary of badge identifiers for a given key from the badges dictionary in the user default. If non have
- * been set, it should return nil, otherwise, it should return a dictionary of identifiers, where the identifier is the 
- * key, and a bool is the value.
- */
--(NSMutableDictionary *)identifiersForKey:(NSString *)key
-{
-    id object = [self.badges objectForKey:key];
-    if ([object isKindOfClass:[NSDictionary class]])
-    {
-        NSDictionary *identifiers = (NSDictionary *)object;
-        return [NSMutableDictionary dictionaryWithDictionary:identifiers];
-    }
-    return [NSMutableDictionary dictionary];
-}
-
-/**
- * Sets the the badge identifiers for a given key.
- *
- * This method does not merge current identifers, but rather replaces them. If you are updating, You should get the 
- * identifiers, add them, the set them.
- */
--(void)setIdentifiers:(NSDictionary *)identifiers forKey:(NSString *)key
-{
-    [self willChangeValueForKey:key];
-    NSMutableDictionary *badges = self.badges;
-    [badges setObject:identifiers forKey:key];
-    self.badges = badges;
-    
-    [self didChangeValueForKey:key];
-}
-
-#pragma mark Batch Badging
-
-/**
- *  Processes dictionary from the NSManagedObjectContextDidSaveNotification notification into a batch update proccess.
- */
--(void)batchUpdate:(NSDictionary *)updateDictionary
-{
-    
-    
-        // Preload the batch badges with the current batch badges.
-        _batchBadges = [self.badges mutableCopy];
-        
-        [self batchUpdateInfoKey:NSInsertedObjectsKey updateDictionary:updateDictionary];
-        [self batchUpdateInfoKey:NSUpdatedObjectsKey updateDictionary:updateDictionary];
-        [self batchUpdateInfoKey:NSDeletedObjectsKey updateDictionary:updateDictionary];
-    
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-    
-        // Iterate over the _batchBadges dictionary keys and trigger updates for each key into badges.
-        NSArray *keys = _batchBadges.allKeys;
-        for (NSString *key in keys) {
-            id object = [_batchBadges objectForKey:key];
-            if ([object isKindOfClass:[NSDictionary class]]) {
-                NSDictionary *identifiers = (NSDictionary *)object;
-                [self setIdentifiers:identifiers forKey:key];
-            }
-        }
-        
-        // Dispose of the batch badges, we are done.
-        _batchBadges = nil;
-    });
-}
-
--(void)batchUpdateInfoKey:(NSString *)key updateDictionary:(NSDictionary *)dictionary
-{
-    // Check to see if we have a set for the info key. Exit if we do not. The object being passed should be a NSSet
-    // object. If it is not, we exit.
-    id object = [dictionary objectForKey:key];
-    if (!object || ![object isKindOfClass:[NSSet class]]) {
-        return;
-    }
-    
-    // Pull out our set and iterate over each of the objects in the set. Objects should be NSManagedObjects. Process the
-    // managed object.
-    NSSet *set = (NSSet *)object;
-    for (id item in set) {
-        if ([item isKindOfClass:[NSManagedObject class]]) {
-            [self batchProcessManagedObject:(NSManagedObject *)item forInfoKey:key];
-        }
-    }
-}
-
--(void)batchProcessManagedObject:(NSManagedObject *)object forInfoKey:(NSString *)actionKey
-{
-    if (![object isKindOfClass:[RecentEvent class]])
-        return;
-    
-    RecentEvent *recentEvent = (RecentEvent *)object;
-    NSString *key = [self badgeKeyFromRecentEvent:recentEvent];
-    if (!key)
-    {
-        return;
-    }
-    
-    NSString *identifier = recentEvent.objectID.URIRepresentation.absoluteString;
-    BOOL read = recentEvent.isRead;
-    BOOL insert = [actionKey isEqualToString:NSInsertedObjectsKey];
-    BOOL update = [actionKey isEqualToString:NSUpdatedObjectsKey];
-    BOOL delete = [actionKey isEqualToString:NSDeletedObjectsKey];
-    
-    // Do this stuff off of main thread, since we need to check if it contains, and then add it in a multidimensional
-    // array for performance.
-    if (insert && !read) {
-        [self setBatchIdentifier:identifier forKey:key displayed:NO];
-    }
-    else if (update) {
-        if (!read) {
-            [self setBatchIdentifier:identifier forKey:key displayed:NO];
-        }
-        else {
-            [self batchDeleteIdentifier:identifier forKey:key];
-        }
-    }
-    else if (delete) {
-        [self batchDeleteIdentifier:identifier forKey:key];
-    }
-}
-
-/**
- * Inserts a badge event identifier into the badge system for the badge category bucket by its key.
- *
- * Only inserts on if it does not contain one. The identifier is stored as the key in a dictionary with a boolean value
- * representing if it has been "read". The read state is used during a background refresh to identifiy which ones have
- * generated a local notification for.
- */
--(void)setBatchIdentifier:(NSString *)identifier forKey:(NSString *)key displayed:(BOOL)displayed
-{
-    NSMutableDictionary *identifiers = [self batchIdentifiersForKey:key];
-    [identifiers setObject:[NSNumber numberWithBool:displayed] forKey:identifier];
-    [self setBatchIdentifiers:identifiers forKey:key];
-}
-
-
-/**
- * Removes an badge event identifier from the given badge bucket by its key.
- */
--(void)batchDeleteIdentifier:(NSString *)identifier forKey:(NSString *)key
-{
-    NSMutableDictionary *identifiers = [NSMutableDictionary dictionaryWithDictionary:[self batchIdentifiersForKey:key]];
-    [identifiers removeObjectForKey:identifier];
-    [self setBatchIdentifiers:identifiers forKey:key];
-}
-
--(void)setBatchIdentifiers:(NSDictionary *)identifiers forKey:(NSString *)key
-{
-    [_batchBadges setObject:identifiers forKey:key];
+    NSString *line = [JCAuthenticationManager sharedInstance].line.jrn;
+    NSDictionary *events = [self eventsForEventType:eventType line:line];
+    return events.allKeys.count;
 }
 
 /**
@@ -426,16 +251,49 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
  * been set, it should return nil, otherwise, it should return a dictionary of identifiers, where the identifier is the
  * key, and a bool is the value.
  */
--(NSMutableDictionary *)batchIdentifiersForKey:(NSString *)key
+-(NSMutableDictionary *)eventsForEventType:(NSString *)type line:(NSString *)line
 {
-    id object = [_batchBadges objectForKey:key];
-    if ([object isKindOfClass:[NSDictionary class]])
-    {
-        NSDictionary *identifiers = (NSDictionary *)object;
-        return [NSMutableDictionary dictionaryWithDictionary:identifiers];
+    NSMutableDictionary *eventTypes = [self eventTypesForLine:line];
+    id object = [eventTypes objectForKey:type];
+    if ([object isKindOfClass:[NSDictionary class]]) {
+        return [NSMutableDictionary dictionaryWithDictionary:(NSDictionary *)object];
     }
     return [NSMutableDictionary dictionary];
 }
+
+-(NSMutableDictionary *)eventTypesForLine:(NSString *)line
+{
+    id object = [self.badges objectForKey:line];
+    if ([object isKindOfClass:[NSDictionary class]]) {
+        return [NSMutableDictionary dictionaryWithDictionary:(NSDictionary *)object];
+    }
+    return [NSMutableDictionary dictionary];
+}
+
+-(void)setEventTypes:(NSDictionary *)eventTypes line:(NSString *)line
+{
+    NSMutableDictionary *badges = self.badges;
+    [badges setObject:eventTypes forKey:line];
+    self.badges = badges;
+}
+
+
+/**
+ * Sets the the badge identifiers for a given key.
+ *
+ * This method does not merge current identifers, but rather replaces them. If you are updating, You should get the 
+ * identifiers, add them, the set them.
+ */
+//-(void)setIdentifiers:(NSDictionary *)identifiers forKey:(NSString *)key line:(NSString *)line
+//{
+//    [self willChangeValueForKey:key];
+//    NSMutableDictionary *lineIdentifiers = [self identifiersForLine:line];
+//    [lineIdentifiers setObject:identifiers forKey:key];
+//    [self setIdentifiers:lineIdentifiers line:line];
+//    [self didChangeValueForKey:key];
+//}
+//
+
 
 /*
 - (void)setNotification:(NSInteger)voicemailCount conversation:(NSInteger)conversationCount {

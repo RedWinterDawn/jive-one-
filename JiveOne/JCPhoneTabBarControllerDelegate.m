@@ -20,7 +20,7 @@ NSString *const kJCPhoneTabBarControllerVoicemailRestorationIdentifier = @"Voice
     self = [super init];
     if (self) {
         JCBadgeManager *badgeManager = [JCBadgeManager sharedManager];
-        [badgeManager addObserver:self forKeyPath:@"missedCalls" options:NSKeyValueObservingOptionNew context:NULL];
+        [badgeManager addObserver:self forKeyPath:NSStringFromSelector(@selector(missedCalls)) options:NSKeyValueObservingOptionNew context:NULL];
         [badgeManager addObserver:self forKeyPath:NSStringFromSelector(@selector(voicemails)) options:NSKeyValueObservingOptionNew context:NULL];
     }
     return self;
@@ -28,7 +28,7 @@ NSString *const kJCPhoneTabBarControllerVoicemailRestorationIdentifier = @"Voice
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if ([keyPath isEqualToString:@"missedCalls"]) {
+    if ([keyPath isEqualToString:NSStringFromSelector(@selector(missedCalls))]) {
         [self setCountForViewController:[self findViewControllerForRestorationIdentifier:kJCPhoneTabBarControllerCallHistoryRestorationIdentifier]];
     }
     else if ([keyPath isEqualToString:NSStringFromSelector(@selector(voicemails))]) {
@@ -39,7 +39,6 @@ NSString *const kJCPhoneTabBarControllerVoicemailRestorationIdentifier = @"Voice
 -(void)setTabBarController:(UITabBarController *)tabBarController
 {
     _tabBarController = tabBarController;
-    
     NSArray *viewControllers = tabBarController.viewControllers;
     for (UIViewController *viewController in viewControllers) {
         [self setCountForViewController:viewController];
