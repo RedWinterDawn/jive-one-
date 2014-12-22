@@ -288,6 +288,7 @@
 		F266162618B42AA0000B770A /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266162418B42AA0000B770A /* AddressBook.framework */; };
 		F266162718B42AA0000B770A /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266162518B42AA0000B770A /* AddressBookUI.framework */; };
 		F59AE2C9192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2BC192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png */; };
+		F814B0101A48E5140013CF0B /* JCStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = F814B00F1A48E5140013CF0B /* JCStyleKit.m */; };
 		F82A284119DDC55E00C3620D /* JCV4ProvisioningClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F82A284019DDC55E00C3620D /* JCV4ProvisioningClient.m */; };
 		F84A087919DF38C8003476E6 /* JCTransferConfirmationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F84A087819DF38C8003476E6 /* JCTransferConfirmationViewController.m */; };
 		F85DAD0919EF07D30075AAA2 /* JCCallHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F85DAD0819EF07D30075AAA2 /* JCCallHistoryViewController.m */; };
@@ -764,6 +765,8 @@
 		F266162418B42AA0000B770A /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		F266162518B42AA0000B770A /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		F59AE2BC192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhone2XnewBlurSmall.png; sourceTree = "<group>"; };
+		F814B00E1A48E5140013CF0B /* JCStyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JCStyleKit.h; path = StyleKitAssets/JCStyleKit.h; sourceTree = "<group>"; };
+		F814B00F1A48E5140013CF0B /* JCStyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JCStyleKit.m; path = StyleKitAssets/JCStyleKit.m; sourceTree = "<group>"; };
 		F817802B1A1BCCA2009A5F40 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		F817802C1A1BCCA2009A5F40 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Main_iPhone.strings"; sourceTree = "<group>"; };
 		F817802D1A1BCCA2009A5F40 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Main_iPad.strings"; sourceTree = "<group>"; };
@@ -1213,6 +1216,8 @@
 				2751590E18AD174F00FD8D3F /* KeychainItemWrapper.m */,
 				9172AD5B19192A1500481B01 /* UserDefaults.plist */,
 				275F4A6018AD0FBC00D2F069 /* JCAppDelegate.h */,
+				F814B00E1A48E5140013CF0B /* JCStyleKit.h */,
+				F814B00F1A48E5140013CF0B /* JCStyleKit.m */,
 				275F4A6118AD0FBC00D2F069 /* JCAppDelegate.m */,
 				2751590218AD10E500FD8D3F /* Constants.h */,
 				274493CC18D13538002744CB /* Common.h */,
@@ -2138,6 +2143,7 @@
 				27B6F23D19DDC676007E80DA /* JCDialerViewController.m in Sources */,
 				279E4CB3192273E5002A556C /* MBContactModel.m in Sources */,
 				5D2EDB871A3CEBE80031F7AD /* JCDebugUsersTableViewController.m in Sources */,
+				F814B0101A48E5140013CF0B /* JCStyleKit.m in Sources */,
 				5D2EDB8A1A3CEC060031F7AD /* JCDebugUserTableViewController.m in Sources */,
 				5D7339A71A03F2E700339DC6 /* NSManagedObject+JCCoreDataAdditions.m in Sources */,
 				279E4CAD192273E5002A556C /* MBContactCollectionViewEntryCell.m in Sources */,
