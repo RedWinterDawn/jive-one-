@@ -227,7 +227,8 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
 
 -(void)managedObjectContextUpdated:(NSNotification *)notification
 {
-    NSDictionary *userInfo = notification.userInfo;
+    __block NSDictionary *userInfo = notification.userInfo;
+    __unsafe_unretained NSOperationQueue *weakOperationQueue = _operationQueue;
     dispatch_async(dispatch_get_main_queue(), ^{
         [_operationQueue addOperation:[[JCBadgeManagerBatchOperation alloc] initWithDictionaryUpdate:userInfo]];
     });
