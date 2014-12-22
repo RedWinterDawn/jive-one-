@@ -82,9 +82,7 @@ enum TagSections {
         text = [self.presetTags objectAtIndex:(NSUInteger)indexPath.row];
     }
 
-    CGFloat height = [text sizeWithFont:self.tagField.font
-                      constrainedToSize:CGSizeMake(240, 1500)
-                          lineBreakMode:NSLineBreakByWordWrapping].height;
+    CGFloat height = 12;
 
     return height + kCellPaddingHeight * 2;
 }

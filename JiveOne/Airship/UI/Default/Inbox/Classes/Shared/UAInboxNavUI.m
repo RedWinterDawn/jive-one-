@@ -103,7 +103,7 @@ static BOOL runiPhoneTargetOniPad = NO;
             [self shared].popoverController = [[UIPopoverController alloc] initWithContentViewController:[self shared].navigationController];
             
             [self shared].popoverController.popoverContentSize = [self shared].popoverSize;
-            [self shared].messageListController.contentSizeForViewInPopover = [self shared].popoverSize;
+            [self shared].messageListController.preferredContentSize = [self shared].popoverSize;
             
             [self shared].popoverController.delegate = [self shared];
             

@@ -197,9 +197,7 @@ enum {
         text = [[UAPush shared].tags objectAtIndex:(NSUInteger)indexPath.row];
     }
     
-    CGFloat height = [text sizeWithFont:strongTextLabel.font
-                                     constrainedToSize:CGSizeMake(240, 1500)
-                                         lineBreakMode:NSLineBreakByWordWrapping].height;
+    CGFloat height = 12;
     
     return height + kCellPaddingHeight * 2;
 
