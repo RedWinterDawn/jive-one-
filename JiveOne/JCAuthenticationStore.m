@@ -51,6 +51,9 @@ NSString *const kJCAuthenticationManagerRememberMeKey   = @"remberMe";
         [NSException raise:NSInvalidArgumentException format:@"Access Token null or empty"];
     }
     
+    NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+    
+    [_keychainWrapper setObject:appName forKey:(__bridge id)kSecAttrService];
     [_keychainWrapper setObject:(__bridge id)(kSecAttrAccessibleAfterFirstUnlock) forKey:(__bridge id)(kSecAttrAccessible)];
     [_keychainWrapper setObject:username forKey:(__bridge id)(kSecAttrAccount)];
     [_keychainWrapper setObject:accessToken forKey:(__bridge id)(kSecValueData)];

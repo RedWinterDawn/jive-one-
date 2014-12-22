@@ -63,7 +63,7 @@
     else {
         self.missedCallsBadgeView.badgeStyle = _missedCallDisabledStyle;
     }
-    self.missedCallsBadgeView.badgeText = [NSString stringWithFormat:@"%lu", (unsigned long)badgeManager.missedCalls];
+    self.missedCallsBadgeView.badgeText = [NSString stringWithFormat:@"%lu", (unsigned long)missedCalls];
     
     // Voicemails
     NSUInteger voicemails = badgeManager.voicemails;
@@ -73,7 +73,7 @@
     else {
         self.voicemailsBadgeView.badgeStyle = _voicemailDisabledStyle;
     }
-    self.voicemailsBadgeView.badgeText = [NSString stringWithFormat:@"%lu", (unsigned long)badgeManager.voicemails];
+    self.voicemailsBadgeView.badgeText = [NSString stringWithFormat:@"%lu", (unsigned long)voicemails];
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context

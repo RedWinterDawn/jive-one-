@@ -60,3 +60,39 @@ static MBProgressHUD *progressHud;
 }
 
 @end
+
+@implementation UIApplication (Custom)
+
++(void)showHudWithTitle:(NSString *)title message:(NSString *)message
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+        [viewController showHudWithTitle:title detail:message];
+    });
+}
+
++(void)hideHud
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+        [viewController hideHud];
+    });
+}
+
++(void)showSimpleAlert:(NSString *)title message:(NSString *)message
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+        [viewController showSimpleAlert:title message:message];
+    });
+}
+
++(void)showSimpleAlert:(NSString *)title message:(NSString *)message code:(NSInteger)code
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+        [viewController showSimpleAlert:title message:message code:code];
+    });
+}
+
+@end

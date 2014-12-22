@@ -98,7 +98,7 @@
      */
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
 #if DEBUG
-    //[[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
+    [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
     [[AFNetworkActivityLogger sharedLogger] startLogging];
 #else
     [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelOff];
@@ -263,17 +263,7 @@
     }
     
     // Register the Phone.
-    UIViewController *rootViewController = self.window.rootViewController;
-    [JCPhoneManager connectToLine:line
-                             started:^{
-                                 [rootViewController showHudWithTitle:@"" detail:@"Selecting Line..."];
-                             }
-                           completed:^(BOOL success, NSError *error) {
-                               [rootViewController hideHud];
-                               if (!success) {
-                                   [rootViewController showSimpleAlert:@"" message:@"Unable to connect to this line at this time. Please Try again." code:error.code];
-                               }
-                            }];
+    [JCPhoneManager connectToLine:line completion:NULL];
     
     // Get Contacts
     [Contact downloadContactsForLine:line complete:NULL];

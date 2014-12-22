@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import <MBProgressHUD/MBProgressHUD.h>
 
 @interface UIViewController (HUD)
 
@@ -16,5 +16,16 @@
 
 - (void)showSimpleAlert:(NSString *)title message:(NSString *)message;
 - (void)showSimpleAlert:(NSString *)title message:(NSString *)message code:(NSInteger)code;
+
+@end
+
+
+@interface UIApplication (Custom)
+
++(void)showHudWithTitle:(NSString *)title message:(NSString *)message;
++(void)hideHud;
+
++(void)showSimpleAlert:(NSString *)title message:(NSString *)message;
++(void)showSimpleAlert:(NSString *)title message:(NSString *)message code:(NSInteger)code;
 
 @end

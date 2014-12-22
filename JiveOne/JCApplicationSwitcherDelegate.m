@@ -111,7 +111,6 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
             else if ([controller.restorationIdentifier isEqualToString:kJCPhoneTabBarControllerVoicemailRestorationIdentifier] && [recentEvent isKindOfClass:[Voicemail class]]) {
                 [self navigateVoicemailViewController:controller toRecentEvent:(Voicemail *)recentEvent];
             }
-            
             break;
         }
     }
@@ -137,7 +136,7 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
         viewController = ((UINavigationController *)viewController).topViewController;
         if ([viewController isKindOfClass:[JCVoicemailViewController class]]) {
             JCVoicemailViewController *voicemailViewController = (JCVoicemailViewController *)viewController;
-            [voicemailViewController loadVoicemail:recentEvent];
+            voicemailViewController.voicemail = recentEvent;
         }
     }
 }
