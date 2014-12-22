@@ -58,10 +58,7 @@
 #define kCellPaddingHeight 10
 
 - (CGFloat)tableView: (UITableView *) tableView heightForRowAtIndexPath:(NSIndexPath *) indexPath {
-    UIFont *font = [UIFont systemFontOfSize:17];
-    CGFloat height = [self.text sizeWithFont:font
-                      constrainedToSize:CGSizeMake(280.0, 1500.0)
-                          lineBreakMode:NSLineBreakByWordWrapping].height;
+    CGFloat height = 12;
     return height + kCellPaddingHeight;
 }
 
@@ -91,9 +88,7 @@
     description.numberOfLines = 0;
     description.backgroundColor = [UIColor clearColor];
     [description setFont: font];
-    CGFloat height = [self.text sizeWithFont:font
-                      constrainedToSize:CGSizeMake(280.0, 800.0)
-                          lineBreakMode:NSLineBreakByWordWrapping].height;
+    CGFloat height = 12;
     [description setFrame: CGRectMake(0.0f, 10.0f, 320.0f, height)];
     [description setBounds: CGRectMake(0.20f, 0.0f, 290.0f, height)];
     [description setAutoresizingMask:UIViewAutoresizingFlexibleWidth];

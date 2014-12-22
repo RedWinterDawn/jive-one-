@@ -73,10 +73,7 @@ enum {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == SectionDesc) {
-        UILabel *strongTextLabel = self.textLabel;
-        CGFloat height = [strongTextLabel.text sizeWithFont:strongTextLabel.font
-                          constrainedToSize:CGSizeMake(300, 1500)
-                              lineBreakMode:NSLineBreakByWordWrapping].height;
+        CGFloat height = 12;
         return height + kCellPaddingHeight * 2;
     } else {
         return 44;
