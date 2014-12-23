@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
+#import "JCStyleKit.h"
 #import "LoggerCommon.h"
 
 #define D_MINUTE	60
