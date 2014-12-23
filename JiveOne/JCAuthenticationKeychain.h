@@ -6,16 +6,15 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "JCKeychain.h"
 
-@interface JCAuthenticationStore : NSObject
+@interface JCAuthenticationKeychain : JCKeychain
 
-@property (nonatomic, readonly) NSString *accessToken;
 @property (nonatomic, readonly) NSString *jiveUserId;
-
+@property (nonatomic, readonly) NSString *accessToken;
 @property (nonatomic, readonly) BOOL isAuthenticated;
 
-- (void)setAuthToken:(NSDictionary *)tokenData;
+- (BOOL)setAccessToken:(NSString *)tokenData username:(NSString *)username;
 - (void)logout;
 
 @end
