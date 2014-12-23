@@ -254,6 +254,7 @@
 		5DBBDCC619DD9A4100A4DB96 /* JCPhoneManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBBDCC519DD9A4100A4DB96 /* JCPhoneManager.m */; };
 		5DBBDCC919DDA0A300A4DB96 /* JCCallCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBBDCC819DDA0A300A4DB96 /* JCCallCard.m */; };
 		5DBCB93919FE9300001C7157 /* JCConferenceCallCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBCB93819FE9300001C7157 /* JCConferenceCallCard.m */; };
+		5DDDA5411A49C16000E31AA3 /* JCStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DDDA5401A49C16000E31AA3 /* JCStyleKit.m */; };
 		5DE0F1B519F6D47E000469D0 /* JCRoundedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0F1B419F6D47E000469D0 /* JCRoundedView.m */; };
 		9135DE0418BC01550052E998 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9135DE0318BC01550052E998 /* AVFoundation.framework */; };
 		9136FF231925D48D0040B367 /* slider_maximum@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9136FF211925D48D0040B367 /* slider_maximum@2x.png */; };
@@ -705,6 +706,8 @@
 		5DBD9F1F1A1D00A300F967B6 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5DBD9F201A1D00A400F967B6 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5DBD9F211A1D00A500F967B6 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5DDDA53F1A49C16000E31AA3 /* JCStyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JCStyleKit.h; path = StyleKitAssets/JCStyleKit.h; sourceTree = "<group>"; };
+		5DDDA5401A49C16000E31AA3 /* JCStyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JCStyleKit.m; path = StyleKitAssets/JCStyleKit.m; sourceTree = "<group>"; };
 		5DE0F1B319F6D47E000469D0 /* JCRoundedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCRoundedView.h; sourceTree = "<group>"; };
 		5DE0F1B419F6D47E000469D0 /* JCRoundedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCRoundedView.m; sourceTree = "<group>"; };
 		6594302CE0A00068957DC0D5 /* Pods-JiveOneTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JiveOneTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JiveOneTests/Pods-JiveOneTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1209,8 +1212,9 @@
 		2751590118AD10D400FD8D3F /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				5DDDA53F1A49C16000E31AA3 /* JCStyleKit.h */,
+				5DDDA5401A49C16000E31AA3 /* JCStyleKit.m */,
 				91F6DFA9192A7009001C54FB /* Configuration */,
-				91DDB1821934DED700550F10 /* StyleKit */,
 				9172AD5B19192A1500481B01 /* UserDefaults.plist */,
 				275F4A6018AD0FBC00D2F069 /* JCAppDelegate.h */,
 				275F4A6118AD0FBC00D2F069 /* JCAppDelegate.m */,
@@ -2138,6 +2142,7 @@
 				27B6F23D19DDC676007E80DA /* JCDialerViewController.m in Sources */,
 				279E4CB3192273E5002A556C /* MBContactModel.m in Sources */,
 				5D2EDB871A3CEBE80031F7AD /* JCDebugUsersTableViewController.m in Sources */,
+				5DDDA5411A49C16000E31AA3 /* JCStyleKit.m in Sources */,
 				5D2EDB8A1A3CEC060031F7AD /* JCDebugUserTableViewController.m in Sources */,
 				5D7339A71A03F2E700339DC6 /* NSManagedObject+JCCoreDataAdditions.m in Sources */,
 				279E4CAD192273E5002A556C /* MBContactCollectionViewEntryCell.m in Sources */,
