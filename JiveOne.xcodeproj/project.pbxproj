@@ -76,7 +76,6 @@
 		270098C918F5EA9300B6BC2F /* people-star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 270098BE18F5EA9300B6BC2F /* people-star@2x.png */; };
 		270098CA18F5EA9300B6BC2F /* people-star.png in Resources */ = {isa = PBXBuildFile; fileRef = 270098BF18F5EA9300B6BC2F /* people-star.png */; };
 		270152C61901D1FF00F271CE /* PersonEntities+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 270152C51901D1FF00F271CE /* PersonEntities+Custom.m */; };
-		270152CB1901D86700F271CE /* JCContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 270152CA1901D86700F271CE /* JCContactModel.m */; };
 		270559A5196DD11700A7AF35 /* ContactGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 270559A4196DD11700A7AF35 /* ContactGroup.m */; };
 		2710E40C18CE873000152C91 /* Conversation+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 2710E40B18CE873000152C91 /* Conversation+Custom.m */; };
 		2710E40F18CEC8C300152C91 /* ConversationEntry+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 2710E40E18CEC8C300152C91 /* ConversationEntry+Custom.m */; };
@@ -394,8 +393,6 @@
 		270098BF18F5EA9300B6BC2F /* people-star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "people-star.png"; sourceTree = "<group>"; };
 		270152C41901D1FF00F271CE /* PersonEntities+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PersonEntities+Custom.h"; sourceTree = "<group>"; };
 		270152C51901D1FF00F271CE /* PersonEntities+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PersonEntities+Custom.m"; sourceTree = "<group>"; };
-		270152C91901D86700F271CE /* JCContactModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCContactModel.h; sourceTree = "<group>"; };
-		270152CA1901D86700F271CE /* JCContactModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCContactModel.m; sourceTree = "<group>"; };
 		270559A3196DD11700A7AF35 /* ContactGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactGroup.h; sourceTree = "<group>"; };
 		270559A4196DD11700A7AF35 /* ContactGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactGroup.m; sourceTree = "<group>"; };
 		2710E40A18CE873000152C91 /* Conversation+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Conversation+Custom.h"; sourceTree = "<group>"; };
@@ -1115,8 +1112,6 @@
 			children = (
 				5DDE651219F0C49A00B90B55 /* Calling */,
 				2788F147190EB0F70099348D /* Categories */,
-				270152C91901D86700F271CE /* JCContactModel.h */,
-				270152CA1901D86700F271CE /* JCContactModel.m */,
 				276CFEA9196AF45F00C30B30 /* JasmineSocket.h */,
 				276CFEAA196AF45F00C30B30 /* JasmineSocket.m */,
 				2762C45618B4177D00885918 /* JCOmniPresence.h */,
@@ -2041,7 +2036,6 @@
 				F84A087919DF38C8003476E6 /* JCTransferConfirmationViewController.m in Sources */,
 				5DE0F1B519F6D47E000469D0 /* JCRoundedView.m in Sources */,
 				270559A5196DD11700A7AF35 /* ContactGroup.m in Sources */,
-				270152CB1901D86700F271CE /* JCContactModel.m in Sources */,
 				2700987818F4714100B6BC2F /* JSBubbleImageViewFactory.m in Sources */,
 				27F64D5919772CCE00F772AA /* PBX.m in Sources */,
 				5D35479519FF4B6E009E3CB4 /* JCApplicationSwitcherViewController.m in Sources */,
@@ -2500,7 +2494,7 @@
 		};
 		275F4A8A18AD0FBC00D2F069 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6594302CE0A00068957DC0D5 /* Pods-JiveOneTests.debug.xcconfig */;
+			baseConfigurationReference = 91F6DFB1192A706B001C54FB /* Debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/JiveOne.app/JiveOne";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -2526,7 +2520,7 @@
 		};
 		275F4A8B18AD0FBC00D2F069 /* Enterprise */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C87156C53B57B04D9871E012 /* Pods-JiveOneTests.enterprise.xcconfig */;
+			baseConfigurationReference = 91F6DFB4192A7080001C54FB /* Enterprise.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/JiveOne.app/JiveOne";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -2626,7 +2620,7 @@
 		};
 		91F6DFBA192A7B35001C54FB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 865FB851301D1534E4CC63E7 /* Pods-JiveOneTests.release.xcconfig */;
+			baseConfigurationReference = 91F6DFAE192A7053001C54FB /* Release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/JiveOne.app/JiveOne";
 				CLANG_ENABLE_OBJC_ARC = YES;
