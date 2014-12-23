@@ -15,6 +15,7 @@ NSString *const kJCAuthenticationManagerKeychainStoreIdentifier  = @"oauth-token
 @interface JCAuthenticationKeychain ()
 {
     NSString *_jiveUserId;
+    NSString *_accessToken;
 }
 
 @end
@@ -41,6 +42,7 @@ NSString *const kJCAuthenticationManagerKeychainStoreIdentifier  = @"oauth-token
     }
     
     // Data store
+    _accessToken = accessToken;
     [keychainQuery setObject:[accessToken dataUsingEncoding:NSUTF8StringEncoding] forKey:(__bridge id)kSecValueData];
     
     #if DEBUG
@@ -64,6 +66,7 @@ NSString *const kJCAuthenticationManagerKeychainStoreIdentifier  = @"oauth-token
 -(void)logout
 {
     _jiveUserId = nil;
+    _accessToken = nil;
     NSMutableDictionary *keychainQuery = [self getBaseKeychainQuery];
     SecItemDelete((__bridge CFDictionaryRef)keychainQuery);
 }
@@ -99,16 +102,19 @@ NSString *const kJCAuthenticationManagerKeychainStoreIdentifier  = @"oauth-token
 
 -(NSString *)accessToken
 {
-    NSString *jiveUserId = self.jiveUserId;
-    if (!jiveUserId || jiveUserId.length < 1) {
-        return nil;
+    if (!_accessToken) {
+        NSString *jiveUserId = self.jiveUserId;
+        if (!jiveUserId || jiveUserId.length < 1) {
+            return nil;
+        }
+        
+        NSString *accessToken = [self loadAccessTokenForAccount:jiveUserId];
+        if (accessToken && accessToken.length > 0) {
+            _accessToken = accessToken;
+        }
     }
     
-    NSString *accessToken = [self loadAccessTokenForAccount:jiveUserId];
-    if (accessToken && accessToken.length > 0) {
-        return accessToken;
-    }
-    return nil;
+    return _accessToken;
 }
 
 -(BOOL)isAuthenticated

@@ -8,7 +8,7 @@
 
 #import "JCKeychain.h"
 
-@interface JCAuthenticationKeychain : JCKeychain
+@interface JCAuthenticationKeychain : NSObject
 
 @property (nonatomic, readonly) NSString *jiveUserId;
 @property (nonatomic, readonly) NSString *accessToken;
