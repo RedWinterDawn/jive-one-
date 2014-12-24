@@ -35,12 +35,9 @@
 #import "Voicemail+Custom.h"
 #import "Contact+Custom.h"
 
-#import "UAirship.h"
-#import "UAConfig.h"
-#import "UAPush.h"
 #import "UIViewController+HUD.h"
 
-@interface JCAppDelegate () <JCCallerViewControllerDelegate, UAPushNotificationDelegate, UARegistrationDelegate, JCPickerViewControllerDelegate>
+@interface JCAppDelegate () <JCCallerViewControllerDelegate, JCPickerViewControllerDelegate>
 {
     JCCallerViewController *_presentedCallerViewController;
     JCAuthenticationManager *_authenticationManager;
@@ -69,8 +66,6 @@
     
     // Badging
     [[JCBadgeManager sharedManager] initialize];
-    UAConfig *config = [UAConfig defaultConfig];
-    [UAirship takeOff:config];
     
     // Authentication
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];

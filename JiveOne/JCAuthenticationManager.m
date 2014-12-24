@@ -7,7 +7,7 @@
 //
 
 #import "JCAuthenticationManager.h"
-#import "JCAuthenticationStore.h"
+#import "JCAuthenticationKeychain.h"
 
 #import "Common.h"
 
@@ -27,6 +27,12 @@ NSString *const kJCAuthenticationManagerLineChangedNotification                 
 // KVO and NSUserDefaults Keys
 NSString *const kJCAuthenticationManagerRememberMeAttributeKey  = @"rememberMe";
 NSString *const kJCAuthenticationManagerJiveUserIdKey           = @"username";
+
+NSString *const kJCAuthenticationManagerAccessTokenKey  = @"access_token";
+NSString *const kJCAuthenticationManagerRefreshTokenKey = @"refresh_token";
+NSString *const kJCAuthenticationManagerUsernameKey     = @"username";
+NSString *const kJCAuthenticationManagerRememberMeKey   = @"remberMe";
+
 
 // Javascript
 NSString *const kJCAuthenticationManagerJavascriptString    = @"document.getElementById('username').value = '%@';document.getElementById('password').value = '%@';document.getElementById('go-button').click()";
@@ -50,7 +56,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 @interface JCAuthenticationManager () <UIWebViewDelegate>
 {
-    JCAuthenticationStore *_authenticationStore;
+    JCAuthenticationKeychain *_authenticationKeychain;
     
     NSInteger _loginAttempts;
     CompletionBlock _completionBlock;
@@ -71,7 +77,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 {
     self = [super init];
     if (self) {
-        _authenticationStore = [[JCAuthenticationStore alloc] init];
+        _authenticationKeychain = [[JCAuthenticationKeychain alloc] init];
     }
     return self;
 }
@@ -88,13 +94,13 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 -(void)checkAuthenticationStatus
 {
     // Check to see if we are autheticiated. If we are not, notify that we are logged out.
-    if (!_authenticationStore.isAuthenticated) {
+    if (!_authenticationKeychain.isAuthenticated) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kJCAuthenticationManagerUserLoggedOutNotification object:self userInfo:nil];
         return;
     }
-    
+
     // Check to see if we have data using the authentication store to retrive the user id.
-    NSString *jiveUserId = _authenticationStore.jiveUserId;
+    NSString *jiveUserId = _authenticationKeychain.jiveUserId;
     _user = [User MR_findFirstByAttribute:@"jiveUserId" withValue:jiveUserId];
     if (_user && _user.pbxs) {
         [[NSNotificationCenter defaultCenter] postNotificationName:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:self userInfo:nil];
@@ -116,11 +122,11 @@ static int MAX_LOGIN_ATTEMPTS = 2;
         [self reportError:InvalidAuthenticationParameters description:@"UserName/Password Cannot Be Empty"];
         return;
     }
+    
+    [_authenticationKeychain logout]; // destroy current authToken;
     _username = username;
     _password = password;
     
-    // Clears stored credentials.
-    [_authenticationStore logout];
     _user = nil;
     _line = nil;
            
@@ -140,7 +146,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 - (void)logout
 {
-    [_authenticationStore logout];
+    [_authenticationKeychain logout];
     _user = nil;
     _line = nil;
     if (!self.rememberMe) {
@@ -185,7 +191,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 - (BOOL)userAuthenticated
 {
-    return _authenticationStore.isAuthenticated;
+    return _authenticationKeychain.isAuthenticated;
 }
 
 - (BOOL)userLoadedMinimumData
@@ -195,12 +201,12 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 -(NSString *)authToken
 {
-    return _authenticationStore.accessToken;
+    return _authenticationKeychain.accessToken;
 }
 
 -(NSString *)jiveUserId
 {
-    return _authenticationStore.jiveUserId;
+    return _authenticationKeychain.jiveUserId;
 }
 
 - (BOOL)rememberMe
@@ -249,12 +255,29 @@ static int MAX_LOGIN_ATTEMPTS = 2;
             [NSException raise:NSInvalidArgumentException format:@"%@", tokenData[@"error"]];
         }
         
-        [_authenticationStore setAuthToken:tokenData];
+        NSString *accessToken = [tokenData valueForKey:kJCAuthenticationManagerAccessTokenKey];
+        if (!accessToken || accessToken.length == 0) {
+            [NSException raise:NSInvalidArgumentException format:@"Access Token null or empty"];
+        }
+        
+        NSString *jiveUserId = [tokenData valueForKey:kJCAuthenticationManagerUsernameKey];
+        if (!jiveUserId || jiveUserId.length == 0) {
+            [NSException raise:NSInvalidArgumentException format:@"Username null or empty"];
+        }
+        
+        if (![jiveUserId isEqualToString:_username]) {
+           [NSException raise:NSInvalidArgumentException format:@"Auth token user name does not match login user name"];
+        }
+        
+        if (![_authenticationKeychain setAccessToken:accessToken username:jiveUserId]) {
+            [NSException raise:NSInvalidArgumentException format:@"Unable to save access token to keychain store."];
+        }
+        
         [[NSNotificationCenter defaultCenter] postNotificationName:kJCAuthenticationManagerUserAuthenticatedNotification object:self userInfo:nil];
-        _user = [User userForJiveUserId:_authenticationStore.jiveUserId context:[NSManagedObjectContext MR_contextForCurrentThread]];
+        _user = [User userForJiveUserId:_authenticationKeychain.jiveUserId context:[NSManagedObjectContext MR_contextForCurrentThread]];
         
         if(self.rememberMe)
-            self.rememberMeUser = _authenticationStore.jiveUserId;
+            self.rememberMeUser = _authenticationKeychain.jiveUserId;
         
         [PBX downloadPbxInfoForUser:_user completed:^(BOOL success, NSError *error) {
             if (success) {
@@ -289,7 +312,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     if (success){
         [center postNotificationName:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:self userInfo:nil];
     } else {
-        [_authenticationStore logout];
+        [_authenticationKeychain logout];
         [center postNotificationName:kJCAuthenticationManagerAuthenticationFailedNotification object:self userInfo:nil];
     }
     
@@ -344,7 +367,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    if (_authenticationStore.isAuthenticated) {
+    if (_authenticationKeychain.isAuthenticated) {
         return;
     }
     [self reportError:NetworkError description:error.localizedDescription];
