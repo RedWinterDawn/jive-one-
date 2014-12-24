@@ -48,7 +48,7 @@ static MBProgressHUD *progressHud;
 
 -(void)showSimpleAlert:(NSString *)title message:(NSString *)message code:(NSInteger)code
 {
-    NSLog(@"%@: %@ (-%li)", title, message, code);
+    NSLog(@"%@: %@ (-%li)", title, message, (long)code);
     message = [NSString stringWithFormat:@"%@ (-%li)", NSLocalizedString(message, nil), (long)code];
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(title, nil)
