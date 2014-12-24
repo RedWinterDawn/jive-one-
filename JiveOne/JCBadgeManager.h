@@ -15,6 +15,8 @@ extern NSString *const kJCBadgeManagerIdentifierKey;
 
 @interface JCBadgeManager : NSObject
 
+@property (nonatomic, strong) NSMutableDictionary *badges;
+
 // Total of all recent events badges.
 @property (nonatomic, readonly) NSUInteger recentEvents;
 @property (nonatomic, readonly) NSManagedObjectContext *managedObjectContext;

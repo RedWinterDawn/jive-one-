@@ -47,23 +47,8 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 {
     [super viewWillAppear:animated];
     
-    JCAuthenticationManager *manager = [JCAuthenticationManager sharedInstance];
-    if(!_phoneManager.isConnected && manager.user)
-    {
-        Line *line = manager.line;
-        if (!line) {
-            return;
-        }
-        
-        __unsafe_unretained UIViewController *weakSelf = self;
-        [_phoneManager reconnectToLine:line
-                               started:^{
-                                   [weakSelf showHudWithTitle:@"Registering" detail:@"Selecting Line..."];
-                               }
-                            completion:^(BOOL success, NSError *error) {
-                                [weakSelf hideHud];
-                                
-                            }];
+    if (_phoneManager.line && !_phoneManager.isConnected && !_phoneManager.isConnecting) {
+        [_phoneManager reconnectToLine:_phoneManager.line completion:NULL];
     }
 }
 
@@ -99,11 +84,11 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 -(IBAction)initiateCall:(id)sender
 {
     NSString *string = self.dialStringLabel.dialString;
+    
+    // If the string is empty, we polulate the dial string with the most recent item in call history.
     if (!string || [string isEqualToString:@""]) {
-
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"line = %@", _phoneManager.line];
         OutgoingCall *call = [OutgoingCall MR_findFirstWithPredicate:predicate sortedBy:@"date" ascending:false];
-        
         self.dialStringLabel.dialString = call.number;
         return;
     }
@@ -113,14 +98,17 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     if (_initiatingCall) {
         return;
     }
+    
     _initiatingCall = TRUE;
-    [_phoneManager dialNumber:string type:JCPhoneManagerSingleDial completion:^(BOOL success, NSDictionary *callInfo) {
-        if (success){
-            [self performSegueWithIdentifier:kJCDialerViewControllerCallerStoryboardIdentifier sender:self];
-            self.dialStringLabel.dialString = nil;
-        }
-        _initiatingCall = false;
-    }];
+    [_phoneManager dialNumber:string
+                         type:JCPhoneManagerSingleDial
+                   completion:^(BOOL success, NSDictionary *callInfo) {
+                       if (success){
+                           [self performSegueWithIdentifier:kJCDialerViewControllerCallerStoryboardIdentifier sender:self];
+                           self.dialStringLabel.dialString = nil;
+                       }
+                       _initiatingCall = false;
+                   }];
 }
 
 -(IBAction)backspace:(id)sender
