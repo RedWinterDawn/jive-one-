@@ -19,16 +19,6 @@
 //static NSInteger SocketCloseCode = 1001;
 static BOOL closedSocketOnPurpose;
 
-+ (JasmineSocket *)sharedInstance
-{
-    static JasmineSocket* sharedObject = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedObject = [[JasmineSocket alloc] init];
-    });
-    return sharedObject;
-}
-
 - (void)initSocket
 {
 	if ([self.socket respondsToSelector:@selector(readyState)]) {

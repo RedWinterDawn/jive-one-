@@ -7,23 +7,16 @@
 //
 
 #import "UIDevice+InstallationIdentifier.h"
-#import "KeychainItemWrapper.h"
+#import "JCKeychain.h"
 
 NSString *const kUIDeviceInstallationId = @"installationIdentifier";
-static KeychainItemWrapper *keychain;
 
 @implementation UIDevice (InstallationIdentifier)
 
 -(NSString *)installationIdentifier
 {
-    if (!keychain)
-        keychain = [[KeychainItemWrapper alloc] initWithIdentifier:kUIDeviceInstallationId accessGroup:nil];
-    
-    NSString *string = nil;;
-    id object = [keychain objectForKey:(__bridge id)(kSecValueData)];
-    if ([object isKindOfClass:[NSString class]])
-        string = (NSString *)object;
-    
+    NSString *key = self.installationIdentifierKey;
+    NSString *string = (NSString *)[JCKeychain loadValueForKey:key];
     if (string.length == 0)
     {
         //Generate UUID to serve as device ID
@@ -33,19 +26,20 @@ static KeychainItemWrapper *keychain;
         CFRelease(uuidString);
         CFRelease(uuidObj);
         
-        NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
-        [keychain setObject:appName forKey:(__bridge id)kSecAttrService];
-        [keychain setObject:(__bridge id)(kSecAttrAccessibleAfterFirstUnlock) forKey:(__bridge id)(kSecAttrAccessible)];
-        [keychain setObject:string forKey:(__bridge id)(kSecValueData)];
+        [JCKeychain saveValue:string forKey:key];
     }
     return string;
 }
 
 -(void)clearInstallationIdentifier
 {
-    if (!keychain)
-        keychain = [[KeychainItemWrapper alloc] initWithIdentifier:kUIDeviceInstallationId accessGroup:nil];
-    [keychain resetKeychainItem];
+    [JCKeychain deleteValueForKey:self.installationIdentifierKey];
+}
+
+-(NSString *)installationIdentifierKey
+{
+    NSString *bundleIdentifier = [[NSBundle mainBundle] objectForInfoDictionaryKey:(__bridge id)kCFBundleIdentifierKey];
+    return [NSString stringWithFormat:@"%@.%@", bundleIdentifier, kUIDeviceInstallationId];
 }
 
 @end
