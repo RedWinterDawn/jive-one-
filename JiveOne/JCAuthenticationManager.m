@@ -187,6 +187,21 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     [[NSNotificationCenter defaultCenter] postNotificationName:kJCAuthenticationManagerLineChangedNotification object:self];
 }
 
+- (void)setDeviceToken:(NSString *)deviceToken
+{
+    NSString *newToken = [deviceToken description];
+    newToken = [newToken stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    newToken = [newToken stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setValue:newToken forKey:UDdeviceToken];
+    [defaults synchronize];
+}
+
+#pragma mark - Getters -
+
+
+
 #pragma mark - Getters -
 
 - (BOOL)userAuthenticated
@@ -207,6 +222,11 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 -(NSString *)jiveUserId
 {
     return _authenticationKeychain.jiveUserId;
+}
+
+-(NSString *)deviceToken
+{
+    return [[NSUserDefaults standardUserDefaults] valueForKey:UDdeviceToken];
 }
 
 - (BOOL)rememberMe

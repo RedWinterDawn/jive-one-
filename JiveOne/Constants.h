@@ -100,15 +100,7 @@
 
 
 
-typedef enum {
-    JCPresenceTypeOffline       = 0,
-    JCPresenceTypeAvailable     = 1,
-    JCPresenceTypeBusy          = 9,
-    JCPresenceTypeInvisible     = 4,
-    JCPresenceTypeDoNotDisturb  = 2,
-    JCPresenceTypeAway          = 7,
-    JCPresenceTypeNone          = -1
-} JCPresenceType;
+
 
 typedef enum {
     JCExistingConversation,

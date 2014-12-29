@@ -8,7 +8,7 @@
 
 @import UIKit;
 
-#import "JCPresenceView.h"
+//#import "JCPresenceView.h"
 #import "Person.h"
 
 @interface JCPersonCell : UITableViewCell
@@ -16,7 +16,7 @@
 @property (nonatomic, weak) IBOutlet UILabel *personNameLabel;
 @property (nonatomic, weak) IBOutlet UILabel *personDetailLabel;
 
-@property (nonatomic, weak) IBOutlet JCPresenceView *personPresenceView;
+//@property (nonatomic, weak) IBOutlet JCPresenceView *personPresenceView;
 
 @property (nonatomic) Person *person;
 

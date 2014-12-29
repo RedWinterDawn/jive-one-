@@ -9,7 +9,7 @@
 #import "PersonEntities.h"
 #import "Company.h"
 #import "PersonMeta.h"
-#import "Presence.h"
+//#import "Presence.h"
 
 
 @implementation PersonEntities

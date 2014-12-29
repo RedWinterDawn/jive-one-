@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class Contact;
 @class User;
 @class Line;
 
@@ -24,12 +25,18 @@
 @property (nonatomic, readonly) NSString * displayName;
 
 // Relationships
+@property (nonatomic, retain) NSSet * contacts;
 @property (nonatomic, retain) User * user;
 @property (nonatomic, retain) NSSet * lines;
 
 @end
 
 @interface PBX (CoreDataGeneratedAccessors)
+
+- (void)addContactsObject:(Contact *)value;
+- (void)removeContactsObject:(Contact *)value;
+- (void)addContacts:(NSSet *)values;
+- (void)removeContacts:(NSSet *)values;
 
 - (void)addLinesObject:(Line *)value;
 - (void)removeLinesObject:(Line *)value;

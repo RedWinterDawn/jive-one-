@@ -11,9 +11,6 @@
 #import <MBProgressHUD/MBProgressHUD.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import "AFNetworkActivityIndicatorManager.h"
-#import "JasmineSocket.h"
-#import "PersonEntities.h"
-#import "NotificationView.h"
 #import "JCLoginViewController.h"
 #import "Common.h"
 #import "TRVSMonitor.h"
@@ -23,10 +20,12 @@
 
 #import "Voicemail+Custom.h"
 #import "JCPhoneManager.h"
+#import "JCPresenceManager.h"
 #import "JCCallerViewController.h"
 #import "JCBadgeManager.h"
 #import "JCApplicationSwitcherDelegate.h"
 #import "JCV5ApiClient.h"
+#import "JCSocket.h"
 
 #import "PBX.h"
 #import "Line.h"
@@ -194,60 +193,60 @@
     
     NSLog(@"APPDELEGATE - performFetchWithCompletionHandler");
     __block UIBackgroundFetchResult fetchResult = UIBackgroundFetchResultFailed;
-    if ([JasmineSocket sharedInstance].socket.readyState != SR_OPEN)
-    {
-        @try {
-            TRVSMonitor *monitor = [TRVSMonitor monitor];
-            JCBadgeManager *badgeManger = [JCBadgeManager sharedManager];
-            [badgeManger startBackgroundUpdates];
-            
-            Line *line = [JCAuthenticationManager sharedInstance].line;
-            [Voicemail downloadVoicemailsForLine:line complete:^(BOOL suceeded, NSError *error) {
-                [monitor signal];
-            }];
-            
-            // No Socket for now.
-            //            [[JCSocketDispatch sharedInstance] startPoolingFromSocketWithCompletion:^(BOOL success, NSError *error) {
-            //                if (success) {
-            //                    NSLog(@"Success Done with Block");
-            //                    LogMessage(@"socket", 4, @"Success pooling from socket");
-            //                }
-            //                else {
-            //                    NSLog(@"Error Done With Block %@", error);
-            //                    LogMessage(@"socket", 4, @"Error pooling from socket");
-            //
-            //                }
-            //                [monitor signal];
-            //            }];
-            
-            [monitor waitWithTimeout:25];
-            NSUInteger badgeUpdateEvents = [badgeManger endBackgroundUpdates];
-            if (badgeUpdateEvents != 0) {
-                fetchResult = UIBackgroundFetchResultNewData;
-            }
-            else {
-                fetchResult = UIBackgroundFetchResultNoData;
-            }
-        }
-        @catch (NSException *exception) {
-            NSLog(@"%@", exception);
-        }
-        @finally {
-            if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground ) {
-                if ([JasmineSocket sharedInstance].socket.readyState == SR_OPEN) {
-                    LogMessage(@"socket", 4, @"Will Call closeSocket");
-                    
-                    [JasmineSocket stopSocket];
-                }
-            }
-            
-        }
-    }
+//    if ([JasmineSocket sharedInstance].socket.readyState != SR_OPEN)
+//    {
+//        @try {
+//            TRVSMonitor *monitor = [TRVSMonitor monitor];
+//            JCBadgeManager *badgeManger = [JCBadgeManager sharedManager];
+//            [badgeManger startBackgroundUpdates];
+//            
+//            Line *line = [JCAuthenticationManager sharedInstance].line;
+//            [Voicemail downloadVoicemailsForLine:line complete:^(BOOL suceeded, NSError *error) {
+//                [monitor signal];
+//            }];
+//            
+//            // No Socket for now.
+//            //            [[JCSocketDispatch sharedInstance] startPoolingFromSocketWithCompletion:^(BOOL success, NSError *error) {
+//            //                if (success) {
+//            //                    NSLog(@"Success Done with Block");
+//            //                    LogMessage(@"socket", 4, @"Success pooling from socket");
+//            //                }
+//            //                else {
+//            //                    NSLog(@"Error Done With Block %@", error);
+//            //                    LogMessage(@"socket", 4, @"Error pooling from socket");
+//            //
+//            //                }
+//            //                [monitor signal];
+//            //            }];
+//            
+//            [monitor waitWithTimeout:25];
+//            NSUInteger badgeUpdateEvents = [badgeManger endBackgroundUpdates];
+//            if (badgeUpdateEvents != 0) {
+//                fetchResult = UIBackgroundFetchResultNewData;
+//            }
+//            else {
+//                fetchResult = UIBackgroundFetchResultNoData;
+//            }
+//        }
+//        @catch (NSException *exception) {
+//            NSLog(@"%@", exception);
+//        }
+//        @finally {
+//            if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground ) {
+//                if ([JasmineSocket sharedInstance].socket.readyState == SR_OPEN) {
+//                    LogMessage(@"socket", 4, @"Will Call closeSocket");
+//                    
+//                    [JasmineSocket stopSocket];
+//                }
+//            }
+//            
+//        }
+//    }
     
     return fetchResult;
 }
 
--(void)registerServicesToLine:(Line *)line
+-(void)registerServicesToLine:(Line *)line deviceToken:(NSString *)deviceToken
 {
     // If we have not already, initialize the phone manager singleton, store a reference to it and register for notifications.
     if (!_phoneManager) {
@@ -260,8 +259,12 @@
     // Register the Phone.
     [JCPhoneManager connectToLine:line completion:NULL];
     
-    // Get Contacts
-    [Contact downloadContactsForLine:line complete:NULL];
+    // Get Contacts. Once we have contacts, we subscribe to their presence.
+    [Contact downloadContactsForLine:line complete:^(BOOL success, NSError *error) {
+        [JCSocket connectWithDeviceToken:deviceToken completion:^(BOOL success, NSError *error) {
+            //[JCPresenceManager subscribeToPbx:line.pbx];
+        }];
+    }];
     
     // Get Voicemails
     [Voicemail downloadVoicemailsForLine:line complete:NULL];
@@ -280,8 +283,10 @@
     // dismissed or should transition to requesting that they select a line.
     JCAuthenticationManager *authenticationManager = notification.object;
     Line *line = authenticationManager.line;
+    NSString *deviceToken = authenticationManager.deviceToken;
+    
     if (!_navigationController){
-        [self registerServicesToLine:line];
+        [self registerServicesToLine:line deviceToken:deviceToken];
         return;
     }
     
@@ -295,7 +300,7 @@
     }
         
     [self dismissLoginViewController:YES completed:^(BOOL finished) {
-        [self registerServicesToLine:authenticationManager.line];
+        [self registerServicesToLine:line deviceToken:deviceToken];
     }];
 }
 
@@ -307,7 +312,7 @@
 -(void)lineChanged:(NSNotification *)notification
 {
     JCAuthenticationManager *authenticationManager = notification.object;
-    [self registerServicesToLine:authenticationManager.line];
+    [self registerServicesToLine:authenticationManager.line deviceToken:authenticationManager.deviceToken];
 }
 
 /**
@@ -319,10 +324,12 @@
     
     [Flurry logEvent:@"Log out"];
     
-    [JasmineSocket stopSocket];                         // Kill any socket connections.
+    [JCSocket disconnect];                              // Disconnect the socket;
+    [JCPhoneManager disconnect];                        // Disconnect the phone manager
+    
+    
     [[JCV5ApiClient sharedClient] stopAllOperations];   // Kill any netowrk operations.
     [JCBadgeManager reset];                             // Resets the Badge Manager.
-    [JCPhoneManager disconnect];                        // Dissconnect the
     [self presentLoginViewController:YES];              // Present the login view.
     
     [[UIApplication sharedApplication] unregisterForRemoteNotifications];
@@ -464,8 +471,7 @@
 -(void)applicationDidEnterBackground:(UIApplication *)application
 {
     LOG_Info();
-    LogMessage(@"socket", 4, @"Will Call CloseSocket");
-    [JasmineSocket stopSocket];
+    [JCSocket stop];
 }
 
 /**
@@ -477,7 +483,7 @@
     LOG_Info();
 
     [Flurry logEvent:@"Resumed Session"];
-    [JasmineSocket startSocket];
+    [JCSocket start];
 }
 
 /**
@@ -504,20 +510,19 @@
 {
     LOG_Info();
     
-    NSString *newToken = [deviceToken description];
-	newToken = [newToken stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
-	newToken = [newToken stringByReplacingOccurrencesOfString:@" " withString:@""];
     
-    [[NSUserDefaults standardUserDefaults] setObject:newToken forKey:UDdeviceToken];
+    [JCAuthenticationManager sharedInstance].deviceToken = [deviceToken description];
+    
+    
     LogMessage(@"socket", 4, @"Will Call requestSession");
-    [JasmineSocket startSocket];
+    [JCSocket start];
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
     LOG_Info();
     LogMessage(@"socket", 4, @"Will Call requestSession");
-    [JasmineSocket startSocket];
+    [JCSocket start];
 	NSLog(@"APPDELEGATE - Failed to get token, error: %@", error);
 }
 

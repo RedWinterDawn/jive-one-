@@ -35,15 +35,15 @@ static BOOL closedSocketOnPurpose;
 {
 	[self cleanup];
 	
-    [[JCV5ApiClient sharedClient] RequestSocketSession:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
-        if (suceeded) {
-            _webSocketUrl = responseObject[@"ws"];
-            _subscriptionUrl = responseObject[@"subscriptions"];
-            _selfUrl = responseObject[@"self"];
-            
-            [self startSocketWithURL];
-        }
-    }];
+//    [[JCV5ApiClient sharedClient] RequestSocketSession:^(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error) {
+//        if (suceeded) {
+//            _webSocketUrl = responseObject[@"ws"];
+//            _subscriptionUrl = responseObject[@"subscriptions"];
+//            _selfUrl = responseObject[@"self"];
+//            
+//            [self startSocketWithURL];
+//        }
+//    }];
 }
 
 - (void) startSocketWithURL
@@ -159,7 +159,7 @@ static BOOL closedSocketOnPurpose;
 			[params setObject:type forKey:@"type"];
 		}
 		
-		[[JCV5ApiClient sharedClient] SubscribeToSocketEvents:self.subscriptionUrl dataDictionary:params];
+		//[[JCV5ApiClient sharedClient] SubscribeToSocketEvents:self.subscriptionUrl dataDictionary:params];
 	}
     
 }
