@@ -21,7 +21,6 @@
 @interface JCPresenceManager (Singleton)
 
 +(instancetype)sharedManager;
-
 +(void)subscribeToPbx:(PBX *)pbx;
 
 @end

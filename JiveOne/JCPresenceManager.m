@@ -7,11 +7,7 @@
 //
 
 #import "JCPresenceManager.h"
-
-#import "JCV5ApiClient.h"
-
 #import "JCSocket.h"
-
 
 @interface JCPresenceManager ()
 {
@@ -23,6 +19,10 @@
 
 @implementation JCPresenceManager
 
+/**
+ * Override class init to grab pointer to socket singleton, and to register for Notification Center 
+ * events from the socket for recieved data.
+ */
 -(instancetype)init
 {
     self = [super init];
@@ -34,6 +34,10 @@
     return self;
 }
 
+/**
+ * Loops through the PBX's contacts and subscribe to presence events for each of them. Creates a 
+ * line presence object to represent that contact.
+ */
 -(void)subscribeToPbx:(PBX *)pbx
 {
     // Create a line presence object to represent the contact.
@@ -85,10 +89,19 @@ NSString *const kJCPresenceManagerIdentifierKey = @"subId";
     
     // Right now we only care about withdraws and confirms
     NSString *type = [results stringValueForKey:kJCPresenceManagerTypeKey];
-    if (!type || !([type isEqualToString:kJCPresenceManagerTypeWithdraw] || [type isEqualToString:kJCPresenceManagerTypeConfirmed])) {
+
+    NSString *state = nil;
+    id object = [results objectForKey:kJCPresenceManagerDataKey];
+    if (object && [object isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *data = (NSDictionary *)object;
+        state = [data stringValueForKey:kJCPresenceManagerStateKey];
+    }
+    
+    if (![type isEqualToString:kJCPresenceManagerTypeWithdraw] && !(state && [state isEqualToString:kJCPresenceManagerTypeConfirmed])) {
         return;
     }
     
+    // Get identifer.
     NSString *identifier = [results stringValueForKey:kJCPresenceManagerIdentifierKey];
     if (!identifier || identifier.length < 1) {
         return;
@@ -99,18 +112,11 @@ NSString *const kJCPresenceManagerIdentifierKey = @"subId";
         return;
     }
     
-    id object = [results objectForKey:kJCPresenceManagerDataKey];
-    if (!object || ![object isKindOfClass:[NSDictionary class]]) {
-        return;
-    }
-    
-    NSDictionary *data = (NSDictionary *)object;
-    NSString *state = [data stringValueForKey:kJCPresenceManagerStateKey];
-    if (state && [state isEqualToString:kJCPresenceManagerTypeConfirmed]) {
-        linePresence.state = JCLinePresenceTypeDoNotDisturb;
-    }
-    else if (type && [type isEqualToString:kJCPresenceManagerTypeWithdraw]) {
+    if ([type isEqualToString:kJCPresenceManagerTypeWithdraw]) {
         linePresence.state = JCLinePresenceTypeAvailable;
+    }
+    else if ([state isEqualToString:kJCPresenceManagerTypeConfirmed]) {
+        linePresence.state = JCLinePresenceTypeDoNotDisturb;
     }
 }
 

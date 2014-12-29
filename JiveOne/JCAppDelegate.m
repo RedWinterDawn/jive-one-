@@ -259,15 +259,28 @@
     // Register the Phone.
     [JCPhoneManager connectToLine:line completion:NULL];
     
-    // Get Contacts. Once we have contacts, we subscribe to their presence.
+    // Get Contacts. Once we have contacts, we subscribe to their presence, fetch voicemails trying
+    // to link contacts to thier voicemail if in the pbx. Only fetch voicmails, and open sockets for
+    // v5 pbxs. If we are on v4, we disconnect, and do not fetch voicemails.
     [Contact downloadContactsForLine:line complete:^(BOOL success, NSError *error) {
-        [JCSocket connectWithDeviceToken:deviceToken completion:^(BOOL success, NSError *error) {
-            //[JCPresenceManager subscribeToPbx:line.pbx];
-        }];
+        if (line.pbx.isV5) {
+            
+            // Fetch Voicemails
+            [Voicemail downloadVoicemailsForLine:line complete:NULL];
+            
+            // Open socket to subscribe to presence and voicemail events.
+            [JCSocket connectWithDeviceToken:deviceToken completion:^(BOOL success, NSError *error) {
+                [JCPresenceManager subscribeToPbx:line.pbx];
+                
+                // TODO: Subscribe to voicemail socket events.
+            }];
+        }
+        else {
+            [JCSocket disconnect]; // If we are
+        }
     }];
     
-    // Get Voicemails
-    [Voicemail downloadVoicemailsForLine:line complete:NULL];
+    
 }
 
 #pragma mark - Notification Handlers -

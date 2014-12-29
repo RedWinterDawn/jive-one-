@@ -166,11 +166,19 @@ NSString *const kJCV5ClientSocketSessionDeviceTokenKey                  = @"devi
     __autoreleasing NSError *error;
     NSDictionary *result = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCSocketConnectFailedNotification
+    NSDictionary *userInfo;
+    if (error) {
+        userInfo = @{kJCSocketNotificationDataKey:data,
+                     kJCSocketNotificationErrorKey: error};
+    }
+    else {
+        userInfo = @{kJCSocketNotificationDataKey:data,
+                     kJCSocketNotificationResultKey:result};
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kJCSocketReceivedDataNotification
                                                         object:self
-                                                      userInfo:@{kJCSocketNotificationErrorKey:error,
-                                                                 kJCSocketNotificationDataKey:data,
-                                                                 kJCSocketNotificationResultKey:result}];
+                                                      userInfo:userInfo];
 }
 
 

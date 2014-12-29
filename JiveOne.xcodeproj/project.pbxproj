@@ -1124,6 +1124,10 @@
 		270152C81901D79000F271CE /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				5DDDA5461A4B08AD00E31AA3 /* JCSocket.h */,
+				5DDDA5471A4B08AD00E31AA3 /* JCSocket.m */,
+				276CFEA9196AF45F00C30B30 /* JasmineSocket.h */,
+				276CFEAA196AF45F00C30B30 /* JasmineSocket.m */,
 				5DDDA5421A4A827600E31AA3 /* Presence */,
 				5DDE651219F0C49A00B90B55 /* Calling */,
 				2788F147190EB0F70099348D /* Categories */,
@@ -1619,10 +1623,6 @@
 				5DDDA5441A4A856800E31AA3 /* JCPresenceManager.m */,
 				5DDDA5491A4B238300E31AA3 /* JCLinePresence.h */,
 				5DDDA54A1A4B238300E31AA3 /* JCLinePresence.m */,
-				5DDDA5461A4B08AD00E31AA3 /* JCSocket.h */,
-				5DDDA5471A4B08AD00E31AA3 /* JCSocket.m */,
-				276CFEA9196AF45F00C30B30 /* JasmineSocket.h */,
-				276CFEAA196AF45F00C30B30 /* JasmineSocket.m */,
 			);
 			name = Presence;
 			sourceTree = "<group>";
