@@ -40,9 +40,3 @@
 - (void)removeEvents:(NSSet *)values;
 
 @end
-
-@interface Contact (Custom)
-
-+ (Contact *)contactForExtension:(NSString *)extension pbx:(PBX *)pbx;
-
-@end

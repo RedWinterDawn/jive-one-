@@ -11,6 +11,8 @@
 
 @interface Contact (Custom)
 
++ (Contact *)contactForExtension:(NSString *)extension pbx:(PBX *)pbx;
+
 // Retrives all contacts for a line.
 + (void)downloadContactsForLine:(Line *)line complete:(CompletionHandler)completed;
 

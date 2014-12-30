@@ -3,15 +3,6 @@
     <entity name="Call" representedClassName="Call" isAbstract="YES" parentEntity="RecentEvent" syncable="YES">
         <attribute name="extension" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
-    <entity name="Company" representedClassName="Company" syncable="YES">
-        <attribute name="companyId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="createDate" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="lastModified" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="pbxId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="timezone" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="urn" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
     <entity name="Contact" representedClassName="Contact" parentEntity="Person" syncable="YES">
         <attribute name="favorite" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="jiveUserId" optional="YES" attributeType="String" syncable="YES"/>
@@ -23,37 +14,6 @@
         <attribute name="groupId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="contacts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Contact" inverseName="groups" inverseEntity="Contact" syncable="YES"/>
-    </entity>
-    <entity name="Conversation" representedClassName="Conversation" syncable="YES">
-        <attribute name="conversationId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="createdDate" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="entities" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="group" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="hasEntries" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="isGroup" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="lastModified" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="urn" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
-    <entity name="ConversationEntry" representedClassName="ConversationEntry" syncable="YES">
-        <attribute name="call" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="conversationId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="createdDate" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="deliveryDate" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="entityId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="entryId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="failedToSend" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="file" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="lastModified" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="mentions" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="message" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="tags" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="tempUrn" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="urn" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
-    <entity name="ConversationETag" representedClassName="ConversationETag" syncable="YES">
-        <attribute name="etag" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="IncomingCall" representedClassName="IncomingCall" parentEntity="Call" syncable="YES"/>
     <entity name="Line" representedClassName="Line" parentEntity="Person" syncable="YES">
@@ -72,11 +32,6 @@
         <attribute name="sipUsername" optional="YES" attributeType="Transformable" valueTransformerName="JCStringEncryptionTransformer" syncable="YES"/>
         <relationship name="line" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Line" inverseName="lineConfiguration" inverseEntity="Line" syncable="YES"/>
     </entity>
-    <entity name="Membership" representedClassName="Membership" syncable="YES">
-        <attribute name="jiveId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="membershipId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="pbxId" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
     <entity name="MissedCall" representedClassName="MissedCall" parentEntity="Call" syncable="YES"/>
     <entity name="OutgoingCall" representedClassName="OutgoingCall" parentEntity="Call" syncable="YES"/>
     <entity name="PBX" representedClassName="PBX" syncable="YES">
@@ -94,45 +49,6 @@
         <attribute name="jrn" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pbxId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-    </entity>
-    <entity name="PersonEntities" representedClassName="PersonEntities" syncable="YES">
-        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="entityId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="externalId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="firstLastName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="firstName" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="groups" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="isFavorite" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="lastFirstName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="lastModified" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="location" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="me" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="picture" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="presence" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="resourceGroupName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="tags" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="urn" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="entityCompany" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Company" syncable="YES"/>
-        <relationship name="entityMeta" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PersonMeta" syncable="YES"/>
-        <relationship name="entityPresence" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Presence" syncable="YES"/>
-    </entity>
-    <entity name="PersonMeta" representedClassName="PersonMeta" syncable="YES">
-        <attribute name="activityOrder" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="createDate" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="entityId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="lastModified" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="metaId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="pinnedActivityOrder" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="urn" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
-    <entity name="Presence" representedClassName="Presence" syncable="YES">
-        <attribute name="createDate" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="entityId" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="interactions" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="lastModified" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="presenceId" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="RecentEvent" representedClassName="RecentEvent" isAbstract="YES" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
@@ -159,23 +75,15 @@
     </entity>
     <elements>
         <element name="Call" positionX="241" positionY="-346" width="128" height="58"/>
-        <element name="Company" positionX="-110" positionY="720" width="128" height="150"/>
         <element name="Contact" positionX="-81" positionY="-334" width="128" height="118"/>
         <element name="ContactGroup" positionX="-279" positionY="-369" width="128" height="88"/>
-        <element name="Conversation" positionX="-758" positionY="126" width="128" height="180"/>
-        <element name="ConversationEntry" positionX="-605" positionY="126" width="128" height="270"/>
-        <element name="ConversationETag" positionX="-666" positionY="432" width="128" height="60"/>
-        <element name="IncomingCall" positionX="448" positionY="-405" width="128" height="43"/>
+        <element name="IncomingCall" positionX="448" positionY="-405" width="128" height="45"/>
         <element name="Line" positionX="-83" positionY="-63" width="128" height="133"/>
         <element name="LineConfiguration" positionX="162" positionY="-45" width="128" height="133"/>
-        <element name="Membership" positionX="619" positionY="567" width="128" height="90"/>
-        <element name="MissedCall" positionX="448" positionY="-277" width="128" height="43"/>
-        <element name="OutgoingCall" positionX="448" positionY="-340" width="128" height="43"/>
+        <element name="MissedCall" positionX="448" positionY="-277" width="128" height="45"/>
+        <element name="OutgoingCall" positionX="448" positionY="-340" width="128" height="45"/>
         <element name="PBX" positionX="-288" positionY="-162" width="128" height="163"/>
         <element name="Person" positionX="-83" positionY="-189" width="128" height="103"/>
-        <element name="PersonEntities" positionX="430" positionY="837" width="128" height="360"/>
-        <element name="PersonMeta" positionX="448" positionY="594" width="128" height="150"/>
-        <element name="Presence" positionX="612" positionY="717" width="128" height="120"/>
         <element name="RecentEvent" positionX="160" positionY="-241" width="128" height="133"/>
         <element name="User" positionX="-497" positionY="-198" width="128" height="73"/>
         <element name="Voicemail" positionX="448" positionY="-180" width="128" height="180"/>

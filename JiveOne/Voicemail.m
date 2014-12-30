@@ -60,11 +60,11 @@ NSString *const kVoicemailDataAttributeKey = @"data";
                 extension = [NSString stringWithFormat:@"%@ on %@", line.extension, line.pbx.name];
             }
             else {
-                extension = [NSString stringWithFormat:@"%@", line.extension];
+                extension = line.extension;
             }
         }
         else {
-            extension = [NSString stringWithFormat:@"%@", line.extension];
+            extension = line.extension;
         }
     }
     

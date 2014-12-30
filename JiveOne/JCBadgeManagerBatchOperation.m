@@ -17,7 +17,6 @@
 
 #import "MissedCall.h"
 #import "Voicemail.h"
-#import "Conversation.h"
 
 NSString *const kJCBadgeManagerBatchVoicemailsKey    = @"voicemails";
 NSString *const kJCBadgeManagerBatchMissedCallsKey   = @"missedCalls";
@@ -134,9 +133,6 @@ NSString *const kJCBadgeManagerBatchConversationsKey = @"conversations";
     }
     else if ([recentEvent isKindOfClass:[Voicemail class]]) {
         return kJCBadgeManagerBatchVoicemailsKey;
-    }
-    else if ([recentEvent isKindOfClass:[Conversation class]]) {
-        return kJCBadgeManagerBatchConversationsKey;
     }
     return nil;
 }

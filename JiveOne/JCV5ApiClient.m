@@ -11,7 +11,6 @@
 
 #import "User.h"
 #import "PBX+Custom.h"
-#import "Membership+Custom.h"
 #import "Lines+Custom.h"
 #import "Voicemail+Custom.h"
 

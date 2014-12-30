@@ -22,6 +22,12 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
 
 @implementation Contact (Custom)
 
++ (Contact *)contactForExtension:(NSString *)extension pbx:(PBX *)pbx
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx = %@ and extension = %@", pbx, extension];
+    return [Contact MR_findFirstWithPredicate:predicate inContext:pbx.managedObjectContext];
+}
+
 + (void)downloadContactsForLine:(Line *)line complete:(CompletionHandler)complete
 {
     if (!line) {

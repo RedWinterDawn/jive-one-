@@ -22,7 +22,7 @@
 
 // Categories
 #import "UIDevice+Custom.h"
-#import "Contact.h"
+#import "Contact+Custom.h"
 #import "UIViewController+HUD.h"
 
 NSString *const kJCPhoneManager911String = @"911";
