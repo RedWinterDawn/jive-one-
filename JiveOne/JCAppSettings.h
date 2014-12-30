@@ -11,7 +11,7 @@
 @interface JCAppSettings : NSObject
 
 @property (nonatomic, getter=isIntercomEnabled) BOOL intercomEnabled;
-@property (nonatomic, getter=isCallsOverCellEnabled) BOOL callsOverCellEnabled;
+@property (nonatomic, getter=isWifiOnly) BOOL wifiOnly;
 
 @end
 

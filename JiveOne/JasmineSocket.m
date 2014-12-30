@@ -102,7 +102,7 @@ static BOOL closedSocketOnPurpose;
 
 
 - (void)webSocketDidOpen:(SRWebSocket *)webSocket {
-    NSLog(@"The websocket handshake completed and is now open!");
+//    NSLog(@"The websocket handshake completed and is now open!");
     [[NSNotificationCenter defaultCenter] postNotificationName:@"socketDidOpen" object:nil];
 }
 

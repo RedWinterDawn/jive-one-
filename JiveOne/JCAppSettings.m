@@ -20,7 +20,7 @@ NSString *const kJCAppSettingsCallOverCellEnabledAttribute = @"callsOverCellEnab
     [self setSettingBoolValue:intercomEnabled forKey:kJCAppSettingsIntercomEnabledAttribute];
 }
 
--(void)setCallsOverCellEnabled:(BOOL)callsOverCellEnabled
+-(void)setWifiOnly:(BOOL)callsOverCellEnabled
 {
     [self setSettingBoolValue:callsOverCellEnabled forKey:kJCAppSettingsCallOverCellEnabledAttribute];
 }
@@ -31,7 +31,7 @@ NSString *const kJCAppSettingsCallOverCellEnabledAttribute = @"callsOverCellEnab
 {
     return [[NSUserDefaults standardUserDefaults] boolForKey:kJCAppSettingsIntercomEnabledAttribute];
 }
--(BOOL)isCallsOverCellEnabled
+-(BOOL)isWifiOnly
 {
     return [[NSUserDefaults standardUserDefaults] boolForKey:kJCAppSettingsCallOverCellEnabledAttribute];
 }

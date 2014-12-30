@@ -524,7 +524,7 @@
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MGe-0z-lyW">
                                                     <rect key="frame" x="255" y="6" width="51" height="31"/>
                                                     <connections>
-                                                        <action selector="toggleCallOverCellEnabled:" destination="BBd-7J-jmI" eventType="valueChanged" id="5Yc-ud-9xW"/>
+                                                        <action selector="toggleWifiOnly:" destination="BBd-7J-jmI" eventType="valueChanged" id="oTN-yv-N3d"/>
                                                     </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Calls Over Cell Data" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aJW-Bp-S2E">
@@ -719,11 +719,11 @@
                     <connections>
                         <outlet property="appLabel" destination="r0i-CD-OoY" id="kFO-U9-cCh"/>
                         <outlet property="buildLabel" destination="UjK-HA-EeS" id="jwm-RA-hC8"/>
-                        <outlet property="callsOverCellEnabled" destination="MGe-0z-lyW" id="luv-ok-ips"/>
                         <outlet property="extensionLabel" destination="SCG-SS-mwf" id="ote-dI-OWx"/>
                         <outlet property="intercomEnabled" destination="hWN-sv-srO" id="OTb-5s-RLd"/>
                         <outlet property="pbxLabel" destination="7RL-so-6fF" id="3ZT-DO-Ldn"/>
                         <outlet property="userNameLabel" destination="Ha4-sQ-nx4" id="T5D-Dz-uVO"/>
+                        <outlet property="wifiOnly" destination="MGe-0z-lyW" id="jbZ-I2-fC7"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wYg-P0-wSv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4009,7 +4009,7 @@
                                             <constraint firstItem="btO-Oq-plE" firstAttribute="centerY" secondItem="0q4-MP-UNQ" secondAttribute="centerY" id="z1Z-s6-5uE"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bwa-pS-Ida" userLabel="Dial Button Button">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bwa-pS-Ida" userLabel="Dial Button Button">
                                         <rect key="frame" x="121" y="255" width="58" height="58"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="Bwa-pS-Ida" secondAttribute="height" multiplier="1:1" id="agn-V1-7Fd"/>

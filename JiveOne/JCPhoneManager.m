@@ -104,37 +104,43 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
  */
 -(void)connectToLine:(Line *)line completion:(CompletionHandler)completion
 {
-    if (_connecting) {
-        return;
+//    check the user settings to see if they will let us call over cell and if we have wifi regester anyways
+    if ([JCAppSettings sharedSettings].isWifiOnly && _previousNetworkStatus == AFNetworkReachabilityStatusReachableViaWWAN) {
+        NSLog(@"Failed to regester please check your wifi, or enable calls over cell in settings page  : %d ", [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus);
+    }
+    else
+    {
+//        [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus
+        if (_connecting) {
+            return;
+        }
+    
+        _connecting = TRUE;
+        _completion = completion;
+        
+        // If we have a line configuration for the line, try to register it.
+        //TODO: Check this stuff
+            if (line.lineConfiguration){
+                [self registerToLine:line];
+                return;
+            }
+    
+        // If we do not have a line configuration, we need to request it.
+        [UIApplication showHudWithTitle:@"" message:@"Selecting Line..."];
+        [JCV4ProvisioningClient requestProvisioningForLine:line completed:^(BOOL success, NSError *error) {
+            [UIApplication hideHud];
+            if (success) {
+                [self registerToLine:line];
+                return;
+            }
+        
+            [UIApplication showSimpleAlert:@"" message:@"Unable to connect to this line at this time. Please Try again." code:error.code];
+            if (completion) {
+                completion(success, error);
+            }
+        }];
     }
     
-    _connecting = TRUE;
-    _completion = completion;
-    
-    // We need to check for out connectivity type and settings for if we can make calls over cell if not and we are only one cell dont redgester.
-//  if ([JCAppSettings sharedSettings].isCallsOverCellEnabled) {
-    
-    // If we have a line configuration for the line, try to register it.
-    //TODO: Check this stuff
-        if (line.lineConfiguration){
-            [self registerToLine:line];
-            return;
-        }
-    
-    // If we do not have a line configuration, we need to request it.
-    [UIApplication showHudWithTitle:@"" message:@"Selecting Line..."];
-    [JCV4ProvisioningClient requestProvisioningForLine:line completed:^(BOOL success, NSError *error) {
-        [UIApplication hideHud];
-        if (success) {
-            [self registerToLine:line];
-            return;
-        }
-        
-        [UIApplication showSimpleAlert:@"" message:@"Unable to connect to this line at this time. Please Try again." code:error.code];
-        if (completion) {
-            completion(success, error);
-        }
-    }];
 }
 
 -(void)reconnectToLine:(Line *)line completion:(CompletionHandler)completion

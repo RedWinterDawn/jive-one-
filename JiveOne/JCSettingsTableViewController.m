@@ -39,8 +39,8 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Descrip
     self.buildLabel.text = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
     
     self.intercomEnabled.on = [JCAppSettings sharedSettings].intercomEnabled;
-    self.callsOverCellEnabled.on = [JCAppSettings sharedSettings].callsOverCellEnabled;
-    NSLog(@"Calls Over Cell %@", self.callsOverCellEnabled);
+    self.wifiOnly.on = [JCAppSettings sharedSettings].wifiOnly;
+    NSLog(@"Calls Over Cell %@", self.wifiOnly);
 }
 
 -(void)awakeFromNib
@@ -175,13 +175,13 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Descrip
     }
 }
 
--(IBAction)toggleCallOverCellEnabled:(id)sender
+-(IBAction)toggleWifiOnly:(id)sender
 {
     if ([sender isKindOfClass:[UISwitch class]]) {
         UISwitch *switchBtn = (UISwitch *)sender;
         JCAppSettings *settings = [JCAppSettings sharedSettings];
-        settings.callsOverCellEnabled = !settings.isCallsOverCellEnabled;
-        switchBtn.on = settings.isCallsOverCellEnabled;
+        settings.wifiOnly = !settings.isWifiOnly;
+        switchBtn.on = settings.isWifiOnly;
     }
 }
 

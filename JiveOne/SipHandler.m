@@ -99,7 +99,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     @try {
         NSLog(@"Connecting");
         
-        if ([JCAppSettings sharedSettings].isCallsOverCellEnabled) {
+        if ([JCAppSettings sharedSettings].isWifiOnly) {
             [self login];
         }
         [self login];
