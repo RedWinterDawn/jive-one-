@@ -9,6 +9,7 @@
 #import "JCAppSettings.h"
 
 NSString *const kJCAppSettingsIntercomEnabledAttribute = @"intercomEnabled";
+NSString *const kJCAppSettingsCallOverCellEnabledAttribute = @"callsOverCellEnabled";
 
 @implementation JCAppSettings
 
@@ -19,11 +20,20 @@ NSString *const kJCAppSettingsIntercomEnabledAttribute = @"intercomEnabled";
     [self setSettingBoolValue:intercomEnabled forKey:kJCAppSettingsIntercomEnabledAttribute];
 }
 
+-(void)setCallsOverCellEnabled:(BOOL)callsOverCellEnabled
+{
+    [self setSettingBoolValue:callsOverCellEnabled forKey:kJCAppSettingsCallOverCellEnabledAttribute];
+}
+
 #pragma mark - Getters -
 
 -(BOOL)isIntercomEnabled
 {
     return [[NSUserDefaults standardUserDefaults] boolForKey:kJCAppSettingsIntercomEnabledAttribute];
+}
+-(BOOL)isCallsOverCellEnabled
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kJCAppSettingsCallOverCellEnabledAttribute];
 }
 
 #pragma mark - Private -

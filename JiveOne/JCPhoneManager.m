@@ -10,6 +10,7 @@
 @import CoreTelephony;
 
 #import "JCPhoneManager.h"
+#import "JCAppSettings.h"
 
 // Managers
 #import "JCBluetoothManager.h"
@@ -50,6 +51,7 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
 {
     CompletionHandler _completion;
     JCBluetoothManager *_bluetoothManager;
+    AFNetworkReachabilityStatus _previousNetworkStatus;
     SipHandler *_sipHandler;
 	NSString *_warmTransferNumber;
     CTCallCenter *_externalCallCenter;
@@ -77,7 +79,9 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
         _bluetoothManager = [[JCBluetoothManager alloc] init];
         
         // Register for app notifications
+        _previousNetworkStatus = [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self selector:@selector(networkConnectivityChanged:) name:AFNetworkingReachabilityDidChangeNotification object:nil];
         [center addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
         [center addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
         [center addObserver:self selector:@selector(audioSessionRouteChangeSelector:) name:AVAudioSessionRouteChangeNotification object:nil];
@@ -107,11 +111,15 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
     _connecting = TRUE;
     _completion = completion;
     
+    // We need to check for out connectivity type and settings for if we can make calls over cell if not and we are only one cell dont redgester.
+//  if ([JCAppSettings sharedSettings].isCallsOverCellEnabled) {
+    
     // If we have a line configuration for the line, try to register it.
-    if (line.lineConfiguration){
-        [self registerToLine:line];
-        return;
-    }
+    //TODO: Check this stuff
+        if (line.lineConfiguration){
+            [self registerToLine:line];
+            return;
+        }
     
     // If we do not have a line configuration, we need to request it.
     [UIApplication showHudWithTitle:@"" message:@"Selecting Line..."];
@@ -136,6 +144,37 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
     } else {
         [self connectToLine:line completion:completion];
     }
+}
+
+
+#pragma mark NetworkConnectivity
+
+-(void)networkConnectivityChanged:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    AFNetworkReachabilityStatus status = (AFNetworkReachabilityStatus)((NSNumber *)[userInfo valueForKey:AFNetworkingReachabilityNotificationStatusItem]).integerValue;
+    NSLog(@"AFNetworking status change");
+    
+    if (_previousNetworkStatus == AFNetworkReachabilityStatusUnknown)
+        _previousNetworkStatus = status;
+    
+    switch (status)
+    {
+        case AFNetworkReachabilityStatusNotReachable:
+            break;
+            
+        case AFNetworkReachabilityStatusReachableViaWiFi: {
+            
+            // If we are not transitioning from cellular to wifi, reconnect
+            if (_previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWWAN && _previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWiFi)
+                [self reconnectToLine:_line completion:NULL];
+            break;
+        }
+        default:
+            [self reconnectToLine:_line completion:NULL];
+            break;
+    }
+    _previousNetworkStatus = status;
 }
 
 -(void)disconnect
@@ -799,6 +838,9 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
 
 + (void)connectToLine:(Line *)line completion:(CompletionHandler)completed
 {
+    NSLog(@"Check network");
+    
+    
     [[JCPhoneManager sharedManager] connectToLine:line completion:completed];
 }
 

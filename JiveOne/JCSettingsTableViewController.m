@@ -7,18 +7,12 @@
 //
 
 #import "JCSettingsTableViewController.h"
-
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
-
 #import "JCTermsAndConditonsViewController.h"
-
 #import "JCAuthenticationManager.h"
 #import "JCAppSettings.h"
-
 #import <sys/sysctl.h>
-
-
 #import "PBX.h"
 
 NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Description of feedback:</strong> <br><br><br><br><br><hr><strong>Device Specs</strong><br>Model: %@ <br> System Version: %@ <br> App Version: %@ <br> Country: %@";
@@ -45,6 +39,8 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Descrip
     self.buildLabel.text = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
     
     self.intercomEnabled.on = [JCAppSettings sharedSettings].intercomEnabled;
+    self.callsOverCellEnabled.on = [JCAppSettings sharedSettings].callsOverCellEnabled;
+    NSLog(@"Calls Over Cell %@", self.callsOverCellEnabled);
 }
 
 -(void)awakeFromNib
@@ -176,6 +172,16 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Descrip
         JCAppSettings *settings = [JCAppSettings sharedSettings];
         settings.intercomEnabled = !settings.isIntercomEnabled;
         switchBtn.on = settings.isIntercomEnabled;
+    }
+}
+
+-(IBAction)toggleCallOverCellEnabled:(id)sender
+{
+    if ([sender isKindOfClass:[UISwitch class]]) {
+        UISwitch *switchBtn = (UISwitch *)sender;
+        JCAppSettings *settings = [JCAppSettings sharedSettings];
+        settings.callsOverCellEnabled = !settings.isCallsOverCellEnabled;
+        switchBtn.on = settings.isCallsOverCellEnabled;
     }
 }
 
