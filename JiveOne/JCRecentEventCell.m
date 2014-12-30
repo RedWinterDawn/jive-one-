@@ -7,6 +7,8 @@
 //
 
 #import "JCRecentEventCell.h"
+#import "Contact.h"
+#import "PBX.h"
 
 @interface JCRecentEventCell(){
     UIFont *_dateFont;
@@ -47,7 +49,7 @@
     
     self.date.text = self.recentEvent.formattedModifiedShortDate;
     self.name.text = self.recentEvent.displayName;
-    self.number.text = self.recentEvent.displayNumber;
+    self.number.text = [NSString stringWithFormat:@"%@ %@ %@", self.recentEvent.displayNumber, NSLocalizedString(@"on", @"on"), self.recentEvent.line.pbx.name];
     
     if (self.recentEvent.isRead)
     {
@@ -71,6 +73,9 @@
         [self setNeedsLayout];
         [self layoutIfNeeded];
     }
+    else{
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
 }
 
 #pragma mark - Setters -
@@ -82,6 +87,11 @@
     }
     
     _recentEvent = recentEvent;
+    Contact *contact = recentEvent.contact;
+    if (contact) {
+        self.identifier = contact.jrn;
+    }
+    
     if (_recentEvent) {
         [_recentEvent addObserver:self forKeyPath:@"read" options:NSKeyValueObservingOptionNew context:NULL];
     }

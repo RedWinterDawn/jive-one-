@@ -9,6 +9,8 @@
 #import "JCPresenceManager.h"
 #import "JCSocket.h"
 
+NSString *const kJCPresenceManagerLinesChangedNotification = @"linesChanged";
+
 @interface JCPresenceManager ()
 {
     NSMutableArray *_lines;
@@ -47,6 +49,8 @@
         [_lines addObject:[[JCLinePresence alloc] initWithLineIdentifer:contact.jrn]];
         [JCSocket subscribeToSocketEventsWithIdentifer:contact.jrn entity:contact.jrn type:@"dialog"];
     }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kJCPresenceManagerLinesChangedNotification object:self userInfo:nil];
 }
 
 -(JCLinePresence *)linePresenceForContact:(Contact *)contact

@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class Contact;
+
 extern NSString *const kJCLineSessionStateKey;
 
 typedef enum {
@@ -31,6 +33,7 @@ typedef enum {
 
 @interface JCLineSession : NSObject
 
+@property (nonatomic, strong) Contact *contact;
 @property (nonatomic) NSString *callTitle;
 @property (nonatomic) NSString *callDetail;
 

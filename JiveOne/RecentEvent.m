@@ -82,5 +82,6 @@ NSString *const kRecentEventReadKey = @"read";
 }
 
 @dynamic line;
+@dynamic contact;
 
 @end

@@ -12,6 +12,8 @@
 #import "PBX.h"
 #import "Contact.h"
 
+extern NSString *const kJCPresenceManagerLinesChangedNotification;
+
 @interface JCPresenceManager : NSObject
 
 -(JCLinePresence *)linePresenceForContact:(Contact *)contact;

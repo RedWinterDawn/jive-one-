@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCTableViewCell.h"
+#import "JCPresenceCell.h"
 #import "RecentEvent.h"
 
-@interface JCRecentEventCell : JCTableViewCell
+@interface JCRecentEventCell : JCPresenceCell
 
 @property (nonatomic, strong) RecentEvent *recentEvent;
 
