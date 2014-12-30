@@ -93,8 +93,6 @@
 		274493CE18D13538002744CB /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 274493CD18D13538002744CB /* Common.m */; };
 		2747F1661A07E0F300E3FE73 /* JCContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2747F1651A07E0F300E3FE73 /* JCContactsViewController.m */; };
 		275158FC18AD10BB00FD8D3F /* main-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 275158F718AD10BA00FD8D3F /* main-logo.png */; };
-		2751591118AD174F00FD8D3F /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751590E18AD174F00FD8D3F /* KeychainItemWrapper.m */; };
-		2751591218AD174F00FD8D3F /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751590E18AD174F00FD8D3F /* KeychainItemWrapper.m */; };
 		2751591318AD174F00FD8D3F /* JCAuthenticationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751591018AD174F00FD8D3F /* JCAuthenticationManager.m */; };
 		2751591418AD174F00FD8D3F /* JCAuthenticationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751591018AD174F00FD8D3F /* JCAuthenticationManager.m */; };
 		2751591718AD300B00FD8D3F /* OsgiData.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 2751591618AD300B00FD8D3F /* OsgiData.xcdatamodel */; };
@@ -180,7 +178,7 @@
 		5D0275101A3F81FF0077A37B /* NSData+AESAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D02750F1A3F81FF0077A37B /* NSData+AESAddition.m */; };
 		5D0275131A3F836A0077A37B /* JCStringEncryptionTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0275121A3F836A0077A37B /* JCStringEncryptionTransformer.m */; };
 		5D03649119DC5A450090CC21 /* JCTransferViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D03649019DC5A450090CC21 /* JCTransferViewController.m */; };
-		5D112DDA1A4094340097223C /* JCAuthenticationStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D112DD91A4094340097223C /* JCAuthenticationStore.m */; };
+		5D112DDA1A4094340097223C /* JCAuthenticationKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D112DD91A4094340097223C /* JCAuthenticationKeychain.m */; };
 		5D112DDD1A4161220097223C /* JCDebugPbxsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D112DDC1A4161220097223C /* JCDebugPbxsTableViewController.m */; };
 		5D15AF2B19DB271500E86116 /* NSString+DialString.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D15AF2819DB271500E86116 /* NSString+DialString.m */; };
 		5D15AF2C19DB271500E86116 /* NSString+IsNumeric.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D15AF2A19DB271500E86116 /* NSString+IsNumeric.m */; };
@@ -188,6 +186,7 @@
 		5D1FAC5F19DDD68000899915 /* JCCallCardViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FAC5E19DDD68000899915 /* JCCallCardViewCell.m */; };
 		5D1FAC6219DDFF5300899915 /* JCCallCardCollectionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FAC6119DDFF5300899915 /* JCCallCardCollectionLayout.m */; };
 		5D1FAC6519DF376B00899915 /* JCKeypadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FAC6419DF376B00899915 /* JCKeypadViewController.m */; };
+		5D1FD5C41A48B05E007EF8B6 /* JCKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FD5C31A48B05E007EF8B6 /* JCKeychain.m */; };
 		5D2087141A44F00F00C0C394 /* JCBadgeManagerBatchOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2087131A44F00F00C0C394 /* JCBadgeManagerBatchOperation.m */; };
 		5D241FC81A36339D008B498A /* JCAppSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FC71A36339D008B498A /* JCAppSettings.m */; };
 		5D241FCB1A36AE12008B498A /* JCLinePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FCA1A36AE12008B498A /* JCLinePickerViewController.m */; };
@@ -247,6 +246,7 @@
 		5DBBDCC619DD9A4100A4DB96 /* JCPhoneManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBBDCC519DD9A4100A4DB96 /* JCPhoneManager.m */; };
 		5DBBDCC919DDA0A300A4DB96 /* JCCallCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBBDCC819DDA0A300A4DB96 /* JCCallCard.m */; };
 		5DBCB93919FE9300001C7157 /* JCConferenceCallCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBCB93819FE9300001C7157 /* JCConferenceCallCard.m */; };
+		5DDDA5411A49C16000E31AA3 /* JCStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DDDA5401A49C16000E31AA3 /* JCStyleKit.m */; };
 		5DE0F1B519F6D47E000469D0 /* JCRoundedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0F1B419F6D47E000469D0 /* JCRoundedView.m */; };
 		9135DE0418BC01550052E998 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9135DE0318BC01550052E998 /* AVFoundation.framework */; };
 		9136FF231925D48D0040B367 /* slider_maximum@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9136FF211925D48D0040B367 /* slider_maximum@2x.png */; };
@@ -424,8 +424,6 @@
 		2747F1651A07E0F300E3FE73 /* JCContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCContactsViewController.m; sourceTree = "<group>"; };
 		275158F718AD10BA00FD8D3F /* main-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "main-logo.png"; sourceTree = "<group>"; };
 		2751590218AD10E500FD8D3F /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		2751590D18AD174F00FD8D3F /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
-		2751590E18AD174F00FD8D3F /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainItemWrapper.m; sourceTree = "<group>"; };
 		2751590F18AD174F00FD8D3F /* JCAuthenticationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAuthenticationManager.h; sourceTree = "<group>"; };
 		2751591018AD174F00FD8D3F /* JCAuthenticationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthenticationManager.m; sourceTree = "<group>"; };
 		2751591618AD300B00FD8D3F /* OsgiData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OsgiData.xcdatamodel; sourceTree = "<group>"; };
@@ -552,8 +550,8 @@
 		5D0275121A3F836A0077A37B /* JCStringEncryptionTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCStringEncryptionTransformer.m; sourceTree = "<group>"; };
 		5D03648F19DC5A450090CC21 /* JCTransferViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTransferViewController.h; sourceTree = "<group>"; };
 		5D03649019DC5A450090CC21 /* JCTransferViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTransferViewController.m; sourceTree = "<group>"; };
-		5D112DD81A4094340097223C /* JCAuthenticationStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAuthenticationStore.h; sourceTree = "<group>"; };
-		5D112DD91A4094340097223C /* JCAuthenticationStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthenticationStore.m; sourceTree = "<group>"; };
+		5D112DD81A4094340097223C /* JCAuthenticationKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAuthenticationKeychain.h; sourceTree = "<group>"; };
+		5D112DD91A4094340097223C /* JCAuthenticationKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthenticationKeychain.m; sourceTree = "<group>"; };
 		5D112DDB1A4161220097223C /* JCDebugPbxsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDebugPbxsTableViewController.h; sourceTree = "<group>"; };
 		5D112DDC1A4161220097223C /* JCDebugPbxsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDebugPbxsTableViewController.m; sourceTree = "<group>"; };
 		5D15AF2719DB271500E86116 /* NSString+DialString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+DialString.h"; sourceTree = "<group>"; };
@@ -568,6 +566,8 @@
 		5D1FAC6119DDFF5300899915 /* JCCallCardCollectionLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallCardCollectionLayout.m; sourceTree = "<group>"; };
 		5D1FAC6319DF376B00899915 /* JCKeypadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCKeypadViewController.h; sourceTree = "<group>"; };
 		5D1FAC6419DF376B00899915 /* JCKeypadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCKeypadViewController.m; sourceTree = "<group>"; };
+		5D1FD5C21A48B05E007EF8B6 /* JCKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCKeychain.h; sourceTree = "<group>"; };
+		5D1FD5C31A48B05E007EF8B6 /* JCKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCKeychain.m; sourceTree = "<group>"; };
 		5D2087121A44F00F00C0C394 /* JCBadgeManagerBatchOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCBadgeManagerBatchOperation.h; sourceTree = "<group>"; };
 		5D2087131A44F00F00C0C394 /* JCBadgeManagerBatchOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCBadgeManagerBatchOperation.m; sourceTree = "<group>"; };
 		5D241FC61A36339D008B498A /* JCAppSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAppSettings.h; sourceTree = "<group>"; };
@@ -683,6 +683,8 @@
 		5DBD9F1F1A1D00A300F967B6 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5DBD9F201A1D00A400F967B6 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5DBD9F211A1D00A500F967B6 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5DDDA53F1A49C16000E31AA3 /* JCStyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JCStyleKit.h; path = StyleKitAssets/JCStyleKit.h; sourceTree = "<group>"; };
+		5DDDA5401A49C16000E31AA3 /* JCStyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JCStyleKit.m; path = StyleKitAssets/JCStyleKit.m; sourceTree = "<group>"; };
 		5DE0F1B319F6D47E000469D0 /* JCRoundedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCRoundedView.h; sourceTree = "<group>"; };
 		5DE0F1B419F6D47E000469D0 /* JCRoundedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCRoundedView.m; sourceTree = "<group>"; };
 		6594302CE0A00068957DC0D5 /* Pods-JiveOneTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JiveOneTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JiveOneTests/Pods-JiveOneTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1116,8 +1118,8 @@
 				276CFEAA196AF45F00C30B30 /* JasmineSocket.m */,
 				2762C45618B4177D00885918 /* JCOmniPresence.h */,
 				2762C45718B4177D00885918 /* JCOmniPresence.m */,
-				5D112DD81A4094340097223C /* JCAuthenticationStore.h */,
-				5D112DD91A4094340097223C /* JCAuthenticationStore.m */,
+				5D112DD81A4094340097223C /* JCAuthenticationKeychain.h */,
+				5D112DD91A4094340097223C /* JCAuthenticationKeychain.m */,
 				2751590F18AD174F00FD8D3F /* JCAuthenticationManager.h */,
 				2751591018AD174F00FD8D3F /* JCAuthenticationManager.m */,
 				5DA566471A20543500286BA5 /* JCAuthenticationManagerError.h */,
@@ -1134,6 +1136,8 @@
 				5D02750C1A3F81060077A37B /* JCEncryptionTransformer.m */,
 				5D0275111A3F836A0077A37B /* JCStringEncryptionTransformer.h */,
 				5D0275121A3F836A0077A37B /* JCStringEncryptionTransformer.m */,
+				5D1FD5C21A48B05E007EF8B6 /* JCKeychain.h */,
+				5D1FD5C31A48B05E007EF8B6 /* JCKeychain.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -1185,9 +1189,9 @@
 		2751590118AD10D400FD8D3F /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				5DDDA53F1A49C16000E31AA3 /* JCStyleKit.h */,
+				5DDDA5401A49C16000E31AA3 /* JCStyleKit.m */,
 				91F6DFA9192A7009001C54FB /* Configuration */,
-				2751590D18AD174F00FD8D3F /* KeychainItemWrapper.h */,
-				2751590E18AD174F00FD8D3F /* KeychainItemWrapper.m */,
 				9172AD5B19192A1500481B01 /* UserDefaults.plist */,
 				275F4A6018AD0FBC00D2F069 /* JCAppDelegate.h */,
 				F814B00E1A48E5140013CF0B /* JCStyleKit.h */,
@@ -2056,7 +2060,7 @@
 				5D0275101A3F81FF0077A37B /* NSData+AESAddition.m in Sources */,
 				5D34446519F02F1C00315230 /* JCCurrentCallCardViewCell.m in Sources */,
 				2700987E18F4714100B6BC2F /* JSMessageSoundEffect.m in Sources */,
-				5D112DDA1A4094340097223C /* JCAuthenticationStore.m in Sources */,
+				5D112DDA1A4094340097223C /* JCAuthenticationKeychain.m in Sources */,
 				5D1FAC5F19DDD68000899915 /* JCCallCardViewCell.m in Sources */,
 				275F4A5E18AD0FBC00D2F069 /* main.m in Sources */,
 				5D241FDE1A383837008B498A /* JCDebugLineTableViewController.m in Sources */,
@@ -2092,10 +2096,11 @@
 				5D241FC81A36339D008B498A /* JCAppSettings.m in Sources */,
 				27B6F23D19DDC676007E80DA /* JCDialerViewController.m in Sources */,
 				5D2EDB871A3CEBE80031F7AD /* JCDebugUsersTableViewController.m in Sources */,
-				F814B0101A48E5140013CF0B /* JCStyleKit.m in Sources */,
+				5DDDA5411A49C16000E31AA3 /* JCStyleKit.m in Sources */,
 				5D2EDB8A1A3CEC060031F7AD /* JCDebugUserTableViewController.m in Sources */,
 				5D7339A71A03F2E700339DC6 /* NSManagedObject+JCCoreDataAdditions.m in Sources */,
 				27D2C1F7196F030C005285FF /* JCLineSelectorTableViewController.m in Sources */,
+				5D1FD5C41A48B05E007EF8B6 /* JCKeychain.m in Sources */,
 				5D241FCE1A36AF2C008B498A /* JCPickerViewController.m in Sources */,
 				5DB0BFC71A0033B5006737D7 /* JCView.m in Sources */,
 				27EA1DFD1900A83D0075CAEE /* JCVoicemailTableViewController.m in Sources */,
@@ -2125,7 +2130,6 @@
 				2751591718AD300B00FD8D3F /* OsgiData.xcdatamodel in Sources */,
 				5D02750D1A3F81060077A37B /* JCEncryptionTransformer.m in Sources */,
 				91DDB19D193500B500550F10 /* JCDeleteButton.m in Sources */,
-				2751591118AD174F00FD8D3F /* KeychainItemWrapper.m in Sources */,
 				91DDB1991935008A00550F10 /* JCSpeakerButton.m in Sources */,
 				2751591318AD174F00FD8D3F /* JCAuthenticationManager.m in Sources */,
 				F8C9A7EC19EC691C0049A715 /* JCCallHistoryCell.m in Sources */,
@@ -2177,7 +2181,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2751591218AD174F00FD8D3F /* KeychainItemWrapper.m in Sources */,
 				2751591418AD174F00FD8D3F /* JCAuthenticationManager.m in Sources */,
 				2762C45918B4177D00885918 /* JCOmniPresence.m in Sources */,
 				2751591818AD300B00FD8D3F /* OsgiData.xcdatamodel in Sources */,
@@ -2438,8 +2441,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/JiveOne/TestFlightSDK3.0.0",
-					"$(PROJECT_DIR)/JiveOne/Airship",
 					"$(PROJECT_DIR)/JiveOne/Flurry",
 				);
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
@@ -2478,8 +2479,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/JiveOne/TestFlightSDK3.0.0",
-					"$(PROJECT_DIR)/JiveOne/Airship",
 					"$(PROJECT_DIR)/JiveOne/Flurry",
 				);
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
@@ -2604,8 +2603,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/JiveOne/TestFlightSDK3.0.0",
-					"$(PROJECT_DIR)/JiveOne/Airship",
 					"$(PROJECT_DIR)/JiveOne/Flurry",
 				);
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
