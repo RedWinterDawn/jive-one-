@@ -32,6 +32,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Descrip
     [super viewDidLoad];
     
     _authenticationManager = [JCAuthenticationManager sharedInstance];
+    _phoneManager = [JCPhoneManager sharedManager];
     
     /*NSDictionary *localizedDictionary = [[NSBundle mainBundle] localizedInfoDictionary];
     self.appLabel.text = [localizedDictionary objectForKey:@"CFBundleDisplayName"];*/
@@ -42,7 +43,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Descrip
     
     self.intercomEnabled.on = [JCAppSettings sharedSettings].intercomEnabled;
     self.wifiOnly.on = [JCAppSettings sharedSettings].wifiOnly;
-    NSLog(@"Calls Over Cell %@", self.wifiOnly);
+  
 }
 
 -(void)awakeFromNib
@@ -183,8 +184,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Descrip
         UISwitch *switchBtn = (UISwitch *)sender;
         JCAppSettings *settings = [JCAppSettings sharedSettings];
         [_phoneManager disconnect];
-        NSLog(@"Disconnect and Reconnect");
-        [_phoneManager connectToLine:_phoneManager.line completion:NULL];
+        [_phoneManager connectToLine:_phoneManager.line completion:nil];
         settings.wifiOnly = !settings.isWifiOnly;
         switchBtn.on = settings.isWifiOnly;
     }

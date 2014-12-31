@@ -518,7 +518,7 @@
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="q6R-MT-yoy">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="q6R-MT-yoy" id="sIj-sl-FP4">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="WIfi Only" tableViewCell="q6R-MT-yoy" id="sIj-sl-FP4">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MGe-0z-lyW">
@@ -2066,7 +2066,6 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xbK-XO-rJ8">
                                         <rect key="frame" x="103" y="20" width="209" height="150"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="110" id="0gB-sw-lrS"/>
                                             <constraint firstAttribute="width" constant="209" id="2Sv-0s-sLr"/>
                                             <constraint firstAttribute="height" priority="750" constant="150" id="cfW-zQ-NXC"/>
                                         </constraints>
@@ -2234,7 +2233,6 @@
                             <constraint firstItem="23F-O6-dwE" firstAttribute="leading" secondItem="0vo-PH-rDJ" secondAttribute="leading" id="L64-1x-Ejm"/>
                             <constraint firstAttribute="bottomMargin" secondItem="hhq-s3-oQT" secondAttribute="bottom" constant="20" id="QES-4h-69Q"/>
                             <constraint firstItem="PJQ-b3-euV" firstAttribute="top" secondItem="0vo-PH-rDJ" secondAttribute="top" id="R0K-V1-S7p"/>
-                            <constraint firstItem="PJQ-b3-euV" firstAttribute="top" secondItem="u9R-oi-zj0" secondAttribute="bottom" constant="-399" id="Wpw-ZZ-lw4"/>
                             <constraint firstAttribute="trailing" secondItem="hhq-s3-oQT" secondAttribute="trailing" constant="10" id="bK9-pY-oe3"/>
                             <constraint firstAttribute="centerX" secondItem="u9R-oi-zj0" secondAttribute="centerX" id="e5Z-ux-pGS"/>
                             <constraint firstAttribute="trailing" secondItem="23F-O6-dwE" secondAttribute="trailing" id="eFG-Pt-3Ri"/>
