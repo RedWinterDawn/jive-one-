@@ -208,6 +208,7 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
     // outside of ourselves through openSession, so we clear out the data.
     _reconnectRetries = 0;
     _socket = nil;
+    [JCKeychain deleteValueForKey:kJCSocketSessionKeychainKey];
     [[NSNotificationCenter defaultCenter] postNotificationName:kJCSocketConnectFailedNotification
                                                         object:self
                                                       userInfo:@{kJCSocketNotificationErrorKey:error}];
