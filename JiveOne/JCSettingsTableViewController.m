@@ -34,16 +34,13 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Descrip
     _authenticationManager = [JCAuthenticationManager sharedInstance];
     _phoneManager = [JCPhoneManager sharedManager];
     
-    /*NSDictionary *localizedDictionary = [[NSBundle mainBundle] localizedInfoDictionary];
-    self.appLabel.text = [localizedDictionary objectForKey:@"CFBundleDisplayName"];*/
-    
     NSBundle *bundle = [NSBundle mainBundle];
     self.appLabel.text = [bundle objectForInfoDictionaryKey:@"CFBundleDisplayName"];
     self.buildLabel.text = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
     
-    self.intercomEnabled.on = [JCAppSettings sharedSettings].intercomEnabled;
-    self.wifiOnly.on = [JCAppSettings sharedSettings].wifiOnly;
-  
+    JCAppSettings *settings = [JCAppSettings sharedSettings];
+    self.intercomEnabled.on = settings.intercomEnabled;
+    self.wifiOnly.on = settings.wifiOnly;
 }
 
 -(void)awakeFromNib
@@ -184,9 +181,9 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Descrip
         UISwitch *switchBtn = (UISwitch *)sender;
         JCAppSettings *settings = [JCAppSettings sharedSettings];
         [_phoneManager disconnect];
-        [_phoneManager connectToLine:_phoneManager.line completion:nil];
         settings.wifiOnly = !settings.isWifiOnly;
         switchBtn.on = settings.isWifiOnly;
+        [_phoneManager connectToLine:_authenticationManager.line completion:nil];
     }
 }
 
