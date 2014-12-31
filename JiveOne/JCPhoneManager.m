@@ -105,12 +105,16 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
 -(void)connectToLine:(Line *)line completion:(CompletionHandler)completion
 {
 //    check the user settings to see if they will let us call over cell and if we have wifi regester anyways
-    if ([JCAppSettings sharedSettings].isWifiOnly && _previousNetworkStatus == AFNetworkReachabilityStatusReachableViaWWAN) {
+    
+    if (([JCAppSettings sharedSettings].isWifiOnly && _previousNetworkStatus == AFNetworkReachabilityStatusReachableViaWWAN) || !(_previousNetworkStatus == AFNetworkReachabilityStatusUnknown)) {
+        [self disconnect];
         NSLog(@"Failed to regester please check your wifi, or enable calls over cell in settings page  : %d ", [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus);
     }
+    
     else
     {
-//        [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus
+        NSLog(@"You Regesterd and your network status is : %d ", [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus);
+        
         if (_connecting) {
             return;
         }
@@ -119,7 +123,6 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
         _completion = completion;
         
         // If we have a line configuration for the line, try to register it.
-        //TODO: Check this stuff
             if (line.lineConfiguration){
                 [self registerToLine:line];
                 return;
@@ -164,27 +167,111 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
     if (_previousNetworkStatus == AFNetworkReachabilityStatusUnknown)
         _previousNetworkStatus = status;
     
-    switch (status)
-    {
-        case AFNetworkReachabilityStatusNotReachable:
-            break;
-            
-        case AFNetworkReachabilityStatusReachableViaWiFi: {
-            
-            // If we are not transitioning from cellular to wifi, reconnect
-            if (_previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWWAN && _previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWiFi)
-                [self reconnectToLine:_line completion:NULL];
-            break;
+    
+    if ([JCAppSettings sharedSettings].isWifiOnly) {
+        switch (status) {
+            case AFNetworkReachabilityStatusNotReachable:
+                NSLog(@"Network Unreachable please check your self");
+                break;
+                
+            case AFNetworkReachabilityStatusReachableViaWiFi: {
+                if (_previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWWAN && _previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWiFi)
+                    [self reconnectToLine:_line completion:NULL];
+                else {
+                    [self connectToLine:_line completion:NULL];
+                }
+                break;
+            }
+                
+            case AFNetworkReachabilityStatusReachableViaWWAN: {
+                if (_previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWiFi && _previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWWAN)
+                    NSLog(@"Deregester Because of wifi only settings set to true and you have no wifi");
+                else {
+                    NSLog(@"Deregester");
+                    [self disconnect];
+                }
+                break;
+            }
+                
+                
+            default:
+                NSLog(@" \n \n \n ======== This is a unforseen situaltion we need to take into account ========== \n \n \n \n \n");
+                break;
         }
-        default:
-            [self reconnectToLine:_line completion:NULL];
-            break;
+    
     }
-    _previousNetworkStatus = status;
+    else
+    {
+        switch (status) {
+            case AFNetworkReachabilityStatusNotReachable:
+                NSLog(@"Network Unreachable please check your self");
+                break;
+                
+            case AFNetworkReachabilityStatusReachableViaWiFi: {
+                if (_previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWWAN && _previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWiFi)
+                    [self reconnectToLine:_line completion:NULL];
+                else {
+                    [self connectToLine:_line completion:NULL];
+                }
+                break;
+            }
+                
+            case AFNetworkReachabilityStatusReachableViaWWAN: {
+                if (_previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWiFi && _previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWWAN)
+                    [self reconnectToLine:_line completion:NULL];
+                else {
+                    [self connectToLine:_line completion:NULL];
+                }
+                break;
+            }
+                
+                
+            default:
+                NSLog(@" \n \n \n ======== This is a unforseen situaltion we need to take into account 2 ========== \n \n \n \n \n");
+                break;
+        }
+    }
 }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+//    switch (status)
+//    {
+//        case AFNetworkReachabilityStatusNotReachable:
+//            
+//            break;
+//            
+//        case AFNetworkReachabilityStatusReachableViaWiFi: {
+//            
+//            // If we are not transitioning from cellular to wifi, reconnect
+//            if (_previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWWAN && _previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWiFi)
+//                [self reconnectToLine:_line completion:NULL];
+//            else {
+//                [self connectToLine:_line completion:NULL];
+//            }
+//            break;
+//        }
+//        default:
+//            [self reconnectToLine:_line completion:NULL];
+//            break;
+//    }
+//    _previousNetworkStatus = status;
+//    
+//    // [self disconnect]; deregisters, and destroys the sip handler object.
+//    // [self reconnectToLine:_line completion:NULL];        // Primarily called from the phone dialer, if there is no connection (not connected, calls connect.)
+//    // [self connectToLine:_line completion:NULL]
+//}
 
 -(void)disconnect
 {
+    NSLog(@"Disconnecting from sip Handler");
     [_sipHandler disconnect];
     _sipHandler = nil;
     self.connected = FALSE;
