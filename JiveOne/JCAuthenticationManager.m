@@ -301,7 +301,6 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 -(void)notifyCompletionBlock:(BOOL)success error:(NSError *)error
 {
-    _completionBlock = nil;
     _loginAttempts = 0;
     _webview = nil;
     _username = nil;
@@ -318,6 +317,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     
     if (_completionBlock) {
         _completionBlock(success, error);
+        _completionBlock = nil;
     }
 }
 
