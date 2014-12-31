@@ -308,21 +308,7 @@ static inline double radians (double degrees) { return degrees * M_PI/180; }
 #pragma mark - Telephony Utils
 + (BOOL) IsConnectionFast
 {
-//    TRVSMonitor *monitor = [TRVSMonitor monitor];
     CTTelephonyNetworkInfo *telephonyInfo = [CTTelephonyNetworkInfo new];
-    NSLog(@"Current Radio Access Technology: %@", telephonyInfo.currentRadioAccessTechnology);
-    
-//    [NSNotificationCenter.defaultCenter addObserverForName:CTRadioAccessTechnologyDidChangeNotification
-//                                                    object:nil
-//                                                     queue:nil
-//                                                usingBlock:^(NSNotification *note)
-//     {
-//         NSLog(@"New Radio Access Technology: %@", telephonyInfo.currentRadioAccessTechnology);
-//         
-//     }];
-    
-//    [monitor waitWithTimeout:10];
-    
     return [self isFast:telephonyInfo.currentRadioAccessTechnology];
 }
 

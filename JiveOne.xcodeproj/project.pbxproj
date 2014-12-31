@@ -105,8 +105,6 @@
 		275F4A8318AD0FBC00D2F069 /* UTJiveOneTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 275F4A8218AD0FBC00D2F069 /* UTJiveOneTests.m */; };
 		2762151E1912AA2500CFBCC8 /* NSDictionary+QueryString.m in Sources */ = {isa = PBXBuildFile; fileRef = 2762151D1912AA2500CFBCC8 /* NSDictionary+QueryString.m */; };
 		276215211912AA7400CFBCC8 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 276215201912AA7400CFBCC8 /* NSString+URLEncoding.m */; };
-		276CFEAB196AF45F00C30B30 /* JasmineSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 276CFEAA196AF45F00C30B30 /* JasmineSocket.m */; };
-		276CFEAC196AF45F00C30B30 /* JasmineSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 276CFEAA196AF45F00C30B30 /* JasmineSocket.m */; };
 		276E067A1A0293BC00CD2827 /* JCContactsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 276E06791A0293BC00CD2827 /* JCContactsTableViewController.m */; };
 		277A1F8018F88987009A41F7 /* JCLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 277A1F7F18F88987009A41F7 /* JCLoginViewController.m */; };
 		277F094218FED58C00EEF0E3 /* JCStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 277F094118FED58C00EEF0E3 /* JCStatusViewController.m */; };
@@ -426,8 +424,6 @@
 		2762151D1912AA2500CFBCC8 /* NSDictionary+QueryString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+QueryString.m"; sourceTree = "<group>"; };
 		2762151F1912AA7400CFBCC8 /* NSString+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncoding.h"; sourceTree = "<group>"; };
 		276215201912AA7400CFBCC8 /* NSString+URLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncoding.m"; sourceTree = "<group>"; };
-		276CFEA9196AF45F00C30B30 /* JasmineSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JasmineSocket.h; sourceTree = "<group>"; };
-		276CFEAA196AF45F00C30B30 /* JasmineSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JasmineSocket.m; sourceTree = "<group>"; };
 		276E06781A0293BC00CD2827 /* JCContactsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCContactsTableViewController.h; sourceTree = "<group>"; };
 		276E06791A0293BC00CD2827 /* JCContactsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCContactsTableViewController.m; sourceTree = "<group>"; };
 		277A1F7E18F88987009A41F7 /* JCLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCLoginViewController.h; sourceTree = "<group>"; };
@@ -1083,22 +1079,17 @@
 		270152C81901D79000F271CE /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				5DB0BFC219FFF97A006737D7 /* JCDrawing.h */,
+				5DB0BFC319FFF97A006737D7 /* JCDrawing.m */,
 				5DDDA5461A4B08AD00E31AA3 /* JCSocket.h */,
 				5DDDA5471A4B08AD00E31AA3 /* JCSocket.m */,
-				276CFEA9196AF45F00C30B30 /* JasmineSocket.h */,
-				276CFEAA196AF45F00C30B30 /* JasmineSocket.m */,
+				272B61DB18B2A4DD00EB8ED5 /* TRVSMonitor.h */,
+				272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */,
+				5D2A3FA01A53776400974B8A /* Badging */,
 				5DDDA5421A4A827600E31AA3 /* Presence */,
 				5DDE651219F0C49A00B90B55 /* Phone */,
 				2788F147190EB0F70099348D /* Categories */,
 				5D2A3F9F1A53706200974B8A /* Security */,
-				272B61DB18B2A4DD00EB8ED5 /* TRVSMonitor.h */,
-				272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */,
-				5DB0BFC219FFF97A006737D7 /* JCDrawing.h */,
-				5DB0BFC319FFF97A006737D7 /* JCDrawing.m */,
-				5D7339A81A03FF9700339DC6 /* JCBadgeManager.h */,
-				5D7339A91A03FF9700339DC6 /* JCBadgeManager.m */,
-				5D2087121A44F00F00C0C394 /* JCBadgeManagerBatchOperation.h */,
-				5D2087131A44F00F00C0C394 /* JCBadgeManagerBatchOperation.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -1165,8 +1156,6 @@
 				5D35479719FF4B85009E3CB4 /* JCApplicationSwitcherDelegate.m */,
 				5D7339C91A0826CC00339DC6 /* JCPhoneTabBarControllerDelegate.h */,
 				5D7339CA1A0826CC00339DC6 /* JCPhoneTabBarControllerDelegate.m */,
-				5D9A5E201A24E30A00E8274C /* JCBluetoothManager.h */,
-				5D9A5E211A24E30A00E8274C /* JCBluetoothManager.m */,
 				5D241FC61A36339D008B498A /* JCAppSettings.h */,
 				5D241FC71A36339D008B498A /* JCAppSettings.m */,
 			);
@@ -1452,19 +1441,6 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
-		279A4E1319DA894700E8AB7B /* SIP */ = {
-			isa = PBXGroup;
-			children = (
-				279A4E2A19DA91E100E8AB7B /* SipHandler.h */,
-				279A4E2B19DA91E100E8AB7B /* SipHandler.m */,
-				278E858419EC6B6E0087649D /* VideoViewController.h */,
-				278E858519EC6B6E0087649D /* VideoViewController.mm */,
-				27BE503B19DCF6A800B725ED /* JCLineSession.h */,
-				27BE503C19DCF6A800B725ED /* JCLineSession.m */,
-			);
-			name = SIP;
-			sourceTree = "<group>";
-		};
 		279E4C9A192273E5002A556C /* MBContactPicker */ = {
 			isa = PBXGroup;
 			children = (
@@ -1536,6 +1512,17 @@
 				5D1FD5C31A48B05E007EF8B6 /* JCKeychain.m */,
 			);
 			name = Security;
+			sourceTree = "<group>";
+		};
+		5D2A3FA01A53776400974B8A /* Badging */ = {
+			isa = PBXGroup;
+			children = (
+				5D7339A81A03FF9700339DC6 /* JCBadgeManager.h */,
+				5D7339A91A03FF9700339DC6 /* JCBadgeManager.m */,
+				5D2087121A44F00F00C0C394 /* JCBadgeManagerBatchOperation.h */,
+				5D2087131A44F00F00C0C394 /* JCBadgeManagerBatchOperation.m */,
+			);
+			name = Badging;
 			sourceTree = "<group>";
 		};
 		5D3CC6211A4226D300DA374B /* JiveOne Localization Import Files */ = {
@@ -1611,13 +1598,20 @@
 		5DDE651219F0C49A00B90B55 /* Phone */ = {
 			isa = PBXGroup;
 			children = (
-				279A4E1319DA894700E8AB7B /* SIP */,
 				5DBBDCC419DD9A4100A4DB96 /* JCPhoneManager.h */,
 				5DBBDCC519DD9A4100A4DB96 /* JCPhoneManager.m */,
+				5D9A5E201A24E30A00E8274C /* JCBluetoothManager.h */,
+				5D9A5E211A24E30A00E8274C /* JCBluetoothManager.m */,
 				5DBBDCC719DDA0A300A4DB96 /* JCCallCard.h */,
 				5DBBDCC819DDA0A300A4DB96 /* JCCallCard.m */,
 				5DBCB93719FE9300001C7157 /* JCConferenceCallCard.h */,
 				5DBCB93819FE9300001C7157 /* JCConferenceCallCard.m */,
+				279A4E2A19DA91E100E8AB7B /* SipHandler.h */,
+				279A4E2B19DA91E100E8AB7B /* SipHandler.m */,
+				278E858419EC6B6E0087649D /* VideoViewController.h */,
+				278E858519EC6B6E0087649D /* VideoViewController.mm */,
+				27BE503B19DCF6A800B725ED /* JCLineSession.h */,
+				27BE503C19DCF6A800B725ED /* JCLineSession.m */,
 			);
 			name = Phone;
 			sourceTree = "<group>";
@@ -2106,7 +2100,6 @@
 				27EB18C419DF194E00C1503B /* LineConfiguration.m in Sources */,
 				277A1F8018F88987009A41F7 /* JCLoginViewController.m in Sources */,
 				5DBCB93919FE9300001C7157 /* JCConferenceCallCard.m in Sources */,
-				276CFEAB196AF45F00C30B30 /* JasmineSocket.m in Sources */,
 				5DA5A1B219DAFEAD00968F7D /* JCDialStringLabel.m in Sources */,
 				5D35479819FF4B85009E3CB4 /* JCApplicationSwitcherDelegate.m in Sources */,
 				2700987D18F4714100B6BC2F /* JSMessageInputView.m in Sources */,
@@ -2149,7 +2142,6 @@
 			files = (
 				2751591418AD174F00FD8D3F /* JCAuthenticationManager.m in Sources */,
 				2751591818AD300B00FD8D3F /* OsgiData.xcdatamodel in Sources */,
-				276CFEAC196AF45F00C30B30 /* JasmineSocket.m in Sources */,
 				272B61DE18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */,
 				5D7339C51A056B5400339DC6 /* JCBadgeManager.m in Sources */,
 				275F4A8318AD0FBC00D2F069 /* UTJiveOneTests.m in Sources */,

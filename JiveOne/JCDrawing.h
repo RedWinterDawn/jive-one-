@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 typedef enum : NSUInteger {
     kJCDrawingLinePositionTop,
@@ -15,7 +15,7 @@ typedef enum : NSUInteger {
     kJCDrawingLinePositionRight
 } JCDrawingLinePosition;
 
-typedef struct RBGraphicsLine {
+typedef struct JCDrawingLine {
     CGFloat width;
     CGColorRef color;
 } JCDrawingLine;
