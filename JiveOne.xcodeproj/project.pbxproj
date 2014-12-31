@@ -1088,14 +1088,9 @@
 				276CFEA9196AF45F00C30B30 /* JasmineSocket.h */,
 				276CFEAA196AF45F00C30B30 /* JasmineSocket.m */,
 				5DDDA5421A4A827600E31AA3 /* Presence */,
-				5DDE651219F0C49A00B90B55 /* Calling */,
+				5DDE651219F0C49A00B90B55 /* Phone */,
 				2788F147190EB0F70099348D /* Categories */,
-				5D112DD81A4094340097223C /* JCAuthenticationKeychain.h */,
-				5D112DD91A4094340097223C /* JCAuthenticationKeychain.m */,
-				2751590F18AD174F00FD8D3F /* JCAuthenticationManager.h */,
-				2751591018AD174F00FD8D3F /* JCAuthenticationManager.m */,
-				5DA566471A20543500286BA5 /* JCAuthenticationManagerError.h */,
-				5DA566481A20543500286BA5 /* JCAuthenticationManagerError.m */,
+				5D2A3F9F1A53706200974B8A /* Security */,
 				272B61DB18B2A4DD00EB8ED5 /* TRVSMonitor.h */,
 				272B61DC18B2A4DD00EB8ED5 /* TRVSMonitor.m */,
 				5DB0BFC219FFF97A006737D7 /* JCDrawing.h */,
@@ -1104,12 +1099,6 @@
 				5D7339A91A03FF9700339DC6 /* JCBadgeManager.m */,
 				5D2087121A44F00F00C0C394 /* JCBadgeManagerBatchOperation.h */,
 				5D2087131A44F00F00C0C394 /* JCBadgeManagerBatchOperation.m */,
-				5D02750B1A3F81060077A37B /* JCEncryptionTransformer.h */,
-				5D02750C1A3F81060077A37B /* JCEncryptionTransformer.m */,
-				5D0275111A3F836A0077A37B /* JCStringEncryptionTransformer.h */,
-				5D0275121A3F836A0077A37B /* JCStringEncryptionTransformer.m */,
-				5D1FD5C21A48B05E007EF8B6 /* JCKeychain.h */,
-				5D1FD5C31A48B05E007EF8B6 /* JCKeychain.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -1530,6 +1519,25 @@
 			name = Debug;
 			sourceTree = "<group>";
 		};
+		5D2A3F9F1A53706200974B8A /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				5D112DD81A4094340097223C /* JCAuthenticationKeychain.h */,
+				5D112DD91A4094340097223C /* JCAuthenticationKeychain.m */,
+				2751590F18AD174F00FD8D3F /* JCAuthenticationManager.h */,
+				2751591018AD174F00FD8D3F /* JCAuthenticationManager.m */,
+				5DA566471A20543500286BA5 /* JCAuthenticationManagerError.h */,
+				5DA566481A20543500286BA5 /* JCAuthenticationManagerError.m */,
+				5D02750B1A3F81060077A37B /* JCEncryptionTransformer.h */,
+				5D02750C1A3F81060077A37B /* JCEncryptionTransformer.m */,
+				5D0275111A3F836A0077A37B /* JCStringEncryptionTransformer.h */,
+				5D0275121A3F836A0077A37B /* JCStringEncryptionTransformer.m */,
+				5D1FD5C21A48B05E007EF8B6 /* JCKeychain.h */,
+				5D1FD5C31A48B05E007EF8B6 /* JCKeychain.m */,
+			);
+			name = Security;
+			sourceTree = "<group>";
+		};
 		5D3CC6211A4226D300DA374B /* JiveOne Localization Import Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -1600,7 +1608,7 @@
 			name = Caller;
 			sourceTree = "<group>";
 		};
-		5DDE651219F0C49A00B90B55 /* Calling */ = {
+		5DDE651219F0C49A00B90B55 /* Phone */ = {
 			isa = PBXGroup;
 			children = (
 				279A4E1319DA894700E8AB7B /* SIP */,
@@ -1611,7 +1619,7 @@
 				5DBCB93719FE9300001C7157 /* JCConferenceCallCard.h */,
 				5DBCB93819FE9300001C7157 /* JCConferenceCallCard.m */,
 			);
-			name = Calling;
+			name = Phone;
 			sourceTree = "<group>";
 		};
 		91743F351965B7EA003CD5E4 /* Status */ = {
