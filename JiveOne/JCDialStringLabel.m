@@ -136,13 +136,13 @@
         
     if (string.length > 11)
     {
-        NSString *phoneNumberString = [string substringToIndex:10];
+        NSString *phoneNumberString = [string substringToIndex:11];
         NSString *extension = [string substringFromIndex:11];
         phoneNumber = [phoneNumberUtil parse:phoneNumberString defaultRegion:@"US" error:&error];
         if (error)
             NSLog(@"%@", [error description]);
         
-        return [NSString stringWithFormat:@"%@ %@", [phoneNumberUtil format:phoneNumber numberFormat:NBEPhoneNumberFormatNATIONAL error:&error], extension];
+        return [NSString stringWithFormat:@"%@%@", [phoneNumberUtil format:phoneNumber numberFormat:NBEPhoneNumberFormatNATIONAL error:&error], extension];
     }
     
     NBAsYouTypeFormatter *formatter = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"];
