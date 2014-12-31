@@ -119,7 +119,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     username = [username stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     password = [password stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     if(username.length == 0 || password.length == 0){
-        [self reportError:InvalidAuthenticationParameters description:@"UserName/Password Cannot Be Empty"];
+        [self reportError:JCAuthenticationManagerInvalidParameterError description:@"Username/Password Cannot Be Empty"];
         return;
     }
     
@@ -305,12 +305,12 @@ static int MAX_LOGIN_ATTEMPTS = 2;
             }
             else {
                 NSLog(@"%@", [error description]);
-                [self reportError:NetworkError description:@"We could not reach the server at this time. Please check your connection"];
+                [self reportError:JCAuthenticationManagerNetworkError description:@"We could not reach the server at this time. Please check your connection"];
             }
         }];
     }
     @catch (NSException *exception) {
-        [self reportError:AutheticationError description:exception.reason];
+        [self reportError:JCAuthenticationManagerAutheticationError description:exception.reason];
     }
 }
 
@@ -321,7 +321,6 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 -(void)notifyCompletionBlock:(BOOL)success error:(NSError *)error
 {
-    _completionBlock = nil;
     _loginAttempts = 0;
     _webview = nil;
     _username = nil;
@@ -338,6 +337,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     
     if (_completionBlock) {
         _completionBlock(success, error);
+        _completionBlock = nil;
     }
 }
 
@@ -372,7 +372,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     }
     else {
         [webView stopLoading];
-        [self reportError:InvalidAuthenticationParameters description:@"Invalid Username/Password. Please try again."];
+        [self reportError:JCAuthenticationManagerInvalidParameterError description:@"Invalid Username/Password.\nPlease try again."];
     }
 }
 
@@ -390,7 +390,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     if (_authenticationKeychain.isAuthenticated) {
         return;
     }
-    [self reportError:NetworkError description:error.localizedDescription];
+    [self reportError:JCAuthenticationManagerNetworkError description:error.localizedDescription];
 }
 
 @end

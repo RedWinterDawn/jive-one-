@@ -9,13 +9,11 @@
 @import Foundation;
 
 typedef enum : NSUInteger {
-    InvalidAuthenticationParameters,
-    AutheticationError,
-    NetworkError,
-    TimeoutError,
-    NoPbx,
-    MultiplePbx,
-    ProvisioningFailure,
+    JCAuthenticationManagerInvalidParameterError,
+    JCAuthenticationManagerAutheticationError,
+    JCAuthenticationManagerNetworkError,
+    JCAuthenticationManagerTimeoutError,
+    JCAuthenticationManagerNoPbxError,
     
 } JCAuthenticationManagerErrorType;
 
