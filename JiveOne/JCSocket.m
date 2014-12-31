@@ -7,8 +7,10 @@
 //
 
 #import "JCSocket.h"
+
 #import <SocketRocket/SRWebSocket.h>
 #import "JCV5ApiClient.h"
+#import "JCKeychain.h"
 
 NSString *const kJCSocketConnectedNotification      = @"socketDidOpen";
 NSString *const kJCSocketConnectFailedNotification  = @"socketDidFail";
@@ -18,11 +20,18 @@ NSString *const kJCSocketNotificationErrorKey       = @"error";
 NSString *const kJCSocketNotificationDataKey        = @"data";
 NSString *const kJCSocketNotificationResultKey      = @"result";
 
+NSString *const kJCSocketSessionKeychainKey         = @"socket-session";
+
 NSString *const kJCV5ClientSocketSessionRequestURL                      = @"https://realtime.jive.com/session";
 NSString *const kJCV5ClientSocketSessionResponseWebSocketRequestKey     = @"ws";
 NSString *const kJCV5ClientSocketSessionResponseSubscriptionRequestKey  = @"subscriptions";
 NSString *const kJCV5ClientSocketSessionResponseSelfRequestKey          = @"self";
+NSString *const kJCV5ClientSocketSessionResponseSessionKey              = @"session";
 NSString *const kJCV5ClientSocketSessionDeviceTokenKey                  = @"deviceToken";
+
+NSString *const kJCSocketSessionIdKey           = @"sessionId";
+NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
+
 
 
 #define SOCKET_MAX_RETRIES 3
@@ -32,12 +41,15 @@ NSString *const kJCV5ClientSocketSessionDeviceTokenKey                  = @"devi
     SRWebSocket *_socket;
     CompletionHandler _completion;
     
-    NSURL *_url;
     BOOL _closedSocketOnPurpose;
     NSInteger _reconnectRetries;
 }
 
-@property (nonatomic, strong) NSURL *subscriptionUrl;
+@property (nonatomic, readonly) NSString *sessionId;
+@property (nonatomic, readonly) NSString *sessionDeviceToken;
+@property (nonatomic, readonly) NSURL *subscriptionUrl;
+@property (nonatomic, readonly) NSURL *selfUrl;
+@property (nonatomic, readonly) NSURL *sessionUrl;
 
 @end
 
@@ -50,7 +62,6 @@ NSString *const kJCV5ClientSocketSessionDeviceTokenKey                  = @"devi
         [self disconnect];
     }
     
-    _url = sessionUrl;
     _completion = completion;
     _socket = [[SRWebSocket alloc] initWithURL:sessionUrl];
     _socket.delegate = self;
@@ -63,9 +74,11 @@ NSString *const kJCV5ClientSocketSessionDeviceTokenKey                  = @"devi
 
 -(void)disconnect
 {
+    // TODO: Unsubscribe to all socket events.
+    [JCSocket unsubscribeToSocketEvents];
+    
     [self closeSocketWithReason:@"Disconnecting"];
     _socket = nil;
-    _url = nil;
 }
 
 - (void)start
@@ -87,6 +100,51 @@ NSString *const kJCV5ClientSocketSessionDeviceTokenKey                  = @"devi
     return (_socket && _socket.readyState == SR_OPEN);
 }
 
+-(NSString *)sessionDeviceToken
+{
+    NSDictionary *socketSession = [JCKeychain loadValueForKey:kJCSocketSessionKeychainKey];
+    if (socketSession) {
+        return [socketSession objectForKey:kJCV5ClientSocketSessionDeviceTokenKey];
+    }
+    return nil;
+}
+
+-(NSString *)sessionId
+{
+    NSDictionary *socketSession = [JCKeychain loadValueForKey:kJCSocketSessionKeychainKey];
+    if (socketSession) {
+        return [socketSession objectForKey:kJCSocketSessionIdKey];
+    }
+    return nil;
+}
+
+-(NSURL *)sessionUrl
+{
+    NSDictionary *socketSession = [JCKeychain loadValueForKey:kJCSocketSessionKeychainKey];
+    if (socketSession) {
+        return [socketSession objectForKey:kJCV5ClientSocketSessionResponseWebSocketRequestKey];
+    }
+    return nil;
+}
+
+-(NSURL *)subscriptionUrl
+{
+    NSDictionary *socketSession = [JCKeychain loadValueForKey:kJCSocketSessionKeychainKey];
+    if (socketSession) {
+        return [socketSession objectForKey:kJCV5ClientSocketSessionResponseSubscriptionRequestKey];
+    }
+    return nil;
+}
+
+-(NSURL *)selfUrl
+{
+    NSDictionary *socketSession = [JCKeychain loadValueForKey:kJCSocketSessionKeychainKey];
+    if (socketSession) {
+        return [socketSession objectForKey:kJCV5ClientSocketSessionResponseSelfRequestKey];
+    }
+    return nil;
+}
+
 #pragma mark - Private -
 
 - (void)restartSocket
@@ -95,7 +153,7 @@ NSString *const kJCV5ClientSocketSessionDeviceTokenKey                  = @"devi
         [_socket open];
     }
     else {
-        [self openSession:_url completion:NULL];
+        [self openSession:self.sessionUrl completion:NULL];
     }
 }
 
@@ -127,14 +185,13 @@ NSString *const kJCV5ClientSocketSessionDeviceTokenKey                  = @"devi
 
 #pragma mark SRWebSocketDelegate
 
-
-
 - (void)webSocketDidOpen:(SRWebSocket *)webSocket
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kJCSocketConnectedNotification object:self];
     
     if (_completion) {
         _completion(YES, nil);
+        _completion = NULL;
     }
 }
 
@@ -151,12 +208,12 @@ NSString *const kJCV5ClientSocketSessionDeviceTokenKey                  = @"devi
     // outside of ourselves through openSession, so we clear out the data.
     _reconnectRetries = 0;
     _socket = nil;
-    _url = nil;
     [[NSNotificationCenter defaultCenter] postNotificationName:kJCSocketConnectFailedNotification
                                                         object:self
                                                       userInfo:@{kJCSocketNotificationErrorKey:error}];
     if (_completion) {
         _completion(NO, error);
+        _completion = NULL;
     }
 }
 
@@ -181,32 +238,30 @@ NSString *const kJCV5ClientSocketSessionDeviceTokenKey                  = @"devi
                                                       userInfo:userInfo];
 }
 
-
-
 - (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean {
     NSLog(@"The websocket closed with code: %@, reason: %@, wasClean: %@", @(code), reason, (wasClean) ? @"YES" : @"NO");
     
     
-//    /*
-//     * If we have a completion block, it means
-//     * this connection was started by the background fetch process or background
-//     * remote notification. If that's the case then once we're done, we don't want to
-//     * restart the socket automatically.
-//     */
-//    if (self.completionBlock) {
-//        self.completionBlock(YES, nil);
-//        closedSocketOnPurpose = YES;
-//    }
-//    
-//    
-//    /*
-//     * If this was not closed on purpose, try to connect again
-//     */
-//    if (!closedSocketOnPurpose) {
-//        [self restartSocket];
-//    }
-//    
-//    closedSocketOnPurpose = NO;
+    /*
+     * If we have a completion block, it means
+     * this connection was started by the background fetch process or background
+     * remote notification. If that's the case then once we're done, we don't want to
+     * restart the socket automatically.
+     */
+    if (_completion) {
+        _completion(YES, nil);
+        _completion = NULL;
+        _closedSocketOnPurpose = YES;
+    }
+    
+    /*
+     * If this was not closed on purpose, try to connect again
+     */
+    if (!_closedSocketOnPurpose) {
+        [self restartSocket];
+    }
+    
+    _closedSocketOnPurpose = NO;
 }
 
 @end
@@ -230,10 +285,28 @@ NSString *const kJCV5ClientSocketSessionDeviceTokenKey                  = @"devi
 
 + (void)connectWithDeviceToken:(NSString *)deviceToken completion:(CompletionHandler)completion
 {
+    // If we have a socket session url, try to reuse it.
     JCSocket *socket = [JCSocket sharedSocket];
+    if (socket.sessionUrl) {
+        
+        // Premtively unsubscribe from all events on the socket.
+        [JCSocket unsubscribeToSocketEvents];
+        
+        NSString *sessionDeviceToken = socket.sessionDeviceToken;
+        if (!deviceToken || [sessionDeviceToken isEqualToString:deviceToken]) {
+            [socket openSession:socket.sessionUrl completion:completion];
+            return;
+        }
+    }
+    
+    // If we do not have a session url, we need to request one, creating a session.
     [JCSocket requestSocketSessionRequestUrlsWithDeviceIdentifier:deviceToken completion:^(BOOL success, NSError *error, NSDictionary *userInfo) {
         if (success) {
-            socket.subscriptionUrl = [userInfo objectForKey:kJCV5ClientSocketSessionResponseSubscriptionRequestKey];
+            
+            // Save the session keychain into the keychain for secure access.
+            [JCKeychain saveValue:userInfo forKey:kJCSocketSessionKeychainKey];
+            
+            // Open Session
             [socket openSession:[userInfo objectForKey:kJCV5ClientSocketSessionResponseWebSocketRequestKey] completion:completion];
         }
         else {
@@ -257,6 +330,12 @@ NSString *const kJCV5ClientSocketSessionDeviceTokenKey                  = @"devi
     [[JCSocket sharedSocket] stop];
 }
 
++ (void)reset
+{
+    [JCSocket disconnect];
+    [JCKeychain deleteValueForKey:kJCSocketSessionKeychainKey]; // delete stored keychain credentials.
+}
+
 @end
 
 @implementation JCSocket (V5Client)
@@ -275,10 +354,14 @@ NSString *const kJCV5ClientSocketSessionDeviceTokenKey                  = @"devi
                      
                      NSDictionary *data = (NSDictionary *)responseObject;
                      NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+                     if (deviceToken) {
+                         [userInfo setObject:deviceToken forKey:kJCSocketSessionDeviceTokenKey];
+                     }
                      
                      NSURL *selfUrl = [data urlValueForKey:kJCV5ClientSocketSessionResponseSelfRequestKey];
                      if (selfUrl) {
                          [userInfo setObject:selfUrl forKey:kJCV5ClientSocketSessionResponseSelfRequestKey];
+                         [userInfo setObject:selfUrl.lastPathComponent forKey:kJCSocketSessionIdKey];
                      }
                      
                      NSURL *websocketUrl = [data urlValueForKey:kJCV5ClientSocketSessionResponseWebSocketRequestKey];
@@ -317,6 +400,21 @@ NSString *const kJCSocketParameterTypeKey       = @"type";
                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                         NSLog(@"Error Subscribing %@", error);
                     }];
+}
+
++ (void)unsubscribeToSocketEvents {
+    
+    NSURL *url = [JCSocket sharedSocket].subscriptionUrl;
+    JCV5ApiClient *apiClient = [JCV5ApiClient sharedClient];
+    [apiClient setRequestAuthHeader:NO];
+    [apiClient.manager DELETE:url.absoluteString
+                   parameters:nil
+                      success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                          NSLog(@"Unsubscribe All Events");
+                      }
+                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                          NSLog(@"Error Un subscribing %@", error);
+                      }];
 }
 
 + (NSDictionary *)subscriptionDictionaryForIdentifier:(NSString *)identifier entity:(NSString *)entity type:(NSString *)type

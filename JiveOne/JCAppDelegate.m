@@ -337,10 +337,8 @@
     
     [Flurry logEvent:@"Log out"];
     
-    [JCSocket disconnect];                              // Disconnect the socket;
+    [JCSocket reset];                                   // Disconnect the socket and purge socket session.
     [JCPhoneManager disconnect];                        // Disconnect the phone manager
-    
-    
     [[JCV5ApiClient sharedClient] stopAllOperations];   // Kill any netowrk operations.
     [JCBadgeManager reset];                             // Resets the Badge Manager.
     [self presentLoginViewController:YES];              // Present the login view.
