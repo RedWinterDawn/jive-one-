@@ -28,19 +28,14 @@ NSString *const kJCAuthenticationManagerError = @"AuthenticationManagerError";
 +(NSString *)stringForType:(JCAuthenticationManagerErrorType)type
 {
     switch (type) {
-        case InvalidAuthenticationParameters:
-            return @"Invalid Parameters";
-            
-        case AutheticationError:
+        case JCAuthenticationManagerInvalidParameterError:
+        case JCAuthenticationManagerAutheticationError:
             return @"Authentication Error";
             
-        case NoPbx:
+        case JCAuthenticationManagerNoPbxError:
             return @"No PBX";
             
-        case MultiplePbx:
-            return @"Multiple PBXs";
-            
-        case NetworkError:
+        case JCAuthenticationManagerNetworkError:
             return @"Server Unavailable";
             
         default:
