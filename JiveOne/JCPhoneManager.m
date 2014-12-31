@@ -105,23 +105,25 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
  */
 -(void)connectToLine:(Line *)line completion:(CompletionHandler)completion
 {
-//    check the user settings to see if they will let us call over cell and if we have wifi regester anyways
-    AFNetworkReachabilityStatus currentStatus = [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
+    // If we are already connecting, exit out, we are done here.
+    if (_connecting) {
+        if (completion) {
+            completion(FALSE, nil);
+        }
+        return;
+    }
     
-    if (currentStatus == AFNetworkReachabilityStatusReachableViaWWAN || currentStatus == AFNetworkReachabilityStatusReachableViaWiFi) {
-    
-        if ([JCAppSettings sharedSettings].isWifiOnly && currentStatus == AFNetworkReachabilityStatusReachableViaWWAN)
+    AFNetworkReachabilityStatus status = [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
+    if (status == AFNetworkReachabilityStatusReachableViaWWAN || status == AFNetworkReachabilityStatusReachableViaWiFi) {
+        if ([JCAppSettings sharedSettings].isWifiOnly && status == AFNetworkReachabilityStatusReachableViaWWAN)
         {
             [self disconnect];
-            NSLog(@"You dont have wifi and can only make calls using wifi");
+            if (completion) {
+                completion(FALSE, nil);
+            }
             return;
         }
-        NSLog(@"You Regesterd and your network status is : %d ", [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus);
         
-        if (_connecting) {
-            return;
-        }
-                
         _connecting = TRUE;
         _completion = completion;
         
@@ -143,15 +145,15 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
             [UIApplication showSimpleAlert:@"" message:@"Unable to connect to this line at this time. Please Try again." code:error.code];
             if (completion) {
                 completion(success, error);
+                _connecting = FALSE;
+                _completion = nil;
             }
         }];
-            
     }
-    else if (currentStatus == AFNetworkReachabilityStatusUnknown){
-        NSLog(@"Network Unknown");
+    
+    if (completion) {
+        completion(FALSE, nil);
     }
-    else
-        NSLog(@"No Internet");
 }
 
 -(void)reconnectToLine:(Line *)line completion:(CompletionHandler)completion
@@ -283,9 +285,11 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
 -(void)disconnect
 {
     NSLog(@"Disconnecting from sip Handler");
+    
     [_sipHandler disconnect];
     _sipHandler = nil;
     self.connected = FALSE;
+    _connecting = FALSE;
 }
 
 /**
@@ -880,6 +884,7 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
     self.connected = sipHandler.registered;
     if (_completion) {
         _completion(true, nil);
+        _completion = nil;
     }
 }
 
@@ -889,6 +894,7 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
     self.connected = sipHandler.registered;
     if (_completion) {
         _completion(FALSE, error);
+        _completion = nil;
     }
     NSLog(@"%@", [error description]);
 }
