@@ -2544,7 +2544,7 @@
 		};
 		275F4A8A18AD0FBC00D2F069 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6594302CE0A00068957DC0D5 /* Pods-JiveOneTests.debug.xcconfig */;
+			baseConfigurationReference = 1B209FFD8576BB760529B3CA /* Pods.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/JiveOne.app/JiveOne";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -2570,7 +2570,7 @@
 		};
 		275F4A8B18AD0FBC00D2F069 /* Enterprise */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C87156C53B57B04D9871E012 /* Pods-JiveOneTests.enterprise.xcconfig */;
+			baseConfigurationReference = 27364B6C977955C61C47BA59 /* Pods.enterprise.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/JiveOne.app/JiveOne";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -2668,7 +2668,7 @@
 		};
 		91F6DFBA192A7B35001C54FB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 865FB851301D1534E4CC63E7 /* Pods-JiveOneTests.release.xcconfig */;
+			baseConfigurationReference = 43C81F9C015A20BD2322B787 /* Pods.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/JiveOne.app/JiveOne";
 				CLANG_ENABLE_OBJC_ARC = YES;
