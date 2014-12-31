@@ -406,6 +406,10 @@ NSString *const kJCSocketParameterTypeKey       = @"type";
 + (void)unsubscribeToSocketEvents {
     
     NSURL *url = [JCSocket sharedSocket].subscriptionUrl;
+    if (!url) {
+        return;
+    }
+    
     JCV5ApiClient *apiClient = [JCV5ApiClient sharedClient];
     [apiClient setRequestAuthHeader:NO];
     [apiClient.manager DELETE:url.absoluteString
