@@ -9,7 +9,7 @@
 #import "JCAppSettings.h"
 
 NSString *const kJCAppSettingsIntercomEnabledAttribute = @"intercomEnabled";
-NSString *const kJCAppSettingsCallOverCellEnabledAttribute = @"callsOverCellEnabled";
+NSString *const kJCAppSettingsWifiOnlyAttribute = @"wifiOnly";
 
 @implementation JCAppSettings
 
@@ -22,7 +22,7 @@ NSString *const kJCAppSettingsCallOverCellEnabledAttribute = @"callsOverCellEnab
 
 -(void)setWifiOnly:(BOOL)callsOverCellEnabled
 {
-    [self setSettingBoolValue:callsOverCellEnabled forKey:kJCAppSettingsCallOverCellEnabledAttribute];
+    [self setSettingBoolValue:callsOverCellEnabled forKey:kJCAppSettingsWifiOnlyAttribute];
 }
 
 #pragma mark - Getters -
@@ -33,7 +33,7 @@ NSString *const kJCAppSettingsCallOverCellEnabledAttribute = @"callsOverCellEnab
 }
 -(BOOL)isWifiOnly
 {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:kJCAppSettingsCallOverCellEnabledAttribute];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kJCAppSettingsWifiOnlyAttribute];
 }
 
 #pragma mark - Private -

@@ -80,6 +80,7 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
         
         // Register for app notifications
         _previousNetworkStatus = [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
+        [[AFNetworkReachabilityManager sharedManager] startMonitoring];
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         [center addObserver:self selector:@selector(networkConnectivityChanged:) name:AFNetworkingReachabilityDidChangeNotification object:nil];
         [center addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -105,29 +106,31 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
 -(void)connectToLine:(Line *)line completion:(CompletionHandler)completion
 {
 //    check the user settings to see if they will let us call over cell and if we have wifi regester anyways
+    AFNetworkReachabilityStatus currentStatus = [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
     
-    if (([JCAppSettings sharedSettings].isWifiOnly && _previousNetworkStatus == AFNetworkReachabilityStatusReachableViaWWAN) || !(_previousNetworkStatus == AFNetworkReachabilityStatusUnknown)) {
-        [self disconnect];
-        NSLog(@"Failed to regester please check your wifi, or enable calls over cell in settings page  : %d ", [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus);
-    }
+    if (currentStatus == AFNetworkReachabilityStatusReachableViaWWAN || currentStatus == AFNetworkReachabilityStatusReachableViaWiFi) {
     
-    else
-    {
+        if ([JCAppSettings sharedSettings].isWifiOnly && currentStatus == AFNetworkReachabilityStatusReachableViaWWAN)
+        {
+            [self disconnect];
+            NSLog(@"You dont have wifi and can only make calls using wifi");
+            return;
+        }
         NSLog(@"You Regesterd and your network status is : %d ", [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus);
         
         if (_connecting) {
             return;
         }
-    
+                
         _connecting = TRUE;
         _completion = completion;
         
         // If we have a line configuration for the line, try to register it.
-            if (line.lineConfiguration){
-                [self registerToLine:line];
-                return;
-            }
-    
+        if (line.lineConfiguration){
+            [self registerToLine:line];
+            return;
+        }
+                
         // If we do not have a line configuration, we need to request it.
         [UIApplication showHudWithTitle:@"" message:@"Selecting Line..."];
         [JCV4ProvisioningClient requestProvisioningForLine:line completed:^(BOOL success, NSError *error) {
@@ -136,14 +139,19 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
                 [self registerToLine:line];
                 return;
             }
-        
+            
             [UIApplication showSimpleAlert:@"" message:@"Unable to connect to this line at this time. Please Try again." code:error.code];
             if (completion) {
                 completion(success, error);
             }
         }];
+            
     }
-    
+    else if (currentStatus == AFNetworkReachabilityStatusUnknown){
+        NSLog(@"Network Unknown");
+    }
+    else
+        NSLog(@"No Internet");
 }
 
 -(void)reconnectToLine:(Line *)line completion:(CompletionHandler)completion
@@ -171,10 +179,11 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
     if ([JCAppSettings sharedSettings].isWifiOnly) {
         switch (status) {
             case AFNetworkReachabilityStatusNotReachable:
-                NSLog(@"Network Unreachable please check your self");
+                NSLog(@"No Network Connection: please check your self");
                 break;
                 
             case AFNetworkReachabilityStatusReachableViaWiFi: {
+                 NSLog(@"WIFI Connection");
                 if (_previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWWAN && _previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWiFi)
                     [self reconnectToLine:_line completion:NULL];
                 else {
@@ -184,6 +193,7 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
             }
                 
             case AFNetworkReachabilityStatusReachableViaWWAN: {
+                NSLog(@"3G Connection");
                 if (_previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWiFi && _previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWWAN)
                     NSLog(@"Deregester Because of wifi only settings set to true and you have no wifi");
                 else {
@@ -196,6 +206,7 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
                 
             default:
                 NSLog(@" \n \n \n ======== This is a unforseen situaltion we need to take into account ========== \n \n \n \n \n");
+                NSLog(@"Unkown network status  in the Phone Manager");
                 break;
         }
     
@@ -932,7 +943,6 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
 + (void)connectToLine:(Line *)line completion:(CompletionHandler)completed
 {
     NSLog(@"Check network");
-    
     
     [[JCPhoneManager sharedManager] connectToLine:line completion:completed];
 }

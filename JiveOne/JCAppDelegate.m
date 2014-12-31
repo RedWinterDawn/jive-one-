@@ -58,7 +58,6 @@
 {
     _appSwitcherViewController = self.window.rootViewController;
     
-    [self configureNetworking];
     [self loadUserDefaults];
     
     // Load Core Data
@@ -74,35 +73,6 @@
     [center addObserver:self selector:@selector(userDataReady:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:_authenticationManager];
     [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:_authenticationManager];
     [_authenticationManager checkAuthenticationStatus];
-}
-
-/**
- *  We predominately use the AFNetworking Networking stack to handle data request between the App and Jive Servers for
- *  data requests. Here we configure caching, logging and monitoring indication for AFNetoworking.
- */
--(void)configureNetworking
-{
-    //Create a sharedCache for AFNetworking
-    NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:2 * 1024 * 1024
-                                                            diskCapacity:100 * 1024 * 1024
-                                                                diskPath:nil];
-    [NSURLCache setSharedURLCache:sharedCache];
-    
-    /*
-     * AFNETWORKING
-     */
-    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
-#if DEBUG
-    [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
-    [[AFNetworkActivityLogger sharedLogger] startLogging];
-#else
-    [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelOff];
-#endif
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
-    
-    //Start monitor for Reachability
-    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
 }
 
 /**
@@ -257,14 +227,16 @@
         [center addObserver:self selector:@selector(stopRingtone) name:kJCPhoneManagerAnswerCallNotification object:_phoneManager];
     }
     
-    // Register the Phone.
-    [JCPhoneManager connectToLine:line completion:NULL];
+    
     
     // Get Contacts
     [Contact downloadContactsForLine:line complete:NULL];
     
     // Get Voicemails
     [Voicemail downloadVoicemailsForLine:line complete:NULL];
+    
+    // Register the Phone.
+    [JCPhoneManager connectToLine:line completion:NULL];
 }
 
 #pragma mark - Notification Handlers -

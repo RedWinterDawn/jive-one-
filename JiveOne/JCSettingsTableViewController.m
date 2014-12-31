@@ -7,6 +7,7 @@
 //
 
 #import "JCSettingsTableViewController.h"
+#import "JCPhoneManager.h"
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
 #import "JCTermsAndConditonsViewController.h"
@@ -20,6 +21,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Descrip
 @interface JCSettingsTableViewController () <MFMailComposeViewControllerDelegate>
 {
     JCAuthenticationManager *_authenticationManager;
+    JCPhoneManager * _phoneManager;
 }
 
 @end
@@ -171,7 +173,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Descrip
         UISwitch *switchBtn = (UISwitch *)sender;
         JCAppSettings *settings = [JCAppSettings sharedSettings];
         settings.intercomEnabled = !settings.isIntercomEnabled;
-        switchBtn.on = settings.isIntercomEnabled;
+                switchBtn.on = settings.isIntercomEnabled;
     }
 }
 
@@ -180,6 +182,9 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Descrip
     if ([sender isKindOfClass:[UISwitch class]]) {
         UISwitch *switchBtn = (UISwitch *)sender;
         JCAppSettings *settings = [JCAppSettings sharedSettings];
+        [_phoneManager disconnect];
+        NSLog(@"Disconnect and Reconnect");
+        [_phoneManager connectToLine:_phoneManager.line completion:NULL];
         settings.wifiOnly = !settings.isWifiOnly;
         switchBtn.on = settings.isWifiOnly;
     }
