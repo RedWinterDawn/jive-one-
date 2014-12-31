@@ -192,10 +192,10 @@
             </objects>
             <point key="canvasLocation" x="2054" y="-869"/>
         </scene>
-        <!--Presence View Controller-->
+        <!--PreasenceViewController-->
         <scene sceneID="N7a-CP-hnj">
             <objects>
-                <tableViewController storyboardIdentifier="JCPresenceSelectionViewController" id="Udl-o5-oNi" customClass="JCPresenceViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="JCPresenceSelectionViewController" title="PreasenceViewController" id="Udl-o5-oNi" customClass="JCPresenceViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="static" style="grouped" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="11" id="qTP-mJ-nry">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -330,13 +330,13 @@
         <!--Conversations-->
         <scene sceneID="aoz-Ao-5CC">
             <objects>
-                <tableViewController restorationIdentifier="JCConversationsViewController" storyboardIdentifier="JCConversationsViewController" id="Js6-I9-TTA" customClass="JCConversationsViewController" sceneMemberID="viewController">
+                <tableViewController restorationIdentifier="JCConversationsViewController" storyboardIdentifier="JCConversationsViewController" title="Conversations" id="Js6-I9-TTA" customClass="JCConversationsViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="uUn-W5-uvk">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.89752072699999996" green="0.89752072699999996" blue="0.89752072699999996" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ChangeMeIfNeeded" rowHeight="70" id="irc-Oo-UAJ">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ChangeMeIfNeeded2" rowHeight="70" id="irc-Oo-UAJ">
                                 <rect key="frame" x="0.0" y="22" width="320" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="irc-Oo-UAJ" id="0t5-g0-2Xe">
