@@ -333,7 +333,7 @@
                          animations:(void (^)(void))animations
                          completion:(void (^)(BOOL))completion
 {
-    if ([toViewController isEqual:fromViewController] || !toViewController)
+    if (!toViewController)
         return;
     
     UIViewController *controller = _transitionViewController;
