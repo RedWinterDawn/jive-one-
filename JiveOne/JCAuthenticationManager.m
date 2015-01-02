@@ -102,16 +102,8 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     // Check to see if we have data using the authentication store to retrive the user id.
     NSString *jiveUserId = _authenticationKeychain.jiveUserId;
     _user = [User MR_findFirstByAttribute:@"jiveUserId" withValue:jiveUserId];
-    if (_user) {
-        [PBX downloadPbxInfoForUser:_user completed:^(BOOL success, NSError *error) {
-            if (success) {
-                [self notifyCompletionBlock:YES error:nil];
-            }
-            else {
-                NSLog(@"%@", [error description]);
-                [self reportError:JCAuthenticationManagerNetworkError description:@"We could not reach the server at this time. Please check your connection"];
-            }
-        }];
+    if (_user && _user.pbxs.count > 0) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:self userInfo:nil];
     }
     else {
         [self logout]; // Nuke it, we need to relogin.
