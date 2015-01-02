@@ -37,6 +37,7 @@
         NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
         if (error) {
             completed(false, [JCV4ProvisioningError errorWithType:JCV4ProvisioningRequestResponseError reason:error.localizedDescription]);
+            NSLog(@"%@", error.description);
             return;
         }
         
@@ -44,7 +45,7 @@
         @try {
             NSDictionary *result = [NSDictionary dictionaryWithXMLData:data];
             if (!result) {
-                completed(false, [JCV4ProvisioningError errorWithType:JCV4ProvisioningRequestResponseError reason:@"Response is Empty"]);
+                completed(false, [JCV4ProvisioningError errorWithType:JCV4ProvisioningResponseParseError reason:@"Response is Empty"]);
                 return;
             }
             
@@ -57,16 +58,17 @@
             
             NSArray *array = [result valueForKeyPath:@"branding.settings_data.core_data_list.account_list.account.data"];
             if (!array || array.count == 0) {
-                completed(false, [JCV4ProvisioningError errorWithType:JCV4ProvisioningRequestResponseError reason:@"No Line Configuration present"]);
+                completed(false, [JCV4ProvisioningError errorWithType:JCV4ProvisioningResponseParseError reason:@"No Line Configuration present"]);
                 return;
             }
             
             [LineConfiguration addLineConfigurations:array line:line completed:^(BOOL success, NSError *error) {
-                completed(success, error);
+                completed(success, [JCV4ProvisioningError errorWithType:JCV4ProvisioningResponseCoreDataError reason:error.localizedDescription]);
+                NSLog(@"%@", [error description]);
             }];
         }
         @catch (NSException *exception) {
-            completed(NO, [JCV4ProvisioningError errorWithType:JCV4ProvisioningResponseParseError reason:exception.reason]);
+            completed(NO, [JCV4ProvisioningError errorWithType:JCV4ProvisioningUnknownProvisioningError reason:exception.reason]);
         }
     });
 }
