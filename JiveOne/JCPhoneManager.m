@@ -80,7 +80,6 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
         
         // Register for app notifications
         _previousNetworkStatus = [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
-        [[AFNetworkReachabilityManager sharedManager] startMonitoring];
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         [center addObserver:self selector:@selector(networkConnectivityChanged:) name:AFNetworkingReachabilityDidChangeNotification object:nil];
         [center addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -113,6 +112,7 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
         return;
     }
     
+    _line = line;
     AFNetworkReachabilityStatus status = [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
     if (status == AFNetworkReachabilityStatusReachableViaWWAN || status == AFNetworkReachabilityStatusReachableViaWiFi) {
         if ([JCAppSettings sharedSettings].isWifiOnly && status == AFNetworkReachabilityStatusReachableViaWWAN)
@@ -245,42 +245,6 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
         }
     }
 }
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-//    switch (status)
-//    {
-//        case AFNetworkReachabilityStatusNotReachable:
-//            
-//            break;
-//            
-//        case AFNetworkReachabilityStatusReachableViaWiFi: {
-//            
-//            // If we are not transitioning from cellular to wifi, reconnect
-//            if (_previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWWAN && _previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWiFi)
-//                [self reconnectToLine:_line completion:NULL];
-//            else {
-//                [self connectToLine:_line completion:NULL];
-//            }
-//            break;
-//        }
-//        default:
-//            [self reconnectToLine:_line completion:NULL];
-//            break;
-//    }
-//    _previousNetworkStatus = status;
-//    
-//    // [self disconnect]; deregisters, and destroys the sip handler object.
-//    // [self reconnectToLine:_line completion:NULL];        // Primarily called from the phone dialer, if there is no connection (not connected, calls connect.)
-//    // [self connectToLine:_line completion:NULL]
-//}
 
 -(void)disconnect
 {
@@ -429,8 +393,6 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
     if (_sipHandler && _line != line) {
         [self disconnect];
     }
-    
-    _line = line;
     _sipHandler = [[SipHandler alloc] initWithLine:line delegate:self];
 }
 

@@ -254,30 +254,34 @@
         [center addObserver:self selector:@selector(stopRingtone) name:kJCPhoneManagerAnswerCallNotification object:_phoneManager];
     }
     
-    
-    // Get Contacts. Once we have contacts, we subscribe to their presence, fetch voicemails trying
-    // to link contacts to thier voicemail if in the pbx. Only fetch voicmails, and open sockets for
-    // v5 pbxs. If we are on v4, we disconnect, and do not fetch voicemails.
-    [Contact downloadContactsForLine:line complete:^(BOOL success, NSError *error) {
-        if (line.pbx.isV5) {
+    dispatch_queue_t backgroundQueue = dispatch_queue_create("register_services_to_line", 0);
+    dispatch_async(backgroundQueue, ^{
+        Line *localLine = (Line *)[[NSManagedObjectContext MR_contextForCurrentThread] objectWithID:line.objectID];
+        
+        // Get Contacts. Once we have contacts, we subscribe to their presence, fetch voicemails trying
+    	// to link contacts to thier voicemail if in the pbx. Only fetch voicmails, and open sockets for
+    	// v5 pbxs. If we are on v4, we disconnect, and do not fetch voicemails.
+    	[Contact downloadContactsForLine:localLine complete:^(BOOL success, NSError *error) {
+        	if (line.pbx.isV5) {
             
-            // Fetch Voicemails
-            [Voicemail downloadVoicemailsForLine:line complete:NULL];
+            	// Fetch Voicemails
+            	[Voicemail downloadVoicemailsForLine:localLine complete:NULL];
             
-            // Open socket to subscribe to presence and voicemail events.
-            [JCSocket connectWithDeviceToken:deviceToken completion:^(BOOL success, NSError *error) {
-                [JCPresenceManager subscribeToPbx:line.pbx];
+            	// Open socket to subscribe to presence and voicemail events.
+            	[JCSocket connectWithDeviceToken:deviceToken completion:^(BOOL success, NSError *error) {
+                	[JCPresenceManager subscribeToPbx:localLine.pbx];
                 
-                // TODO: Subscribe to voicemail socket events.
-            }];
-        }
-        else {
-            [JCSocket disconnect]; // If we are
-        }
-    }];
-    
-    // Register the Phone.
-    [JCPhoneManager connectToLine:line completion:NULL];
+                	// TODO: Subscribe to voicemail socket events.
+            	}];
+        	}
+        	else {
+            	[JCSocket disconnect]; // If we are on v4, which does not use the jasmine socket
+        	}
+    	}];
+        
+        // Register the Phone.
+        [JCPhoneManager connectToLine:localLine completion:NULL];
+    });
 }
 
 #pragma mark - Notification Handlers -
