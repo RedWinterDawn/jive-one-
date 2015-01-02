@@ -7,18 +7,13 @@
 //
 
 #import "JCSettingsTableViewController.h"
-
+#import "JCPhoneManager.h"
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
-
 #import "JCTermsAndConditonsViewController.h"
-
 #import "JCAuthenticationManager.h"
 #import "JCAppSettings.h"
-
 #import <sys/sysctl.h>
-
-
 #import "PBX.h"
 
 NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Description of feedback:</strong> <br><br><br><br><br><hr><strong>Device Specs</strong><br>Model: %@ <br> System Version: %@ <br> App Version: %@ <br> Country: %@";
@@ -26,6 +21,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Descrip
 @interface JCSettingsTableViewController () <MFMailComposeViewControllerDelegate>
 {
     JCAuthenticationManager *_authenticationManager;
+    JCPhoneManager * _phoneManager;
 }
 
 @end
@@ -36,15 +32,15 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Descrip
     [super viewDidLoad];
     
     _authenticationManager = [JCAuthenticationManager sharedInstance];
-    
-    /*NSDictionary *localizedDictionary = [[NSBundle mainBundle] localizedInfoDictionary];
-    self.appLabel.text = [localizedDictionary objectForKey:@"CFBundleDisplayName"];*/
+    _phoneManager = [JCPhoneManager sharedManager];
     
     NSBundle *bundle = [NSBundle mainBundle];
     self.appLabel.text = [bundle objectForInfoDictionaryKey:@"CFBundleDisplayName"];
     self.buildLabel.text = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
     
-    self.intercomEnabled.on = [JCAppSettings sharedSettings].intercomEnabled;
+    JCAppSettings *settings = [JCAppSettings sharedSettings];
+    self.intercomEnabled.on = settings.intercomEnabled;
+    self.wifiOnly.on = settings.wifiOnly;
 }
 
 -(void)awakeFromNib
@@ -175,7 +171,19 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Descrip
         UISwitch *switchBtn = (UISwitch *)sender;
         JCAppSettings *settings = [JCAppSettings sharedSettings];
         settings.intercomEnabled = !settings.isIntercomEnabled;
-        switchBtn.on = settings.isIntercomEnabled;
+                switchBtn.on = settings.isIntercomEnabled;
+    }
+}
+
+-(IBAction)toggleWifiOnly:(id)sender
+{
+    if ([sender isKindOfClass:[UISwitch class]]) {
+        UISwitch *switchBtn = (UISwitch *)sender;
+        JCAppSettings *settings = [JCAppSettings sharedSettings];
+        [_phoneManager disconnect];
+        settings.wifiOnly = !settings.isWifiOnly;
+        switchBtn.on = settings.isWifiOnly;
+        [_phoneManager connectToLine:_authenticationManager.line completion:nil];
     }
 }
 

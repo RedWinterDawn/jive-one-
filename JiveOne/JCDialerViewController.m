@@ -10,6 +10,8 @@
 #import "JCPhoneManager.h"
 #import "OutgoingCall.h"
 #import "UIViewController+HUD.h"
+#import "JCAppSettings.h"
+#import <AFNetworking/AFNetworkReachabilityManager.h>
 
 NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCall";
 
@@ -129,6 +131,9 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     if (_phoneManager.isConnected) {
         _callBtn.selected = false;
         prompt = _phoneManager.line.extension;
+    }
+    else if ([JCAppSettings sharedSettings].wifiOnly && [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus == AFNetworkReachabilityStatusReachableViaWWAN){
+        prompt = NSLocalizedString(@"Disabled", nil);
     }
     else
         _callBtn.selected = true;

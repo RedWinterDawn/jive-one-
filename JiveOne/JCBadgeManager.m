@@ -88,7 +88,7 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
         NSUInteger recentEvents = self.recentEvents;
         if (self.canSendNotifications && recentEvents != [UIApplication sharedApplication].applicationIconBadgeNumber)
         {
-            NSLog(@"recentEvents: %lu", (unsigned long)recentEvents);
+//            NSLog(@"recentEvents: %lu", (unsigned long)recentEvents);
             [UIApplication sharedApplication].applicationIconBadgeNumber = recentEvents;
         }
     });

@@ -151,7 +151,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    NSLog(@"*** %@: didReceiveMemoryWarning ***", [self class]);
 }
 
 - (void)dealloc
