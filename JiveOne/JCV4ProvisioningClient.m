@@ -63,8 +63,14 @@
             }
             
             [LineConfiguration addLineConfigurations:array line:line completed:^(BOOL success, NSError *error) {
-                completed(success, [JCV4ProvisioningError errorWithType:JCV4ProvisioningResponseCoreDataError reason:error.localizedDescription]);
-                NSLog(@"%@", [error description]);
+                if (success) {
+                    completed (YES, nil);
+                }
+                else
+                {
+                    completed(NO, [JCV4ProvisioningError errorWithType:JCV4ProvisioningResponseCoreDataError reason:error.localizedDescription]);
+                    NSLog(@"%@", [error description]);
+                }
             }];
         }
         @catch (NSException *exception) {
@@ -195,7 +201,13 @@ NSString *const kJCV4ProvisioningErrorDomain = @"ProvisioningError";
 @implementation JCV4ProvisioningError
 
 +(instancetype)errorWithType:(JCV4ProvisioningErrorType)type reason:(NSString *)reason{
-    return [JCV4ProvisioningError errorWithDomain:kJCV4ProvisioningErrorDomain code:type userInfo:@{NSLocalizedDescriptionKey:reason}];
+    NSDictionary *userInfo = nil;
+    if (reason) {
+        userInfo = @{NSLocalizedDescriptionKey:reason};
+    }
+    
+    
+    return [JCV4ProvisioningError errorWithDomain:kJCV4ProvisioningErrorDomain code:type userInfo:userInfo];
 }
 
 

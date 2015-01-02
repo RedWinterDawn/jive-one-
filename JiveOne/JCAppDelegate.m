@@ -57,7 +57,6 @@
 {
     _appSwitcherViewController = self.window.rootViewController;
     
-    [self configureNetworking];
     [self loadUserDefaults];
     
     // Load Core Data
@@ -73,35 +72,6 @@
     [center addObserver:self selector:@selector(userDataReady:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:_authenticationManager];
     [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:_authenticationManager];
     [_authenticationManager checkAuthenticationStatus];
-}
-
-/**
- *  We predominately use the AFNetworking Networking stack to handle data request between the App and Jive Servers for
- *  data requests. Here we configure caching, logging and monitoring indication for AFNetoworking.
- */
--(void)configureNetworking
-{
-    //Create a sharedCache for AFNetworking
-    NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:2 * 1024 * 1024
-                                                            diskCapacity:100 * 1024 * 1024
-                                                                diskPath:nil];
-    [NSURLCache setSharedURLCache:sharedCache];
-    
-    /*
-     * AFNETWORKING
-     */
-    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
-#if DEBUG
-    [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
-    [[AFNetworkActivityLogger sharedLogger] startLogging];
-#else
-    [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelOff];
-#endif
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeConnection:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
-    
-    //Start monitor for Reachability
-    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
 }
 
 /**
@@ -256,8 +226,6 @@
         [center addObserver:self selector:@selector(stopRingtone) name:kJCPhoneManagerAnswerCallNotification object:_phoneManager];
     }
     
-    // Register the Phone.
-    [JCPhoneManager connectToLine:line completion:NULL];
     
     // Get Contacts. Once we have contacts, we subscribe to their presence, fetch voicemails trying
     // to link contacts to thier voicemail if in the pbx. Only fetch voicmails, and open sockets for
@@ -280,7 +248,8 @@
         }
     }];
     
-    
+    // Register the Phone.
+    [JCPhoneManager connectToLine:line completion:NULL];
 }
 
 #pragma mark - Notification Handlers -

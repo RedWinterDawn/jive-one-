@@ -90,7 +90,12 @@ NSString *const kJCBadgeManagerBatchConversationsKey = @"conversations";
     }
     
     NSString *key = recentEvent.objectID.URIRepresentation.absoluteString;
-    NSString *line = recentEvent.line.jrn;
+    Line *lineObject = recentEvent.line;
+    if (!lineObject) {
+        return;
+    }
+    
+    NSString *line = lineObject.jrn;
     if (!line || line.length == 0) {
         return;
     }

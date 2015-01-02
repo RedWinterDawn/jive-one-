@@ -48,7 +48,6 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     Line *_line;
     PortSIPSDK *_mPortSIPSDK;
     CompletionHandler _connectionCompletionHandler;
-    AFNetworkReachabilityStatus _previousNetworkStatus;
 	VideoViewController *_videoController;
 	bool inConference;
 	bool autoAnswer;
@@ -82,10 +81,6 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 		
 		_videoController = [VideoViewController new];
         
-        // Register to listen for AFNetworkReachability Changes.
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(networkConnectivityChanged:) name:AFNetworkingReachabilityDidChangeNotification  object:nil];
-        _previousNetworkStatus = [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
-        
         [self connect:NULL];
     }
     return self;
@@ -104,6 +99,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     @try {
         NSLog(@"Connecting");
         
+        if ([JCAppSettings sharedSettings].isWifiOnly) {
+            [self login];
+        }
         [self login];
         _initialized = true;
     }
@@ -251,34 +249,6 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     }
 };
 
-#pragma mark NetworkConnectivity
-
--(void)networkConnectivityChanged:(NSNotification *)notification
-{
-    NSDictionary *userInfo = notification.userInfo;
-    AFNetworkReachabilityStatus status = (AFNetworkReachabilityStatus)((NSNumber *)[userInfo valueForKey:AFNetworkingReachabilityNotificationStatusItem]).integerValue;
-    NSLog(@"AFNetworking status change");
-    
-    if (_previousNetworkStatus == AFNetworkReachabilityStatusUnknown)
-        _previousNetworkStatus = status;
-    
-    switch (status)
-    {
-        case AFNetworkReachabilityStatusNotReachable:
-            break;
-        case AFNetworkReachabilityStatusReachableViaWiFi: {
-            
-            // If we are not transitioning from cellular to wifi, reconnect
-            if (_previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWWAN && _previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWiFi)
-                [self connect:NULL];
-            break;
-        }
-        default:
-            [self connect:NULL];
-            break;
-    }
-    _previousNetworkStatus = status;
-}
 
 #pragma mark Backgrounding
 

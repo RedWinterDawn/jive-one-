@@ -26,10 +26,10 @@
         
         // if not live central manager and peripheral manager
         NSArray *centralManagerIdentifiers = launchOptions[UIApplicationLaunchOptionsBluetoothCentralsKey];
-        NSLog(@"CENTRAL: restore identifiers count :%lu",(unsigned long)centralManagerIdentifiers.count);
+//        NSLog(@"CENTRAL: restore identifiers count :%lu",(unsigned long)centralManagerIdentifiers.count);
         
         NSArray *peripheralManagerIdentifiers = launchOptions[UIApplicationLaunchOptionsBluetoothPeripheralsKey];
-        NSLog(@"PERIPHERAL: restore identifiers count :%lu",(unsigned long)peripheralManagerIdentifiers.count);
+//        NSLog(@"PERIPHERAL: restore identifiers count :%lu",(unsigned long)peripheralManagerIdentifiers.count);
     }
     return self;
 }
@@ -86,7 +86,7 @@
  */
 - (void)myInterruptionSelector:(NSNotification *)notification {
     
-    NSLog(@"Audio Session Interuption %@", [notification.userInfo description]);
+//    NSLog(@"Audio Session Interuption %@", [notification.userInfo description]);
     
     AVAudioSessionRouteDescription *currentRoute = [[AVAudioSession sharedInstance] currentRoute];
     NSArray *inputsForRoute = currentRoute.inputs;
@@ -102,7 +102,7 @@
  */
 - (void)audioSessionRouteChangeSelector:(NSNotification*)notification {
     
-    NSLog(@"Audio Session Route Changed %@", [notification.userInfo description]);
+//    NSLog(@"Audio Session Route Changed %@", [notification.userInfo description]);
     
     AVAudioSessionRouteDescription *currentRoute = [[AVAudioSession sharedInstance] currentRoute];
     NSArray *inputsForRoute = currentRoute.inputs;

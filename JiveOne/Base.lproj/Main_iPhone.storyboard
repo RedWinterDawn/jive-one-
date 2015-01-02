@@ -515,6 +515,61 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="q6R-MT-yoy">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="WIfi Only" tableViewCell="q6R-MT-yoy" id="sIj-sl-FP4">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MGe-0z-lyW">
+                                                    <rect key="frame" x="255" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="toggleWifiOnly:" destination="BBd-7J-jmI" eventType="valueChanged" id="oTN-yv-N3d"/>
+                                                    </connections>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Calls Only Over Wifi" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aJW-Bp-S2E">
+                                                    <rect key="frame" x="14" y="11" width="153" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="tkM-st-Ca2">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tkM-st-Ca2" id="rkB-WG-dWQ">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Allow Intercom:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="unk-sI-EzS">
+                                                    <rect key="frame" x="15" y="12" width="113" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="19.5" id="5uK-2H-qqt"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="hWN-sv-srO">
+                                                    <rect key="frame" x="254" y="7" width="51" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="31" id="N3O-Eo-0Sy"/>
+                                                        <constraint firstAttribute="width" constant="49" id="OpU-NI-MpM"/>
+                                                    </constraints>
+                                                    <connections>
+                                                        <action selector="toggleIntercomeEnabled:" destination="BBd-7J-jmI" eventType="valueChanged" id="tU9-h4-A7H"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="hWN-sv-srO" secondAttribute="trailing" constant="9" id="Ct0-v6-L0O"/>
+                                                <constraint firstItem="unk-sI-EzS" firstAttribute="leading" secondItem="rkB-WG-dWQ" secondAttribute="leadingMargin" constant="7" id="Soh-4o-D1X"/>
+                                                <constraint firstItem="unk-sI-EzS" firstAttribute="top" secondItem="rkB-WG-dWQ" secondAttribute="topMargin" constant="4" id="YdP-U2-EfH"/>
+                                                <constraint firstItem="hWN-sv-srO" firstAttribute="top" secondItem="rkB-WG-dWQ" secondAttribute="topMargin" constant="-1" id="eyO-Us-zn5"/>
+                                                <constraint firstItem="hWN-sv-srO" firstAttribute="leading" secondItem="unk-sI-EzS" secondAttribute="trailing" constant="126" id="sOk-PY-tCx"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Account" id="bw0-5L-SgE">
@@ -581,40 +636,6 @@
                                         <connections>
                                             <segue destination="fPm-Id-TEE" kind="push" id="mgf-k5-F7u"/>
                                         </connections>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="tkM-st-Ca2">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tkM-st-Ca2" id="rkB-WG-dWQ">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Allow Intercom:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="unk-sI-EzS">
-                                                    <rect key="frame" x="15" y="12" width="113" height="20"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="19.5" id="5uK-2H-qqt"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="hWN-sv-srO">
-                                                    <rect key="frame" x="254" y="7" width="51" height="31"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="31" id="N3O-Eo-0Sy"/>
-                                                        <constraint firstAttribute="width" constant="49" id="OpU-NI-MpM"/>
-                                                    </constraints>
-                                                    <connections>
-                                                        <action selector="toggleIntercomeEnabled:" destination="BBd-7J-jmI" eventType="valueChanged" id="7Oo-62-IhT"/>
-                                                    </connections>
-                                                </switch>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="hWN-sv-srO" secondAttribute="trailing" constant="9" id="Ct0-v6-L0O"/>
-                                                <constraint firstItem="unk-sI-EzS" firstAttribute="leading" secondItem="rkB-WG-dWQ" secondAttribute="leadingMargin" constant="7" id="Soh-4o-D1X"/>
-                                                <constraint firstItem="unk-sI-EzS" firstAttribute="top" secondItem="rkB-WG-dWQ" secondAttribute="topMargin" constant="4" id="YdP-U2-EfH"/>
-                                                <constraint firstItem="hWN-sv-srO" firstAttribute="top" secondItem="rkB-WG-dWQ" secondAttribute="topMargin" constant="-1" id="eyO-Us-zn5"/>
-                                                <constraint firstItem="hWN-sv-srO" firstAttribute="leading" secondItem="unk-sI-EzS" secondAttribute="trailing" constant="126" id="sOk-PY-tCx"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="SOB-aA-7Rz" style="IBUITableViewCellStyleDefault" id="daE-uY-xBH">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -702,6 +723,7 @@
                         <outlet property="intercomEnabled" destination="hWN-sv-srO" id="OTb-5s-RLd"/>
                         <outlet property="pbxLabel" destination="7RL-so-6fF" id="3ZT-DO-Ldn"/>
                         <outlet property="userNameLabel" destination="Ha4-sQ-nx4" id="T5D-Dz-uVO"/>
+                        <outlet property="wifiOnly" destination="MGe-0z-lyW" id="jbZ-I2-fC7"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wYg-P0-wSv" userLabel="First Responder" sceneMemberID="firstResponder"/>
