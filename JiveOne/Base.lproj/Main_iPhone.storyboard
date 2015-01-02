@@ -2542,13 +2542,26 @@
                                     <outletCollection property="gestureRecognizers" destination="9YZ-qe-5Z7" appends="YES" id="cye-6U-PNK"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3FV-p4-tnZ" userLabel="Dial Button">
+                                <rect key="frame" x="131" y="298" width="58" height="58"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="3FV-p4-tnZ" secondAttribute="height" multiplier="1:1" id="iRA-pi-2Nk"/>
+                                </constraints>
+                                <state key="normal" image="dialer-callButton-green">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="disabled" image="gray-callbutton"/>
+                                <connections>
+                                    <action selector="initiateCall:" destination="3A8-R9-IcP" eventType="touchUpInside" id="CI4-Nv-yH0"/>
+                                </connections>
+                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="meF-1G-p2k" userLabel="Keypad">
-                                <rect key="frame" x="0.0" y="77" width="320" height="213"/>
+                                <rect key="frame" x="25" y="50" width="270" height="246"/>
                                 <subviews>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nsS-HF-huE">
                                         <rect key="frame" x="0.0" y="0.0" width="107" height="53"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="nsS-HF-huE" secondAttribute="height" multiplier="2:1" id="POJ-Wh-2w9"/>
+                                            <constraint firstAttribute="width" secondItem="nsS-HF-huE" secondAttribute="height" multiplier="1:1" id="POJ-Wh-2w9"/>
                                         </constraints>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
                                         <state key="normal">
