@@ -48,7 +48,8 @@ typedef enum : NSUInteger {
     JCV4ProvisioningUnknownProvisioningError = 0,
     JCV4ProvisioningInvalidRequestParametersError,
     JCV4ProvisioningRequestResponseError,
-    JCV4ProvisioningResponseParseError
+    JCV4ProvisioningResponseParseError,
+    JCV4ProvisioningResponseCoreDataError,
 } JCV4ProvisioningErrorType;
 
 @interface JCV4ProvisioningError : NSError
