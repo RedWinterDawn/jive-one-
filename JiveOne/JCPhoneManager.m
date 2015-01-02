@@ -80,7 +80,6 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
         
         // Register for app notifications
         _previousNetworkStatus = [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
-        [[AFNetworkReachabilityManager sharedManager] startMonitoring];
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         [center addObserver:self selector:@selector(networkConnectivityChanged:) name:AFNetworkingReachabilityDidChangeNotification object:nil];
         [center addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -113,6 +112,7 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
         return;
     }
     
+    _line = line;
     AFNetworkReachabilityStatus status = [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
     if (status == AFNetworkReachabilityStatusReachableViaWWAN || status == AFNetworkReachabilityStatusReachableViaWiFi) {
         if ([JCAppSettings sharedSettings].isWifiOnly && status == AFNetworkReachabilityStatusReachableViaWWAN)
@@ -393,8 +393,6 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
     if (_sipHandler && _line != line) {
         [self disconnect];
     }
-    
-    _line = line;
     _sipHandler = [[SipHandler alloc] initWithLine:line delegate:self];
 }
 
