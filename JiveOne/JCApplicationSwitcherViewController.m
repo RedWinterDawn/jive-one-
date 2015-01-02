@@ -179,6 +179,9 @@
 
 -(IBAction)showMenu:(id)sender
 {
+    if (!_selectedViewController) {
+        return;
+    }
     if (_showingMenu) {
         [self hideMenuAnimated:YES];
     }

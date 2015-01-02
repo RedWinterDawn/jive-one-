@@ -10,7 +10,7 @@
         <!--Application Switcher View Controller-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
-                <tabBarController storyboardIdentifier="AppSwitcherViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="49e-Tb-3d3" customClass="JCApplicationSwitcherViewController" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="AppSwitcherViewController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="49e-Tb-3d3" customClass="JCApplicationSwitcherViewController" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
@@ -2408,16 +2408,16 @@
         <!--Dialer-->
         <scene sceneID="GNC-gS-V56">
             <objects>
-                <viewController autoresizesArchivedViewToFullSize="NO" automaticallyAdjustsScrollViewInsets="NO" id="3A8-R9-IcP" userLabel="Dialer" customClass="JCDialerViewController" sceneMemberID="viewController">
+                <viewController autoresizesArchivedViewToFullSize="NO" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="3A8-R9-IcP" userLabel="Dialer" customClass="JCDialerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="iWl-PB-GRi"/>
                         <viewControllerLayoutGuide type="bottom" id="D7Y-Ur-CEJ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Rfg-zK-3ym">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0XG-qH-giP" customClass="JCDialStringLabel">
+                            <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0XG-qH-giP" customClass="JCDialStringLabel">
                                 <rect key="frame" x="50" y="27" width="220" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="J3N-Vb-lVj"/>
@@ -2430,7 +2430,7 @@
                                     <outlet property="delegate" destination="3A8-R9-IcP" id="3qR-WB-EA9"/>
                                 </connections>
                             </label>
-                            <button opaque="NO" contentMode="center" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="igS-G2-NfM" userLabel="DeleteButton">
+                            <button opaque="NO" contentMode="center" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="igS-G2-NfM" userLabel="DeleteButton">
                                 <rect key="frame" x="270" y="27" width="50" height="50"/>
                                 <gestureRecognizers/>
                                 <constraints>
@@ -2445,10 +2445,10 @@
                                     <outletCollection property="gestureRecognizers" destination="9YZ-qe-5Z7" appends="YES" id="cye-6U-PNK"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="meF-1G-p2k" userLabel="Keypad">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="meF-1G-p2k" userLabel="Keypad">
                                 <rect key="frame" x="0.0" y="77" width="320" height="213"/>
                                 <subviews>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nsS-HF-huE">
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nsS-HF-huE">
                                         <rect key="frame" x="0.0" y="0.0" width="107" height="53"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="nsS-HF-huE" secondAttribute="height" multiplier="2:1" id="POJ-Wh-2w9"/>
@@ -4965,10 +4965,10 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="u61-Zl-F4Y"/>
+        <segue reference="x1v-U1-NC6"/>
+        <segue reference="qaE-xG-axE"/>
         <segue reference="Uqi-bD-GAX"/>
         <segue reference="Tth-R2-xu6"/>
-        <segue reference="x1v-U1-NC6"/>
         <segue reference="2yK-HA-Lah"/>
         <segue reference="UvZ-f2-OIn"/>
     </inferredMetricsTieBreakers>
