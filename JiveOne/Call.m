@@ -7,6 +7,7 @@
 //
 
 #import "Call.h"
+#import "Contact.h"
 
 NSString *const kCallEntityName = @"Call";
 
@@ -31,6 +32,9 @@ NSString *const kCallEntityName = @"Call";
         call.read = read;
         call.line = localLine;
         
+        if (session.contact) {
+            call.contact = (Contact *)[localContext objectWithID:session.contact.objectID];
+        }
     } completion:^(BOOL success, NSError *error) {
         if (error) {
             NSLog(@"%@ Call Event Insert Error:%@", entityName, [error description]);

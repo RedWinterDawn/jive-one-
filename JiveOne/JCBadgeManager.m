@@ -12,7 +12,6 @@
 #import "RecentEvent.h"
 #import "MissedCall.h"
 #import "Voicemail.h"
-#import "Conversation.h"
 
 #import "JCBadgeManagerBatchOperation.h"
 

@@ -12,6 +12,7 @@
 
 @class PBX;
 @class ContactGroup;
+@class RecentEvent;
 
 @interface Contact : Person
 
@@ -20,6 +21,7 @@
 @property (nonatomic, getter=isFavorite) BOOL favorite;
 
 // Relationships
+@property (nonatomic, strong) NSSet *events;
 @property (nonatomic, retain) NSSet *groups;
 @property (nonatomic, retain) PBX *pbx;
 
@@ -31,5 +33,10 @@
 - (void)removeGroupsObject:(ContactGroup *)value;
 - (void)addGroups:(NSSet *)values;
 - (void)removeGroups:(NSSet *)values;
+
+- (void)addEventsObject:(RecentEvent *)value;
+- (void)removeEventsObject:(RecentEvent *)value;
+- (void)addEvents:(NSSet *)values;
+- (void)removeEvents:(NSSet *)values;
 
 @end

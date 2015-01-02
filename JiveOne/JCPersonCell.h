@@ -6,17 +6,13 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-@import UIKit;
-
-#import "JCPresenceView.h"
+#import "JCPresenceCell.h"
 #import "Person.h"
 
-@interface JCPersonCell : UITableViewCell
+@interface JCPersonCell : JCPresenceCell
 
-@property (nonatomic, weak) IBOutlet UILabel *personNameLabel;
-@property (nonatomic, weak) IBOutlet UILabel *personDetailLabel;
-
-@property (nonatomic, weak) IBOutlet JCPresenceView *personPresenceView;
+@property (nonatomic, weak) IBOutlet UILabel *textLabel;
+@property (nonatomic, weak) IBOutlet UILabel *detailTextLabel;
 
 @property (nonatomic) Person *person;
 

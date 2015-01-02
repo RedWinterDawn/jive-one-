@@ -11,7 +11,6 @@
 
 #import "User.h"
 #import "PBX+Custom.h"
-#import "Membership+Custom.h"
 #import "Lines+Custom.h"
 #import "Voicemail+Custom.h"
 
@@ -108,11 +107,14 @@ NSString *const kV5BaseUrl = @"https://api.jive.com/";
 	
 	NSString *sessionURL = @"https://realtime.jive.com/session";
 	
-	[_manager POST:sessionURL parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-		completed(YES, responseObject, operation, nil);
-	} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-		completed(NO, nil, operation, error);
-	}];
+	[_manager POST:sessionURL
+        parameters:params
+           success:^(AFHTTPRequestOperation *operation, id responseObject) {
+               completed(YES, responseObject, operation, nil);
+           }
+           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+               completed(NO, nil, operation, error);
+           }];
 }
 
 //update voicemail to read

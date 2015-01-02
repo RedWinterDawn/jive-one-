@@ -10,7 +10,7 @@
         <!--Application Switcher View Controller-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
-                <tabBarController storyboardIdentifier="AppSwitcherViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="49e-Tb-3d3" customClass="JCApplicationSwitcherViewController" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="AppSwitcherViewController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="49e-Tb-3d3" customClass="JCApplicationSwitcherViewController" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
@@ -1629,14 +1629,6 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Imk-Vj-t20" customClass="JCPresenceView">
-                                                    <rect key="frame" x="10" y="11" width="15" height="15"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="15" id="6Qr-Ov-pST"/>
-                                                        <constraint firstAttribute="width" constant="15" id="cYC-3h-wXN"/>
-                                                    </constraints>
-                                                </view>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TBH-my-sze">
                                                     <rect key="frame" x="33" y="30" width="222" height="21"/>
                                                     <constraints>
@@ -1664,13 +1656,11 @@
                                                 <constraint firstItem="TBH-my-sze" firstAttribute="leading" secondItem="zaA-J6-Ptg" secondAttribute="leading" constant="33" id="2iT-Sz-f5y"/>
                                                 <constraint firstItem="fpX-p1-9pC" firstAttribute="leading" secondItem="Kbp-js-aK1" secondAttribute="trailing" constant="5" id="8gj-FC-Xf4"/>
                                                 <constraint firstItem="Kbp-js-aK1" firstAttribute="top" secondItem="zaA-J6-Ptg" secondAttribute="top" constant="8" id="Dgh-1B-rel"/>
-                                                <constraint firstItem="Imk-Vj-t20" firstAttribute="leading" secondItem="zaA-J6-Ptg" secondAttribute="leading" constant="10" id="Hdo-nH-lbG"/>
                                                 <constraint firstAttribute="bottom" secondItem="TBH-my-sze" secondAttribute="bottom" constant="9" id="TWD-PF-1K8"/>
-                                                <constraint firstItem="Kbp-js-aK1" firstAttribute="leading" secondItem="Imk-Vj-t20" secondAttribute="trailing" constant="8" id="gyx-1R-Gmh"/>
+                                                <constraint firstItem="Kbp-js-aK1" firstAttribute="leading" secondItem="zaA-J6-Ptg" secondAttribute="leading" constant="33" id="efj-B9-xb1"/>
                                                 <constraint firstItem="fpX-p1-9pC" firstAttribute="top" secondItem="zaA-J6-Ptg" secondAttribute="top" constant="8" id="iZU-NY-hnG"/>
                                                 <constraint firstAttribute="trailing" secondItem="fpX-p1-9pC" secondAttribute="trailing" constant="16" id="oEU-JV-YS4"/>
                                                 <constraint firstItem="fpX-p1-9pC" firstAttribute="leading" secondItem="TBH-my-sze" secondAttribute="trailing" constant="5" id="vm5-F6-sHW"/>
-                                                <constraint firstItem="Imk-Vj-t20" firstAttribute="top" secondItem="zaA-J6-Ptg" secondAttribute="top" constant="11" id="yCd-DM-isv"/>
                                             </constraints>
                                         </view>
                                     </subviews>
@@ -1682,10 +1672,9 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="detailTextLabel" destination="TBH-my-sze" id="gha-fH-ZXa"/>
                                     <outlet property="favoriteBtn" destination="fpX-p1-9pC" id="cLy-hW-fmr"/>
-                                    <outlet property="personDetailLabel" destination="TBH-my-sze" id="ESN-Lz-BaH"/>
-                                    <outlet property="personNameLabel" destination="Kbp-js-aK1" id="TD4-a1-U0E"/>
-                                    <outlet property="personPresenceView" destination="Imk-Vj-t20" id="ikn-7G-qxK"/>
+                                    <outlet property="textLabel" destination="Kbp-js-aK1" id="syq-O4-PNr"/>
                                     <segue destination="ph3-lT-GBI" kind="modal" identifier="ContactsClickToCall" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" animates="NO" id="voi-Tt-SuU"/>
                                 </connections>
                             </tableViewCell>
@@ -1707,14 +1696,6 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IJp-7B-E4i" customClass="JCPresenceView">
-                                                    <rect key="frame" x="10" y="11" width="15" height="15"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="15" id="ZB0-jz-yYB"/>
-                                                        <constraint firstAttribute="height" constant="15" id="fIn-g1-HCz"/>
-                                                    </constraints>
-                                                </view>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tpx-qk-Eby">
                                                     <rect key="frame" x="33" y="30" width="222" height="21"/>
                                                     <constraints>
@@ -1724,31 +1705,15 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WMY-2m-tJl">
-                                                    <rect key="frame" x="260" y="8" width="44" height="45"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="44" id="3Sc-zh-Ly1"/>
-                                                        <constraint firstAttribute="height" constant="45" id="tKl-6E-6p9"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                                    <state key="normal" title="★"/>
-                                                    <connections>
-                                                        <action selector="toggleFavoriteStatus:" destination="2td-vl-Ngo" eventType="touchUpInside" id="DJu-Hw-00M"/>
-                                                    </connections>
-                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="tpx-qk-Eby" secondAttribute="bottom" constant="9" id="0cV-Xk-40U"/>
                                                 <constraint firstItem="tpx-qk-Eby" firstAttribute="leading" secondItem="asI-jE-Iz6" secondAttribute="leading" constant="33" id="4Ph-Xd-sDa"/>
-                                                <constraint firstItem="WMY-2m-tJl" firstAttribute="top" secondItem="asI-jE-Iz6" secondAttribute="top" constant="8" id="IZo-MD-EUJ"/>
-                                                <constraint firstAttribute="trailing" secondItem="WMY-2m-tJl" secondAttribute="trailing" constant="16" id="Mlx-u2-JWC"/>
-                                                <constraint firstItem="OwV-S4-lMz" firstAttribute="leading" secondItem="IJp-7B-E4i" secondAttribute="trailing" constant="8" id="Vbi-AP-tCd"/>
-                                                <constraint firstItem="WMY-2m-tJl" firstAttribute="leading" secondItem="OwV-S4-lMz" secondAttribute="trailing" constant="5" id="frP-xD-aCi"/>
-                                                <constraint firstItem="IJp-7B-E4i" firstAttribute="top" secondItem="asI-jE-Iz6" secondAttribute="top" constant="11" id="jK3-Wf-nGA"/>
+                                                <constraint firstAttribute="trailing" secondItem="OwV-S4-lMz" secondAttribute="trailing" constant="65" id="JCo-Rj-VF4"/>
+                                                <constraint firstItem="OwV-S4-lMz" firstAttribute="leading" secondItem="asI-jE-Iz6" secondAttribute="leading" constant="33" id="UB7-BE-xDv"/>
+                                                <constraint firstAttribute="trailing" secondItem="tpx-qk-Eby" secondAttribute="trailing" constant="65" id="ZcD-9n-l2F"/>
                                                 <constraint firstItem="OwV-S4-lMz" firstAttribute="top" secondItem="asI-jE-Iz6" secondAttribute="top" constant="8" id="mg7-bq-0jN"/>
-                                                <constraint firstItem="IJp-7B-E4i" firstAttribute="leading" secondItem="asI-jE-Iz6" secondAttribute="leading" constant="10" id="pM2-Ow-geZ"/>
-                                                <constraint firstItem="WMY-2m-tJl" firstAttribute="leading" secondItem="tpx-qk-Eby" secondAttribute="trailing" constant="5" id="tU7-xH-owP"/>
                                             </constraints>
                                         </view>
                                     </subviews>
@@ -1760,9 +1725,8 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="personDetailLabel" destination="tpx-qk-Eby" id="e1r-YE-xu7"/>
-                                    <outlet property="personNameLabel" destination="OwV-S4-lMz" id="Pah-dt-rU8"/>
-                                    <outlet property="personPresenceView" destination="IJp-7B-E4i" id="Ovr-b6-Pck"/>
+                                    <outlet property="detailTextLabel" destination="tpx-qk-Eby" id="P1K-Fd-tuj"/>
+                                    <outlet property="textLabel" destination="OwV-S4-lMz" id="b62-25-I87"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -2466,13 +2430,13 @@
         <!--Dialer-->
         <scene sceneID="GNC-gS-V56">
             <objects>
-                <viewController autoresizesArchivedViewToFullSize="NO" automaticallyAdjustsScrollViewInsets="NO" id="3A8-R9-IcP" userLabel="Dialer" customClass="JCDialerViewController" sceneMemberID="viewController">
+                <viewController autoresizesArchivedViewToFullSize="NO" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="3A8-R9-IcP" userLabel="Dialer" customClass="JCDialerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="iWl-PB-GRi"/>
                         <viewControllerLayoutGuide type="bottom" id="D7Y-Ur-CEJ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Rfg-zK-3ym">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0XG-qH-giP" customClass="JCDialStringLabel">
@@ -5025,10 +4989,10 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="u61-Zl-F4Y"/>
+        <segue reference="x1v-U1-NC6"/>
+        <segue reference="qaE-xG-axE"/>
         <segue reference="Uqi-bD-GAX"/>
         <segue reference="Tth-R2-xu6"/>
-        <segue reference="x1v-U1-NC6"/>
         <segue reference="2yK-HA-Lah"/>
         <segue reference="UvZ-f2-OIn"/>
     </inferredMetricsTieBreakers>

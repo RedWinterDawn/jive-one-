@@ -8,6 +8,7 @@
 
 #import "Voicemail+Custom.h"
 #import "PBX.h"
+#import "Contact+Custom.h"
 
 NSString *const kVoicemailResponseIdentifierKey         = @"jrn";
 NSString *const kVoicemailResponseDurationKey           = @"duration";
@@ -106,6 +107,7 @@ NSString *const kVoicemailResponseSelfMailboxKey        = @"self_mailbox";
     voicemail.url_changeStatus  = [data stringValueForKey:kVoicemailResponseSelfChangeStatusKey];
     voicemail.mailboxUrl        = [data stringValueForKey:kVoicemailResponseSelfMailboxKey];
     voicemail.unixTimestamp     = [data integerValueForKey:kVoicemailResponseTimestampKey];
+    voicemail.contact           = [Contact contactForExtension:voicemail.number pbx:line.pbx];
     
     // Removing. Should not be used as is without fixing the concurrency problems.
     if (!voicemail.data) {

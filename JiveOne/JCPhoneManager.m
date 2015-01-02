@@ -23,7 +23,7 @@
 
 // Categories
 #import "UIDevice+Custom.h"
-#import "Contact.h"
+#import "Contact+Custom.h"
 #import "UIViewController+HUD.h"
 
 NSString *const kJCPhoneManager911String = @"911";
@@ -439,9 +439,16 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
         return;
     }
     
-    JCLineSession *session = [_sipHandler makeCall:dialNumber videoCall:NO contactName:[self getContactNameByNumber:dialNumber]];
+    NSString *callerId = dialNumber;
+    Contact *contact = [Contact contactForExtension:dialNumber pbx:_line.pbx];
+    if (contact) {
+        callerId = contact.extension;
+    }
+    
+    JCLineSession *session = [_sipHandler makeCall:dialNumber videoCall:NO contactName:callerId];
     if (session.isActive)
     {
+        session.contact = contact;
         JCCallCard *transferedCall = self.calls.lastObject;
         JCCallCard *callCard = [[JCCallCard alloc] initWithLineSession:session];
         callCard.delegate = self;
@@ -533,16 +540,6 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
             return callCard;
         }
     }
-    return nil;
-}
-
--(NSString *)getContactNameByNumber:(NSString *)number
-{
-    Contact *contact = [Contact MR_findFirstByAttribute:@"extension" withValue:number];
-    if (contact) {
-        return contact.name;
-    }
-    
     return nil;
 }
 
@@ -874,6 +871,7 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
 -(void)addLineSession:(JCLineSession *)session
 {
     JCCallCard *callCard = [[JCCallCard alloc] initWithLineSession:session];
+    session.contact = [Contact contactForExtension:session.callDetail pbx:_line.pbx];
     callCard.delegate = self;
     [self addCall:callCard];
 }

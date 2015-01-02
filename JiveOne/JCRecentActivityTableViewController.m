@@ -17,6 +17,8 @@
 #import "Call.h"
 #import "Voicemail.h"
 
+#import "JCPresenceManager.h"
+
 NSString *const kJCHistoryCellReuseIdentifier = @"HistoryCell";
 NSString *const kJCVoicemailCellReuseIdentifier = @"VoicemailCell";
 
@@ -25,6 +27,15 @@ NSString *const kJCVoicemailCellReuseIdentifier = @"VoicemailCell";
 @end
 
 @implementation JCRecentActivityTableViewController
+
+-(instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTable:) name:kJCPresenceManagerLinesChangedNotification object:[JCPresenceManager sharedManager]];
+    }
+    return self;
+}
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -93,7 +104,15 @@ NSString *const kJCVoicemailCellReuseIdentifier = @"VoicemailCell";
     }
 }
 
+#pragma mark - Notification Handlers -
+         
+- (void)reloadTable:(NSNotification *)notification
+{
+    [self.tableView reloadData];
+}
 
+#pragma mark - Delegate Handlers -
+         
 #pragma mark Caller View Controller Delegate
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

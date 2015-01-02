@@ -16,7 +16,6 @@
     #import <AFNetworking/AFNetworking.h>
     #import "Constants.h"
     #import "CoreData+MagicalRecord.h"
-    #import "JCOmniPresence.h"
     #import "NotificationView.h"
     #import "JCAuthenticationManager.h"
     #import "Flurry.h"
@@ -25,3 +24,6 @@
 #import "NSString+Custom.h"
 #import "NSDictionary+Validations.h"
 #import "UIDevice+Custom.h"
+
+typedef void(^CompletionHandler)(BOOL success, NSError *error);
+typedef void(^ResultCompletionHandler)(BOOL success, NSError *error, NSDictionary *userInfo);

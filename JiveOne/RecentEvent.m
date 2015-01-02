@@ -8,6 +8,7 @@
 
 #import "RecentEvent.h"
 #import "Common.h"
+#import "Contact.h"
 
 #import "NSManagedObject+JCCoreDataAdditions.h"
 
@@ -60,6 +61,10 @@ NSString *const kRecentEventReadKey = @"read";
 
 -(NSString *)displayName
 {
+    if (self.contact) {
+        return self.contact.name;
+    }
+    
     NSString *name = [self.name stringByReplacingOccurrencesOfString:@"\"" withString:@""];
     if ([name isEqualToString:@"*99"]) {
         return NSLocalizedString(@"Voicemail", nil);
@@ -69,9 +74,8 @@ NSString *const kRecentEventReadKey = @"read";
 
 -(NSString *)displayNumber
 {
-    if ([self.displayName isEqualToString:self.number])
-    {
-        return nil;
+    if (self.contact) {
+        return self.contact.extension;
     }
     return self.number;
 }
@@ -82,5 +86,6 @@ NSString *const kRecentEventReadKey = @"read";
 }
 
 @dynamic line;
+@dynamic contact;
 
 @end

@@ -10,6 +10,7 @@
 #import <CoreData/CoreData.h>
 
 @class Line;
+@class Contact;
 
 @interface RecentEvent : NSManagedObject
 
@@ -29,5 +30,6 @@
 
 // Relationships
 @property (nonatomic, retain) Line *line;
+@property (nonatomic, retain) Contact *contact;
 
 @end

@@ -59,6 +59,14 @@
 #pragma mark - Constants
 #define kCoreDataDatabase   @"MyJiveDatabase.sqlite"
 
+#define DEFAULT_PRESENCE_AVAILABLE_COLOR       [UIColor colorWithRed:129.0/255.0 green:205.0/255.0 blue:0.0/255.0 alpha:1]
+#define DEFAULT_PRESENCE_AWAY_COLOR            [UIColor colorWithRed:233.0/255.0 green:195.0/255.0 blue:0.0/255.0 alpha:1]
+#define DEFAULT_PRESENCE_BUSY_COLOR            [UIColor colorWithRed:233.0/255.0 green:195.0/255.0 blue:0.0/255.0 alpha:1]
+#define DEFAULT_PRESENCE_DO_NOT_DISTURB_COLOR  [UIColor colorWithRed:233.0/255.0 green:0.0/255.0 blue:19.0/255.0 alpha:1]
+#define DEFAULT_PRESENCE_OFFLINE_COLOR         [UIColor colorWithRed:186.0/255.0 green:186.0/255.0 blue:186.0/255.0 alpha:1]
+#define DEFAULT_PRESENCE_COLOR                 [UIColor colorWithRed:129.0/255.0 green:205.0/255.0 blue:0.0/255.0 alpha:1]
+#define DEFAULT_PRESENCE_BASE_COLOR            [UIColor colorWithRed:0.42 green:0.49 blue:0.239 alpha:0.8]
+
 #pragma mark - KVO Constants
 #define kPresenceKeyPathForClientEntity     @"entityPresence"
 #define kPresenceKeyPathForLineEntity       @"state"
@@ -100,15 +108,7 @@
 
 
 
-typedef enum {
-    JCPresenceTypeOffline       = 0,
-    JCPresenceTypeAvailable     = 1,
-    JCPresenceTypeBusy          = 9,
-    JCPresenceTypeInvisible     = 4,
-    JCPresenceTypeDoNotDisturb  = 2,
-    JCPresenceTypeAway          = 7,
-    JCPresenceTypeNone          = -1
-} JCPresenceType;
+
 
 typedef enum {
     JCExistingConversation,

@@ -12,8 +12,6 @@
 #import "JCContactCell.h"
 #import "JCLineCell.h"
 
-#import "JasmineSocket.h"
-
 #import "Contact.h"
 #import "Line.h"
 #import "PBX.h"
@@ -37,15 +35,7 @@
     [super viewDidLoad];
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-//    [center addObserver:self selector:@selector(subscribeToLinePresence:) name:kSocketDidOpen object:[JasmineSocket sharedInstance]];
     [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:[JCAuthenticationManager sharedInstance]];
-    
-//    if ([JasmineSocket sharedInstance].socket.readyState == SR_OPEN) {
-//        [self subscribeToLinePresence:nil];
-//    }
-//    else {
-//        [[JasmineSocket sharedInstance] initSocket];
-//    }
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -148,34 +138,6 @@
 }
 
 #pragma mark - Notification handlers -
-
-#pragma mark Socket Events
-
-//- (void)subscribeToLinePresence:(NSNotification *)notification
-//{
-//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//        for (Line *line in [self.fetchedResultsController fetchedObjects]) {
-//            
-//            if (self.lineSubscription[line.jrn] && [self.lineSubscription[line.jrn] boolValue]) {
-//                continue;
-//            }
-//            
-//            [[JasmineSocket sharedInstance] postSubscriptionsToSocketWithId:line.jrn entity:line.jrn type:@"dialog"];
-//            [self.lineSubscription setObject:@YES forKey:line.jrn];
-//        }
-//    });
-//}
-//
-//- (NSMutableDictionary *)lineSubscription
-//{
-//    if (!lineSubcription) {
-//        lineSubcription = [[NSUserDefaults standardUserDefaults] objectForKey:@"lineSub"];
-//        if (!lineSubcription) {
-//            lineSubcription = [NSMutableDictionary new];
-//        }
-//    }
-//    return lineSubcription;
-//}
 
 #pragma mark JCAuthenticationManager
 

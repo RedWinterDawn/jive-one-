@@ -12,26 +12,19 @@
 @class Line;
 @class User;
 
-typedef void(^CompletionHandler)(BOOL success, NSError *error);
-
 @interface JCV5ApiClient : NSObject
 
 @property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
 
 + (instancetype)sharedClient;
 
-- (void) clearCookies;
-- (void) stopAllOperations;
-- (BOOL) isOperationRunning:(NSString *)operationName;
+- (void)clearCookies;
+- (void)stopAllOperations;
+- (BOOL)isOperationRunning:(NSString *)operationName;
 - (void)setRequestAuthHeader:(BOOL) demandsBearer;
-
-#pragma mark - Socket API Calls
-- (void)SubscribeToSocketEvents:(NSString *)subscriptionURL dataDictionary:(NSDictionary *)dataDictionary;
-- (void) RequestSocketSession:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed;
 
 - (void)updateVoicemailToRead:(Voicemail*)voicemail completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed;
 - (void)deleteVoicemail:(NSString *)url completed:(void (^)(BOOL succeeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed;
-
 
 @end
 
