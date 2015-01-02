@@ -25,10 +25,10 @@
     if (self) {
         
         // if not live central manager and peripheral manager
-        NSArray *centralManagerIdentifiers = launchOptions[UIApplicationLaunchOptionsBluetoothCentralsKey];
+        //NSArray *centralManagerIdentifiers = launchOptions[UIApplicationLaunchOptionsBluetoothCentralsKey];
 //        NSLog(@"CENTRAL: restore identifiers count :%lu",(unsigned long)centralManagerIdentifiers.count);
         
-        NSArray *peripheralManagerIdentifiers = launchOptions[UIApplicationLaunchOptionsBluetoothPeripheralsKey];
+        //NSArray *peripheralManagerIdentifiers = launchOptions[UIApplicationLaunchOptionsBluetoothPeripheralsKey];
 //        NSLog(@"PERIPHERAL: restore identifiers count :%lu",(unsigned long)peripheralManagerIdentifiers.count);
     }
     return self;

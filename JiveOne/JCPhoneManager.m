@@ -246,42 +246,6 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
     }
 }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-//    switch (status)
-//    {
-//        case AFNetworkReachabilityStatusNotReachable:
-//            
-//            break;
-//            
-//        case AFNetworkReachabilityStatusReachableViaWiFi: {
-//            
-//            // If we are not transitioning from cellular to wifi, reconnect
-//            if (_previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWWAN && _previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWiFi)
-//                [self reconnectToLine:_line completion:NULL];
-//            else {
-//                [self connectToLine:_line completion:NULL];
-//            }
-//            break;
-//        }
-//        default:
-//            [self reconnectToLine:_line completion:NULL];
-//            break;
-//    }
-//    _previousNetworkStatus = status;
-//    
-//    // [self disconnect]; deregisters, and destroys the sip handler object.
-//    // [self reconnectToLine:_line completion:NULL];        // Primarily called from the phone dialer, if there is no connection (not connected, calls connect.)
-//    // [self connectToLine:_line completion:NULL]
-//}
-
 -(void)disconnect
 {
     NSLog(@"Disconnecting from sip Handler");
