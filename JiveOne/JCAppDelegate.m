@@ -255,16 +255,19 @@
         [center addObserver:self selector:@selector(stopRingtone) name:kJCPhoneManagerAnswerCallNotification object:_phoneManager];
     }
     
-    
-    
-    // Get Contacts
-    [Contact downloadContactsForLine:line complete:NULL];
-    
-    // Get Voicemails
-    [Voicemail downloadVoicemailsForLine:line complete:NULL];
-    
-    // Register the Phone.
-    [JCPhoneManager connectToLine:line completion:NULL];
+    dispatch_queue_t backgroundQueue = dispatch_queue_create("register_services_to_line", 0);
+    dispatch_async(backgroundQueue, ^{
+        Line *localLine = (Line *)[[NSManagedObjectContext MR_contextForCurrentThread] objectWithID:line.objectID];
+        
+        // Get Contacts
+        [Contact downloadContactsForLine:localLine complete:NULL];
+        
+        // Get Voicemails
+        [Voicemail downloadVoicemailsForLine:localLine complete:NULL];
+        
+        // Register the Phone.
+        [JCPhoneManager connectToLine:localLine completion:NULL];
+    });
 }
 
 #pragma mark - Notification Handlers -
