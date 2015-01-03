@@ -184,7 +184,7 @@
 		5D241FEA1A38C4CE008B498A /* JCLineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FE91A38C4CE008B498A /* JCLineCell.m */; };
 		5D2B2C081A30D8AE00938D76 /* JCVisualEffectsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2B2C051A30D8AE00938D76 /* JCVisualEffectsView.m */; };
 		5D2B2C091A30D8AE00938D76 /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2B2C071A30D8AE00938D76 /* FXBlurView.m */; };
-		5D2EDB7E1A3ADFAF0031F7AD /* Contact+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2EDB7D1A3ADFAF0031F7AD /* Contact+Custom.m */; };
+		5D2EDB7E1A3ADFAF0031F7AD /* Contact+V5Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2EDB7D1A3ADFAF0031F7AD /* Contact+V5Client.m */; };
 		5D2EDB811A3BA8250031F7AD /* JCDebugContactGroupsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2EDB801A3BA8250031F7AD /* JCDebugContactGroupsTableViewController.m */; };
 		5D2EDB841A3BAA800031F7AD /* JCDebugContactsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2EDB831A3BAA800031F7AD /* JCDebugContactsTableViewController.m */; };
 		5D2EDB871A3CEBE80031F7AD /* JCDebugUsersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2EDB861A3CEBE80031F7AD /* JCDebugUsersTableViewController.m */; };
@@ -264,7 +264,6 @@
 		F266162618B42AA0000B770A /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266162418B42AA0000B770A /* AddressBook.framework */; };
 		F266162718B42AA0000B770A /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266162518B42AA0000B770A /* AddressBookUI.framework */; };
 		F59AE2C9192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2BC192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png */; };
-		F814B0101A48E5140013CF0B /* JCStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = F814B00F1A48E5140013CF0B /* JCStyleKit.m */; };
 		F82A284119DDC55E00C3620D /* JCV4ProvisioningClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F82A284019DDC55E00C3620D /* JCV4ProvisioningClient.m */; };
 		F84A087919DF38C8003476E6 /* JCTransferConfirmationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F84A087819DF38C8003476E6 /* JCTransferConfirmationViewController.m */; };
 		F85DAD0919EF07D30075AAA2 /* JCCallHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F85DAD0819EF07D30075AAA2 /* JCCallHistoryViewController.m */; };
@@ -550,8 +549,8 @@
 		5D2B2C051A30D8AE00938D76 /* JCVisualEffectsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVisualEffectsView.m; sourceTree = "<group>"; };
 		5D2B2C061A30D8AE00938D76 /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
 		5D2B2C071A30D8AE00938D76 /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
-		5D2EDB7C1A3ADFAF0031F7AD /* Contact+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Contact+Custom.h"; sourceTree = "<group>"; };
-		5D2EDB7D1A3ADFAF0031F7AD /* Contact+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Contact+Custom.m"; sourceTree = "<group>"; };
+		5D2EDB7C1A3ADFAF0031F7AD /* Contact+V5Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Contact+V5Client.h"; sourceTree = "<group>"; };
+		5D2EDB7D1A3ADFAF0031F7AD /* Contact+V5Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Contact+V5Client.m"; sourceTree = "<group>"; };
 		5D2EDB7F1A3BA8250031F7AD /* JCDebugContactGroupsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDebugContactGroupsTableViewController.h; sourceTree = "<group>"; };
 		5D2EDB801A3BA8250031F7AD /* JCDebugContactGroupsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDebugContactGroupsTableViewController.m; sourceTree = "<group>"; };
 		5D2EDB821A3BAA800031F7AD /* JCDebugContactsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDebugContactsTableViewController.h; sourceTree = "<group>"; };
@@ -1174,13 +1173,13 @@
 			children = (
 				F82A283F19DDC55E00C3620D /* JCV4ProvisioningClient.h */,
 				F82A284019DDC55E00C3620D /* JCV4ProvisioningClient.m */,
+				27EB18BD19DE045900C1503B /* JCV5ApiClient.h */,
+				27EB18BE19DE045900C1503B /* JCV5ApiClient.m */,
 				91059D341949F8E6002DE67C /* LoggerCommon.h */,
 				913786F5194A22E200002DD3 /* LoggerClient.h */,
 				913786F6194A22E200002DD3 /* LoggerClient.m */,
 				9145E31D191D842500840D66 /* JCVersion.h */,
 				9145E31E191D842500840D66 /* JCVersion.m */,
-				27EB18BD19DE045900C1503B /* JCV5ApiClient.h */,
-				27EB18BE19DE045900C1503B /* JCV5ApiClient.m */,
 			);
 			name = Clients;
 			sourceTree = "<group>";
@@ -1199,8 +1198,8 @@
 				270152C71901D77A00F271CE /* Models */,
 				DD3BD9F218DCB1740080318E /* Voicemail+Custom.h */,
 				DD3BD9F318DCB1740080318E /* Voicemail+Custom.m */,
-				5D2EDB7C1A3ADFAF0031F7AD /* Contact+Custom.h */,
-				5D2EDB7D1A3ADFAF0031F7AD /* Contact+Custom.m */,
+				5D2EDB7C1A3ADFAF0031F7AD /* Contact+V5Client.h */,
+				5D2EDB7D1A3ADFAF0031F7AD /* Contact+V5Client.m */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -2086,7 +2085,7 @@
 				5DA566491A20543500286BA5 /* JCAuthenticationManagerError.m in Sources */,
 				2700987418F4714100B6BC2F /* NSString+JSMessagesView.m in Sources */,
 				27BE503D19DCF6A800B725ED /* JCLineSession.m in Sources */,
-				5D2EDB7E1A3ADFAF0031F7AD /* Contact+Custom.m in Sources */,
+				5D2EDB7E1A3ADFAF0031F7AD /* Contact+V5Client.m in Sources */,
 				278E858619EC6B6E0087649D /* VideoViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
