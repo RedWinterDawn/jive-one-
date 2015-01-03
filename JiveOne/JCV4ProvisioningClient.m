@@ -89,7 +89,6 @@ NSString *const kJCV4ProvisioningClientRequestString = @"<login user=\"%@\" pass
 
 +(NSData *)postDataForLine:(Line *)line
 {
-    
     JCV4ProvisioningRequest *request = [[JCV4ProvisioningRequest alloc] initWithUserName:line.pbx.user.jiveUserId
                                                                                 password:nil
                                                                                    token:[JCAuthenticationManager sharedInstance].authToken
@@ -205,11 +204,7 @@ NSString *const kJCV4ProvisioningErrorDomain = @"ProvisioningError";
     if (reason) {
         userInfo = @{NSLocalizedDescriptionKey:reason};
     }
-    
-    
     return [JCV4ProvisioningError errorWithDomain:kJCV4ProvisioningErrorDomain code:type userInfo:userInfo];
 }
-
-
 
 @end

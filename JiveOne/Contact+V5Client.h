@@ -7,13 +7,12 @@
 //
 
 #import "Contact.h"
-#import "JCV5ApiClient.h"
 
-@interface Contact (Custom)
-
-+ (Contact *)contactForExtension:(NSString *)extension pbx:(PBX *)pbx;
+@interface Contact (V5Client)
 
 // Retrives all contacts for a line.
 + (void)downloadContactsForLine:(Line *)line complete:(CompletionHandler)completed;
 
 @end
+
+
