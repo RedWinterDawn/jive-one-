@@ -10,8 +10,6 @@
 #import "Common.h"
 
 #import "User.h"
-#import "PBX+Custom.h"
-#import "Lines+Custom.h"
 #import "Voicemail+Custom.h"
 
 NSString *const kV5BaseUrl = @"https://api.jive.com/";

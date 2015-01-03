@@ -19,8 +19,8 @@
 #import "JCBadgeManager.h"
 
 #import "LineConfiguration+Custom.h"
-#import "Lines+Custom.h"
-#import "PBX+Custom.h"
+#import "Line.h"
+#import "PBX.h"
 #import "VideoViewController.h"
 #import "JCAppSettings.h"
 

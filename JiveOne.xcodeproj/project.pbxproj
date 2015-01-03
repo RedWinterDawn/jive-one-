@@ -111,8 +111,7 @@
 		2788F14A190EB1260099348D /* NSNull+IntValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 2788F149190EB1260099348D /* NSNull+IntValue.m */; };
 		278E858619EC6B6E0087649D /* VideoViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 278E858519EC6B6E0087649D /* VideoViewController.mm */; };
 		278E858719EC6B6E0087649D /* VideoViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 278E858519EC6B6E0087649D /* VideoViewController.mm */; };
-		27997574195A12C5001425CC /* PBX+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 27997573195A12C5001425CC /* PBX+Custom.m */; };
-		27997577195A12D7001425CC /* Lines+Custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 27997576195A12D7001425CC /* Lines+Custom.m */; };
+		27997574195A12C5001425CC /* PBX+V5Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 27997573195A12C5001425CC /* PBX+V5Client.m */; };
 		279A4E0819DA86F600E8AB7B /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279A4E0719DA86F600E8AB7B /* CoreAudio.framework */; };
 		279A4E0A19DA86FC00E8AB7B /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279A4E0919DA86FC00E8AB7B /* CoreVideo.framework */; };
 		279A4E0C19DA870600E8AB7B /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 279A4E0B19DA870600E8AB7B /* libresolv.dylib */; };
@@ -264,7 +263,6 @@
 		F266162618B42AA0000B770A /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266162418B42AA0000B770A /* AddressBook.framework */; };
 		F266162718B42AA0000B770A /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266162518B42AA0000B770A /* AddressBookUI.framework */; };
 		F59AE2C9192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2BC192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png */; };
-		F814B0101A48E5140013CF0B /* JCStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = F814B00F1A48E5140013CF0B /* JCStyleKit.m */; };
 		F82A284119DDC55E00C3620D /* JCV4ProvisioningClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F82A284019DDC55E00C3620D /* JCV4ProvisioningClient.m */; };
 		F84A087919DF38C8003476E6 /* JCTransferConfirmationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F84A087819DF38C8003476E6 /* JCTransferConfirmationViewController.m */; };
 		F85DAD0919EF07D30075AAA2 /* JCCallHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F85DAD0819EF07D30075AAA2 /* JCCallHistoryViewController.m */; };
@@ -428,10 +426,8 @@
 		2788F149190EB1260099348D /* NSNull+IntValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNull+IntValue.m"; sourceTree = "<group>"; };
 		278E858419EC6B6E0087649D /* VideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
 		278E858519EC6B6E0087649D /* VideoViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VideoViewController.mm; sourceTree = "<group>"; };
-		27997572195A12C5001425CC /* PBX+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PBX+Custom.h"; sourceTree = "<group>"; };
-		27997573195A12C5001425CC /* PBX+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PBX+Custom.m"; sourceTree = "<group>"; };
-		27997575195A12D7001425CC /* Lines+Custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Lines+Custom.h"; sourceTree = "<group>"; };
-		27997576195A12D7001425CC /* Lines+Custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Lines+Custom.m"; sourceTree = "<group>"; };
+		27997572195A12C5001425CC /* PBX+V5Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PBX+V5Client.h"; sourceTree = "<group>"; };
+		27997573195A12C5001425CC /* PBX+V5Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PBX+V5Client.m"; sourceTree = "<group>"; };
 		279A4E0719DA86F600E8AB7B /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		279A4E0919DA86FC00E8AB7B /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		279A4E0B19DA870600E8AB7B /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
@@ -1190,10 +1186,8 @@
 			children = (
 				5D241FD21A382241008B498A /* User+Custom.h */,
 				5D241FD31A382241008B498A /* User+Custom.m */,
-				27997572195A12C5001425CC /* PBX+Custom.h */,
-				27997573195A12C5001425CC /* PBX+Custom.m */,
-				27997575195A12D7001425CC /* Lines+Custom.h */,
-				27997576195A12D7001425CC /* Lines+Custom.m */,
+				27997572195A12C5001425CC /* PBX+V5Client.h */,
+				27997573195A12C5001425CC /* PBX+V5Client.m */,
 				27EB18C219DF194E00C1503B /* LineConfiguration+Custom.h */,
 				27EB18C319DF194E00C1503B /* LineConfiguration+Custom.m */,
 				270152C71901D77A00F271CE /* Models */,
@@ -2031,7 +2025,6 @@
 				2762151E1912AA2500CFBCC8 /* NSDictionary+QueryString.m in Sources */,
 				5DA566441A1D454D00286BA5 /* JCSettingsTableViewController.m in Sources */,
 				5D35479B19FF4BB7009E3CB4 /* JCMenuBarButtonItem.m in Sources */,
-				27997577195A12D7001425CC /* Lines+Custom.m in Sources */,
 				5DBABCD41A283DA500B09783 /* NSString+Custom.m in Sources */,
 				2700987518F4714100B6BC2F /* UIColor+JSMessagesView.m in Sources */,
 				F8BC82C319E44A2E00340BA1 /* JCKeypadOverlayView.m in Sources */,
@@ -2064,7 +2057,7 @@
 				5D629BB019D9CE4500F5744E /* JCVoiceNonVisualViewController.m in Sources */,
 				5DDDA54B1A4B238300E31AA3 /* JCLinePresence.m in Sources */,
 				5DBABCD11A281F7900B09783 /* UIViewController+HUD.m in Sources */,
-				27997574195A12C5001425CC /* PBX+Custom.m in Sources */,
+				27997574195A12C5001425CC /* PBX+V5Client.m in Sources */,
 				5D241FCB1A36AE12008B498A /* JCLinePickerViewController.m in Sources */,
 				2700987C18F4714100B6BC2F /* JSMessage.m in Sources */,
 				276215211912AA7400CFBCC8 /* NSString+URLEncoding.m in Sources */,

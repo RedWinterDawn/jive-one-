@@ -30,6 +30,9 @@
 -(NSDate *)timeValueForKey:(NSString *)key;
 -(NSURL *)urlValueForKey:(NSString *)key;
 
+-(NSDictionary *)dictionaryForKey:(NSString *)key;
+-(NSArray *)arrayForKey:(NSString *)key;
+
 @end
 
 

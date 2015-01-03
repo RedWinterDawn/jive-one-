@@ -147,6 +147,23 @@ static NSDateFormatter *timeFormatter = nil;
     return nil;
 }
 
+-(NSDictionary *)dictionaryForKey:(NSString *)key
+{
+    id object = [self objectForKey:key];
+    if ([object isKindOfClass:[NSDictionary class]]) {
+        return object;
+    }
+    return nil;
+}
+
+-(NSArray *)arrayForKey:(NSString *)key
+{
+    id object = [self objectForKey:key];
+    if ([object isKindOfClass:[NSArray class]]) {
+        return object;
+    }
+    return nil;
+}
 
 
 @end

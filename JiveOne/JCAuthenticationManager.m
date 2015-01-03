@@ -15,7 +15,7 @@
 #import "JCV4ProvisioningClient.h"
 #import "JCAuthenticationManagerError.h"
 #import "User+Custom.h"
-#import "PBX+Custom.h"
+#import "PBX+V5Client.h"
 
 // Notifications
 NSString *const kJCAuthenticationManagerUserLoggedOutNotification               = @"userLoggedOut";
@@ -101,7 +101,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
     // Check to see if we have data using the authentication store to retrive the user id.
     NSString *jiveUserId = _authenticationKeychain.jiveUserId;
-    _user = [User MR_findFirstByAttribute:@"jiveUserId" withValue:jiveUserId];
+    _user = [User MR_findFirstByAttribute:NSStringFromSelector(@selector(jiveUserId)) withValue:jiveUserId];
     if (_user && _user.pbxs.count > 0) {
         [self postNotificationEvent:kJCAuthenticationManagerUserLoadedMinimumDataNotification];
     }
@@ -201,10 +201,6 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 #pragma mark - Getters -
 
-
-
-#pragma mark - Getters -
-
 - (BOOL)userAuthenticated
 {
     return _authenticationKeychain.isAuthenticated;
@@ -294,25 +290,37 @@ static int MAX_LOGIN_ATTEMPTS = 2;
             [NSException raise:NSInvalidArgumentException format:@"Unable to save access token to keychain store."];
         }
         
-        _user = [User userForJiveUserId:_authenticationKeychain.jiveUserId context:[NSManagedObjectContext MR_contextForCurrentThread]];
-        
         if(self.rememberMe)
-            self.rememberMeUser = _authenticationKeychain.jiveUserId;
+            self.rememberMeUser = jiveUserId;
         
-        [PBX downloadPbxInfoForUser:_user completed:^(BOOL success, NSError *error) {
-            if (success) {
-                [self notifyCompletionBlock:YES error:nil];
-            }
-            else {
-                NSLog(@"%@", [error description]);
-                [self reportError:JCAuthenticationManagerNetworkError description:@"We could not reach the server at this time. Please check your connection"];
-            }
-        }];
+        // Broadcast that we have authenticated.
         [self postNotificationEvent:kJCAuthenticationManagerUserAuthenticatedNotification];
+        
+        NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
+        _user = [User userForJiveUserId:_authenticationKeychain.jiveUserId context:context];
+        [self fetchPbxInfoForUser:_user];
+        
     }
     @catch (NSException *exception) {
         [self reportError:JCAuthenticationManagerAutheticationError description:exception.reason];
     }
+}
+
+-(void)fetchPbxInfoForUser:(User *)user
+{
+    dispatch_async(dispatch_queue_create("pbx_info", 0), ^{
+        [PBX downloadPbxInfoForUser:(User *)[[NSManagedObjectContext MR_contextForCurrentThread] objectWithID:user.objectID]
+                          completed:^(BOOL success, NSError *error) {
+                              dispatch_async(dispatch_get_main_queue(), ^{
+                                  if (success) {
+                                      [self notifyCompletionBlock:YES error:nil];
+                                  }
+                                  else {
+                                      [self reportError:JCAuthenticationManagerNetworkError description:@"We could not reach the server at this time. Please check your connection"];
+                                  }
+                              });
+                          }];
+    });
 }
 
 -(void)reportError:(JCAuthenticationManagerErrorType)type description:(NSString *)description
@@ -408,7 +416,6 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 }
 
 @end
-
 
 static JCAuthenticationManager *authenticationManager = nil;
 static dispatch_once_t authenticationManagerOnceToken;

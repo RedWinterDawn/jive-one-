@@ -10,9 +10,9 @@
 
 @class User;
 
-@interface PBX (Custom)
+@interface PBX (V5Client)
 
-// Retrives the information for all PBXs and Lines attached to the user.
+// Retrives the information for all PBXs and Lines attached to the user using v5client.
 + (void)downloadPbxInfoForUser:(User *)user completed:(void(^)(BOOL success, NSError *error))completion;
 
 @end
