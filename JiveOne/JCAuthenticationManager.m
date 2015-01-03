@@ -95,7 +95,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 {
     // Check to see if we are autheticiated. If we are not, notify that we are logged out.
     if (!_authenticationKeychain.isAuthenticated) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kJCAuthenticationManagerUserLoggedOutNotification object:self userInfo:nil];
+        [self postNotificationEvent:kJCAuthenticationManagerUserLoggedOutNotification];
         return;
     }
 
@@ -103,7 +103,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     NSString *jiveUserId = _authenticationKeychain.jiveUserId;
     _user = [User MR_findFirstByAttribute:@"jiveUserId" withValue:jiveUserId];
     if (_user && _user.pbxs.count > 0) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:self userInfo:nil];
+        [self postNotificationEvent:kJCAuthenticationManagerUserLoadedMinimumDataNotification];
     }
     else {
         [self logout]; // Nuke it, we need to relogin.
@@ -152,7 +152,8 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     if (!self.rememberMe) {
         self.rememberMeUser = nil;
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCAuthenticationManagerUserLoggedOutNotification object:self userInfo:nil];
+    
+    [self postNotificationEvent:kJCAuthenticationManagerUserLoggedOutNotification];
 }
 
 #pragma mark - Setters -
@@ -184,7 +185,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     [self willChangeValueForKey:NSStringFromSelector(@selector(line))];
     _line = line;
     [self didChangeValueForKey:NSStringFromSelector(@selector(line))];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCAuthenticationManagerLineChangedNotification object:self];
+    [self postNotificationEvent:kJCAuthenticationManagerLineChangedNotification];
 }
 
 - (void)setDeviceToken:(NSString *)deviceToken
@@ -293,7 +294,6 @@ static int MAX_LOGIN_ATTEMPTS = 2;
             [NSException raise:NSInvalidArgumentException format:@"Unable to save access token to keychain store."];
         }
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:kJCAuthenticationManagerUserAuthenticatedNotification object:self userInfo:nil];
         _user = [User userForJiveUserId:_authenticationKeychain.jiveUserId context:[NSManagedObjectContext MR_contextForCurrentThread]];
         
         if(self.rememberMe)
@@ -308,6 +308,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
                 [self reportError:JCAuthenticationManagerNetworkError description:@"We could not reach the server at this time. Please check your connection"];
             }
         }];
+        [self postNotificationEvent:kJCAuthenticationManagerUserAuthenticatedNotification];
     }
     @catch (NSException *exception) {
         [self reportError:JCAuthenticationManagerAutheticationError description:exception.reason];
@@ -322,23 +323,36 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 -(void)notifyCompletionBlock:(BOOL)success error:(NSError *)error
 {
     _loginAttempts = 0;
-    _webview = nil;
-    _username = nil;
-    _password = nil;
-    _line = nil;
+    _webview    = nil;
+    _username   = nil;
+    _password   = nil;
+    _line       = nil;
     
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     if (success){
-        [center postNotificationName:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:self userInfo:nil];
+        [self postNotificationEvent:kJCAuthenticationManagerUserLoadedMinimumDataNotification];
     } else {
         [_authenticationKeychain logout];
-        [center postNotificationName:kJCAuthenticationManagerAuthenticationFailedNotification object:self userInfo:nil];
+        [self postNotificationEvent:kJCAuthenticationManagerAuthenticationFailedNotification];
     }
     
     if (_completionBlock) {
         _completionBlock(success, error);
         _completionBlock = nil;
     }
+}
+
+/**
+ * A helper method to post a notification to the main thread. All notifcations posting from the
+ * authentication Manager should be from the main thread.
+ */
+-(void)postNotificationEvent:(NSString *)event
+{
+    if (![NSThread isMainThread]) {
+        [self performSelectorOnMainThread:@selector(postNotificationEvent:) withObject:event waitUntilDone:NO];
+        return;
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:event object:self userInfo:nil];
 }
 
 -(NSDictionary *)tokenDataFromURL:(NSURL *)url
