@@ -32,7 +32,7 @@
 #import "User.h"
 
 #import "Voicemail+Custom.h"
-#import "Contact+Custom.h"
+#import "Contact+V5Client.h"
 
 #import "UIViewController+HUD.h"
 

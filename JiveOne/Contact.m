@@ -46,3 +46,13 @@ NSString *kContacktFavoriteAttribute = @"favorite";
 @dynamic groups;
 
 @end
+
+@implementation Contact (Search)
+
++ (Contact *)contactForExtension:(NSString *)extension pbx:(PBX *)pbx
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx = %@ and extension = %@", pbx, extension];
+    return [Contact MR_findFirstWithPredicate:predicate inContext:pbx.managedObjectContext];
+}
+
+@end

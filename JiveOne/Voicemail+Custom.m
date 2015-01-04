@@ -8,7 +8,7 @@
 
 #import "Voicemail+Custom.h"
 #import "PBX.h"
-#import "Contact+Custom.h"
+#import "Contact.h"
 
 NSString *const kVoicemailResponseIdentifierKey         = @"jrn";
 NSString *const kVoicemailResponseDurationKey           = @"duration";
