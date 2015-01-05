@@ -8,7 +8,7 @@
 
 #import "Voicemail.h"
 
-@interface Voicemail (Custom)
+@interface Voicemail (V5Client)
 
 // Retrives all voicemails for a line.
 + (void)downloadVoicemailsForLine:(Line *)line complete:(CompletionHandler)completed;

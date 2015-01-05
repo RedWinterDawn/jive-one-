@@ -26,7 +26,7 @@ NSString *const kVoicemailResponseSelfDownloadKey       = @"self_download";
 NSString *const kVoicemailResponseSelfChangeStatusKey   = @"self_changeStatus";
 NSString *const kVoicemailResponseSelfMailboxKey        = @"self_mailbox";
 
-@implementation Voicemail (Custom)
+@implementation Voicemail (V5Client)
 
 + (void)downloadVoicemailsForLine:(Line *)line complete:(CompletionHandler)completion {
     
