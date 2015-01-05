@@ -54,31 +54,24 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
 + (void)processContactResponse:(id)responseObject line:(Line *)line completion:(CompletionHandler)completion
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        Line *localLine = (Line *)[[NSManagedObjectContext MR_contextForCurrentThread] objectWithID:line.objectID];
+        
         @try {
             if (![responseObject isKindOfClass:[NSArray class]]){
                 [NSException raise:@"v5clientException" format:@"UnexpectedResponse returned"];
             }
-                
-            [self processContactsData:(NSArray *)responseObject pbx:localLine.pbx];
-                
-            // If the context has changed, save it.
-            __autoreleasing NSError *error;
-            NSManagedObjectContext *context = localLine.managedObjectContext;
-            if (context.hasChanges) {
-                [context save:&error];
+    
+            [MagicalRecord saveUsingCurrentThreadContextWithBlock:^(NSManagedObjectContext *localContext) {
+                Line *localLine = (Line *)[localContext objectWithID:line.objectID];
+                [self processContactsData:(NSArray *)responseObject pbx:localLine.pbx];
             }
-
-            __block NSError *blockError = error;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (blockError) {
-                    completion(NO, blockError);
+            completion:^(BOOL success, NSError *error) {
+                if (error) {
+                    completion(NO, error);
                 }
                 else {
                     completion(YES, nil);
                 }
-            });
-            
+            }];
         }
         @catch (NSException *exception) {
             dispatch_async(dispatch_get_main_queue(), ^{

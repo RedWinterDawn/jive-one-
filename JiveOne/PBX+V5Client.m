@@ -58,7 +58,6 @@ NSString *const kPBXResponseException           = @"pbxResponseException";
 +(void)processRequestResponse:(id)responseObject user:(User *)user competion:(CompletionHandler)completion
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        User *localUser = (User *)[[NSManagedObjectContext MR_contextForCurrentThread] objectWithID:user.objectID];
         @try {
             if (![responseObject isKindOfClass:[NSDictionary class]]) {
                 [NSException raise:kPBXResponseException format:@"Invalid pbxs response object."];
@@ -69,25 +68,19 @@ NSString *const kPBXResponseException           = @"pbxResponseException";
                 [NSException raise:kPBXResponseException format:@"Invalid pbx response array."];
             }
             
-            // Process response array to add, update or remove pbxs
-            [self processPbxArrayData:pbxsData user:localUser];
-            
-            // If the context has changed, save it.
-            __autoreleasing NSError *error;
-            NSManagedObjectContext *context = localUser.managedObjectContext;
-            if (context.hasChanges) {
-                [context save:&error];
-            }
-            
-            __block NSError *blockError = error;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (blockError) {
-                    completion(NO, blockError);
+            [MagicalRecord saveUsingCurrentThreadContextWithBlock:^(NSManagedObjectContext *localContext) {
+                
+                // Process response array to add, update or remove pbxs
+                [self processPbxArrayData:pbxsData user:(User *)[localContext objectWithID:user.objectID]];
+                
+            } completion:^(BOOL success, NSError *error) {
+                if (error) {
+                    completion(NO, error);
                 }
                 else {
                     completion(YES, nil);
                 }
-            });
+            }];
         }
         @catch (NSException *exception) {
             dispatch_async(dispatch_get_main_queue(), ^{
