@@ -37,7 +37,7 @@ NSString *const kPBXResponseException           = @"pbxResponseException";
 + (void)downloadPbxInfoForUser:(User *)user completed:(void(^)(BOOL success, NSError *error))completion
 {
     if (!user) {
-        if (completion != NULL) {
+        if (completion) {
             completion(false, [JCV5ApiClientError errorWithCode:JCV5ApiClientInvalidArgumentErrorCode reason:@"User Is Null"]);
         }
         return;
@@ -51,7 +51,9 @@ NSString *const kPBXResponseException           = @"pbxResponseException";
                     [self processRequestResponse:responseObject user:user competion:completion];
                 }
                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                    completion(NO, [JCV5ApiClientError errorWithCode:JCV5ApiClientRequestErrorCode reason:error.localizedDescription]);
+                    if (completion) {
+                        completion(NO, [JCV5ApiClientError errorWithCode:JCV5ApiClientRequestErrorCode reason:error.localizedDescription]);
+                    }
                 }];
 }
 
@@ -74,18 +76,21 @@ NSString *const kPBXResponseException           = @"pbxResponseException";
                 [self processPbxArrayData:pbxsData user:(User *)[localContext objectWithID:user.objectID]];
                 
             } completion:^(BOOL success, NSError *error) {
-                if (error) {
-                    completion(NO, error);
-                }
-                else {
-                    completion(YES, nil);
+                if (completion) {
+                    if (error) {
+                        completion(NO, error);
+                    } else {
+                        completion(YES, nil);
+                    }
                 }
             }];
         }
         @catch (NSException *exception) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completion(NO, [JCV5ApiClientError errorWithCode:JCV5ApiClientResponseParseErrorCode reason:exception.reason]);
-            });
+            if (completion) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completion(NO, [JCV5ApiClientError errorWithCode:JCV5ApiClientResponseParseErrorCode reason:exception.reason]);
+                });
+            }
         }
     });
 }

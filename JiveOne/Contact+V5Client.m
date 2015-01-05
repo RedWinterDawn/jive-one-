@@ -65,18 +65,22 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
                 [self processContactsData:(NSArray *)responseObject pbx:localLine.pbx];
             }
             completion:^(BOOL success, NSError *error) {
-                if (error) {
-                    completion(NO, error);
-                }
-                else {
-                    completion(YES, nil);
+                if (completion) {
+                    if (error) {
+                        completion(NO, error);
+                    }
+                    else {
+                        completion(YES, nil);
+                    }
                 }
             }];
         }
         @catch (NSException *exception) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completion(NO, [JCV5ApiClientError errorWithCode:JCV5ApiClientResponseParseErrorCode reason:exception.reason]);
-            });
+            if (completion) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completion(NO, [JCV5ApiClientError errorWithCode:JCV5ApiClientResponseParseErrorCode reason:exception.reason]);
+                });
+            }
         }
     });
 }
