@@ -2430,7 +2430,7 @@
         <!--Dialer-->
         <scene sceneID="GNC-gS-V56">
             <objects>
-                <viewController autoresizesArchivedViewToFullSize="NO" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="3A8-R9-IcP" userLabel="Dialer" customClass="JCDialerViewController" sceneMemberID="viewController">
+                <viewController autoresizesArchivedViewToFullSize="NO" title="DialerView" extendedLayoutIncludesOpaqueBars="YES" id="3A8-R9-IcP" userLabel="Dialer" customClass="JCDialerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="iWl-PB-GRi"/>
                         <viewControllerLayoutGuide type="bottom" id="D7Y-Ur-CEJ"/>
@@ -2484,7 +2484,7 @@
                                 <rect key="frame" x="25" y="50" width="270" height="246"/>
                                 <subviews>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nsS-HF-huE">
-                                        <rect key="frame" x="23" y="0.0" width="61" height="62"/>
+                                        <rect key="frame" x="33" y="0.0" width="61" height="62"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="nsS-HF-huE" secondAttribute="height" multiplier="1:1" id="POJ-Wh-2w9"/>
                                         </constraints>
@@ -2554,7 +2554,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Bh-Zq-F0d">
-                                        <rect key="frame" x="186" y="0.0" width="61" height="62"/>
+                                        <rect key="frame" x="176" y="0.0" width="61" height="62"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="8Bh-Zq-F0d" secondAttribute="height" multiplier="1:1" id="AQf-xH-OhI"/>
                                         </constraints>
@@ -2589,7 +2589,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vTE-Gq-ApS">
-                                        <rect key="frame" x="23" y="62" width="61" height="61"/>
+                                        <rect key="frame" x="33" y="62" width="61" height="61"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="vTE-Gq-ApS" secondAttribute="height" multiplier="1:1" id="g8v-8n-RH2"/>
                                         </constraints>
@@ -2624,7 +2624,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YzY-zZ-v3g">
-                                        <rect key="frame" x="186" y="62" width="61" height="61"/>
+                                        <rect key="frame" x="176" y="62" width="61" height="61"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="YzY-zZ-v3g" secondAttribute="height" multiplier="1:1" id="vHg-I3-e5l"/>
                                         </constraints>
@@ -2659,7 +2659,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gPW-Ap-sqH">
-                                        <rect key="frame" x="23" y="123" width="61" height="62"/>
+                                        <rect key="frame" x="33" y="123" width="61" height="62"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="gPW-Ap-sqH" secondAttribute="height" multiplier="1:1" id="28B-Ax-Bf5"/>
                                         </constraints>
@@ -2687,7 +2687,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="9" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="utg-cS-vHJ">
-                                        <rect key="frame" x="186" y="123" width="61" height="62"/>
+                                        <rect key="frame" x="176" y="123" width="61" height="62"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="utg-cS-vHJ" secondAttribute="height" multiplier="1:1" id="0Vh-5w-qjp"/>
                                         </constraints>
@@ -2785,7 +2785,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uSH-QK-bW1">
-                                        <rect key="frame" x="186" y="185" width="61" height="61"/>
+                                        <rect key="frame" x="176" y="185" width="61" height="61"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="uSH-QK-bW1" secondAttribute="height" multiplier="1:1" id="Q7Y-dh-CCi"/>
                                         </constraints>
@@ -2820,7 +2820,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZJt-14-a51">
-                                        <rect key="frame" x="23" y="185" width="61" height="61"/>
+                                        <rect key="frame" x="33" y="185" width="61" height="61"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="ZJt-14-a51" secondAttribute="height" multiplier="1:1" id="OWe-L0-G4W"/>
                                         </constraints>
@@ -2907,7 +2907,7 @@
                                     <constraint firstItem="b2R-GS-nch" firstAttribute="height" secondItem="IKI-cG-rUa" secondAttribute="height" id="R0g-Gb-o0b"/>
                                     <constraint firstItem="8Bh-Zq-F0d" firstAttribute="centerY" secondItem="7br-ug-lFI" secondAttribute="centerY" id="R8h-1Y-USs"/>
                                     <constraint firstItem="IKI-cG-rUa" firstAttribute="width" secondItem="nsS-HF-huE" secondAttribute="width" id="Tn7-lf-WqF"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="270" id="U80-AU-YPm"/>
+                                    <constraint firstAttribute="width" constant="270" id="U80-AU-YPm"/>
                                     <constraint firstItem="8Bh-Zq-F0d" firstAttribute="width" secondItem="IKI-cG-rUa" secondAttribute="width" id="Usd-nJ-ZY7"/>
                                     <constraint firstAttribute="centerX" secondItem="IKI-cG-rUa" secondAttribute="centerX" id="VF4-TN-Y0N"/>
                                     <constraint firstItem="YzY-zZ-v3g" firstAttribute="width" secondItem="IKI-cG-rUa" secondAttribute="width" id="Wbh-XC-62j"/>
@@ -2919,7 +2919,7 @@
                                     <constraint firstItem="utg-cS-vHJ" firstAttribute="centerY" secondItem="ggV-Gf-26E" secondAttribute="centerY" id="gam-lH-9ol"/>
                                     <constraint firstItem="uSH-QK-bW1" firstAttribute="centerX" secondItem="YzY-zZ-v3g" secondAttribute="centerX" id="hTI-yN-E2W"/>
                                     <constraint firstItem="7br-ug-lFI" firstAttribute="top" secondItem="meF-1G-p2k" secondAttribute="top" id="hzV-k5-jWR"/>
-                                    <constraint firstItem="YzY-zZ-v3g" firstAttribute="leading" secondItem="IKI-cG-rUa" secondAttribute="trailing" constant="20" id="iXH-WG-uRn"/>
+                                    <constraint firstItem="YzY-zZ-v3g" firstAttribute="leading" secondItem="IKI-cG-rUa" secondAttribute="trailing" constant="10" id="iXH-WG-uRn"/>
                                     <constraint firstItem="ggV-Gf-26E" firstAttribute="centerX" secondItem="IKI-cG-rUa" secondAttribute="centerX" id="k25-eQ-kXy"/>
                                     <constraint firstItem="utg-cS-vHJ" firstAttribute="width" secondItem="IKI-cG-rUa" secondAttribute="width" id="k9F-BA-kkb"/>
                                     <constraint firstItem="ggV-Gf-26E" firstAttribute="height" secondItem="IKI-cG-rUa" secondAttribute="height" id="l9N-SJ-XnX"/>
@@ -2929,7 +2929,7 @@
                                     <constraint firstItem="IKI-cG-rUa" firstAttribute="height" secondItem="7br-ug-lFI" secondAttribute="height" id="qZN-E6-7tI"/>
                                     <constraint firstItem="nsS-HF-huE" firstAttribute="centerX" secondItem="vTE-Gq-ApS" secondAttribute="centerX" id="sd4-co-v2J"/>
                                     <constraint firstItem="IKI-cG-rUa" firstAttribute="width" secondItem="vTE-Gq-ApS" secondAttribute="width" id="vEX-Tr-ryP"/>
-                                    <constraint firstItem="IKI-cG-rUa" firstAttribute="leading" secondItem="vTE-Gq-ApS" secondAttribute="trailing" constant="20" id="vNG-Os-QWr"/>
+                                    <constraint firstItem="IKI-cG-rUa" firstAttribute="leading" secondItem="vTE-Gq-ApS" secondAttribute="trailing" constant="10" id="vNG-Os-QWr"/>
                                     <constraint firstItem="ggV-Gf-26E" firstAttribute="top" secondItem="IKI-cG-rUa" secondAttribute="bottom" id="wL3-fq-pI0"/>
                                     <constraint firstItem="ZJt-14-a51" firstAttribute="centerX" secondItem="vTE-Gq-ApS" secondAttribute="centerX" id="zoG-Qo-9dH"/>
                                 </constraints>
@@ -2943,10 +2943,8 @@
                             <constraint firstItem="meF-1G-p2k" firstAttribute="top" secondItem="0XG-qH-giP" secondAttribute="bottom" id="CTy-9l-ZOK"/>
                             <constraint firstItem="0XG-qH-giP" firstAttribute="centerY" secondItem="igS-G2-NfM" secondAttribute="centerY" id="F3A-Mz-Cnd"/>
                             <constraint firstItem="igS-G2-NfM" firstAttribute="leading" secondItem="0XG-qH-giP" secondAttribute="trailing" id="HbT-LW-NNC"/>
-                            <constraint firstAttribute="trailing" secondItem="meF-1G-p2k" secondAttribute="trailing" constant="25" id="Sih-jf-z2B"/>
+                            <constraint firstAttribute="bottom" secondItem="3FV-p4-tnZ" secondAttribute="bottom" constant="60" id="QrM-yh-9o0"/>
                             <constraint firstAttribute="bottom" secondItem="meF-1G-p2k" secondAttribute="bottom" constant="120" id="VoP-QX-uCM"/>
-                            <constraint firstItem="meF-1G-p2k" firstAttribute="leading" secondItem="Rfg-zK-3ym" secondAttribute="leading" constant="25" id="YKE-z3-Bmv"/>
-                            <constraint firstAttribute="bottom" secondItem="3FV-p4-tnZ" secondAttribute="bottom" constant="60" id="jMk-xl-mQm"/>
                             <constraint firstAttribute="centerX" secondItem="3FV-p4-tnZ" secondAttribute="centerX" id="jdR-Xo-yrT"/>
                         </constraints>
                     </view>
@@ -4494,15 +4492,19 @@
         <!--Dialer Navagation Controller-->
         <scene sceneID="3Br-E9-xSO">
             <objects>
-                <navigationController storyboardIdentifier="DialerNavigationController" title="Keypad" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vrQ-kc-2ec" userLabel="Dialer Navagation Controller" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="DialerNavigationController" title="Keypad" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vrQ-kc-2ec" userLabel="Dialer Navagation Controller" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <tabBarItem key="tabBarItem" title="Keypad" image="nav-dial-black" id="idj-mu-viK"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="G3Z-gL-2uq">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="barTintColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="X7a-4G-FJQ">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.29803921570000003" green="0.44705882349999998" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
+                    </toolbar>
                     <connections>
                         <segue destination="3A8-R9-IcP" kind="relationship" relationship="rootViewController" id="yF3-we-Crg"/>
                     </connections>
