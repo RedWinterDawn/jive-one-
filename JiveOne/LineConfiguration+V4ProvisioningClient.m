@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "LineConfiguration+Custom.h"
+#import "LineConfiguration+V4ProvisioningClient.h"
 #import "PBX.h"
 #import "JCV4ProvisioningClient.h"
 #import <XMLDictionary/XMLDictionary.h>

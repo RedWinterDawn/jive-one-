@@ -8,7 +8,7 @@
 
 #import "JCV4ProvisioningClient.h"
 #import "Common.h"
-#import "LineConfiguration+Custom.h"
+#import "LineConfiguration.h"
 
 #import "Line.h"
 #import "PBX.h"

@@ -18,7 +18,7 @@
 #import "Common.h"
 #import "JCBadgeManager.h"
 
-#import "LineConfiguration+Custom.h"
+#import "LineConfiguration.h"
 #import "Line.h"
 #import "PBX.h"
 #import "VideoViewController.h"

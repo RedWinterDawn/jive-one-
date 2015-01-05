@@ -15,7 +15,7 @@
 // Managers
 #import "JCBluetoothManager.h"
 #import "SipHandler.h"
-#import "LineConfiguration+Custom.h"
+#import "LineConfiguration+V4ProvisioningClient.h"
 
 // Objects
 #import "JCLineSession.h"

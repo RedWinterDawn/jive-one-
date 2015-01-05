@@ -40,8 +40,6 @@
 
 @interface JCV4ProvisioningClient : NSObject
 
-+(void)requestProvisioningForLine:(Line *)line completed:(void (^)(BOOL suceeded, NSError *error))completed;
-
 @end
 
 typedef enum : NSUInteger {

@@ -1,5 +1,5 @@
 //
-//  LineConfiguration+Custom.h
+//  LineConfiguration+V4ProvisioningClient.h
 //  JiveOne
 //
 //  Created by Eduardo Gueiros on 9/30/14.
