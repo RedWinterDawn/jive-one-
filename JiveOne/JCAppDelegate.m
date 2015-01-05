@@ -18,7 +18,6 @@
 #import "LoggerClient.h"
 #import "JCLinePickerViewController.h"
 
-#import "Voicemail+Custom.h"
 #import "JCPhoneManager.h"
 #import "JCPresenceManager.h"
 #import "JCCallerViewController.h"
@@ -31,8 +30,8 @@
 #import "Line.h"
 #import "User.h"
 
-#import "Voicemail+Custom.h"
 #import "Contact+V5Client.h"
+#import "Voicemail+V5Client.h"
 
 #import "UIViewController+HUD.h"
 

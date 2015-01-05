@@ -6,7 +6,12 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "Voicemail+Custom.h"
+#import "Voicemail+V5Client.h"
+
+// Client
+#import "JCV5ApiClient.h"
+
+// Models
 #import "PBX.h"
 #import "Contact.h"
 

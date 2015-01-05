@@ -7,7 +7,6 @@
 //
 
 #import "Voicemail.h"
-#import "JCV5ApiClient.h"
 
 @interface Voicemail (Custom)
 

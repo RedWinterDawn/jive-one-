@@ -16,7 +16,7 @@
 #import "JCV5ApiClient.h"
 
 #import "JCAppDelegate.h"
-#import "Voicemail+Custom.h"
+#import "Voicemail+V5Client.h"
 
 @interface JCVoicemailTableViewController () <AVAudioPlayerDelegate, JCVoiceCellDelegate>
 {

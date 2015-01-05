@@ -8,7 +8,7 @@
 
 #import "JCVoicemailCell.h"
 
-#import "Voicemail+Custom.h"
+#import "Voicemail+V5Client.h"
 #import "JCPopoverSlider.h"
 #import "JCSpeakerButton.h"
 #import "JCPlayPauseButton.h"
