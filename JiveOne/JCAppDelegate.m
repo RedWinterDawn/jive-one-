@@ -264,11 +264,11 @@
         	if (line.pbx.isV5) {
             
             	// Fetch Voicemails
-            	[Voicemail downloadVoicemailsForLine:localLine complete:NULL];
+            	[Voicemail downloadVoicemailsForLine:line complete:NULL];
             
             	// Open socket to subscribe to presence and voicemail events.
             	[JCSocket connectWithDeviceToken:deviceToken completion:^(BOOL success, NSError *error) {
-                	[JCPresenceManager subscribeToPbx:localLine.pbx];
+                	[JCPresenceManager subscribeToPbx:line.pbx];
                 
                 	// TODO: Subscribe to voicemail socket events.
             	}];
