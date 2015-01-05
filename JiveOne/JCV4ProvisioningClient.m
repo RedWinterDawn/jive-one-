@@ -9,75 +9,15 @@
 #import "JCV4ProvisioningClient.h"
 #import "Common.h"
 #import "LineConfiguration+Custom.h"
-#import <XMLDictionary/XMLDictionary.h>
 
 #import "Line.h"
 #import "PBX.h"
 #import "User.h"
 
+NSString *const kJCV4ProvisioningClientRequestUrl = @"https://pbx.onjive.com/p/mobility/mobileusersettings";
+
 @implementation JCV4ProvisioningClient
 
-+(void)requestProvisioningForLine:(Line *)line completed:(void (^)(BOOL success, NSError * error))completed
-{
-    // Build Request
-    NSURLRequest *request = nil;
-    @try {
-        request = [JCV4ProvisioningURLRequest requestWithLine:line];
-    }
-    @catch (NSException *exception) {
-        completed(false, [JCV4ProvisioningError errorWithType:JCV4ProvisioningInvalidRequestParametersError reason:exception.reason]);
-        return;
-    }
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        // Peform the request
-        __autoreleasing NSURLResponse *response;
-        __autoreleasing NSError *error = nil;
-        NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-        if (error) {
-            completed(false, [JCV4ProvisioningError errorWithType:JCV4ProvisioningRequestResponseError reason:error.localizedDescription]);
-            NSLog(@"%@", error.description);
-            return;
-        }
-        
-        // Process Response Data
-        @try {
-            NSDictionary *result = [NSDictionary dictionaryWithXMLData:data];
-            if (!result) {
-                completed(false, [JCV4ProvisioningError errorWithType:JCV4ProvisioningResponseParseError reason:@"Response is Empty"]);
-                return;
-            }
-            
-            NSDictionary *status = [result valueForKeyPath:@"login_response.status"];
-            NSString *success = [status stringValueForKey:@"_success"];
-            if ([success isEqualToString:@"false"]) {
-                completed(false, [JCV4ProvisioningError errorWithType:JCV4ProvisioningRequestResponseError reason:[status stringValueForKey:@"_error_text"]]);
-                return;
-            }
-            
-            NSArray *array = [result valueForKeyPath:@"branding.settings_data.core_data_list.account_list.account.data"];
-            if (!array || array.count == 0) {
-                completed(false, [JCV4ProvisioningError errorWithType:JCV4ProvisioningResponseParseError reason:@"No Line Configuration present"]);
-                return;
-            }
-            
-            [LineConfiguration addLineConfigurations:array line:line completed:^(BOOL success, NSError *error) {
-                if (success) {
-                    completed (YES, nil);
-                }
-                else
-                {
-                    completed(NO, [JCV4ProvisioningError errorWithType:JCV4ProvisioningResponseCoreDataError reason:error.localizedDescription]);
-                    NSLog(@"%@", [error description]);
-                }
-            }];
-        }
-        @catch (NSException *exception) {
-            completed(NO, [JCV4ProvisioningError errorWithType:JCV4ProvisioningUnknownProvisioningError reason:exception.reason]);
-        }
-    });
-}
 
 @end
 
@@ -172,7 +112,6 @@ NSString *const kJCV4ProvisioningClientRequestString = @"<login user=\"%@\" pass
 
 #pragma mark - JCV4ProvisioningURLRequest -
 
-NSString *const kJCV4ProvisioningClientRequestUrl = @"https://pbx.onjive.com/p/mobility/mobileusersettings";
 
 @implementation JCV4ProvisioningURLRequest
 

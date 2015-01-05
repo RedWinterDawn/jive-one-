@@ -15,7 +15,7 @@
 // Managers
 #import "JCBluetoothManager.h"
 #import "SipHandler.h"
-#import "JCV4ProvisioningClient.h"
+#import "LineConfiguration+Custom.h"
 
 // Objects
 #import "JCLineSession.h"
@@ -135,7 +135,7 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
                 
         // If we do not have a line configuration, we need to request it.
         [UIApplication showHudWithTitle:@"" message:@"Selecting Line..."];
-        [JCV4ProvisioningClient requestProvisioningForLine:line completed:^(BOOL success, NSError *error) {
+        [LineConfiguration downloadLineConfigurationForLine:line completion:^(BOOL success, NSError *error) {
             [UIApplication hideHud];
             if (success) {
                 [self registerToLine:line];

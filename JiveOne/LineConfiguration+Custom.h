@@ -8,8 +8,8 @@
 
 #import "LineConfiguration.h"
 
-@interface LineConfiguration (Custom)
+@interface LineConfiguration (V4ProvisioningClient)
 
-+ (void)addLineConfigurations:(NSArray *)data line:(Line *)line completed:(void (^)(BOOL success, NSError *error))completed;
++(void)downloadLineConfigurationForLine:(Line *)line completion:(CompletionHandler)completion;
 
 @end
