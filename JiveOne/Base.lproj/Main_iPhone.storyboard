@@ -2480,8 +2480,8 @@
                                     <action selector="initiateCall:" destination="3A8-R9-IcP" eventType="touchUpInside" id="CI4-Nv-yH0"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="meF-1G-p2k" userLabel="Keypad">
-                                <rect key="frame" x="25" y="50" width="270" height="247"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="meF-1G-p2k" userLabel="Keypad">
+                                <rect key="frame" x="25" y="50" width="270" height="246"/>
                                 <subviews>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nsS-HF-huE">
                                         <rect key="frame" x="32" y="0.0" width="62" height="62"/>
@@ -2518,7 +2518,7 @@
                                             <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="qbb-YW-777"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7br-ug-lFI">
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7br-ug-lFI">
                                         <rect key="frame" x="104" y="0.0" width="62" height="62"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="7br-ug-lFI" secondAttribute="height" multiplier="1:1" id="S45-pP-9rf"/>
@@ -2944,7 +2944,7 @@
                             <constraint firstItem="0XG-qH-giP" firstAttribute="centerY" secondItem="igS-G2-NfM" secondAttribute="centerY" id="F3A-Mz-Cnd"/>
                             <constraint firstItem="igS-G2-NfM" firstAttribute="leading" secondItem="0XG-qH-giP" secondAttribute="trailing" id="HbT-LW-NNC"/>
                             <constraint firstAttribute="bottomMargin" secondItem="3FV-p4-tnZ" secondAttribute="bottom" constant="60" id="QrM-yh-9o0"/>
-                            <constraint firstAttribute="bottom" secondItem="meF-1G-p2k" secondAttribute="bottom" constant="70" id="VoP-QX-uCM"/>
+                            <constraint firstAttribute="bottom" secondItem="meF-1G-p2k" secondAttribute="bottom" constant="120" id="VoP-QX-uCM"/>
                             <constraint firstAttribute="centerX" secondItem="3FV-p4-tnZ" secondAttribute="centerX" id="jdR-Xo-yrT"/>
                         </constraints>
                     </view>
