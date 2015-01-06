@@ -11,6 +11,7 @@
 #import "JCV4Client.h"
 
 #import "NSDictionary+Validations.h"
+#import "NSString+MD5Additions.h"
 
 #define LINE_CONFIGURATION_REQUEST_TIMEOUT 60
 
@@ -271,7 +272,7 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
     NSString *appBuildString    = [bundle objectForInfoDictionaryKey:(__bridge id)kCFBundleVersionKey];
     NSString *model             = device.model;
     NSString *os                = device.systemVersion;
-    NSString *uuid              = device.identifierForVendor.UUIDString;
+    NSString *uuid              = [[NSString stringWithFormat:@"%@-%@", device.identifierForVendor.UUIDString, username] MD5Hash];
     NSString *type              = device.userInterfaceIdiom == UIUserInterfaceIdiomPhone ? kJCLineConfigurationRequestDeviceTypePhone : kJCLineConfigurationRequestDeviceTypeTablet;
     
     _xml = [NSString stringWithFormat:kLineConfigurationRequestXMLString, username, token, pbxId, extension, model, os, locale, language, uuid, appBuildString, type];
@@ -285,7 +286,6 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
     mutableRequest.HTTPShouldHandleCookies = FALSE;
     [mutableRequest setValue:@"application/xml" forHTTPHeaderField:@"Content-Type"];
     mutableRequest.timeoutInterval = LINE_CONFIGURATION_REQUEST_TIMEOUT;
-    
     
     return mutableRequest;
 }
