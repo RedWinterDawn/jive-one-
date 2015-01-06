@@ -187,6 +187,18 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Descrip
     }
 }
 
+- (IBAction)togglePreasenceEnabled:(id)sender {
+    if ([sender isKindOfClass:[UISwitch class]]) {
+        UISwitch *switchBtn = (UISwitch *)sender;
+        JCAppSettings *settings = [JCAppSettings sharedSettings];
+//        [_phoneManager disconnect];
+        settings.preasence = !settings.isPreasenceEnabled;
+        switchBtn.on = settings.isPreasenceEnabled;
+       // [_phoneManager connectToLine:_authenticationManager.line completion:nil];
+        NSLog(@"TogglePreasence");
+    }
+}
+
 #pragma mark - Delegate Handlers -
 
 #pragma mark MFMailComposeViewControllerDelegate

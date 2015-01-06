@@ -10,6 +10,7 @@
 
 NSString *const kJCAppSettingsIntercomEnabledAttribute = @"intercomEnabled";
 NSString *const kJCAppSettingsWifiOnlyAttribute = @"wifiOnly";
+NSString *const kJCAppSettingsPreasenceAttribute = @"preasenceEnabled";
 
 @implementation JCAppSettings
 
@@ -25,6 +26,11 @@ NSString *const kJCAppSettingsWifiOnlyAttribute = @"wifiOnly";
     [self setSettingBoolValue:callsOverCellEnabled forKey:kJCAppSettingsWifiOnlyAttribute];
 }
 
+-(void)setPreasenceEnabled:(BOOL)preasenceEnabled
+{
+    [self setSettingBoolValue:preasenceEnabled forKey:kJCAppSettingsPreasenceAttribute];
+}
+
 #pragma mark - Getters -
 
 -(BOOL)isIntercomEnabled
@@ -36,6 +42,10 @@ NSString *const kJCAppSettingsWifiOnlyAttribute = @"wifiOnly";
     return [[NSUserDefaults standardUserDefaults] boolForKey:kJCAppSettingsWifiOnlyAttribute];
 }
 
+-(BOOL)isPreasenceEnabled
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kJCAppSettingsPreasenceAttribute];
+}
 #pragma mark - Private -
 
 -(void)setSettingBoolValue:(BOOL)value forKey:(NSString *)key
