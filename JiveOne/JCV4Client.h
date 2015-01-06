@@ -6,9 +6,13 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "JCClient.h"
 
 @class Line;
+
+@interface JCV4Client : JCClient
+
+@end
 
 @interface JCV4ProvisioningURLRequest : NSMutableURLRequest
 
@@ -35,23 +39,5 @@
 
 @property (nonatomic, readonly) NSString *xml;
 @property (nonatomic, readonly) NSData *postData;
-
-@end
-
-@interface JCV4ProvisioningClient : NSObject
-
-@end
-
-typedef enum : NSUInteger {
-    JCV4ProvisioningUnknownProvisioningError = 0,
-    JCV4ProvisioningInvalidRequestParametersError,
-    JCV4ProvisioningRequestResponseError,
-    JCV4ProvisioningResponseParseError,
-    JCV4ProvisioningResponseCoreDataError,
-} JCV4ProvisioningErrorType;
-
-@interface JCV4ProvisioningError : NSError
-
-+(instancetype)errorWithType:(JCV4ProvisioningErrorType)type reason:(NSString *)reason;
 
 @end

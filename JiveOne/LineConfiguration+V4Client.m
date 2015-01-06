@@ -6,10 +6,11 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "LineConfiguration+V4ProvisioningClient.h"
+#import "LineConfiguration+V4Client.h"
 #import "PBX.h"
-#import "JCV4ProvisioningClient.h"
-#import <XMLDictionary/XMLDictionary.h>
+#import "JCV4Client.h"
+
+NSString *const kJCV4ProvisioningRequestUrl = @"/p/mobility/mobileusersettings";
 
 NSString *const kLineConfigurationResponseKey = @"_name";
 NSString *const kLineConfigurationResponseValue = @"_value";
@@ -29,26 +30,27 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
 
 + (void)downloadLineConfigurationForLine:(Line *)line completion:(CompletionHandler)completion
 {
+    NSURLRequest *request = nil;
+    request = [JCV4ProvisioningURLRequest requestWithLine:line];
+    
+    JCV4Client *client = [[JCV4Client alloc] init];
+    [client.manager POST:kJCV4ProvisioningRequestUrl
+              parameters:nil
+                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                     [self processLineConfigurationResponseObject:responseObject line:line completion:completion];
+                 }
+                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                     if (completion) {
+                         completion(NO, [JCClientError errorWithCode:JCClientRequestErrorCode userInfo:error.userInfo]);
+                     }
+                 }];
+}
+
++ (void)processLineConfigurationResponseObject:(id)responseObject line:(Line *)line completion:(CompletionHandler)completion
+{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         Line *localLine = (Line *)[[NSManagedObjectContext MR_contextForCurrentThread] objectWithID:line.objectID];
-        
         @try {
-            NSURLRequest *request = nil;
-            request = [JCV4ProvisioningURLRequest requestWithLine:localLine];
-        
-            // Peform the request
-            __autoreleasing NSURLResponse *response;
-            __block NSError *error = nil;
-            NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-            if (error) {
-                [NSException raise:kLineConfigurationServerErrorException format:@"%@", error.description];
-            }
-        
-            // Process Response Data
-            NSDictionary *responseObject = [NSDictionary dictionaryWithXMLData:data];
-            if (!response) {
-                [NSException raise:kLineConfigurationInvalidServerResponseException format:@"Response Empty"];
-            }
             
             NSDictionary *status = [responseObject valueForKeyPath:@"login_response.status"];
             NSString *success = [status stringValueForKey:@"_success"];
@@ -64,19 +66,19 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
             [MagicalRecord saveUsingCurrentThreadContextWithBlock:^(NSManagedObjectContext *localContext) {
                 [self processLineConfigurationDataArray:array line:(Line *)[localContext objectWithID:line.objectID]];
             }
-            completion:^(BOOL success, NSError *error) {
-                if (completion) {
-                    if (error) {
-                        completion(NO, error);
-                    } else {
-                        completion(YES, nil);
-                    }
-                }
-            }];
+                                                       completion:^(BOOL success, NSError *error) {
+                                                           if (completion) {
+                                                               if (error) {
+                                                                   completion(NO, error);
+                                                               } else {
+                                                                   completion(YES, nil);
+                                                               }
+                                                           }
+                                                       }];
         }
         @catch (NSException *exception) {
             if (completion) {
-                JCV4ProvisioningErrorType type;
+                JCClientErrorCode code;
                 NSString *name = exception.name;
                 if ([name isEqualToString:kLineConfigurationInvalidServerRequestException]) {
                     type = JCV4ProvisioningInvalidRequestParametersError;
@@ -89,7 +91,7 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
                 }
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    completion(NO, [JCV4ProvisioningError errorWithType:type reason:exception.reason]);
+                    completion(NO, [JCClientError errorWithCode:code reason:exception.reason]);
                 });
             }
         }

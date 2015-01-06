@@ -12,7 +12,6 @@
 #import "Common.h"
 
 #import "JCV5ApiClient.h"
-#import "JCV4ProvisioningClient.h"
 #import "JCAuthenticationManagerError.h"
 #import "User+Custom.h"
 #import "PBX+V5Client.h"

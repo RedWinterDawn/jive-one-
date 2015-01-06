@@ -6,18 +6,32 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCV4ProvisioningClient.h"
-#import "Common.h"
-#import "LineConfiguration.h"
+#import "JCV4Client.h"
 
+// Managed Objects
+#import "LineConfiguration.h"
 #import "Line.h"
 #import "PBX.h"
 #import "User.h"
 
-NSString *const kJCV4ProvisioningClientRequestUrl = @"https://pbx.onjive.com/p/mobility/mobileusersettings";
+NSString *const kJCV4ClientBaseUrl = @"https://pbx.onjive.com";
 
-@implementation JCV4ProvisioningClient
+@implementation JCV4Client
 
+-(instancetype)init
+{
+    return [self initWithBaseURL:[NSURL URLWithString:kJCV4ClientBaseUrl]];
+}
+
+-(instancetype)initWithBaseURL:(NSURL *)url
+{
+    self = [super initWithBaseURL:url];
+    if (self) {
+        _manager.requestSerializer = [JCAuthenticationXmlRequestSerializer serializer];
+        _manager.responseSerializer = [JCXMLParserResponseSerializer serializer];
+    }
+    return self;
+}
 
 @end
 
@@ -112,7 +126,6 @@ NSString *const kJCV4ProvisioningClientRequestString = @"<login user=\"%@\" pass
 
 #pragma mark - JCV4ProvisioningURLRequest -
 
-
 @implementation JCV4ProvisioningURLRequest
 
 +(NSMutableURLRequest *)requestWithLine:(Line *)line
@@ -125,25 +138,9 @@ NSString *const kJCV4ProvisioningClientRequestString = @"<login user=\"%@\" pass
     // Create Payload
     NSData *data = [JCV4ProvisioningRequest postDataForLine:line];
     [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)data.length] forHTTPHeaderField:@"Content-Length"];
-    [request setValue:[JCAuthenticationManager sharedInstance].authToken forHTTPHeaderField:@"Authorization"];
+    //[request setValue:[JCAuthenticationManager sharedInstance].authToken forHTTPHeaderField:@"Authorization"];
     [request setHTTPBody:data];
     return request;
-}
-
-@end
-
-#pragma mark - JCV4ProvisioningError -
-
-NSString *const kJCV4ProvisioningErrorDomain = @"ProvisioningError";
-
-@implementation JCV4ProvisioningError
-
-+(instancetype)errorWithType:(JCV4ProvisioningErrorType)type reason:(NSString *)reason{
-    NSDictionary *userInfo = nil;
-    if (reason) {
-        userInfo = @{NSLocalizedDescriptionKey:reason};
-    }
-    return [JCV4ProvisioningError errorWithDomain:kJCV4ProvisioningErrorDomain code:type userInfo:userInfo];
 }
 
 @end

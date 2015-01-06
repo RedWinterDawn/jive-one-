@@ -8,7 +8,7 @@
 
 #import "LineConfiguration.h"
 
-@interface LineConfiguration (V4ProvisioningClient)
+@interface LineConfiguration (V4Client)
 
 +(void)downloadLineConfigurationForLine:(Line *)line completion:(CompletionHandler)completion;
 
