@@ -279,7 +279,9 @@
     	}];
         
         // Register the Phone.
-        [JCPhoneManager connectToLine:localLine completion:NULL];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [JCPhoneManager connectToLine:line completion:NULL];
+        });
     });
 }
 
