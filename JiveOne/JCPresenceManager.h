@@ -25,5 +25,6 @@ extern NSString *const kJCPresenceManagerLinesChangedNotification;
 
 +(instancetype)sharedManager;
 +(void)subscribeToPbx:(PBX *)pbx;
++(void)unsubscribeFromPbx:(PBX *)pbx;
 
 @end

@@ -41,6 +41,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Descrip
     JCAppSettings *settings = [JCAppSettings sharedSettings];
     self.intercomEnabled.on = settings.intercomEnabled;
     self.wifiOnly.on = settings.wifiOnly;
+    self.preasenceEnabled.on = settings.preasenceEnabled;
 }
 
 -(void)awakeFromNib
@@ -192,10 +193,10 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Descrip
         UISwitch *switchBtn = (UISwitch *)sender;
         JCAppSettings *settings = [JCAppSettings sharedSettings];
 //        [_phoneManager disconnect];
-        settings.preasence = !settings.isPreasenceEnabled;
+        settings.preasenceEnabled = !settings.isPreasenceEnabled;
         switchBtn.on = settings.isPreasenceEnabled;
        // [_phoneManager connectToLine:_authenticationManager.line completion:nil];
-        NSLog(@"TogglePreasence");
+        NSLog(@"Toggle Preasence %@", settings.isPreasenceEnabled);
     }
 }
 
