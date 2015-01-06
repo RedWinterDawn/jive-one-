@@ -339,14 +339,10 @@
     
     [JCSocket reset];                                   // Disconnect the socket and purge socket session.
     [JCPhoneManager disconnect];                        // Disconnect the phone manager
-    [[JCV5ApiClient sharedClient] stopAllOperations];   // Kill any netowrk operations.
+    [JCClient cancelAllOperations];                     // Kill any pending client network operations.
     [JCBadgeManager reset];                             // Resets the Badge Manager.
     [self presentLoginViewController:YES];              // Present the login view.
-    
-    [[UIApplication sharedApplication] unregisterForRemoteNotifications];
 }
-
-
 
 #pragma mark JCCallCardManager
 

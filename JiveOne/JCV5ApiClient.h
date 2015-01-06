@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "JCClient.h"
+
 @class Voicemail;
 @class Line;
 @class User;

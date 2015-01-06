@@ -11,6 +11,8 @@
 #import "JCAuthenticationManager.h"
 #import <XMLDictionary/XMLDictionary.h>
 
+NSMutableArray *operationQueues;
+
 NSString *const kJCClientAuthorizationHeaderFieldKey = @"Authorization";
 
 @implementation JCClient
@@ -25,8 +27,33 @@ NSString *const kJCClientAuthorizationHeaderFieldKey = @"Authorization";
         _manager.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
         _manager.securityPolicy.allowInvalidCertificates = YES;
         #endif
+        
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            operationQueues = [[NSMutableArray alloc] init];
+        });
+        
+        NSOperationQueue *queue = _manager.operationQueue;
+        if (![operationQueues containsObject:queue]) {
+            [operationQueues addObject:queue];
+        }
     }
     return self;
+}
+
+-(void)dealloc
+{
+    NSOperationQueue *queue = _manager.operationQueue;
+    if ([operationQueues containsObject:queue]) {
+        [operationQueues removeObject:queue];
+    }
+}
+
++(void)cancelAllOperations
+{
+    for (NSOperationQueue *operationQueue in operationQueues) {
+        [operationQueue cancelAllOperations];
+    }
 }
 
 @end
@@ -76,12 +103,6 @@ NSString *const JCClientErrorDomain = @"JCClientError";
     return serializer;
 }
 
-- (NSURLRequest *)requestBySerializingRequest:(NSURLRequest *)request withParameters:(id)parameters error:(NSError *__autoreleasing *)error
-{
-    
-    return request;
-}
-
 @end
 
 @implementation JCXMLParserResponseSerializer
@@ -95,7 +116,7 @@ NSString *const JCClientErrorDomain = @"JCClientError";
 {
     self = [super init];
     if (self) {
-        self.acceptableContentTypes = [[NSSet alloc] initWithObjects:@"application/xml", @"text/xml", nil];
+        self.acceptableContentTypes = [[NSSet alloc] initWithObjects:@"application/xml", @"text/xml", @"text/html;charset=ISO-8859-1", @"text/html", nil];
     }
     return self;
 }

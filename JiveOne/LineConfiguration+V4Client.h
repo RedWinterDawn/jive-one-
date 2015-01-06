@@ -7,9 +7,16 @@
 //
 
 #import "LineConfiguration.h"
+#import "JCV4Client.h"
 
 @interface LineConfiguration (V4Client)
 
 +(void)downloadLineConfigurationForLine:(Line *)line completion:(CompletionHandler)completion;
+
+@end
+
+@interface JCProvisioningXmlRequestSerializer : AFHTTPRequestSerializer
+
+@property (nonatomic, readonly) NSString *xml;
 
 @end

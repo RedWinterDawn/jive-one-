@@ -19,6 +19,8 @@
 
 -(instancetype)initWithBaseURL:(NSURL *)url;
 
++ (void)cancelAllOperations;
+
 @end
 
 #pragma mark Error Handling
@@ -28,6 +30,7 @@ typedef enum : NSUInteger {
     JCClientInvalidArgumentErrorCode,
     JCClientInvalidRequestParameterErrorCode,
     JCClientRequestErrorCode,
+    JCClientResponseErrorCode,
     JCClientResponseParserErrorCode,
     JCClientUnexpectedResponseErrorCode,
     JCClientCoreDataErrorCode
