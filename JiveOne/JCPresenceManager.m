@@ -34,7 +34,7 @@ NSString *const kJCPresenceManagerLinesChangedNotification = @"linesChanged";
         _socket = [JCSocket sharedSocket];
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         [center addObserver:self selector:@selector(socketDidReceiveMessageSelector:) name:kJCSocketReceivedDataNotification object:_socket];
-        [ [JCAppSettings sharedSettings] addObserver:self forKeyPath:kJCAppSettingsPreasenceAttribute options:0 context:NULL];
+        [ [JCAppSettings sharedSettings] addObserver:self forKeyPath:kJCAppSettingsPresenceAttribute options:0 context:NULL];
     }
     return self;
     
@@ -53,7 +53,7 @@ NSString *const kJCPresenceManagerLinesChangedNotification = @"linesChanged";
         return;
     }
     
-    if (![JCAppSettings sharedSettings].isPreasenceEnabled) {
+    if (![JCAppSettings sharedSettings].isPresenceEnabled) {
         return;
     }
 
@@ -70,10 +70,10 @@ NSString *const kJCPresenceManagerLinesChangedNotification = @"linesChanged";
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if ([keyPath isEqualToString:kJCAppSettingsPreasenceAttribute]) {
+    if ([keyPath isEqualToString:kJCAppSettingsPresenceAttribute]) {
         JCAppSettings *settings = (JCAppSettings *)object;
         if([JCSocket sharedSocket].isReady) {
-            if (settings.isPreasenceEnabled) {
+            if (settings.isPresenceEnabled) {
                 [self subscribeToPbx:_pbx];
             } else {
                 [self unsubscribeFromPbx:_pbx];

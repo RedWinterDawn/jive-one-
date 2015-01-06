@@ -10,7 +10,7 @@
 
 NSString *const kJCAppSettingsIntercomEnabledAttribute = @"intercomEnabled";
 NSString *const kJCAppSettingsWifiOnlyAttribute = @"wifiOnly";
-NSString *const kJCAppSettingsPreasenceAttribute = @"preasenceEnabled";
+NSString *const kJCAppSettingsPresenceAttribute = @"presenceEnabled";
 
 @implementation JCAppSettings
 
@@ -26,9 +26,9 @@ NSString *const kJCAppSettingsPreasenceAttribute = @"preasenceEnabled";
     [self setSettingBoolValue:callsOverCellEnabled forKey:kJCAppSettingsWifiOnlyAttribute];
 }
 
--(void)setPreasenceEnabled:(BOOL)preasenceEnabled
+-(void)setPresenceEnabled:(BOOL)presenceEnabled
 {
-    [self setSettingBoolValue:preasenceEnabled forKey:kJCAppSettingsPreasenceAttribute];
+    [self setSettingBoolValue:presenceEnabled forKey:kJCAppSettingsPresenceAttribute];
 }
 
 #pragma mark - Getters -
@@ -42,9 +42,9 @@ NSString *const kJCAppSettingsPreasenceAttribute = @"preasenceEnabled";
     return [[NSUserDefaults standardUserDefaults] boolForKey:kJCAppSettingsWifiOnlyAttribute];
 }
 
--(BOOL)isPreasenceEnabled
+-(BOOL)isPresenceEnabled
 {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:kJCAppSettingsPreasenceAttribute];
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kJCAppSettingsPresenceAttribute];
 }
 #pragma mark - Private -
 
