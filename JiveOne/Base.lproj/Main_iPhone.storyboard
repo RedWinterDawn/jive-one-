@@ -2228,9 +2228,11 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
+                        <outlet property="logingBackgroundView" destination="PJQ-b3-euV" id="Rta-gW-6ar"/>
                         <outlet property="pickerContainerBottomConstraint" destination="pfW-xx-drb" id="s9R-Dy-63E"/>
                         <outlet property="pickerContainerHeightConstraint" destination="0ym-Kr-wXd" id="mwR-8w-iEJ"/>
                         <outlet property="pickerView" destination="GHJ-Ok-PFS" id="r5d-dM-Gi5"/>
+                        <outlet property="pickerViewBackground" destination="Alt-lS-7wK" id="8R0-Nd-vB7"/>
                         <outlet property="selectBtn" destination="gRx-8z-M5N" id="P0e-tj-vNq"/>
                     </connections>
                 </viewController>
