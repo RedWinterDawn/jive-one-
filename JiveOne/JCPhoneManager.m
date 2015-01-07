@@ -252,6 +252,7 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
     
     [_sipHandler disconnect];
     _sipHandler = nil;
+    _line = nil;
     self.connected = FALSE;
     _connecting = FALSE;
 }
@@ -401,6 +402,13 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
     // If we are connected, we should be able to place a phone call.
     if (_connected) {
         [self dial:dialString type:dialType completion:completion];
+        return;
+    }
+    
+    if (!_line) {
+        if (completion) {
+            completion(false, nil);
+        }
         return;
     }
     
