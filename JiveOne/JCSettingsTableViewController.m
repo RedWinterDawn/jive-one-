@@ -16,7 +16,7 @@
 #import <sys/sysctl.h>
 #import "PBX.h"
 
-NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please describe any issues your are exsperiencing :</strong><br><br><br><br><br><br><br><br><br><br><br><br><br><hr><strong>Device Specs</strong><br>Model: %@ <br> On iOS Version: %@ <br> App Version: %@ <br> Country: %@ <br> UUID : %@  <br> PBX : %@  <br> User : %@  <br> Line : %@  <br> ";
+NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please describe any issues you are exsperiencing :</strong><br><br><br><br><br><br><br><br><br><br><br><br><br><hr><strong>Device Specs</strong><br>Model: %@ <br> On iOS Version: %@ <br> App Version: %@ <br> Country: %@ <br> UUID : %@  <br> PBX : %@  <br> User : %@  <br> Line : %@  <br> ";
 
 @interface JCSettingsTableViewController () <MFMailComposeViewControllerDelegate>
 {
