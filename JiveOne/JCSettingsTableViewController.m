@@ -16,7 +16,7 @@
 #import <sys/sysctl.h>
 #import "PBX.h"
 
-NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please describe any issues your are exsperiencing :</strong><br><br><br><br><br><br><br><br><br><br><br><br><br><hr><strong>Device Specs</strong><br>Model: %@ <br> On iOS Version: %@ <br> App Version: %@ <br> Country: %@ <br> UUID : %@  <br> ";
+NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please describe any issues your are exsperiencing :</strong><br><br><br><br><br><br><br><br><br><br><br><br><br><hr><strong>Device Specs</strong><br>Model: %@ <br> On iOS Version: %@ <br> App Version: %@ <br> Country: %@ <br> UUID : %@  <br> PBX : %@  <br> User : %@  <br> Line : %@  <br> ";
 
 @interface JCSettingsTableViewController () <MFMailComposeViewControllerDelegate>
 {
@@ -107,8 +107,11 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
         NSString *appVersion         = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
         NSString *country               = [[NSLocale currentLocale] localeIdentifier];
         NSString *uuid                    = [currentDevice userUniqueIdentiferForUser:_authenticationManager.jiveUserId];
+        NSString * pbx                    = _authenticationManager.line.pbx.displayName;
+        NSString *user                    = _authenticationManager.line.pbx.user.jiveUserId;
+        NSString *line                    = _authenticationManager.line.extension;
         
-        NSString *bodyTemplate = [NSString stringWithFormat:kJCSettingsTableViewControllerFeebackMessage, model, systemVersion, appVersion, country, uuid];
+        NSString *bodyTemplate = [NSString stringWithFormat:kJCSettingsTableViewControllerFeebackMessage, model, systemVersion, appVersion, country, uuid, pbx, user, line];
         [mailViewController setMessageBody:bodyTemplate isHTML:YES];
         [self presentViewController:mailViewController animated:YES completion:nil];
     }
