@@ -178,10 +178,6 @@ static int MAX_LOGIN_ATTEMPTS = 2;
 
 -(void)setLine:(Line *)line
 {
-    if (_line == line) {
-        return;
-    }
-    
     [self willChangeValueForKey:NSStringFromSelector(@selector(line))];
     _line = line;
     [self didChangeValueForKey:NSStringFromSelector(@selector(line))];
