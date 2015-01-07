@@ -84,7 +84,7 @@ NSString *const kJCPresenceManagerLinesChangedNotification = @"linesChanged";
 
 -(void)unsubscribeFromPbx:(PBX *)pbx
 {
-    [JCSocket unsubscribeToSocketEvents];
+    [JCSocket unsubscribeToSocketEvents:NULL];
     _lines = nil;
     [[NSNotificationCenter defaultCenter] postNotificationName:kJCPresenceManagerLinesChangedNotification object:self userInfo:nil];
 }
