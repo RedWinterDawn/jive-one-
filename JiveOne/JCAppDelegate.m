@@ -253,6 +253,7 @@
         [center addObserver:self selector:@selector(stopRingtone) name:kJCPhoneManagerAnswerCallNotification object:_phoneManager];
     }
     
+    [JCPhoneManager disconnect];
     dispatch_queue_t backgroundQueue = dispatch_queue_create("register_services_to_line", 0);
     dispatch_async(backgroundQueue, ^{
         Line *localLine = (Line *)[[NSManagedObjectContext MR_contextForCurrentThread] objectWithID:line.objectID];
