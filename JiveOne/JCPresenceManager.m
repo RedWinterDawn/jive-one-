@@ -8,6 +8,7 @@
 
 #import "JCPresenceManager.h"
 #import "JCSocket.h"
+#import "JCAppSettings.h"
 
 NSString *const kJCPresenceManagerLinesChangedNotification = @"linesChanged";
 
@@ -15,6 +16,7 @@ NSString *const kJCPresenceManagerLinesChangedNotification = @"linesChanged";
 {
     NSMutableArray *_lines;
     JCSocket *_socket;
+    PBX *_pbx;
 }
 
 @end
@@ -32,8 +34,10 @@ NSString *const kJCPresenceManagerLinesChangedNotification = @"linesChanged";
         _socket = [JCSocket sharedSocket];
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         [center addObserver:self selector:@selector(socketDidReceiveMessageSelector:) name:kJCSocketReceivedDataNotification object:_socket];
+        [ [JCAppSettings sharedSettings] addObserver:self forKeyPath:kJCAppSettingsPresenceAttribute options:0 context:NULL];
     }
     return self;
+    
 }
 
 /**
@@ -42,6 +46,17 @@ NSString *const kJCPresenceManagerLinesChangedNotification = @"linesChanged";
  */
 -(void)subscribeToPbx:(PBX *)pbx
 {
+    
+    _pbx = pbx;
+    
+    if (!_pbx) {
+        return;
+    }
+    
+    if (![JCAppSettings sharedSettings].isPresenceEnabled) {
+        return;
+    }
+
     // Create a line presence object to represent the contact.
     NSSet *contacts = pbx.contacts;
     _lines = [NSMutableArray arrayWithCapacity:contacts.count];
@@ -50,6 +65,27 @@ NSString *const kJCPresenceManagerLinesChangedNotification = @"linesChanged";
         [JCSocket subscribeToSocketEventsWithIdentifer:contact.jrn entity:contact.jrn type:@"dialog"];
     }
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:kJCPresenceManagerLinesChangedNotification object:self userInfo:nil];
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:kJCAppSettingsPresenceAttribute]) {
+        JCAppSettings *settings = (JCAppSettings *)object;
+        if([JCSocket sharedSocket].isReady) {
+            if (settings.isPresenceEnabled) {
+                [self subscribeToPbx:_pbx];
+            } else {
+                [self unsubscribeFromPbx:_pbx];
+            }
+        }
+    }
+}
+
+-(void)unsubscribeFromPbx:(PBX *)pbx
+{
+    [JCSocket unsubscribeToSocketEvents:NULL];
+    _lines = nil;
     [[NSNotificationCenter defaultCenter] postNotificationName:kJCPresenceManagerLinesChangedNotification object:self userInfo:nil];
 }
 
@@ -149,6 +185,9 @@ NSString *const kJCPresenceManagerIdentifierKey = @"subId";
     [[JCPresenceManager sharedManager] subscribeToPbx:pbx];
 }
 
-
++(void)unsubscribeFromPbx:(PBX *)pbx
+{
+    [[JCPresenceManager sharedManager] unsubscribeFromPbx:pbx];
+}
 
 @end

@@ -17,10 +17,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *buildLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *intercomEnabled;
 @property (weak, nonatomic) IBOutlet UISwitch *wifiOnly;
+@property (weak, nonatomic) IBOutlet UISwitch *presenceEnabled;
 
 -(IBAction)leaveFeedback:(id)sender;
 -(IBAction)logout:(id)sender;
 -(IBAction)toggleIntercomeEnabled:(id)sender;
 -(IBAction)toggleWifiOnly:(id)sender;
+- (IBAction)togglePresenceEnabled:(id)sender;
 
 @end

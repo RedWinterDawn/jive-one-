@@ -192,10 +192,10 @@
             </objects>
             <point key="canvasLocation" x="2054" y="-869"/>
         </scene>
-        <!--PreasenceViewController-->
+        <!--PresenceViewController-->
         <scene sceneID="N7a-CP-hnj">
             <objects>
-                <tableViewController storyboardIdentifier="JCPresenceSelectionViewController" title="PreasenceViewController" id="Udl-o5-oNi" customClass="JCPresenceViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="JCPresenceSelectionViewController" title="PresenceViewController" id="Udl-o5-oNi" userLabel="PresenceViewController" customClass="JCPresenceViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="static" style="grouped" rowHeight="44" sectionHeaderHeight="1" sectionFooterHeight="11" id="qTP-mJ-nry">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

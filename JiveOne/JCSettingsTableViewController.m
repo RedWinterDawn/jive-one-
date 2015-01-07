@@ -41,6 +41,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Descrip
     JCAppSettings *settings = [JCAppSettings sharedSettings];
     self.intercomEnabled.on = settings.intercomEnabled;
     self.wifiOnly.on = settings.wifiOnly;
+    self.presenceEnabled.on = settings.presenceEnabled;
 }
 
 -(void)awakeFromNib
@@ -184,6 +185,16 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Descrip
         settings.wifiOnly = !settings.isWifiOnly;
         switchBtn.on = settings.isWifiOnly;
         [_phoneManager connectToLine:_authenticationManager.line completion:nil];
+    }
+}
+
+- (IBAction)togglePresenceEnabled:(id)sender {
+    if ([sender isKindOfClass:[UISwitch class]]) {
+        UISwitch *switchBtn = (UISwitch *)sender;
+        JCAppSettings *settings = [JCAppSettings sharedSettings];
+        settings.presenceEnabled = !settings.isPresenceEnabled;
+        switchBtn.on = settings.isPresenceEnabled;
+         NSLog(@"Toggle Presence ");
     }
 }
 
