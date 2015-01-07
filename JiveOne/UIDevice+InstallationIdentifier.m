@@ -9,6 +9,8 @@
 #import "UIDevice+InstallationIdentifier.h"
 #import "JCKeychain.h"
 
+NSString *const kUIDeviceSimulatorInstallationIdString = @"00000000-0000-0000-0000-000000000000";
+
 NSString *const kUIDeviceInstallationId = @"installationIdentifier";
 
 @implementation UIDevice (InstallationIdentifier)
@@ -19,12 +21,20 @@ NSString *const kUIDeviceInstallationId = @"installationIdentifier";
     NSString *string = (NSString *)[JCKeychain loadValueForKey:key];
     if (string.length == 0)
     {
+        #if TARGET_IPHONE_SIMULATOR
+    
+        string = kUIDeviceSimulatorInstallationIdString;
+        
+        #else
+        
         //Generate UUID to serve as device ID
         CFUUIDRef uuidObj = CFUUIDCreate(nil);
         CFStringRef uuidString = CFUUIDCreateString(nil, uuidObj);
         string = [NSString stringWithString:(__bridge NSString*)uuidString];
         CFRelease(uuidString);
         CFRelease(uuidObj);
+        
+        #endif
         
         [JCKeychain saveValue:string forKey:key];
     }
