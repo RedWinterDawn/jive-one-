@@ -75,7 +75,7 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
 -(void)disconnect
 {
     // TODO: Unsubscribe to all socket events.
-    [JCSocket unsubscribeToSocketEvents];
+    [JCSocket unsubscribeToSocketEvents:NULL];
     
     [self closeSocketWithReason:@"Disconnecting"];
     _socket = nil;
@@ -290,30 +290,32 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
     JCSocket *socket = [JCSocket sharedSocket];
     if (socket.sessionUrl) {
         
-        // Premtively unsubscribe from all events on the socket.
-        [JCSocket unsubscribeToSocketEvents];
-        
-        NSString *sessionDeviceToken = socket.sessionDeviceToken;
-        if (!deviceToken || [sessionDeviceToken isEqualToString:deviceToken]) {
-            [socket openSession:socket.sessionUrl completion:completion];
-            return;
-        }
+        // Premtively unsubscribe from all events on the socket. If we get an error unsubscribing,
+        // we likely have a bad session url, which would occur if the server was restarted, or the
+        // sessions were terminated on the server, so they are now invalid and should not be
+        // connected to. We delete the keychain store. If we are successful at unsubscribing, we
+        // then attempt to open the socket.
+        [JCSocket unsubscribeToSocketEvents:^(BOOL success, NSError *error) {
+            if (success) {
+                NSString *sessionDeviceToken = socket.sessionDeviceToken;
+                if (!deviceToken || [sessionDeviceToken isEqualToString:deviceToken]) {
+                    [socket openSession:socket.sessionUrl completion:completion];
+                    return;
+                }
+            }
+            else
+            {
+                [JCKeychain deleteValueForKey:kJCSocketSessionKeychainKey]; // delete stored keychain credentials. They are no longer valid
+                [JCSocket requestSocketSessionRequestUrlsWithDeviceIdentifier:deviceToken completion:completion];
+            }
+        }];
     }
     
-    // If we do not have a session url, we need to request one, creating a session.
-    [JCSocket requestSocketSessionRequestUrlsWithDeviceIdentifier:deviceToken completion:^(BOOL success, NSError *error, NSDictionary *userInfo) {
-        if (success) {
-            
-            // Save the session keychain into the keychain for secure access.
-            [JCKeychain saveValue:userInfo forKey:kJCSocketSessionKeychainKey];
-            
-            // Open Session
-            [socket openSession:[userInfo objectForKey:kJCV5ClientSocketSessionResponseWebSocketRequestKey] completion:completion];
-        }
-        else {
-            NSLog(@"Failed requesting socket urls: %@", [error description]);
-        }
-    }];
+    // If we do not have a session url, we create a new session by requesting one.
+    else
+    {
+        [JCSocket requestSocketSessionRequestUrlsWithDeviceIdentifier:deviceToken completion:completion];
+    }
 }
 
 + (void)disconnect
@@ -341,7 +343,7 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
 
 @implementation JCSocket (V5Client)
 
-+ (void)requestSocketSessionRequestUrlsWithDeviceIdentifier:(NSString *)deviceToken completion:(ResultCompletionHandler)completed
++ (void)requestSocketSessionRequestUrlsWithDeviceIdentifier:(NSString *)deviceToken completion:(CompletionHandler)completion
 {
     JCV5ApiClient *client = [JCV5ApiClient sharedClient];
     [client setRequestAuthHeader:NO];
@@ -349,7 +351,9 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
               parameters:((deviceToken && deviceToken.length > 0) ? @{kJCV5ClientSocketSessionDeviceTokenKey : deviceToken} : nil)
                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
                      if (![responseObject isKindOfClass:[NSDictionary class]]) {
-                         completed(NO, nil, nil);
+                         if (completion) {
+                             completion(NO, nil);
+                         }
                          return;
                      }
                      
@@ -375,11 +379,16 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
                          [userInfo setObject:subscriptionUrl forKey:kJCV5ClientSocketSessionResponseSubscriptionRequestKey];
                      }
                      
-                     completed(YES, nil, userInfo);
+                     // Save the session keychain into the keychain for secure access.
+                     [JCKeychain saveValue:userInfo forKey:kJCSocketSessionKeychainKey];
                      
+                     // Open Session
+                     [[JCSocket sharedSocket] openSession:websocketUrl completion:completion];
                  }
                  failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                     completed(NO, error, nil);
+                     if (completion) {
+                         completion(NO, error);
+                     }
                  }];
 }
 
@@ -403,10 +412,13 @@ NSString *const kJCSocketParameterTypeKey       = @"type";
                     }];
 }
 
-+ (void)unsubscribeToSocketEvents {
++ (void)unsubscribeToSocketEvents:(CompletionHandler)completion {
     
     NSURL *url = [JCSocket sharedSocket].subscriptionUrl;
     if (!url) {
+        if (completion) {
+            completion(NO, [NSError errorWithDomain:@"Socket" code:0 userInfo:nil]);
+        }
         return;
     }
     
@@ -416,9 +428,15 @@ NSString *const kJCSocketParameterTypeKey       = @"type";
                    parameters:nil
                       success:^(AFHTTPRequestOperation *operation, id responseObject) {
                           NSLog(@"Unsubscribe All Events");
+                          if (completion) {
+                              completion(YES, nil);
+                          }
+                          
                       }
                       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                          NSLog(@"Error Un subscribing %@", error);
+                          if (completion) {
+                              completion(NO, error);
+                          }
                       }];
 }
 
