@@ -1,6 +1,8 @@
 //
-//  UIDevice+CellularData.h
+//  UIDevice+Additions.h
 //  JiveOne
+//
+//  Category Additions added to UIDevice to expose or provide additional data.
 //
 //  Created by Robert Barclay on 12/1/14.
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
@@ -23,5 +25,14 @@
 
 -(BOOL)carrierAllowsVOIP;
 -(BOOL)canMakeCall;
+
+@end
+
+@interface UIDevice (InstallationIdentifier)
+
+@property (nonatomic, readonly) NSString *installationIdentifier;
+
+-(void)clearInstallationIdentifier;
+-(NSString *)userUniqueIdentiferForUser:(NSString *)username;
 
 @end

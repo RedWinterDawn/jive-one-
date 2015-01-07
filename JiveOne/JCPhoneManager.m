@@ -15,15 +15,14 @@
 // Managers
 #import "JCBluetoothManager.h"
 #import "SipHandler.h"
-#import "LineConfiguration+V4ProvisioningClient.h"
+#import "LineConfiguration+V4Client.h"
 
 // Objects
 #import "JCLineSession.h"
 #import "JCConferenceCallCard.h"
+#import "Contact.h"
 
 // Categories
-#import "UIDevice+Custom.h"
-#import "Contact.h"
 #import "UIViewController+HUD.h"
 
 NSString *const kJCPhoneManager911String = @"911";

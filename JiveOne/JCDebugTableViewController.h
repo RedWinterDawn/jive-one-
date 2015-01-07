@@ -12,6 +12,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *jiveUserId;
 @property (weak, nonatomic) IBOutlet UILabel *accessToken;
+@property (weak, nonatomic) IBOutlet UILabel *installationIdentifer;
+@property (weak, nonatomic) IBOutlet UILabel *uuid;
 
 @property (weak, nonatomic) IBOutlet UILabel *users;
 @property (weak, nonatomic) IBOutlet UILabel *pbxs;

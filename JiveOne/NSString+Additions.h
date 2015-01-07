@@ -8,8 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSString (Custom)
+@interface NSString (Validations)
 
 -(BOOL)isEmpty;
+
+@end
+
+@interface NSString (MD5Additions)
+
+- (NSString *)MD5Hash;
 
 @end
