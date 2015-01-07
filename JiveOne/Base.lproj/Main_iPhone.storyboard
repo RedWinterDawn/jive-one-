@@ -594,7 +594,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" restorationIdentifier="EnablePresenceCell" selectionStyle="default" indentationWidth="10" id="wFh-qN-Em8" userLabel="EnablePresenceCellRow">
+                                    <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" restorationIdentifier="EnablePresenceCell" selectionStyle="default" indentationWidth="10" id="wFh-qN-Em8" userLabel="EnablePresenceCellRow">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wFh-qN-Em8" id="RuY-pZ-NgE" userLabel="EPView">
