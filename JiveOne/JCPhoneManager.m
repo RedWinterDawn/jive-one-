@@ -20,10 +20,9 @@
 // Objects
 #import "JCLineSession.h"
 #import "JCConferenceCallCard.h"
+#import "Contact.h"
 
 // Categories
-#import "UIDevice+Custom.h"
-#import "Contact.h"
 #import "UIViewController+HUD.h"
 
 NSString *const kJCPhoneManager911String = @"911";

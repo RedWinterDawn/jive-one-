@@ -1,4 +1,25 @@
 //
+//  NSString+Custom.m
+//  JiveOne
+//
+//  Created by Robert Barclay on 11/27/14.
+//  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
+//
+
+#import "NSString+Additions.h"
+
+@implementation NSString (Custom)
+
+-(BOOL)isEmpty {
+    if ([self isKindOfClass:[NSNull class]]) {
+        return YES;
+    }
+    return !self.length;
+}
+
+@end
+
+//
 //  NSString+MD5Additions.m
 //  JiveOne
 //
@@ -6,7 +27,6 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "NSString+MD5Additions.h"
 #import <CommonCrypto/CommonDigest.h>
 
 @implementation NSString (MD5Additions)

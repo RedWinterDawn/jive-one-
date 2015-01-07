@@ -11,8 +11,6 @@
 #import "JCV4Client.h"
 
 #import "NSDictionary+Validations.h"
-#import "NSString+MD5Additions.h"
-#import "UIDevice+InstallationIdentifier.h"
 
 #define LINE_CONFIGURATION_REQUEST_TIMEOUT 60
 
@@ -273,7 +271,7 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
     NSString *appBuildString    = [bundle objectForInfoDictionaryKey:(__bridge id)kCFBundleVersionKey];
     NSString *model             = device.model;
     NSString *os                = device.systemVersion;
-    NSString *uuid              = [[NSString stringWithFormat:@"%@-%@", device.installationIdentifier, username] MD5Hash];
+    NSString *uuid              = [device userUniqueIdentiferForUser:username];
     NSString *type              = device.userInterfaceIdiom == UIUserInterfaceIdiomPhone ? kJCLineConfigurationRequestDeviceTypePhone : kJCLineConfigurationRequestDeviceTypeTablet;
     
     _xml = [NSString stringWithFormat:kLineConfigurationRequestXMLString, username, token, pbxId, extension, model, os, locale, language, uuid, appBuildString, type];

@@ -7,7 +7,6 @@
 //
 
 #import "JCEncryptionTransformer.h"
-#import "UIDevice+InstallationIdentifier.h"
 #import "NSData+AESAddition.h"
 
 @interface JCEncryptionTransformer ()

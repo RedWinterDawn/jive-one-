@@ -31,6 +31,10 @@
     self.jiveUserId.text = authenticationManager.jiveUserId;
     self.accessToken.text = authenticationManager.authToken;
     
+    UIDevice *device = [UIDevice currentDevice];
+    self.installationIdentifer.text = device.installationIdentifier;
+    self.uuid.text = [device userUniqueIdentiferForUser:authenticationManager.jiveUserId];
+    
     self.users.text = [NSString stringWithFormat:@"%lu", (unsigned long)[User MR_countOfEntities]];
     self.pbxs.text = [NSString stringWithFormat:@"%lu", (unsigned long)[PBX MR_countOfEntities]];
     self.lines.text = [NSString stringWithFormat:@"%lu", (unsigned long)[Line MR_countOfEntities]];

@@ -25,7 +25,6 @@
 #import "JCCallCardCollectionViewController.h"
 
 #import "UIViewController+HUD.h"
-#import "NSString+Custom.h"
 
 #define CALL_OPTIONS_ANIMATION_DURATION 0.6
 #define TRANSFER_ANIMATION_DURATION 0.3

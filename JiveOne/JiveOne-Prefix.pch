@@ -21,9 +21,11 @@
     #import "Flurry.h"
 #endif
 
-#import "NSString+Custom.h"
+#import "NSString+Additions.h"
+#import "UIDevice+Additions.h"
+
 #import "NSDictionary+Validations.h"
-#import "UIDevice+Custom.h"
+
 
 typedef void(^CompletionHandler)(BOOL success, NSError *error);
 typedef void(^ResultCompletionHandler)(BOOL success, NSError *error, NSDictionary *userInfo);
