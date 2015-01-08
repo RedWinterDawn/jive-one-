@@ -1073,20 +1073,20 @@
 		2743985218D0CFAA00ABCD69 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				2736698018BD441D0069B4B3 /* JCPersonCell.h */,
-				2736698118BD441D0069B4B3 /* JCPersonCell.m */,
 				5D35479919FF4BB7009E3CB4 /* JCMenuBarButtonItem.h */,
 				5D35479A19FF4BB7009E3CB4 /* JCMenuBarButtonItem.m */,
 				F8B62E5919DB091500AF98D3 /* JCRoundedButton.h */,
 				F8B62E5A19DB091500AF98D3 /* JCRoundedButton.m */,
-				27B8152418D93F1A00516BF6 /* NotificationView.h */,
-				27B8152518D93F1A00516BF6 /* NotificationView.m */,
 				5DE0F1B319F6D47E000469D0 /* JCRoundedView.h */,
 				5DE0F1B419F6D47E000469D0 /* JCRoundedView.m */,
 				5DB0BFBF19FFF3FE006737D7 /* JCTableViewCell.h */,
 				5DB0BFC019FFF3FE006737D7 /* JCTableViewCell.m */,
+				5D895EB31A0B230F0015368D /* JCPresenceCell.h */,
+				5D895EB41A0B230F0015368D /* JCPresenceCell.m */,
 				5DB0BFCE1A013982006737D7 /* JCRecentEventCell.h */,
 				5DB0BFCF1A013982006737D7 /* JCRecentEventCell.m */,
+				2736698018BD441D0069B4B3 /* JCPersonCell.h */,
+				2736698118BD441D0069B4B3 /* JCPersonCell.m */,
 				5DB0BFC51A0033B5006737D7 /* JCView.h */,
 				5DB0BFC61A0033B5006737D7 /* JCView.m */,
 				5D895EAD1A0AB7270015368D /* JCPhoneMenuCell.h */,
@@ -1097,8 +1097,8 @@
 				5D2B2C051A30D8AE00938D76 /* JCVisualEffectsView.m */,
 				5D2B2C061A30D8AE00938D76 /* FXBlurView.h */,
 				5D2B2C071A30D8AE00938D76 /* FXBlurView.m */,
-				5D895EB31A0B230F0015368D /* JCPresenceCell.h */,
-				5D895EB41A0B230F0015368D /* JCPresenceCell.m */,
+				27B8152418D93F1A00516BF6 /* NotificationView.h */,
+				27B8152518D93F1A00516BF6 /* NotificationView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";

@@ -2,8 +2,8 @@
 inhibit_all_warnings!
 source 'https://github.com/CocoaPods/Specs.git'
 
-pod 'AFNetworking', '~> 2.1.0'
-pod 'AFNetworkActivityLogger', '~> 2.0.1'
+pod 'AFNetworking', '~> 2.5.0'
+pod 'AFNetworkActivityLogger', '~> 2.0.3'
 pod 'MBProgressHUD', '~> 0.8'
 #pod 'SDWebImage', '~> 3.7.1'
 pod 'MagicalRecord', '~> 2.2'
