@@ -26,7 +26,8 @@
     UIView *view = self.visualEffectsView;
     if (!view.superview) {
         view.frame = self.bounds;
-        [super addSubview:view];
+        self.backgroundColor = [UIColor clearColor];
+        [self addSubview:view];
     }
 }
 
@@ -40,10 +41,11 @@
         }
         else
         {
-            FXBlurView *blurView = [[FXBlurView alloc] init];
+            FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:self.bounds];
             blurView.blurRadius = 40;
             blurView.underlyingView = self.backgroundView;
             blurView.tintColor = [[UIColor darkGrayColor] colorWithAlphaComponent:0.2f];
+            blurView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
             _visualEffectsView = blurView;
         }
     }
