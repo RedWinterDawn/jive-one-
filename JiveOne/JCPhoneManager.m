@@ -169,6 +169,12 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
 
 -(void)networkConnectivityChanged:(NSNotification *)notification
 {
+    // Check to see if we have a line, if not, we do not care about the network status, because we
+    // have not been asked to register.
+    if (!_line) {
+        return;
+    }
+    
     NSDictionary *userInfo = notification.userInfo;
     AFNetworkReachabilityStatus status = (AFNetworkReachabilityStatus)((NSNumber *)[userInfo valueForKey:AFNetworkingReachabilityNotificationStatusItem]).integerValue;
     NSLog(@"AFNetworking status change");
