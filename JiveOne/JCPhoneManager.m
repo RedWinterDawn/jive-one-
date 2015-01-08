@@ -177,8 +177,6 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
     
     NSDictionary *userInfo = notification.userInfo;
     AFNetworkReachabilityStatus status = (AFNetworkReachabilityStatus)((NSNumber *)[userInfo valueForKey:AFNetworkingReachabilityNotificationStatusItem]).integerValue;
-    NSLog(@"AFNetworking status change");
-    
     if (_previousNetworkStatus == AFNetworkReachabilityStatusUnknown)
         _previousNetworkStatus = status;
     
@@ -186,14 +184,14 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
     if ([JCAppSettings sharedSettings].isWifiOnly) {
         switch (status) {
             case AFNetworkReachabilityStatusNotReachable:
-                NSLog(@"No Network Connection: please check your self");
+                NSLog(@"No Network Connection");
                 break;
                 
             case AFNetworkReachabilityStatusReachableViaWiFi: {
-                 NSLog(@"WIFI Connection");
-                if (_previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWWAN && _previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWiFi)
+                NSLog(@"WIFI Connection");
+                if (_previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWWAN && _previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWiFi) {
                     [self reconnectToLine:_line completion:NULL];
-                else {
+                } else {
                     [self connectToLine:_line completion:NULL];
                 }
                 break;
@@ -201,19 +199,16 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
                 
             case AFNetworkReachabilityStatusReachableViaWWAN: {
                 NSLog(@"3G Connection");
-                if (_previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWiFi && _previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWWAN)
+                if (_previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWiFi && _previousNetworkStatus != AFNetworkReachabilityStatusReachableViaWWAN) {
                     NSLog(@"Deregester Because of wifi only settings set to true and you have no wifi");
-                else {
+                } else {
                     NSLog(@"Deregester");
                     [self disconnect];
                 }
                 break;
             }
                 
-                
             default:
-                NSLog(@" \n \n \n ======== This is a unforseen situaltion we need to take into account ========== \n \n \n \n \n");
-                NSLog(@"Unkown network status  in the Phone Manager");
                 break;
         }
     
@@ -222,7 +217,6 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
     {
         switch (status) {
             case AFNetworkReachabilityStatusNotReachable:
-                NSLog(@"Network Unreachable please check your self");
                 break;
                 
             case AFNetworkReachabilityStatusReachableViaWiFi: {
@@ -243,9 +237,7 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
                 break;
             }
                 
-                
             default:
-                NSLog(@" \n \n \n ======== This is a unforseen situaltion we need to take into account 2 ========== \n \n \n \n \n");
                 break;
         }
     }
@@ -253,10 +245,11 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
 
 -(void)disconnect
 {
-    NSLog(@"Disconnecting from sip Handler");
+    if (_sipHandler) {
+        [_sipHandler disconnect];
+        _sipHandler = nil;
+    }
     
-    [_sipHandler disconnect];
-    _sipHandler = nil;
     _line = nil;
     self.connected = FALSE;
     _connecting = FALSE;
