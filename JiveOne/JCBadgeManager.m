@@ -226,11 +226,11 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
 
 -(void)managedObjectContextUpdated:(NSNotification *)notification
 {
-    __block NSDictionary *userInfo = notification.userInfo;
-    __unsafe_unretained NSOperationQueue *weakOperationQueue = _operationQueue;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [weakOperationQueue addOperation:[[JCBadgeManagerBatchOperation alloc] initWithDictionaryUpdate:userInfo]];
-    });
+//    __block NSDictionary *userInfo = notification.userInfo;
+//    __unsafe_unretained NSOperationQueue *weakOperationQueue = _operationQueue;
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [weakOperationQueue addOperation:[[JCBadgeManagerBatchOperation alloc] initWithDictionaryUpdate:userInfo]];
+//    });
 }
 
 #pragma mark - Private -
