@@ -23,6 +23,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.loginPromptVisualEffectsView.backgroundView        = self.navigationController.view;
+    self.termsAndConditionsVisualEffectsView.backgroundView = self.navigationController.view;
+    
     [self.passwordTextField fixSecureTextFieldFont];
     
     _authenticationManager = [JCAuthenticationManager sharedInstance];
