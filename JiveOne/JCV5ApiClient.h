@@ -6,17 +6,9 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "JCApiClient.h"
 
-#import "JCClient.h"
-
-@class Voicemail;
-@class Line;
-@class User;
-
-@interface JCV5ApiClient : NSObject
-
-@property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
+@interface JCV5ApiClient : JCApiClient
 
 + (instancetype)sharedClient;
 
@@ -24,9 +16,6 @@
 - (void)stopAllOperations;
 - (BOOL)isOperationRunning:(NSString *)operationName;
 - (void)setRequestAuthHeader:(BOOL) demandsBearer;
-
-- (void)updateVoicemailToRead:(Voicemail*)voicemail completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed;
-- (void)deleteVoicemail:(NSString *)url completed:(void (^)(BOOL succeeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed;
 
 @end
 

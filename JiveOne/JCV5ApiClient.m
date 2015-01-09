@@ -11,7 +11,7 @@
 #import "Voicemail.h"
 #import "User.h"
 
-NSString *const kV5BaseUrl = @"https://api.jive.com/";
+NSString *const kJCV5ApiClientBaseUrl = @"https://api.jive.com/";
 
 @implementation JCV5ApiClient
 
@@ -21,25 +21,19 @@ NSString *const kV5BaseUrl = @"https://api.jive.com/";
 	static JCV5ApiClient *sharedClient = nil;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		sharedClient = [[super alloc] init];
+		sharedClient = [[super alloc] initWithBaseURL:[NSURL URLWithString:kJCV5ApiClientBaseUrl]];
 	});
 	return sharedClient;
 }
 
--(instancetype)init {
-    self = [super init];
+-(instancetype)initWithBaseURL:(NSURL *)url {
+    self = [super initWithBaseURL:url];
     if (self) {
-        _manager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:kV5BaseUrl]];
         _manager.responseSerializer = [AFJSONResponseSerializer serializer];
         _manager.requestSerializer = [AFJSONRequestSerializer serializer];
-        #if DEBUG
-        _manager.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
-        _manager.securityPolicy.allowInvalidCertificates = YES;
-        #endif
     }
     return self;
 }
-
 
 - (void)setRequestAuthHeader:(BOOL) demandsBearer
 {
@@ -74,75 +68,6 @@ NSString *const kV5BaseUrl = @"https://api.jive.com/";
 		}
 	}
 	return NO;
-}
-
-#pragma mark - Socket API Calls
-
-- (void)SubscribeToSocketEvents:(NSString *)subscriptionURL dataDictionary:(NSDictionary *)dataDictionary
-{
-	[self setRequestAuthHeader:NO];
-	
-	if (![Common stringIsNilOrEmpty:subscriptionURL]) {
-		[_manager POST:subscriptionURL parameters:dataDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
-			NSLog(@"Success");
-		} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-			NSLog(@"Error Subscribing %@", error);
-			// boo!
-		}];
-	}
-}
-
-- (void) RequestSocketSession:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed
-{
-	[self setRequestAuthHeader:NO];
-	
-	NSString *deviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:UDdeviceToken];
-	NSDictionary *params = nil;
-	if (deviceToken) {
-		params = [NSDictionary dictionaryWithObject:deviceToken forKey:UDdeviceToken];
-	}
-	
-	NSString *sessionURL = @"https://realtime.jive.com/session";
-	
-	[_manager POST:sessionURL
-        parameters:params
-           success:^(AFHTTPRequestOperation *operation, id responseObject) {
-               completed(YES, responseObject, operation, nil);
-           }
-           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-               completed(NO, nil, operation, error);
-           }];
-}
-
-//update voicemail to read
--(void)updateVoicemailToRead:(Voicemail*)voicemail completed:(void (^)(BOOL suceeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed{
-    
-    [self setRequestAuthHeader:NO];
-    
-    NSString *url = [NSString stringWithFormat:@"%@", voicemail.url_changeStatus];
-    NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-    [params setObject:@"true" forKey:@"read"];
-    
-    if (![Common stringIsNilOrEmpty:url]) {
-        [self.manager PUT:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            completed(YES, responseObject, operation, nil);
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"%@", error);
-            completed(NO, nil, nil, error);
-        }];
-    }
-}
-
-- (void)deleteVoicemail:(NSString *)url completed:(void (^)(BOOL succeeded, id responseObject, AFHTTPRequestOperation *operation, NSError *error))completed {
-    
-    [self setRequestAuthHeader:NO];
-    
-    
-    [_manager DELETE:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        completed(YES, responseObject, operation, nil);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        completed(NO, nil, operation, error);
-    }];
 }
 
 @end

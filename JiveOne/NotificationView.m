@@ -7,6 +7,8 @@
 
 #import "NotificationView.h"
 
+#import <AFNetworking/AFNetworkReachabilityManager.h>
+
 @implementation NotificationView
 
 CGFloat panelHeight = 44;

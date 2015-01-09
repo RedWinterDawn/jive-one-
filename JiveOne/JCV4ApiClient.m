@@ -6,11 +6,11 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCV4Client.h"
+#import "JCV4ApiClient.h"
 
 NSString *const kJCV4ClientBaseUrl = @"https://pbx.onjive.com";
 
-@implementation JCV4Client
+@implementation JCV4ApiClient
 
 -(instancetype)init
 {

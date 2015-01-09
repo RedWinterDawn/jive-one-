@@ -10,7 +10,7 @@
 
 #import <AFNetworking/AFNetworking.h>
 
-@interface JCClient : NSObject
+@interface JCApiClient : NSObject
 {
     AFHTTPRequestOperationManager *_manager;
 }

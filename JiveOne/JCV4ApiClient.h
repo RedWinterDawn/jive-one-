@@ -6,10 +6,8 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCClient.h"
+#import "JCApiClient.h"
 
-@class Line;
-
-@interface JCV4Client : JCClient
+@interface JCV4ApiClient : JCApiClient
 
 @end

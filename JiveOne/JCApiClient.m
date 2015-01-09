@@ -6,16 +6,17 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCClient.h"
+#import "JCApiClient.h"
 
 #import "JCAuthenticationManager.h"
 #import <XMLDictionary/XMLDictionary.h>
 
 NSMutableArray *operationQueues;
 
-NSString *const kJCClientAuthorizationHeaderFieldKey = @"Authorization";
+NSString *const kJCApiClientAuthorizationHeaderFieldKey = @"Authorization";
+NSString *const kJCApiClientErrorDomain = @"JCClientError";
 
-@implementation JCClient
+@implementation JCApiClient
 
 -(instancetype)initWithBaseURL:(NSURL *)url
 {
@@ -58,18 +59,16 @@ NSString *const kJCClientAuthorizationHeaderFieldKey = @"Authorization";
 
 @end
 
-NSString *const JCClientErrorDomain = @"JCClientError";
-
 @implementation JCClientError
 
 +(instancetype)errorWithCode:(JCClientErrorCode)code reason:(NSString *)reason
 {
-    return [self errorWithDomain:JCClientErrorDomain code:code userInfo:@{NSLocalizedDescriptionKey: reason}];
+    return [self errorWithDomain:kJCApiClientErrorDomain code:code userInfo:@{NSLocalizedDescriptionKey: reason}];
 }
 
 +(instancetype)errorWithCode:(JCClientErrorCode)code userInfo:(NSDictionary *)userInfo
 {
-    return [self errorWithDomain:JCClientErrorDomain code:code userInfo:userInfo];
+    return [self errorWithDomain:kJCApiClientErrorDomain code:code userInfo:userInfo];
 }
 
 @end
@@ -80,7 +79,7 @@ NSString *const JCClientErrorDomain = @"JCClientError";
 {
     JCAuthenticationJSONRequestSerializer *serializer = [self new];
     NSString *authToken = [JCAuthenticationManager sharedInstance].authToken;
-    [serializer setValue:authToken forHTTPHeaderField:kJCClientAuthorizationHeaderFieldKey];
+    [serializer setValue:authToken forHTTPHeaderField:kJCApiClientAuthorizationHeaderFieldKey];
     return serializer;
 }
 
@@ -99,7 +98,7 @@ NSString *const JCClientErrorDomain = @"JCClientError";
 {
     JCAuthenticationXmlRequestSerializer *serializer = [self new];
     NSString *authToken = [JCAuthenticationManager sharedInstance].authToken;
-    [serializer setValue:authToken forHTTPHeaderField:kJCClientAuthorizationHeaderFieldKey];
+    [serializer setValue:authToken forHTTPHeaderField:kJCApiClientAuthorizationHeaderFieldKey];
     return serializer;
 }
 

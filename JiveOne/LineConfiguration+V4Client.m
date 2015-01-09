@@ -8,7 +8,7 @@
 
 #import "LineConfiguration+V4Client.h"
 #import "PBX.h"
-#import "JCV4Client.h"
+#import "JCV4ApiClient.h"
 
 #import "NSDictionary+Validations.h"
 
@@ -76,7 +76,7 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
             failure(error);
         }
     } else {
-        JCV4Client *client = [[JCV4Client alloc] init];
+        JCV4ApiClient *client = [[JCV4ApiClient alloc] init];
         client.manager.requestSerializer = [JCProvisioningXmlRequestSerializer serializer];
         [client.manager POST:kLineConfigurationRequestPath
                   parameters:parameters
