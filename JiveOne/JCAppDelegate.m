@@ -61,7 +61,10 @@
     [self configureNetworking];
     [self loadUserDefaults];
     
-    // Load Core Data
+    // Load Core Data. Currently we are not concerned aobut persisting data long term, so if there
+    // is any core data conflict, we would rather delete the whole .sqlite file and rebuild it, than
+    // to merge.
+    [MagicalRecord setShouldDeleteStoreOnModelMismatch:YES];
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:kCoreDataDatabase];
     
     // Badging

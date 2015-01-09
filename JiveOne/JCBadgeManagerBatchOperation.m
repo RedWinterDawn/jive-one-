@@ -89,40 +89,49 @@ NSString *const kJCBadgeManagerBatchConversationsKey = @"conversations";
         return;
     }
     
-    NSString *key = recentEvent.objectID.URIRepresentation.absoluteString;
-    Line *lineObject = recentEvent.line;
-    if (!lineObject) {
-        return;
-    }
-    
-    NSString *line = lineObject.jrn;
-    if (!line || line.length == 0) {
-        return;
-    }
-    
-    _updated = TRUE;
-    BOOL read = recentEvent.isRead;
     BOOL insert = [infoKey isEqualToString:NSInsertedObjectsKey];
     BOOL update = [infoKey isEqualToString:NSUpdatedObjectsKey];
     BOOL delete = [infoKey isEqualToString:NSDeletedObjectsKey];
     
-    NSMutableDictionary *events = [self eventsForEventType:eventType forLine:line];
-    if (insert && !read) {
-        [events setObject:@NO forKey:key];
+    _updated = TRUE;
+    NSString *key = recentEvent.objectID.URIRepresentation.absoluteString;
+    if (delete) {
+        NSArray *lines = _badges.allKeys;
+        for (NSString *line in lines) {
+            NSMutableDictionary *events = [self eventsForEventType:eventType forLine:line];
+            if ([events objectForKey:key]) {
+                [events removeObjectForKey:key];
+            }
+            [self setEvents:events forEventType:eventType forLine:line];
+        }
     }
-    else if (update) {
-        if (!read) {
+    else
+    {
+        Line *lineObject = recentEvent.line;
+        if (!lineObject) {
+            return;
+        }
+        
+        NSString *line = lineObject.jrn;
+        if (!line || line.length == 0) {
+            return;
+        }
+        
+        BOOL read = recentEvent.isRead;
+        NSMutableDictionary *events = [self eventsForEventType:eventType forLine:line];
+        if (insert && !read) {
             [events setObject:@NO forKey:key];
         }
-        else {
-            [events removeObjectForKey:key];
+        else if (update) {
+            if (!read) {
+                [events setObject:@NO forKey:key];
+            }
+            else {
+                [events removeObjectForKey:key];
+            }
         }
+        [self setEvents:events forEventType:eventType forLine:line];
     }
-    else if (delete) {
-        [events removeObjectForKey:key];
-    }
-    
-    [self setEvents:events forEventType:eventType forLine:line];
 }
 
 /**

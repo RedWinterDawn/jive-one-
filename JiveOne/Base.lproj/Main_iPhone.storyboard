@@ -1841,10 +1841,7 @@
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qiO-74-sU0" customClass="JCVisualEffectsView">
                                         <rect key="frame" x="0.0" y="0.0" width="280" height="156"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <connections>
-                                            <outlet property="backgroundView" destination="VoB-Ef-4tt" id="Yf7-aD-GeH"/>
-                                        </connections>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
                                     <textField clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="password" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="k5B-9E-t78">
                                         <rect key="frame" x="20" y="72" width="240" height="40"/>
@@ -1922,10 +1919,7 @@
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mFx-Mu-esg" customClass="JCVisualEffectsView">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <connections>
-                                            <outlet property="backgroundView" destination="VoB-Ef-4tt" id="naL-1S-vwY"/>
-                                        </connections>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                     </view>
                                     <label opaque="NO" clipsSubviews="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By signing in you agree to our Terms &amp; Conditions." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="6" preferredMaxLayoutWidth="171" translatesAutoresizingMaskIntoConstraints="NO" id="bxS-qG-c0L">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
@@ -1968,8 +1962,10 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="loginPromptVisualEffectsView" destination="qiO-74-sU0" id="Lut-3t-ZbA"/>
                         <outlet property="passwordTextField" destination="k5B-9E-t78" id="rWM-So-HNb"/>
                         <outlet property="rememberMeSwitch" destination="v6D-EQ-qKa" id="65y-Qu-cae"/>
+                        <outlet property="termsAndConditionsVisualEffectsView" destination="mFx-Mu-esg" id="e4d-u4-0hH"/>
                         <outlet property="usernameTextField" destination="OzV-9h-pmX" id="MPM-fg-5Cj"/>
                     </connections>
                 </viewController>
@@ -2039,7 +2035,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="PJQ-b3-euV" customClass="JCVisualEffectsView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gnv-xZ-55G" customClass="JCVisualEffectsView">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="PJQ-b3-euV">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xbK-XO-rJ8">
@@ -2152,9 +2152,9 @@
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="23F-O6-dwE" userLabel="Picker View Container">
                                 <rect key="frame" x="0.0" y="501" width="414" height="235"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Alt-lS-7wK" customClass="JCVisualEffectsView">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="235"/>
-                                        <color key="backgroundColor" red="0.81568627450980391" green="0.81568627450980391" blue="0.81568627450980391" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jYt-LI-wUt" customClass="JCVisualEffectsView">
+                                        <rect key="frame" x="0.0" y="-5" width="414" height="240"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eGI-eP-3bp" userLabel="Bar">
                                         <rect key="frame" x="0.0" y="-5" width="414" height="40"/>
@@ -2181,8 +2181,8 @@
                                             <constraint firstAttribute="trailing" secondItem="ZhL-2w-2Q2" secondAttribute="trailing" constant="16" id="wzV-1I-tB6"/>
                                         </constraints>
                                     </view>
-                                    <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GHJ-Ok-PFS">
-                                        <rect key="frame" x="0.0" y="45" width="414" height="180"/>
+                                    <pickerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GHJ-Ok-PFS">
+                                        <rect key="frame" x="0.0" y="55" width="414" height="180"/>
                                         <connections>
                                             <outlet property="dataSource" destination="e8o-Sx-Cyb" id="9QB-yb-zhv"/>
                                             <outlet property="delegate" destination="e8o-Sx-Cyb" id="ceb-Gq-db9"/>
@@ -2191,15 +2191,15 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.85759478720000004" green="0.86087610670000003" blue="0.87661210320000005" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="Alt-lS-7wK" secondAttribute="trailing" id="0Yl-em-j1j"/>
                                     <constraint firstAttribute="height" constant="235" id="0ym-Kr-wXd"/>
+                                    <constraint firstItem="jYt-LI-wUt" firstAttribute="top" secondItem="23F-O6-dwE" secondAttribute="top" constant="-5" id="5Ou-1p-DTO"/>
                                     <constraint firstAttribute="bottom" secondItem="GHJ-Ok-PFS" secondAttribute="bottom" id="7Ow-fd-7Ip"/>
+                                    <constraint firstAttribute="trailing" secondItem="jYt-LI-wUt" secondAttribute="trailing" id="EYy-8Z-tOV"/>
                                     <constraint firstAttribute="trailing" secondItem="eGI-eP-3bp" secondAttribute="trailing" id="JGA-5t-gl9"/>
                                     <constraint firstAttribute="trailing" secondItem="GHJ-Ok-PFS" secondAttribute="trailing" id="McR-de-vj5"/>
+                                    <constraint firstAttribute="bottom" secondItem="jYt-LI-wUt" secondAttribute="bottom" id="Ut9-uR-SrS"/>
                                     <constraint firstItem="eGI-eP-3bp" firstAttribute="top" secondItem="23F-O6-dwE" secondAttribute="top" constant="-5" id="VzP-qb-r6V"/>
-                                    <constraint firstItem="Alt-lS-7wK" firstAttribute="leading" secondItem="23F-O6-dwE" secondAttribute="leading" id="Ywf-8B-XwE"/>
-                                    <constraint firstAttribute="bottom" secondItem="Alt-lS-7wK" secondAttribute="bottom" id="fdj-6t-mI9"/>
-                                    <constraint firstItem="Alt-lS-7wK" firstAttribute="top" secondItem="23F-O6-dwE" secondAttribute="top" id="g1T-ez-mfk"/>
+                                    <constraint firstItem="jYt-LI-wUt" firstAttribute="leading" secondItem="23F-O6-dwE" secondAttribute="leading" id="bKp-ZK-n5c"/>
                                     <constraint firstItem="eGI-eP-3bp" firstAttribute="leading" secondItem="23F-O6-dwE" secondAttribute="leading" id="hWt-F8-Gup"/>
                                     <constraint firstItem="GHJ-Ok-PFS" firstAttribute="top" secondItem="eGI-eP-3bp" secondAttribute="bottom" id="kKF-kM-WT0"/>
                                     <constraint firstItem="GHJ-Ok-PFS" firstAttribute="leading" secondItem="23F-O6-dwE" secondAttribute="leading" id="vOr-yR-A52"/>
@@ -2208,6 +2208,8 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="gnv-xZ-55G" firstAttribute="leading" secondItem="0vo-PH-rDJ" secondAttribute="leading" id="5J7-1c-hSi"/>
+                            <constraint firstItem="gnv-xZ-55G" firstAttribute="top" secondItem="0vo-PH-rDJ" secondAttribute="top" id="AYH-rn-73Y"/>
                             <constraint firstItem="u9R-oi-zj0" firstAttribute="leading" secondItem="0vo-PH-rDJ" secondAttribute="leading" constant="10" id="FRr-vK-Ilo"/>
                             <constraint firstItem="23F-O6-dwE" firstAttribute="leading" secondItem="0vo-PH-rDJ" secondAttribute="leading" id="L64-1x-Ejm"/>
                             <constraint firstAttribute="bottomMargin" secondItem="hhq-s3-oQT" secondAttribute="bottom" constant="20" id="QES-4h-69Q"/>
@@ -2215,7 +2217,9 @@
                             <constraint firstAttribute="trailing" secondItem="hhq-s3-oQT" secondAttribute="trailing" constant="10" id="bK9-pY-oe3"/>
                             <constraint firstAttribute="centerX" secondItem="u9R-oi-zj0" secondAttribute="centerX" id="e5Z-ux-pGS"/>
                             <constraint firstAttribute="trailing" secondItem="23F-O6-dwE" secondAttribute="trailing" id="eFG-Pt-3Ri"/>
+                            <constraint firstAttribute="trailing" secondItem="gnv-xZ-55G" secondAttribute="trailing" id="gGN-be-b3P"/>
                             <constraint firstAttribute="centerY" secondItem="u9R-oi-zj0" secondAttribute="centerY" constant="32" id="iJL-jY-dzu"/>
+                            <constraint firstItem="7hC-mg-TlP" firstAttribute="top" secondItem="gnv-xZ-55G" secondAttribute="bottom" id="l2P-bt-gQM"/>
                             <constraint firstItem="PJQ-b3-euV" firstAttribute="bottom" secondItem="0vo-PH-rDJ" secondAttribute="bottomMargin" id="oEH-WM-PbW"/>
                             <constraint firstItem="23F-O6-dwE" firstAttribute="bottom" secondItem="0vo-PH-rDJ" secondAttribute="bottom" id="pfW-xx-drb"/>
                             <constraint firstItem="PJQ-b3-euV" firstAttribute="leading" secondItem="0vo-PH-rDJ" secondAttribute="leading" id="vEf-Av-ZLI"/>
@@ -2228,9 +2232,12 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
+                        <outlet property="backgroundVisualEffectsView" destination="gnv-xZ-55G" id="3Pm-Fy-ExF"/>
+                        <outlet property="pickerContainer" destination="23F-O6-dwE" id="7GM-n7-ZNo"/>
                         <outlet property="pickerContainerBottomConstraint" destination="pfW-xx-drb" id="s9R-Dy-63E"/>
                         <outlet property="pickerContainerHeightConstraint" destination="0ym-Kr-wXd" id="mwR-8w-iEJ"/>
                         <outlet property="pickerView" destination="GHJ-Ok-PFS" id="r5d-dM-Gi5"/>
+                        <outlet property="pickerViewVisualEffectsView" destination="jYt-LI-wUt" id="JaD-YP-8xM"/>
                         <outlet property="selectBtn" destination="gRx-8z-M5N" id="P0e-tj-vNq"/>
                     </connections>
                 </viewController>
