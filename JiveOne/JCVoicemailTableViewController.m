@@ -248,12 +248,8 @@
         indexPaths = @[indexPath];
     }
     
-    
-    [self.tableView reloadRowsAtIndexPaths:indexPaths
-                          withRowAnimation:UITableViewRowAnimationFade];
-    
+    [self.tableView reloadData];
 }
-
 
 #pragma mark - JCVoiceCell Delegate
 - (void)voiceCellPlayTapped:(JCVoicemailPlaybackCell *)cell
