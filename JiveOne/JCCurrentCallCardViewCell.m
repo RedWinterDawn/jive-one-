@@ -196,8 +196,8 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
     // @!^$#$ Apple! Seriously!
     if ([[UIDevice currentDevice].systemVersion floatValue] < 8.0f)
     {
-        _cardInfoViewTopConstraint.constant = -15;
-        _holdViewTopConstraint.constant = -5;
+        _cardInfoViewTopConstraint.constant = -35;
+        _holdViewTopConstraint.constant = 0;
     }
     else
     {
@@ -247,7 +247,7 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
     // @!^$#$ Apple! Seriously!
     if ([[UIDevice currentDevice].systemVersion floatValue] < 8.0f)
     {
-        _cardInfoViewTopConstraint.constant = 13;
+        _cardInfoViewTopConstraint.constant = 0;
         _holdViewTopConstraint.constant = 5;
     }
     else
