@@ -78,28 +78,73 @@ NSString *const kJCApiClientErrorDomain = @"JCClientError";
 +(instancetype)serializer
 {
     JCAuthenticationJSONRequestSerializer *serializer = [self new];
-    NSString *authToken = [JCAuthenticationManager sharedInstance].authToken;
-    [serializer setValue:authToken forHTTPHeaderField:kJCApiClientAuthorizationHeaderFieldKey];
+    [serializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    
+    serializer.cachePolicy = NSURLRequestReloadIgnoringLocalAndRemoteCacheData;
+    serializer.HTTPShouldHandleCookies = FALSE;
+    
     return serializer;
 }
 
-+ (instancetype)serializerWithWritingOptions:(NSJSONWritingOptions)writingOptions
+- (NSURLRequest *)requestBySerializingRequest:(NSURLRequest *)request withParameters:(id)object error:(NSError *__autoreleasing *)error
 {
-    JCAuthenticationJSONRequestSerializer *serializer = [JCAuthenticationJSONRequestSerializer serializer];
-    serializer.writingOptions = writingOptions;
+    NSMutableURLRequest *mutableRequest = [[super requestBySerializingRequest:request withParameters:object error:error] mutableCopy];
+    NSString *authToken = [JCAuthenticationManager sharedInstance].authToken;
+    [mutableRequest setValue:authToken forHTTPHeaderField:kJCApiClientAuthorizationHeaderFieldKey];
+    return mutableRequest;
+}
+
+@end
+
+@implementation JCBearerAuthenticationJSONRequestSerializer
+
+- (NSURLRequest *)requestBySerializingRequest:(NSURLRequest *)request withParameters:(id)object error:(NSError *__autoreleasing *)error
+{
+    NSMutableURLRequest *mutableRequest = [[super requestBySerializingRequest:request withParameters:object error:error] mutableCopy];
+    NSString *authToken = [JCAuthenticationManager sharedInstance].authToken;
+    [mutableRequest setValue:[NSString stringWithFormat:@"Bearer %@", authToken] forHTTPHeaderField:kJCApiClientAuthorizationHeaderFieldKey];
+    return mutableRequest;
+}
+
+@end
+
+@implementation JCXmlRequestSerializer : AFHTTPRequestSerializer
+
++(instancetype)serializer
+{
+    JCAuthenticationXmlRequestSerializer *serializer = [self new];
+    
+    serializer.cachePolicy = NSURLRequestReloadIgnoringLocalAndRemoteCacheData;
+    serializer.HTTPShouldHandleCookies = FALSE;
+    [serializer setValue:@"application/xml" forHTTPHeaderField:@"Content-Type"];
     return serializer;
+}
+
+- (NSURLRequest *)requestBySerializingRequest:(NSURLRequest *)request withParameters:(id)object error:(NSError *__autoreleasing *)error
+{
+    if (![object isKindOfClass:[NSData class]]) {
+        *error = [JCApiClientError errorWithCode:JCApiClientInvalidArgumentErrorCode reason:@"object is not the class type NSData"];
+        return nil;
+    }
+    
+    NSData *data = object;
+    NSMutableURLRequest *mutableRequest = [request mutableCopy];
+    [mutableRequest setValue:[NSString stringWithFormat:@"%lu", (unsigned long)data.length] forHTTPHeaderField:@"Content-Length"];
+    [mutableRequest setHTTPBody:data];
+    
+    return mutableRequest;
 }
 
 @end
 
 @implementation JCAuthenticationXmlRequestSerializer
 
-+(instancetype)serializer
+- (NSURLRequest *)requestBySerializingRequest:(NSURLRequest *)request withParameters:(id)object error:(NSError *__autoreleasing *)error
 {
-    JCAuthenticationXmlRequestSerializer *serializer = [self new];
+    NSMutableURLRequest *mutableRequest = [[super requestBySerializingRequest:request withParameters:object error:error] mutableCopy];
     NSString *authToken = [JCAuthenticationManager sharedInstance].authToken;
-    [serializer setValue:authToken forHTTPHeaderField:kJCApiClientAuthorizationHeaderFieldKey];
-    return serializer;
+    [mutableRequest setValue:authToken forHTTPHeaderField:kJCApiClientAuthorizationHeaderFieldKey];
+    return mutableRequest;
 }
 
 @end
@@ -121,7 +166,6 @@ NSString *const kJCApiClientErrorDomain = @"JCClientError";
 }
 
 #pragma mark - AFURLResponseSerialization
-
 
 - (id)responseObjectForResponse:(NSHTTPURLResponse *)response data:(NSData *)data error:(NSError *__autoreleasing *)error
 {

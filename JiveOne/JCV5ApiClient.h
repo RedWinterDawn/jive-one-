@@ -12,8 +12,6 @@
 
 + (instancetype)sharedClient;
 
-- (void)clearCookies;
 - (BOOL)isOperationRunning:(NSString *)operationName;
-- (void)setRequestAuthHeader:(BOOL) demandsBearer;
 
 @end

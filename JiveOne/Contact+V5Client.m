@@ -37,8 +37,8 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
     }
     
     // Request using the v5 client.
-    JCV5ApiClient *client = [JCV5ApiClient sharedClient];
-    [client setRequestAuthHeader:YES];
+    JCV5ApiClient *client = [JCV5ApiClient new];
+    client.manager.requestSerializer = [JCBearerAuthenticationJSONRequestSerializer serializer];
     [client.manager GET:[NSString stringWithFormat:kContactRequestPath, line.pbx.pbxId, line.lineId]
              parameters:nil
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {

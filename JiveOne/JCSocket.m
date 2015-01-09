@@ -346,7 +346,6 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
 + (void)requestSocketSessionRequestUrlsWithDeviceIdentifier:(NSString *)deviceToken completion:(CompletionHandler)completion
 {
     JCV5ApiClient *client = [JCV5ApiClient sharedClient];
-    [client setRequestAuthHeader:NO];
     [client.manager POST:kJCV5ClientSocketSessionRequestURL
               parameters:((deviceToken && deviceToken.length > 0) ? @{kJCV5ClientSocketSessionDeviceTokenKey : deviceToken} : nil)
                  success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -401,7 +400,6 @@ NSString *const kJCSocketParameterTypeKey       = @"type";
     NSDictionary *requestParameters = [self subscriptionDictionaryForIdentifier:identifer entity:entity type:type];
     NSURL *url = [JCSocket sharedSocket].subscriptionUrl;
     JCV5ApiClient *apiClient = [JCV5ApiClient sharedClient];
-    [apiClient setRequestAuthHeader:NO];
     [apiClient.manager POST:url.absoluteString
                  parameters:requestParameters
                     success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -423,7 +421,6 @@ NSString *const kJCSocketParameterTypeKey       = @"type";
     }
     
     JCV5ApiClient *apiClient = [JCV5ApiClient sharedClient];
-    [apiClient setRequestAuthHeader:NO];
     [apiClient.manager DELETE:url.absoluteString
                    parameters:nil
                       success:^(AFHTTPRequestOperation *operation, id responseObject) {

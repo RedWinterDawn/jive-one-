@@ -44,7 +44,6 @@ NSString *const kPBXResponseException           = @"pbxResponseException";
     }
     
     JCV5ApiClient *client = [JCV5ApiClient sharedClient];
-    [client setRequestAuthHeader:NO];
     [client.manager GET:[NSString stringWithFormat:kPBXInfoRequestPath, user.jiveUserId]
              parameters:nil
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {

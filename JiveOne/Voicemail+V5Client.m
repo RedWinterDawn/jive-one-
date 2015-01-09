@@ -46,7 +46,6 @@ NSString *const kVoicemailResponseSelfMailboxKey        = @"self_mailbox";
     }
     
     JCV5ApiClient *client = [JCV5ApiClient sharedClient];
-    [client setRequestAuthHeader:NO];
     [client.manager GET:line.mailboxUrl
              parameters:nil
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -90,7 +89,7 @@ NSString *const kVoicemailResponseSelfMailboxKey        = @"self_mailbox";
         @catch (NSException *exception) {
             if (completion) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    completion(NO, [JCV5ApiClientError errorWithCode:JCV5ApiClientResponseParseErrorCode reason:exception.reason]);
+                    completion(NO, [JCApiClientError errorWithCode:JCApiClientUnexpectedResponseErrorCode reason:exception.reason]);
                 });
             }
         }

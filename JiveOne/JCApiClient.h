@@ -49,7 +49,15 @@ typedef enum : NSUInteger {
 
 @end
 
-@interface JCAuthenticationXmlRequestSerializer : AFHTTPRequestSerializer
+@interface JCBearerAuthenticationJSONRequestSerializer : JCAuthenticationJSONRequestSerializer
+
+@end
+
+@interface JCXmlRequestSerializer : AFHTTPRequestSerializer
+
+@end
+
+@interface JCAuthenticationXmlRequestSerializer : JCXmlRequestSerializer
 
 @end
 

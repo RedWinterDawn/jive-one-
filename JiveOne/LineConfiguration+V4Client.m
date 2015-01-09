@@ -78,6 +78,7 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
     } else {
         JCV4ApiClient *client = [[JCV4ApiClient alloc] init];
         client.manager.requestSerializer = [JCProvisioningXmlRequestSerializer serializer];
+        client.manager.requestSerializer.timeoutInterval = LINE_CONFIGURATION_REQUEST_TIMEOUT;
         [client.manager POST:kLineConfigurationRequestPath
                   parameters:parameters
                      success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -277,14 +278,7 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
     _xml = [NSString stringWithFormat:kLineConfigurationRequestXMLString, username, token, pbxId, extension, model, os, locale, language, uuid, appBuildString, type];
     NSData *data = [_xml dataUsingEncoding:NSUTF8StringEncoding];
     
-    NSMutableURLRequest *mutableRequest = request.mutableCopy;
-    [mutableRequest setValue:[NSString stringWithFormat:@"%lu", (unsigned long)data.length] forHTTPHeaderField:@"Content-Length"];
-    [mutableRequest setHTTPBody:data];
-    
-    mutableRequest.cachePolicy = NSURLRequestReloadIgnoringLocalAndRemoteCacheData;
-    mutableRequest.HTTPShouldHandleCookies = FALSE;
-    [mutableRequest setValue:@"application/xml" forHTTPHeaderField:@"Content-Type"];
-    mutableRequest.timeoutInterval = LINE_CONFIGURATION_REQUEST_TIMEOUT;
+    NSMutableURLRequest *mutableRequest = [[super requestBySerializingRequest:request withParameters:data error:error] mutableCopy];
     
     return mutableRequest;
 }

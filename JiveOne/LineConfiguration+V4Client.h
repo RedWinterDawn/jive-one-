@@ -15,7 +15,7 @@
 
 @end
 
-@interface JCProvisioningXmlRequestSerializer : AFHTTPRequestSerializer
+@interface JCProvisioningXmlRequestSerializer : JCXmlRequestSerializer
 
 @property (nonatomic, readonly) NSString *xml;
 
