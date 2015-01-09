@@ -54,11 +54,6 @@ NSString *const kJCV5ApiClientBaseUrl = @"https://api.jive.com/";
 	}
 }
 
-- (void)stopAllOperations
-{
-	[_manager.operationQueue cancelAllOperations];
-}
-
 - (BOOL)isOperationRunning:(NSString *)operationName
 {
 	NSArray *operations = [_manager.operationQueue operations];
@@ -68,15 +63,6 @@ NSString *const kJCV5ApiClientBaseUrl = @"https://api.jive.com/";
 		}
 	}
 	return NO;
-}
-
-@end
-
-@implementation JCV5ApiClientError
-
-+(instancetype)errorWithCode:(JCV5ApiClientErrorCode)code reason:(NSString *)reason
-{
-    return [JCV5ApiClientError errorWithDomain:@"JCV5ApiClientError" code:code userInfo:@{NSLocalizedDescriptionKey: reason}];
 }
 
 @end

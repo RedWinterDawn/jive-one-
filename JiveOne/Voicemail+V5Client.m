@@ -32,7 +32,7 @@ NSString *const kVoicemailResponseSelfMailboxKey        = @"self_mailbox";
     
     if (!line.mailboxUrl || line.mailboxUrl.isEmpty || !line.pbx) {
         if (completion != NULL) {
-            completion(false, [JCV5ApiClientError errorWithCode:JCV5ApiClientInvalidArgumentErrorCode reason:@"Line has no mailbox url."]);
+            completion(false, [JCApiClientError errorWithCode:JCApiClientInvalidArgumentErrorCode reason:@"Line has no mailbox url."]);
         }
         return;
     }
@@ -54,7 +54,7 @@ NSString *const kVoicemailResponseSelfMailboxKey        = @"self_mailbox";
                 }
                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                     if (completion) {
-                        completion(NO, [JCV5ApiClientError errorWithCode:JCV5ApiClientRequestErrorCode reason:error.localizedDescription]);
+                        completion(NO, [JCApiClientError errorWithCode:JCApiClientRequestErrorCode reason:error.localizedDescription]);
                     }
                 }];
 }

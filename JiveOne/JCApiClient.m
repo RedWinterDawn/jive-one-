@@ -59,14 +59,14 @@ NSString *const kJCApiClientErrorDomain = @"JCClientError";
 
 @end
 
-@implementation JCClientError
+@implementation JCApiClientError
 
-+(instancetype)errorWithCode:(JCClientErrorCode)code reason:(NSString *)reason
++(instancetype)errorWithCode:(JCApiClientErrorCode)code reason:(NSString *)reason
 {
     return [self errorWithDomain:kJCApiClientErrorDomain code:code userInfo:@{NSLocalizedDescriptionKey: reason}];
 }
 
-+(instancetype)errorWithCode:(JCClientErrorCode)code userInfo:(NSDictionary *)userInfo
++(instancetype)errorWithCode:(JCApiClientErrorCode)code userInfo:(NSDictionary *)userInfo
 {
     return [self errorWithDomain:kJCApiClientErrorDomain code:code userInfo:userInfo];
 }
@@ -134,7 +134,7 @@ NSString *const kJCApiClientErrorDomain = @"JCClientError";
     // Process Response Data
     NSDictionary *responseObject = [NSDictionary dictionaryWithXMLData:data];
     if (!response) {
-        *error = [JCClientError errorWithCode:JCClientResponseParserErrorCode reason:@"Response Empty"];
+        *error = [JCApiClientError errorWithCode:JCApiClientResponseParserErrorCode reason:@"Response Empty"];
     }
     
     return responseObject;

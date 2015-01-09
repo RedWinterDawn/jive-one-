@@ -31,7 +31,7 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
 {
     if (!line) {
         if (completion) {
-            completion(false, [JCV5ApiClientError errorWithCode:JCV5ApiClientInvalidArgumentErrorCode reason:@"Line Is Null"]);
+            completion(false, [JCApiClientError errorWithCode:JCApiClientInvalidArgumentErrorCode reason:@"Line Is Null"]);
         }
         return;
     }
@@ -46,7 +46,7 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
                 }
                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                     if (completion) {
-                        completion(NO, [JCV5ApiClientError errorWithCode:JCV5ApiClientRequestErrorCode reason:error.localizedDescription]);
+                        completion(NO, [JCApiClientError errorWithCode:JCApiClientRequestErrorCode reason:error.localizedDescription]);
                     }
                 }];
 }
@@ -78,7 +78,7 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
         @catch (NSException *exception) {
             if (completion) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    completion(NO, [JCV5ApiClientError errorWithCode:JCV5ApiClientResponseParseErrorCode reason:exception.reason]);
+                    completion(NO, [JCApiClientError errorWithCode:JCApiClientUnexpectedResponseErrorCode reason:exception.reason]);
                 });
             }
         }

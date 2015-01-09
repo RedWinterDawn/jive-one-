@@ -13,21 +13,7 @@
 + (instancetype)sharedClient;
 
 - (void)clearCookies;
-- (void)stopAllOperations;
 - (BOOL)isOperationRunning:(NSString *)operationName;
 - (void)setRequestAuthHeader:(BOOL) demandsBearer;
-
-@end
-
-
-typedef enum : NSUInteger {
-    JCV5ApiClientInvalidArgumentErrorCode,
-    JCV5ApiClientRequestErrorCode,
-    JCV5ApiClientResponseParseErrorCode,
-} JCV5ApiClientErrorCode;
-
-@interface JCV5ApiClientError : NSError
-
-+(instancetype)errorWithCode:(JCV5ApiClientErrorCode)code reason:(NSString *)reason;
 
 @end

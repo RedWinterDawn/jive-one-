@@ -38,7 +38,7 @@ NSString *const kPBXResponseException           = @"pbxResponseException";
 {
     if (!user) {
         if (completion) {
-            completion(false, [JCV5ApiClientError errorWithCode:JCV5ApiClientInvalidArgumentErrorCode reason:@"User Is Null"]);
+            completion(false, [JCApiClientError errorWithCode:JCApiClientInvalidArgumentErrorCode reason:@"User Is Null"]);
         }
         return;
     }
@@ -52,7 +52,7 @@ NSString *const kPBXResponseException           = @"pbxResponseException";
                 }
                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                     if (completion) {
-                        completion(NO, [JCV5ApiClientError errorWithCode:JCV5ApiClientRequestErrorCode reason:error.localizedDescription]);
+                        completion(NO, [JCApiClientError errorWithCode:JCApiClientRequestErrorCode reason:error.localizedDescription]);
                     }
                 }];
 }
@@ -88,7 +88,7 @@ NSString *const kPBXResponseException           = @"pbxResponseException";
         @catch (NSException *exception) {
             if (completion) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    completion(NO, [JCV5ApiClientError errorWithCode:JCV5ApiClientResponseParseErrorCode reason:exception.reason]);
+                    completion(NO, [JCApiClientError errorWithCode:JCApiClientUnexpectedResponseErrorCode reason:exception.reason]);
                 });
             }
         }

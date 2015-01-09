@@ -26,20 +26,20 @@
 #pragma mark Error Handling
 
 typedef enum : NSUInteger {
-    JCClientUnknownErrorCode = 0,
-    JCClientInvalidArgumentErrorCode,
-    JCClientInvalidRequestParameterErrorCode,
-    JCClientRequestErrorCode,
-    JCClientResponseErrorCode,
-    JCClientResponseParserErrorCode,
-    JCClientUnexpectedResponseErrorCode,
-    JCClientCoreDataErrorCode
-} JCClientErrorCode;
+    JCApiClientUnknownErrorCode = 0,
+    JCApiClientInvalidArgumentErrorCode,
+    JCApiClientInvalidRequestParameterErrorCode,
+    JCApiClientRequestErrorCode,
+    JCApiClientResponseErrorCode,
+    JCApiClientResponseParserErrorCode,
+    JCApiClientUnexpectedResponseErrorCode,
+    JCApiClientCoreDataErrorCode
+} JCApiClientErrorCode;
 
-@interface JCClientError : NSError
+@interface JCApiClientError : NSError
 
-+(instancetype)errorWithCode:(JCClientErrorCode)code reason:(NSString *)reason;
-+(instancetype)errorWithCode:(JCClientErrorCode)code userInfo:(NSDictionary *)userInfo;
++(instancetype)errorWithCode:(JCApiClientErrorCode)code reason:(NSString *)reason;
++(instancetype)errorWithCode:(JCApiClientErrorCode)code userInfo:(NSDictionary *)userInfo;
 
 @end
 
