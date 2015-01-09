@@ -71,7 +71,7 @@
     [[NSRunLoop currentRunLoop] addTimer:requestTimeout forMode:NSRunLoopCommonModes];
  
     Line *line = [JCAuthenticationManager sharedInstance].line;
-    [Voicemail downloadVoicemailsForLine:line complete:^(BOOL success, NSError *error) {
+    [Voicemail downloadVoicemailsForLine:line completion:^(BOOL success, NSError *error) {
         if ([requestTimeout isValid]) {
             [requestTimeout invalidate];
         }
@@ -162,8 +162,7 @@
 	}
 	
 	Voicemail *voicemail = [self objectAtIndexPath:indexPath];
-	[Voicemail markVoicemailForDeletion:voicemail.jrn managedContext:nil];
-	[Voicemail deleteVoicemailsInBackground];
+    [voicemail markForDeletion:NULL];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -324,7 +323,7 @@
         
         [self startProgressTimerForVoicemail];
         self.selectedCell.playPauseButton.selected = TRUE;
-        [self.selectedCell.voicemail markAsRead];
+        [self.selectedCell.voicemail markAsRead:NULL];
     }
 }
 

@@ -270,7 +270,9 @@
         	if (line.pbx.isV5) {
             
             	// Fetch Voicemails
-            	[Voicemail downloadVoicemailsForLine:line complete:NULL];
+                [Voicemail downloadVoicemailsForLine:line completion:^(BOOL success, NSError *error) {
+                    [Voicemail deleteAllMarkedVoicemailsForLine:line completion:NULL];
+                }];
             
             	// Open socket to subscribe to presence and voicemail events.
             	[JCSocket connectWithDeviceToken:deviceToken completion:^(BOOL success, NSError *error) {
