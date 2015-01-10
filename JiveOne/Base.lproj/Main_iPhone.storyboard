@@ -69,7 +69,7 @@
                                 <items>
                                     <tabBarItem systemItem="contacts" id="qRU-ek-73r"/>
                                     <tabBarItem tag="1" systemItem="favorites" id="plA-OB-q0o"/>
-                                    <tabBarItem tag="2" title="Groups" image="black-avatar" id="25K-ui-BV6" userLabel="LocalDirctory"/>
+                                    <tabBarItem tag="2" title="Groups" image="local_contacts" id="25K-ui-BV6" userLabel="LocalDirctory"/>
                                     <tabBarItem tag="2" title="Local Contacts" image="black-avatar" id="S8g-R9-uuQ" userLabel="LocalDirctory"/>
                                 </items>
                                 <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -93,7 +93,7 @@
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
-                    <tabBarItem key="tabBarItem" title="Contacts" image="second" id="j3y-6c-YEc"/>
+                    <tabBarItem key="tabBarItem" title="Contacts" image="black-avatar" id="j3y-6c-YEc"/>
                     <navigationItem key="navigationItem" title="Contacts" id="oEe-KQ-NpU"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -5101,7 +5101,7 @@
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
-                    <tabBarItem key="tabBarItem" title="Contacts" image="second" id="4Kr-1y-4AM"/>
+                    <tabBarItem key="tabBarItem" title="Contacts" image="black-avatar" id="4Kr-1y-4AM"/>
                     <navigationItem key="navigationItem" title="Contact Group" id="W7L-pF-Ckr"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -5132,13 +5132,13 @@
         <image name="gray-callbutton" width="58" height="58"/>
         <image name="green-check" width="58" height="58"/>
         <image name="incall-background" width="320" height="568"/>
+        <image name="local_contacts" width="24" height="23"/>
         <image name="loginlogo" width="376" height="380"/>
         <image name="main-logo.png" width="217" height="216"/>
         <image name="nav-dial-black" width="70" height="70"/>
         <image name="nav-hist-black" width="25" height="25"/>
         <image name="nav-voicemail-black" width="33" height="16"/>
         <image name="power" width="100" height="100"/>
-        <image name="second" width="265" height="154"/>
         <image name="white-arrow" width="30" height="31"/>
         <image name="white-arrow-outline" width="30" height="31"/>
         <image name="white-check" width="30" height="30"/>
@@ -5157,12 +5157,12 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="5C3-Di-Qgq"/>
+        <segue reference="x1v-U1-NC6"/>
         <segue reference="u61-Zl-F4Y"/>
         <segue reference="e0I-ZU-Bxk"/>
         <segue reference="Uqi-bD-GAX"/>
-        <segue reference="x1v-U1-NC6"/>
         <segue reference="Tth-R2-xu6"/>
+        <segue reference="5C3-Di-Qgq"/>
         <segue reference="2yK-HA-Lah"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29803921570000003" green="0.44705882349999998" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
