@@ -70,7 +70,7 @@
                                     <tabBarItem systemItem="contacts" id="qRU-ek-73r"/>
                                     <tabBarItem tag="1" systemItem="favorites" id="plA-OB-q0o"/>
                                     <tabBarItem tag="2" title="Groups" image="local_contacts" id="25K-ui-BV6" userLabel="LocalDirctory"/>
-                                    <tabBarItem tag="2" title="Local Contacts" image="black-avatar" id="S8g-R9-uuQ" userLabel="LocalDirctory"/>
+                                    <tabBarItem tag="3" title="Local Contacts" image="black-avatar" id="S8g-R9-uuQ" userLabel="LocalDirctory"/>
                                 </items>
                                 <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -1685,7 +1685,7 @@
             <objects>
                 <tableViewController id="c3p-aT-jcP" customClass="JCContactsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" id="pel-iU-N6o">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="411"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -5158,8 +5158,8 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="x1v-U1-NC6"/>
+        <segue reference="NV4-rr-lnW"/>
         <segue reference="u61-Zl-F4Y"/>
-        <segue reference="e0I-ZU-Bxk"/>
         <segue reference="Uqi-bD-GAX"/>
         <segue reference="Tth-R2-xu6"/>
         <segue reference="5C3-Di-Qgq"/>
