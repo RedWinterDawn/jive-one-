@@ -701,6 +701,16 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
     }
 }
 
+-(JCCallCard *)callCardForLineSession:(JCLineSession *)lineSession
+{
+    for (JCCallCard *callCard in self.calls) {
+        if (callCard.lineSession.mSessionId == lineSession.mSessionId){
+            return callCard;
+        }
+    }
+    return nil;
+}
+
 #pragma mark - Notification Selectors -
 
 #pragma mark UIApplication
@@ -843,7 +853,7 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
 
 #pragma mark SipHanglerDelegate
 
--(void)sipHandlerDidRegister:(SipHandler *)sipHandler
+-(void)sipHandlerDidConnect:(SipHandler *)sipHandler
 {
     self.connecting = FALSE;
     self.connected = sipHandler.registered;
@@ -853,7 +863,7 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
     }
 }
 
--(void)sipHandlerDidFailToRegister:(SipHandler *)sipHandler error:(NSError *)error
+-(void)sipHandler:(SipHandler *)sipHandler didFailToConnectWithError:(NSError *)error
 {
     self.connecting = FALSE;
     self.connected = sipHandler.registered;
@@ -864,33 +874,59 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
     NSLog(@"%@", [error description]);
 }
 
-- (void)answerAutoCall:(JCLineSession *)session
+-(void)sipHandler:(SipHandler *)sipHandler receivedIntercomLineSession:(JCLineSession *)session
 {
-	for (JCCallCard *callCard in self.calls) {
-		if (callCard.lineSession.mSessionId == session.mSessionId)
-		{
-			[self answerCall:callCard];
-		}
-	}
+    if(![JCAppSettings sharedSettings].isIntercomEnabled) {
+        return;
+    }
+    
+    JCCallCard *callCard = [self callCardForLineSession:session];
+    if (!callCard) {
+        return;
+    }
+    
+    [self answerCall:callCard];
+    
+    // Determine if the speaker should be turned on. If we are on the built in reciever, it means we
+    // are not on Bluetooth, or Airplay, etc., and are on the internal built in speaker, so we can,
+    // and should enable speaker mode.
+    BOOL shouldTurnOnSpeaker = FALSE;
+    NSArray *currentOutputs = [AVAudioSession sharedInstance].currentRoute.outputs;
+    for( AVAudioSessionPortDescription *port in currentOutputs ){
+        if ([port.portType isEqualToString:AVAudioSessionPortBuiltInReceiver]) {
+            shouldTurnOnSpeaker = TRUE;
+        }
+    }
+    sipHandler.loudSpeakerEnabled = shouldTurnOnSpeaker;
 }
 
--(void)addLineSession:(JCLineSession *)session
+-(void)sipHandler:(SipHandler *)sipHandler didAddLineSession:(JCLineSession *)session
 {
+    // If we are backgrounded, push out a local notification
+    if ([UIApplication sharedApplication].applicationState ==  UIApplicationStateBackground) {
+        UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+        if (localNotif){
+            localNotif.alertBody =[NSString  stringWithFormat:@"Call from <%@>%@", session.callTitle, session.callDetail];
+            localNotif.soundName = UILocalNotificationDefaultSoundName;
+            localNotif.applicationIconBadgeNumber = 1;
+            [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
+        }
+    }
+    
     JCCallCard *callCard = [[JCCallCard alloc] initWithLineSession:session];
     session.contact = [Contact contactForExtension:session.callDetail pbx:_line.pbx];
     callCard.delegate = self;
     [self addCall:callCard];
 }
 
--(void)removeLineSession:(JCLineSession *)session
+-(void)sipHandler:(SipHandler *)sipHandler willRemoveLineSession:(JCLineSession *)session
 {
-    for (JCCallCard *callCard in self.calls) {
-        if (callCard.lineSession.mSessionId == session.mSessionId)
-        {
-            [self removeCall:callCard];
-            break;
-        }
+    JCCallCard *callCard = [self callCardForLineSession:session];
+    if (!callCard) {
+        return;
     }
+    
+    [self removeCall:callCard];
 }
 
 @end
