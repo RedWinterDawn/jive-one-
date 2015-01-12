@@ -7,3 +7,6 @@
 //
 
 #import "JCFetchedResultsTableViewController.h"
+
+#import "Conversation.h"
+#import "SMSMessage.h"

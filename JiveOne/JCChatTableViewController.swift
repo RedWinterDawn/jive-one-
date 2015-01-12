@@ -42,10 +42,10 @@ class JCChatTableViewController: JCFetchedResultsTableViewController {
             
         }
     }
-    
+
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "goToChat" {
-            var DestViewController : JCConversationTableViewController  = segue.destinationViewController as JCConversationTableViewController
+            //var DestViewController : JCConversationTableViewController  = segue.destinationViewController as JCConversationTableViewController
         }
         
     }
