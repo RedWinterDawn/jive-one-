@@ -26,12 +26,12 @@ extern NSString *const kSipHandlerRegisteredSelectorKey;
 
 @end
 
-
 @interface SipHandler : NSObject
 
 @property (nonatomic, weak) id <SipHandlerDelegate> delegate;
 @property (nonatomic, readonly, getter=isRegistered) BOOL registered;
 @property (nonatomic, readonly, getter=isInitialized) BOOL initialized;
+@property (nonatomic, readonly, getter=isActive) BOOL active;
 
 - (instancetype)initWithLine:(Line *)line delegate:(id<SipHandlerDelegate>)delegate;
 

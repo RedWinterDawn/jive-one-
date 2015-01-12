@@ -221,11 +221,6 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     }
 }
 
-#pragma mark Registration Callback
-
-
-
-
 #pragma mark Backgrounding
 
 - (void)startKeepAwake
@@ -507,6 +502,17 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     {
         [_mPortSIPSDK sendDtmf:session.mSessionId dtmfMethod:DTMF_RFC2833 code:dtmf dtmfDration:160 playDtmfTone:TRUE];
     }
+}
+
+#pragma mark - Getters -
+
+-(BOOL)isActive
+{
+    NSArray *activeLines = [self findAllActiveLines];
+    if (activeLines.count > 0) {
+        return TRUE;
+    }
+    return FALSE;
 }
 
 #pragma mark - Private -
