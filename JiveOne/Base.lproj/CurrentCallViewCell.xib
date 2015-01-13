@@ -3,19 +3,20 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JCCallCardViewCell"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CurrentCallCardCell" id="Sdb-VX-oTp" userLabel="CurrentCallCardCell" customClass="JCCurrentCallCardViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="300" height="170"/>
+            <rect key="frame" x="0.0" y="0.0" width="300" height="470"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="300" height="170"/>
+                <rect key="frame" x="0.0" y="0.0" width="300" height="470"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view clipsSubviews="YES" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="QCr-7s-whc" userLabel="Call Card View">
-                        <rect key="frame" x="0.0" y="0.0" width="300" height="120"/>
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="420"/>
                         <subviews>
                             <view autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rkJ-cf-ec6" userLabel="Hold Bar">
                                 <rect key="frame" x="0.0" y="0.0" width="300" height="28"/>
@@ -110,11 +111,16 @@
                             <constraint firstAttribute="trailing" secondItem="8Zm-YG-q5c" secondAttribute="trailing" id="KfH-aM-65k"/>
                             <constraint firstItem="8Zm-YG-q5c" firstAttribute="top" secondItem="QCr-7s-whc" secondAttribute="top" constant="27" id="QyH-nI-2r3"/>
                             <constraint firstItem="rkJ-cf-ec6" firstAttribute="leading" secondItem="QCr-7s-whc" secondAttribute="leading" id="UDR-eN-OWr"/>
-                            <constraint firstAttribute="bottom" secondItem="8Zm-YG-q5c" secondAttribute="bottom" constant="21" id="X5E-8I-0mS"/>
                         </constraints>
                     </view>
+                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" image="white-person" translatesAutoresizingMaskIntoConstraints="NO" id="uAN-u9-Z7P">
+                        <rect key="frame" x="36" y="99" width="228" height="272"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="uAN-u9-Z7P" secondAttribute="height" multiplier="76:91" id="eIJ-x1-Uvf"/>
+                        </constraints>
+                    </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yUi-Hn-q9R" userLabel="Action Bar">
-                        <rect key="frame" x="0.0" y="120" width="300" height="50"/>
+                        <rect key="frame" x="0.0" y="420" width="300" height="50"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dim-MR-5Mi" userLabel="Hold">
                                 <rect key="frame" x="150" y="0.0" width="150" height="50"/>
@@ -156,6 +162,7 @@
                             <constraint firstAttribute="bottom" secondItem="fMI-EZ-LsX" secondAttribute="bottom" id="OLL-Lt-UHt"/>
                             <constraint firstAttribute="trailing" secondItem="dim-MR-5Mi" secondAttribute="trailing" id="fAs-rb-i2g"/>
                             <constraint firstItem="dim-MR-5Mi" firstAttribute="top" secondItem="yUi-Hn-q9R" secondAttribute="top" id="gWg-RB-Tfc"/>
+                            <constraint firstItem="fMI-EZ-LsX" firstAttribute="width" secondItem="dim-MR-5Mi" secondAttribute="width" id="mDj-25-fPa"/>
                             <constraint firstItem="fMI-EZ-LsX" firstAttribute="leading" secondItem="yUi-Hn-q9R" secondAttribute="leading" id="pz7-Af-bx7"/>
                             <constraint firstItem="dim-MR-5Mi" firstAttribute="leading" secondItem="fMI-EZ-LsX" secondAttribute="trailing" id="qIw-ol-pLx"/>
                         </constraints>
@@ -167,13 +174,16 @@
             <constraints>
                 <constraint firstItem="yUi-Hn-q9R" firstAttribute="bottom" secondItem="Sdb-VX-oTp" secondAttribute="bottom" id="2m8-Ya-HDg"/>
                 <constraint firstAttribute="trailing" secondItem="yUi-Hn-q9R" secondAttribute="trailing" id="2uS-DD-a5n"/>
-                <constraint firstItem="yUi-Hn-q9R" firstAttribute="bottom" secondItem="QCr-7s-whc" secondAttribute="bottom" constant="50" id="Qet-S8-h8L"/>
+                <constraint firstAttribute="bottom" secondItem="QCr-7s-whc" secondAttribute="bottom" constant="50" id="6vv-hH-jM5"/>
+                <constraint firstItem="uAN-u9-Z7P" firstAttribute="top" secondItem="8Zm-YG-q5c" secondAttribute="bottom" id="YcF-8a-oUY"/>
                 <constraint firstItem="yUi-Hn-q9R" firstAttribute="leading" secondItem="Sdb-VX-oTp" secondAttribute="leading" id="YiS-lT-s4F"/>
                 <constraint firstItem="QCr-7s-whc" firstAttribute="top" secondItem="Sdb-VX-oTp" secondAttribute="top" id="dbk-zW-vD4"/>
                 <constraint firstAttribute="trailing" secondItem="QCr-7s-whc" secondAttribute="trailing" id="hdr-hu-TCw"/>
                 <constraint firstItem="QCr-7s-whc" firstAttribute="leading" secondItem="Sdb-VX-oTp" secondAttribute="leading" id="iya-mG-NTo"/>
+                <constraint firstAttribute="centerX" secondItem="uAN-u9-Z7P" secondAttribute="centerX" id="oWQ-TY-jD5"/>
+                <constraint firstItem="yUi-Hn-q9R" firstAttribute="top" secondItem="uAN-u9-Z7P" secondAttribute="bottom" constant="49" id="tMZ-YN-zyv"/>
             </constraints>
-            <size key="customSize" width="300" height="170"/>
+            <size key="customSize" width="300" height="396"/>
             <connections>
                 <outlet property="actionView" destination="yUi-Hn-q9R" id="7mo-Bp-q50"/>
                 <outlet property="callerIdLabel" destination="H4z-0p-bTI" id="cVv-c3-SfY"/>
@@ -198,6 +208,7 @@
         <image name="grayed-phone" width="37" height="12"/>
         <image name="red-phone" width="37" height="30"/>
         <image name="transfer-onhold-mini-blackish" width="11" height="12"/>
+        <image name="white-person" width="184" height="221"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
