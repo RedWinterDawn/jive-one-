@@ -40,8 +40,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     UIViewController *_presentedTransferViewController;
     UIViewController *_presentedKeyboardViewController;
     NSTimeInterval _defaultCallOptionViewConstraint;
-    UIButton * _keypadButtonUnslectedState;
-	
+    
     bool _showingCallOptions;
     
     JCCallCardCollectionViewController *_callCardCollectionViewController;
@@ -76,6 +75,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+    
     NSString *dialString = self.dialString;
     if (!dialString || dialString.isEmpty) {
         return;
@@ -168,17 +168,18 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(IBAction)keypad:(id)sender
 {
-    if ([sender isKindOfClass:[UIButton class]]){
-        _keypadButtonUnselected.selected = !_keypadButtonUnselected.selected;
-        
-        if (!_presentedKeyboardViewController)
-        {
+    if ([sender isKindOfClass:[UIButton class]]) {
+        UIButton *button = (UIButton *)sender;
+        if (!_presentedKeyboardViewController) {
             JCKeypadViewController *keyboardViewController = [self.storyboard instantiateViewControllerWithIdentifier:kJCCallerViewControllerKeyboardStoryboardIdentifier];
             keyboardViewController.delegate = self;
             [self presentKeyboardViewController:keyboardViewController];
+            button.selected = TRUE;
         }
-        else
+        else {
             [self dismissKeyboardViewController:YES];
+            button.selected = FALSE;
+        }
     }
 }
 
@@ -353,7 +354,6 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(void)dismissKeyboardViewController:(bool)animated
 {
-    _keypadButtonUnselected.selected = !_keypadButtonUnselected.selected;
     UIViewController *viewController = _presentedKeyboardViewController;
     CGRect frame = self.view.frame;
     frame.origin.y = -frame.size.height;
@@ -364,16 +364,15 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
                          [viewController removeFromParentViewController];
                          [viewController.view removeFromSuperview];
                          _presentedKeyboardViewController = nil;
+                         _keypadButton.selected = FALSE;
                      }];
 }
 
 -(void)presentTransferViewController:(UIViewController *)viewController
 {
-    if (_presentedKeyboardViewController)   {
-//        [ _keypadButtonUnselected:YES];
+    if (_presentedKeyboardViewController){
         [self dismissKeyboardViewController:YES];
     }
-    
     
     if (viewController == _presentedTransferViewController)
         return;

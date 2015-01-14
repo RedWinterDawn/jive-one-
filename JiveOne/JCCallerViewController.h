@@ -20,13 +20,12 @@
 
 @interface JCCallerViewController : UIViewController
 
-@property (nonatomic, weak) IBOutlet id<JCCallerViewControllerDelegate> delegate;
-@property (nonatomic, weak) IBOutlet JCCallOptionsView *callOptionsView;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *callOptionsViewOriginYConstraint;
-@property (nonatomic, weak) IBOutlet UIButton *speakerBtn;
-
-@property (nonatomic, weak) IBOutlet UILabel *mergeLabel;
-@property (weak, nonatomic) IBOutlet UIButton *keypadButtonUnselected;
+@property (weak, nonatomic) IBOutlet id<JCCallerViewControllerDelegate> delegate;
+@property (weak, nonatomic) IBOutlet JCCallOptionsView *callOptionsView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *callOptionsViewOriginYConstraint;
+@property (weak, nonatomic) IBOutlet UIButton *speakerBtn;
+@property (weak, nonatomic) IBOutlet UILabel *mergeLabel;
+@property (weak, nonatomic) IBOutlet UIButton *keypadButton;
 
 @property (nonatomic) bool callOptionsHidden;
 @property (nonatomic) NSTimeInterval callOptionTransitionAnimationDuration;
