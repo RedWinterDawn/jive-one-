@@ -81,9 +81,9 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         return;
     }
     
-    [_phoneManager dialNumber:dialString
+    [JCPhoneManager dialNumber:dialString
                          type:JCPhoneManagerSingleDial
-                   completion:^(BOOL success, NSDictionary *callInfo) {
+                   completion:^(BOOL success, NSError *error, NSDictionary *callInfo) {
                        if (!success) {
                            [self performSelector:@selector(closeCallerViewController) withObject:nil afterDelay:0];
                        }
@@ -162,7 +162,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     {
         UIButton *button = (UIButton *)sender;
         button.selected = !button.selected;
-        [_phoneManager muteCall:button.selected];
+        [JCPhoneManager muteCall:button.selected];
     }
 }
 
@@ -185,7 +185,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(IBAction)speaker:(id)sender
 {
-    [_phoneManager setLoudSpeakerEnabled:(_phoneManager.outputType != JCPhoneManagerOutputSpeaker)];
+    [JCPhoneManager setLoudSpeakerEnabled:(_phoneManager.outputType != JCPhoneManagerOutputSpeaker)];
 }
 
 -(IBAction)blindTransfer:(id)sender
@@ -214,7 +214,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(IBAction)swapCall:(id)sender
 {
-    [_phoneManager swapCalls];
+    [JCPhoneManager swapCalls];
 }
 
 -(IBAction)mergeCall:(id)sender
@@ -224,7 +224,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         button.selected = !button.selected;
         
         if (button.selected) {
-            [_phoneManager mergeCalls:^(BOOL success) {
+            [JCPhoneManager mergeCalls:^(BOOL success, NSError *error) {
 				if (success) {
 					self.mergeLabel.text = NSLocalizedString(@"Split Calls", nil);
 				}
@@ -237,7 +237,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 			}];
 			
         } else {
-            [_phoneManager splitCalls];
+            [JCPhoneManager splitCalls];
             self.mergeLabel.text = NSLocalizedString(@"Merge Calls", nil);
         }
     }
@@ -245,7 +245,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(IBAction)finishTransfer:(id)sender
 {
-    [_phoneManager finishWarmTransfer:^(BOOL success) {
+    [JCPhoneManager finishWarmTransfer:^(BOOL success, NSError *error) {
         if (success) {
             [self showTransferSuccess];
         }
@@ -445,7 +445,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(void)keypadViewController:(JCKeypadViewController *)controller didTypeNumber:(NSInteger)number
 {
-    [_phoneManager numberPadPressedWithInteger:number];
+    [JCPhoneManager numberPadPressedWithInteger:number];
 }
 
 #pragma mark JCTransferViewController
@@ -453,9 +453,9 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 -(void)transferViewController:(JCTransferViewController *)controller shouldDialNumber:(NSString *)dialString
 {
     __unsafe_unretained JCCallerViewController *weakSelf = self;
-    [_phoneManager dialNumber:dialString
+    [JCPhoneManager dialNumber:dialString
                          type:controller.transferCallType
-                   completion:^(BOOL success, NSDictionary *callInfo) {
+                   completion:^(BOOL success, NSError *error, NSDictionary *callInfo) {
                        if (success)
                        {
                            switch (controller.transferCallType) {

@@ -176,7 +176,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
         UISwitch *switchBtn = (UISwitch *)sender;
         JCAppSettings *settings = [JCAppSettings sharedSettings];
         settings.intercomEnabled = !settings.isIntercomEnabled;
-                switchBtn.on = settings.isIntercomEnabled;
+        switchBtn.on = settings.isIntercomEnabled;
     }
 }
 
@@ -185,10 +185,9 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
     if ([sender isKindOfClass:[UISwitch class]]) {
         UISwitch *switchBtn = (UISwitch *)sender;
         JCAppSettings *settings = [JCAppSettings sharedSettings];
-        [_phoneManager disconnect];
         settings.wifiOnly = !settings.isWifiOnly;
         switchBtn.on = settings.isWifiOnly;
-        [_phoneManager connectToLine:_authenticationManager.line completion:nil];
+        [JCPhoneManager connectToLine:_authenticationManager.line];
     }
 }
 
@@ -198,7 +197,6 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
         JCAppSettings *settings = [JCAppSettings sharedSettings];
         settings.presenceEnabled = !settings.isPresenceEnabled;
         switchBtn.on = settings.isPresenceEnabled;
-         NSLog(@"Toggle Presence ");
     }
 }
 
