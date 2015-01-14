@@ -40,7 +40,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     UIViewController *_presentedTransferViewController;
     UIViewController *_presentedKeyboardViewController;
     NSTimeInterval _defaultCallOptionViewConstraint;
-	
+    
     bool _showingCallOptions;
     
     JCCallCardCollectionViewController *_callCardCollectionViewController;
@@ -168,19 +168,18 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(IBAction)keypad:(id)sender
 {
-    if ([sender isKindOfClass:[UIButton class]])
-    {
+    if ([sender isKindOfClass:[UIButton class]]) {
         UIButton *button = (UIButton *)sender;
-        button.selected = ! button.selected;
-        
-        if (!_presentedKeyboardViewController)
-        {
+        if (!_presentedKeyboardViewController) {
             JCKeypadViewController *keyboardViewController = [self.storyboard instantiateViewControllerWithIdentifier:kJCCallerViewControllerKeyboardStoryboardIdentifier];
             keyboardViewController.delegate = self;
             [self presentKeyboardViewController:keyboardViewController];
+            button.selected = TRUE;
         }
-        else
+        else {
             [self dismissKeyboardViewController:YES];
+            button.selected = FALSE;
+        }
     }
 }
 
@@ -365,13 +364,15 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
                          [viewController removeFromParentViewController];
                          [viewController.view removeFromSuperview];
                          _presentedKeyboardViewController = nil;
+                         _keypadButton.selected = FALSE;
                      }];
 }
 
 -(void)presentTransferViewController:(UIViewController *)viewController
 {
-    if (_presentedKeyboardViewController)
+    if (_presentedKeyboardViewController){
         [self dismissKeyboardViewController:YES];
+    }
     
     if (viewController == _presentedTransferViewController)
         return;
