@@ -19,7 +19,6 @@
     CGFloat _defaultMergePosition;
     CGFloat _defaultFinishPosition;
     
-    bool _showingInital;
     bool _showingSingle;
     bool _showingMultiple;
     bool _showingConference;
@@ -36,8 +35,8 @@
     if (self)
     {
         _annimationDuration = DIAL_OPTIONS_ANIMATION_DURATION;
-        _showingSingle = false;
-        _showingInital = true;
+        _showingSingle = true;
+      
     }
     return self;
 }
@@ -55,7 +54,7 @@
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    [self showInital:TRUE];
+
 //    [self hideSingle:FALSE completion:NULL];
 }
 
@@ -86,70 +85,12 @@
             [self showFinishTransfer:animated];
             break;
             
-        case JCCallOptionViewSingleCallState:
+         default:
             [self showSingle:animated];
             break;
             
-        default:
-            [self showInital:animated];
-            break;
     }
 }
-
-#pragma mark - Inital -
-
--(void)showInital:(BOOL)animated
-{
-    if (_showingMultiple)
-        [self hideMultiple:animated completion:^(BOOL finished) {
-            [self showInital:animated completion:NULL];
-        }];
-    
-    else if (_showingConference)
-        [self hideConference:animated completion:^(BOOL finished) {
-            [self showInital:animated completion:NULL];
-        }];
-    
-    else if (_showingSingle)
-        [self hideSingle:animated completion:^(BOOL finished) {
-            [self showInital:animated completion:NULL];
-        }];
-    
-    else if (_showingFinish)
-        [self hideFinishTransfer:animated completion:^(BOOL finished) {
-            [self showInital:animated completion:NULL];
-        }];
-}
-
--(void)showInital:(bool)animated completion:(void (^)(BOOL finished))completion
-{
-    _transferBtnHorizontalContstraint.constant = - (5 * _defaultTransferPosition);
-    _warmBtnVerticalConstraint.constant = - (5 * _defaultWarmTransferPosition);
-    _addCallBtnHorizontalContstraint.constant = - (5 * _defaultAddCallPosition);
-    
-    [self animate:animated completion:^(BOOL finished) {
-        _showingInital = true;
-        if (completion != NULL && finished)
-            completion(finished);
-    }];
-}
-
--(void)hideInital:(bool)animated completion:(void (^)(BOOL finished))completion
-{
-    
-    _transferBtnHorizontalContstraint.constant  = _defaultTransferPosition;
-    _warmBtnVerticalConstraint.constant         = _defaultWarmTransferPosition;
-    _addCallBtnHorizontalContstraint.constant   = _defaultAddCallPosition;
-    
-    
-    
-    [self animate:animated completion:^(BOOL finished) {
-        _showingInital = false;
-        if (completion != NULL && finished)
-            completion(finished);
-    }];
-}
-
 
 #pragma mark - Single -
 
@@ -162,11 +103,6 @@
     
     else if (_showingConference)
         [self hideConference:animated completion:^(BOOL finished) {
-            [self showSingle:animated completion:NULL];
-        }];
-
-    else if (_showingInital)
-        [self hideInital:animated completion:^(BOOL finished) {
             [self showSingle:animated completion:NULL];
         }];
 
@@ -217,11 +153,6 @@
             [self showMultiple:animated completion:NULL];
         }];
     
-    else if (_showingInital)
-        [self hideInital:animated completion:^(BOOL finished) {
-            [self showMultiple:animated completion:NULL];
-        }];
-    
     else if (_showingFinish)
         [self hideFinishTransfer:animated completion:^(BOOL finished) {
             [self showMultiple:animated completion:NULL];
@@ -265,11 +196,6 @@
     
     else if (_showingMultiple)
         [self hideMultiple:animated completion:^(BOOL finished) {
-            [self showConference:animated completion:NULL];
-        }];
-    
-    else if (_showingInital)
-        [self hideInital:animated completion:^(BOOL finished) {
             [self showConference:animated completion:NULL];
         }];
     
@@ -317,11 +243,6 @@
     else if (_showingMultiple)
         [self hideMultiple:animated completion:^(BOOL finished) {
             [self showFinishTransfer:animated completion:NULL];
-        }];
-    
-    else if (_showingInital)
-        [self hideInital:animated completion:^(BOOL finished) {
-            [self showMultiple:animated completion:NULL];
         }];
     
     else if (_showingConference)

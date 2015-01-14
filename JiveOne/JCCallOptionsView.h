@@ -9,8 +9,7 @@
 #import <UIKit/UIKit.h>
 
 typedef enum : NSUInteger {
-    JCCallOptionViewInitalCallState = 0,
-    JCCallOptionViewSingleCallState,
+    JCCallOptionViewSingleCallState = 0,
     JCCallOptionViewMultipleCallsState,
     JCCallOptionViewConferenceCallState,
     JCCallOptionViewFinishTransferState
