@@ -6,69 +6,55 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "JCLineSession.h"
+@import Foundation;
+
 #import "Line.h"
-
-typedef void(^CompletionHandler)(BOOL success, NSError *error);
-typedef void(^TransferCompletionHandler)(BOOL success, NSError *error);
-
-extern NSString *const kSipHandlerRegisteredSelectorKey;
+#import "JCLineSession.h"
 
 @class SipHandler;
 
 @protocol SipHandlerDelegate <NSObject>
 
 -(void)sipHandlerDidRegister:(SipHandler *)sipHandler;
--(void)sipHandlerDidFailToRegister:(SipHandler *)sipHandler error:(NSError *)error;
--(void)answerAutoCall:(JCLineSession *)session;
--(void)addLineSession:(JCLineSession *)session;
--(void)removeLineSession:(JCLineSession *)session;
+-(void)sipHandlerDidUnregister:(SipHandler *)sipHandler;
+-(void)sipHandler:(SipHandler *)sipHandler didFailToRegisterWithError:(NSError *)error;
+-(void)sipHandler:(SipHandler *)sipHandler receivedIntercomLineSession:(JCLineSession *)session;
+-(void)sipHandler:(SipHandler *)sipHandler didAddLineSession:(JCLineSession *)session;
+-(void)sipHandler:(SipHandler *)sipHandler willRemoveLineSession:(JCLineSession *)session;
 
 @end
-
 
 @interface SipHandler : NSObject
 
 @property (nonatomic, weak) id <SipHandlerDelegate> delegate;
 
-@property (nonatomic, strong) NSString *sipURL;
-@property (nonatomic) NSInteger mActiveLine;
-
+@property (nonatomic, readonly) Line *line;
 @property (nonatomic, readonly, getter=isRegistered) BOOL registered;
 @property (nonatomic, readonly, getter=isInitialized) BOOL initialized;
+@property (nonatomic, readonly, getter=isActive) BOOL active;
 
-@property (nonatomic, copy) TransferCompletionHandler transferCompleted;
+-(instancetype)initWithNumberOfLines:(NSInteger)lines delegate:(id<SipHandlerDelegate>)delegate;
 
-- (instancetype)initWithLine:(Line *)line delegate:(id<SipHandlerDelegate>)delegate;
+// Methods to handle registration.
+- (void)registerToLine:(Line *)line;
+- (void)unregister;
 
-// "Registers" the application to the SIP service via the Port SIP SDK.
-- (void)connect:(CompletionHandler)completion;
-
-// "Deregisters" the application from the SIP service.
-- (void)disconnect;
-
-- (void) pressNumpadButton:(char )dtmf;
-- (JCLineSession *) makeCall:(NSString*)callee videoCall:(BOOL)videoCall contactName:(NSString *)contactName;
-
-- (void)answerSession:(JCLineSession *)lineSession completion:(CompletionHandler)completion;
-
-- (void)hangUpSession:(JCLineSession *)lineSession completion:(CompletionHandler)completion;
-
-- (bool)setConference:(bool)conference;
-//- (void) hangUpCall;
-- (void) blindTransferToNumber:(NSString*)referTo completion:(void (^)(BOOL success, NSError *error))completion;   // Blind Transfer
-- (void) warmTransferToNumber:(NSString*)referTo completion:(void (^)(BOOL success, NSError *error))completion;    // warm Transfer
-- (void) muteCall:(BOOL)mute;
-- (void) setLoudSpeakerEnabled:(BOOL)loudSpeakerEnabled;
-
-// Directly sets the hold state of a call session.
-- (void)setHoldCallState:(bool)holdState forSessionId:(long)sessionId;
-
-- (NSArray *) findAllActiveLines;
-
-//- (void) switchSessionLine;
+// Backgrounding
 - (void)startKeepAwake;
 - (void)stopKeepAwake;
+
+// Methods for makeing, transferring or establsihing conference calls.
+- (JCLineSession *) makeCall:(NSString*)callee videoCall:(BOOL)videoCall contactName:(NSString *)contactName;
+- (void)answerSession:(JCLineSession *)lineSession completion:(CompletionHandler)completion;
+- (void)hangUpSession:(JCLineSession *)lineSession completion:(CompletionHandler)completion;
+- (void)blindTransferToNumber:(NSString*)referTo completion:(CompletionHandler)completion;
+- (void)warmTransferToNumber:(NSString*)referTo completion:(CompletionHandler)completion;
+- (bool)setConference:(bool)conference;
+
+// Methods to effect a calls state or audio.
+- (void)pressNumpadButton:(char )dtmf;
+- (void)muteCall:(BOOL)mute;
+- (void)setLoudSpeakerEnabled:(BOOL)loudSpeakerEnabled;
+- (void)setHoldCallState:(bool)holdState forSessionId:(long)sessionId;
 
 @end

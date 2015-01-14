@@ -78,6 +78,24 @@
     }
 }
 
+-(void)prepareForReuse
+{
+    [super prepareForReuse];
+    
+    if (_recentEvent) {
+        [_recentEvent removeObserver:self forKeyPath:@"read"];
+        _recentEvent = nil;
+    }
+}
+
+-(void)dealloc
+{
+    if (_recentEvent) {
+        [_recentEvent removeObserver:self forKeyPath:@"read"];
+        _recentEvent = nil;
+    }
+}
+
 #pragma mark - Setters -
 
 -(void)setRecentEvent:(RecentEvent *)recentEvent

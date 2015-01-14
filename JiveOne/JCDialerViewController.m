@@ -35,9 +35,19 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     
     _phoneManager = [JCPhoneManager sharedManager];
     [_phoneManager addObserver:self forKeyPath:@"connected" options:NSKeyValueObservingOptionNew context:NULL];
+    [_phoneManager addObserver:self forKeyPath:@"connecting" options:NSKeyValueObservingOptionNew context:NULL];
     [self updateRegistrationStatus];
     
     self.backspaceBtn.alpha = 0;
+}
+
+-(void)awakeFromNib
+{
+    [super awakeFromNib];
+    
+#ifndef DEBUG
+    self.navigationItem.rightBarButtonItem = nil;
+#endif
 }
 
 /**
@@ -50,21 +60,25 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     [super viewWillAppear:animated];
     
     if (_phoneManager.line && !_phoneManager.isConnected && !_phoneManager.isConnecting) {
-        [_phoneManager reconnectToLine:_phoneManager.line completion:NULL];
+        [JCPhoneManager connectToLine:_phoneManager.line];
     }
 }
 
 - (void)dealloc
 {
     [_phoneManager removeObserver:self forKeyPath:@"connected"];
+    [_phoneManager removeObserver:self forKeyPath:@"connecting"];
 }
 
 #pragma mark - KVO -
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if ([keyPath isEqualToString:@"connected"])
+    if ([keyPath isEqualToString:@"connected"] || [keyPath isEqualToString:@"connecting"]) {
         [self updateRegistrationStatus];
+    }
+    
+    
 }
 
 #pragma mark - IBActions -
@@ -79,7 +93,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     {
         UIButton *button = (UIButton *)sender;
         [self.dialStringLabel append:[self characterFromNumPadTag:(int)button.tag]];
-        [_phoneManager numberPadPressedWithInteger:button.tag];
+        [JCPhoneManager numberPadPressedWithInteger:button.tag];
     }
 }
 
@@ -102,9 +116,9 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     }
     
     _initiatingCall = TRUE;
-    [_phoneManager dialNumber:string
+    [JCPhoneManager dialNumber:string
                          type:JCPhoneManagerSingleDial
-                   completion:^(BOOL success, NSDictionary *callInfo) {
+                   completion:^(BOOL success, NSError *error, NSDictionary *callInfo) {
                        if (success){
                            [self performSegueWithIdentifier:kJCDialerViewControllerCallerStoryboardIdentifier sender:self];
                            self.dialStringLabel.dialString = nil;
@@ -132,11 +146,15 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
         _callBtn.selected = false;
         prompt = _phoneManager.line.extension;
     }
-    else if ([JCAppSettings sharedSettings].wifiOnly && [AFNetworkReachabilityManager sharedManager].networkReachabilityStatus == AFNetworkReachabilityStatusReachableViaWWAN){
+    else if ([JCAppSettings sharedSettings].wifiOnly && [AFNetworkReachabilityManager sharedManager].isReachableViaWWAN){
         prompt = NSLocalizedString(@"Disabled", nil);
     }
-    else
+    else if (_phoneManager.isConnecting) {
+        prompt = NSLocalizedString(@"Connecting", nil);
+    }
+    else {
         _callBtn.selected = true;
+    }
     
     self.regestrationStatus.text = prompt;
 }
