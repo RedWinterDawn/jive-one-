@@ -137,7 +137,7 @@
         <image name="grayed-phone" width="37" height="12"/>
         <image name="green-phone" width="30" height="30"/>
         <image name="red-phone" width="37" height="30"/>
-        <image name="white-person" width="89" height="107"/>
+        <image name="white-person" width="184" height="221"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

@@ -45,6 +45,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     
     JCCallCardCollectionViewController *_callCardCollectionViewController;
     JCPhoneManager *_phoneManager;
+//    JCCallOptionsView *_callOptionsView;
 }
 
 @property (nonatomic, strong) NSDictionary *warmTransferInfo;
@@ -94,7 +95,8 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 {
     [super viewWillLayoutSubviews];
     
-    [self setCallOptionsHidden:_callOptionsHidden animated:NO];
+    [self setCallOptionsHidden:_callOptionsHidden animated:YES];
+    
     self.speakerBtn.selected = (_phoneManager.outputType == JCPhoneManagerOutputSpeaker);
 }
 
@@ -417,6 +419,9 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 {
     if (!_showingCallOptions)
         self.callOptionsHidden = false;
+//    [self.callOptionsView setState:JCCallOptionViewSingleCallState animated:YES];
+   
+    [self showCallOptionsAnimated:TRUE];
     
     NSInteger count = [[notification.userInfo objectForKey:kJCPhoneManagerUpdateCount] integerValue];
     if (count > 1)
