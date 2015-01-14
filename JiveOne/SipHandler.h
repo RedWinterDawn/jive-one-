@@ -6,20 +6,18 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "JCLineSession.h"
-#import "Line.h"
+@import Foundation;
 
-extern NSString *const kSipHandlerRegisteredSelectorKey;
+#import "Line.h"
+#import "JCLineSession.h"
 
 @class SipHandler;
 
 @protocol SipHandlerDelegate <NSObject>
 
--(void)sipHandlerDidConnect:(SipHandler *)sipHandler;
--(void)sipHandler:(SipHandler *)sipHandler didFailToConnectWithError:(NSError *)error;
-
-//-(BOOL)sipHandler:(SipHandler *)sipHandler shouldReceiveIncommingLineSession:(JCLineSession *)session;
+-(void)sipHandlerDidRegister:(SipHandler *)sipHandler;
+-(void)sipHandlerDidUnregister:(SipHandler *)sipHandler;
+-(void)sipHandler:(SipHandler *)sipHandler didFailToRegisterWithError:(NSError *)error;
 -(void)sipHandler:(SipHandler *)sipHandler receivedIntercomLineSession:(JCLineSession *)session;
 -(void)sipHandler:(SipHandler *)sipHandler didAddLineSession:(JCLineSession *)session;
 -(void)sipHandler:(SipHandler *)sipHandler willRemoveLineSession:(JCLineSession *)session;
@@ -29,15 +27,17 @@ extern NSString *const kSipHandlerRegisteredSelectorKey;
 @interface SipHandler : NSObject
 
 @property (nonatomic, weak) id <SipHandlerDelegate> delegate;
+
+@property (nonatomic, readonly) Line *line;
 @property (nonatomic, readonly, getter=isRegistered) BOOL registered;
 @property (nonatomic, readonly, getter=isInitialized) BOOL initialized;
 @property (nonatomic, readonly, getter=isActive) BOOL active;
 
-- (instancetype)initWithLine:(Line *)line delegate:(id<SipHandlerDelegate>)delegate;
+-(instancetype)initWithNumberOfLines:(NSInteger)lines delegate:(id<SipHandlerDelegate>)delegate;
 
 // Methods to handle registration.
-- (void)connect:(CompletionHandler)completion;
-- (void)disconnect;
+- (void)registerToLine:(Line *)line;
+- (void)unregister;
 
 // Backgrounding
 - (void)startKeepAwake;

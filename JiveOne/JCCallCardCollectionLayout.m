@@ -97,9 +97,6 @@ static NSString * const JSCallCardLayoutCellKind = @"CallCardCell";
 
 -(CGSize)collectionViewContentSize
 {
-    NSLog(@"collentionViewContentSize");
-    
-    
     NSArray *array = self.layoutInfo[JSCallCardLayoutCellKind];
     NSInteger rowCount = array.count;
     CGFloat height = self.itemInsets.top + (rowCount * [self cellHeightForSection:0]) + (rowCount - 1) * _interItemSpacingY + _itemInsets.bottom;
