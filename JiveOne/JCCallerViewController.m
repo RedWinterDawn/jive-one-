@@ -25,7 +25,8 @@
 #import "JCCallCardCollectionViewController.h"
 
 #import "UIViewController+HUD.h"
-
+#define kCallOptionsDefualtContraint 229
+#define kHalfCallOptionsContraint 114
 #define CALL_OPTIONS_ANIMATION_DURATION 0.6
 #define TRANSFER_ANIMATION_DURATION 0.3
 #define KEYBOARD_ANIMATION_DURATION 0.3
@@ -66,6 +67,8 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         _phoneManager = [JCPhoneManager sharedManager];
         [center addObserver:self selector:@selector(answeredCall:) name:kJCPhoneManagerAnswerCallNotification object:_phoneManager];
+        [center addObserver:self selector:@selector(addedCall:) name:kJCPhoneManagerAddedCallNotification object:_phoneManager];
+//        [center addObserver:self selector:@selector(callState) name:kJCCallCardStatusChangeKey object:_phoneManager];
         [center addObserver:self selector:@selector(removedCall:) name:kJCPhoneManagerRemoveCallNotification object:_phoneManager];
         [_phoneManager addObserver:self forKeyPath:@"outputType" options:NSKeyValueObservingOptionNew context:NULL];
         
@@ -107,7 +110,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(void)awakeFromNib
 {
-    _defaultCallOptionViewConstraint = 229;
+    _defaultCallOptionViewConstraint = kHalfCallOptionsContraint;
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -340,9 +343,6 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     _presentedKeyboardViewController = viewController;
     [self addChildViewController:viewController];
     
-    
-    
-    
     CGRect bounds = (self.view.bounds);
     CGRect frame = self.view.frame;
     frame.origin.y = -frame.size.height;
@@ -409,6 +409,14 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 #pragma mark - Notification Handlers -
 
+-(void)addedCall:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    JCCallCard *callCard = [userInfo objectForKey:kJCPhoneManagerNewCall];
+    [callCard addObserver:self forKeyPath:NSStringFromSelector(@selector(statusCode)) options:0 context:NULL];
+}
+
+
 /**
  * Notification recieved when an incoming call has been answered. If we are currently not showing the call options view,
  * We animate in the showing of the call options view. This would occur if we were recieving an incomming call, with no 
@@ -419,10 +427,6 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 {
     if (!_showingCallOptions)
         self.callOptionsHidden = false;
-//    [self.callOptionsView setState:JCCallOptionViewSingleCallState animated:YES];
-   
-    [self showCallOptionsAnimated:TRUE];
-    
     NSInteger count = [[notification.userInfo objectForKey:kJCPhoneManagerUpdateCount] integerValue];
     if (count > 1)
         [self.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];

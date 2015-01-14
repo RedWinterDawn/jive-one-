@@ -45,6 +45,7 @@ NSString *const kJCPhoneManagerNewCall           = @"newCall";
 NSString *const kJCPhoneManagerActiveCall        = @"activeCall";
 NSString *const kJCPhoneManagerIncomingCall      = @"incomingCall";
 NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
+NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
 
 @interface JCPhoneManager ()<SipHandlerDelegate, JCCallCardDelegate>
 {
@@ -570,7 +571,8 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
                                                                  kJCPhoneManagerUpdatedIndex:[NSNumber numberWithInteger:newIndex],
                                                                  kJCPhoneManagerPriorUpdateCount:[NSNumber numberWithInteger:priorCount],
                                                                  kJCPhoneManagerUpdateCount: [NSNumber numberWithInteger:self.calls.count],
-                                                                 kJCPhoneManagerIncomingCall: [NSNumber numberWithBool:callCard.isIncoming]
+                                                                 kJCPhoneManagerIncomingCall: [NSNumber numberWithBool:callCard.isIncoming],
+                                                                 kJCPhoneManagerNewCall: callCard
                                                                  }];
 }
 
@@ -587,7 +589,8 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
                                                       userInfo:@{
                                                                  kJCPhoneManagerUpdatedIndex:[NSNumber numberWithInteger:index],
                                                                  kJCPhoneManagerPriorUpdateCount:[NSNumber numberWithInteger:priorCount],
-                                                                 kJCPhoneManagerUpdateCount:[NSNumber numberWithInteger:self.calls.count]
+                                                                 kJCPhoneManagerUpdateCount:[NSNumber numberWithInteger:self.calls.count],
+                                                                 kJCPhoneManagerRemovedCall: callCard
                                                                  }];
     
     // If when removing the call we are backgrounded, we tell the sip handler to operate in background mode.

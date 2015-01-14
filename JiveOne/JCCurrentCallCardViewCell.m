@@ -10,7 +10,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "JCConferenceCallCard.h"
-
+#import "JCCallOptionsView.h"
 #define HOLD_ANIMATION_DURATION 0.5f
 #define HOLD_ANIMATION_ALPHA 0.6f
 #define HOLD_PULSE_ANIMATION_DURATION 1.0f
@@ -43,6 +43,7 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
         _holdAnimationDuration = HOLD_ANIMATION_DURATION;
         _holdAnimationAlpha = HOLD_ANIMATION_ALPHA;
         _holdPulseAnimationDuration = HOLD_PULSE_ANIMATION_DURATION;
+        JCCallOptionsView *_CallOptionsView;
     }
     return self;
 }
@@ -169,6 +170,7 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
             {
                 [self showHoldButton:YES];
                 [self startTimer];
+                [self showCallOptions];
                 break;
             }
             case JCNoCall:
