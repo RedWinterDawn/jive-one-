@@ -44,10 +44,20 @@
 -(void)prepareForReuse
 {
     [super prepareForReuse];
-    [self removeObservers];
+
+    if (self.voicemail){
+        [self.voicemail removeObserver:self forKeyPath:kVoicemailDataAttributeKey];
+    }
     
     self.playPauseButton.selected = false;
     self.speakerButton.selected = false;
+}
+
+-(void)dealloc
+{
+    if (self.voicemail){
+        [self.voicemail removeObserver:self forKeyPath:kVoicemailDataAttributeKey];
+    }
 }
 
 #pragma mark - Methods -
@@ -96,14 +106,6 @@
     if (self.delegate && [self.delegate respondsToSelector:@selector(voiceCellDeleteTapped:)]) {
         [self.delegate voiceCellDeleteTapped:self];
     }
-}
-
-#pragma mark - Private -
-
--(void)removeObservers
-{
-    if (self.voicemail)
-        [self.voicemail removeObserver:self forKeyPath:kVoicemailDataAttributeKey];
 }
 
 @end
