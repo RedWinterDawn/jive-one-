@@ -65,6 +65,7 @@ typedef enum : NSInteger {
 @property (nonatomic) BOOL reconnectAfterCallFinishes;
 
 @property (nonatomic, readonly) Line *line;
+@property (nonatomic, readonly, getter=isInitialized) BOOL initialized;
 @property (nonatomic, readonly, getter=isConnected) BOOL connected;
 @property (nonatomic, readonly, getter=isConnecting) BOOL connecting;
 

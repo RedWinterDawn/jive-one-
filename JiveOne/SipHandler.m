@@ -11,6 +11,7 @@
 #import "SipHandler.h"
 #import "Common.h"
 #import "JCAppSettings.h"
+#import "JCSipHandlerError.h"
 
 #ifdef __APPLE__
 #include "TargetConditionals.h"
@@ -77,7 +78,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 @implementation SipHandler
 
--(instancetype)initWithNumberOfLines:(NSInteger)lines delegate:(id<SipHandlerDelegate>)delegate
+-(instancetype)initWithNumberOfLines:(NSInteger)lines delegate:(id<SipHandlerDelegate>)delegate error:(NSError *__autoreleasing *)error;
 {
     self = [super init];
     if (self) {
@@ -89,9 +90,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         
         // Initialize the port sip sdk.
         _mPortSIPSDK = [PortSIPSDK new];
-        
         _mPortSIPSDK.delegate = self;
-        int ret = [_mPortSIPSDK initialize:TRANSPORT_UDP
+        int errorCode = [_mPortSIPSDK initialize:TRANSPORT_UDP
                                   loglevel:LOG_LEVEL
                                    logPath:NULL
                                    maxLine:(int)lines
@@ -99,41 +99,54 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
                         virtualAudioDevice:IS_SIMULATOR
                         virtualVideoDevice:IS_SIMULATOR];
         
-        if(ret != 0)
-            [NSException raise:NSInvalidArgumentException format:@"Initialize Port Sip SDK failure with error code: %d", ret];
+        if(errorCode) {
+            _mPortSIPSDK = nil;
+            _lineSessions = nil;
+            *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error initializing port sip sdk"];
+            return self;
+        }
         
-        //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_PCMA];
+        // Check License Key
+        errorCode = [_mPortSIPSDK setLicenseKey:kPortSIPKey];
+        if(errorCode) {
+            [_mPortSIPSDK unInitialize];
+            _mPortSIPSDK = nil;
+            _lineSessions = nil;
+            *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Port Sip License Key Failure"];
+            return self;
+        }
+        
+        // Configure codecs. These return error codes, but are not critical if they fail.
+        
+        // Used Audio Codecs
         [_mPortSIPSDK addAudioCodec:AUDIOCODEC_PCMU];
-        //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_SPEEX];
         [_mPortSIPSDK addAudioCodec:AUDIOCODEC_G729];
         [_mPortSIPSDK addAudioCodec:AUDIOCODEC_G722];
         
+        // Not used Audio Codecs
+        //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_SPEEX];
+        //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_PCMA];
         //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_GSM];
         //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_ILBC];
         //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_AMR];
         //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_SPEEXWB];
         
-        //[_mPortSIPSDK addVideoCodec:VIDEO_CODEC_H263];
-        //[_mPortSIPSDK addVideoCodec:VIDEO_CODEC_H263_1998];
+        // Used Video Codecs
         [_mPortSIPSDK addVideoCodec:VIDEO_CODEC_H264];
         
-        [_mPortSIPSDK setVideoBitrate:100];//video send bitrate,100kbps
+        // Not Used Video Codecs
+        //[_mPortSIPSDK addVideoCodec:VIDEO_CODEC_H263];
+        //[_mPortSIPSDK addVideoCodec:VIDEO_CODEC_H263_1998];
+        
+        [_mPortSIPSDK setVideoBitrate:100];             //video send bitrate,100kbps
         [_mPortSIPSDK setVideoFrameRate:10];
         [_mPortSIPSDK setVideoResolution:VIDEO_CIF];
-        [_mPortSIPSDK setAudioSamples:20 maxPtime:60];//ptime 20
-        
-        //1 - FrontCamra 0 - BackCamra
-        [_mPortSIPSDK setVideoDeviceId:1];
+        [_mPortSIPSDK setAudioSamples:20 maxPtime:60];  //ptime 20
+        [_mPortSIPSDK setVideoDeviceId:1];              //1 - FrontCamra 0 - BackCamra
         //[_mPortSIPSDK setVideoOrientation:180];
         
-        //enable srtp
+        //Enable SRTP
         [_mPortSIPSDK setSrtpPolicy:SRTP_POLICY_NONE];
-        
-        ret = [_mPortSIPSDK setLicenseKey:kPortSIPKey];
-        if (ret == ECoreTrialVersionLicenseKey)
-            [NSException raise:NSInvalidArgumentException format:@"This trial version SDK just allows short conversation, you can't heairng anyting after 2-3 minutes, contact us: sales@portsip.com to buy official version."];
-        else if (ret == ECoreWrongLicenseKey)
-            [NSException raise:NSInvalidArgumentException format:@"The wrong license key was detected, please check with sales@portsip.com or support@portsip.com"];
         
         //set RTC keep alives
         [_mPortSIPSDK setRtpKeepAlive:true keepAlivePayloadType:126 deltaTransmitTimeMS:30000];
@@ -158,37 +171,63 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         [self unregister];
     }
     
-    @try {
-        
-        if (!line)
-            [NSException raise:NSInvalidArgumentException format:kSipHandlerLineErrorMessage];
-    
-        NSString *userName = line.lineConfiguration.sipUsername;
-        NSString *server   = line.pbx.isV5 ? line.lineConfiguration.outboundProxy : line.lineConfiguration.registrationHost;
-    
-        int ret = [_mPortSIPSDK setUser:userName
-                            displayName:line.lineConfiguration.display
-                               authName:userName
-                               password:line.lineConfiguration.sipPassword
-                                localIP:@"0.0.0.0"                      // Auto select IP address
-                           localSIPPort:(10000 + arc4random()%1000)     // Generate a random port in the 10,000 range
-                             userDomain:@""
-                              SIPServer:server
-                          SIPServerPort:OUTBOUND_SIP_SERVER_PORT
-                             STUNServer:@""
-                         STUNServerPort:0
-                         outboundServer:line.lineConfiguration.outboundProxy
-                     outboundServerPort:OUTBOUND_SIP_SERVER_PORT];
-    
-        if(ret != 0)
-            [NSException raise:NSInvalidArgumentException format:@"set user failure ErrorCode = %d",ret];
-        
-        _line = line;
-        [_mPortSIPSDK registerServer:3600 retryTimes:9];
+    if (!line) {
+        [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:JC_SIP_REGISTER_LINE_IS_EMPTY reason:@"Line is empty"]];
+        return;
     }
-    @catch (NSException *exception) {
-        NSError *error = [NSError errorWithDomain:exception.reason code:0 userInfo:nil];
-        [_delegate sipHandler:self didFailToRegisterWithError:error];
+    
+    if (!line.lineConfiguration) {
+        [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:JC_SIP_REGISTER_LINE_CONFIGURATION_IS_EMPTY reason:@"Line Configuration is empty"]];
+        return;
+    }
+    
+    if (!line.pbx) {
+        [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:JC_SIP_REGISTER_LINE_PBX_IS_EMPTY reason:@"Line PBX is empty"]];
+        return;
+    }
+    
+    NSString *userName = line.lineConfiguration.sipUsername;
+    if (!userName) {
+        [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:JC_SIP_REGISTER_USER_IS_EMPTY reason:@"User is empty"]];
+        return;
+    }
+    
+    NSString *server = line.pbx.isV5 ? line.lineConfiguration.outboundProxy : line.lineConfiguration.registrationHost;
+    if (!server) {
+        [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:JC_SIP_REGISTER_SERVER_IS_EMPTY reason:@"Server is empty"]];
+        return;
+    }
+    
+    NSString *password = line.lineConfiguration.sipPassword;
+    if (!password) {
+        [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:JC_SIP_REGISTER_PASSWORD_IS_EMPTY reason:@"Password is empty"]];
+        return;
+    }
+    
+    int errorCode = [_mPortSIPSDK setUser:userName
+                              displayName:line.lineConfiguration.display
+                                 authName:userName
+                                 password:password
+                                  localIP:@"0.0.0.0"                      // Auto select IP address
+                             localSIPPort:(10000 + arc4random()%1000)     // Generate a random port in the 10,000 range
+                               userDomain:@""
+                                SIPServer:server
+                            SIPServerPort:OUTBOUND_SIP_SERVER_PORT
+                               STUNServer:@""
+                           STUNServerPort:0
+                           outboundServer:line.lineConfiguration.outboundProxy
+                       outboundServerPort:OUTBOUND_SIP_SERVER_PORT];
+    
+    if(errorCode) {
+        [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:errorCode reason:@"Error Setting the User"]];
+        return;
+    }
+    
+    _line = line;
+    errorCode = [_mPortSIPSDK registerServer:3600 retryTimes:9];
+    if(errorCode) {
+        [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:errorCode reason:@"Error starting Registration"]];
+        return;
     }
 }
 
@@ -633,9 +672,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 - (void)onRegisterFailure:(char*) statusText statusCode:(int)statusCode
 {
     _registered = FALSE;
-    NSString *message = [NSString stringWithFormat:@"%@ code:(%i)", [NSString stringWithUTF8String:statusText], statusCode];
-    NSError *error = [NSError errorWithDomain:@"SipHandlerError" code:0 userInfo:@{NSLocalizedDescriptionKey: message}];
-    [_delegate sipHandler:self didFailToRegisterWithError:error];
+    [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:statusCode reason:@"Registration failed"]];
 }
 
 #pragma mark Incoming Call Events

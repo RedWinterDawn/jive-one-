@@ -80,7 +80,13 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(audioSessionRouteChangeSelector:) name:AVAudioSessionRouteChangeNotification object:nil];
         
         // Initialize the Sip Handler.
-        _sipHandler = [[SipHandler alloc] initWithNumberOfLines:MAX_LINES delegate:self];
+        __autoreleasing NSError *error;
+        _sipHandler = [[SipHandler alloc] initWithNumberOfLines:MAX_LINES delegate:self error:&error];
+        if (!error) {
+            _initialized = TRUE;
+        } else {
+            [UIApplication showSimpleAlert:@"Warning" message:@"There was an error loading the phone" code:error.code];
+        }
     }
     return self;
 }
@@ -100,6 +106,14 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
  */
 -(void)connectToLine:(Line *)line completion:(CompletionHandler)completion
 {
+    // Check if we are initialized.
+    if(!_initialized) {
+        if (completion) {
+            completion(false, nil);
+        }
+        return;
+    }
+    
     self.completion = completion;
     
     
@@ -788,8 +802,6 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
 {
     self.connecting = FALSE;
     self.connected = sipHandler.registered;
-    NSString *message = [NSString stringWithFormat:@"Phone did fail to connect with error: %@", [error description]];
-    [UIApplication showSimpleAlert:@"Error" message:message];
     [self reportError:error];
 }
 
