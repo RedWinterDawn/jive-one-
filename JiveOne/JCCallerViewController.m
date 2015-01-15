@@ -1,4 +1,4 @@
-//
+ //
 //  JCCallerViewController.m
 //  JiveOne
 //
@@ -25,8 +25,6 @@
 #import "JCCallCardCollectionViewController.h"
 
 #import "UIViewController+HUD.h"
-#define kCallOptionsDefualtContraint 229
-#define kHalfCallOptionsContraint 114
 #define CALL_OPTIONS_ANIMATION_DURATION 0.6
 #define TRANSFER_ANIMATION_DURATION 0.3
 #define KEYBOARD_ANIMATION_DURATION 0.3
@@ -40,7 +38,6 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 {
     UIViewController *_presentedTransferViewController;
     UIViewController *_presentedKeyboardViewController;
-    NSTimeInterval _defaultCallOptionViewConstraint;
     
     bool _showingCallOptions;
     
@@ -70,7 +67,6 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         [center addObserver:self selector:@selector(addedCallSelector:) name:kJCPhoneManagerAddedCallNotification object:_phoneManager];
         [center addObserver:self selector:@selector(removedCall:) name:kJCPhoneManagerRemoveCallNotification object:_phoneManager];
         [_phoneManager addObserver:self forKeyPath:@"outputType" options:NSKeyValueObservingOptionNew context:NULL];
-        
     }
     return self;
 }
@@ -78,6 +74,12 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 -(void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    NSArray *calls = _phoneManager.calls;
+    for (JCCallCard *callCard in calls) {
+        [callCard addObserver:self forKeyPath:kJCCallCardStatusChangeKey options:0 context:NULL];
+    }
+    [self checkCallConnectedState];
     
     NSString *dialString = self.dialString;
     if (!dialString || dialString.isEmpty) {
@@ -98,7 +100,6 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     [super viewWillLayoutSubviews];
     
     [self setCallOptionsHidden:_callOptionsHidden animated:NO];
-    _defaultCallOptionViewConstraint = kHalfCallOptionsContraint;
     
     self.speakerBtn.selected = (_phoneManager.outputType == JCPhoneManagerOutputSpeaker);
 }
@@ -107,11 +108,6 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 {
     return UIStatusBarStyleLightContent;
 }
-
-//-(void)awakeFromNib
-//{
-//    _defaultCallOptionViewConstraint = kHalfCallOptionsContraint;
-//}
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -129,28 +125,41 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    JCPhoneManager *manager = object;
-
     if ([keyPath isEqualToString:@"outputType"]) {
+            JCPhoneManager *manager = object;
                 self.speakerBtn.selected = (manager.outputType == JCPhoneManagerOutputSpeaker);
     }
     else if ([keyPath isEqualToString:kJCCallCardStatusChangeKey])
     {
-        if ([object isKindOfClass:[JCCallCard class]])
-        {
-            JCCallCard * callCard = (JCCallCard *)object;
-            if (callCard.callState == "Connected"|| callCard.callState == "Answered" ) {
-                _defaultCallOptionViewConstraint = kCallOptionsDefualtContraint;
-            }
-            else
-            {
-                _defaultCallOptionViewConstraint = kHalfCallOptionsContraint;
-            }
-            // count from phone manager
-            // call state of call card.
-            // we only want buttons hidden if there is only one call and its state is not JCCallAnswered or JCCallConnected.
-            
+        [self checkCallConnectedState];
+    }
+}
+
+-(void)checkCallConnectedState {
+    NSArray *calls = _phoneManager.calls;
+    NSInteger count = calls.count;
+    
+    if(count == 0) {
+        [self closeCallerViewController];
+    } else if (count == 1) {
+        
+        JCCallCard *callCard = calls.firstObject;
+        if (callCard.lineSession.sessionState == JCCallIncoming) {
+            [self.callOptionsView setState:JCCallOptionViewSingleCallState animated:YES];
         }
+        else if (callCard.callState == JCCallAnswered || callCard.callState == JCCallConnected)
+        {
+            NSLog(@"show options %i", callCard.callState);
+            
+            [self.callOptionsView setState:JCCallOptionViewSingleCallState animated:YES];
+        }
+        else {
+          
+            NSLog(@"hide options %i", callCard.callState);
+            [self.callOptionsView setState:JCCallOptionsViewInitalCallState animated:YES];
+        }
+    } else if (count > 1) {
+        [self.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];
     }
 }
 
@@ -312,9 +321,6 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     if (_showingCallOptions)
         return;
     
-    _callOptionsViewOriginYConstraint.constant = _defaultCallOptionViewConstraint;
-    [self.view setNeedsUpdateConstraints];
-    
     __unsafe_unretained UIView *weakView = self.view;
     [UIView animateWithDuration:animated ? 0.1 : 0
                      animations:^{
@@ -436,7 +442,9 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 {
     NSDictionary *userInfo = notification.userInfo;
     JCCallCard *callCard = [userInfo objectForKey:kJCPhoneManagerNewCall];
-    [callCard addObserver:self forKeyPath:kJCCallCardStatusChangeKey options:0 context:NULL];
+    if (callCard) {
+        [callCard addObserver:self forKeyPath:kJCCallCardStatusChangeKey options:0 context:NULL];
+    }
 }
 
 /**
@@ -450,11 +458,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     if (!_showingCallOptions)
         self.callOptionsHidden = false;
     
-    _defaultCallOptionViewConstraint = kCallOptionsDefualtContraint;
-    [self updateViewConstraints];
-    NSInteger count = [[notification.userInfo objectForKey:kJCPhoneManagerUpdateCount] integerValue];
-    if (count > 1)
-        [self.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];
+    [self checkCallConnectedState];
 }
 
 /**
@@ -463,17 +467,12 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
  */
 -(void)removedCall:(NSNotification *)notification
 {
-    NSInteger count = [[notification.userInfo objectForKey:kJCPhoneManagerUpdateCount] integerValue];
-    if(count == 0)
-        [self closeCallerViewController];
-    else if (count == 1)
-        [self.callOptionsView setState:JCCallOptionViewSingleCallState animated:YES];
-    else if (count > 1)
-        [self.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];
-    
+    [self checkCallConnectedState];
     NSDictionary *userInfo = notification.userInfo;
-    JCCallCard *callCard = [userInfo objectForKey:kJCPhoneManagerRemoveCallNotification];
-    [callCard removeObserver:self forKeyPath:kJCCallCardStatusChangeKey context:NULL];
+    JCCallCard *callCard = [userInfo objectForKey:kJCPhoneManagerRemovedCall];
+    if (callCard) {
+        [callCard removeObserver:self forKeyPath:kJCCallCardStatusChangeKey context:NULL];
+    }
 }
 
 #pragma mark - Delegate Handlers -

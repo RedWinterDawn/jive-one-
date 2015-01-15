@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -1991,10 +1992,10 @@
                         <viewControllerLayoutGuide type="bottom" id="AiG-Lb-b2c"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="vw4-gr-jHe">
-                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" misplaced="YES" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4nq-wa-FF2">
+                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4nq-wa-FF2">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
@@ -3530,6 +3531,8 @@
                                 </constraints>
                                 <connections>
                                     <outlet property="addCallBtnHorizontalContstraint" destination="qBX-wH-8Os" id="JRs-dk-8eS"/>
+                                    <outlet property="bottomSpaceToOptionsViewConstraint" destination="IA5-6S-Vng" id="YuV-KJ-bGY"/>
+                                    <outlet property="callOptionsYConstraint" destination="9FD-JK-27t" id="jWE-cQ-xKK"/>
                                     <outlet property="finishTransferConstraint" destination="tFc-6A-DTX" id="Atv-Ja-o2T"/>
                                     <outlet property="mergeBtnHorizontalContstraint" destination="tzG-hY-Oeq" id="s7A-Mx-wnX"/>
                                     <outlet property="swapBtnHorizontalContstraint" destination="6zV-kp-m5a" id="5aj-vh-9ty"/>
