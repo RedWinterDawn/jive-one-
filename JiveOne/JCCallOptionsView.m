@@ -9,8 +9,8 @@
 #import "JCCallOptionsView.h"
 
 #define DIAL_OPTIONS_ANIMATION_DURATION 0.3f
-#define kCallOptionsDefualtContraint 229
-#define kHalfCallOptionsContraint 114
+#define kCallOptionsDefualtContraint 114
+#define kHalfCallOptionsContraint 229
 
 @interface JCCallOptionsView ()
 {
@@ -21,7 +21,7 @@
     CGFloat _defaultMergePosition;
     CGFloat _defaultFinishPosition;
     CGFloat _defaultOptionsYPosition;
-    CGFloat _defaultOptionsYHalfPosition;
+    CGFloat _defaultOptionsYDoublePosition;
     CGFloat _defaultBottomDistance;
     
     bool _showingInital;
@@ -41,7 +41,7 @@
     if (self)
     {
         _annimationDuration = DIAL_OPTIONS_ANIMATION_DURATION;
-        _showingSingle = true;
+        _showingInital = true;
         
     }
     return self;
@@ -57,7 +57,7 @@
     _defaultMergePosition           = _mergeBtnHorizontalContstraint.constant;
     _defaultFinishPosition          = _finishTransferConstraint.constant;
     _defaultOptionsYPosition        =_callOptionsYConstraint.constant;
-    _defaultOptionsYHalfPosition = _callOptionsYConstraint.constant / 2;
+    _defaultOptionsYDoublePosition = _callOptionsYConstraint.constant * 2;
     _defaultBottomDistance = _bottomSpaceToOptionsViewConstraint.constant;
 }
 
@@ -68,7 +68,7 @@
 }
 -(void)viewDidLoad
 {
-    [self showInital:NO];
+//    [self showInital:NO];
 }
 
 -(void)setState:(JCCallOptionViewState)state
@@ -144,10 +144,10 @@
 //    _warmBtnVerticalConstraint.constant = - (5 * _defaultWarmTransferPosition);
 //    _addCallBtnHorizontalContstraint.constant = - (5 * _defaultAddCallPosition);
     
-    _callOptionsYConstraint.constant = _defaultOptionsYHalfPosition;
-    _bottomSpaceToOptionsViewConstraint.constant = 0;
+    
+//    _bottomSpaceToOptionsViewConstraint.constant = 0;
    
-
+    _callOptionsYConstraint.constant = _defaultOptionsYPosition;
      [self animate:animated completion:^(BOOL finished) {
         _showingInital = true;
         if (completion != NULL && finished)
@@ -157,7 +157,8 @@
 
 -(void)hideInital:(bool)animated completion:(void (^)(BOOL finished))completion
 {
-    _callOptionsYConstraint.constant = _defaultOptionsYPosition;
+   
+    _callOptionsYConstraint.constant = _defaultOptionsYDoublePosition;
     _bottomSpaceToOptionsViewConstraint.constant = 0;
     
     [self animate:animated completion:^(BOOL finished) {

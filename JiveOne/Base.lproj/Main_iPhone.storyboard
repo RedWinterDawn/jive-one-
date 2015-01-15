@@ -3248,13 +3248,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                             </imageView>
                             <containerView clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AIn-Um-NXd">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="251"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="364"/>
                                 <connections>
                                     <segue destination="1Io-pQ-qUd" kind="embed" identifier="CallerCollectionView" id="MUQ-NU-NHH"/>
                                 </connections>
                             </containerView>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T5I-ze-dYa" customClass="JCCallOptionsView">
-                                <rect key="frame" x="0.0" y="251" width="320" height="227"/>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T5I-ze-dYa" customClass="JCCallOptionsView">
+                                <rect key="frame" x="0.0" y="366" width="320" height="227"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="249" verticalCompressionResistancePriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JGQ-cX-3bl" userLabel="Mute Button" customClass="JCRoundedButton">
                                         <rect key="frame" x="32" y="20" width="60" height="60"/>
@@ -3526,7 +3526,6 @@
                                     <constraint firstAttribute="bottom" secondItem="LZA-VZ-Dk3" secondAttribute="bottom" constant="40" id="s8n-gI-G4K"/>
                                     <constraint firstAttribute="bottom" secondItem="hys-3G-Hvf" secondAttribute="bottom" constant="-60" id="tFc-6A-DTX"/>
                                     <constraint firstItem="907-zj-hOp" firstAttribute="leading" secondItem="T5I-ze-dYa" secondAttribute="leading" constant="-78" id="tzG-hY-Oeq"/>
-                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="500" id="uxQ-n4-PH0"/>
                                     <constraint firstAttribute="bottom" secondItem="W4O-ei-fkQ" secondAttribute="bottom" constant="39" id="y6q-dY-Ebf"/>
                                 </constraints>
                                 <connections>
@@ -3544,7 +3543,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="5bp-16-Yhx" firstAttribute="top" secondItem="AIn-Um-NXd" secondAttribute="bottom" constant="20" id="2bt-qC-cxl"/>
-                            <constraint firstItem="eCX-gY-NnK" firstAttribute="top" secondItem="T5I-ze-dYa" secondAttribute="top" constant="229" id="9FD-JK-27t"/>
+                            <constraint firstItem="eCX-gY-NnK" firstAttribute="top" secondItem="T5I-ze-dYa" secondAttribute="top" constant="116" id="9FD-JK-27t"/>
                             <constraint firstItem="AIn-Um-NXd" firstAttribute="top" secondItem="q42-OL-z6o" secondAttribute="bottom" id="F80-2V-nkf"/>
                             <constraint firstItem="T5I-ze-dYa" firstAttribute="top" secondItem="AIn-Um-NXd" secondAttribute="bottom" id="IA5-6S-Vng"/>
                             <constraint firstItem="T5I-ze-dYa" firstAttribute="leading" secondItem="iLc-8x-FhM" secondAttribute="leading" id="LCw-9n-T84"/>
@@ -3577,7 +3576,7 @@
             <objects>
                 <collectionViewController id="1Io-pQ-qUd" customClass="JCCallCardCollectionViewController" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="CSs-ad-Lqn">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="251"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="364"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
