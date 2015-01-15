@@ -45,6 +45,8 @@
     
     UINavigationController *_navigationController;
     UIViewController *_appSwitcherViewController;
+    
+    AFNetworkReachabilityStatus _previousNetworkStatus;
 }
 
 @end
@@ -96,14 +98,16 @@
      */
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
 #if DEBUG
-    [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
+    //[[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
     [[AFNetworkActivityLogger sharedLogger] startLogging];
 #else
     [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelOff];
 #endif
     
     //Start monitor for Reachability
-    [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+    AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(networkConnectivityChanged:) name:AFNetworkingReachabilityDidChangeNotification object:nil];
+    [manager startMonitoring];
 }
 
 /**
@@ -289,12 +293,79 @@
         
         // Register the Phone.
         dispatch_async(dispatch_get_main_queue(), ^{
-            [JCPhoneManager connectToLine:line completion:NULL];
+            [JCPhoneManager connectToLine:line];
         });
     });
 }
 
 #pragma mark - Notification Handlers -
+
+#pragma mark AFNetworkReachability
+
+-(void)networkConnectivityChanged:(NSNotification *)notification
+{
+    if (![NSThread isMainThread]) {
+        [self performSelectorOnMainThread:@selector(networkConnectivityChanged:) withObject:notification waitUntilDone:NO];
+        return;
+    }
+    
+    AFNetworkReachabilityStatus status = (AFNetworkReachabilityStatus)((NSNumber *)[notification.userInfo valueForKey:AFNetworkingReachabilityNotificationStatusItem]).integerValue;
+    AFNetworkReachabilityManager *networkManager = (AFNetworkReachabilityManager *)notification.object;
+    Line *line = [JCAuthenticationManager sharedInstance].line;
+    JCPhoneManagerNetworkType currentNetworkType = [JCPhoneManager networkType];
+    
+    // Check to see if we have a previous network state that was different from our current network
+    // state. If they are the same, we have no reason to change the state change, so we exit out.
+    if (currentNetworkType == status) {
+        return;
+    }
+    
+    // If we have become unreachable, we note it, but we do not disconnect, in case its a temporary
+    // outage, and we are able to reconnect. Its possible we may loose network connectivity, but we
+    // may recover, or transition to anouther state, so we choose not to act on the change, but
+    // rather the recovery when we reconnect.
+    if (status == AFNetworkReachabilityStatusNotReachable) {
+        NSLog(@"No Network Connection");
+    }
+    
+    // Transition from Cellular data to wifi. If we have an active call, we should not reconnect at
+    // this time. We schedule it to be reconnected when the current call(s) finishes.
+    else if (currentNetworkType == AFNetworkReachabilityStatusReachableViaWWAN && status == AFNetworkReachabilityStatusReachableViaWiFi) {
+        NSLog(@"Transitioning to Wifi from Cellular Data Connection");
+        if ([JCPhoneManager isActiveCall]) {
+            [JCPhoneManager setReconnectAfterCallsFinishes];
+        }
+        else {
+            [JCPhoneManager connectToLine:line];
+        }
+    }
+    
+    // Transition from wifi to cellular data. Since the active connection will likely drop, we reconnect.
+    else if (currentNetworkType == AFNetworkReachabilityStatusReachableViaWiFi && status == AFNetworkReachabilityStatusReachableViaWWAN) {
+        NSLog(@"Transitioning to Cellular Data from Wifi Connection");
+        [JCPhoneManager connectToLine:line];
+    }
+    
+    // Transition from no connection to having a connection
+    else if(currentNetworkType == AFNetworkReachabilityStatusNotReachable && networkManager.isReachable) {
+        NSLog(@"Transitioning from no network connectivity to connected.");
+        if (![JCPhoneManager sharedManager].isConnected) {
+            [JCPhoneManager connectToLine:line];
+        }
+    }
+    
+    // Handle socket to reconnect. Since we reuse the socket, we do not need to subscribe, but just
+    // activate the socket to reopen it.
+    if (networkManager.isReachable && ![JCSocket sharedSocket].isReady) {
+        if (line.pbx.isV5) {
+            NSLog(@"Restarting socket");
+            [JCSocket connectWithDeviceToken:[JCAuthenticationManager sharedInstance].deviceToken completion:NULL];
+        }
+        else {
+            [JCSocket disconnect];
+        }
+    }
+}
 
 #pragma mark JCAuthenticationManager
 
@@ -394,50 +465,6 @@
     }];
 }
 
-#pragma mark AFNetworkReachabilityManager
-
-- (void)didChangeConnection:(NSNotification *)notification
-{
-    LOG_Info();
-    
-    AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];
-    AFNetworkReachabilityStatus status = manager.networkReachabilityStatus;
-    switch (status)
-    {
-        case AFNetworkReachabilityStatusNotReachable: {
-            NSLog(@"No Internet Connection");
-            
-            break;
-        }
-        case AFNetworkReachabilityStatusReachableViaWiFi: {
-            NSLog(@"WIFI");
-            
-            // TRY TO RECONNECT
-            
-            //            //send any chat messages in the queue
-            //            [JCMessagesViewController sendOfflineMessagesQueue:[JCRESTClient sharedClient]];
-            //            //try to initialize socket connections
-            //            LogMessage(@"socket", 4, @"Will Call requestSession");
-            //
-            //            [self startSocket:!appIsActive];
-            break;
-        }
-        case AFNetworkReachabilityStatusReachableViaWWAN: {
-            NSLog(@"3G");
-            //            //send any chat messages in the queue
-            //            [JCMessagesViewController sendOfflineMessagesQueue:[JCRESTClient sharedClient]];
-            //            //try to initialize socket connections
-            //            LogMessage(@"socket", 4, @"Will Call requestSession");
-            //
-            //            [self startSocket:!appIsActive];
-            break;
-        }
-        default:
-            NSLog(@"Unkown network status");
-            break;
-    }
-}
-
 #pragma mark - Delegate Handlers -
 
 -(void)pickerViewControllerShouldDismiss:(JCPickerViewController *)controller
@@ -490,6 +517,7 @@
 {
     LOG_Info();
     [JCSocket stop];
+    [JCPhoneManager startKeepAlive];
 }
 
 /**
@@ -502,6 +530,7 @@
 
     [Flurry logEvent:@"Resumed Session"];
     [JCSocket start];
+    [JCPhoneManager stopKeepAlive];
 }
 
 /**

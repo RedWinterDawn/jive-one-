@@ -1,38 +1,54 @@
-    //
+//
 //  SipHandler.m
 //  JiveOne
+//
+//  The Sip Handler server as a wrapper to the port sip SDK and manages Line Session objects.
 //
 //  Created by Eduardo Gueiros on 9/30/14.
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
 #import "SipHandler.h"
-
-#import <PortSIPLib/PortSIPSDK.h>
-#import <AFNetworking/AFNetworkReachabilityManager.h>
-#import <AVFoundation/AVFoundation.h>
-
-#import "IncomingCall.h"
-#import "MissedCall.h"
-#import "OutgoingCall.h"
 #import "Common.h"
-#import "JCBadgeManager.h"
-
-#import "LineConfiguration.h"
-#import "Line.h"
-#import "PBX.h"
-#import "VideoViewController.h"
 #import "JCAppSettings.h"
 
 #ifdef __APPLE__
 #include "TargetConditionals.h"
 #endif
 
-#define MAX_LINES 2
+// Libraries
+#import <PortSIPLib/PortSIPSDK.h>
+#import <AVFoundation/AVFoundation.h>
+
+// Managers
+#import "JCBadgeManager.h"   // Sip directly reports voicemail count for v4 clients to badge manager
+
+// Managed Objects
+#import "IncomingCall.h"
+#import "MissedCall.h"
+#import "OutgoingCall.h"
+#import "LineConfiguration.h"
+#import "Line.h"
+#import "PBX.h"
+
+// View Controllers
+#import "VideoViewController.h"
+
 #define ALERT_TAG_REFER 100
 #define OUTBOUND_SIP_SERVER_PORT 5061
-
 #define AUTO_ANSWER_CHECK_COUNT 3
+
+#if DEBUG
+#define LOG_LEVEL PORTSIP_LOG_DEBUG
+#else
+#define LOG_LEVEL PORTSIP_LOG_NONE
+#endif
+
+#if TARGET_IPHONE_SIMULATOR
+#define IS_SIMULATOR TRUE
+#elif TARGET_OS_IPHONE
+#define IS_SIMULATOR FALSE
+#endif
 
 NSString *const kSipHandlerAutoAnswerModeAutoHeader = @"Answer-Mode: auto";
 NSString *const kSipHandlerAutoAnswerInfoIntercomHeader = @"Alert-Info: Intercom";
@@ -45,9 +61,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 @interface SipHandler() <PortSIPEventDelegate>
 {
-    Line *_line;
     PortSIPSDK *_mPortSIPSDK;
     CompletionHandler _connectionCompletionHandler;
+    CompletionHandler _transferCompletionHandler;
 	VideoViewController *_videoController;
 	bool inConference;
 	bool autoAnswer;
@@ -61,209 +77,146 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 @implementation SipHandler
 
--(instancetype)initWithLine:(Line *)line delegate:(id<SipHandlerDelegate>)delegate
+-(instancetype)initWithNumberOfLines:(NSInteger)lines delegate:(id<SipHandlerDelegate>)delegate
 {
     self = [super init];
-    if (self)
-    {
-        if (!line)
-            [NSException raise:NSInvalidArgumentException format:kSipHandlerLineErrorMessage];
-        
-        _line = line;
+    if (self) {
         _delegate = delegate;
-    
+        
         _lineSessions = [NSMutableArray new];
-        for (int i = 0; i < MAX_LINES; i++)
+        for (int i = 0; i < lines; i++)
             [_lineSessions addObject:[JCLineSession new]];
         
-        _mPortSIPSDK = [[PortSIPSDK alloc] init];
-        _mPortSIPSDK.delegate = self;
-		
-		_videoController = [VideoViewController new];
+        // Initialize the port sip sdk.
+        _mPortSIPSDK = [PortSIPSDK new];
         
-        [self connect:NULL];
+        _mPortSIPSDK.delegate = self;
+        int ret = [_mPortSIPSDK initialize:TRANSPORT_UDP
+                                  loglevel:LOG_LEVEL
+                                   logPath:NULL
+                                   maxLine:(int)lines
+                                     agent:kSipHandlerServerAgentname
+                        virtualAudioDevice:IS_SIMULATOR
+                        virtualVideoDevice:IS_SIMULATOR];
+        
+        if(ret != 0)
+            [NSException raise:NSInvalidArgumentException format:@"Initialize Port Sip SDK failure with error code: %d", ret];
+        
+        //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_PCMA];
+        [_mPortSIPSDK addAudioCodec:AUDIOCODEC_PCMU];
+        //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_SPEEX];
+        [_mPortSIPSDK addAudioCodec:AUDIOCODEC_G729];
+        [_mPortSIPSDK addAudioCodec:AUDIOCODEC_G722];
+        
+        //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_GSM];
+        //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_ILBC];
+        //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_AMR];
+        //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_SPEEXWB];
+        
+        //[_mPortSIPSDK addVideoCodec:VIDEO_CODEC_H263];
+        //[_mPortSIPSDK addVideoCodec:VIDEO_CODEC_H263_1998];
+        [_mPortSIPSDK addVideoCodec:VIDEO_CODEC_H264];
+        
+        [_mPortSIPSDK setVideoBitrate:100];//video send bitrate,100kbps
+        [_mPortSIPSDK setVideoFrameRate:10];
+        [_mPortSIPSDK setVideoResolution:VIDEO_CIF];
+        [_mPortSIPSDK setAudioSamples:20 maxPtime:60];//ptime 20
+        
+        //1 - FrontCamra 0 - BackCamra
+        [_mPortSIPSDK setVideoDeviceId:1];
+        //[_mPortSIPSDK setVideoOrientation:180];
+        
+        //enable srtp
+        [_mPortSIPSDK setSrtpPolicy:SRTP_POLICY_NONE];
+        
+        ret = [_mPortSIPSDK setLicenseKey:kPortSIPKey];
+        if (ret == ECoreTrialVersionLicenseKey)
+            [NSException raise:NSInvalidArgumentException format:@"This trial version SDK just allows short conversation, you can't heairng anyting after 2-3 minutes, contact us: sales@portsip.com to buy official version."];
+        else if (ret == ECoreWrongLicenseKey)
+            [NSException raise:NSInvalidArgumentException format:@"The wrong license key was detected, please check with sales@portsip.com or support@portsip.com"];
+        
+        //set RTC keep alives
+        [_mPortSIPSDK setRtpKeepAlive:true keepAlivePayloadType:126 deltaTransmitTimeMS:30000];
+        
+        _videoController = [VideoViewController new];
     }
     return self;
 }
 
-#pragma mark - Device Registration -
-
--(void)connect:(CompletionHandler)completionHandler;
+-(void)dealloc
 {
-    _connectionCompletionHandler = completionHandler;
-    
-    // If we are already connected, disconnect then reconnect.
-    if (_registered)
-        [self disconnect];
+    [self unregister];
+    [_mPortSIPSDK unInitialize];
+}
+
+#pragma mark - Registration -
+
+-(void)registerToLine:(Line *)line
+{
+    // If we are registered to a line, we need to unregister from that line, and reconnect.
+    if (_registered) {
+        [self unregister];
+    }
     
     @try {
-        NSLog(@"Connecting");
         
-        if ([JCAppSettings sharedSettings].isWifiOnly) {
-            [self login];
-        }
-        [self login];
-        _initialized = true;
+        if (!line)
+            [NSException raise:NSInvalidArgumentException format:kSipHandlerLineErrorMessage];
+    
+        NSString *userName = line.lineConfiguration.sipUsername;
+        NSString *server   = line.pbx.isV5 ? line.lineConfiguration.outboundProxy : line.lineConfiguration.registrationHost;
+    
+        int ret = [_mPortSIPSDK setUser:userName
+                            displayName:line.lineConfiguration.display
+                               authName:userName
+                               password:line.lineConfiguration.sipPassword
+                                localIP:@"0.0.0.0"                      // Auto select IP address
+                           localSIPPort:(10000 + arc4random()%1000)     // Generate a random port in the 10,000 range
+                             userDomain:@""
+                              SIPServer:server
+                          SIPServerPort:OUTBOUND_SIP_SERVER_PORT
+                             STUNServer:@""
+                         STUNServerPort:0
+                         outboundServer:line.lineConfiguration.outboundProxy
+                     outboundServerPort:OUTBOUND_SIP_SERVER_PORT];
+    
+        if(ret != 0)
+            [NSException raise:NSInvalidArgumentException format:@"set user failure ErrorCode = %d",ret];
+        
+        _line = line;
+        [_mPortSIPSDK registerServer:3600 retryTimes:9];
     }
     @catch (NSException *exception) {
         NSError *error = [NSError errorWithDomain:exception.reason code:0 userInfo:nil];
-        if (completionHandler != NULL)
-            completionHandler(false, error);
-        else
-            NSLog(@"%@", error);
+        [_delegate sipHandler:self didFailToRegisterWithError:error];
     }
 }
 
-/**
- *  Sets the User info from Core Data into the Port Sip SDK.
- */
--(void)login
+-(void)unregister
 {
-    NSString *kSipUserName  = _line.lineConfiguration.sipUsername;
-    NSString *kSIPServer    = _line.pbx.isV5 ? _line.lineConfiguration.outboundProxy : _line.lineConfiguration.registrationHost;
-    
-    _sipURL = [[NSString alloc] initWithFormat:@"sip:%@:%@", kSipUserName, kSIPServer];
-	
-	bool isSimulator = FALSE;
-    PORTSIP_LOG_LEVEL LOG_LEVEL;
-#if DEBUG
-    LOG_LEVEL = PORTSIP_LOG_DEBUG;
-#else
-    LOG_LEVEL = PORTSIP_LOG_NONE;
-#endif
-    
-#if TARGET_IPHONE_SIMULATOR
-	isSimulator = TRUE;
-#elif TARGET_OS_IPHONE
-	isSimulator = FALSE;
-#endif
-    
-    // Initialized the SIP SDK
-    int ret = [_mPortSIPSDK initialize:TRANSPORT_UDP
-                              loglevel:LOG_LEVEL
-                               logPath:NULL
-                               maxLine:MAX_LINES
-                                 agent:kSipHandlerServerAgentname
-                    virtualAudioDevice:isSimulator
-                    virtualVideoDevice:isSimulator];
-    
-    if(ret != 0)
-        [NSException raise:NSInvalidArgumentException format:@"initializeSDK failure ErrorCode = %d",ret];
-    
-    ret = [_mPortSIPSDK setUser:kSipUserName
-                    displayName:_line.lineConfiguration.display
-                       authName:kSipUserName
-                       password:_line.lineConfiguration.sipPassword
-                        localIP:@"0.0.0.0"                      // Auto select IP address
-                   localSIPPort:(10000 + arc4random()%1000)     // Generate a random port in the 10,000 range
-                     userDomain:@""
-                      SIPServer:kSIPServer
-                  SIPServerPort:OUTBOUND_SIP_SERVER_PORT
-                     STUNServer:@""
-                 STUNServerPort:0
-                 outboundServer:_line.lineConfiguration.outboundProxy
-             outboundServerPort:OUTBOUND_SIP_SERVER_PORT];
-    
-    if(ret != 0)
-        [NSException raise:NSInvalidArgumentException format:@"set user failure ErrorCode = %d",ret];
-    
-    ret = [_mPortSIPSDK setLicenseKey:kPortSIPKey];
-    if (ret == ECoreTrialVersionLicenseKey)
-        [NSException raise:NSInvalidArgumentException format:@"This trial version SDK just allows short conversation, you can't heairng anyting after 2-3 minutes, contact us: sales@portsip.com to buy official version."];
-    else if (ret == ECoreWrongLicenseKey)
-        [NSException raise:NSInvalidArgumentException format:@"The wrong license key was detected, please check with sales@portsip.com or support@portsip.com"];
-    
-    //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_PCMA];
-    [_mPortSIPSDK addAudioCodec:AUDIOCODEC_PCMU];
-    //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_SPEEX];
-    [_mPortSIPSDK addAudioCodec:AUDIOCODEC_G729];
-    [_mPortSIPSDK addAudioCodec:AUDIOCODEC_G722];
-    
-    //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_GSM];
-    //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_ILBC];
-    //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_AMR];
-    //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_SPEEXWB];
-    
-    //[_mPortSIPSDK addVideoCodec:VIDEO_CODEC_H263];
-    //[_mPortSIPSDK addVideoCodec:VIDEO_CODEC_H263_1998];
-    [_mPortSIPSDK addVideoCodec:VIDEO_CODEC_H264];
-    
-    [_mPortSIPSDK setVideoBitrate:100];//video send bitrate,100kbps
-    [_mPortSIPSDK setVideoFrameRate:10];
-    [_mPortSIPSDK setVideoResolution:VIDEO_CIF];
-    [_mPortSIPSDK setAudioSamples:20 maxPtime:60];//ptime 20
-    
-    //1 - FrontCamra 0 - BackCamra
-    [_mPortSIPSDK setVideoDeviceId:1];
-    //[_mPortSIPSDK setVideoOrientation:180];
-    
-    //enable srtp
-    [_mPortSIPSDK setSrtpPolicy:SRTP_POLICY_NONE];
-    
-    // Try to register the default identity
-    [_mPortSIPSDK registerServer:3600 retryTimes:9];
-	
-	//set RTC keep alives
-	[_mPortSIPSDK setRtpKeepAlive:true keepAlivePayloadType:126 deltaTransmitTimeMS:30000];
-}
-
--(void)disconnect
-{
-    if(_initialized)
+    if(_registered)
     {
         for (JCLineSession *lineSession in _lineSessions) {
             [self hangUpSession:lineSession completion:NULL];
         }
         [_mPortSIPSDK unRegisterServer];
-        [_mPortSIPSDK unInitialize];
-        
         _registered = NO;
-        _initialized = NO;
+        [_delegate sipHandlerDidUnregister:self];
     }
 }
 
-#pragma mark Registration Callback
-
-- (void)onRegisterSuccess:(char*) statusText statusCode:(int)statusCode
-{
-    _registered = TRUE;
-    if (_connectionCompletionHandler != NULL)
-        _connectionCompletionHandler(true, nil);
-    
-    if (_delegate && [_delegate respondsToSelector:@selector(sipHandlerDidRegister:)]) {
-        [_delegate sipHandlerDidRegister:self];
-    }
-};
-
-- (void)onRegisterFailure:(char*) statusText statusCode:(int)statusCode
-{
-    _registered = FALSE;
-    NSString *message = [NSString stringWithFormat:@"%@ code:(%i)", [NSString stringWithUTF8String:statusText], statusCode];
-    NSError *error = [NSError errorWithDomain:@"SipHandlerError" code:0 userInfo:@{NSLocalizedDescriptionKey: message}];
-    
-    if (_connectionCompletionHandler != NULL)
-        _connectionCompletionHandler(false, error);
-    
-    if (_delegate && [_delegate respondsToSelector:@selector(sipHandlerDidFailToRegister:error:)]) {
-        [_delegate sipHandlerDidFailToRegister:self error:error];
-    }
-};
-
-
-#pragma mark Backgrounding
+#pragma mark - Backgrounding -
 
 - (void)startKeepAwake
 {
-    if (_mPortSIPSDK)
-    {
+    if (_mPortSIPSDK) {
         [_mPortSIPSDK startKeepAwake];
     }
 }
 
 -(void)stopKeepAwake
 {
-    if (_mPortSIPSDK)
-    {
+    if (_mPortSIPSDK) {
         [_mPortSIPSDK stopKeepAwake];
     }
 }
@@ -292,12 +245,12 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         NSError *error = [Common createErrorWithDescription:NSLocalizedString(@"Call Failed", nil) reason:NSLocalizedString(@"Unable to create call", nil) code:sessionId];
         [self setSessionState:JCCallFailed forSession:lineSession event:@"makeCall:" error:error];
 	}
-    
 	return lineSession;
 }
 
-- (void)answerSession:(JCLineSession *)lineSession {
-	[self answerSession:lineSession completion:nil];
+- (void)answerSession:(JCLineSession *)lineSession
+{
+	[self answerSession:lineSession completion:NULL];
 }
 
 - (void)answerSession:(JCLineSession *)lineSession completion:(CompletionHandler)completion
@@ -399,7 +352,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	
     // Tell PortSip to refer the session id to the passed number. If sucessful, the PortSip deleagate method will inform
     // us and we will call the completion block.
-    _transferCompleted = completion;
+    _transferCompletionHandler = completion;
 	int result = [_mPortSIPSDK refer:lineSession.mSessionId referTo:number];
     if (result != 0)
     {
@@ -407,7 +360,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         NSError *error = [Common createErrorWithDescription:msg reason:NSLocalizedString(@"Unable to make blind transfer", nil) code:result];
         [self setSessionState:JCTransferFailed forSession:lineSession event:msg error:error];
         completion(false, [NSError errorWithDomain:msg code:0 userInfo:nil]);
-        _transferCompleted = nil;
+        _transferCompletionHandler = nil;
     }
     return;
 }
@@ -427,49 +380,20 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return;
     }
 	
-    _transferCompleted = completion;
+    _transferCompletionHandler = completion;
     int result = [_mPortSIPSDK attendedRefer:receivingSession.mSessionId replaceSessionId:sessionToTransfer.mSessionId referTo:number];
     if (result != 0) {
         NSString *msg = NSLocalizedString(@"Warm Transfer failed", nil);
         NSError *error = [Common createErrorWithDescription:msg reason:NSLocalizedString(@"Unable make transfer", nil) code:result];
         [self setSessionState:JCTransferFailed forSession:receivingSession event:msg error:error];
         completion(false, error);
-        _transferCompleted = nil;
+        _transferCompletionHandler = nil;
     }
 }
 
 - (void) muteCall:(BOOL)mute
 {
-    
     [_mPortSIPSDK muteMicrophone:mute];
-    
-// For the MVP the call above suffices. For more advanced control over earch session
-// the code below might come in handy.
-    
-//    if (!inConference) {
-//        JCLineSession *selectedLine = [self findLineWithSessionState];
-//        
-//        if(selectedLine.mSessionState){
-//            [_mPortSIPSDK muteSession:selectedLine.mSessionState
-//                    muteIncomingAudio:FALSE
-//                    muteOutgoingAudio:mute == YES ? TRUE : FALSE
-//                    muteIncomingVideo:FALSE
-//                    muteOutgoingVideo:mute == YES ? TRUE : FALSE];
-//        }
-//    }
-//    else {
-//        for (JCLineSession *line in self.lineSessions)
-//        {
-//            if (line.mSessionState)
-//            {
-//                [_mPortSIPSDK muteSession:line.mSessionState
-//                        muteIncomingAudio:FALSE
-//                        muteOutgoingAudio:mute == YES ? TRUE : FALSE
-//                        muteIncomingVideo:FALSE
-//                        muteOutgoingVideo:mute == YES ? TRUE : FALSE];            }
-//        }
-//    }
-	
 }
 
 - (bool)setConference:(bool)conference
@@ -533,32 +457,37 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     }
 }
 
+#pragma mark - Getters -
+
+-(BOOL)isActive
+{
+    NSArray *activeLines = [self findAllActiveLines];
+    if (activeLines.count > 0) {
+        return TRUE;
+    }
+    return FALSE;
+}
+
 #pragma mark - Private -
 
 #pragma mark Find line methods
 
 - (JCLineSession *)findSession:(long)sessionId
 {
-    
-    for (JCLineSession *line in self.lineSessions)
-    {
-        if (sessionId == line.mSessionId)
-        {
+    for (JCLineSession *line in self.lineSessions) {
+        if (sessionId == line.mSessionId) {
             return line;
         }
     }
-    
     return nil;
 }
 
 - (JCLineSession *)findActiveLine
 {
-    for (JCLineSession *line in self.lineSessions)
-    {
+    for (JCLineSession *line in self.lineSessions) {
         if (line.isActive &&
             !line.isHolding &&
-            !line.mRecvCallState)
-        {
+            !line.mRecvCallState){
             return line;
         }
     }
@@ -567,11 +496,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 - (JCLineSession *)findLineWithRecevingState
 {
-    for (JCLineSession *line in self.lineSessions)
-    {
+    for (JCLineSession *line in self.lineSessions) {
         if (!line.isActive &&
-            line.mRecvCallState)
-        {
+            line.mRecvCallState){
             return line;
         }
     }
@@ -580,12 +507,10 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 - (JCLineSession *)findLineWithHoldState
 {
-    for (JCLineSession *line in self.lineSessions)
-    {
+    for (JCLineSession *line in self.lineSessions) {
         if (line.isActive &&
             line.isHolding &&
-            !line.mRecvCallState)
-        {
+            !line.mRecvCallState) {
             return line;
         }
     }
@@ -594,11 +519,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 - (JCLineSession *)findIdleLine
 {
-    for (JCLineSession *line in self.lineSessions)
-    {
+    for (JCLineSession *line in self.lineSessions){
         if (!line.isActive &&
-            !line.mRecvCallState)
-        {
+            !line.mRecvCallState){
             return line;
         }
     }
@@ -621,8 +544,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 -(void)setSessionState:(JCLineSessionState)state forSession:(JCLineSession *)lineSession event:(NSString *)event error:(NSError *)error
 {
-    if (!lineSession)
-    {
+    if (!lineSession) {
         return;
     }
     
@@ -632,11 +554,11 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         case JCTransferSuccess:
         {
             lineSession.sessionState = state;
-            if (_transferCompleted) {
-                _transferCompleted(YES, error);
-                _transferCompleted = nil;
+            if (_transferCompletionHandler) {
+                _transferCompletionHandler(YES, error);
+                _transferCompletionHandler = nil;
             }
-            [self.delegate removeLineSession:lineSession];
+            [self.delegate sipHandler:self willRemoveLineSession:lineSession];
             [lineSession reset];
             break;
         }
@@ -644,9 +566,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         {
             lineSession.sessionState = state;
             NSLog(@"%@", [self.lineSessions description]);
-            if (_transferCompleted) {
-                _transferCompleted(NO, error);
-                _transferCompleted = nil;
+            if (_transferCompletionHandler) {
+                _transferCompletionHandler(NO, error);
+                _transferCompletionHandler = nil;
             }
             break;
         }
@@ -659,7 +581,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             {
                 [MissedCall addMissedCallWithLineSession:lineSession line:_line];
             }
-            [self.delegate removeLineSession:lineSession];
+            [self.delegate sipHandler:self willRemoveLineSession:lineSession];
             [lineSession reset];
             break;
         }
@@ -667,27 +589,10 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         // Session is an incoming call -> notify delegate to add it.
         case JCCallIncoming:
             lineSession.sessionState = state;               // Set the session state.
-            [self.delegate addLineSession:lineSession];     // Notify the delegate to add a line.
+            [self.delegate sipHandler:self didAddLineSession:lineSession];     // Notify the delegate to add a line.
             if (autoAnswer) {
                 autoAnswer = false;
-                
-                // Only answer the call in auto answer mode if the intercom is enabled.
-                if ([JCAppSettings sharedSettings].isIntercomEnabled) {
-                    [self.delegate answerAutoCall:lineSession];
-                    
-                    // Determine if the speaker should be turned on. If we are on the built in reciever, it means we are
-                    // not on Bluetooth, or Airplay, etc., and are on the internal built in speaker, so we can, and
-                    // should enable speaker mode.
-                    BOOL shouldTurnOnSpeaker = FALSE;
-                    NSArray *currentOutputs = [AVAudioSession sharedInstance].currentRoute.outputs;
-                    for( AVAudioSessionPortDescription *port in currentOutputs ){
-                        if ([port.portType isEqualToString:AVAudioSessionPortBuiltInReceiver]) {
-                            shouldTurnOnSpeaker = TRUE;
-                        }
-                    }
-                    
-                    self.loudSpeakerEnabled = shouldTurnOnSpeaker;
-                }
+                [self.delegate sipHandler:self receivedIntercomLineSession:lineSession];
             }
             break;
         
@@ -715,7 +620,23 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     [self setSessionState:state forSession:[self findSession:sessionId] event:event error:error];
 }
 
-#pragma mark - Delegate Handlers -
+#pragma mark - PortSIP SDK Delegate Handlers -
+
+#pragma mark Resgistration Events
+
+- (void)onRegisterSuccess:(char*) statusText statusCode:(int)statusCode
+{
+    _registered = TRUE;
+    [_delegate sipHandlerDidRegister:self];
+}
+
+- (void)onRegisterFailure:(char*) statusText statusCode:(int)statusCode
+{
+    _registered = FALSE;
+    NSString *message = [NSString stringWithFormat:@"%@ code:(%i)", [NSString stringWithUTF8String:statusText], statusCode];
+    NSError *error = [NSError errorWithDomain:@"SipHandlerError" code:0 userInfo:@{NSLocalizedDescriptionKey: message}];
+    [_delegate sipHandler:self didFailToRegisterWithError:error];
+}
 
 #pragma mark Incoming Call Events
 
@@ -745,44 +666,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     [idleLine setMVideoState:existsVideo];                                                          // Flag if video call.
 	[idleLine setCallTitle:[NSString stringWithUTF8String:callerDisplayName]];                      // Get Call Title
 	[idleLine setCallDetail:[self formatCallDetail:[NSString stringWithUTF8String:caller]]];        // Get Call Detail.
-	
     [self setSessionState:JCCallIncoming forSession:idleLine event:@"onInviteIncoming" error:nil];  // Set the session state.
-	
-    // If we are backgrounded, push out a local notification
-	if ([UIApplication sharedApplication].applicationState ==  UIApplicationStateBackground) {
-		UILocalNotification* localNotif = [[UILocalNotification alloc] init];
-		if (localNotif){
-			localNotif.alertBody =[NSString  stringWithFormat:@"Call from <%s>%s", callerDisplayName, caller];
-			localNotif.soundName = UILocalNotificationDefaultSoundName;
-			localNotif.applicationIconBadgeNumber = 1;
-			
-			[[UIApplication sharedApplication]  presentLocalNotificationNow:localNotif];
-		}
-	}
-	
-// DO NOT DELETE
-//	if(existsVideo)
-//	{//video call
-//		UIAlertView *alert = [[UIAlertView alloc]
-//							  initWithTitle: @"Incoming Call"
-//							  message: [NSString  stringWithFormat:@"Call from <%s>%s on line %d", callerDisplayName,caller,index]
-//							  delegate: self
-//							  cancelButtonTitle: @"Reject"
-//							  otherButtonTitles:@"Answer", @"Video",nil];
-////		alert.tag = index;
-//		[alert show];
-//	}
-//	else
-//	{
-//		UIAlertView *alert = [[UIAlertView alloc]
-//							  initWithTitle: @"Incoming Call"
-//							  message: [NSString  stringWithFormat:@"Call from <%s>%s on line %d", callerDisplayName,caller,index]
-//							  delegate: self
-//							  cancelButtonTitle: @"Reject"
-//							  otherButtonTitles:@"Answer", nil];
-////		alert.tag = index;
-//		[alert show];
-//	}
 };
 
 -(NSString *)formatCallDetail:(NSString *)callDetail
@@ -971,7 +855,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 		[idleLine setMSessionId:referSessionId];
         idleLine.active = true;
         [idleLine setReferCall:true originalCallSessionId:selectedLine.mSessionId];
-        [self.delegate removeLineSession:selectedLine];
+        [self.delegate sipHandler:self willRemoveLineSession:selectedLine];
 	}
     
     [self setSessionState:JCTransferIncoming forSessionId:sessionId event:@"onReceivedRefer" error:nil];

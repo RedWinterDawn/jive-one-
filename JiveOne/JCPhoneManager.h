@@ -13,6 +13,8 @@
 #import "JCCallCard.h"
 #import "Line.h"
 
+#import "JCManager.h"
+
 extern NSString *const kJCPhoneManagerAddedCallNotification;
 extern NSString *const kJCPhoneManagerAnswerCallNotification;
 extern NSString *const kJCPhoneManagerRemoveCallNotification;
@@ -31,7 +33,7 @@ extern NSString *const kJCPhoneManagerIncomingCall;
 extern NSString *const kJCPhoneManagerNewCall;
 extern NSString *const kJCPhoneManagerTransferedCall;
 
-typedef void(^CompletionHandler)(BOOL success, NSError *error);
+typedef void(^CallCompletionHandler)(BOOL success, NSError *error, NSDictionary *callInfo);
 
 typedef enum : NSUInteger {
     JCPhoneManagerSingleDial = 0,
@@ -50,45 +52,25 @@ typedef enum : NSUInteger {
     JCPhoneManagerOutputAirPlay
 } JCPhoneManagerOutputType;
 
-@interface JCPhoneManager : NSObject
+typedef enum : NSInteger {
+    JCPhoneManagerUnknownNetwork = AFNetworkReachabilityStatusUnknown,
+    JCPhoneManagerNoNetwork = AFNetworkReachabilityStatusNotReachable,
+    JCPhoneManagerWifiNetwork = AFNetworkReachabilityStatusReachableViaWiFi,
+    JCPhoneManagerCellularNetwork = AFNetworkReachabilityStatusReachableViaWWAN,
+} JCPhoneManagerNetworkType;
+
+@interface JCPhoneManager : JCManager
 
 @property (nonatomic, strong) NSMutableArray *calls;
+@property (nonatomic) BOOL reconnectAfterCallFinishes;
 
 @property (nonatomic, readonly) Line *line;
 @property (nonatomic, readonly, getter=isConnected) BOOL connected;
 @property (nonatomic, readonly, getter=isConnecting) BOOL connecting;
+
+@property (nonatomic, readonly) BOOL isActiveCall;
 @property (nonatomic, readonly) JCPhoneManagerOutputType outputType;
-
--(void)connectToLine:(Line *)line completion:(CompletionHandler)completion;
--(void)reconnectToLine:(Line *)line completion:(CompletionHandler)completion;
--(void)disconnect;
-
-// Attempts to dial a passed string following the dial type directive. When the dial operation was completed, we are
-// notified. If the dial action resulted in the creation of a dial card, an kJCCallCardManagerAddedCallNotification is
-// broadcasted through the notification center.
--(void)dialNumber:(NSString *)dialNumber
-             type:(JCPhoneManagerDialType)dialType
-       completion:(void(^)(BOOL success, NSDictionary *callInfo))completion;
-
-// Merges two existing calls into a conference call. Requires there to be two current calls to be merged.
--(void)mergeCalls:(void (^)(BOOL success))completion;
-
-// Splits a conference call into it calls.
--(void)splitCalls;
-
-// Switches the active call to be on hold, and unholding the inactive call.
--(void)swapCalls;
-
-// Umm mutes the call :)
--(void)muteCall:(BOOL)mute;
-
-// Finish a transfer
--(void)finishWarmTransfer:(void (^)(BOOL success))completion;
-
-// NumberPad
--(void)numberPadPressedWithInteger:(NSInteger)numberPad;
-
--(void)setLoudSpeakerEnabled:(BOOL)loudSpeakerEnabled;
+@property (nonatomic, readonly) JCPhoneManagerNetworkType networkType;
 
 @end
 
@@ -96,8 +78,40 @@ typedef enum : NSUInteger {
 
 + (JCPhoneManager *)sharedManager;
 
-+ (void)connectToLine:(Line *)line completion:(CompletionHandler)completion;
-+ (void)reconnectToLine:(Line *)line completion:(CompletionHandler)completion;
++ (void)connectToLine:(Line *)line;
 + (void)disconnect;
+
++ (void)startKeepAlive;
++ (void)stopKeepAlive;
+
++ (BOOL)isActiveCall;
++ (JCPhoneManagerNetworkType)networkType;
+
++ (void)setReconnectAfterCallsFinishes;
+
+// Attempts to dial a passed string following the dial type directive. When the dial operation was completed, we are
+// notified. If the dial action resulted in the creation of a dial card, an kJCCallCardManagerAddedCallNotification is
+// broadcasted through the notification center.
++ (void)dialNumber:(NSString *)dialNumber type:(JCPhoneManagerDialType)dialType completion:(CallCompletionHandler)completion;
+
+// Merges two existing calls into a conference call. Requires there to be two current calls to be merged.
++ (void)mergeCalls:(CompletionHandler)completion;
+
+// Splits a conference call into it calls.
++ (void)splitCalls;
+
+// Switches the active call to be on hold, and unholding the inactive call.
++ (void)swapCalls;
+
+// Umm mutes the call :)
++ (void)muteCall:(BOOL)mute;
+
+// Finish a transfer
++ (void)finishWarmTransfer:(CompletionHandler)completion;
+
+// NumberPad
++ (void)numberPadPressedWithInteger:(NSInteger)numberPad;
+
++ (void)setLoudSpeakerEnabled:(BOOL)loudSpeakerEnabled;
 
 @end
