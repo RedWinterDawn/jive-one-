@@ -14,6 +14,7 @@
 - (void)showHudWithTitle:(NSString*)title detail:(NSString*)detail;
 - (void)hideHud;
 
+- (void)showSimpleAlert:(NSString *)title error:(NSError *)error;
 - (void)showSimpleAlert:(NSString *)title message:(NSString *)message;
 - (void)showSimpleAlert:(NSString *)title message:(NSString *)message code:(NSInteger)code;
 
@@ -25,6 +26,7 @@
 +(void)showHudWithTitle:(NSString *)title message:(NSString *)message;
 +(void)hideHud;
 
++(void)showSimpleAlert:(NSString *)title error:(NSError *)error;
 +(void)showSimpleAlert:(NSString *)title message:(NSString *)message;
 +(void)showSimpleAlert:(NSString *)title message:(NSString *)message code:(NSInteger)code;
 

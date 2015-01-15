@@ -34,6 +34,23 @@ static MBProgressHUD *progressHud;
     }
 }
 
+-(void)showSimpleAlert:(NSString *)title error:(NSError *)error
+{
+    NSLog(@"%@", [error description]);
+    NSString *message = [error localizedDescription];
+    if (!message) {
+        message = [error localizedFailureReason];
+    }
+    message = [NSString stringWithFormat:@"%@ (%li)", message, (long)error.code];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(title, nil)
+                                                    message:message
+                                                   delegate:nil
+                                          cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                          otherButtonTitles:nil, nil];
+    [alert show];
+}
+
+
 -(void)showSimpleAlert:(NSString *)title message:(NSString *)message
 {
     NSLog(@"%@: %@", title, message);
@@ -49,7 +66,7 @@ static MBProgressHUD *progressHud;
 -(void)showSimpleAlert:(NSString *)title message:(NSString *)message code:(NSInteger)code
 {
     NSLog(@"%@: %@ (-%li)", title, message, (long)code);
-    message = [NSString stringWithFormat:@"%@ (-%li)", NSLocalizedString(message, nil), (long)code];
+    message = [NSString stringWithFormat:@"%@ (%li)", NSLocalizedString(message, nil), (long)code];
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(title, nil)
                                                     message:message
@@ -76,6 +93,14 @@ static MBProgressHUD *progressHud;
     dispatch_async(dispatch_get_main_queue(), ^{
         UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
         [viewController hideHud];
+    });
+}
+
++(void)showSimpleAlert:(NSString *)title error:(NSError *)error
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+        [viewController showSimpleAlert:title error:error];
     });
 }
 
