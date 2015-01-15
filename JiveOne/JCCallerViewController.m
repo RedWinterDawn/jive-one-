@@ -214,31 +214,44 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(IBAction)swapCall:(id)sender
 {
-    [JCPhoneManager swapCalls];
+    if ([sender isKindOfClass:[UIButton class]]) {
+        //UIButton *button = (UIButton *)sender;
+        //button.enabled = false;
+        [JCPhoneManager swapCalls:^(BOOL success, NSError *error) {
+            //[self showHudWithTitle:@"Oh-oh", detail:@"Failed to Create Conference"]
+            
+            //button.enabled = true;
+        }];
+    }
 }
 
 -(IBAction)mergeCall:(id)sender
 {
     if ([sender isKindOfClass:[UIButton class]]){
         UIButton *button = (UIButton *)sender;
-        button.selected = !button.selected;
-        
+        button.enabled = false;
         if (button.selected) {
             [JCPhoneManager mergeCalls:^(BOOL success, NSError *error) {
 				if (success) {
 					self.mergeLabel.text = NSLocalizedString(@"Split Calls", nil);
+                    button.selected = FALSE;
 				}
-				else
-				{
-					button.selected = !button.selected;
-					[self showHudWithTitle:NSLocalizedString(@"Oh-oh", nil)
-                                    detail:NSLocalizedString(@"Failed to Create Conference", nil)];
+				else {
+					[self showHudWithTitle:@"Oh-oh" detail:@"Failed to Create Conference"];
 				}
+                button.enabled = TRUE;
 			}];
-			
         } else {
-            [JCPhoneManager splitCalls];
-            self.mergeLabel.text = NSLocalizedString(@"Merge Calls", nil);
+            [JCPhoneManager splitCalls:^(BOOL success, NSError *error) {
+                if (success) {
+                    self.mergeLabel.text = NSLocalizedString(@"Merge Calls", nil);
+                    button.selected = TRUE;
+                }
+                else {
+                    [self showHudWithTitle:@"Oh-oh" detail:@"Failed to End Conference"];
+                }
+                button.enabled = TRUE;
+            }];
         }
     }
 }

@@ -365,13 +365,6 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
 
 -(void)finishWarmTransfer:(CompletionHandler)completion
 {
-    if (!_sipHandler) {
-        if (completion) {
-            completion(NO, nil);
-        }
-        return;
-    }
-    
     if (_warmTransferNumber) {
         [_sipHandler warmTransferToNumber:_warmTransferNumber completion:^(BOOL success, NSError *error) {
             _warmTransferNumber = nil;
@@ -384,84 +377,59 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
 
 -(void)mergeCalls:(CompletionHandler)completion
 {
-    if (!_sipHandler) {
-        return;
+    __autoreleasing NSError *error;
+    BOOL success = [_sipHandler createConference:&error];
+    if(success){
+        [self addConferenceCallWithCallArray:self.calls];
     }
     
-    bool inConference = [_sipHandler setConference:true];
-    if (inConference)
-    {
-        NSArray *calls = self.calls;
-        [self addConferenceCallWithCallArray:calls];
+    if (completion) {
+        completion(success, error);
     }
-    completion(inConference, nil);
 }
 
--(void)splitCalls
+-(void)splitCalls:(CompletionHandler)completion
 {
-    if (!_sipHandler) {
+    JCCallCard *callCard = [self.calls objectAtIndex:0];
+    if (![callCard isKindOfClass:[JCConferenceCallCard class]])
+    {
+        if (completion) {
+            completion(NO, [NSError errorWithDomain:@"Phone Manager" code:0 userInfo:nil]);
+        }
         return;
     }
-    
-    // Since we are only supporting two line sessions at a time, if we have a conference call, it should be the only
-    // object in the array;
-    JCCallCard *callCard = [self.calls objectAtIndex:0];
-    if ([callCard isKindOfClass:[JCConferenceCallCard class]])
-    {
+        
+    __autoreleasing NSError *error;
+    BOOL success = [_sipHandler endConference:&error];
+    if(success) {
         JCConferenceCallCard *conferenceCallCard = (JCConferenceCallCard *)callCard;
         [self removeConferenceCall:conferenceCallCard];
-        [_sipHandler setConference:false];
+    }
+    
+    if (completion) {
+        completion(success, error);
     }
 }
 
--(void)swapCalls
+-(void)swapCalls:(CompletionHandler)completion
 {
-    if (!_sipHandler) {
-        return;
-    }
-    
     JCCallCard *inactiveCall = [self findInactiveCallCard];
     inactiveCall.hold = false;
 }
 
 -(void)muteCall:(BOOL)mute
 {
-    if (!_sipHandler) {
-        return;
-    }
-    
     [_sipHandler muteCall:mute];
 }
 
 -(void)setLoudSpeakerEnabled:(BOOL)loudSpeakerEnabled
 {
-    if (!_sipHandler) {
-        return;
-    }
     [_sipHandler setLoudSpeakerEnabled:loudSpeakerEnabled];
 }
 
 -(void)numberPadPressedWithInteger:(NSInteger)numberPadNumber
 {
-    if(!_sipHandler) {
-        return;
-    }
-    
-    char dtmf = numberPadNumber;
-    switch (numberPadNumber) {
-        case kTAGStar:
-        {
-            dtmf = 10;
-            break;
-        }
-        case kTAGSharp:
-        {
-            dtmf = 11;
-            break;
-        }
-    }
-    
-    [_sipHandler pressNumpadButton:dtmf];
+    [_sipHandler pressNumpadButton:numberPadNumber];
 }
 
 #pragma mark - Getters -
@@ -922,14 +890,14 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
     [[JCPhoneManager sharedManager] mergeCalls:completion];
 }
 
-+ (void)splitCalls
++ (void)splitCalls:(CompletionHandler)completion
 {
-    [[JCPhoneManager sharedManager] splitCalls];
+    [[JCPhoneManager sharedManager] splitCalls:completion];
 }
 
-+ (void)swapCalls
++ (void)swapCalls:(CompletionHandler)completion
 {
-    [[JCPhoneManager sharedManager] swapCalls];
+    [[JCPhoneManager sharedManager] swapCalls:completion];
 }
 
 + (void)muteCall:(BOOL)mute

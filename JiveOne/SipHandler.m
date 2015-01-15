@@ -63,10 +63,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 @interface SipHandler() <PortSIPEventDelegate>
 {
     PortSIPSDK *_mPortSIPSDK;
-    CompletionHandler _connectionCompletionHandler;
     CompletionHandler _transferCompletionHandler;
 	VideoViewController *_videoController;
-	bool inConference;
 	bool autoAnswer;
 }
 
@@ -246,7 +244,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 #pragma mark - Backgrounding -
 
-- (void)startKeepAwake
+-(void)startKeepAwake
 {
     if (_mPortSIPSDK) {
         [_mPortSIPSDK startKeepAwake];
@@ -435,51 +433,84 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     [_mPortSIPSDK muteMicrophone:mute];
 }
 
-- (bool)setConference:(bool)conference
+- (BOOL)createConference:(NSError *__autoreleasing *)error
 {
-	if (conference)
-	{
-		int rt = [_mPortSIPSDK createConference:[UIView new] videoResolution:VIDEO_NONE displayLocalVideo:NO];
-		if (rt == 0) {
-			for (JCLineSession *line in self.lineSessions)
-			{
-				if (line.isActive)
-				{
-					if (line.isHolding)
-					{
-						[_mPortSIPSDK unHold:line.mSessionId];
-						line.hold = false;
-					}
-					
-					[_mPortSIPSDK joinToConference:line.mSessionId];
-				}
-			}
-			
-			inConference = true;
-		}
-		else
-		{
-			// failed to create conference
-			inConference = false;
-		}
-	}
-	else if (inConference)
-	{
-		inConference = false;
-		// Before stop the conference, MUST place all lines to hold state
-		for (JCLineSession *line in self.lineSessions)
-		{
-			if (line.isActive && !line.isHolding )
-			{
-				[_mPortSIPSDK hold:line.mSessionId];
-				line.hold = true;
-			}
-		}
-		
-		[_mPortSIPSDK destroyConference];
-	}
-	
-	return inConference;
+    NSSet *lineSessions = [NSSet setWithArray:[self findAllActiveLines]];
+    return [self createConferenceWithLineSessions:lineSessions error:error];
+}
+
+-(BOOL)createConferenceWithLineSessions:(NSSet *)lineSessions error:(NSError *__autoreleasing *)error
+{
+    if (_conferenceCall) {
+        *error = [JCSipHandlerError errorWithCode:JC_SIP_CONFERENCE_CALL_ALREADY_STARTED reason:@"Conference call already started"];
+        return FALSE;
+    }
+    
+    int errorCode = [_mPortSIPSDK createConference:[UIView new] videoResolution:VIDEO_NONE displayLocalVideo:NO];
+    if (errorCode) {
+        *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error Creating Conference"];
+        return false;
+    }
+    
+    _conferenceCall = true;
+    for (JCLineSession *lineSession in lineSessions) {
+        
+        errorCode = [_mPortSIPSDK joinToConference:lineSession.mSessionId];
+        if (errorCode) {
+            *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error Joining line session to conference"];
+            break;
+        }
+        
+        if (lineSession.isHolding) {
+            errorCode = [_mPortSIPSDK unHold:lineSession.mSessionId];
+            if (errorCode) {
+                *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error unholding the line session while after joing the conference"];
+                break;
+            }
+        }
+    }
+    
+    if (!errorCode) {
+        return TRUE;
+    }
+    
+    [_mPortSIPSDK destroyConference];
+    _conferenceCall = false;
+    return false;
+}
+
+-(BOOL)endConference:(NSError *__autoreleasing *)error
+{
+    NSSet *lineSessions = [NSSet setWithArray:[self findAllActiveLines]];
+    return [self endConferenceCallForLineSessions:lineSessions error:error];
+}
+
+-(BOOL)endConferenceCallForLineSessions:(NSSet *)lineSessions error:(NSError *__autoreleasing *)error
+{
+    if (!_conferenceCall) {
+        *error = [JCSipHandlerError errorWithCode:JC_SIP_CONFERENCE_CALL_ALREADY_ENDED reason:@"Conference call already started"];
+        return FALSE;
+    }
+    
+    [_mPortSIPSDK destroyConference];
+    _conferenceCall = FALSE;
+
+    // Before stop the conference, MUST place all lines to hold state
+    int errorCode;
+    for (JCLineSession *lineSession in lineSessions) {
+        if (!lineSession.isHolding){
+            errorCode = [_mPortSIPSDK hold:lineSession.mSessionId];
+            if (errorCode) {
+                *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error placing calls on hold after ending a conference"];
+                break;
+            }
+        }
+    }
+    
+    if (!errorCode) {
+        return true;
+    }
+    return false;
 }
 
 -(void)setLoudSpeakerEnabled:(BOOL)loudSpeakerEnabled
@@ -490,8 +521,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 - (void) pressNumpadButton:(char )dtmf
 {
     JCLineSession *session = [self findActiveLine];
-    if(session && session.isActive)
-    {
+    if(session && session.isActive){
         [_mPortSIPSDK sendDtmf:session.mSessionId dtmfMethod:DTMF_RFC2833 code:dtmf dtmfDration:160 playDtmfTone:TRUE];
     }
 }

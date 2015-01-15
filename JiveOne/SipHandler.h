@@ -32,6 +32,7 @@
 @property (nonatomic, readonly, getter=isRegistered) BOOL registered;
 @property (nonatomic, readonly, getter=isInitialized) BOOL initialized;
 @property (nonatomic, readonly, getter=isActive) BOOL active;
+@property (nonatomic, readonly, getter=isConferenceCall) BOOL conferenceCall;
 
 -(instancetype)initWithNumberOfLines:(NSInteger)lines delegate:(id<SipHandlerDelegate>)delegate error:(NSError *__autoreleasing *)error;
 
@@ -49,7 +50,13 @@
 - (void)hangUpSession:(JCLineSession *)lineSession completion:(CompletionHandler)completion;
 - (void)blindTransferToNumber:(NSString*)referTo completion:(CompletionHandler)completion;
 - (void)warmTransferToNumber:(NSString*)referTo completion:(CompletionHandler)completion;
-- (bool)setConference:(bool)conference;
+
+// Conference Calls
+- (BOOL)createConference:(NSError *__autoreleasing *)error;
+- (BOOL)createConferenceWithLineSessions:(NSSet *)lineSessions error:(NSError *__autoreleasing *)error;
+
+- (BOOL)endConference:(NSError *__autoreleasing *)error;
+- (BOOL)endConferenceCallForLineSessions:(NSSet *)lineSessions error:(NSError *__autoreleasing *)error;
 
 // Methods to effect a calls state or audio.
 - (void)pressNumpadButton:(char )dtmf;
