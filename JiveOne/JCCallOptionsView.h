@@ -9,8 +9,7 @@
 #import <UIKit/UIKit.h>
 
 typedef enum : NSUInteger {
-    JCCallOptionsViewInitalCallState = 0,
-    JCCallOptionViewSingleCallState,
+    JCCallOptionViewSingleCallState = 0,
     JCCallOptionViewMultipleCallsState,
     JCCallOptionViewConferenceCallState,
     JCCallOptionViewFinishTransferState
@@ -21,8 +20,8 @@ typedef enum : NSUInteger {
 @property (nonatomic) JCCallOptionViewState state;
 @property (nonatomic) CGFloat annimationDuration;
 
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *callOptionsYConstraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *bottomSpaceToOptionsViewConstraint;
+
+
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *transferBtnHorizontalContstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *warmBtnVerticalConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *addCallBtnHorizontalContstraint;

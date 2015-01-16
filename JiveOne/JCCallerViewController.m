@@ -29,6 +29,9 @@
 #define TRANSFER_ANIMATION_DURATION 0.3
 #define KEYBOARD_ANIMATION_DURATION 0.3
 
+#define kCallOptionsDefualtContraint 116
+#define kHalfCallOptionsContraint 232
+
 NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTransferModal";
 NSString *const kJCCallerViewControllerKeyboardStoryboardIdentifier = @"keyboardModal";
 
@@ -99,7 +102,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 {
     [super viewWillLayoutSubviews];
     
-    [self setCallOptionsHidden:_callOptionsHidden animated:NO];
+//    [self setCallOptionsHidden:_callOptionsHidden animated:NO];
     
     self.speakerBtn.selected = (_phoneManager.outputType == JCPhoneManagerOutputSpeaker);
 }
@@ -145,21 +148,27 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         
         JCCallCard *callCard = calls.firstObject;
         if (callCard.lineSession.sessionState == JCCallIncoming) {
+            
             [self.callOptionsView setState:JCCallOptionViewSingleCallState animated:YES];
+            [self hideCallOptionsAnimated:YES];
         }
         else if (callCard.callState == JCCallAnswered || callCard.callState == JCCallConnected)
         {
             NSLog(@"show options %i", callCard.callState);
-            
             [self.callOptionsView setState:JCCallOptionViewSingleCallState animated:YES];
+            [self showAllCallOptionsAnimated:YES];
+
         }
         else {
           
             NSLog(@"hide options %i", callCard.callState);
-            [self.callOptionsView setState:JCCallOptionsViewInitalCallState animated:YES];
+            [self showCallOptionsAnimated:YES];
+            
         }
     } else if (count > 1) {
+        
         [self.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];
+        [self showAllCallOptionsAnimated:YES];
     }
 }
 
@@ -173,19 +182,19 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(void)setCallOptionsHidden:(bool)callOptionsHidden
 {
-    _callOptionsHidden = callOptionsHidden;
-    if (self.view.superview)
-        [self setCallOptionsHidden:callOptionsHidden animated:YES];
+//    _callOptionsHidden = callOptionsHidden;
+//    if (self.view.superview)
+//        [self setCallOptionsHidden:callOptionsHidden animated:YES];
 
 }
 
--(void)setCallOptionsHidden:(bool)callOptionsHidden animated:(bool)animated
-{
-    if (callOptionsHidden)
-        [self hideCallOptionsAnimated:animated];
-    else
-        [self showCallOptionsAnimated:animated];
-}
+//-(void)setCallOptionsHidden:(bool)callOptionsHidden animated:(bool)animated
+//{
+//    if (callOptionsHidden)
+//        [self hideCallOptionsAnimated:animated];
+//    else
+//        [self showCallOptionsAnimated:animated];
+//}
 
 #pragma mark - IBActions -
 
@@ -310,33 +319,68 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
                      }];
 }
 
+/**
+ * Hides the call options card.
+ */
+-(void)showCallOptionsAnimated:(BOOL)animated
+{
+    _callOptionsViewOriginYConstraint.constant = 114;
+    [self.view setNeedsUpdateConstraints];
+    
+    __unsafe_unretained UIView *weakView = self.view;
+    [UIView animateWithDuration:animated ? _callOptionTransitionAnimationDuration : 0
+                     animations:^{
+                         [weakView layoutIfNeeded];
+                     } completion:^(BOOL finished) {
+                         _showingCallOptions = false;
+                         [_callCardCollectionViewController.collectionViewLayout invalidateLayout];
+                     }];
+}
+
+-(void)showAllCallOptionsAnimated:(BOOL)animated
+{
+//    if (_showingCallOptions)
+//        return;
+    
+    _callOptionsViewOriginYConstraint.constant = 228;
+    [self.view setNeedsUpdateConstraints];
+    
+    __unsafe_unretained UIView *weakView = self.view;
+    [UIView animateWithDuration:animated ? _callOptionTransitionAnimationDuration : 0
+                     animations:^{
+                         [weakView layoutIfNeeded];
+                     } completion:^(BOOL finished) {
+                         _showingCallOptions = false;
+                         [_callCardCollectionViewController.collectionViewLayout invalidateLayout];
+                     }];
+}
 
 
 
 /**
  * Shows the call option card.
  */
--(void)showCallOptionsAnimated:(BOOL)animated
-{
-    if (_showingCallOptions)
-        return;
-    
-    __unsafe_unretained UIView *weakView = self.view;
-    [UIView animateWithDuration:animated ? 0.1 : 0
-                     animations:^{
-                         [weakView layoutIfNeeded];
-                     }
-                     completion:NULL];
-    
-    [UIView transitionWithView:self.view
-                      duration:_callOptionTransitionAnimationDuration
-                       options:UIViewAnimationOptionTransitionFlipFromRight
-                    animations:NULL
-                    completion:^(BOOL finished) {
-                        _showingCallOptions = true;
-                        [_callCardCollectionViewController.collectionViewLayout invalidateLayout];
-                    }];
-}
+//-(void)showCallOptionsAnimated:(BOOL)animated
+//{
+//    if (_showingCallOptions)
+//        return;
+//    
+//    __unsafe_unretained UIView *weakView = self.view;
+//    [UIView animateWithDuration:animated ? 0.1 : 0
+//                     animations:^{
+//                         [weakView layoutIfNeeded];
+//                     }
+//                     completion:NULL];
+//    
+//    [UIView transitionWithView:self.view
+//                      duration:_callOptionTransitionAnimationDuration
+//                       options:UIViewAnimationOptionTransitionFlipFromRight
+//                    animations:NULL
+//                    completion:^(BOOL finished) {
+//                        _showingCallOptions = true;
+//                        [_callCardCollectionViewController.collectionViewLayout invalidateLayout];
+//                    }];
+//}
 
 /**
  * Displays the "Transfer Success page" after a warm or blind transfer.
@@ -445,6 +489,9 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     if (callCard) {
         [callCard addObserver:self forKeyPath:kJCCallCardStatusChangeKey options:0 context:NULL];
     }
+    [self checkCallConnectedState];
+    
+    
 }
 
 /**
@@ -459,6 +506,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         self.callOptionsHidden = false;
     
     [self checkCallConnectedState];
+    
 }
 
 /**
