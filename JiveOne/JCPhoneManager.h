@@ -12,7 +12,6 @@
 
 #import "JCCallCard.h"
 #import "Line.h"
-
 #import "JCManager.h"
 
 extern NSString *const kJCPhoneManagerAddedCallNotification;
@@ -62,15 +61,12 @@ typedef enum : NSInteger {
 @interface JCPhoneManager : JCManager
 
 @property (nonatomic, strong) NSMutableArray *calls;
-@property (nonatomic) BOOL reconnectAfterCallFinishes;
 
-@property (nonatomic, readonly) Line *line;
 @property (nonatomic, readonly, getter=isInitialized) BOOL initialized;
 @property (nonatomic, readonly, getter=isConnected) BOOL connected;
 @property (nonatomic, readonly, getter=isConnecting) BOOL connecting;
 
-@property (nonatomic, readonly) BOOL isActiveCall;
-
+@property (nonatomic, readonly) Line *line;
 @property (nonatomic, readonly) JCPhoneManagerOutputType outputType;
 @property (nonatomic, readonly) JCPhoneManagerNetworkType networkType;
 
@@ -86,10 +82,7 @@ typedef enum : NSInteger {
 + (void)startKeepAlive;
 + (void)stopKeepAlive;
 
-+ (BOOL)isActiveCall;
 + (JCPhoneManagerNetworkType)networkType;
-
-+ (void)setReconnectAfterCallsFinishes;
 
 // Attempts to dial a passed string following the dial type directive. When the dial operation was completed, we are
 // notified. If the dial action resulted in the creation of a dial card, an kJCCallCardManagerAddedCallNotification is

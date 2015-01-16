@@ -330,12 +330,7 @@
     // this time. We schedule it to be reconnected when the current call(s) finishes.
     else if (currentNetworkType == AFNetworkReachabilityStatusReachableViaWWAN && status == AFNetworkReachabilityStatusReachableViaWiFi) {
         NSLog(@"Transitioning to Wifi from Cellular Data Connection");
-        if ([JCPhoneManager isActiveCall]) {
-            [JCPhoneManager setReconnectAfterCallsFinishes];
-        }
-        else {
-            [JCPhoneManager connectToLine:line];
-        }
+        [JCPhoneManager connectToLine:line];
     }
     
     // Transition from wifi to cellular data. Since the active connection will likely drop, we reconnect.
@@ -347,7 +342,7 @@
     // Transition from no connection to having a connection
     else if(currentNetworkType == AFNetworkReachabilityStatusNotReachable && status != AFNetworkReachabilityStatusNotReachable) {
         NSLog(@"Transitioning from no network connectivity to connected.");
-        if (![JCPhoneManager sharedManager].isConnected) {
+        if (![JCPhoneManager sharedManager].isConnected && ![JCPhoneManager sharedManager].isConnecting) {
             [JCPhoneManager connectToLine:line];
         }
     }

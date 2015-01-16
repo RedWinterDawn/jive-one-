@@ -55,6 +55,8 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
     SipHandler *_sipHandler;
 	NSString *_warmTransferNumber;
     CTCallCenter *_externalCallCenter;
+    
+    BOOL _reconnectWhenCallFinishes;
 }
 
 @property (copy)void (^externalCallCompletionHandler)(BOOL connected);
@@ -111,19 +113,27 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
     
     // Check if we are initialized.
     if(!_initialized) {
-        [self reportError:[JCPhoneManagerError errorWithCode:JS_PHONE_SIP_NOT_INITIALIZED reason:@"Sip handler not initialized"]];
+        [self reportError:[JCPhoneManagerError errorWithCode:JS_PHONE_SIP_NOT_INITIALIZED]];
         return;
     }
     
     // If we are already connecting, exit out. We only allow one connection attempt at a time.
     if (_connecting) {
-        [self notifyCompletionBlock:false error:[JCPhoneManagerError errorWithCode:JS_PHONE_ALREADY_CONNECTING reason:@"Phone is already attempting to connect"]];
+        [self notifyCompletionBlock:false error:[JCPhoneManagerError errorWithCode:JS_PHONE_ALREADY_CONNECTING]];
         return;
     }
     
     // Check if we have a line. If not, we fail. We cannot register if we did not receive a line.
     if (!line) {
-        [self notifyCompletionBlock:false error:[JCPhoneManagerError errorWithCode:JS_PHONE_LINE_IS_NULL reason:@"Line is null"]];
+        [self notifyCompletionBlock:false error:[JCPhoneManagerError errorWithCode:JS_PHONE_LINE_IS_NULL]];
+        return;
+    }
+    
+    // Check to see if we are on a current call. If we are, we need to exit out, and wait until the
+    // call has completed.
+    _reconnectWhenCallFinishes = FALSE;
+    if (self.calls.count > 0) {
+        _reconnectWhenCallFinishes = TRUE;
         return;
     }
     
@@ -136,7 +146,7 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
     // if we are configured to be wifi only.
     if ([AFNetworkReachabilityManager sharedManager].isReachableViaWWAN && [JCAppSettings sharedSettings].isWifiOnly) {
         _networkType = JCPhoneManagerNoNetwork;
-        [self notifyCompletionBlock:false error:[JCPhoneManagerError errorWithCode:JS_PHONE_WIFI_DISABLED reason:@"Phone is set to be Wifi Only"]];
+        [self notifyCompletionBlock:false error:[JCPhoneManagerError errorWithCode:JS_PHONE_WIFI_DISABLED]];
         return;
     }
     
@@ -158,7 +168,7 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
             [_sipHandler registerToLine:line];
         } else {
             self.connecting = FALSE;
-            [self reportError:[JCPhoneManagerError errorWithCode:JC_PHONE_LINE_CONFIGURATION_REQUEST_ERROR reason:@"Unable to connect to this line at this time. Please Try again." underlyingError:error]];
+            [self reportError:[JCPhoneManagerError errorWithCode:JC_PHONE_LINE_CONFIGURATION_REQUEST_ERROR underlyingError:error]];
         }
     }];
 }
@@ -544,6 +554,11 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
                                                                  kJCPhoneManagerUpdateCount:[NSNumber numberWithInteger:self.calls.count]
                                                                  }];
     
+    if (_reconnectWhenCallFinishes && self.calls.count == 0) {
+        _reconnectWhenCallFinishes = false;
+        [self connectToLine:self.line completion:self.completion];
+    }
+    
     // If when removing the call we are backgrounded, we tell the sip handler to operate in background mode.
     UIApplicationState state = [[UIApplication sharedApplication] applicationState];
     if ((state == UIApplicationStateBackground || state == UIApplicationStateInactive) && self.calls.count == 0) {
@@ -868,14 +883,6 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
 +(JCPhoneManagerNetworkType)networkType
 {
     return [JCPhoneManager sharedManager].networkType;
-}
-
-+ (BOOL)isActiveCall {
-    return ([JCPhoneManager sharedManager].calls.count > 0);
-}
-
-+ (void)setReconnectAfterCallsFinishes {
-    [JCPhoneManager sharedManager].reconnectAfterCallFinishes = TRUE;
 }
 
 + (void)dialNumber:(NSString *)dialNumber type:(JCPhoneManagerDialType)dialType completion:(CallCompletionHandler)completion
