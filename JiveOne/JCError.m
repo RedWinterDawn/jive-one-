@@ -14,18 +14,23 @@ NSString *kJCErrorGerneralDomain = @"JiveGeneralErrorDomain";
 
 +(instancetype)errorWithCode:(NSInteger)code
 {
-    NSString *reason = [self failureReasonFromCode:code];
-    return [self errorWithCode:code reason:reason];
+    return [self errorWithCode:code underlyingError:nil];
 }
 
-+(instancetype)errorWithCode:(NSInteger)code userInfo:(NSDictionary *)userInfo
++(instancetype)errorWithCode:(NSInteger)code underlyingError:(NSError *)error
 {
-    return [self errorWithDomain:kJCErrorGerneralDomain code:code userInfo:userInfo];
+    NSString *reason = [self failureReasonFromCode:code];
+    return [self errorWithCode:code reason:reason underlyingError:error];
 }
 
 +(instancetype)errorWithCode:(NSInteger)code reason:(NSString *)reason
 {
-    return [self errorWithDomain:kJCErrorGerneralDomain code:code reason:reason];
+    return [self errorWithDomain:kJCErrorGerneralDomain code:code reason:reason underlyingError:nil];
+}
+
++(instancetype)errorWithCode:(NSInteger)code reason:(NSString *)reason underlyingError:(NSError *)error
+{
+    return [self errorWithDomain:kJCErrorGerneralDomain code:code reason:reason underlyingError:error];
 }
 
 +(instancetype)errorWithDomain:(NSString *)domain code:(NSInteger)code reason:(NSString *)reason
@@ -44,7 +49,7 @@ NSString *kJCErrorGerneralDomain = @"JiveGeneralErrorDomain";
     NSMutableDictionary *userInfo;
     if (reason) {
         userInfo = [@{NSLocalizedDescriptionKey: NSLocalizedString(reason, nil),
-                     NSLocalizedFailureReasonErrorKey: NSLocalizedString(shortReason, nil)} mutableCopy];
+                      NSLocalizedFailureReasonErrorKey: NSLocalizedString(shortReason, nil)} mutableCopy];
     }
     
     if (error) {
@@ -53,6 +58,12 @@ NSString *kJCErrorGerneralDomain = @"JiveGeneralErrorDomain";
     
     return [self errorWithDomain:domain code:code userInfo:userInfo];
 }
+
++(instancetype)errorWithCode:(NSInteger)code userInfo:(NSDictionary *)userInfo
+{
+    return [self errorWithDomain:kJCErrorGerneralDomain code:code userInfo:userInfo];
+}
+
 
 +(NSString *)failureReasonFromCode:(NSInteger)integer
 {

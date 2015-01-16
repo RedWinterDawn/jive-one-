@@ -11,11 +11,15 @@
 @interface JCError : NSError
 
 +(instancetype)errorWithCode:(NSInteger)code;
++(instancetype)errorWithCode:(NSInteger)code underlyingError:(NSError *)error;
+
 +(instancetype)errorWithCode:(NSInteger)code reason:(NSString *)reason;
-+(instancetype)errorWithCode:(NSInteger)code userInfo:(NSDictionary *)userInfo;
++(instancetype)errorWithCode:(NSInteger)code reason:(NSString *)reason underlyingError:(NSError *)error;
 
 +(instancetype)errorWithDomain:(NSString *)domain code:(NSInteger)code reason:(NSString *)reason;
 +(instancetype)errorWithDomain:(NSString *)domain code:(NSInteger)code reason:(NSString *)reason underlyingError:(NSError *)error;
+
++(instancetype)errorWithCode:(NSInteger)code userInfo:(NSDictionary *)userInfo;
 
 +(NSString *)failureReasonFromCode:(NSInteger)integer;
 

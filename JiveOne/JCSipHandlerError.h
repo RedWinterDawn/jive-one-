@@ -7,9 +7,7 @@
 //
 
 #import "JCError.h"
-
-
-
+#import <PortSIPLib/PortSIPSDK.h>
 
 #define JC_SIP_REGISTER_LINE_IS_EMPTY                   -1000
 #define JC_SIP_REGISTER_LINE_CONFIGURATION_IS_EMPTY     -1001
@@ -22,7 +20,7 @@
 #define JC_SIP_CONFERENCE_CALL_ALREADY_STARTED          -2000
 #define JC_SIP_CONFERENCE_CALL_ALREADY_ENDED            -2001
 
-
+extern NSString *const kJCSipHandlerErrorDomain;
 
 @interface JCSipHandlerError : JCError
 

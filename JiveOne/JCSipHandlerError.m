@@ -7,7 +7,6 @@
 //
 
 #import "JCSipHandlerError.h"
-#import <PortSIPLib/PortSIPSDK.h>
 
 NSString *const kJCSipHandlerErrorDomain = @"SipErrorDomain";
 
@@ -18,9 +17,9 @@ NSString *const kJCSipHandlerErrorDomain = @"SipErrorDomain";
     return [self errorWithDomain:kJCSipHandlerErrorDomain code:code userInfo:userInfo];
 }
 
-+(instancetype)errorWithCode:(NSInteger)code reason:(NSString *)reason
++(instancetype)errorWithCode:(NSInteger)code reason:(NSString *)reason underlyingError:(NSError *)error
 {
-    return [self errorWithDomain:kJCSipHandlerErrorDomain code:code reason:reason];
+    return [self errorWithDomain:kJCSipHandlerErrorDomain code:code reason:reason underlyingError:error];
 }
 
 +(NSString *)failureReasonFromCode:(NSInteger)code
