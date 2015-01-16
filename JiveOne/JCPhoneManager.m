@@ -12,6 +12,7 @@
 #define MAX_LINES 2
 
 #import "JCPhoneManager.h"
+#import "JCPhoneManagerError.h"
 
 // Managers
 #import "JCBluetoothManager.h"
@@ -106,70 +107,60 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
  */
 -(void)connectToLine:(Line *)line completion:(CompletionHandler)completion
 {
+    self.completion = completion;
+    
     // Check if we are initialized.
     if(!_initialized) {
-        if (completion) {
-            completion(false, nil);
-        }
+        [self reportError:[JCPhoneManagerError errorWithCode:JS_PHONE_SIP_NOT_INITIALIZED reason:@"Sip handler not initialized"]];
         return;
     }
     
-    self.completion = completion;
+    // If we are already connecting, exit out. We only allow one connection attempt at a time.
+    if (_connecting) {
+        [self notifyCompletionBlock:false error:[JCPhoneManagerError errorWithCode:JS_PHONE_ALREADY_CONNECTING reason:@"Phone is already attempting to connect"]];
+        return;
+    }
     
+    // Check if we have a line. If not, we fail. We cannot register if we did not receive a line.
+    if (!line) {
+        [self notifyCompletionBlock:false error:[JCPhoneManagerError errorWithCode:JS_PHONE_LINE_IS_NULL reason:@"Line is null"]];
+        return;
+    }
     
     // If we are connected, we need to disconnect.
     if (self.isConnected) {
         [self disconnect];
     }
     
-    @try {
-        // Check if we have a line. If not, we fail. We cannot register if we did not receive a line
-        if (!line) {
-            [NSException raise:NSInvalidArgumentException format:@"Line is null"];
-        }
+    // Retrive the current network status. Check if the status is Cellular data, and do not connect
+    // if we are configured to be wifi only.
+    if ([AFNetworkReachabilityManager sharedManager].isReachableViaWWAN && [JCAppSettings sharedSettings].isWifiOnly) {
+        _networkType = JCPhoneManagerNoNetwork;
+        [self notifyCompletionBlock:false error:[JCPhoneManagerError errorWithCode:JS_PHONE_WIFI_DISABLED reason:@"Phone is set to be Wifi Only"]];
+        return;
+    }
+    
+    self.connecting = TRUE;
+    _networkType = (JCPhoneManagerNetworkType)[AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
         
-        // If we are already connecting, exit out. We only allow one connection attempt at a time.
-        if (_connecting) {
-            [NSException raise:NSInternalInconsistencyException format:@"Already Connecting."];
-        }
-        self.connecting = TRUE;
+    // If we have a line configuration for the line, try to register it.
+    if (line.lineConfiguration){
+        [_sipHandler registerToLine:line];
+        return;
+    }
         
-        // Retrive the current network status. Check if the status is Cellular data, and disconnect if
-        // we are configured to be wifi only, and prevent us from reconnecting.
-        if ([AFNetworkReachabilityManager sharedManager].isReachableViaWWAN && [JCAppSettings sharedSettings].isWifiOnly) {
-            _networkType = JCPhoneManagerNoNetwork;
-            [NSException raise:NSInternalInconsistencyException format:@"Marked as Wifi only"];
-        }
-        
-        // Store the network type we are connecting too.
-        _networkType = (JCPhoneManagerNetworkType)[AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
-        
-        // If we have a line configuration for the line, try to register it.
-        if (line.lineConfiguration){
+    // If we do not have a line configuration, we need to request it.
+    NSLog(@"Phone Requesting Line Configuration");
+    [UIApplication showHudWithTitle:@"" message:@"Selecting Line..."];
+    [LineConfiguration downloadLineConfigurationForLine:line completion:^(BOOL success, NSError *error) {
+        [UIApplication hideHud];
+        if (success) {
             [_sipHandler registerToLine:line];
-            return;
+        } else {
+            self.connecting = FALSE;
+            [self reportError:[JCPhoneManagerError errorWithCode:JC_PHONE_LINE_CONFIGURATION_REQUEST_ERROR reason:@"Unable to connect to this line at this time. Please Try again." underlyingError:error]];
         }
-        
-        // If we do not have a line configuration, we need to request it.
-        NSLog(@"Phone Requesting Line Configuration");
-        [UIApplication showHudWithTitle:@"" message:@"Selecting Line..."];
-        [LineConfiguration downloadLineConfigurationForLine:line completion:^(BOOL success, NSError *error) {
-            [UIApplication hideHud];
-            if (success) {
-                [_sipHandler registerToLine:line];
-            }
-            else
-            {
-                [UIApplication showSimpleAlert:@"" message:@"Unable to connect to this line at this time. Please Try again." code:error.code];
-                [self reportError:error];
-                self.connecting = FALSE;
-            }
-        }];
-    }
-    @catch (NSException *exception) {
-        [self reportErrorWithDescription:exception.reason];
-        self.connecting = FALSE;
-    }
+    }];
 }
 
 -(void)disconnect
@@ -849,7 +840,14 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
 
 + (void)connectToLine:(Line *)line
 {
-    [[JCPhoneManager sharedManager] connectToLine:line completion:NULL];
+    [[JCPhoneManager sharedManager] connectToLine:line completion:^(BOOL success, NSError *error) {
+        if (error && error.code != JS_PHONE_WIFI_DISABLED && error.code != JS_PHONE_ALREADY_CONNECTING) {
+            [UIApplication showSimpleAlert:@"Warning" error:error];
+        }
+        else if (error) {
+            NSLog(@"%@", [error description]);
+        }
+    }];
 }
 
 + (void)disconnect
