@@ -41,7 +41,10 @@ static MBProgressHUD *progressHud;
     if (!message) {
         message = [error localizedFailureReason];
     }
-    message = [NSString stringWithFormat:@"%@ (%li)", message, (long)error.code];
+    
+    NSInteger underlyingErrorCode = [self underlyingErrorCodeForError:error];
+    
+    message = [NSString stringWithFormat:@"%@ (%li)", message, (long)underlyingErrorCode];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(title, nil)
                                                     message:message
                                                    delegate:nil
@@ -49,7 +52,6 @@ static MBProgressHUD *progressHud;
                                           otherButtonTitles:nil, nil];
     [alert show];
 }
-
 
 -(void)showSimpleAlert:(NSString *)title message:(NSString *)message
 {
@@ -74,6 +76,15 @@ static MBProgressHUD *progressHud;
                                           cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                           otherButtonTitles:nil, nil];
     [alert show];
+}
+
+-(NSInteger)underlyingErrorCodeForError:(NSError *)error
+{
+    NSError *underlyingError = [error.userInfo objectForKey:NSUnderlyingErrorKey];
+    if (underlyingError) {
+        return [self underlyingErrorCodeForError:underlyingError];
+    }
+    return error.code;
 }
 
 @end
