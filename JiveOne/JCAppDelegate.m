@@ -308,7 +308,7 @@
     }
     
     AFNetworkReachabilityStatus status = (AFNetworkReachabilityStatus)((NSNumber *)[notification.userInfo valueForKey:AFNetworkingReachabilityNotificationStatusItem]).integerValue;
-    AFNetworkReachabilityManager *networkManager = (AFNetworkReachabilityManager *)notification.object;
+    AFNetworkReachabilityManager *networkManager = [AFNetworkReachabilityManager sharedManager];
     Line *line = [JCAuthenticationManager sharedInstance].line;
     JCPhoneManagerNetworkType currentNetworkType = [JCPhoneManager networkType];
     
@@ -345,7 +345,7 @@
     }
     
     // Transition from no connection to having a connection
-    else if(currentNetworkType == AFNetworkReachabilityStatusNotReachable && networkManager.isReachable) {
+    else if(currentNetworkType == AFNetworkReachabilityStatusNotReachable && status != AFNetworkReachabilityStatusNotReachable) {
         NSLog(@"Transitioning from no network connectivity to connected.");
         if (![JCPhoneManager sharedManager].isConnected) {
             [JCPhoneManager connectToLine:line];
