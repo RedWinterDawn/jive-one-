@@ -142,6 +142,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     NSArray *calls = _phoneManager.calls;
     NSInteger count = calls.count;
     
+    
     if(count == 0) {
         [self closeCallerViewController];
     } else if (count == 1) {
@@ -152,6 +153,10 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
             [self.callOptionsView setState:JCCallOptionViewSingleCallState animated:YES];
             [self hideCallOptionsAnimated:YES];
         }
+        else if (callCard.lineSession.mConferenceState)
+        {
+            [self.callOptionsView setState:JCCallOptionViewConferenceCallState ];
+        }
         else if (callCard.callState == JCCallAnswered || callCard.callState == JCCallConnected)
         {
             NSLog(@"show options %i", callCard.callState);
@@ -160,7 +165,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
         }
         else {
-          
+        
             NSLog(@"hide options %i", callCard.callState);
             [self showCallOptionsAnimated:YES];
             
@@ -180,21 +185,6 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 #pragma mark - Setters -
 
--(void)setCallOptionsHidden:(bool)callOptionsHidden
-{
-//    _callOptionsHidden = callOptionsHidden;
-//    if (self.view.superview)
-//        [self setCallOptionsHidden:callOptionsHidden animated:YES];
-
-}
-
-//-(void)setCallOptionsHidden:(bool)callOptionsHidden animated:(bool)animated
-//{
-//    if (callOptionsHidden)
-//        [self hideCallOptionsAnimated:animated];
-//    else
-//        [self showCallOptionsAnimated:animated];
-//}
 
 #pragma mark - IBActions -
 
@@ -269,6 +259,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
             [JCPhoneManager mergeCalls:^(BOOL success, NSError *error) {
 				if (success) {
 					self.mergeLabel.text = NSLocalizedString(@"Split Calls", nil);
+                   [self.callOptionsView setState:JCCallOptionViewConferenceCallState animated:YES];
 				}
 				else
 				{
@@ -280,6 +271,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 			
         } else {
             [JCPhoneManager splitCalls];
+//            [self.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];
             self.mergeLabel.text = NSLocalizedString(@"Merge Calls", nil);
         }
     }
@@ -320,7 +312,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 }
 
 /**
- * Hides the call options card.
+ * Show basic call options card.
  */
 -(void)showCallOptionsAnimated:(BOOL)animated
 {
@@ -336,6 +328,10 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
                          [_callCardCollectionViewController.collectionViewLayout invalidateLayout];
                      }];
 }
+
+/**
+ * Show All call options card.
+ */
 
 -(void)showAllCallOptionsAnimated:(BOOL)animated
 {
@@ -354,33 +350,6 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
                          [_callCardCollectionViewController.collectionViewLayout invalidateLayout];
                      }];
 }
-
-
-
-/**
- * Shows the call option card.
- */
-//-(void)showCallOptionsAnimated:(BOOL)animated
-//{
-//    if (_showingCallOptions)
-//        return;
-//    
-//    __unsafe_unretained UIView *weakView = self.view;
-//    [UIView animateWithDuration:animated ? 0.1 : 0
-//                     animations:^{
-//                         [weakView layoutIfNeeded];
-//                     }
-//                     completion:NULL];
-//    
-//    [UIView transitionWithView:self.view
-//                      duration:_callOptionTransitionAnimationDuration
-//                       options:UIViewAnimationOptionTransitionFlipFromRight
-//                    animations:NULL
-//                    completion:^(BOOL finished) {
-//                        _showingCallOptions = true;
-//                        [_callCardCollectionViewController.collectionViewLayout invalidateLayout];
-//                    }];
-//}
 
 /**
  * Displays the "Transfer Success page" after a warm or blind transfer.

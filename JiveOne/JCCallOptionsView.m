@@ -222,8 +222,6 @@
     }];
 }
 
-
-
 -(void)hideConference:(bool)animated completion:(void (^)(BOOL finished))completion
 {
     _mergeBtnHorizontalContstraint.constant = _defaultMergePosition;
