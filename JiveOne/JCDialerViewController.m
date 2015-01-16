@@ -41,6 +41,13 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     self.backspaceBtn.alpha = 0;
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self updateRegistrationStatus];
+}
+
+
 -(void)awakeFromNib
 {
     [super awakeFromNib];
