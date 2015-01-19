@@ -293,7 +293,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return NO;
     }
     
-    int errorCode = [_mPortSIPSDK answerCall:lineSession.mSessionId videoCall:FALSE];
+    NSInteger errorCode = [_mPortSIPSDK answerCall:lineSession.mSessionId videoCall:FALSE];
     if (errorCode) {
         NSError *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Unable to answer the call"];
         [self setSessionState:JCCallFailed forSession:lineSession event:error.localizedDescription error:error];
@@ -336,7 +336,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return YES;
     }
     
-    int errorCode = [_mPortSIPSDK hangUp:lineSession.mSessionId];
+    NSInteger errorCode = [_mPortSIPSDK hangUp:lineSession.mSessionId];
     if (errorCode) {
         *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error Trying to Hang up"];
         return NO;
@@ -374,7 +374,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return YES;
     }
     
-    int errorCode = [_mPortSIPSDK hold:lineSession.mSessionId];
+    NSInteger errorCode = [_mPortSIPSDK hold:lineSession.mSessionId];
     if (errorCode) {
         *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error placing calls on hold"];
         return NO;
@@ -387,7 +387,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 - (BOOL)unholdLines:(NSError *__autoreleasing *)error
 {
     NSSet *lineSessions = [self findAllActiveLinesOnHold];
-    return [self holdLineSessions:lineSessions error:error];
+    return [self unholdLineSessions:lineSessions error:error];
 }
 
 - (BOOL)unholdLineSessions:(NSSet *)lineSessions error:(NSError *__autoreleasing *)error
@@ -412,7 +412,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return YES;
     }
     
-    int errorCode = [_mPortSIPSDK unHold:lineSession.mSessionId];
+    NSInteger errorCode = [_mPortSIPSDK unHold:lineSession.mSessionId];
     if (errorCode) {
         *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error placing calls on hold"];
         return NO;
@@ -435,7 +435,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return FALSE;
     }
     
-    int errorCode = [_mPortSIPSDK createConference:[UIView new] videoResolution:VIDEO_NONE displayLocalVideo:NO];
+    NSInteger errorCode = [_mPortSIPSDK createConference:[UIView new] videoResolution:VIDEO_NONE displayLocalVideo:NO];
     if (errorCode) {
         *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error Creating Conference"];
         return false;
@@ -513,7 +513,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     // Tell PortSip to refer the session id to the passed number. If sucessful, the PortSip deleagate method will inform
     // us and we will call the completion block.
     _transferCompletionHandler = completion;
-	int result = [_mPortSIPSDK refer:lineSession.mSessionId referTo:number];
+	NSInteger result = [_mPortSIPSDK refer:lineSession.mSessionId referTo:number];
     if (result != 0)
     {
         NSString *msg = NSLocalizedString(@"Blind Transfer failed", nil);
@@ -541,7 +541,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     }
 	
     _transferCompletionHandler = completion;
-    int result = [_mPortSIPSDK attendedRefer:receivingSession.mSessionId replaceSessionId:sessionToTransfer.mSessionId referTo:number];
+    NSInteger result = [_mPortSIPSDK attendedRefer:receivingSession.mSessionId replaceSessionId:sessionToTransfer.mSessionId referTo:number];
     if (result != 0) {
         NSString *msg = NSLocalizedString(@"Warm Transfer failed", nil);
         NSError *error = [Common createErrorWithDescription:msg reason:NSLocalizedString(@"Unable make transfer", nil) code:result];

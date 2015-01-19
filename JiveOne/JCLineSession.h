@@ -35,8 +35,8 @@ typedef enum {
 @interface JCLineSession : NSObject
 
 @property (nonatomic, strong) Contact *contact;
-@property (nonatomic) NSString *callTitle;
-@property (nonatomic) NSString *callDetail;
+@property (nonatomic, strong) NSString *callTitle;
+@property (nonatomic, strong) NSString *callDetail;
 
 // State
 @property (nonatomic) JCLineSessionState sessionState;

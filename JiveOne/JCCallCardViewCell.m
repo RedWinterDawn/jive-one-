@@ -39,6 +39,16 @@
     [self setNeedsLayout];
 }
 
+-(void)setHighlighted:(BOOL)highlighted
+{
+    // Override to disable default action
+}
+
+-(void)setSelected:(BOOL)selected
+{
+    // Overide to disable default action.
+}
+
 /**
  * Due to an iOS 7 bug under the iOS 8 SDK, it appear that the content's view bounds is not updated 
  * when the cell's bounds are changed via the Autolayout feature, causing some odd behavior when 
@@ -51,14 +61,6 @@
     if (![UIDevice currentDevice].iOS8)
         self.contentView.frame = bounds;
 }
-
-//-(void)setHighlighted:(BOOL)highlighted
-//{
-//    [super setHighlighted:highlighted];
-//    
-//    //self.callerIdLabel.highlighted = highlighted;
-//    //self.dialedNumberLabel.highlighted = highlighted;
-//}
 
 #pragma mark - IBActions -
 
