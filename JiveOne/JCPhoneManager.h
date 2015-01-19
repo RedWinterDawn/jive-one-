@@ -65,6 +65,7 @@ typedef enum : NSInteger {
 @property (nonatomic, readonly, getter=isInitialized) BOOL initialized;
 @property (nonatomic, readonly, getter=isConnected) BOOL connected;
 @property (nonatomic, readonly, getter=isConnecting) BOOL connecting;
+@property (nonatomic, readonly, getter=isConferenceCall) BOOL conferenceCall;
 
 @property (nonatomic, readonly) Line *line;
 @property (nonatomic, readonly) JCPhoneManagerOutputType outputType;
@@ -99,7 +100,5 @@ typedef enum : NSInteger {
 
 // NumberPad
 + (void)numberPadPressedWithInteger:(NSInteger)numberPad;
-
-
 
 @end

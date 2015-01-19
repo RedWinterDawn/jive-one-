@@ -233,8 +233,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 {
     if(_registered)
     {
+        __autoreleasing NSError *error;
         for (JCLineSession *lineSession in _lineSessions) {
-            [self hangUpSession:lineSession completion:NULL];
+            [self hangUpSession:lineSession error:&error];
         }
         [_mPortSIPSDK unRegisterServer];
         _registered = NO;
@@ -285,96 +286,218 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	return lineSession;
 }
 
-- (void)answerSession:(JCLineSession *)lineSession
+- (BOOL)answerSession:(JCLineSession *)lineSession error:(NSError *__autoreleasing *)error
 {
-	[self answerSession:lineSession completion:NULL];
-}
-
-- (void)answerSession:(JCLineSession *)lineSession completion:(CompletionHandler)completion
-{
-    if (!lineSession)
-        return;
+    if (!lineSession) {
+        *error = [JCSipHandlerError errorWithCode:JC_SIP_LINE_SESSION_IS_EMPTY reason:@"Line Session in empty"];
+        return NO;
+    }
     
-    int error = [_mPortSIPSDK answerCall:lineSession.mSessionId videoCall:FALSE];
-    if(error == 0)
-    {
-        if (lineSession.mRecvCallState) {
-            [IncomingCall addIncommingCallWithLineSession:lineSession line:_line];
-        }
-        
-        [lineSession setMRecvCallState:false];
-        [lineSession setMVideoState:false];
-        
-        if (completion != NULL) {
-            completion(true, nil);
-        }
+    int errorCode = [_mPortSIPSDK answerCall:lineSession.mSessionId videoCall:FALSE];
+    if (errorCode) {
+        NSError *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Unable to answer the call"];
+        [self setSessionState:JCCallFailed forSession:lineSession event:error.localizedDescription error:error];
+        return NO;
     }
-    else {
-        NSString *event = @"Unable to answer the call";
-        NSError *msg = [NSError errorWithDomain:@"Unable to answer the call" code:error userInfo:nil];
-        [self setSessionState:JCCallFailed forSession:lineSession event:event error:msg];
-        if (completion != NULL) {
-            completion(false, msg);
-        }
-    }
+    return YES;
 }
 
-- (void)hangUpSession:(JCLineSession *)lineSession completion:(CompletionHandler)completion
+- (BOOL)hangUpAllSessions:(NSError *__autoreleasing *)error
 {
-    if (lineSession.isActive)
-    {
-        int error = [_mPortSIPSDK hangUp:lineSession.mSessionId];
-        if (error == 0) {
-            [self setSessionState:JCCallCanceled forSession:lineSession event:@"Hangup Call" error:nil];
-            if (completion != NULL) {
-                completion(true, nil);
-            }
-        }
-        else
-        {
-            if (completion != NULL) {
-                completion(false, [NSError errorWithDomain:@"Error Trying to Hang up" code:error userInfo:nil]);
-            }
+    NSSet *lineSessions = [self findAllActiveLines];
+    
+    
+    __autoreleasing NSError *hangupError;
+    for (JCLineSession *lineSession in lineSessions) {
+        [self hangUpSession:lineSession error:&hangupError];
+        if (hangupError) {
+            break;
         }
     }
-    else if (lineSession.mRecvCallState)
-    {
-        int error = [_mPortSIPSDK rejectCall:lineSession.mSessionId code:486];
-        if (error == 0) {
-            [self setSessionState:JCCallCanceled forSession:lineSession event:@"Manually Reject Incoming Call" error:nil];
-            if (completion != NULL) {
-                completion(true, nil);
-            }
-        }
-        else
-        {
-            if (completion != NULL) {
-                completion(false, [NSError errorWithDomain:@"Error Trying to reject Call" code:error userInfo:nil]);
-            }
-        }
+    
+    if (hangupError) {
+        *error = hangupError;
+        return NO;
     }
-    else
-    {
-        
-    }
+    return YES;
 }
 
-- (void)setHoldCallState:(bool)hold forSessionId:(long)sessionId
+- (BOOL)hangUpSession:(JCLineSession *)lineSession error:(NSError *__autoreleasing *)error
 {
-    JCLineSession *lineSession = [self findSession:sessionId];
-    if (lineSession)
+    if (lineSession.incomming)
     {
-        if (hold)
-        {
-            [_mPortSIPSDK hold:lineSession.mSessionId];
+        int errorCode = [_mPortSIPSDK rejectCall:lineSession.mSessionId code:486];
+        if (errorCode) {
+            *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error trying to manually reject incomming call"];
+            return NO;
         }
-        else
-        {
-            [_mPortSIPSDK unHold:lineSession.mSessionId];
-        }
-        lineSession.hold = hold;
-        NSLog(@"%@", [self.lineSessions description]);
+            
+        [self setSessionState:JCCallCanceled forSession:lineSession event:@"Manually Rejected Incoming Call" error:nil];
+        return YES;
     }
+    
+    int errorCode = [_mPortSIPSDK hangUp:lineSession.mSessionId];
+    if (errorCode) {
+        *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error Trying to Hang up"];
+        return NO;
+    }
+        
+    [self setSessionState:JCCallCanceled forSession:lineSession event:@"Hangup Call" error:nil];
+    return YES;
+}
+
+- (BOOL)holdLines:(NSError *__autoreleasing *)error
+{
+    NSSet *lineSessions = [self findAllActiveLinesNotHolding];
+    return [self holdLineSessions:lineSessions error:error];
+}
+
+- (BOOL)holdLineSessions:(NSSet *)lineSessions error:(NSError *__autoreleasing *)error
+{
+    __autoreleasing NSError *holdError;
+    for (JCLineSession *lineSession in lineSessions) {
+        if (![self holdLineSession:lineSession error:&holdError]) {
+            break;
+        }
+    }
+    
+    if (holdError) {
+        *error = [JCSipHandlerError errorWithCode:holdError.code reason:@"Error holding the line sessions" underlyingError:holdError];
+        return false;
+    }
+    return true;
+}
+
+- (BOOL)holdLineSession:(JCLineSession *)lineSession error:(NSError *__autoreleasing *)error
+{
+    if (lineSession.isHolding) {
+        return YES;
+    }
+    
+    int errorCode = [_mPortSIPSDK hold:lineSession.mSessionId];
+    if (errorCode) {
+        *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error placing calls on hold"];
+        return NO;
+    }
+    
+    lineSession.hold = TRUE;
+    return YES;
+}
+
+- (BOOL)unholdLines:(NSError *__autoreleasing *)error
+{
+    NSSet *lineSessions = [self findAllActiveLinesOnHold];
+    return [self holdLineSessions:lineSessions error:error];
+}
+
+- (BOOL)unholdLineSessions:(NSSet *)lineSessions error:(NSError *__autoreleasing *)error
+{
+    __autoreleasing NSError *holdError;
+    for (JCLineSession *lineSession in lineSessions) {
+        if (![self unholdLineSession:lineSession error:&holdError]) {
+            break;
+        }
+    }
+    
+    if (holdError) {
+        *error = [JCSipHandlerError errorWithCode:holdError.code reason:@"Error unholding the line session while after joing the conference" underlyingError:holdError];
+        return FALSE;
+    }
+    return TRUE;
+}
+
+-(BOOL)unholdLineSession:(JCLineSession *)lineSession error:(NSError *__autoreleasing *)error
+{
+    if (!lineSession.isHolding) {
+        return YES;
+    }
+    
+    int errorCode = [_mPortSIPSDK unHold:lineSession.mSessionId];
+    if (errorCode) {
+        *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error placing calls on hold"];
+        return NO;
+    }
+
+    lineSession.hold = FALSE;
+    return YES;
+}
+
+- (BOOL)createConference:(NSError *__autoreleasing *)error
+{
+    NSSet *lineSessions = [self findAllActiveLines];
+    return [self createConferenceWithLineSessions:lineSessions error:error];
+}
+
+-(BOOL)createConferenceWithLineSessions:(NSSet *)lineSessions error:(NSError *__autoreleasing *)error
+{
+    if (_conferenceCall) {
+        *error = [JCSipHandlerError errorWithCode:JC_SIP_CONFERENCE_CALL_ALREADY_STARTED reason:@"Conference call already started"];
+        return FALSE;
+    }
+    
+    int errorCode = [_mPortSIPSDK createConference:[UIView new] videoResolution:VIDEO_NONE displayLocalVideo:NO];
+    if (errorCode) {
+        *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error Creating Conference"];
+        return false;
+    }
+    
+    _conferenceCall = true;
+    for (JCLineSession *lineSession in lineSessions) {
+        
+        if (lineSession.isHolding) {
+            __autoreleasing NSError *holdError;
+            if (![self unholdLineSession:lineSession error:&holdError]) {
+                *error = [JCSipHandlerError errorWithCode:holdError.code reason:@"Error unholding the line session while after joing the conference" underlyingError:holdError];
+                break;
+            }
+        }
+        
+        errorCode = [_mPortSIPSDK joinToConference:lineSession.mSessionId];
+        if (errorCode) {
+            *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error Joining line session to conference"];
+            break;
+        }
+    }
+    
+    if (!errorCode) {
+        [_delegate sipHandler:self didCreateConferenceCallWithLineSessions:lineSessions];
+        return TRUE;
+    }
+    
+    [_mPortSIPSDK destroyConference];
+    _conferenceCall = false;
+    return false;
+}
+
+-(BOOL)endConference:(NSError *__autoreleasing *)error
+{
+    NSSet *lineSessions = [self findAllActiveLines];
+    return [self endConferenceCallForLineSessions:lineSessions error:error];
+}
+
+-(BOOL)endConferenceCallForLineSessions:(NSSet *)lineSessions error:(NSError *__autoreleasing *)error
+{
+    if (!_conferenceCall) {
+        *error = [JCSipHandlerError errorWithCode:JC_SIP_CONFERENCE_CALL_ALREADY_ENDED reason:@"Conference call already started"];
+        return FALSE;
+    }
+    
+    // Before stop the conference, MUST place all lines to hold state
+    for (JCLineSession *lineSession in lineSessions) {
+        if (!lineSession.isHolding)
+        {
+            __autoreleasing NSError *holdError;
+            if(![self holdLineSession:lineSession error:&holdError]) {
+                *error = [JCSipHandlerError errorWithCode:holdError.code reason:@"Error placing calls on hold after ending a conference" underlyingError:holdError];
+                return false;
+            }
+        }
+    }
+    
+    [_mPortSIPSDK destroyConference];
+    _conferenceCall = FALSE;
+    [_delegate sipHandler:self didEndConferenceCallForLineSessions:lineSessions];
+    return true;
 }
 
 - (void)blindTransferToNumber:(NSString *)number completion:(void (^)(BOOL, NSError *))completion
@@ -433,85 +556,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     [_mPortSIPSDK muteMicrophone:mute];
 }
 
-- (BOOL)createConference:(NSError *__autoreleasing *)error
-{
-    NSSet *lineSessions = [NSSet setWithArray:[self findAllActiveLines]];
-    return [self createConferenceWithLineSessions:lineSessions error:error];
-}
 
--(BOOL)createConferenceWithLineSessions:(NSSet *)lineSessions error:(NSError *__autoreleasing *)error
-{
-    if (_conferenceCall) {
-        *error = [JCSipHandlerError errorWithCode:JC_SIP_CONFERENCE_CALL_ALREADY_STARTED reason:@"Conference call already started"];
-        return FALSE;
-    }
-    
-    int errorCode = [_mPortSIPSDK createConference:[UIView new] videoResolution:VIDEO_NONE displayLocalVideo:NO];
-    if (errorCode) {
-        *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error Creating Conference"];
-        return false;
-    }
-    
-    _conferenceCall = true;
-    for (JCLineSession *lineSession in lineSessions) {
-        
-        errorCode = [_mPortSIPSDK joinToConference:lineSession.mSessionId];
-        if (errorCode) {
-            *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error Joining line session to conference"];
-            break;
-        }
-        
-        if (lineSession.isHolding) {
-            errorCode = [_mPortSIPSDK unHold:lineSession.mSessionId];
-            if (errorCode) {
-                *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error unholding the line session while after joing the conference"];
-                break;
-            }
-        }
-    }
-    
-    if (!errorCode) {
-        return TRUE;
-    }
-    
-    [_mPortSIPSDK destroyConference];
-    _conferenceCall = false;
-    return false;
-}
-
--(BOOL)endConference:(NSError *__autoreleasing *)error
-{
-    NSSet *lineSessions = [NSSet setWithArray:[self findAllActiveLines]];
-    return [self endConferenceCallForLineSessions:lineSessions error:error];
-}
-
--(BOOL)endConferenceCallForLineSessions:(NSSet *)lineSessions error:(NSError *__autoreleasing *)error
-{
-    if (!_conferenceCall) {
-        *error = [JCSipHandlerError errorWithCode:JC_SIP_CONFERENCE_CALL_ALREADY_ENDED reason:@"Conference call already started"];
-        return FALSE;
-    }
-    
-    [_mPortSIPSDK destroyConference];
-    _conferenceCall = FALSE;
-
-    // Before stop the conference, MUST place all lines to hold state
-    int errorCode;
-    for (JCLineSession *lineSession in lineSessions) {
-        if (!lineSession.isHolding){
-            errorCode = [_mPortSIPSDK hold:lineSession.mSessionId];
-            if (errorCode) {
-                *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error placing calls on hold after ending a conference"];
-                break;
-            }
-        }
-    }
-    
-    if (!errorCode) {
-        return true;
-    }
-    return false;
-}
 
 -(void)setLoudSpeakerEnabled:(BOOL)loudSpeakerEnabled
 {
@@ -530,7 +575,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 -(BOOL)isActive
 {
-    NSArray *activeLines = [self findAllActiveLines];
+    NSSet *activeLines = [self findAllActiveLines];
     if (activeLines.count > 0) {
         return TRUE;
     }
@@ -556,7 +601,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     for (JCLineSession *line in self.lineSessions) {
         if (line.isActive &&
             !line.isHolding &&
-            !line.mRecvCallState){
+            !line.isIncomming){
             return line;
         }
     }
@@ -567,7 +612,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 {
     for (JCLineSession *line in self.lineSessions) {
         if (!line.isActive &&
-            line.mRecvCallState){
+            line.isIncomming){
             return line;
         }
     }
@@ -579,7 +624,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     for (JCLineSession *line in self.lineSessions) {
         if (line.isActive &&
             line.isHolding &&
-            !line.mRecvCallState) {
+            !line.isIncomming) {
             return line;
         }
     }
@@ -590,16 +635,16 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 {
     for (JCLineSession *line in self.lineSessions){
         if (!line.isActive &&
-            !line.mRecvCallState){
+            !line.isIncomming){
             return line;
         }
     }
     return nil;
 }
 
-- (NSArray *) findAllActiveLines
+- (NSSet *)findAllActiveLines
 {
-    NSMutableArray *activeLines = [NSMutableArray new];
+    NSMutableSet *activeLines = [NSMutableSet setWithCapacity:self.lineSessions.count];
     for (JCLineSession *line in self.lineSessions)
     {
         if (line.isActive) {
@@ -607,6 +652,28 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         }
     }
     return activeLines;
+}
+
+- (NSSet *)findAllActiveLinesOnHold
+{
+    NSMutableSet *lineSessions = [NSMutableSet setWithCapacity:self.lineSessions.count];
+    for (JCLineSession *line in self.lineSessions) {
+        if (line.isActive && line.isHolding) {
+            [lineSessions addObject:line];
+        }
+    }
+    return lineSessions;
+}
+
+- (NSSet *)findAllActiveLinesNotHolding
+{
+    NSMutableSet *lineSessions = [NSMutableSet setWithCapacity:self.lineSessions.count];
+    for (JCLineSession *line in self.lineSessions) {
+        if (line.isActive && !line.isHolding) {
+            [lineSessions addObject:line];
+        }
+    }
+    return lineSessions;
 }
 
 #pragma mark Session State
@@ -627,7 +694,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
                 _transferCompletionHandler(YES, error);
                 _transferCompletionHandler = nil;
             }
-            [self.delegate sipHandler:self willRemoveLineSession:lineSession];
+            [_delegate sipHandler:self willRemoveLineSession:lineSession];
             [lineSession reset];
             break;
         }
@@ -646,11 +713,10 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         {
             lineSession.sessionState = state;
             NSLog(@"%@", [self.lineSessions description]);
-            if (lineSession.mRecvCallState)
-            {
+            if (lineSession.incomming){
                 [MissedCall addMissedCallWithLineSession:lineSession line:_line];
             }
-            [self.delegate sipHandler:self willRemoveLineSession:lineSession];
+            [_delegate sipHandler:self willRemoveLineSession:lineSession];
             [lineSession reset];
             break;
         }
@@ -658,17 +724,25 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         // Session is an incoming call -> notify delegate to add it.
         case JCCallIncoming:
             lineSession.sessionState = state;               // Set the session state.
-            [self.delegate sipHandler:self didAddLineSession:lineSession];     // Notify the delegate to add a line.
+            [_delegate sipHandler:self didAddLineSession:lineSession];     // Notify the delegate to add a line.
             if (autoAnswer) {
                 autoAnswer = false;
-                [self.delegate sipHandler:self receivedIntercomLineSession:lineSession];
+                [_delegate sipHandler:self receivedIntercomLineSession:lineSession];
             }
             break;
         
         case JCCallConnected:
             lineSession.updatable = TRUE;
         case JCCallAnswered:
+        {
+            if (lineSession.incomming) {
+                [IncomingCall addIncommingCallWithLineSession:lineSession line:_line];
+                [lineSession setIncomming:false];
+                [_delegate sipHandler:self didAnswerLineSession:lineSession];
+            }
             lineSession.active = TRUE;
+            lineSession.sessionState = state;
+        }
         default:
             lineSession.sessionState = state;
             break;
@@ -728,7 +802,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	}
 	
     // Setup the line session.
-    idleLine.mRecvCallState = true;              // Flag as being in a receiving state.
+    idleLine.incomming = true;              // Flag as being in a receiving state.
 	[idleLine setMSessionId:sessionId];          // Attach a session id to the line session.
     [idleLine setMVideoState:existsVideo];                                                          // Flag if video call.
 	[idleLine setCallTitle:[NSString stringWithUTF8String:callerDisplayName]];                      // Get Call Title

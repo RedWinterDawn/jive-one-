@@ -17,8 +17,9 @@
 #define JC_SIP_REGISTER_PASSWORD_IS_EMPTY               -1005
 #define JC_SIP_REGISTER_CALLER_ID_IS_EMPTY              -1006
 
-#define JC_SIP_CONFERENCE_CALL_ALREADY_STARTED          -2000
-#define JC_SIP_CONFERENCE_CALL_ALREADY_ENDED            -2001
+#define JC_SIP_LINE_SESSION_IS_EMPTY                    -2000
+#define JC_SIP_CONFERENCE_CALL_ALREADY_STARTED          -2001
+#define JC_SIP_CONFERENCE_CALL_ALREADY_ENDED            -2002
 
 extern NSString *const kJCSipHandlerErrorDomain;
 

@@ -11,6 +11,7 @@
 @class Contact;
 
 extern NSString *const kJCLineSessionStateKey;
+extern NSString *const kJCLineSessionHoldKey;
 
 typedef enum {
     JCNoCall,               // Idle line state.
@@ -48,9 +49,10 @@ typedef enum {
 @property (nonatomic, getter=isActive) BOOL active;
 @property (nonatomic, getter=isHolding) BOOL hold;
 @property (nonatomic, getter=isUpdatable) BOOL updatable;
+@property (nonatomic, getter=isIncomming) bool incomming;
+
 //@property (nonatomic) bool mSessionState;
 @property (nonatomic) bool mConferenceState;
-@property (nonatomic) bool mRecvCallState;
 @property (nonatomic, getter=isReferCall) bool mIsReferCall;
 @property (nonatomic) bool mExistEarlyMedia;
 @property (nonatomic) bool mVideoState;

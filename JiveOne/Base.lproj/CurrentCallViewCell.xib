@@ -110,7 +110,6 @@
                             <constraint firstAttribute="trailing" secondItem="8Zm-YG-q5c" secondAttribute="trailing" id="KfH-aM-65k"/>
                             <constraint firstItem="8Zm-YG-q5c" firstAttribute="top" secondItem="QCr-7s-whc" secondAttribute="top" constant="27" id="QyH-nI-2r3"/>
                             <constraint firstItem="rkJ-cf-ec6" firstAttribute="leading" secondItem="QCr-7s-whc" secondAttribute="leading" id="UDR-eN-OWr"/>
-                            <constraint firstAttribute="bottom" secondItem="8Zm-YG-q5c" secondAttribute="bottom" constant="21" id="X5E-8I-0mS"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yUi-Hn-q9R" userLabel="Action Bar">

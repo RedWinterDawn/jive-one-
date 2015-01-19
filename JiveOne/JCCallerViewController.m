@@ -215,12 +215,10 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 -(IBAction)swapCall:(id)sender
 {
     if ([sender isKindOfClass:[UIButton class]]) {
-        //UIButton *button = (UIButton *)sender;
-        //button.enabled = false;
+        UIButton *button = (UIButton *)sender;
+        button.enabled = false;
         [JCPhoneManager swapCalls:^(BOOL success, NSError *error) {
-            //[self showHudWithTitle:@"Oh-oh", detail:@"Failed to Create Conference"]
-            
-            //button.enabled = true;
+            button.enabled = true;
         }];
     }
 }
@@ -230,18 +228,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     if ([sender isKindOfClass:[UIButton class]]){
         UIButton *button = (UIButton *)sender;
         button.enabled = false;
-        if (button.selected) {
-            [JCPhoneManager mergeCalls:^(BOOL success, NSError *error) {
-				if (success) {
-					self.mergeLabel.text = NSLocalizedString(@"Split Calls", nil);
-                    button.selected = FALSE;
-				}
-				else {
-					[self showHudWithTitle:@"Oh-oh" detail:@"Failed to Create Conference"];
-				}
-                button.enabled = TRUE;
-			}];
-        } else {
+        if ([JCPhoneManager sharedManager].isConferenceCall) {
             [JCPhoneManager splitCalls:^(BOOL success, NSError *error) {
                 if (success) {
                     self.mergeLabel.text = NSLocalizedString(@"Merge Calls", nil);
@@ -252,6 +239,17 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
                 }
                 button.enabled = TRUE;
             }];
+        } else {
+            [JCPhoneManager mergeCalls:^(BOOL success, NSError *error) {
+				if (success) {
+					self.mergeLabel.text = NSLocalizedString(@"Split Calls", nil);
+                    button.selected = FALSE;
+				}
+				else {
+					[self showHudWithTitle:@"Oh-oh" detail:@"Failed to Create Conference"];
+				}
+                button.enabled = TRUE;
+			}];
         }
     }
 }

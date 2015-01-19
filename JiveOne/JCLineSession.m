@@ -13,6 +13,7 @@
 #define INVALID_SESSION_ID -1
 
 NSString *const kJCLineSessionStateKey = @"sessionState";
+NSString *const kJCLineSessionHoldKey = @"hold";
 
 @implementation JCLineSession
 
@@ -35,8 +36,6 @@ NSString *const kJCLineSessionStateKey = @"sessionState";
     return output;
 }
 
-#pragma mark - Setters -
-
 #pragma mark - Public Methods -
 
 - (void) setReferCall:(BOOL)referCall originalCallSessionId:(long)originalCallSessionId
@@ -54,12 +53,12 @@ NSString *const kJCLineSessionStateKey = @"sessionState";
     _callDetail             = nil;
     _hold                   = false;
     _updatable              = false;
+    _active                 = false;
+    _incomming              = false;
     
     _mSessionId             = INVALID_SESSION_ID;
     _mOriginCallSessionId   = INVALID_SESSION_ID;
-    _active                 = false;
     _mConferenceState       = false;
-    _mRecvCallState         = false;
     _mIsReferCall           = false;
     _mExistEarlyMedia       = false;
     _mVideoState            = false;

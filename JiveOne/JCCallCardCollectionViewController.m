@@ -159,7 +159,7 @@ NSString *const kJCCallCardCollectionConferenceCallCellReuseIdentifier = @"Confe
 {
     JCCallCardViewCell *cell;
     JCCallCard *callCard = [self callCardForIndexPath:indexPath];
-    if (callCard.isIncoming)
+    if (callCard.lineSession.isIncomming)
         cell = (JCCallCardViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kJCCallCardCollectionIncomingCallCellReuseIdentifier forIndexPath:indexPath];
     else if([callCard isKindOfClass:[JCConferenceCallCard class]])
         cell = (JCCallCardViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:kJCCallCardCollectionConferenceCallCellReuseIdentifier forIndexPath:indexPath];

@@ -15,12 +15,22 @@
 
 @protocol SipHandlerDelegate <NSObject>
 
+// Registration
 -(void)sipHandlerDidRegister:(SipHandler *)sipHandler;
 -(void)sipHandlerDidUnregister:(SipHandler *)sipHandler;
 -(void)sipHandler:(SipHandler *)sipHandler didFailToRegisterWithError:(NSError *)error;
--(void)sipHandler:(SipHandler *)sipHandler receivedIntercomLineSession:(JCLineSession *)session;
--(void)sipHandler:(SipHandler *)sipHandler didAddLineSession:(JCLineSession *)session;
--(void)sipHandler:(SipHandler *)sipHandler willRemoveLineSession:(JCLineSession *)session;
+
+// Intercom line session for Auto Answer feature.
+-(void)sipHandler:(SipHandler *)sipHandler receivedIntercomLineSession:(JCLineSession *)lineSession;
+
+// Call Creation Events
+-(void)sipHandler:(SipHandler *)sipHandler didAddLineSession:(JCLineSession *)lineSession;
+-(void)sipHandler:(SipHandler *)sipHandler didAnswerLineSession:(JCLineSession *)lineSession;
+-(void)sipHandler:(SipHandler *)sipHandler willRemoveLineSession:(JCLineSession *)lineSession;
+
+// Conference Calls
+-(void)sipHandler:(SipHandler *)sipHandler didCreateConferenceCallWithLineSessions:(NSSet *)lineSessions;
+-(void)sipHandler:(SipHandler *)sipHandler didEndConferenceCallForLineSessions:(NSSet *)lineSessions;
 
 @end
 
@@ -46,8 +56,21 @@
 
 // Methods for makeing, transferring or establsihing conference calls.
 - (JCLineSession *) makeCall:(NSString*)callee videoCall:(BOOL)videoCall contactName:(NSString *)contactName;
-- (void)answerSession:(JCLineSession *)lineSession completion:(CompletionHandler)completion;
-- (void)hangUpSession:(JCLineSession *)lineSession completion:(CompletionHandler)completion;
+
+// Call Actions
+- (BOOL)answerSession:(JCLineSession *)lineSession error:(NSError *__autoreleasing *)error;         // Answer line session
+
+- (BOOL)hangUpAllSessions:(NSError *__autoreleasing *)error;
+- (BOOL)hangUpSession:(JCLineSession *)lineSession error:(NSError *__autoreleasing *)error;         // Hang up line session
+
+- (BOOL)holdLines:(NSError *__autoreleasing *)error;                                                // Hold all line sessions
+- (BOOL)holdLineSessions:(NSSet *)lineSessions error:(NSError *__autoreleasing *)error;             // Holds line sessions in set
+- (BOOL)holdLineSession:(JCLineSession *)lineSession error:(NSError *__autoreleasing *)error;       // Holds line session
+
+- (BOOL)unholdLines:(NSError *__autoreleasing *)error;                                              // unhold all line sessions
+- (BOOL)unholdLineSessions:(NSSet *)lineSessions error:(NSError *__autoreleasing *)error;           // unhold line sessions in set
+- (BOOL)unholdLineSession:(JCLineSession *)lineSession error:(NSError *__autoreleasing *)error;     // unhold line session
+
 - (void)blindTransferToNumber:(NSString*)referTo completion:(CompletionHandler)completion;
 - (void)warmTransferToNumber:(NSString*)referTo completion:(CompletionHandler)completion;
 
@@ -62,6 +85,6 @@
 - (void)pressNumpadButton:(char )dtmf;
 - (void)muteCall:(BOOL)mute;
 - (void)setLoudSpeakerEnabled:(BOOL)loudSpeakerEnabled;
-- (void)setHoldCallState:(bool)holdState forSessionId:(long)sessionId;
+//- (void)setHoldCallState:(bool)holdState forSessionId:(long)sessionId;
 
 @end
