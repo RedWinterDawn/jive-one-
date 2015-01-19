@@ -36,11 +36,12 @@
 
 -(BOOL)isHolding
 {
-    BOOL holding = NO;
     for (JCCallCard *call in _calls) {
-        holding = holding && call.lineSession.isHolding;
+        if(!call.lineSession.isHolding) {
+            return NO;
+        }
     }
-    return holding;
+    return YES;
 }
 
 -(NSString *)callerId {
