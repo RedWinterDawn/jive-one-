@@ -15,6 +15,7 @@
 
 #import "JCCallerViewController.h"
 
+
 // Managers
 #import "JCPhoneManager.h"   // Handles call cards, and managed calls
 
@@ -81,7 +82,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     
     NSArray *calls = _phoneManager.calls;
     for (JCCallCard *callCard in calls) {
-        [callCard addObserver:self forKeyPath:kJCCallCardStatusChangeKey options:0 context:NULL];
+        [callCard.lineSession addObserver:self forKeyPath:kJCLineSessionStateKey options:0 context:NULL];
     }
     [self checkCallConnectedState];
     
@@ -133,7 +134,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
             JCPhoneManager *manager = object;
                 self.speakerBtn.selected = (manager.outputType == JCPhoneManagerOutputSpeaker);
     }
-    else if ([keyPath isEqualToString:kJCCallCardStatusChangeKey])
+    else if ([keyPath isEqualToString:kJCLineSessionStateKey])
     {
         [self checkCallConnectedState];
     }
@@ -158,16 +159,16 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         {
             [self.callOptionsView setState:JCCallOptionViewConferenceCallState ];
         }
-        else if (callCard.callState == JCCallAnswered || callCard.callState == JCCallConnected)
+        else if (callCard.lineSession.sessionState == JCCallAnswered || callCard.lineSession.sessionState == JCCallConnected)
         {
-            NSLog(@"show options %i", callCard.callState);
+            NSLog(@"show options %i", callCard.lineSession.sessionState);
             [self.callOptionsView setState:JCCallOptionViewSingleCallState animated:YES];
             [self showAllCallOptionsAnimated:YES];
 
         }
         else {
         
-            NSLog(@"hide options %i", callCard.callState);
+            NSLog(@"hide options %i", callCard.lineSession.sessionState);
             [self showCallOptionsAnimated:YES];
             
         }
@@ -466,7 +467,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     NSDictionary *userInfo = notification.userInfo;
     JCCallCard *callCard = [userInfo objectForKey:kJCPhoneManagerNewCall];
     if (callCard) {
-        [callCard addObserver:self forKeyPath:kJCCallCardStatusChangeKey options:0 context:NULL];
+        [callCard.lineSession addObserver:self forKeyPath:kJCLineSessionStateKey options:0 context:NULL];
     }
     [self checkCallConnectedState];
     
@@ -498,7 +499,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     NSDictionary *userInfo = notification.userInfo;
     JCCallCard *callCard = [userInfo objectForKey:kJCPhoneManagerRemovedCall];
     if (callCard) {
-        [callCard removeObserver:self forKeyPath:kJCCallCardStatusChangeKey context:NULL];
+        [callCard.lineSession removeObserver:self forKeyPath:kJCLineSessionStateKey context:NULL];
     }
 }
 
