@@ -263,9 +263,11 @@
     }
     
     [JCPhoneManager disconnect];
+    
+    __block NSManagedObjectID *lineId = line.objectID;
     dispatch_queue_t backgroundQueue = dispatch_queue_create("register_services_to_line", 0);
     dispatch_async(backgroundQueue, ^{
-        Line *localLine = (Line *)[[NSManagedObjectContext MR_contextForCurrentThread] objectWithID:line.objectID];
+        Line *localLine = (Line *)[[NSManagedObjectContext MR_contextForCurrentThread] objectWithID:lineId];
         
         // Get Contacts. Once we have contacts, we subscribe to their presence, fetch voicemails trying
     	// to link contacts to thier voicemail if in the pbx. Only fetch voicmails, and open sockets for
@@ -371,6 +373,13 @@
     // dismissed or should transition to requesting that they select a line.
     JCAuthenticationManager *authenticationManager = notification.object;
     Line *line = authenticationManager.line;
+    if (!line) {
+        [UIApplication showSimpleAlert:@"Warning" message:@"Unable to select line. Please call Customer Care. You may not have a device associated with this account."];
+        return;
+    }
+    
+    
+    
     NSString *deviceToken = authenticationManager.deviceToken;
     
     if (!_navigationController){
