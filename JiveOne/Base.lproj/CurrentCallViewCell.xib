@@ -3,21 +3,22 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JCCallCardViewCell"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CurrentCallCardCell" id="Sdb-VX-oTp" userLabel="CurrentCallCardCell" customClass="JCCurrentCallCardViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="300" height="170"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" reuseIdentifier="CurrentCallCardCell" id="Sdb-VX-oTp" userLabel="CurrentCallCardCell" customClass="JCCurrentCallCardViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="300" height="270"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="300" height="170"/>
+                <rect key="frame" x="0.0" y="0.0" width="300" height="270"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="QCr-7s-whc" userLabel="Call Card View">
-                        <rect key="frame" x="0.0" y="0.0" width="300" height="120"/>
+                    <view clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="QCr-7s-whc" userLabel="Call Card View">
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="220"/>
                         <subviews>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rkJ-cf-ec6" userLabel="Hold Bar">
+                            <view autoresizesSubviews="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rkJ-cf-ec6" userLabel="Hold Bar">
                                 <rect key="frame" x="0.0" y="0.0" width="300" height="28"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="transfer-onhold-mini-blackish" translatesAutoresizingMaskIntoConstraints="NO" id="axI-Sc-RBD">
@@ -58,7 +59,7 @@
                                     <constraint firstItem="axI-Sc-RBD" firstAttribute="top" secondItem="rkJ-cf-ec6" secondAttribute="top" constant="10" id="mhH-Xb-R2t"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Zm-YG-q5c" userLabel="Info Bar">
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Zm-YG-q5c" userLabel="Info Bar">
                                 <rect key="frame" x="0.0" y="27" width="300" height="72"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Katerina Illiov" lineBreakMode="tailTruncation" baselineAdjustment="none" minimumFontSize="18" highlighted="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H4z-0p-bTI">
@@ -112,8 +113,14 @@
                             <constraint firstItem="rkJ-cf-ec6" firstAttribute="leading" secondItem="QCr-7s-whc" secondAttribute="leading" id="UDR-eN-OWr"/>
                         </constraints>
                     </view>
+                    <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" image="white-person" translatesAutoresizingMaskIntoConstraints="NO" id="uAN-u9-Z7P">
+                        <rect key="frame" x="69" y="50" width="162" height="195"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="uAN-u9-Z7P" secondAttribute="height" multiplier="76:91" id="eIJ-x1-Uvf"/>
+                        </constraints>
+                    </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yUi-Hn-q9R" userLabel="Action Bar">
-                        <rect key="frame" x="0.0" y="120" width="300" height="50"/>
+                        <rect key="frame" x="0.0" y="220" width="300" height="50"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dim-MR-5Mi" userLabel="Hold">
                                 <rect key="frame" x="150" y="0.0" width="150" height="50"/>
@@ -125,7 +132,7 @@
                                     <action selector="toggleHold:" destination="Sdb-VX-oTp" eventType="touchUpInside" id="Flk-Db-6vh"/>
                                 </connections>
                             </button>
-                            <button autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fMI-EZ-LsX" userLabel="HangUp">
+                            <button autoresizesSubviews="NO" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fMI-EZ-LsX" userLabel="HangUp">
                                 <rect key="frame" x="0.0" y="0.0" width="150" height="50"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" none="YES" button="YES" image="YES"/>
@@ -155,6 +162,7 @@
                             <constraint firstAttribute="bottom" secondItem="fMI-EZ-LsX" secondAttribute="bottom" id="OLL-Lt-UHt"/>
                             <constraint firstAttribute="trailing" secondItem="dim-MR-5Mi" secondAttribute="trailing" id="fAs-rb-i2g"/>
                             <constraint firstItem="dim-MR-5Mi" firstAttribute="top" secondItem="yUi-Hn-q9R" secondAttribute="top" id="gWg-RB-Tfc"/>
+                            <constraint firstItem="fMI-EZ-LsX" firstAttribute="width" secondItem="dim-MR-5Mi" secondAttribute="width" id="mDj-25-fPa"/>
                             <constraint firstItem="fMI-EZ-LsX" firstAttribute="leading" secondItem="yUi-Hn-q9R" secondAttribute="leading" id="pz7-Af-bx7"/>
                             <constraint firstItem="dim-MR-5Mi" firstAttribute="leading" secondItem="fMI-EZ-LsX" secondAttribute="trailing" id="qIw-ol-pLx"/>
                         </constraints>
@@ -164,15 +172,18 @@
             </view>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="yUi-Hn-q9R" firstAttribute="bottom" secondItem="Sdb-VX-oTp" secondAttribute="bottom" id="2m8-Ya-HDg"/>
                 <constraint firstAttribute="trailing" secondItem="yUi-Hn-q9R" secondAttribute="trailing" id="2uS-DD-a5n"/>
-                <constraint firstItem="yUi-Hn-q9R" firstAttribute="bottom" secondItem="QCr-7s-whc" secondAttribute="bottom" constant="50" id="Qet-S8-h8L"/>
+                <constraint firstAttribute="bottom" secondItem="QCr-7s-whc" secondAttribute="bottom" constant="50" id="6vv-hH-jM5"/>
                 <constraint firstItem="yUi-Hn-q9R" firstAttribute="leading" secondItem="Sdb-VX-oTp" secondAttribute="leading" id="YiS-lT-s4F"/>
+                <constraint firstItem="uAN-u9-Z7P" firstAttribute="top" secondItem="Sdb-VX-oTp" secondAttribute="top" constant="50" id="b38-wP-cSd"/>
+                <constraint firstAttribute="bottom" secondItem="uAN-u9-Z7P" secondAttribute="bottom" constant="25" id="bQq-Kz-okt"/>
                 <constraint firstItem="QCr-7s-whc" firstAttribute="top" secondItem="Sdb-VX-oTp" secondAttribute="top" id="dbk-zW-vD4"/>
                 <constraint firstAttribute="trailing" secondItem="QCr-7s-whc" secondAttribute="trailing" id="hdr-hu-TCw"/>
                 <constraint firstItem="QCr-7s-whc" firstAttribute="leading" secondItem="Sdb-VX-oTp" secondAttribute="leading" id="iya-mG-NTo"/>
+                <constraint firstAttribute="bottom" secondItem="yUi-Hn-q9R" secondAttribute="bottom" id="lv6-WQ-xT0"/>
+                <constraint firstAttribute="centerX" secondItem="uAN-u9-Z7P" secondAttribute="centerX" id="oWQ-TY-jD5"/>
             </constraints>
-            <size key="customSize" width="300" height="170"/>
+            <size key="customSize" width="300" height="396"/>
             <connections>
                 <outlet property="actionView" destination="yUi-Hn-q9R" id="7mo-Bp-q50"/>
                 <outlet property="callerIdLabel" destination="H4z-0p-bTI" id="cVv-c3-SfY"/>
@@ -197,6 +208,7 @@
         <image name="grayed-phone" width="37" height="12"/>
         <image name="red-phone" width="37" height="30"/>
         <image name="transfer-onhold-mini-blackish" width="11" height="12"/>
+        <image name="white-person" width="184" height="221"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

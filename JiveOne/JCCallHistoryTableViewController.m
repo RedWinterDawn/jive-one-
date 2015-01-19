@@ -31,6 +31,13 @@
     [self.managedObjectContext MR_saveOnlySelfAndWait];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+
+}
+
 #pragma mark - Setters - 
 
 -(void)setFetchRequest:(NSFetchRequest *)fetchRequest

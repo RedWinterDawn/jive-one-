@@ -18,7 +18,7 @@
     CGFloat _defaultSwapPosition;
     CGFloat _defaultMergePosition;
     CGFloat _defaultFinishPosition;
-    
+        
     bool _showingSingle;
     bool _showingMultiple;
     bool _showingConference;
@@ -36,28 +36,36 @@
     {
         _annimationDuration = DIAL_OPTIONS_ANIMATION_DURATION;
         _showingSingle = true;
+        
     }
     return self;
 }
 
 -(void)awakeFromNib
 {
+    
     _defaultTransferPosition        = _transferBtnHorizontalContstraint.constant;
     _defaultWarmTransferPosition    = _warmBtnVerticalConstraint.constant;
     _defaultAddCallPosition         = _addCallBtnHorizontalContstraint.constant;
     _defaultSwapPosition            = _swapBtnHorizontalContstraint.constant;
     _defaultMergePosition           = _mergeBtnHorizontalContstraint.constant;
     _defaultFinishPosition          = _finishTransferConstraint.constant;
+    
 }
 
 -(void)layoutSubviews
 {
     [super layoutSubviews];
+
+}
+-(void)viewDidLoad
+{
+
 }
 
 -(void)setState:(JCCallOptionViewState)state
 {
-    [self setState:state animated:NO];
+    [self setState:state animated:YES];
 }
 
 -(void)setState:(JCCallOptionViewState)state animated:(bool)animated
@@ -82,9 +90,10 @@
             [self showFinishTransfer:animated];
             break;
             
-        default:
-            [self showSingle:animated];
+         default:
+           [self showSingle:animated];
             break;
+            
     }
 }
 
@@ -101,7 +110,7 @@
         [self hideConference:animated completion:^(BOOL finished) {
             [self showSingle:animated completion:NULL];
         }];
-    
+
     else if (_showingFinish)
         [self hideFinishTransfer:animated completion:^(BOOL finished) {
             [self showSingle:animated completion:NULL];
@@ -126,7 +135,7 @@
     _transferBtnHorizontalContstraint.constant = - (5 * _defaultTransferPosition);
     _warmBtnVerticalConstraint.constant = - (5 * _defaultWarmTransferPosition);
     _addCallBtnHorizontalContstraint.constant = - (5 * _defaultAddCallPosition);
-    
+       
     [self animate:animated completion:^(BOOL finished) {
         _showingSingle = false;
         if (completion != NULL && finished)
@@ -213,8 +222,6 @@
     }];
 }
 
-
-
 -(void)hideConference:(bool)animated completion:(void (^)(BOOL finished))completion
 {
     _mergeBtnHorizontalContstraint.constant = _defaultMergePosition;
@@ -240,7 +247,7 @@
         [self hideMultiple:animated completion:^(BOOL finished) {
             [self showFinishTransfer:animated completion:NULL];
         }];
-    
+       
     else if (_showingConference)
         [self hideConference:animated completion:^(BOOL finished) {
             [self showFinishTransfer:animated completion:NULL];

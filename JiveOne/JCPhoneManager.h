@@ -31,6 +31,7 @@ extern NSString *const kJCPhoneManagerIncomingCall;
 
 extern NSString *const kJCPhoneManagerNewCall;
 extern NSString *const kJCPhoneManagerTransferedCall;
+extern NSString *const kJCPhoneManagerRemovedCall;
 
 typedef void(^CallCompletionHandler)(BOOL success, NSError *error, NSDictionary *callInfo);
 

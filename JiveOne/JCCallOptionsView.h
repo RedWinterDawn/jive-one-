@@ -20,6 +20,8 @@ typedef enum : NSUInteger {
 @property (nonatomic) JCCallOptionViewState state;
 @property (nonatomic) CGFloat annimationDuration;
 
+
+
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *transferBtnHorizontalContstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *warmBtnVerticalConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *addCallBtnHorizontalContstraint;

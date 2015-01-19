@@ -48,6 +48,7 @@ NSString *const kJCPhoneManagerNewCall           = @"newCall";
 NSString *const kJCPhoneManagerActiveCall        = @"activeCall";
 NSString *const kJCPhoneManagerIncomingCall      = @"incomingCall";
 NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
+NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
 
 @interface JCPhoneManager ()<SipHandlerDelegate, JCCallCardDelegate>
 {
@@ -559,7 +560,8 @@ NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
                                                       userInfo:@{
                                                                  kJCPhoneManagerUpdatedIndex:[NSNumber numberWithInteger:index],
                                                                  kJCPhoneManagerPriorUpdateCount:[NSNumber numberWithInteger:priorCount],
-                                                                 kJCPhoneManagerUpdateCount:[NSNumber numberWithInteger:self.calls.count]
+                                                                 kJCPhoneManagerUpdateCount:[NSNumber numberWithInteger:self.calls.count],
+                                                                 kJCPhoneManagerRemovedCall: callCard
                                                                  }];
     
     if (_reconnectWhenCallFinishes && self.calls.count == 0) {
