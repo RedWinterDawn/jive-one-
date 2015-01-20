@@ -209,6 +209,30 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
     }
 }
 
+#pragma mark SipHandlerDelegate
+
+-(void)sipHandlerDidRegister:(SipHandler *)sipHandler
+{
+    NSLog(@"Phone Manager Sip Handler did register");
+    self.connecting = FALSE;
+    self.connected = sipHandler.registered;
+    [self notifyCompletionBlock:YES error:nil];
+}
+
+-(void)sipHandlerDidUnregister:(SipHandler *)sipHandler
+{
+    NSLog(@"Phone Manager Sip Handler did unregister");
+    self.connecting = FALSE;
+    self.connected = sipHandler.registered;
+}
+
+-(void)sipHandler:(SipHandler *)sipHandler didFailToRegisterWithError:(NSError *)error
+{
+    self.connecting = FALSE;
+    self.connected = sipHandler.registered;
+    [self reportError:error];
+}
+
 #pragma mark - Dialing -
 
 /**
@@ -250,36 +274,6 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
                      completion(false, nil, nil);
                  }
              }];
-}
-
--(void)dial:(NSString *)dialNumber type:(JCPhoneManagerDialType)dialType completion:(CallCompletionHandler)completion
-{
-    if (dialType == JCPhoneManagerBlindTransfer) {
-        [_sipHandler blindTransferToNumber:dialNumber completion:^(BOOL success, NSError *error) {
-            if (success) {
-                [self hangUpAll];
-            }
-            
-            if (completion != NULL)
-                completion(success, nil, @{});
-            
-            if (error)
-                NSLog(@"%@", [error description]);
-        }];
-        return;
-    } else if (dialType == JCPhoneManagerWarmTransfer) {
-        _warmTransferNumber = dialNumber;
-    }
-    
-    _callCompletionHandler = completion;
-    __autoreleasing NSError *error;
-    BOOL success = [_sipHandler makeCall:dialNumber videoCall:NO error:&error];
-    if (completion) {
-        if (!success) {
-            completion(false, error, nil);
-            _callCompletionHandler = nil;
-        }
-    }
 }
 
 -(BOOL)isEmergencyNumber:(NSString *)dialString
@@ -330,269 +324,39 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", emergencyNumber]]];
 }
 
+-(void)dial:(NSString *)dialNumber type:(JCPhoneManagerDialType)dialType completion:(CallCompletionHandler)completion
+{
+    if (dialType == JCPhoneManagerBlindTransfer) {
+        [_sipHandler blindTransferToNumber:dialNumber completion:^(BOOL success, NSError *error) {
+            if (success) {
+                __autoreleasing NSError *hangupError;
+                [_sipHandler hangUpAllSessions:&hangupError];
+            }
+            
+            if (completion != NULL)
+                completion(success, nil, @{});
+            
+            if (error)
+                NSLog(@"%@", [error description]);
+        }];
+        return;
+    } else if (dialType == JCPhoneManagerWarmTransfer) {
+        _warmTransferNumber = dialNumber;
+    }
+    
+    _callCompletionHandler = completion;
+    __autoreleasing NSError *error;
+    BOOL success = [_sipHandler makeCall:dialNumber videoCall:NO error:&error];
+    if (completion) {
+        if (!success) {
+            completion(false, error, nil);
+            _callCompletionHandler = nil;
+        }
+    }
+}
+
 #pragma mark - Phone Actions -
 
--(void)finishWarmTransfer:(CompletionHandler)completion
-{
-    if (_warmTransferNumber) {
-        [_sipHandler warmTransferToNumber:_warmTransferNumber completion:^(BOOL success, NSError *error) {
-            _warmTransferNumber = nil;
-            if (completion) {
-                completion(success, error);
-            }
-        }];
-    }
-}
-
--(void)mergeCalls:(CompletionHandler)completion
-{
-    // If we are already in a conference call, we do not try to start new one on top of it (it kinda
-    // crashes when you do something as crazy as that, i wonder why?).
-    if (self.isConferenceCall) {
-        if (completion) {
-            completion(NO, [JCPhoneManagerError errorWithCode:JC_PHONE_CONFERENCE_CALL_ALREADY_EXISTS]);
-        }
-        return;
-    }
-    
-    // Create the conference call.
-    __autoreleasing NSError *error;
-    BOOL success = [_sipHandler createConference:&error];
-    if (completion) {
-        if (success) {
-            completion(YES, nil);
-        } else {
-            completion(NO, [JCPhoneManagerError errorWithCode:JC_PHONE_FAILED_TO_CREATE_CONFERENCE_CALL underlyingError:error]);
-        }
-    }
-}
-
--(void)splitCalls:(CompletionHandler)completion
-{
-    if (!self.isConferenceCall) {
-        if (completion) {
-            completion(NO, [JCPhoneManagerError errorWithCode:JC_PHONE_NO_CONFERENCE_CALL_TO_END]);
-        }
-        return;
-    }
-    
-    // End Conference Call
-    __autoreleasing NSError *error;
-    BOOL success = [_sipHandler endConference:&error];
-    if (completion) {
-        if(success) {
-            completion(YES, nil);
-        }
-        else {
-            completion(NO, [JCPhoneManagerError errorWithCode:JC_PHONE_FAILED_ENDING_CONFERENCE_CALL underlyingError:error]);
-        }
-    }
-}
-
--(void)swapCalls:(CompletionHandler)completion
-{
-    JCCallCard *inactiveCall = [self findInactiveCallCard];
-    [self unholdCall:inactiveCall completion:completion];
-}
-
--(void)muteCall:(BOOL)mute
-{
-    [_sipHandler muteCall:mute];
-}
-
--(void)setLoudSpeakerEnabled:(BOOL)loudSpeakerEnabled
-{
-    [_sipHandler setLoudSpeakerEnabled:loudSpeakerEnabled];
-}
-
--(void)numberPadPressedWithInteger:(NSInteger)numberPadNumber
-{
-    [_sipHandler pressNumpadButton:numberPadNumber];
-}
-
-#pragma mark - Getters -
-
--(NSMutableArray *)calls
-{
-	if (!_calls)
-		_calls = [NSMutableArray array];
-	return _calls;
-}
-
--(Line *)line
-{
-    if (_sipHandler) {
-        return _sipHandler.line;
-    }
-    return nil;
-}
-
--(BOOL)isActiveCall
-{
-    return (self.calls.count > 0);
-}
-
--(BOOL)isConferenceCall
-{
-    return _sipHandler.isConferenceCall;
-}
-
-#pragma mark - General Private Methods -
-
--(JCCallCard *)findInactiveCallCard
-{
-    for (JCCallCard *callCard in self.calls) {
-        if (callCard.lineSession.isHolding == TRUE) {
-            return callCard;
-        }
-    }
-    return nil;
-}
-
--(JCCallCard *)callCardForLineSession:(JCLineSession *)lineSession
-{
-    for (JCCallCard *callCard in self.calls) {
-        if (callCard.lineSession.sessionId == lineSession.sessionId){
-            return callCard;
-        }
-    }
-    return nil;
-}
-
--(JCPhoneManagerOutputType)outputTypeFromString:(NSString *)type
-{
-    if ([type isEqualToString:AVAudioSessionPortLineOut]) {
-        return JCPhoneManagerOutputLineOut;
-        
-    } else if ([type isEqualToString:AVAudioSessionPortHeadphones]) {
-        return JCPhoneManagerOutputHeadphones;
-        
-    } else if ([type isEqualToString:AVAudioSessionPortHeadphones]) {
-        return JCPhoneManagerOutputHeadphones;
-        
-    } else if ([type isEqualToString:AVAudioSessionPortBluetoothA2DP] ||
-               [type isEqualToString:AVAudioSessionPortBluetoothLE]) {
-        return JCPhoneManagerOutputBluetooth;
-        
-    } else if ([type isEqualToString:AVAudioSessionPortBuiltInReceiver]) {
-        return JCPhoneManagerOutputReceiver;
-        
-    } else if ([type isEqualToString:AVAudioSessionPortBuiltInSpeaker]) {
-        return JCPhoneManagerOutputSpeaker;
-        
-    } else if ([type isEqualToString:AVAudioSessionPortHDMI]) {
-        return JCPhoneManagerOutputHDMI;
-        
-    } else if ([type isEqualToString:AVAudioSessionPortAirPlay]) {
-        return JCPhoneManagerOutputAirPlay;
-    } else {
-        return JCPhoneManagerOutputUnknown;
-    }
-}
-
-#pragma mark Call Card Management
-
--(void)addCall:(JCCallCard *)callCard
-{
-    if ([self.calls containsObject:callCard])
-        return;
-    
-    NSUInteger priorCount = self.calls.count;
-    [self.calls addObject:callCard];
-    
-    // Sort the array and fetch the resulting new index of the call card.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:NSStringFromSelector(@selector(started)) ascending:NO];
-    [self.calls sortUsingDescriptors:@[sortDescriptor]];
-    
-    NSUInteger newIndex = [self.calls indexOfObject:callCard];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCPhoneManagerAddedCallNotification
-                                                        object:self
-                                                      userInfo:@{
-                                                                 kJCPhoneManagerUpdatedIndex:[NSNumber numberWithInteger:newIndex],
-                                                                 kJCPhoneManagerPriorUpdateCount:[NSNumber numberWithInteger:priorCount],
-                                                                 kJCPhoneManagerUpdateCount: [NSNumber numberWithInteger:self.calls.count],
-                                                                 kJCPhoneManagerIncomingCall: [NSNumber numberWithBool:callCard.lineSession.isIncomming]
-                                                                 }];
-}
-
--(void)removeCall:(JCCallCard *)callCard
-{
-    if (![self.calls containsObject:callCard])
-        return;
-    
-    NSUInteger index = [self.calls indexOfObject:callCard];
-    NSUInteger priorCount = self.calls.count;
-    [self.calls removeObject:callCard];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCPhoneManagerRemoveCallNotification
-                                                        object:self
-                                                      userInfo:@{
-                                                                 kJCPhoneManagerUpdatedIndex:[NSNumber numberWithInteger:index],
-                                                                 kJCPhoneManagerPriorUpdateCount:[NSNumber numberWithInteger:priorCount],
-                                                                 kJCPhoneManagerUpdateCount:[NSNumber numberWithInteger:self.calls.count],
-                                                                 kJCPhoneManagerRemovedCall: callCard
-                                                                 }];
-    
-    if (_reconnectWhenCallFinishes && self.calls.count == 0) {
-        _reconnectWhenCallFinishes = false;
-        [self connectToLine:self.line completion:self.completion];
-    }
-    
-    // If when removing the call we are backgrounded, we tell the sip handler to operate in background mode.
-    UIApplicationState state = [[UIApplication sharedApplication] applicationState];
-    if ((state == UIApplicationStateBackground || state == UIApplicationStateInactive) && self.calls.count == 0) {
-        [_sipHandler startKeepAwake];
-    }
-}
-
--(void)hangUpAll
-{
-    for (JCCallCard *call in self.calls) {
-        if (call.lineSession.isActive) {
-            [self hangUpCall:call completion:NULL];
-        }
-    }
-}
-
-#pragma mark - Notification Selectors -
-
-#pragma mark UIApplication
-
--(void)applicationDidBecomeActive:(NSNotification *)notification
-{
-    NSLog(@"application did become active");
-    if (self.externalCallDisconnected)
-    {
-        NSLog(@"deregistering did become active, and processing call");
-        
-        if (self.externalCallCompletionHandler != NULL) {
-            self.externalCallCompletionHandler(self.externalCallConnected);
-        }
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
-    }
-}
-
-#pragma mark AVAudioSession
-
--(void)audioSessionRouteChangeSelector:(NSNotification *)notification
-{
-    if (![NSThread isMainThread]) {
-        [self performSelectorOnMainThread:@selector(audioSessionRouteChangeSelector:) withObject:notification waitUntilDone:NO];
-        return;
-    }
-    
-    AVAudioSession *audioSession = notification.object;
-    NSArray *outputs = audioSession.currentRoute.outputs;
-    AVAudioSessionPortDescription *port = [outputs lastObject];
-    self.outputType = [self outputTypeFromString:port.portType];
-}
-
-#pragma mark - Delegate Handlers -
-
-#pragma mark JCCallCardDelegate
-
-/**
- * Answer the call by notifying the sip handler to answer the passed call.
- */
 -(void)answerCall:(JCCallCard *)callCard completion:(CompletionHandler)completion
 {
     __autoreleasing NSError *error;
@@ -664,29 +428,85 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
     }
 }
 
-#pragma mark SipHanglerDelegate
-
--(void)sipHandlerDidRegister:(SipHandler *)sipHandler
+-(void)mergeCalls:(CompletionHandler)completion
 {
-    NSLog(@"Phone Manager Sip Handler did register");
-    self.connecting = FALSE;
-    self.connected = sipHandler.registered;
-    [self notifyCompletionBlock:YES error:nil];
+    // If we are already in a conference call, we do not try to start new one on top of it (it kinda
+    // crashes when you do something as crazy as that, i wonder why?).
+    if (self.isConferenceCall) {
+        if (completion) {
+            completion(NO, [JCPhoneManagerError errorWithCode:JC_PHONE_CONFERENCE_CALL_ALREADY_EXISTS]);
+        }
+        return;
+    }
+    
+    // Create the conference call.
+    __autoreleasing NSError *error;
+    BOOL success = [_sipHandler createConference:&error];
+    if (completion) {
+        if (success) {
+            completion(YES, nil);
+        } else {
+            completion(NO, [JCPhoneManagerError errorWithCode:JC_PHONE_FAILED_TO_CREATE_CONFERENCE_CALL underlyingError:error]);
+        }
+    }
 }
 
--(void)sipHandlerDidUnregister:(SipHandler *)sipHandler
+-(void)splitCalls:(CompletionHandler)completion
 {
-    NSLog(@"Phone Manager Sip Handler did unregister");
-    self.connecting = FALSE;
-    self.connected = sipHandler.registered;
+    if (!self.isConferenceCall) {
+        if (completion) {
+            completion(NO, [JCPhoneManagerError errorWithCode:JC_PHONE_NO_CONFERENCE_CALL_TO_END]);
+        }
+        return;
+    }
+    
+    // End Conference Call
+    __autoreleasing NSError *error;
+    BOOL success = [_sipHandler endConference:&error];
+    if (completion) {
+        if(success) {
+            completion(YES, nil);
+        }
+        else {
+            completion(NO, [JCPhoneManagerError errorWithCode:JC_PHONE_FAILED_ENDING_CONFERENCE_CALL underlyingError:error]);
+        }
+    }
 }
 
--(void)sipHandler:(SipHandler *)sipHandler didFailToRegisterWithError:(NSError *)error
+-(void)swapCalls:(CompletionHandler)completion
 {
-    self.connecting = FALSE;
-    self.connected = sipHandler.registered;
-    [self reportError:error];
+    JCCallCard *inactiveCall = [self findInactiveCallCard];
+    [self unholdCall:inactiveCall completion:completion];
 }
+
+-(void)muteCall:(BOOL)mute
+{
+    [_sipHandler muteCall:mute];
+}
+
+-(void)setLoudSpeakerEnabled:(BOOL)loudSpeakerEnabled
+{
+    [_sipHandler setLoudSpeakerEnabled:loudSpeakerEnabled];
+}
+
+-(void)numberPadPressedWithInteger:(NSInteger)numberPadNumber
+{
+    [_sipHandler pressNumpadButton:numberPadNumber];
+}
+
+-(void)finishWarmTransfer:(CompletionHandler)completion
+{
+    if (_warmTransferNumber) {
+        [_sipHandler warmTransferToNumber:_warmTransferNumber completion:^(BOOL success, NSError *error) {
+            _warmTransferNumber = nil;
+            if (completion) {
+                completion(success, error);
+            }
+        }];
+    }
+}
+
+#pragma mark SipHandlerDelegate
 
 -(void)sipHandler:(SipHandler *)sipHandler receivedIntercomLineSession:(JCLineSession *)session
 {
@@ -731,18 +551,37 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
     
     JCCallCard *callCard = [[JCCallCard alloc] initWithLineSession:session];
     callCard.delegate = self;
-    [self addCall:callCard];
+    
+    
+    if ([self.calls containsObject:callCard])
+        return;
+    
+    NSUInteger priorCount = self.calls.count;
+    [self.calls addObject:callCard];
+    
+    // Sort the array and fetch the resulting new index of the call card.
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:NSStringFromSelector(@selector(started)) ascending:NO];
+    [self.calls sortUsingDescriptors:@[sortDescriptor]];
+    
+    NSDictionary *userInfo = @{
+                               kJCPhoneManagerUpdatedIndex:[NSNumber numberWithInteger:[self.calls indexOfObject:callCard]],
+                               kJCPhoneManagerPriorUpdateCount:[NSNumber numberWithInteger:priorCount],
+                               kJCPhoneManagerUpdateCount: [NSNumber numberWithInteger:self.calls.count],
+                               kJCPhoneManagerIncomingCall: [NSNumber numberWithBool:session.isIncomming]
+                               };
+    
+    [self postNotificationNamed:kJCPhoneManagerAddedCallNotification userInfo:userInfo];
     
     NSInteger index = [self.calls indexOfObject:callCard];
     if (_callCompletionHandler) {
-//        if (_warmTransferNumber) {
-//            _callCompletionHandler(true, nil, @{kJCPhoneManagerTransferedCall: transferedCall,
-//                                                kJCPhoneManagerNewCall: callCard,
-//                                                kJCPhoneManagerUpdatedIndex: [NSNumber numberWithInteger:index]});
-//            
-//        } else {
-            _callCompletionHandler(true, nil, @{kJCPhoneManagerNewCall: callCard,
-                                                kJCPhoneManagerUpdatedIndex: [NSNumber numberWithInteger:index]});
+        //        if (_warmTransferNumber) {
+        //            _callCompletionHandler(true, nil, @{kJCPhoneManagerTransferedCall: transferedCall,
+        //                                                kJCPhoneManagerNewCall: callCard,
+        //                                                kJCPhoneManagerUpdatedIndex: [NSNumber numberWithInteger:index]});
+        //
+        //        } else {
+        _callCompletionHandler(true, nil, @{kJCPhoneManagerNewCall: callCard,
+                                            kJCPhoneManagerUpdatedIndex: [NSNumber numberWithInteger:index]});
     }
 }
 
@@ -750,7 +589,6 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
 {
     JCCallCard *callCard = [self callCardForLineSession:lineSession];
     callCard.started = [NSDate date];
-    [self unholdCall:callCard completion:NULL];
     NSDictionary *userInfo = @{kJCPhoneManagerUpdatedIndex:[NSNumber numberWithInteger:[self.calls indexOfObject:callCard]],
                                kJCPhoneManagerIncomingCall: [NSNumber numberWithBool:callCard.lineSession.isIncomming],
                                kJCPhoneManagerLastCallState:[NSNumber numberWithInt:callCard.lineSession.sessionState]};
@@ -765,7 +603,33 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
         return;
     }
     
-    [self removeCall:callCard];
+    NSMutableArray *calls = self.calls;
+    if (![calls containsObject:callCard])
+        return;
+    
+    NSUInteger index = [self.calls indexOfObject:callCard];
+    NSUInteger priorCount = self.calls.count;
+    [calls removeObject:callCard];
+    self.calls = calls;
+    
+    NSDictionary *userInfo = @{kJCPhoneManagerUpdatedIndex:[NSNumber numberWithInteger:index],
+                               kJCPhoneManagerPriorUpdateCount:[NSNumber numberWithInteger:priorCount],
+                               kJCPhoneManagerUpdateCount:[NSNumber numberWithInteger:calls.count],
+                               kJCPhoneManagerRemovedCall: callCard
+                               };
+    
+    [self postNotificationNamed:kJCPhoneManagerRemoveCallNotification userInfo:userInfo];
+    
+    if (_reconnectWhenCallFinishes && calls.count == 0) {
+        _reconnectWhenCallFinishes = false;
+        [self connectToLine:self.line completion:self.completion];
+    }
+    
+    // If when removing the call we are backgrounded, we tell the sip handler to operate in background mode.
+    UIApplicationState state = [[UIApplication sharedApplication] applicationState];
+    if ((state == UIApplicationStateBackground || state == UIApplicationStateInactive) && calls.count == 0) {
+        [_sipHandler startKeepAwake];
+    }
 }
 
 -(void)sipHandler:(SipHandler *)sipHandler didCreateConferenceCallWithLineSessions:(NSSet *)lineSessions
@@ -795,10 +659,122 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
     
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:NSStringFromSelector(@selector(started)) ascending:NO];
     [_calls sortUsingDescriptors:@[sortDescriptor]];
-
+    
     [self postNotificationNamed:kJCPhoneManagerRemoveConferenceCallNotification];
 }
 
+#pragma mark - Getters -
+
+-(NSMutableArray *)calls
+{
+	if (!_calls)
+		_calls = [NSMutableArray array];
+	return _calls;
+}
+
+-(Line *)line
+{
+    if (_sipHandler) {
+        return _sipHandler.line;
+    }
+    return nil;
+}
+
+-(BOOL)isActiveCall
+{
+    return (self.calls.count > 0);
+}
+
+-(BOOL)isConferenceCall
+{
+    return _sipHandler.isConferenceCall;
+}
+
+#pragma mark - General Private Methods -
+
+-(JCCallCard *)findInactiveCallCard
+{
+    for (JCCallCard *callCard in self.calls) {
+        if (callCard.lineSession.isHolding == TRUE) {
+            return callCard;
+        }
+    }
+    return nil;
+}
+
+-(JCCallCard *)callCardForLineSession:(JCLineSession *)lineSession
+{
+    for (JCCallCard *callCard in self.calls) {
+        if (callCard.lineSession.sessionId == lineSession.sessionId){
+            return callCard;
+        }
+    }
+    return nil;
+}
+
+#pragma mark - Notification Selectors -
+
+#pragma mark UIApplication
+
+-(void)applicationDidBecomeActive:(NSNotification *)notification
+{
+    NSLog(@"application did become active");
+    if (self.externalCallDisconnected)
+    {
+        NSLog(@"deregistering did become active, and processing call");
+        
+        if (self.externalCallCompletionHandler != NULL) {
+            self.externalCallCompletionHandler(self.externalCallConnected);
+        }
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+    }
+}
+
+#pragma mark AVAudioSession
+
+-(void)audioSessionRouteChangeSelector:(NSNotification *)notification
+{
+    if (![NSThread isMainThread]) {
+        [self performSelectorOnMainThread:@selector(audioSessionRouteChangeSelector:) withObject:notification waitUntilDone:NO];
+        return;
+    }
+    
+    AVAudioSession *audioSession = notification.object;
+    NSArray *outputs = audioSession.currentRoute.outputs;
+    AVAudioSessionPortDescription *port = [outputs lastObject];
+    self.outputType = [self outputTypeFromString:port.portType];
+}
+
+-(JCPhoneManagerOutputType)outputTypeFromString:(NSString *)type
+{
+    if ([type isEqualToString:AVAudioSessionPortLineOut]) {
+        return JCPhoneManagerOutputLineOut;
+        
+    } else if ([type isEqualToString:AVAudioSessionPortHeadphones]) {
+        return JCPhoneManagerOutputHeadphones;
+        
+    } else if ([type isEqualToString:AVAudioSessionPortHeadphones]) {
+        return JCPhoneManagerOutputHeadphones;
+        
+    } else if ([type isEqualToString:AVAudioSessionPortBluetoothA2DP] ||
+               [type isEqualToString:AVAudioSessionPortBluetoothLE]) {
+        return JCPhoneManagerOutputBluetooth;
+        
+    } else if ([type isEqualToString:AVAudioSessionPortBuiltInReceiver]) {
+        return JCPhoneManagerOutputReceiver;
+        
+    } else if ([type isEqualToString:AVAudioSessionPortBuiltInSpeaker]) {
+        return JCPhoneManagerOutputSpeaker;
+        
+    } else if ([type isEqualToString:AVAudioSessionPortHDMI]) {
+        return JCPhoneManagerOutputHDMI;
+        
+    } else if ([type isEqualToString:AVAudioSessionPortAirPlay]) {
+        return JCPhoneManagerOutputAirPlay;
+    } else {
+        return JCPhoneManagerOutputUnknown;
+    }
+}
 
 @end
 
@@ -831,6 +807,61 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
     }];
 }
 
++ (void)dialNumber:(NSString *)dialNumber type:(JCPhoneManagerDialType)dialType completion:(CallCompletionHandler)completion
+{
+    [[JCPhoneManager sharedManager] dialNumber:dialNumber type:dialType completion:^(BOOL success, NSError *error, NSDictionary *userInfo) {
+        if (error) {
+            NSLog(@"%@", [error description]);
+        }
+        completion(success, error, userInfo);
+    }];
+}
+
++ (void)mergeCalls:(CompletionHandler)completion
+{
+    [[JCPhoneManager sharedManager] mergeCalls:^(BOOL success, NSError *error) {
+        if (error) {
+            NSLog(@"%@", [error description]);
+        }
+        completion(success, error);
+    }];
+}
+
++ (void)splitCalls:(CompletionHandler)completion
+{
+    [[JCPhoneManager sharedManager] splitCalls:^(BOOL success, NSError *error) {
+        if (error) {
+            NSLog(@"%@", [error description]);
+        }
+        completion(success, error);
+    }];
+}
+
++ (void)swapCalls:(CompletionHandler)completion
+{
+    [[JCPhoneManager sharedManager] swapCalls:^(BOOL success, NSError *error) {
+        if (error) {
+            NSLog(@"%@", [error description]);
+        }
+        completion(success, error);
+    }];
+}
+
++ (void)muteCall:(BOOL)mute
+{
+    [[JCPhoneManager sharedManager] muteCall:mute];
+}
+
++ (void)finishWarmTransfer:(CompletionHandler)completion
+{
+    [[JCPhoneManager sharedManager] finishWarmTransfer:^(BOOL success, NSError *error) {
+        if (error) {
+            NSLog(@"%@", [error description]);
+        }
+        completion(success, error);
+    }];
+}
+
 + (void)disconnect
 {
     [[JCPhoneManager sharedManager] disconnect];
@@ -849,36 +880,6 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
 +(JCPhoneManagerNetworkType)networkType
 {
     return [JCPhoneManager sharedManager].networkType;
-}
-
-+ (void)dialNumber:(NSString *)dialNumber type:(JCPhoneManagerDialType)dialType completion:(CallCompletionHandler)completion
-{
-    [[JCPhoneManager sharedManager] dialNumber:dialNumber type:dialType completion:completion];
-}
-
-+ (void)mergeCalls:(CompletionHandler)completion
-{
-    [[JCPhoneManager sharedManager] mergeCalls:completion];
-}
-
-+ (void)splitCalls:(CompletionHandler)completion
-{
-    [[JCPhoneManager sharedManager] splitCalls:completion];
-}
-
-+ (void)swapCalls:(CompletionHandler)completion
-{
-    [[JCPhoneManager sharedManager] swapCalls:completion];
-}
-
-+ (void)muteCall:(BOOL)mute
-{
-    [[JCPhoneManager sharedManager] muteCall:mute];
-}
-
-+ (void)finishWarmTransfer:(CompletionHandler)completion
-{
-    [[JCPhoneManager sharedManager] finishWarmTransfer:completion];
 }
 
 + (void)numberPadPressedWithInteger:(NSInteger)numberPad

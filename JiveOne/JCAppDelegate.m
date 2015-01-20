@@ -378,10 +378,7 @@
         return;
     }
     
-    
-    
     NSString *deviceToken = authenticationManager.deviceToken;
-    
     if (!_navigationController){
         [self registerServicesToLine:line deviceToken:deviceToken];
         return;

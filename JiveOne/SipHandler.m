@@ -269,14 +269,14 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     JCLineSession *lineSession = [self findIdleLine];
     if (!lineSession) {
         *error = [JCSipHandlerError errorWithCode:JC_SIP_CALL_NO_IDLE_LINE];
-        return FALSE;
+        return NO;
     }
     
     // Try to to place all current calls that are active on hold.
     __autoreleasing NSError *holdError;
-    NSSet *activeLines = [self findAllActiveLinesNotHolding];
-    if (activeLines.count > 0) {
-        [self holdLineSessions:activeLines error:&holdError];
+    if (![self holdLines:&holdError]) {
+        *error = holdError;
+        return NO;
     }
     
     // Intitiate the call. If we fail, set error and return. Errors from this method are negative
@@ -309,6 +309,18 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         *error = [JCSipHandlerError errorWithCode:JC_SIP_LINE_SESSION_IS_EMPTY reason:@"Line Session in empty"];
         return NO;
     }
+    
+    // Try to to place all current calls that are active on hold.
+    __autoreleasing NSError *holdError;
+    if (![self holdLines:&holdError]) {
+        *error = holdError;
+        return NO;
+    }
+    
+    if (lineSession.active || !lineSession.isIncomming) {
+        return YES;
+    }
+    
     
     NSInteger errorCode = [_mPortSIPSDK answerCall:lineSession.sessionId videoCall:FALSE];
     if (errorCode) {
@@ -365,7 +377,10 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 - (BOOL)holdLines:(NSError *__autoreleasing *)error
 {
     NSSet *lineSessions = [self findAllActiveLinesNotHolding];
-    return [self holdLineSessions:lineSessions error:error];
+    if (lineSessions.count > 0) {
+        return [self holdLineSessions:lineSessions error:error];
+    }
+    return YES;
 }
 
 - (BOOL)holdLineSessions:(NSSet *)lineSessions error:(NSError *__autoreleasing *)error
@@ -575,8 +590,6 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     [_mPortSIPSDK muteMicrophone:mute];
 }
 
-
-
 -(void)setLoudSpeakerEnabled:(BOOL)loudSpeakerEnabled
 {
     [_mPortSIPSDK setLoudspeakerStatus:loudSpeakerEnabled];
@@ -703,7 +716,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return;
     }
     
-    NSLog(@"%@ Session Id: %ld", event, lineSession.sessionId);
+    NSLog(@"%@ Session Id: %ld", event, (long)lineSession.sessionId);
     switch (state)
     {
         case JCTransferSuccess:
