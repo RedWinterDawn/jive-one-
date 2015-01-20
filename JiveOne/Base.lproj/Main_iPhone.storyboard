@@ -3532,6 +3532,7 @@
                                     <outlet property="addCallBtnHorizontalContstraint" destination="qBX-wH-8Os" id="JRs-dk-8eS"/>
                                     <outlet property="finishTransferConstraint" destination="tFc-6A-DTX" id="Atv-Ja-o2T"/>
                                     <outlet property="mergeBtnHorizontalContstraint" destination="tzG-hY-Oeq" id="s7A-Mx-wnX"/>
+                                    <outlet property="mergeButtonState" destination="907-zj-hOp" id="9hL-Z8-hsZ"/>
                                     <outlet property="swapBtnHorizontalContstraint" destination="6zV-kp-m5a" id="5aj-vh-9ty"/>
                                     <outlet property="transferBtnHorizontalContstraint" destination="Qyv-ZB-7RT" id="eqU-y4-4nk"/>
                                     <outlet property="warmBtnVerticalConstraint" destination="08r-rh-XUX" id="CkM-Wg-Z8V"/>
@@ -3557,11 +3558,16 @@
                     <navigationItem key="navigationItem" id="Kwk-NC-fNH"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
+                        <outlet property="blindTransfer" destination="LZA-VZ-Dk3" id="Cdg-aU-hba"/>
                         <outlet property="callOptionsView" destination="T5I-ze-dYa" id="jCb-Vb-WgF"/>
                         <outlet property="callOptionsViewOriginYConstraint" destination="cyC-4X-o2P" id="5Kx-qn-JuN"/>
                         <outlet property="keypadButton" destination="5bp-16-Yhx" id="HRk-bY-ny3"/>
+                        <outlet property="mergeBtn" destination="907-zj-hOp" id="EiJ-V9-cfA"/>
+                        <outlet property="mergeCallButton" destination="907-zj-hOp" id="kbi-83-jgb"/>
                         <outlet property="mergeLabel" destination="C17-8W-dR3" id="59Y-ze-I53"/>
                         <outlet property="speakerBtn" destination="Bf6-vA-5bi" id="qC6-wV-dSM"/>
+                        <outlet property="swapBtn" destination="W4O-ei-fkQ" id="nGj-b3-QaI"/>
+                        <outlet property="warmTransfer" destination="8tp-NP-l8d" id="ekm-UW-4JU"/>
                         <segue destination="H5p-Pr-pGE" kind="modal" identifier="blindTransferComplete" animates="NO" id="5G9-TH-HLg"/>
                     </connections>
                 </viewController>
@@ -3651,7 +3657,7 @@
                                 <rect key="frame" x="10" y="20" width="300" height="318"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="center" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iPa-Xg-z62" userLabel="Backspace Button">
-                                        <rect key="frame" x="270" y="21" width="35" height="40"/>
+                                        <rect key="frame" x="260" y="21" width="35" height="40"/>
                                         <gestureRecognizers/>
                                         <state key="normal" image="delete-black">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -3663,10 +3669,10 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h71-A9-iRN" customClass="JCDialStringLabel">
-                                        <rect key="frame" x="30" y="21" width="240" height="40"/>
+                                        <rect key="frame" x="40" y="21" width="220" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="FZV-fz-iZk"/>
-                                            <constraint firstAttribute="width" constant="240" id="hRa-bV-XTc"/>
+                                            <constraint firstAttribute="width" constant="220" id="hRa-bV-XTc"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="30"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>

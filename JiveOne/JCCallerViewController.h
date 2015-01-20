@@ -26,6 +26,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *speakerBtn;
 @property (weak, nonatomic) IBOutlet UILabel *mergeLabel;
 @property (weak, nonatomic) IBOutlet UIButton *keypadButton;
+@property (weak, nonatomic) IBOutlet UIButton *blindTransfer;
+@property (weak, nonatomic) IBOutlet UIButton *swapBtn;
+@property (weak, nonatomic) IBOutlet UIButton *mergeBtn;
+@property (weak, nonatomic) IBOutlet UIButton *warmTransfer;
 
 @property (nonatomic) bool callOptionsHidden;
 @property (nonatomic) NSTimeInterval callOptionTransitionAnimationDuration;

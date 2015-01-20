@@ -84,6 +84,11 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     for (JCCallCard *callCard in calls) {
         [callCard.lineSession addObserver:self forKeyPath:kJCLineSessionStateKey options:0 context:NULL];
     }
+    self.warmTransfer.enabled = false;
+    self.blindTransfer.enabled = false;
+    self.mergeBtn.enabled = false;
+    self.swapBtn.enabled = false;
+    
     [self checkCallConnectedState];
     
     NSString *dialString = self.dialString;
@@ -157,11 +162,20 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         }
         else if (callCard.lineSession.mConferenceState)
         {
+            if (callCard.lineSession.isUpdatable) {
+                self.mergeBtn.enabled = true;
+            }
             [self.callOptionsView setState:JCCallOptionViewConferenceCallState ];
         }
         else if (callCard.lineSession.sessionState == JCCallAnswered || callCard.lineSession.sessionState == JCCallConnected)
         {
             NSLog(@"show options %i", callCard.lineSession.sessionState);
+            if (callCard.lineSession.isUpdatable)
+            {
+            self.warmTransfer.enabled = true;
+            self.blindTransfer.enabled = true;
+            }
+            
             [self.callOptionsView setState:JCCallOptionViewSingleCallState animated:YES];
             [self showAllCallOptionsAnimated:YES];
 
