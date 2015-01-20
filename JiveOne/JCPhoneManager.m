@@ -536,52 +536,44 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
     }];
 }
 
--(void)sipHandler:(SipHandler *)sipHandler didAddLineSession:(JCLineSession *)session
+-(void)sipHandler:(SipHandler *)sipHandler didAddLineSession:(JCLineSession *)lineSession
 {
     // If we are backgrounded, push out a local notification
     if ([UIApplication sharedApplication].applicationState ==  UIApplicationStateBackground) {
         UILocalNotification *localNotif = [[UILocalNotification alloc] init];
         if (localNotif){
-            localNotif.alertBody =[NSString  stringWithFormat:@"Call from <%@>%@", session.callTitle, session.callDetail];
+            localNotif.alertBody =[NSString  stringWithFormat:@"Call from <%@>%@", lineSession.callTitle, lineSession.callDetail];
             localNotif.soundName = UILocalNotificationDefaultSoundName;
             localNotif.applicationIconBadgeNumber = 1;
             [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
         }
     }
     
-    JCCallCard *callCard = [[JCCallCard alloc] initWithLineSession:session];
+    // Create and add the call card to the calls array
+    JCCallCard *callCard = [[JCCallCard alloc] initWithLineSession:lineSession];
     callCard.delegate = self;
-    
-    
-    if ([self.calls containsObject:callCard])
-        return;
-    
-    NSUInteger priorCount = self.calls.count;
-    [self.calls addObject:callCard];
+    NSMutableArray *calls = self.calls;
+    NSUInteger priorCount = calls.count;
+    [calls addObject:callCard];
     
     // Sort the array and fetch the resulting new index of the call card.
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:NSStringFromSelector(@selector(started)) ascending:NO];
-    [self.calls sortUsingDescriptors:@[sortDescriptor]];
+    [calls sortUsingDescriptors:@[sortDescriptor]];
+    NSInteger index = [calls indexOfObject:callCard];
     
     NSDictionary *userInfo = @{
-                               kJCPhoneManagerUpdatedIndex:[NSNumber numberWithInteger:[self.calls indexOfObject:callCard]],
+                               kJCPhoneManagerUpdatedIndex:[NSNumber numberWithInteger:index],
                                kJCPhoneManagerPriorUpdateCount:[NSNumber numberWithInteger:priorCount],
-                               kJCPhoneManagerUpdateCount: [NSNumber numberWithInteger:self.calls.count],
-                               kJCPhoneManagerIncomingCall: [NSNumber numberWithBool:session.isIncoming]
+                               kJCPhoneManagerUpdateCount: [NSNumber numberWithInteger:calls.count],
+                               kJCPhoneManagerIncomingCall: [NSNumber numberWithBool:lineSession.isIncoming],
+                               kJCPhoneManagerNewCall:callCard
                                };
+    self.calls = calls;
     
     [self postNotificationNamed:kJCPhoneManagerAddedCallNotification userInfo:userInfo];
-    
-    NSInteger index = [self.calls indexOfObject:callCard];
     if (_callCompletionHandler) {
-        //        if (_warmTransferNumber) {
-        //            _callCompletionHandler(true, nil, @{kJCPhoneManagerTransferedCall: transferedCall,
-        //                                                kJCPhoneManagerNewCall: callCard,
-        //                                                kJCPhoneManagerUpdatedIndex: [NSNumber numberWithInteger:index]});
-        //
-        //        } else {
-        _callCompletionHandler(true, nil, @{kJCPhoneManagerNewCall: callCard,
-                                            kJCPhoneManagerUpdatedIndex: [NSNumber numberWithInteger:index]});
+        _callCompletionHandler(true, nil, userInfo);
+        _callCompletionHandler = nil;
     }
 }
 
