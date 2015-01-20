@@ -155,7 +155,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
             [self.callOptionsView setState:JCCallOptionViewSingleCallState animated:YES];
             [self hideCallOptionsAnimated:YES];
         }
-        else if (callCard.lineSession.mConferenceState)
+        else if (callCard.lineSession.isConference)
         {
             [self.callOptionsView setState:JCCallOptionViewConferenceCallState ];
         }

@@ -58,7 +58,7 @@ NSString *const kJCLineSessionHoldKey = @"hold";
     
     _sessionId              = INVALID_SESSION_ID;
     _mOriginCallSessionId   = INVALID_SESSION_ID;
-    _mConferenceState       = false;
+    _conference       = false;
     _mIsReferCall           = false;
     _mExistEarlyMedia       = false;
     _video                  = false;

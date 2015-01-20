@@ -51,10 +51,10 @@ typedef enum {
 @property (nonatomic, getter=isHolding) BOOL hold;
 @property (nonatomic, getter=isUpdatable) BOOL updatable;
 @property (nonatomic, getter=isIncomming) BOOL incomming;
+@property (nonatomic, getter=isConference) BOOL conference;
 @property (nonatomic, getter=isVideo) BOOL video;
 @property (nonatomic, getter=isAudio) BOOL audio;
 
-@property (nonatomic) bool mConferenceState;
 @property (nonatomic, getter=isReferCall) bool mIsReferCall;
 @property (nonatomic) bool mExistEarlyMedia;
 

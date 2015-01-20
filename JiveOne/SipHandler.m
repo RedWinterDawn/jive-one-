@@ -473,6 +473,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error Joining line session to conference"];
             break;
         }
+        
+        lineSession.conference = TRUE;
     }
     
     if (!errorCode) {
@@ -508,6 +510,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
                 return false;
             }
         }
+        lineSession.conference = FALSE;
     }
     
     [_mPortSIPSDK destroyConference];
