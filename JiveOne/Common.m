@@ -38,7 +38,7 @@ static inline double radians (double degrees) { return degrees * M_PI/180; }
     
     int days = (int)[self differenceInDaysToDate:date];
     if (days == 0){
-        [shortDateFormatter setDateFormat:@"HH:mm a"];
+        [shortDateFormatter setDateFormat:@"h:mm a"];
         NSString* hour = [shortDateFormatter stringFromDate:date];
         return hour;
     } else if (days == -1){
