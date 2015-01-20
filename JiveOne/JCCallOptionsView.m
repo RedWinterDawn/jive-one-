@@ -56,7 +56,6 @@
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-
 }
 -(void)viewDidLoad
 {

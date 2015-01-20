@@ -21,7 +21,7 @@ typedef enum : NSUInteger {
 @property (nonatomic) CGFloat annimationDuration;
 
 
-
+@property (nonatomic, weak) IBOutlet UIButton *mergeButtonState;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *transferBtnHorizontalContstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *warmBtnVerticalConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *addCallBtnHorizontalContstraint;
