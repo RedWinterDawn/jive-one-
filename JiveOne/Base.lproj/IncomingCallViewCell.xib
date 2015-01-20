@@ -15,6 +15,13 @@
                 <rect key="frame" x="0.0" y="0.0" width="300" height="417"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="white-person" translatesAutoresizingMaskIntoConstraints="NO" id="PqB-we-9MP">
+                        <rect key="frame" x="40" y="77" width="220" height="263"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="dzM-4K-C3g"/>
+                            <constraint firstAttribute="width" secondItem="PqB-we-9MP" secondAttribute="height" multiplier="220:263" id="fka-HT-ZJZ"/>
+                        </constraints>
+                    </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wpr-n7-w9W" userLabel="CallInfo">
                         <rect key="frame" x="0.0" y="0.0" width="300" height="86"/>
                         <subviews>
@@ -99,13 +106,6 @@
                             <constraint firstItem="NP4-wW-qRx" firstAttribute="leading" secondItem="6AT-cr-W7i" secondAttribute="trailing" id="z5a-er-lqz"/>
                         </constraints>
                     </view>
-                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="white-person" translatesAutoresizingMaskIntoConstraints="NO" id="PqB-we-9MP">
-                        <rect key="frame" x="40" y="77" width="220" height="263"/>
-                        <constraints>
-                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="dzM-4K-C3g"/>
-                            <constraint firstAttribute="width" secondItem="PqB-we-9MP" secondAttribute="height" multiplier="220:263" id="fka-HT-ZJZ"/>
-                        </constraints>
-                    </imageView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
@@ -120,7 +120,6 @@
                 <constraint firstItem="RgF-K8-zw2" firstAttribute="leading" secondItem="QsI-zY-aNm" secondAttribute="leading" id="Yuy-2p-WdM"/>
                 <constraint firstItem="PqB-we-9MP" firstAttribute="top" secondItem="wpr-n7-w9W" secondAttribute="bottom" constant="-9" id="bAk-3V-Yzu"/>
                 <constraint firstItem="wpr-n7-w9W" firstAttribute="top" secondItem="QsI-zY-aNm" secondAttribute="top" id="gvE-aM-css"/>
-                <constraint firstAttribute="centerY" secondItem="PqB-we-9MP" secondAttribute="centerY" id="uO5-Ku-Sfg"/>
                 <constraint firstAttribute="trailing" secondItem="wpr-n7-w9W" secondAttribute="trailing" id="vQa-pd-tWQ"/>
             </constraints>
             <size key="customSize" width="302" height="557"/>

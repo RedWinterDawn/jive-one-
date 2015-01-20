@@ -15,6 +15,7 @@ extern NSString *const kJCLineSessionHoldKey;
 
 typedef enum {
     JCNoCall,               // Idle line state.
+    JCCallInitiated,        // Start of an outgoing call.
     JCCallIncoming,         // Incoming call
     JCCallTrying,           // Outgoing call request is processed.
     JCCallProgress,         // Notification of early media and if audio or video exists.
@@ -42,20 +43,21 @@ typedef enum {
 @property (nonatomic) JCLineSessionState sessionState;
 
 // Identifiers
-@property (nonatomic) long mSessionId;
-@property (nonatomic, getter=getOriginalCallSessionId) long mOriginCallSessionId;
+@property (nonatomic) NSInteger sessionId;
+@property (nonatomic, getter=getOriginalCallSessionId) NSInteger mOriginCallSessionId;
 
 // Flags
 @property (nonatomic, getter=isActive) BOOL active;
 @property (nonatomic, getter=isHolding) BOOL hold;
 @property (nonatomic, getter=isUpdatable) BOOL updatable;
-@property (nonatomic, getter=isIncomming) bool incomming;
+@property (nonatomic, getter=isIncomming) BOOL incomming;
+@property (nonatomic, getter=isConference) BOOL conference;
+@property (nonatomic, getter=isVideo) BOOL video;
+@property (nonatomic, getter=isAudio) BOOL audio;
 
-//@property (nonatomic) bool mSessionState;
-@property (nonatomic) bool mConferenceState;
 @property (nonatomic, getter=isReferCall) bool mIsReferCall;
 @property (nonatomic) bool mExistEarlyMedia;
-@property (nonatomic) bool mVideoState;
+
 
 - (void)setReferCall:(BOOL)referCall originalCallSessionId:(long)originalCallSessionId;
 - (void)reset;
