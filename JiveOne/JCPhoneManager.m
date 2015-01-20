@@ -58,6 +58,9 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
     CTCallCenter *_externalCallCenter;
     
     BOOL _reconnectWhenCallFinishes;
+    
+    CallCompletionHandler _callCompletionHandler;
+    
 }
 
 @property (copy)void (^externalCallCompletionHandler)(BOOL connected);
@@ -251,11 +254,6 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
 
 -(void)dial:(NSString *)dialNumber type:(JCPhoneManagerDialType)dialType completion:(CallCompletionHandler)completion
 {
-    // If we are not logged in and do not have a sip handler, we must fail.
-    if (!_sipHandler) {
-        completion(false, nil, nil);
-    }
-    
     if (dialType == JCPhoneManagerBlindTransfer) {
         [_sipHandler blindTransferToNumber:dialNumber completion:^(BOOL success, NSError *error) {
             if (success) {
@@ -269,48 +267,18 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
                 NSLog(@"%@", [error description]);
         }];
         return;
+    } else if (dialType == JCPhoneManagerWarmTransfer) {
+        _warmTransferNumber = dialNumber;
     }
     
-    NSString *callerId = dialNumber;
-    Contact *contact = [Contact contactForExtension:dialNumber pbx:self.line.pbx];
-    if (contact) {
-        callerId = contact.extension;
-    }
-    
-    JCLineSession *session = [_sipHandler makeCall:dialNumber videoCall:NO contactName:callerId];
-    if (session.isActive)
-    {
-        session.contact = contact;
-        JCCallCard *transferedCall = self.calls.lastObject;
-        JCCallCard *callCard = [[JCCallCard alloc] initWithLineSession:session];
-        callCard.delegate = self;
-        [self addCall:callCard];
-        NSUInteger index = [self.calls indexOfObject:callCard];
-        if (completion != NULL)
-        {
-            if (dialType == JCPhoneManagerWarmTransfer) {
-                _warmTransferNumber = dialNumber;
-                
-                completion(true, nil, @{
-                                   kJCPhoneManagerTransferedCall: transferedCall,
-                                   kJCPhoneManagerNewCall: callCard,
-                                   kJCPhoneManagerUpdatedIndex: [NSNumber numberWithInteger:index],
-                                   });
-            }
-            else
-            {
-                completion(true, nil, @{
-                                   kJCPhoneManagerNewCall: callCard,
-                                   kJCPhoneManagerUpdatedIndex: [NSNumber numberWithInteger:index],
-                                   });
-            }
+    _callCompletionHandler = completion;
+    __autoreleasing NSError *error;
+    BOOL success = [_sipHandler makeCall:dialNumber videoCall:NO error:&error];
+    if (completion) {
+        if (!success) {
+            completion(false, error, nil);
+            _callCompletionHandler = nil;
         }
-    }
-    else
-    {
-        NSLog(@"Error Making Call");
-        if (completion != NULL)
-            completion(false, nil, @{});
     }
 }
 
@@ -762,11 +730,20 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
     }
     
     JCCallCard *callCard = [[JCCallCard alloc] initWithLineSession:session];
-    session.contact = [Contact contactForExtension:session.callDetail pbx:self.line.pbx];
     callCard.delegate = self;
-    [self unholdCall:callCard completion:NULL];
     [self addCall:callCard];
     
+    NSInteger index = [self.calls indexOfObject:callCard];
+    if (_callCompletionHandler) {
+//        if (_warmTransferNumber) {
+//            _callCompletionHandler(true, nil, @{kJCPhoneManagerTransferedCall: transferedCall,
+//                                                kJCPhoneManagerNewCall: callCard,
+//                                                kJCPhoneManagerUpdatedIndex: [NSNumber numberWithInteger:index]});
+//            
+//        } else {
+            _callCompletionHandler(true, nil, @{kJCPhoneManagerNewCall: callCard,
+                                                kJCPhoneManagerUpdatedIndex: [NSNumber numberWithInteger:index]});
+    }
 }
 
 -(void)sipHandler:(SipHandler *)sipHandler didAnswerLineSession:(JCLineSession *)lineSession

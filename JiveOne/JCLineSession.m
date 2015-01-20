@@ -82,6 +82,9 @@ NSString *const kJCLineSessionCallCanceled = @"Call Canceled: %lu";
     switch (state) {
         case JCNoCall:
             return kJCLineSessionNoCallState;
+            
+        case JCCallInitiated:
+            return [NSString stringWithFormat:kJCLineSessionCall, @"Initiated", _mSessionId, _callTitle, _callDetail];
          
         case JCCallIncoming:
             return [NSString stringWithFormat:kJCLineSessionIncomingCall, _mSessionId];

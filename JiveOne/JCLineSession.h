@@ -15,6 +15,7 @@ extern NSString *const kJCLineSessionHoldKey;
 
 typedef enum {
     JCNoCall,               // Idle line state.
+    JCCallInitiated,        // Start of an outgoing call.
     JCCallIncoming,         // Incoming call
     JCCallTrying,           // Outgoing call request is processed.
     JCCallProgress,         // Notification of early media and if audio or video exists.

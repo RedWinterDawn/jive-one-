@@ -31,6 +31,7 @@
 #import "LineConfiguration.h"
 #import "Line.h"
 #import "PBX.h"
+#import "Contact.h"
 
 // View Controllers
 #import "VideoViewController.h"
@@ -261,29 +262,45 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 #pragma mark - Line Session Public Methods -
 
-- (JCLineSession *)makeCall:(NSString *)dialString videoCall:(BOOL)videoCall contactName:(NSString *)contactName;
+- (BOOL)makeCall:(NSString *)dialString videoCall:(BOOL)videoCall error:(NSError *__autoreleasing *)error
 {
-	JCLineSession *lineSession = [self findIdleLine];
+	// Check to see if we can make a call. We can make a call if we have an idle line session. If we
+    // do not have one, exit with error.
+    JCLineSession *lineSession = [self findIdleLine];
     if (!lineSession) {
-        return nil;
+        *error = [JCSipHandlerError errorWithCode:JC_SIP_CALL_NO_IDLE_LINE];
+        return FALSE;
     }
-	
-	long sessionId = [_mPortSIPSDK call:dialString sendSdp:TRUE videoCall:videoCall];
-	if(sessionId >= 0)
-	{
-		[lineSession setMSessionId:sessionId];
-        lineSession.active = TRUE;
-		
-		[lineSession setCallTitle:contactName ? contactName : dialString];
-		[lineSession setCallDetail:dialString];
-        [OutgoingCall addOutgoingCallWithLineSession:lineSession line:_line];
+    
+    // Try to to place all current calls that are active on hold.
+    __autoreleasing NSError *holdError;
+    NSSet *activeLines = [self findAllActiveLinesNotHolding];
+    if (activeLines.count > 0) {
+        [self holdLineSessions:activeLines error:&holdError];
+    }
+    
+    // Intitiate the call. If we fail, set error and return. Errors from this method are negative
+    // numbers, and positive numbers are success and thier session id.
+	NSInteger result = [_mPortSIPSDK call:dialString sendSdp:TRUE videoCall:videoCall];
+	if(result <= 0) {
+        *error = [JCSipHandlerError errorWithCode:result reason:@"Unable to create call"];
+        [self setSessionState:JCCallFailed forSession:lineSession event:@"makeCall:" error:nil];
+        return NO;
 	}
-	else
-	{
-        NSError *error = [Common createErrorWithDescription:NSLocalizedString(@"Call Failed", nil) reason:NSLocalizedString(@"Unable to create call", nil) code:sessionId];
-        [self setSessionState:JCCallFailed forSession:lineSession event:@"makeCall:" error:error];
-	}
-	return lineSession;
+    
+    NSString *callerId = dialString;
+    Contact *contact = [Contact contactForExtension:dialString pbx:_line.pbx];
+    if (contact) {
+        callerId = contact.extension;
+    }
+    
+    // Configure the line session.
+    [lineSession setMSessionId:result];
+    [lineSession setCallTitle:callerId];
+    [lineSession setCallDetail:dialString];
+    
+    [self setSessionState:JCCallInitiated forSession:lineSession event:@"Initiating Call" error:nil];
+    return YES;
 }
 
 - (BOOL)answerSession:(JCLineSession *)lineSession error:(NSError *__autoreleasing *)error
@@ -305,7 +322,6 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 - (BOOL)hangUpAllSessions:(NSError *__autoreleasing *)error
 {
     NSSet *lineSessions = [self findAllActiveLines];
-    
     
     __autoreleasing NSError *hangupError;
     for (JCLineSession *lineSession in lineSessions) {
@@ -721,27 +737,46 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             break;
         }
         
-        // Session is an incoming call -> notify delegate to add it.
+        case JCCallInitiated:
+        {
+            lineSession.active = TRUE;
+            lineSession.contact = [Contact contactForExtension:lineSession.callDetail pbx:_line.pbx];
+            lineSession.sessionState = state;
+            [OutgoingCall addOutgoingCallWithLineSession:lineSession line:_line];
+            [_delegate sipHandler:self didAddLineSession:lineSession];     // Notify the delegate to add a line.
+            break;
+        }
+            
+        // Session is an incoming call -> notify delegate to add it. Check Auto Answer to know if we
+        // should be auto answer.
         case JCCallIncoming:
-            lineSession.sessionState = state;               // Set the session state.
+        {
+            lineSession.incomming = TRUE;
+            lineSession.contact = [Contact contactForExtension:lineSession.callDetail pbx:_line.pbx];
+            lineSession.sessionState = state;                              // Set the session state.
             [_delegate sipHandler:self didAddLineSession:lineSession];     // Notify the delegate to add a line.
             if (autoAnswer) {
                 autoAnswer = false;
                 [_delegate sipHandler:self receivedIntercomLineSession:lineSession];
             }
             break;
-        
+        }
         case JCCallConnected:
+        {
             lineSession.updatable = TRUE;
+            lineSession.sessionState = state;
+            break;
+        }
         case JCCallAnswered:
         {
+            lineSession.active = TRUE;
             if (lineSession.incomming) {
+                lineSession.incomming = false;
                 [IncomingCall addIncommingCallWithLineSession:lineSession line:_line];
-                [lineSession setIncomming:false];
                 [_delegate sipHandler:self didAnswerLineSession:lineSession];
             }
-            lineSession.active = TRUE;
             lineSession.sessionState = state;
+            break;
         }
         default:
             lineSession.sessionState = state;
@@ -794,20 +829,18 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 			 existsAudio:(BOOL)existsAudio
 			 existsVideo:(BOOL)existsVideo
 {
-	JCLineSession *idleLine = [self findIdleLine];
-	if (!idleLine)
-	{
+	JCLineSession *lineSession = [self findIdleLine];
+	if (!lineSession){
 		[_mPortSIPSDK rejectCall:sessionId code:486];
-		return ;
+		return;
 	}
 	
     // Setup the line session.
-    idleLine.incomming = true;              // Flag as being in a receiving state.
-	[idleLine setMSessionId:sessionId];          // Attach a session id to the line session.
-    [idleLine setMVideoState:existsVideo];                                                          // Flag if video call.
-	[idleLine setCallTitle:[NSString stringWithUTF8String:callerDisplayName]];                      // Get Call Title
-	[idleLine setCallDetail:[self formatCallDetail:[NSString stringWithUTF8String:caller]]];        // Get Call Detail.
-    [self setSessionState:JCCallIncoming forSession:idleLine event:@"onInviteIncoming" error:nil];  // Set the session state.
+	[lineSession setMSessionId:sessionId];                                                             // Attach a session id to the line session.
+    [lineSession setMVideoState:existsVideo];                                                          // Flag if video call.
+	[lineSession setCallTitle:[NSString stringWithUTF8String:callerDisplayName]];                      // Get Call Title
+	[lineSession setCallDetail:[self formatCallDetail:[NSString stringWithUTF8String:caller]]];        // Get Call Detail.
+    [self setSessionState:JCCallIncoming forSession:lineSession event:@"onInviteIncoming" error:nil];  // Set the session state.
 };
 
 -(NSString *)formatCallDetail:(NSString *)callDetail

@@ -55,7 +55,7 @@
 - (void)stopKeepAwake;
 
 // Methods for makeing, transferring or establsihing conference calls.
-- (JCLineSession *) makeCall:(NSString*)callee videoCall:(BOOL)videoCall contactName:(NSString *)contactName;
+- (BOOL)makeCall:(NSString*)callee videoCall:(BOOL)videoCall error:(NSError *__autoreleasing *)error;
 
 // Call Actions
 - (BOOL)answerSession:(JCLineSession *)lineSession error:(NSError *__autoreleasing *)error;         // Answer line session
