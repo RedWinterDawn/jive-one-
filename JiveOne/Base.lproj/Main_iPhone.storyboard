@@ -3247,14 +3247,14 @@
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="incall-background" translatesAutoresizingMaskIntoConstraints="NO" id="tSQ-18-0Px">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
-                            <containerView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AIn-Um-NXd">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="251"/>
+                            <containerView clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AIn-Um-NXd">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="452"/>
                                 <connections>
                                     <segue destination="1Io-pQ-qUd" kind="embed" identifier="CallerCollectionView" id="MUQ-NU-NHH"/>
                                 </connections>
                             </containerView>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T5I-ze-dYa" customClass="JCCallOptionsView">
-                                <rect key="frame" x="0.0" y="251" width="320" height="227"/>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T5I-ze-dYa" customClass="JCCallOptionsView">
+                                <rect key="frame" x="0.0" y="452" width="320" height="227"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="249" verticalCompressionResistancePriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JGQ-cX-3bl" userLabel="Mute Button" customClass="JCRoundedButton">
                                         <rect key="frame" x="32" y="20" width="60" height="60"/>
@@ -3579,7 +3579,7 @@
             <objects>
                 <collectionViewController id="1Io-pQ-qUd" customClass="JCCallCardCollectionViewController" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="CSs-ad-Lqn">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="251"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="452"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
