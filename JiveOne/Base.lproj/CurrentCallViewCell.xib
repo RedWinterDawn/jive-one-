@@ -15,8 +15,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="300" height="270"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" image="white-person" translatesAutoresizingMaskIntoConstraints="NO" id="uAN-u9-Z7P">
-                        <rect key="frame" x="69" y="50" width="162" height="195"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.25" contentMode="scaleAspectFill" image="white-person" translatesAutoresizingMaskIntoConstraints="NO" id="uAN-u9-Z7P">
+                        <rect key="frame" x="90" y="50" width="121" height="146"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="uAN-u9-Z7P" secondAttribute="height" multiplier="76:91" id="eIJ-x1-Uvf"/>
                         </constraints>
@@ -176,7 +176,7 @@
                 <constraint firstAttribute="bottom" secondItem="QCr-7s-whc" secondAttribute="bottom" constant="50" id="6vv-hH-jM5"/>
                 <constraint firstItem="uAN-u9-Z7P" firstAttribute="top" secondItem="Sdb-VX-oTp" secondAttribute="top" constant="50" id="Ua2-Pc-hIU"/>
                 <constraint firstItem="yUi-Hn-q9R" firstAttribute="leading" secondItem="Sdb-VX-oTp" secondAttribute="leading" id="YiS-lT-s4F"/>
-                <constraint firstAttribute="bottom" secondItem="uAN-u9-Z7P" secondAttribute="bottom" constant="25" id="bQq-Kz-okt"/>
+                <constraint firstAttribute="bottom" secondItem="uAN-u9-Z7P" secondAttribute="bottom" constant="74" id="bQq-Kz-okt"/>
                 <constraint firstItem="QCr-7s-whc" firstAttribute="top" secondItem="Sdb-VX-oTp" secondAttribute="top" id="dbk-zW-vD4"/>
                 <constraint firstAttribute="trailing" secondItem="QCr-7s-whc" secondAttribute="trailing" id="hdr-hu-TCw"/>
                 <constraint firstItem="QCr-7s-whc" firstAttribute="leading" secondItem="Sdb-VX-oTp" secondAttribute="leading" id="iya-mG-NTo"/>
