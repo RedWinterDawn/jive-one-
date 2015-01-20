@@ -317,17 +317,18 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return NO;
     }
     
-    if (lineSession.active || !lineSession.isIncoming) {
+    if (lineSession.isActive && !lineSession.isIncoming) {
         return YES;
     }
     
-    
-    NSInteger errorCode = [_mPortSIPSDK answerCall:lineSession.sessionId videoCall:FALSE];
+    NSInteger errorCode = [_mPortSIPSDK answerCall:lineSession.sessionId videoCall:lineSession.isVideo];
     if (errorCode) {
-        NSError *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Unable to answer the call"];
-        [self setSessionState:JCCallFailed forSession:lineSession event:error.localizedDescription error:error];
+        *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Unable to answer the call"];
+        [self setSessionState:JCCallFailed forSession:lineSession event:nil error:nil];
         return NO;
     }
+    
+    [self setSessionState:JCCallAnswerInitiated forSession:lineSession event:nil error:nil];
     return YES;
 }
 
@@ -753,6 +754,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             break;
         }
         
+        // State when a call is initiated before we any trying, ringing, and answered events.
+        // Initial State of a call
         case JCCallInitiated:
         {
             lineSession.active = TRUE;
@@ -777,20 +780,18 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             }
             break;
         }
-        case JCCallConnected:
+        case JCCallAnswerInitiated:
         {
-            lineSession.updatable = TRUE;
+            lineSession.incoming = NO;
+            lineSession.active = YES;
             lineSession.sessionState = state;
+            [IncomingCall addIncommingCallWithLineSession:lineSession line:_line];
+            [_delegate sipHandler:self didAnswerLineSession:lineSession];
             break;
         }
-        case JCCallAnswered:
+        case JCCallConnected:
         {
-            lineSession.active = TRUE;
-            if (lineSession.isIncoming) {
-                lineSession.incoming = false;
-                [IncomingCall addIncommingCallWithLineSession:lineSession line:_line];
-                [_delegate sipHandler:self didAnswerLineSession:lineSession];
-            }
+            lineSession.updatable = YES;
             lineSession.sessionState = state;
             break;
         }
@@ -948,8 +949,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 			 existsVideo:(BOOL)existsVideo
 {
 	JCLineSession *selectedLine = [self findSession:sessionId];
-	if (!selectedLine)
-	{
+	if (!selectedLine){
 		return;
 	}
 	
@@ -969,8 +969,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     selectedLine.video = existsVideo;
     
 	// If this is the refer call then need set it to normal
-	if (selectedLine.mIsReferCall)
-	{
+	if (selectedLine.mIsReferCall){
 		[selectedLine setReferCall:false originalCallSessionId:0];
 	}
     
