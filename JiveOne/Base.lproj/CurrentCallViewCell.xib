@@ -15,7 +15,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="300" height="270"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" misplaced="YES" image="white-person" translatesAutoresizingMaskIntoConstraints="NO" id="uAN-u9-Z7P">
+                    <imageView opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" image="white-person" translatesAutoresizingMaskIntoConstraints="NO" id="uAN-u9-Z7P">
                         <rect key="frame" x="69" y="50" width="162" height="195"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="uAN-u9-Z7P" secondAttribute="height" multiplier="76:91" id="eIJ-x1-Uvf"/>
@@ -174,6 +174,7 @@
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="yUi-Hn-q9R" secondAttribute="trailing" id="2uS-DD-a5n"/>
                 <constraint firstAttribute="bottom" secondItem="QCr-7s-whc" secondAttribute="bottom" constant="50" id="6vv-hH-jM5"/>
+                <constraint firstItem="uAN-u9-Z7P" firstAttribute="top" secondItem="Sdb-VX-oTp" secondAttribute="top" constant="50" id="Ua2-Pc-hIU"/>
                 <constraint firstItem="yUi-Hn-q9R" firstAttribute="leading" secondItem="Sdb-VX-oTp" secondAttribute="leading" id="YiS-lT-s4F"/>
                 <constraint firstAttribute="bottom" secondItem="uAN-u9-Z7P" secondAttribute="bottom" constant="25" id="bQq-Kz-okt"/>
                 <constraint firstItem="QCr-7s-whc" firstAttribute="top" secondItem="Sdb-VX-oTp" secondAttribute="top" id="dbk-zW-vD4"/>
