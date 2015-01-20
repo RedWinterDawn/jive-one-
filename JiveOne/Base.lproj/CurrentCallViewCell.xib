@@ -15,12 +15,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="300" height="270"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.25" contentMode="scaleAspectFill" image="white-person" translatesAutoresizingMaskIntoConstraints="NO" id="uAN-u9-Z7P">
-                        <rect key="frame" x="90" y="50" width="121" height="146"/>
-                        <constraints>
-                            <constraint firstAttribute="width" secondItem="uAN-u9-Z7P" secondAttribute="height" multiplier="76:91" id="eIJ-x1-Uvf"/>
-                        </constraints>
-                    </imageView>
                     <view clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="QCr-7s-whc" userLabel="Call Card View">
                         <rect key="frame" x="0.0" y="0.0" width="300" height="220"/>
                         <subviews>
@@ -108,15 +102,25 @@
                                     <constraint firstAttribute="trailing" secondItem="zQp-R0-cci" secondAttribute="trailing" constant="16" id="zbh-iA-mTm"/>
                                 </constraints>
                             </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.25" contentMode="scaleAspectFill" image="white-person" translatesAutoresizingMaskIntoConstraints="NO" id="uAN-u9-Z7P">
+                                <rect key="frame" x="72" y="30" width="157" height="190"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="300" id="9B7-fI-NKM"/>
+                                    <constraint firstAttribute="width" secondItem="uAN-u9-Z7P" secondAttribute="height" multiplier="145:176" id="lGz-Hn-Tla"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.29999999999999999" colorSpace="deviceRGB"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.40000000000000002" colorSpace="deviceRGB"/>
                         <constraints>
                             <constraint firstItem="8Zm-YG-q5c" firstAttribute="leading" secondItem="QCr-7s-whc" secondAttribute="leading" id="1XQ-fG-qkM"/>
+                            <constraint firstItem="uAN-u9-Z7P" firstAttribute="top" relation="greaterThanOrEqual" secondItem="QCr-7s-whc" secondAttribute="top" constant="30" id="52C-Ug-Woc"/>
                             <constraint firstItem="rkJ-cf-ec6" firstAttribute="top" secondItem="QCr-7s-whc" secondAttribute="top" id="EeP-7w-6AA"/>
                             <constraint firstAttribute="trailing" secondItem="rkJ-cf-ec6" secondAttribute="trailing" id="G9Z-jr-U4M"/>
+                            <constraint firstItem="uAN-u9-Z7P" firstAttribute="top" relation="lessThanOrEqual" secondItem="QCr-7s-whc" secondAttribute="top" constant="40" id="GaZ-DE-WlA"/>
                             <constraint firstAttribute="trailing" secondItem="8Zm-YG-q5c" secondAttribute="trailing" id="KfH-aM-65k"/>
                             <constraint firstItem="8Zm-YG-q5c" firstAttribute="top" secondItem="QCr-7s-whc" secondAttribute="top" constant="27" id="QyH-nI-2r3"/>
                             <constraint firstItem="rkJ-cf-ec6" firstAttribute="leading" secondItem="QCr-7s-whc" secondAttribute="leading" id="UDR-eN-OWr"/>
+                            <constraint firstAttribute="centerX" secondItem="uAN-u9-Z7P" secondAttribute="centerX" id="nZn-mQ-KWR"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yUi-Hn-q9R" userLabel="Action Bar">
@@ -174,14 +178,13 @@
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="yUi-Hn-q9R" secondAttribute="trailing" id="2uS-DD-a5n"/>
                 <constraint firstAttribute="bottom" secondItem="QCr-7s-whc" secondAttribute="bottom" constant="50" id="6vv-hH-jM5"/>
-                <constraint firstItem="uAN-u9-Z7P" firstAttribute="top" secondItem="Sdb-VX-oTp" secondAttribute="top" constant="50" id="Ua2-Pc-hIU"/>
+                <constraint firstItem="yUi-Hn-q9R" firstAttribute="top" relation="greaterThanOrEqual" secondItem="uAN-u9-Z7P" secondAttribute="bottom" id="CG1-1S-z5a"/>
                 <constraint firstItem="yUi-Hn-q9R" firstAttribute="leading" secondItem="Sdb-VX-oTp" secondAttribute="leading" id="YiS-lT-s4F"/>
-                <constraint firstAttribute="bottom" secondItem="uAN-u9-Z7P" secondAttribute="bottom" constant="74" id="bQq-Kz-okt"/>
                 <constraint firstItem="QCr-7s-whc" firstAttribute="top" secondItem="Sdb-VX-oTp" secondAttribute="top" id="dbk-zW-vD4"/>
                 <constraint firstAttribute="trailing" secondItem="QCr-7s-whc" secondAttribute="trailing" id="hdr-hu-TCw"/>
+                <constraint firstItem="yUi-Hn-q9R" firstAttribute="top" relation="lessThanOrEqual" secondItem="uAN-u9-Z7P" secondAttribute="bottom" constant="10" id="iAz-MR-d6h"/>
                 <constraint firstItem="QCr-7s-whc" firstAttribute="leading" secondItem="Sdb-VX-oTp" secondAttribute="leading" id="iya-mG-NTo"/>
                 <constraint firstAttribute="bottom" secondItem="yUi-Hn-q9R" secondAttribute="bottom" id="lv6-WQ-xT0"/>
-                <constraint firstAttribute="centerX" secondItem="uAN-u9-Z7P" secondAttribute="centerX" id="oWQ-TY-jD5"/>
             </constraints>
             <size key="customSize" width="300" height="396"/>
             <connections>
