@@ -50,7 +50,7 @@ typedef enum {
 @property (nonatomic, getter=isActive) BOOL active;
 @property (nonatomic, getter=isHolding) BOOL hold;
 @property (nonatomic, getter=isUpdatable) BOOL updatable;
-@property (nonatomic, getter=isIncomming) BOOL incomming;
+@property (nonatomic, getter=isIncoming) BOOL incoming;
 @property (nonatomic, getter=isConference) BOOL conference;
 @property (nonatomic, getter=isVideo) BOOL video;
 @property (nonatomic, getter=isAudio) BOOL audio;

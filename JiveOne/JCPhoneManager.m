@@ -204,7 +204,7 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
         [_bluetoothManager enableBluetoothAudio];
         [_sipHandler registerToLine:line];
     }
-    else if(self.calls.count == 1 && ((JCCallCard *)self.calls.lastObject).lineSession.isIncomming){
+    else if(self.calls.count == 1 && ((JCCallCard *)self.calls.lastObject).lineSession.isIncoming){
         [_bluetoothManager enableBluetoothAudio];
     }
 }
@@ -567,7 +567,7 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
                                kJCPhoneManagerUpdatedIndex:[NSNumber numberWithInteger:[self.calls indexOfObject:callCard]],
                                kJCPhoneManagerPriorUpdateCount:[NSNumber numberWithInteger:priorCount],
                                kJCPhoneManagerUpdateCount: [NSNumber numberWithInteger:self.calls.count],
-                               kJCPhoneManagerIncomingCall: [NSNumber numberWithBool:session.isIncomming]
+                               kJCPhoneManagerIncomingCall: [NSNumber numberWithBool:session.isIncoming]
                                };
     
     [self postNotificationNamed:kJCPhoneManagerAddedCallNotification userInfo:userInfo];
@@ -590,7 +590,7 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
     JCCallCard *callCard = [self callCardForLineSession:lineSession];
     callCard.started = [NSDate date];
     NSDictionary *userInfo = @{kJCPhoneManagerUpdatedIndex:[NSNumber numberWithInteger:[self.calls indexOfObject:callCard]],
-                               kJCPhoneManagerIncomingCall: [NSNumber numberWithBool:callCard.lineSession.isIncomming],
+                               kJCPhoneManagerIncomingCall: [NSNumber numberWithBool:callCard.lineSession.isIncoming],
                                kJCPhoneManagerLastCallState:[NSNumber numberWithInt:callCard.lineSession.sessionState]};
     
     [self postNotificationNamed:kJCPhoneManagerAnswerCallNotification userInfo:userInfo];

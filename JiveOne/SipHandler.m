@@ -317,7 +317,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return NO;
     }
     
-    if (lineSession.active || !lineSession.isIncomming) {
+    if (lineSession.active || !lineSession.isIncoming) {
         return YES;
     }
     
@@ -352,7 +352,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 - (BOOL)hangUpSession:(JCLineSession *)lineSession error:(NSError *__autoreleasing *)error
 {
-    if (lineSession.incomming)
+    if (lineSession.incoming)
     {
         int errorCode = [_mPortSIPSDK rejectCall:lineSession.sessionId code:486];
         if (errorCode) {
@@ -633,7 +633,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     for (JCLineSession *line in self.lineSessions) {
         if (line.isActive &&
             !line.isHolding &&
-            !line.isIncomming){
+            !line.isIncoming){
             return line;
         }
     }
@@ -644,7 +644,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 {
     for (JCLineSession *line in self.lineSessions) {
         if (!line.isActive &&
-            line.isIncomming){
+            line.isIncoming){
             return line;
         }
     }
@@ -656,7 +656,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     for (JCLineSession *line in self.lineSessions) {
         if (line.isActive &&
             line.isHolding &&
-            !line.isIncomming) {
+            !line.isIncoming) {
             return line;
         }
     }
@@ -667,7 +667,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 {
     for (JCLineSession *line in self.lineSessions){
         if (!line.isActive &&
-            !line.isIncomming){
+            !line.isIncoming){
             return line;
         }
     }
@@ -745,7 +745,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         {
             lineSession.sessionState = state;
             NSLog(@"%@", [self.lineSessions description]);
-            if (lineSession.incomming){
+            if (lineSession.incoming){
                 [MissedCall addMissedCallWithLineSession:lineSession line:_line];
             }
             [_delegate sipHandler:self willRemoveLineSession:lineSession];
@@ -767,7 +767,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         // should be auto answer.
         case JCCallIncoming:
         {
-            lineSession.incomming = TRUE;
+            lineSession.incoming = TRUE;
             lineSession.contact = [Contact contactForExtension:lineSession.callDetail pbx:_line.pbx];
             lineSession.sessionState = state;                              // Set the session state.
             [_delegate sipHandler:self didAddLineSession:lineSession];     // Notify the delegate to add a line.
@@ -786,8 +786,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         case JCCallAnswered:
         {
             lineSession.active = TRUE;
-            if (lineSession.incomming) {
-                lineSession.incomming = false;
+            if (lineSession.isIncoming) {
+                lineSession.incoming = false;
                 [IncomingCall addIncommingCallWithLineSession:lineSession line:_line];
                 [_delegate sipHandler:self didAnswerLineSession:lineSession];
             }
