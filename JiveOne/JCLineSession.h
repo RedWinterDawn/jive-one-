@@ -20,6 +20,7 @@ typedef enum {
     JCCallTrying,           // Outgoing call request is processed.
     JCCallProgress,         // Notification of early media and if audio or video exists.
     JCCallRinging,          // Outgoing call rang
+    JCCallAnswerInitiated,   // Start answering a call.
     JCCallAnswered,         // Outgoing call was answered
     JCCallConnected,        // Outgoing call fully connected.
     JCCallFailed,           // Outgoing call failed.
