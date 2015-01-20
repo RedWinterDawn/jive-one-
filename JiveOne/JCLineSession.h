@@ -23,6 +23,7 @@ typedef enum {
     JCCallAnswerInitiated,   // Start answering a call.
     JCCallAnswered,         // Outgoing call was answered
     JCCallConnected,        // Outgoing call fully connected.
+    JCCallConference,       // Call in a conference call.
     JCCallFailed,           // Outgoing call failed.
     JCCallCanceled,         // Call Was Canceled.
     JCTransferIncoming,     // Incoming Transfer Call

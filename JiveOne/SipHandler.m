@@ -490,7 +490,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             break;
         }
         
-        lineSession.conference = TRUE;
+        [self setSessionState:JCCallConference forSession:lineSession event:nil error:nil];
     }
     
     if (!errorCode) {
@@ -527,6 +527,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             }
         }
         lineSession.conference = FALSE;
+        [self setSessionState:JCCallConnected forSession:lineSession event:nil error:nil];
     }
     
     [_mPortSIPSDK destroyConference];
@@ -792,6 +793,12 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         case JCCallConnected:
         {
             lineSession.updatable = YES;
+            lineSession.sessionState = state;
+            break;
+        }
+        case JCCallConference:
+        {
+            lineSession.conference = YES;
             lineSession.sessionState = state;
             break;
         }

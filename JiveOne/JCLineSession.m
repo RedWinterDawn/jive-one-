@@ -109,6 +109,9 @@ NSString *const kJCLineSessionCallCanceled  = @"Call Canceled: %lu";
         case JCCallConnected:
             return [NSString stringWithFormat:kJCLineSessionCall, @"Connected", (long)_sessionId, _callTitle, _callDetail];
             
+        case JCCallConference:
+            return [NSString stringWithFormat:kJCLineSessionCall, @"Conference", (long)_sessionId, _callTitle, _callDetail];
+            
         case JCCallFailed:
             return [NSString stringWithFormat:kJCLineSessionCallFailed, (long)_sessionId];
                     
