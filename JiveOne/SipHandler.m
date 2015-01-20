@@ -295,7 +295,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     }
     
     // Configure the line session.
-    [lineSession setMSessionId:result];
+    lineSession.sessionId = result;
     [lineSession setCallTitle:callerId];
     [lineSession setCallDetail:dialString];
     
@@ -310,7 +310,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return NO;
     }
     
-    NSInteger errorCode = [_mPortSIPSDK answerCall:lineSession.mSessionId videoCall:FALSE];
+    NSInteger errorCode = [_mPortSIPSDK answerCall:lineSession.sessionId videoCall:FALSE];
     if (errorCode) {
         NSError *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Unable to answer the call"];
         [self setSessionState:JCCallFailed forSession:lineSession event:error.localizedDescription error:error];
@@ -342,7 +342,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 {
     if (lineSession.incomming)
     {
-        int errorCode = [_mPortSIPSDK rejectCall:lineSession.mSessionId code:486];
+        int errorCode = [_mPortSIPSDK rejectCall:lineSession.sessionId code:486];
         if (errorCode) {
             *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error trying to manually reject incomming call"];
             return NO;
@@ -352,7 +352,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return YES;
     }
     
-    NSInteger errorCode = [_mPortSIPSDK hangUp:lineSession.mSessionId];
+    NSInteger errorCode = [_mPortSIPSDK hangUp:lineSession.sessionId];
     if (errorCode) {
         *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error Trying to Hang up"];
         return NO;
@@ -390,7 +390,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return YES;
     }
     
-    NSInteger errorCode = [_mPortSIPSDK hold:lineSession.mSessionId];
+    NSInteger errorCode = [_mPortSIPSDK hold:lineSession.sessionId];
     if (errorCode) {
         *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error placing calls on hold"];
         return NO;
@@ -428,7 +428,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return YES;
     }
     
-    NSInteger errorCode = [_mPortSIPSDK unHold:lineSession.mSessionId];
+    NSInteger errorCode = [_mPortSIPSDK unHold:lineSession.sessionId];
     if (errorCode) {
         *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error placing calls on hold"];
         return NO;
@@ -468,7 +468,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             }
         }
         
-        errorCode = [_mPortSIPSDK joinToConference:lineSession.mSessionId];
+        errorCode = [_mPortSIPSDK joinToConference:lineSession.sessionId];
         if (errorCode) {
             *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error Joining line session to conference"];
             break;
@@ -529,7 +529,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     // Tell PortSip to refer the session id to the passed number. If sucessful, the PortSip deleagate method will inform
     // us and we will call the completion block.
     _transferCompletionHandler = completion;
-	NSInteger result = [_mPortSIPSDK refer:lineSession.mSessionId referTo:number];
+	NSInteger result = [_mPortSIPSDK refer:lineSession.sessionId referTo:number];
     if (result != 0)
     {
         NSString *msg = NSLocalizedString(@"Blind Transfer failed", nil);
@@ -557,7 +557,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     }
 	
     _transferCompletionHandler = completion;
-    NSInteger result = [_mPortSIPSDK attendedRefer:receivingSession.mSessionId replaceSessionId:sessionToTransfer.mSessionId referTo:number];
+    NSInteger result = [_mPortSIPSDK attendedRefer:receivingSession.sessionId replaceSessionId:sessionToTransfer.sessionId referTo:number];
     if (result != 0) {
         NSString *msg = NSLocalizedString(@"Warm Transfer failed", nil);
         NSError *error = [Common createErrorWithDescription:msg reason:NSLocalizedString(@"Unable make transfer", nil) code:result];
@@ -583,7 +583,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 {
     JCLineSession *session = [self findActiveLine];
     if(session && session.isActive){
-        [_mPortSIPSDK sendDtmf:session.mSessionId dtmfMethod:DTMF_RFC2833 code:dtmf dtmfDration:160 playDtmfTone:TRUE];
+        [_mPortSIPSDK sendDtmf:session.sessionId dtmfMethod:DTMF_RFC2833 code:dtmf dtmfDration:160 playDtmfTone:TRUE];
     }
 }
 
@@ -605,7 +605,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 - (JCLineSession *)findSession:(long)sessionId
 {
     for (JCLineSession *line in self.lineSessions) {
-        if (sessionId == line.mSessionId) {
+        if (sessionId == line.sessionId) {
             return line;
         }
     }
@@ -700,7 +700,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return;
     }
     
-    NSLog(@"%@ Session Id: %ld", event, lineSession.mSessionId);
+    NSLog(@"%@ Session Id: %ld", event, lineSession.sessionId);
     switch (state)
     {
         case JCTransferSuccess:
@@ -836,8 +836,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	}
 	
     // Setup the line session.
-	[lineSession setMSessionId:sessionId];                                                             // Attach a session id to the line session.
-    [lineSession setMVideoState:existsVideo];                                                          // Flag if video call.
+    lineSession.sessionId = sessionId;      // Attach a session id to the line session.
+    lineSession.video = existsVideo;    // Flag if video call.
 	[lineSession setCallTitle:[NSString stringWithUTF8String:callerDisplayName]];                      // Get Call Title
 	[lineSession setCallDetail:[self formatCallDetail:[NSString stringWithUTF8String:caller]]];        // Get Call Detail.
     [self setSessionState:JCCallIncoming forSession:lineSession event:@"onInviteIncoming" error:nil];  // Set the session state.
@@ -949,9 +949,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	{
         
 	}*/
-	
-	[selectedLine setMVideoState:existsVideo];
-	
+    selectedLine.audio = existsAudio;
+    selectedLine.video = existsVideo;
+    
 	// If this is the refer call then need set it to normal
 	if (selectedLine.mIsReferCall)
 	{
@@ -1014,21 +1014,21 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	
 	//auto accept refer
 	// Hold currently call after accepted the REFER
-    [_mPortSIPSDK hold:selectedLine.mSessionId];
+    [_mPortSIPSDK hold:selectedLine.sessionId];
     selectedLine.hold = true;
     
 	long referSessionId = [_mPortSIPSDK acceptRefer:referId referSignaling:[NSString stringWithUTF8String:referSipMessage]];
 	if (referSessionId <= 0)
 	{
 		[idleLine reset];
-		[_mPortSIPSDK unHold:selectedLine.mSessionId];
+		[_mPortSIPSDK unHold:selectedLine.sessionId];
         selectedLine.hold = false;
 	}
 	else
 	{
-		[idleLine setMSessionId:referSessionId];
+        idleLine.sessionId = referSessionId;
         idleLine.active = true;
-        [idleLine setReferCall:true originalCallSessionId:selectedLine.mSessionId];
+        [idleLine setReferCall:true originalCallSessionId:selectedLine.sessionId];
         [self.delegate sipHandler:self willRemoveLineSession:selectedLine];
 	}
     

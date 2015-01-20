@@ -452,7 +452,7 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
 -(JCCallCard *)callCardForLineSession:(JCLineSession *)lineSession
 {
     for (JCCallCard *callCard in self.calls) {
-        if (callCard.lineSession.mSessionId == lineSession.mSessionId){
+        if (callCard.lineSession.sessionId == lineSession.sessionId){
             return callCard;
         }
     }
