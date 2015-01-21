@@ -32,6 +32,9 @@
 -(void)sipHandler:(SipHandler *)sipHandler didCreateConferenceCallWithLineSessions:(NSSet *)lineSessions;
 -(void)sipHandler:(SipHandler *)sipHandler didEndConferenceCallForLineSessions:(NSSet *)lineSessions;
 
+// Line Session Status
+-(void)sipHandler:(SipHandler *)sipHandler didUpdateStatusForLineSessions:(NSSet *)lineSessions;
+
 @end
 
 @interface SipHandler : NSObject

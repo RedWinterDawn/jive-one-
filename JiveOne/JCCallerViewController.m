@@ -83,7 +83,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     }
     
     // determine call options view state
-    [self.callOptionsView setState:[self stateForOptionView]];
+    [self.callOptionsView setState:[self stateForOptionView] animated:YES];
 }
 
 -(UIStatusBarStyle)preferredStatusBarStyle

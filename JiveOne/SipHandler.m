@@ -69,7 +69,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	bool autoAnswer;
 }
 
-@property (nonatomic) NSMutableArray *lineSessions;
+@property (nonatomic) NSMutableSet *lineSessions;
 
 - (JCLineSession *)findSession:(long)sessionId;
 
@@ -83,7 +83,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     if (self) {
         _delegate = delegate;
         
-        _lineSessions = [NSMutableArray new];
+        _lineSessions = [NSMutableSet new];
         for (int i = 0; i < lines; i++)
             [_lineSessions addObject:[JCLineSession new]];
         
@@ -806,6 +806,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             lineSession.sessionState = state;
             break;
     }
+    
+    [_delegate sipHandler:self didUpdateStatusForLineSessions:self.lineSessions];
     
     NSLog(@"%@", [self.lineSessions description]);
 }

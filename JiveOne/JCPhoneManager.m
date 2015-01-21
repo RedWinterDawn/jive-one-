@@ -624,6 +624,28 @@ NSString *const kJCPhoneManager611String = @"611";
     }
 }
 
+-(void)sipHandler:(SipHandler *)sipHandler didUpdateStatusForLineSessions:(NSSet *)lineSessions
+{
+    // Checks all active calls to see if they are updatable on status update.
+    BOOL updatable = YES;
+    for (JCLineSession *lineSession in lineSessions) {
+        if (lineSession.isActive) {
+            if (!lineSession.isUpdatable) {
+                updatable = NO;
+                break;
+            }
+        }
+    }
+    
+    // Use the updatable state to update the call view controller UI.
+    if (_callViewController) {
+        _callViewController.mergeBtn.enabled        = updatable;
+        _callViewController.swapBtn.enabled         = updatable;
+        _callViewController.warmTransfer.enabled    = updatable;
+        _callViewController.blindTransfer.enabled   = updatable;
+    }
+}
+
 #pragma mark - Getters -
 
 -(NSMutableArray *)calls
