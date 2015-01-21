@@ -36,35 +36,28 @@
     {
         _annimationDuration = DIAL_OPTIONS_ANIMATION_DURATION;
         _showingSingle = true;
-        
     }
     return self;
 }
 
 -(void)awakeFromNib
 {
-    
     _defaultTransferPosition        = _transferBtnHorizontalContstraint.constant;
     _defaultWarmTransferPosition    = _warmBtnVerticalConstraint.constant;
     _defaultAddCallPosition         = _addCallBtnHorizontalContstraint.constant;
     _defaultSwapPosition            = _swapBtnHorizontalContstraint.constant;
     _defaultMergePosition           = _mergeBtnHorizontalContstraint.constant;
     _defaultFinishPosition          = _finishTransferConstraint.constant;
-    
 }
 
 -(void)layoutSubviews
 {
     [super layoutSubviews];
 }
--(void)viewDidLoad
-{
-
-}
 
 -(void)setState:(JCCallOptionViewState)state
 {
-    [self setState:state animated:YES];
+    [self setState:state animated:NO];
 }
 
 -(void)setState:(JCCallOptionViewState)state animated:(bool)animated
@@ -92,7 +85,6 @@
          default:
            [self showSingle:animated];
             break;
-            
     }
 }
 

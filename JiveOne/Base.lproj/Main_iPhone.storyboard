@@ -3244,13 +3244,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
                             <containerView clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AIn-Um-NXd">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="452"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="340"/>
                                 <connections>
                                     <segue destination="1Io-pQ-qUd" kind="embed" identifier="CallerCollectionView" id="MUQ-NU-NHH"/>
                                 </connections>
                             </containerView>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T5I-ze-dYa" customClass="JCCallOptionsView">
-                                <rect key="frame" x="0.0" y="452" width="320" height="227"/>
+                                <rect key="frame" x="0.0" y="340" width="320" height="227"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="249" verticalCompressionResistancePriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JGQ-cX-3bl" userLabel="Mute Button" customClass="JCRoundedButton">
                                         <rect key="frame" x="32" y="20" width="60" height="60"/>
@@ -3545,7 +3545,7 @@
                             <constraint firstItem="tSQ-18-0Px" firstAttribute="top" secondItem="q42-OL-z6o" secondAttribute="top" id="PUm-HZ-MXr"/>
                             <constraint firstAttribute="trailing" secondItem="T5I-ze-dYa" secondAttribute="trailing" id="Rvm-PK-EEk"/>
                             <constraint firstItem="tSQ-18-0Px" firstAttribute="leading" secondItem="iLc-8x-FhM" secondAttribute="leading" id="YQR-No-tFc"/>
-                            <constraint firstItem="eCX-gY-NnK" firstAttribute="top" secondItem="T5I-ze-dYa" secondAttribute="top" constant="116" id="cyC-4X-o2P"/>
+                            <constraint firstItem="eCX-gY-NnK" firstAttribute="top" secondItem="T5I-ze-dYa" secondAttribute="top" constant="228" id="cyC-4X-o2P"/>
                             <constraint firstAttribute="bottom" secondItem="tSQ-18-0Px" secondAttribute="bottom" id="tRh-X1-IKU"/>
                             <constraint firstAttribute="trailing" secondItem="AIn-Um-NXd" secondAttribute="trailing" id="wSl-Md-Nva"/>
                             <constraint firstAttribute="trailing" secondItem="tSQ-18-0Px" secondAttribute="trailing" id="xxy-Za-i5e"/>
@@ -3575,7 +3575,7 @@
             <objects>
                 <collectionViewController id="1Io-pQ-qUd" customClass="JCCallCardCollectionViewController" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="CSs-ad-Lqn">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="452"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="340"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3589,7 +3589,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fjL-08-UaV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3368" y="-1685"/>
+            <point key="canvasLocation" x="3368" y="-1799"/>
         </scene>
         <!--Transfer-->
         <scene sceneID="7rh-NI-sb1">

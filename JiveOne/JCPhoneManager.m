@@ -32,7 +32,7 @@
 NSString *const kJCPhoneManager911String = @"911";
 NSString *const kJCPhoneManager611String = @"611";
 
-@interface JCPhoneManager ()<SipHandlerDelegate, JCCallCardDelegate, JCCallViewControllerDataSource>
+@interface JCPhoneManager ()<SipHandlerDelegate, JCCallCardDelegate>
 {
     JCBluetoothManager *_bluetoothManager;
     SipHandler *_sipHandler;
@@ -540,7 +540,6 @@ NSString *const kJCPhoneManager611String = @"611";
         UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
         _callViewController = [rootViewController.storyboard instantiateViewControllerWithIdentifier:@"CallerViewController"];
         _callViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-        _callViewController.dataSource = self;
         [rootViewController presentViewController:_callViewController animated:YES completion:NULL];
     } else {
         [_callViewController reload];
@@ -672,27 +671,6 @@ NSString *const kJCPhoneManager611String = @"611";
         }
     }
     return nil;
-}
-
--(BOOL)callerViewControllerShouldShowCallOptions:(JCCallerViewController *)callerViewController
-{
-    NSArray *calls = self.calls;
-    if (calls.count > 1) {
-        BOOL isIncoming = TRUE;
-        for (JCCallCard *call in calls) {
-            if (!call.lineSession.isIncoming) {
-                isIncoming = FALSE;
-                break;
-            }
-        }
-        return !isIncoming;
-    } else {
-        JCCallCard *call = calls.firstObject;
-        if (call.lineSession.isIncoming) {
-            return NO;
-        }
-        return YES;
-    }
 }
 
 #pragma mark - Notification Selectors -

@@ -15,7 +15,6 @@
 
 #import "JCCallerViewController.h"
 
-
 // Managers
 #import "JCPhoneManager.h"   // Handles call cards, and managed calls
 
@@ -25,7 +24,9 @@
 #import "JCTransferConfirmationViewController.h"    // Transfer confimation view controller
 #import "JCCallCardCollectionViewController.h"
 
+#import "JCLineSession.h"
 #import "UIViewController+HUD.h"
+
 #define CALL_OPTIONS_ANIMATION_DURATION 0.6
 #define TRANSFER_ANIMATION_DURATION 0.3
 #define KEYBOARD_ANIMATION_DURATION 0.3
@@ -78,22 +79,14 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     [super viewWillLayoutSubviews];
     
     // determine if call options should be shown
-    if ([_dataSource callerViewControllerShouldShowCallOptions:self]) {
+    if ([self shouldShowCallOptions]) {
         [self showCallOptionsAnimated:YES];
     } else {
         [self hideCallOptionsAnimated:NO];
     }
     
     // determine call options view state
-    JCCallOptionViewState state = JCCallOptionViewSingleCallState;
-    if (_showingConferenceCall) {
-        state = JCCallOptionViewConferenceCallState;
-    }
-    else if ([JCPhoneManager sharedManager].calls.count > 1) {
-        state = JCCallOptionViewMultipleCallsState;
-    }
-    
-    [self.callOptionsView setState:state];
+    [self.callOptionsView setState:[self stateForOptionView]];
 }
 
 -(UIStatusBarStyle)preferredStatusBarStyle
@@ -122,28 +115,24 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(void)startConferenceCall
 {
+    _showingConferenceCall = TRUE;
     [UIView transitionWithView:_callCardCollectionViewController.view
                       duration:0.3
                        options:UIViewAnimationOptionTransitionFlipFromRight
                     animations:^{
-                        [_callCardCollectionViewController.collectionView reloadData];
-                        [self.callOptionsView setState:JCCallOptionViewConferenceCallState animated:YES];
-                    } completion:^(BOOL finished) {
-                        _showingConferenceCall = TRUE;
-                    }];
+                        [self reload];
+                    } completion:NULL];
 }
 
 -(void)stopConferenceCall
 {
+    _showingConferenceCall = FALSE;
     [UIView transitionWithView:_callCardCollectionViewController.view
                       duration:0.3
                        options:UIViewAnimationOptionTransitionFlipFromLeft
                     animations:^{
-                        [_callCardCollectionViewController.collectionView reloadData];
-                        [self.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];
-                    } completion:^(BOOL finished) {
-                        _showingConferenceCall = FALSE;
-                    }];
+                        [self reload];
+                    } completion:NULL];
 }
 
 #pragma mark - IBActions -
@@ -262,6 +251,39 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 #pragma mark - Private -
 
+-(BOOL)shouldShowCallOptions
+{
+    NSArray *calls = [JCPhoneManager sharedManager].calls;
+    if (calls.count > 1) {
+        BOOL isIncoming = TRUE;
+        for (JCCallCard *call in calls) {
+            if (!call.lineSession.isIncoming) {
+                isIncoming = FALSE;
+                break;
+            }
+        }
+        return !isIncoming;
+    } else {
+        JCCallCard *call = calls.firstObject;
+        if (call.lineSession.isIncoming) {
+            return NO;
+        }
+        return YES;
+    }
+}
+
+-(JCCallOptionViewState)stateForOptionView
+{
+    JCCallOptionViewState state = JCCallOptionViewSingleCallState;
+    if (_showingConferenceCall) {
+        state = JCCallOptionViewConferenceCallState;
+    }
+    else if ([JCPhoneManager sharedManager].calls.count > 1) {
+        state = JCCallOptionViewMultipleCallsState;
+    }
+    return state;
+}
+
 /**
  * Hides the call options card.
  */
@@ -328,10 +350,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(void)closeCallerViewController
 {
-    if (_delegate && [_delegate respondsToSelector:@selector(shouldDismissCallerViewController:)])
-        [_delegate shouldDismissCallerViewController:self];
-    else
-        [self dismissViewControllerAnimated:YES completion:NULL];
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 -(void)presentKeyboardViewController:(UIViewController *)viewController
@@ -407,51 +426,6 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
                          _presentedTransferViewController = nil;
                      }];
 }
-
-#pragma mark - Notification Handlers -
-
-//-(void)addedCallSelector:(NSNotification *)notification
-//{
-//    NSDictionary *userInfo = notification.userInfo;
-//    JCCallCard *callCard = [userInfo objectForKey:kJCPhoneManagerNewCall];
-//    if (callCard) {
-//        [callCard.lineSession addObserver:self forKeyPath:kJCLineSessionStateKey options:0 context:NULL];
-//    }
-//    [self.view setNeedsLayout];
-//    [self.view layoutIfNeeded];
-//}
-//
-///**
-// * Notification recieved when an incoming call has been answered. If we are currently not showing the call options view,
-// * We animate in the showing of the call options view. This would occur if we were recieving an incomming call, with no 
-// * other active calls. If we answer a call while already on the call, we should shown the multiple call state of the 
-// * call options, allowing us to merge or swap calls.
-// */
-//-(void)answeredCall:(NSNotification *)notification
-//{
-//    if (!_showingCallOptions)
-//        self.callOptionsHidden = false;
-//    
-//    [self.view setNeedsLayout];
-//    [self.view layoutIfNeeded];
-//    
-//}
-//
-///**
-// * Notification when a call has been been removed and we should possibly respond to close the view. We check the number
-// * of calls. If we have no calls, we close the view. If we have a single call, we show the single call state.
-// */
-//-(void)removedCall:(NSNotification *)notification
-//{
-//    [self.view setNeedsLayout];
-//    [self.view layoutIfNeeded];
-//    
-//    NSDictionary *userInfo = notification.userInfo;
-//    JCCallCard *callCard = [userInfo objectForKey:kJCPhoneManagerRemovedCall];
-//    if (callCard) {
-//        [callCard.lineSession removeObserver:self forKeyPath:kJCLineSessionStateKey context:NULL];
-//    }
-//}
 
 #pragma mark - Delegate Handlers -
 

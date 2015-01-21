@@ -9,26 +9,8 @@
 @import UIKit;
 
 #import "JCCallOptionsView.h"
-#import "JCLineSession.h"
-
-@class JCCallerViewController;
-
-@protocol JCCallerViewControllerDelegate <NSObject>
-
--(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController;
-
-@end
-
-@protocol JCCallViewControllerDataSource <NSObject>
-
--(BOOL)callerViewControllerShouldShowCallOptions:(JCCallerViewController *)callerViewController;
-
-@end
 
 @interface JCCallerViewController : UIViewController
-
-@property (weak, nonatomic) IBOutlet id<JCCallerViewControllerDelegate> delegate;
-@property (weak, nonatomic) IBOutlet id<JCCallViewControllerDataSource> dataSource;
 
 @property (weak, nonatomic) IBOutlet JCCallOptionsView *callOptionsView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *callOptionsViewOriginYConstraint;
@@ -44,9 +26,6 @@
 @property (nonatomic) NSTimeInterval callOptionTransitionAnimationDuration;
 @property (nonatomic) NSTimeInterval transferAnimationDuration;
 @property (nonatomic) NSTimeInterval keyboardAnimationDuration;
-
-// Phone number to be dialed when the view controller is loads.
-@property (nonatomic, strong) NSString *dialString __deprecated;
 
 -(void)startConferenceCall;
 -(void)stopConferenceCall;
