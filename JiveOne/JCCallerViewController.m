@@ -31,9 +31,6 @@
 #define TRANSFER_ANIMATION_DURATION 0.3
 #define KEYBOARD_ANIMATION_DURATION 0.3
 
-#define kCallOptionsDefualtContraint 116
-#define kHalfCallOptionsContraint 232
-
 NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTransferModal";
 NSString *const kJCCallerViewControllerKeyboardStoryboardIdentifier = @"keyboardModal";
 
