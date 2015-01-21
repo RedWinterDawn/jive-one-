@@ -38,7 +38,14 @@
     
     self.selected = self.selected;
 }
-
+-(void)setEnabled:(BOOL)enabled{
+    [super setEnabled:enabled];
+    if (enabled) {
+        self.backgroundColor = _defaultBackgroundColor;
+    } else{
+        self.backgroundColor = [_defaultBackgroundColor colorWithAlphaComponent: 0.05];
+    }
+}
 -(void)setSelected:(BOOL)selected
 {
     [super setSelected:selected];

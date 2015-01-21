@@ -3326,21 +3326,6 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="248" horizontalCompressionResistancePriority="249" verticalCompressionResistancePriority="253" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LZA-VZ-Dk3" userLabel="Blind Transfer Button" customClass="JCRoundedButton">
-                                        <rect key="frame" x="32" y="127" width="60" height="60"/>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="KXe-EI-lyh"/>
-                                            <constraint firstAttribute="width" constant="60" id="c76-HB-6VL"/>
-                                        </constraints>
-                                        <state key="normal" image="white-arrow-outline">
-                                            <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <state key="selected" image="blue-arrow-outline"/>
-                                        <connections>
-                                            <action selector="blindTransfer:" destination="ph3-lT-GBI" eventType="touchUpInside" id="yRd-vU-PiR"/>
-                                        </connections>
-                                    </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transfer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PLC-2m-6mE" userLabel="Blind Transfer Label">
                                         <rect key="frame" x="32" y="192" width="60" height="21"/>
                                         <constraints>
@@ -3481,6 +3466,21 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="248" horizontalCompressionResistancePriority="249" verticalCompressionResistancePriority="253" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LZA-VZ-Dk3" userLabel="Blind Transfer Button" customClass="JCRoundedButton">
+                                        <rect key="frame" x="32" y="127" width="60" height="60"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="KXe-EI-lyh"/>
+                                            <constraint firstAttribute="width" constant="60" id="c76-HB-6VL"/>
+                                        </constraints>
+                                        <state key="normal" image="white-arrow-outline">
+                                            <color key="titleShadowColor" red="0.1450980392" green="0.4941176471" blue="0.59607843140000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <state key="selected" image="blue-arrow-outline"/>
+                                        <connections>
+                                            <action selector="blindTransfer:" destination="ph3-lT-GBI" eventType="touchUpInside" id="yRd-vU-PiR"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
