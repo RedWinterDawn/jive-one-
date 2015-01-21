@@ -557,20 +557,26 @@ NSString *const kJCPhoneManager611String = @"611";
 
 -(void)sipHandler:(SipHandler *)sipHandler willRemoveLineSession:(JCLineSession *)session
 {
-    JCCallCard *callCard = [self callCardForLineSession:session];
-    if (!callCard) {
+    // Check to see if the line session happens to be a conference call. if it is, we need to end
+    // the conference call. This will end the conference call, and it will be removed because it
+    // will have been marked as inactive.
+    if (session.isConference) {
+        __autoreleasing NSError *error;
+        [_sipHandler endConference:&error];
         return;
     }
     
-    NSMutableArray *calls = self.calls;
-    if (![calls containsObject:callCard])
-        return;
+    JCCallCard *callCard = [self callCardForLineSession:session];
+    if (callCard) {
+        [self.calls removeObject:callCard];
+    }
     
-    [self.calls removeObject:callCard];
-    
-    // Check to see if all the calls are gone, and dismiss the call UI if they are
+    // Check to see if all the calls are gone, and perform actions closing out the caller view
+    // controller, re registration if we have switched networks while on the call, and to start keep
+    // alive if we were in the background when the call ends.
+    NSInteger count = self.calls.count;
     if (_callViewController) {
-        if (self.calls.count == 0) {
+        if (count == 0) {
             [_callViewController dismissViewControllerAnimated:YES completion:NULL];
             _callViewController = nil;
         } else {
@@ -578,14 +584,14 @@ NSString *const kJCPhoneManager611String = @"611";
         }
     }
     
-    if (_reconnectWhenCallFinishes && calls.count == 0) {
+    if (_reconnectWhenCallFinishes && count == 0) {
         _reconnectWhenCallFinishes = false;
         [self connectToLine:self.line completion:self.completion];
     }
     
     // If when removing the call we are backgrounded, we tell the sip handler to operate in background mode.
     UIApplicationState state = [[UIApplication sharedApplication] applicationState];
-    if ((state == UIApplicationStateBackground || state == UIApplicationStateInactive) && calls.count == 0) {
+    if ((state == UIApplicationStateBackground || state == UIApplicationStateInactive) && count == 0) {
         [_sipHandler startKeepAwake];
     }
 }
@@ -609,11 +615,16 @@ NSString *const kJCPhoneManager611String = @"611";
     // Blow away the call cards, we are going to make new ones
     _calls = [NSMutableArray arrayWithCapacity:lineSessions.count];
     
-    // Create a call card for each line session.
+    // Create a call card for each line session. We only re-add active lines. If we had a call fail,
+    // we would have called for the conference call to have ended, and the failed line would have
+    // been marked as inactive when the state changed, so we would not add it here, so the UI can
+    // recover.
     for (JCLineSession *lineSession in lineSessions) {
-        JCCallCard *callCard = [[JCCallCard alloc] initWithLineSession:lineSession];
-        callCard.delegate = self;
-        [_calls addObject:callCard];
+        if(lineSession.isActive) {
+            JCCallCard *callCard = [[JCCallCard alloc] initWithLineSession:lineSession];
+            callCard.delegate = self;
+            [_calls addObject:callCard];
+        }
     }
     
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:NSStringFromSelector(@selector(started)) ascending:NO];

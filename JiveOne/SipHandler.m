@@ -517,15 +517,20 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     }
     
     // Before stop the conference, MUST place all lines to hold state
-    for (JCLineSession *lineSession in lineSessions) {
-        if (!lineSession.isHolding)
-        {
-            __autoreleasing NSError *holdError;
-            if(![self holdLineSession:lineSession error:&holdError]) {
-                *error = [JCSipHandlerError errorWithCode:holdError.code reason:@"Error placing calls on hold after ending a conference" underlyingError:holdError];
-                return false;
+    if (lineSessions.count > 1) {
+        for (JCLineSession *lineSession in lineSessions) {
+            if (!lineSession.isHolding){
+                __autoreleasing NSError *holdError;
+                if(![self holdLineSession:lineSession error:&holdError]) {
+                    *error = [JCSipHandlerError errorWithCode:holdError.code reason:@"Error placing calls on hold after ending a conference" underlyingError:holdError];
+                    return false;
+                }
             }
+            lineSession.conference = FALSE;
+            [self setSessionState:JCCallConnected forSession:lineSession event:nil error:nil];
         }
+    } else {
+        JCLineSession *lineSession = lineSessions.allObjects.firstObject;
         lineSession.conference = FALSE;
         [self setSessionState:JCCallConnected forSession:lineSession event:nil error:nil];
     }
@@ -745,9 +750,11 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         case JCCallFailed:
         case JCCallCanceled:
         {
+            lineSession.active = FALSE;
+            lineSession.updatable = FALSE;
             lineSession.sessionState = state;
             NSLog(@"%@", [self.lineSessions description]);
-            if (lineSession.incoming){
+            if (lineSession.isIncoming){
                 [MissedCall addMissedCallWithLineSession:lineSession line:_line];
             }
             [_delegate sipHandler:self willRemoveLineSession:lineSession];
