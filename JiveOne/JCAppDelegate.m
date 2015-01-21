@@ -8,8 +8,8 @@
 
 #import "JCAppDelegate.h"
 #import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
-#import <MBProgressHUD/MBProgressHUD.h>
-#import <AudioToolbox/AudioToolbox.h>
+//#import <MBProgressHUD/MBProgressHUD.h>
+
 #import "AFNetworkActivityIndicatorManager.h"
 #import "JCLoginViewController.h"
 #import "Common.h"
@@ -259,7 +259,7 @@
         _phoneManager = [JCPhoneManager sharedManager];
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         [center addObserver:self selector:@selector(didReceiveIncomingCall:) name:kJCPhoneManagerAddedCallNotification object:_phoneManager];
-        [center addObserver:self selector:@selector(stopRingtone) name:kJCPhoneManagerAnswerCallNotification object:_phoneManager];
+//        [center addObserver:self selector:@selector(stopRingtone) name:kJCPhoneManagerAnswerCallNotification object:_phoneManager];
     }
     
     [JCPhoneManager disconnect];
@@ -433,7 +433,7 @@
  */
 -(void)didReceiveIncomingCall:(NSNotification *)notification
 {
-    [self startVibration];
+//    [self startVibration];
     
     NSDictionary *userInfo = notification.userInfo;
     BOOL incoming = [[userInfo objectForKey:kJCPhoneManagerIncomingCall] boolValue];
@@ -441,7 +441,7 @@
     if (!incoming || priorCount > 0)
         return;
     
-    [self startRingtone];
+//    [self startRingtone];
     
     _presentedCallerViewController = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"CallerViewController"];
     _presentedCallerViewController.delegate = self;
@@ -459,8 +459,8 @@
 {
     [self.window.rootViewController dismissViewControllerAnimated:FALSE completion:^{
         _presentedCallerViewController = nil;
-        [self stopRingtone];
-        [self stopVibration];
+//        [self stopRingtone];
+//        [self stopVibration];
     }];
 }
 
@@ -592,85 +592,5 @@
     completionHandler([self backgroundPerformFetchWithCompletionHandler]);
 }
 
-#pragma mark - Ringing
-
-static bool incommingCall;
-
--(void)startVibration
-{
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    bool vibrate = [userDefaults boolForKey:@"vibrateOnRing"];
-    if (vibrate)
-    {
-        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
-        AudioServicesAddSystemSoundCompletion(kSystemSoundID_Vibrate, NULL, NULL, endVibration, NULL);
-    }
-}
-
-
--(void)stopVibration
-{
-    incommingCall = false;
-}
-
-void endVibration (SystemSoundID ssID, void *clientData)
-{
-    if (!incommingCall)
-        return;
-    
-    double delayInSeconds = 1;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        if (!incommingCall)
-            return;
-        AudioServicesPlaySystemSound(ssID);
-    });
-}
-
--(void)startRingtone
-{
-    incommingCall = true;
-    @try {
-        SystemSoundID soundId = [self playRingtone];
-        AudioServicesAddSystemSoundCompletion(soundId, NULL, NULL, endRingtone, NULL);
-    }
-    @catch (NSException *exception) {
-        NSLog(@"%@", exception.description);
-    }
-}
-
-void endRingtone (SystemSoundID ssID, void *clientData)
-{
-    if (!incommingCall)
-        return;
-    
-    double delayInSeconds = 1;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        if (!incommingCall)
-            return;
-        AudioServicesPlaySystemSound(ssID);
-    });
-}
-
--(SystemSoundID)playRingtone
-{
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSURL *url = [NSURL fileURLWithPath:@"/System/Library/Audio/UISounds/vc~ringing.caf"];
-    SystemSoundID soundID;
-    AudioServicesCreateSystemSoundID((__bridge_retained CFURLRef)url, &soundID);
-    AudioServicesPlaySystemSound(soundID);
-    
-    bool vibrate = [userDefaults boolForKey:@"vibrateOnRing"];
-    if (vibrate)
-        AudioServicesPlaySystemSound(4095);
-    return soundID;
-}
-
-
--(void)stopRingtone
-{
-    incommingCall = false;
-}
 
 @end
