@@ -14,12 +14,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    JCCallCard *call = [self.transferInfo objectForKey:kJCPhoneManagerTransferedCall];
-    JCCallCard *transferCall = [self.transferInfo objectForKey:kJCPhoneManagerNewCall];
+    //JCCallCard *call = [self.transferInfo objectForKey:kJCPhoneManagerTransferedCall];
+    //JCCallCard *transferCall = [self.transferInfo objectForKey:kJCPhoneManagerNewCall];
     
-    self.currentCallersName.text = call.callerId;
-    self.currentCallersNumber.text = call.dialNumber;
-    self.transferToCallersName.text = transferCall.callerId;
-    self.transferToCallersNumber.text = transferCall.dialNumber;
+//    self.currentCallersName.text = call.callerId;
+//    self.currentCallersNumber.text = call.dialNumber;
+//    self.transferToCallersName.text = transferCall.callerId;
+//    self.transferToCallersNumber.text = transferCall.dialNumber;
 }
 @end

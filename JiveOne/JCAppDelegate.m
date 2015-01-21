@@ -413,43 +413,6 @@
 
 #pragma mark JCCallCardManager
 
-/**
- * Responds to a notification dispatched by the JCCallCardManager when a incoming call occurs. Presents an instance of
- * the CallerViewController modaly with ourselves set up as the delegate responder to the view controller.
- */
--(void)didReceiveIncomingCall:(NSNotification *)notification
-{
-    [self startVibration];
-    
-    NSDictionary *userInfo = notification.userInfo;
-    BOOL incoming = [[userInfo objectForKey:kJCPhoneManagerIncomingCall] boolValue];
-    int priorCount = [[userInfo objectForKey:kJCPhoneManagerPriorUpdateCount] intValue];
-    if (!incoming || priorCount > 0)
-        return;
-    
-    [self startRingtone];
-    
-//    _presentedCallerViewController = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"CallerViewController"];
-//    _presentedCallerViewController.delegate = self;
-//    _presentedCallerViewController.callOptionsHidden = true;
-//    _presentedCallerViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-//    
-//    [self.window.rootViewController presentViewController:_presentedCallerViewController animated:YES completion:NULL];
-}
-
-/**
- * Delegate rsponder to remove the the presented modal view controller when an incomming callerver view controller is
- * dismissed. Used only if the caller was presented from the app delegate.
- */
-//-(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController
-//{
-////    [self.window.rootViewController dismissViewControllerAnimated:FALSE completion:^{
-////        _presentedCallerViewController = nil;
-////        [self stopRingtone];
-////        [self stopVibration];
-////    }];
-//}
-
 #pragma mark - Delegate Handlers -
 
 -(void)pickerViewControllerShouldDismiss:(JCPickerViewController *)controller

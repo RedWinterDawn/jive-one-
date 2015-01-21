@@ -98,7 +98,6 @@
                     <connections>
                         <outlet property="searchBar" destination="5ds-mG-BrS" id="eKU-3I-hhY"/>
                         <outlet property="tabBar" destination="KQN-3R-ma5" id="wBh-2d-BJB"/>
-                        <segue destination="ph3-lT-GBI" kind="modal" identifier="LocalContactsClickToCall" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" animates="NO" id="u61-Zl-F4Y"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ozR-aT-h5B" sceneMemberID="firstResponder"/>
@@ -1751,7 +1750,6 @@
                                     <outlet property="detailTextLabel" destination="TBH-my-sze" id="gha-fH-ZXa"/>
                                     <outlet property="favoriteBtn" destination="fpX-p1-9pC" id="cLy-hW-fmr"/>
                                     <outlet property="textLabel" destination="Kbp-js-aK1" id="syq-O4-PNr"/>
-                                    <segue destination="ph3-lT-GBI" kind="modal" identifier="ContactsClickToCall" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" animates="NO" id="voi-Tt-SuU"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LineCell" rowHeight="60" id="2td-vl-Ngo" customClass="JCLineCell">
@@ -1815,7 +1813,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fLZ-A1-vk7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1271" y="789.5"/>
+            <point key="canvasLocation" x="1231" y="816.5"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="uDf-PG-NB6">
@@ -2298,7 +2296,7 @@
                     </connections>
                 </customObject>
             </objects>
-            <point key="canvasLocation" x="-115" y="-1756"/>
+            <point key="canvasLocation" x="-379" y="-1284"/>
         </scene>
         <!--Voicemail-->
         <scene sceneID="SLB-hS-Ps4">
@@ -2343,7 +2341,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M93-Je-gB3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1164" y="-1115"/>
+            <point key="canvasLocation" x="1156" y="-819"/>
         </scene>
         <!--Voicemail-->
         <scene sceneID="pGY-6k-mPt">
@@ -2514,7 +2512,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U9g-em-KGD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1534" y="-1128.5"/>
+            <point key="canvasLocation" x="1633" y="-1110.5"/>
         </scene>
         <!--Dialer-->
         <scene sceneID="GNC-gS-V56">
@@ -3086,7 +3084,7 @@
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="933" y="-1849"/>
+            <point key="canvasLocation" x="1164" y="-1849"/>
         </scene>
         <!--Debug Phone Manager Table View Controller-->
         <scene sceneID="bcR-yj-i5i">
@@ -3228,7 +3226,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Dp-b9-cfY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1393" y="-1849"/>
+            <point key="canvasLocation" x="1633" y="-1849"/>
         </scene>
         <!--Caller View Controller-->
         <scene sceneID="h4n-pS-5vD">
@@ -3570,7 +3568,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eMn-vI-5KV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2538" y="-1093"/>
+            <point key="canvasLocation" x="2874" y="-1685"/>
         </scene>
         <!--Call Card Collection View Controller-->
         <scene sceneID="EaI-Tg-0e9">
@@ -3591,7 +3589,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fjL-08-UaV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2973" y="-1208"/>
+            <point key="canvasLocation" x="3368" y="-1685"/>
         </scene>
         <!--Transfer-->
         <scene sceneID="7rh-NI-sb1">
@@ -4222,7 +4220,7 @@
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2099" y="-1115"/>
+            <point key="canvasLocation" x="2874" y="-1013"/>
         </scene>
         <!--Key Pad-->
         <scene sceneID="ZaT-F2-AJD">
@@ -4731,7 +4729,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="thX-pi-Kb7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2624" y="-1805"/>
+            <point key="canvasLocation" x="2874" y="-2337"/>
         </scene>
         <!--Dialer Navagation Controller-->
         <scene sceneID="3Br-E9-xSO">
@@ -4780,7 +4778,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="ph3-lT-GBI" kind="modal" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" animates="NO" id="Cw0-XI-zbd"/>
+                                    <action selector="callVoicemail:" destination="uGc-fk-52J" eventType="touchUpInside" id="J12-YK-fhO"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -4797,7 +4795,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3N9-A7-pSU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1164" y="-360"/>
+            <point key="canvasLocation" x="1650" y="-440"/>
         </scene>
         <!--Voicemail-->
         <scene sceneID="cTu-cz-LSJ">
@@ -4964,7 +4962,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RqF-BJ-Pex" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2966" y="-376"/>
+            <point key="canvasLocation" x="3368" y="-969"/>
         </scene>
         <!--History-->
         <scene sceneID="hDA-V2-YRp">
@@ -5140,7 +5138,6 @@
                                     <outlet property="icon" destination="aaV-Hh-0FM" id="sID-r3-uat"/>
                                     <outlet property="name" destination="TmI-c8-kkS" id="x5m-8O-pWi"/>
                                     <outlet property="number" destination="xbE-Wj-ANr" id="sd3-eO-J0h"/>
-                                    <segue destination="ph3-lT-GBI" kind="modal" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="qpb-jz-IY5"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -5190,7 +5187,7 @@
                     </state>
                 </button>
             </objects>
-            <point key="canvasLocation" x="1719" y="-2550"/>
+            <point key="canvasLocation" x="1618" y="-2551"/>
         </scene>
     </scenes>
     <resources>
@@ -5237,11 +5234,10 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="qpb-jz-IY5"/>
         <segue reference="Uqi-bD-GAX"/>
-        <segue reference="x1v-U1-NC6"/>
         <segue reference="5C3-Di-Qgq"/>
         <segue reference="Tth-R2-xu6"/>
+        <segue reference="x1v-U1-NC6"/>
         <segue reference="2yK-HA-Lah"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29803921570000003" green="0.44705882349999998" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>

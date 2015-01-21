@@ -22,7 +22,6 @@
 @protocol JCCallViewControllerDataSource <NSObject>
 
 -(BOOL)callerViewControllerShouldShowCallOptions:(JCCallerViewController *)callerViewController;
--(JCCallOptionViewState)callerViewControllerCallOptionsViewState:(JCCallerViewController *)callerViewController;
 
 @end
 

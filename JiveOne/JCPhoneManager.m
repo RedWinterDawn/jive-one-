@@ -25,45 +25,21 @@
 #import "JCConferenceCallCard.h"
 #import "Contact.h"
 
-// Categories
-#import "UIViewController+HUD.h"
-
 // View Controllers
 #import "JCCallerViewController.h"
+#import "UIViewController+HUD.h"
 
 NSString *const kJCPhoneManager911String = @"911";
 NSString *const kJCPhoneManager611String = @"611";
-
-NSString *const kJCPhoneManagerAddedCallNotification            = @"addedCall";
-NSString *const kJCPhoneManagerAnswerCallNotification           = @"answerCall";
-NSString *const kJCPhoneManagerRemoveCallNotification           = @"removedCall";
-NSString *const kJCPhoneManagerAddedConferenceCallNotification  = @"addedConferenceCall";
-NSString *const kJCPhoneManagerRemoveConferenceCallNotification = @"removeConferenceCall";
-
-NSString *const kJCPhoneManagerUpdatedIndex      = @"index";
-NSString *const kJCPhoneManagerPriorUpdateCount  = @"priorCount";
-NSString *const kJCPhoneManagerUpdateCount       = @"updateCount";
-NSString *const kJCPhoneManagerRemovedCells      = @"removedCells";
-NSString *const kJCPhoneManagerAddedCells        = @"addedCells";
-NSString *const kJCPhoneManagerLastCallState     = @"lastCallState";
-
-NSString *const kJCPhoneManagerNewCall           = @"newCall";
-NSString *const kJCPhoneManagerActiveCall        = @"activeCall";
-NSString *const kJCPhoneManagerIncomingCall      = @"incomingCall";
-NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
-NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
 
 @interface JCPhoneManager ()<SipHandlerDelegate, JCCallCardDelegate, JCCallViewControllerDataSource>
 {
     JCBluetoothManager *_bluetoothManager;
     SipHandler *_sipHandler;
+    JCCallerViewController *_callViewController;
+    BOOL _reconnectWhenCallFinishes;
 	NSString *_warmTransferNumber;
     CTCallCenter *_externalCallCenter;
-    
-    BOOL _reconnectWhenCallFinishes;
-    
-    CallCompletionHandler _callCompletionHandler;
-    JCCallerViewController *_callViewController;
 }
 
 @property (copy)void (^externalCallCompletionHandler)(BOOL connected);
@@ -249,7 +225,7 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
  *  immediately, otherwise tries to register, then dial. If we are uable to connect, we call 
  *  completion handler with success being false.
  */
--(void)dialNumber:(NSString *)dialString type:(JCPhoneManagerDialType)dialType completion:(CallCompletionHandler)completion
+-(void)dialNumber:(NSString *)dialString type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion
 {
     if ([self isEmergencyNumber:dialString] && [UIDevice currentDevice].canMakeCall) {
         [self dialEmergencyNumber:dialString type:dialType completion:completion];
@@ -259,7 +235,7 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
     [self connectAndDial:dialString type:dialType completion:completion];
 }
 
--(void)connectAndDial:(NSString *)dialString type:(JCPhoneManagerDialType)dialType completion:(CallCompletionHandler)completion
+-(void)connectAndDial:(NSString *)dialString type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion
 {
     if (self.isConnected) {
         [self dial:dialString type:dialType completion:completion];
@@ -274,7 +250,7 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
                  }
                  
                  if (completion) {
-                     completion(false, nil, nil);
+                     completion(false, nil);
                  }
              }];
 }
@@ -286,7 +262,7 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
     // TODO: Localization, detecting the emergency number based on localization for the device and cellular positioning for the carrier device.
 }
 
--(void)dialEmergencyNumber:(NSString *)emergencyNumber type:(JCPhoneManagerDialType)dialType completion:(CallCompletionHandler)completion
+-(void)dialEmergencyNumber:(NSString *)emergencyNumber type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion
 {
     #ifdef DEBUG
     emergencyNumber = kJCPhoneManager611String;
@@ -299,7 +275,7 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
     __unsafe_unretained JCPhoneManager *weakSelf = self;
     self.externalCallCompletionHandler = ^(BOOL connected){
         if (connected) {
-            completion(false, nil, nil);
+            completion(false, nil);
         }
         else{
             [weakSelf connectAndDial:emergencyNumber type:dialType completion:completion];
@@ -327,7 +303,7 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@", emergencyNumber]]];
 }
 
--(void)dial:(NSString *)dialNumber type:(JCPhoneManagerDialType)dialType completion:(CallCompletionHandler)completion
+-(void)dial:(NSString *)dialNumber type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion
 {
     if (dialType == JCPhoneManagerBlindTransfer) {
         [_sipHandler blindTransferToNumber:dialNumber completion:^(BOOL success, NSError *error) {
@@ -337,7 +313,7 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
             }
             
             if (completion != NULL)
-                completion(success, nil, @{});
+                completion(success, nil);
             
             if (error)
                 NSLog(@"%@", [error description]);
@@ -350,7 +326,7 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
     __autoreleasing NSError *error;
     BOOL success = [_sipHandler makeCall:dialNumber videoCall:NO error:&error];
     if (completion) {
-        completion(success, error, nil);
+        completion(success, error);
     }
 }
 
@@ -817,13 +793,13 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
     }];
 }
 
-+ (void)dialNumber:(NSString *)dialNumber type:(JCPhoneManagerDialType)dialType completion:(CallCompletionHandler)completion
++ (void)dialNumber:(NSString *)dialNumber type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion
 {
-    [[JCPhoneManager sharedManager] dialNumber:dialNumber type:dialType completion:^(BOOL success, NSError *error, NSDictionary *userInfo) {
+    [[JCPhoneManager sharedManager] dialNumber:dialNumber type:dialType completion:^(BOOL success, NSError *error) {
         if (error) {
             NSLog(@"%@", [error description]);
         }
-        completion(success, error, userInfo);
+        completion(success, error);
     }];
 }
 
@@ -900,6 +876,41 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
 + (void)setLoudSpeakerEnabled:(BOOL)loudSpeakerEnabled
 {
     [[JCPhoneManager sharedManager] setLoudSpeakerEnabled:loudSpeakerEnabled];
+}
+
+@end
+
+@implementation UIViewController (PhoneManager)
+
+- (void)dialNumber:(NSString *)phoneNumber sender:(id)sender
+{
+    [self dialNumber:phoneNumber sender:sender completion:NULL];
+}
+
+- (void)dialNumber:(NSString *)phoneNumber sender:(id)sender completion:(CompletionHandler)completion
+{
+    if([sender isKindOfClass:[UIButton class]]) {
+        ((UIButton *)sender).enabled = FALSE;
+    } else if ([sender isKindOfClass:[UITableView class]]) {
+        ((UITableView *)sender).userInteractionEnabled = FALSE;
+    }
+        
+    [JCPhoneManager dialNumber:phoneNumber
+                          type:JCPhoneManagerSingleDial
+                    completion:^(BOOL success, NSError *error) {
+                        if (!success) {
+                            [self showSimpleAlert:@"Warning" error:error];
+                        }
+                        if (completion) {
+                            completion(success, error);
+                        }
+                        
+                        if([sender isKindOfClass:[UIButton class]]) {
+                            ((UIButton *)sender).enabled = TRUE;
+                        } else if ([sender isKindOfClass:[UITableView class]]) {
+                            ((UITableView *)sender).userInteractionEnabled = TRUE;
+                        }
+                    }];
 }
 
 @end

@@ -113,21 +113,11 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
         return;
     }
     
-    if ([sender isKindOfClass:[UIButton class]]) {
-        UIButton *button = (UIButton *)sender;
-        button.enabled = FALSE;
-        [JCPhoneManager dialNumber:string
-                              type:JCPhoneManagerSingleDial
-                        completion:^(BOOL success, NSError *error, NSDictionary *callInfo) {
-                            if (success){
-                                self.dialStringLabel.dialString = nil;
-                            }
-                            else{
-                                [self showSimpleAlert:@"Warning" error:error];
-                            }
-                            button.enabled = TRUE;
-                        }];
-    }
+    [self dialNumber:string sender:sender completion:^(BOOL success, NSError *error) {
+        if (success){
+            self.dialStringLabel.dialString = nil;
+        }
+    }];
 }
 
 -(IBAction)backspace:(id)sender

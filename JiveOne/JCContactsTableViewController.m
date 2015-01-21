@@ -7,7 +7,6 @@
 //
 
 #import "JCContactsTableViewController.h"
-#import "JCCallerViewController.h"
 
 #import "JCContactCell.h"
 #import "JCLineCell.h"
@@ -17,7 +16,9 @@
 #import "PBX.h"
 #import "User.h"
 
-@interface JCContactsTableViewController()  <JCCallerViewControllerDelegate>
+#import "JCPhoneManager.h"
+
+@interface JCContactsTableViewController()
 {
     NSString *_searchText;
     NSMutableDictionary *lineSubcription;
@@ -36,21 +37,6 @@
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:[JCAuthenticationManager sharedInstance]];
-}
-
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    UIViewController *viewController = segue.destinationViewController;
-    if ([viewController isKindOfClass:[JCCallerViewController class]]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        id object = [self objectAtIndexPath:indexPath];
-        if ([object isKindOfClass:[Contact class]]) {
-            Contact *contact = (Contact *)object;
-            JCCallerViewController *callerViewController = (JCCallerViewController *)viewController;
-            callerViewController.delegate = self;
-            callerViewController.dialString = contact.extension;
-        }
-    }
 }
 
 - (void)configureCell:(UITableViewCell *)cell withObject:(id<NSObject>)object
@@ -146,13 +132,6 @@
     [self reloadTable];
 }
 
-#pragma mark - Delegate handlers -
-
--(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController
-{
-    [self dismissViewControllerAnimated:NO completion:NULL];
-}
-
 #pragma mark - Table view data source
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
@@ -163,6 +142,19 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     return [self.fetchedResultsController sectionIndexTitles][section];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    id object = [self objectAtIndexPath:indexPath];
+    if ([object isKindOfClass:[Contact class]]) {
+        Contact *contact = (Contact *)object;
+        [self dialNumber:contact.extension sender:tableView];
+    }
+    else if ([object isKindOfClass:[Line class]] && object != [JCAuthenticationManager sharedInstance].line) {
+        Line *line = (Line *)object;
+        [self dialNumber:line.extension sender:tableView];
+    }
 }
 
 #pragma mark - Search Bar Delegate

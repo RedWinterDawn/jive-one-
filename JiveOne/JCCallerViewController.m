@@ -469,7 +469,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     __unsafe_unretained JCCallerViewController *weakSelf = self;
     [JCPhoneManager dialNumber:dialString
                          type:controller.transferCallType
-                   completion:^(BOOL success, NSError *error, NSDictionary *callInfo) {
+                   completion:^(BOOL success, NSError *error) {
                        if (success)
                        {
                            switch (controller.transferCallType) {
@@ -483,7 +483,6 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
                                {
                                    [weakSelf dismissTransferViewControllerAnimated:YES];
                                    [weakSelf.callOptionsView setState:JCCallOptionViewFinishTransferState animated:YES];
-                                   weakSelf.warmTransferInfo = callInfo;
                                    break;
                                }
                                default:

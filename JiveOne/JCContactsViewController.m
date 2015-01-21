@@ -11,7 +11,7 @@
 
 #import "JCContactsViewController.h"
 #import "JCContactsTableViewController.h"
-#import "JCCallerViewController.h"
+#import "JCPhoneManager.h"
 
 @interface JCContactsViewController () <ABPeoplePickerNavigationControllerDelegate>
 {
@@ -26,7 +26,6 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    
     self.tabBar.selectedItem = [self.tabBar.items objectAtIndex:0];
 }
 
@@ -34,7 +33,9 @@
 {
     [super viewDidAppear:animated];
     if (_dialString) {
-        [self performSegueWithIdentifier:@"LocalContactsClickToCall" sender:self];
+        [self dialNumber:_dialString sender:nil completion:^(BOOL success, NSError *error) {
+            _dialString = nil;
+        }];
     }
 }
 
@@ -45,12 +46,6 @@
         _contactsTableViewController = (JCContactsTableViewController *)viewController;
         _contactsTableViewController.filterType = JCContactFilterAll;
         self.searchBar.delegate = _contactsTableViewController;
-    }
-    else if ([viewController isKindOfClass:[JCCallerViewController class]])
-    {
-        JCCallerViewController *caller = (JCCallerViewController *)viewController;
-        caller.dialString = _dialString;
-        _dialString = nil;
     }
 }
 
