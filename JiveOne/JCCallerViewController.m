@@ -69,8 +69,13 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-
     
+    [UIDevice currentDevice].proximityMonitoringEnabled = YES;
+}
+
+-(void)dealloc
+{
+    [UIDevice currentDevice].proximityMonitoringEnabled = NO;
 }
 
 -(void)viewWillLayoutSubviews
