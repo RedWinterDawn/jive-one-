@@ -313,6 +313,7 @@
         
         [self stopProgressTimerForVoicemail];
         self.selectedCell.playPauseButton.selected = false;
+        [UIDevice currentDevice].proximityMonitoringEnabled = NO;
     }
     else {
         //play
@@ -321,6 +322,7 @@
         [self startProgressTimerForVoicemail];
         self.selectedCell.playPauseButton.selected = TRUE;
         [self.selectedCell.voicemail markAsRead];
+        [UIDevice currentDevice].proximityMonitoringEnabled = YES;
     }
 }
 
@@ -365,11 +367,13 @@
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
     [self stopProgressTimerForVoicemail];
     self.selectedCell.playPauseButton.selected = FALSE;
+    [UIDevice currentDevice].proximityMonitoringEnabled = NO;
 }
 
 - (void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error {
     [self stopProgressTimerForVoicemail];
     self.selectedCell.playPauseButton.selected = TRUE;
+    [UIDevice currentDevice].proximityMonitoringEnabled = NO;
 }
 
 - (void)setupSpeaker
