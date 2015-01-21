@@ -9,7 +9,6 @@
 #import "JCCallCardCollectionViewController.h"
 #import "JCPhoneManager.h"
 #import "JCCallCardViewCell.h"
-
 #import "JCConferenceCallCard.h"
 
 @implementation JCCallCardCollectionViewController
@@ -17,23 +16,6 @@
 NSString *const kJCCallCardCollectionCurrentCallCellReuseIdentifier = @"CurrentCallCardCell";
 NSString *const kJCCallCardCollectionIncomingCallCellReuseIdentifier = @"IncomingCallCardCell";
 NSString *const kJCCallCardCollectionConferenceCallCellReuseIdentifier = @"ConferenceCallCardCell";
-
--(id)initWithCoder:(NSCoder *)aDecoder
-{
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-        JCPhoneManager *phoneManager = [JCPhoneManager sharedManager];
-        
-        [center addObserver:self selector:@selector(reloadTable:) name:kJCPhoneManagerAddedCallNotification object:phoneManager];
-        [center addObserver:self selector:@selector(reloadTable:) name:kJCPhoneManagerRemoveCallNotification object:phoneManager];
-        [center addObserver:self selector:@selector(reloadTable:) name:kJCPhoneManagerAnswerCallNotification object:phoneManager];
-        
-        [center addObserver:self selector:@selector(addedConferenceCallNotification:) name:kJCPhoneManagerAddedConferenceCallNotification object:phoneManager];
-        [center addObserver:self selector:@selector(removeConferenceCallNotification:) name:kJCPhoneManagerRemoveConferenceCallNotification object:phoneManager];
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -43,45 +25,6 @@ NSString *const kJCCallCardCollectionConferenceCallCellReuseIdentifier = @"Confe
     [self.collectionView registerNib:[UINib nibWithNibName:@"CurrentCallViewCell" bundle:bundle] forCellWithReuseIdentifier:kJCCallCardCollectionCurrentCallCellReuseIdentifier];
     [self.collectionView registerNib:[UINib nibWithNibName:@"IncomingCallViewCell" bundle:bundle] forCellWithReuseIdentifier:kJCCallCardCollectionIncomingCallCellReuseIdentifier];
     [self.collectionView registerNib:[UINib nibWithNibName:@"ConferenceCallViewCell" bundle:bundle] forCellWithReuseIdentifier:kJCCallCardCollectionConferenceCallCellReuseIdentifier];
-}
-
--(void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
--(void)reloadTable:(NSNotification *)notification
-{
-    if (![NSThread isMainThread]) {
-        [self performSelectorOnMainThread:@selector(reloadTable:) withObject:notification waitUntilDone:NO];
-        return;
-    }
-    
-    [self.collectionView reloadData];
-}
-
--(void)addedConferenceCallNotification:(NSNotification *)notification
-{
-    [UIView transitionWithView:self.view
-                      duration:0.3
-                       options:UIViewAnimationOptionTransitionFlipFromRight
-                    animations:^{
-                        [self.collectionView reloadData];
-                    } completion:^(BOOL finished) {
-                        
-                    }];
-}
-
--(void)removeConferenceCallNotification:(NSNotification *)notification
-{
-    [UIView transitionWithView:self.view
-                      duration:0.3
-                       options:UIViewAnimationOptionTransitionFlipFromLeft
-                    animations:^{
-                        [self.collectionView reloadData];
-                    } completion:^(BOOL finished) {
-                        
-                    }];
 }
 
 #pragma mark - Priviate -

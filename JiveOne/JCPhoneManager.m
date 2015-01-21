@@ -28,6 +28,9 @@
 // Categories
 #import "UIViewController+HUD.h"
 
+// View Controllers
+#import "JCCallerViewController.h"
+
 NSString *const kJCPhoneManager911String = @"911";
 NSString *const kJCPhoneManager611String = @"611";
 
@@ -50,7 +53,7 @@ NSString *const kJCPhoneManagerIncomingCall      = @"incomingCall";
 NSString *const kJCPhoneManagerTransferedCall    = @"transferedCall";
 NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
 
-@interface JCPhoneManager ()<SipHandlerDelegate, JCCallCardDelegate>
+@interface JCPhoneManager ()<SipHandlerDelegate, JCCallCardDelegate, JCCallViewControllerDataSource>
 {
     JCBluetoothManager *_bluetoothManager;
     SipHandler *_sipHandler;
@@ -60,7 +63,7 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
     BOOL _reconnectWhenCallFinishes;
     
     CallCompletionHandler _callCompletionHandler;
-    
+    JCCallerViewController *_callViewController;
 }
 
 @property (copy)void (^externalCallCompletionHandler)(BOOL connected);
@@ -344,14 +347,10 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
         _warmTransferNumber = dialNumber;
     }
     
-    _callCompletionHandler = completion;
     __autoreleasing NSError *error;
     BOOL success = [_sipHandler makeCall:dialNumber videoCall:NO error:&error];
     if (completion) {
-        if (!success) {
-            completion(false, error, nil);
-            _callCompletionHandler = nil;
-        }
+        completion(success, error, nil);
     }
 }
 
@@ -553,27 +552,22 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
     JCCallCard *callCard = [[JCCallCard alloc] initWithLineSession:lineSession];
     callCard.delegate = self;
     NSMutableArray *calls = self.calls;
-    NSUInteger priorCount = calls.count;
     [calls addObject:callCard];
     
     // Sort the array and fetch the resulting new index of the call card.
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:NSStringFromSelector(@selector(started)) ascending:NO];
     [calls sortUsingDescriptors:@[sortDescriptor]];
-    NSInteger index = [calls indexOfObject:callCard];
-    
-    NSDictionary *userInfo = @{
-                               kJCPhoneManagerUpdatedIndex:[NSNumber numberWithInteger:index],
-                               kJCPhoneManagerPriorUpdateCount:[NSNumber numberWithInteger:priorCount],
-                               kJCPhoneManagerUpdateCount: [NSNumber numberWithInteger:calls.count],
-                               kJCPhoneManagerIncomingCall: [NSNumber numberWithBool:lineSession.isIncoming],
-                               kJCPhoneManagerNewCall:callCard
-                               };
     self.calls = calls;
     
-    [self postNotificationNamed:kJCPhoneManagerAddedCallNotification userInfo:userInfo];
-    if (_callCompletionHandler) {
-        _callCompletionHandler(true, nil, userInfo);
-        _callCompletionHandler = nil;
+    if(!_callViewController)
+    {
+        UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+        _callViewController = [rootViewController.storyboard instantiateViewControllerWithIdentifier:@"CallerViewController"];
+        _callViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+        _callViewController.dataSource = self;
+        [rootViewController presentViewController:_callViewController animated:YES completion:NULL];
+    } else {
+        [_callViewController reload];
     }
 }
 
@@ -581,11 +575,9 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
 {
     JCCallCard *callCard = [self callCardForLineSession:lineSession];
     callCard.started = [NSDate date];
-    NSDictionary *userInfo = @{kJCPhoneManagerUpdatedIndex:[NSNumber numberWithInteger:[self.calls indexOfObject:callCard]],
-                               kJCPhoneManagerIncomingCall: [NSNumber numberWithBool:callCard.lineSession.isIncoming],
-                               kJCPhoneManagerLastCallState:[NSNumber numberWithInt:callCard.lineSession.sessionState]};
-    
-    [self postNotificationNamed:kJCPhoneManagerAnswerCallNotification userInfo:userInfo];
+    if (_callViewController) {
+        [_callViewController reload];
+    }
 }
 
 -(void)sipHandler:(SipHandler *)sipHandler willRemoveLineSession:(JCLineSession *)session
@@ -599,18 +591,17 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
     if (![calls containsObject:callCard])
         return;
     
-    NSUInteger index = [self.calls indexOfObject:callCard];
-    NSUInteger priorCount = self.calls.count;
-    [calls removeObject:callCard];
-    self.calls = calls;
+    [self.calls removeObject:callCard];
     
-    NSDictionary *userInfo = @{kJCPhoneManagerUpdatedIndex:[NSNumber numberWithInteger:index],
-                               kJCPhoneManagerPriorUpdateCount:[NSNumber numberWithInteger:priorCount],
-                               kJCPhoneManagerUpdateCount:[NSNumber numberWithInteger:calls.count],
-                               kJCPhoneManagerRemovedCall: callCard
-                               };
-    
-    [self postNotificationNamed:kJCPhoneManagerRemoveCallNotification userInfo:userInfo];
+    // Check to see if all the calls are gone, and dismiss the call UI if they are
+    if (_callViewController) {
+        if (self.calls.count == 0) {
+            [_callViewController dismissViewControllerAnimated:YES completion:NULL];
+            _callViewController = nil;
+        } else {
+            [_callViewController reload];
+        }
+    }
     
     if (_reconnectWhenCallFinishes && calls.count == 0) {
         _reconnectWhenCallFinishes = false;
@@ -633,8 +624,9 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
     // Blow away the previous call cards on the call array, replacing with the conference call card.
     _calls = [NSMutableArray arrayWithObject:conferenceCallCard];
     
-    // Notify of the change.
-    [self postNotificationNamed:kJCPhoneManagerAddedConferenceCallNotification];
+    if (_callViewController) {
+        [_callViewController startConferenceCall];
+    }
 }
 
 -(void)sipHandler:(SipHandler *)sipHandler didEndConferenceCallForLineSessions:(NSSet *)lineSessions
@@ -652,7 +644,9 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:NSStringFromSelector(@selector(started)) ascending:NO];
     [_calls sortUsingDescriptors:@[sortDescriptor]];
     
-    [self postNotificationNamed:kJCPhoneManagerRemoveConferenceCallNotification];
+    if (_callViewController) {
+        [_callViewController stopConferenceCall];
+    }
 }
 
 #pragma mark - Getters -
@@ -704,6 +698,27 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
     return nil;
 }
 
+-(BOOL)callerViewControllerShouldShowCallOptions:(JCCallerViewController *)callerViewController
+{
+    NSArray *calls = self.calls;
+    if (calls.count > 1) {
+        BOOL isIncoming = TRUE;
+        for (JCCallCard *call in calls) {
+            if (!call.lineSession.isIncoming) {
+                isIncoming = FALSE;
+                break;
+            }
+        }
+        return !isIncoming;
+    } else {
+        JCCallCard *call = calls.firstObject;
+        if (call.lineSession.isIncoming) {
+            return NO;
+        }
+        return YES;
+    }
+}
+
 #pragma mark - Notification Selectors -
 
 #pragma mark UIApplication
@@ -734,7 +749,10 @@ NSString *const kJCPhoneManagerRemovedCall  = @"removedCall";
     AVAudioSession *audioSession = notification.object;
     NSArray *outputs = audioSession.currentRoute.outputs;
     AVAudioSessionPortDescription *port = [outputs lastObject];
-    self.outputType = [self outputTypeFromString:port.portType];
+    _outputType = [self outputTypeFromString:port.portType];
+    if (_callViewController) {
+        _callViewController.speakerBtn.selected = (_outputType == JCPhoneManagerOutputSpeaker);
+    }
 }
 
 -(JCPhoneManagerOutputType)outputTypeFromString:(NSString *)type

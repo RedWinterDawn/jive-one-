@@ -9,6 +9,7 @@
 @import UIKit;
 
 #import "JCCallOptionsView.h"
+#import "JCLineSession.h"
 
 @class JCCallerViewController;
 
@@ -18,9 +19,18 @@
 
 @end
 
+@protocol JCCallViewControllerDataSource <NSObject>
+
+-(BOOL)callerViewControllerShouldShowCallOptions:(JCCallerViewController *)callerViewController;
+-(JCCallOptionViewState)callerViewControllerCallOptionsViewState:(JCCallerViewController *)callerViewController;
+
+@end
+
 @interface JCCallerViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet id<JCCallerViewControllerDelegate> delegate;
+@property (weak, nonatomic) IBOutlet id<JCCallViewControllerDataSource> dataSource;
+
 @property (weak, nonatomic) IBOutlet JCCallOptionsView *callOptionsView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *callOptionsViewOriginYConstraint;
 @property (weak, nonatomic) IBOutlet UIButton *speakerBtn;
@@ -31,13 +41,18 @@
 @property (weak, nonatomic) IBOutlet UIButton *mergeBtn;
 @property (weak, nonatomic) IBOutlet UIButton *warmTransfer;
 
-@property (nonatomic) bool callOptionsHidden;
+@property (nonatomic) BOOL callOptionsHidden;
 @property (nonatomic) NSTimeInterval callOptionTransitionAnimationDuration;
 @property (nonatomic) NSTimeInterval transferAnimationDuration;
 @property (nonatomic) NSTimeInterval keyboardAnimationDuration;
 
 // Phone number to be dialed when the view controller is loads.
-@property (nonatomic, strong) NSString *dialString;
+@property (nonatomic, strong) NSString *dialString __deprecated;
+
+-(void)startConferenceCall;
+-(void)stopConferenceCall;
+
+-(void)reload;
 
 // IBActions to trigger events with the call.
 -(IBAction)speaker:(id)sender;

@@ -20,7 +20,7 @@
 
 #import "JCPhoneManager.h"
 #import "JCPresenceManager.h"
-#import "JCCallerViewController.h"
+
 #import "JCBadgeManager.h"
 #import "JCApplicationSwitcherDelegate.h"
 #import "JCV5ApiClient.h"
@@ -37,16 +37,10 @@
 
 #import  "JCAppSettings.h"
 
-@interface JCAppDelegate () <JCCallerViewControllerDelegate, JCPickerViewControllerDelegate>
+@interface JCAppDelegate () <JCPickerViewControllerDelegate>
 {
-    JCCallerViewController *_presentedCallerViewController;
-    JCAuthenticationManager *_authenticationManager;
-    JCPhoneManager *_phoneManager;
-    
     UINavigationController *_navigationController;
     UIViewController *_appSwitcherViewController;
-    
-    AFNetworkReachabilityStatus _previousNetworkStatus;
 }
 
 @end
@@ -74,11 +68,11 @@
     
     // Authentication
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    _authenticationManager = [JCAuthenticationManager sharedInstance];
-    [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:_authenticationManager];
-    [center addObserver:self selector:@selector(userDataReady:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:_authenticationManager];
-    [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:_authenticationManager];
-    [_authenticationManager checkAuthenticationStatus];
+    JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
+    [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];
+    [center addObserver:self selector:@selector(userDataReady:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:authenticationManager];
+    [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:authenticationManager];
+    [authenticationManager checkAuthenticationStatus];
 }
 
 /**
@@ -194,7 +188,7 @@
 {
     LOG_Info();
     // If we are not a V5 PBX, we do not have a voicemail data to go fetch, and return with a no data callback.
-    if (!_authenticationManager.line.pbx.isV5)
+    if (![JCAuthenticationManager sharedInstance].line.pbx.isV5)
         return UIBackgroundFetchResultNoData;
     
     NSLog(@"APPDELEGATE - performFetchWithCompletionHandler");
@@ -254,14 +248,6 @@
 
 -(void)registerServicesToLine:(Line *)line deviceToken:(NSString *)deviceToken
 {
-    // If we have not already, initialize the phone manager singleton, store a reference to it and register for notifications.
-    if (!_phoneManager) {
-        _phoneManager = [JCPhoneManager sharedManager];
-        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-        [center addObserver:self selector:@selector(didReceiveIncomingCall:) name:kJCPhoneManagerAddedCallNotification object:_phoneManager];
-        [center addObserver:self selector:@selector(stopRingtone) name:kJCPhoneManagerAnswerCallNotification object:_phoneManager];
-    }
-    
     [JCPhoneManager disconnect];
     
     __block NSManagedObjectID *lineId = line.objectID;
@@ -443,26 +429,26 @@
     
     [self startRingtone];
     
-    _presentedCallerViewController = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"CallerViewController"];
-    _presentedCallerViewController.delegate = self;
-    _presentedCallerViewController.callOptionsHidden = true;
-    _presentedCallerViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    
-    [self.window.rootViewController presentViewController:_presentedCallerViewController animated:YES completion:NULL];
+//    _presentedCallerViewController = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"CallerViewController"];
+//    _presentedCallerViewController.delegate = self;
+//    _presentedCallerViewController.callOptionsHidden = true;
+//    _presentedCallerViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+//    
+//    [self.window.rootViewController presentViewController:_presentedCallerViewController animated:YES completion:NULL];
 }
 
 /**
  * Delegate rsponder to remove the the presented modal view controller when an incomming callerver view controller is
  * dismissed. Used only if the caller was presented from the app delegate.
  */
--(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController
-{
-    [self.window.rootViewController dismissViewControllerAnimated:FALSE completion:^{
-        _presentedCallerViewController = nil;
-        [self stopRingtone];
-        [self stopVibration];
-    }];
-}
+//-(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController
+//{
+////    [self.window.rootViewController dismissViewControllerAnimated:FALSE completion:^{
+////        _presentedCallerViewController = nil;
+////        [self stopRingtone];
+////        [self stopVibration];
+////    }];
+//}
 
 #pragma mark - Delegate Handlers -
 
