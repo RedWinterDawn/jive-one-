@@ -27,7 +27,7 @@
 -(void)awakeFromNib
 {
     _defaultBackgroundColor = self.backgroundColor;
-    self.selected = self.selected;
+//    self.selected = self.selected;
 }
 
 -(void)layoutSubviews
@@ -36,7 +36,7 @@
     self.layer.cornerRadius = self.bounds.size.width/2;
     self.layer.masksToBounds = true;
     
-    self.selected = self.selected;
+//    self.selected = self.selected;
 }
 -(void)setEnabled:(BOOL)enabled{
     [super setEnabled:enabled];

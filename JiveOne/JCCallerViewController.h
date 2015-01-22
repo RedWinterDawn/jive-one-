@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *swapBtn;
 @property (weak, nonatomic) IBOutlet UIButton *mergeBtn;
 @property (weak, nonatomic) IBOutlet UIButton *warmTransfer;
+@property (weak, nonatomic) IBOutlet UIButton *addBtn;
 
 @property (nonatomic) BOOL callOptionsHidden;
 @property (nonatomic) NSTimeInterval callOptionTransitionAnimationDuration;

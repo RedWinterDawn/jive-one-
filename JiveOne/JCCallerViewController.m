@@ -62,6 +62,11 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         _callOptionTransitionAnimationDuration = CALL_OPTIONS_ANIMATION_DURATION;
         _transferAnimationDuration             = TRANSFER_ANIMATION_DURATION;
         _keyboardAnimationDuration             = KEYBOARD_ANIMATION_DURATION;
+        
+        self.warmTransfer.enabled = false;
+        self.blindTransfer.enabled = false;
+        self.swapBtn.enabled = false;
+        self.mergeBtn.enabled =false;
     }
     return self;
 }
@@ -71,6 +76,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     [super viewDidLoad];
     
     [UIDevice currentDevice].proximityMonitoringEnabled = YES;
+        
 }
 
 -(void)dealloc

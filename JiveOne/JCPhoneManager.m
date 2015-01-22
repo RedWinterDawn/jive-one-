@@ -654,6 +654,7 @@ NSString *const kJCPhoneManager611String = @"611";
         _callViewController.swapBtn.enabled         = updatable;
         _callViewController.warmTransfer.enabled    = updatable;
         _callViewController.blindTransfer.enabled   = updatable;
+        _callViewController.addBtn.enabled           = updatable;
     }
 }
 
