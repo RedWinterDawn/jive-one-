@@ -63,10 +63,11 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         _transferAnimationDuration             = TRANSFER_ANIMATION_DURATION;
         _keyboardAnimationDuration             = KEYBOARD_ANIMATION_DURATION;
         
-        self.warmTransfer.enabled = false;
-        self.blindTransfer.enabled = false;
-        self.swapBtn.enabled = false;
-        self.mergeBtn.enabled =false;
+        self.warmTransfer.enabled   = false;
+        self.blindTransfer.enabled    = false;
+        self.swapBtn.enabled           = false;
+        self.mergeBtn.enabled         = false;
+        self.addBtn.enabled             = false;
     }
     return self;
 }
@@ -223,7 +224,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
             [JCPhoneManager splitCalls:^(BOOL success, NSError *error) {
                 if (success) {
                     self.mergeLabel.text = NSLocalizedString(@"Merge Calls", nil);
-                    button.selected = TRUE;
+                    button.selected = FALSE;
                 }
                 else {
                     [self showHudWithTitle:@"Oh-oh" detail:@"Failed to End Conference"];
@@ -234,7 +235,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
             [JCPhoneManager mergeCalls:^(BOOL success, NSError *error) {
 				if (success) {
 					self.mergeLabel.text = NSLocalizedString(@"Split Calls", nil);
-                    button.selected = FALSE;
+                    button.selected = TRUE;
 				}
 				else {
 					[self showHudWithTitle:@"Oh-oh" detail:@"Failed to Create Conference"];

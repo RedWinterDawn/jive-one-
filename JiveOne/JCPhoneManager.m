@@ -651,7 +651,7 @@ NSString *const kJCPhoneManager611String = @"611";
     // Use the updatable state to update the call view controller UI.
     if (_callViewController) {
         _callViewController.mergeBtn.enabled        = updatable;
-        _callViewController.swapBtn.enabled         = updatable;
+        _callViewController.swapBtn.enabled         =updatable;
         _callViewController.warmTransfer.enabled    = updatable;
         _callViewController.blindTransfer.enabled   = updatable;
         _callViewController.addBtn.enabled           = updatable;

@@ -48,6 +48,8 @@
     _defaultSwapPosition            = _swapBtnHorizontalContstraint.constant;
     _defaultMergePosition           = _mergeBtnHorizontalContstraint.constant;
     _defaultFinishPosition          = _finishTransferConstraint.constant;
+    
+
 }
 
 -(void)layoutSubviews
@@ -145,9 +147,7 @@
         }];
     
     else if (_showingConference)
-        [self hideConference:animated completion:^(BOOL finished) {
-            [self showMultiple:animated completion:NULL];
-        }];
+                   [self showMultiple:animated completion:NULL];
     
     else if (_showingFinish)
         [self hideFinishTransfer:animated completion:^(BOOL finished) {
@@ -157,8 +157,8 @@
 
 -(void)showMultiple:(bool)animated completion:(void (^)(BOOL finished))completion
 {
-    _swapBtnHorizontalContstraint.constant  = - _defaultSwapPosition;
-    _mergeBtnHorizontalContstraint.constant = - _defaultMergePosition;
+    _mergeBtnHorizontalContstraint.constant = - _defaultSwapPosition;
+    _swapBtnHorizontalContstraint.constant   = - _defaultSwapPosition;
     
     [self animate:animated completion:^(BOOL finished) {
         _showingMultiple = true;
@@ -171,8 +171,8 @@
 
 -(void)hideMultiple:(bool)animated completion:(void (^)(BOOL finished))completion
 {
-    _swapBtnHorizontalContstraint.constant  = _defaultSwapPosition;
     _mergeBtnHorizontalContstraint.constant = _defaultMergePosition;
+    _swapBtnHorizontalContstraint.constant = _defaultSwapPosition;
     
     [self animate:animated completion:^(BOOL finished) {
         _showingMultiple = false;
@@ -191,9 +191,7 @@
         }];
     
     else if (_showingMultiple)
-        [self hideMultiple:animated completion:^(BOOL finished) {
-            [self showConference:animated completion:NULL];
-        }];
+        [self showConference:animated completion:NULL];
     
     else if (_showingFinish)
         [self hideFinishTransfer:animated completion:^(BOOL finished) {
@@ -203,8 +201,10 @@
 
 -(void)showConference:(bool)animated completion:(void (^)(BOOL finished))completion
 {
-    _mergeBtnHorizontalContstraint.constant = - _defaultMergePosition;
-    _addCallBtnHorizontalContstraint.constant = - _defaultSwapPosition;
+    
+    _mergeBtnHorizontalContstraint.constant = 0;
+    _swapBtnHorizontalContstraint.constant =  _defaultSwapPosition;
+
     
     [self animate:animated completion:^(BOOL finished) {
         _showingConference = true;
@@ -216,7 +216,8 @@
 -(void)hideConference:(bool)animated completion:(void (^)(BOOL finished))completion
 {
     _mergeBtnHorizontalContstraint.constant = _defaultMergePosition;
-    _addCallBtnHorizontalContstraint.constant = _defaultSwapPosition;
+    _swapBtnHorizontalContstraint.constant = _defaultSwapPosition;
+
     
     [self animate:animated completion:^(BOOL finished) {
         _showingConference = false;
