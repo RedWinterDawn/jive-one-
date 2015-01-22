@@ -3387,7 +3387,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="248" horizontalCompressionResistancePriority="249" verticalCompressionResistancePriority="253" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="907-zj-hOp" userLabel="Merge Calls Button" customClass="JCMergeButton">
-                                        <rect key="frame" x="-120" y="127" width="60" height="60"/>
+                                        <rect key="frame" x="-570" y="127" width="60" height="60"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="b3q-gp-MSR"/>
@@ -3407,7 +3407,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Merge Calls" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C17-8W-dR3" userLabel="Merge Calls Label">
-                                        <rect key="frame" x="-132" y="187" width="76" height="21"/>
+                                        <rect key="frame" x="-582" y="187" width="76" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="GP9-ym-b5g"/>
                                             <constraint firstAttribute="width" constant="76" id="h1M-6C-ah6"/>
@@ -3487,7 +3487,7 @@
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="8tp-NP-l8d" secondAttribute="bottom" constant="40" id="08r-rh-XUX"/>
                                     <constraint firstAttribute="bottom" secondItem="fG3-GZ-ycX" secondAttribute="bottom" constant="40" id="2gI-cH-88J"/>
-                                    <constraint firstAttribute="centerX" secondItem="907-zj-hOp" secondAttribute="centerX" constant="250" id="4xc-KH-gB4"/>
+                                    <constraint firstAttribute="centerX" secondItem="907-zj-hOp" secondAttribute="centerX" constant="700" id="4xc-KH-gB4"/>
                                     <constraint firstItem="zpq-3o-7Gs" firstAttribute="centerX" secondItem="hys-3G-Hvf" secondAttribute="centerX" constant="0.5" id="5YW-c9-mRE"/>
                                     <constraint firstAttribute="trailing" secondItem="W4O-ei-fkQ" secondAttribute="trailing" constant="-79" id="6zV-kp-m5a"/>
                                     <constraint firstAttribute="bottom" secondItem="907-zj-hOp" secondAttribute="bottom" constant="40" id="703-5z-JMN"/>
