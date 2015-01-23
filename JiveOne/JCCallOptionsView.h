@@ -28,6 +28,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *swapBtnHorizontalContstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *mergeBtnHorizontalContstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *finishTransferConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *halfTheScreen;
 
 -(void)setState:(JCCallOptionViewState)state animated:(bool)animated;
 
