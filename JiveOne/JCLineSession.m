@@ -26,6 +26,29 @@ NSString *const kJCLineSessionHoldKey = @"hold";
     return self;
 }
 
+-(id)copyWithZone:(NSZone *)zone
+{
+    JCLineSession *copy = [[[self class] allocWithZone:zone] init];
+    if (copy) {
+        copy.sessionId          = self.sessionId;
+        copy.referedSessionId   = self.referedSessionId;
+        copy.callTitle          = self.callTitle;
+        copy.callDetail         = self.callDetail;
+        copy.active             = self.isActive;
+        copy.hold               = self.isHolding;
+        copy.updatable          = self.isUpdatable;
+        copy.incoming           = self.isIncoming;
+        copy.conference         = self.isConference;
+        copy.video              = self.isVideo;
+        copy.audio              = self.isAudio;
+        copy.transfer           = self.isTransfer;
+        copy.refer              = self.isRefer;
+        copy.mExistEarlyMedia   = self.mExistEarlyMedia;
+    }
+    return copy;
+}
+
+
 - (NSString *)description
 {
     NSMutableString *output = [NSMutableString string];

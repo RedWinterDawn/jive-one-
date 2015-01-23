@@ -37,7 +37,7 @@ typedef enum {
     JCTransferFailed,
 } JCLineSessionState;
 
-@interface JCLineSession : NSObject
+@interface JCLineSession : NSObject <NSCopying>
 
 @property (nonatomic, strong) Contact *contact;
 @property (nonatomic, strong) NSString *callTitle;

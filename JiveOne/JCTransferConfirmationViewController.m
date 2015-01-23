@@ -11,4 +11,14 @@
 @implementation JCTransferConfirmationViewController
 
 
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.currentCallersName.text              = self.transferLineSession.callTitle;
+    self.currentCallersNumber.dialString      = self.transferLineSession.callDetail;
+    self.transferToCallersName.text           = self.receivingLineSession.callTitle;
+    self.transferToCallersNumber.dialString   = self.receivingLineSession.callDetail;
+}
+
 @end

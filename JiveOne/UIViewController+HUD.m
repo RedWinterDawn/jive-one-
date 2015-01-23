@@ -44,7 +44,7 @@ static NSInteger JCProgressHUDDuration;
     [JCProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
     [JCProgressHUD setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:0.75]];
     [JCProgressHUD setForegroundColor:[UIColor whiteColor]];
-    [JCProgressHUD setDuration:3];
+    [JCProgressHUD setDuration:4];
 }
 
 - (void)showError:(NSError *)error

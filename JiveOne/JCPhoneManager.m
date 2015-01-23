@@ -27,6 +27,7 @@
 
 // View Controllers
 #import "JCCallerViewController.h"
+#import "JCTransferConfirmationViewController.h"
 #import "UIViewController+HUD.h"
 
 NSString *const kJCPhoneManager911String = @"911";
@@ -37,6 +38,7 @@ NSString *const kJCPhoneManager611String = @"611";
     JCBluetoothManager *_bluetoothManager;
     SipHandler *_sipHandler;
     JCCallerViewController *_callViewController;
+    JCTransferConfirmationViewController *_transferConfirmationViewController;
     BOOL _reconnectWhenCallFinishes;
 	NSString *_warmTransferNumber;
     CTCallCenter *_externalCallCenter;
@@ -496,13 +498,47 @@ NSString *const kJCPhoneManager611String = @"611";
     [_sipHandler pressNumpadButton:numberPadNumber];
 }
 
--(void)dismissCallViewController
+-(void)presentCallViewController
 {
-    if (_callViewController.presentedViewController != nil) {
-        [_callViewController.presentedViewController dismissViewControllerAnimated:NO completion:NULL];
+    if (_transferConfirmationViewController) {
+        [self dismissCallViewControllerAnimated:NO];
     }
-    [_callViewController dismissViewControllerAnimated:YES completion:NULL];
-    _callViewController = nil;
+    
+    UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    _callViewController = [rootViewController.storyboard instantiateViewControllerWithIdentifier:@"CallerViewController"];
+    _callViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [rootViewController presentViewController:_callViewController animated:YES completion:NULL];
+}
+
+-(void)dismissCallViewControllerAnimated:(BOOL)animated
+{
+    [_callViewController dismissViewControllerAnimated:animated completion:^{
+        _callViewController = nil;
+    }];
+}
+
+-(void)presentTransferSuccessWithSession:(JCLineSession *)lineSession receivingSession:(JCLineSession *)receivingSession
+{
+    UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    _transferConfirmationViewController = [rootViewController.storyboard instantiateViewControllerWithIdentifier:@"TransferConfirmationViewController"];
+    _transferConfirmationViewController.transferLineSession = lineSession;
+    _transferConfirmationViewController.receivingLineSession = receivingSession;
+    
+   [rootViewController presentViewController:_transferConfirmationViewController animated:YES completion:NULL];
+    [self performSelector:@selector(dismissTransferConfirmationViewController) withObject:nil afterDelay:3];
+}
+
+
+- (void)dismissTransferConfirmationViewController
+{
+    [self dismissCallViewControllerAnimated:YES];
+}
+
+- (void)dismissTransferConfirmationViewControllerAnimated:(BOOL)animated
+{
+    [_transferConfirmationViewController dismissViewControllerAnimated:animated completion:^{
+        _transferConfirmationViewController = nil;
+    }];
 }
 
 #pragma mark SipHandlerDelegate
@@ -561,10 +597,7 @@ NSString *const kJCPhoneManager611String = @"611";
     
     if(!_callViewController)
     {
-        UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-        _callViewController = [rootViewController.storyboard instantiateViewControllerWithIdentifier:@"CallerViewController"];
-        _callViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-        [rootViewController presentViewController:_callViewController animated:YES completion:NULL];
+        [self presentCallViewController];
     } else {
         [_callViewController reload];
     }
@@ -601,7 +634,7 @@ NSString *const kJCPhoneManager611String = @"611";
     NSInteger count = self.calls.count;
     if (_callViewController) {
         if (count == 0) {
-            [self dismissCallViewController];
+            [self dismissCallViewControllerAnimated:YES];
         } else {
             [_callViewController reload];
         }
@@ -697,13 +730,13 @@ NSString *const kJCPhoneManager611String = @"611";
             receivingLine = lineSession;
         }
     }
-    [_callViewController presentWarmTransferSuccessWithSession:transferLine receivingSession:receivingLine];
-    [self performSelector:@selector(dismissCallViewController) withObject:nil afterDelay:3];
+    
+    [self dismissCallViewControllerAnimated:NO];
+    [self presentTransferSuccessWithSession:transferLine receivingSession:receivingLine];
 }
 
 -(void)sipHandler:(SipHandler *)sipHandler didFailTransferWithError:(NSError *)error
 {
-    [_callViewController hideStatus];
     [_callViewController showError:error];
 }
 

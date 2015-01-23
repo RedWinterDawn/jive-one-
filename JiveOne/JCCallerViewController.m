@@ -139,16 +139,6 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
                     } completion:NULL];
 }
 
--(void)presentWarmTransferSuccessWithSession:(JCLineSession *)lineSession receivingSession:(JCLineSession *)receivingSession
-{
-    JCTransferConfirmationViewController *transferConfirmationViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"TransferConfirmationViewController"];
-    transferConfirmationViewController.currentCallersName.text              = lineSession.callTitle;
-    transferConfirmationViewController.currentCallersNumber.dialString      = lineSession.callDetail;
-    transferConfirmationViewController.transferToCallersName.text           = receivingSession.callTitle;
-    transferConfirmationViewController.transferToCallersNumber.dialString   = receivingSession.callDetail;
-    [self presentViewController:transferConfirmationViewController animated:YES completion:NULL];
-}
-
 #pragma mark - IBActions -
 
 -(IBAction)mute:(id)sender
