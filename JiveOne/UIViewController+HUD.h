@@ -16,10 +16,6 @@
 - (void)showStatus:(NSString *)string;
 - (void)hideStatus;
 
-
-- (void)showHudWithTitle:(NSString*)title detail:(NSString*)detail __deprecated;
-- (void)hideHud __deprecated;
-
 - (void)showSimpleAlert:(NSString *)title error:(NSError *)error;
 - (void)showSimpleAlert:(NSString *)title message:(NSString *)message;
 - (void)showSimpleAlert:(NSString *)title message:(NSString *)message code:(NSInteger)code;
@@ -33,9 +29,6 @@
 
 +(void)showStatus:(NSString *)status;
 +(void)hideStatus;
-
-+(void)showHudWithTitle:(NSString *)title message:(NSString *)message __deprecated;
-+(void)hideHud  __deprecated;
 
 +(void)showSimpleAlert:(NSString *)title error:(NSError *)error;
 +(void)showSimpleAlert:(NSString *)title message:(NSString *)message;

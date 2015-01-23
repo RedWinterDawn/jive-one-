@@ -37,8 +37,6 @@ static NSInteger JCProgressHUDDuration;
 
 @end
 
-//static MBProgressHUD *progressHud;
-
 @implementation UIViewController (HUD)
 
 - (void)configureHud
@@ -79,31 +77,6 @@ static NSInteger JCProgressHUDDuration;
 - (void)hideStatus
 {
     [JCProgressHUD dismiss];
-}
-
-- (void)showHudWithTitle:(NSString*)title detail:(NSString*)detail
-{
-    //[SVProgressHUD showInfoWithStatus:<#(NSString *)#>]
-    
-    
-    
-//    if (!progressHud) {
-//        progressHud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//        progressHud.mode = MBProgressHUDModeIndeterminate;
-//    }
-//    
-//    progressHud.labelText = NSLocalizedString(title, nil);
-//    progressHud.detailsLabelText = NSLocalizedString(detail, nil);
-//    [progressHud show:YES];
-}
-
-- (void)hideHud
-{
-//    if (progressHud) {
-//        [MBProgressHUD hideHUDForView:self.view animated:YES];
-//        [progressHud removeFromSuperview];
-//        progressHud = nil;
-//    }
 }
 
 -(void)showSimpleAlert:(NSString *)title error:(NSError *)error
@@ -180,23 +153,6 @@ static NSInteger JCProgressHUDDuration;
 +(void)hideStatus{
     dispatch_async(dispatch_get_main_queue(), ^{
         [[UIApplication sharedApplication].keyWindow.rootViewController hideStatus];
-    });
-}
-
-
-+(void)showHudWithTitle:(NSString *)title message:(NSString *)message
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-        [viewController showHudWithTitle:title detail:message];
-    });
-}
-
-+(void)hideHud
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-        [viewController hideHud];
     });
 }
 
