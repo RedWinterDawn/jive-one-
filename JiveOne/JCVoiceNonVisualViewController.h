@@ -6,8 +6,10 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 
 @interface JCVoiceNonVisualViewController : UIViewController
+
+-(IBAction)callVoicemail:(id)sender;
 
 @end

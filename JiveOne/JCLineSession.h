@@ -8,18 +8,24 @@
 
 #import <Foundation/Foundation.h>
 
+#define INVALID_SESSION_ID -1
+
 @class Contact;
 
 extern NSString *const kJCLineSessionStateKey;
+extern NSString *const kJCLineSessionHoldKey;
 
 typedef enum {
     JCNoCall,               // Idle line state.
+    JCCallInitiated,        // Start of an outgoing call.
     JCCallIncoming,         // Incoming call
     JCCallTrying,           // Outgoing call request is processed.
     JCCallProgress,         // Notification of early media and if audio or video exists.
     JCCallRinging,          // Outgoing call rang
+    JCCallAnswerInitiated,   // Start answering a call.
     JCCallAnswered,         // Outgoing call was answered
     JCCallConnected,        // Outgoing call fully connected.
+    JCCallConference,       // Call in a conference call.
     JCCallFailed,           // Outgoing call failed.
     JCCallCanceled,         // Call Was Canceled.
     JCTransferIncoming,     // Incoming Transfer Call
@@ -31,31 +37,32 @@ typedef enum {
     JCTransferFailed,
 } JCLineSessionState;
 
-@interface JCLineSession : NSObject
+@interface JCLineSession : NSObject <NSCopying>
 
 @property (nonatomic, strong) Contact *contact;
-@property (nonatomic) NSString *callTitle;
-@property (nonatomic) NSString *callDetail;
+@property (nonatomic, strong) NSString *callTitle;
+@property (nonatomic, strong) NSString *callDetail;
 
 // State
 @property (nonatomic) JCLineSessionState sessionState;
 
 // Identifiers
-@property (nonatomic) long mSessionId;
-@property (nonatomic, getter=getOriginalCallSessionId) long mOriginCallSessionId;
+@property (nonatomic) NSInteger sessionId;
+@property (nonatomic) NSInteger referedSessionId;
 
 // Flags
-@property (nonatomic, getter=isActive) BOOL active;
-@property (nonatomic, getter=isHolding) BOOL hold;
-@property (nonatomic, getter=isUpdatable) BOOL updatable;
-//@property (nonatomic) bool mSessionState;
-@property (nonatomic) bool mConferenceState;
-@property (nonatomic) bool mRecvCallState;
-@property (nonatomic, getter=isReferCall) bool mIsReferCall;
-@property (nonatomic) bool mExistEarlyMedia;
-@property (nonatomic) bool mVideoState;
+@property (nonatomic, getter=isActive) BOOL active;             // Has an active line session on it.
+@property (nonatomic, getter=isHolding) BOOL hold;              // Active line hold status.
+@property (nonatomic, getter=isUpdatable) BOOL updatable;       // Active line is updateable
+@property (nonatomic, getter=isIncoming) BOOL incoming;         // Is incomming call.
+@property (nonatomic, getter=isConference) BOOL conference;     // Is member of conference call.
+@property (nonatomic, getter=isVideo) BOOL video;               // is a video call (not yet supported)
+@property (nonatomic, getter=isAudio) BOOL audio;               // is a audio call (normally true)
+@property (nonatomic, getter=isTransfer) BOOL transfer;         // if active call is being transfered.
+@property (nonatomic, getter=isRefer) BOOL refer;               // if incoming call is a refer call
 
-- (void)setReferCall:(BOOL)referCall originalCallSessionId:(long)originalCallSessionId;
+@property (nonatomic) bool mExistEarlyMedia;
+
 - (void)reset;
 
 @end

@@ -11,14 +11,8 @@
 @interface JCConferenceCallCard : JCCallCard
 
 @property (nonatomic, readonly) NSArray *calls;
+@property (nonatomic, readonly) BOOL isHolding;
 
--(instancetype)initWithCalls:(NSArray *)calls;
--(instancetype)initWithLineSessions:(NSArray *)sessions;
-
--(void)addCall:(JCCallCard *)call;
--(void)addCalls:(NSArray *)calls;
-
--(void)removeCall:(JCCallCard *)call;
--(void)removeCalls:(NSArray *)calls;
+-(instancetype)initWithLineSessions:(NSSet *)sessions;
 
 @end

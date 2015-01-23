@@ -9,6 +9,9 @@
 #import "JCCallCardViewCell.h"
 
 @interface JCCurrentCallCardViewCell : JCCallCardViewCell
+{
+    NSTimer *_holdTimer;
+}
 
 // Subviews
 @property (nonatomic, weak) IBOutlet UIView *actionView;
@@ -31,5 +34,13 @@
 
 // Actions
 -(IBAction)toggleHold:(id)sender;
+
+@property (nonatomic, getter=isHolding) BOOL holding;
+-(void)setHolding:(BOOL)holding animated:(BOOL)animated;
+
+-(void)showHoldButton:(bool)animated;
+-(void)hideHoldButton:(bool)animated;
+
+-(void)startTimer;
 
 @end

@@ -8,14 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "JCDialStringLabel.h"
+#import "JCLineSession.h"
 
 @interface JCTransferConfirmationViewController : UIViewController
+
+@property (nonatomic, copy) JCLineSession *transferLineSession;
+@property (nonatomic, copy) JCLineSession *receivingLineSession;
 
 @property (weak, nonatomic) IBOutlet UILabel *currentCallersName;
 @property (weak, nonatomic) IBOutlet JCDialStringLabel *currentCallersNumber;
 @property (weak, nonatomic) IBOutlet UILabel *transferToCallersName;
 @property (weak, nonatomic) IBOutlet JCDialStringLabel *transferToCallersNumber;
-
-@property (nonatomic, strong) NSDictionary *transferInfo;
 
 @end

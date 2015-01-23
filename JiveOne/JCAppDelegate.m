@@ -8,7 +8,7 @@
 
 #import "JCAppDelegate.h"
 #import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
-#import <MBProgressHUD/MBProgressHUD.h>
+#import <NewRelicAgent/NewRelic.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import "AFNetworkActivityIndicatorManager.h"
 #import "JCLoginViewController.h"
@@ -20,7 +20,7 @@
 
 #import "JCPhoneManager.h"
 #import "JCPresenceManager.h"
-#import "JCCallerViewController.h"
+
 #import "JCBadgeManager.h"
 #import "JCApplicationSwitcherDelegate.h"
 #import "JCV5ApiClient.h"
@@ -37,16 +37,12 @@
 
 #import  "JCAppSettings.h"
 
-@interface JCAppDelegate () <JCCallerViewControllerDelegate, JCPickerViewControllerDelegate>
+#import <SVProgressHUD/SVProgressHUD.h>
+
+@interface JCAppDelegate () <JCPickerViewControllerDelegate>
 {
-    JCCallerViewController *_presentedCallerViewController;
-    JCAuthenticationManager *_authenticationManager;
-    JCPhoneManager *_phoneManager;
-    
     UINavigationController *_navigationController;
     UIViewController *_appSwitcherViewController;
-    
-    AFNetworkReachabilityStatus _previousNetworkStatus;
 }
 
 @end
@@ -74,11 +70,11 @@
     
     // Authentication
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    _authenticationManager = [JCAuthenticationManager sharedInstance];
-    [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:_authenticationManager];
-    [center addObserver:self selector:@selector(userDataReady:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:_authenticationManager];
-    [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:_authenticationManager];
-    [_authenticationManager checkAuthenticationStatus];
+    JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
+    [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];
+    [center addObserver:self selector:@selector(userDataReady:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:authenticationManager];
+    [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:authenticationManager];
+    [authenticationManager checkAuthenticationStatus];
 }
 
 /**
@@ -194,7 +190,7 @@
 {
     LOG_Info();
     // If we are not a V5 PBX, we do not have a voicemail data to go fetch, and return with a no data callback.
-    if (!_authenticationManager.line.pbx.isV5)
+    if (![JCAuthenticationManager sharedInstance].line.pbx.isV5)
         return UIBackgroundFetchResultNoData;
     
     NSLog(@"APPDELEGATE - performFetchWithCompletionHandler");
@@ -254,18 +250,12 @@
 
 -(void)registerServicesToLine:(Line *)line deviceToken:(NSString *)deviceToken
 {
-    // If we have not already, initialize the phone manager singleton, store a reference to it and register for notifications.
-    if (!_phoneManager) {
-        _phoneManager = [JCPhoneManager sharedManager];
-        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-        [center addObserver:self selector:@selector(didReceiveIncomingCall:) name:kJCPhoneManagerAddedCallNotification object:_phoneManager];
-        [center addObserver:self selector:@selector(stopRingtone) name:kJCPhoneManagerAnswerCallNotification object:_phoneManager];
-    }
-    
     [JCPhoneManager disconnect];
+    
+    __block NSManagedObjectID *lineId = line.objectID;
     dispatch_queue_t backgroundQueue = dispatch_queue_create("register_services_to_line", 0);
     dispatch_async(backgroundQueue, ^{
-        Line *localLine = (Line *)[[NSManagedObjectContext MR_contextForCurrentThread] objectWithID:line.objectID];
+        Line *localLine = (Line *)[[NSManagedObjectContext MR_contextForCurrentThread] objectWithID:lineId];
         
         // Get Contacts. Once we have contacts, we subscribe to their presence, fetch voicemails trying
     	// to link contacts to thier voicemail if in the pbx. Only fetch voicmails, and open sockets for
@@ -308,7 +298,7 @@
     }
     
     AFNetworkReachabilityStatus status = (AFNetworkReachabilityStatus)((NSNumber *)[notification.userInfo valueForKey:AFNetworkingReachabilityNotificationStatusItem]).integerValue;
-    AFNetworkReachabilityManager *networkManager = (AFNetworkReachabilityManager *)notification.object;
+    AFNetworkReachabilityManager *networkManager = [AFNetworkReachabilityManager sharedManager];
     Line *line = [JCAuthenticationManager sharedInstance].line;
     JCPhoneManagerNetworkType currentNetworkType = [JCPhoneManager networkType];
     
@@ -330,12 +320,7 @@
     // this time. We schedule it to be reconnected when the current call(s) finishes.
     else if (currentNetworkType == AFNetworkReachabilityStatusReachableViaWWAN && status == AFNetworkReachabilityStatusReachableViaWiFi) {
         NSLog(@"Transitioning to Wifi from Cellular Data Connection");
-        if ([JCPhoneManager isActiveCall]) {
-            [JCPhoneManager setReconnectAfterCallsFinishes];
-        }
-        else {
-            [JCPhoneManager connectToLine:line];
-        }
+        [JCPhoneManager connectToLine:line];
     }
     
     // Transition from wifi to cellular data. Since the active connection will likely drop, we reconnect.
@@ -345,9 +330,9 @@
     }
     
     // Transition from no connection to having a connection
-    else if(currentNetworkType == AFNetworkReachabilityStatusNotReachable && networkManager.isReachable) {
+    else if(currentNetworkType == AFNetworkReachabilityStatusNotReachable && status != AFNetworkReachabilityStatusNotReachable) {
         NSLog(@"Transitioning from no network connectivity to connected.");
-        if (![JCPhoneManager sharedManager].isConnected) {
+        if (![JCPhoneManager sharedManager].isConnected && ![JCPhoneManager sharedManager].isConnecting) {
             [JCPhoneManager connectToLine:line];
         }
     }
@@ -376,8 +361,12 @@
     // dismissed or should transition to requesting that they select a line.
     JCAuthenticationManager *authenticationManager = notification.object;
     Line *line = authenticationManager.line;
-    NSString *deviceToken = authenticationManager.deviceToken;
+    if (!line) {
+        [UIApplication showSimpleAlert:@"Warning" message:@"Unable to select line. Please call Customer Care. You may not have a device associated with this account."];
+        return;
+    }
     
+    NSString *deviceToken = authenticationManager.deviceToken;
     if (!_navigationController){
         [self registerServicesToLine:line deviceToken:deviceToken];
         return;
@@ -415,7 +404,6 @@
 {
     LOG_Info();
     
-    [Flurry logEvent:@"Log out"];
     
     [JCSocket reset];                                   // Disconnect the socket and purge socket session.
     [JCPhoneManager disconnect];                        // Disconnect the phone manager
@@ -425,43 +413,6 @@
 }
 
 #pragma mark JCCallCardManager
-
-/**
- * Responds to a notification dispatched by the JCCallCardManager when a incoming call occurs. Presents an instance of
- * the CallerViewController modaly with ourselves set up as the delegate responder to the view controller.
- */
--(void)didReceiveIncomingCall:(NSNotification *)notification
-{
-    [self startVibration];
-    
-    NSDictionary *userInfo = notification.userInfo;
-    BOOL incoming = [[userInfo objectForKey:kJCPhoneManagerIncomingCall] boolValue];
-    int priorCount = [[userInfo objectForKey:kJCPhoneManagerPriorUpdateCount] intValue];
-    if (!incoming || priorCount > 0)
-        return;
-    
-    [self startRingtone];
-    
-    _presentedCallerViewController = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"CallerViewController"];
-    _presentedCallerViewController.delegate = self;
-    _presentedCallerViewController.callOptionsHidden = true;
-    _presentedCallerViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    
-    [self.window.rootViewController presentViewController:_presentedCallerViewController animated:YES completion:NULL];
-}
-
-/**
- * Delegate rsponder to remove the the presented modal view controller when an incomming callerver view controller is
- * dismissed. Used only if the caller was presented from the app delegate.
- */
--(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController
-{
-    [self.window.rootViewController dismissViewControllerAnimated:FALSE completion:^{
-        _presentedCallerViewController = nil;
-        [self stopRingtone];
-        [self stopVibration];
-    }];
-}
 
 #pragma mark - Delegate Handlers -
 
@@ -476,15 +427,10 @@
 {
     LOG_Info();
     NSLog(LOGGER_TARGET);
-    
     /*
-     * FLURRY
+     * New Relic
      */
-    //note: iOS only allows one crash reporting tool per app; if using another, set to: NO
-    [Flurry setCrashReportingEnabled:YES];
-    
-    // Replace YOUR_API_KEY with the api key in the downloaded package
-    [Flurry startSession:@"JCMVPQDYJZNCZVCJQ59P"];
+    [NewRelicAgent startWithApplicationToken:@"AA6303a3125152af3660d1e3371797aefedfb29761"];
     
     //Register for background fetches
     [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
@@ -503,7 +449,6 @@
 {
     LOG_Info();
     
-    [Flurry logEvent:@"Left Application"];
 }
 
 /**
@@ -525,8 +470,7 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     LOG_Info();
-
-    [Flurry logEvent:@"Resumed Session"];
+  
     [JCSocket start];
     [JCPhoneManager stopKeepAlive];
 }
