@@ -15,7 +15,6 @@
 
 #import "JCCallerViewController.h"
 
-
 // Managers
 #import "JCPhoneManager.h"   // Handles call cards, and managed calls
 
@@ -25,13 +24,12 @@
 #import "JCTransferConfirmationViewController.h"    // Transfer confimation view controller
 #import "JCCallCardCollectionViewController.h"
 
+#import "JCLineSession.h"
 #import "UIViewController+HUD.h"
+
 #define CALL_OPTIONS_ANIMATION_DURATION 0.6
 #define TRANSFER_ANIMATION_DURATION 0.3
 #define KEYBOARD_ANIMATION_DURATION 0.3
-
-#define kCallOptionsDefualtContraint 116
-#define kHalfCallOptionsContraint 232
 
 NSString *const kJCCallerViewControllerTransferStoryboardIdentifier = @"warmTransferModal";
 NSString *const kJCCallerViewControllerKeyboardStoryboardIdentifier = @"keyboardModal";
@@ -45,33 +43,33 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     NSTimeInterval _defaultCallOptionViewConstraint;
     
     bool _showingCallOptions;
+    BOOL _showingConferenceCall;
     
     JCCallCardCollectionViewController *_callCardCollectionViewController;
-    JCPhoneManager *_phoneManager;
-
 }
-
-@property (nonatomic, strong) NSDictionary *warmTransferInfo;
 
 @end
 
 @implementation JCCallerViewController
 
+CGFloat *_callOptionsWidth;
+
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
-    if (self)
-    {
+    if (self) {
         _callOptionTransitionAnimationDuration = CALL_OPTIONS_ANIMATION_DURATION;
         _transferAnimationDuration             = TRANSFER_ANIMATION_DURATION;
         _keyboardAnimationDuration             = KEYBOARD_ANIMATION_DURATION;
         
-        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-        _phoneManager = [JCPhoneManager sharedManager];
-        [center addObserver:self selector:@selector(answeredCall:) name:kJCPhoneManagerAnswerCallNotification object:_phoneManager];
-        [center addObserver:self selector:@selector(addedCallSelector:) name:kJCPhoneManagerAddedCallNotification object:_phoneManager];
-        [center addObserver:self selector:@selector(removedCall:) name:kJCPhoneManagerRemoveCallNotification object:_phoneManager];
-        [_phoneManager addObserver:self forKeyPath:@"outputType" options:NSKeyValueObservingOptionNew context:NULL];
+        
+        
+        self.warmTransfer.enabled   = false;
+        self.blindTransfer.enabled    = false;
+        self.swapBtn.enabled           = false;
+        self.mergeBtn.enabled         = false;
+        self.addBtn.enabled             = false;
+        self.finishTransferBtn.enabled = false;
     }
     return self;
 }
@@ -80,38 +78,32 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 {
     [super viewDidLoad];
     
-    NSArray *calls = _phoneManager.calls;
-    for (JCCallCard *callCard in calls) {
-        [callCard.lineSession addObserver:self forKeyPath:kJCLineSessionStateKey options:0 context:NULL];
+    [UIDevice currentDevice].proximityMonitoringEnabled = YES;
+        
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    UIViewController *viewController = segue.destinationViewController;
+    if ([viewController isKindOfClass:[JCCallCardCollectionViewController class]]) {
+        _callCardCollectionViewController = (JCCallCardCollectionViewController *)viewController;
     }
-    self.warmTransfer.enabled = false;
-    self.blindTransfer.enabled = false;
-    self.mergeBtn.enabled = false;
-    self.swapBtn.enabled = false;
-    
-    [self checkCallConnectedState];
-    
-    NSString *dialString = self.dialString;
-    if (!dialString || dialString.isEmpty) {
-        return;
-    }
-    
-    [JCPhoneManager dialNumber:dialString
-                         type:JCPhoneManagerSingleDial
-                   completion:^(BOOL success, NSError *error, NSDictionary *callInfo) {
-                       if (!success) {
-                           [self performSelector:@selector(closeCallerViewController) withObject:nil afterDelay:0];
-                       }
-                   }];
 }
 
 -(void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
     
-//    [self setCallOptionsHidden:_callOptionsHidden animated:NO];
+    // determine if call options should be shown
+    if ([self shouldShowCallOptions]) {
+        [self showCallOptionsAnimated:YES];
+    } else {
+        [self hideCallOptionsAnimated:NO];
+    }
+        
+    // determine call options view state
+    [self.callOptionsView setState:[self stateForOptionView] animated:YES];
     
-    self.speakerBtn.selected = (_phoneManager.outputType == JCPhoneManagerOutputSpeaker);
 }
 
 -(UIStatusBarStyle)preferredStatusBarStyle
@@ -119,88 +111,39 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     return UIStatusBarStyleLightContent;
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    UIViewController *viewController = segue.destinationViewController;
-    if ([viewController isKindOfClass:[JCTransferConfirmationViewController class]])
-    {
-        JCTransferConfirmationViewController *transferConfirmationViewController = (JCTransferConfirmationViewController *)viewController;
-        transferConfirmationViewController.transferInfo = _warmTransferInfo;
-    }
-    else if ([viewController isKindOfClass:[JCCallCardCollectionViewController class]])
-    {
-        _callCardCollectionViewController = (JCCallCardCollectionViewController *)viewController;
-    }
-}
-
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    if ([keyPath isEqualToString:@"outputType"]) {
-            JCPhoneManager *manager = object;
-                self.speakerBtn.selected = (manager.outputType == JCPhoneManagerOutputSpeaker);
-    }
-    else if ([keyPath isEqualToString:kJCLineSessionStateKey])
-    {
-        [self checkCallConnectedState];
-    }
-}
-
--(void)checkCallConnectedState {
-    NSArray *calls = _phoneManager.calls;
-    NSInteger count = calls.count;
-    
-    
-    if(count == 0) {
-        [self closeCallerViewController];
-    } else if (count == 1) {
-        
-        JCCallCard *callCard = calls.firstObject;
-        if (callCard.lineSession.sessionState == JCCallIncoming) {
-            
-            [self.callOptionsView setState:JCCallOptionViewSingleCallState animated:YES];
-            [self hideCallOptionsAnimated:YES];
-        }
-        else if (callCard.lineSession.isConference)
-        {
-            if (callCard.lineSession.isUpdatable) {
-                self.mergeBtn.enabled = true;
-            }
-            [self.callOptionsView setState:JCCallOptionViewConferenceCallState ];
-        }
-        else if (callCard.lineSession.sessionState == JCCallAnswered || callCard.lineSession.sessionState == JCCallConnected)
-        {
-            NSLog(@"show options %i", callCard.lineSession.sessionState);
-            if (callCard.lineSession.isUpdatable)
-            {
-            self.warmTransfer.enabled = true;
-            self.blindTransfer.enabled = true;
-            }
-            
-            [self.callOptionsView setState:JCCallOptionViewSingleCallState animated:YES];
-            [self showAllCallOptionsAnimated:YES];
-
-        }
-        else {
-        
-            NSLog(@"hide options %i", callCard.lineSession.sessionState);
-            [self showCallOptionsAnimated:YES];
-            
-        }
-    } else if (count > 1) {
-        
-        [self.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];
-        [self showAllCallOptionsAnimated:YES];
-    }
-}
-
 -(void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [_phoneManager removeObserver:self forKeyPath:@"outputType"];
+    [UIDevice currentDevice].proximityMonitoringEnabled = NO;
 }
 
-#pragma mark - Setters -
+-(void)reload
+{
+    [self.view setNeedsLayout];
+    [self.view layoutIfNeeded];
+    [_callCardCollectionViewController.collectionView reloadData];
+}
 
+-(void)startConferenceCall
+{
+    _showingConferenceCall = TRUE;
+    [UIView transitionWithView:_callCardCollectionViewController.view
+                      duration:0.3
+                       options:UIViewAnimationOptionTransitionFlipFromRight
+                    animations:^{
+                        [self reload];
+                    } completion:NULL];
+}
+
+-(void)stopConferenceCall
+{
+    _showingConferenceCall = FALSE;
+    [UIView transitionWithView:_callCardCollectionViewController.view
+                      duration:0.3
+                       options:UIViewAnimationOptionTransitionFlipFromLeft
+                    animations:^{
+                        [self reload];
+                    } completion:NULL];
+}
 
 #pragma mark - IBActions -
 
@@ -233,31 +176,44 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(IBAction)speaker:(id)sender
 {
-    [JCPhoneManager setLoudSpeakerEnabled:(_phoneManager.outputType != JCPhoneManagerOutputSpeaker)];
+    [JCPhoneManager setLoudSpeakerEnabled:([JCPhoneManager sharedManager].outputType != JCPhoneManagerOutputSpeaker)];
 }
 
 -(IBAction)blindTransfer:(id)sender
 {
-    JCTransferViewController *transferViewController = [self.storyboard instantiateViewControllerWithIdentifier:kJCCallerViewControllerTransferStoryboardIdentifier];
-    transferViewController.transferCallType = JCPhoneManagerBlindTransfer;
-    transferViewController.delegate = self;
-    [self presentTransferViewController:transferViewController];
+    if ([sender isKindOfClass:[UIButton class]]) {
+        UIButton *button = (UIButton *)sender;
+        button.enabled = NO;
+        [self presentTransferViewControllerWithDialType:JCPhoneManagerBlindTransfer
+                                             completion:^(BOOL success, NSError *error) {
+                                                 button.enabled = YES;
+                                             }];
+    }
 }
 
 -(IBAction)warmTransfer:(id)sender
 {
-    JCTransferViewController *transferViewController = [self.storyboard instantiateViewControllerWithIdentifier:kJCCallerViewControllerTransferStoryboardIdentifier];
-    transferViewController.transferCallType = JCPhoneManagerWarmTransfer;
-    transferViewController.delegate = self;
-    [self presentTransferViewController:transferViewController];
+    if ([sender isKindOfClass:[UIButton class]]) {
+        UIButton *button = (UIButton *)sender;
+        button.enabled = NO;
+        [self presentTransferViewControllerWithDialType:JCPhoneManagerWarmTransfer
+                                             completion:^(BOOL success, NSError *error) {
+                                                 button.enabled = YES;
+                                             }];
+    }
 }
 
 -(IBAction)addCall:(id)sender
 {
-    JCTransferViewController *transferViewController = [self.storyboard instantiateViewControllerWithIdentifier:kJCCallerViewControllerTransferStoryboardIdentifier];
-    transferViewController.transferCallType = JCPhoneManagerSingleDial;
-    transferViewController.delegate = self;
-    [self presentTransferViewController:transferViewController];
+    if ([sender isKindOfClass:[UIButton class]]) {
+        UIButton *button = (UIButton *)sender;
+        button.enabled = NO;
+        
+        [self presentTransferViewControllerWithDialType:JCPhoneManagerSingleDial
+                                             completion:^(BOOL success, NSError *error) {
+                                                 button.enabled = YES;
+                                             }];
+    }
 }
 
 -(IBAction)swapCall:(id)sender
@@ -280,10 +236,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
             [JCPhoneManager splitCalls:^(BOOL success, NSError *error) {
                 if (success) {
                     self.mergeLabel.text = NSLocalizedString(@"Merge Calls", nil);
-                    button.selected = TRUE;
-                }
-                else {
-                    [self showHudWithTitle:@"Oh-oh" detail:@"Failed to End Conference"];
+                    button.selected = FALSE;
                 }
                 button.enabled = TRUE;
             }];
@@ -291,10 +244,7 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
             [JCPhoneManager mergeCalls:^(BOOL success, NSError *error) {
 				if (success) {
 					self.mergeLabel.text = NSLocalizedString(@"Split Calls", nil);
-                    button.selected = FALSE;
-				}
-				else {
-					[self showHudWithTitle:@"Oh-oh" detail:@"Failed to Create Conference"];
+                    button.selected = TRUE;
 				}
                 button.enabled = TRUE;
 			}];
@@ -304,19 +254,61 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(IBAction)finishTransfer:(id)sender
 {
-    [JCPhoneManager finishWarmTransfer:^(BOOL success, NSError *error) {
-        if (success) {
-            [self showTransferSuccess];
-        }
-        else {
-            [self showHudWithTitle:NSLocalizedString(@"Oh-oh", nil)
-                            detail:NSLocalizedString(@"Failed to finish transfer", nil)];
-            [self.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];
-        }
-    }];
+    if ([sender isKindOfClass:[UIButton class]]) {
+        UIButton *button = (UIButton *)sender;
+        button.enabled = NO;
+        [JCPhoneManager finishWarmTransfer:^(BOOL success, NSError *error) {
+            if (!success) {
+                [self showSimpleAlert:@"" error:error];
+            }
+            button.enabled = YES;
+        }];
+    }
 }
 
 #pragma mark - Private -
+
+-(BOOL)shouldShowCallOptions
+{
+    NSArray *calls = [JCPhoneManager sharedManager].calls;
+    if (calls.count > 1) {
+        BOOL isIncoming = TRUE;
+        for (JCCallCard *call in calls) {
+            if (!call.lineSession.isIncoming) {
+                isIncoming = FALSE;
+                break;
+            }
+        }
+        return !isIncoming;
+    } else {
+        JCCallCard *call = calls.firstObject;
+        if (call.lineSession.isIncoming) {
+            return NO;
+        }
+        return YES;
+    }
+}
+
+-(JCCallOptionViewState)stateForOptionView
+{
+    JCCallOptionViewState state = JCCallOptionViewSingleCallState;
+    if (_showingConferenceCall) {
+        state = JCCallOptionViewConferenceCallState;
+    }
+    else if ([JCPhoneManager sharedManager].calls.count > 1) {
+        
+        state = JCCallOptionViewMultipleCallsState;
+        NSArray *calls = [JCPhoneManager sharedManager].calls;
+       
+            for (JCCallCard *call in calls) {
+                if (call.lineSession.isTransfer) {
+                    state = JCCallOptionViewFinishTransferState;
+                    break;
+                }
+            }
+        }
+    return state;
+}
 
 /**
  * Hides the call options card.
@@ -325,29 +317,9 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 {
     _callOptionsViewOriginYConstraint.constant = 10;
     [self.view setNeedsUpdateConstraints];
-    
-    __unsafe_unretained UIView *weakView = self.view;
     [UIView animateWithDuration:animated ? _callOptionTransitionAnimationDuration : 0
                      animations:^{
-                         [weakView layoutIfNeeded];
-                     } completion:^(BOOL finished) {
-                         _showingCallOptions = false;
-                         [_callCardCollectionViewController.collectionViewLayout invalidateLayout];
-                     }];
-}
-
-/**
- * Show basic call options card.
- */
--(void)showCallOptionsAnimated:(BOOL)animated
-{
-    _callOptionsViewOriginYConstraint.constant = 114;
-    [self.view setNeedsUpdateConstraints];
-    
-    __unsafe_unretained UIView *weakView = self.view;
-    [UIView animateWithDuration:animated ? _callOptionTransitionAnimationDuration : 0
-                     animations:^{
-                         [weakView layoutIfNeeded];
+                         [self.view layoutIfNeeded];
                      } completion:^(BOOL finished) {
                          _showingCallOptions = false;
                          [_callCardCollectionViewController.collectionViewLayout invalidateLayout];
@@ -358,22 +330,32 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
  * Show All call options card.
  */
 
--(void)showAllCallOptionsAnimated:(BOOL)animated
+-(void)showCallOptionsAnimated:(BOOL)animated
 {
-//    if (_showingCallOptions)
-//        return;
+    if (_showingCallOptions) {
+        return;
+    }
     
     _callOptionsViewOriginYConstraint.constant = 228;
     [self.view setNeedsUpdateConstraints];
     
-    __unsafe_unretained UIView *weakView = self.view;
-    [UIView animateWithDuration:animated ? _callOptionTransitionAnimationDuration : 0
+    [UIView animateWithDuration:animated ? 0.1 : 0
                      animations:^{
-                         [weakView layoutIfNeeded];
+                         [self.view layoutIfNeeded];
                      } completion:^(BOOL finished) {
                          _showingCallOptions = false;
                          [_callCardCollectionViewController.collectionViewLayout invalidateLayout];
                      }];
+    
+    // Flip view to show a transition state
+    [UIView transitionWithView:self.view
+                      duration:_callOptionTransitionAnimationDuration
+                       options:UIViewAnimationOptionTransitionFlipFromRight
+                    animations:NULL
+                    completion:^(BOOL finished) {
+                        _showingCallOptions = TRUE;
+                        [_callCardCollectionViewController.collectionViewLayout invalidateLayout];
+                    }];
 }
 
 /**
@@ -382,23 +364,15 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 -(void)showTransferSuccess
 {
     [self performSegueWithIdentifier:kJCCallerViewControllerBlindTransferCompleteSegueIdentifier sender:self];
-    [self performSelector:@selector(dismissModalViewController) withObject:nil afterDelay:3];
+    //[self performSelector:@selector(dismissModalViewController) withObject:nil afterDelay:3];
 }
 
--(void)dismissModalViewController
-{
-    [self dismissViewControllerAnimated:NO completion:^{
-        [self closeCallerViewController];
-    }];
-}
-
--(void)closeCallerViewController
-{
-    if (_delegate && [_delegate respondsToSelector:@selector(shouldDismissCallerViewController:)])
-        [_delegate shouldDismissCallerViewController:self];
-    else
-        [self dismissViewControllerAnimated:YES completion:NULL];
-}
+//-(void)dismissModalViewController
+//{
+////    [self dismissViewControllerAnimated:NO completion:^{
+////        //[self closeCallerViewController];
+////    }];
+//}
 
 -(void)presentKeyboardViewController:(UIViewController *)viewController
 {
@@ -436,27 +410,32 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
                      }];
 }
 
--(void)presentTransferViewController:(UIViewController *)viewController
+-(void)presentTransferViewControllerWithDialType:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion
 {
     if (_presentedKeyboardViewController){
         [self dismissKeyboardViewController:YES];
     }
     
-    if (viewController == _presentedTransferViewController)
-        return;
+    JCTransferViewController *transferViewController = [self.storyboard instantiateViewControllerWithIdentifier:kJCCallerViewControllerTransferStoryboardIdentifier];
+    transferViewController.transferCallType = dialType;
+    transferViewController.delegate = self;
     
-    _presentedTransferViewController = viewController;
-    [self addChildViewController:viewController];
+    _presentedTransferViewController = transferViewController;
+    [self addChildViewController:transferViewController];
     CGRect bounds = self.view.bounds;
     CGRect frame = self.view.frame;
     frame.origin.y = frame.origin.y + frame.size.height;
-    viewController.view.frame = frame;
-    [self.view addSubview:viewController.view];
+    transferViewController.view.frame = frame;
+    [self.view addSubview:transferViewController.view];
     [UIView animateWithDuration:_transferAnimationDuration
                      animations:^{
-                         viewController.view.frame = bounds;
+                         transferViewController.view.frame = bounds;
                      }
-                     completion:NULL];
+                     completion:^(BOOL finished) {
+                         if (completion) {
+                            completion(YES, nil);
+                         }
+                     }];
 }
 
 -(void)dismissTransferViewControllerAnimated:(bool)animated;
@@ -474,49 +453,6 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
                      }];
 }
 
-#pragma mark - Notification Handlers -
-
--(void)addedCallSelector:(NSNotification *)notification
-{
-    NSDictionary *userInfo = notification.userInfo;
-    JCCallCard *callCard = [userInfo objectForKey:kJCPhoneManagerNewCall];
-    if (callCard) {
-        [callCard.lineSession addObserver:self forKeyPath:kJCLineSessionStateKey options:0 context:NULL];
-    }
-    [self checkCallConnectedState];
-    
-    
-}
-
-/**
- * Notification recieved when an incoming call has been answered. If we are currently not showing the call options view,
- * We animate in the showing of the call options view. This would occur if we were recieving an incomming call, with no 
- * other active calls. If we answer a call while already on the call, we should shown the multiple call state of the 
- * call options, allowing us to merge or swap calls.
- */
--(void)answeredCall:(NSNotification *)notification
-{
-    if (!_showingCallOptions)
-        self.callOptionsHidden = false;
-    
-    [self checkCallConnectedState];
-    
-}
-
-/**
- * Notification when a call has been been removed and we should possibly respond to close the view. We check the number
- * of calls. If we have no calls, we close the view. If we have a single call, we show the single call state.
- */
--(void)removedCall:(NSNotification *)notification
-{
-    [self checkCallConnectedState];
-    NSDictionary *userInfo = notification.userInfo;
-    JCCallCard *callCard = [userInfo objectForKey:kJCPhoneManagerRemovedCall];
-    if (callCard) {
-        [callCard.lineSession removeObserver:self forKeyPath:kJCLineSessionStateKey context:NULL];
-    }
-}
-
 #pragma mark - Delegate Handlers -
 
 #pragma mark JCKeyboardViewController
@@ -530,32 +466,22 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 -(void)transferViewController:(JCTransferViewController *)controller shouldDialNumber:(NSString *)dialString
 {
-    __unsafe_unretained JCCallerViewController *weakSelf = self;
     [JCPhoneManager dialNumber:dialString
                          type:controller.transferCallType
-                   completion:^(BOOL success, NSError *error, NSDictionary *callInfo) {
-                       if (success)
-                       {
+                   completion:^(BOOL success, NSError *error) {
+                       [self dismissTransferViewControllerAnimated:YES];
+                       if (success) {
                            switch (controller.transferCallType) {
-                               case JCPhoneManagerBlindTransfer:
-                               {
-                                   [weakSelf dismissTransferViewControllerAnimated:NO];
-                                   [weakSelf closeCallerViewController];
+                               case JCPhoneManagerSingleDial:
+                                   [self.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];
                                    break;
-                               }
+                               
                                case JCPhoneManagerWarmTransfer:
-                               {
-                                   [weakSelf dismissTransferViewControllerAnimated:YES];
-                                   [weakSelf.callOptionsView setState:JCCallOptionViewFinishTransferState animated:YES];
-                                   weakSelf.warmTransferInfo = callInfo;
+                                   [self.callOptionsView setState:JCCallOptionViewFinishTransferState animated:YES];
                                    break;
-                               }
-                               default:
-                               {
-                                   [weakSelf dismissTransferViewControllerAnimated:YES];
-                                   [weakSelf.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];
+                                   
+                                default:
                                    break;
-                               }
                            }
                        }
                    }];

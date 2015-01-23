@@ -18,6 +18,8 @@
     CGFloat _defaultSwapPosition;
     CGFloat _defaultMergePosition;
     CGFloat _defaultFinishPosition;
+    CGFloat _halfTheScreenDistance;
+    CGFloat _oneThridTheScreenDistance;
         
     bool _showingSingle;
     bool _showingMultiple;
@@ -28,6 +30,8 @@
 @end
 
 @implementation JCCallOptionsView
+CGFloat _callOptionsWidth;
+
 
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -36,14 +40,12 @@
     {
         _annimationDuration = DIAL_OPTIONS_ANIMATION_DURATION;
         _showingSingle = true;
-        
     }
     return self;
 }
 
 -(void)awakeFromNib
 {
-    
     _defaultTransferPosition        = _transferBtnHorizontalContstraint.constant;
     _defaultWarmTransferPosition    = _warmBtnVerticalConstraint.constant;
     _defaultAddCallPosition         = _addCallBtnHorizontalContstraint.constant;
@@ -51,20 +53,21 @@
     _defaultMergePosition           = _mergeBtnHorizontalContstraint.constant;
     _defaultFinishPosition          = _finishTransferConstraint.constant;
     
+    _callOptionsWidth = self.bounds.size.width;
+    _halfTheScreenDistance       = _callOptionsWidth/2;
+    _oneThridTheScreenDistance = _callOptionsWidth/4;
 }
+
 
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-}
--(void)viewDidLoad
-{
-
+  
 }
 
 -(void)setState:(JCCallOptionViewState)state
 {
-    [self setState:state animated:YES];
+    [self setState:state animated:NO];
 }
 
 -(void)setState:(JCCallOptionViewState)state animated:(bool)animated
@@ -92,7 +95,6 @@
          default:
            [self showSingle:animated];
             break;
-            
     }
 }
 
@@ -153,9 +155,7 @@
         }];
     
     else if (_showingConference)
-        [self hideConference:animated completion:^(BOOL finished) {
-            [self showMultiple:animated completion:NULL];
-        }];
+                   [self showMultiple:animated completion:NULL];
     
     else if (_showingFinish)
         [self hideFinishTransfer:animated completion:^(BOOL finished) {
@@ -165,8 +165,8 @@
 
 -(void)showMultiple:(bool)animated completion:(void (^)(BOOL finished))completion
 {
-    _swapBtnHorizontalContstraint.constant  = - _defaultSwapPosition;
-    _mergeBtnHorizontalContstraint.constant = - _defaultMergePosition;
+    _mergeBtnHorizontalContstraint.constant = _oneThridTheScreenDistance;
+    _swapBtnHorizontalContstraint.constant   = _oneThridTheScreenDistance;
     
     [self animate:animated completion:^(BOOL finished) {
         _showingMultiple = true;
@@ -179,8 +179,8 @@
 
 -(void)hideMultiple:(bool)animated completion:(void (^)(BOOL finished))completion
 {
-    _swapBtnHorizontalContstraint.constant  = _defaultSwapPosition;
-    _mergeBtnHorizontalContstraint.constant = _defaultMergePosition;
+    _mergeBtnHorizontalContstraint.constant = - _halfTheScreenDistance;
+    _swapBtnHorizontalContstraint.constant = - _halfTheScreenDistance;
     
     [self animate:animated completion:^(BOOL finished) {
         _showingMultiple = false;
@@ -199,9 +199,7 @@
         }];
     
     else if (_showingMultiple)
-        [self hideMultiple:animated completion:^(BOOL finished) {
-            [self showConference:animated completion:NULL];
-        }];
+        [self showConference:animated completion:NULL];
     
     else if (_showingFinish)
         [self hideFinishTransfer:animated completion:^(BOOL finished) {
@@ -211,8 +209,10 @@
 
 -(void)showConference:(bool)animated completion:(void (^)(BOOL finished))completion
 {
-    _mergeBtnHorizontalContstraint.constant = - _defaultMergePosition;
-    _addCallBtnHorizontalContstraint.constant = - _defaultSwapPosition;
+    
+    _mergeBtnHorizontalContstraint.constant = _halfTheScreenDistance;
+    _swapBtnHorizontalContstraint.constant =  -_halfTheScreenDistance;
+
     
     [self animate:animated completion:^(BOOL finished) {
         _showingConference = true;
@@ -223,8 +223,9 @@
 
 -(void)hideConference:(bool)animated completion:(void (^)(BOOL finished))completion
 {
-    _mergeBtnHorizontalContstraint.constant = _defaultMergePosition;
-    _addCallBtnHorizontalContstraint.constant = _defaultSwapPosition;
+    _mergeBtnHorizontalContstraint.constant = - _halfTheScreenDistance;
+    _swapBtnHorizontalContstraint.constant = - _halfTheScreenDistance;
+
     
     [self animate:animated completion:^(BOOL finished) {
         _showingConference = false;
@@ -255,7 +256,7 @@
 
 -(void)showFinishTransfer:(bool)animated completion:(void (^)(BOOL finished))completion
 {
-    _finishTransferConstraint.constant = - (_defaultFinishPosition / 4);
+        _finishTransferConstraint.constant = - (_defaultFinishPosition / 4);
     [self animate:animated completion:^(BOOL finished) {
         _showingFinish = true;
         if (completion != NULL && finished)

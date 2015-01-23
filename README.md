@@ -55,20 +55,6 @@ If the real object:
 For example, an alarm clock program which causes a bell to ring at a certain time might get the current time from the outside world. To test this, the test must wait until the alarm time to know whether it has rung the bell correctly. If a mock object is used in place of the real object, it can be programmed to provide the bell-ringing time (whether it is actually that time or not) so that the alarm clock program can be tested in isolation.
 
 
-
-How to send a push notification through Urban Airship API 
-==========
-Reference: http://docs.urbanairship.com/connect/ios_push.html
-```
-curl -X POST -u "PBJUc1sXQTaAk1YwnWzlKQ:P0-eJ93JR1Ov7OmltF5XDw"
--H "Content-Type: application/json"
--H "Accept: application/vnd.urbanairship+json; version=3;"
---data '{
-	"audience": {"device_token": "FE66489F304DC75B8D6E8200DFF8A456E8DAEACEC428B427E9518741C92C6660"}, 
-	"notification": {"ios": {"content-available": 1}}, 
-	"device_types": ["ios"]
-	}'
-https://go.urbanairship.com/api/push/
 ```
 OR
 <code>
