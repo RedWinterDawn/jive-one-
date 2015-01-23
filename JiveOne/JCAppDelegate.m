@@ -8,6 +8,7 @@
 
 #import "JCAppDelegate.h"
 #import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
+#import <NewRelicAgent/NewRelic.h>
 #import <MBProgressHUD/MBProgressHUD.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import "AFNetworkActivityIndicatorManager.h"
@@ -426,6 +427,10 @@
 {
     LOG_Info();
     NSLog(LOGGER_TARGET);
+    /*
+     * New Relic
+     */
+    [NewRelicAgent startWithApplicationToken:@"AA6303a3125152af3660d1e3371797aefedfb29761"];
     
     /*
      * FLURRY

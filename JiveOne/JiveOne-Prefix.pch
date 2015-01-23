@@ -20,6 +20,7 @@
     #import <MagicalRecord/CoreData+MagicalRecord.h>
     #import <AFNetworking/AFNetworking.h>
     #import "Flurry.h"
+    #import <NewRelicAgent/NewRelic.h>
 
     // Singletons
     #import "Constants.h"
