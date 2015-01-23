@@ -226,9 +226,6 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
                     self.mergeLabel.text = NSLocalizedString(@"Merge Calls", nil);
                     button.selected = FALSE;
                 }
-                else {
-                    [self showHudWithTitle:@"Oh-oh" detail:@"Failed to End Conference"];
-                }
                 button.enabled = TRUE;
             }];
         } else {
@@ -236,9 +233,6 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 				if (success) {
 					self.mergeLabel.text = NSLocalizedString(@"Split Calls", nil);
                     button.selected = TRUE;
-				}
-				else {
-					[self showHudWithTitle:@"Oh-oh" detail:@"Failed to Create Conference"];
 				}
                 button.enabled = TRUE;
 			}];
@@ -253,8 +247,6 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
             [self showTransferSuccess];
         }
         else {
-            [self showHudWithTitle:NSLocalizedString(@"Oh-oh", nil)
-                            detail:NSLocalizedString(@"Failed to finish transfer", nil)];
             [self.callOptionsView setState:JCCallOptionViewMultipleCallsState animated:YES];
         }
     }];

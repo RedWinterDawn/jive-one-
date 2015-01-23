@@ -9,14 +9,14 @@
 @import AVFoundation;
 @import UIKit;
 
-#import <MBProgressHUD/MBProgressHUD.h>
-
 #import "JCVoicemailTableViewController.h"
 #import "JCVoicemailPlaybackCell.h"
 #import "JCV5ApiClient.h"
 
 #import "JCAppDelegate.h"
 #import "Voicemail+V5Client.h"
+#import "UIViewController+HUD.h"
+#import "JCError.h"
 
 @interface JCVoicemailTableViewController () <AVAudioPlayerDelegate, JCVoiceCellDelegate>
 {
@@ -24,7 +24,6 @@
     AVAudioPlayer *player;
     NSManagedObjectContext *context;
     BOOL _playThroughSpeaker;
-    MBProgressHUD *hud;
     NSTimer *requestTimeout;
 }
 
@@ -84,43 +83,9 @@
     if ([requestTimeout isValid]) {
         [requestTimeout invalidate];
     }
-    [self showHudWithTitle:NSLocalizedString(@"Server Not Reachable", nil) detail:NSLocalizedString(@"Could not check for voicemails at this moment. Please try again.", nil) mode:MBProgressHUDModeText];
+    
+    [self showError:[JCError errorWithCode:0 reason:@"Could not check for voicemails at this moment. Please try again."]];
     [self.refreshControl endRefreshing];
-}
-
-#pragma mark - HUD Operations
-
-- (void)showHudWithTitle:(NSString*)title detail:(NSString*)detail mode:(MBProgressHUDMode)mode
-{
-    if (!hud) {
-        hud = [MBProgressHUD showHUDAddedTo:[[[UIApplication sharedApplication] windows] lastObject] animated:YES];
-        if (!mode) {
-            mode = MBProgressHUDModeIndeterminate;
-        }
-        hud.mode = mode;
-    }
-    
-    if (hud.mode != mode) {
-        hud.mode = mode;
-    }
-    
-    hud.labelText = title;
-    hud.detailsLabelText = detail;
-    
-    if (hud.mode == MBProgressHUDModeText) {
-        [hud hide:YES afterDelay:2];
-    }
-    
-    [hud show:YES];
-}
-
-- (void)hideHud
-{
-    if (hud) {
-        [MBProgressHUD hideHUDForView:[[[UIApplication sharedApplication] windows] lastObject] animated:YES];
-        [hud removeFromSuperview];
-        hud = nil;
-    }
 }
 
 #pragma mark - Table view data source

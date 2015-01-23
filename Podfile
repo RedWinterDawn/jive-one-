@@ -4,7 +4,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 pod 'AFNetworking', '~> 2.5.0'
 pod 'AFNetworkActivityLogger', '~> 2.0.3'
-pod 'MBProgressHUD', '~> 0.8'
+#pod 'MBProgressHUD', '~> 0.8'
 pod 'NewRelicAgent'
 #pod 'SDWebImage', '~> 3.7.1'
 pod 'MagicalRecord', '~> 2.2'
@@ -20,3 +20,4 @@ pod 'libPhoneNumber-iOS', '~> 0.7'
 #   pod 'Kiwi', '~> 2.3'
 #end
 pod 'XMLDictionary', '~> 1.4'
+pod 'SVProgressHUD'

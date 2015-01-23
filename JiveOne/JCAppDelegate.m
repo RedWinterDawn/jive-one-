@@ -9,7 +9,6 @@
 #import "JCAppDelegate.h"
 #import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
 #import <NewRelicAgent/NewRelic.h>
-#import <MBProgressHUD/MBProgressHUD.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import "AFNetworkActivityIndicatorManager.h"
 #import "JCLoginViewController.h"
@@ -37,6 +36,8 @@
 #import "UIViewController+HUD.h"
 
 #import  "JCAppSettings.h"
+
+#import <SVProgressHUD/SVProgressHUD.h>
 
 @interface JCAppDelegate () <JCPickerViewControllerDelegate>
 {

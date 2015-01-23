@@ -7,12 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <MBProgressHUD/MBProgressHUD.h>
+
 
 @interface UIViewController (HUD)
 
-- (void)showHudWithTitle:(NSString*)title detail:(NSString*)detail;
-- (void)hideHud;
+- (void)showError:(NSError *)error;
+
+- (void)showStatus:(NSString *)string;
+- (void)hideStatus;
+
+
+- (void)showHudWithTitle:(NSString*)title detail:(NSString*)detail __deprecated;
+- (void)hideHud __deprecated;
 
 - (void)showSimpleAlert:(NSString *)title error:(NSError *)error;
 - (void)showSimpleAlert:(NSString *)title message:(NSString *)message;
@@ -23,8 +29,13 @@
 
 @interface UIApplication (Custom)
 
-+(void)showHudWithTitle:(NSString *)title message:(NSString *)message;
-+(void)hideHud;
++(void)showError:(NSError *)error;
+
++(void)showStatus:(NSString *)status;
++(void)hideStatus;
+
++(void)showHudWithTitle:(NSString *)title message:(NSString *)message __deprecated;
++(void)hideHud  __deprecated;
 
 +(void)showSimpleAlert:(NSString *)title error:(NSError *)error;
 +(void)showSimpleAlert:(NSString *)title message:(NSString *)message;

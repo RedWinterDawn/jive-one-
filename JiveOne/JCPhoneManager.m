@@ -144,9 +144,9 @@ NSString *const kJCPhoneManager611String = @"611";
         
     // If we do not have a line configuration, we need to request it.
     NSLog(@"Phone Requesting Line Configuration");
-    [UIApplication showHudWithTitle:@"" message:@"Selecting Line..."];
+    [UIApplication showStatus:@"Selecting Line..."];
     [LineConfiguration downloadLineConfigurationForLine:line completion:^(BOOL success, NSError *error) {
-        [UIApplication hideHud];
+        [UIApplication hideStatus];
         if (success) {
             [_sipHandler registerToLine:line];
         } else {
@@ -797,7 +797,7 @@ NSString *const kJCPhoneManager611String = @"611";
 {
     [[JCPhoneManager sharedManager] connectToLine:line completion:^(BOOL success, NSError *error) {
         if (error && error.code != JS_PHONE_WIFI_DISABLED && error.code != JS_PHONE_ALREADY_CONNECTING) {
-            [UIApplication showSimpleAlert:@"Warning" error:error];
+            [UIApplication showError:error];
         }
         else if (error) {
             NSLog(@"%@", [error description]);
@@ -809,7 +809,7 @@ NSString *const kJCPhoneManager611String = @"611";
 {
     [[JCPhoneManager sharedManager] dialNumber:dialNumber type:dialType completion:^(BOOL success, NSError *error) {
         if (error) {
-            NSLog(@"%@", [error description]);
+            [UIApplication showError:error];
         }
         completion(success, error);
     }];
@@ -819,7 +819,7 @@ NSString *const kJCPhoneManager611String = @"611";
 {
     [[JCPhoneManager sharedManager] mergeCalls:^(BOOL success, NSError *error) {
         if (error) {
-            NSLog(@"%@", [error description]);
+            [UIApplication showError:error];
         }
         completion(success, error);
     }];
@@ -829,7 +829,7 @@ NSString *const kJCPhoneManager611String = @"611";
 {
     [[JCPhoneManager sharedManager] splitCalls:^(BOOL success, NSError *error) {
         if (error) {
-            NSLog(@"%@", [error description]);
+            [UIApplication showError:error];
         }
         completion(success, error);
     }];
@@ -839,7 +839,7 @@ NSString *const kJCPhoneManager611String = @"611";
 {
     [[JCPhoneManager sharedManager] swapCalls:^(BOOL success, NSError *error) {
         if (error) {
-            NSLog(@"%@", [error description]);
+            [UIApplication showError:error];
         }
         completion(success, error);
     }];
@@ -854,7 +854,7 @@ NSString *const kJCPhoneManager611String = @"611";
 {
     [[JCPhoneManager sharedManager] finishWarmTransfer:^(BOOL success, NSError *error) {
         if (error) {
-            NSLog(@"%@", [error description]);
+            [UIApplication showError:error];
         }
         completion(success, error);
     }];
