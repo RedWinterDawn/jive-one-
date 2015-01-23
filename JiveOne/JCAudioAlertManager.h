@@ -11,12 +11,12 @@
 
 @interface JCAudioAlertManager : NSObject
 
-- (void)vibrate;            // Single vibrate.
-- (void)startRepeatingVibration:(BOOL)repeating;
++ (void)vibrate;            // Single vibrate.
++ (void)startRepeatingVibration:(BOOL)repeating;
 
-- (void)ring;               // Single ring.
-- (void)startRepeatingRingtone:(BOOL)repeating;
++ (void)ring;               // Single ring.
++ (void)startRepeatingRingtone:(BOOL)repeating;
 
-- (void)stop;
++ (void)stop;
 
 @end

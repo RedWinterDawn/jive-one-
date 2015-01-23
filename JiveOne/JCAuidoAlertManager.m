@@ -17,29 +17,29 @@
 
 static BOOL active;
 
--(void)vibrate
++(void)vibrate
 {
     [self startRepeatingVibration:NO];
 }
 
--(void)startRepeatingVibration:(BOOL)repeating
++(void)startRepeatingVibration:(BOOL)repeating
 {
     active = repeating;
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
     AudioServicesAddSystemSoundCompletion(kSystemSoundID_Vibrate, NULL, NULL, vibration, NULL);
 }
 
--(void)stop
++(void)stop
 {
     active = false;
 }
 
--(void)ring
++(void)ring
 {
     [self startRepeatingRingtone:NO];
 }
 
--(void)startRepeatingRingtone:(BOOL)repeating
++(void)startRepeatingRingtone:(BOOL)repeating
 {
     active = repeating;
     @try {
@@ -84,7 +84,7 @@ void ringtone (SystemSoundID ssID, void *clientData)
     });
 }
 
--(SystemSoundID)playRingtone
++ (SystemSoundID)playRingtone
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSURL *url = [NSURL fileURLWithPath:@"/System/Library/Audio/UISounds/vc~ringing.caf"];

@@ -23,6 +23,7 @@
 
 // Managers
 #import "JCBadgeManager.h"   // Sip directly reports voicemail count for v4 clients to badge manager
+#import "JCAudioAlertManager.h"
 
 // Managed Objects
 #import "IncomingCall.h"
@@ -963,6 +964,10 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             
             // Notify
             if (lineSession.isIncoming){
+                
+                // Stop Ringing
+                [JCAudioAlertManager stop];
+                
                 [MissedCall addMissedCallWithLineSession:lineSession line:_line];
             }
             [_delegate sipHandler:self willRemoveLineSession:lineSession];
@@ -994,6 +999,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             lineSession.contact = [Contact contactForExtension:lineSession.callDetail pbx:_line.pbx];
             lineSession.sessionState = state;
             
+            // Start ringing
+            [JCAudioAlertManager startRepeatingRingtone:YES];
+
             // Notify
             [_delegate sipHandler:self didAddLineSession:lineSession];     // Notify the delegate to add a line.
             if (autoAnswer) {
@@ -1008,9 +1016,13 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             lineSession.active = YES;
             lineSession.sessionState = state;
             
+            // Stop Ringing
+            [JCAudioAlertManager stop];
+            
             // Notify
             [IncomingCall addIncommingCallWithLineSession:lineSession line:_line];
             [_delegate sipHandler:self didAnswerLineSession:lineSession];
+            
             break;
         }
         case JCCallConnected:
