@@ -3410,8 +3410,8 @@
                                             <action selector="mergeCall:" destination="ph3-lT-GBI" eventType="touchUpInside" id="Qrw-6N-nYQ"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Merge Calls" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C17-8W-dR3" userLabel="Merge Calls Label">
-                                        <rect key="frame" x="-578" y="187" width="76" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Merge Calls" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C17-8W-dR3" userLabel="Merge Calls Label">
+                                        <rect key="frame" x="-267" y="187" width="76" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="GP9-ym-b5g"/>
                                             <constraint firstAttribute="width" constant="76" id="h1M-6C-ah6"/>
@@ -4187,7 +4187,6 @@
                                     <constraint firstItem="9g4-aC-DOe" firstAttribute="leading" secondItem="4OK-8s-FqD" secondAttribute="leading" id="fzQ-mi-J41"/>
                                     <constraint firstAttribute="centerX" secondItem="9g4-aC-DOe" secondAttribute="centerX" id="gd4-cV-ItV"/>
                                     <constraint firstItem="h71-A9-iRN" firstAttribute="top" secondItem="4OK-8s-FqD" secondAttribute="top" constant="10" id="n9I-7L-bkY"/>
-                                    <constraint firstItem="T1J-t0-XYo" firstAttribute="height" secondItem="Bwa-pS-Ida" secondAttribute="height" id="pAU-jP-aOW"/>
                                     <constraint firstAttribute="bottom" secondItem="9g4-aC-DOe" secondAttribute="bottom" constant="68" id="pTd-ub-1ZQ"/>
                                     <constraint firstItem="9g4-aC-DOe" firstAttribute="top" secondItem="4OK-8s-FqD" secondAttribute="top" constant="50" id="sGv-Cn-ZY8"/>
                                     <constraint firstAttribute="centerX" secondItem="Bwa-pS-Ida" secondAttribute="centerX" id="sVK-mF-iHr"/>
