@@ -13,6 +13,7 @@
 #import "JCAppSettings.h"
 #import <AFNetworking/AFNetworkReachabilityManager.h>
 #import "UIViewController+HUD.h"
+#import "JCPhoneManagerError.h"
 
 NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCall";
 
@@ -40,12 +41,14 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     [self updateRegistrationStatus];
     
     self.backspaceBtn.alpha = 0;
+    
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self updateRegistrationStatus];
+    [self updateRegistrationStatus];    
 }
 
 
