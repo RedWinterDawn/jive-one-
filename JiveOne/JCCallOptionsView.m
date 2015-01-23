@@ -30,6 +30,8 @@
 @end
 
 @implementation JCCallOptionsView
+CGFloat _callOptionsWidth;
+
 
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -50,16 +52,17 @@
     _defaultSwapPosition            = _swapBtnHorizontalContstraint.constant;
     _defaultMergePosition           = _mergeBtnHorizontalContstraint.constant;
     _defaultFinishPosition          = _finishTransferConstraint.constant;
-    _halfTheScreenDistance       = _halfTheScreen.constant;
-    _oneThridTheScreenDistance = _halfTheScreen.constant/2;
     
-
+    _callOptionsWidth = self.bounds.size.width;
+    _halfTheScreenDistance       = _callOptionsWidth/2;
+    _oneThridTheScreenDistance = _callOptionsWidth/4;
 }
+
 
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-
+  
 }
 
 -(void)setState:(JCCallOptionViewState)state
@@ -176,8 +179,8 @@
 
 -(void)hideMultiple:(bool)animated completion:(void (^)(BOOL finished))completion
 {
-    _mergeBtnHorizontalContstraint.constant = - _halfTheScreenDistance*2;
-    _swapBtnHorizontalContstraint.constant = - _halfTheScreenDistance*2;
+    _mergeBtnHorizontalContstraint.constant = - _halfTheScreenDistance;
+    _swapBtnHorizontalContstraint.constant = - _halfTheScreenDistance;
     
     [self animate:animated completion:^(BOOL finished) {
         _showingMultiple = false;
@@ -208,7 +211,7 @@
 {
     
     _mergeBtnHorizontalContstraint.constant = _halfTheScreenDistance;
-    _swapBtnHorizontalContstraint.constant =  _defaultSwapPosition;
+    _swapBtnHorizontalContstraint.constant =  -_halfTheScreenDistance;
 
     
     [self animate:animated completion:^(BOOL finished) {
@@ -220,8 +223,8 @@
 
 -(void)hideConference:(bool)animated completion:(void (^)(BOOL finished))completion
 {
-    _mergeBtnHorizontalContstraint.constant = - _halfTheScreenDistance*2;
-    _swapBtnHorizontalContstraint.constant = - _halfTheScreenDistance*2;
+    _mergeBtnHorizontalContstraint.constant = - _halfTheScreenDistance;
+    _swapBtnHorizontalContstraint.constant = - _halfTheScreenDistance;
 
     
     [self animate:animated completion:^(BOOL finished) {
