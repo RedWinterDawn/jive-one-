@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define INVALID_SESSION_ID -1
+
 @class Contact;
 
 extern NSString *const kJCLineSessionStateKey;
@@ -46,22 +48,21 @@ typedef enum {
 
 // Identifiers
 @property (nonatomic) NSInteger sessionId;
-@property (nonatomic, getter=getOriginalCallSessionId) NSInteger mOriginCallSessionId;
+@property (nonatomic) NSInteger referedSessionId;
 
 // Flags
-@property (nonatomic, getter=isActive) BOOL active;
-@property (nonatomic, getter=isHolding) BOOL hold;
-@property (nonatomic, getter=isUpdatable) BOOL updatable;
-@property (nonatomic, getter=isIncoming) BOOL incoming;
-@property (nonatomic, getter=isConference) BOOL conference;
-@property (nonatomic, getter=isVideo) BOOL video;
-@property (nonatomic, getter=isAudio) BOOL audio;
+@property (nonatomic, getter=isActive) BOOL active;             // Has an active line session on it.
+@property (nonatomic, getter=isHolding) BOOL hold;              // Active line hold status.
+@property (nonatomic, getter=isUpdatable) BOOL updatable;       // Active line is updateable
+@property (nonatomic, getter=isIncoming) BOOL incoming;         // Is incomming call.
+@property (nonatomic, getter=isConference) BOOL conference;     // Is member of conference call.
+@property (nonatomic, getter=isVideo) BOOL video;               // is a video call (not yet supported)
+@property (nonatomic, getter=isAudio) BOOL audio;               // is a audio call (normally true)
+@property (nonatomic, getter=isTransfer) BOOL transfer;         // if active call is being transfered.
+@property (nonatomic, getter=isRefer) BOOL refer;               // if incoming call is a refer call
 
-@property (nonatomic, getter=isReferCall) bool mIsReferCall;
 @property (nonatomic) bool mExistEarlyMedia;
 
-
-- (void)setReferCall:(BOOL)referCall originalCallSessionId:(long)originalCallSessionId;
 - (void)reset;
 
 @end

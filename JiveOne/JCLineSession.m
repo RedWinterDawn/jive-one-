@@ -10,7 +10,7 @@
 
 #define LINE_BASE 0
 #define MAX_LINES 2
-#define INVALID_SESSION_ID -1
+
 
 NSString *const kJCLineSessionStateKey = @"sessionState";
 NSString *const kJCLineSessionHoldKey = @"hold";
@@ -30,19 +30,28 @@ NSString *const kJCLineSessionHoldKey = @"hold";
 {
     NSMutableString *output = [NSMutableString string];
     [output appendString:[self stringForState:_sessionState]];
+    [output appendFormat:@", %@", (_incoming) ? @"Incoming Call": @""];
     [output appendFormat:@", %@", (_active) ? @"Active": @"Inactive"];
     [output appendFormat:@", %@", (_updatable) ? @"updatable": @"locked"];
     [output appendFormat:@", %@", (_hold) ? @"On Hold": @"Off Hold"];
+    [output appendFormat:@", %@", (_conference) ? @"Conference Call": @""];
+    
+    if (_transfer) {
+        [output appendFormat:@", Transfer"];
+    }
+    if (_refer) {
+        [output appendFormat:@", Refering (%li -> %li)", (long)_referedSessionId, (long)_sessionId];
+    }
     return output;
 }
 
 #pragma mark - Public Methods -
 
-- (void) setReferCall:(BOOL)referCall originalCallSessionId:(long)originalCallSessionId
-{
-    _mIsReferCall = referCall;
-    _mOriginCallSessionId = originalCallSessionId;
-}
+//- (void) setReferCall:(BOOL)referCall originalCallSessionId:(long)originalCallSessionId
+//{
+//    _mIsReferCall = referCall;
+//    _mOriginCallSessionId = originalCallSessionId;
+//}
 
 /**
  * Resets the line session to its default values.
@@ -50,19 +59,20 @@ NSString *const kJCLineSessionHoldKey = @"hold";
 - (void)reset
 {
     _sessionId              = INVALID_SESSION_ID;
+    _referedSessionId       = INVALID_SESSION_ID;
     _callTitle              = nil;
     _callDetail             = nil;
     _contact                = nil;
-    _hold                   = false;
-    _updatable              = false;
-    _active                 = false;
-    _incoming              = false;
-    _conference             = false;
-    _video                  = false;
-    _audio                  = false;
+    _hold                   = FALSE;
+    _updatable              = FALSE;
+    _active                 = FALSE;
+    _incoming               = FALSE;
+    _conference             = FALSE;
+    _video                  = FALSE;
+    _audio                  = FALSE;
+    _transfer               = FALSE;
+    _refer                  = FALSE;
     
-    _mOriginCallSessionId   = INVALID_SESSION_ID;
-    _mIsReferCall           = false;
     _mExistEarlyMedia       = false;
 
     self.sessionState       = JCNoCall;  // We do this last because we have KVO Listeners watching it.

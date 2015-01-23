@@ -244,6 +244,20 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     }
 }
 
+#pragma mark Registration PortSIP SDK Delegate Events
+
+- (void)onRegisterSuccess:(char*) statusText statusCode:(int)statusCode
+{
+    _registered = TRUE;
+    [_delegate sipHandlerDidRegister:self];
+}
+
+- (void)onRegisterFailure:(char*) statusText statusCode:(int)statusCode
+{
+    _registered = FALSE;
+    [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:statusCode reason:@"Registration failed"]];
+}
+
 #pragma mark - Backgrounding -
 
 -(void)startKeepAwake
@@ -281,12 +295,12 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     
     // Intitiate the call. If we fail, set error and return. Errors from this method are negative
     // numbers, and positive numbers are success and thier session id.
-	NSInteger result = [_mPortSIPSDK call:dialString sendSdp:TRUE videoCall:videoCall];
-	if(result <= 0) {
+    NSInteger result = [_mPortSIPSDK call:dialString sendSdp:TRUE videoCall:videoCall];
+    if(result <= 0) {
         *error = [JCSipHandlerError errorWithCode:result reason:@"Unable to create call"];
         [self setSessionState:JCCallFailed forSession:lineSession event:@"makeCall:" error:nil];
         return NO;
-	}
+    }
     
     NSString *callerId = dialString;
     Contact *contact = [Contact contactForExtension:dialString pbx:_line.pbx];
@@ -541,57 +555,6 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     return true;
 }
 
-- (void)blindTransferToNumber:(NSString *)number completion:(void (^)(BOOL, NSError *))completion
-{
-    // Find the active line. It is the one we will be refering to the number passed.
-	JCLineSession *lineSession = [self findActiveLine];
-	if (!lineSession || lineSession.isActive == false)
-	{
-        completion(false, [NSError errorWithDomain:@"Need to make the call established first" code:0 userInfo:nil]);
-		return;
-	}
-	
-    // Tell PortSip to refer the session id to the passed number. If sucessful, the PortSip deleagate method will inform
-    // us and we will call the completion block.
-    _transferCompletionHandler = completion;
-	NSInteger result = [_mPortSIPSDK refer:lineSession.sessionId referTo:number];
-    if (result != 0)
-    {
-        NSString *msg = NSLocalizedString(@"Blind Transfer failed", nil);
-        NSError *error = [Common createErrorWithDescription:msg reason:NSLocalizedString(@"Unable to make blind transfer", nil) code:result];
-        [self setSessionState:JCTransferFailed forSession:lineSession event:msg error:error];
-        completion(false, [NSError errorWithDomain:msg code:0 userInfo:nil]);
-        _transferCompletionHandler = nil;
-    }
-    return;
-}
-
-- (void)warmTransferToNumber:(NSString *)number completion:(void (^)(BOOL success, NSError *error))completion
-{
-	JCLineSession *receivingSession = [self findActiveLine];
-    if (!receivingSession || !receivingSession.isActive)
-    {
-        completion(false, [NSError errorWithDomain:@"Need to make the call established first" code:0 userInfo:nil]);
-        return;
-    }
-    
-	JCLineSession *sessionToTransfer = [self findLineWithHoldState];
-    if (!sessionToTransfer || !sessionToTransfer.isActive) {
-        completion(false, [NSError errorWithDomain:@"Unable to find session on hold to warm transfer" code:0 userInfo:nil]);
-        return;
-    }
-	
-    _transferCompletionHandler = completion;
-    NSInteger result = [_mPortSIPSDK attendedRefer:receivingSession.sessionId replaceSessionId:sessionToTransfer.sessionId referTo:number];
-    if (result != 0) {
-        NSString *msg = NSLocalizedString(@"Warm Transfer failed", nil);
-        NSError *error = [Common createErrorWithDescription:msg reason:NSLocalizedString(@"Unable make transfer", nil) code:result];
-        [self setSessionState:JCTransferFailed forSession:receivingSession event:msg error:error];
-        completion(false, error);
-        _transferCompletionHandler = nil;
-    }
-}
-
 - (void) muteCall:(BOOL)mute
 {
     [_mPortSIPSDK muteMicrophone:mute];
@@ -608,6 +571,246 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     if(session && session.isActive){
         [_mPortSIPSDK sendDtmf:session.sessionId dtmfMethod:DTMF_RFC2833 code:dtmf dtmfDration:160 playDtmfTone:TRUE];
     }
+}
+
+#pragma mark - Transfers -
+
+//  We are A. B and C represent remote lines that we are connecting to. A blind transfer shifts an
+//  established call leg from A -> B to B -> C, following this proccess:
+//
+//  1) LOCAL: A using a idle line calls B, and establishes a line session on A.
+//  2) REMOTE: B using an idle line answers the call from A, and establishes a line session on B.
+//  3) LOCAL: A talks to B.
+//
+//  Blind transfer
+//  ---------------------------
+//  4) LOCAL: A places B on hold.
+//  5) LOCAL: A tags B's session with refer to number of C.
+//  6) LOCAL: A refers B to C.
+//
+//  V4:
+//
+//  7) REMOTE: C get incoming call from B.
+//  8) REMOTE: C answers incoming call from B.
+//  9) LOCAL: A gets message ACTVTransferSuccess on line session for B.
+//  10) LOCAL: A hangs up call to B.
+//  11) LOCAL: A clears the line session that was used for B.
+//
+//  If the extension is invalid, it still answers, so we do not get an error back, so we cannot
+//  catch the error. For actual failures, the onACTVTransferFailure should get called and notify us
+//  of the error.
+//
+//
+//  V5:
+//
+//  1) LOCAL: A using a idle line calls B, and establishes a line session on A.
+//  2) REMOTE: B using an idle line answers the call from A, and establishes a line session on B.
+//  3) LOCAL: A talks to B.
+//
+//  Blind transfer
+//  ---------------------------
+//  4) LOCAL: A places B on hold.
+//  5) LOCAL: A tags B's session with refer to number of C.
+//  6) LOCAL: A refers B to C.
+//
+
+- (BOOL)startBlindTransferToNumber:(NSString *)number error:(NSError *__autoreleasing *)error
+{
+    // Find the active line. It is the one we will be refering to the number passed.
+	JCLineSession *b = [self findActiveLine];
+    if (!b) {
+        *error = [JCSipHandlerError errorWithCode:JC_SIP_CALL_NO_ACTIVE_LINE];
+        return NO;
+    }
+    
+    // Try to place the current call on hold before we refer it off the the other number.
+    if (![self holdLineSession:b error:error]) {
+        return NO;
+    }
+	
+    // Tell PortSip to refer the session id to the passed number. If sucessful, the PortSip
+    // deleagate method will inform us if the transfer was successful or a failure.
+    b.transfer = TRUE;
+	NSInteger errorCode = [_mPortSIPSDK refer:b.sessionId referTo:number];
+    if (errorCode) {
+        *error = [JCSipHandlerError errorWithCode:errorCode];
+        [self setSessionState:JCTransferFailed forSession:b event:nil error:nil];
+        return NO;
+    }
+    
+    return YES;
+}
+
+
+#pragma mark Warm Transfers
+
+//
+//  Warm transfer shifts an established call leg from A -> B to B -> C, following this process:
+//
+//  1) LOCAL: A using an idle line calls B, and establishes a line session on A.
+//  2) REMOTE: B using an idle line answers the call from A, and establishes a line session on B.
+//  3) LOCAL: A talks to B.
+//
+//  Start Warm Transfer
+//  ---------------------------
+//  4) LOCAL: A tags B with the number for C as a referToNumber
+//  5) LOCAL: A places B on hold.
+//  6) LOCAL: A using anouther idle session, establishes a call with C.
+//  7) LOCAL: A has no idle line remaining, with B and C both using a line session each.
+//
+//  8) REMOTE: C using an idle line session, answers the call from A.
+//  9) LOCAL: A talks to C. B is still connected on hold.
+//
+//  Finish Warm Transfer
+//  ---------------------------
+//  10) Local: A instructs C to take over the line session with B, refer B to C number which was store on B's
+//     line session.
+//  11) A get
+//
+
+/**
+ * Set the currently active line session (B) to have the refer to number on it before we initiate 
+ * the other call (C). We will look for this call when we go to finish the transfer, and hand it off.
+ */
+-(BOOL)startWarmTransferToNumber:(NSString *)number error:(NSError *__autoreleasing *)error
+{
+    JCLineSession *b = [self findActiveLine];
+    b.transfer = TRUE;
+    return [self makeCall:number videoCall:NO error:error];
+}
+
+-(BOOL)finishWarmTransfer:(NSError *__autoreleasing *)error
+{
+    JCLineSession *c = [self findActiveLine];
+    if (!c) {
+        *error = [JCSipHandlerError errorWithCode:JC_SIP_CALL_NO_ACTIVE_LINE];
+        return NO;
+    }
+    
+    JCLineSession *b = [self findTransferLine];
+    if (!b) {
+        *error = [JCSipHandlerError errorWithCode:JC_SIP_CALL_NO_REFERRAL_LINE];
+        return NO;
+    }
+    
+    NSInteger errorCode = [_mPortSIPSDK attendedRefer:c.sessionId replaceSessionId:b.sessionId referTo:c.callDetail];
+    if (errorCode) {
+        *error = [JCSipHandlerError errorWithCode:errorCode];
+        [self setSessionState:JCTransferFailed forSession:b event:nil error:nil];
+        return NO;
+    }
+    return YES;
+}
+
+#pragma mark Transfer PortSIP SDK Delegate Events
+
+
+/*!
+ *  This event will be triggered when we received a REFER message.
+ *
+ *  @param sessionId       The session ID of the call.
+ *  @param referId         The ID of the REFER message, pass it to acceptRefer or rejectRefer
+ *  @param to              The refer target.
+ *  @param from            The sender of REFER message.
+ *  @param referSipMessage The SIP message of "REFER", pass it to "acceptRefer" function.
+ */
+- (void)onReceivedRefer:(long)sessionId referId:(long)referId to:(char*)to from:(char*)from referSipMessage:(char*)referSipMessage
+{
+    // YOU Are B.
+    // A represents the call leg between A -> B and C will represent the call leg between B -> C.
+    
+    NSString *receiver = [NSString stringWithUTF8String:to];
+    NSString *sender   = [NSString stringWithUTF8String:from];
+    NSLog(@"sender: %@ receiver: %@", sender, receiver);
+    
+    
+    JCLineSession *a = [self findSession:sessionId];
+    JCLineSession *c = [self findIdleLine];
+    if (!a || !c) {
+        [_mPortSIPSDK rejectRefer:referId];
+        return;
+    }
+    
+    // Hold current call from A before we accept the refer to C
+    //__autoreleasing NSError *error;
+    //[self holdLineSession:a error:&error];
+    
+    NSInteger errorCode = [_mPortSIPSDK acceptRefer:referId referSignaling:[NSString stringWithUTF8String:referSipMessage]];
+    if (errorCode <= 0) {
+        NSError *error = [JCSipHandlerError errorWithCode:errorCode];
+        NSLog(@"%@", [error description]);
+        
+        // Error recovery
+        //[self unholdLineSession:a error:&error];
+        //return;
+    }
+    
+    c.sessionId = errorCode; // In this case, the error code is the session Id.
+    c.active = true;
+    //[c setReferCall:true originalCallSessionId:a.sessionId];
+    [self setSessionState:JCTransferIncoming forSession:c event:@"onReceivedRefer" error:nil];
+}
+
+/**
+ * This callback will be triggered when the remote side calls "acceptRefer" to accept the REFER,
+ * which means the transfer was successfull.
+ */
+- (void)onReferAccepted:(long)sessionId
+{
+    [self setSessionState:JCTransferAccepted forSessionId:sessionId event:@"onReferAccepted" error:nil];
+}
+
+/**
+ * This callback will be triggered when the remote side calls "rejectRefer" to reject the REFER
+ */
+- (void)onReferRejected:(long)sessionId reason:(char*)reason code:(int)code
+{
+    NSError *error = [JCSipHandlerError errorWithCode:code reason:[NSString stringWithCString:reason encoding:NSUTF8StringEncoding]];
+    [self setSessionState:JCTransferRejected forSessionId:sessionId event:@"onReferRejected" error:error];
+    [self setSessionState:JCCallConnected forSessionId:sessionId event:nil error:nil];
+}
+
+/**
+ * When the refer call is processing, this event trigged.
+ */
+- (void)onTransferTrying:(long)sessionId
+{
+    [self setSessionState:JCTransferTrying forSessionId:sessionId event:@"onTransferTrying" error:nil];
+}
+
+/**
+ * When the refer call is ringing, this event trigged.
+ */
+- (void)onTransferRinging:(long)sessionId
+{
+    [self setSessionState:JCTransferRinging forSessionId:sessionId event:@"onTransferRinging" error:nil];
+}
+
+/**
+ * When the refer call succeeds, this event will be triggered. The ACTV means Active. For example:
+ * A established the call with B, A transfer B to C, C accepted the refer call, A received this event.
+ */
+- (void)onACTVTransferSuccess:(long)sessionId
+{
+    [self setSessionState:JCTransferSuccess forSessionId:sessionId event:@"onACTVTransferSuccess" error:nil];
+    
+    __autoreleasing NSError *error;
+    JCLineSession *lineSession = [self findSession:sessionId];
+    if (![self hangUpSession:lineSession error:&error]) {
+        NSLog(@"%@", [error description]);
+    }
+}
+
+/**
+ * When the refer call fails, this event will be triggered. The ACTV means Active. For example: A
+ * established the call with B, A transfer B to C, C rejected this refer call, A will received this
+ * event.
+ */
+- (void)onACTVTransferFailure:(long)sessionId reason:(char*)reason code:(int)code
+{
+    NSError *error = [JCSipHandlerError errorWithCode:code reason:[NSString stringWithCString:reason encoding:NSUTF8StringEncoding]];
+    [self setSessionState:JCTransferFailed forSessionId:sessionId event:@"onACTVTransferFailure" error:error];
+    [self setSessionState:JCCallConnected forSessionId:sessionId event:nil error:nil];
 }
 
 #pragma mark - Getters -
@@ -681,6 +884,16 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     return nil;
 }
 
+- (JCLineSession *)findTransferLine
+{
+    for (JCLineSession *line in self.lineSessions){
+        if (line.isTransfer){
+            return line;
+        }
+    }
+    return nil;
+}
+
 - (NSSet *)findAllActiveLines
 {
     NSMutableSet *activeLines = [NSMutableSet setWithCapacity:self.lineSessions.count];
@@ -726,25 +939,22 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     NSLog(@"%@ Session Id: %ld", event, (long)lineSession.sessionId);
     switch (state)
     {
-        case JCTransferSuccess:
-        {
-            lineSession.sessionState = state;
-            if (_transferCompletionHandler) {
-                _transferCompletionHandler(YES, error);
-                _transferCompletionHandler = nil;
-            }
-            [_delegate sipHandler:self willRemoveLineSession:lineSession];
-            [lineSession reset];
-            break;
-        }
+        case JCTransferRejected:
         case JCTransferFailed:
         {
+            [_delegate sipHandler:self didFailTransferWithError:error];
+            
+//            lineSession.warmTransferToNumber = nil;
+//            lineSession.transfer = NO;
             lineSession.sessionState = state;
-            NSLog(@"%@", [self.lineSessions description]);
-            if (_transferCompletionHandler) {
-                _transferCompletionHandler(NO, error);
-                _transferCompletionHandler = nil;
-            }
+            break;
+        }
+        case JCTransferSuccess:
+        {
+            [_delegate sipHandler:self didTransferCalls:self.lineSessions];
+//            lineSession.warmTransferToNumber = nil;
+//            lineSession.transfer = NO;
+            lineSession.sessionState = state;
             break;
         }
         case JCCallFailed:
@@ -753,12 +963,15 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             lineSession.active = FALSE;
             lineSession.updatable = FALSE;
             lineSession.sessionState = state;
-            NSLog(@"%@", [self.lineSessions description]);
+            
+            // Notify
             if (lineSession.isIncoming){
                 [MissedCall addMissedCallWithLineSession:lineSession line:_line];
             }
             [_delegate sipHandler:self willRemoveLineSession:lineSession];
-            [lineSession reset];
+            
+            NSLog(@"%@", [self.lineSessions description]);
+            [lineSession reset];  // clear up this line session for reuse.
             break;
         }
         
@@ -769,6 +982,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             lineSession.active = TRUE;
             lineSession.contact = [Contact contactForExtension:lineSession.callDetail pbx:_line.pbx];
             lineSession.sessionState = state;
+            
+            // Notify
             [OutgoingCall addOutgoingCallWithLineSession:lineSession line:_line];
             [_delegate sipHandler:self didAddLineSession:lineSession];     // Notify the delegate to add a line.
             break;
@@ -780,7 +995,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         {
             lineSession.incoming = TRUE;
             lineSession.contact = [Contact contactForExtension:lineSession.callDetail pbx:_line.pbx];
-            lineSession.sessionState = state;                              // Set the session state.
+            lineSession.sessionState = state;
+            
+            // Notify
             [_delegate sipHandler:self didAddLineSession:lineSession];     // Notify the delegate to add a line.
             if (autoAnswer) {
                 autoAnswer = false;
@@ -793,6 +1010,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             lineSession.incoming = NO;
             lineSession.active = YES;
             lineSession.sessionState = state;
+            
+            // Notify
             [IncomingCall addIncommingCallWithLineSession:lineSession line:_line];
             [_delegate sipHandler:self didAnswerLineSession:lineSession];
             break;
@@ -833,19 +1052,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 #pragma mark - PortSIP SDK Delegate Handlers -
 
-#pragma mark Resgistration Events
 
-- (void)onRegisterSuccess:(char*) statusText statusCode:(int)statusCode
-{
-    _registered = TRUE;
-    [_delegate sipHandlerDidRegister:self];
-}
-
-- (void)onRegisterFailure:(char*) statusText statusCode:(int)statusCode
-{
-    _registered = FALSE;
-    [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:statusCode reason:@"Registration failed"]];
-}
 
 #pragma mark Incoming Call Events
 
@@ -909,23 +1116,19 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 					existsVideo:(BOOL)existsVideo
 {
 	JCLineSession *selectedLine = [self findSession:sessionId];
-	if (!selectedLine)
-	{
+	if (!selectedLine) {
 		return;
 	}
 	
-	if (existsEarlyMedia)
-	{
+	if (existsEarlyMedia) {
 		// Checking does this call has video
-		if (existsVideo)
-		{
+		if (existsVideo) {
 			// This incoming call has video
 			// If more than one codecs using, then they are separated with "#",
 			// for example: "g.729#GSM#AMR", "H264#H263", you have to parse them by yourself.
 		}
 		
-		if (existsAudio)
-		{
+		if (existsAudio) {
 			// If more than one codecs using, then they are separated with "#",
 			// for example: "g.729#GSM#AMR", "H264#H263", you have to parse them by yourself.
 		}
@@ -985,13 +1188,13 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     selectedLine.video = existsVideo;
     
 	// If this is the refer call then need set it to normal
-	if (selectedLine.mIsReferCall){
-		[selectedLine setReferCall:false originalCallSessionId:0];
-	}
+    if(selectedLine.isRefer) {
+        selectedLine.refer = NO;
+        selectedLine.referedSessionId = INVALID_SESSION_ID;
+    }
     
     [self setSessionState:JCCallAnswered forSession:selectedLine event:@"onInviteAnswered" error:nil];
 }
-
 
 /**
  * If the outgoing call fails, this event is triggered.
@@ -1016,103 +1219,15 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     [self setSessionState:JCCallConnected forSessionId:sessionId event:@"onInviteConnected" error:nil];
 }
 
+/*!
+ *  This event is triggered once remote side close the call.
+ */
 - (void)onInviteClosed:(long)sessionId
 {
     [self setSessionState:JCCallCanceled forSessionId:sessionId event:@"onInviteClosed" error:nil];
 }
 
-#pragma mark - Transfer Events
 
-- (void)onReceivedRefer:(long)sessionId
-				referId:(long)referId
-					 to:(char*)to
-				   from:(char*)from
-		referSipMessage:(char*)referSipMessage
-{
-	JCLineSession *selectedLine = [self findSession:sessionId];
-	if (!selectedLine)
-	{
-		[_mPortSIPSDK rejectRefer:referId];
-		return;
-	}
-	
-	JCLineSession *idleLine = [self findIdleLine];
-	if (!idleLine)
-	{
-		[_mPortSIPSDK rejectRefer:referId];
-		return;
-	}
-	
-	//auto accept refer
-	// Hold currently call after accepted the REFER
-    [_mPortSIPSDK hold:selectedLine.sessionId];
-    selectedLine.hold = true;
-    
-	long referSessionId = [_mPortSIPSDK acceptRefer:referId referSignaling:[NSString stringWithUTF8String:referSipMessage]];
-	if (referSessionId <= 0)
-	{
-		[idleLine reset];
-		[_mPortSIPSDK unHold:selectedLine.sessionId];
-        selectedLine.hold = false;
-	}
-	else
-	{
-        idleLine.sessionId = referSessionId;
-        idleLine.active = true;
-        [idleLine setReferCall:true originalCallSessionId:selectedLine.sessionId];
-        [self.delegate sipHandler:self willRemoveLineSession:selectedLine];
-	}
-    
-    [self setSessionState:JCTransferIncoming forSessionId:sessionId event:@"onReceivedRefer" error:nil];
-}
-
-/**
- * This callback will be triggered once remote side called "acceptRefer" to accept the REFER
- */
-- (void)onReferAccepted:(long)sessionId
-{
-    [self setSessionState:JCTransferAccepted forSessionId:sessionId event:@"onReferAccepted" error:nil];
-}
-
-/**
- * This callback will be triggered once remote side called "rejectRefer" to reject the REFER
- */
-- (void)onReferRejected:(long)sessionId reason:(char*)reason code:(int)code
-{
-    [self setSessionState:JCTransferRejected forSessionId:sessionId event:@"onReferRejected" error:nil];
-}
-
-/**
- * When the refer call is processing, this event trigged.
- */
-- (void)onTransferTrying:(long)sessionId
-{
-    [self setSessionState:JCTransferTrying forSessionId:sessionId event:@"onTransferTrying" error:nil];
-}
-
-/**
- * When the refer call is ringing, this event trigged.
- */
-- (void)onTransferRinging:(long)sessionId
-{
-    [self setSessionState:JCTransferRinging forSessionId:sessionId event:@"onTransferRinging" error:nil];
-}
-
-/**
- * When the refer call is succeeds, this event will be triggered. The ACTV means Active. For example: A established the 
- * call with B, A transfer B to C, C accepted the refer call, A received this event.
- */
-- (void)onACTVTransferSuccess:(long)sessionId
-{
-    [self setSessionState:JCTransferSuccess forSessionId:sessionId event:@"onACTVTransferSuccess" error:nil];
-}
-
-- (void)onACTVTransferFailure:(long)sessionId reason:(char*)reason code:(int)code
-{
-    NSString *event = [NSString stringWithFormat:@"onACTVTransferFailure reason: %@ code: %i", [NSString stringWithCString:reason encoding:NSUTF8StringEncoding], code];
-    NSError *error = [Common createErrorWithDescription:event reason:[NSString stringWithUTF8String:reason] code:code];
-    [self setSessionState:JCTransferFailed forSessionId:sessionId event:event error:error];
-}
 
 #pragma mark Not Implemented
 

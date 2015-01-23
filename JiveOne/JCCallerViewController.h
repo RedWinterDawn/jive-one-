@@ -9,6 +9,7 @@
 @import UIKit;
 
 #import "JCCallOptionsView.h"
+#import "JCLineSession.h"
 
 @interface JCCallerViewController : UIViewController
 
@@ -30,8 +31,9 @@
 
 -(void)startConferenceCall;
 -(void)stopConferenceCall;
-
 -(void)reload;
+
+-(void)presentWarmTransferSuccessWithSession:(JCLineSession *)lineSession receivingSession:(JCLineSession *)receivingSession;
 
 // IBActions to trigger events with the call.
 -(IBAction)speaker:(id)sender;

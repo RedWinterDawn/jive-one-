@@ -3570,7 +3570,6 @@
                         <outlet property="speakerBtn" destination="Bf6-vA-5bi" id="qC6-wV-dSM"/>
                         <outlet property="swapBtn" destination="W4O-ei-fkQ" id="nGj-b3-QaI"/>
                         <outlet property="warmTransfer" destination="8tp-NP-l8d" id="ekm-UW-4JU"/>
-                        <segue destination="H5p-Pr-pGE" kind="modal" identifier="blindTransferComplete" animates="NO" id="5G9-TH-HLg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eMn-vI-5KV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4828,7 +4827,7 @@
         <!--Transfer Confirmation View Controller-->
         <scene sceneID="yea-6d-KmQ">
             <objects>
-                <viewController id="H5p-Pr-pGE" customClass="JCTransferConfirmationViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TransferConfirmationViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="H5p-Pr-pGE" customClass="JCTransferConfirmationViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Pfs-jG-OKT"/>
                         <viewControllerLayoutGuide type="bottom" id="SoL-9Y-eyi"/>
@@ -4837,7 +4836,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" image="incall-background" translatesAutoresizingMaskIntoConstraints="NO" id="9C2-Xx-ecb">
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" misplaced="YES" image="incall-background" translatesAutoresizingMaskIntoConstraints="NO" id="9C2-Xx-ecb">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lg7-3g-Bk3">
@@ -4970,7 +4969,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RqF-BJ-Pex" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3368" y="-969"/>
+            <point key="canvasLocation" x="3295" y="-1005"/>
         </scene>
         <!--History-->
         <scene sceneID="hDA-V2-YRp">

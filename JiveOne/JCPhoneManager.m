@@ -306,25 +306,52 @@ NSString *const kJCPhoneManager611String = @"611";
 -(void)dial:(NSString *)dialNumber type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion
 {
     if (dialType == JCPhoneManagerBlindTransfer) {
-        [_sipHandler blindTransferToNumber:dialNumber completion:^(BOOL success, NSError *error) {
-            if (success) {
-                __autoreleasing NSError *hangupError;
-                [_sipHandler hangUpAllSessions:&hangupError];
-            }
-            
-            if (completion != NULL)
-                completion(success, nil);
-            
-            if (error)
-                NSLog(@"%@", [error description]);
-        }];
-        return;
+        [self blindTransferToNumber:dialNumber completion:completion];
     } else if (dialType == JCPhoneManagerWarmTransfer) {
-        _warmTransferNumber = dialNumber;
+        [self warmTransferToNumber:dialNumber completion:completion];
+    } else {
+        [self simpleDialNumber:dialNumber completion:completion];
     }
-    
+}
+
+-(void)blindTransferToNumber:(NSString *)number completion:(CompletionHandler)completion
+{
+    [UIApplication showStatus:@"Transfering..."];
     __autoreleasing NSError *error;
-    BOOL success = [_sipHandler makeCall:dialNumber videoCall:NO error:&error];
+    BOOL success = [_sipHandler startBlindTransferToNumber:number error:&error];
+    if (completion) {
+        if (!success) {
+            [UIApplication hideStatus];
+            completion(NO, [JCPhoneManagerError errorWithCode:JC_PHONE_BLIND_TRANSFER_FAILED reason:@"Unable to perform transfer at this time. Please Try Again." underlyingError:error]);
+        } else {
+            completion(YES, nil);
+        }
+    }
+}
+
+-(void)warmTransferToNumber:(NSString *)number completion:(CompletionHandler)completion
+{
+    _warmTransferNumber = number;
+    __autoreleasing NSError *error;
+    BOOL success = [_sipHandler startWarmTransferToNumber:number error:&error];
+    if (completion) {
+        completion(success, error);
+    }
+}
+
+-(void)simpleDialNumber:(NSString *)number completion:(CompletionHandler)completion
+{
+    __autoreleasing NSError *error;
+    BOOL success = [_sipHandler makeCall:number videoCall:NO error:&error];
+    if (completion) {
+        completion(success, error);
+    }
+}
+
+-(void)finishWarmTransfer:(CompletionHandler)completion
+{
+    __autoreleasing NSError *error;
+    BOOL success = [_sipHandler finishWarmTransfer:&error];
     if (completion) {
         completion(success, error);
     }
@@ -469,16 +496,13 @@ NSString *const kJCPhoneManager611String = @"611";
     [_sipHandler pressNumpadButton:numberPadNumber];
 }
 
--(void)finishWarmTransfer:(CompletionHandler)completion
+-(void)dismissCallViewController
 {
-    if (_warmTransferNumber) {
-        [_sipHandler warmTransferToNumber:_warmTransferNumber completion:^(BOOL success, NSError *error) {
-            _warmTransferNumber = nil;
-            if (completion) {
-                completion(success, error);
-            }
-        }];
+    if (_callViewController.presentedViewController != nil) {
+        [_callViewController.presentedViewController dismissViewControllerAnimated:NO completion:NULL];
     }
+    [_callViewController dismissViewControllerAnimated:YES completion:NULL];
+    _callViewController = nil;
 }
 
 #pragma mark SipHandlerDelegate
@@ -577,8 +601,7 @@ NSString *const kJCPhoneManager611String = @"611";
     NSInteger count = self.calls.count;
     if (_callViewController) {
         if (count == 0) {
-            [_callViewController dismissViewControllerAnimated:YES completion:NULL];
-            _callViewController = nil;
+            [self dismissCallViewController];
         } else {
             [_callViewController reload];
         }
@@ -651,11 +674,37 @@ NSString *const kJCPhoneManager611String = @"611";
     // Use the updatable state to update the call view controller UI.
     if (_callViewController) {
         _callViewController.mergeBtn.enabled        = updatable;
-        _callViewController.swapBtn.enabled         =updatable;
+        _callViewController.swapBtn.enabled         = updatable;
         _callViewController.warmTransfer.enabled    = updatable;
         _callViewController.blindTransfer.enabled   = updatable;
-        _callViewController.addBtn.enabled           = updatable;
+        _callViewController.addBtn.enabled          = updatable;
     }
+}
+
+-(void)sipHandler:(SipHandler *)sipHandler didTransferCalls:(NSSet *)lineSessions
+{
+    [_callViewController hideStatus];
+    
+    // TODO: determine which line sessions are what.
+    JCLineSession *transferLine;
+    JCLineSession *receivingLine;
+    
+    for (JCLineSession *lineSession in lineSessions) {
+        if (lineSession.isTransfer) {
+            transferLine = lineSession;
+        }
+        else {
+            receivingLine = lineSession;
+        }
+    }
+    [_callViewController presentWarmTransferSuccessWithSession:transferLine receivingSession:receivingLine];
+    [self performSelector:@selector(dismissCallViewController) withObject:nil afterDelay:3];
+}
+
+-(void)sipHandler:(SipHandler *)sipHandler didFailTransferWithError:(NSError *)error
+{
+    [_callViewController hideStatus];
+    [_callViewController showError:error];
 }
 
 #pragma mark - Getters -

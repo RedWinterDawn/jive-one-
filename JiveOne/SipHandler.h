@@ -35,6 +35,10 @@
 // Line Session Status
 -(void)sipHandler:(SipHandler *)sipHandler didUpdateStatusForLineSessions:(NSSet *)lineSessions;
 
+// Transfer Call
+-(void)sipHandler:(SipHandler *)sipHandler didTransferCalls:(NSSet *)lineSessions;
+-(void)sipHandler:(SipHandler *)sipHandler didFailTransferWithError:(NSError *)error;
+
 @end
 
 @interface SipHandler : NSObject
@@ -57,30 +61,23 @@
 - (void)startKeepAwake;
 - (void)stopKeepAwake;
 
-// Methods for makeing, transferring or establsihing conference calls.
-- (BOOL)makeCall:(NSString*)callee videoCall:(BOOL)videoCall error:(NSError *__autoreleasing *)error;
+// Calls a party from its number.
+- (BOOL)makeCall:(NSString *)number videoCall:(BOOL)videoCall error:(NSError *__autoreleasing *)error;
 
 // Call Actions
 - (BOOL)answerSession:(JCLineSession *)lineSession error:(NSError *__autoreleasing *)error;         // Answer line session
-
 - (BOOL)hangUpAllSessions:(NSError *__autoreleasing *)error;
 - (BOOL)hangUpSession:(JCLineSession *)lineSession error:(NSError *__autoreleasing *)error;         // Hang up line session
-
 - (BOOL)holdLines:(NSError *__autoreleasing *)error;                                                // Hold all line sessions
 - (BOOL)holdLineSessions:(NSSet *)lineSessions error:(NSError *__autoreleasing *)error;             // Holds line sessions in set
 - (BOOL)holdLineSession:(JCLineSession *)lineSession error:(NSError *__autoreleasing *)error;       // Holds line session
-
 - (BOOL)unholdLines:(NSError *__autoreleasing *)error;                                              // unhold all line sessions
 - (BOOL)unholdLineSessions:(NSSet *)lineSessions error:(NSError *__autoreleasing *)error;           // unhold line sessions in set
 - (BOOL)unholdLineSession:(JCLineSession *)lineSession error:(NSError *__autoreleasing *)error;     // unhold line session
 
-- (void)blindTransferToNumber:(NSString*)referTo completion:(CompletionHandler)completion;
-- (void)warmTransferToNumber:(NSString*)referTo completion:(CompletionHandler)completion;
-
 // Conference Calls
 - (BOOL)createConference:(NSError *__autoreleasing *)error;
 - (BOOL)createConferenceWithLineSessions:(NSSet *)lineSessions error:(NSError *__autoreleasing *)error;
-
 - (BOOL)endConference:(NSError *__autoreleasing *)error;
 - (BOOL)endConferenceCallForLineSessions:(NSSet *)lineSessions error:(NSError *__autoreleasing *)error;
 
@@ -88,6 +85,14 @@
 - (void)pressNumpadButton:(char )dtmf;
 - (void)muteCall:(BOOL)mute;
 - (void)setLoudSpeakerEnabled:(BOOL)loudSpeakerEnabled;
-//- (void)setHoldCallState:(bool)holdState forSessionId:(long)sessionId;
+
+// Starts a blind transfer. Success and failure reported through the delegate responses.
+- (BOOL)startBlindTransferToNumber:(NSString *)number error:(NSError *__autoreleasing *)error;
+
+// Starts a warm transfer, connecting to 2nd party taging first party as going to be transferred.
+- (BOOL)startWarmTransferToNumber:(NSString *)number error:(NSError *__autoreleasing *)error;
+
+// Finishes a warm transfer, anctually perfoming the transfer.
+- (BOOL)finishWarmTransfer:(NSError *__autoreleasing *)error;
 
 @end

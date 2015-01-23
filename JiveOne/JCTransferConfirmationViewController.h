@@ -16,6 +16,4 @@
 @property (weak, nonatomic) IBOutlet UILabel *transferToCallersName;
 @property (weak, nonatomic) IBOutlet JCDialStringLabel *transferToCallersNumber;
 
-@property (nonatomic, strong) NSDictionary *transferInfo;
-
 @end
