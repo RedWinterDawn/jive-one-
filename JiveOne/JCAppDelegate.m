@@ -403,7 +403,6 @@
 {
     LOG_Info();
     
-    [Flurry logEvent:@"Log out"];
     
     [JCSocket reset];                                   // Disconnect the socket and purge socket session.
     [JCPhoneManager disconnect];                        // Disconnect the phone manager
@@ -432,15 +431,6 @@
      */
     [NewRelicAgent startWithApplicationToken:@"AA6303a3125152af3660d1e3371797aefedfb29761"];
     
-    /*
-     * FLURRY
-     */
-    //note: iOS only allows one crash reporting tool per app; if using another, set to: NO
-    [Flurry setCrashReportingEnabled:YES];
-    
-    // Replace YOUR_API_KEY with the api key in the downloaded package
-    [Flurry startSession:@"JCMVPQDYJZNCZVCJQ59P"];
-    
     //Register for background fetches
     [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     
@@ -458,7 +448,6 @@
 {
     LOG_Info();
     
-    [Flurry logEvent:@"Left Application"];
 }
 
 /**
@@ -480,8 +469,7 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     LOG_Info();
-
-    [Flurry logEvent:@"Resumed Session"];
+  
     [JCSocket start];
     [JCPhoneManager stopKeepAlive];
 }

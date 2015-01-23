@@ -61,8 +61,6 @@
 #endif
         [self.usernameTextField becomeFirstResponder];
     }
-    
-    [Flurry logEvent:@"Login View"];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
