@@ -7,86 +7,78 @@
 //
 
 #import "JCAudioAlertManager.h"
+#import "JCAppSettings.h"
+
+#define DEFAULT_TIME_INTERVAL 1
 
 @implementation JCAudioAlertManager
 
-
 #pragma mark - Ringing
 
-static bool incommingCall;
+static BOOL active;
 
--(void)startVibration
+-(void)vibrate
 {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    bool vibrate = [userDefaults boolForKey:@"vibrateOnRing"];
-    if (vibrate)
-    {
-        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
-        AudioServicesAddSystemSoundCompletion(kSystemSoundID_Vibrate, NULL, NULL, endVibration, NULL);
+    [self startRepeatingVibration:NO];
+}
+
+-(void)startRepeatingVibration:(BOOL)repeating
+{
+    active = repeating;
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    AudioServicesAddSystemSoundCompletion(kSystemSoundID_Vibrate, NULL, NULL, vibration, NULL);
+}
+
+-(void)stop
+{
+    active = false;
+}
+
+-(void)ring
+{
+    [self startRepeatingRingtone:NO];
+}
+
+-(void)startRepeatingRingtone:(BOOL)repeating
+{
+    active = repeating;
+    @try {
+        if ([JCAppSettings sharedSettings].isVibrateOnRing) {
+            [self startRepeatingVibration:repeating];
+        }
+        SystemSoundID soundId = [self playRingtone];
+        AudioServicesAddSystemSoundCompletion(soundId, NULL, NULL, ringtone, NULL);
+    }
+    @catch (NSException *exception) {
+        NSLog(@"%@", exception.description);
     }
 }
 
+#pragma mark - Private -
 
--(void)stopVibration
+void vibration (SystemSoundID ssID, void *clientData)
 {
-    incommingCall = false;
-}
-
-void endVibration (SystemSoundID ssID, void *clientData)
-{
-    if (!incommingCall)
+    if (!active)
         return;
     
-    double delayInSeconds = 1;
+    double delayInSeconds = DEFAULT_TIME_INTERVAL;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        if (!incommingCall)
+        if (!active)
             return;
         AudioServicesPlaySystemSound(ssID);
     });
 }
 
--(void)startRingtone: (BOOL)Vibrate
+void ringtone (SystemSoundID ssID, void *clientData)
 {
-    incommingCall = true;
-    
-    @try {
-        if (Vibrate) {
-            [self startVibration];
-        }
-        SystemSoundID soundId = [self playRingtone];
-        AudioServicesAddSystemSoundCompletion(soundId, NULL, NULL, endRingtone, NULL);
-    }
-    @catch (NSException *exception) {
-        NSLog(@"%@", exception.description);
-    }
-}
-
--(void)stopRingtone: (BOOL)Vibrate
-{
-    
-    
-    @try {
-        if (Vibrate) {
-            [self stopVibration];
-        }
-        incommingCall = false;
-    }
-    @catch (NSException *exception) {
-        NSLog(@"%@", exception.description);
-    }
-}
-
-
-void endRingtone (SystemSoundID ssID, void *clientData)
-{
-    if (!incommingCall)
+    if (!active)
         return;
     
-    double delayInSeconds = 1;
+    double delayInSeconds = DEFAULT_TIME_INTERVAL;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        if (!incommingCall)
+        if (!active)
             return;
         AudioServicesPlaySystemSound(ssID);
     });
@@ -104,12 +96,6 @@ void endRingtone (SystemSoundID ssID, void *clientData)
     if (vibrate)
         AudioServicesPlaySystemSound(4095);
     return soundID;
-}
-
-
--(void)stopRingtone
-{
-    incommingCall = false;
 }
 
 
