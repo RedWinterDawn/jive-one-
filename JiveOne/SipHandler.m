@@ -942,18 +942,15 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         case JCTransferRejected:
         case JCTransferFailed:
         {
-            [_delegate sipHandler:self didFailTransferWithError:error];
-            
-//            lineSession.warmTransferToNumber = nil;
-//            lineSession.transfer = NO;
+            lineSession.transfer = NO;
             lineSession.sessionState = state;
+            [_delegate sipHandler:self didFailTransferWithError:error];
             break;
         }
         case JCTransferSuccess:
         {
             [_delegate sipHandler:self didTransferCalls:self.lineSessions];
-//            lineSession.warmTransferToNumber = nil;
-//            lineSession.transfer = NO;
+            lineSession.transfer = NO;
             lineSession.sessionState = state;
             break;
         }

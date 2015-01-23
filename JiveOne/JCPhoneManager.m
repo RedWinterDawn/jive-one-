@@ -523,15 +523,14 @@ NSString *const kJCPhoneManager611String = @"611";
     _transferConfirmationViewController = [rootViewController.storyboard instantiateViewControllerWithIdentifier:@"TransferConfirmationViewController"];
     _transferConfirmationViewController.transferLineSession = lineSession;
     _transferConfirmationViewController.receivingLineSession = receivingSession;
-    
-   [rootViewController presentViewController:_transferConfirmationViewController animated:YES completion:NULL];
+    [rootViewController presentViewController:_transferConfirmationViewController animated:YES completion:NULL];
     [self performSelector:@selector(dismissTransferConfirmationViewController) withObject:nil afterDelay:3];
 }
 
 
 - (void)dismissTransferConfirmationViewController
 {
-    [self dismissCallViewControllerAnimated:YES];
+    [self dismissTransferConfirmationViewControllerAnimated:YES];
 }
 
 - (void)dismissTransferConfirmationViewControllerAnimated:(BOOL)animated
@@ -738,6 +737,7 @@ NSString *const kJCPhoneManager611String = @"611";
 -(void)sipHandler:(SipHandler *)sipHandler didFailTransferWithError:(NSError *)error
 {
     [_callViewController showError:error];
+    [_callViewController reload];
 }
 
 #pragma mark - Getters -
