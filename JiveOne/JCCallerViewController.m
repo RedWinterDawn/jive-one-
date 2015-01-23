@@ -52,6 +52,8 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
 
 @implementation JCCallerViewController
 
+CGFloat *_callOptionsWidth;
+
 -(id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
@@ -60,11 +62,14 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         _transferAnimationDuration             = TRANSFER_ANIMATION_DURATION;
         _keyboardAnimationDuration             = KEYBOARD_ANIMATION_DURATION;
         
+        
+        
         self.warmTransfer.enabled   = false;
         self.blindTransfer.enabled    = false;
         self.swapBtn.enabled           = false;
         self.mergeBtn.enabled         = false;
         self.addBtn.enabled             = false;
+        self.finishTransferBtn.enabled = false;
     }
     return self;
 }
@@ -95,9 +100,10 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
     } else {
         [self hideCallOptionsAnimated:NO];
     }
-    
+        
     // determine call options view state
     [self.callOptionsView setState:[self stateForOptionView] animated:YES];
+    
 }
 
 -(UIStatusBarStyle)preferredStatusBarStyle
@@ -300,8 +306,17 @@ NSString *const kJCCallerViewControllerBlindTransferCompleteSegueIdentifier = @"
         state = JCCallOptionViewConferenceCallState;
     }
     else if ([JCPhoneManager sharedManager].calls.count > 1) {
+        
         state = JCCallOptionViewMultipleCallsState;
-    }
+        NSArray *calls = [JCPhoneManager sharedManager].calls;
+       
+            for (JCCallCard *call in calls) {
+                if (call.lineSession.isTransfer) {
+                    state = JCCallOptionViewFinishTransferState;
+                    break;
+                }
+            }
+        }
     return state;
 }
 

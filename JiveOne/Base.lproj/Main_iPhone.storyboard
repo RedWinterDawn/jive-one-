@@ -3446,7 +3446,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="checkButton" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hys-3G-Hvf" userLabel="Finish Transfer Button" customClass="JCRoundedButton">
-                                        <rect key="frame" x="130" y="257" width="60" height="60"/>
+                                        <rect key="frame" x="130" y="267" width="60" height="60"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.20000000000000001" colorSpace="deviceRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="ExA-Zg-b4x"/>
@@ -3461,7 +3461,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Finish Transfer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zpq-3o-7Gs" userLabel="Finish Transfer Label">
-                                        <rect key="frame" x="118" y="317" width="85" height="21"/>
+                                        <rect key="frame" x="118" y="327" width="85" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="a8b-4C-Zbe"/>
                                             <constraint firstAttribute="width" constant="85" id="shB-8y-rU7"/>
@@ -3526,7 +3526,7 @@
                                     <constraint firstItem="Hvu-aR-OOp" firstAttribute="top" secondItem="fG3-GZ-ycX" secondAttribute="bottom" constant="5" id="pXe-JV-Pop"/>
                                     <constraint firstAttribute="trailing" secondItem="fG3-GZ-ycX" secondAttribute="trailing" constant="32" id="qBX-wH-8Os"/>
                                     <constraint firstAttribute="bottom" secondItem="LZA-VZ-Dk3" secondAttribute="bottom" constant="40" id="s8n-gI-G4K"/>
-                                    <constraint firstAttribute="bottom" secondItem="hys-3G-Hvf" secondAttribute="bottom" constant="-90" id="tFc-6A-DTX"/>
+                                    <constraint firstAttribute="bottom" secondItem="hys-3G-Hvf" secondAttribute="bottom" constant="-100" id="tFc-6A-DTX"/>
                                     <constraint firstAttribute="bottom" secondItem="W4O-ei-fkQ" secondAttribute="bottom" constant="39" id="y6q-dY-Ebf"/>
                                 </constraints>
                                 <connections>
@@ -3564,6 +3564,7 @@
                         <outlet property="blindTransfer" destination="LZA-VZ-Dk3" id="Cdg-aU-hba"/>
                         <outlet property="callOptionsView" destination="T5I-ze-dYa" id="jCb-Vb-WgF"/>
                         <outlet property="callOptionsViewOriginYConstraint" destination="cyC-4X-o2P" id="5Kx-qn-JuN"/>
+                        <outlet property="finishTransferBtn" destination="hys-3G-Hvf" id="95M-ki-XSN"/>
                         <outlet property="keypadButton" destination="5bp-16-Yhx" id="HRk-bY-ny3"/>
                         <outlet property="mergeBtn" destination="907-zj-hOp" id="EiJ-V9-cfA"/>
                         <outlet property="mergeLabel" destination="C17-8W-dR3" id="59Y-ze-I53"/>
