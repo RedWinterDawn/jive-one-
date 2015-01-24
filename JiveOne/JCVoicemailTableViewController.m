@@ -203,17 +203,6 @@
         removed = [self.selectedIndexPaths objectAtIndex:0];
         [self.selectedIndexPaths removeObjectAtIndex:0];
     }
-    
-    
-    NSArray *indexPaths;
-    
-    if (removed) {
-        indexPaths = @[removed, indexPath];
-    }
-    else {
-        indexPaths = @[indexPath];
-    }
-    
     [self.tableView reloadData];
 }
 
