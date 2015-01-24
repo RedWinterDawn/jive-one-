@@ -299,6 +299,10 @@
     AFNetworkReachabilityStatus status = (AFNetworkReachabilityStatus)((NSNumber *)[notification.userInfo valueForKey:AFNetworkingReachabilityNotificationStatusItem]).integerValue;
     AFNetworkReachabilityManager *networkManager = [AFNetworkReachabilityManager sharedManager];
     Line *line = [JCAuthenticationManager sharedInstance].line;
+    if (!line) {
+        return;
+    }
+    
     JCPhoneManagerNetworkType currentNetworkType = [JCPhoneManager networkType];
     
     // Check to see if we have a previous network state that was different from our current network
