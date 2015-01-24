@@ -102,7 +102,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         if(errorCode) {
             _mPortSIPSDK = nil;
             _lineSessions = nil;
-            *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error initializing port sip sdk"];
+            if (error != NULL) {
+                *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error initializing port sip sdk"];
+            }
             return self;
         }
         
@@ -112,7 +114,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             [_mPortSIPSDK unInitialize];
             _mPortSIPSDK = nil;
             _lineSessions = nil;
-            *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Port Sip License Key Failure"];
+            if(error != NULL) {
+                *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Port Sip License Key Failure"];
+            }
             return self;
         }
         
@@ -283,14 +287,18 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     // do not have one, exit with error.
     JCLineSession *lineSession = [self findIdleLine];
     if (!lineSession) {
-        *error = [JCSipHandlerError errorWithCode:JC_SIP_CALL_NO_IDLE_LINE];
+        if (error != NULL) {
+            *error = [JCSipHandlerError errorWithCode:JC_SIP_CALL_NO_IDLE_LINE];
+        }
         return NO;
     }
     
     // Try to to place all current calls that are active on hold.
     __autoreleasing NSError *holdError;
     if (![self holdLines:&holdError]) {
-        *error = holdError;
+        if (error != NULL) {
+            *error = holdError;
+        }
         return NO;
     }
     
@@ -298,7 +306,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     // numbers, and positive numbers are success and thier session id.
     NSInteger result = [_mPortSIPSDK call:dialString sendSdp:TRUE videoCall:videoCall];
     if(result <= 0) {
-        *error = [JCSipHandlerError errorWithCode:result reason:@"Unable to create call"];
+        if (error != NULL) {
+            *error = [JCSipHandlerError errorWithCode:result reason:@"Unable to create call"];
+        }
         [self setSessionState:JCCallFailed forSession:lineSession event:@"makeCall:" error:nil];
         return NO;
     }
@@ -321,14 +331,18 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 - (BOOL)answerSession:(JCLineSession *)lineSession error:(NSError *__autoreleasing *)error
 {
     if (!lineSession) {
-        *error = [JCSipHandlerError errorWithCode:JC_SIP_LINE_SESSION_IS_EMPTY reason:@"Line Session in empty"];
+        if (error != NULL) {
+            *error = [JCSipHandlerError errorWithCode:JC_SIP_LINE_SESSION_IS_EMPTY reason:@"Line Session in empty"];
+        }
         return NO;
     }
     
     // Try to to place all current calls that are active on hold.
     __autoreleasing NSError *holdError;
     if (![self holdLines:&holdError]) {
-        *error = holdError;
+        if (error != NULL) {
+            *error = holdError;
+        }
         return NO;
     }
     
@@ -338,7 +352,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     
     NSInteger errorCode = [_mPortSIPSDK answerCall:lineSession.sessionId videoCall:lineSession.isVideo];
     if (errorCode) {
-        *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Unable to answer the call"];
+        if (error != NULL) {
+            *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Unable to answer the call"];
+        }
         [self setSessionState:JCCallFailed forSession:lineSession event:nil error:nil];
         return NO;
     }
