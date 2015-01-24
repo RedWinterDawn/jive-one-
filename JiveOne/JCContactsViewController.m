@@ -11,7 +11,7 @@
 
 #import "JCContactsViewController.h"
 #import "JCContactsTableViewController.h"
-#import "JCCallerViewController.h"
+#import "JCPhoneManager.h"
 #import "ContactGroup.h"
 
 NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"ContactGroupViewController";
@@ -29,7 +29,6 @@ NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"Contact
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    
     self.tabBar.selectedItem = [self.tabBar.items objectAtIndex:0];
     
     ContactGroup *contactGroup = self.contactGroup;
@@ -43,7 +42,9 @@ NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"Contact
 {
     [super viewDidAppear:animated];
     if (_dialString) {
-        [self performSegueWithIdentifier:@"LocalContactsClickToCall" sender:self];
+        [self dialNumber:_dialString sender:nil completion:^(BOOL success, NSError *error) {
+            _dialString = nil;
+        }];
     }
 }
 
@@ -57,13 +58,7 @@ NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"Contact
         _contactsTableViewController.filterType = JCContactFilterAll;
         self.searchBar.delegate = _contactsTableViewController;
     }
-    else if ([viewController isKindOfClass:[JCCallerViewController class]])
-    {
-        JCCallerViewController *caller = (JCCallerViewController *)viewController;
-        caller.dialString = _dialString;
-        _dialString = nil;
-    }
-    else if ([viewController isKindOfClass:[JCContactsViewController class]])
+	else if ([viewController isKindOfClass:[JCContactsViewController class]])
     {
         JCContactsViewController *contacts = (JCContactsViewController *)viewController;
         NSIndexPath *indexPath = [_contactsTableViewController.tableView indexPathForSelectedRow];

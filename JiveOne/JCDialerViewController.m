@@ -12,6 +12,8 @@
 #import "UIViewController+HUD.h"
 #import "JCAppSettings.h"
 #import <AFNetworking/AFNetworkReachabilityManager.h>
+#import "UIViewController+HUD.h"
+#import "JCPhoneManagerError.h"
 
 NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCall";
 
@@ -39,7 +41,16 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     [self updateRegistrationStatus];
     
     self.backspaceBtn.alpha = 0;
+    
+    
 }
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self updateRegistrationStatus];    
+}
+
 
 -(void)awakeFromNib
 {
@@ -70,15 +81,11 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     [_phoneManager removeObserver:self forKeyPath:@"connecting"];
 }
 
-#pragma mark - KVO -
-
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if ([keyPath isEqualToString:@"connected"] || [keyPath isEqualToString:@"connecting"]) {
         [self updateRegistrationStatus];
     }
-    
-    
 }
 
 #pragma mark - IBActions -
@@ -101,7 +108,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 {
     NSString *string = self.dialStringLabel.dialString;
     
-    // If the string is empty, we polulate the dial string with the most recent item in call history.
+    // If the string is empty, we populate the dial string with the most recent item in call history.
     if (!string || [string isEqualToString:@""]) {
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"line = %@", _phoneManager.line];
         OutgoingCall *call = [OutgoingCall MR_findFirstWithPredicate:predicate sortedBy:@"date" ascending:false];
@@ -109,22 +116,11 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
         return;
     }
     
-    // If we are already initiating a call, do not try the call again. Prevents double tapping errors that might cause
-    // two calls to be triggered.
-    if (_initiatingCall) {
-        return;
-    }
-    
-    _initiatingCall = TRUE;
-    [JCPhoneManager dialNumber:string
-                         type:JCPhoneManagerSingleDial
-                   completion:^(BOOL success, NSError *error, NSDictionary *callInfo) {
-                       if (success){
-                           [self performSegueWithIdentifier:kJCDialerViewControllerCallerStoryboardIdentifier sender:self];
-                           self.dialStringLabel.dialString = nil;
-                       }
-                       _initiatingCall = false;
-                   }];
+    [self dialNumber:string sender:sender completion:^(BOOL success, NSError *error) {
+        if (success){
+            self.dialStringLabel.dialString = nil;
+        }
+    }];
 }
 
 -(IBAction)backspace:(id)sender

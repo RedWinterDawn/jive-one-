@@ -11,6 +11,7 @@
 #import "SipHandler.h"
 #import "Common.h"
 #import "JCAppSettings.h"
+#import "JCSipHandlerError.h"
 
 #ifdef __APPLE__
 #include "TargetConditionals.h"
@@ -22,6 +23,7 @@
 
 // Managers
 #import "JCBadgeManager.h"   // Sip directly reports voicemail count for v4 clients to badge manager
+#import "JCAudioAlertManager.h"
 
 // Managed Objects
 #import "IncomingCall.h"
@@ -30,6 +32,7 @@
 #import "LineConfiguration.h"
 #import "Line.h"
 #import "PBX.h"
+#import "Contact.h"
 
 // View Controllers
 #import "VideoViewController.h"
@@ -62,14 +65,12 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 @interface SipHandler() <PortSIPEventDelegate>
 {
     PortSIPSDK *_mPortSIPSDK;
-    CompletionHandler _connectionCompletionHandler;
     CompletionHandler _transferCompletionHandler;
 	VideoViewController *_videoController;
-	bool inConference;
 	bool autoAnswer;
 }
 
-@property (nonatomic) NSMutableArray *lineSessions;
+@property (nonatomic) NSMutableSet *lineSessions;
 
 - (JCLineSession *)findSession:(long)sessionId;
 
@@ -77,21 +78,20 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 @implementation SipHandler
 
--(instancetype)initWithNumberOfLines:(NSInteger)lines delegate:(id<SipHandlerDelegate>)delegate
+-(instancetype)initWithNumberOfLines:(NSInteger)lines delegate:(id<SipHandlerDelegate>)delegate error:(NSError *__autoreleasing *)error;
 {
     self = [super init];
     if (self) {
         _delegate = delegate;
         
-        _lineSessions = [NSMutableArray new];
+        _lineSessions = [NSMutableSet new];
         for (int i = 0; i < lines; i++)
             [_lineSessions addObject:[JCLineSession new]];
         
         // Initialize the port sip sdk.
         _mPortSIPSDK = [PortSIPSDK new];
-        
         _mPortSIPSDK.delegate = self;
-        int ret = [_mPortSIPSDK initialize:TRANSPORT_UDP
+        int errorCode = [_mPortSIPSDK initialize:TRANSPORT_UDP
                                   loglevel:LOG_LEVEL
                                    logPath:NULL
                                    maxLine:(int)lines
@@ -99,41 +99,54 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
                         virtualAudioDevice:IS_SIMULATOR
                         virtualVideoDevice:IS_SIMULATOR];
         
-        if(ret != 0)
-            [NSException raise:NSInvalidArgumentException format:@"Initialize Port Sip SDK failure with error code: %d", ret];
+        if(errorCode) {
+            _mPortSIPSDK = nil;
+            _lineSessions = nil;
+            *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error initializing port sip sdk"];
+            return self;
+        }
         
-        //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_PCMA];
+        // Check License Key
+        errorCode = [_mPortSIPSDK setLicenseKey:kPortSIPKey];
+        if(errorCode) {
+            [_mPortSIPSDK unInitialize];
+            _mPortSIPSDK = nil;
+            _lineSessions = nil;
+            *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Port Sip License Key Failure"];
+            return self;
+        }
+        
+        // Configure codecs. These return error codes, but are not critical if they fail.
+        
+        // Used Audio Codecs
         [_mPortSIPSDK addAudioCodec:AUDIOCODEC_PCMU];
-        //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_SPEEX];
         [_mPortSIPSDK addAudioCodec:AUDIOCODEC_G729];
         [_mPortSIPSDK addAudioCodec:AUDIOCODEC_G722];
         
+        // Not used Audio Codecs
+        //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_SPEEX];
+        //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_PCMA];
         //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_GSM];
         //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_ILBC];
         //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_AMR];
         //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_SPEEXWB];
         
-        //[_mPortSIPSDK addVideoCodec:VIDEO_CODEC_H263];
-        //[_mPortSIPSDK addVideoCodec:VIDEO_CODEC_H263_1998];
+        // Used Video Codecs
         [_mPortSIPSDK addVideoCodec:VIDEO_CODEC_H264];
         
-        [_mPortSIPSDK setVideoBitrate:100];//video send bitrate,100kbps
+        // Not Used Video Codecs
+        //[_mPortSIPSDK addVideoCodec:VIDEO_CODEC_H263];
+        //[_mPortSIPSDK addVideoCodec:VIDEO_CODEC_H263_1998];
+        
+        [_mPortSIPSDK setVideoBitrate:100];             //video send bitrate,100kbps
         [_mPortSIPSDK setVideoFrameRate:10];
         [_mPortSIPSDK setVideoResolution:VIDEO_CIF];
-        [_mPortSIPSDK setAudioSamples:20 maxPtime:60];//ptime 20
-        
-        //1 - FrontCamra 0 - BackCamra
-        [_mPortSIPSDK setVideoDeviceId:1];
+        [_mPortSIPSDK setAudioSamples:20 maxPtime:60];  //ptime 20
+        [_mPortSIPSDK setVideoDeviceId:1];              //1 - FrontCamra 0 - BackCamra
         //[_mPortSIPSDK setVideoOrientation:180];
         
-        //enable srtp
+        //Enable SRTP
         [_mPortSIPSDK setSrtpPolicy:SRTP_POLICY_NONE];
-        
-        ret = [_mPortSIPSDK setLicenseKey:kPortSIPKey];
-        if (ret == ECoreTrialVersionLicenseKey)
-            [NSException raise:NSInvalidArgumentException format:@"This trial version SDK just allows short conversation, you can't heairng anyting after 2-3 minutes, contact us: sales@portsip.com to buy official version."];
-        else if (ret == ECoreWrongLicenseKey)
-            [NSException raise:NSInvalidArgumentException format:@"The wrong license key was detected, please check with sales@portsip.com or support@portsip.com"];
         
         //set RTC keep alives
         [_mPortSIPSDK setRtpKeepAlive:true keepAlivePayloadType:126 deltaTransmitTimeMS:30000];
@@ -158,37 +171,63 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         [self unregister];
     }
     
-    @try {
-        
-        if (!line)
-            [NSException raise:NSInvalidArgumentException format:kSipHandlerLineErrorMessage];
-    
-        NSString *userName = line.lineConfiguration.sipUsername;
-        NSString *server   = line.pbx.isV5 ? line.lineConfiguration.outboundProxy : line.lineConfiguration.registrationHost;
-    
-        int ret = [_mPortSIPSDK setUser:userName
-                            displayName:line.lineConfiguration.display
-                               authName:userName
-                               password:line.lineConfiguration.sipPassword
-                                localIP:@"0.0.0.0"                      // Auto select IP address
-                           localSIPPort:(10000 + arc4random()%1000)     // Generate a random port in the 10,000 range
-                             userDomain:@""
-                              SIPServer:server
-                          SIPServerPort:OUTBOUND_SIP_SERVER_PORT
-                             STUNServer:@""
-                         STUNServerPort:0
-                         outboundServer:line.lineConfiguration.outboundProxy
-                     outboundServerPort:OUTBOUND_SIP_SERVER_PORT];
-    
-        if(ret != 0)
-            [NSException raise:NSInvalidArgumentException format:@"set user failure ErrorCode = %d",ret];
-        
-        _line = line;
-        [_mPortSIPSDK registerServer:3600 retryTimes:9];
+    if (!line) {
+        [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:JC_SIP_REGISTER_LINE_IS_EMPTY reason:@"Line is empty"]];
+        return;
     }
-    @catch (NSException *exception) {
-        NSError *error = [NSError errorWithDomain:exception.reason code:0 userInfo:nil];
-        [_delegate sipHandler:self didFailToRegisterWithError:error];
+    
+    if (!line.lineConfiguration) {
+        [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:JC_SIP_REGISTER_LINE_CONFIGURATION_IS_EMPTY reason:@"Line Configuration is empty"]];
+        return;
+    }
+    
+    if (!line.pbx) {
+        [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:JC_SIP_REGISTER_LINE_PBX_IS_EMPTY reason:@"Line PBX is empty"]];
+        return;
+    }
+    
+    NSString *userName = line.lineConfiguration.sipUsername;
+    if (!userName) {
+        [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:JC_SIP_REGISTER_USER_IS_EMPTY reason:@"User is empty"]];
+        return;
+    }
+    
+    NSString *server = line.pbx.isV5 ? line.lineConfiguration.outboundProxy : line.lineConfiguration.registrationHost;
+    if (!server) {
+        [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:JC_SIP_REGISTER_SERVER_IS_EMPTY reason:@"Server is empty"]];
+        return;
+    }
+    
+    NSString *password = line.lineConfiguration.sipPassword;
+    if (!password) {
+        [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:JC_SIP_REGISTER_PASSWORD_IS_EMPTY reason:@"Password is empty"]];
+        return;
+    }
+    
+    int errorCode = [_mPortSIPSDK setUser:userName
+                              displayName:line.lineConfiguration.display
+                                 authName:userName
+                                 password:password
+                                  localIP:@"0.0.0.0"                      // Auto select IP address
+                             localSIPPort:(10000 + arc4random()%1000)     // Generate a random port in the 10,000 range
+                               userDomain:@""
+                                SIPServer:server
+                            SIPServerPort:OUTBOUND_SIP_SERVER_PORT
+                               STUNServer:@""
+                           STUNServerPort:0
+                           outboundServer:line.lineConfiguration.outboundProxy
+                       outboundServerPort:OUTBOUND_SIP_SERVER_PORT];
+    
+    if(errorCode) {
+        [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:errorCode reason:@"Error Setting the User"]];
+        return;
+    }
+    
+    _line = line;
+    errorCode = [_mPortSIPSDK registerServer:3600 retryTimes:9];
+    if(errorCode) {
+        [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:errorCode reason:@"Error starting Registration"]];
+        return;
     }
 }
 
@@ -196,8 +235,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 {
     if(_registered)
     {
+        __autoreleasing NSError *error;
         for (JCLineSession *lineSession in _lineSessions) {
-            [self hangUpSession:lineSession completion:NULL];
+            [self hangUpSession:lineSession error:&error];
         }
         [_mPortSIPSDK unRegisterServer];
         _registered = NO;
@@ -205,9 +245,23 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     }
 }
 
+#pragma mark Registration PortSIP SDK Delegate Events
+
+- (void)onRegisterSuccess:(char*) statusText statusCode:(int)statusCode
+{
+    _registered = TRUE;
+    [_delegate sipHandlerDidRegister:self];
+}
+
+- (void)onRegisterFailure:(char*) statusText statusCode:(int)statusCode
+{
+    _registered = FALSE;
+    [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:statusCode reason:@"Registration failed"]];
+}
+
 #pragma mark - Backgrounding -
 
-- (void)startKeepAwake
+-(void)startKeepAwake
 {
     if (_mPortSIPSDK) {
         [_mPortSIPSDK startKeepAwake];
@@ -223,224 +277,288 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 #pragma mark - Line Session Public Methods -
 
-- (JCLineSession *)makeCall:(NSString *)dialString videoCall:(BOOL)videoCall contactName:(NSString *)contactName;
+- (BOOL)makeCall:(NSString *)dialString videoCall:(BOOL)videoCall error:(NSError *__autoreleasing *)error
 {
-	JCLineSession *lineSession = [self findIdleLine];
+	// Check to see if we can make a call. We can make a call if we have an idle line session. If we
+    // do not have one, exit with error.
+    JCLineSession *lineSession = [self findIdleLine];
     if (!lineSession) {
-        return nil;
-    }
-	
-	long sessionId = [_mPortSIPSDK call:dialString sendSdp:TRUE videoCall:videoCall];
-	if(sessionId >= 0)
-	{
-		[lineSession setMSessionId:sessionId];
-        lineSession.active = TRUE;
-		
-		[lineSession setCallTitle:contactName ? contactName : dialString];
-		[lineSession setCallDetail:dialString];
-        [OutgoingCall addOutgoingCallWithLineSession:lineSession line:_line];
-	}
-	else
-	{
-        NSError *error = [Common createErrorWithDescription:NSLocalizedString(@"Call Failed", nil) reason:NSLocalizedString(@"Unable to create call", nil) code:sessionId];
-        [self setSessionState:JCCallFailed forSession:lineSession event:@"makeCall:" error:error];
-	}
-	return lineSession;
-}
-
-- (void)answerSession:(JCLineSession *)lineSession
-{
-	[self answerSession:lineSession completion:NULL];
-}
-
-- (void)answerSession:(JCLineSession *)lineSession completion:(CompletionHandler)completion
-{
-    if (!lineSession)
-        return;
-    
-    int error = [_mPortSIPSDK answerCall:lineSession.mSessionId videoCall:FALSE];
-    if(error == 0)
-    {
-        if (lineSession.mRecvCallState) {
-            [IncomingCall addIncommingCallWithLineSession:lineSession line:_line];
-        }
-        
-        [lineSession setMRecvCallState:false];
-        [lineSession setMVideoState:false];
-        
-        if (completion != NULL) {
-            completion(true, nil);
-        }
-    }
-    else {
-        NSString *event = @"Unable to answer the call";
-        NSError *msg = [NSError errorWithDomain:@"Unable to answer the call" code:error userInfo:nil];
-        [self setSessionState:JCCallFailed forSession:lineSession event:event error:msg];
-        if (completion != NULL) {
-            completion(false, msg);
-        }
-    }
-}
-
-- (void)hangUpSession:(JCLineSession *)lineSession completion:(CompletionHandler)completion
-{
-    if (lineSession.isActive)
-    {
-        int error = [_mPortSIPSDK hangUp:lineSession.mSessionId];
-        if (error == 0) {
-            [self setSessionState:JCCallCanceled forSession:lineSession event:@"Hangup Call" error:nil];
-            if (completion != NULL) {
-                completion(true, nil);
-            }
-        }
-        else
-        {
-            if (completion != NULL) {
-                completion(false, [NSError errorWithDomain:@"Error Trying to Hang up" code:error userInfo:nil]);
-            }
-        }
-    }
-    else if (lineSession.mRecvCallState)
-    {
-        int error = [_mPortSIPSDK rejectCall:lineSession.mSessionId code:486];
-        if (error == 0) {
-            [self setSessionState:JCCallCanceled forSession:lineSession event:@"Manually Reject Incoming Call" error:nil];
-            if (completion != NULL) {
-                completion(true, nil);
-            }
-        }
-        else
-        {
-            if (completion != NULL) {
-                completion(false, [NSError errorWithDomain:@"Error Trying to reject Call" code:error userInfo:nil]);
-            }
-        }
-    }
-    else
-    {
-        
-    }
-}
-
-- (void)setHoldCallState:(bool)hold forSessionId:(long)sessionId
-{
-    JCLineSession *lineSession = [self findSession:sessionId];
-    if (lineSession)
-    {
-        if (hold)
-        {
-            [_mPortSIPSDK hold:lineSession.mSessionId];
-        }
-        else
-        {
-            [_mPortSIPSDK unHold:lineSession.mSessionId];
-        }
-        lineSession.hold = hold;
-        NSLog(@"%@", [self.lineSessions description]);
-    }
-}
-
-- (void)blindTransferToNumber:(NSString *)number completion:(void (^)(BOOL, NSError *))completion
-{
-    // Find the active line. It is the one we will be refering to the number passed.
-	JCLineSession *lineSession = [self findActiveLine];
-	if (!lineSession || lineSession.isActive == false)
-	{
-        completion(false, [NSError errorWithDomain:@"Need to make the call established first" code:0 userInfo:nil]);
-		return;
-	}
-	
-    // Tell PortSip to refer the session id to the passed number. If sucessful, the PortSip deleagate method will inform
-    // us and we will call the completion block.
-    _transferCompletionHandler = completion;
-	int result = [_mPortSIPSDK refer:lineSession.mSessionId referTo:number];
-    if (result != 0)
-    {
-        NSString *msg = NSLocalizedString(@"Blind Transfer failed", nil);
-        NSError *error = [Common createErrorWithDescription:msg reason:NSLocalizedString(@"Unable to make blind transfer", nil) code:result];
-        [self setSessionState:JCTransferFailed forSession:lineSession event:msg error:error];
-        completion(false, [NSError errorWithDomain:msg code:0 userInfo:nil]);
-        _transferCompletionHandler = nil;
-    }
-    return;
-}
-
-- (void)warmTransferToNumber:(NSString *)number completion:(void (^)(BOOL success, NSError *error))completion
-{
-	JCLineSession *receivingSession = [self findActiveLine];
-    if (!receivingSession || !receivingSession.isActive)
-    {
-        completion(false, [NSError errorWithDomain:@"Need to make the call established first" code:0 userInfo:nil]);
-        return;
+        *error = [JCSipHandlerError errorWithCode:JC_SIP_CALL_NO_IDLE_LINE];
+        return NO;
     }
     
-	JCLineSession *sessionToTransfer = [self findLineWithHoldState];
-    if (!sessionToTransfer || !sessionToTransfer.isActive) {
-        completion(false, [NSError errorWithDomain:@"Unable to find session on hold to warm transfer" code:0 userInfo:nil]);
-        return;
+    // Try to to place all current calls that are active on hold.
+    __autoreleasing NSError *holdError;
+    if (![self holdLines:&holdError]) {
+        *error = holdError;
+        return NO;
     }
-	
-    _transferCompletionHandler = completion;
-    int result = [_mPortSIPSDK attendedRefer:receivingSession.mSessionId replaceSessionId:sessionToTransfer.mSessionId referTo:number];
-    if (result != 0) {
-        NSString *msg = NSLocalizedString(@"Warm Transfer failed", nil);
-        NSError *error = [Common createErrorWithDescription:msg reason:NSLocalizedString(@"Unable make transfer", nil) code:result];
-        [self setSessionState:JCTransferFailed forSession:receivingSession event:msg error:error];
-        completion(false, error);
-        _transferCompletionHandler = nil;
+    
+    // Intitiate the call. If we fail, set error and return. Errors from this method are negative
+    // numbers, and positive numbers are success and thier session id.
+    NSInteger result = [_mPortSIPSDK call:dialString sendSdp:TRUE videoCall:videoCall];
+    if(result <= 0) {
+        *error = [JCSipHandlerError errorWithCode:result reason:@"Unable to create call"];
+        [self setSessionState:JCCallFailed forSession:lineSession event:@"makeCall:" error:nil];
+        return NO;
     }
+    
+    NSString *callerId = dialString;
+    Contact *contact = [Contact contactForExtension:dialString pbx:_line.pbx];
+    if (contact) {
+        callerId = contact.extension;
+    }
+    
+    // Configure the line session.
+    lineSession.sessionId = result;
+    [lineSession setCallTitle:callerId];
+    [lineSession setCallDetail:dialString];
+    
+    [self setSessionState:JCCallInitiated forSession:lineSession event:@"Initiating Call" error:nil];
+    return YES;
+}
+
+- (BOOL)answerSession:(JCLineSession *)lineSession error:(NSError *__autoreleasing *)error
+{
+    if (!lineSession) {
+        *error = [JCSipHandlerError errorWithCode:JC_SIP_LINE_SESSION_IS_EMPTY reason:@"Line Session in empty"];
+        return NO;
+    }
+    
+    // Try to to place all current calls that are active on hold.
+    __autoreleasing NSError *holdError;
+    if (![self holdLines:&holdError]) {
+        *error = holdError;
+        return NO;
+    }
+    
+    if (lineSession.isActive && !lineSession.isIncoming) {
+        return YES;
+    }
+    
+    NSInteger errorCode = [_mPortSIPSDK answerCall:lineSession.sessionId videoCall:lineSession.isVideo];
+    if (errorCode) {
+        *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Unable to answer the call"];
+        [self setSessionState:JCCallFailed forSession:lineSession event:nil error:nil];
+        return NO;
+    }
+    
+    [self setSessionState:JCCallAnswerInitiated forSession:lineSession event:nil error:nil];
+    return YES;
+}
+
+- (BOOL)hangUpAllSessions:(NSError *__autoreleasing *)error
+{
+    NSSet *lineSessions = [self findAllActiveLines];
+    
+    __autoreleasing NSError *hangupError;
+    for (JCLineSession *lineSession in lineSessions) {
+        [self hangUpSession:lineSession error:&hangupError];
+        if (hangupError) {
+            break;
+        }
+    }
+    
+    if (hangupError) {
+        *error = hangupError;
+        return NO;
+    }
+    return YES;
+}
+
+- (BOOL)hangUpSession:(JCLineSession *)lineSession error:(NSError *__autoreleasing *)error
+{
+    if (lineSession.incoming)
+    {
+        int errorCode = [_mPortSIPSDK rejectCall:lineSession.sessionId code:486];
+        if (errorCode) {
+            *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error trying to manually reject incomming call"];
+            return NO;
+        }
+            
+        [self setSessionState:JCCallCanceled forSession:lineSession event:@"Manually Rejected Incoming Call" error:nil];
+        return YES;
+    }
+    
+    NSInteger errorCode = [_mPortSIPSDK hangUp:lineSession.sessionId];
+    if (errorCode) {
+        *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error Trying to Hang up"];
+        return NO;
+    }
+        
+    [self setSessionState:JCCallCanceled forSession:lineSession event:@"Hangup Call" error:nil];
+    return YES;
+}
+
+- (BOOL)holdLines:(NSError *__autoreleasing *)error
+{
+    NSSet *lineSessions = [self findAllActiveLinesNotHolding];
+    if (lineSessions.count > 0) {
+        return [self holdLineSessions:lineSessions error:error];
+    }
+    return YES;
+}
+
+- (BOOL)holdLineSessions:(NSSet *)lineSessions error:(NSError *__autoreleasing *)error
+{
+    __autoreleasing NSError *holdError;
+    for (JCLineSession *lineSession in lineSessions) {
+        if (![self holdLineSession:lineSession error:&holdError]) {
+            break;
+        }
+    }
+    
+    if (holdError) {
+        *error = [JCSipHandlerError errorWithCode:holdError.code reason:@"Error holding the line sessions" underlyingError:holdError];
+        return false;
+    }
+    return true;
+}
+
+- (BOOL)holdLineSession:(JCLineSession *)lineSession error:(NSError *__autoreleasing *)error
+{
+    if (lineSession.isHolding) {
+        return YES;
+    }
+    
+    NSInteger errorCode = [_mPortSIPSDK hold:lineSession.sessionId];
+    if (errorCode) {
+        *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error placing calls on hold"];
+        return NO;
+    }
+    
+    lineSession.hold = TRUE;
+    return YES;
+}
+
+- (BOOL)unholdLines:(NSError *__autoreleasing *)error
+{
+    NSSet *lineSessions = [self findAllActiveLinesOnHold];
+    return [self unholdLineSessions:lineSessions error:error];
+}
+
+- (BOOL)unholdLineSessions:(NSSet *)lineSessions error:(NSError *__autoreleasing *)error
+{
+    __autoreleasing NSError *holdError;
+    for (JCLineSession *lineSession in lineSessions) {
+        if (![self unholdLineSession:lineSession error:&holdError]) {
+            break;
+        }
+    }
+    
+    if (holdError) {
+        *error = [JCSipHandlerError errorWithCode:holdError.code reason:@"Error unholding the line session while after joing the conference" underlyingError:holdError];
+        return FALSE;
+    }
+    return TRUE;
+}
+
+-(BOOL)unholdLineSession:(JCLineSession *)lineSession error:(NSError *__autoreleasing *)error
+{
+    if (!lineSession.isHolding) {
+        return YES;
+    }
+    
+    NSInteger errorCode = [_mPortSIPSDK unHold:lineSession.sessionId];
+    if (errorCode) {
+        *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error placing calls on hold"];
+        return NO;
+    }
+
+    lineSession.hold = FALSE;
+    return YES;
+}
+
+- (BOOL)createConference:(NSError *__autoreleasing *)error
+{
+    NSSet *lineSessions = [self findAllActiveLines];
+    return [self createConferenceWithLineSessions:lineSessions error:error];
+}
+
+-(BOOL)createConferenceWithLineSessions:(NSSet *)lineSessions error:(NSError *__autoreleasing *)error
+{
+    if (_conferenceCall) {
+        *error = [JCSipHandlerError errorWithCode:JC_SIP_CONFERENCE_CALL_ALREADY_STARTED reason:@"Conference call already started"];
+        return FALSE;
+    }
+    
+    NSInteger errorCode = [_mPortSIPSDK createConference:[UIView new] videoResolution:VIDEO_NONE displayLocalVideo:NO];
+    if (errorCode) {
+        *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error Creating Conference"];
+        return false;
+    }
+    
+    _conferenceCall = true;
+    for (JCLineSession *lineSession in lineSessions) {
+        
+        if (lineSession.isHolding) {
+            __autoreleasing NSError *holdError;
+            if (![self unholdLineSession:lineSession error:&holdError]) {
+                *error = [JCSipHandlerError errorWithCode:holdError.code reason:@"Error unholding the line session while after joing the conference" underlyingError:holdError];
+                break;
+            }
+        }
+        
+        errorCode = [_mPortSIPSDK joinToConference:lineSession.sessionId];
+        if (errorCode) {
+            *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error Joining line session to conference"];
+            break;
+        }
+        
+        [self setSessionState:JCCallConference forSession:lineSession event:nil error:nil];
+    }
+    
+    if (!errorCode) {
+        [_delegate sipHandler:self didCreateConferenceCallWithLineSessions:lineSessions];
+        return TRUE;
+    }
+    
+    [_mPortSIPSDK destroyConference];
+    _conferenceCall = false;
+    return false;
+}
+
+-(BOOL)endConference:(NSError *__autoreleasing *)error
+{
+    NSSet *lineSessions = [self findAllActiveLines];
+    return [self endConferenceCallForLineSessions:lineSessions error:error];
+}
+
+-(BOOL)endConferenceCallForLineSessions:(NSSet *)lineSessions error:(NSError *__autoreleasing *)error
+{
+    if (!_conferenceCall) {
+        *error = [JCSipHandlerError errorWithCode:JC_SIP_CONFERENCE_CALL_ALREADY_ENDED reason:@"Conference call already started"];
+        return FALSE;
+    }
+    
+    // Before stop the conference, MUST place all lines to hold state
+    if (lineSessions.count > 1) {
+        for (JCLineSession *lineSession in lineSessions) {
+            if (!lineSession.isHolding){
+                __autoreleasing NSError *holdError;
+                if(![self holdLineSession:lineSession error:&holdError]) {
+                    *error = [JCSipHandlerError errorWithCode:holdError.code reason:@"Error placing calls on hold after ending a conference" underlyingError:holdError];
+                    return false;
+                }
+            }
+            lineSession.conference = FALSE;
+            [self setSessionState:JCCallConnected forSession:lineSession event:nil error:nil];
+        }
+    } else {
+        JCLineSession *lineSession = lineSessions.allObjects.firstObject;
+        lineSession.conference = FALSE;
+        [self setSessionState:JCCallConnected forSession:lineSession event:nil error:nil];
+    }
+    
+    [_mPortSIPSDK destroyConference];
+    _conferenceCall = FALSE;
+    [_delegate sipHandler:self didEndConferenceCallForLineSessions:lineSessions];
+    return true;
 }
 
 - (void) muteCall:(BOOL)mute
 {
     [_mPortSIPSDK muteMicrophone:mute];
-}
-
-- (bool)setConference:(bool)conference
-{
-	if (conference)
-	{
-		int rt = [_mPortSIPSDK createConference:[UIView new] videoResolution:VIDEO_NONE displayLocalVideo:NO];
-		if (rt == 0) {
-			for (JCLineSession *line in self.lineSessions)
-			{
-				if (line.isActive)
-				{
-					if (line.isHolding)
-					{
-						[_mPortSIPSDK unHold:line.mSessionId];
-						line.hold = false;
-					}
-					
-					[_mPortSIPSDK joinToConference:line.mSessionId];
-				}
-			}
-			
-			inConference = true;
-		}
-		else
-		{
-			// failed to create conference
-			inConference = false;
-		}
-	}
-	else if (inConference)
-	{
-		inConference = false;
-		// Before stop the conference, MUST place all lines to hold state
-		for (JCLineSession *line in self.lineSessions)
-		{
-			if (line.isActive && !line.isHolding )
-			{
-				[_mPortSIPSDK hold:line.mSessionId];
-				line.hold = true;
-			}
-		}
-		
-		[_mPortSIPSDK destroyConference];
-	}
-	
-	return inConference;
 }
 
 -(void)setLoudSpeakerEnabled:(BOOL)loudSpeakerEnabled
@@ -451,17 +569,256 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 - (void) pressNumpadButton:(char )dtmf
 {
     JCLineSession *session = [self findActiveLine];
-    if(session && session.isActive)
-    {
-        [_mPortSIPSDK sendDtmf:session.mSessionId dtmfMethod:DTMF_RFC2833 code:dtmf dtmfDration:160 playDtmfTone:TRUE];
+    if(session && session.isActive){
+        [_mPortSIPSDK sendDtmf:session.sessionId dtmfMethod:DTMF_RFC2833 code:dtmf dtmfDration:160 playDtmfTone:TRUE];
     }
+}
+
+#pragma mark - Transfers -
+
+//  We are A. B and C represent remote lines that we are connecting to. A blind transfer shifts an
+//  established call leg from A -> B to B -> C, following this proccess:
+//
+//  1) LOCAL: A using a idle line calls B, and establishes a line session on A.
+//  2) REMOTE: B using an idle line answers the call from A, and establishes a line session on B.
+//  3) LOCAL: A talks to B.
+//
+//  Blind transfer
+//  ---------------------------
+//  4) LOCAL: A places B on hold.
+//  5) LOCAL: A tags B's session with refer to number of C.
+//  6) LOCAL: A refers B to C.
+//
+//  V4:
+//
+//  7) REMOTE: C get incoming call from B.
+//  8) REMOTE: C answers incoming call from B.
+//  9) LOCAL: A gets message ACTVTransferSuccess on line session for B.
+//  10) LOCAL: A hangs up call to B.
+//  11) LOCAL: A clears the line session that was used for B.
+//
+//  If the extension is invalid, it still answers, so we do not get an error back, so we cannot
+//  catch the error. For actual failures, the onACTVTransferFailure should get called and notify us
+//  of the error.
+//
+//
+//  V5:
+//
+//  1) LOCAL: A using a idle line calls B, and establishes a line session on A.
+//  2) REMOTE: B using an idle line answers the call from A, and establishes a line session on B.
+//  3) LOCAL: A talks to B.
+//
+//  Blind transfer
+//  ---------------------------
+//  4) LOCAL: A places B on hold.
+//  5) LOCAL: A tags B's session with refer to number of C.
+//  6) LOCAL: A refers B to C.
+//
+
+- (BOOL)startBlindTransferToNumber:(NSString *)number error:(NSError *__autoreleasing *)error
+{
+    // Find the active line. It is the one we will be refering to the number passed.
+	JCLineSession *b = [self findActiveLine];
+    if (!b) {
+        *error = [JCSipHandlerError errorWithCode:JC_SIP_CALL_NO_ACTIVE_LINE];
+        return NO;
+    }
+    
+    // Try to place the current call on hold before we refer it off the the other number.
+    if (![self holdLineSession:b error:error]) {
+        return NO;
+    }
+	
+    // Tell PortSip to refer the session id to the passed number. If sucessful, the PortSip
+    // deleagate method will inform us if the transfer was successful or a failure.
+    b.transfer = TRUE;
+	NSInteger errorCode = [_mPortSIPSDK refer:b.sessionId referTo:number];
+    if (errorCode) {
+        *error = [JCSipHandlerError errorWithCode:errorCode];
+        [self setSessionState:JCTransferFailed forSession:b event:nil error:nil];
+        return NO;
+    }
+    
+    return YES;
+}
+
+
+#pragma mark Warm Transfers
+
+//
+//  Warm transfer shifts an established call leg from A -> B to B -> C, following this process:
+//
+//  1) LOCAL: A using an idle line calls B, and establishes a line session on A.
+//  2) REMOTE: B using an idle line answers the call from A, and establishes a line session on B.
+//  3) LOCAL: A talks to B.
+//
+//  Start Warm Transfer
+//  ---------------------------
+//  4) LOCAL: A tags B with the number for C as a referToNumber
+//  5) LOCAL: A places B on hold.
+//  6) LOCAL: A using anouther idle session, establishes a call with C.
+//  7) LOCAL: A has no idle line remaining, with B and C both using a line session each.
+//
+//  8) REMOTE: C using an idle line session, answers the call from A.
+//  9) LOCAL: A talks to C. B is still connected on hold.
+//
+//  Finish Warm Transfer
+//  ---------------------------
+//  10) Local: A instructs C to take over the line session with B, refer B to C number which was store on B's
+//     line session.
+//  11) A get
+//
+
+/**
+ * Set the currently active line session (B) to have the refer to number on it before we initiate 
+ * the other call (C). We will look for this call when we go to finish the transfer, and hand it off.
+ */
+-(BOOL)startWarmTransferToNumber:(NSString *)number error:(NSError *__autoreleasing *)error
+{
+    JCLineSession *b = [self findActiveLine];
+    b.transfer = TRUE;
+    return [self makeCall:number videoCall:NO error:error];
+}
+
+-(BOOL)finishWarmTransfer:(NSError *__autoreleasing *)error
+{
+    JCLineSession *c = [self findActiveLine];
+    if (!c) {
+        *error = [JCSipHandlerError errorWithCode:JC_SIP_CALL_NO_ACTIVE_LINE];
+        return NO;
+    }
+    
+    JCLineSession *b = [self findTransferLine];
+    if (!b) {
+        *error = [JCSipHandlerError errorWithCode:JC_SIP_CALL_NO_REFERRAL_LINE];
+        return NO;
+    }
+    
+    NSInteger errorCode = [_mPortSIPSDK attendedRefer:c.sessionId replaceSessionId:b.sessionId referTo:c.callDetail];
+    if (errorCode) {
+        *error = [JCSipHandlerError errorWithCode:errorCode];
+        [self setSessionState:JCTransferFailed forSession:b event:nil error:nil];
+        return NO;
+    }
+    return YES;
+}
+
+#pragma mark Transfer PortSIP SDK Delegate Events
+
+
+/*!
+ *  This event will be triggered when we received a REFER message.
+ *
+ *  @param sessionId       The session ID of the call.
+ *  @param referId         The ID of the REFER message, pass it to acceptRefer or rejectRefer
+ *  @param to              The refer target.
+ *  @param from            The sender of REFER message.
+ *  @param referSipMessage The SIP message of "REFER", pass it to "acceptRefer" function.
+ */
+- (void)onReceivedRefer:(long)sessionId referId:(long)referId to:(char*)to from:(char*)from referSipMessage:(char*)referSipMessage
+{
+    // YOU Are B.
+    // A represents the call leg between A -> B and C will represent the call leg between B -> C.
+    
+    NSString *receiver = [NSString stringWithUTF8String:to];
+    NSString *sender   = [NSString stringWithUTF8String:from];
+    NSLog(@"sender: %@ receiver: %@", sender, receiver);
+    
+    
+    JCLineSession *a = [self findSession:sessionId];
+    JCLineSession *c = [self findIdleLine];
+    if (!a || !c) {
+        [_mPortSIPSDK rejectRefer:referId];
+        return;
+    }
+    
+    // Hold current call from A before we accept the refer to C
+    //__autoreleasing NSError *error;
+    //[self holdLineSession:a error:&error];
+    
+    NSInteger errorCode = [_mPortSIPSDK acceptRefer:referId referSignaling:[NSString stringWithUTF8String:referSipMessage]];
+    if (errorCode <= 0) {
+        NSError *error = [JCSipHandlerError errorWithCode:errorCode];
+        NSLog(@"%@", [error description]);
+        
+        // Error recovery
+        //[self unholdLineSession:a error:&error];
+        //return;
+    }
+    
+    c.sessionId = errorCode; // In this case, the error code is the session Id.
+    c.active = true;
+    //[c setReferCall:true originalCallSessionId:a.sessionId];
+    [self setSessionState:JCTransferIncoming forSession:c event:@"onReceivedRefer" error:nil];
+}
+
+/**
+ * This callback will be triggered when the remote side calls "acceptRefer" to accept the REFER,
+ * which means the transfer was successfull.
+ */
+- (void)onReferAccepted:(long)sessionId
+{
+    [self setSessionState:JCTransferAccepted forSessionId:sessionId event:@"onReferAccepted" error:nil];
+}
+
+/**
+ * This callback will be triggered when the remote side calls "rejectRefer" to reject the REFER
+ */
+- (void)onReferRejected:(long)sessionId reason:(char*)reason code:(int)code
+{
+    NSError *error = [JCSipHandlerError errorWithCode:code reason:[NSString stringWithCString:reason encoding:NSUTF8StringEncoding]];
+    [self setSessionState:JCTransferRejected forSessionId:sessionId event:@"onReferRejected" error:error];
+    [self setSessionState:JCCallConnected forSessionId:sessionId event:nil error:nil];
+}
+
+/**
+ * When the refer call is processing, this event trigged.
+ */
+- (void)onTransferTrying:(long)sessionId
+{
+    [self setSessionState:JCTransferTrying forSessionId:sessionId event:@"onTransferTrying" error:nil];
+}
+
+/**
+ * When the refer call is ringing, this event trigged.
+ */
+- (void)onTransferRinging:(long)sessionId
+{
+    [self setSessionState:JCTransferRinging forSessionId:sessionId event:@"onTransferRinging" error:nil];
+}
+
+/**
+ * When the refer call succeeds, this event will be triggered. The ACTV means Active. For example:
+ * A established the call with B, A transfer B to C, C accepted the refer call, A received this event.
+ */
+- (void)onACTVTransferSuccess:(long)sessionId
+{
+    [self setSessionState:JCTransferSuccess forSessionId:sessionId event:@"onACTVTransferSuccess" error:nil];
+    
+    __autoreleasing NSError *error;
+    JCLineSession *lineSession = [self findSession:sessionId];
+    if (![self hangUpSession:lineSession error:&error]) {
+        NSLog(@"%@", [error description]);
+    }
+}
+
+/**
+ * When the refer call fails, this event will be triggered. The ACTV means Active. For example: A
+ * established the call with B, A transfer B to C, C rejected this refer call, A will received this
+ * event.
+ */
+- (void)onACTVTransferFailure:(long)sessionId reason:(char*)reason code:(int)code
+{
+    NSError *error = [JCSipHandlerError errorWithCode:code reason:[NSString stringWithCString:reason encoding:NSUTF8StringEncoding]];
+    [self setSessionState:JCTransferFailed forSessionId:sessionId event:@"onACTVTransferFailure" error:error];
+    [self setSessionState:JCCallConnected forSessionId:sessionId event:nil error:nil];
 }
 
 #pragma mark - Getters -
 
 -(BOOL)isActive
 {
-    NSArray *activeLines = [self findAllActiveLines];
+    NSSet *activeLines = [self findAllActiveLines];
     if (activeLines.count > 0) {
         return TRUE;
     }
@@ -475,7 +832,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 - (JCLineSession *)findSession:(long)sessionId
 {
     for (JCLineSession *line in self.lineSessions) {
-        if (sessionId == line.mSessionId) {
+        if (sessionId == line.sessionId) {
             return line;
         }
     }
@@ -487,7 +844,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     for (JCLineSession *line in self.lineSessions) {
         if (line.isActive &&
             !line.isHolding &&
-            !line.mRecvCallState){
+            !line.isIncoming){
             return line;
         }
     }
@@ -498,7 +855,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 {
     for (JCLineSession *line in self.lineSessions) {
         if (!line.isActive &&
-            line.mRecvCallState){
+            line.isIncoming){
             return line;
         }
     }
@@ -510,7 +867,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     for (JCLineSession *line in self.lineSessions) {
         if (line.isActive &&
             line.isHolding &&
-            !line.mRecvCallState) {
+            !line.isIncoming) {
             return line;
         }
     }
@@ -521,16 +878,26 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 {
     for (JCLineSession *line in self.lineSessions){
         if (!line.isActive &&
-            !line.mRecvCallState){
+            !line.isIncoming){
             return line;
         }
     }
     return nil;
 }
 
-- (NSArray *) findAllActiveLines
+- (JCLineSession *)findTransferLine
 {
-    NSMutableArray *activeLines = [NSMutableArray new];
+    for (JCLineSession *line in self.lineSessions){
+        if (line.isTransfer){
+            return line;
+        }
+    }
+    return nil;
+}
+
+- (NSSet *)findAllActiveLines
+{
+    NSMutableSet *activeLines = [NSMutableSet setWithCapacity:self.lineSessions.count];
     for (JCLineSession *line in self.lineSessions)
     {
         if (line.isActive) {
@@ -538,6 +905,28 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         }
     }
     return activeLines;
+}
+
+- (NSSet *)findAllActiveLinesOnHold
+{
+    NSMutableSet *lineSessions = [NSMutableSet setWithCapacity:self.lineSessions.count];
+    for (JCLineSession *line in self.lineSessions) {
+        if (line.isActive && line.isHolding) {
+            [lineSessions addObject:line];
+        }
+    }
+    return lineSessions;
+}
+
+- (NSSet *)findAllActiveLinesNotHolding
+{
+    NSMutableSet *lineSessions = [NSMutableSet setWithCapacity:self.lineSessions.count];
+    for (JCLineSession *line in self.lineSessions) {
+        if (line.isActive && !line.isHolding) {
+            [lineSessions addObject:line];
+        }
+    }
+    return lineSessions;
 }
 
 #pragma mark Session State
@@ -548,62 +937,112 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         return;
     }
     
-    NSLog(@"%@ Session Id: %ld", event, lineSession.mSessionId);
+    NSLog(@"%@ Session Id: %ld", event, (long)lineSession.sessionId);
     switch (state)
     {
-        case JCTransferSuccess:
-        {
-            lineSession.sessionState = state;
-            if (_transferCompletionHandler) {
-                _transferCompletionHandler(YES, error);
-                _transferCompletionHandler = nil;
-            }
-            [self.delegate sipHandler:self willRemoveLineSession:lineSession];
-            [lineSession reset];
-            break;
-        }
+        case JCTransferRejected:
         case JCTransferFailed:
         {
+            lineSession.transfer = NO;
             lineSession.sessionState = state;
-            NSLog(@"%@", [self.lineSessions description]);
-            if (_transferCompletionHandler) {
-                _transferCompletionHandler(NO, error);
-                _transferCompletionHandler = nil;
-            }
+            [_delegate sipHandler:self didFailTransferWithError:error];
+            break;
+        }
+        case JCTransferSuccess:
+        {
+            [_delegate sipHandler:self didTransferCalls:self.lineSessions];
+            lineSession.transfer = NO;
+            lineSession.sessionState = state;
             break;
         }
         case JCCallFailed:
         case JCCallCanceled:
         {
+            lineSession.active = FALSE;
+            lineSession.updatable = FALSE;
             lineSession.sessionState = state;
-            NSLog(@"%@", [self.lineSessions description]);
-            if (lineSession.mRecvCallState)
-            {
+            
+            // Notify
+            if (lineSession.isIncoming){
+                
+                // Stop Ringing
+                [JCAudioAlertManager stop];
+                
                 [MissedCall addMissedCallWithLineSession:lineSession line:_line];
             }
-            [self.delegate sipHandler:self willRemoveLineSession:lineSession];
-            [lineSession reset];
+            [_delegate sipHandler:self willRemoveLineSession:lineSession];
+            
+            NSLog(@"%@", [self.lineSessions description]);
+            [lineSession reset];  // clear up this line session for reuse.
             break;
         }
         
-        // Session is an incoming call -> notify delegate to add it.
+        // State when a call is initiated before we any trying, ringing, and answered events.
+        // Initial State of a call
+        case JCCallInitiated:
+        {
+            lineSession.active = TRUE;
+            lineSession.contact = [Contact contactForExtension:lineSession.callDetail pbx:_line.pbx];
+            lineSession.sessionState = state;
+            
+            // Notify
+            [OutgoingCall addOutgoingCallWithLineSession:lineSession line:_line];
+            [_delegate sipHandler:self didAddLineSession:lineSession];     // Notify the delegate to add a line.
+            break;
+        }
+            
+        // Session is an incoming call -> notify delegate to add it. Check Auto Answer to know if we
+        // should be auto answer.
         case JCCallIncoming:
-            lineSession.sessionState = state;               // Set the session state.
-            [self.delegate sipHandler:self didAddLineSession:lineSession];     // Notify the delegate to add a line.
+        {
+            lineSession.incoming = TRUE;
+            lineSession.contact = [Contact contactForExtension:lineSession.callDetail pbx:_line.pbx];
+            lineSession.sessionState = state;
+            
+            // Start ringing
+            [JCAudioAlertManager startRepeatingRingtone:YES];
+
+            // Notify
+            [_delegate sipHandler:self didAddLineSession:lineSession];     // Notify the delegate to add a line.
             if (autoAnswer) {
                 autoAnswer = false;
-                [self.delegate sipHandler:self receivedIntercomLineSession:lineSession];
+                [_delegate sipHandler:self receivedIntercomLineSession:lineSession];
             }
             break;
-        
+        }
+        case JCCallAnswerInitiated:
+        {
+            lineSession.incoming = NO;
+            lineSession.active = YES;
+            lineSession.sessionState = state;
+            
+            // Stop Ringing
+            [JCAudioAlertManager stop];
+            
+            // Notify
+            [IncomingCall addIncommingCallWithLineSession:lineSession line:_line];
+            [_delegate sipHandler:self didAnswerLineSession:lineSession];
+            
+            break;
+        }
         case JCCallConnected:
-            lineSession.updatable = TRUE;
-        case JCCallAnswered:
-            lineSession.active = TRUE;
+        {
+            lineSession.updatable = YES;
+            lineSession.sessionState = state;
+            break;
+        }
+        case JCCallConference:
+        {
+            lineSession.conference = YES;
+            lineSession.sessionState = state;
+            break;
+        }
         default:
             lineSession.sessionState = state;
             break;
     }
+    
+    [_delegate sipHandler:self didUpdateStatusForLineSessions:self.lineSessions];
     
     NSLog(@"%@", [self.lineSessions description]);
 }
@@ -622,21 +1061,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 #pragma mark - PortSIP SDK Delegate Handlers -
 
-#pragma mark Resgistration Events
 
-- (void)onRegisterSuccess:(char*) statusText statusCode:(int)statusCode
-{
-    _registered = TRUE;
-    [_delegate sipHandlerDidRegister:self];
-}
-
-- (void)onRegisterFailure:(char*) statusText statusCode:(int)statusCode
-{
-    _registered = FALSE;
-    NSString *message = [NSString stringWithFormat:@"%@ code:(%i)", [NSString stringWithUTF8String:statusText], statusCode];
-    NSError *error = [NSError errorWithDomain:@"SipHandlerError" code:0 userInfo:@{NSLocalizedDescriptionKey: message}];
-    [_delegate sipHandler:self didFailToRegisterWithError:error];
-}
 
 #pragma mark Incoming Call Events
 
@@ -653,20 +1078,18 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 			 existsAudio:(BOOL)existsAudio
 			 existsVideo:(BOOL)existsVideo
 {
-	JCLineSession *idleLine = [self findIdleLine];
-	if (!idleLine)
-	{
+	JCLineSession *lineSession = [self findIdleLine];
+	if (!lineSession){
 		[_mPortSIPSDK rejectCall:sessionId code:486];
-		return ;
+		return;
 	}
 	
     // Setup the line session.
-    idleLine.mRecvCallState = true;              // Flag as being in a receiving state.
-	[idleLine setMSessionId:sessionId];          // Attach a session id to the line session.
-    [idleLine setMVideoState:existsVideo];                                                          // Flag if video call.
-	[idleLine setCallTitle:[NSString stringWithUTF8String:callerDisplayName]];                      // Get Call Title
-	[idleLine setCallDetail:[self formatCallDetail:[NSString stringWithUTF8String:caller]]];        // Get Call Detail.
-    [self setSessionState:JCCallIncoming forSession:idleLine event:@"onInviteIncoming" error:nil];  // Set the session state.
+    lineSession.sessionId = sessionId;      // Attach a session id to the line session.
+    lineSession.video = existsVideo;    // Flag if video call.
+	[lineSession setCallTitle:[NSString stringWithUTF8String:callerDisplayName]];                      // Get Call Title
+	[lineSession setCallDetail:[self formatCallDetail:[NSString stringWithUTF8String:caller]]];        // Get Call Detail.
+    [self setSessionState:JCCallIncoming forSession:lineSession event:@"onInviteIncoming" error:nil];  // Set the session state.
 };
 
 -(NSString *)formatCallDetail:(NSString *)callDetail
@@ -702,23 +1125,19 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 					existsVideo:(BOOL)existsVideo
 {
 	JCLineSession *selectedLine = [self findSession:sessionId];
-	if (!selectedLine)
-	{
+	if (!selectedLine) {
 		return;
 	}
 	
-	if (existsEarlyMedia)
-	{
+	if (existsEarlyMedia) {
 		// Checking does this call has video
-		if (existsVideo)
-		{
+		if (existsVideo) {
 			// This incoming call has video
 			// If more than one codecs using, then they are separated with "#",
 			// for example: "g.729#GSM#AMR", "H264#H263", you have to parse them by yourself.
 		}
 		
-		if (existsAudio)
-		{
+		if (existsAudio) {
 			// If more than one codecs using, then they are separated with "#",
 			// for example: "g.729#GSM#AMR", "H264#H263", you have to parse them by yourself.
 		}
@@ -758,8 +1177,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 			 existsVideo:(BOOL)existsVideo
 {
 	JCLineSession *selectedLine = [self findSession:sessionId];
-	if (!selectedLine)
-	{
+	if (!selectedLine){
 		return;
 	}
 	
@@ -775,18 +1193,17 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 	{
         
 	}*/
-	
-	[selectedLine setMVideoState:existsVideo];
-	
+    selectedLine.audio = existsAudio;
+    selectedLine.video = existsVideo;
+    
 	// If this is the refer call then need set it to normal
-	if (selectedLine.mIsReferCall)
-	{
-		[selectedLine setReferCall:false originalCallSessionId:0];
-	}
+    if(selectedLine.isRefer) {
+        selectedLine.refer = NO;
+        selectedLine.referedSessionId = INVALID_SESSION_ID;
+    }
     
     [self setSessionState:JCCallAnswered forSession:selectedLine event:@"onInviteAnswered" error:nil];
 }
-
 
 /**
  * If the outgoing call fails, this event is triggered.
@@ -811,103 +1228,15 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     [self setSessionState:JCCallConnected forSessionId:sessionId event:@"onInviteConnected" error:nil];
 }
 
+/*!
+ *  This event is triggered once remote side close the call.
+ */
 - (void)onInviteClosed:(long)sessionId
 {
     [self setSessionState:JCCallCanceled forSessionId:sessionId event:@"onInviteClosed" error:nil];
 }
 
-#pragma mark - Transfer Events
 
-- (void)onReceivedRefer:(long)sessionId
-				referId:(long)referId
-					 to:(char*)to
-				   from:(char*)from
-		referSipMessage:(char*)referSipMessage
-{
-	JCLineSession *selectedLine = [self findSession:sessionId];
-	if (!selectedLine)
-	{
-		[_mPortSIPSDK rejectRefer:referId];
-		return;
-	}
-	
-	JCLineSession *idleLine = [self findIdleLine];
-	if (!idleLine)
-	{
-		[_mPortSIPSDK rejectRefer:referId];
-		return;
-	}
-	
-	//auto accept refer
-	// Hold currently call after accepted the REFER
-    [_mPortSIPSDK hold:selectedLine.mSessionId];
-    selectedLine.hold = true;
-    
-	long referSessionId = [_mPortSIPSDK acceptRefer:referId referSignaling:[NSString stringWithUTF8String:referSipMessage]];
-	if (referSessionId <= 0)
-	{
-		[idleLine reset];
-		[_mPortSIPSDK unHold:selectedLine.mSessionId];
-        selectedLine.hold = false;
-	}
-	else
-	{
-		[idleLine setMSessionId:referSessionId];
-        idleLine.active = true;
-        [idleLine setReferCall:true originalCallSessionId:selectedLine.mSessionId];
-        [self.delegate sipHandler:self willRemoveLineSession:selectedLine];
-	}
-    
-    [self setSessionState:JCTransferIncoming forSessionId:sessionId event:@"onReceivedRefer" error:nil];
-}
-
-/**
- * This callback will be triggered once remote side called "acceptRefer" to accept the REFER
- */
-- (void)onReferAccepted:(long)sessionId
-{
-    [self setSessionState:JCTransferAccepted forSessionId:sessionId event:@"onReferAccepted" error:nil];
-}
-
-/**
- * This callback will be triggered once remote side called "rejectRefer" to reject the REFER
- */
-- (void)onReferRejected:(long)sessionId reason:(char*)reason code:(int)code
-{
-    [self setSessionState:JCTransferRejected forSessionId:sessionId event:@"onReferRejected" error:nil];
-}
-
-/**
- * When the refer call is processing, this event trigged.
- */
-- (void)onTransferTrying:(long)sessionId
-{
-    [self setSessionState:JCTransferTrying forSessionId:sessionId event:@"onTransferTrying" error:nil];
-}
-
-/**
- * When the refer call is ringing, this event trigged.
- */
-- (void)onTransferRinging:(long)sessionId
-{
-    [self setSessionState:JCTransferRinging forSessionId:sessionId event:@"onTransferRinging" error:nil];
-}
-
-/**
- * When the refer call is succeeds, this event will be triggered. The ACTV means Active. For example: A established the 
- * call with B, A transfer B to C, C accepted the refer call, A received this event.
- */
-- (void)onACTVTransferSuccess:(long)sessionId
-{
-    [self setSessionState:JCTransferSuccess forSessionId:sessionId event:@"onACTVTransferSuccess" error:nil];
-}
-
-- (void)onACTVTransferFailure:(long)sessionId reason:(char*)reason code:(int)code
-{
-    NSString *event = [NSString stringWithFormat:@"onACTVTransferFailure reason: %@ code: %i", [NSString stringWithCString:reason encoding:NSUTF8StringEncoding], code];
-    NSError *error = [Common createErrorWithDescription:event reason:[NSString stringWithUTF8String:reason] code:code];
-    [self setSessionState:JCTransferFailed forSessionId:sessionId event:event error:error];
-}
 
 #pragma mark Not Implemented
 
