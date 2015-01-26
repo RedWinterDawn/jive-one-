@@ -11,7 +11,7 @@ import UIKit
 let ConversationMessageCellReuseIdentifer = "ConversationMessageCell"
 let SMSMessageCellReuseIdentifer = "SMSMessageCell"
 
-class JCChatTableViewController: JCFetchedResultsTableViewController {
+class JCConversationsTableViewController: JCFetchedResultsTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
