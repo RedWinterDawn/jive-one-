@@ -43,9 +43,6 @@ static BOOL active;
 {
     active = repeating;
     @try {
-        if ([JCAppSettings sharedSettings].isVibrateOnRing) {
-            [self startRepeatingVibration:repeating];
-        }
         SystemSoundID soundId = [self playRingtone];
         AudioServicesAddSystemSoundCompletion(soundId, NULL, NULL, ringtone, NULL);
     }
@@ -86,15 +83,14 @@ void ringtone (SystemSoundID ssID, void *clientData)
 
 + (SystemSoundID)playRingtone
 {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSURL *url = [NSURL fileURLWithPath:@"/System/Library/Audio/UISounds/vc~ringing.caf"];
     SystemSoundID soundID;
     AudioServicesCreateSystemSoundID((__bridge_retained CFURLRef)url, &soundID);
     AudioServicesPlaySystemSound(soundID);
+    CFBridgingRelease((__bridge CFURLRef)url);
     
-    bool vibrate = [userDefaults boolForKey:@"vibrateOnRing"];
-    if (vibrate)
-        AudioServicesPlaySystemSound(4095);
+    if ([JCAppSettings sharedSettings].isVibrateOnRing)
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
     return soundID;
 }
 

@@ -237,26 +237,34 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
 - (NSURLRequest *)requestBySerializingRequest:(NSURLRequest *)request withParameters:(id)object error:(NSError *__autoreleasing *)error
 {
     if (![object isKindOfClass:[NSDictionary class]]) {
-        *error = [JCClientError errorWithCode:JCClientInvalidRequestParameterErrorCode reason:@"Unvalid Parameters dictionary"];
+        if (error != NULL) {
+            *error = [JCClientError errorWithCode:JCClientInvalidRequestParameterErrorCode reason:@"Unvalid Parameters dictionary"];
+        }
         return nil;
     }
     
     NSDictionary *parameters = (NSDictionary *)object;
     NSString *username = [parameters stringValueForKey:kJCLineConfigurationRequestUsernameKey];
     if (!username) {
-        *error = [JCClientError errorWithCode:JCClientInvalidRequestParameterErrorCode reason:@"Username is NULL"];
+        if (error != NULL) {
+            *error = [JCClientError errorWithCode:JCClientInvalidRequestParameterErrorCode reason:@"Username is NULL"];
+        }
         return nil;
     }
     
     NSString *pbxId = [parameters stringValueForKey:kJCLineConfigurationRequestPbxIdKey];
     if (!pbxId) {
-        *error = [JCClientError errorWithCode:JCClientInvalidRequestParameterErrorCode reason:@"PBX id is NULL"];
+        if (error != NULL) {
+            *error = [JCClientError errorWithCode:JCClientInvalidRequestParameterErrorCode reason:@"PBX id is NULL"];
+        }
         return nil;
     }
         
     NSString *extension = [parameters stringValueForKey:kJCLineConfigurationRequestExtensionKey];
     if (!extension) {
-        *error = [JCClientError errorWithCode:JCClientInvalidRequestParameterErrorCode reason:@"Extension is NULL"];
+        if (error != NULL) {
+            *error = [JCClientError errorWithCode:JCClientInvalidRequestParameterErrorCode reason:@"Extension is NULL"];
+        }
         return nil;
     }
     
