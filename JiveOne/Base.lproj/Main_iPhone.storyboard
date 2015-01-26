@@ -787,7 +787,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="75" id="D2t-fp-QtY">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ConversationCell" rowHeight="75" id="D2t-fp-QtY">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="D2t-fp-QtY" id="W9i-Ew-j3S">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -816,6 +816,9 @@
                                         <constraint firstItem="TTr-Dm-YVJ" firstAttribute="top" secondItem="W9i-Ew-j3S" secondAttribute="topMargin" id="wVk-j5-XO4"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="LJs-XB-Q4C" kind="push" id="ttd-bY-cQH"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -823,18 +826,25 @@
                             <outlet property="delegate" destination="J2i-zc-aC2" id="30j-oc-4qT"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Conversations" id="BUa-qT-EHb"/>
+                    <navigationItem key="navigationItem" title="Conversations" id="BUa-qT-EHb">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="v46-Ma-zwl">
+                            <connections>
+                                <segue destination="LJs-XB-Q4C" kind="push" id="P8p-un-DXC"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <nil key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f7M-NG-bBN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="788" y="-9"/>
+            <point key="canvasLocation" x="752" y="-5"/>
         </scene>
         <!--Conversation Table View Controller-->
         <scene sceneID="Rg1-RM-Qhm">
             <objects>
                 <tableViewController id="8m2-0S-XL6" customClass="JCConversationTableViewController" customModule="JiveOne" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="AKv-Cw-28K" userLabel="Conversation">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -945,7 +955,45 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r9l-0t-c0Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1289" y="-22"/>
+            <point key="canvasLocation" x="1643" y="-5.5"/>
+        </scene>
+        <!--Conversation View Controller-->
+        <scene sceneID="r4O-DY-vGU">
+            <objects>
+                <viewController id="LJs-XB-Q4C" customClass="JCConversationViewController" customModule="JiveOne" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="W6W-ON-kAp"/>
+                        <viewControllerLayoutGuide type="bottom" id="eSN-Wc-lg8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8OS-VX-VRX">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cZi-zk-wcY">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
+                                <connections>
+                                    <segue destination="8m2-0S-XL6" kind="embed" id="8eC-c5-j4f"/>
+                                </connections>
+                            </containerView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yvz-wI-hIz">
+                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZWb-lw-1Op">
+                                        <rect key="frame" x="8" y="7" width="304" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="0E4-Ng-CKR"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AbU-g0-fTT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1231" y="-5"/>
         </scene>
         <!--Conversations-->
         <scene sceneID="anK-fg-DgQ">
@@ -5425,9 +5473,10 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="ttd-bY-cQH"/>
         <segue reference="Uqi-bD-GAX"/>
-        <segue reference="5C3-Di-Qgq"/>
         <segue reference="Tth-R2-xu6"/>
+        <segue reference="5C3-Di-Qgq"/>
         <segue reference="x1v-U1-NC6"/>
         <segue reference="2yK-HA-Lah"/>
     </inferredMetricsTieBreakers>
