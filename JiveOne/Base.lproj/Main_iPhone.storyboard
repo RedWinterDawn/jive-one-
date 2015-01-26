@@ -969,13 +969,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cZi-zk-wcY">
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cZi-zk-wcY">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
                                 <connections>
                                     <segue destination="8m2-0S-XL6" kind="embed" id="8eC-c5-j4f"/>
                                 </connections>
                             </containerView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yvz-wI-hIz">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yvz-wI-hIz">
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZWb-lw-1Op">
@@ -985,9 +985,21 @@
                                     </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="aNp-ia-t37"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="cZi-zk-wcY" secondAttribute="trailing" id="RSm-nH-QZO"/>
+                            <constraint firstItem="cZi-zk-wcY" firstAttribute="top" secondItem="8OS-VX-VRX" secondAttribute="top" id="Y8b-Gx-fw2"/>
+                            <constraint firstItem="yvz-wI-hIz" firstAttribute="top" secondItem="cZi-zk-wcY" secondAttribute="bottom" id="bIh-0E-yAC"/>
+                            <constraint firstAttribute="trailing" secondItem="yvz-wI-hIz" secondAttribute="trailing" id="gdD-Vz-Ay3"/>
+                            <constraint firstItem="eSN-Wc-lg8" firstAttribute="top" secondItem="yvz-wI-hIz" secondAttribute="bottom" id="lXW-pl-k1O"/>
+                            <constraint firstItem="cZi-zk-wcY" firstAttribute="leading" secondItem="8OS-VX-VRX" secondAttribute="leading" id="neC-3a-Ww3"/>
+                            <constraint firstItem="yvz-wI-hIz" firstAttribute="leading" secondItem="8OS-VX-VRX" secondAttribute="leading" id="wE8-lj-DEt"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="0E4-Ng-CKR"/>
                 </viewController>
