@@ -778,7 +778,7 @@
             </objects>
             <point key="canvasLocation" x="559" y="2413"/>
         </scene>
-        <!--Root View Controller-->
+        <!--Conversations-->
         <scene sceneID="RM6-57-2r2">
             <objects>
                 <tableViewController id="J2i-zc-aC2" sceneMemberID="viewController">
@@ -799,11 +799,29 @@
                             <outlet property="delegate" destination="J2i-zc-aC2" id="30j-oc-4qT"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="BUa-qT-EHb"/>
+                    <navigationItem key="navigationItem" title="Conversations" id="BUa-qT-EHb"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f7M-NG-bBN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="788" y="-5"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="AQj-zJ-Mqh">
+            <objects>
+                <viewController id="IbH-vF-F2X" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="FV1-r9-GQg"/>
+                        <viewControllerLayoutGuide type="bottom" id="PMu-IO-3Ob"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fSR-Mm-fhc" userLabel="Chat">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BlH-2Z-vrj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1318" y="-21"/>
         </scene>
         <!--Chat-->
         <scene sceneID="anK-fg-DgQ">
