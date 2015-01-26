@@ -10,3 +10,5 @@
 
 #import "Conversation.h"
 #import "SMSMessage.h"
+
+#import <MagicalRecord/CoreData+MagicalRecord.h>

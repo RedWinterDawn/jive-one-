@@ -8,26 +8,24 @@
 
 import UIKit
 
-let ConversationMessageCellReuseIdentifer = "ConversationMessageCell"
-let SMSMessageCellReuseIdentifer = "SMSMessageCell"
+let ConversationCellReuseIdentifer = "ConversationCell"
 
 class JCConversationsTableViewController: JCFetchedResultsTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: ConversationMessageCellReuseIdentifer)
+        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: ConversationCellReuseIdentifer)
         self.tableView.dataSource = self
+        
+        let fetchRequest:NSFetchRequest = Message.MR_requestAll();
+        fetchRequest.includesSubentities = true;
+        let fetchedResultsController:NSFetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil);
     }
-    
-    
+
     override func tableView(tableView: UITableView!, cellForObject object: NSObjectProtocol!, atIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
-        if object.isKindOfClass(Conversation) {
-            let cell:UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ConversationMessageCellReuseIdentifer) as UITableViewCell
-            configureCell(cell, withObject: object);
-            return cell
-        } else if object.isKindOfClass(SMSMessage) {
-            let cell:UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier(SMSMessageCellReuseIdentifer) as UITableViewCell
+        if object.isKindOfClass(Message) {
+            let cell:UITableViewCell = self.tableView.dequeueReusableCellWithIdentifier(ConversationCellReuseIdentifer) as UITableViewCell
             configureCell(cell, withObject: object);
             return cell
         }
@@ -35,10 +33,7 @@ class JCConversationsTableViewController: JCFetchedResultsTableViewController {
     }
     
     override func configureCell(cell: UITableViewCell!, withObject object: NSObjectProtocol!) {
-        if object.isKindOfClass(Conversation){
-            
-        }
-        else if object.isKindOfClass(SMSMessage) {
+        if object.isKindOfClass(Message){
             
         }
     }
@@ -47,8 +42,6 @@ class JCConversationsTableViewController: JCFetchedResultsTableViewController {
         if segue.identifier == "goToChat" {
             //var DestViewController : JCConversationTableViewController  = segue.destinationViewController as JCConversationTableViewController
         }
-        
     }
-    
 }
 

@@ -1526,8 +1526,8 @@
 			children = (
 				5D65268F1A76BD920038B14A /* JCConversationsViewController.swift */,
 				5D65268A1A76B4610038B14A /* JCConversationsTableViewController.swift */,
-				5D65268D1A76BC010038B14A /* JCConversationTableViewController.swift */,
 				5D6526911A76BE120038B14A /* JCConversationViewController.swift */,
+				5D65268D1A76BC010038B14A /* JCConversationTableViewController.swift */,
 			);
 			name = Messages;
 			sourceTree = "<group>";
