@@ -311,7 +311,7 @@
     menuFrame.origin.y = -menuFrame.size.height - [UIApplication sharedApplication].statusBarFrame.size.height;
     
     CGRect activityFrame = _activityViewController.view.frame;
-    activityFrame.origin.y = 2 * (menuFrame.origin.y + menuFrame.size.height + activityFrame.size.height);
+    activityFrame.origin.y = self.view.bounds.size.height;
     [UIView animateWithDuration:(animated ? 0.3 : 0)
                           delay:0
                         options:UIViewAnimationOptionCurveEaseInOut
