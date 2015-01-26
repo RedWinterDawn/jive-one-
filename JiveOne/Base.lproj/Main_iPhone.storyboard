@@ -27,6 +27,7 @@
                         <segue destination="dm4-oa-PNL" kind="relationship" relationship="viewControllers" id="JZV-1j-5Bt"/>
                         <segue destination="3E5-0Q-2Rs" kind="relationship" relationship="viewControllers" id="FG3-g0-Mta"/>
                         <segue destination="fwQ-1I-zye" kind="relationship" relationship="viewControllers" id="NhP-YT-ati"/>
+                        <segue destination="cs1-Q4-pfo" kind="relationship" relationship="viewControllers" id="hUL-1m-Wme"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
@@ -776,6 +777,68 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="559" y="2413"/>
+        </scene>
+        <!--Conversations-->
+        <scene sceneID="RM6-57-2r2">
+            <objects>
+                <tableViewController id="J2i-zc-aC2" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="elf-Fi-Ick">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="D2t-fp-QtY">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="D2t-fp-QtY" id="W9i-Ew-j3S">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="J2i-zc-aC2" id="XNu-3Z-Wzl"/>
+                            <outlet property="delegate" destination="J2i-zc-aC2" id="30j-oc-4qT"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Conversations" id="BUa-qT-EHb"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="f7M-NG-bBN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="788" y="-5"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="AQj-zJ-Mqh">
+            <objects>
+                <viewController id="IbH-vF-F2X" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="FV1-r9-GQg"/>
+                        <viewControllerLayoutGuide type="bottom" id="PMu-IO-3Ob"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fSR-Mm-fhc" userLabel="Chat">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BlH-2Z-vrj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1318" y="-21"/>
+        </scene>
+        <!--Chat-->
+        <scene sceneID="anK-fg-DgQ">
+            <objects>
+                <navigationController id="cs1-Q4-pfo" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Chat" image="black-bubble" id="1NY-Mi-445"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="GyZ-sd-sl6">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="J2i-zc-aC2" kind="relationship" relationship="rootViewController" id="Qp8-Wi-gaF"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PCt-tB-i27" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="320" y="-5"/>
         </scene>
         <!--Select Line-->
         <scene sceneID="5q7-sS-1jV">
@@ -4802,7 +4865,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3N9-A7-pSU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1650" y="-440"/>
+            <point key="canvasLocation" x="2070" y="-1066"/>
         </scene>
         <!--Voicemail-->
         <scene sceneID="cTu-cz-LSJ">
@@ -5195,6 +5258,7 @@
     </scenes>
     <resources>
         <image name="black-avatar" width="25" height="25"/>
+        <image name="black-bubble" width="50" height="45"/>
         <image name="black-gear" width="25" height="26"/>
         <image name="black-phone" width="25" height="25"/>
         <image name="blue-arrow" width="30" height="31"/>
