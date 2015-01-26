@@ -135,7 +135,9 @@ NSString *const JCClientErrorDomain = @"JCClientError";
     // Process Response Data
     NSDictionary *responseObject = [NSDictionary dictionaryWithXMLData:data];
     if (!response) {
-        *error = [JCClientError errorWithCode:JCClientResponseParserErrorCode reason:@"Response Empty"];
+        if (error != NULL) {
+            *error = [JCClientError errorWithCode:JCClientResponseParserErrorCode reason:@"Response Empty"];
+        }
     }
     
     return responseObject;
