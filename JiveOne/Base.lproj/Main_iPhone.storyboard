@@ -981,7 +981,10 @@
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZWb-lw-1Op">
                                         <rect key="frame" x="8" y="7" width="304" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="alphabet" returnKeyType="send" enablesReturnKeyAutomatically="YES"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="LJs-XB-Q4C" id="NBK-RQ-FLV"/>
+                                        </connections>
                                     </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -996,12 +999,15 @@
                             <constraint firstItem="cZi-zk-wcY" firstAttribute="top" secondItem="8OS-VX-VRX" secondAttribute="top" id="Y8b-Gx-fw2"/>
                             <constraint firstItem="yvz-wI-hIz" firstAttribute="top" secondItem="cZi-zk-wcY" secondAttribute="bottom" id="bIh-0E-yAC"/>
                             <constraint firstAttribute="trailing" secondItem="yvz-wI-hIz" secondAttribute="trailing" id="gdD-Vz-Ay3"/>
-                            <constraint firstItem="eSN-Wc-lg8" firstAttribute="top" secondItem="yvz-wI-hIz" secondAttribute="bottom" id="lXW-pl-k1O"/>
+                            <constraint firstItem="yvz-wI-hIz" firstAttribute="bottom" secondItem="eSN-Wc-lg8" secondAttribute="top" id="lXW-pl-k1O"/>
                             <constraint firstItem="cZi-zk-wcY" firstAttribute="leading" secondItem="8OS-VX-VRX" secondAttribute="leading" id="neC-3a-Ww3"/>
                             <constraint firstItem="yvz-wI-hIz" firstAttribute="leading" secondItem="8OS-VX-VRX" secondAttribute="leading" id="wE8-lj-DEt"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="0E4-Ng-CKR"/>
+                    <connections>
+                        <outlet property="messageBarBaseConstraint" destination="lXW-pl-k1O" id="C94-DK-bHr"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AbU-g0-fTT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

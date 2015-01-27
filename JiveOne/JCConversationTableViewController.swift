@@ -10,4 +10,9 @@ import UIKit
 
 class JCConversationTableViewController: JCFetchedResultsTableViewController {
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.OnDrag
+    }
 }
