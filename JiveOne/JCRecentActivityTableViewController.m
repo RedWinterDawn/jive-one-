@@ -15,12 +15,14 @@
 // Data Models
 #import "Call.h"
 #import "Voicemail.h"
+#import "Message.h"
 
 // Managers
 #import "JCPresenceManager.h"
 
 NSString *const kJCHistoryCellReuseIdentifier = @"HistoryCell";
 NSString *const kJCVoicemailCellReuseIdentifier = @"VoicemailCell";
+NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
 
 @implementation JCRecentActivityTableViewController
 
@@ -72,6 +74,12 @@ NSString *const kJCVoicemailCellReuseIdentifier = @"VoicemailCell";
         [self configureCell:cell withObject:object];
         return cell;
     }
+    else if ([object isKindOfClass:[Message class]])
+    {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kJCMessageCellReuseIdentifier];
+        [self configureCell:cell withObject:object];
+        return cell;
+    }
     else
         return [super tableView:tableView cellForObject:object atIndexPath:indexPath];
 }
@@ -88,6 +96,12 @@ NSString *const kJCVoicemailCellReuseIdentifier = @"VoicemailCell";
     {
         JCVoicemailCell *voiceCell = (JCVoicemailCell *)cell;
         voiceCell.voicemail = (Voicemail *)object;
+    }
+    else if ([object isKindOfClass:[Message class]])
+    {
+        JCRecentEventCell *recentEventCell = (JCRecentEventCell *)cell;
+        recentEventCell.recentEvent = (RecentEvent *)object;
+        recentEventCell.textLabel.text = ((Message *)object).text;
     }
 }
 
