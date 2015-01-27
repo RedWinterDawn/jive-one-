@@ -7,7 +7,6 @@
 //
 
 #import "JCCallHistoryViewController.h"
-#import <CoreData/CoreData.h>
 #import "MissedCall.h"
 
 @implementation JCCallHistoryViewController
@@ -41,7 +40,6 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     UIViewController *viewController = segue.destinationViewController;
-    
     if ([viewController isKindOfClass:[JCCallHistoryTableViewController class]]){
         _callHistoryTableViewController = (JCCallHistoryTableViewController *)viewController;
     

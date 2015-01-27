@@ -15,6 +15,7 @@
 #import "JCAuthenticationManagerError.h"
 #import "User+Custom.h"
 #import "PBX+V5Client.h"
+#import "UIViewController+HUD.h"
 
 // Notifications
 NSString *const kJCAuthenticationManagerUserLoggedOutNotification               = @"userLoggedOut";
@@ -102,7 +103,13 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     NSString *jiveUserId = _authenticationKeychain.jiveUserId;
     _user = [User MR_findFirstByAttribute:NSStringFromSelector(@selector(jiveUserId)) withValue:jiveUserId];
     if (_user && _user.pbxs.count > 0) {
-        [self postNotificationEvent:kJCAuthenticationManagerUserLoadedMinimumDataNotification];
+        Line *line = self.line;
+        if (line) {
+            [self postNotificationEvent:kJCAuthenticationManagerUserLoadedMinimumDataNotification];
+        } else {
+            [UIApplication showSimpleAlert:@"Warning" message:@"Unable to select line. Please Login again."];
+            [self logout];
+        }
     }
     else {
         [self logout]; // Nuke it, we need to relogin.

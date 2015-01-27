@@ -11,6 +11,7 @@
 NSString *const kJCAppSettingsIntercomEnabledAttribute = @"intercomEnabled";
 NSString *const kJCAppSettingsWifiOnlyAttribute = @"wifiOnly";
 NSString *const kJCAppSettingsPresenceAttribute = @"presenceEnabled";
+NSString *const kJCAppSettingsVibrateOnRingAttribute = @"vibrateOnRing";
 
 @implementation JCAppSettings
 
@@ -31,6 +32,11 @@ NSString *const kJCAppSettingsPresenceAttribute = @"presenceEnabled";
     [self setSettingBoolValue:presenceEnabled forKey:kJCAppSettingsPresenceAttribute];
 }
 
+-(void)setVibrateOnRing:(BOOL)vibrateOnRing
+{
+    [self setSettingBoolValue:vibrateOnRing forKey:kJCAppSettingsVibrateOnRingAttribute];
+}
+
 #pragma mark - Getters -
 
 -(BOOL)isIntercomEnabled
@@ -46,6 +52,12 @@ NSString *const kJCAppSettingsPresenceAttribute = @"presenceEnabled";
 {
     return [[NSUserDefaults standardUserDefaults] boolForKey:kJCAppSettingsPresenceAttribute];
 }
+
+-(BOOL)isVibrateOnRing
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kJCAppSettingsVibrateOnRingAttribute];
+}
+
 #pragma mark - Private -
 
 -(void)setSettingBoolValue:(BOOL)value forKey:(NSString *)key

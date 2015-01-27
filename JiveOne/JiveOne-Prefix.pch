@@ -19,7 +19,7 @@
     #import <Foundation/Foundation.h>
     #import <MagicalRecord/CoreData+MagicalRecord.h>
     #import <AFNetworking/AFNetworking.h>
-    #import "Flurry.h"
+    #import <NewRelicAgent/NewRelic.h>
 
     // Singletons
     #import "Constants.h"
@@ -31,10 +31,11 @@
     #import "NSDictionary+Validations.h"
 #endif
 
-
-
-
-
+#if !defined(__OPTIMIZE__) || defined(DEBUG)
+    #define NSLog(...) NSLog(__VA_ARGS__)
+#else
+    #define NSLog(...) { }
+#endif
 
 typedef void(^CompletionHandler)(BOOL success, NSError *error);
 typedef void(^ResultCompletionHandler)(BOOL success, NSError *error, NSDictionary *userInfo);

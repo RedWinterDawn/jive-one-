@@ -206,8 +206,7 @@ NSString *const kVoicemailResponseSelfMailboxKey        = @"self_mailbox";
                 {
                     NSString *errorMessage = @"Failed Updating Voicemail Read Status On Server, Aborting";
                     NSLog(@"%@", errorMessage);
-                    [Flurry logError:@"Voicmail-11" message:errorMessage error:error];
-                }
+                   }
             }];
         }
     }];
@@ -233,7 +232,6 @@ NSString *const kVoicemailResponseSelfMailboxKey        = @"self_mailbox";
                 }];
             }
             else{
-                [Flurry logError:@"Voicemail Service" message:@"url_self is nil to delete" error:nil];
             }
         }
     }
