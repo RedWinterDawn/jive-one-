@@ -863,7 +863,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="53" id="UwN-bX-Fgd" userLabel="Incoming Chat Cell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="IncomingCell" rowHeight="53" id="UwN-bX-Fgd" userLabel="Incoming Chat Cell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UwN-bX-Fgd" id="WJg-6D-AQu">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -912,7 +912,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="80" id="NFH-fT-slV" userLabel="Outgoing Chat Cell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="OutgoingCell" rowHeight="80" id="NFH-fT-slV" userLabel="Outgoing Chat Cell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NFH-fT-slV" id="VXF-Hq-N8N">
                                     <autoresizingMask key="autoresizingMask"/>

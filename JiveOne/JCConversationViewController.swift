@@ -77,16 +77,18 @@ class JCConversationViewController: UIViewController, UITextFieldDelegate {
         textField.resignFirstResponder()
         
         let context = NSManagedObjectContext.MR_defaultContext()
-        let message:Message = Message.MR_createInContext(context) as Message
-        message.text = textField.text;
+        let conversation:Conversation = Conversation.MR_createInContext(context) as Conversation
+        conversation.text = textField.text;
+        conversation.jiveUserId = JCAuthenticationManager.sharedInstance().jiveUserId
+        conversation.read = true;
+        conversation.date = NSDate()
+        
+        //FIXME: get the real conversationId as part of the upload
+        conversation.conversationId = String(format: "%i", Conversation.MR_countOfEntities())
         
         context.MR_saveToPersistentStoreWithCompletion { (success:Bool, error:NSError!) -> Void in
             //TODO: upload to the server here.
         }
-        
-        
-        
-        
         return true
     }
 

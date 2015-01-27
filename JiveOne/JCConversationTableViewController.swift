@@ -8,11 +8,46 @@
 
 import UIKit
 
+let OutgoingCellReuseIdentifier = "OutgoingCell"
+let IncomingCellReuseIdentifier = "IncomingCell"
+
 class JCConversationTableViewController: JCFetchedResultsTableViewController {
 
+    var conversationId:String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.OnDrag
+        var fetchRequest:NSFetchRequest
+        if (conversationId? != nil) {
+            fetchRequest = Message.MR_requestAllWhere("conversationId", isEqualTo: conversationId, inContext: self.managedObjectContext)
+        } else {
+            fetchRequest = Message.MR_requestAllInContext(self.managedObjectContext);
+        }
+        
+        let sortDescriptor:NSSortDescriptor = NSSortDescriptor(key: "date", ascending:false)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        fetchRequest.includesSubentities = true
+        self.fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+    }
+    
+    override func configureCell(cell: UITableViewCell!, withObject object: NSObjectProtocol!) {
+        let message = object as Message
+        //cell.textLabel?.text = message.text;
+    }
+    
+    override func tableView(tableView: UITableView!, cellForObject object: NSObjectProtocol!, atIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
+        if object.isKindOfClass(Conversation) {
+            let conversation:Conversation = object as Conversation
+            var cell:UITableViewCell
+            if conversation.jiveUserId == JCAuthenticationManager.sharedInstance().jiveUserId {
+                cell = self.tableView.dequeueReusableCellWithIdentifier(OutgoingCellReuseIdentifier) as UITableViewCell
+            } else {
+                cell = self.tableView.dequeueReusableCellWithIdentifier(IncomingCellReuseIdentifier) as UITableViewCell
+            }
+            configureCell(cell, withObject: object)
+            return cell
+        }
+        return nil;
     }
 }
