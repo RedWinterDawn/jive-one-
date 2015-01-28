@@ -53,15 +53,16 @@ CGFloat _callOptionsWidth;
     _defaultMergePosition           = _mergeBtnHorizontalContstraint.constant;
     _defaultFinishPosition          = _finishTransferConstraint.constant;
     
-    _callOptionsWidth = self.bounds.size.width;
-    _halfTheScreenDistance       = _callOptionsWidth/2;
-    _oneThridTheScreenDistance = _callOptionsWidth/4;
+    
 }
 
 
 -(void)layoutSubviews
 {
     [super layoutSubviews];
+    _callOptionsWidth = self.bounds.size.width;
+    _halfTheScreenDistance       = _callOptionsWidth/2-30;
+    _oneThridTheScreenDistance = _callOptionsWidth/4;
   
 }
 
