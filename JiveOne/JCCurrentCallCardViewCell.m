@@ -210,6 +210,7 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
             break;
         }
         case JCNoCall:
+        case JCCallInitiated:
         case JCCallIncoming:
         case JCCallTrying:
         case JCCallProgress:
