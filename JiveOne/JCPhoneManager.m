@@ -403,6 +403,10 @@ NSString *const kJCPhoneManager611String = @"611";
         success = [_sipHandler holdLineSession:callCard.lineSession error:&error];
     }
     
+    if (success) {
+        callCard.holdStarted = [NSDate date];
+    }
+    
     if (completion) {
         completion(success, error);
     }
