@@ -62,6 +62,20 @@ static NSInteger JCProgressHUDDuration;
     [JCProgressHUD showErrorWithStatus:message];
 }
 
+- (void)showInfo:(NSString *)string
+{
+    [self configureHud];
+    
+    [JCProgressHUD showInfoWithStatus:string];
+}
+
+- (void)showInfo:(NSString *)string duration:(NSTimeInterval)timeInterval
+{
+    [self configureHud];
+    [JCProgressHUD setDuration:timeInterval];
+    [JCProgressHUD showInfoWithStatus:string];
+}
+
 - (void)showStatus:(NSString *)string
 {
     [self configureHud];
@@ -140,6 +154,20 @@ static NSInteger JCProgressHUDDuration;
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         [[UIApplication sharedApplication].keyWindow.rootViewController showError:error];
+    });
+}
+
++(void)showInfo:(NSString *)string
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[UIApplication sharedApplication].keyWindow.rootViewController showInfo:string];
+    });
+}
+
++(void)showInfo:(NSString *)string duration:(NSTimeInterval)duration;
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[UIApplication sharedApplication].keyWindow.rootViewController showInfo:string duration:duration];
     });
 }
 

@@ -13,6 +13,9 @@
 
 - (void)showError:(NSError *)error;
 
+- (void)showInfo:(NSString *)string;
+- (void)showInfo:(NSString *)string duration:(NSTimeInterval)duration;
+
 - (void)showStatus:(NSString *)string;
 - (void)hideStatus;
 
@@ -26,6 +29,9 @@
 @interface UIApplication (Custom)
 
 +(void)showError:(NSError *)error;
+
++(void)showInfo:(NSString *)string;
++(void)showInfo:(NSString *)string duration:(NSTimeInterval)duration;
 
 +(void)showStatus:(NSString *)status;
 +(void)hideStatus;

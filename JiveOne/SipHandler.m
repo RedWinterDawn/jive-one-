@@ -12,6 +12,8 @@
 #import "Common.h"
 #import "JCAppSettings.h"
 #import "JCSipHandlerError.h"
+#import "JCSipNetworkQualityRequestOperation.h"
+#import "UIViewController+HUD.h"
 
 #ifdef __APPLE__
 #include "TargetConditionals.h"
@@ -67,6 +69,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     PortSIPSDK *_mPortSIPSDK;
     CompletionHandler _transferCompletionHandler;
 	VideoViewController *_videoController;
+    NSOperationQueue *_operationQueue;
 	bool autoAnswer;
 }
 
@@ -87,6 +90,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         _lineSessions = [NSMutableSet new];
         for (int i = 0; i < lines; i++)
             [_lineSessions addObject:[JCLineSession new]];
+        
+        _operationQueue = [[NSOperationQueue alloc] init];
+        _operationQueue.name = @"SipHandler Operation Queue";
         
         // Initialize the port sip sdk.
         _mPortSIPSDK = [PortSIPSDK new];
@@ -1047,6 +1053,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         {
             lineSession.updatable = YES;
             lineSession.sessionState = state;
+            
+            [self startNetworkQualityIndicatorForLineSession:lineSession];
             break;
         }
         case JCCallConference:
@@ -1064,6 +1072,28 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     
     NSLog(@"%@", [self.lineSessions description]);
 }
+
+-(void)startNetworkQualityIndicatorForLineSession:(JCLineSession *)lineSession
+{
+    JCSipNetworkQualityRequestOperation *operation = [[JCSipNetworkQualityRequestOperation alloc] initWithSessionId:lineSession.sessionId portSipSdk:_mPortSIPSDK];
+    operation.name = [NSString stringWithFormat:@"%lu", (long)lineSession.sessionId];
+    __weak JCSipNetworkQualityRequestOperation *weakOperation = operation;
+    operation.completionBlock = ^{
+        
+        if (weakOperation.isBelowNetworkThreshold) {
+            [UIApplication showInfo:@"Poor Network Quality" duration:5.5];
+        }
+
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            if (lineSession.sessionState != JCNoCall) {
+                [self startNetworkQualityIndicatorForLineSession:lineSession];
+            }
+        });
+    };
+    [_operationQueue addOperation:operation];
+}
+
 
 -(void)setSessionState:(JCLineSessionState)state forSessionId:(long)sessionId event:(NSString *)event error:(NSError *)error
 {
@@ -1174,8 +1204,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 {
     JCLineSession *selectedLine = [self findSession:sessionId];
-	if (selectedLine && !selectedLine.mExistEarlyMedia)
-    {
+	if (selectedLine && !selectedLine.mExistEarlyMedia) {
         [JCAudioAlertManager startRingback];
 	}
     [self setSessionState:JCCallRinging forSession:selectedLine event:@"onInviteRinging" error:nil];
@@ -1550,3 +1579,4 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 }
 
 @end
+
