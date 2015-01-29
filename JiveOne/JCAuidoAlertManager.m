@@ -9,6 +9,8 @@
 #import "JCAudioAlertManager.h"
 #import "JCAppSettings.h"
 
+@import AVFoundation;
+
 #define DEFAULT_TIME_INTERVAL 1
 
 @implementation JCAudioAlertManager
@@ -32,6 +34,11 @@ static BOOL active;
 +(void)stop
 {
     active = false;
+    
+    __autoreleasing NSError *error;
+    if (![[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:&error]) {
+        NSLog(@"%@", error);
+    }
 }
 
 +(void)ring
@@ -85,6 +92,12 @@ void ringtone (SystemSoundID ssID, void *clientData)
 {
     NSURL *url = [NSURL fileURLWithPath:@"/System/Library/Audio/UISounds/vc~ringing.caf"];
     SystemSoundID soundID;
+    
+    __autoreleasing NSError *error;
+    if (![[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error]) {
+        NSLog(@"%@", error);
+    }
+    
     AudioServicesCreateSystemSoundID((__bridge_retained CFURLRef)url, &soundID);
     AudioServicesPlaySystemSound(soundID);
     CFBridgingRelease((__bridge CFURLRef)url);

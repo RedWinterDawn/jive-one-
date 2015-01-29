@@ -64,9 +64,23 @@
         NSLog(@"deactivationError");
     }
     
+    __autoreleasing NSError *error;
+    
     // set audio session category AVAudioSessionCategoryPlayAndRecord options AVAudioSessionCategoryOptionAllowBluetooth
-    if (![session setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth error:nil]) {
+    if (![session setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth error:&error]) {
         NSLog(@"setCategoryError");
+    }
+    
+    if (![session setMode:AVAudioSessionModeVoiceChat error:&error]) {
+        NSLog(@"AVAudioSession error setting category:%@",error);
+    }
+    
+    if (![session overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:&error]) {
+        NSLog(@"AVAudioSession error setting mode:%@",error);
+    }
+    
+    if (![session setPreferredOutputNumberOfChannels:0 error:&error]) {
+        NSLog(@"AVAudioSession error overrideOutputAudioPort:%@",error);
     }
     
     // activate audio session
