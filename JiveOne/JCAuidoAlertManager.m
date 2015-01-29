@@ -50,8 +50,27 @@ static BOOL active;
 {
     active = repeating;
     @try {
-        SystemSoundID soundId = [self playRingtone];
-        AudioServicesAddSystemSoundCompletion(soundId, NULL, NULL, ringtone, NULL);
+        NSURL *url = [NSURL fileURLWithPath:@"/System/Library/Audio/UISounds/vc~ringing.caf"];
+        SystemSoundID soundID;
+        
+        AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+        NSArray *outputs = audioSession.currentRoute.outputs;
+        AVAudioSessionPortDescription *port = [outputs lastObject];
+        if ([port.portType isEqualToString:AVAudioSessionPortBuiltInReceiver]) {
+            __autoreleasing NSError *error;
+            if (![audioSession overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error]) {
+                NSLog(@"%@", error);
+            }
+        }
+        
+        AudioServicesCreateSystemSoundID((__bridge_retained CFURLRef)url, &soundID);
+        AudioServicesPlaySystemSound(soundID);
+        CFBridgingRelease((__bridge CFURLRef)url);
+        
+        AudioServicesAddSystemSoundCompletion(soundID, NULL, NULL, ringtone, NULL);
+        
+        if ([JCAppSettings sharedSettings].isVibrateOnRing)
+            [self startRepeatingVibration:repeating];
     }
     @catch (NSException *exception) {
         NSLog(@"%@", exception.description);
@@ -86,25 +105,6 @@ void ringtone (SystemSoundID ssID, void *clientData)
             return;
         AudioServicesPlaySystemSound(ssID);
     });
-}
-
-+ (SystemSoundID)playRingtone
-{
-    NSURL *url = [NSURL fileURLWithPath:@"/System/Library/Audio/UISounds/vc~ringing.caf"];
-    SystemSoundID soundID;
-    
-    __autoreleasing NSError *error;
-    if (![[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error]) {
-        NSLog(@"%@", error);
-    }
-    
-    AudioServicesCreateSystemSoundID((__bridge_retained CFURLRef)url, &soundID);
-    AudioServicesPlaySystemSound(soundID);
-    CFBridgingRelease((__bridge CFURLRef)url);
-    
-    if ([JCAppSettings sharedSettings].isVibrateOnRing)
-        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
-    return soundID;
 }
 
 
