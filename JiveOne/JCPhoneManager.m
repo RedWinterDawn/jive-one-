@@ -403,6 +403,10 @@ NSString *const kJCPhoneManager611String = @"611";
         success = [_sipHandler holdLineSession:callCard.lineSession error:&error];
     }
     
+    if (success) {
+        callCard.holdStarted = [NSDate date];
+    }
+    
     if (completion) {
         completion(success, error);
     }
@@ -656,6 +660,7 @@ NSString *const kJCPhoneManager611String = @"611";
     // Add the conference call Card
     JCConferenceCallCard *conferenceCallCard = [[JCConferenceCallCard alloc] initWithLineSessions:lineSessions];
     conferenceCallCard.delegate = self;
+    conferenceCallCard.started = [NSDate date];
     
     // Blow away the previous call cards on the call array, replacing with the conference call card.
     _calls = [NSMutableArray arrayWithObject:conferenceCallCard];

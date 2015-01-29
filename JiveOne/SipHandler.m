@@ -978,6 +978,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             lineSession.updatable = FALSE;
             lineSession.sessionState = state;
             
+            [JCAudioAlertManager stop];
+            
             // Notify
             if (lineSession.isIncoming){
                 
@@ -1174,7 +1176,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     JCLineSession *selectedLine = [self findSession:sessionId];
 	if (selectedLine && !selectedLine.mExistEarlyMedia)
     {
-        // No early media, you must play the local WAVE file for ringing tone
+        [JCAudioAlertManager startRingback];
 	}
     [self setSessionState:JCCallRinging forSession:selectedLine event:@"onInviteRinging" error:nil];
 }
