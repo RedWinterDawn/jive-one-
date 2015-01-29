@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCTableViewCell.h"
+#import "JCCustomCell.h"
 
-@interface JCPresenceCell : JCTableViewCell
+@interface JCPresenceCell : JCCustomCell
 
 @property (nonatomic, strong) NSString *identifier;
 

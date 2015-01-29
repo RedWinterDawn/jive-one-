@@ -10,9 +10,6 @@
 
 @implementation JCPersonCell
 
-@synthesize textLabel;
-@synthesize detailTextLabel;
-
 - (void)layoutSubviews
 {
     [super layoutSubviews];

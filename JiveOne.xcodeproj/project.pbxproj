@@ -197,7 +197,8 @@
 		5D3CC62E1A4226D300DA374B /* fr.xliff in Resources */ = {isa = PBXBuildFile; fileRef = 5D3CC6271A4226D300DA374B /* fr.xliff */; };
 		5D3CC62F1A4226D300DA374B /* it.xliff in Resources */ = {isa = PBXBuildFile; fileRef = 5D3CC6281A4226D300DA374B /* it.xliff */; };
 		5D3CC6301A4226D400DA374B /* pt.xliff in Resources */ = {isa = PBXBuildFile; fileRef = 5D3CC6291A4226D300DA374B /* pt.xliff */; };
-		5D5523621A77F56500CA8A6D /* JCMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5523611A77F56500CA8A6D /* JCMessageCell.swift */; };
+		5D5523671A78040E00CA8A6D /* JCMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5523661A78040E00CA8A6D /* JCMessageCell.swift */; };
+		5D55236A1A7811E500CA8A6D /* JCCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5523691A7811E500CA8A6D /* JCCustomCell.m */; };
 		5D6243661A644D17001DF88E /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D6243651A644D17001DF88E /* Message.m */; };
 		5D6243691A644D4B001DF88E /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D6243681A644D4B001DF88E /* Conversation.m */; };
 		5D62436C1A644D4C001DF88E /* SMSMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D62436B1A644D4C001DF88E /* SMSMessage.m */; };
@@ -580,7 +581,9 @@
 		5D3CC6271A4226D300DA374B /* fr.xliff */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = fr.xliff; sourceTree = "<group>"; };
 		5D3CC6281A4226D300DA374B /* it.xliff */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = it.xliff; sourceTree = "<group>"; };
 		5D3CC6291A4226D300DA374B /* pt.xliff */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = pt.xliff; sourceTree = "<group>"; };
-		5D5523611A77F56500CA8A6D /* JCMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JCMessageCell.swift; sourceTree = "<group>"; };
+		5D5523661A78040E00CA8A6D /* JCMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JCMessageCell.swift; sourceTree = "<group>"; };
+		5D5523681A7811E500CA8A6D /* JCCustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCustomCell.h; sourceTree = "<group>"; };
+		5D5523691A7811E500CA8A6D /* JCCustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCustomCell.m; sourceTree = "<group>"; };
 		5D6243641A644D17001DF88E /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
 		5D6243651A644D17001DF88E /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
 		5D6243671A644D4B001DF88E /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
@@ -1123,6 +1126,8 @@
 				5DE0F1B419F6D47E000469D0 /* JCRoundedView.m */,
 				5DB0BFBF19FFF3FE006737D7 /* JCTableViewCell.h */,
 				5DB0BFC019FFF3FE006737D7 /* JCTableViewCell.m */,
+				5D5523681A7811E500CA8A6D /* JCCustomCell.h */,
+				5D5523691A7811E500CA8A6D /* JCCustomCell.m */,
 				5D895EB31A0B230F0015368D /* JCPresenceCell.h */,
 				5D895EB41A0B230F0015368D /* JCPresenceCell.m */,
 				5DB0BFCE1A013982006737D7 /* JCRecentEventCell.h */,
@@ -1530,7 +1535,7 @@
 				5D65268A1A76B4610038B14A /* JCConversationsTableViewController.swift */,
 				5D6526911A76BE120038B14A /* JCConversationViewController.swift */,
 				5D65268D1A76BC010038B14A /* JCConversationTableViewController.swift */,
-				5D5523611A77F56500CA8A6D /* JCMessageCell.swift */,
+				5D5523661A78040E00CA8A6D /* JCMessageCell.swift */,
 			);
 			name = Messages;
 			sourceTree = "<group>";
@@ -2081,6 +2086,7 @@
 				5D6526901A76BD920038B14A /* JCConversationsViewController.swift in Sources */,
 				2747F1661A07E0F300E3FE73 /* JCContactsViewController.m in Sources */,
 				2700987618F4714100B6BC2F /* UIImage+JSMessagesView.m in Sources */,
+				5D55236A1A7811E500CA8A6D /* JCCustomCell.m in Sources */,
 				5D241FD41A382241008B498A /* User+Custom.m in Sources */,
 				5DB0BFCA1A00AB29006737D7 /* JCRecentActivityTableViewController.m in Sources */,
 				2700988018F4714100B6BC2F /* JSMessageTableView.m in Sources */,
@@ -2165,7 +2171,7 @@
 				5DDDA5451A4A856800E31AA3 /* JCPresenceManager.m in Sources */,
 				DD3BD9F418DCB1740080318E /* Voicemail+V5Client.m in Sources */,
 				2700987A18F4714100B6BC2F /* JSBubbleView.m in Sources */,
-				5D5523621A77F56500CA8A6D /* JCMessageCell.swift in Sources */,
+				5D5523671A78040E00CA8A6D /* JCMessageCell.swift in Sources */,
 				2700987918F4714100B6BC2F /* JSBubbleMessageCell.m in Sources */,
 				27B8152618D93F1A00516BF6 /* NotificationView.m in Sources */,
 				5DA566491A20543500286BA5 /* JCAuthenticationManagerError.m in Sources */,

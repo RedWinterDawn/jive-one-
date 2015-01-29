@@ -10,6 +10,9 @@
 
 @interface JCView : UIView
 
+@property (nonatomic) BOOL topLine;
+@property (nonatomic) BOOL bottomLine;
+
 @property (nonatomic, strong) UIColor *seperatorColor;
 
 @end

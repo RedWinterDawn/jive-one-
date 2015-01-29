@@ -8,15 +8,23 @@
 
 import UIKit;
 
-class JCConversationViewController: UIViewController, UITextFieldDelegate {
+class JCConversationViewController: UIViewController, UITextViewDelegate {
     
-    
-    @IBOutlet weak var messageBarBaseConstraint:NSLayoutConstraint?
     var conversationId:String?
     
+    @IBOutlet weak var messageBarBaseConstraint:NSLayoutConstraint?
+    @IBOutlet weak var messageTextView:UITextView?
+    @IBOutlet weak var messageTextViewHeightConstraint:NSLayoutConstraint?
+    @IBOutlet weak var sendBtn:UIButton?
+    
+    private var _defaultMessageTextHeightConstraint:CGFloat?
     
     private var conversationTableViewController:JCConversationTableViewController?
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        _defaultMessageTextHeightConstraint = self.messageTextViewHeightConstraint?.constant
+    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -72,24 +80,45 @@ class JCConversationViewController: UIViewController, UITextFieldDelegate {
         animateMessageBarWithKeyboard(notification)
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textViewDidChange(textView: UITextView) {
         
-        textField.resignFirstResponder()
+        var frame:CGRect = textView.frame;
+        frame.size.height = textView.contentSize.height
+        
+        
+        NSLog("%@, %@", frame.size.height, textView.font.lineHeight);
+        
+        if messageTextViewHeightConstraint?.constant != frame.size.height {
+            messageTextViewHeightConstraint?.constant = max(frame.size.height, _defaultMessageTextHeightConstraint!)
+            self.view.setNeedsUpdateConstraints();
+            self.view.layoutIfNeeded();
+        }
+    }
+    
+    @IBAction func sendMessage(sender: UIButton) {
+    
+        self.messageTextView?.resignFirstResponder()
         
         let context = NSManagedObjectContext.MR_defaultContext()
         let conversation:Conversation = Conversation.MR_createInContext(context) as Conversation
-        conversation.text = textField.text;
+        conversation.text = self.messageTextView?.text;
         conversation.jiveUserId = JCAuthenticationManager.sharedInstance().jiveUserId
-        conversation.read = true;
+        conversation.read = true
         conversation.date = NSDate()
+        self.messageTextView?.text = nil;
         
         //FIXME: get the real conversationId as part of the upload
         conversation.conversationId = String(format: "%i", Conversation.MR_countOfEntities())
         
         context.MR_saveToPersistentStoreWithCompletion { (success:Bool, error:NSError!) -> Void in
-            //TODO: upload to the server here.
+            
+            if success {
+                //TODO: upload to the server here.
+                
+                self.conversationTableViewController?.tableView.scrollToNearestSelectedRowAtScrollPosition(UITableViewScrollPosition.Bottom, animated: true)
+            } else {
+                
+            }
         }
-        return true
     }
-
 }

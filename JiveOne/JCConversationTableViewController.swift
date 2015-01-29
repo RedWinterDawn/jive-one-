@@ -33,7 +33,7 @@ class JCConversationTableViewController: JCFetchedResultsTableViewController {
     
     override func configureCell(cell: UITableViewCell!, withObject object: NSObjectProtocol!) {
         let message = object as Message
-        //cell.textLabel?.text = message.text;
+        cell.textLabel?.text = message.text;
     }
     
     override func tableView(tableView: UITableView!, cellForObject object: NSObjectProtocol!, atIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
@@ -49,5 +49,16 @@ class JCConversationTableViewController: JCFetchedResultsTableViewController {
             return cell
         }
         return nil;
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        let message = self.objectAtIndexPath(indexPath) as Message
+        let cell = self.tableView.dequeueReusableCellWithIdentifier(OutgoingCellReuseIdentifier) as UITableViewCell
+        let font = cell.textLabel?.font;
+        let text:NSString = message.text as NSString;
+        var size:CGSize = text.sizeWithAttributes(NSDictionary( object: font!, forKey: NSFontAttributeName))
+        size.height += 10
+        return size.height;
     }
 }
