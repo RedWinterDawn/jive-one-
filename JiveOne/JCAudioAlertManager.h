@@ -19,4 +19,6 @@
 
 + (void)stop;
 
++ (void)startRingback;
+
 @end

@@ -13,6 +13,9 @@
 
 #define DEFAULT_TIME_INTERVAL 1
 
+static AVAudioPlayer *ringbackAudioPlayer;
+static SystemSoundID ringtoneID;
+
 @implementation JCAudioAlertManager
 
 #pragma mark - Ringing
@@ -35,9 +38,20 @@ static BOOL active;
 {
     active = false;
     
+    if (ringtoneID) {
+        AudioServicesRemoveSystemSoundCompletion (ringtoneID);
+        AudioServicesDisposeSystemSoundID(ringtoneID);
+        ringtoneID = false;
+    }
+    
     __autoreleasing NSError *error;
     if (![[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:&error]) {
         NSLog(@"%@", error);
+    }
+    
+    if (ringbackAudioPlayer) {
+        [ringbackAudioPlayer stop];
+        ringbackAudioPlayer = nil;
     }
 }
 
@@ -51,8 +65,6 @@ static BOOL active;
     active = repeating;
     @try {
         NSURL *url = [NSURL fileURLWithPath:@"/System/Library/Audio/UISounds/vc~ringing.caf"];
-        SystemSoundID soundID;
-        
         AVAudioSession *audioSession = [AVAudioSession sharedInstance];
         NSArray *outputs = audioSession.currentRoute.outputs;
         AVAudioSessionPortDescription *port = [outputs lastObject];
@@ -63,17 +75,32 @@ static BOOL active;
             }
         }
         
-        AudioServicesCreateSystemSoundID((__bridge_retained CFURLRef)url, &soundID);
-        AudioServicesPlaySystemSound(soundID);
+        AudioServicesCreateSystemSoundID((__bridge_retained CFURLRef)url, &ringtoneID);
+        AudioServicesPlaySystemSound(ringtoneID);
         CFBridgingRelease((__bridge CFURLRef)url);
         
-        AudioServicesAddSystemSoundCompletion(soundID, NULL, NULL, ringtone, NULL);
+        AudioServicesAddSystemSoundCompletion(ringtoneID, NULL, NULL, ringtone, NULL);
         
         if ([JCAppSettings sharedSettings].isVibrateOnRing)
             [self startRepeatingVibration:repeating];
     }
     @catch (NSException *exception) {
         NSLog(@"%@", exception.description);
+    }
+}
+
++ (void)startRingback
+{
+    if (!ringbackAudioPlayer) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"calling" ofType:@"mp3"];
+        NSURL *url = [NSURL fileURLWithPath:path];
+        __autoreleasing NSError *error;
+        ringbackAudioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
+        [ringbackAudioPlayer prepareToPlay];
+    }
+    
+    if (!ringbackAudioPlayer.isPlaying) {
+        [ringbackAudioPlayer play];
     }
 }
 
@@ -106,8 +133,5 @@ void ringtone (SystemSoundID ssID, void *clientData)
         AudioServicesPlaySystemSound(ssID);
     });
 }
-
-
-
 
 @end
