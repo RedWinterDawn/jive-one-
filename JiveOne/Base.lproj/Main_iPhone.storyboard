@@ -751,6 +751,7 @@
                     <connections>
                         <outlet property="appLabel" destination="r0i-CD-OoY" id="kFO-U9-cCh"/>
                         <outlet property="buildLabel" destination="UjK-HA-EeS" id="jwm-RA-hC8"/>
+                        <outlet property="enablePreasenceCell" destination="wFh-qN-Em8" id="SGe-wX-6br"/>
                         <outlet property="extensionLabel" destination="SCG-SS-mwf" id="ote-dI-OWx"/>
                         <outlet property="intercomEnabled" destination="hWN-sv-srO" id="OTb-5s-RLd"/>
                         <outlet property="pbxLabel" destination="7RL-so-6fF" id="3ZT-DO-Ldn"/>

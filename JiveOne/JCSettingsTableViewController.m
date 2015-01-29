@@ -71,6 +71,13 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
     self.userNameLabel.text     = _authenticationManager.line.pbx.user.jiveUserId;
     self.extensionLabel.text    = _authenticationManager.line.extension;
     self.pbxLabel.text          = _authenticationManager.line.pbx.displayName;
+    
+    if ([JCAuthenticationManager sharedInstance].line.pbx.isV5) {
+        self.enablePreasenceCell.hidden = false;
+    } else
+        self.enablePreasenceCell.hidden = true;
+    
+    
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
