@@ -79,9 +79,9 @@
         NSLog(@"AVAudioSession error setting mode:%@",error);
     }
     
-    if (![session setPreferredOutputNumberOfChannels:0 error:&error]) {
-        NSLog(@"AVAudioSession error overrideOutputAudioPort:%@",error);
-    }
+//    if (![session setPreferredOutputNumberOfChannels:0 error:&error]) {
+//        NSLog(@"AVAudioSession error overrideOutputAudioPort:%@",error);
+//    }
     
     // activate audio session
     if (![session setActive:YES error:nil]) {
