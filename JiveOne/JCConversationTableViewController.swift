@@ -51,14 +51,19 @@ class JCConversationTableViewController: JCFetchedResultsTableViewController {
         return nil;
     }
     
+    func configureTableView() {
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 66.0
+    }
+    
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
         let message = self.objectAtIndexPath(indexPath) as Message
         let cell = self.tableView.dequeueReusableCellWithIdentifier(OutgoingCellReuseIdentifier) as UITableViewCell
-        let font = cell.textLabel?.font;
-        let text:NSString = message.text as NSString;
-        var size:CGSize = text.sizeWithAttributes(NSDictionary( object: font!, forKey: NSFontAttributeName))
-        size.height += 10
-        return size.height;
+        configureTableView()
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 66.0
+
+        return tableView.rowHeight
     }
 }
