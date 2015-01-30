@@ -992,18 +992,37 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yvz-wI-hIz">
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZWb-lw-1Op">
-                                        <rect key="frame" x="8" y="7" width="304" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="alphabet" returnKeyType="send" enablesReturnKeyAutomatically="YES"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p82-MJ-8DT">
+                                        <rect key="frame" x="276" y="7" width="36" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="8dk-8o-ETc"/>
+                                            <constraint firstAttribute="width" constant="36" id="U7p-ND-w6S"/>
+                                        </constraints>
+                                        <state key="normal" title="Send">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
                                         <connections>
-                                            <outlet property="delegate" destination="LJs-XB-Q4C" id="NBK-RQ-FLV"/>
+                                            <action selector="sendMessage:" destination="LJs-XB-Q4C" eventType="touchUpInside" id="iec-Hr-0DB"/>
                                         </connections>
-                                    </textField>
+                                    </button>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pTV-Ch-IL2">
+                                        <rect key="frame" x="8" y="5" width="260" height="34"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="34" id="YQo-RB-YX6"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
                                 </subviews>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="aNp-ia-t37"/>
+                                    <constraint firstItem="pTV-Ch-IL2" firstAttribute="leading" secondItem="yvz-wI-hIz" secondAttribute="leading" constant="8" id="29r-8B-RFa"/>
+                                    <constraint firstAttribute="bottom" secondItem="p82-MJ-8DT" secondAttribute="bottom" constant="7" id="Did-1X-AsJ"/>
+                                    <constraint firstItem="pTV-Ch-IL2" firstAttribute="top" secondItem="yvz-wI-hIz" secondAttribute="top" constant="5" id="PX1-Lq-rHi"/>
+                                    <constraint firstAttribute="trailing" secondItem="p82-MJ-8DT" secondAttribute="trailing" constant="8" id="isf-Kl-9Rx"/>
+                                    <constraint firstAttribute="bottom" secondItem="pTV-Ch-IL2" secondAttribute="bottom" constant="5" id="xUV-UZ-WEX"/>
+                                    <constraint firstItem="p82-MJ-8DT" firstAttribute="leading" secondItem="pTV-Ch-IL2" secondAttribute="trailing" constant="8" id="zif-CY-AMr"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -1021,6 +1040,9 @@
                     <navigationItem key="navigationItem" id="0E4-Ng-CKR"/>
                     <connections>
                         <outlet property="messageBarBaseConstraint" destination="lXW-pl-k1O" id="C94-DK-bHr"/>
+                        <outlet property="messageTextView" destination="pTV-Ch-IL2" id="VNd-gh-LWe"/>
+                        <outlet property="messageTextViewHeightConstraint" destination="YQo-RB-YX6" id="paq-3J-NbD"/>
+                        <outlet property="sendBtn" destination="p82-MJ-8DT" id="Ecs-eP-4JJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AbU-g0-fTT" userLabel="First Responder" sceneMemberID="firstResponder"/>
