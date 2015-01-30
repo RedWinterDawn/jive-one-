@@ -25,9 +25,9 @@
                     <connections>
                         <outlet property="delegate" destination="cB1-cF-XDO" id="KPx-lV-HNf"/>
                         <segue destination="dm4-oa-PNL" kind="relationship" relationship="viewControllers" id="JZV-1j-5Bt"/>
+                        <segue destination="cs1-Q4-pfo" kind="relationship" relationship="viewControllers" id="hUL-1m-Wme"/>
                         <segue destination="3E5-0Q-2Rs" kind="relationship" relationship="viewControllers" id="FG3-g0-Mta"/>
                         <segue destination="fwQ-1I-zye" kind="relationship" relationship="viewControllers" id="NhP-YT-ati"/>
-                        <segue destination="cs1-Q4-pfo" kind="relationship" relationship="viewControllers" id="hUL-1m-Wme"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
@@ -794,7 +794,7 @@
             </objects>
             <point key="canvasLocation" x="559" y="2413"/>
         </scene>
-        <!--Conversations-->
+        <!--Messages-->
         <scene sceneID="RM6-57-2r2">
             <objects>
                 <tableViewController id="J2i-zc-aC2" customClass="JCConversationsTableViewController" customModule="JiveOne" customModuleProvider="target" sceneMemberID="viewController">
@@ -842,7 +842,7 @@
                             <outlet property="delegate" destination="J2i-zc-aC2" id="30j-oc-4qT"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Conversations" id="BUa-qT-EHb">
+                    <navigationItem key="navigationItem" title="Messages" id="BUa-qT-EHb">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="v46-Ma-zwl">
                             <connections>
                                 <segue destination="LJs-XB-Q4C" kind="push" id="P8p-un-DXC"/>
@@ -1027,14 +1027,15 @@
             </objects>
             <point key="canvasLocation" x="1231" y="-5"/>
         </scene>
-        <!--Conversations-->
+        <!--Messages-->
         <scene sceneID="anK-fg-DgQ">
             <objects>
-                <navigationController id="cs1-Q4-pfo" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Conversations" image="black-bubble" id="1NY-Mi-445"/>
+                <navigationController storyboardIdentifier="MessagesNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cs1-Q4-pfo" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Messages" image="black-bubble" id="1NY-Mi-445"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="GyZ-sd-sl6">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                     </navigationBar>
                     <connections>
                         <segue destination="J2i-zc-aC2" kind="relationship" relationship="rootViewController" id="Qp8-Wi-gaF"/>
