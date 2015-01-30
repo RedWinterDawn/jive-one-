@@ -871,7 +871,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="751" verticalCompressionResistancePriority="751" text="Dude, I'm back." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YLh-Mm-g1v">
-                                            <rect key="frame" x="52" y="4" width="216" height="36"/>
+                                            <rect key="frame" x="52" y="4" width="216" height="46"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="36" id="tOB-In-12Q"/>
@@ -881,17 +881,17 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time Stamp" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pZL-63-cK0">
-                                            <rect key="frame" x="62" y="40" width="155" height="21"/>
+                                            <rect key="frame" x="62" y="38" width="155" height="12"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="155" id="VCa-c7-SBd"/>
-                                                <constraint firstAttribute="height" constant="21" id="eoQ-TS-HrR"/>
+                                                <constraint firstAttribute="height" constant="12" id="eoQ-TS-HrR"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gray-box" translatesAutoresizingMaskIntoConstraints="NO" id="ACI-lw-6oc">
-                                            <rect key="frame" x="8" y="4" width="40" height="40"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="gray-box" translatesAutoresizingMaskIntoConstraints="NO" id="ACI-lw-6oc">
+                                            <rect key="frame" x="8" y="5" width="40" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="ACI-lw-6oc" secondAttribute="height" multiplier="1:1" id="9RJ-LD-Ogz"/>
                                                 <constraint firstAttribute="width" constant="40" id="o9D-Sx-6WZ"/>
@@ -907,8 +907,8 @@
                                     <constraints>
                                         <constraint firstItem="ACI-lw-6oc" firstAttribute="centerY" secondItem="gVS-x7-8Eg" secondAttribute="centerY" id="FIj-cr-Oji"/>
                                         <constraint firstItem="ACI-lw-6oc" firstAttribute="leading" secondItem="WJg-6D-AQu" secondAttribute="leading" constant="8" id="MN3-3U-Vca"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="YLh-Mm-g1v" secondAttribute="bottom" constant="20" id="WQZ-l5-Dph"/>
-                                        <constraint firstItem="pZL-63-cK0" firstAttribute="top" secondItem="YLh-Mm-g1v" secondAttribute="bottom" id="ZCN-he-t1O"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="YLh-Mm-g1v" secondAttribute="bottom" constant="10" id="WQZ-l5-Dph"/>
+                                        <constraint firstItem="pZL-63-cK0" firstAttribute="top" secondItem="YLh-Mm-g1v" secondAttribute="bottom" constant="-12" id="ZCN-he-t1O"/>
                                         <constraint firstItem="YLh-Mm-g1v" firstAttribute="top" secondItem="WJg-6D-AQu" secondAttribute="top" constant="4" id="dLD-Y5-BC6"/>
                                         <constraint firstItem="pZL-63-cK0" firstAttribute="centerX" secondItem="YLh-Mm-g1v" secondAttribute="centerX" constant="-20.5" id="dq9-fi-Q6K"/>
                                         <constraint firstItem="YLh-Mm-g1v" firstAttribute="leading" secondItem="ACI-lw-6oc" secondAttribute="trailing" constant="4" id="lnV-Ag-1qH"/>
@@ -919,24 +919,11 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </tableViewCell>
-                            <tableViewCell autoresizesSubviews="NO" userInteractionEnabled="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="761" restorationIdentifier="OutgoingCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="OutgoingCell" rowHeight="82" id="NFH-fT-slV" userLabel="Outgoing Chat Cell" customClass="JCMessageCell">
+                            <tableViewCell autoresizesSubviews="NO" userInteractionEnabled="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="761" restorationIdentifier="OutgoingCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="OutgoingCell" rowHeight="68" id="NFH-fT-slV" userLabel="Outgoing Chat Cell" customClass="JCMessageCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" tableViewCell="NFH-fT-slV" id="VXF-Hq-N8N">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="751" verticalHuggingPriority="751" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" misplaced="YES" text="Yo, man where have you been for the last 16 years." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fuU-aH-rBt">
-                                            <rect key="frame" x="52" y="5" width="216" height="57"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <accessibility key="accessibilityConfiguration">
-                                                <accessibilityTraits key="traits" none="YES" updatesFrequently="YES"/>
-                                            </accessibility>
-                                            <constraints>
-                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="57" id="9bC-As-xJ2"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="blue-box" translatesAutoresizingMaskIntoConstraints="NO" id="dCa-b0-sTY">
                                             <rect key="frame" x="272" y="5" width="40" height="40"/>
                                             <constraints>
@@ -951,7 +938,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time Stamp" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GFf-jA-MTI">
-                                            <rect key="frame" x="59" y="59" width="155" height="14"/>
+                                            <rect key="frame" x="59" y="45" width="155" height="14"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="14" id="UO0-rR-1Zl"/>
                                                 <constraint firstAttribute="width" constant="155" id="o0p-S1-I6X"/>
@@ -960,15 +947,28 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="751" verticalHuggingPriority="751" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Yo, man where have you been for the last 16 years." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fuU-aH-rBt">
+                                            <rect key="frame" x="52" y="4" width="216" height="53"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <accessibility key="accessibilityConfiguration">
+                                                <accessibilityTraits key="traits" none="YES" updatesFrequently="YES"/>
+                                            </accessibility>
+                                            <constraints>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="9bC-As-xJ2"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="fuU-aH-rBt" firstAttribute="top" secondItem="VXF-Hq-N8N" secondAttribute="top" constant="4" id="4Og-3o-z6A"/>
                                         <constraint firstItem="dCa-b0-sTY" firstAttribute="centerY" secondItem="PgE-2C-512" secondAttribute="centerY" id="K03-v3-XEM"/>
-                                        <constraint firstAttribute="bottom" secondItem="fuU-aH-rBt" secondAttribute="bottom" constant="20" id="Qbz-eH-a8k"/>
+                                        <constraint firstAttribute="bottom" secondItem="fuU-aH-rBt" secondAttribute="bottom" constant="10" id="Qbz-eH-a8k"/>
                                         <constraint firstItem="GFf-jA-MTI" firstAttribute="centerX" secondItem="fuU-aH-rBt" secondAttribute="centerX" constant="-23.5" id="SYY-Ua-5WV"/>
                                         <constraint firstAttribute="trailing" secondItem="fuU-aH-rBt" secondAttribute="trailing" constant="52" id="ZUh-sm-daw"/>
-                                        <constraint firstItem="GFf-jA-MTI" firstAttribute="top" secondItem="fuU-aH-rBt" secondAttribute="bottom" constant="-2" id="bh4-Ao-tCm"/>
+                                        <constraint firstItem="GFf-jA-MTI" firstAttribute="top" secondItem="fuU-aH-rBt" secondAttribute="bottom" constant="-12" id="bh4-Ao-tCm"/>
                                         <constraint firstItem="dCa-b0-sTY" firstAttribute="centerX" secondItem="PgE-2C-512" secondAttribute="centerX" id="ffj-xv-50l"/>
                                         <constraint firstItem="dCa-b0-sTY" firstAttribute="top" secondItem="VXF-Hq-N8N" secondAttribute="top" constant="4" id="o68-rI-XL5"/>
                                         <constraint firstItem="fuU-aH-rBt" firstAttribute="leading" secondItem="VXF-Hq-N8N" secondAttribute="leading" constant="52" id="qeM-OL-ct0"/>
@@ -993,7 +993,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r9l-0t-c0Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1688" y="-9"/>
+            <point key="canvasLocation" x="1688" y="-10"/>
         </scene>
         <!--Conversation View Controller-->
         <scene sceneID="r4O-DY-vGU">
