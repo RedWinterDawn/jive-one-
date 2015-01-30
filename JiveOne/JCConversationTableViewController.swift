@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 let OutgoingCellReuseIdentifier = "OutgoingCell"
 let IncomingCellReuseIdentifier = "IncomingCell"
 
@@ -25,7 +26,7 @@ class JCConversationTableViewController: JCFetchedResultsTableViewController {
             fetchRequest = Message.MR_requestAllInContext(self.managedObjectContext);
         }
         
-        let sortDescriptor:NSSortDescriptor = NSSortDescriptor(key: "date", ascending:false)
+        let sortDescriptor:NSSortDescriptor = NSSortDescriptor(key: "date", ascending:true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         fetchRequest.includesSubentities = true
         self.fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
@@ -35,7 +36,8 @@ class JCConversationTableViewController: JCFetchedResultsTableViewController {
         let message = object as Message
        
         cell.textLabel?.text = message.text;
-        cell.detailTextLabel?.text = message.timestamp.stringValue
+        cell.detailTextLabel?.text = message.formattedLongDate
+       
     }
     
     override func tableView(tableView: UITableView!, cellForObject object: NSObjectProtocol!, atIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
@@ -59,7 +61,7 @@ class JCConversationTableViewController: JCFetchedResultsTableViewController {
         let message = self.objectAtIndexPath(indexPath) as Message
         let cell = self.tableView.dequeueReusableCellWithIdentifier(OutgoingCellReuseIdentifier) as UITableViewCell
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 66.0
+        tableView.estimatedRowHeight = 166.0
 
         return tableView.rowHeight
     }

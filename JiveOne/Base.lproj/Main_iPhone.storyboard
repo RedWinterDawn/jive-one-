@@ -859,18 +859,23 @@
         <scene sceneID="Rg1-RM-Qhm">
             <objects>
                 <tableViewController id="8m2-0S-XL6" customClass="JCConversationTableViewController" customModule="JiveOne" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="AKv-Cw-28K" userLabel="Conversation">
+                    <tableView key="view" autoresizesSubviews="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="AKv-Cw-28K" userLabel="Conversation">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="sectionIndexBackgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="IncomingCell" rowHeight="69" id="UwN-bX-Fgd" userLabel="Incoming Chat Cell">
+                            <tableViewCell autoresizesSubviews="NO" userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="IncomingCell" rowHeight="69" id="UwN-bX-Fgd" userLabel="Incoming Chat Cell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UwN-bX-Fgd" id="WJg-6D-AQu">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dude, I'm back." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YLh-Mm-g1v">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="751" verticalCompressionResistancePriority="751" text="Dude, I'm back." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YLh-Mm-g1v">
                                             <rect key="frame" x="52" y="4" width="216" height="36"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="36" id="tOB-In-12Q"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
@@ -912,14 +917,22 @@
                                         <constraint firstItem="ACI-lw-6oc" firstAttribute="centerX" secondItem="gVS-x7-8Eg" secondAttribute="centerX" id="ubO-uY-ZCV"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="OutgoingCell" rowHeight="80" id="NFH-fT-slV" userLabel="Outgoing Chat Cell" customClass="JCMessageCell">
+                            <tableViewCell autoresizesSubviews="NO" userInteractionEnabled="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="761" restorationIdentifier="OutgoingCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="OutgoingCell" rowHeight="82" id="NFH-fT-slV" userLabel="Outgoing Chat Cell" customClass="JCMessageCell">
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NFH-fT-slV" id="VXF-Hq-N8N">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" tableViewCell="NFH-fT-slV" id="VXF-Hq-N8N">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yo, man where have you been for the last 16 years." lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fuU-aH-rBt">
-                                            <rect key="frame" x="52" y="4" width="216" height="55"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="751" verticalHuggingPriority="751" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" misplaced="YES" text="Yo, man where have you been for the last 16 years." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fuU-aH-rBt">
+                                            <rect key="frame" x="52" y="5" width="216" height="57"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <accessibility key="accessibilityConfiguration">
+                                                <accessibilityTraits key="traits" none="YES" updatesFrequently="YES"/>
+                                            </accessibility>
+                                            <constraints>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="57" id="9bC-As-xJ2"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
@@ -938,9 +951,9 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time Stamp" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GFf-jA-MTI">
-                                            <rect key="frame" x="59" y="59" width="155" height="21"/>
+                                            <rect key="frame" x="59" y="59" width="155" height="14"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="21" id="UO0-rR-1Zl"/>
+                                                <constraint firstAttribute="height" constant="14" id="UO0-rR-1Zl"/>
                                                 <constraint firstAttribute="width" constant="155" id="o0p-S1-I6X"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
@@ -948,19 +961,24 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="fuU-aH-rBt" firstAttribute="top" secondItem="VXF-Hq-N8N" secondAttribute="top" constant="4" id="4Og-3o-z6A"/>
                                         <constraint firstItem="dCa-b0-sTY" firstAttribute="centerY" secondItem="PgE-2C-512" secondAttribute="centerY" id="K03-v3-XEM"/>
                                         <constraint firstAttribute="bottom" secondItem="fuU-aH-rBt" secondAttribute="bottom" constant="20" id="Qbz-eH-a8k"/>
                                         <constraint firstItem="GFf-jA-MTI" firstAttribute="centerX" secondItem="fuU-aH-rBt" secondAttribute="centerX" constant="-23.5" id="SYY-Ua-5WV"/>
-                                        <constraint firstItem="GFf-jA-MTI" firstAttribute="top" secondItem="fuU-aH-rBt" secondAttribute="bottom" id="bh4-Ao-tCm"/>
+                                        <constraint firstAttribute="trailing" secondItem="fuU-aH-rBt" secondAttribute="trailing" constant="52" id="ZUh-sm-daw"/>
+                                        <constraint firstItem="GFf-jA-MTI" firstAttribute="top" secondItem="fuU-aH-rBt" secondAttribute="bottom" constant="-2" id="bh4-Ao-tCm"/>
                                         <constraint firstItem="dCa-b0-sTY" firstAttribute="centerX" secondItem="PgE-2C-512" secondAttribute="centerX" id="ffj-xv-50l"/>
-                                        <constraint firstItem="dCa-b0-sTY" firstAttribute="leading" secondItem="fuU-aH-rBt" secondAttribute="trailing" constant="4" id="mCP-kI-CKN"/>
                                         <constraint firstItem="dCa-b0-sTY" firstAttribute="top" secondItem="VXF-Hq-N8N" secondAttribute="top" constant="4" id="o68-rI-XL5"/>
                                         <constraint firstItem="fuU-aH-rBt" firstAttribute="leading" secondItem="VXF-Hq-N8N" secondAttribute="leading" constant="52" id="qeM-OL-ct0"/>
                                         <constraint firstAttribute="trailing" secondItem="dCa-b0-sTY" secondAttribute="trailing" constant="8" id="roc-wZ-cGU"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" none="YES" updatesFrequently="YES"/>
+                                </accessibility>
                                 <connections>
                                     <outlet property="detailTextLabel" destination="GFf-jA-MTI" id="9iw-Kq-l25"/>
                                     <outlet property="textLabel" destination="fuU-aH-rBt" id="dwY-mi-oeM"/>
@@ -975,7 +993,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r9l-0t-c0Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1688" y="-8"/>
+            <point key="canvasLocation" x="1688" y="-9"/>
         </scene>
         <!--Conversation View Controller-->
         <scene sceneID="r4O-DY-vGU">
