@@ -21,6 +21,7 @@
 #define JC_SIP_CALL_NO_ACTIVE_LINE                      -5101
 #define JC_SIP_LINE_SESSION_IS_EMPTY                    -5102
 #define JC_SIP_CALL_NO_REFERRAL_LINE                    -5103
+#define JC_SIP_CALL_POOR_NETWORK_QUALITY                -5104
 
 #define JC_SIP_CONFERENCE_CALL_ALREADY_STARTED          -5201
 #define JC_SIP_CONFERENCE_CALL_ALREADY_ENDED            -5202
