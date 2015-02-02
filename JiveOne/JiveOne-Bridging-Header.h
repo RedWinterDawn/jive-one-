@@ -8,6 +8,7 @@
 
 // Libraries
 #import <MagicalRecord/CoreData+MagicalRecord.h>
+#import <JSQMessagesViewController/JSQMessagesViewController.h>
 
 // Controllers
 #import "JCFetchedResultsTableViewController.h"
@@ -15,6 +16,7 @@
 
 // Views
 #import "JCRecentEventCell.h"
+#import "JCMessageBarView.h"
 
 // Models
 #import "Conversation.h"

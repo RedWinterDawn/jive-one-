@@ -8,10 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import <JSQMessagesViewController/JSQMessageData.h>
 #import "RecentEvent.h"
 
-
-@interface Message : RecentEvent
+@interface Message : RecentEvent <JSQMessageData>
 
 @property (nonatomic, retain) NSString * text;
 

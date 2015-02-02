@@ -21,7 +21,11 @@
     return self;
 }
 
-
+-(void)layoutSubviews
+{
+    [super layoutSubviews];
+    [self setNeedsDisplay];
+}
 
 -(void)drawRect:(CGRect)rect
 {
