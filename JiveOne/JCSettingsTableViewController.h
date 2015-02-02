@@ -18,6 +18,8 @@
 @property (weak, nonatomic) IBOutlet UISwitch *intercomEnabled;
 @property (weak, nonatomic) IBOutlet UISwitch *wifiOnly;
 @property (weak, nonatomic) IBOutlet UISwitch *presenceEnabled;
+@property (weak, nonatomic) IBOutlet UITableViewCell *enablePreasenceCell;
+
 
 -(IBAction)leaveFeedback:(id)sender;
 -(IBAction)logout:(id)sender;
