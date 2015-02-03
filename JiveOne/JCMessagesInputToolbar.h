@@ -13,4 +13,6 @@
 
 @property (nonatomic, weak) IBOutlet JCMessagesToolbarContentView *contentView;
 
+@property (nonatomic) BOOL sendAsSMS;
+
 @end

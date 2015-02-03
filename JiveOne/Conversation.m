@@ -12,6 +12,10 @@
 @implementation Conversation
 
 @dynamic jiveUserId;
-@dynamic conversationId;
+
+-(NSString *)senderId
+{
+    return self.jiveUserId;
+}
 
 @end

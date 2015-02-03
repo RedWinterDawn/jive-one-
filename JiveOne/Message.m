@@ -12,5 +12,21 @@
 @implementation Message
 
 @dynamic text;
+@dynamic conversationId;
+
+-(NSString *)senderId
+{
+    return self.number;
+}
+
+-(NSString *)senderDisplayName
+{
+    return self.name;
+}
+
+-(BOOL)isMediaMessage
+{
+    return NO;
+}
 
 @end

@@ -14,5 +14,6 @@
 @interface Message : RecentEvent <JSQMessageData>
 
 @property (nonatomic, retain) NSString * text;
+@property (nonatomic, retain) NSString * conversationId;
 
 @end

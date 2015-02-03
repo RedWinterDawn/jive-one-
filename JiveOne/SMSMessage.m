@@ -8,8 +8,6 @@
 
 #import "SMSMessage.h"
 
-
 @implementation SMSMessage
-
 
 @end

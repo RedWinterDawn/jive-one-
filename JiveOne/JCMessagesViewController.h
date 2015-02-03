@@ -8,6 +8,10 @@
 
 #import <JSQMessagesViewController/JSQMessagesViewController.h>
 
+#import "JCMessagesInputToolbar.h"
+
 @interface JCMessagesViewController : JSQMessagesViewController
+
+@property (weak, nonatomic, readonly) JCMessagesInputToolbar *inputToolbar;
 
 @end

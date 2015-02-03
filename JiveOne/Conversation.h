@@ -14,6 +14,5 @@
 @interface Conversation : Message
 
 @property (nonatomic, retain) NSString * jiveUserId;
-@property (nonatomic, retain) NSString * conversationId;
 
 @end

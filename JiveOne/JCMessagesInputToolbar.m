@@ -10,6 +10,8 @@
 #import <JSQMessagesViewController/UIView+JSQMessages.h>
 #import <JSQMessagesViewController/JSQMessagesToolbarButtonFactory.h>
 
+static void * kJSQMessagesInputToolbarKeyValueObservingContext = &kJSQMessagesInputToolbarKeyValueObservingContext;
+
 @protocol JSQMessagesInputToolbarPrivate <NSObject>
 
 @optional
@@ -18,15 +20,20 @@
 - (void)jsq_addObservers;
 - (void)jsq_removeObservers;
 
+- (void)jsq_leftBarButtonPressed:(UIButton *)sender;
+- (void)jsq_rightBarButtonPressed:(UIButton *)sender;
+
 @end
 
 @interface JCMessagesInputToolbar () <JSQMessagesInputToolbarPrivate>
+{
+    JCMessagesToolbarContentView *_contentView;
+}
 
 @end
 
 @implementation JCMessagesInputToolbar
 
-@synthesize contentView = _contentView;
 @synthesize jsq_isObserving = _jsq_isObserving;
 
 - (void)awakeFromNib
@@ -55,6 +62,65 @@
     _contentView = nil;
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (context == kJSQMessagesInputToolbarKeyValueObservingContext) {
+        if (object == _contentView) {
+            
+            if ([keyPath isEqualToString:NSStringFromSelector(@selector(leftBarButtonItem))]) {
+                
+                [_contentView.leftBarButtonItem removeTarget:self
+                                                      action:NULL
+                                            forControlEvents:UIControlEventTouchUpInside];
+                
+                [_contentView.leftBarButtonItem addTarget:self
+                                                   action:@selector(jsq_leftBarButtonPressed:)
+                                         forControlEvents:UIControlEventTouchUpInside];
+            }
+            else if ([keyPath isEqualToString:NSStringFromSelector(@selector(rightBarButtonItem))]) {
+                
+                [_contentView.rightBarButtonItem removeTarget:self
+                                                       action:NULL
+                                             forControlEvents:UIControlEventTouchUpInside];
+                
+                [_contentView.rightBarButtonItem addTarget:self
+                                                    action:@selector(jsq_rightBarButtonPressed:)
+                                          forControlEvents:UIControlEventTouchUpInside];
+            }
+            
+            [self toggleSendButtonEnabled];
+        }
+    }
+}
+
+- (void)toggleSendButtonEnabled
+{
+    BOOL hasText = [self.contentView.textView hasText];
+    
+    if (self.sendButtonOnRight) {
+        self.contentView.rightBarButtonItem.enabled = hasText;
+    }
+    else {
+        self.contentView.leftBarButtonItem.enabled = hasText;
+    }
+}
+
+#pragma mark - Setters -
+
+-(void)setContentView:(JCMessagesToolbarContentView *)contentView
+{
+    _contentView = contentView;
+}
+
+#pragma mark - Getters -
+
+-(JCMessagesToolbarContentView *)contentView
+{
+    return _contentView;
+}
+
+#pragma mark - Private -
+
 - (void)jsq_addObservers
 {
     if (self.jsq_isObserving) {
@@ -64,12 +130,12 @@
     [_contentView addObserver:self
                        forKeyPath:NSStringFromSelector(@selector(leftBarButtonItem))
                           options:0
-                          context:nil];
+                          context:kJSQMessagesInputToolbarKeyValueObservingContext];
     
     [_contentView addObserver:self
                        forKeyPath:NSStringFromSelector(@selector(rightBarButtonItem))
                           options:0
-                          context:nil];
+                          context:kJSQMessagesInputToolbarKeyValueObservingContext];
     
     _jsq_isObserving = YES;
 }
@@ -83,11 +149,11 @@
     @try {
         [_contentView removeObserver:self
                           forKeyPath:NSStringFromSelector(@selector(leftBarButtonItem))
-                             context:nil];
+                             context:kJSQMessagesInputToolbarKeyValueObservingContext];
         
         [_contentView removeObserver:self
                           forKeyPath:NSStringFromSelector(@selector(rightBarButtonItem))
-                             context:nil];
+                             context:kJSQMessagesInputToolbarKeyValueObservingContext];
     }
     @catch (NSException *__unused exception) { }
     
