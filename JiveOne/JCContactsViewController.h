@@ -8,9 +8,13 @@
 
 @import UIKit;
 
+@class ContactGroup;
+
 @interface JCContactsViewController : UIViewController <UITabBarDelegate>
 
 @property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
 @property (nonatomic, weak) IBOutlet UITabBar *tabBar;
+
+@property (nonatomic, strong) ContactGroup *contactGroup;
 
 @end
