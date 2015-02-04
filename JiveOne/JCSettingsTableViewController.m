@@ -39,7 +39,6 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
     self.buildLabel.text = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
     
     JCAppSettings *settings = [JCAppSettings sharedSettings];
-    self.intercomEnabled.on = settings.intercomEnabled;
     self.wifiOnly.on = settings.wifiOnly;
     self.presenceEnabled.on = settings.presenceEnabled;
 }
@@ -70,14 +69,10 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
     
     self.userNameLabel.text     = _authenticationManager.line.pbx.user.jiveUserId;
     self.extensionLabel.text    = _authenticationManager.line.extension;
-    self.pbxLabel.text          = _authenticationManager.line.pbx.displayName;
-    
     if ([JCAuthenticationManager sharedInstance].line.pbx.isV5) {
         self.enablePreasenceCell.hidden = false;
     } else
         self.enablePreasenceCell.hidden = true;
-    
-    
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -175,16 +170,6 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
 -(IBAction)logout:(id)sender
 {
     [_authenticationManager logout];
-}
-
--(IBAction)toggleIntercomeEnabled:(id)sender
-{
-    if ([sender isKindOfClass:[UISwitch class]]) {
-        UISwitch *switchBtn = (UISwitch *)sender;
-        JCAppSettings *settings = [JCAppSettings sharedSettings];
-        settings.intercomEnabled = !settings.isIntercomEnabled;
-        switchBtn.on = settings.isIntercomEnabled;
-    }
 }
 
 -(IBAction)toggleWifiOnly:(id)sender
