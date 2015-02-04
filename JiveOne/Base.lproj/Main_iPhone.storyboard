@@ -522,7 +522,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="m89-Pe-fiX" id="kwr-5k-ObI" userLabel="User View">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="User:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="i1A-sz-Qdg" userLabel="User Label">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="User" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="i1A-sz-Qdg" userLabel="User Label">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -542,7 +542,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bGr-0c-mgj" id="wgI-BG-ZHq" userLabel="ExtentionView">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Extension:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Tj6-BS-QA2" userLabel="Extension Lebel">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Extension" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Tj6-BS-QA2" userLabel="Extension Lebel">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -1982,13 +1982,13 @@
         <!--Terms And Conditons View Controller-->
         <scene sceneID="zrd-iB-Kwq">
             <objects>
-                <viewController id="qkA-TN-d1M" customClass="JCTermsAndConditonsViewController" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" id="qkA-TN-d1M" customClass="JCTermsAndConditonsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jXC-se-TAb"/>
                         <viewControllerLayoutGuide type="bottom" id="AiG-Lb-b2c"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="vw4-gr-jHe">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4nq-wa-FF2">
@@ -2007,7 +2007,7 @@
                             <constraint firstItem="4nq-wa-FF2" firstAttribute="leading" secondItem="vw4-gr-jHe" secondAttribute="leading" id="egN-lg-ks2"/>
                         </constraints>
                     </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="43N-lM-8tC">
                         <barButtonItem key="leftBarButtonItem" systemItem="stop" id="ueR-RC-kfP">
                             <connections>
@@ -2039,7 +2039,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mZZ-Iu-eGY" id="f5U-Oo-f3Y" userLabel="AIView">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" misplaced="YES" text="Allow Intercom:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Il-Me-eBv" userLabel="Allow Intercom Label">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" misplaced="YES" text="Allow Intercom" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Il-Me-eBv" userLabel="Allow Intercom Label">
                                                     <rect key="frame" x="12" y="12" width="113" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -2073,7 +2073,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IIo-T5-yZY" id="nFN-A5-pkh" userLabel="AIView">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" misplaced="YES" text="Mute Microphone:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tcX-CY-rDM" userLabel="Allow Intercom Label">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" misplaced="YES" text="Mute Microphone" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tcX-CY-rDM" userLabel="Allow Intercom Label">
                                                     <rect key="frame" x="12" y="12" width="125" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -2094,7 +2094,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="oMD-AT-6Az" secondAttribute="trailing" constant="15" id="19Z-bc-aNi"/>
                                                 <constraint firstItem="tcX-CY-rDM" firstAttribute="leading" secondItem="nFN-A5-pkh" secondAttribute="leading" constant="12" id="EY3-js-kav"/>
                                                 <constraint firstItem="oMD-AT-6Az" firstAttribute="top" secondItem="nFN-A5-pkh" secondAttribute="topMargin" id="GVE-Uy-I81"/>
-                                                <constraint firstItem="tcX-CY-rDM" firstAttribute="centerY" secondItem="oMD-AT-6Az" secondAttribute="centerY" constant="-1.5" id="ZNF-Md-RTP"/>
+                                                <constraint firstItem="tcX-CY-rDM" firstAttribute="centerY" secondItem="oMD-AT-6Az" secondAttribute="centerY" constant="-2" id="ZNF-Md-RTP"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
