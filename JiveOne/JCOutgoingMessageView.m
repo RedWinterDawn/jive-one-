@@ -13,24 +13,24 @@
 
 -(void)drawRect:(CGRect)frame {
         //// Color Declarations
-        UIColor* recColor = [UIColor lightGrayColor];
-        UIColor* triangleColor = [UIColor lightGrayColor];
+//        UIColor* recColor = [UIColor lightGrayColor];
+//        UIColor* triangleColor = [UIColor lightGrayColor];
 
     //// Rectangle Drawing
-    UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(CGRectGetMinX(frame), CGRectGetMinY(frame), CGRectGetWidth(frame) - 8, CGRectGetHeight(frame)) byRoundingCorners: UIRectCornerTopLeft | UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii: CGSizeMake(4, 4)];
+    UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(CGRectGetMinX(frame), CGRectGetMinY(frame), CGRectGetWidth(frame) - 5, CGRectGetHeight(frame)) byRoundingCorners: UIRectCornerTopLeft | UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii: CGSizeMake(6, 6)];
     [rectanglePath closePath];
-    [recColor setFill];
+    [UIColor.grayColor setFill];
     [rectanglePath fill];
     
     
     //// Bezier Drawing
     UIBezierPath* bezierPath = UIBezierPath.bezierPath;
-    [bezierPath moveToPoint: CGPointMake(CGRectGetMaxX(frame) - 9, CGRectGetMinY(frame))];
-    [bezierPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 0, CGRectGetMinY(frame))];
-    [bezierPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 9, CGRectGetMinY(frame) + 9)];
-    [bezierPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 9, CGRectGetMinY(frame))];
+    [bezierPath moveToPoint: CGPointMake(CGRectGetMaxX(frame) - 5, CGRectGetMinY(frame))];
+    [bezierPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame), CGRectGetMinY(frame))];
+    [bezierPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 5, CGRectGetMinY(frame) + 5)];
+    [bezierPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 5, CGRectGetMinY(frame))];
     [bezierPath closePath];
-    [triangleColor setFill];
+    [UIColor.grayColor setFill];
     [bezierPath fill];
 }
 

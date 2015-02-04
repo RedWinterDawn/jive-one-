@@ -866,7 +866,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" restorationIdentifier="messagesCollectionView" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="9e6-Dt-026" customClass="JCMessagesCollectionView" customModule="JiveOne" customModuleProvider="target">
+                            <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="redraw" restorationIdentifier="messagesCollectionView" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="9e6-Dt-026" customClass="JCMessagesCollectionView" customModule="JiveOne" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewLayout key="collectionViewLayout" id="t0a-eQ-OVM" customClass="JSQMessagesCollectionViewFlowLayout"/>
@@ -898,7 +898,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="hav-LN-yiy" userLabel="Bubble container" customClass="JCOutgoingMessageView">
+                                                <view opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="hav-LN-yiy" userLabel="Bubble container" customClass="JCOutgoingMessageView">
                                                     <rect key="frame" x="37" y="40" width="244" height="65"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GTZ-ov-FIb" userLabel="Bubble Image View">
@@ -934,10 +934,10 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qnq-fr-8CZ" userLabel="Avatar container">
+                                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qnq-fr-8CZ" userLabel="Avatar container" customClass="JCRoundedView">
                                                     <rect key="frame" x="283" y="40" width="34" height="34"/>
                                                     <subviews>
-                                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YQ2-cg-Nej" userLabel="Avatar Image View"/>
+                                                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YQ2-cg-Nej" userLabel="Avatar Image View"/>
                                                     </subviews>
                                                     <color key="backgroundColor" red="0.34901960784313724" green="0.64313725490196083" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
@@ -948,6 +948,11 @@
                                                         <constraint firstAttribute="height" constant="34" id="YuX-AY-vfY"/>
                                                         <constraint firstItem="YQ2-cg-Nej" firstAttribute="leading" secondItem="qnq-fr-8CZ" secondAttribute="leading" id="ZyZ-HO-XB8"/>
                                                     </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <integer key="value" value="6"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
                                                 </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -970,7 +975,6 @@
                                         </constraints>
                                         <size key="customSize" width="317" height="125"/>
                                         <connections>
-                                            <outlet property="avatarContainerView" destination="qnq-fr-8CZ" id="gvu-8F-h3c"/>
                                             <outlet property="avatarContainerViewHeightConstraint" destination="YuX-AY-vfY" id="4g5-Sw-QZ6"/>
                                             <outlet property="avatarContainerViewWidthConstraint" destination="5Im-EG-J69" id="tKu-Md-0kC"/>
                                             <outlet property="avatarImageView" destination="YQ2-cg-Nej" id="9oy-eY-02X"/>
