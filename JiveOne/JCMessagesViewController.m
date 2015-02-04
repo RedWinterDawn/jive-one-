@@ -37,7 +37,8 @@
 - (void)viewDidLoad {
     [self jsq_configureMessagesViewController];
     [self jsq_registerForNotifications:YES];
-    //self.collectionView.backgroundView = nil;
+    
+    //setting the background color of the messages view
     self.collectionView.backgroundColor = [UIColor colorWithRed:239/255.0f green:239/255.0f blue:239/255.0f alpha:1.0f];
     
 
@@ -211,18 +212,7 @@
      */
 
     cell.backgroundColor = [UIColor clearColor];
-
-    Message *message = [self objectAtIndexPath:indexPath];
-    if (!message.isMediaMessage) {
-        if ([message.senderId isEqualToString:self.senderId]) {
-            cell.textView.textColor = [UIColor blackColor];
-        }
-        else {
-            cell.textView.textColor = [UIColor whiteColor];
-        }
-        cell.textView.linkTextAttributes = @{ NSForegroundColorAttributeName : cell.textView.textColor,
-                                              NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle | NSUnderlinePatternSolid) };
-    }
+    cell.textView.textColor = [UIColor blackColor];
     
     return cell;
 }
@@ -323,6 +313,40 @@
         _sectionChanges = nil;
         _itemChanges = nil;
     }];
+}
+- (IBAction)simulateIncomingMsg:(id)sender {
+    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextWithParent:self.fetchedResultsController.managedObjectContext];
+    Message *message;
+    if (self.inputToolbar.sendAsSMS) {
+        SMSMessage *smsMessage = [SMSMessage MR_createInContext:context];
+        smsMessage.number = @"555-555-5555";
+        message = smsMessage;
+        
+    } else {
+        Conversation *conversation = [Conversation MR_createInContext:context];
+        conversation.jiveUserId = @"stranger";
+        message = conversation;
+    }
+    
+    message.name = @"Strangeralso";
+    message.conversationId = @"0"; //String(format: "%i", Conversation.MR_countOfEntities())
+    message.text = @"Ahhhh Things";
+    message.read = TRUE;
+    message.date = [NSDate date];
+    
+    [context MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
+        if (success) {
+            
+            [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
+            
+            //TODO: upload to the server here.
+            
+            [self finishSendingMessageAnimated:YES];
+        } else {
+            
+        }
+    }];
+
 }
 
 
