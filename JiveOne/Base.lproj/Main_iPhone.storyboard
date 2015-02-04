@@ -610,23 +610,6 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" restorationIdentifier="AllowIntercomCell" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="Ykz-N6-sCq" style="IBUITableViewCellStyleDefault" id="tkM-st-Ca2" userLabel="AllowIntercomCellRow">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tkM-st-Ca2" id="rkB-WG-dWQ" userLabel="AIView">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Intercom" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ykz-N6-sCq">
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="gQ8-WW-E4K" kind="push" id="Ep4-wI-ywv"/>
-                                        </connections>
-                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" restorationIdentifier="EnablePresenceCell" selectionStyle="none" indentationWidth="10" id="wFh-qN-Em8" userLabel="EnablePresenceCellRow">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
@@ -657,6 +640,23 @@
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" none="YES" notEnabled="YES"/>
                                         </accessibility>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" restorationIdentifier="AllowIntercomCell" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="Ykz-N6-sCq" style="IBUITableViewCellStyleDefault" id="tkM-st-Ca2" userLabel="AllowIntercomCellRow">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tkM-st-Ca2" id="rkB-WG-dWQ" userLabel="AIView">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Intercom" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ykz-N6-sCq">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="gQ8-WW-E4K" kind="push" id="Ep4-wI-ywv"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -2066,7 +2066,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection footerTitle="Mute your phone when someone calls you through the intercom. Requires you to unmute to talk to them." id="JXM-i4-rbx">
+                            <tableViewSection footerTitle="Mutes your phone when someone calls you through the intercom. Requires you to unmute to talk to them." id="JXM-i4-rbx">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="IIo-T5-yZY" userLabel="MicrophoneCellRow">
                                         <autoresizingMask key="autoresizingMask"/>
