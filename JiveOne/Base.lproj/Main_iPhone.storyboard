@@ -3661,6 +3661,7 @@
                         <outlet property="keypadButton" destination="5bp-16-Yhx" id="HRk-bY-ny3"/>
                         <outlet property="mergeBtn" destination="907-zj-hOp" id="EiJ-V9-cfA"/>
                         <outlet property="mergeLabel" destination="C17-8W-dR3" id="59Y-ze-I53"/>
+                        <outlet property="muteBtn" destination="JGQ-cX-3bl" id="A5c-Ef-Tjz"/>
                         <outlet property="speakerBtn" destination="Bf6-vA-5bi" id="qC6-wV-dSM"/>
                         <outlet property="swapBtn" destination="W4O-ei-fkQ" id="nGj-b3-QaI"/>
                         <outlet property="warmTransfer" destination="8tp-NP-l8d" id="ekm-UW-4JU"/>
