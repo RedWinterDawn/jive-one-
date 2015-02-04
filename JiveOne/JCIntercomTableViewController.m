@@ -8,6 +8,13 @@
 
 #import "JCIntercomTableViewController.h"
 #import "JCAppSettings.h"
+#import "JCAuthenticationManager.h"
+
+@interface JCIntercomTableViewController () {
+    NSString *_intercomFooter;
+}
+
+@end
 
 @implementation JCIntercomTableViewController
 
@@ -18,6 +25,8 @@
     self.intercomSwitch.on = settings.isIntercomEnabled;
     [self enableIntercomMicrophoneMuteSwitch:settings.isIntercomEnabled];
     self.intercomeMicrophoneMuteSwitch.on = settings.isIntercomMicrophoneMuteEnabled;
+    
+    _intercomFooter = [super tableView:self.tableView titleForFooterInSection:0];
 }
 
 -(IBAction)intercomChanged:(id)sender
@@ -46,6 +55,11 @@
     self.intercomMicrophoneMuteCell.userInteractionEnabled = enabled;
     self.intercomMicrophoneMuteLabel.enabled = enabled;
     self.intercomeMicrophoneMuteSwitch.enabled = enabled;
+}
+
+-(NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+    return [NSString stringWithFormat:_intercomFooter, [JCAuthenticationManager sharedInstance].line.extension];
 }
 
 @end

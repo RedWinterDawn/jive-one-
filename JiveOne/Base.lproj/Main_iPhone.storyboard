@@ -633,14 +633,14 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wFh-qN-Em8" id="RuY-pZ-NgE" userLabel="EPView">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="sG2-aY-SNJ" userLabel="EPSwitch">
-                                                    <rect key="frame" x="256" y="6" width="51" height="31"/>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="sG2-aY-SNJ" userLabel="EPSwitch">
+                                                    <rect key="frame" x="256" y="7" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="togglePresenceEnabled:" destination="BBd-7J-jmI" eventType="valueChanged" id="2z0-Pp-A4E"/>
                                                     </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Show other people's availability" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="itj-gb-n0Z" userLabel="Enable Presence label">
-                                                    <rect key="frame" x="12" y="11" width="243" height="21"/>
+                                                    <rect key="frame" x="14" y="12" width="240" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
@@ -648,8 +648,8 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="sG2-aY-SNJ" secondAttribute="trailing" constant="15" id="Jjd-z2-Seh"/>
-                                                <constraint firstItem="itj-gb-n0Z" firstAttribute="leading" secondItem="RuY-pZ-NgE" secondAttribute="leading" constant="12" id="YwR-Ou-mOK"/>
-                                                <constraint firstItem="itj-gb-n0Z" firstAttribute="top" secondItem="RuY-pZ-NgE" secondAttribute="topMargin" constant="3" id="fXL-lS-jSD"/>
+                                                <constraint firstItem="itj-gb-n0Z" firstAttribute="leading" secondItem="RuY-pZ-NgE" secondAttribute="leading" constant="14" id="YwR-Ou-mOK"/>
+                                                <constraint firstItem="itj-gb-n0Z" firstAttribute="top" secondItem="RuY-pZ-NgE" secondAttribute="topMargin" constant="4" id="fXL-lS-jSD"/>
                                                 <constraint firstItem="itj-gb-n0Z" firstAttribute="centerY" secondItem="sG2-aY-SNJ" secondAttribute="centerY" id="pSX-Lk-KaW"/>
                                                 <constraint firstAttribute="centerY" secondItem="sG2-aY-SNJ" secondAttribute="centerY" id="xZq-qM-hsm"/>
                                             </constraints>
@@ -743,7 +743,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="695" y="2413"/>
+            <point key="canvasLocation" x="695" y="2412"/>
         </scene>
         <!--Select Line-->
         <scene sceneID="5q7-sS-1jV">
