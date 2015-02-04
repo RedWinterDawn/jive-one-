@@ -228,6 +228,8 @@
 		F59AE2C9192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2BC192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png */; };
 		F8213C791A7B2434000FDA57 /* JCMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F8213C781A7B2434000FDA57 /* JCMessageCell.m */; };
 		F82A284119DDC55E00C3620D /* JCV4Client.m in Sources */ = {isa = PBXBuildFile; fileRef = F82A284019DDC55E00C3620D /* JCV4Client.m */; };
+		F82B938F1A819BE500660AAA /* JCIncomingMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F82B938E1A819BE500660AAA /* JCIncomingMessageView.m */; };
+		F82B93921A819C0000660AAA /* JCOutgoingMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F82B93911A819C0000660AAA /* JCOutgoingMessageView.m */; };
 		F84A087919DF38C8003476E6 /* JCTransferConfirmationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F84A087819DF38C8003476E6 /* JCTransferConfirmationViewController.m */; };
 		F85DAD0919EF07D30075AAA2 /* JCCallHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F85DAD0819EF07D30075AAA2 /* JCCallHistoryViewController.m */; };
 		F8910FD21A71EC590040B8C7 /* LoggerClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F8910FD01A71EC590040B8C7 /* LoggerClient.m */; };
@@ -645,6 +647,10 @@
 		F8213C781A7B2434000FDA57 /* JCMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMessageCell.m; sourceTree = "<group>"; };
 		F82A283F19DDC55E00C3620D /* JCV4Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCV4Client.h; sourceTree = "<group>"; };
 		F82A284019DDC55E00C3620D /* JCV4Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCV4Client.m; sourceTree = "<group>"; };
+		F82B938D1A819BE500660AAA /* JCIncomingMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCIncomingMessageView.h; sourceTree = "<group>"; };
+		F82B938E1A819BE500660AAA /* JCIncomingMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCIncomingMessageView.m; sourceTree = "<group>"; };
+		F82B93901A819C0000660AAA /* JCOutgoingMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCOutgoingMessageView.h; sourceTree = "<group>"; };
+		F82B93911A819C0000660AAA /* JCOutgoingMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCOutgoingMessageView.m; sourceTree = "<group>"; };
 		F84A087719DF38C8003476E6 /* JCTransferConfirmationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTransferConfirmationViewController.h; sourceTree = "<group>"; };
 		F84A087819DF38C8003476E6 /* JCTransferConfirmationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTransferConfirmationViewController.m; sourceTree = "<group>"; };
 		F84FAF771A1BEC61003BC143 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1278,6 +1284,10 @@
 				5D0B02241A814652005CCCFB /* JCMessagesCollectionViewCellOutgoing.m */,
 				5D0B02261A81467A005CCCFB /* JCMessagesCollectionViewCellIncoming.h */,
 				5D0B02271A81467A005CCCFB /* JCMessagesCollectionViewCellIncoming.m */,
+				F82B938D1A819BE500660AAA /* JCIncomingMessageView.h */,
+				F82B938E1A819BE500660AAA /* JCIncomingMessageView.m */,
+				F82B93901A819C0000660AAA /* JCOutgoingMessageView.h */,
+				F82B93911A819C0000660AAA /* JCOutgoingMessageView.m */,
 			);
 			name = Messages;
 			sourceTree = "<group>";
@@ -1835,6 +1845,7 @@
 				2762151E1912AA2500CFBCC8 /* NSDictionary+QueryString.m in Sources */,
 				5DA566441A1D454D00286BA5 /* JCSettingsTableViewController.m in Sources */,
 				5D35479B19FF4BB7009E3CB4 /* JCMenuBarButtonItem.m in Sources */,
+				F82B938F1A819BE500660AAA /* JCIncomingMessageView.m in Sources */,
 				5DBABCD41A283DA500B09783 /* NSString+Additions.m in Sources */,
 				F8BC82C319E44A2E00340BA1 /* JCKeypadOverlayView.m in Sources */,
 				275F4A6218AD0FBC00D2F069 /* JCAppDelegate.m in Sources */,
@@ -1846,6 +1857,7 @@
 				5D15AF2B19DB271500E86116 /* NSString+DialString.m in Sources */,
 				F8C9A7E219EC31DF0049A715 /* Call.m in Sources */,
 				5D895EB21A0AC66B0015368D /* JCBadgeView.m in Sources */,
+				F82B93921A819C0000660AAA /* JCOutgoingMessageView.m in Sources */,
 				2751591718AD300B00FD8D3F /* OsgiData.xcdatamodel in Sources */,
 				5D65268E1A76BC010038B14A /* JCConversationTableViewController.swift in Sources */,
 				5D02750D1A3F81060077A37B /* JCEncryptionTransformer.m in Sources */,

@@ -41,6 +41,10 @@
     self.senderId = [JCAuthenticationManager sharedInstance].jiveUserId;
     self.senderDisplayName = [JCAuthenticationManager sharedInstance].line.name;
     
+    self.incomingCellIdentifier = @"incomingText";
+    self.outgoingCellIdentifier = @"outgoingText";
+    self.view.backgroundColor = [UIColor yellowColor];
+    
     self.inputToolbar.contentView.textView.placeHolder = NSLocalizedStringFromTable(@"Send Message Through SMS", @"JSQMessages", @"Placeholder text for the message input text view");
 }
 
@@ -201,6 +205,7 @@
      *  DO NOT manipulate cell layout information!
      *  Instead, override the properties you want on `self.collectionView.collectionViewLayout` from `viewDidLoad`
      */
+        cell.avatarContainerView.backgroundColor = [UIColor blueColor];
     
     Message *message = [self objectAtIndexPath:indexPath];
     if (!message.isMediaMessage) {
