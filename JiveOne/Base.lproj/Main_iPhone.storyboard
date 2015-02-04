@@ -871,7 +871,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewLayout key="collectionViewLayout" id="t0a-eQ-OVM" customClass="JSQMessagesCollectionViewFlowLayout"/>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="outgoingText" id="p7y-Yu-5Gi" userLabel="outgoingText" customClass="JCMessagesCollectionViewCellOutgoing">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" reuseIdentifier="outgoingText" id="p7y-Yu-5Gi" userLabel="outgoingText" customClass="JCMessagesCollectionViewCellOutgoing">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="154"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -898,7 +898,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hav-LN-yiy" userLabel="Bubble container" customClass="JCOutgoingMessageView">
+                                                <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="hav-LN-yiy" userLabel="Bubble container" customClass="JCOutgoingMessageView">
                                                     <rect key="frame" x="37" y="40" width="244" height="65"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GTZ-ov-FIb" userLabel="Bubble Image View">
@@ -939,7 +939,7 @@
                                                     <subviews>
                                                         <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YQ2-cg-Nej" userLabel="Avatar Image View"/>
                                                     </subviews>
-                                                    <color key="backgroundColor" red="0.34872159089999999" green="0.64158107519999996" blue="1" alpha="1" colorSpace="deviceRGB"/>
+                                                    <color key="backgroundColor" red="0.34901960784313724" green="0.64313725490196083" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="34" id="5Im-EG-J69"/>
                                                         <constraint firstItem="YQ2-cg-Nej" firstAttribute="top" secondItem="qnq-fr-8CZ" secondAttribute="top" id="Fj0-wq-347"/>

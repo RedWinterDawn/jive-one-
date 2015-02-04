@@ -16,21 +16,22 @@
         UIColor* recColor = [UIColor lightGrayColor];
         UIColor* triangleColor = [UIColor lightGrayColor];
 
-        //// Rectangle Drawing
-        UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(CGRectGetMinX(frame), CGRectGetMinY(frame), CGRectGetWidth(frame) - 19, CGRectGetHeight(frame)) byRoundingCorners: UIRectCornerTopLeft | UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii: CGSizeMake(6, 6)];
-        [rectanglePath closePath];
-        [recColor setFill];
-        [rectanglePath fill];
-
-
-        //// Polygon Drawing
-        UIBezierPath* polygonPath = UIBezierPath.bezierPath;
-        [polygonPath moveToPoint: CGPointMake(CGRectGetMaxX(frame) - 35, CGRectGetMinY(frame) + 45.75)];
-        [polygonPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) + 0.51, CGRectGetMinY(frame) - 0.37)];
-        [polygonPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 70.51, CGRectGetMinY(frame) - 0.38)];
-        [polygonPath closePath];
-        [triangleColor setFill];
-        [polygonPath fill];
+    //// Rectangle Drawing
+    UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(CGRectGetMinX(frame), CGRectGetMinY(frame), CGRectGetWidth(frame) - 8, CGRectGetHeight(frame)) byRoundingCorners: UIRectCornerTopLeft | UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii: CGSizeMake(4, 4)];
+    [rectanglePath closePath];
+    [recColor setFill];
+    [rectanglePath fill];
+    
+    
+    //// Bezier Drawing
+    UIBezierPath* bezierPath = UIBezierPath.bezierPath;
+    [bezierPath moveToPoint: CGPointMake(CGRectGetMaxX(frame) - 9, CGRectGetMinY(frame))];
+    [bezierPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 0, CGRectGetMinY(frame))];
+    [bezierPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 9, CGRectGetMinY(frame) + 9)];
+    [bezierPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 9, CGRectGetMinY(frame))];
+    [bezierPath closePath];
+    [triangleColor setFill];
+    [bezierPath fill];
 }
 
 @end

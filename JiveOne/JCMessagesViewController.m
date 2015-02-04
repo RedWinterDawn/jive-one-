@@ -43,7 +43,7 @@
     
     self.incomingCellIdentifier = @"incomingText";
     self.outgoingCellIdentifier = @"outgoingText";
-    self.view.backgroundColor = [UIColor yellowColor];
+    
     
     self.inputToolbar.contentView.textView.placeHolder = NSLocalizedStringFromTable(@"Send Message Through SMS", @"JSQMessages", @"Placeholder text for the message input text view");
 }
@@ -205,7 +205,7 @@
      *  DO NOT manipulate cell layout information!
      *  Instead, override the properties you want on `self.collectionView.collectionViewLayout` from `viewDidLoad`
      */
-        cell.avatarContainerView.backgroundColor = [UIColor blueColor];
+        cell.avatarContainerView.backgroundColor = [UIColor colorWithRed:89 green:164 blue:255 alpha:1];
     
     Message *message = [self objectAtIndexPath:indexPath];
     if (!message.isMediaMessage) {
