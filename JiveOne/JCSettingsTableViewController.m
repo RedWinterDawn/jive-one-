@@ -19,10 +19,6 @@
 NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please describe any issues you are experiencing :</strong><br><br><br><br><br><br><br><br><br><br><br><br><br><hr><strong>Device Specs</strong><br>Model: %@ <br> On iOS Version: %@ <br> App Version: %@ <br> Country: %@ <br> UUID : %@  <br> PBX : %@  <br> User : %@  <br> Line : %@  <br> ";
 
 @interface JCSettingsTableViewController () <MFMailComposeViewControllerDelegate>
-{
-    JCAuthenticationManager *_authenticationManager;
-    JCPhoneManager * _phoneManager;
-}
 
 @end
 
@@ -31,9 +27,6 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _authenticationManager = [JCAuthenticationManager sharedInstance];
-    _phoneManager = [JCPhoneManager sharedManager];
-    
     NSBundle *bundle = [NSBundle mainBundle];
     self.appLabel.text = [bundle objectForInfoDictionaryKey:@"CFBundleDisplayName"];
     self.buildLabel.text = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
@@ -41,6 +34,9 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
     JCAppSettings *settings = [JCAppSettings sharedSettings];
     self.wifiOnly.on = settings.wifiOnly;
     self.presenceEnabled.on = settings.presenceEnabled;
+    
+    [self cell:self.enablePreasenceCell setHidden:![JCAuthenticationManager sharedInstance].line.pbx.isV5];
+    [self reloadDataAnimated:NO];
 }
 
 -(void)awakeFromNib
@@ -56,6 +52,9 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
 {
     [super viewWillAppear:animated];
     [self.view setNeedsLayout];
+    
+    [self cell:self.enablePreasenceCell setHidden:![JCAuthenticationManager sharedInstance].line.pbx.isV5];
+    [self reloadDataAnimated:NO];
 }
 
 -(void)dealloc
@@ -67,12 +66,9 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
 {
     [super viewWillLayoutSubviews];
     
-    self.userNameLabel.text     = _authenticationManager.line.pbx.user.jiveUserId;
-    self.extensionLabel.text    = _authenticationManager.line.extension;
-    if ([JCAuthenticationManager sharedInstance].line.pbx.isV5) {
-        self.enablePreasenceCell.hidden = false;
-    } else
-        self.enablePreasenceCell.hidden = true;
+    JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
+    self.userNameLabel.text     = authenticationManager.line.pbx.user.jiveUserId;
+    self.extensionLabel.text    = authenticationManager.line.extension;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -93,15 +89,16 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
         [mailViewController setSubject:@"Feedback"];
         
         //get device specs
+        JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
         UIDevice *currentDevice     = [UIDevice currentDevice];
         NSString *model             = [currentDevice platformType];
         NSString *systemVersion     = [currentDevice systemVersion];
         NSString *appVersion        = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
         NSString *country           = [[NSLocale currentLocale] localeIdentifier];
-        NSString *uuid              = [currentDevice userUniqueIdentiferForUser:_authenticationManager.jiveUserId];
-        NSString * pbx              = _authenticationManager.line.pbx.displayName;
-        NSString *user              = _authenticationManager.line.pbx.user.jiveUserId;
-        NSString *line              = _authenticationManager.line.extension;
+        NSString *uuid              = [currentDevice userUniqueIdentiferForUser:authenticationManager.jiveUserId];
+        NSString * pbx              = authenticationManager.line.pbx.displayName;
+        NSString *user              = authenticationManager.line.pbx.user.jiveUserId;
+        NSString *line              = authenticationManager.line.extension;
         
         NSString *bodyTemplate = [NSString stringWithFormat:kJCSettingsTableViewControllerFeebackMessage, model, systemVersion, appVersion, country, uuid, pbx, user, line];
         [mailViewController setMessageBody:bodyTemplate isHTML:YES];
@@ -111,7 +108,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
 
 -(IBAction)logout:(id)sender
 {
-    [_authenticationManager logout];
+    [[JCAuthenticationManager sharedInstance] logout];
 }
 
 -(IBAction)toggleWifiOnly:(id)sender
@@ -121,7 +118,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
         JCAppSettings *settings = [JCAppSettings sharedSettings];
         settings.wifiOnly = !settings.isWifiOnly;
         switchBtn.on = settings.isWifiOnly;
-        [JCPhoneManager connectToLine:_authenticationManager.line];
+        [JCPhoneManager connectToLine:[JCAuthenticationManager sharedInstance].line];
     }
 }
 

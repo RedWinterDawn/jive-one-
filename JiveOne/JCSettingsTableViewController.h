@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-@import UIKit;
+#import <StaticDataTableViewController/StaticDataTableViewController.h>
 
-@interface JCSettingsTableViewController : UITableViewController
+@interface JCSettingsTableViewController : StaticDataTableViewController
 
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *extensionLabel;
