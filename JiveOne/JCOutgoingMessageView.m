@@ -12,26 +12,26 @@
 
 
 -(void)drawRect:(CGRect)frame {
-        //// Color Declarations
-//        UIColor* recColor = [UIColor lightGrayColor];
-//        UIColor* triangleColor = [UIColor lightGrayColor];
-
+    //// Color Declarations
+    UIColor* white = [UIColor colorWithRed: 1 green: 1 blue: 1 alpha: 1];
+    
     //// Rectangle Drawing
-    UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(CGRectGetMinX(frame), CGRectGetMinY(frame), CGRectGetWidth(frame) - 5, CGRectGetHeight(frame)) byRoundingCorners: UIRectCornerTopLeft | UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii: CGSizeMake(6, 6)];
+    UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(CGRectGetMinX(frame), CGRectGetMinY(frame), CGRectGetWidth(frame) - 9, CGRectGetHeight(frame)) byRoundingCorners: UIRectCornerTopLeft | UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii: CGSizeMake(6, 6)];
     [rectanglePath closePath];
-    [UIColor.grayColor setFill];
+    [white setFill];
     [rectanglePath fill];
     
     
     //// Bezier Drawing
     UIBezierPath* bezierPath = UIBezierPath.bezierPath;
-    [bezierPath moveToPoint: CGPointMake(CGRectGetMaxX(frame) - 5, CGRectGetMinY(frame))];
-    [bezierPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame), CGRectGetMinY(frame))];
-    [bezierPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 5, CGRectGetMinY(frame) + 5)];
-    [bezierPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 5, CGRectGetMinY(frame))];
+    [bezierPath moveToPoint: CGPointMake(CGRectGetMaxX(frame) - 9, CGRectGetMinY(frame))];
+    [bezierPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 1, CGRectGetMinY(frame))];
+    [bezierPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 9, CGRectGetMinY(frame) + 8)];
+    [bezierPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 9, CGRectGetMinY(frame))];
     [bezierPath closePath];
-    [UIColor.grayColor setFill];
+    [white setFill];
     [bezierPath fill];
 }
 
+        
 @end
