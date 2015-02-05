@@ -49,8 +49,16 @@
     self.outgoingCellIdentifier = @"outgoingText";
     
     
-    self.inputToolbar.contentView.textView.placeHolder = NSLocalizedStringFromTable(@"Send Message Through SMS", @"JSQMessages", @"Placeholder text for the message input text view");
+    self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeMake(40, 40);
+    self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeMake(40, 40);
    
+    
+    if (self.collectionView.bounds.size.height < 40){
+//        CGRect currentSize = self.collectionView.bounds;
+        self.collectionView.bounds = CGRectMake(self.collectionView.bounds.origin.x, self.collectionView.bounds.origin.y, self.collectionView.bounds.size.width, 50.0f);
+    }
+    
+    self.inputToolbar.contentView.textView.placeHolder = NSLocalizedStringFromTable(@"Send Message Through SMS", @"JSQMessages", @"Placeholder text for the message input text view");
 }
 
 + (UINib *)nib {
@@ -210,7 +218,7 @@
      *  DO NOT manipulate cell layout information!
      *  Instead, override the properties you want on `self.collectionView.collectionViewLayout` from `viewDidLoad`
      */
-
+   
     cell.backgroundColor = [UIColor clearColor];
     cell.textView.textColor = [UIColor blackColor];
     
