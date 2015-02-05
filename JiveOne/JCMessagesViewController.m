@@ -38,6 +38,8 @@
     [self jsq_configureMessagesViewController];
     [self jsq_registerForNotifications:YES];
     
+
+    
     //setting the background color of the messages view
     self.collectionView.backgroundColor = [UIColor colorWithRed:239/255.0f green:239/255.0f blue:239/255.0f alpha:1.0f];
     
@@ -53,12 +55,7 @@
     self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeMake(40, 40);
    
     
-    if (self.collectionView.bounds.size.height < 40){
-//        CGRect currentSize = self.collectionView.bounds;
-        self.collectionView.bounds = CGRectMake(self.collectionView.bounds.origin.x, self.collectionView.bounds.origin.y, self.collectionView.bounds.size.width, 50.0f);
-    }
-    
-    self.inputToolbar.contentView.textView.placeHolder = NSLocalizedStringFromTable(@"Send Message Through SMS", @"JSQMessages", @"Placeholder text for the message input text view");
+    self.inputToolbar.contentView.textView.placeHolder = NSLocalizedStringFromTable(@"Send SMS", @"JSQMessages", @"Placeholder text for the message input text view");
 }
 
 + (UINib *)nib {
