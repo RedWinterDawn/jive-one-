@@ -879,10 +879,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view opaque="NO" clipsSubviews="YES" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="hav-LN-yiy" userLabel="Bubble container" customClass="JCOutgoingMessageView">
-                                                    <rect key="frame" x="53" y="0.0" width="211" height="115"/>
+                                                    <rect key="frame" x="53" y="0.0" width="171" height="115"/>
                                                     <subviews>
                                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OHd-BP-XK2" customClass="JSQMessagesCellTextView">
-                                                            <rect key="frame" x="0.0" y="0.0" width="203" height="115"/>
+                                                            <rect key="frame" x="0.0" y="5" width="163" height="105"/>
                                                             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -892,18 +892,18 @@
                                                     <constraints>
                                                         <constraint firstAttribute="trailing" secondItem="OHd-BP-XK2" secondAttribute="trailing" constant="8" id="3Vy-Nl-ZEl"/>
                                                         <constraint firstItem="OHd-BP-XK2" firstAttribute="leading" secondItem="hav-LN-yiy" secondAttribute="leading" id="GjX-Rk-Nm0"/>
-                                                        <constraint firstAttribute="bottom" secondItem="OHd-BP-XK2" secondAttribute="bottom" id="jGu-qj-SHK"/>
-                                                        <constraint firstItem="OHd-BP-XK2" firstAttribute="top" secondItem="hav-LN-yiy" secondAttribute="top" id="rY8-4q-7El"/>
+                                                        <constraint firstAttribute="bottom" secondItem="OHd-BP-XK2" secondAttribute="bottom" constant="5" id="jGu-qj-SHK"/>
+                                                        <constraint firstItem="OHd-BP-XK2" firstAttribute="top" secondItem="hav-LN-yiy" secondAttribute="top" constant="5" id="rY8-4q-7El"/>
                                                     </constraints>
                                                 </view>
                                                 <view opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="800" verticalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="qnq-fr-8CZ" userLabel="Avatar container" customClass="JCRoundedView">
-                                                    <rect key="frame" x="268" y="0.0" width="40" height="40"/>
+                                                    <rect key="frame" x="228" y="10" width="80" height="80"/>
                                                     <subviews>
                                                         <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YQ2-cg-Nej" userLabel="Avatar Image View">
-                                                            <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="me" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xhk-Ia-FZE">
-                                                            <rect key="frame" x="11" y="12" width="19" height="16"/>
+                                                            <rect key="frame" x="31" y="32" width="19" height="16"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                             <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.93725490199999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -914,11 +914,11 @@
                                                         <accessibilityTraits key="traits" none="YES" image="YES" staticText="YES"/>
                                                     </accessibility>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="40" id="5Im-EG-J69"/>
+                                                        <constraint firstAttribute="width" constant="80" id="5Im-EG-J69"/>
                                                         <constraint firstAttribute="centerY" secondItem="xhk-Ia-FZE" secondAttribute="centerY" id="L54-eg-R0b"/>
                                                         <constraint firstItem="YQ2-cg-Nej" firstAttribute="leading" secondItem="qnq-fr-8CZ" secondAttribute="leading" id="LfP-fK-ywj"/>
                                                         <constraint firstAttribute="trailing" secondItem="YQ2-cg-Nej" secondAttribute="trailing" id="Vft-dm-pRP"/>
-                                                        <constraint firstAttribute="height" constant="40" id="YuX-AY-vfY"/>
+                                                        <constraint firstAttribute="height" constant="80" id="YuX-AY-vfY"/>
                                                         <constraint firstItem="YQ2-cg-Nej" firstAttribute="top" secondItem="qnq-fr-8CZ" secondAttribute="top" id="hb3-aD-Ya5"/>
                                                         <constraint firstAttribute="bottom" secondItem="YQ2-cg-Nej" secondAttribute="bottom" id="kWY-lq-YIY"/>
                                                         <constraint firstAttribute="centerX" secondItem="xhk-Ia-FZE" secondAttribute="centerX" id="mPe-II-vuO"/>
@@ -936,7 +936,7 @@
                                         <constraints>
                                             <constraint firstItem="qnq-fr-8CZ" firstAttribute="leading" secondItem="hav-LN-yiy" secondAttribute="trailing" constant="4" id="7W6-CT-CjR"/>
                                             <constraint firstItem="hav-LN-yiy" firstAttribute="top" secondItem="p7y-Yu-5Gi" secondAttribute="top" id="FJx-9A-n6g"/>
-                                            <constraint firstItem="qnq-fr-8CZ" firstAttribute="top" secondItem="OHd-BP-XK2" secondAttribute="top" id="K14-qK-Zok"/>
+                                            <constraint firstItem="qnq-fr-8CZ" firstAttribute="top" secondItem="OHd-BP-XK2" secondAttribute="top" constant="5" id="K14-qK-Zok"/>
                                             <constraint firstItem="hav-LN-yiy" firstAttribute="leading" secondItem="p7y-Yu-5Gi" secondAttribute="leading" constant="53" id="eIU-rW-PFB"/>
                                             <constraint firstAttribute="trailing" secondItem="qnq-fr-8CZ" secondAttribute="trailing" constant="9" id="f2U-tX-Vqt"/>
                                             <constraint firstAttribute="bottom" secondItem="hav-LN-yiy" secondAttribute="bottom" id="xUf-3A-9NV"/>
@@ -945,7 +945,6 @@
                                         <connections>
                                             <outlet property="avatarContainerViewHeightConstraint" destination="YuX-AY-vfY" id="4g5-Sw-QZ6"/>
                                             <outlet property="avatarContainerViewWidthConstraint" destination="5Im-EG-J69" id="tKu-Md-0kC"/>
-                                            <outlet property="avatarImageView" destination="YQ2-cg-Nej" id="9oy-eY-02X"/>
                                             <outlet property="messageBubbleContainerView" destination="hav-LN-yiy" id="wYg-aO-pff"/>
                                             <outlet property="textView" destination="OHd-BP-XK2" id="DvW-DC-WWr"/>
                                             <outlet property="textViewBottomVerticalSpaceConstraint" destination="jGu-qj-SHK" id="S4W-fo-AJx"/>
@@ -964,7 +963,7 @@
                                                     <rect key="frame" x="53" y="0.0" width="211" height="107"/>
                                                     <subviews>
                                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fVs-FP-xDC" customClass="JSQMessagesCellTextView">
-                                                            <rect key="frame" x="8" y="0.0" width="203" height="107"/>
+                                                            <rect key="frame" x="8" y="-5" width="203" height="117"/>
                                                             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -972,18 +971,24 @@
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstItem="fVs-FP-xDC" firstAttribute="top" secondItem="OER-DE-mR2" secondAttribute="top" id="GuX-2f-tit"/>
-                                                        <constraint firstAttribute="bottom" secondItem="fVs-FP-xDC" secondAttribute="bottom" id="LJF-0L-5CA"/>
+                                                        <constraint firstItem="fVs-FP-xDC" firstAttribute="top" secondItem="OER-DE-mR2" secondAttribute="top" constant="-5" id="GuX-2f-tit"/>
+                                                        <constraint firstAttribute="bottom" secondItem="fVs-FP-xDC" secondAttribute="bottom" constant="-5" id="LJF-0L-5CA"/>
                                                         <constraint firstAttribute="trailing" secondItem="fVs-FP-xDC" secondAttribute="trailing" id="ilv-QM-U9l"/>
                                                         <constraint firstItem="fVs-FP-xDC" firstAttribute="leading" secondItem="OER-DE-mR2" secondAttribute="leading" constant="8" id="mOo-i0-DkD"/>
                                                     </constraints>
                                                 </view>
-                                                <view opaque="NO" clipsSubviews="YES" contentMode="redraw" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GDo-ja-VmD" userLabel="Avatar container" customClass="JCRoundedView">
-                                                    <rect key="frame" x="9" y="10" width="40" height="40"/>
+                                                <view opaque="NO" clipsSubviews="YES" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="GDo-ja-VmD" userLabel="Avatar container" customClass="JCRoundedView">
+                                                    <rect key="frame" x="9" y="-5" width="40" height="40"/>
                                                     <subviews>
                                                         <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9YN-rb-wuK" userLabel="Avatar Image View">
                                                             <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                                         </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="PF" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j11-Id-Qq4">
+                                                            <rect key="frame" x="8" y="9" width="42" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <color key="backgroundColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <accessibility key="accessibilityConfiguration">
@@ -994,7 +999,9 @@
                                                         <constraint firstItem="9YN-rb-wuK" firstAttribute="leading" secondItem="GDo-ja-VmD" secondAttribute="leading" id="B9G-sK-R92"/>
                                                         <constraint firstAttribute="trailing" secondItem="9YN-rb-wuK" secondAttribute="trailing" id="CTg-qb-BEn"/>
                                                         <constraint firstAttribute="bottom" secondItem="9YN-rb-wuK" secondAttribute="bottom" id="M62-NC-nCr"/>
+                                                        <constraint firstAttribute="centerX" secondItem="j11-Id-Qq4" secondAttribute="centerX" id="aiN-Q1-iQh"/>
                                                         <constraint firstAttribute="height" constant="40" id="ngr-c6-2Tp"/>
+                                                        <constraint firstAttribute="centerY" secondItem="j11-Id-Qq4" secondAttribute="centerY" id="tcc-gH-L3B"/>
                                                         <constraint firstItem="9YN-rb-wuK" firstAttribute="top" secondItem="GDo-ja-VmD" secondAttribute="top" id="wby-bc-y92"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
@@ -1011,7 +1018,6 @@
                                             <constraint firstAttribute="bottom" secondItem="OER-DE-mR2" secondAttribute="bottom" id="1PE-ei-FC4"/>
                                             <constraint firstItem="OER-DE-mR2" firstAttribute="leading" secondItem="GDo-ja-VmD" secondAttribute="trailing" constant="4" id="6Rk-LO-egq"/>
                                             <constraint firstItem="GDo-ja-VmD" firstAttribute="leading" secondItem="v3d-hs-f64" secondAttribute="leading" constant="9" id="9QI-8G-2k2"/>
-                                            <constraint firstItem="9YN-rb-wuK" firstAttribute="top" secondItem="fVs-FP-xDC" secondAttribute="top" id="FK1-bc-Ito"/>
                                             <constraint firstAttribute="trailing" secondItem="OER-DE-mR2" secondAttribute="trailing" constant="53" id="Gpu-Wr-jdo"/>
                                             <constraint firstItem="GDo-ja-VmD" firstAttribute="top" secondItem="fVs-FP-xDC" secondAttribute="top" id="St5-hm-n0Q"/>
                                             <constraint firstItem="OER-DE-mR2" firstAttribute="top" secondItem="v3d-hs-f64" secondAttribute="top" id="fyn-LX-9ci"/>
@@ -1020,7 +1026,6 @@
                                         <connections>
                                             <outlet property="avatarContainerViewHeightConstraint" destination="ngr-c6-2Tp" id="Pn3-KL-gbI"/>
                                             <outlet property="avatarContainerViewWidthConstraint" destination="27u-9E-hTb" id="EZg-ZF-0nJ"/>
-                                            <outlet property="avatarImageView" destination="9YN-rb-wuK" id="jps-x2-0qw"/>
                                             <outlet property="messageBubbleContainerView" destination="OER-DE-mR2" id="HfV-64-5QV"/>
                                             <outlet property="textView" destination="fVs-FP-xDC" id="Z1O-O0-fGP"/>
                                             <outlet property="textViewAvatarHorizontalSpaceConstraint" destination="mOo-i0-DkD" id="PmK-nU-dgk"/>
