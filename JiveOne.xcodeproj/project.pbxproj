@@ -854,6 +854,8 @@
 		2743985218D0CFAA00ABCD69 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5D1ECABC1A84014300424FA0 /* JCAvatarView.h */,
+				5D1ECABD1A84014300424FA0 /* JCAvatarView.m */,
 				5D35479919FF4BB7009E3CB4 /* JCMenuBarButtonItem.h */,
 				5D35479A19FF4BB7009E3CB4 /* JCMenuBarButtonItem.m */,
 				F8B62E5919DB091500AF98D3 /* JCRoundedButton.h */,
@@ -882,8 +884,6 @@
 				5D2B2C071A30D8AE00938D76 /* FXBlurView.m */,
 				27B8152418D93F1A00516BF6 /* NotificationView.h */,
 				27B8152518D93F1A00516BF6 /* NotificationView.m */,
-				5D1ECABC1A84014300424FA0 /* JCAvatarView.h */,
-				5D1ECABD1A84014300424FA0 /* JCAvatarView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";

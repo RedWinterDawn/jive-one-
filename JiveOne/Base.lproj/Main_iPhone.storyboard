@@ -896,7 +896,7 @@
                                                         <constraint firstItem="OHd-BP-XK2" firstAttribute="top" secondItem="hav-LN-yiy" secondAttribute="top" id="rY8-4q-7El"/>
                                                     </constraints>
                                                 </view>
-                                                <view opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="800" verticalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="qnq-fr-8CZ" userLabel="Avatar container" customClass="JCRoundedView">
+                                                <view opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="800" verticalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="qnq-fr-8CZ" userLabel="Avatar container" customClass="JCAvatarView">
                                                     <rect key="frame" x="268" y="0.0" width="40" height="40"/>
                                                     <subviews>
                                                         <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YQ2-cg-Nej" userLabel="Avatar Image View">
@@ -928,6 +928,10 @@
                                                             <integer key="value" value="6"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
+                                                    <connections>
+                                                        <outlet property="image" destination="YQ2-cg-Nej" id="wsl-O0-gJz"/>
+                                                        <outlet property="name" destination="xhk-Ia-FZE" id="fKx-dE-nB2"/>
+                                                    </connections>
                                                 </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -976,7 +980,7 @@
                                                         <constraint firstItem="fVs-FP-xDC" firstAttribute="leading" secondItem="OER-DE-mR2" secondAttribute="leading" constant="4" id="mOo-i0-DkD"/>
                                                     </constraints>
                                                 </view>
-                                                <view opaque="NO" clipsSubviews="YES" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="GDo-ja-VmD" userLabel="Avatar container" customClass="JCRoundedView">
+                                                <view opaque="NO" clipsSubviews="YES" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="GDo-ja-VmD" userLabel="Avatar container" customClass="JCAvatarView">
                                                     <rect key="frame" x="9" y="0.0" width="40" height="40"/>
                                                     <subviews>
                                                         <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9YN-rb-wuK" userLabel="Avatar Image View">
@@ -1008,6 +1012,10 @@
                                                             <integer key="value" value="6"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
+                                                    <connections>
+                                                        <outlet property="image" destination="9YN-rb-wuK" id="mC5-Xi-0yh"/>
+                                                        <outlet property="name" destination="j11-Id-Qq4" id="wPP-sM-jLb"/>
+                                                    </connections>
                                                 </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
