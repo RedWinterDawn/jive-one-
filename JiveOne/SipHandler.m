@@ -580,6 +580,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 - (void) muteCall:(BOOL)mute
 {
+    _mute = mute;
     [_mPortSIPSDK muteMicrophone:mute];
 }
 

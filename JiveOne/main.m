@@ -7,31 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JCAuthenticationManager.h"
 #import "JCAppDelegate.h"
 
 int main(int argc, char * argv[])
 {
-
-#ifdef CONFIGURATION_Debug
- 
-    NSLog(@"%@",[[UIDevice currentDevice] name]);
-    
-#endif
-    
-    
-#ifdef CONFIGURATION_Enterprise
-     if ([[[UIDevice currentDevice]name] isEqualToString:@"iPhone Simulator"]) {
-          NSLog(@"Logger Stop Message Sent");
-     }
-     else
-     {
-         NSLog(@"Logger Start Message Sent");
-      }
-    
-#endif
-
-
     int returnValue;
     
     @autoreleasepool {
