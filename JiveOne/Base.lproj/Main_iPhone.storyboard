@@ -831,33 +831,47 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="redraw" restorationIdentifier="messagesCollectionView" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="9e6-Dt-026" customClass="JCMessagesCollectionView" customModule="JiveOne" customModuleProvider="target">
+                            <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="redraw" restorationIdentifier="messagesCollectionView" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="9e6-Dt-026" customClass="JCMessagesCollectionView">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.93725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewLayout key="collectionViewLayout" id="t0a-eQ-OVM" customClass="JSQMessagesCollectionViewFlowLayout"/>
                                 <cells>
-                                    <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="scaleAspectFill" restorationIdentifier="outgoingText" reuseIdentifier="outgoingText" id="p7y-Yu-5Gi" userLabel="outgoingText" customClass="JCMessagesCollectionViewCellOutgoing">
+                                    <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="scaleAspectFill" restorationIdentifier="outgoingText" reuseIdentifier="outgoingText" id="p7y-Yu-5Gi" userLabel="outgoingText" customClass="JCMessagesCollectionViewCell">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="154"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="317" height="93"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="317" height="87"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view opaque="NO" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="hav-LN-yiy" userLabel="Bubble container" customClass="JCOutgoingMessageView">
-                                                    <rect key="frame" x="60" y="0.0" width="204" height="93"/>
+                                                    <rect key="frame" x="60" y="0.0" width="204" height="82"/>
                                                     <subviews>
                                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" verticalHuggingPriority="1000" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="OHd-BP-XK2" customClass="JSQMessagesCellTextView">
-                                                            <rect key="frame" x="0.0" y="0.0" width="200" height="93"/>
-                                                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="59"/>
+                                                            <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <inset key="scrollIndicatorInsets" minX="0.0" minY="10" maxX="0.0" maxY="10"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                         </textView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QqL-cj-VuK">
+                                                            <rect key="frame" x="13" y="61" width="183" height="21"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="21" id="QyW-RV-A9Y"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="trailing" secondItem="OHd-BP-XK2" secondAttribute="trailing" constant="4" id="3Vy-Nl-ZEl"/>
-                                                        <constraint firstAttribute="bottom" secondItem="OHd-BP-XK2" secondAttribute="bottom" id="5uH-NN-YyY"/>
+                                                        <constraint firstAttribute="trailing" secondItem="QqL-cj-VuK" secondAttribute="trailing" constant="8" id="0mu-7W-MiP"/>
+                                                        <constraint firstAttribute="trailing" secondItem="OHd-BP-XK2" secondAttribute="trailing" constant="8" id="3Vy-Nl-ZEl"/>
+                                                        <constraint firstAttribute="bottom" secondItem="OHd-BP-XK2" secondAttribute="bottom" constant="23" id="5uH-NN-YyY"/>
+                                                        <constraint firstAttribute="bottom" secondItem="QqL-cj-VuK" secondAttribute="bottom" id="BEY-rC-sBD"/>
                                                         <constraint firstItem="OHd-BP-XK2" firstAttribute="leading" secondItem="hav-LN-yiy" secondAttribute="leading" id="GjX-Rk-Nm0"/>
+                                                        <constraint firstItem="QqL-cj-VuK" firstAttribute="leading" secondItem="hav-LN-yiy" secondAttribute="leading" constant="13" id="NcS-Mt-iIS"/>
                                                         <constraint firstItem="OHd-BP-XK2" firstAttribute="top" secondItem="hav-LN-yiy" secondAttribute="top" id="rY8-4q-7El"/>
                                                     </constraints>
                                                 </view>
@@ -906,20 +920,22 @@
                                             <constraint firstItem="qnq-fr-8CZ" firstAttribute="top" secondItem="p7y-Yu-5Gi" secondAttribute="top" id="4kj-FF-Xz0"/>
                                             <constraint firstItem="qnq-fr-8CZ" firstAttribute="leading" secondItem="hav-LN-yiy" secondAttribute="trailing" constant="4" id="7W6-CT-CjR"/>
                                             <constraint firstItem="hav-LN-yiy" firstAttribute="top" secondItem="p7y-Yu-5Gi" secondAttribute="top" id="FJx-9A-n6g"/>
-                                            <constraint firstAttribute="bottom" secondItem="hav-LN-yiy" secondAttribute="bottom" id="VU0-9J-0iU"/>
+                                            <constraint firstAttribute="bottom" secondItem="hav-LN-yiy" secondAttribute="bottom" constant="5" id="VU0-9J-0iU"/>
                                             <constraint firstItem="hav-LN-yiy" firstAttribute="leading" secondItem="p7y-Yu-5Gi" secondAttribute="leading" constant="60" id="eIU-rW-PFB"/>
                                             <constraint firstAttribute="trailing" secondItem="qnq-fr-8CZ" secondAttribute="trailing" constant="9" id="f2U-tX-Vqt"/>
                                         </constraints>
-                                        <size key="customSize" width="317" height="93"/>
+                                        <size key="customSize" width="317" height="87"/>
                                         <connections>
                                             <outlet property="avatarContainerViewHeightConstraint" destination="YuX-AY-vfY" id="4g5-Sw-QZ6"/>
                                             <outlet property="avatarContainerViewWidthConstraint" destination="5Im-EG-J69" id="tKu-Md-0kC"/>
+                                            <outlet property="detailLabel" destination="QqL-cj-VuK" id="Fb9-Aa-VOk"/>
                                             <outlet property="messageBubbleContainerView" destination="hav-LN-yiy" id="wYg-aO-pff"/>
                                             <outlet property="textView" destination="OHd-BP-XK2" id="DvW-DC-WWr"/>
+                                            <outlet property="textViewAvatarHorizontalSpaceConstraint" destination="7W6-CT-CjR" id="oyZ-78-Aki"/>
                                             <outlet property="textViewMarginHorizontalSpaceConstraint" destination="GjX-Rk-Nm0" id="IJC-1e-F3a"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="scaleAspectFill" restorationIdentifier="incomingText" reuseIdentifier="incomingText" id="v3d-hs-f64" userLabel="incomingText" customClass="JCMessagesCollectionViewCellIncoming">
+                                    <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="scaleAspectFill" restorationIdentifier="incomingText" reuseIdentifier="incomingText" id="v3d-hs-f64" userLabel="incomingText" customClass="JCMessagesCollectionViewCell">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="154"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -927,22 +943,35 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view opaque="NO" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="OER-DE-mR2" userLabel="Bubble container" customClass="JCIncomingMessageView">
-                                                    <rect key="frame" x="53" y="0.0" width="204" height="87"/>
+                                                    <rect key="frame" x="53" y="0.0" width="204" height="82"/>
                                                     <subviews>
                                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" verticalHuggingPriority="1000" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="fVs-FP-xDC" customClass="JSQMessagesCellTextView">
-                                                            <rect key="frame" x="4" y="0.0" width="200" height="87"/>
-                                                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                            <rect key="frame" x="8" y="0.0" width="196" height="58"/>
+                                                            <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <inset key="scrollIndicatorInsets" minX="0.0" minY="10" maxX="0.0" maxY="10"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                         </textView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u9b-gC-i2W">
+                                                            <rect key="frame" x="21" y="61" width="183" height="21"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="21" id="AMP-Ux-MFp"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstItem="fVs-FP-xDC" firstAttribute="top" secondItem="OER-DE-mR2" secondAttribute="top" id="GuX-2f-tit"/>
-                                                        <constraint firstAttribute="bottom" secondItem="fVs-FP-xDC" secondAttribute="bottom" id="LJF-0L-5CA"/>
+                                                        <constraint firstItem="u9b-gC-i2W" firstAttribute="leading" secondItem="OER-DE-mR2" secondAttribute="leading" constant="21" id="Jal-P0-WY4"/>
+                                                        <constraint firstAttribute="bottom" secondItem="fVs-FP-xDC" secondAttribute="bottom" constant="24" id="LJF-0L-5CA"/>
+                                                        <constraint firstAttribute="trailing" secondItem="u9b-gC-i2W" secondAttribute="trailing" id="Noh-T9-rfY"/>
+                                                        <constraint firstAttribute="bottom" secondItem="u9b-gC-i2W" secondAttribute="bottom" id="aOk-VS-lzP"/>
                                                         <constraint firstAttribute="trailing" secondItem="fVs-FP-xDC" secondAttribute="trailing" id="ilv-QM-U9l"/>
-                                                        <constraint firstItem="fVs-FP-xDC" firstAttribute="leading" secondItem="OER-DE-mR2" secondAttribute="leading" constant="4" id="mOo-i0-DkD"/>
+                                                        <constraint firstItem="fVs-FP-xDC" firstAttribute="leading" secondItem="OER-DE-mR2" secondAttribute="leading" constant="8" id="mOo-i0-DkD"/>
                                                     </constraints>
                                                 </view>
                                                 <view opaque="NO" clipsSubviews="YES" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="GDo-ja-VmD" userLabel="Avatar container" customClass="JCAvatarView">
@@ -987,7 +1016,7 @@
                                         </view>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="OER-DE-mR2" secondAttribute="bottom" id="1PE-ei-FC4"/>
+                                            <constraint firstAttribute="bottom" secondItem="OER-DE-mR2" secondAttribute="bottom" constant="5" id="1PE-ei-FC4"/>
                                             <constraint firstItem="OER-DE-mR2" firstAttribute="leading" secondItem="GDo-ja-VmD" secondAttribute="trailing" constant="4" id="6Rk-LO-egq"/>
                                             <constraint firstItem="GDo-ja-VmD" firstAttribute="leading" secondItem="v3d-hs-f64" secondAttribute="leading" constant="9" id="9QI-8G-2k2"/>
                                             <constraint firstAttribute="trailing" secondItem="OER-DE-mR2" secondAttribute="trailing" constant="60" id="Gpu-Wr-jdo"/>
@@ -998,6 +1027,7 @@
                                         <connections>
                                             <outlet property="avatarContainerViewHeightConstraint" destination="ngr-c6-2Tp" id="Pn3-KL-gbI"/>
                                             <outlet property="avatarContainerViewWidthConstraint" destination="27u-9E-hTb" id="EZg-ZF-0nJ"/>
+                                            <outlet property="detailLabel" destination="u9b-gC-i2W" id="CnG-o2-NDo"/>
                                             <outlet property="messageBubbleContainerView" destination="OER-DE-mR2" id="HfV-64-5QV"/>
                                             <outlet property="textView" destination="fVs-FP-xDC" id="Z1O-O0-fGP"/>
                                             <outlet property="textViewAvatarHorizontalSpaceConstraint" destination="mOo-i0-DkD" id="PmK-nU-dgk"/>
@@ -5847,7 +5877,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="e0I-ZU-Bxk"/>
         <segue reference="Uqi-bD-GAX"/>
         <segue reference="x1v-U1-NC6"/>
         <segue reference="Tth-R2-xu6"/>
