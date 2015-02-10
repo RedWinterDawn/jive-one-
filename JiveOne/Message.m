@@ -29,4 +29,8 @@
     return NO;
 }
 
+-(NSString *)detailText {
+    return self.formattedLongDate;
+}
+
 @end

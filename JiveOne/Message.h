@@ -16,4 +16,6 @@
 @property (nonatomic, retain) NSString * text;
 @property (nonatomic, retain) NSString * conversationId;
 
+@property (nonatomic, readonly) NSString *detailText;
+
 @end

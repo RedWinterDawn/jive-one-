@@ -10,4 +10,8 @@
 
 @implementation SMSMessage
 
+-(NSString *)detailText {
+    return [NSString stringWithFormat:@"SMS at %@", self.formattedModifiedShortDate];
+}
+
 @end
