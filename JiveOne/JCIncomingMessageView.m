@@ -11,24 +11,28 @@
 @implementation JCIncomingMessageView
 
 -(void)drawRect:(CGRect)frame {
-    //// Color Declarations
-    UIColor* white = [UIColor colorWithRed: 1 green: 1 blue: 1 alpha: 1];
     
     //// Rectangle Drawing
-    UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(CGRectGetMinX(frame) + 8, CGRectGetMinY(frame), CGRectGetWidth(frame) - 8, CGRectGetHeight(frame)) byRoundingCorners: UIRectCornerTopRight | UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii: CGSizeMake(6, 6)];
+    CGFloat x = CGRectGetMinX(frame) + _margin;
+    CGFloat y = CGRectGetMinY(frame);
+    CGFloat w = CGRectGetWidth(frame) - _margin;
+    CGFloat h = CGRectGetHeight(frame);
+    CGSize cornerRadii = CGSizeMake(_cornerRadius, _cornerRadius);
+                           
+    UIBezierPath *rectanglePath = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(x, y, w, h) byRoundingCorners: UIRectCornerTopRight | UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii: cornerRadii];
     [rectanglePath closePath];
-    [white setFill];
+    [_bubbleColor setFill];
     [rectanglePath fill];
     
     
     //// Bezier Drawing
     UIBezierPath* bezierPath = UIBezierPath.bezierPath;
-    [bezierPath moveToPoint: CGPointMake(CGRectGetMinX(frame) + 8, CGRectGetMinY(frame))];
+    [bezierPath moveToPoint: CGPointMake(CGRectGetMinX(frame) + _margin, CGRectGetMinY(frame))];
     [bezierPath addLineToPoint: CGPointMake(CGRectGetMinX(frame), CGRectGetMinY(frame))];
-    [bezierPath addLineToPoint: CGPointMake(CGRectGetMinX(frame) + 8, CGRectGetMinY(frame) + 8)];
-    [bezierPath addLineToPoint: CGPointMake(CGRectGetMinX(frame) + 8, CGRectGetMinY(frame))];
+    [bezierPath addLineToPoint: CGPointMake(CGRectGetMinX(frame) + _margin, CGRectGetMinY(frame) + _margin)];
+    [bezierPath addLineToPoint: CGPointMake(CGRectGetMinX(frame) + _margin, CGRectGetMinY(frame))];
     [bezierPath closePath];
-    [white setFill];
+    [_bubbleColor setFill];
     [bezierPath fill];
 }
 

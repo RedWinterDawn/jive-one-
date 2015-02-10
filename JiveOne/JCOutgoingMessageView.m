@@ -10,29 +10,29 @@
 
 @implementation JCOutgoingMessageView
 
-
 -(void)drawRect:(CGRect)frame {
-    //// Color Declarations
-    UIColor* white = [UIColor colorWithRed: 1 green: 1 blue: 1 alpha: 1];
     
     //// Rectangle Drawing
-    UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(CGRectGetMinX(frame), CGRectGetMinY(frame), CGRectGetWidth(frame) - 9, CGRectGetHeight(frame)) byRoundingCorners: UIRectCornerTopLeft | UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii: CGSizeMake(6, 6)];
-    [rectanglePath closePath];
-    [white setFill];
-    [rectanglePath fill];
+    CGFloat x = CGRectGetMinX(frame);
+    CGFloat y = CGRectGetMinY(frame);
+    CGFloat w = CGRectGetWidth(frame) - _margin;
+    CGFloat h = CGRectGetHeight(frame);
+    CGSize cornerRadii = CGSizeMake(_cornerRadius, _cornerRadius);
     
+    UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(x, y, w, h) byRoundingCorners: UIRectCornerTopLeft | UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii: cornerRadii];
+    [rectanglePath closePath];
+    [_bubbleColor setFill];
+    [rectanglePath fill];
     
     //// Bezier Drawing
     UIBezierPath* bezierPath = UIBezierPath.bezierPath;
-    [bezierPath moveToPoint: CGPointMake(CGRectGetMaxX(frame) - 9, CGRectGetMinY(frame))];
-    [bezierPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 1, CGRectGetMinY(frame))];
-    [bezierPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 9, CGRectGetMinY(frame) + 8)];
-    [bezierPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - 9, CGRectGetMinY(frame))];
+    [bezierPath moveToPoint: CGPointMake(CGRectGetMaxX(frame) - _margin, CGRectGetMinY(frame))];
+    [bezierPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame), CGRectGetMinY(frame))];
+    [bezierPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - _margin, CGRectGetMinY(frame) + _margin)];
+    [bezierPath addLineToPoint: CGPointMake(CGRectGetMaxX(frame) - _margin, CGRectGetMinY(frame))];
     [bezierPath closePath];
-    [white setFill];
+    [_bubbleColor setFill];
     [bezierPath fill];
 }
 
-
-        
 @end

@@ -2,12 +2,14 @@
 //  JCOutgoingMessageView.h
 //  JiveOne
 //
+//  Subclass of Message view that draws a rounded bubble with a carrot on the right.
+//
 //  Created by P Leonard on 2/3/15.
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "JCMessageView.h"
 
-@interface JCOutgoingMessageView : UIView
+@interface JCOutgoingMessageView : JCMessageView
 
 @end
