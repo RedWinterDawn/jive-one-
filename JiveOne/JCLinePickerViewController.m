@@ -22,7 +22,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-     JCAuthenticationManager *authenticationManger = [JCAuthenticationManager sharedInstance];
+    self.backgroundVisualEffectsView.backgroundView = self.navigationController.view;
+    self.pickerViewVisualEffectsView.backgroundView = self.view;
+    
+    JCAuthenticationManager *authenticationManger = [JCAuthenticationManager sharedInstance];
     User *user = authenticationManger.user;
     Line *line = authenticationManger.line;
     

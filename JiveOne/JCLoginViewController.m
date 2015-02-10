@@ -23,6 +23,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.loginPromptVisualEffectsView.backgroundView        = self.navigationController.view;
+    self.termsAndConditionsVisualEffectsView.backgroundView = self.navigationController.view;
+    
     [self.passwordTextField fixSecureTextFieldFont];
     
     _authenticationManager = [JCAuthenticationManager sharedInstance];
@@ -57,8 +61,6 @@
 #endif
         [self.usernameTextField becomeFirstResponder];
     }
-    
-    [Flurry logEvent:@"Login View"];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
@@ -82,13 +84,11 @@
 
 - (void)login
 {
-    [self showHudWithTitle:@"One Moment Please"
-                    detail:@"Logging In"];
-    
+    [self showStatus:@"Logging In"];
     [_authenticationManager loginWithUsername:self.usernameTextField.text
                                      password:self.passwordTextField.text
                                     completed:^(BOOL success, NSError *error) {
-                                        [self hideHud];
+                                        [self hideStatus];
                                         if (error) {
                                             [self showSimpleAlert:error.localizedFailureReason
                                                           message:error.localizedDescription];
@@ -100,8 +100,7 @@
 
 - (void)authenticated:(NSNotification *)notification
 {
-    [self showHudWithTitle:@"One Moment Please"
-                    detail:@"Loading data"];
+    [self showStatus:@"Loading data"];
 }
 
 #pragma mark - Delegate Handlers -

@@ -32,6 +32,14 @@
     _selectBtn.layer.masksToBounds = true;
     
     _pickerVisible = TRUE;
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    _pickerVisible = TRUE;
     [self hidePicker:false];
 }
 
@@ -77,7 +85,7 @@
     __unsafe_unretained JCPickerViewController *weakSelf = self;
     _pickerContainerBottomConstraint.constant = 0;
     [self.view setNeedsUpdateConstraints];
-    [UIView animateWithDuration:(animated ? 0.6 : 0.0)
+    [UIView animateWithDuration:(animated ? 0.2 : 0.0)
                      animations:^{
                          
                          [weakSelf.view layoutIfNeeded];
@@ -94,7 +102,7 @@
     __unsafe_unretained JCPickerViewController *weakSelf = self;
     _pickerContainerBottomConstraint.constant = _pickerContainerHeightConstraint.constant;
     [self.view setNeedsUpdateConstraints];
-    [UIView animateWithDuration:(animated ? 0.6 : 0.0)
+    [UIView animateWithDuration:(animated ? 0.2 : 0.0)
                      animations:^{
                          [weakSelf.view layoutIfNeeded];
                      }

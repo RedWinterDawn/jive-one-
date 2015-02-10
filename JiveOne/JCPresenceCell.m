@@ -60,6 +60,14 @@
     [self rebuildLayers];
 }
 
+-(void)dealloc
+{
+    if (_linePresence) {
+        [_linePresence removeObserver:self forKeyPath:NSStringFromSelector(@selector(state))];
+        _linePresence = nil;
+    }
+}
+
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if([keyPath isEqualToString:NSStringFromSelector(@selector(state))]){

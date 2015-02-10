@@ -71,6 +71,13 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
     self.userNameLabel.text     = _authenticationManager.line.pbx.user.jiveUserId;
     self.extensionLabel.text    = _authenticationManager.line.extension;
     self.pbxLabel.text          = _authenticationManager.line.pbx.displayName;
+    
+    if ([JCAuthenticationManager sharedInstance].line.pbx.isV5) {
+        self.enablePreasenceCell.hidden = false;
+    } else
+        self.enablePreasenceCell.hidden = true;
+    
+    
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -176,7 +183,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
         UISwitch *switchBtn = (UISwitch *)sender;
         JCAppSettings *settings = [JCAppSettings sharedSettings];
         settings.intercomEnabled = !settings.isIntercomEnabled;
-                switchBtn.on = settings.isIntercomEnabled;
+        switchBtn.on = settings.isIntercomEnabled;
     }
 }
 
@@ -185,10 +192,9 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
     if ([sender isKindOfClass:[UISwitch class]]) {
         UISwitch *switchBtn = (UISwitch *)sender;
         JCAppSettings *settings = [JCAppSettings sharedSettings];
-        [_phoneManager disconnect];
         settings.wifiOnly = !settings.isWifiOnly;
         switchBtn.on = settings.isWifiOnly;
-        [_phoneManager connectToLine:_authenticationManager.line completion:nil];
+        [JCPhoneManager connectToLine:_authenticationManager.line];
     }
 }
 
@@ -198,7 +204,6 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
         JCAppSettings *settings = [JCAppSettings sharedSettings];
         settings.presenceEnabled = !settings.isPresenceEnabled;
         switchBtn.on = settings.isPresenceEnabled;
-         NSLog(@"Toggle Presence ");
     }
 }
 

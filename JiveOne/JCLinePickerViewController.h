@@ -6,8 +6,12 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
+#import "JCVisualEffectsView.h"
 #import "JCPickerViewController.h"
 
 @interface JCLinePickerViewController : JCPickerViewController
+
+@property (weak, nonatomic) IBOutlet JCVisualEffectsView *backgroundVisualEffectsView;
+@property (weak, nonatomic) IBOutlet JCVisualEffectsView *pickerViewVisualEffectsView;
 
 @end

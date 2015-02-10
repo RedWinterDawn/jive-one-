@@ -8,6 +8,10 @@
 
 #import "JCCallHistoryTableViewController.h"
 
+// Managers
+#import "JCPhoneManager.h"
+
+// Managed objects
 #import "Call.h"
 #import "MissedCall.h"
 
@@ -29,6 +33,12 @@
         missedCall.read = YES;
     }
     [self.managedObjectContext MR_saveOnlySelfAndWait];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 }
 
 #pragma mark - Setters - 
@@ -62,6 +72,14 @@
         _fetchRequest.sortDescriptors = @[sortDescriptor];
     }
     return _fetchRequest;
+}
+
+#pragma mark - Delegate Handlers
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    Call *call = (Call *)[self objectAtIndexPath:indexPath];
+    [self dialNumber:call.number sender:tableView];
 }
 
 @end

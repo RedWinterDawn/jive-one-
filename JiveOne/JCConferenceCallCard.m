@@ -17,117 +17,46 @@
 
 @implementation JCConferenceCallCard
 
--(instancetype)initWithCalls:(NSArray *)calls
+-(instancetype)initWithLineSessions:(NSSet *)sessions
 {
-    self = [self init];
-    if (self)
-    {
-        [self addCalls:calls];
-    }
-    return self;
-}
-
--(instancetype)initWithLineSessions:(NSArray *)sessions
-{
-    self = [self init];
-    if (self)
-    {
-        for (id session in sessions)
-        {
-            if ([session isKindOfClass:[JCLineSession class]])
-            {
-                [self addCall:[[JCCallCard alloc] initWithLineSession:(JCLineSession *)session]];
+    self = [super init];
+    if (self) {
+        _calls = [NSMutableArray array];
+        for (id session in sessions) {
+            if ([session isKindOfClass:[JCLineSession class]]) {
+                JCCallCard *call = [[JCCallCard alloc] initWithLineSession:(JCLineSession *)session];
+                [_calls addObject:call];
             }
         }
     }
     return self;
 }
 
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    if ([keyPath isEqualToString:kJCCallCardStatusChangeKey])
-    {
-        // do something for conference calls.
-    }
-}
-
--(void)dealloc
-{
-    if (_calls) {
-        [self removeCalls:_calls];
-    }
-}
-
 #pragma mark - Getters -
 
--(NSString *)callerId
+-(BOOL)isHolding
 {
+    for (JCCallCard *call in _calls) {
+        if(!call.lineSession.isHolding) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
+-(NSString *)callerId {
     return NSLocalizedString(@"Conference", null) ;
 }
 
--(NSString *)dialNumber
-{
+-(NSString *)dialNumber {
     NSMutableString *output = [NSMutableString string];
-    for(JCCallCard *callCard in _calls)
-    {
-        if (output.length > 0)
-        {
+    for(JCCallCard *callCard in _calls) {
+        if (output.length > 0) {
             [output appendString:@","];
         }
         [output appendString:callCard.callerId];
     }
     return output;
 }
-
-#pragma mark - Methods -
-
--(void)addCall:(JCCallCard *)call
-{
-    if (!_calls) {
-        _calls = [NSMutableArray array];
-    }
-    
-    if (![_calls containsObject:call]) {
-        [_calls addObject:call];
-        [call addObserver:self forKeyPath:kJCCallCardStatusChangeKey options:NSKeyValueObservingOptionPrior context:NULL];
-    }
-}
-
--(void)addCalls:(NSArray *)calls
-{
-    for (id object in calls)
-    {
-        if ([object isKindOfClass:[JCCallCard class]])
-        {
-            [self addCall:(JCCallCard *)object];
-        }
-    }
-}
-
--(void)removeCall:(JCCallCard *)call
-{
-    if (!_calls)
-    {
-        return;
-    }
-    
-    if ([_calls containsObject:call])
-    {
-        [_calls removeObject:call];
-        [call removeObserver:self forKeyPath:kJCCallCardStatusChangeKey];
-    }
-}
-
--(void)removeCalls:(NSArray *)calls
-{
-    for (id object in calls)
-    {
-        if ([object isKindOfClass:[JCCallCard class]])
-        {
-            [self removeCall:(JCCallCard *)object];
-        }
-    }
-}
-
 
 @end

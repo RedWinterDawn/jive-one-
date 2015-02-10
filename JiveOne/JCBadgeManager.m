@@ -66,9 +66,7 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
             UIUserNotificationSettings* requestedSettings = [UIUserNotificationSettings settingsForTypes:USER_NOTIFICATION_TYPES_REQUIRED categories:nil];
             [application registerUserNotificationSettings:requestedSettings];
         }
-    }
-    else
-    {
+    }else {
         [application registerForRemoteNotificationTypes:REMOTE_NOTIFICATION_TYPES_REQUIRED];
     }
     [self update];
@@ -87,7 +85,6 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
         NSUInteger recentEvents = self.recentEvents;
         if (self.canSendNotifications && recentEvents != [UIApplication sharedApplication].applicationIconBadgeNumber)
         {
-//            NSLog(@"recentEvents: %lu", (unsigned long)recentEvents);
             [UIApplication sharedApplication].applicationIconBadgeNumber = recentEvents;
         }
     });
@@ -111,8 +108,6 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
 
 -(NSUInteger)endBackgroundUpdates
 {
-    // TODO: enumberate through all the badges, identifieying badges that have not been flagged as displayed, get
-    // managed objects for the badge, and generate a local notification for it, flagging it as displayed.
     return 0;
 }
 
@@ -120,6 +115,8 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
 
 -(void)reset
 {
+    [_operationQueue cancelAllOperations];
+    
     [self willChangeValueForKey:kJCBadgeManagerMissedCallsKey];
     [self willChangeValueForKey:kJCBadgeManagerVoicemailsKey];
     [self willChangeValueForKey:kJCBadgeManagerConversationsKey];
@@ -226,11 +223,18 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
 
 -(void)managedObjectContextUpdated:(NSNotification *)notification
 {
-    __block NSDictionary *userInfo = notification.userInfo;
-    __unsafe_unretained NSOperationQueue *weakOperationQueue = _operationQueue;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [weakOperationQueue addOperation:[[JCBadgeManagerBatchOperation alloc] initWithDictionaryUpdate:userInfo]];
-    });
+    // Differ the processing of the notification to the main thread. Since the saves to managed
+    // object contexts can happen on different threads, we want to create the processing response
+    // on the main thread, adding it to an operation queue to be processed not on the main thread.
+    if (![NSThread isMainThread]) {
+        [self performSelectorOnMainThread:@selector(managedObjectContextUpdated:) withObject:notification waitUntilDone:NO];
+        return;
+    }
+    
+    NSDictionary *userInfo = notification.userInfo;
+    if (userInfo && _operationQueue) {
+        [_operationQueue addOperation:[[JCBadgeManagerBatchOperation alloc] initWithDictionaryUpdate:userInfo]];
+    }
 }
 
 #pragma mark - Private -

@@ -20,12 +20,15 @@ typedef enum : NSUInteger {
 @property (nonatomic) JCCallOptionViewState state;
 @property (nonatomic) CGFloat annimationDuration;
 
+
+@property (nonatomic, weak) IBOutlet UIButton *mergeButtonState;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *transferBtnHorizontalContstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *warmBtnVerticalConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *addCallBtnHorizontalContstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *swapBtnHorizontalContstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *mergeBtnHorizontalContstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *finishTransferConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *halfTheScreen;
 
 -(void)setState:(JCCallOptionViewState)state animated:(bool)animated;
 

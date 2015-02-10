@@ -10,7 +10,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "JCConferenceCallCard.h"
-
+#import "JCCallOptionsView.h"
 #define HOLD_ANIMATION_DURATION 0.5f
 #define HOLD_ANIMATION_ALPHA 0.6f
 #define HOLD_PULSE_ANIMATION_DURATION 1.0f
@@ -21,14 +21,14 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
 
 @interface JCCurrentCallCardViewCell ()
 {
-    NSTimer *_holdTimer;
     UIColor *_defaultCallActionsColor;
     CGFloat _currentCallCardInfoElevation;
     CGFloat _originalCurrentCallViewConstraint;
     CGFloat _originalEndCallButtonWidthConstraint;
     
-    bool _showingHold;
     NSTimer *_timer;
+    
+    BOOL _showingHold;
 }
 
 @end
@@ -40,10 +40,10 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
     self = [super initWithCoder:aDecoder];
     if (self)
     {
-        _holdAnimationDuration = HOLD_ANIMATION_DURATION;
-        _holdAnimationAlpha = HOLD_ANIMATION_ALPHA;
+        _holdAnimationDuration      = HOLD_ANIMATION_DURATION;
+        _holdAnimationAlpha         = HOLD_ANIMATION_ALPHA;
         _holdPulseAnimationDuration = HOLD_PULSE_ANIMATION_DURATION;
-    }
+           }
     return self;
 }
 
@@ -57,19 +57,33 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
     _originalEndCallButtonWidthConstraint   = self.endCallButtonWidthConstraint.constant;
 }
 
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+-(void)prepareForReuse
 {
-    if ([keyPath isEqualToString:kJCCallCardStatusChangeKey])
-    {
-        [self updateState:YES];
+    [super prepareForReuse];
+    
+    // Dispose of the timers
+    if (_holdTimer) {
+        [_holdTimer invalidate];
+        _holdTimer = nil;
     }
+    
+    if (_timer) {
+        [_timer invalidate];
+        _timer = nil;
+    }
+    
+    [self removeObservers];
 }
 
 -(void)dealloc
 {
-    if (self.callCard != nil)
-    {
-        [self.callCard removeObserver:self forKeyPath:kJCCallCardStatusChangeKey];
+    [self removeObservers];
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:kJCLineSessionStateKey] || [keyPath isEqualToString:kJCLineSessionHoldKey]){
+        [self updateState:YES];
     }
 }
 
@@ -83,32 +97,70 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
 
 -(IBAction)toggleHold:(id)sender
 {
-    self.callCard.hold = !self.callCard.isHolding;
+    if ([sender isKindOfClass:[UIButton class]]) {
+        UIButton *button = (UIButton *)sender;
+        button.enabled = FALSE;
+        if (_callCard.lineSession.isHolding) {
+            [_callCard unholdCall:^(BOOL success, NSError *error) {
+                button.enabled = TRUE;
+            }];
+        }
+        else {
+            [_callCard holdCall:^(BOOL success, NSError *error) {
+                button.enabled = TRUE;
+            }];
+        }
+    }
 }
-
 
 #pragma mark - Setters -
 
 -(void)setCallCard:(JCCallCard *)callCard
 {
-    JCCallCard *currentCallCard = self.callCard;
-    if (currentCallCard && currentCallCard != callCard) {
-        [currentCallCard removeObserver:self forKeyPath:kJCCallCardStatusChangeKey];
+    if (_callCard && _callCard != callCard) {
+        [self removeObservers];
     }
     
     [super setCallCard:callCard];
-    [callCard addObserver:self forKeyPath:kJCCallCardStatusChangeKey options:0 context:NULL];
+    [self updateState:NO];
+    
+    if (_callCard.lineSession) {
+        [_callCard.lineSession addObserver:self forKeyPath:kJCLineSessionStateKey options:0 context:NULL];
+        [_callCard.lineSession addObserver:self forKeyPath:kJCLineSessionHoldKey options:0 context:NULL];
+    }
 }
 
--(void)setHighlighted:(BOOL)highlighted
+-(void)setHolding:(BOOL)holding
 {
-    [super setHighlighted:highlighted];
-    
-    self.elapsedTimeLabel.highlighted = highlighted;
+    [self setHolding:holding animated:YES];
+}
+
+-(void)setHolding:(BOOL)holding animated:(BOOL)animated
+{
+    if (holding) {
+        [self showHoldStateAnimated:animated];
+    }
+    else {
+        [self showConnectedState:animated];
+    }
 }
 
 #pragma mark - Private -
 
+-(void)removeObservers
+{
+    if (_callCard) {
+        @try {
+            if (_callCard.lineSession) {
+                [_callCard.lineSession removeObserver:self forKeyPath:kJCLineSessionStateKey];
+                [_callCard.lineSession removeObserver:self forKeyPath:kJCLineSessionHoldKey];
+            }
+        }
+        @catch (NSException *exception) {
+            
+        }
+    }
+}
 
 -(void)startTimer
 {
@@ -142,47 +194,34 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
         _holdTimer = nil;
     }
     
-    if (self.callCard.isHolding) {
-        [self showHoldStateAnimated:animated];
-    }
-    else {
-        [self showConnectedState:animated];
-    }
-    
-    if ([self.callCard isKindOfClass:[JCConferenceCallCard class]])
+    [self setHolding:_callCard.lineSession.isHolding animated:animated];
+    switch (_callCard.lineSession.sessionState)
     {
-        [self showHoldButton:YES];
-        [self startTimer];
-    }
-    else
-    {
-        switch (self.callCard.lineSession.sessionState)
+        case JCCallFailed:
+        case JCCallCanceled:
         {
-            case JCCallFailed:
-            case JCCallCanceled:
-            {
-                [self hideHoldButton:NO];
-                self.elapsedTimeLabel.text = NSLocalizedString(@"CANCELED", nil);
-                break;
-            }
-            case JCCallConnected:
-            {
-                [self showHoldButton:YES];
-                [self startTimer];
-                break;
-            }
-            case JCNoCall:
-            case JCCallIncoming:
-            case JCCallTrying:
-            case JCCallProgress:
-            case JCCallRinging:
-            case JCCallAnswered:
-                [self hideHoldButton:NO];
-                self.elapsedTimeLabel.text = NSLocalizedString(@"RINGING", nil);
-                break;
-            default:
-                break;
+            [self hideHoldButton:NO];
+            self.elapsedTimeLabel.text = NSLocalizedString(@"CANCELED", nil);
+            break;
         }
+        case JCCallConnected:
+        {
+            [self showHoldButton:YES];
+            [self startTimer];
+            break;
+        }
+        case JCNoCall:
+        case JCCallInitiated:
+        case JCCallIncoming:
+        case JCCallTrying:
+        case JCCallProgress:
+        case JCCallRinging:
+        case JCCallAnswered:
+            [self hideHoldButton:NO];
+            self.elapsedTimeLabel.text = NSLocalizedString(@"RINGING", nil);
+            break;
+        default:
+            break;
     }
 }
 
@@ -196,8 +235,8 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
     // @!^$#$ Apple! Seriously!
     if ([[UIDevice currentDevice].systemVersion floatValue] < 8.0f)
     {
-        _cardInfoViewTopConstraint.constant = -15;
-        _holdViewTopConstraint.constant = -5;
+        _cardInfoViewTopConstraint.constant = -35;
+        _holdViewTopConstraint.constant = 0;
     }
     else
     {
@@ -218,8 +257,10 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
         _cardInfoView.alpha = 1;
         [_cardInfoView layoutIfNeeded];
         weakSelf.actionView.backgroundColor = _defaultCallActionsColor;
-        weakSelf.highlighted = false;
         weakSelf.endCallButton.alpha = 1;
+        weakSelf.elapsedTimeLabel.highlighted = NO;
+        weakSelf.callerIdLabel.highlighted = NO;
+        weakSelf.dialedNumberLabel.highlighted = NO;
     } copy];
     
     if (animated)
@@ -230,7 +271,9 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
                          animations:^{
                              holdAnimation();
                          }
-                         completion:NULL];
+                         completion:^(BOOL finished) {
+                             
+                         }];
     }
     else
     {
@@ -247,7 +290,7 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
     // @!^$#$ Apple! Seriously!
     if ([[UIDevice currentDevice].systemVersion floatValue] < 8.0f)
     {
-        _cardInfoViewTopConstraint.constant = 13;
+        _cardInfoViewTopConstraint.constant = 0;
         _holdViewTopConstraint.constant = 5;
     }
     else
@@ -267,8 +310,10 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
         _cardInfoView.alpha = _holdAnimationAlpha;
         [_cardInfoView layoutIfNeeded];
         weakSelf.actionView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.35/2];
-        weakSelf.highlighted = true;
         weakSelf.endCallButton.alpha = HOLD_PULSE_OPACITY_TO_VALUE;
+        weakSelf.elapsedTimeLabel.highlighted = YES;
+        weakSelf.callerIdLabel.highlighted = YES;
+        weakSelf.dialedNumberLabel.highlighted = YES;
     } copy];
     
     if (animated)
@@ -306,6 +351,9 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
 
 -(void)hideHoldButton:(bool)animated
 {
+    if(!_showingHold)
+        return;
+    
     _endCallButtonWidthConstraint.constant = (self.bounds.size.width / 2);
     [_actionView setNeedsUpdateConstraints];
     [UIView animateWithDuration:animated ? 0.3 : 0
@@ -318,6 +366,9 @@ NSString *const kJCCallCardCollectionViewCellTimerFormat = @"%02d:%02d";
 
 -(void)showHoldButton:(bool)animated
 {
+    if(_showingHold)
+        return;
+    
     _endCallButtonWidthConstraint.constant = (self.bounds.size.width / 2);
     [_actionView setNeedsUpdateConstraints];
     

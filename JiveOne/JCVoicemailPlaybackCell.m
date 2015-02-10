@@ -21,9 +21,11 @@
     [self.voicemail addObserver:self forKeyPath:kVoicemailDataAttributeKey options:NSKeyValueObservingOptionNew context:NULL];
     if (self.voicemail.data.length > 0) {
         [self.spinningWheel stopAnimating];
+        self.playPauseButton.enabled = true;
     }
     else {
         [self.spinningWheel startAnimating];
+        self.playPauseButton.enabled = false;
     }
 }
 
@@ -44,10 +46,20 @@
 -(void)prepareForReuse
 {
     [super prepareForReuse];
-    [self removeObservers];
+
+    if (self.voicemail){
+        [self.voicemail removeObserver:self forKeyPath:kVoicemailDataAttributeKey];
+    }
     
     self.playPauseButton.selected = false;
     self.speakerButton.selected = false;
+}
+
+-(void)dealloc
+{
+    if (self.voicemail){
+        [self.voicemail removeObserver:self forKeyPath:kVoicemailDataAttributeKey];
+    }
 }
 
 #pragma mark - Methods -
@@ -96,14 +108,6 @@
     if (self.delegate && [self.delegate respondsToSelector:@selector(voiceCellDeleteTapped:)]) {
         [self.delegate voiceCellDeleteTapped:self];
     }
-}
-
-#pragma mark - Private -
-
--(void)removeObservers
-{
-    if (self.voicemail)
-        [self.voicemail removeObserver:self forKeyPath:kVoicemailDataAttributeKey];
 }
 
 @end

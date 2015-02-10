@@ -10,22 +10,32 @@
 #warning "This project uses features only available in iOS SDK 5.0 and later."
 #endif
 
+#define MR_LOGGING_ENABLED 0
+
 #ifdef __OBJC__
+
+    // Libraries
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
+    #import <MagicalRecord/CoreData+MagicalRecord.h>
     #import <AFNetworking/AFNetworking.h>
+    #import <NewRelicAgent/NewRelic.h>
+
+    // Singletons
     #import "Constants.h"
-    #import "CoreData+MagicalRecord.h"
-    #import "NotificationView.h"
     #import "JCAuthenticationManager.h"
-    #import "Flurry.h"
+
+    // Categories
+    #import "NSString+Additions.h"
+    #import "UIDevice+Additions.h"
+    #import "NSDictionary+Validations.h"
 #endif
 
-#import "NSString+Additions.h"
-#import "UIDevice+Additions.h"
-
-#import "NSDictionary+Validations.h"
-
+#if !defined(__OPTIMIZE__) || defined(DEBUG)
+    #define NSLog(...) NSLog(__VA_ARGS__)
+#else
+    #define NSLog(...) { }
+#endif
 
 typedef void(^CompletionHandler)(BOOL success, NSError *error);
 typedef void(^ResultCompletionHandler)(BOOL success, NSError *error, NSDictionary *userInfo);
