@@ -179,7 +179,7 @@
                                                                            action:@selector(closeDropdown:)];
     
     [navController presentDropdownViewController:viewController
-                               leftBarButtonItem:nil
+                               leftBarButtonItem:self.navigationItem.leftBarButtonItem
                               rightBarButtonItem:close
                                        maxHeight:maxHeight
                                         animated:animated];

@@ -12,6 +12,9 @@
 #import "Conversation.h"
 #import <JSQMessagesViewController/JSQSystemSoundPlayer+JSQMessages.h>
 
+#import "JCMessageParticipantViewController.h"
+#import "JCNavigationController.h"
+
 @protocol JSQMessageViewControllerPrivate <NSObject>
 
 @optional
@@ -26,6 +29,8 @@
     // Support arrays for the NSFetchedResultController delegate methods.
     NSMutableArray *_sectionChanges;
     NSMutableArray *_itemChanges;
+    
+    JCMessageParticipantViewController *_messageParticipantsViewController;
 }
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
@@ -56,6 +61,8 @@
    
     
     self.inputToolbar.contentView.textView.placeHolder = NSLocalizedStringFromTable(@"Send SMS", @"JSQMessages", @"Placeholder text for the message input text view");
+    
+    
 }
 
 + (UINib *)nib {
@@ -109,6 +116,12 @@
             
         }
     }];
+}
+
+-(IBAction)showParticipants:(id)sender {
+    
+    JCMessageParticipantViewController *messageParticipantsViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MessageParticipantsViewController"];
+    [self presentDropdownViewController:messageParticipantsViewController animated:YES];
 }
 
 #pragma mark - Getters -
