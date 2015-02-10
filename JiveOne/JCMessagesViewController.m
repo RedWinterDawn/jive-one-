@@ -7,11 +7,19 @@
 //
 
 #import "JCMessagesViewController.h"
+
+// Libraries
+#import <JSQMessagesViewController/JSQSystemSoundPlayer+JSQMessages.h>
+
+// Models
 #import "Message.h"
 #import "SMSMessage.h"
 #import "Conversation.h"
-#import <JSQMessagesViewController/JSQSystemSoundPlayer+JSQMessages.h>
 
+// Views
+#import "JCMessagesCollectionViewCell.h"
+
+// Controllers
 #import "JCMessageParticipantViewController.h"
 #import "JCNavigationController.h"
 
@@ -25,7 +33,6 @@
 
 @interface JCMessagesViewController () <JSQMessageViewControllerPrivate, NSFetchedResultsControllerDelegate>
 {
-    
     // Support arrays for the NSFetchedResultController delegate methods.
     NSMutableArray *_sectionChanges;
     NSMutableArray *_itemChanges;
@@ -39,11 +46,10 @@
 
 @implementation JCMessagesViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [self jsq_configureMessagesViewController];
     [self jsq_registerForNotifications:YES];
-    
-
     
     //setting the background color of the messages view
     self.collectionView.backgroundColor = [UIColor colorWithRed:239/255.0f green:239/255.0f blue:239/255.0f alpha:1.0f];
@@ -55,17 +61,16 @@
     self.incomingCellIdentifier = @"incomingText";
     self.outgoingCellIdentifier = @"outgoingText";
     
-    
+    // Layout configurations
     self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeMake(40, 40);
     self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeMake(40, 40);
+    self.collectionView.collectionViewLayout.messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(7.0f, 14.0f, 26.0f, 14.0f);
    
-    
     self.inputToolbar.contentView.textView.placeHolder = NSLocalizedStringFromTable(@"Send SMS", @"JSQMessages", @"Placeholder text for the message input text view");
-    
-    
 }
 
-+ (UINib *)nib {
++ (UINib *)nib
+{
     return nil; // Override to use the storyboard.
 }
 
@@ -75,7 +80,8 @@
     _fetchedResultsController = nil;    // This can be rebuilt if we are in a low memory situation.
 }
 
--(void)didPressAccessoryButton:(UIButton *)sender {
+-(void)didPressAccessoryButton:(UIButton *)sender
+{
     // Not Implemented for Media attachment.
 }
 
@@ -118,8 +124,8 @@
     }];
 }
 
--(IBAction)showParticipants:(id)sender {
-    
+-(IBAction)showParticipants:(id)sender
+{
     JCMessageParticipantViewController *messageParticipantsViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MessageParticipantsViewController"];
     [self presentDropdownViewController:messageParticipantsViewController animated:YES];
 }
@@ -210,27 +216,42 @@
 - (UICollectionViewCell *)collectionView:(JSQMessagesCollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    /**
-     *  Override point for customizing cells
-     */
-    JSQMessagesCollectionViewCell *cell = (JSQMessagesCollectionViewCell *)[super collectionView:collectionView cellForItemAtIndexPath:indexPath];
+    id<JSQMessageData> messageItem = [collectionView.dataSource collectionView:collectionView messageDataForItemAtIndexPath:indexPath];
+    NSString *messageSenderId = messageItem.senderId;
+    BOOL isOutgoingMessage = [messageSenderId isEqualToString:self.senderId];
+    BOOL isMediaMessage = messageItem.isMediaMessage;
     
-    /**
-     *  Configure almost *anything* on the cell
-     *
-     *  Text colors, label text, label colors, etc.
-     *
-     *
-     *  DO NOT set `cell.textView.font` !
-     *  Instead, you need to set `self.collectionView.collectionViewLayout.messageBubbleFont` to the font you want in `viewDidLoad`
-     *
-     *
-     *  DO NOT manipulate cell layout information!
-     *  Instead, override the properties you want on `self.collectionView.collectionViewLayout` from `viewDidLoad`
-     */
-   
-    cell.backgroundColor = [UIColor clearColor];
-    cell.textView.textColor = [UIColor blackColor];
+    NSString *cellIdentifier = nil;
+    if (isMediaMessage) {
+        cellIdentifier = isOutgoingMessage ? self.outgoingMediaCellIdentifier : self.incomingMediaCellIdentifier;
+    }
+    else {
+        cellIdentifier = isOutgoingMessage ? self.outgoingCellIdentifier : self.incomingCellIdentifier;
+    }
+    
+    JCMessagesCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    cell.delegate = collectionView;
+    cell.incoming = !isOutgoingMessage;
+    if (!isMediaMessage) {
+        cell.textView.text = messageItem.text;
+    }
+    else {
+        id<JSQMessageMediaData> messageMedia = messageItem.media;
+        cell.mediaView = messageMedia.mediaView ?: messageMedia.mediaPlaceholderView;
+    }
+    
+    cell.backgroundColor            = [UIColor clearColor];
+    cell.layer.rasterizationScale   = [UIScreen mainScreen].scale;
+    cell.layer.shouldRasterize      = YES;
+    cell.textView.textColor         = [UIColor blackColor];
+    cell.textView.backgroundColor   = [UIColor redColor];
+    
+    cell.textView.dataDetectorTypes = UIDataDetectorTypeAll;
+    
+    if ([messageItem isKindOfClass:[Message class]]) {
+        Message *message = (Message *)messageItem;
+        cell.detailLabel.text = message.detailText;
+    }
     
     return cell;
 }
