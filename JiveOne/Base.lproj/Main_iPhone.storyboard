@@ -847,17 +847,17 @@
                                                     <rect key="frame" x="60" y="0.0" width="204" height="82"/>
                                                     <subviews>
                                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" verticalHuggingPriority="1000" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="OHd-BP-XK2" customClass="JSQMessagesCellTextView">
-                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="59"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="64"/>
                                                             <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <inset key="scrollIndicatorInsets" minX="0.0" minY="10" maxX="0.0" maxY="10"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                         </textView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QqL-cj-VuK">
-                                                            <rect key="frame" x="13" y="61" width="183" height="21"/>
+                                                            <rect key="frame" x="13" y="63" width="183" height="16"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="21" id="QyW-RV-A9Y"/>
+                                                                <constraint firstAttribute="height" constant="16" id="QyW-RV-A9Y"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -868,8 +868,8 @@
                                                     <constraints>
                                                         <constraint firstAttribute="trailing" secondItem="QqL-cj-VuK" secondAttribute="trailing" constant="8" id="0mu-7W-MiP"/>
                                                         <constraint firstAttribute="trailing" secondItem="OHd-BP-XK2" secondAttribute="trailing" constant="8" id="3Vy-Nl-ZEl"/>
-                                                        <constraint firstAttribute="bottom" secondItem="OHd-BP-XK2" secondAttribute="bottom" constant="23" id="5uH-NN-YyY"/>
-                                                        <constraint firstAttribute="bottom" secondItem="QqL-cj-VuK" secondAttribute="bottom" id="BEY-rC-sBD"/>
+                                                        <constraint firstAttribute="bottom" secondItem="OHd-BP-XK2" secondAttribute="bottom" constant="18" id="5uH-NN-YyY"/>
+                                                        <constraint firstAttribute="bottom" secondItem="QqL-cj-VuK" secondAttribute="bottom" constant="3" id="BEY-rC-sBD"/>
                                                         <constraint firstItem="OHd-BP-XK2" firstAttribute="leading" secondItem="hav-LN-yiy" secondAttribute="leading" id="GjX-Rk-Nm0"/>
                                                         <constraint firstItem="QqL-cj-VuK" firstAttribute="leading" secondItem="hav-LN-yiy" secondAttribute="leading" constant="13" id="NcS-Mt-iIS"/>
                                                         <constraint firstItem="OHd-BP-XK2" firstAttribute="top" secondItem="hav-LN-yiy" secondAttribute="top" id="rY8-4q-7El"/>
@@ -946,17 +946,17 @@
                                                     <rect key="frame" x="53" y="0.0" width="204" height="82"/>
                                                     <subviews>
                                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" verticalHuggingPriority="1000" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="fVs-FP-xDC" customClass="JSQMessagesCellTextView">
-                                                            <rect key="frame" x="8" y="0.0" width="196" height="58"/>
+                                                            <rect key="frame" x="8" y="0.0" width="196" height="64"/>
                                                             <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <inset key="scrollIndicatorInsets" minX="0.0" minY="10" maxX="0.0" maxY="10"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                         </textView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u9b-gC-i2W">
-                                                            <rect key="frame" x="21" y="61" width="183" height="21"/>
+                                                            <rect key="frame" x="21" y="63" width="183" height="16"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="21" id="AMP-Ux-MFp"/>
+                                                                <constraint firstAttribute="height" constant="16" id="AMP-Ux-MFp"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -967,9 +967,9 @@
                                                     <constraints>
                                                         <constraint firstItem="fVs-FP-xDC" firstAttribute="top" secondItem="OER-DE-mR2" secondAttribute="top" id="GuX-2f-tit"/>
                                                         <constraint firstItem="u9b-gC-i2W" firstAttribute="leading" secondItem="OER-DE-mR2" secondAttribute="leading" constant="21" id="Jal-P0-WY4"/>
-                                                        <constraint firstAttribute="bottom" secondItem="fVs-FP-xDC" secondAttribute="bottom" constant="24" id="LJF-0L-5CA"/>
+                                                        <constraint firstAttribute="bottom" secondItem="fVs-FP-xDC" secondAttribute="bottom" constant="18" id="LJF-0L-5CA"/>
                                                         <constraint firstAttribute="trailing" secondItem="u9b-gC-i2W" secondAttribute="trailing" id="Noh-T9-rfY"/>
-                                                        <constraint firstAttribute="bottom" secondItem="u9b-gC-i2W" secondAttribute="bottom" id="aOk-VS-lzP"/>
+                                                        <constraint firstAttribute="bottom" secondItem="u9b-gC-i2W" secondAttribute="bottom" constant="3" id="aOk-VS-lzP"/>
                                                         <constraint firstAttribute="trailing" secondItem="fVs-FP-xDC" secondAttribute="trailing" id="ilv-QM-U9l"/>
                                                         <constraint firstItem="fVs-FP-xDC" firstAttribute="leading" secondItem="OER-DE-mR2" secondAttribute="leading" constant="8" id="mOo-i0-DkD"/>
                                                     </constraints>

@@ -54,7 +54,6 @@
     //setting the background color of the messages view
     self.collectionView.backgroundColor = [UIColor colorWithRed:239/255.0f green:239/255.0f blue:239/255.0f alpha:1.0f];
     
-
     self.senderId = [JCAuthenticationManager sharedInstance].jiveUserId;
     self.senderDisplayName = [JCAuthenticationManager sharedInstance].line.name;
     
@@ -64,7 +63,7 @@
     // Layout configurations
     self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeMake(40, 40);
     self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeMake(40, 40);
-    self.collectionView.collectionViewLayout.messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(7.0f, 14.0f, 26.0f, 14.0f);
+    self.collectionView.collectionViewLayout.messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(7.0f, 14.0f, 0.0f, 14.0f);
    
     self.inputToolbar.contentView.textView.placeHolder = NSLocalizedStringFromTable(@"Send SMS", @"JSQMessages", @"Placeholder text for the message input text view");
 }
@@ -192,6 +191,11 @@
     return nil;
 }
 
+-(CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
+                  layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath {
+    return 23;
+}
+
 #pragma mark UICollectionViewDataSource
 
 //  This section defines the bechavior of the collection view controller, defining to the Layout
@@ -244,8 +248,6 @@
     cell.layer.rasterizationScale   = [UIScreen mainScreen].scale;
     cell.layer.shouldRasterize      = YES;
     cell.textView.textColor         = [UIColor blackColor];
-    cell.textView.backgroundColor   = [UIColor redColor];
-    
     cell.textView.dataDetectorTypes = UIDataDetectorTypeAll;
     
     if ([messageItem isKindOfClass:[Message class]]) {
