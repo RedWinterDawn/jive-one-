@@ -134,8 +134,8 @@
 /* Class = "IBUILabel"; text = "TRANSFERRED TO"; ObjectID = "Zey-Qd-g8J"; */
 "Zey-Qd-g8J.text" = "TRANSFERRED TO";
 
-/* Class = "IBUITableViewSection"; headerTitle = "Application"; ObjectID = "aSD-9F-7Ze"; */
-"aSD-9F-7Ze.headerTitle" = "Application";
+/* Class = "IBUITableViewSection"; headerTitle = "Calling"; ObjectID = "aSD-9F-7Ze"; */
+"aSD-9F-7Ze.headerTitle" = "Calling";
 
 /* Class = "IBUILabel"; text = "Swap Calls"; ObjectID = "aTR-Bp-dDz"; */
 "aTR-Bp-dDz.text" = "Swap Calls";
