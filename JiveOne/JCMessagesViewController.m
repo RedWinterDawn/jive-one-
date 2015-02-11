@@ -20,7 +20,7 @@
 #import "JCMessagesCollectionViewCell.h"
 
 // Controllers
-#import "JCMessageParticipantViewController.h"
+#import "JCMessageParticipantTableViewController.h"
 #import "JCNavigationController.h"
 
 @protocol JSQMessageViewControllerPrivate <NSObject>
@@ -37,7 +37,7 @@
     NSMutableArray *_sectionChanges;
     NSMutableArray *_itemChanges;
     
-    JCMessageParticipantViewController *_messageParticipantsViewController;
+    JCMessageParticipantTableViewController *_messageParticipantsViewController;
 }
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
@@ -125,7 +125,7 @@
 
 -(IBAction)showParticipants:(id)sender
 {
-    JCMessageParticipantViewController *messageParticipantsViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MessageParticipantsViewController"];
+    JCMessageParticipantTableViewController *messageParticipantsViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MessageParticipantsViewController"];
     [self presentDropdownViewController:messageParticipantsViewController animated:YES];
 }
 

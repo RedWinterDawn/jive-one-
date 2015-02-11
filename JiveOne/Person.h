@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "JCPerson.h"
 
-@interface Person : NSManagedObject
+@interface Person : NSManagedObject <JCPerson>
 
 // Attributes
 @property (nonatomic, retain) NSString * jrn;

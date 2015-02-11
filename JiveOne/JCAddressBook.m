@@ -1,0 +1,166 @@
+//
+//  JCAddressBook.m
+//  JiveOne
+//
+//  Created by Robert Barclay on 2/10/15.
+//  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
+//
+
+#import "JCAddressBook.h"
+
+@implementation JCAddressBook
+
++(void)personForPersonId:(NSString *)personId personHash:(NSString *)hash completion:(void (^)(JCAddressBookPerson *person, NSError *error))completion
+{
+    [self personForRecordId:personId.intValue personHash:hash completion:completion];
+}
+
++(void)personForRecordId:(ABRecordID)recordId personHash:(NSString *)hash completion:(void (^)(JCAddressBookPerson *person, NSError *error))completion
+{
+    [JCAddressBook getPermission:^(BOOL success, ABAddressBookRef addressBook, NSError *error) {
+        if (success) {
+            ABRecordRef person = ABAddressBookGetPersonWithRecordID(addressBook,recordId);
+            if (completion) {
+                completion([[JCAddressBookPerson alloc] initWithABRecordRef:person], nil);
+            }
+        }
+        else {
+            if (completion) {
+                completion(nil, error);
+            }
+        }
+    }];
+}
+
++(void)fetchAllPeople:(void (^)(NSArray *contacts, NSError *error))completion {
+    [self fetchAllPeopleWithSortDescriptors:nil completion:completion];
+}
+
++(void)fetchAllPeopleWithSortDescriptors:(NSArray *)sortDescriptors
+                              completion:(void (^)(NSArray *contacts, NSError *error))completion
+{
+    [self fetchWithPredicate:nil sortDescriptors:nil completion:completion];
+}
+
++(void)fetchWithKeyword:(NSString *)keyword
+        sortDescriptors:(NSArray *)sortDescriptors
+             completion:(void (^)(NSArray *contacts, NSError *error))completion
+{
+    NSPredicate *predicate = [NSPredicate predicateWithBlock: ^(id record, NSDictionary *bindings) {
+        BOOL result = NO;
+        
+        NSString *string = keyword.lowercaseString;
+        
+        ABRecordRef person = (__bridge ABRecordRef)record;
+        NSString *firstName = ((__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty)).lowercaseString;
+        if ([firstName containsString:string]) {
+            result = YES;
+        }
+        
+        NSString *middleName = (__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonMiddleNameProperty);
+        if ([middleName containsString:string]) {
+            result = YES;
+        }
+        
+        NSString *lastName = (__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);
+        if ([lastName containsString:string]) {
+            result = YES;
+        }
+        
+        NSString *nickname = (__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonNicknameProperty);
+        if ([nickname containsString:string]) {
+            result = YES;
+        }
+        
+        NSString *organizationName = (__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonOrganizationProperty);
+        if ([organizationName containsString:string]) {
+            result = YES;
+        }
+        
+        ABMultiValueRef phoneNumbers = ABRecordCopyValue( person, kABPersonPhoneProperty);
+        for (CFIndex i = 0; i < ABMultiValueGetCount(phoneNumbers); i++) {
+            NSString *phoneNumber = (__bridge_transfer NSString*) ABMultiValueCopyValueAtIndex(phoneNumbers, i);
+            if ([phoneNumber containsString:keyword]) {
+                result = YES;
+                break;
+            }
+        }
+        
+        CFRelease(phoneNumbers);
+        return result;
+    }];
+
+    [self fetchWithPredicate:predicate sortDescriptors:sortDescriptors completion:completion];
+}
+
++(void)fetchWithPredicate:(NSPredicate *)predicate
+          sortDescriptors:(NSArray *)sortDescriptors
+               completion:(void (^)(NSArray *contacts, NSError *error))completion
+{
+    [self getPermission:^(BOOL success, ABAddressBookRef addressBook, NSError *error) {
+        if (!success) {
+            completion(nil, error);
+        } else {
+            [self readAddressBook:addressBook
+                        predicate:predicate
+                  sortDescriptors:sortDescriptors
+                       completion:completion];
+        }
+    }];
+}
+
+#pragma mark - Private -
+
++(void)getPermission:(void (^)(BOOL success, ABAddressBookRef addressBook, NSError *error))completion
+{
+    CFErrorRef err;
+    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, &err);
+    if (err) {
+        completion(NO, NULL, (__bridge NSError *)err);
+        CFRelease(err);
+        return;
+    }
+    
+    ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion(granted, addressBook, (__bridge NSError *)error);
+            CFRelease(addressBook);
+        });
+    });
+}
+
++ (void)readAddressBook:(ABAddressBookRef)addressBook
+              predicate:(NSPredicate *)predicate
+        sortDescriptors:(NSArray *)sortDescriptors
+             completion:(void (^)(NSArray *contacts, NSError *error))completion
+{
+    if (completion) {
+        CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeople(addressBook);
+        NSArray *people;
+        if (predicate) {
+            people = [self addressBookPeopleForRecordArray:[((__bridge NSArray *)allPeople) filteredArrayUsingPredicate:predicate]
+                                           sortDescriptors:sortDescriptors];
+        }
+        else {
+            people = [self addressBookPeopleForRecordArray:(__bridge NSArray *)allPeople
+                                           sortDescriptors:sortDescriptors];
+        }
+        
+        completion(people, nil);
+        CFRelease(allPeople);
+    }
+}
+
++ (NSArray *)addressBookPeopleForRecordArray:(NSArray *)arrayOfPeople
+                             sortDescriptors:(NSArray *)sortDesciptors
+{
+    NSMutableArray *addressBook = [NSMutableArray arrayWithCapacity:arrayOfPeople.count];
+    for(NSUInteger index = 0; index < arrayOfPeople.count; index++){
+        ABRecordRef currentPerson = (__bridge ABRecordRef)[arrayOfPeople objectAtIndex:index];
+        [addressBook addObject:[[JCAddressBookPerson alloc] initWithABRecordRef:currentPerson]];
+    }
+    [addressBook sortUsingDescriptors:sortDesciptors];
+    return addressBook;
+}
+
+@end
