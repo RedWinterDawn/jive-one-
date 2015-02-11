@@ -40,6 +40,8 @@ static void * kJSQMessagesInputToolbarKeyValueObservingContext = &kJSQMessagesIn
 {
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
     
+    _sendAsSMS = true;
+    
     self.jsq_isObserving = NO;
     self.sendButtonOnRight = YES;
     

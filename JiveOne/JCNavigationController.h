@@ -48,4 +48,7 @@
                            maxHeight:(CGFloat)maxHeight
                             animated:(BOOL)animated;
 
+-(void)dismissDropdownViewControllerAnimated:(BOOL)animated
+                                  completion:(void (^)(void))completion;
+
 @end

@@ -47,3 +47,14 @@
 }
 
 @end
+
+@implementation NSString (IsNumeric)
+
+-(bool)isNumeric
+{
+    NSCharacterSet *alphaNums = [NSCharacterSet decimalDigitCharacterSet];
+    NSCharacterSet *inStringSet = [NSCharacterSet characterSetWithCharactersInString:self];
+    return [alphaNums isSupersetOfSet:inStringSet];
+}
+
+@end

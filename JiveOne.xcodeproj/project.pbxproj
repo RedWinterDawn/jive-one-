@@ -101,7 +101,6 @@
 		5D112DDD1A4161220097223C /* JCDebugPbxsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D112DDC1A4161220097223C /* JCDebugPbxsTableViewController.m */; };
 		5D11566F1A6DB486006217D6 /* JCConferenceCallCardViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D11566E1A6DB486006217D6 /* JCConferenceCallCardViewCell.m */; };
 		5D15AF2B19DB271500E86116 /* NSString+DialString.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D15AF2819DB271500E86116 /* NSString+DialString.m */; };
-		5D15AF2C19DB271500E86116 /* NSString+IsNumeric.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D15AF2A19DB271500E86116 /* NSString+IsNumeric.m */; };
 		5D1BBE5B19EDC9EF006526B2 /* JCMergeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1BBE5A19EDC9EF006526B2 /* JCMergeButton.m */; };
 		5D1ECABE1A84014300424FA0 /* JCAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1ECABD1A84014300424FA0 /* JCAvatarView.m */; };
 		5D1FAC5F19DDD68000899915 /* JCCallCardViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FAC5E19DDD68000899915 /* JCCallCardViewCell.m */; };
@@ -400,8 +399,6 @@
 		5D11566E1A6DB486006217D6 /* JCConferenceCallCardViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCConferenceCallCardViewCell.m; sourceTree = "<group>"; };
 		5D15AF2719DB271500E86116 /* NSString+DialString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+DialString.h"; sourceTree = "<group>"; };
 		5D15AF2819DB271500E86116 /* NSString+DialString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+DialString.m"; sourceTree = "<group>"; };
-		5D15AF2919DB271500E86116 /* NSString+IsNumeric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+IsNumeric.h"; sourceTree = "<group>"; };
-		5D15AF2A19DB271500E86116 /* NSString+IsNumeric.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+IsNumeric.m"; sourceTree = "<group>"; };
 		5D1BBE5919EDC9EF006526B2 /* JCMergeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMergeButton.h; sourceTree = "<group>"; };
 		5D1BBE5A19EDC9EF006526B2 /* JCMergeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMergeButton.m; sourceTree = "<group>"; };
 		5D1ECABC1A84014300424FA0 /* JCAvatarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAvatarView.h; sourceTree = "<group>"; };
@@ -864,9 +861,9 @@
 				5D2A3F9F1A53706200974B8A /* Security */,
 				5D6243761A678B6F001DF88E /* JCError.h */,
 				5D6243771A678B6F001DF88E /* JCError.m */,
+				5D490E5B1A8AEFB5004B62C0 /* JCPerson.h */,
 				5D490E581A8AEF7E004B62C0 /* JCAddressBook.h */,
 				5D490E591A8AEF7E004B62C0 /* JCAddressBook.m */,
-				5D490E5B1A8AEFB5004B62C0 /* JCPerson.h */,
 				5D490E5C1A8AF364004B62C0 /* JCAddressBookPerson.h */,
 				5D490E5D1A8AF364004B62C0 /* JCAddressBookPerson.m */,
 			);
@@ -1194,8 +1191,6 @@
 			children = (
 				5D15AF2719DB271500E86116 /* NSString+DialString.h */,
 				5D15AF2819DB271500E86116 /* NSString+DialString.m */,
-				5D15AF2919DB271500E86116 /* NSString+IsNumeric.h */,
-				5D15AF2A19DB271500E86116 /* NSString+IsNumeric.m */,
 				2788F148190EB1260099348D /* NSNull+IntValue.h */,
 				2788F149190EB1260099348D /* NSNull+IntValue.m */,
 				2762151C1912AA2500CFBCC8 /* NSDictionary+QueryString.h */,
@@ -1796,7 +1791,6 @@
 				5D7DD3681A7B004B00B9FF4D /* SMSMessage.m in Sources */,
 				5D7DD3691A7B004B00B9FF4D /* Conversation.m in Sources */,
 				5D7DD36A1A7B004B00B9FF4D /* JCCustomCell.m in Sources */,
-				5D15AF2C19DB271500E86116 /* NSString+IsNumeric.m in Sources */,
 				5D241FDB1A38346A008B498A /* JCDebugLinesTableViewController.m in Sources */,
 				5D36B7AB19F8674E0024A0E7 /* JCFetchedResultsTableViewController.m in Sources */,
 				5D87FF341A7FF576001B8BB2 /* JCMessagesViewController.m in Sources */,

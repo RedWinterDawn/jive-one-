@@ -19,3 +19,9 @@
 - (NSString *)MD5Hash;
 
 @end
+
+@interface NSString (IsNumeric)
+
+@property (nonatomic, readonly) bool isNumeric;
+
+@end

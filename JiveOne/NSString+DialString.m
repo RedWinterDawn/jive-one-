@@ -7,7 +7,7 @@
 //
 
 #import "NSString+DialString.h"
-#import "NSString+IsNumeric.h"
+#import "NSString+Additions.h"
 
 NSString *const kDialStringStarKey = @"*";
 NSString *const kDialStringPoundKey = @"#";

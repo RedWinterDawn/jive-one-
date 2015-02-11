@@ -15,6 +15,7 @@
 @property (weak, nonatomic, readonly) UIButton *participantsButton;
 @property (weak, nonatomic, readonly) JCMessagesInputToolbar *inputToolbar;
 
--(IBAction)showParticipants:(id)sender;
+@property (strong, nonatomic) NSString *conversationId;
+@property (strong, nonatomic) NSString *senderNumber;
 
 @end

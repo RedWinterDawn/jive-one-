@@ -16,6 +16,8 @@
 #import "SMSMessage.h"
 #import "Conversation.h"
 
+#import "JCPerson.h"
+
 // Views
 #import "JCMessagesCollectionViewCell.h"
 
@@ -31,11 +33,13 @@
 
 @end
 
-@interface JCMessagesViewController () <JSQMessageViewControllerPrivate, NSFetchedResultsControllerDelegate>
+@interface JCMessagesViewController () <JSQMessageViewControllerPrivate, NSFetchedResultsControllerDelegate, JCMessageParticipantTableViewControllerDelegate>
 {
     // Support arrays for the NSFetchedResultController delegate methods.
     NSMutableArray *_sectionChanges;
     NSMutableArray *_itemChanges;
+    
+    NSArray *_participants;
     
     JCMessageParticipantTableViewController *_messageParticipantsViewController;
 }
@@ -54,8 +58,9 @@
     //setting the background color of the messages view
     self.collectionView.backgroundColor = [UIColor colorWithRed:239/255.0f green:239/255.0f blue:239/255.0f alpha:1.0f];
     
-    self.senderId = [JCAuthenticationManager sharedInstance].jiveUserId;
-    self.senderDisplayName = [JCAuthenticationManager sharedInstance].line.name;
+    self.senderId           = [JCAuthenticationManager sharedInstance].jiveUserId;
+    self.senderDisplayName  = [JCAuthenticationManager sharedInstance].line.name;
+    self.senderNumber       = @"555-555-5555";
     
     self.incomingCellIdentifier = @"incomingText";
     self.outgoingCellIdentifier = @"outgoingText";
@@ -66,6 +71,13 @@
     self.collectionView.collectionViewLayout.messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(7.0f, 14.0f, 0.0f, 14.0f);
    
     self.inputToolbar.contentView.textView.placeHolder = NSLocalizedStringFromTable(@"Send SMS", @"JSQMessages", @"Placeholder text for the message input text view");
+    
+    if (!self.conversationId) {
+        JCMessageParticipantTableViewController *messageParticipantsViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MessageParticipantsViewController"];
+        messageParticipantsViewController.delegate = self;
+        [self presentDropdownViewController:messageParticipantsViewController animated:YES];
+    }
+    
 }
 
 + (UINib *)nib
@@ -94,7 +106,7 @@
     Message *message;
     if (self.inputToolbar.sendAsSMS) {
         SMSMessage *smsMessage = [SMSMessage MR_createInContext:context];
-        smsMessage.number = @"555-555-5555";
+        smsMessage.number = _conversationId;
         message = smsMessage;
         
     } else {
@@ -104,7 +116,7 @@
     }
     
     message.name = senderDisplayName;
-    message.conversationId = @"0"; //String(format: "%i", Conversation.MR_countOfEntities())
+    message.conversationId = _conversationId;
     message.text = text;
     message.read = TRUE;
     message.date = [NSDate date];
@@ -123,10 +135,12 @@
     }];
 }
 
--(IBAction)showParticipants:(id)sender
+-(void)setConversationId:(NSString *)conversationId
 {
-    JCMessageParticipantTableViewController *messageParticipantsViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MessageParticipantsViewController"];
-    [self presentDropdownViewController:messageParticipantsViewController animated:YES];
+    _conversationId = conversationId;
+    _fetchedResultsController = nil;
+    
+    [self.collectionView reloadData];
 }
 
 #pragma mark - Getters -
@@ -134,8 +148,14 @@
 -(NSFetchedResultsController *)fetchedResultsController
 {
     if (!_fetchedResultsController) {
+        
+        // Only do a fetch request if we have a conversation id.
+        if (!_conversationId) {
+            return nil;
+        }
+        
         NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
-        NSFetchRequest *fetchRequest = [Message MR_requestAllInContext:context];
+        NSFetchRequest *fetchRequest = [Message MR_requestAllWhere:@"conversationId" isEqualTo:_conversationId inContext:context];
         fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]];
         fetchRequest.includesSubentities = YES;
         
@@ -370,7 +390,7 @@
     }
     
     message.name = @"Strangeralso";
-    message.conversationId = @"0"; //String(format: "%i", Conversation.MR_countOfEntities())
+    message.conversationId = _conversationId;
     message.text = @"Ahhhh Things";
     message.read = TRUE;
     message.date = [NSDate date];
@@ -388,6 +408,15 @@
         }
     }];
 
+}
+
+-(void)messageParticipantTableViewController:(JCMessageParticipantTableViewController *)controller didSelectParticipants:(NSArray *)participants
+{
+    _participants = participants;
+    
+    id<JCPerson> person = participants.lastObject;
+    self.conversationId = person.number;
+    [self dismissDropdownViewControllerAnimated:YES completion:NULL];
 }
 
 
