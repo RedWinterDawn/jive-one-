@@ -8,14 +8,21 @@
 
 #import "Conversation.h"
 
+#import "Contact.h"
+#import "JCAuthenticationManager.h"
 
 @implementation Conversation
 
-@dynamic jiveUserId;
+@dynamic conversationId;
+@dynamic contact;
+@dynamic user;
 
 -(NSString *)senderId
 {
-    return self.jiveUserId;
+    if (self.contact) {
+        return self.contact.jiveUserId;
+    }
+    return self.user.jiveUserId;
 }
 
 @end

@@ -8,7 +8,6 @@
 
 #import "RecentEvent.h"
 #import "Common.h"
-#import "Contact.h"
 
 #import "NSManagedObject+JCCoreDataAdditions.h"
 
@@ -16,11 +15,20 @@ NSString *const kRecentEventReadKey = @"read";
 
 @implementation RecentEvent
 
-@dynamic name;
-@dynamic number;
 @dynamic date;
 
-#pragma mark - Setters -
+-(void)setRead:(bool)read
+{
+    [self setPrimitiveValueFromBoolValue:read forKey:kRecentEventReadKey];
+}
+
+-(bool)isRead
+{
+    return [self boolValueFromPrimitiveValueForKey:kRecentEventReadKey];
+}
+
+
+#pragma mark - Transient Properties -
 
 -(void)setUnixTimestamp:(long long)unixTimestamp
 {
@@ -30,11 +38,6 @@ NSString *const kRecentEventReadKey = @"read";
 -(void)setTimestamp:(NSNumber *)timestamp
 {
     self.date = [Common dateFromTimestamp:timestamp];
-}
-
--(void)setRead:(bool)read
-{
-    [self setPrimitiveValueFromBoolValue:read forKey:kRecentEventReadKey];
 }
 
 #pragma mark - Getters -
@@ -59,33 +62,9 @@ NSString *const kRecentEventReadKey = @"read";
     return [Common formattedLongDate:self.date];
 }
 
--(NSString *)displayName
+-(NSString *)detailText
 {
-    if (self.contact) {
-        return self.contact.name;
-    }
-    
-    NSString *name = [self.name stringByReplacingOccurrencesOfString:@"\"" withString:@""];
-    if ([name isEqualToString:@"*99"]) {
-        return NSLocalizedString(@"Voicemail", nil);
-    }
-    return name;
+    return self.formattedModifiedShortDate;
 }
-
--(NSString *)displayNumber
-{
-    if (self.contact) {
-        return self.contact.extension;
-    }
-    return self.number;
-}
-
--(bool)isRead
-{
-    return [self boolValueFromPrimitiveValueForKey:kRecentEventReadKey];
-}
-
-@dynamic line;
-@dynamic contact;
 
 @end

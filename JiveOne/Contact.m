@@ -41,7 +41,8 @@ NSString *kContacktFavoriteAttribute = @"favorite";
     return detailText;
 }
 
-@dynamic events;
+@dynamic lineEvents;
+@dynamic conversations;
 @dynamic pbx;
 @dynamic groups;
 

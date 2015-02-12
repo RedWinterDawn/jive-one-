@@ -6,13 +6,18 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
 #import "Message.h"
 
+@class Contact;
+@class User;
 
 @interface Conversation : Message
 
-@property (nonatomic, retain) NSString * jiveUserId;
+// Attributes
+@property (nonatomic, retain) NSString * conversationId;
+
+// Relationships
+@property (nonatomic, retain) Contact *contact;
+@property (nonatomic, retain) Contact *user;
 
 @end

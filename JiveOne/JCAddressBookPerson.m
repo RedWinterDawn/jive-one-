@@ -96,9 +96,9 @@
 
 -(NSString *)middleInitial
 {
-    NSString *lastName = self.lastName;
-    if (lastName.length > 0) {
-        return [lastName substringToIndex:1].uppercaseString;
+    NSString *middleName = self.middleName;
+    if (middleName.length > 0) {
+        return [middleName substringToIndex:1].uppercaseString;
     }
     return nil;
 }

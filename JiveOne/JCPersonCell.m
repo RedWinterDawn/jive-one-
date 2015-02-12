@@ -8,6 +8,8 @@
 
 #import "JCPersonCell.h"
 
+#import "JiveContact.h"
+
 @implementation JCPersonCell
 
 - (void)layoutSubviews
@@ -16,7 +18,13 @@
     
     Person *person = self.person;
     self.textLabel.text = person.name;
-    self.detailTextLabel.text = person.detailText;
+    
+    if ([person isKindOfClass:[JiveContact class]]) {
+        JiveContact *jiveContact = (JiveContact *)person;
+        self.detailTextLabel.text = jiveContact.detailText;
+    }
+    
+    
 }
 
 #pragma mark - Setters -
@@ -24,7 +32,10 @@
 - (void)setPerson:(Person *)person
 {
     _person = person;
-    self.identifier = person.jrn;
+    if ([person isKindOfClass:[JiveContact class]]) {
+        JiveContact *jiveContact = (JiveContact *)person;
+        self.identifier = jiveContact.jrn;
+    }
 }
 
 @end

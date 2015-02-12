@@ -10,10 +10,10 @@
 
 @protocol JCPerson <NSObject>
 
-@property (nonatomic, readonly) NSString *number;
-
 // Name Composites
 @property (nonatomic, readonly) NSString *name;
+
+@property (nonatomic, readonly) NSString *detailText;
 
 @optional
 @property (nonatomic, readonly) NSString *firstNameFirstName;

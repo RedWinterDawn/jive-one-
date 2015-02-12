@@ -106,17 +106,17 @@
     Message *message;
     if (self.inputToolbar.sendAsSMS) {
         SMSMessage *smsMessage = [SMSMessage MR_createInContext:context];
-        smsMessage.number = _conversationId;
+        //smsMessage.number = _conversationId;
         message = smsMessage;
         
     } else {
         Conversation *conversation = [Conversation MR_createInContext:context];
-        conversation.jiveUserId = [JCAuthenticationManager sharedInstance].jiveUserId;
+        //conversation.senderId = [JCAuthenticationManager sharedInstance].jiveUserId;
         message = conversation;
     }
     
-    message.name = senderDisplayName;
-    message.conversationId = _conversationId;
+    //message.name = senderDisplayName;
+    //message.conversationId = _conversationId;
     message.text = text;
     message.read = TRUE;
     message.date = [NSDate date];
@@ -139,7 +139,6 @@
 {
     _conversationId = conversationId;
     _fetchedResultsController = nil;
-    
     [self.collectionView reloadData];
 }
 
@@ -159,7 +158,10 @@
         fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]];
         fetchRequest.includesSubentities = YES;
         
-        _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
+        _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+                                                                        managedObjectContext:context
+                                                                          sectionNameKeyPath:nil
+                                                                                   cacheName:nil];
         _fetchedResultsController.delegate = self;
         
         // Make sure the _fetched result controller has fetched data and reload
@@ -380,17 +382,17 @@
     Message *message;
     if (self.inputToolbar.sendAsSMS) {
         SMSMessage *smsMessage = [SMSMessage MR_createInContext:context];
-        smsMessage.number = @"555-555-5555";
+        //smsMessage.number = @"555-555-5555";
         message = smsMessage;
         
     } else {
         Conversation *conversation = [Conversation MR_createInContext:context];
-        conversation.jiveUserId = @"stranger";
+        //conversation.jiveUserId = @"stranger";
         message = conversation;
     }
     
-    message.name = @"Strangeralso";
-    message.conversationId = _conversationId;
+    //message.name = @"Strangeralso";
+    //message.conversationId = _conversationId;
     message.text = @"Ahhhh Things";
     message.read = TRUE;
     message.date = [NSDate date];
@@ -415,7 +417,7 @@
     _participants = participants;
     
     id<JCPerson> person = participants.lastObject;
-    self.conversationId = person.number;
+    //self.conversationId = person.number;
     [self dismissDropdownViewControllerAnimated:YES completion:NULL];
 }
 

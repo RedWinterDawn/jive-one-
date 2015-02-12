@@ -8,20 +8,23 @@
 
 #import "Message.h"
 
-
 @implementation Message
 
 @dynamic text;
-@dynamic conversationId;
+
+-(NSString *)conversationId
+{
+    return nil; // should be overwritten by subclass
+}
 
 -(NSString *)senderId
 {
-    return self.number;
+    return nil; // should be overwritten by subclass
 }
 
 -(NSString *)senderDisplayName
 {
-    return self.name;
+    return nil; // should be overwritten by subclass
 }
 
 -(BOOL)isMediaMessage

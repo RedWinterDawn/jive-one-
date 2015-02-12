@@ -36,7 +36,7 @@
 -(void)configureCell:(UITableViewCell *)cell withObject:(Line *)line
 {
     cell.textLabel.text = line.name;
-    cell.detailTextLabel.text = line.extension;
+//    cell.detailTextLabel.text = line.extension;
 }
 
 @end

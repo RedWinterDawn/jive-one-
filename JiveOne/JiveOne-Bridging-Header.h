@@ -16,7 +16,6 @@
 
 // Views
 #import "JCRecentEventCell.h"
-#import "JCMessageBarView.h"
 
 // Models
 #import "Conversation.h"

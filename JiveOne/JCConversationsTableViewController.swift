@@ -43,15 +43,15 @@ class JCConversationsTableViewController: JCFetchedResultsTableViewController {
         }
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.destinationViewController.isKindOfClass(JCConversationViewController) {
-            var conversationViewController : JCConversationViewController  = segue.destinationViewController as JCConversationViewController
-            
-//            let indexPath: NSIndexPath = self.tableView.indexPathForSelectedRow()!;
-//            conversationViewController.conversationId = "1"
-            
-            
-        }
-    }
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        if segue.destinationViewController.isKindOfClass(JCConversationViewController) {
+//            var conversationViewController : JCConversationViewController  = segue.destinationViewController as JCConversationViewController
+//            
+////            let indexPath: NSIndexPath = self.tableView.indexPathForSelectedRow()!;
+////            conversationViewController.conversationId = "1"
+//            
+//            
+//        }
+//    }
 }
 

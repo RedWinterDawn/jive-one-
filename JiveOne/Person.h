@@ -13,13 +13,8 @@
 @interface Person : NSManagedObject <JCPerson>
 
 // Attributes
-@property (nonatomic, retain) NSString * jrn;
-@property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSString * extension;
-@property (nonatomic, retain) NSString * pbxId;
-
-// Transient Attributes
-@property (nonatomic, readonly) NSString *firstLetter;
-@property (nonatomic, readonly) NSString *detailText;
+@property (nonatomic, retain) NSString *name;
+@property (nonatomic, retain) NSString *firstName;
+@property (nonatomic, retain) NSString *lastName;
 
 @end
