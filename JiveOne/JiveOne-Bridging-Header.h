@@ -13,6 +13,9 @@
 // Controllers
 #import "JCFetchedResultsTableViewController.h"
 #import "JCAuthenticationManager.h"
+#import "JCMessagesViewController.h"
+#import "JCMessageParticipantTableViewController.h"
+#import "JCNavigationController.h"
 
 // Views
 #import "JCRecentEventCell.h"
@@ -20,3 +23,5 @@
 // Models
 #import "Conversation.h"
 #import "SMSMessage.h"
+
+

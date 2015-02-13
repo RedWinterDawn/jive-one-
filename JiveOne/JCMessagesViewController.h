@@ -9,13 +9,14 @@
 #import <JSQMessagesViewController/JSQMessagesViewController.h>
 
 #import "JCMessagesInputToolbar.h"
+#import "JCMessageParticipantTableViewController.h"
 
-@interface JCMessagesViewController : JSQMessagesViewController
+@interface JCMessagesViewController : JSQMessagesViewController <JCMessageParticipantTableViewControllerDelegate>
 
 @property (weak, nonatomic, readonly) UIButton *participantsButton;
 @property (weak, nonatomic, readonly) JCMessagesInputToolbar *inputToolbar;
 
-@property (strong, nonatomic) NSString *conversationId;
+@property (strong, nonatomic) NSString *messageGroupId;
 @property (strong, nonatomic) NSString *senderNumber;
 
 @end

@@ -7,13 +7,10 @@
 //
 
 #import "Conversation.h"
-
 #import "Contact.h"
-#import "JCAuthenticationManager.h"
 
 @implementation Conversation
 
-@dynamic conversationId;
 @dynamic contact;
 @dynamic user;
 

@@ -36,11 +36,6 @@ NSString *const kSMSMessageInboundAttributeKey = @"inbound";
 
 #pragma mark - Transient Properties -
 
--(NSString *)conversationId
-{
-    return self.localContact.number;
-}
-
 -(NSString *)senderId
 {
     if (self.isInbound) {
@@ -75,9 +70,13 @@ NSString *const kSMSMessageInboundAttributeKey = @"inbound";
 
 -(void)setNumber:(NSString *)number name:(NSString *)name
 {
+    self.messageGroupId = number;
+    
     LocalContact *localContact = [LocalContact MR_findFirstByAttribute:NSStringFromSelector(@selector(number))
                                                              withValue:number
                                                              inContext:self.managedObjectContext];
+    
+    
     if (!localContact) {
         localContact = [LocalContact MR_createInContext:self.managedObjectContext];
         localContact.number = number;

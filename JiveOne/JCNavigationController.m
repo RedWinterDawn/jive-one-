@@ -46,7 +46,7 @@
     [self.view addSubview:viewController.view];
     [self.view bringSubviewToFront:self.navigationBar];
     
-    // Add an overlay Navigation Bar with dismiss controls.
+    //Add an overlay Navigation Bar with dismiss controls.
     _overlayNavigationBar = [JCNavigationController navigationBarForTitle:[JCNavigationController titleForViewController:viewController]
                                                         leftBarButtonItem:leftBarButtonItem
                                                        rightBarButtonItem:rightBarButtonItem

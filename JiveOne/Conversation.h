@@ -13,9 +13,6 @@
 
 @interface Conversation : Message
 
-// Attributes
-@property (nonatomic, retain) NSString * conversationId;
-
 // Relationships
 @property (nonatomic, retain) Contact *contact;
 @property (nonatomic, retain) Contact *user;

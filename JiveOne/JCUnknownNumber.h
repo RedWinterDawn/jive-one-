@@ -7,7 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JCPerson.h"
 
-@interface JCMessageParticipant : NSObject
+@interface JCUnknownNumber :  NSObject <JCPerson>
+
++(instancetype) unknownNumberWithNumber:(NSString *)number;
+
+@property (nonatomic, strong) NSString *number;
 
 @end

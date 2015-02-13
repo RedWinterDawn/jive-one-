@@ -764,13 +764,13 @@
         <!--Messages-->
         <scene sceneID="RM6-57-2r2">
             <objects>
-                <tableViewController id="J2i-zc-aC2" customClass="JCConversationsTableViewController" customModule="JiveOne" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="J2i-zc-aC2" customClass="JCConversationsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="75" sectionHeaderHeight="22" sectionFooterHeight="22" id="elf-Fi-Ick">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ConversationCell" rowHeight="75" id="D2t-fp-QtY">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ConversationCell" rowHeight="75" id="D2t-fp-QtY" customClass="JCConversationTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="D2t-fp-QtY" id="W9i-Ew-j3S">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -799,6 +799,12 @@
                                         <constraint firstItem="TTr-Dm-YVJ" firstAttribute="top" secondItem="W9i-Ew-j3S" secondAttribute="topMargin" id="wVk-j5-XO4"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="dateLabel" destination="TTr-Dm-YVJ" id="C1q-z6-QJb"/>
+                                    <outlet property="lastMessageLabel" destination="Kz0-zU-FzF" id="AGz-3V-Q7V"/>
+                                    <outlet property="senderNameLabel" destination="u5G-lj-0Cl" id="6gU-Sq-Pe6"/>
+                                    <segue destination="foX-Z7-9EW" kind="push" identifier="LoadMessageGroup" id="ZYx-zc-gsM"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -809,11 +815,17 @@
                     <navigationItem key="navigationItem" title="Messages" id="BUa-qT-EHb">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="v46-Ma-zwl">
                             <connections>
-                                <segue destination="foX-Z7-9EW" kind="push" id="rim-j8-ZTY"/>
+                                <segue destination="foX-Z7-9EW" kind="push" identifier="NewMessage" id="rim-j8-ZTY"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="8rP-YK-go9">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <connections>
+                            <action selector="refreshTable:" destination="J2i-zc-aC2" eventType="valueChanged" id="yIM-lA-9F2"/>
+                        </connections>
+                    </refreshControl>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f7M-NG-bBN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1066,6 +1078,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="w8d-wI-w7j">
                         <nil key="title"/>
+                        <barButtonItem key="backBarButtonItem" title="back" id="qhs-l8-Uxl"/>
                         <barButtonItem key="rightBarButtonItem" title="msg" id="BDn-kQ-O7j">
                             <connections>
                                 <action selector="simulateIncomingMsg:" destination="foX-Z7-9EW" id="ab4-nr-Nc7"/>
@@ -1232,9 +1245,10 @@
             <objects>
                 <navigationController storyboardIdentifier="MessagesNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cs1-Q4-pfo" customClass="JCNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Messages" image="black-bubble" id="1NY-Mi-445"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="GyZ-sd-sl6">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="GyZ-sd-sl6">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                     </navigationBar>
                     <connections>
@@ -5882,12 +5896,13 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="e0I-ZU-Bxk"/>
+        <segue reference="ZYx-zc-gsM"/>
         <segue reference="Uqi-bD-GAX"/>
         <segue reference="x1v-U1-NC6"/>
-        <segue reference="Tth-R2-xu6"/>
         <segue reference="5C3-Di-Qgq"/>
+        <segue reference="Tth-R2-xu6"/>
         <segue reference="2yK-HA-Lah"/>
-        <segue reference="e0I-ZU-Bxk"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29803921570000003" green="0.44705882349999998" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
 </document>

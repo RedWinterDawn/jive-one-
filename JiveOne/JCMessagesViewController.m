@@ -12,11 +12,12 @@
 #import <JSQMessagesViewController/JSQSystemSoundPlayer+JSQMessages.h>
 
 // Models
+#import "JCPerson.h"
 #import "Message.h"
 #import "SMSMessage.h"
 #import "Conversation.h"
-
-#import "JCPerson.h"
+#import "JCUnknownNumber.h"
+#import "LocalContact.h"
 
 // Views
 #import "JCMessagesCollectionViewCell.h"
@@ -33,17 +34,17 @@
 
 @end
 
-@interface JCMessagesViewController () <JSQMessageViewControllerPrivate, NSFetchedResultsControllerDelegate, JCMessageParticipantTableViewControllerDelegate>
+@interface JCMessagesViewController () <JSQMessageViewControllerPrivate, NSFetchedResultsControllerDelegate>
 {
     // Support arrays for the NSFetchedResultController delegate methods.
     NSMutableArray *_sectionChanges;
     NSMutableArray *_itemChanges;
     
+    // A list of participants
     NSArray *_participants;
-    
-    JCMessageParticipantTableViewController *_messageParticipantsViewController;
 }
 
+@property (nonatomic, strong) NSArray *participants;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 @end
@@ -60,7 +61,9 @@
     
     self.senderId           = [JCAuthenticationManager sharedInstance].jiveUserId;
     self.senderDisplayName  = [JCAuthenticationManager sharedInstance].line.name;
-    self.senderNumber       = @"555-555-5555";
+    self.senderNumber       = @"8013163336";
+    
+    // didId = 0142349c-fff3-719c-cb63-000100420002
     
     self.incomingCellIdentifier = @"incomingText";
     self.outgoingCellIdentifier = @"outgoingText";
@@ -72,12 +75,20 @@
    
     self.inputToolbar.contentView.textView.placeHolder = NSLocalizedStringFromTable(@"Send SMS", @"JSQMessages", @"Placeholder text for the message input text view");
     
-    if (!self.conversationId) {
-        JCMessageParticipantTableViewController *messageParticipantsViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MessageParticipantsViewController"];
-        messageParticipantsViewController.delegate = self;
-        [self presentDropdownViewController:messageParticipantsViewController animated:YES];
+    if (!_messageGroupId) {
+        JCMessageParticipantTableViewController *participantTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MessageParticipantsViewController"];
+        participantTableViewController.delegate = self;
+        [self presentDropdownViewController:participantTableViewController animated:YES];
+    } else {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId = %@", _messageGroupId];
+        Message *message = [Message MR_findFirstWithPredicate:predicate sortedBy:@"date" ascending:NO];
+        if ([message isKindOfClass:[SMSMessage class]]) {
+            SMSMessage *smsMessage = (SMSMessage *)message;
+            self.title = smsMessage.localContact.name;
+            _participants = @[smsMessage.localContact];
+        }
+        [message.managedObjectContext refreshObject:message mergeChanges:NO];
     }
-    
 }
 
 + (UINib *)nib
@@ -91,11 +102,6 @@
     _fetchedResultsController = nil;    // This can be rebuilt if we are in a low memory situation.
 }
 
--(void)didPressAccessoryButton:(UIButton *)sender
-{
-    // Not Implemented for Media attachment.
-}
-
 -(void)didPressSendButton:(UIButton *)button
           withMessageText:(NSString *)text
                  senderId:(NSString *)senderId
@@ -103,20 +109,20 @@
                      date:(NSDate *)date
 {
     NSManagedObjectContext *context = [NSManagedObjectContext MR_contextWithParent:self.fetchedResultsController.managedObjectContext];
+    id<JCPerson> person = _participants.lastObject;
     Message *message;
-    if (self.inputToolbar.sendAsSMS) {
+    if ([person isKindOfClass:[JCUnknownNumber class]]) {
+        JCUnknownNumber *unknowNumber = (JCUnknownNumber *)person;
         SMSMessage *smsMessage = [SMSMessage MR_createInContext:context];
-        //smsMessage.number = _conversationId;
+        [smsMessage setNumber:unknowNumber.number name:unknowNumber.name];
         message = smsMessage;
-        
-    } else {
-        Conversation *conversation = [Conversation MR_createInContext:context];
-        //conversation.senderId = [JCAuthenticationManager sharedInstance].jiveUserId;
-        message = conversation;
+    } else if ([person isKindOfClass:[LocalContact class]]) {
+        LocalContact *localContact = (LocalContact *)person;
+        SMSMessage *smsMessage = [SMSMessage MR_createInContext:context];
+        [smsMessage setNumber:localContact.number name:localContact.name];
+        message = smsMessage;
     }
-    
-    //message.name = senderDisplayName;
-    //message.conversationId = _conversationId;
+        
     message.text = text;
     message.read = TRUE;
     message.date = [NSDate date];
@@ -133,11 +139,66 @@
             
         }
     }];
+
 }
 
--(void)setConversationId:(NSString *)conversationId
+- (IBAction)simulateIncomingMsg:(id)sender {
+    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextWithParent:self.fetchedResultsController.managedObjectContext];
+    id<JCPerson> person = _participants.lastObject;
+    Message *message;
+    if ([person isKindOfClass:[JCUnknownNumber class]]) {
+        JCUnknownNumber *unknowNumber = (JCUnknownNumber *)person;
+        SMSMessage *smsMessage = [SMSMessage MR_createInContext:context];
+        [smsMessage setNumber:unknowNumber.number name:unknowNumber.name];
+        smsMessage.inbound = true;
+        message = smsMessage;
+    } else if ([person isKindOfClass:[LocalContact class]]) {
+        LocalContact *localContact = (LocalContact *)person;
+        SMSMessage *smsMessage = [SMSMessage MR_createInContext:context];
+        [smsMessage setNumber:localContact.number name:localContact.name];
+        smsMessage.inbound = true;
+        message = smsMessage;
+    }
+    
+    message.text = @"Ahhhh Things";
+    message.read = TRUE;
+    message.date = [NSDate date];
+    
+    [context MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
+        if (success) {
+            
+            [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
+            
+            //TODO: upload to the server here.
+            
+            [self finishSendingMessageAnimated:YES];
+        } else {
+            
+        }
+    }];
+    
+}
+
+#pragma mark - Setters -
+
+-(void)setParticipants:(NSArray *)participants
 {
-    _conversationId = conversationId;
+    // For now we only allow one participant...so for now, limit it to the first participant past.
+    if (participants.count < 1) {
+        return;
+    }
+    _participants = @[participants.firstObject];
+    id<JCPerson> person = _participants.lastObject;
+        
+    // New SMS from a unknown number;
+    if ([person isKindOfClass:[JCUnknownNumber class]]) {
+        self.messageGroupId = ((JCUnknownNumber *)person).number;
+    }
+}
+
+-(void)setMessageGroupId:(NSString *)conversationId
+{
+    _messageGroupId = conversationId;
     _fetchedResultsController = nil;
     [self.collectionView reloadData];
 }
@@ -149,12 +210,12 @@
     if (!_fetchedResultsController) {
         
         // Only do a fetch request if we have a conversation id.
-        if (!_conversationId) {
+        if (!_messageGroupId) {
             return nil;
         }
         
         NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
-        NSFetchRequest *fetchRequest = [Message MR_requestAllWhere:@"conversationId" isEqualTo:_conversationId inContext:context];
+        NSFetchRequest *fetchRequest = [Message MR_requestAllWhere:NSStringFromSelector(@selector(messageGroupId)) isEqualTo:_messageGroupId inContext:context];
         fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]];
         fetchRequest.includesSubentities = YES;
         
@@ -201,18 +262,6 @@
     return [self objectAtIndexPath:indexPath];
 }
 
-- (id<JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView
-             messageBubbleImageDataForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return nil;
-}
-
-- (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView
-                    avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return nil;
-}
-
 -(CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
                   layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath {
     return 23;
@@ -242,40 +291,20 @@
 - (UICollectionViewCell *)collectionView:(JSQMessagesCollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    id<JSQMessageData> messageItem = [collectionView.dataSource collectionView:collectionView messageDataForItemAtIndexPath:indexPath];
-    NSString *messageSenderId = messageItem.senderId;
-    BOOL isOutgoingMessage = [messageSenderId isEqualToString:self.senderId];
-    BOOL isMediaMessage = messageItem.isMediaMessage;
-    
-    NSString *cellIdentifier = nil;
-    if (isMediaMessage) {
-        cellIdentifier = isOutgoingMessage ? self.outgoingMediaCellIdentifier : self.incomingMediaCellIdentifier;
-    }
-    else {
-        cellIdentifier = isOutgoingMessage ? self.outgoingCellIdentifier : self.incomingCellIdentifier;
-    }
-    
+    Message *message = [collectionView.dataSource collectionView:collectionView messageDataForItemAtIndexPath:indexPath];
+    BOOL isOutgoingMessage = ([message isKindOfClass:[SMSMessage class]]) ? !((SMSMessage *)message).isInbound : [message.senderId isEqualToString:self.senderId];
+    NSString *cellIdentifier = isOutgoingMessage ? self.outgoingCellIdentifier : self.incomingCellIdentifier;
     JCMessagesCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     cell.delegate = collectionView;
     cell.incoming = !isOutgoingMessage;
-    if (!isMediaMessage) {
-        cell.textView.text = messageItem.text;
-    }
-    else {
-        id<JSQMessageMediaData> messageMedia = messageItem.media;
-        cell.mediaView = messageMedia.mediaView ?: messageMedia.mediaPlaceholderView;
-    }
+    cell.textView.text = message.text;
+    cell.detailLabel.text = message.detailText;
     
     cell.backgroundColor            = [UIColor clearColor];
     cell.layer.rasterizationScale   = [UIScreen mainScreen].scale;
     cell.layer.shouldRasterize      = YES;
     cell.textView.textColor         = [UIColor blackColor];
     cell.textView.dataDetectorTypes = UIDataDetectorTypeAll;
-    
-    if ([messageItem isKindOfClass:[Message class]]) {
-        Message *message = (Message *)messageItem;
-        cell.detailLabel.text = message.detailText;
-    }
     
     return cell;
 }
@@ -377,49 +406,13 @@
         _itemChanges = nil;
     }];
 }
-- (IBAction)simulateIncomingMsg:(id)sender {
-    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextWithParent:self.fetchedResultsController.managedObjectContext];
-    Message *message;
-    if (self.inputToolbar.sendAsSMS) {
-        SMSMessage *smsMessage = [SMSMessage MR_createInContext:context];
-        //smsMessage.number = @"555-555-5555";
-        message = smsMessage;
-        
-    } else {
-        Conversation *conversation = [Conversation MR_createInContext:context];
-        //conversation.jiveUserId = @"stranger";
-        message = conversation;
-    }
-    
-    //message.name = @"Strangeralso";
-    //message.conversationId = _conversationId;
-    message.text = @"Ahhhh Things";
-    message.read = TRUE;
-    message.date = [NSDate date];
-    
-    [context MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
-        if (success) {
-            
-            [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
-            
-            //TODO: upload to the server here.
-            
-            [self finishSendingMessageAnimated:YES];
-        } else {
-            
-        }
-    }];
 
-}
+#pragma mark JCMessageParticipantTableViewControllerDelegate
 
 -(void)messageParticipantTableViewController:(JCMessageParticipantTableViewController *)controller didSelectParticipants:(NSArray *)participants
 {
-    _participants = participants;
-    
-    id<JCPerson> person = participants.lastObject;
-    //self.conversationId = person.number;
+    self.participants = participants;
     [self dismissDropdownViewControllerAnimated:YES completion:NULL];
 }
-
 
 @end

@@ -11,11 +11,7 @@
 @implementation Message
 
 @dynamic text;
-
--(NSString *)conversationId
-{
-    return nil; // should be overwritten by subclass
-}
+@dynamic messageGroupId;
 
 -(NSString *)senderId
 {

@@ -13,8 +13,7 @@
 
 @interface Message : RecentEvent <JSQMessageData>
 
-@property (nonatomic, retain) NSString * text;
-
-@property (nonatomic, readonly) NSString * conversationId;
+@property (nonatomic, retain) NSString *text;
+@property (nonatomic, retain) NSString *messageGroupId;
 
 @end

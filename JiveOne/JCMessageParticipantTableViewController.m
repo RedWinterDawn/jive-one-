@@ -9,6 +9,7 @@
 #import "JCMessageParticipantTableViewController.h"
 
 #import "JCAddressBook.h"
+#import "JCUnknownNumber.h"
 #import "NSString+Additions.h"
 
 @interface JCMessageParticipantTableViewController ()
@@ -18,13 +19,6 @@
 }
 
 @property (nonatomic, strong) NSArray *tableData;
-
-@end
-
-@interface JCUnknownNumber : NSObject <JCPerson>
-
-@property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *number;
 
 @end
 
@@ -71,17 +65,16 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell;
     id<JCPerson> person = [self objectAtIndexPath:indexPath];
+    NSString *identifier;
     if ([person isKindOfClass:[JCUnknownNumber class]]) {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"UnknownNumberCell"];
-        cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"Send SMS to", nil), person.name];
+        identifier = @"UnknownNumberCell";
     } else {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"SearchResultCell"];
-        cell.textLabel.text = person.name;
+        identifier = @"SearchResultCell";
     }
     
-    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    cell.textLabel.text = person.detailText;
     return cell;
 }
 
@@ -90,7 +83,6 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     id<JCPerson> person = [self objectAtIndexPath:indexPath];
-    
     [self.delegate messageParticipantTableViewController:self didSelectParticipants:@[person]];
 }
 
@@ -100,17 +92,9 @@
 {
     NSMutableArray *people = [NSMutableArray new];
     if (searchText.isNumeric && searchText.length > 0) {
-        JCUnknownNumber *unknownNumber = [[JCUnknownNumber alloc] init];
-        unknownNumber.name = searchText;
-        unknownNumber.number = searchText;
-        [people addObject:unknownNumber];
+        [people addObject:[JCUnknownNumber unknownNumberWithNumber:searchText]];
     }
-    
     self.tableData = people;
 }
-
-@end
-
-@implementation JCUnknownNumber
 
 @end
