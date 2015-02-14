@@ -382,7 +382,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     }
     
     if (hangupError) {
-        *error = hangupError;
+        if (error != NULL) {
+            *error = hangupError;
+        }
         return NO;
     }
     return YES;
@@ -394,7 +396,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     {
         int errorCode = [_mPortSIPSDK rejectCall:lineSession.sessionId code:486];
         if (errorCode) {
-            *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error trying to manually reject incomming call"];
+            if(error != NULL) {
+                *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error trying to manually reject incomming call"];
+            }
             return NO;
         }
             
@@ -404,7 +408,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     
     NSInteger errorCode = [_mPortSIPSDK hangUp:lineSession.sessionId];
     if (errorCode) {
-        *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error Trying to Hang up"];
+        if (error != NULL) {
+            *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error Trying to Hang up"];
+        }
         return NO;
     }
         
@@ -431,7 +437,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     }
     
     if (holdError) {
-        *error = [JCSipHandlerError errorWithCode:holdError.code reason:@"Error holding the line sessions" underlyingError:holdError];
+        if (error != NULL) {
+            *error = [JCSipHandlerError errorWithCode:holdError.code reason:@"Error holding the line sessions" underlyingError:holdError];
+        }
         return false;
     }
     return true;
@@ -445,7 +453,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     
     NSInteger errorCode = [_mPortSIPSDK hold:lineSession.sessionId];
     if (errorCode) {
-        *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error placing calls on hold"];
+        if (error != NULL) {
+            *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error placing calls on hold"];
+        }
         return NO;
     }
     
@@ -469,7 +479,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     }
     
     if (holdError) {
-        *error = [JCSipHandlerError errorWithCode:holdError.code reason:@"Error unholding the line session while after joing the conference" underlyingError:holdError];
+        if (error != NULL) {
+            *error = [JCSipHandlerError errorWithCode:holdError.code reason:@"Error unholding the line session while after joing the conference" underlyingError:holdError];
+        }
         return FALSE;
     }
     return TRUE;
@@ -483,7 +495,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     
     NSInteger errorCode = [_mPortSIPSDK unHold:lineSession.sessionId];
     if (errorCode) {
-        *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error placing calls on hold"];
+        if (error != NULL) {
+            *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error placing calls on hold"];
+        }
         return NO;
     }
 
@@ -500,13 +514,17 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 -(BOOL)createConferenceWithLineSessions:(NSSet *)lineSessions error:(NSError *__autoreleasing *)error
 {
     if (_conferenceCall) {
-        *error = [JCSipHandlerError errorWithCode:JC_SIP_CONFERENCE_CALL_ALREADY_STARTED reason:@"Conference call already started"];
+        if (error != NULL) {
+            *error = [JCSipHandlerError errorWithCode:JC_SIP_CONFERENCE_CALL_ALREADY_STARTED reason:@"Conference call already started"];
+        }
         return FALSE;
     }
     
     NSInteger errorCode = [_mPortSIPSDK createConference:[UIView new] videoResolution:VIDEO_NONE displayLocalVideo:NO];
     if (errorCode) {
-        *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error Creating Conference"];
+        if (error != NULL) {
+            *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error Creating Conference"];
+        }
         return false;
     }
     
@@ -516,14 +534,18 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         if (lineSession.isHolding) {
             __autoreleasing NSError *holdError;
             if (![self unholdLineSession:lineSession error:&holdError]) {
-                *error = [JCSipHandlerError errorWithCode:holdError.code reason:@"Error unholding the line session while after joing the conference" underlyingError:holdError];
+                if (error != NULL) {
+                    *error = [JCSipHandlerError errorWithCode:holdError.code reason:@"Error unholding the line session while after joing the conference" underlyingError:holdError];
+                }
                 break;
             }
         }
         
         errorCode = [_mPortSIPSDK joinToConference:lineSession.sessionId];
         if (errorCode) {
-            *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error Joining line session to conference"];
+            if (error != NULL) {
+                *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error Joining line session to conference"];
+            }
             break;
         }
         
@@ -549,7 +571,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 -(BOOL)endConferenceCallForLineSessions:(NSSet *)lineSessions error:(NSError *__autoreleasing *)error
 {
     if (!_conferenceCall) {
-        *error = [JCSipHandlerError errorWithCode:JC_SIP_CONFERENCE_CALL_ALREADY_ENDED reason:@"Conference call already started"];
+        if (error != NULL) {
+            *error = [JCSipHandlerError errorWithCode:JC_SIP_CONFERENCE_CALL_ALREADY_ENDED reason:@"Conference call already started"];
+        }
         return FALSE;
     }
     
@@ -559,7 +583,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             if (!lineSession.isHolding){
                 __autoreleasing NSError *holdError;
                 if(![self holdLineSession:lineSession error:&holdError]) {
-                    *error = [JCSipHandlerError errorWithCode:holdError.code reason:@"Error placing calls on hold after ending a conference" underlyingError:holdError];
+                    if (error != NULL) {
+                        *error = [JCSipHandlerError errorWithCode:holdError.code reason:@"Error placing calls on hold after ending a conference" underlyingError:holdError];
+                    }
                     return false;
                 }
             }
@@ -643,7 +669,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     // Find the active line. It is the one we will be refering to the number passed.
 	JCLineSession *b = [self findActiveLine];
     if (!b) {
-        *error = [JCSipHandlerError errorWithCode:JC_SIP_CALL_NO_ACTIVE_LINE];
+        if (error != NULL) {
+            *error = [JCSipHandlerError errorWithCode:JC_SIP_CALL_NO_ACTIVE_LINE];
+        }
         return NO;
     }
     
@@ -657,7 +685,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     b.transfer = TRUE;
 	NSInteger errorCode = [_mPortSIPSDK refer:b.sessionId referTo:number];
     if (errorCode) {
-        *error = [JCSipHandlerError errorWithCode:errorCode];
+        if (error != NULL) {
+            *error = [JCSipHandlerError errorWithCode:errorCode];
+        }
         [self setSessionState:JCTransferFailed forSession:b event:nil error:nil];
         return NO;
     }
@@ -707,19 +737,25 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 {
     JCLineSession *c = [self findActiveLine];
     if (!c) {
-        *error = [JCSipHandlerError errorWithCode:JC_SIP_CALL_NO_ACTIVE_LINE];
+        if (error != NULL) {
+            *error = [JCSipHandlerError errorWithCode:JC_SIP_CALL_NO_ACTIVE_LINE];
+        }
         return NO;
     }
     
     JCLineSession *b = [self findTransferLine];
     if (!b) {
-        *error = [JCSipHandlerError errorWithCode:JC_SIP_CALL_NO_REFERRAL_LINE];
+        if (error != NULL) {
+            *error = [JCSipHandlerError errorWithCode:JC_SIP_CALL_NO_REFERRAL_LINE];
+        }
         return NO;
     }
     
     NSInteger errorCode = [_mPortSIPSDK attendedRefer:c.sessionId replaceSessionId:b.sessionId referTo:c.callDetail];
     if (errorCode) {
-        *error = [JCSipHandlerError errorWithCode:errorCode];
+        if(error != NULL) {
+            *error = [JCSipHandlerError errorWithCode:errorCode];
+        }
         [self setSessionState:JCTransferFailed forSession:b event:nil error:nil];
         return NO;
     }
