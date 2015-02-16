@@ -12,8 +12,8 @@
 
 // Name Composites
 @property (nonatomic, readonly) NSString *name;
-
 @property (nonatomic, readonly) NSString *detailText;
+@property (nonatomic, readonly) NSString *number;
 
 @optional
 @property (nonatomic, readonly) NSString *firstNameFirstName;
