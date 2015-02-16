@@ -7,6 +7,7 @@
 //
 
 #import "JCClient.h"
+#import "JCSMSError.h"
 
 @interface JCSMSClient : JCClient
 

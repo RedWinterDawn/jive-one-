@@ -233,7 +233,7 @@
 		F266162718B42AA0000B770A /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266162518B42AA0000B770A /* AddressBookUI.framework */; };
 		F59AE2C9192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2BC192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png */; };
 		F81EA8AB1A925CEE00081C81 /* JCSMSClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F81EA8AA1A925CEE00081C81 /* JCSMSClient.m */; };
-		F81EA8AE1A925EE400081C81 /* Message+SMSClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F81EA8AD1A925EE400081C81 /* Message+SMSClient.m */; };
+		F81EA8AE1A925EE400081C81 /* SMSMessage+SMSClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F81EA8AD1A925EE400081C81 /* SMSMessage+SMSClient.m */; };
 		F81EA8B21A926D2600081C81 /* JCSMSError.m in Sources */ = {isa = PBXBuildFile; fileRef = F81EA8B11A926D2600081C81 /* JCSMSError.m */; };
 		F82A284119DDC55E00C3620D /* JCV4Client.m in Sources */ = {isa = PBXBuildFile; fileRef = F82A284019DDC55E00C3620D /* JCV4Client.m */; };
 		F82B938F1A819BE500660AAA /* JCIncomingMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F82B938E1A819BE500660AAA /* JCIncomingMessageView.m */; };
@@ -671,8 +671,8 @@
 		F817803F1A1BCF0F009A5F40 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		F81EA8A91A925CEE00081C81 /* JCSMSClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSMSClient.h; sourceTree = "<group>"; };
 		F81EA8AA1A925CEE00081C81 /* JCSMSClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSMSClient.m; sourceTree = "<group>"; };
-		F81EA8AC1A925EE400081C81 /* Message+SMSClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Message+SMSClient.h"; sourceTree = "<group>"; };
-		F81EA8AD1A925EE400081C81 /* Message+SMSClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Message+SMSClient.m"; sourceTree = "<group>"; };
+		F81EA8AC1A925EE400081C81 /* SMSMessage+SMSClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SMSMessage+SMSClient.h"; sourceTree = "<group>"; };
+		F81EA8AD1A925EE400081C81 /* SMSMessage+SMSClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SMSMessage+SMSClient.m"; sourceTree = "<group>"; };
 		F81EA8B01A926D2600081C81 /* JCSMSError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSMSError.h; sourceTree = "<group>"; };
 		F81EA8B11A926D2600081C81 /* JCSMSError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSMSError.m; sourceTree = "<group>"; };
 		F82A283F19DDC55E00C3620D /* JCV4Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCV4Client.h; sourceTree = "<group>"; };
@@ -1542,8 +1542,8 @@
 				F81EA8AF1A926CE600081C81 /* SMSErrorHandleing */,
 				F81EA8A91A925CEE00081C81 /* JCSMSClient.h */,
 				F81EA8AA1A925CEE00081C81 /* JCSMSClient.m */,
-				F81EA8AC1A925EE400081C81 /* Message+SMSClient.h */,
-				F81EA8AD1A925EE400081C81 /* Message+SMSClient.m */,
+				F81EA8AC1A925EE400081C81 /* SMSMessage+SMSClient.h */,
+				F81EA8AD1A925EE400081C81 /* SMSMessage+SMSClient.m */,
 			);
 			name = SMSClient;
 			sourceTree = "<group>";
@@ -1930,7 +1930,7 @@
 				5D02750D1A3F81060077A37B /* JCEncryptionTransformer.m in Sources */,
 				91DDB19D193500B500550F10 /* JCDeleteButton.m in Sources */,
 				91DDB1991935008A00550F10 /* JCSpeakerButton.m in Sources */,
-				F81EA8AE1A925EE400081C81 /* Message+SMSClient.m in Sources */,
+				F81EA8AE1A925EE400081C81 /* SMSMessage+SMSClient.m in Sources */,
 				2751591318AD174F00FD8D3F /* JCAuthenticationManager.m in Sources */,
 				5D490E541A8A9DCE004B62C0 /* JCMessagesCollectionViewCell.m in Sources */,
 				5D87FF4F1A8009E1001B8BB2 /* JCMessagesToolbarContentView.m in Sources */,

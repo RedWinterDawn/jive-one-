@@ -8,14 +8,17 @@
 
 #import "JCError.h"
 
+#define SMS_RESPONSE_INVALID                            1000
+#define SMS_FAILED_CODE_OAUTH                       1001
+#define SMS_FAILED_CODE_USER_PERMISSION     1002
+#define SMS_FAILED_CODE_NO_DID                      1003
+#define SMS_FAILED_CODE_PBX_DISABLED           1004
+#define SMS_FAILED_CODE_PEER_DISABLED          1005
+#define SMS_MESSAGE_CAP_REACHED                    2001
+#define SMS_MESSAGE_CAP_UNDEFINED                2002
 
-#define SMS_FAILED_CODE_OAUTH                       - 1001
-#define SMS_FAILED_CODE_USER_PERMISSION     - 1002
-#define SMS_FAILED_CODE_NO_DID                      - 1003
-#define SMS_FAILED_CODE_PBX_DISABLED           - 1004
-#define SMS_FAILED_CODE_PEER_DISABLED          - 1005
-#define SMS_MESSAGE_CAP_REACHED                    - 2001
-#define SMS_MESSAGE_CAP_UNDEFINED                - 2002
+
+
 
 @interface JCSMSError : JCError
 
