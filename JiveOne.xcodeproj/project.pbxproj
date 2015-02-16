@@ -232,6 +232,8 @@
 		F266162618B42AA0000B770A /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266162418B42AA0000B770A /* AddressBook.framework */; };
 		F266162718B42AA0000B770A /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266162518B42AA0000B770A /* AddressBookUI.framework */; };
 		F59AE2C9192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = F59AE2BC192F07BA00CAF0F3 /* iPhone2XnewBlurSmall.png */; };
+		F81EA8AB1A925CEE00081C81 /* JCSMSClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F81EA8AA1A925CEE00081C81 /* JCSMSClient.m */; };
+		F8213C791A7B2434000FDA57 /* JCMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F8213C781A7B2434000FDA57 /* JCMessageCell.m */; };
 		F82A284119DDC55E00C3620D /* JCV4Client.m in Sources */ = {isa = PBXBuildFile; fileRef = F82A284019DDC55E00C3620D /* JCV4Client.m */; };
 		F82B938F1A819BE500660AAA /* JCIncomingMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F82B938E1A819BE500660AAA /* JCIncomingMessageView.m */; };
 		F82B93921A819C0000660AAA /* JCOutgoingMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = F82B93911A819C0000660AAA /* JCOutgoingMessageView.m */; };
@@ -666,6 +668,8 @@
 		F817803D1A1BCF0F009A5F40 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/ConferenceCallViewCell.strings"; sourceTree = "<group>"; };
 		F817803E1A1BCF0F009A5F40 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		F817803F1A1BCF0F009A5F40 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		F81EA8A91A925CEE00081C81 /* JCSMSClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSMSClient.h; sourceTree = "<group>"; };
+		F81EA8AA1A925CEE00081C81 /* JCSMSClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSMSClient.m; sourceTree = "<group>"; };
 		F82A283F19DDC55E00C3620D /* JCV4Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCV4Client.h; sourceTree = "<group>"; };
 		F82A284019DDC55E00C3620D /* JCV4Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCV4Client.m; sourceTree = "<group>"; };
 		F82B938D1A819BE500660AAA /* JCIncomingMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCIncomingMessageView.h; sourceTree = "<group>"; };
@@ -983,6 +987,7 @@
 		2751590818AD16E200FD8D3F /* Clients */ = {
 			isa = PBXGroup;
 			children = (
+				F81EA8A81A925A0000081C81 /* SMSClient */,
 				F8910FCF1A71EC590040B8C7 /* LoggerClient.h */,
 				F8910FD01A71EC590040B8C7 /* LoggerClient.m */,
 				F8910FD11A71EC590040B8C7 /* LoggerCommon.h */,
@@ -1526,6 +1531,15 @@
 			name = UnitTests;
 			sourceTree = "<group>";
 		};
+		F81EA8A81A925A0000081C81 /* SMSClient */ = {
+			isa = PBXGroup;
+			children = (
+				F81EA8A91A925CEE00081C81 /* JCSMSClient.h */,
+				F81EA8AA1A925CEE00081C81 /* JCSMSClient.m */,
+			);
+			name = SMSClient;
+			sourceTree = "<group>";
+		};
 		F8B62E4119D9F1C300AF98D3 /* Dialer */ = {
 			isa = PBXGroup;
 			children = (
@@ -1929,6 +1943,7 @@
 				9154947819366C54003DCED4 /* JCPlayPauseButton.m in Sources */,
 				5D490E611A8D1FF1004B62C0 /* RecentLineEvent.m in Sources */,
 				5DB0BFCD1A00BAB3006737D7 /* JCVoicemailCell.m in Sources */,
+				F81EA8AB1A925CEE00081C81 /* JCSMSClient.m in Sources */,
 				F8C51B8E1A70162400BC96D8 /* JCAudioAlertManager.m in Sources */,
 				5D241FD11A37F511008B498A /* User.m in Sources */,
 				5D2EDB811A3BA8250031F7AD /* JCDebugContactGroupsTableViewController.m in Sources */,
