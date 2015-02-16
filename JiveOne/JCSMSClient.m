@@ -12,7 +12,7 @@
 #ifndef DEBUG
 NSString *const kJCSMSClientBaseUrl = @"https://api.jive.com/sms";
 #else
-NSString *const kJCSMSClientBaseUrl = @"https://10.20.130.20:52777/sms";
+NSString *const kJCSMSClientBaseUrl = @"http://10.20.130.20:52777";
 #endif
 
 
@@ -28,7 +28,7 @@ NSString *const kJCSMSClientBaseUrl = @"https://10.20.130.20:52777/sms";
     self = [super initWithBaseURL:url];
     if (self) {
         _manager.responseSerializer = [AFJSONResponseSerializer serializer];
-        _manager.requestSerializer = [AFJSONRequestSerializer serializer];
+        _manager.requestSerializer = [JCAuthenticationJSONRequestSerializer serializer];
     }
     return self;
 }

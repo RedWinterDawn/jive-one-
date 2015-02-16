@@ -23,7 +23,7 @@ NSString *const kMessageInvalidSendResponseException  = @"invalidSendResponse";
 NSString *const kMessageResponseStatusSuccessValue = @"queued";
 NSString *const kMessageResponseStatusFailureValue  = @"failure";
 
-NSString *const kMessageRequestPathUrl = @"/sendSmsExternal";
+NSString *const kMessageRequestPathUrl = @"/sms/sendSmsExternal";
 
 @implementation Message (SMSClient)
 
@@ -31,7 +31,7 @@ NSString *const kMessageRequestPathUrl = @"/sendSmsExternal";
 {
     NSDictionary *parameters = @{
                                  kMessageRequestToKey:person.number,
-                                 kMessageRequestFromKey:did.didId,
+                                 kMessageRequestFromKey: @"0142349c-fff3-719c-cb63-000100420002",  //did.didId,
                                  kMessageRequestBodyKey: message};
     
     [self sendMessageWithRetries:1
