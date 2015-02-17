@@ -14,8 +14,7 @@
 
 +(void)sendMessage:(NSString *)message toNumber:(NSString *)number fromDid:(DID *)did completion:(CompletionHandler)completion;
 
-//+(void)sendMessageForDID:(DID *)did person:(id<JCPerson>)person message:(NSString *)message completion:(CompletionHandler)completion;
-
 +(void)downloadMessagesForDID:(DID *)did completion:(CompletionHandler)completion;
++(void)downloadMessagesForDID:(DID *)did number:(NSString *)number completion:(CompletionHandler)completion;
 
 @end
