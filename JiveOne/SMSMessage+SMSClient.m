@@ -85,7 +85,7 @@ NSString *const kMessageRequestPathUrl = @"/sms/sendSmsExternal";
         NSInteger errorCode = [response integerValueForKey:kMessageResponseErrorCodeKey];
         if (errorCode != 0) {
             if (completion) {
-                completion(false, [JCSMSError errorWithCode:errorCode]);
+                completion(false, [JCSMSClientError errorWithCode:errorCode]);
             }
             return;
         }
