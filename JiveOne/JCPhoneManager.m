@@ -28,7 +28,6 @@
 // View Controllers
 #import "JCCallerViewController.h"
 #import "JCTransferConfirmationViewController.h"
-#import "UIViewController+HUD.h"
 
 NSString *const kJCPhoneManager911String = @"911";
 NSString *const kJCPhoneManager611String = @"611";
@@ -73,7 +72,7 @@ NSString *const kJCPhoneManager611String = @"611";
         if (!error) {
             _initialized = TRUE;
         } else {
-            [UIApplication showSimpleAlert:@"Warning" message:@"There was an error loading the phone" code:error.code];
+            [JCAlertView alertWithTitle:@"Warning" message:@"There was an error loading the phone" code:error.code];
         }
     }
     return self;
@@ -1009,7 +1008,7 @@ NSString *const kJCPhoneManager611String = @"611";
                           type:JCPhoneManagerSingleDial
                     completion:^(BOOL success, NSError *error) {
                         if (!success) {
-                            [self showSimpleAlert:@"Warning" error:error];
+                            [JCAlertView alertWithTitle:@"Warning" error:error];
                         }
                         if (completion) {
                             completion(success, error);

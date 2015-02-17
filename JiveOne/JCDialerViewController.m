@@ -9,10 +9,7 @@
 #import "JCDialerViewController.h"
 #import "JCPhoneManager.h"
 #import "OutgoingCall.h"
-#import "UIViewController+HUD.h"
 #import "JCAppSettings.h"
-#import <AFNetworking/AFNetworkReachabilityManager.h>
-#import "UIViewController+HUD.h"
 #import "JCPhoneManagerError.h"
 
 NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCall";

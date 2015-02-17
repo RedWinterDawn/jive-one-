@@ -26,7 +26,6 @@
 // Controllers
 #import "JCMessageParticipantTableViewController.h"
 #import "JCNavigationController.h"
-#import "UIViewController+HUD.h"
 
 @protocol JSQMessageViewControllerPrivate <NSObject>
 

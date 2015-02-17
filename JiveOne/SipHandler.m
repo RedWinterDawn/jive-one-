@@ -13,7 +13,6 @@
 #import "JCAppSettings.h"
 #import "JCSipHandlerError.h"
 #import "JCSipNetworkQualityRequestOperation.h"
-#import "UIViewController+HUD.h"
 
 #ifdef __APPLE__
 #include "TargetConditionals.h"
