@@ -29,6 +29,11 @@ NSString *const kPersonLastNameAttributeKey = @"lastName";
     return nil;
 }
 
+-(NSString *)number
+{
+    return nil;
+}
+
 -(NSString *)firstName
 {
     NSString *firstName = [self primitiveValueForKey:kPersonFirstNameAttributeKey];
