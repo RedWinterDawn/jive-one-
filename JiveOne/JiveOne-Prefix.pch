@@ -29,6 +29,9 @@
     #import "NSString+Additions.h"
     #import "UIDevice+Additions.h"
     #import "NSDictionary+Validations.h"
+    #import "JCAlertView.h"
+    #import "JCProgressHUD.h"
+
 #endif
 
 #if !defined(__OPTIMIZE__) || defined(DEBUG)

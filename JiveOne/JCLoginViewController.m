@@ -10,8 +10,6 @@
 #import "JCAuthenticationManager.h"
 #import "UITextField+ELFixSecureTextFieldFont.h"
 
-#import "UIViewController+HUD.h"
-
 @interface JCLoginViewController () <NSFileManagerDelegate>
 {
     JCAuthenticationManager *_authenticationManager;
@@ -90,8 +88,7 @@
                                     completed:^(BOOL success, NSError *error) {
                                         [self hideStatus];
                                         if (error) {
-                                            [self showSimpleAlert:error.localizedFailureReason
-                                                          message:error.localizedDescription];
+                                            [JCAlertView alertWithTitle:error.localizedFailureReason message:error.localizedDescription];
                                         }
                                     }];
 }

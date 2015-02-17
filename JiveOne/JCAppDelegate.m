@@ -32,11 +32,7 @@
 #import "Contact+V5Client.h"
 #import "Voicemail+V5Client.h"
 
-#import "UIViewController+HUD.h"
-
 #import  "JCAppSettings.h"
-
-#import <SVProgressHUD/SVProgressHUD.h>
 
 @interface JCAppDelegate () <JCPickerViewControllerDelegate>
 {
@@ -359,7 +355,7 @@
     JCAuthenticationManager *authenticationManager = notification.object;
     Line *line = authenticationManager.line;
     if (!line) {
-        [UIApplication showSimpleAlert:@"Warning" message:@"Unable to select line. Please call Customer Care. You may not have a device associated with this account."];
+        [JCAlertView alertWithTitle:@"Warning" message:@"Unable to select line. Please call Customer Care. You may not have a device associated with this account."];
         return;
     }
     

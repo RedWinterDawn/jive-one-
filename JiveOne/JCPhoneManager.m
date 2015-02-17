@@ -30,7 +30,6 @@
 // View Controllers
 #import "JCCallerViewController.h"
 #import "JCTransferConfirmationViewController.h"
-#import "UIViewController+HUD.h"
 
 NSString *const kJCPhoneManager911String = @"911";
 NSString *const kJCPhoneManager611String = @"611";

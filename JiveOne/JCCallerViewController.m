@@ -25,7 +25,6 @@
 #import "JCCallCardCollectionViewController.h"
 
 #import "JCLineSession.h"
-#import "UIViewController+HUD.h"
 
 #define CALL_OPTIONS_ANIMATION_DURATION 0.6
 #define TRANSFER_ANIMATION_DURATION 0.3
@@ -260,7 +259,7 @@ CGFloat *_callOptionsWidth;
         button.enabled = NO;
         [JCPhoneManager finishWarmTransfer:^(BOOL success, NSError *error) {
             if (!success) {
-                [self showSimpleAlert:@"" error:error];
+                [JCAlertView alertWithError:error];
             }
             button.enabled = YES;
         }];
