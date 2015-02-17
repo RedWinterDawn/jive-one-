@@ -995,13 +995,13 @@
 				F8910FCF1A71EC590040B8C7 /* LoggerClient.h */,
 				F8910FD01A71EC590040B8C7 /* LoggerClient.m */,
 				F8910FD11A71EC590040B8C7 /* LoggerCommon.h */,
+				9145E31D191D842500840D66 /* JCVersion.h */,
+				9145E31E191D842500840D66 /* JCVersion.m */,
 				5DF4680E1A5B9BF600E5826A /* JCClient.h */,
 				5DF4680F1A5B9BF600E5826A /* JCClient.m */,
 				5DF4680D1A5B594100E5826A /* V4Provisioning */,
 				5DF4680C1A5B4D2400E5826A /* V5Client */,
 				F81EA8A81A925A0000081C81 /* SMSClient */,
-				9145E31D191D842500840D66 /* JCVersion.h */,
-				9145E31E191D842500840D66 /* JCVersion.m */,
 			);
 			name = Clients;
 			sourceTree = "<group>";

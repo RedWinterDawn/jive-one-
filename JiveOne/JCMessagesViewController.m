@@ -110,47 +110,15 @@
         senderDisplayName:(NSString *)senderDisplayName
                      date:(NSDate *)date
 {
- [SMSMessage sendMessageForDID:nil person:_participants.lastObject message:text completion:^(BOOL success, NSError *error) {
+    id<JCPerson> person = _participants.lastObject;
+    [SMSMessage sendMessage:text toNumber:person.number fromDid:nil completion:^(BOOL success, NSError *error) {
      if (success) {
          [JSQSystemSoundPlayer jsq_playMessageSentSound];
          [self finishSendingMessageAnimated:YES];
      }else {
          [self showError:error];
-         
      }
  }];
-//    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextWithParent:self.fetchedResultsController.managedObjectContext];
-//    id<JCPerson> person = _participants.lastObject;
-//    Message *message;
-//    if ([person isKindOfClass:[JCUnknownNumber class]]) {
-//        JCUnknownNumber *unknowNumber = (JCUnknownNumber *)person;
-//        SMSMessage *smsMessage = [SMSMessage MR_createInContext:context];
-//        [smsMessage setNumber:unknowNumber.number name:unknowNumber.name];
-//        message = smsMessage;
-//    } else if ([person isKindOfClass:[LocalContact class]]) {
-//        LocalContact *localContact = (LocalContact *)person;
-//        SMSMessage *smsMessage = [SMSMessage MR_createInContext:context];
-//        [smsMessage setNumber:localContact.number name:localContact.name];
-//        message = smsMessage;
-//    }
-//        
-//    message.text = text;
-//    message.read = TRUE;
-//    message.date = [NSDate date];
-//    
-//    [context MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
-//        if (success) {
-//            
-//            [JSQSystemSoundPlayer jsq_playMessageSentSound];
-//            
-//            //TODO: upload to the server here.
-//            
-//            [self finishSendingMessageAnimated:YES];
-//        } else {
-//            
-//        }
-//    }];
-
 }
 
 - (IBAction)simulateIncomingMsg:(id)sender {
