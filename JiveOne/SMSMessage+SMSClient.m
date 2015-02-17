@@ -31,7 +31,7 @@ NSString *const kMessageRequestPathUrl = @"/sms/sendSmsExternal";
 {
     NSDictionary *parameters = @{
                                  kMessageRequestToKey:person.number,
-                                 kMessageRequestFromKey: @"0142349c-fff3-719c-cb63-000100420002",  //did.didId,
+                                 kMessageRequestFromKey: @"18013163336",  //did.didId,
                                  kMessageRequestBodyKey: message};
     
     [self sendMessageWithRetries:1
