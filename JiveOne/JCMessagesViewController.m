@@ -89,7 +89,15 @@
             _participants = @[smsMessage.localContact];
         }
         [message.managedObjectContext refreshObject:message mergeChanges:NO];
+        
+        [SMSMessage downloadMessagesForDID:nil
+                                    number:_messageGroupId
+                                completion:^(BOOL success, NSError *error) {
+                                    
+                                }];
     }
+    
+    
 }
 
 + (UINib *)nib
@@ -167,6 +175,7 @@
     }
     _participants = @[participants.firstObject];
     id<JCPerson> person = _participants.lastObject;
+    self.title = person.name;
         
     // New SMS from a unknown number;
     if ([person isKindOfClass:[JCUnknownNumber class]]) {

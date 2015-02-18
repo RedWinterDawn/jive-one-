@@ -11,14 +11,15 @@
 #ifndef DEBUG
 NSString *const kJCSMSClientBaseUrl = @"https://api.jive.com/sms";
 #else
-NSString *const kJCSMSClientBaseUrl = @"http://10.20.130.20:60257";
+NSString *const kJCSMSClientBaseUrl = @"https://api.jive.com/sms-temp";
 #endif
 
 @implementation JCSMSClient
 
 -(instancetype)init
 {
-    return [self initWithBaseURL:[NSURL URLWithString:kJCSMSClientBaseUrl]];
+    NSURL *url = [NSURL URLWithString:kJCSMSClientBaseUrl];
+    return [self initWithBaseURL:url];
 }
 
 -(instancetype)initWithBaseURL:(NSURL *)url
