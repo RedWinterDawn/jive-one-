@@ -260,6 +260,16 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     return _line;
 }
 
+-(PBX *)pbx
+{
+    return self.line.pbx;
+}
+
+-(DID *)did
+{
+    return self.pbx.dids.allObjects.firstObject;
+}
+
 #pragma mark - Private -
 
 -(void)receivedAccessTokenData:(NSDictionary *)tokenData
