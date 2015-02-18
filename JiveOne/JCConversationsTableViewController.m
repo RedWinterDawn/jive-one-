@@ -13,6 +13,7 @@
 #import "Message.h"
 #import "JCNavigationController.h"
 #import "JCConversationTableViewCell.h"
+#import "SMSMessage+SMSClient.h"
 
 NSString *const kJCConversationsTableViewController = @"ConversationCell";
 
@@ -82,12 +83,17 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
 
 - (IBAction)refreshTable:(id)sender {
     if ([sender isKindOfClass:[UIRefreshControl class]]) {
-        UIRefreshControl *control = (UIRefreshControl *)sender;
-        [control endRefreshing];
+        PBX *pbx = [JCAuthenticationManager sharedInstance].pbx;
+        [SMSMessage downloadMessagesForDIDs:pbx.dids completion:^(BOOL success, NSError *error) {
+            [((UIRefreshControl *)sender) endRefreshing];
+            if (success) {
+                _fetchedResultsController = nil;
+                [self.tableView reloadData];
+            } else {
+                [self showError:error];
+            }
+        }];
     }
-    
-    _fetchedResultsController = nil;
-    [self.tableView reloadData];
 }
 
 #pragma mark - Navigation

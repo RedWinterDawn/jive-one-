@@ -27,6 +27,15 @@
 #import "JCMessageParticipantTableViewController.h"
 #import "JCNavigationController.h"
 
+#define MESSAGES_BACKGROUND_COLOR [UIColor colorWithRed:239/255.0f green:239/255.0f blue:239/255.0f alpha:1.0f]
+#define MESSAGES_AVATAR_SIZE CGSizeMake(40, 40)
+#define MESSAGES_TEXT_INSETS UIEdgeInsetsMake(7.0f, 14.0f, 0.0f, 14.0f)
+
+#define MESSAGES_PARTICIPANT_VIEW_CONTROLLER @"MessageParticipantsViewController"
+
+static NSString *IncomingCellIdentifier = @"incomingText";
+static NSString *OutgoingCellIdentifier = @"outgoingText";
+
 @protocol JSQMessageViewControllerPrivate <NSObject>
 
 @optional
@@ -45,8 +54,12 @@
     NSArray *_participants;
 }
 
+// Loads the
+-(void)jc_checkParticipants;
+
 @property (nonatomic, strong) NSArray *participants;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, readonly) DID *did;
 
 @end
 
@@ -54,50 +67,20 @@
 
 - (void)viewDidLoad
 {
+    // We deliberately do not call [super viewDidLoad] here.
+    
     [self jsq_configureMessagesViewController];
     [self jsq_registerForNotifications:YES];
+    self.incomingCellIdentifier = IncomingCellIdentifier;
+    self.outgoingCellIdentifier = OutgoingCellIdentifier;
     
-    //setting the background color of the messages view
-    self.collectionView.backgroundColor = [UIColor colorWithRed:239/255.0f green:239/255.0f blue:239/255.0f alpha:1.0f];
+    self.collectionView.backgroundColor = MESSAGES_BACKGROUND_COLOR;
+    self.collectionView.collectionViewLayout.outgoingAvatarViewSize = MESSAGES_AVATAR_SIZE;
+    self.collectionView.collectionViewLayout.incomingAvatarViewSize = MESSAGES_AVATAR_SIZE;
+    self.collectionView.collectionViewLayout.messageBubbleTextViewTextContainerInsets = MESSAGES_TEXT_INSETS;
     
-    self.senderId           = [JCAuthenticationManager sharedInstance].jiveUserId;
-    self.senderDisplayName  = [JCAuthenticationManager sharedInstance].line.name;
-    self.senderNumber       = @"8013163336";
-    
-    // didId = 0142349c-fff3-719c-cb63-000100420002
-    
-    self.incomingCellIdentifier = @"incomingText";
-    self.outgoingCellIdentifier = @"outgoingText";
-    
-    // Layout configurations
-    self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeMake(40, 40);
-    self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeMake(40, 40);
-    self.collectionView.collectionViewLayout.messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(7.0f, 14.0f, 0.0f, 14.0f);
-   
-    self.inputToolbar.contentView.textView.placeHolder = NSLocalizedStringFromTable(@"Send SMS", @"JSQMessages", @"Placeholder text for the message input text view");
-    
-    if (!_messageGroupId) {
-        JCMessageParticipantTableViewController *participantTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"MessageParticipantsViewController"];
-        participantTableViewController.delegate = self;
-        [self presentDropdownViewController:participantTableViewController animated:YES];
-    } else {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId = %@", _messageGroupId];
-        Message *message = [Message MR_findFirstWithPredicate:predicate sortedBy:@"date" ascending:NO];
-        if ([message isKindOfClass:[SMSMessage class]]) {
-            SMSMessage *smsMessage = (SMSMessage *)message;
-            self.title = smsMessage.localContact.name;
-            _participants = @[smsMessage.localContact];
-        }
-        [message.managedObjectContext refreshObject:message mergeChanges:NO];
-        
-        [SMSMessage downloadMessagesForDID:nil
-                                    number:_messageGroupId
-                                completion:^(BOOL success, NSError *error) {
-                                    
-                                }];
-    }
-    
-    
+    self.inputToolbar.contentView.textView.placeHolder = NSLocalizedString(@"Send SMS", nil);
+    [self jc_checkParticipants];
 }
 
 + (UINib *)nib
@@ -117,7 +100,8 @@
         senderDisplayName:(NSString *)senderDisplayName
                      date:(NSDate *)date
 {
-    [SMSMessage sendMessage:text toNumber:person.number fromDid:nil completion:^(BOOL success, NSError *error) {
+    id<JCPersonDataSource> person = _participants.lastObject;
+    [SMSMessage sendMessage:text toPerson:person fromDid:self.did completion:^(BOOL success, NSError *error) {
      if (success) {
          [JSQSystemSoundPlayer jsq_playMessageSentSound];
          [self finishSendingMessageAnimated:YES];
@@ -125,44 +109,6 @@
          [self showError:error];
      }
  }];
-}
-
-- (IBAction)simulateIncomingMsg:(id)sender {
-    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextWithParent:self.fetchedResultsController.managedObjectContext];
-    id<JCPerson> person = _participants.lastObject;
-    Message *message;
-    if ([person isKindOfClass:[JCUnknownNumber class]]) {
-        JCUnknownNumber *unknowNumber = (JCUnknownNumber *)person;
-        SMSMessage *smsMessage = [SMSMessage MR_createInContext:context];
-        [smsMessage setNumber:unknowNumber.number name:unknowNumber.name];
-        smsMessage.inbound = true;
-        message = smsMessage;
-    } else if ([person isKindOfClass:[LocalContact class]]) {
-        LocalContact *localContact = (LocalContact *)person;
-        SMSMessage *smsMessage = [SMSMessage MR_createInContext:context];
-        [smsMessage setNumber:localContact.number name:localContact.name];
-        smsMessage.inbound = true;
-        message = smsMessage;
-    }
-    id<JCPersonDataSource> person = _participants.lastObject;
-    
-    message.text = @"Ahhhh Things";
-    message.read = TRUE;
-    message.date = [NSDate date];
-    
-    [context MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
-        if (success) {
-            
-            [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
-            
-            //TODO: upload to the server here.
-            
-            [self finishSendingMessageAnimated:YES];
-        } else {
-            
-        }
-    }];
-    
 }
 
 #pragma mark - Setters -
@@ -183,16 +129,43 @@
     }
 }
 
--(void)setMessageGroupId:(NSString *)conversationId
+-(void)setMessageGroupId:(NSString *)messageGroupId
 {
-    _messageGroupId = conversationId;
-    _fetchedResultsController = nil;
-    [self.collectionView reloadData];
+    _messageGroupId = messageGroupId;
+    
+    // Trigger a load of all the message data for that message group if there are messages for that
+    // message group, and trigger a sync.
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId = %@", messageGroupId];
+    Message *message = [Message MR_findFirstWithPredicate:predicate sortedBy:@"date" ascending:NO];
+    if (message) {
+        
+        // We are a SMS messages group, so we set the participant and request messages from the sms
+        // client service.
+        if ([message isKindOfClass:[SMSMessage class]])
+        {
+            SMSMessage *smsMessage = (SMSMessage *)message;
+            [SMSMessage downloadMessagesForDID:smsMessage.did toPerson:smsMessage.localContact completion:NULL];
+            self.title = smsMessage.localContact.name;
+            self.participants = @[smsMessage.localContact];
+        }
+        
+        // We are a conversation group, so we become a conversation UI.
+        else if([message isKindOfClass:[Conversation class]])
+        {
+            // Yet to be defined conversation logic
+        }
+        
+        // Reload the table from whatever it had before.
+        _fetchedResultsController = nil;
+        if (self.view.superview) {
+            [self.collectionView reloadData];
+        }
+    }
 }
 
 #pragma mark - Getters -
 
--(NSFetchedResultsController *)fetchedResultsController
+- (NSFetchedResultsController *)fetchedResultsController
 {
     if (!_fetchedResultsController) {
         
@@ -221,14 +194,39 @@
     return _fetchedResultsController;
 }
 
+- (NSString *)senderId
+{
+    return [JCAuthenticationManager sharedInstance].jiveUserId;
+}
+
+- (NSString *)senderNumber
+{
+    return self.did.number;
+}
+
+- (DID *)did
+{
+    return [JCAuthenticationManager sharedInstance].did;
+}
+
 #pragma mark - Private -
 
--(NSUInteger)count
+- (void)jc_checkParticipants
+{
+    // If we have a message id
+    if (!_participants) {
+        JCMessageParticipantTableViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:MESSAGES_PARTICIPANT_VIEW_CONTROLLER];
+        viewController.delegate = self;
+        [self presentDropdownViewController:viewController animated:YES];
+    }
+}
+
+- (NSUInteger)count
 {
     return self.fetchedResultsController.fetchedObjects.count;
 }
 
--(Message *)objectAtIndexPath:(NSIndexPath *)indexPath
+- (Message *)objectAtIndexPath:(NSIndexPath *)indexPath
 {
     return [self.fetchedResultsController objectAtIndexPath:indexPath];
 }

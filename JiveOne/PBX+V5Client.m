@@ -142,7 +142,7 @@ NSString *const kPBXResponseException           = @"pbxResponseException";
     // TODO: get actual dids from the server response when it becomes available, and it will be an
     // array which we loop through to make a list of DIDs. Temp solution unti we are able to so from
     // the server response.
-    NSString *number = @"+18013163336";
+    NSString *number = @"18013163336";
     NSString *didId = @"0142349c-fff3-719c-cb63-000100420002";
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx = %@ and didId = %@", pbx, didId];
     DID *did = [DID MR_findFirstWithPredicate:predicate inContext:user.managedObjectContext];

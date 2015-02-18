@@ -17,6 +17,6 @@
 @property (weak, nonatomic, readonly) JCMessagesInputToolbar *inputToolbar;
 
 @property (strong, nonatomic) NSString *messageGroupId;
-@property (strong, nonatomic) NSString *senderNumber;
+
 
 @end

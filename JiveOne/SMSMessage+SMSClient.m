@@ -21,18 +21,19 @@
 #define MESSAGES_DOWNLOAD_NUMBER_OF_RETRIES 1
 #endif
 
-NSString *const kSMSMessageSendRequestUrlPath          = @"sendSmsExternal";
-NSString *const kSMSMessageRequestConversationsURLPath = @"external/getMessages/did/%@/";
-NSString *const kSMSMessageRequestConversationURLPath  = @"external/getMessages/did/%@/number/%@";
+NSString *const kSMSMessageSendRequestUrlPath                   = @"send";
+NSString *const kSMSMessageRequestConversationsDigestURLPath    = @"digest/did/%@/";
+NSString *const kSMSMessageRequestConversationsURLPath          = @"messages/did/%@";
+NSString *const kSMSMessageRequestConversationURLPath           = @"messages/did/%@/number/%@";
 
-NSString *const kSMSMessageSendRequestToKey            = @"to";
-NSString *const kSMSMessageSendRequestFromKey          = @"from";
-NSString *const kSMSMessageSendRequestBodyKey          = @"body";
+NSString *const kSMSMessageSendRequestToKey                 = @"to";
+NSString *const kSMSMessageSendRequestFromKey               = @"from";
+NSString *const kSMSMessageSendRequestBodyKey               = @"body";
 
-NSString *const kSMSMessageResponseStatusKey           = @"status";
-NSString *const kSMSMessageResponseErrorMsgKey         = @"errorMessage";
-NSString *const kSMSMessageResponseErrorCodeKey        = @"errorCode";
-NSString *const kSMSMessageResponseObjectKey           = @"message";
+NSString *const kSMSMessageResponseStatusKey                = @"status";
+NSString *const kSMSMessageResponseErrorMsgKey              = @"errorMessage";
+NSString *const kSMSMessageResponseErrorCodeKey             = @"errorCode";
+NSString *const kSMSMessageResponseObjectKey                = @"message";
 
 NSString *const kSMSMessageResponseObjectDidIdKey              = @"didId";
 NSString *const kSMSMessageResponseObjectNumberKey             = @"number";
@@ -48,10 +49,40 @@ NSString *const kSMSMessageHashCreateString = @"%@-%@-%@-%@-%@";
 
 @implementation SMSMessage (SMSClient)
 
-+(void)sendMessage:(NSString *)message toNumber:(NSString *)number fromDid:(DID *)did completion:(CompletionHandler)completion
++ (void)createSmsMessageWithMessageData:(NSDictionary *)data did:(DID *)did
 {
-    NSDictionary *parameters = @{kSMSMessageSendRequestToKey:number,
-                                 kSMSMessageSendRequestFromKey: @"18013163336",  //did.didId,
+    // Fetch values from data object.
+    NSString *didId     = [data stringValueForKey:kSMSMessageResponseObjectDidIdKey];
+    NSString *number    = [data stringValueForKey:kSMSMessageResponseObjectNumberKey];
+    NSString *text      = [data stringValueForKey:kSMSMessageResponseObjectTextKey];
+    NSString *direction = [data stringValueForKey:kSMSMessageResponseObjectDirectionKey];
+    NSString *time      = [data stringValueForKey:kSMSMessageResponseObjectArrivalTimeKey];
+    NSString *hash      = [data stringValueForKey:kSMSMessageResponseObjectHashKey];
+    if (!hash) {
+        hash = [NSString stringWithFormat:kSMSMessageHashCreateString, didId, number, text, direction, time].MD5Hash;
+    }
+    
+    // We check to see if we already have a message using the stored server hash, and if we don't,
+    // we create one with the data.
+    SMSMessage *message = [SMSMessage MR_findFirstByAttribute:NSStringFromSelector(@selector(serverHash)) withValue:hash inContext:did.managedObjectContext];
+    if (!message) {
+        message = [SMSMessage MR_createInContext:did.managedObjectContext];
+        message.serverHash = hash;
+        [message setNumber:number name:nil];
+        message.text = text;
+        message.inbound = [direction isEqualToString:kSMSMessageResponseObjectDirectionInboundValue] ? true : false;
+        message.read = [direction isEqualToString:kSMSMessageResponseObjectDirectionInboundValue] ? false : true;
+        message.date = [data datetimeValueForKey:kSMSMessageResponseObjectArrivalTimeKey];
+        message.did = did;
+    }
+}
+
+#pragma mark - Send -
+
++(void)sendMessage:(NSString *)message toPerson:(id<JCPersonDataSource>)person fromDid:(DID *)did completion:(CompletionHandler)completion
+{
+    NSDictionary *parameters = @{kSMSMessageSendRequestToKey: person.number,
+                                 kSMSMessageSendRequestFromKey: did.didId,
                                  kSMSMessageSendRequestBodyKey: message};
     
     [self sendMessageWithRetries:MESSAGES_SEND_NUMBER_OF_RETRIES
@@ -66,10 +97,12 @@ NSString *const kSMSMessageHashCreateString = @"%@-%@-%@-%@-%@";
                          }];
 }
 
-+(void)downloadMessagesForDIDs:(NSArray *)dids completion:(CompletionHandler)completion
+#pragma mark - Receive -
+
++(void)downloadMessagesForDIDs:(NSSet *)dids completion:(CompletionHandler)completion
 {
     __block NSError *batchError;
-    __block NSMutableArray *pendingDids = [NSMutableArray arrayWithArray:dids];
+    __block NSMutableSet *pendingDids = [NSMutableSet setWithSet:dids];
     for (id object in dids) {
         if ([object isKindOfClass:[DID class]]) {
             __block DID *did = (DID *)object;
@@ -103,10 +136,10 @@ NSString *const kSMSMessageHashCreateString = @"%@-%@-%@-%@-%@";
                          }];
 }
 
-+(void)downloadMessagesForDID:(DID *)did number:(NSString *)number completion:(CompletionHandler)completion
++(void)downloadMessagesForDID:(DID *)did toPerson:(id<JCPersonDataSource>)person completion:(CompletionHandler)completion
 {
     [self downloadMessagesForDID:did
-                          number:number
+                          person:person
                          retries:MESSAGES_DOWNLOAD_NUMBER_OF_RETRIES
                          success:^(id responseObject) {
                              [self processSMSDownloadConversationResponseObject:responseObject did:did completion:completion];
@@ -167,8 +200,7 @@ NSString *const kSMSMessageHashCreateString = @"%@-%@-%@-%@-%@";
             failure(error);
         }
     } else {
-        
-        NSString *path = [NSString stringWithFormat:kSMSMessageRequestConversationsURLPath, @"18013163336"];  //did.didId];
+        NSString *path = [NSString stringWithFormat:kSMSMessageRequestConversationsDigestURLPath, did.number];
         JCSMSClient *client = [[JCSMSClient alloc] init];
         [client.manager GET:path
                  parameters:nil
@@ -187,7 +219,7 @@ NSString *const kSMSMessageHashCreateString = @"%@-%@-%@-%@-%@";
 }
 
 + (void)downloadMessagesForDID:(DID *)did
-                        number:(NSString *)number
+                        person:(id<JCPersonDataSource>)person
                        retries:(NSInteger)retryCount
                        success:(void (^)(id responseObject))success
                        failure:(void (^)(NSError *error))failure
@@ -198,7 +230,7 @@ NSString *const kSMSMessageHashCreateString = @"%@-%@-%@-%@-%@";
             failure(error);
         }
     } else {
-        NSString *path = [NSString stringWithFormat:kSMSMessageRequestConversationURLPath, @"18013163336", number];
+        NSString *path = [NSString stringWithFormat:kSMSMessageRequestConversationURLPath, did.number, person.number];
         JCSMSClient *client = [[JCSMSClient alloc] init];
         [client.manager GET:path
                  parameters:nil
@@ -208,7 +240,7 @@ NSString *const kSMSMessageHashCreateString = @"%@-%@-%@-%@-%@";
                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                         if (error.code == NSURLErrorTimedOut) {
                             NSLog(@"Retry Message send: %lu", (long)retryCount);
-                            [self downloadMessagesForDID:did number:number retries:(retryCount - 1) success:success failure:failure];
+                            [self downloadMessagesForDID:did person:person retries:(retryCount - 1) success:success failure:failure];
                         } else{
                             failure(error);
                         }
@@ -223,168 +255,105 @@ NSString *const kSMSMessageHashCreateString = @"%@-%@-%@-%@-%@";
 // message from the result and store it locally
 + (void)processSMSSendResponseObject:(id)responseObject did:(DID *)did completion:(CompletionHandler)completion
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        @autoreleasepool {
-            @try {
-                // Is dictionary?
-                if (![responseObject isKindOfClass:[NSDictionary class]]) {
-                    [NSException raise:kSMSMessageInvalidSendResponseException format:@"Dictionary is null"];
-                }
-                
-                // Is Success?
-                NSDictionary *response = (NSDictionary *)responseObject;
-                NSInteger errorCode = [response integerValueForKey:kSMSMessageResponseErrorCodeKey];
-                if (errorCode != 0) {
-                    if (completion) {
-                        completion(false, [JCSMSClientError errorWithCode:errorCode]);
-                    }
-                    return;
-                }
-                
-                // Do we have a response object?
-                id object = [response objectForKey:kSMSMessageResponseObjectKey];
-                if(!object || ![object isKindOfClass:[NSDictionary class]]) {
-                    [NSException raise:kSMSMessageInvalidSendResponseException format:@"Response object is null or invalid"];
-                }
-                
-                // Lets get a mamanged object context and create a message from the response object
-                // and save it to the local store.
-                [MagicalRecord saveUsingCurrentThreadContextWithBlock:^(NSManagedObjectContext *localContext) {
-                    [self createSmsMessageWithMessageData:(NSDictionary *)object did:did context:localContext];
-                }
-                completion:^(BOOL success, NSError *error) {
-                    if (completion) {
-                        if (error) {
-                            completion(NO, error);
-                        } else {
-                            completion(YES, nil);
-                        }
-                    }
-                }];
-            }
-            @catch (NSException *exception) {
-                NSInteger code;
-                if (completion) {
-                    if ([exception.name isEqualToString:kSMSMessageInvalidSendResponseException]) {
-                        code = SMS_RESPONSE_INVALID;
-                    }
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        completion(NO, [JCSMSClientError errorWithCode:code]);
-                    });
-                }
-            }
+    @try {
+        // Is dictionary?
+        if (![responseObject isKindOfClass:[NSDictionary class]]) {
+            [NSException raise:kSMSMessageInvalidSendResponseException format:@"Dictionary is null"];
         }
-    });
+        
+        // Is Success?
+        NSDictionary *response = (NSDictionary *)responseObject;
+        NSInteger errorCode = [response integerValueForKey:kSMSMessageResponseErrorCodeKey];
+        if (errorCode != 0) {
+            if (completion) {
+                completion(false, [JCSMSClientError errorWithCode:errorCode]);
+            }
+            return;
+        }
+        
+        // Do we have a response object?
+        id object = [response objectForKey:kSMSMessageResponseObjectKey];
+        if(!object || ![object isKindOfClass:[NSDictionary class]]) {
+            [NSException raise:kSMSMessageInvalidSendResponseException format:@"Response object is null or invalid"];
+        }
+        
+        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+            DID *localDid = (DID *)[localContext objectWithID:did.objectID];
+            [self createSmsMessageWithMessageData:(NSDictionary *)object did:localDid];
+        } completion:completion];
+    }
+    @catch (NSException *exception) {
+        NSInteger code;
+        if (completion) {
+            if ([exception.name isEqualToString:kSMSMessageInvalidSendResponseException]) {
+                code = SMS_RESPONSE_INVALID;
+            }
+            completion(NO, [JCSMSClientError errorWithCode:code]);
+        }
+    }
 }
 
 + (void)processSMSDownloadConversationsResponseObject:(id)responseObject completion:(CompletionHandler)completion
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        @autoreleasepool {
-            @try {
-                
-                // Is Array? We should have an array of messages.
-                if (![responseObject isKindOfClass:[NSArray class]]) {
-                    [NSException raise:kSMSMessageInvalidSendResponseException format:@"Array is null"];
-                }
-                
-                NSLog(@"%@", responseObject);
-                
-            }
-            @catch (NSException *exception) {
-                NSInteger code;
-                if (completion) {
-                    if ([exception.name isEqualToString:kSMSMessageInvalidSendResponseException]) {
-                        code = SMS_RESPONSE_INVALID;
-                    }
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        completion(NO, [JCSMSClientError errorWithCode:code]);
-                    });
-                }
-            }
+    @try {
+        
+        // Is Array? We should have an array of messages.
+        if (![responseObject isKindOfClass:[NSArray class]]) {
+            [NSException raise:kSMSMessageInvalidSendResponseException format:@"Array is null"];
         }
-    });
+        
+        NSLog(@"%@", responseObject);
+        
+        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+            
+            // TODO: Implement this.
+            
+        } completion:completion];
+    }
+    @catch (NSException *exception) {
+        NSInteger code;
+        if (completion) {
+            if ([exception.name isEqualToString:kSMSMessageInvalidSendResponseException]) {
+                code = SMS_RESPONSE_INVALID;
+            }
+            completion(NO, [JCSMSClientError errorWithCode:code]);
+        }
+    }
 }
 
 + (void)processSMSDownloadConversationResponseObject:(id)responseObject did:(DID *)did completion:(CompletionHandler)completion
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        @autoreleasepool {
-            @try {
-                
-                // Is Array? We should have an array of messages.
-                if (![responseObject isKindOfClass:[NSArray class]]) {
-                    [NSException raise:kSMSMessageInvalidSendResponseException format:@"Array is null"];
-                }
-                
-                NSArray *messages = (NSArray *)responseObject;
-                [MagicalRecord saveUsingCurrentThreadContextWithBlock:^(NSManagedObjectContext *localContext) {
-                    
-                    DID *localDid = did ? (DID *)[localContext objectWithID:did.objectID] : nil;
-                    for (id object in messages) {
-                        if ([object isKindOfClass:[NSDictionary class]]) {
-                            [self createSmsMessageWithMessageData:(NSDictionary *)object did:localDid context:localContext];
-                        }
-                    }
-                } completion:^(BOOL success, NSError *error) {
-                    if (completion) {
-                        if (error) {
-                            completion(NO, error);
-                        } else {
-                            completion(YES, nil);
-                        }
-                    }
-                }];
-            }
-            @catch (NSException *exception) {
-                NSInteger code;
-                if (completion) {
-                    if ([exception.name isEqualToString:kSMSMessageInvalidSendResponseException]) {
-                        code = SMS_RESPONSE_INVALID;
-                    }
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        completion(NO, [JCSMSClientError errorWithCode:code]);
-                    });
+    @try {
+        
+        // Is Array? We should have an array of messages.
+        if (![responseObject isKindOfClass:[NSArray class]]) {
+            [NSException raise:kSMSMessageInvalidSendResponseException format:@"Array is null"];
+        }
+        
+        NSArray *messages = (NSArray *)responseObject;
+        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+            DID *localDid = did ? (DID *)[localContext objectWithID:did.objectID] : nil;
+            for (id object in messages) {
+                if ([object isKindOfClass:[NSDictionary class]]) {
+                    [self createSmsMessageWithMessageData:(NSDictionary *)object did:localDid];
                 }
             }
         }
-    });
+        completion:completion];
+    }
+    @catch (NSException *exception) {
+        NSInteger code;
+        if (completion) {
+            if ([exception.name isEqualToString:kSMSMessageInvalidSendResponseException]) {
+                code = SMS_RESPONSE_INVALID;
+            }
+            completion(NO, [JCSMSClientError errorWithCode:code]);
+        }
+    }
 }
 
 #pragma mark Shared
 
-+ (void)createSmsMessageWithMessageData:(NSDictionary *)data did:(DID *)did context:(NSManagedObjectContext *)context
-{
-    // Fetch values from data object.
-    NSString *didId     = [data stringValueForKey:kSMSMessageResponseObjectDidIdKey];
-    NSString *number    = [data stringValueForKey:kSMSMessageResponseObjectNumberKey];
-    NSString *text      = [data stringValueForKey:kSMSMessageResponseObjectTextKey];
-    NSString *direction = [data stringValueForKey:kSMSMessageResponseObjectDirectionKey];
-    NSString *time      = [data stringValueForKey:kSMSMessageResponseObjectArrivalTimeKey];
-    NSString *hash      = [data stringValueForKey:kSMSMessageResponseObjectHashKey];
-    if (!hash) {
-        hash = [NSString stringWithFormat:kSMSMessageHashCreateString, didId, number, text, direction, time].MD5Hash;
-    }
-    
-    // We check to see if we already have a message using the stored server hash, and if we don't,
-    // we create one with the data.
-    SMSMessage *message = [SMSMessage MR_findFirstByAttribute:NSStringFromSelector(@selector(serverHash)) withValue:hash inContext:context];
-    if (!message) {
-        message = [SMSMessage MR_createInContext:context];
-        message.serverHash = hash;
-        [message setNumber:number name:nil];
-        message.text = text;
-        message.inbound = [direction isEqualToString:kSMSMessageResponseObjectDirectionInboundValue] ? true : false;
-        message.read = [direction isEqualToString:kSMSMessageResponseObjectDirectionInboundValue] ? false : true;
-        message.date = [data datetimeValueForKey:kSMSMessageResponseObjectArrivalTimeKey];
-        
-        // Set the DID
-        if (did) {
-            message.did = did;
-        } else {
-            [message setDidId:didId];
-        }
-    }
-}
+
 
 @end

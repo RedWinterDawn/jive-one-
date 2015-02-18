@@ -1079,11 +1079,6 @@
                     <navigationItem key="navigationItem" id="w8d-wI-w7j">
                         <nil key="title"/>
                         <barButtonItem key="backBarButtonItem" title="back" id="qhs-l8-Uxl"/>
-                        <barButtonItem key="rightBarButtonItem" title="msg" id="BDn-kQ-O7j">
-                            <connections>
-                                <action selector="simulateIncomingMsg:" destination="foX-Z7-9EW" id="ab4-nr-Nc7"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>

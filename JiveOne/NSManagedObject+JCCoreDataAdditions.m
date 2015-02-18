@@ -12,6 +12,13 @@
 
 #pragma mark - Setters -
 
+-(void)setPrimitiveValueFromStringValue:(NSString *)string forKey:(NSString *)key
+{
+    [self willChangeValueForKey:key];
+    [self setPrimitiveValue:string forKey:key];
+    [self didChangeValueForKey:key];
+}
+
 -(void)setPrimitiveValueFromBoolValue:(BOOL)boolean forKey:(NSString *)key
 {
     [self willChangeValueForKey:key];
@@ -65,6 +72,14 @@
 }
 
 #pragma mark - Getters -
+
+-(NSString *)stringValueFromPrimitiveValueForKey:(NSString *)key
+{
+    [self willAccessValueForKey:key];
+    NSString *value = [self primitiveValueForKey:key];
+    [self didAccessValueForKey:key];
+    return value;
+}
 
 -(BOOL)boolValueFromPrimitiveValueForKey:(NSString *)key
 {
