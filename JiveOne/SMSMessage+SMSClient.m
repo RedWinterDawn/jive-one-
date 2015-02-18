@@ -34,6 +34,7 @@ NSString *const kSMSMessageResponseStatusKey                = @"status";
 NSString *const kSMSMessageResponseErrorMsgKey              = @"errorMessage";
 NSString *const kSMSMessageResponseErrorCodeKey             = @"errorCode";
 NSString *const kSMSMessageResponseObjectKey                = @"message";
+NSString *const kSMSLastMessageResponseObjectKey            = @"lastMessage";
 
 NSString *const kSMSMessageResponseObjectDidIdKey              = @"didId";
 NSString *const kSMSMessageResponseObjectNumberKey             = @"number";
@@ -127,7 +128,7 @@ NSString *const kSMSMessageHashCreateString = @"%@-%@-%@-%@-%@";
     [self downloadMessagesForDID:did
                          retries:CONVERSATIONS_DOWNLOAD_NUMBER_OF_RETRIES
                          success:^(id responseObject) {
-                             [self processSMSDownloadConversationsResponseObject:responseObject completion:completion];
+                             [self processSMSDownloadConversationsResponseObject:responseObject did:did completion:completion];
                          }
                          failure:^(NSError *error) {
                              if (completion) {
@@ -293,7 +294,7 @@ NSString *const kSMSMessageHashCreateString = @"%@-%@-%@-%@-%@";
     }
 }
 
-+ (void)processSMSDownloadConversationsResponseObject:(id)responseObject completion:(CompletionHandler)completion
++ (void)processSMSDownloadConversationsResponseObject:(id)responseObject did:(DID *)did completion:(CompletionHandler)completion
 {
     @try {
         
@@ -303,11 +304,18 @@ NSString *const kSMSMessageHashCreateString = @"%@-%@-%@-%@-%@";
         }
         
         NSLog(@"%@", responseObject);
-        
+        NSArray *digestMessages = (NSArray *)responseObject;
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-            
-            // TODO: Implement this.
-            
+            DID *localDid = (DID *)[localContext objectWithID:did.objectID];
+            for (id object in digestMessages) {
+                if ([object isKindOfClass:[NSDictionary class]]) {
+                    NSDictionary *digestData = (NSDictionary *)object;
+                    id messageObject = [digestData objectForKey:kSMSLastMessageResponseObjectKey];
+                    if ([messageObject isKindOfClass:[NSDictionary class]]) {
+                        [self createSmsMessageWithMessageData:messageObject did:localDid];
+                    }
+                }
+            }
         } completion:completion];
     }
     @catch (NSException *exception) {
@@ -332,7 +340,7 @@ NSString *const kSMSMessageHashCreateString = @"%@-%@-%@-%@-%@";
         
         NSArray *messages = (NSArray *)responseObject;
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-            DID *localDid = did ? (DID *)[localContext objectWithID:did.objectID] : nil;
+            DID *localDid = (DID *)[localContext objectWithID:did.objectID];
             for (id object in messages) {
                 if ([object isKindOfClass:[NSDictionary class]]) {
                     [self createSmsMessageWithMessageData:(NSDictionary *)object did:localDid];
