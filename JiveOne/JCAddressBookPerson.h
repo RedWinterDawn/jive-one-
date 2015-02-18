@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "JCPerson.h"
+#import "JCPersonDataSource.h"
 
 @import AddressBook;
 
-@interface JCAddressBookPerson : NSObject <JCPerson>
+@interface JCAddressBookPerson : NSObject <JCPersonDataSource>
 
 -(instancetype)initWithABRecordRef:(ABRecordRef)recordRef;
 

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol JCPerson <NSObject>
+@protocol JCPersonDataSource <NSObject>
 
 // Name Composites
 @property (nonatomic, readonly) NSString *name;

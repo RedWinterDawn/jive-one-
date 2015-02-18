@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "JCPerson.h"
+#import "JCPersonDataSource.h"
 
-@interface JCUnknownNumber :  NSObject <JCPerson>
+@interface JCUnknownNumber :  NSObject <JCPersonDataSource>
 
 +(instancetype) unknownNumberWithNumber:(NSString *)number;
 

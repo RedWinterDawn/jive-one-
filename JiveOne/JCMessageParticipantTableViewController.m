@@ -46,7 +46,7 @@
     [self.view setNeedsUpdateConstraints];
 }
 
--(id<JCPerson>)objectAtIndexPath:(NSIndexPath *)indexPath {
+-(id<JCPersonDataSource>)objectAtIndexPath:(NSIndexPath *)indexPath {
     return [self.tableData objectAtIndex:indexPath.row];
 }
 
@@ -65,7 +65,7 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    id<JCPerson> person = [self objectAtIndexPath:indexPath];
+    id<JCPersonDataSource> person = [self objectAtIndexPath:indexPath];
     NSString *identifier;
     if ([person isKindOfClass:[JCUnknownNumber class]]) {
         identifier = @"UnknownNumberCell";
@@ -82,7 +82,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    id<JCPerson> person = [self objectAtIndexPath:indexPath];
+    id<JCPersonDataSource> person = [self objectAtIndexPath:indexPath];
     [self.delegate messageParticipantTableViewController:self didSelectParticipants:@[person]];
 }
 

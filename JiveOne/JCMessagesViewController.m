@@ -12,7 +12,7 @@
 #import <JSQMessagesViewController/JSQSystemSoundPlayer+JSQMessages.h>
 
 // Models
-#import "JCPerson.h"
+#import "JCPersonDataSource.h"
 #import "Message.h"
 #import "SMSMessage.h"
 #import "Conversation.h"
@@ -117,7 +117,6 @@
         senderDisplayName:(NSString *)senderDisplayName
                      date:(NSDate *)date
 {
-    id<JCPerson> person = _participants.lastObject;
     [SMSMessage sendMessage:text toNumber:person.number fromDid:nil completion:^(BOOL success, NSError *error) {
      if (success) {
          [JSQSystemSoundPlayer jsq_playMessageSentSound];
@@ -145,6 +144,7 @@
         smsMessage.inbound = true;
         message = smsMessage;
     }
+    id<JCPersonDataSource> person = _participants.lastObject;
     
     message.text = @"Ahhhh Things";
     message.read = TRUE;
@@ -174,7 +174,7 @@
         return;
     }
     _participants = @[participants.firstObject];
-    id<JCPerson> person = _participants.lastObject;
+    id<JCPersonDataSource> person = _participants.lastObject;
     self.title = person.name;
         
     // New SMS from a unknown number;

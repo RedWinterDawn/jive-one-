@@ -486,7 +486,7 @@
 		5D490E561A8AD0A1004B62C0 /* JCUnknownNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCUnknownNumber.m; sourceTree = "<group>"; };
 		5D490E581A8AEF7E004B62C0 /* JCAddressBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAddressBook.h; sourceTree = "<group>"; };
 		5D490E591A8AEF7E004B62C0 /* JCAddressBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAddressBook.m; sourceTree = "<group>"; };
-		5D490E5B1A8AEFB5004B62C0 /* JCPerson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPerson.h; sourceTree = "<group>"; };
+		5D490E5B1A8AEFB5004B62C0 /* JCPersonDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPersonDataSource.h; sourceTree = "<group>"; };
 		5D490E5C1A8AF364004B62C0 /* JCAddressBookPerson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAddressBookPerson.h; sourceTree = "<group>"; };
 		5D490E5D1A8AF364004B62C0 /* JCAddressBookPerson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAddressBookPerson.m; sourceTree = "<group>"; };
 		5D490E5F1A8D1FF1004B62C0 /* RecentLineEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecentLineEvent.h; sourceTree = "<group>"; };
@@ -885,7 +885,7 @@
 				5D2A3F9F1A53706200974B8A /* Security */,
 				5D6243761A678B6F001DF88E /* JCError.h */,
 				5D6243771A678B6F001DF88E /* JCError.m */,
-				5D490E5B1A8AEFB5004B62C0 /* JCPerson.h */,
+				5D490E5B1A8AEFB5004B62C0 /* JCPersonDataSource.h */,
 				5D490E581A8AEF7E004B62C0 /* JCAddressBook.h */,
 				5D490E591A8AEF7E004B62C0 /* JCAddressBook.m */,
 				5D490E5C1A8AF364004B62C0 /* JCAddressBookPerson.h */,
