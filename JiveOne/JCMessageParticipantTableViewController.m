@@ -11,6 +11,7 @@
 #import "JCAddressBook.h"
 #import "JCUnknownNumber.h"
 #import "NSString+Additions.h"
+#import "JCAddressBookNumber.h"
 
 @interface JCMessageParticipantTableViewController ()
 {
@@ -74,7 +75,12 @@
     }
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    cell.textLabel.text = person.detailText;
+    if ([person isKindOfClass:[JCAddressBookNumber class]]) {
+        cell.textLabel.text = person.name;
+        cell.detailTextLabel.text = person.detailText;
+    } else {
+        cell.textLabel.text = person.detailText;
+    }
     return cell;
 }
 
@@ -90,11 +96,19 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    NSMutableArray *people = [NSMutableArray new];
+    NSMutableArray *results = [NSMutableArray new];
     if (searchText.isNumeric && searchText.length > 0) {
-        [people addObject:[JCUnknownNumber unknownNumberWithNumber:searchText]];
+        [results addObject:[JCUnknownNumber unknownNumberWithNumber:searchText]];
     }
-    self.tableData = people;
+    
+    [JCAddressBook fetchNumbersWithKeyword:searchText completion:^(NSArray *people, NSError *error) {
+        if (people) {
+            [results addObjectsFromArray:people];
+        }
+        self.tableData = people;
+    }];
+    
+    
 }
 
 @end

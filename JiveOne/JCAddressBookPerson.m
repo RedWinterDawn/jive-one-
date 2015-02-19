@@ -9,6 +9,7 @@
 #import "JCAddressBookPerson.h"
 #import "NSString+Additions.h"
 #import "JCAddressBook.h"
+#import "JCAddressBookNumber.h"
 
 @interface JCAddressBookPerson () {
     ABRecordRef _person;
@@ -123,6 +124,31 @@
         return [NSString stringWithFormat:@"%@%@", firstInitial, lastInitial];
     }
     return lastInitial;
+}
+
+-(NSString *)detailText
+{
+    return self.name;
+}
+
+-(NSArray *)phoneNumbers {
+    NSMutableArray *phoneNumbers = [NSMutableArray array];
+    ABMultiValueRef phones = ABRecordCopyValue(_person, kABPersonPhoneProperty);
+    for (CFIndex i=0; i < ABMultiValueGetCount(phones); i++) {
+        CFStringRef phoneNumberRef = ABMultiValueCopyValueAtIndex(phones, i);
+        CFStringRef locLabel = ABMultiValueCopyLabelAtIndex(phones, i);
+        
+        JCAddressBookNumber *number = [JCAddressBookNumber new];
+        number.name = self.name;
+        number.number = (__bridge NSString *)phoneNumberRef;
+        number.type = (__bridge NSString *)ABAddressBookCopyLocalizedLabel(locLabel);
+        
+        CFRelease(phoneNumberRef);
+        CFRelease(locLabel);
+        
+        [phoneNumbers addObject:number];
+    }
+    return  phoneNumbers;
 }
 
 @end

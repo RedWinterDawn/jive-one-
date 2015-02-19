@@ -7,6 +7,7 @@
 //
 
 #import "JCAddressBook.h"
+#import "JCAddressBookNumber.h"
 
 @implementation JCAddressBook
 
@@ -42,6 +43,30 @@
     [self fetchWithPredicate:nil sortDescriptors:nil completion:completion];
 }
 
++(void)fetchNumbersWithKeyword:(NSString *)keyword
+                    completion:(void (^)(NSArray *numbers, NSError *error))completion
+{
+    [self fetchWithKeyword:keyword completion:^(NSArray *people, NSError *error) {
+        NSMutableArray *numbers = [NSMutableArray array];
+        for (JCAddressBookPerson *person in people) {
+            NSArray *phones = person.phoneNumbers;
+            if (phones) {
+                for (JCAddressBookNumber *phoneNumber in phones) {
+                    [numbers addObject:phoneNumber];
+                }
+            }
+        }
+        if (completion) {
+            completion(numbers, error);
+        }
+    }];
+}
+
++(void)fetchWithKeyword:(NSString *)keyword
+             completion:(void (^)(NSArray *people, NSError *error))completion {
+    [self fetchWithKeyword:keyword sortDescriptors:nil completion:completion];
+}
+
 +(void)fetchWithKeyword:(NSString *)keyword
         sortDescriptors:(NSArray *)sortDescriptors
              completion:(void (^)(NSArray *contacts, NSError *error))completion
@@ -57,22 +82,22 @@
             result = YES;
         }
         
-        NSString *middleName = (__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonMiddleNameProperty);
+        NSString *middleName = ((__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonMiddleNameProperty)).lowercaseString;
         if ([middleName containsString:string]) {
             result = YES;
         }
         
-        NSString *lastName = (__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);
+        NSString *lastName = ((__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty)).lowercaseString;
         if ([lastName containsString:string]) {
             result = YES;
         }
         
-        NSString *nickname = (__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonNicknameProperty);
+        NSString *nickname = ((__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonNicknameProperty)).lowercaseString;
         if ([nickname containsString:string]) {
             result = YES;
         }
         
-        NSString *organizationName = (__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonOrganizationProperty);
+        NSString *organizationName = ((__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonOrganizationProperty)).lowercaseString;
         if ([organizationName containsString:string]) {
             result = YES;
         }

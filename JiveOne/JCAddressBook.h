@@ -25,6 +25,12 @@
 +(void)fetchAllPeopleWithSortDescriptors:(NSArray *)sortDescriptors
                               completion:(void (^)(NSArray *people, NSError *error))completion;
 
++(void)fetchNumbersWithKeyword:(NSString *)keyword
+                    completion:(void (^)(NSArray *numbers, NSError *error))completion;
+
++(void)fetchWithKeyword:(NSString *)keyword
+             completion:(void (^)(NSArray *people, NSError *error))completion;
+
 +(void)fetchWithKeyword:(NSString *)keyword
         sortDescriptors:(NSArray *)sortDescriptors
              completion:(void (^)(NSArray *people, NSError *error))completion;
