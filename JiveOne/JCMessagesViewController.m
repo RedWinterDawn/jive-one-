@@ -19,6 +19,7 @@
 #import "JCUnknownNumber.h"
 #import "LocalContact.h"
 #import "SMSMessage+SMSClient.h"
+#import "JCAddressBook.h"
 
 // Views
 #import "JCMessagesCollectionViewCell.h"
@@ -121,7 +122,18 @@ static NSString *OutgoingCellIdentifier = @"outgoingText";
     }
     _participants = @[participants.firstObject];
     id<JCPersonDataSource> person = _participants.lastObject;
-    self.title = person.name;
+    if ([person isKindOfClass:[LocalContact class]]) {
+        NSString *name = person.name;
+        if (name) {
+            self.title = name;
+        } else {
+            [JCAddressBook formattedNameForNumber:person.number completion:^(NSString *name, NSError *error) {
+                self.title = name;
+            }];
+        }
+    } else {
+        self.title = person.name;
+    }
         
     // New SMS from a unknown number;
     if ([person isKindOfClass:[JCUnknownNumber class]]) {

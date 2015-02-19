@@ -39,4 +39,11 @@
           sortDescriptors:(NSArray *)sortDescriptors
                completion:(void (^)(NSArray *people, NSError *error))completion;
 
++(void)fetchPeopleWithNumber:(NSString *)number
+                  completion:(void (^)(NSArray *people, NSError *error))completion;
+
+
++(void)formattedNameForNumber:(NSString *)number
+                   completion:(void (^)(NSString *name, NSError *error))completion;
+
 @end

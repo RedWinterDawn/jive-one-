@@ -140,11 +140,15 @@
         
         JCAddressBookNumber *number = [JCAddressBookNumber new];
         number.name = self.name;
-        number.number = (__bridge NSString *)phoneNumberRef;
-        number.type = (__bridge NSString *)ABAddressBookCopyLocalizedLabel(locLabel);
+        if (phoneNumberRef) {
+            number.number = (__bridge NSString *)phoneNumberRef;
+            CFRelease(phoneNumberRef);
+        }
         
-        CFRelease(phoneNumberRef);
-        CFRelease(locLabel);
+        if (locLabel) {
+            number.type = (__bridge NSString *)ABAddressBookCopyLocalizedLabel(locLabel);
+            CFRelease(locLabel);
+        }
         
         [phoneNumbers addObject:number];
     }

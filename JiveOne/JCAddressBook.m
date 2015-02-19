@@ -134,6 +134,54 @@
     }];
 }
 
++(void)fetchPeopleWithNumber:(NSString *)number
+                  completion:(void (^)(NSArray *people, NSError *error))completion
+{
+    NSPredicate *predicate = [NSPredicate predicateWithBlock: ^(id record, NSDictionary *bindings) {
+        BOOL result = NO;
+        NSString *string = number.numericStringValue;
+        ABRecordRef person = (__bridge ABRecordRef)record;
+        ABMultiValueRef phoneNumbers = ABRecordCopyValue( person, kABPersonPhoneProperty);
+        for (CFIndex i = 0; i < ABMultiValueGetCount(phoneNumbers); i++) {
+            NSString *phoneNumber = ((__bridge_transfer NSString*) ABMultiValueCopyValueAtIndex(phoneNumbers, i)).numericStringValue;
+            if ([phoneNumber containsString:string] || [string containsString:phoneNumber]) {
+                result = YES;
+                break;
+            }
+        }
+        
+        CFRelease(phoneNumbers);
+        return result;
+    }];
+    
+    [self fetchWithPredicate:predicate sortDescriptors:nil completion:completion];
+}
+
++(void)formattedNameForNumber:(NSString *)number
+                   completion:(void (^)(NSString *name, NSError *error))completion
+{
+    [self fetchPeopleWithNumber:number completion:^(NSArray *people, NSError *error) {
+        NSString *name = number;
+        if (people && people.count > 0) {
+            id<JCPersonDataSource> person = people.firstObject;
+            if (people.count > 1) {
+                if (people.count == 2) {
+                    id<JCPersonDataSource> otherPerson = people.lastObject;
+                    name = [NSString stringWithFormat:@"%@, %@", person.firstName, otherPerson.firstName];
+                } else {
+                    name = [NSString stringWithFormat:@"%@,... +%li", person.firstName, (long)people.count-1];
+                }
+            } else {
+                name = person.name;
+            }
+        }
+        
+        if (completion) {
+            completion(name, error);
+        }
+    }];
+}
+
 #pragma mark - Private -
 
 +(void)getPermission:(void (^)(BOOL success, ABAddressBookRef addressBook, NSError *error))completion

@@ -105,7 +105,7 @@
         if (people) {
             [results addObjectsFromArray:people];
         }
-        self.tableData = people;
+        self.tableData = results;
     }];
     
     
