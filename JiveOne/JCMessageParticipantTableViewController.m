@@ -10,14 +10,9 @@
 
 #import "JCAddressBook.h"
 #import "JCUnknownNumber.h"
-#import "NSString+Additions.h"
 #import "JCAddressBookNumber.h"
 
 @interface JCMessageParticipantTableViewController ()
-{
-    NSMutableArray *_participants;
-    NSArray *_tableData;
-}
 
 @property (nonatomic, strong) NSArray *tableData;
 
@@ -27,9 +22,32 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.tableData = [NSMutableArray array];
 }
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(animateResizeWithNotification:) name:UIKeyboardWillShowNotification object:nil];
+    [center addObserver:self selector:@selector(animateResizeWithNotification:) name:UIKeyboardWillHideNotification object:nil];
+    [self.searchBar becomeFirstResponder];
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - Private -
+
+-(id<JCPersonDataSource>)objectAtIndexPath:(NSIndexPath *)indexPath {
+    return [self.tableData objectAtIndex:indexPath.row];
+}
+
+#pragma mark - Setters -
 
 -(void)setTableData:(NSArray *)tableData {
     _tableData = tableData;
@@ -47,11 +65,29 @@
     [self.view setNeedsUpdateConstraints];
 }
 
--(id<JCPersonDataSource>)objectAtIndexPath:(NSIndexPath *)indexPath {
-    return [self.tableData objectAtIndex:indexPath.row];
-}
-
 #pragma mark - Delegate Handlers -
+
+-(void)animateResizeWithNotification:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    CGRect kbframe = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    kbframe = [self.view convertRect:kbframe fromView:nil];
+    
+    CGRect frame = self.view.frame;
+    frame.size.height = self.view.frame.size.height - kbframe.size.height - 44;
+    
+    NSTimeInterval duration = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    UIViewAnimationCurve animationCurve = [[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] integerValue];
+    [UIView animateKeyframesWithDuration:duration
+                                   delay:0
+                                 options:(UIViewAnimationOptions)animationCurve << 16
+                              animations:^{
+                                  self.view.frame = frame;
+                              }
+                              completion:^(BOOL finished) {
+                                  
+                              }];
+}
 
 #pragma mark UITableViewDataSource
 
@@ -90,6 +126,7 @@
 {
     id<JCPersonDataSource> person = [self objectAtIndexPath:indexPath];
     [self.delegate messageParticipantTableViewController:self didSelectParticipants:@[person]];
+    [self.view endEditing:YES];
 }
 
 #pragma mark UISearchBarDelegate
