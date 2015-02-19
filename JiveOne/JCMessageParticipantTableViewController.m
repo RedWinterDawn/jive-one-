@@ -43,7 +43,7 @@
         tableHeight = [self.tableView sizeThatFits:CGSizeMake(self.tableView.frame.size.width, FLT_MAX)].height;
     }
     
-    self.tableViewHeightConstraint.constant = tableHeight;
+    self.tableViewHeightConstraint.constant = MIN(tableHeight, self.view.bounds.size.height);
     [self.view setNeedsUpdateConstraints];
 }
 
