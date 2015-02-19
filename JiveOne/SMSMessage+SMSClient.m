@@ -83,7 +83,7 @@ NSString *const kSMSMessageHashCreateString = @"%@-%@-%@-%@-%@";
 +(void)sendMessage:(NSString *)message toPerson:(id<JCPersonDataSource>)person fromDid:(DID *)did completion:(CompletionHandler)completion
 {
     NSDictionary *parameters = @{kSMSMessageSendRequestToKey: person.number,
-                                 kSMSMessageSendRequestFromKey: did.didId,
+                                 kSMSMessageSendRequestFromKey: did.number,
                                  kSMSMessageSendRequestBodyKey: message};
     
     [self sendMessageWithRetries:MESSAGES_SEND_NUMBER_OF_RETRIES
