@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import <JSQMessagesViewController/JSQMessagesComposerTextView.h>
+#import <JCMessagesViewController/JSQMessagesComposerTextView.h>
 
 @interface JCMessagesComposerTextView : JSQMessagesComposerTextView
 

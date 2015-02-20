@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import <JSQMessagesViewController/JSQMessagesCollectionView.h>
+#import <JCMessagesViewController/JSQMessagesCollectionView.h>
 
 @interface JCMessagesCollectionView : JSQMessagesCollectionView
 

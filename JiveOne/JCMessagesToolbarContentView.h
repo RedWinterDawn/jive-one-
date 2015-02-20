@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import <JSQMessagesViewController/JSQMessagesToolbarContentView.h>
+#import <JCMessagesViewController/JSQMessagesToolbarContentView.h>
 
 @interface JCMessagesToolbarContentView : JSQMessagesToolbarContentView
 

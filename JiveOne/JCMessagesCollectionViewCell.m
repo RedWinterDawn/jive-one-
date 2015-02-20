@@ -8,7 +8,7 @@
 
 #import "JCMessagesCollectionViewCell.h"
 
-#import <JSQMessagesViewController/JSQMessagesCollectionViewLayoutAttributes.h>
+#import <JCMessagesViewController/JSQMessagesCollectionViewLayoutAttributes.h>
 
 @protocol JSQMessagesCollectionViewCellPrivate <NSObject>
 

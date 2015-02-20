@@ -7,8 +7,8 @@
 //
 
 #import "JCMessagesInputToolbar.h"
-#import <JSQMessagesViewController/UIView+JSQMessages.h>
-#import <JSQMessagesViewController/JSQMessagesToolbarButtonFactory.h>
+#import <JCMessagesViewController/UIView+JSQMessages.h>
+#import <JCMessagesViewController/JSQMessagesToolbarButtonFactory.h>
 
 static void * kJSQMessagesInputToolbarKeyValueObservingContext = &kJSQMessagesInputToolbarKeyValueObservingContext;
 

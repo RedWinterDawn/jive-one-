@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import <JSQMessagesViewController/JSQMessageData.h>
+#import <JCMessagesViewController/JSQMessageData.h>
 #import "RecentEvent.h"
 
 @interface Message : RecentEvent <JSQMessageData>

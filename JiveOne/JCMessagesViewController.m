@@ -9,7 +9,7 @@
 #import "JCMessagesViewController.h"
 
 // Libraries
-#import <JSQMessagesViewController/JSQSystemSoundPlayer+JSQMessages.h>
+#import <JCMessagesViewController/JSQSystemSoundPlayer+JSQMessages.h>
 
 // Models
 #import "JCPersonDataSource.h"
