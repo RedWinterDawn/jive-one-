@@ -6,15 +6,15 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import <JCMessagesViewController/JSQMessagesViewController.h>
+#import <JCMessagesViewController/JCMessagesViewController.h>
 
-#import "JCMessagesInputToolbar.h"
+#import "JCConversationInputToolbar.h"
 #import "JCMessageParticipantTableViewController.h"
 
-@interface JCConversationViewController : JSQMessagesViewController <JCMessageParticipantTableViewControllerDelegate>
+@interface JCConversationViewController : JCMessagesViewController <JCMessageParticipantTableViewControllerDelegate>
 
 @property (weak, nonatomic, readonly) UIButton *participantsButton;
-@property (weak, nonatomic, readonly) JCMessagesInputToolbar *inputToolbar;
+@property (weak, nonatomic, readonly) JCConversationInputToolbar *inputToolbar;
 
 @property (strong, nonatomic) NSString *messageGroupId;
 

@@ -6,12 +6,10 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import <JCMessagesViewController/JSQMessagesInputToolbar.h>
+#import <JCMessagesViewController/JCMessagesInputToolbar.h>
 #import "JCMessagesToolbarContentView.h"
 
-@interface JCMessagesInputToolbar : JSQMessagesInputToolbar
-
-@property (nonatomic, weak) IBOutlet JCMessagesToolbarContentView *contentView;
+@interface JCConversationInputToolbar : JCMessagesInputToolbar
 
 @property (nonatomic) BOOL sendAsSMS;
 

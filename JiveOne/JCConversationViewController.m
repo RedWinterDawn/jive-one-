@@ -8,9 +8,6 @@
 
 #import "JCConversationViewController.h"
 
-// Libraries
-#import <JCMessagesViewController/JSQSystemSoundPlayer+JSQMessages.h>
-
 // Models
 #import "JCPersonDataSource.h"
 #import "Message.h"
@@ -36,26 +33,12 @@
 static NSString *IncomingCellIdentifier = @"incomingText";
 static NSString *OutgoingCellIdentifier = @"outgoingText";
 
-@protocol JSQMessageViewControllerPrivate <NSObject>
-
-@optional
-- (void)jsq_configureMessagesViewController;
-- (void)jsq_registerForNotifications:(BOOL)registerForNotifications;
-
-@end
-
-@interface JCConversationViewController () <JSQMessageViewControllerPrivate, NSFetchedResultsControllerDelegate>
+@interface JCConversationViewController () <NSFetchedResultsControllerDelegate>
 {
     // Support arrays for the NSFetchedResultController delegate methods.
     NSMutableArray *_sectionChanges;
     NSMutableArray *_itemChanges;
-    
-    // A list of participants
-    NSArray *_participants;
 }
-
-// Loads the
--(void)jc_checkParticipants;
 
 @property (nonatomic, strong) NSArray *participants;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
@@ -67,25 +50,23 @@ static NSString *OutgoingCellIdentifier = @"outgoingText";
 
 - (void)viewDidLoad
 {
-    // We deliberately do not call [super viewDidLoad] here.
+    [super viewDidLoad];
     
-    [self jsq_configureMessagesViewController];
-    [self jsq_registerForNotifications:YES];
     self.incomingCellIdentifier = IncomingCellIdentifier;
     self.outgoingCellIdentifier = OutgoingCellIdentifier;
     
-    self.collectionView.backgroundColor = MESSAGES_BACKGROUND_COLOR;
     self.collectionView.collectionViewLayout.outgoingAvatarViewSize = MESSAGES_AVATAR_SIZE;
     self.collectionView.collectionViewLayout.incomingAvatarViewSize = MESSAGES_AVATAR_SIZE;
     self.collectionView.collectionViewLayout.messageBubbleTextViewTextContainerInsets = MESSAGES_TEXT_INSETS;
     
     self.inputToolbar.contentView.textView.placeHolder = NSLocalizedString(@"Send SMS", nil);
-    [self jc_checkParticipants];
-}
-
-+ (UINib *)nib
-{
-    return nil; // Override to use the storyboard.
+    
+    // If we have a message id
+    if (!_participants) {
+        JCMessageParticipantTableViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:MESSAGES_PARTICIPANT_VIEW_CONTROLLER];
+        viewController.delegate = self;
+        [self presentDropdownViewController:viewController animated:YES];
+    }
 }
 
 -(void)didReceiveMemoryWarning
@@ -103,7 +84,7 @@ static NSString *OutgoingCellIdentifier = @"outgoingText";
     id<JCPersonDataSource> person = _participants.lastObject;
     [SMSMessage sendMessage:text toPerson:person fromDid:self.did completion:^(BOOL success, NSError *error) {
      if (success) {
-         [JSQSystemSoundPlayer jsq_playMessageSentSound];
+//         [JSQSystemSoundPlayer jsq_playMessageSentSound];
          [self finishSendingMessageAnimated:YES];
      }else {
          [self showError:error];
@@ -216,16 +197,6 @@ static NSString *OutgoingCellIdentifier = @"outgoingText";
 
 #pragma mark - Private -
 
-- (void)jc_checkParticipants
-{
-    // If we have a message id
-    if (!_participants) {
-        JCMessageParticipantTableViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:MESSAGES_PARTICIPANT_VIEW_CONTROLLER];
-        viewController.delegate = self;
-        [self presentDropdownViewController:viewController animated:YES];
-    }
-}
-
 - (NSUInteger)count
 {
     return self.fetchedResultsController.fetchedObjects.count;
@@ -246,13 +217,13 @@ static NSString *OutgoingCellIdentifier = @"outgoingText";
 // This section is a set of methods from the JSQMessagesViewController superclass that help us
 // define and control the display of the message. Thes are specific to the implementation.
 
-- (id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView
+- (id<JSQMessageData>)collectionView:(JCMessagesCollectionView *)collectionView
        messageDataForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     return [self objectAtIndexPath:indexPath];
 }
 
--(CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
+-(CGFloat)collectionView:(JCMessagesCollectionView *)collectionView
                   layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath {
     return 23;
 }
@@ -278,7 +249,7 @@ static NSString *OutgoingCellIdentifier = @"outgoingText";
     return 0;
 }
 
-- (UICollectionViewCell *)collectionView:(JSQMessagesCollectionView *)collectionView
+- (UICollectionViewCell *)collectionView:(JCMessagesCollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     Message *message = [collectionView.dataSource collectionView:collectionView messageDataForItemAtIndexPath:indexPath];

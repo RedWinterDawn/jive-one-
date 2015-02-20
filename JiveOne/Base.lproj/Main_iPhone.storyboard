@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -631,7 +632,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wFh-qN-Em8" id="RuY-pZ-NgE" userLabel="EPView">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="sG2-aY-SNJ" userLabel="EPSwitch">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="sG2-aY-SNJ" userLabel="EPSwitch">
                                                     <rect key="frame" x="256" y="7" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="togglePresenceEnabled:" destination="BBd-7J-jmI" eventType="valueChanged" id="2z0-Pp-A4E"/>
@@ -844,7 +845,7 @@
                         <subviews>
                             <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="redraw" restorationIdentifier="messagesCollectionView" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="9e6-Dt-026" customClass="JCMessagesCollectionView">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.93725490196078431" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewLayout key="collectionViewLayout" id="t0a-eQ-OVM" customClass="JSQMessagesCollectionViewFlowLayout"/>
                                 <cells>
                                     <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="scaleAspectFill" restorationIdentifier="outgoingText" reuseIdentifier="outgoingText" id="p7y-Yu-5Gi" userLabel="outgoingText" customClass="JCMessagesCollectionViewCell">
@@ -1051,7 +1052,7 @@
                                     <outlet property="delegate" destination="foX-Z7-9EW" id="JUY-JU-Qgl"/>
                                 </connections>
                             </collectionView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PaQ-AW-eUb" customClass="JCMessagesInputToolbar">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PaQ-AW-eUb" customClass="JCConversationInputToolbar">
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -1061,10 +1062,11 @@
                                 <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="contentView" destination="Ptk-so-KVI" id="OpS-gZ-1uK"/>
+                                    <outlet property="delegate" destination="foX-Z7-9EW" id="WGA-2D-kSx"/>
                                 </connections>
                             </toolbar>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="gJ7-ym-mgl" firstAttribute="bottom" secondItem="PaQ-AW-eUb" secondAttribute="bottom" id="8AR-qV-MGw"/>
                             <constraint firstAttribute="trailing" secondItem="9e6-Dt-026" secondAttribute="trailing" id="Bcz-vu-WSj"/>
@@ -1083,18 +1085,26 @@
                     <connections>
                         <outlet property="collectionView" destination="9e6-Dt-026" id="7IK-dV-TOX"/>
                         <outlet property="inputToolbar" destination="PaQ-AW-eUb" id="pUN-Ko-CMC"/>
+                        <outlet property="keyboardController" destination="RRs-Eb-m3W" id="dYj-ap-OPJ"/>
                         <outlet property="toolbarBottomLayoutGuide" destination="8AR-qV-MGw" id="9Tb-ZH-Oy4"/>
                         <outlet property="toolbarHeightConstraint" destination="JLd-Ym-s7u" id="bM3-LY-pL5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9LZ-Po-63u" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="RRs-Eb-m3W" customClass="JCMessagesKeyboardController">
+                    <connections>
+                        <outlet property="contextView" destination="NtX-hc-eGL" id="XvU-MF-DQU"/>
+                        <outlet property="delegate" destination="foX-Z7-9EW" id="ae4-PW-fES"/>
+                        <outlet property="textView" destination="pAL-Q0-nBC" id="geZ-2v-SSZ"/>
+                    </connections>
+                </customObject>
                 <view contentMode="scaleToFill" id="Ptk-so-KVI" customClass="JCMessagesToolbarContentView">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h0L-oK-cvh" userLabel="Left button container">
                             <rect key="frame" x="8" y="6" width="34" height="32"/>
-                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="34" id="a9n-4q-WSY"/>
                                 <constraint firstAttribute="height" constant="32" id="avs-8y-Bzd"/>
@@ -1102,7 +1112,7 @@
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qUg-aN-MUe" userLabel="Right button container">
                             <rect key="frame" x="262" y="7" width="50" height="32"/>
-                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="32" id="em9-SP-gy6"/>
                                 <constraint firstAttribute="width" constant="50" id="lqy-Zt-ju5"/>
@@ -1110,12 +1120,15 @@
                         </view>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pAL-Q0-nBC" customClass="JCMessagesComposerTextView">
                             <rect key="frame" x="50" y="7" width="204" height="30"/>
-                            <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            <connections>
+                                <outlet property="delegate" destination="foX-Z7-9EW" id="9Va-3E-Y73"/>
+                            </connections>
                         </textView>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="qUg-aN-MUe" firstAttribute="leading" secondItem="pAL-Q0-nBC" secondAttribute="trailing" constant="8" id="2ph-qZ-MUq"/>
                         <constraint firstAttribute="bottom" secondItem="qUg-aN-MUe" secondAttribute="bottom" constant="5" id="6PP-Rn-85J"/>
@@ -4882,7 +4895,7 @@
                                             <action selector="numPadPressed:" destination="k9u-JK-Ejv" eventType="touchUpInside" id="ELI-BU-VzE"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="675-5i-6mS">
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="1000" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="675-5i-6mS">
                                         <rect key="frame" x="105" y="57" width="94" height="38"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="675-5i-6mS" secondAttribute="height" multiplier="5:2" id="knh-w0-Hs3"/>
@@ -4987,7 +5000,7 @@
                                             <action selector="numPadPressed:" destination="k9u-JK-Ejv" eventType="touchUpInside" id="Ob0-Jj-tqp"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="5" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zqW-JI-NSh">
+                                    <button opaque="NO" tag="5" contentMode="scaleToFill" horizontalHuggingPriority="1000" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zqW-JI-NSh">
                                         <rect key="frame" x="105" y="95" width="94" height="38"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="zqW-JI-NSh" secondAttribute="height" multiplier="5:2" id="NNT-67-vZl"/>
@@ -5086,7 +5099,7 @@
                                             <action selector="numPadPressed:" destination="k9u-JK-Ejv" eventType="touchUpInside" id="FqG-9P-HTx"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="8" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gra-X4-HLF">
+                                    <button opaque="NO" tag="8" contentMode="scaleToFill" horizontalHuggingPriority="1000" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gra-X4-HLF">
                                         <rect key="frame" x="105" y="133" width="94" height="38"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="Gra-X4-HLF" secondAttribute="height" multiplier="5:2" id="MMx-as-JQ4"/>
@@ -5184,7 +5197,7 @@
                                             <action selector="numPadPressed:" destination="k9u-JK-Ejv" eventType="touchUpInside" id="Ygc-FL-f6J"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CZR-uP-cO5">
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CZR-uP-cO5">
                                         <rect key="frame" x="105" y="171" width="94" height="38"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="CZR-uP-cO5" secondAttribute="height" multiplier="5:2" id="q4j-Il-oO0"/>
