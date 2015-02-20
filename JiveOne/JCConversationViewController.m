@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCMessagesViewController.h"
+#import "JCConversationViewController.h"
 
 // Libraries
 #import <JCMessagesViewController/JSQSystemSoundPlayer+JSQMessages.h>
@@ -44,7 +44,7 @@ static NSString *OutgoingCellIdentifier = @"outgoingText";
 
 @end
 
-@interface JCMessagesViewController () <JSQMessageViewControllerPrivate, NSFetchedResultsControllerDelegate>
+@interface JCConversationViewController () <JSQMessageViewControllerPrivate, NSFetchedResultsControllerDelegate>
 {
     // Support arrays for the NSFetchedResultController delegate methods.
     NSMutableArray *_sectionChanges;
@@ -63,7 +63,7 @@ static NSString *OutgoingCellIdentifier = @"outgoingText";
 
 @end
 
-@implementation JCMessagesViewController
+@implementation JCConversationViewController
 
 - (void)viewDidLoad
 {
@@ -202,6 +202,11 @@ static NSString *OutgoingCellIdentifier = @"outgoingText";
 - (NSString *)senderNumber
 {
     return self.did.number;
+}
+
+- (NSString *)senderDisplayName
+{
+    return [JCAuthenticationManager sharedInstance].line.name;
 }
 
 - (DID *)did

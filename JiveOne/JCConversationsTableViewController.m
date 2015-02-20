@@ -8,7 +8,7 @@
 
 #import "JCConversationsTableViewController.h"
 
-#import "JCMessagesViewController.h"
+#import "JCConversationViewController.h"
 #import "JCMessageParticipantTableViewController.h"
 #import "Message.h"
 #import "JCNavigationController.h"
@@ -102,8 +102,8 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
     
     if ([sender isKindOfClass:[UITableViewCell class]]) {
         UIViewController *viewController = segue.destinationViewController;
-        if ([viewController isKindOfClass:[JCMessagesViewController class]]) {
-            JCMessagesViewController *messagesViewController = (JCMessagesViewController *)viewController;
+        if ([viewController isKindOfClass:[JCConversationViewController class]]) {
+            JCConversationViewController *messagesViewController = (JCConversationViewController *)viewController;
             NSDictionary *entity = (NSDictionary *)[self objectAtIndexPath:[self.tableView indexPathForCell:sender]];
             messagesViewController.messageGroupId = [entity stringValueForKey:NSStringFromSelector(@selector(messageGroupId))];
         }

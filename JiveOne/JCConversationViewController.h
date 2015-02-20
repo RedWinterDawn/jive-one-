@@ -11,7 +11,7 @@
 #import "JCMessagesInputToolbar.h"
 #import "JCMessageParticipantTableViewController.h"
 
-@interface JCMessagesViewController : JSQMessagesViewController <JCMessageParticipantTableViewControllerDelegate>
+@interface JCConversationViewController : JSQMessagesViewController <JCMessageParticipantTableViewControllerDelegate>
 
 @property (weak, nonatomic, readonly) UIButton *participantsButton;
 @property (weak, nonatomic, readonly) JCMessagesInputToolbar *inputToolbar;

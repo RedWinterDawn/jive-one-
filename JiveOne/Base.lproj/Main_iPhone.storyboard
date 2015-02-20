@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -831,10 +830,10 @@
             </objects>
             <point key="canvasLocation" x="771" y="242"/>
         </scene>
-        <!--Messages View Controller-->
+        <!--Conversation View Controller-->
         <scene sceneID="bEB-38-Hex">
             <objects>
-                <viewController extendedLayoutIncludesOpaqueBars="YES" definesPresentationContext="YES" hidesBottomBarWhenPushed="YES" id="foX-Z7-9EW" customClass="JCMessagesViewController" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" definesPresentationContext="YES" hidesBottomBarWhenPushed="YES" id="foX-Z7-9EW" customClass="JCConversationViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="W0Z-MW-2F8"/>
                         <viewControllerLayoutGuide type="bottom" id="gJ7-ym-mgl"/>
