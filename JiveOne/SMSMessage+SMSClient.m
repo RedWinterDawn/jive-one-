@@ -86,12 +86,15 @@ NSString *const kSMSMessageHashCreateString = @"%@-%@-%@-%@-%@";
                                  kSMSMessageSendRequestFromKey: did.number,
                                  kSMSMessageSendRequestBodyKey: message};
     
+    [UIApplication showStatus:@"Sending"];
     [self sendMessageWithRetries:MESSAGES_SEND_NUMBER_OF_RETRIES
                       parameters:parameters
                          success:^(id responseObject) {
                              [self processSMSSendResponseObject:responseObject did:did completion:completion];
+                             [UIApplication hideStatus];
                          }
                          failure:^(NSError *error) {
+                             [UIApplication hideStatus];
                              if (completion) {
                                  completion(NO, [JCClientError errorWithCode:JCClientRequestErrorCode userInfo:error.userInfo]);
                              }
@@ -359,9 +362,5 @@ NSString *const kSMSMessageHashCreateString = @"%@-%@-%@-%@-%@";
         }
     }
 }
-
-#pragma mark Shared
-
-
 
 @end
