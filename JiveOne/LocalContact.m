@@ -15,6 +15,7 @@ static NSString *LocalContactNameAttributeKey = @"name";
 
 @implementation LocalContact
 
+
 -(void)setNumber:(NSString *)number
 {
     [self setPrimitiveValueFromStringValue:number forKey:LocalContactNumberAttributeKey];
@@ -23,15 +24,6 @@ static NSString *LocalContactNameAttributeKey = @"name";
 -(NSString *)number
 {
     return [self stringValueFromPrimitiveValueForKey:LocalContactNumberAttributeKey];
-}
-
--(NSString *)name
-{
-    NSString *name = [self stringValueFromPrimitiveValueForKey:LocalContactNameAttributeKey];
-    if (name) {
-        return name;
-    }
-    return self.number;
 }
 
 @dynamic number;

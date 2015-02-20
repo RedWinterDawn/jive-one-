@@ -16,6 +16,7 @@
 #import "JCUnknownNumber.h"
 #import "LocalContact.h"
 #import "SMSMessage+SMSClient.h"
+#import "JCAddressBook.h"
 
 // Views
 #import "JCMessagesCollectionViewCell.h"
@@ -60,13 +61,7 @@ static NSString *OutgoingCellIdentifier = @"outgoingText";
     self.collectionView.collectionViewLayout.messageBubbleTextViewTextContainerInsets = MESSAGES_TEXT_INSETS;
     
     self.inputToolbar.contentView.textView.placeHolder = NSLocalizedString(@"Send SMS", nil);
-    
-    // If we have a message id
-    if (!_participants) {
-        JCMessageParticipantTableViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:MESSAGES_PARTICIPANT_VIEW_CONTROLLER];
-        viewController.delegate = self;
-        [self presentDropdownViewController:viewController animated:YES];
-    }
+    [self jc_checkParticipants];
 }
 
 -(void)didReceiveMemoryWarning
@@ -102,7 +97,18 @@ static NSString *OutgoingCellIdentifier = @"outgoingText";
     }
     _participants = @[participants.firstObject];
     id<JCPersonDataSource> person = _participants.lastObject;
-    self.title = person.name;
+    if ([person isKindOfClass:[LocalContact class]]) {
+        NSString *name = person.name;
+        if (name) {
+            self.title = name;
+        } else {
+            [JCAddressBook formattedNameForNumber:person.number completion:^(NSString *name, NSError *error) {
+                self.title = name;
+            }];
+        }
+    } else {
+        self.title = person.name;
+    }
         
     // New SMS from a unknown number;
     if ([person isKindOfClass:[JCUnknownNumber class]]) {
@@ -196,6 +202,25 @@ static NSString *OutgoingCellIdentifier = @"outgoingText";
 }
 
 #pragma mark - Private -
+
+- (void)jc_checkParticipants
+{
+    // If we have a message id
+    if (!_participants) {
+        JCMessageParticipantTableViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:MESSAGES_PARTICIPANT_VIEW_CONTROLLER];
+        viewController.view.frame = self.view.bounds;
+        viewController.delegate = self;
+        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(cancelMessageParticipantSelection:)];
+        [self presentDropdownViewController:viewController leftBarButtonItem:nil rightBarButtonItem:doneButton maxHeight:self.view.bounds.size.height animated:NO];
+    }
+}
+                                       
+- (void)cancelMessageParticipantSelection:(id)sender
+{
+    [self dismissDropdownViewControllerAnimated:NO completion:^{
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
+}
 
 - (NSUInteger)count
 {
