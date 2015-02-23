@@ -75,8 +75,8 @@
     </entity>
     <entity name="RecentEvent" representedClassName="RecentEvent" isAbstract="YES" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="eventId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="read" optional="YES" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
-        <attribute name="serverHash" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
     </entity>
     <entity name="RecentLineEvent" representedClassName="RecentLineEvent" parentEntity="RecentEvent" syncable="YES">
         <attribute name="extension" optional="YES" attributeType="String" syncable="YES"/>

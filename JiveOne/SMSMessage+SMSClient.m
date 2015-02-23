@@ -36,13 +36,13 @@ NSString *const kSMSMessageResponseErrorCodeKey             = @"errorCode";
 NSString *const kSMSMessageResponseObjectKey                = @"message";
 NSString *const kSMSLastMessageResponseObjectKey            = @"lastMessage";
 
+NSString *const kSMSMessageResponseObjectEventIdKey              = @"uid";
 NSString *const kSMSMessageResponseObjectDidIdKey              = @"didId";
 NSString *const kSMSMessageResponseObjectNumberKey             = @"number";
 NSString *const kSMSMessageResponseObjectTextKey               = @"body";
 NSString *const kSMSMessageResponseObjectDirectionKey          = @"direction";
 NSString *const kSMSMessageResponseObjectDirectionInboundValue     = @"inbound";
-NSString *const kSMSMessageResponseObjectArrivalTimeKey        = @"arrivalTime";
-NSString *const kSMSMessageResponseObjectHashKey               = @"hash";
+NSString *const kSMSMessageResponseObjectArrivalTimeKey        = @"epochTime";
 
 NSString *const kSMSMessageInvalidSendResponseException = @"invalidSendResponse";
 
@@ -53,27 +53,22 @@ NSString *const kSMSMessageHashCreateString = @"%@-%@-%@-%@-%@";
 + (void)createSmsMessageWithMessageData:(NSDictionary *)data did:(DID *)did
 {
     // Fetch values from data object.
-    NSString *didId     = [data stringValueForKey:kSMSMessageResponseObjectDidIdKey];
     NSString *number    = [data stringValueForKey:kSMSMessageResponseObjectNumberKey];
     NSString *text      = [data stringValueForKey:kSMSMessageResponseObjectTextKey];
     NSString *direction = [data stringValueForKey:kSMSMessageResponseObjectDirectionKey];
-    NSString *time      = [data stringValueForKey:kSMSMessageResponseObjectArrivalTimeKey];
-    NSString *hash      = [data stringValueForKey:kSMSMessageResponseObjectHashKey];
-    if (!hash) {
-        hash = [NSString stringWithFormat:kSMSMessageHashCreateString, didId, number, text, direction, time].MD5Hash;
-    }
+    NSString *eventId   = [data stringValueForKey:kSMSMessageResponseObjectEventIdKey];
     
     // We check to see if we already have a message using the stored server hash, and if we don't,
     // we create one with the data.
-    SMSMessage *message = [SMSMessage MR_findFirstByAttribute:NSStringFromSelector(@selector(serverHash)) withValue:hash inContext:did.managedObjectContext];
+    SMSMessage *message = [SMSMessage MR_findFirstByAttribute:NSStringFromSelector(@selector(eventId)) withValue:eventId inContext:did.managedObjectContext];
     if (!message) {
         message = [SMSMessage MR_createInContext:did.managedObjectContext];
-        message.serverHash = hash;
+        message.eventId = eventId;
         [message setNumber:number name:nil];
         message.text = text;
         message.inbound = [direction isEqualToString:kSMSMessageResponseObjectDirectionInboundValue] ? true : false;
         message.read = [direction isEqualToString:kSMSMessageResponseObjectDirectionInboundValue] ? false : true;
-        message.date = [data datetimeValueForKey:kSMSMessageResponseObjectArrivalTimeKey];
+        message.unixTimestamp = [data integerValueForKey:kSMSMessageResponseObjectArrivalTimeKey];
         message.did = did;
     }
 }
