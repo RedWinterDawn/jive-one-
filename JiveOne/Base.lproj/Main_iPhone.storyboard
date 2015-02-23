@@ -855,7 +855,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="317" height="87"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view opaque="NO" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="hav-LN-yiy" userLabel="Bubble container" customClass="JCOutgoingMessageView">
+                                                <view opaque="NO" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="hav-LN-yiy" userLabel="Bubble container" customClass="JCMessageOutgoingView">
                                                     <rect key="frame" x="60" y="0.0" width="204" height="82"/>
                                                     <subviews>
                                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" verticalHuggingPriority="1000" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="OHd-BP-XK2" customClass="JSQMessagesCellTextView">
@@ -887,7 +887,7 @@
                                                         <constraint firstItem="OHd-BP-XK2" firstAttribute="top" secondItem="hav-LN-yiy" secondAttribute="top" id="rY8-4q-7El"/>
                                                     </constraints>
                                                 </view>
-                                                <view opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="800" verticalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="qnq-fr-8CZ" userLabel="Avatar container" customClass="JCAvatarView">
+                                                <view opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="800" verticalCompressionResistancePriority="800" translatesAutoresizingMaskIntoConstraints="NO" id="qnq-fr-8CZ" userLabel="Avatar container" customClass="JCMessageAvatarView">
                                                     <rect key="frame" x="268" y="0.0" width="40" height="40"/>
                                                     <subviews>
                                                         <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YQ2-cg-Nej" userLabel="Avatar Image View">
@@ -920,7 +920,7 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                     <connections>
-                                                        <outlet property="image" destination="YQ2-cg-Nej" id="wsl-O0-gJz"/>
+                                                        <outlet property="imageView" destination="YQ2-cg-Nej" id="uxh-bg-QYy"/>
                                                         <outlet property="name" destination="xhk-Ia-FZE" id="fKx-dE-nB2"/>
                                                     </connections>
                                                 </view>
@@ -938,6 +938,7 @@
                                         </constraints>
                                         <size key="customSize" width="317" height="87"/>
                                         <connections>
+                                            <outlet property="avatarContainerView" destination="qnq-fr-8CZ" id="ih2-JO-h9P"/>
                                             <outlet property="avatarContainerViewHeightConstraint" destination="YuX-AY-vfY" id="4g5-Sw-QZ6"/>
                                             <outlet property="avatarContainerViewWidthConstraint" destination="5Im-EG-J69" id="tKu-Md-0kC"/>
                                             <outlet property="detailLabel" destination="QqL-cj-VuK" id="Fb9-Aa-VOk"/>
@@ -954,7 +955,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="317" height="87"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view opaque="NO" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="OER-DE-mR2" userLabel="Bubble container" customClass="JCIncomingMessageView">
+                                                <view opaque="NO" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="OER-DE-mR2" userLabel="Bubble container" customClass="JCMessageIncomingView">
                                                     <rect key="frame" x="53" y="0.0" width="204" height="82"/>
                                                     <subviews>
                                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" verticalHuggingPriority="1000" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="fVs-FP-xDC" customClass="JSQMessagesCellTextView">
@@ -986,7 +987,7 @@
                                                         <constraint firstItem="fVs-FP-xDC" firstAttribute="leading" secondItem="OER-DE-mR2" secondAttribute="leading" constant="8" id="mOo-i0-DkD"/>
                                                     </constraints>
                                                 </view>
-                                                <view opaque="NO" clipsSubviews="YES" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="GDo-ja-VmD" userLabel="Avatar container" customClass="JCAvatarView">
+                                                <view opaque="NO" clipsSubviews="YES" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="GDo-ja-VmD" userLabel="Avatar container" customClass="JCMessageAvatarView">
                                                     <rect key="frame" x="9" y="0.0" width="40" height="40"/>
                                                     <subviews>
                                                         <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9YN-rb-wuK" userLabel="Avatar Image View">
@@ -1019,7 +1020,7 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                     <connections>
-                                                        <outlet property="image" destination="9YN-rb-wuK" id="mC5-Xi-0yh"/>
+                                                        <outlet property="imageView" destination="9YN-rb-wuK" id="t6P-L6-ESd"/>
                                                         <outlet property="name" destination="j11-Id-Qq4" id="wPP-sM-jLb"/>
                                                     </connections>
                                                 </view>
@@ -1037,6 +1038,7 @@
                                         </constraints>
                                         <size key="customSize" width="317" height="87"/>
                                         <connections>
+                                            <outlet property="avatarContainerView" destination="GDo-ja-VmD" id="LW6-K8-E9e"/>
                                             <outlet property="avatarContainerViewHeightConstraint" destination="ngr-c6-2Tp" id="Pn3-KL-gbI"/>
                                             <outlet property="avatarContainerViewWidthConstraint" destination="27u-9E-hTb" id="EZg-ZF-0nJ"/>
                                             <outlet property="detailLabel" destination="u9b-gC-i2W" id="CnG-o2-NDo"/>
@@ -1052,7 +1054,7 @@
                                     <outlet property="delegate" destination="foX-Z7-9EW" id="JUY-JU-Qgl"/>
                                 </connections>
                             </collectionView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PaQ-AW-eUb" customClass="JCConversationInputToolbar">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PaQ-AW-eUb" customClass="JCMessagesInputToolbar">
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
