@@ -16,6 +16,7 @@ NSString *const kRecentEventReadKey = @"read";
 @implementation RecentEvent
 
 @dynamic date;
+@dynamic eventId;
 
 -(void)setRead:(bool)read
 {

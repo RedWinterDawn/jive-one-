@@ -14,7 +14,7 @@
 // Attributes
 @property (nonatomic, strong) NSDate *date;        // The date of the event.
 @property (nonatomic, getter=isRead) bool read;    // Indicates whether the event has been read.
-@property (nonatomic, strong) NSString *serverHash;
+@property (nonatomic, strong) NSString *eventId;
 
 // Transient Attributes.
 @property (nonatomic, weak) NSNumber *timestamp;
