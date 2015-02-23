@@ -8,6 +8,7 @@
 
 #import "SMSMessage+SMSClient.h"
 #import "JCSMSClient.h"
+#import <Parse/Parse.h>
 
 #ifndef MESSAGES_SEND_NUMBER_OF_RETRIES
 #define MESSAGES_SEND_NUMBER_OF_RETRIES 1
@@ -96,6 +97,9 @@ NSString *const kSMSMessageHashCreateString = @"%@-%@-%@-%@-%@";
                                  completion(NO, [JCClientError errorWithCode:JCClientRequestErrorCode userInfo:error.userInfo]);
                              }
                          }];
+    PFInstallation *currentInstilation = [PFInstallation currentInstallation];
+    [currentInstilation addUniqueObject:did.description forKey:@"channels"];
+    [currentInstilation saveInBackground];
 }
 
 #pragma mark - Receive -

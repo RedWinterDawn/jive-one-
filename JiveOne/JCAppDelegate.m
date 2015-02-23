@@ -32,6 +32,7 @@
 
 #import "Contact+V5Client.h"
 #import "Voicemail+V5Client.h"
+#import "SMSMessage+SMSClient.h"
 
 #import  "JCAppSettings.h"
 
@@ -533,6 +534,7 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     [PFPush handlePush:userInfo];
+    [SMSMessage  createSmsMessageWithMessageData:userInfo did:[JCAuthenticationManager sharedInstance].did];
     completionHandler([self backgroundPerformFetchWithCompletionHandler]);
 }
 
