@@ -533,8 +533,17 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-    [PFPush handlePush:userInfo];
-    [SMSMessage  createSmsMessageWithMessageData:userInfo did:[JCAuthenticationManager sharedInstance].did];
+//    [PFPush handlePush:userInfo];
+    
+    NSString *didId = [userInfo stringValueForKey:@"didId"];
+    
+    NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
+    DID *did = [DID MR_findFirstByAttribute:@"didId" withValue:didId inContext:context];
+    if (did) {
+        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+            [SMSMessage  createSmsMessageWithMessageData:userInfo did:(DID *)[localContext objectWithID:did.objectID]];
+        }];
+    }
     completionHandler([self backgroundPerformFetchWithCompletionHandler]);
 }
 
