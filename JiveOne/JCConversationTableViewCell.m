@@ -26,9 +26,9 @@
         if (name) {
             self.senderNameLabel.text = name;
         } else {
-            [JCAddressBook formattedNameForNumber:smsMessage.localContact.number completion:^(NSString *name, NSError *error) {
-                self.senderNameLabel.text = name;
-            }];
+//            [JCAddressBook formattedNameForNumber:smsMessage.localContact.number completion:^(NSString *name, NSError *error) {
+//                self.senderNameLabel.text = name;
+//            }];
         }
     }
     

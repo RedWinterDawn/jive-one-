@@ -14,10 +14,17 @@
 #import "JCNavigationController.h"
 #import "JCConversationTableViewCell.h"
 #import "SMSMessage+SMSClient.h"
+#import "LocalContact.h"
+#import "JCAddressBook.h"
+
+#import "JCConversationGroupsResultsController.h"
+#import "JCConversationGroup.h"
 
 NSString *const kJCConversationsTableViewController = @"ConversationCell";
 
-@interface JCConversationsTableViewController ()
+@interface JCConversationsTableViewController () <JCConversationGroupsResultsControllerDelegate>
+
+@property (nonatomic, strong) JCConversationGroupsResultsController *conversationGroupsResultsController;
 
 @end
 
@@ -25,42 +32,17 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-}
-
--(void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
     
-    _fetchedResultsController = nil;
-    [self.tableView reloadData];
-}
-
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    _fetchedResultsController = nil;
-}
-
--(NSFetchedResultsController *)fetchedResultsController
-{
-    if (!_fetchedResultsController) {
-        
-        NSFetchRequest *fetchRequest = [Message MR_requestAllInContext:self.managedObjectContext];
-        fetchRequest.includesSubentities = YES;
-        fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(date )) ascending:NO]];
-        fetchRequest.resultType = NSDictionaryResultType;
-        fetchRequest.propertiesToGroupBy = @[@"messageGroupId"];
-        fetchRequest.propertiesToFetch = @[@"messageGroupId"];
-        _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
-                                                                             managedObjectContext:self.managedObjectContext
-                                                                               sectionNameKeyPath:nil
-                                                                                        cacheName:nil];
-        __autoreleasing NSError *error = nil;
-        if ([_fetchedResultsController performFetch:&error]) {
-            [self.tableView reloadData];
-        }
-        
-    }
-    return _fetchedResultsController;
+    NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
+    NSFetchRequest *fetchRequest = [Message MR_requestAllInContext:context];
+    fetchRequest.includesSubentities = YES;
+    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(date )) ascending:NO]];
+    _conversationGroupsResultsController = [[JCConversationGroupsResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context];
+    
+    __autoreleasing NSError *error = nil;
+    if (![_conversationGroupsResultsController performFetch:&error]) {
+        [self.tableView reloadData];
+    };
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForObject:(id<NSObject>)object atIndexPath:(NSIndexPath *)indexPath {
@@ -70,14 +52,33 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
 }
 
 -(id<NSObject>)objectAtIndexPath:(NSIndexPath *)indexPath {
-    return [self.fetchedResultsController objectAtIndexPath:indexPath];
+    return [self.conversationGroupsResultsController objectAtIndexPath:indexPath];
+}
+
+- (NSIndexPath *)indexPathOfObject:(id<NSObject>)object
+{
+    return [self.conversationGroupsResultsController indexPathForObject:object];
+}
+
+-(void)configureCell:(JCConversationTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
+    [self configureCell:cell withObject:[self objectAtIndexPath:indexPath]];
+    if([cell isKindOfClass:[JCTableViewCell class]])
+    {
+        JCTableViewCell *tableCell = (JCTableViewCell *)cell;
+        if ((indexPath.row == 0 && indexPath.section == 0) && _showTopCellSeperator) {
+            tableCell.top = true;
+        }
+    }
 }
 
 -(void)configureCell:(JCConversationTableViewCell *)cell withObject:(id<NSObject>)object
 {
-    if ([object isKindOfClass:[NSDictionary class]]) {
-        NSDictionary *entity = (NSDictionary *)object;
-        cell.messageGroupId = [entity stringValueForKey:NSStringFromSelector(@selector(messageGroupId))];
+    if ([object isKindOfClass:[JCConversationGroup class]]) {
+        JCConversationGroup *group = (JCConversationGroup *)object;
+        cell.senderNameLabel.text   = group.name;
+        cell.lastMessageLabel.text  = group.lastMessage;
+        //cell.dateLabel.text = message.formattedModifiedShortDate;
     }
 }
 
@@ -87,8 +88,8 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
         [SMSMessage downloadMessagesForDIDs:pbx.dids completion:^(BOOL success, NSError *error) {
             [((UIRefreshControl *)sender) endRefreshing];
             if (success) {
-                _fetchedResultsController = nil;
-                [self.tableView reloadData];
+//                _tableData = nil;
+//                [self loadTableViewData];
             } else {
                 [self showError:error];
             }
@@ -109,5 +110,72 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
         }
     }
 }
+
+#pragma mark - Delegate Handlers -
+
+#pragma mark UITableViewDataSource
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.conversationGroupsResultsController.fetchedObjects.count;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    id object = [self objectAtIndexPath:indexPath];
+    UITableViewCell *cell = [self tableView:tableView cellForObject:object atIndexPath:indexPath];
+    if([cell isKindOfClass:[JCTableViewCell class]])
+    {
+        JCTableViewCell *tableCell = (JCTableViewCell *)cell;
+        if ((indexPath.row == 0 && indexPath.section == 0) && _showTopCellSeperator) {
+            tableCell.top = true;
+        }
+    }
+    return cell;
+}
+
+#pragma mark NSFetchedResultsControllerDelegate
+
+-(void)conversationGroupResultsControllerWillChangeContent:(JCConversationGroupsResultsController *)controller
+{
+    [self.tableView beginUpdates];
+}
+
+-(void)conversationGroupResultsController:(JCConversationGroupsResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(JCConversationGroupsResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
+{
+    UITableView *tableView = self.tableView;
+    switch(type)
+    {
+        case NSFetchedResultsChangeInsert:
+            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationTop];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+        {
+            JCConversationTableViewCell *cell = (JCConversationTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+            [self configureCell:cell atIndexPath:indexPath];
+            break;
+        }
+        case NSFetchedResultsChangeMove:
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+-(void)conversationGroupResultsControllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    [self.tableView endUpdates];
+}
+
 
 @end

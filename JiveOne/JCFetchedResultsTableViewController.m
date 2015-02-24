@@ -24,8 +24,7 @@
     
     // Uncomment the following line to preserve selection between presentations.
     self.clearsSelectionOnViewWillAppear = NO;
-    if (_editable)
-    {
+    if (_editable) {
         self.navigationItem.rightBarButtonItem = self.editButtonItem;
     }
     
@@ -35,7 +34,7 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    self.fetchedResultsController = nil;
+    _fetchedResultsController = nil;
 }
 
 #pragma mark - Setters - 

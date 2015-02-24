@@ -8,8 +8,10 @@
 
 #import "JCFetchedResultsTableViewController.h"
 
-@interface JCConversationsTableViewController : JCFetchedResultsTableViewController
+@interface JCConversationsTableViewController : UITableViewController
 
 -(IBAction)refreshTable:(id)sender;
+
+@property (nonatomic) BOOL showTopCellSeperator;
 
 @end

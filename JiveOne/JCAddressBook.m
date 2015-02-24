@@ -194,12 +194,27 @@
         return;
     }
     
-    ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            completion(granted, addressBook, (__bridge NSError *)error);
-            CFRelease(addressBook);
+    ABAuthorizationStatus status = ABAddressBookGetAuthorizationStatus();
+    if (status == kABAuthorizationStatusNotDetermined) {
+        ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
+            if (![NSThread isMainThread]) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completion(granted, addressBook, (__bridge NSError *)error);
+                    CFRelease(addressBook);
+                });
+            } else {
+                completion(granted, addressBook, (__bridge NSError *)error);
+                CFRelease(addressBook);
+            }
         });
-    });
+    } else if(status == kABAuthorizationStatusAuthorized) {
+        completion(YES, addressBook, nil);
+        CFRelease(addressBook);
+    } else {
+        NSError *error = [NSError errorWithDomain:@"AddressBookErrorDomain" code:0 userInfo:nil];
+        completion(NO, nil, error);
+        CFRelease(addressBook);
+    }
 }
 
 + (void)readAddressBook:(ABAddressBookRef)addressBook
