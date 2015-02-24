@@ -7,6 +7,7 @@
 //
 
 #import "JCAddressBook.h"
+#import "JCAddressBookNumber.h"
 
 @implementation JCAddressBook
 
@@ -42,6 +43,30 @@
     [self fetchWithPredicate:nil sortDescriptors:nil completion:completion];
 }
 
++(void)fetchNumbersWithKeyword:(NSString *)keyword
+                    completion:(void (^)(NSArray *numbers, NSError *error))completion
+{
+    [self fetchWithKeyword:keyword completion:^(NSArray *people, NSError *error) {
+        NSMutableArray *numbers = [NSMutableArray array];
+        for (JCAddressBookPerson *person in people) {
+            NSArray *phones = person.phoneNumbers;
+            if (phones) {
+                for (JCAddressBookNumber *phoneNumber in phones) {
+                    [numbers addObject:phoneNumber];
+                }
+            }
+        }
+        if (completion) {
+            completion(numbers, error);
+        }
+    }];
+}
+
++(void)fetchWithKeyword:(NSString *)keyword
+             completion:(void (^)(NSArray *people, NSError *error))completion {
+    [self fetchWithKeyword:keyword sortDescriptors:nil completion:completion];
+}
+
 +(void)fetchWithKeyword:(NSString *)keyword
         sortDescriptors:(NSArray *)sortDescriptors
              completion:(void (^)(NSArray *contacts, NSError *error))completion
@@ -57,30 +82,30 @@
             result = YES;
         }
         
-        NSString *middleName = (__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonMiddleNameProperty);
+        NSString *middleName = ((__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonMiddleNameProperty)).lowercaseString;
         if ([middleName containsString:string]) {
             result = YES;
         }
         
-        NSString *lastName = (__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);
+        NSString *lastName = ((__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty)).lowercaseString;
         if ([lastName containsString:string]) {
             result = YES;
         }
         
-        NSString *nickname = (__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonNicknameProperty);
+        NSString *nickname = ((__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonNicknameProperty)).lowercaseString;
         if ([nickname containsString:string]) {
             result = YES;
         }
         
-        NSString *organizationName = (__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonOrganizationProperty);
+        NSString *organizationName = ((__bridge_transfer NSString *)ABRecordCopyValue(person, kABPersonOrganizationProperty)).lowercaseString;
         if ([organizationName containsString:string]) {
             result = YES;
         }
         
         ABMultiValueRef phoneNumbers = ABRecordCopyValue( person, kABPersonPhoneProperty);
         for (CFIndex i = 0; i < ABMultiValueGetCount(phoneNumbers); i++) {
-            NSString *phoneNumber = (__bridge_transfer NSString*) ABMultiValueCopyValueAtIndex(phoneNumbers, i);
-            if ([phoneNumber containsString:keyword]) {
+            NSString *phoneNumber = ((__bridge_transfer NSString*) ABMultiValueCopyValueAtIndex(phoneNumbers, i)).numericStringValue;
+            if ([phoneNumber containsString:string]) {
                 result = YES;
                 break;
             }
@@ -105,6 +130,54 @@
                         predicate:predicate
                   sortDescriptors:sortDescriptors
                        completion:completion];
+        }
+    }];
+}
+
++(void)fetchPeopleWithNumber:(NSString *)number
+                  completion:(void (^)(NSArray *people, NSError *error))completion
+{
+    NSPredicate *predicate = [NSPredicate predicateWithBlock: ^(id record, NSDictionary *bindings) {
+        BOOL result = NO;
+        NSString *string = number.numericStringValue;
+        ABRecordRef person = (__bridge ABRecordRef)record;
+        ABMultiValueRef phoneNumbers = ABRecordCopyValue( person, kABPersonPhoneProperty);
+        for (CFIndex i = 0; i < ABMultiValueGetCount(phoneNumbers); i++) {
+            NSString *phoneNumber = ((__bridge_transfer NSString*) ABMultiValueCopyValueAtIndex(phoneNumbers, i)).numericStringValue;
+            if ([phoneNumber containsString:string] || [string containsString:phoneNumber]) {
+                result = YES;
+                break;
+            }
+        }
+        
+        CFRelease(phoneNumbers);
+        return result;
+    }];
+    
+    [self fetchWithPredicate:predicate sortDescriptors:nil completion:completion];
+}
+
++(void)formattedNameForNumber:(NSString *)number
+                   completion:(void (^)(NSString *name, NSError *error))completion
+{
+    [self fetchPeopleWithNumber:number completion:^(NSArray *people, NSError *error) {
+        NSString *name = number;
+        if (people && people.count > 0) {
+            id<JCPersonDataSource> person = people.firstObject;
+            if (people.count > 1) {
+                if (people.count == 2) {
+                    id<JCPersonDataSource> otherPerson = people.lastObject;
+                    name = [NSString stringWithFormat:@"%@, %@", person.firstName, otherPerson.firstName];
+                } else {
+                    name = [NSString stringWithFormat:@"%@,... +%li", person.firstName, (long)people.count-1];
+                }
+            } else {
+                name = person.name;
+            }
+        }
+        
+        if (completion) {
+            completion(name, error);
         }
     }];
 }

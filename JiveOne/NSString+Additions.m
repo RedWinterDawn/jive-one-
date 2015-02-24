@@ -57,4 +57,8 @@
     return [alphaNums isSupersetOfSet:inStringSet];
 }
 
+-(NSString *)numericStringValue {
+    return [[self componentsSeparatedByCharactersInSet: [[NSCharacterSet decimalDigitCharacterSet] invertedSet]] componentsJoinedByString:@""];
+}
+
 @end

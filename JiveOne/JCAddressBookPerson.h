@@ -20,4 +20,6 @@
 @property (nonatomic, readonly) NSString *personId;
 @property (nonatomic, readonly) NSString *personHash;
 
+@property (nonatomic, readonly) NSArray *phoneNumbers;
+
 @end
