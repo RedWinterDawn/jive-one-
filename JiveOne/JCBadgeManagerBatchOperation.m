@@ -18,6 +18,8 @@
 #import "MissedCall.h"
 #import "Voicemail.h"
 #import "RecentLineEvent.h"
+#import "Message.h"
+#import "SMSMessage.h"
 
 NSString *const kJCBadgeManagerBatchVoicemailsKey    = @"voicemails";
 NSString *const kJCBadgeManagerBatchMissedCallsKey   = @"missedCalls";
@@ -97,34 +99,24 @@ NSString *const kJCBadgeManagerBatchConversationsKey = @"conversations";
     _updated = TRUE;
     NSString *key = recentEvent.objectID.URIRepresentation.absoluteString;
     if (delete) {
-        NSArray *lines = _badges.allKeys;
-        for (NSString *line in lines) {
-            NSMutableDictionary *events = [self eventsForEventType:eventType forLine:line];
+        NSArray *eventGroupingKeys = _badges.allKeys;
+        for (NSString *eventGroupingKey in eventGroupingKeys) {
+            NSMutableDictionary *events = [self eventsForEventType:eventType forKey:eventGroupingKey];
             if ([events objectForKey:key]) {
                 [events removeObjectForKey:key];
             }
-            [self setEvents:events forEventType:eventType forLine:line];
+            [self setEvents:events forEventType:eventType forKey:eventGroupingKey];
         }
     }
     else
     {
-        if (![recentEvent isKindOfClass:[RecentLineEvent class]]) {
-            return;
-        }
-        
-        RecentLineEvent *lineEvent = (RecentLineEvent *)recentEvent;
-        Line *lineObject = lineEvent.line;
-        if (!lineObject) {
-            return;
-        }
-        
-        NSString *line = lineObject.jrn;
-        if (!line || line.length == 0) {
+        NSString *eventGroupingKey = [self eventGroupingKeyForRecentEvent:recentEvent];
+        if (!eventGroupingKey) {
             return;
         }
         
         BOOL read = recentEvent.isRead;
-        NSMutableDictionary *events = [self eventsForEventType:eventType forLine:line];
+        NSMutableDictionary *events = [self eventsForEventType:eventType forKey:eventGroupingKey];
         if (insert && !read) {
             [events setObject:@NO forKey:key];
         }
@@ -136,14 +128,46 @@ NSString *const kJCBadgeManagerBatchConversationsKey = @"conversations";
                 [events removeObjectForKey:key];
             }
         }
-        [self setEvents:events forEventType:eventType forLine:line];
+        [self setEvents:events forEventType:eventType forKey:eventGroupingKey];
     }
+}
+
+-(NSString *)eventGroupingKeyForRecentEvent:(RecentEvent *)recentEvent
+{
+    if ([recentEvent isKindOfClass:[RecentLineEvent class]])
+    {
+        Line *lineObject = ((RecentLineEvent *)recentEvent).line;
+        if (!lineObject) {
+            return nil;
+        }
+        
+        NSString *line = lineObject.jrn;
+        if (!line || line.length == 0) {
+            return nil;
+        }
+        return line;
+        
+    }
+    else if([recentEvent isKindOfClass:[SMSMessage class]])
+    {
+        PBX *pbx = ((SMSMessage *)recentEvent).did.pbx;
+        if (!pbx) {
+            return nil;
+        }
+        
+        NSString *pbxId = pbx.pbxId;
+        if (!pbxId || pbxId.length == 0) {
+            return nil;
+        }
+        return pbxId;
+    }
+    return nil;
 }
 
 /**
  * Returns a identifier key for a given recent event based on the kind of object.
  *
- * The Identifier key returned is used thoughout the badge system to categorize a recent event into 
+ * The Identifier key returned is used thoughout the badge system to categorize a recent event into
  * a bucket. The bucket count provides us the badge numbers for a given key.
  */
 -(NSString *)eventTypeFromRecentEvent:(RecentEvent *)recentEvent
@@ -157,16 +181,16 @@ NSString *const kJCBadgeManagerBatchConversationsKey = @"conversations";
     return nil;
 }
 
--(void)setEvents:(NSDictionary *)events forEventType:(NSString *)type forLine:(NSString *)line
+-(void)setEvents:(NSDictionary *)events forEventType:(NSString *)type forKey:(NSString *)key
 {
-    NSMutableDictionary *eventTypes = [self eventTypesForLine:line];
+    NSMutableDictionary *eventTypes = [self eventTypesForKey:key];
     [eventTypes setObject:events forKey:type];
-    [self setEventTypes:eventTypes forLine:line];
+    [self setEventTypes:eventTypes forKey:key];
 }
 
--(NSMutableDictionary *)eventsForEventType:(NSString *)type forLine:(NSString *)line
+-(NSMutableDictionary *)eventsForEventType:(NSString *)type forKey:(NSString *)key
 {
-    NSMutableDictionary *events = [self eventTypesForLine:line];
+    NSMutableDictionary *events = [self eventTypesForKey:key];
     id object = [events objectForKey:type];
     if ([object isKindOfClass:[NSDictionary class]]) {
         return [NSMutableDictionary dictionaryWithDictionary:(NSDictionary *)object];
@@ -180,9 +204,9 @@ NSString *const kJCBadgeManagerBatchConversationsKey = @"conversations";
  * Overrites the existing value of the badges dictionary for a given line. If was empty, it is 
  * created, otherwise replaced with the new values.
  */
--(void)setEventTypes:(NSDictionary *)types forLine:(NSString *)line
+-(void)setEventTypes:(NSDictionary *)types forKey:(NSString *)key
 {
-    [_badges setObject:types forKey:line];
+    [_badges setObject:types forKey:key];
 }
 
 /**
@@ -192,9 +216,9 @@ NSString *const kJCBadgeManagerBatchConversationsKey = @"conversations";
  * object a dictionary corresponding to the line identifier. If we have a dictionary for that key, 
  * we return a mutable form of it. If not, we return a new empty mutable dictionary.
  */
--(NSMutableDictionary *)eventTypesForLine:(NSString *)line
+-(NSMutableDictionary *)eventTypesForKey:(NSString *)key
 {
-    id object = [_badges objectForKey:line];
+    id object = [_badges objectForKey:key];
     if ([object isKindOfClass:[NSDictionary class]]){
         NSDictionary *events = (NSDictionary *)object;
         return [NSMutableDictionary dictionaryWithDictionary:events];

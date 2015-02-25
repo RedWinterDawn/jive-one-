@@ -24,7 +24,9 @@ extern NSString *const kJCBadgeManagerIdentifierKey;
 // Individual recent event types.
 @property (nonatomic) NSUInteger voicemails;
 @property (nonatomic, readonly) NSUInteger missedCalls;
+@property (nonatomic, readonly) NSUInteger smsMessages;
 @property (nonatomic, readonly) NSUInteger conversations;
+
 
 @property (nonatomic, readonly) BOOL canSendNotifications;
 

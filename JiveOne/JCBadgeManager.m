@@ -24,6 +24,7 @@ NSString *const kJCBadgeManagerVoicemailsKey    = @"voicemails";
 NSString *const kJCBadgeManagerV4VoicemailKey   = @"v4_voicemails";
 NSString *const kJCBadgeManagerMissedCallsKey   = @"missedCalls";
 NSString *const kJCBadgeManagerConversationsKey = @"conversations";
+NSString *const kJCBadgeManagerSMSMessagesKey   = @"smsMessages";
 
 NSString *const kJCBadgeManagerInsertedIdentifierNotification = @"insertedIdentifier";
 NSString *const kJCBadgeManagerDeletedIdentifierNotification = @"deletedIdentifier";
@@ -120,12 +121,14 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
     [self willChangeValueForKey:kJCBadgeManagerMissedCallsKey];
     [self willChangeValueForKey:kJCBadgeManagerVoicemailsKey];
     [self willChangeValueForKey:kJCBadgeManagerConversationsKey];
+    [self willChangeValueForKey:kJCBadgeManagerSMSMessagesKey];
     
     self.badges = nil;
     
     [self didChangeValueForKey:kJCBadgeManagerMissedCallsKey];
     [self didChangeValueForKey:kJCBadgeManagerVoicemailsKey];
     [self didChangeValueForKey:kJCBadgeManagerConversationsKey];
+    [self didChangeValueForKey:kJCBadgeManagerSMSMessagesKey];
 }
 
 #pragma mark - Setters -
@@ -136,6 +139,7 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
     [self willChangeValueForKey:kJCBadgeManagerVoicemailsKey];
     [self willChangeValueForKey:kJCBadgeManagerConversationsKey];
     [self willChangeValueForKey:kJCBadgeManagerBadgesKey];
+    [self willChangeValueForKey:kJCBadgeManagerSMSMessagesKey];
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:badges forKey:kJCBadgeManagerBadgesKey];
@@ -145,15 +149,16 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
     [self didChangeValueForKey:kJCBadgeManagerMissedCallsKey];
     [self didChangeValueForKey:kJCBadgeManagerVoicemailsKey];
     [self didChangeValueForKey:kJCBadgeManagerConversationsKey];
+    [self didChangeValueForKey:kJCBadgeManagerSMSMessagesKey];
 }
 
 -(void)setVoicemails:(NSUInteger)voicemails
 {
     [self willChangeValueForKey:kJCBadgeManagerVoicemailsKey];
-    NSString *line = [JCAuthenticationManager sharedInstance].line.jrn;
-    NSMutableDictionary *eventTypes = [self eventTypesForLine:line];
+    NSString *key = [JCAuthenticationManager sharedInstance].line.jrn;
+    NSMutableDictionary *eventTypes = [self eventTypesForKey:key];
     [eventTypes setObject:[NSNumber numberWithInteger:voicemails] forKey:kJCBadgeManagerV4VoicemailKey];
-    [self setEventTypes:eventTypes line:line];
+    [self setEventTypes:eventTypes key:key];
     [self didChangeValueForKey:kJCBadgeManagerVoicemailsKey];
 }
 
@@ -177,8 +182,9 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
 
 - (NSUInteger)recentEvents
 {
-    NSString *line = [JCAuthenticationManager sharedInstance].line.jrn;
-    NSDictionary *eventTypes = [self eventTypesForLine:line];
+    // Recent Line Events
+    NSString *eventGroupKey = [JCAuthenticationManager sharedInstance].line.jrn;
+    NSDictionary *eventTypes = [self eventTypesForKey:eventGroupKey];
     NSArray *keys = eventTypes.allKeys;
     int total = 0;
     for (NSString *key in keys){
@@ -192,14 +198,31 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
             total += [self countForEventType:key];
         }
     }
+    
+    // SMS message
+    eventGroupKey = [JCAuthenticationManager sharedInstance].pbx.pbxId;
+    eventTypes = [self eventTypesForKey:eventGroupKey];
+    keys = eventTypes.allKeys;
+    for (NSString *key in keys){
+        if ([key isEqualToString:kJCBadgeManagerV4VoicemailKey]){
+            id object = [eventTypes objectForKey:key];
+            if ([object isKindOfClass:[NSNumber class]]) {
+                total += ((NSNumber *)object).integerValue;
+            }
+        }
+        else {
+            total += [self countForEventType:key];
+        }
+    }
+    
     return total;
 }
 
 - (NSUInteger)voicemails
 {
-    NSString *line = [JCAuthenticationManager sharedInstance].line.jrn;
+    NSString *key = [JCAuthenticationManager sharedInstance].line.jrn;
     NSUInteger total = 0;
-    NSDictionary *eventTypes = [self eventTypesForLine:line];
+    NSDictionary *eventTypes = [self eventTypesForKey:key];
     id object = [eventTypes objectForKey:kJCBadgeManagerV4VoicemailKey];
     if (object && [object isKindOfClass:[NSNumber class]]) {
         total += ((NSNumber *)object).integerValue;
@@ -217,6 +240,11 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
 - (NSUInteger)conversations
 {
     return [self countForEventType:kJCBadgeManagerConversationsKey];
+}
+
+- (NSUInteger)smsMessages
+{
+    return [self countForEventType:kJCBadgeManagerSMSMessagesKey];
 }
 
 #pragma mark - Notification Handlers -
@@ -244,8 +272,15 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
  */
 -(NSUInteger)countForEventType:(NSString *)eventType
 {
-    NSString *line = [JCAuthenticationManager sharedInstance].line.jrn;
-    NSDictionary *events = [self eventsForEventType:eventType line:line];
+    if ([eventType isEqualToString:kJCBadgeManagerSMSMessagesKey] || [eventType isEqualToString:kJCBadgeManagerSMSMessagesKey])
+    {
+        NSString *key = [JCAuthenticationManager sharedInstance].pbx.pbxId;
+        NSDictionary *events = [self eventsForEventType:eventType key:key];
+        return events.allKeys.count;
+    }
+    
+    NSString *key = [JCAuthenticationManager sharedInstance].line.jrn;
+    NSDictionary *events = [self eventsForEventType:eventType key:key];
     return events.allKeys.count;
 }
 
@@ -254,9 +289,9 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
  * been set, it should return nil, otherwise, it should return a dictionary of identifiers, where the identifier is the
  * key, and a bool is the value.
  */
--(NSMutableDictionary *)eventsForEventType:(NSString *)type line:(NSString *)line
+-(NSMutableDictionary *)eventsForEventType:(NSString *)type key:(NSString *)key
 {
-    NSMutableDictionary *eventTypes = [self eventTypesForLine:line];
+    NSMutableDictionary *eventTypes = [self eventTypesForKey:key];
     id object = [eventTypes objectForKey:type];
     if ([object isKindOfClass:[NSDictionary class]]) {
         return [NSMutableDictionary dictionaryWithDictionary:(NSDictionary *)object];
@@ -264,19 +299,19 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
     return [NSMutableDictionary dictionary];
 }
 
--(NSMutableDictionary *)eventTypesForLine:(NSString *)line
+-(NSMutableDictionary *)eventTypesForKey:(NSString *)key
 {
-    id object = [self.badges objectForKey:line];
+    id object = [self.badges objectForKey:key];
     if ([object isKindOfClass:[NSDictionary class]]) {
         return [NSMutableDictionary dictionaryWithDictionary:(NSDictionary *)object];
     }
     return [NSMutableDictionary dictionary];
 }
 
--(void)setEventTypes:(NSDictionary *)eventTypes line:(NSString *)line
+-(void)setEventTypes:(NSDictionary *)eventTypes key:(NSString *)key
 {
     NSMutableDictionary *badges = self.badges;
-    [badges setObject:eventTypes forKey:line];
+    [badges setObject:eventTypes forKey:key];
     self.badges = badges;
 }
 
