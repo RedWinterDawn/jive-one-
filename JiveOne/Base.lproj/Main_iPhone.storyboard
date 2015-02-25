@@ -813,9 +813,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Messages" id="BUa-qT-EHb">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="v46-Ma-zwl">
+                        <barButtonItem key="rightBarButtonItem" title="Clear" id="I7M-xr-r2z">
                             <connections>
-                                <segue destination="foX-Z7-9EW" kind="push" identifier="NewMessage" id="rim-j8-ZTY"/>
+                                <action selector="clear:" destination="J2i-zc-aC2" id="561-rl-OyQ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -5906,11 +5906,10 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="e0I-ZU-Bxk"/>
-        <segue reference="ZYx-zc-gsM"/>
         <segue reference="Uqi-bD-GAX"/>
-        <segue reference="x1v-U1-NC6"/>
         <segue reference="5C3-Di-Qgq"/>
         <segue reference="Tth-R2-xu6"/>
+        <segue reference="x1v-U1-NC6"/>
         <segue reference="2yK-HA-Lah"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29803921570000003" green="0.44705882349999998" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>

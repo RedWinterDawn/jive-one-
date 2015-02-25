@@ -1353,14 +1353,14 @@
 		5D6526891A76B4210038B14A /* Messages */ = {
 			isa = PBXGroup;
 			children = (
-				5D1175821A9BEFB200D2B03A /* JCConversationGroupsResultsController.h */,
-				5D1175831A9BEFB200D2B03A /* JCConversationGroupsResultsController.m */,
-				5D1175851A9BEFD500D2B03A /* JCConversationGroup.h */,
-				5D1175861A9BEFD500D2B03A /* JCConversationGroup.m */,
 				5D490E6B1A8D7624004B62C0 /* JCConversationsTableViewController.h */,
 				5D490E6C1A8D7624004B62C0 /* JCConversationsTableViewController.m */,
 				5D490E6E1A8E81AF004B62C0 /* JCConversationTableViewCell.h */,
 				5D490E6F1A8E81AF004B62C0 /* JCConversationTableViewCell.m */,
+				5D1175821A9BEFB200D2B03A /* JCConversationGroupsResultsController.h */,
+				5D1175831A9BEFB200D2B03A /* JCConversationGroupsResultsController.m */,
+				5D1175851A9BEFD500D2B03A /* JCConversationGroup.h */,
+				5D1175861A9BEFD500D2B03A /* JCConversationGroup.m */,
 				5D87FF321A7FF576001B8BB2 /* JCMessagesViewController.h */,
 				5D87FF331A7FF576001B8BB2 /* JCMessagesViewController.m */,
 				5D490E4D1A8A665F004B62C0 /* Message Views */,

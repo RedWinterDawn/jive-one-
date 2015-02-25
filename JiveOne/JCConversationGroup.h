@@ -10,11 +10,14 @@
 
 @interface JCConversationGroup : NSObject
 
--(instancetype)initWithConversationId:(NSString *)conversationId;
+-(instancetype)initWithConversationGroupId:(NSString *)conversationGroupId context:(NSManagedObjectContext *)context;
 
-@property (nonatomic, readonly) NSString *conversationId;
+@property (nonatomic, readonly, getter=isSMS) BOOL sms;
+
+@property (nonatomic, readonly) NSString *conversationGroupId;
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *lastMessage;
 @property (strong, nonatomic) NSDate *lastMessageReceived;
+@property (strong, nonatomic) NSString *lastMessageId;
 
 @end

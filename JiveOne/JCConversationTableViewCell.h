@@ -10,8 +10,6 @@
 
 @interface JCConversationTableViewCell : JCTableViewCell
 
-@property (nonatomic, strong) NSString *messageGroupId;
-
 @property (weak, nonatomic) IBOutlet UILabel *senderNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lastMessageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;

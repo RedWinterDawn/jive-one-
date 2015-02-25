@@ -155,4 +155,16 @@
     return  phoneNumbers;
 }
 
+-(BOOL)hasNumber:(NSString *)string
+{
+    NSArray *numbers = self.phoneNumbers;
+    for (JCAddressBookNumber *number in numbers) {
+        NSString *phoneNumber = number.number.numericStringValue;
+        if ([string.numericStringValue containsString:phoneNumber] ) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 @end

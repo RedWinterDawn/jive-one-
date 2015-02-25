@@ -38,6 +38,7 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
     fetchRequest.includesSubentities = YES;
     fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(date )) ascending:NO]];
     _conversationGroupsResultsController = [[JCConversationGroupsResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context];
+    _conversationGroupsResultsController.delegate = self;
     
     __autoreleasing NSError *error = nil;
     if (![_conversationGroupsResultsController performFetch:&error]) {
@@ -87,14 +88,19 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
         PBX *pbx = [JCAuthenticationManager sharedInstance].pbx;
         [SMSMessage downloadMessagesForDIDs:pbx.dids completion:^(BOOL success, NSError *error) {
             [((UIRefreshControl *)sender) endRefreshing];
-            if (success) {
-//                _tableData = nil;
-//                [self loadTableViewData];
-            } else {
+            if (!success) {
                 [self showError:error];
             }
         }];
     }
+}
+
+- (IBAction)clear:(id)sender {
+    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+        [SMSMessage MR_truncateAllInContext:localContext];
+    } completion:^(BOOL success, NSError *error) {
+        [self.tableView reloadData];
+    }];
 }
 
 #pragma mark - Navigation
@@ -105,8 +111,8 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
         UIViewController *viewController = segue.destinationViewController;
         if ([viewController isKindOfClass:[JCMessagesViewController class]]) {
             JCMessagesViewController *messagesViewController = (JCMessagesViewController *)viewController;
-            NSDictionary *entity = (NSDictionary *)[self objectAtIndexPath:[self.tableView indexPathForCell:sender]];
-            messagesViewController.messageGroupId = [entity stringValueForKey:NSStringFromSelector(@selector(messageGroupId))];
+            JCConversationGroup *conversationGroup = (JCConversationGroup *)[self objectAtIndexPath:[self.tableView indexPathForCell:sender]];
+            messagesViewController.messageGroupId = conversationGroup.conversationGroupId;
         }
     }
 }

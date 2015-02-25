@@ -10,7 +10,8 @@
 
 @interface JCConversationsTableViewController : UITableViewController
 
--(IBAction)refreshTable:(id)sender;
+- (IBAction)refreshTable:(id)sender;
+- (IBAction)clear:(id)sender;
 
 @property (nonatomic) BOOL showTopCellSeperator;
 
