@@ -795,7 +795,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Message" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kz0-zU-FzF">
-                                            <rect key="frame" x="8" y="29" width="304" height="21"/>
+                                            <rect key="frame" x="8" y="32" width="304" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="b4e-IH-aST"/>
                                             </constraints>
@@ -812,7 +812,7 @@
                                         <constraint firstAttribute="trailing" secondItem="Kz0-zU-FzF" secondAttribute="trailing" constant="8" id="acj-MD-MvP"/>
                                         <constraint firstItem="u5G-lj-0Cl" firstAttribute="leading" secondItem="W9i-Ew-j3S" secondAttribute="leading" constant="8" id="an1-lP-LCq"/>
                                         <constraint firstItem="TTr-Dm-YVJ" firstAttribute="trailing" secondItem="W9i-Ew-j3S" secondAttribute="trailing" constant="-8" id="ig5-9R-YkV"/>
-                                        <constraint firstItem="Kz0-zU-FzF" firstAttribute="top" secondItem="u5G-lj-0Cl" secondAttribute="bottom" id="lrH-hB-O5B"/>
+                                        <constraint firstItem="Kz0-zU-FzF" firstAttribute="top" secondItem="u5G-lj-0Cl" secondAttribute="bottom" constant="3" id="lrH-hB-O5B"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -830,9 +830,9 @@
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="Messages" id="BUa-qT-EHb">
-                        <barButtonItem key="rightBarButtonItem" title="Clear" id="I7M-xr-r2z">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="PYy-69-e04">
                             <connections>
-                                <action selector="clear:" destination="J2i-zc-aC2" id="561-rl-OyQ"/>
+                                <segue destination="foX-Z7-9EW" kind="push" id="wJG-Wy-RNi"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -3688,7 +3688,7 @@
                     <navigationItem key="navigationItem" id="32D-gV-RmW">
                         <nil key="title"/>
                         <view key="titleView" contentMode="scaleToFill" id="hvF-R3-hJB" userLabel="t">
-                            <rect key="frame" x="96" y="6" width="128" height="33"/>
+                            <rect key="frame" x="96" y="5.5" width="128" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IFW-et-Pls">
@@ -5934,6 +5934,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="wJG-Wy-RNi"/>
         <segue reference="e0I-ZU-Bxk"/>
         <segue reference="Uqi-bD-GAX"/>
         <segue reference="5C3-Di-Qgq"/>
