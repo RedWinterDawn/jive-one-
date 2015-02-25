@@ -36,7 +36,7 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
     NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
     NSFetchRequest *fetchRequest = [Message MR_requestAllInContext:context];
     fetchRequest.includesSubentities = YES;
-    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(date )) ascending:NO]];
+    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(date)) ascending:NO]];
     _conversationGroupsResultsController = [[JCConversationGroupsResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context];
     _conversationGroupsResultsController.delegate = self;
     

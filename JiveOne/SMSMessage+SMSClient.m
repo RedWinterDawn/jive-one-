@@ -297,9 +297,7 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
             DID *localDid = (DID *)[localContext objectWithID:did.objectID];
             [self createSmsMessageWithMessageData:(NSDictionary *)object did:localDid];
         } completion:^(BOOL success, NSError *error) {
-            if (success) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
-            }
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
             if (completion) {
                 completion(success, error);
             }
@@ -325,7 +323,6 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
             [NSException raise:kSMSMessageInvalidSendResponseException format:@"Array is null"];
         }
         
-        NSLog(@"%@", responseObject);
         NSArray *digestMessages = (NSArray *)responseObject;
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
             DID *localDid = (DID *)[localContext objectWithID:did.objectID];
@@ -340,9 +337,7 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
             }
         }
         completion:^(BOOL success, NSError *error) {
-            if (success) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
-            }
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
             if (completion) {
                 completion(success, error);
             }
@@ -378,9 +373,7 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
             }
         }
         completion:^(BOOL success, NSError *error) {
-            if (success) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
-            }
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
             if (completion) {
                 completion(success, error);
             }
