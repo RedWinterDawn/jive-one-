@@ -62,3 +62,29 @@
 }
 
 @end
+
+#import <libPhoneNumber-iOS/NBPhoneNumberUtil.h>
+#import <libPhoneNumber-iOS/NBAsYouTypeFormatter.h>
+
+@implementation NSString (PhoneNumbers)
+
+-(NSString *)formattedPhoneNumber
+{
+    if (self.length < 5)
+        return self;
+    
+    __autoreleasing NSError *error;
+    
+    static NBPhoneNumberUtil *phoneNumberUtil;
+    static dispatch_once_t pred;
+    dispatch_once(&pred, ^{
+        phoneNumberUtil = [NBPhoneNumberUtil new];
+    });
+    
+    NBPhoneNumber *phoneNumber = [phoneNumberUtil parse:self defaultRegion:@"US" error:&error];
+    if (error)
+        NSLog(@"%@", [error description]);
+    return [phoneNumberUtil format:phoneNumber numberFormat:NBEPhoneNumberFormatNATIONAL error:&error];
+}
+
+@end

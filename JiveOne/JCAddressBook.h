@@ -42,6 +42,18 @@
 +(void)fetchPeopleWithNumber:(NSString *)number
                   completion:(void (^)(NSArray *people, NSError *error))completion;
 
++(void)fetchPeopleWithNumbers:(NSSet *)numbers
+                   completion:(void (^)(NSArray *people, NSError *error))completion;
+
+@end
+
+
+@interface JCAddressBook (FormattedNames)
+
++(void)formattedNamesForNumbers:(NSSet *)numbers
+                          begin:(void (^)())begin
+                         number:(void (^)(NSString *name, NSString *number))number
+                     completion:(CompletionHandler)completion;
 
 +(void)formattedNameForNumber:(NSString *)number
                    completion:(void (^)(NSString *name, NSError *error))completion;

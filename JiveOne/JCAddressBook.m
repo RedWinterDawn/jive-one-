@@ -134,6 +134,36 @@
     }];
 }
 
++(void)fetchPeopleWithNumbers:(NSSet *)numbers
+                   completion:(void (^)(NSArray *, NSError *))completion
+{
+    NSMutableArray *predicates = [NSMutableArray new];
+    for (NSString *number in numbers) {
+        __block NSString *blockNumber = number;
+        NSPredicate *predicate = [NSPredicate predicateWithBlock: ^(id record, NSDictionary *bindings) {
+            BOOL result = NO;
+            NSString *string = blockNumber.numericStringValue;
+            ABRecordRef person = (__bridge ABRecordRef)record;
+            ABMultiValueRef phoneNumbers = ABRecordCopyValue( person, kABPersonPhoneProperty);
+            for (CFIndex i = 0; i < ABMultiValueGetCount(phoneNumbers); i++) {
+                NSString *phoneNumber = ((__bridge_transfer NSString*) ABMultiValueCopyValueAtIndex(phoneNumbers, i)).numericStringValue;
+                if ([phoneNumber containsString:string] || [string containsString:phoneNumber]) {
+                    result = YES;
+                    break;
+                }
+            }
+            
+            CFRelease(phoneNumbers);
+            return result;
+        }];
+        
+        [predicates addObject:predicate];
+    }
+    
+    NSPredicate *predicate = [NSCompoundPredicate orPredicateWithSubpredicates:predicates];
+    [self fetchWithPredicate:predicate sortDescriptors:nil completion:completion];
+}
+
 +(void)fetchPeopleWithNumber:(NSString *)number
                   completion:(void (^)(NSArray *people, NSError *error))completion
 {
@@ -157,30 +187,27 @@
     [self fetchWithPredicate:predicate sortDescriptors:nil completion:completion];
 }
 
-+(void)formattedNameForNumber:(NSString *)number
-                   completion:(void (^)(NSString *name, NSError *error))completion
-{
-    [self fetchPeopleWithNumber:number completion:^(NSArray *people, NSError *error) {
-        NSString *name = number;
-        if (people && people.count > 0) {
-            id<JCPersonDataSource> person = people.firstObject;
-            if (people.count > 1) {
-                if (people.count == 2) {
-                    id<JCPersonDataSource> otherPerson = people.lastObject;
-                    name = [NSString stringWithFormat:@"%@, %@", person.firstName, otherPerson.firstName];
-                } else {
-                    name = [NSString stringWithFormat:@"%@,... +%li", person.firstName, (long)people.count-1];
-                }
+NSString *const kNameFormattingTwoPeople = @"%@, %@";
+NSString *const kNameFormattingThreePlusPeople = @"%@,...+%li";
+
++(NSString *)nameForPeople:(NSArray *)people {
+    NSString *name;
+    if (people && people.count > 0) {
+        id<JCPersonDataSource> person = people.firstObject;
+        if (people.count > 1) {
+            if (people.count == 2) {
+                id<JCPersonDataSource> otherPerson = people.lastObject;
+                name = [NSString stringWithFormat:kNameFormattingTwoPeople, person.firstName, otherPerson.firstName];
             } else {
-                name = person.name;
+                name = [NSString stringWithFormat:kNameFormattingThreePlusPeople, person.firstName, (long)people.count-1];
             }
+        } else {
+            name = person.name;
         }
-        
-        if (completion) {
-            completion(name, error);
-        }
-    }];
+    }
+    return name;
 }
+
 
 #pragma mark - Private -
 
@@ -194,12 +221,27 @@
         return;
     }
     
-    ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            completion(granted, addressBook, (__bridge NSError *)error);
-            CFRelease(addressBook);
+    ABAuthorizationStatus status = ABAddressBookGetAuthorizationStatus();
+    if (status == kABAuthorizationStatusNotDetermined) {
+        ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
+            if (![NSThread isMainThread]) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completion(granted, addressBook, (__bridge NSError *)error);
+                    CFRelease(addressBook);
+                });
+            } else {
+                completion(granted, addressBook, (__bridge NSError *)error);
+                CFRelease(addressBook);
+            }
         });
-    });
+    } else if(status == kABAuthorizationStatusAuthorized) {
+        completion(YES, addressBook, nil);
+        CFRelease(addressBook);
+    } else {
+        NSError *error = [NSError errorWithDomain:@"AddressBookErrorDomain" code:0 userInfo:nil];
+        completion(NO, nil, error);
+        CFRelease(addressBook);
+    }
 }
 
 + (void)readAddressBook:(ABAddressBookRef)addressBook
@@ -237,3 +279,57 @@
 }
 
 @end
+
+@implementation JCAddressBook (FormattedNames)
+
++(void)formattedNamesForNumbers:(NSSet *)numbers
+                          begin:(void (^)())begin
+                number:(void (^)(NSString *name, NSString *number))number
+                     completion:(void (^)(BOOL success, NSError *error))completion
+{
+    [self fetchPeopleWithNumbers:numbers completion:^(NSArray *people, NSError *error) {
+        
+        if (begin) {
+            begin();
+        }
+        if (!error && number) {
+            for (NSString *numberString in numbers) {
+                NSMutableArray *peopleGroup = [NSMutableArray new];
+                for (JCAddressBookPerson *person in people) {
+                    if ([person hasNumber:numberString]) {
+                        [peopleGroup addObject:person];
+                    }
+                }
+                
+                if (peopleGroup.count > 0) {
+                    NSString *name = [self nameForPeople:peopleGroup];
+                    number(name, numberString);
+                }
+            }
+        }
+        if (completion) {
+            completion((error == nil), error);
+        }
+    }];
+    
+    
+}
+
++(void)formattedNameForNumber:(NSString *)number
+                   completion:(void (^)(NSString *name, NSError *error))completion
+{
+    [self fetchPeopleWithNumber:number completion:^(NSArray *people, NSError *error) {
+        NSString *name = [self nameForPeople:people];
+        if (!name) {
+            name = number.formattedPhoneNumber;
+        }
+        
+        if (completion) {
+            completion(name, error);
+        }
+    }];
+}
+
+
+@end
+

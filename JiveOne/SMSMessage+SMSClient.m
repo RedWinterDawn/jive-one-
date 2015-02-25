@@ -48,7 +48,24 @@ NSString *const kSMSMessageInvalidSendResponseException = @"invalidSendResponse"
 
 NSString *const kSMSMessageHashCreateString = @"%@-%@-%@-%@-%@";
 
+NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
+
 @implementation SMSMessage (SMSClient)
+
++ (void)createSmsMessageWithMessageData:(NSDictionary *)data {
+    
+    NSString *didId = [data stringValueForKey:kSMSMessageResponseObjectDidIdKey];
+    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+        DID *did = [DID MR_findFirstByAttribute:NSStringFromSelector(@selector(didId)) withValue:didId];
+        if (did) {
+            [self createSmsMessageWithMessageData:data did:did];
+        }
+    } completion:^(BOOL success, NSError *error) {
+        if (success) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
+        }
+    }];
+}
 
 + (void)createSmsMessageWithMessageData:(NSDictionary *)data did:(DID *)did
 {
@@ -279,7 +296,12 @@ NSString *const kSMSMessageHashCreateString = @"%@-%@-%@-%@-%@";
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
             DID *localDid = (DID *)[localContext objectWithID:did.objectID];
             [self createSmsMessageWithMessageData:(NSDictionary *)object did:localDid];
-        } completion:completion];
+        } completion:^(BOOL success, NSError *error) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
+            if (completion) {
+                completion(success, error);
+            }
+        }];
     }
     @catch (NSException *exception) {
         NSInteger code;
@@ -301,7 +323,6 @@ NSString *const kSMSMessageHashCreateString = @"%@-%@-%@-%@-%@";
             [NSException raise:kSMSMessageInvalidSendResponseException format:@"Array is null"];
         }
         
-        NSLog(@"%@", responseObject);
         NSArray *digestMessages = (NSArray *)responseObject;
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
             DID *localDid = (DID *)[localContext objectWithID:did.objectID];
@@ -314,7 +335,13 @@ NSString *const kSMSMessageHashCreateString = @"%@-%@-%@-%@-%@";
                     }
                 }
             }
-        } completion:completion];
+        }
+        completion:^(BOOL success, NSError *error) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
+            if (completion) {
+                completion(success, error);
+            }
+        }];
     }
     @catch (NSException *exception) {
         NSInteger code;
@@ -345,7 +372,12 @@ NSString *const kSMSMessageHashCreateString = @"%@-%@-%@-%@-%@";
                 }
             }
         }
-        completion:completion];
+        completion:^(BOOL success, NSError *error) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
+            if (completion) {
+                completion(success, error);
+            }
+        }];
     }
     @catch (NSException *exception) {
         NSInteger code;

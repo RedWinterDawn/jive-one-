@@ -10,6 +10,8 @@
 #import "DID.h"
 #import "JCPersonDataSource.h"
 
+extern NSString *const kSMSMessagesDidUpdateNotification;
+
 @interface SMSMessage (SMSClient)
 
 // Creates a SMS message from dictionary data. This is meant to be used for processing from a
@@ -17,15 +19,19 @@
 // made will be linked to the passed DID. The Passed DID should be from the same context as the
 // passed managed object context. The passed data dictionary should follow this format:
 // @{
-//      "id": {id},
+//      "uid": {guid},
 //      "number": "{number}",
 //      "didId": "{did_id}",
 //      "body": "{message body}",
 //      "direction": "{outbound | inbound}",
-//      "arrivalTime": "{yyyy-mm-dd HH:mm:ss.SSSS}"
+//      "epochTime": "{unix timestamp}"
 //  }
 //
++ (void)createSmsMessageWithMessageData:(NSDictionary *)dataDictionary;
+
+// Internal method if we know the did already and do not need to extract it from the response.
 + (void)createSmsMessageWithMessageData:(NSDictionary *)dataDictionary did:(DID *)did;
+
 
 #pragma mark - Send -
 

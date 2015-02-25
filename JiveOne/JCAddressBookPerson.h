@@ -22,4 +22,6 @@
 
 @property (nonatomic, readonly) NSArray *phoneNumbers;
 
+-(BOOL)hasNumber:(NSString *)string;
+
 @end

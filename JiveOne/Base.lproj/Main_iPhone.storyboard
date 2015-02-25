@@ -764,39 +764,55 @@
         <!--Messages-->
         <scene sceneID="RM6-57-2r2">
             <objects>
-                <tableViewController id="J2i-zc-aC2" customClass="JCConversationsTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="75" sectionHeaderHeight="22" sectionFooterHeight="22" id="elf-Fi-Ick">
+                <tableViewController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="J2i-zc-aC2" customClass="JCConversationsTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" id="elf-Fi-Ick">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ConversationCell" rowHeight="75" id="D2t-fp-QtY" customClass="JCConversationTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ConversationCell" rowHeight="60" id="D2t-fp-QtY" customClass="JCConversationTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="D2t-fp-QtY" id="W9i-Ew-j3S">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Last Message" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kz0-zU-FzF">
-                                            <rect key="frame" x="8" y="40" width="304" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="3:03 PM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TTr-Dm-YVJ">
-                                            <rect key="frame" x="225" y="9" width="83" height="20"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3:03 PM" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="none" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TTr-Dm-YVJ">
+                                            <rect key="frame" x="257" y="8" width="55" height="13"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="13" id="KfW-Jf-cQg"/>
+                                                <constraint firstAttribute="width" constant="55" id="tB5-J9-aRJ"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contact Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u5G-lj-0Cl">
+                                            <rect key="frame" x="8" y="8" width="241" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="VaK-ke-JHd"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Contact Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u5G-lj-0Cl">
-                                            <rect key="frame" x="8" y="9" width="238" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Message" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kz0-zU-FzF">
+                                            <rect key="frame" x="8" y="32" width="304" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="b4e-IH-aST"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailingMargin" secondItem="TTr-Dm-YVJ" secondAttribute="trailing" constant="4" id="bIL-BK-PYI"/>
-                                        <constraint firstItem="TTr-Dm-YVJ" firstAttribute="top" secondItem="W9i-Ew-j3S" secondAttribute="topMargin" id="wVk-j5-XO4"/>
+                                        <constraint firstItem="TTr-Dm-YVJ" firstAttribute="top" secondItem="W9i-Ew-j3S" secondAttribute="top" constant="8" id="0TS-uo-faF"/>
+                                        <constraint firstItem="u5G-lj-0Cl" firstAttribute="top" secondItem="W9i-Ew-j3S" secondAttribute="top" constant="8" id="3nF-YO-pPD"/>
+                                        <constraint firstItem="TTr-Dm-YVJ" firstAttribute="leading" secondItem="u5G-lj-0Cl" secondAttribute="trailing" constant="8" id="Gtd-bL-GMy"/>
+                                        <constraint firstItem="Kz0-zU-FzF" firstAttribute="leading" secondItem="W9i-Ew-j3S" secondAttribute="leading" constant="8" id="Tnu-Uv-Wui"/>
+                                        <constraint firstAttribute="trailing" secondItem="Kz0-zU-FzF" secondAttribute="trailing" constant="8" id="acj-MD-MvP"/>
+                                        <constraint firstItem="u5G-lj-0Cl" firstAttribute="leading" secondItem="W9i-Ew-j3S" secondAttribute="leading" constant="8" id="an1-lP-LCq"/>
+                                        <constraint firstItem="TTr-Dm-YVJ" firstAttribute="trailing" secondItem="W9i-Ew-j3S" secondAttribute="trailing" constant="-8" id="ig5-9R-YkV"/>
+                                        <constraint firstItem="Kz0-zU-FzF" firstAttribute="top" secondItem="u5G-lj-0Cl" secondAttribute="bottom" constant="3" id="lrH-hB-O5B"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -812,16 +828,26 @@
                             <outlet property="delegate" destination="J2i-zc-aC2" id="30j-oc-4qT"/>
                         </connections>
                     </tableView>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="Messages" id="BUa-qT-EHb">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="v46-Ma-zwl">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="PYy-69-e04">
                             <connections>
-                                <segue destination="foX-Z7-9EW" kind="push" identifier="NewMessage" id="rim-j8-ZTY"/>
+                                <segue destination="foX-Z7-9EW" kind="push" id="wJG-Wy-RNi"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="8rP-YK-go9">
                         <autoresizingMask key="autoresizingMask"/>
+                        <attributedString key="attributedTitle">
+                            <fragment content="Updating Messages...">
+                                <attributes>
+                                    <font key="NSFont" metaFont="smallSystem"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <connections>
                             <action selector="refreshTable:" destination="J2i-zc-aC2" eventType="valueChanged" id="yIM-lA-9F2"/>
                         </connections>
@@ -829,7 +855,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f7M-NG-bBN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="771" y="242"/>
+            <point key="canvasLocation" x="778" y="248"/>
         </scene>
         <!--Conversation View Controller-->
         <scene sceneID="bEB-38-Hex">
@@ -1266,13 +1292,16 @@
         <!--Messages-->
         <scene sceneID="anK-fg-DgQ">
             <objects>
-                <navigationController storyboardIdentifier="MessagesNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cs1-Q4-pfo" customClass="JCNavigationController" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MessagesNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cs1-Q4-pfo" customClass="JCNavigationController" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <tabBarItem key="tabBarItem" title="Messages" image="black-bubble" id="1NY-Mi-445"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="GyZ-sd-sl6">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="barTintColor" red="0.98431372549999996" green="0.98431372549999996" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="J2i-zc-aC2" kind="relationship" relationship="rootViewController" id="Qp8-Wi-gaF"/>
@@ -3673,7 +3702,7 @@
                     <navigationItem key="navigationItem" id="32D-gV-RmW">
                         <nil key="title"/>
                         <view key="titleView" contentMode="scaleToFill" id="hvF-R3-hJB" userLabel="t">
-                            <rect key="frame" x="96" y="6" width="128" height="33"/>
+                            <rect key="frame" x="96" y="5.5" width="128" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IFW-et-Pls">
@@ -5919,12 +5948,12 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="wJG-Wy-RNi"/>
         <segue reference="e0I-ZU-Bxk"/>
-        <segue reference="ZYx-zc-gsM"/>
         <segue reference="Uqi-bD-GAX"/>
-        <segue reference="x1v-U1-NC6"/>
         <segue reference="5C3-Di-Qgq"/>
         <segue reference="Tth-R2-xu6"/>
+        <segue reference="x1v-U1-NC6"/>
         <segue reference="2yK-HA-Lah"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29803921570000003" green="0.44705882349999998" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
