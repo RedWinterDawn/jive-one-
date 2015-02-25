@@ -10,12 +10,11 @@
 
 // Views
 #import "JCCallHistoryCell.h"
-#import "JCVoicemailPlaybackCell.h"
+#import "JCVoicemailCell.h"
 
 // Data Models
 #import "Call.h"
 #import "Voicemail.h"
-#import "Message.h"
 
 // Managers
 #import "JCPresenceManager.h"
@@ -38,7 +37,6 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 }
 
@@ -46,16 +44,17 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
 {
     if (!_fetchedResultsController)
     {
-        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"RecentEvent"];
+        NSManagedObjectContext *context = self.managedObjectContext;
+        NSFetchRequest *fetchRequest = [RecentLineEvent MR_requestAllInContext:context];
         fetchRequest.includesSubentities = true;
         
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:NO];
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:NSStringFromSelector(@selector(date)) ascending:NO];
         fetchRequest.sortDescriptors = @[sortDescriptor];
         
         super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
-                                                                             managedObjectContext:self.managedObjectContext
+                                                                             managedObjectContext:context
                                                                                sectionNameKeyPath:nil
-																						cacheName:nil];
+                                                                                        cacheName:nil];
     }
     return _fetchedResultsController;
 }
@@ -71,12 +70,6 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
     else if ([object isKindOfClass:[Voicemail class]])
     {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kJCVoicemailCellReuseIdentifier];
-        [self configureCell:cell withObject:object];
-        return cell;
-    }
-    else if ([object isKindOfClass:[Message class]])
-    {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kJCMessageCellReuseIdentifier];
         [self configureCell:cell withObject:object];
         return cell;
     }
@@ -96,12 +89,6 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
     {
         JCVoicemailCell *voiceCell = (JCVoicemailCell *)cell;
         voiceCell.voicemail = (Voicemail *)object;
-    }
-    else if ([object isKindOfClass:[Message class]])
-    {
-        JCRecentEventCell *recentEventCell = (JCRecentEventCell *)cell;
-        recentEventCell.recentEvent = (RecentEvent *)object;
-        recentEventCell.textLabel.text = ((Message *)object).text;
     }
 }
 
