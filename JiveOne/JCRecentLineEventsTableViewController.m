@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCRecentActivityTableViewController.h"
+#import "JCRecentLineEventsTableViewController.h"
 
 // Views
 #import "JCCallHistoryCell.h"
@@ -23,7 +23,7 @@ NSString *const kJCHistoryCellReuseIdentifier = @"HistoryCell";
 NSString *const kJCVoicemailCellReuseIdentifier = @"VoicemailCell";
 NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
 
-@implementation JCRecentActivityTableViewController
+@implementation JCRecentLineEventsTableViewController
 
 -(instancetype)initWithCoder:(NSCoder *)aDecoder
 {
@@ -105,9 +105,9 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    RecentEvent *recentEvent = [self objectAtIndexPath:indexPath];
-    if (self.delegate && [self.delegate respondsToSelector:@selector(recentActivityDidSelectRecentEvent:)]) {
-        [self.delegate recentActivityDidSelectRecentEvent:recentEvent];
+    RecentLineEvent *recentLineEvent = [self objectAtIndexPath:indexPath];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(recentLineEventController:didSelectRecentLineEvent:)]) {
+        [self.delegate recentLineEventController:self didSelectRecentLineEvent:recentLineEvent];
     }
 }
 

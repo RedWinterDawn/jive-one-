@@ -193,7 +193,7 @@
 		5DB0BFC119FFF3FE006737D7 /* JCTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB0BFC019FFF3FE006737D7 /* JCTableViewCell.m */; };
 		5DB0BFC419FFF97A006737D7 /* JCDrawing.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB0BFC319FFF97A006737D7 /* JCDrawing.m */; };
 		5DB0BFC71A0033B5006737D7 /* JCView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB0BFC61A0033B5006737D7 /* JCView.m */; };
-		5DB0BFCA1A00AB29006737D7 /* JCRecentActivityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB0BFC91A00AB29006737D7 /* JCRecentActivityTableViewController.m */; };
+		5DB0BFCA1A00AB29006737D7 /* JCRecentLineEventsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB0BFC91A00AB29006737D7 /* JCRecentLineEventsTableViewController.m */; };
 		5DB0BFCD1A00BAB3006737D7 /* JCVoicemailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB0BFCC1A00BAB3006737D7 /* JCVoicemailCell.m */; };
 		5DB0BFD01A013982006737D7 /* JCRecentEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB0BFCF1A013982006737D7 /* JCRecentEventCell.m */; };
 		5DBABCD41A283DA500B09783 /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBABCD31A283DA500B09783 /* NSString+Additions.m */; };
@@ -585,8 +585,8 @@
 		5DB0BFC319FFF97A006737D7 /* JCDrawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDrawing.m; sourceTree = "<group>"; };
 		5DB0BFC51A0033B5006737D7 /* JCView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCView.h; sourceTree = "<group>"; };
 		5DB0BFC61A0033B5006737D7 /* JCView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCView.m; sourceTree = "<group>"; };
-		5DB0BFC81A00AB29006737D7 /* JCRecentActivityTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCRecentActivityTableViewController.h; sourceTree = "<group>"; };
-		5DB0BFC91A00AB29006737D7 /* JCRecentActivityTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCRecentActivityTableViewController.m; sourceTree = "<group>"; };
+		5DB0BFC81A00AB29006737D7 /* JCRecentLineEventsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCRecentLineEventsTableViewController.h; sourceTree = "<group>"; };
+		5DB0BFC91A00AB29006737D7 /* JCRecentLineEventsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCRecentLineEventsTableViewController.m; sourceTree = "<group>"; };
 		5DB0BFCB1A00BAB3006737D7 /* JCVoicemailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVoicemailCell.h; sourceTree = "<group>"; };
 		5DB0BFCC1A00BAB3006737D7 /* JCVoicemailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoicemailCell.m; sourceTree = "<group>"; };
 		5DB0BFCE1A013982006737D7 /* JCRecentEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCRecentEventCell.h; sourceTree = "<group>"; };
@@ -999,8 +999,8 @@
 				277F093B18FECE5E00EEF0E3 /* Contacts */,
 				277F093D18FECEA800EEF0E3 /* Voicemail */,
 				91743F351965B7EA003CD5E4 /* Status */,
-				5DB0BFC81A00AB29006737D7 /* JCRecentActivityTableViewController.h */,
-				5DB0BFC91A00AB29006737D7 /* JCRecentActivityTableViewController.m */,
+				5DB0BFC81A00AB29006737D7 /* JCRecentLineEventsTableViewController.h */,
+				5DB0BFC91A00AB29006737D7 /* JCRecentLineEventsTableViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1891,7 +1891,7 @@
 				272B61DD18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */,
 				2747F1661A07E0F300E3FE73 /* JCContactsViewController.m in Sources */,
 				5D241FD41A382241008B498A /* User+Custom.m in Sources */,
-				5DB0BFCA1A00AB29006737D7 /* JCRecentActivityTableViewController.m in Sources */,
+				5DB0BFCA1A00AB29006737D7 /* JCRecentLineEventsTableViewController.m in Sources */,
 				5D112DDD1A4161220097223C /* JCDebugPbxsTableViewController.m in Sources */,
 				5D490E491A8A522C004B62C0 /* JCMessagesCollectionView.m in Sources */,
 				5D1ECABE1A84014300424FA0 /* JCAvatarView.m in Sources */,
