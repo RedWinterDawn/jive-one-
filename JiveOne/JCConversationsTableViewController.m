@@ -77,9 +77,14 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
 {
     if ([object isKindOfClass:[JCConversationGroup class]]) {
         JCConversationGroup *group = (JCConversationGroup *)object;
-        cell.senderNameLabel.text   = group.name;
+        
+        NSString *name = group.name;
+        if (!name) {
+            name = group.conversationGroupId.formattedPhoneNumber;
+        }
+        cell.senderNameLabel.text   = name;
         cell.lastMessageLabel.text  = group.lastMessage;
-        //cell.dateLabel.text = message.formattedModifiedShortDate;
+        cell.dateLabel.text         = group.formattedModifiedShortDate;
     }
 }
 

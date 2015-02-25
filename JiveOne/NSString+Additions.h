@@ -26,3 +26,12 @@
 @property (nonatomic, readonly) NSString *numericStringValue;
 
 @end
+
+
+@interface NSString (PhoneNumbers)
+
+- (NSString *)formattedPhoneNumber;
+
+//- (NSString *)formattedPhoneNumberForLocal:()
+
+@end

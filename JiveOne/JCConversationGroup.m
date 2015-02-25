@@ -11,6 +11,7 @@
 #import "Message.h"
 #import "SMSMessage.h"
 #import "LocalContact.h"
+#import "Common.h"
 
 @implementation JCConversationGroup
 
@@ -34,7 +35,7 @@
                 if ([message isKindOfClass:[SMSMessage class]]) {
                     SMSMessage *smsMessage = (SMSMessage *)message;
                     _sms = TRUE;
-                    _name = smsMessage.localContact.number;
+                    //_name = smsMessage.localContact.number.formattedPhoneNumber;
                 } else {
                     
                 }
@@ -56,6 +57,11 @@
         return YES;
     }
     return NO;
+}
+
+-(NSString *)formattedModifiedShortDate
+{
+    return [Common formattedModifiedShortDate:self.lastMessageReceived];
 }
 
 @end

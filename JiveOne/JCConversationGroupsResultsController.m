@@ -186,7 +186,7 @@
     // default value matching the conversationGroupId.
     NSMutableSet *numbers = [NSMutableSet new];
     for (JCConversationGroup *conversationGroup in conversationsGroups) {
-        if (conversationGroup.isSMS && [conversationGroup.name isEqualToString:conversationGroup.conversationGroupId]) {
+        if (conversationGroup.isSMS && !conversationGroup.name) {
             [numbers addObject:conversationGroup.conversationGroupId];
         }
     }

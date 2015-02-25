@@ -20,4 +20,8 @@
 @property (strong, nonatomic) NSDate *lastMessageReceived;
 @property (strong, nonatomic) NSString *lastMessageId;
 
+@property (nonatomic, readonly) NSString *formattedModifiedShortDate;
+@property (nonatomic, readonly) NSString *formattedPhoneNumber;
+
+
 @end
