@@ -139,33 +139,21 @@ NSString *const kJCPhoneManager611String = @"611";
         return;
     }
     
-    _networkType = (JCPhoneManagerNetworkType)[AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
-    if (_networkType == JCPhoneManagerNoNetwork) {
-        [self notifyCompletionBlock:false error:[JCPhoneManagerError errorWithCode:JC_PHONE_MANAGER_NO_NETWORK]];
-        return;
-    }
-    
-     // If we have a line configuration for the line, try to register it.
     self.connecting = TRUE;
-    if (line.lineConfiguration){
-       
-        // TODO: Start timer, and call did fail to register after some time interval.
+    _networkType = (JCPhoneManagerNetworkType)[AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
         
+    // If we have a line configuration for the line, try to register it.
+    if (line.lineConfiguration){
         [_sipHandler registerToLine:line];
-        _regTimer = [NSTimer scheduledTimerWithTimeInterval:20 target:self selector:@selector(regTimer) userInfo:nil repeats:NO ];
         return;
     }
-   
-    
+        
     // If we do not have a line configuration, we need to request it.
     NSLog(@"Phone Requesting Line Configuration");
     [UIApplication showStatus:@"Selecting Line..."];
     [LineConfiguration downloadLineConfigurationForLine:line completion:^(BOOL success, NSError *error) {
         [UIApplication hideStatus];
         if (success) {
-            
-            // TODO: Start timer, and call did fail to register after some time interval.
-            
             [_sipHandler registerToLine:line];
         } else {
             self.connecting = FALSE;
@@ -173,11 +161,7 @@ NSString *const kJCPhoneManager611String = @"611";
         }
     }];
 }
--(void)startRegTimer{
-    
-    
-    
-}
+
 -(void)disconnect
 {
     NSLog(@"Phone Disconnect");
@@ -214,20 +198,14 @@ NSString *const kJCPhoneManager611String = @"611";
 
 -(void)sipHandlerDidRegister:(SipHandler *)sipHandler
 {
-    // TODO: invalidate timer and dispose.
-    [_regTimer invalidate];
     NSLog(@"Phone Manager Sip Handler did register");
     self.connecting = FALSE;
-    _regTimer = nil;
     self.connected = sipHandler.registered;
     [self notifyCompletionBlock:YES error:nil];
 }
 
 -(void)sipHandlerDidUnregister:(SipHandler *)sipHandler
 {
-    // TODO: invalidate timer and dispose.
-    [_regTimer invalidate];
-    _regTimer = nil;
     NSLog(@"Phone Manager Sip Handler did unregister");
     self.connecting = FALSE;
     self.connected = sipHandler.registered;
@@ -235,9 +213,6 @@ NSString *const kJCPhoneManager611String = @"611";
 
 -(void)sipHandler:(SipHandler *)sipHandler didFailToRegisterWithError:(NSError *)error
 {
-    // TODO: invalidate timer and dispose.
-    [_regTimer invalidate];
-    _regTimer = nil;
     self.connecting = FALSE;
     self.connected = sipHandler.registered;
     [self reportError:error];
@@ -281,7 +256,7 @@ NSString *const kJCPhoneManager611String = @"611";
                  }
                  
                  if (completion) {
-                     completion(false, error);
+                     completion(false, nil);
                  }
              }];
 }
@@ -1032,6 +1007,9 @@ NSString *const kJCPhoneManager611String = @"611";
     [JCPhoneManager dialNumber:phoneNumber
                           type:JCPhoneManagerSingleDial
                     completion:^(BOOL success, NSError *error) {
+                        if (!success) {
+                            [JCAlertView alertWithTitle:@"Warning" error:error];
+                        }
                         if (completion) {
                             completion(success, error);
                         }
