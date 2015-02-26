@@ -21,6 +21,8 @@
 
 #define JC_PHONE_BLIND_TRANSFER_FAILED              -1104
 
+#define JC_REG_TIMEOUT                                                  -1105
+
 @interface JCPhoneManagerError : JCError
 
 @end

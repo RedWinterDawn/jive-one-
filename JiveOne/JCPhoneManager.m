@@ -42,7 +42,7 @@ NSString *const kJCPhoneManager611String = @"611";
     BOOL _reconnectWhenCallFinishes;
 	NSString *_warmTransferNumber;
     CTCallCenter *_externalCallCenter;
-}
+    }
 
 @property (copy)void (^externalCallCompletionHandler)(BOOL connected);
 @property (nonatomic) BOOL externalCallConnected;
@@ -174,6 +174,12 @@ NSString *const kJCPhoneManager611String = @"611";
         }
     }];
 }
+-(void)startRegTimer{
+    
+    [self sipHandler:_sipHandler didFailToRegisterWithError: [JCPhoneManagerError errorWithCode:JC_REG_TIMEOUT]];
+    NSLog(@"You timed out");
+    
+}
 
 -(void)disconnect
 {
@@ -211,14 +217,20 @@ NSString *const kJCPhoneManager611String = @"611";
 
 -(void)sipHandlerDidRegister:(SipHandler *)sipHandler
 {
+    // TODO: invalidate timer and dispose.
+    [_regTimer invalidate];
     NSLog(@"Phone Manager Sip Handler did register");
     self.connecting = FALSE;
+    _regTimer = nil;
     self.connected = sipHandler.registered;
     [self notifyCompletionBlock:YES error:nil];
 }
 
 -(void)sipHandlerDidUnregister:(SipHandler *)sipHandler
 {
+    // TODO: invalidate timer and dispose.
+    [_regTimer invalidate];
+    _regTimer = nil;
     NSLog(@"Phone Manager Sip Handler did unregister");
     self.connecting = FALSE;
     self.connected = sipHandler.registered;
@@ -226,6 +238,9 @@ NSString *const kJCPhoneManager611String = @"611";
 
 -(void)sipHandler:(SipHandler *)sipHandler didFailToRegisterWithError:(NSError *)error
 {
+    // TODO: invalidate timer and dispose.
+    [_regTimer invalidate];
+    _regTimer = nil;
     self.connecting = FALSE;
     self.connected = sipHandler.registered;
     [self reportError:error];

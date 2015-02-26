@@ -43,6 +43,9 @@ NSString *const kJCPhoneManagerErrorDomain = @"PhoneManagerDomain";
         case JC_PHONE_LINE_CONFIGURATION_REQUEST_ERROR:
             return @"Unable to connect to this line at this time. Please Try again.";
             
+        case JC_REG_TIMEOUT :
+            return @"Can't register, check network connection, If problem persists please restart the app.";
+            
             
          // Conference Calls
         case JC_PHONE_CONFERENCE_CALL_ALREADY_EXISTS:
