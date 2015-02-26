@@ -140,21 +140,33 @@ NSString *const kJCPhoneManager611String = @"611";
         return;
     }
     
-    self.connecting = TRUE;
     _networkType = (JCPhoneManagerNetworkType)[AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
-        
-    // If we have a line configuration for the line, try to register it.
-    if (line.lineConfiguration){
-        [_sipHandler registerToLine:line];
+    if (_networkType == JCPhoneManagerNoNetwork) {
+        [self notifyCompletionBlock:false error:[JCPhoneManagerError errorWithCode:JC_PHONE_MANAGER_NO_NETWORK]];
         return;
     }
+    
+     // If we have a line configuration for the line, try to register it.
+    self.connecting = TRUE;
+    if (line.lineConfiguration){
+       
+        // TODO: Start timer, and call did fail to register after some time interval.
         
+        [_sipHandler registerToLine:line];
+        _regTimer = [NSTimer scheduledTimerWithTimeInterval:20 target:self selector:@selector(regTimer) userInfo:nil repeats:NO ];
+        return;
+    }
+   
+    
     // If we do not have a line configuration, we need to request it.
     NSLog(@"Phone Requesting Line Configuration");
     [UIApplication showStatus:@"Selecting Line..."];
     [LineConfiguration downloadLineConfigurationForLine:line completion:^(BOOL success, NSError *error) {
         [UIApplication hideStatus];
         if (success) {
+            
+            // TODO: Start timer, and call did fail to register after some time interval.
+            
             [_sipHandler registerToLine:line];
         } else {
             self.connecting = FALSE;
@@ -257,7 +269,7 @@ NSString *const kJCPhoneManager611String = @"611";
                  }
                  
                  if (completion) {
-                     completion(false, nil);
+                     completion(false, error);
                  }
              }];
 }
@@ -1008,9 +1020,6 @@ NSString *const kJCPhoneManager611String = @"611";
     [JCPhoneManager dialNumber:phoneNumber
                           type:JCPhoneManagerSingleDial
                     completion:^(BOOL success, NSError *error) {
-                        if (!success) {
-                            [self showSimpleAlert:@"Warning" error:error];
-                        }
                         if (completion) {
                             completion(success, error);
                         }
