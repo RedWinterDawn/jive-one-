@@ -142,12 +142,14 @@ NSString *const kJCPhoneManager611String = @"611";
     _networkType = (JCPhoneManagerNetworkType)[AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
     if (_networkType == JCPhoneManagerNoNetwork) {
         [self notifyCompletionBlock:false error:[JCPhoneManagerError errorWithCode:JC_PHONE_MANAGER_NO_NETWORK]];
+        [self disconnect];
         return;
     }
     
     // If we have a line configuration for the line, try to register it.
     self.connecting = TRUE;
     if (line.lineConfiguration){
+        [_sipHandler registerToLine:line];
         return;
     }
    
@@ -158,8 +160,6 @@ NSString *const kJCPhoneManager611String = @"611";
     [LineConfiguration downloadLineConfigurationForLine:line completion:^(BOOL success, NSError *error) {
         [UIApplication hideStatus];
         if (success) {
-            
-            // TODO: Start timer, and call did fail to register after some time interval.
             
             [_sipHandler registerToLine:line];
         } else {
