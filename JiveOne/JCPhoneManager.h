@@ -43,6 +43,7 @@ typedef enum : NSInteger {
 @property (nonatomic, strong) NSMutableArray *calls;
 
 @property (nonatomic, strong) NSTimer *regTimer;
+@property (nonatomic) NSInteger *timeToWait;
 @property (nonatomic, readonly) Line *line;
 @property (nonatomic, readonly) JCPhoneManagerOutputType outputType;
 @property (nonatomic, readonly) JCPhoneManagerNetworkType networkType;

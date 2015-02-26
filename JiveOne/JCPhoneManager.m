@@ -42,7 +42,7 @@ NSString *const kJCPhoneManager611String = @"611";
     BOOL _reconnectWhenCallFinishes;
 	NSString *_warmTransferNumber;
     CTCallCenter *_externalCallCenter;
-    }
+}
 
 @property (copy)void (^externalCallCompletionHandler)(BOOL connected);
 @property (nonatomic) BOOL externalCallConnected;
