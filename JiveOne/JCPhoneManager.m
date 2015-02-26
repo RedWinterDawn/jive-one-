@@ -145,14 +145,9 @@ NSString *const kJCPhoneManager611String = @"611";
         return;
     }
     
-     // If we have a line configuration for the line, try to register it.
+    // If we have a line configuration for the line, try to register it.
     self.connecting = TRUE;
     if (line.lineConfiguration){
-       
-        // TODO: Start timer, and call did fail to register after some time interval.
-        
-        [_sipHandler registerToLine:line];
-        _regTimer = [NSTimer scheduledTimerWithTimeInterval:20 target:self selector:@selector(regTimer) userInfo:nil repeats:NO ];
         return;
     }
    
