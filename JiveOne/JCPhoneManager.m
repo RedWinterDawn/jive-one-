@@ -139,21 +139,28 @@ NSString *const kJCPhoneManager611String = @"611";
         return;
     }
     
-    self.connecting = TRUE;
     _networkType = (JCPhoneManagerNetworkType)[AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
-        
+    if (_networkType == JCPhoneManagerNoNetwork) {
+        [self notifyCompletionBlock:false error:[JCPhoneManagerError errorWithCode:JC_PHONE_MANAGER_NO_NETWORK]];
+        [self disconnect];
+        return;
+    }
+    
     // If we have a line configuration for the line, try to register it.
+    self.connecting = TRUE;
     if (line.lineConfiguration){
         [_sipHandler registerToLine:line];
         return;
     }
-        
+   
+    
     // If we do not have a line configuration, we need to request it.
     NSLog(@"Phone Requesting Line Configuration");
     [UIApplication showStatus:@"Selecting Line..."];
     [LineConfiguration downloadLineConfigurationForLine:line completion:^(BOOL success, NSError *error) {
         [UIApplication hideStatus];
         if (success) {
+            
             [_sipHandler registerToLine:line];
         } else {
             self.connecting = FALSE;
@@ -256,7 +263,7 @@ NSString *const kJCPhoneManager611String = @"611";
                  }
                  
                  if (completion) {
-                     completion(false, nil);
+                     completion(false, error);
                  }
              }];
 }
@@ -1007,9 +1014,6 @@ NSString *const kJCPhoneManager611String = @"611";
     [JCPhoneManager dialNumber:phoneNumber
                           type:JCPhoneManagerSingleDial
                     completion:^(BOOL success, NSError *error) {
-                        if (!success) {
-                            [JCAlertView alertWithTitle:@"Warning" error:error];
-                        }
                         if (completion) {
                             completion(success, error);
                         }
