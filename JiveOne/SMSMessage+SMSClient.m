@@ -57,7 +57,7 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
     
     NSString *didId = [data stringValueForKey:kSMSMessageResponseObjectDidIdKey];
     [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-        DID *did = [DID MR_findFirstByAttribute:NSStringFromSelector(@selector(didId)) withValue:didId];
+        DID *did = [DID MR_findFirstByAttribute:NSStringFromSelector(@selector(didId)) withValue:didId inContext:localContext];
         if (did) {
             [self createSmsMessageWithMessageData:data did:did];
         }

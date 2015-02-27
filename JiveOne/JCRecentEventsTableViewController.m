@@ -222,6 +222,7 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
         case NSFetchedResultsChangeUpdate:
         {
             NSUInteger row = [_tableData indexOfObject:anObject];
+            [_tableData replaceObjectAtIndex:row withObject:anObject];
             indexPath = [NSIndexPath indexPathForRow:row inSection:indexPath.section];
             UITableViewCell *cell = (UITableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
             [self configureCell:cell atIndexPath:indexPath];
