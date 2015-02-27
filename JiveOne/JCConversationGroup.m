@@ -26,6 +26,7 @@
             _lastMessage = message.text;
             _date = message.date;
             _lastMessageId = message.eventId;
+            _read = message.isRead;
             if ([message isKindOfClass:[SMSMessage class]]) {
                 SMSMessage *smsMessage = (SMSMessage *)message;
                 _sms = TRUE;

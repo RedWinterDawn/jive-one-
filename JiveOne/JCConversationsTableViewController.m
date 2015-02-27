@@ -82,9 +82,10 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
         if (!name) {
             name = group.conversationGroupId.formattedPhoneNumber;
         }
-        cell.senderNameLabel.text   = name;
-        cell.lastMessageLabel.text  = group.lastMessage;
-        cell.dateLabel.text         = group.formattedModifiedShortDate;
+        cell.name.text   = name;
+        cell.detail.text = group.lastMessage;
+        cell.date.text   = group.formattedModifiedShortDate;
+        cell.read = group.isRead;
     }
 }
 

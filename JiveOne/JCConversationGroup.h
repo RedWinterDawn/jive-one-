@@ -13,6 +13,7 @@
 -(instancetype)initWithConversationGroupId:(NSString *)conversationGroupId context:(NSManagedObjectContext *)context;
 
 @property (nonatomic, readonly, getter=isSMS) BOOL sms;
+@property (nonatomic, readonly, getter=isRead) BOOL read;
 
 @property (nonatomic, readonly) NSString *conversationGroupId;
 @property (strong, nonatomic) NSString *name;

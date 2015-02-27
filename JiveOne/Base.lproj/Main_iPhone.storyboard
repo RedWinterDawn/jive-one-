@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -326,9 +325,9 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="dateLabel" destination="Zmu-2B-dTw" id="TyJ-jI-33m"/>
-                                    <outlet property="lastMessageLabel" destination="LQG-gb-DpY" id="oEz-he-yOT"/>
-                                    <outlet property="senderNameLabel" destination="dAo-Ua-oC3" id="ZR4-Jw-qil"/>
+                                    <outlet property="date" destination="Zmu-2B-dTw" id="hlj-ui-EFX"/>
+                                    <outlet property="detail" destination="LQG-gb-DpY" id="cKX-pj-y5p"/>
+                                    <outlet property="name" destination="dAo-Ua-oC3" id="7vv-i2-fwS"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -760,7 +759,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wFh-qN-Em8" id="RuY-pZ-NgE" userLabel="EPView">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="sG2-aY-SNJ" userLabel="EPSwitch">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="sG2-aY-SNJ" userLabel="EPSwitch">
                                                     <rect key="frame" x="256" y="7" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="togglePresenceEnabled:" destination="BBd-7J-jmI" eventType="valueChanged" id="2z0-Pp-A4E"/>
@@ -944,9 +943,9 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="dateLabel" destination="TTr-Dm-YVJ" id="C1q-z6-QJb"/>
-                                    <outlet property="lastMessageLabel" destination="Kz0-zU-FzF" id="AGz-3V-Q7V"/>
-                                    <outlet property="senderNameLabel" destination="u5G-lj-0Cl" id="6gU-Sq-Pe6"/>
+                                    <outlet property="date" destination="TTr-Dm-YVJ" id="tnK-r6-xcR"/>
+                                    <outlet property="detail" destination="Kz0-zU-FzF" id="0nZ-no-g1L"/>
+                                    <outlet property="name" destination="u5G-lj-0Cl" id="1CH-Ol-5oR"/>
                                     <segue destination="foX-Z7-9EW" kind="push" identifier="LoadMessageGroup" id="ZYx-zc-gsM"/>
                                 </connections>
                             </tableViewCell>
@@ -5054,7 +5053,7 @@
                                             <action selector="numPadPressed:" destination="k9u-JK-Ejv" eventType="touchUpInside" id="ELI-BU-VzE"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="675-5i-6mS">
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="1000" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="675-5i-6mS">
                                         <rect key="frame" x="105" y="57" width="94" height="38"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="675-5i-6mS" secondAttribute="height" multiplier="5:2" id="knh-w0-Hs3"/>
@@ -5159,7 +5158,7 @@
                                             <action selector="numPadPressed:" destination="k9u-JK-Ejv" eventType="touchUpInside" id="Ob0-Jj-tqp"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="5" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zqW-JI-NSh">
+                                    <button opaque="NO" tag="5" contentMode="scaleToFill" horizontalHuggingPriority="1000" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zqW-JI-NSh">
                                         <rect key="frame" x="105" y="95" width="94" height="38"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="zqW-JI-NSh" secondAttribute="height" multiplier="5:2" id="NNT-67-vZl"/>
@@ -5258,7 +5257,7 @@
                                             <action selector="numPadPressed:" destination="k9u-JK-Ejv" eventType="touchUpInside" id="FqG-9P-HTx"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="8" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gra-X4-HLF">
+                                    <button opaque="NO" tag="8" contentMode="scaleToFill" horizontalHuggingPriority="1000" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gra-X4-HLF">
                                         <rect key="frame" x="105" y="133" width="94" height="38"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="Gra-X4-HLF" secondAttribute="height" multiplier="5:2" id="MMx-as-JQ4"/>
@@ -5356,7 +5355,7 @@
                                             <action selector="numPadPressed:" destination="k9u-JK-Ejv" eventType="touchUpInside" id="Ygc-FL-f6J"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CZR-uP-cO5">
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CZR-uP-cO5">
                                         <rect key="frame" x="105" y="171" width="94" height="38"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="CZR-uP-cO5" secondAttribute="height" multiplier="5:2" id="q4j-Il-oO0"/>
