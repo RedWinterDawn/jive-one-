@@ -7,19 +7,7 @@
 //
 
 #import "JCFetchedResultsTableViewController.h"
-#import "RecentLineEvent.h"
-
-@class JCRecentLineEventsTableViewController;
-
-@protocol JCRecentLineEventsTableViewControllerDelegate <NSObject>
-
-@optional
--(void)recentLineEventController:(JCRecentLineEventsTableViewController *)controller didSelectRecentLineEvent:(RecentLineEvent *)recentLineEvent;
-
-@end
 
 @interface JCRecentLineEventsTableViewController : JCFetchedResultsTableViewController
-
-@property (nonatomic, weak) id <JCRecentLineEventsTableViewControllerDelegate> delegate;
 
 @end

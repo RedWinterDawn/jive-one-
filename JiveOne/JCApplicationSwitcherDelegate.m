@@ -13,11 +13,14 @@
 #import "JCApplicationSwitcherViewController.h"
 #import "JCCallHistoryViewController.h"
 #import "JCVoicemailViewController.h"
+#import "JCConversationsTableViewController.h"
 
 #import "JCPhoneTabBarControllerDelegate.h"
 
 #import "Voicemail.h"
 #import "Call.h"
+#import "JCConversationGroup.h"
+
 #import "JCAuthenticationManager.h"
 
 NSString *const kApplicationSwitcherLastSelectedViewControllerIdentifierKey = @"applicationSwitcherLastSelected";
@@ -79,11 +82,15 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
 
 #pragma mark - Privete -
 
--(NSString *)applicationSwitcherRestorationIdentifierForRecentEvent:(RecentEvent *)recentEvent
+-(NSString *)applicationSwitcherRestorationIdentifierForRecentEvent:(id)recentEvent
 {
     if ([recentEvent isKindOfClass:[Voicemail class]] || [recentEvent isKindOfClass:[Call class]]) {
         return kApplicationSwitcherPhoneRestorationIdentifier;
     }
+    else if ([recentEvent isKindOfClass:[JCConversationGroup class]]) {
+        return kApplicationSwitcherMessagesRestorationIdentifier;
+    }
+    
     return nil;
 }
 
@@ -235,7 +242,7 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
  *  Delegate method notifying us that the application switcher should respond to a recent event
  *  selection.
  */
--(void)applicationSwitcher:(JCApplicationSwitcherViewController *)controller shouldNavigateToRecentEvent:(RecentEvent *)recentEvent
+-(void)applicationSwitcher:(JCApplicationSwitcherViewController *)controller shouldNavigateToRecentEvent:(id)recentEvent
 {
     NSString *restorationIdentifier = [self applicationSwitcherRestorationIdentifierForRecentEvent:recentEvent];
     if (restorationIdentifier) {
@@ -246,6 +253,14 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
                 // Logic for Phone Recent Events.
                 if ([restorationIdentifier isEqualToString:kApplicationSwitcherPhoneRestorationIdentifier] && [viewController isKindOfClass:[UITabBarController class]]){
                     [self navigatePhoneViewController:(UITabBarController *)viewController forRecentEvent:recentEvent];
+                }
+                else if ([restorationIdentifier isEqualToString:kApplicationSwitcherMessagesRestorationIdentifier] && [viewController isKindOfClass:[UINavigationController class]] && [recentEvent isKindOfClass:[JCConversationGroup class]]) {
+                    UINavigationController *navigationController = (UINavigationController *)viewController;
+                    [navigationController popToRootViewControllerAnimated:NO];
+                    JCConversationsTableViewController *conversationViewController = (JCConversationsTableViewController *)navigationController.topViewController;
+                    NSIndexPath *indexPath = [conversationViewController indexPathOfObject:recentEvent];
+                    UITableViewCell *cell = [conversationViewController.tableView cellForRowAtIndexPath:indexPath];
+                    [conversationViewController performSegueWithIdentifier:@"AppSwitcherLoadMessageGroup" sender:cell];
                 }
                 break;
             }

@@ -99,17 +99,6 @@ NSString *const kJCMessageCellReuseIdentifier = @"MessageCell";
     [self.tableView reloadData];
 }
 
-#pragma mark - Delegate Handlers -
-         
-#pragma mark UITableViewDelegate
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    RecentLineEvent *recentLineEvent = [self objectAtIndexPath:indexPath];
-    if (self.delegate && [self.delegate respondsToSelector:@selector(recentLineEventController:didSelectRecentLineEvent:)]) {
-        [self.delegate recentLineEventController:self didSelectRecentLineEvent:recentLineEvent];
-    }
-}
 
 
 @end

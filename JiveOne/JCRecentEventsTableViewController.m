@@ -138,6 +138,16 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
 
 #pragma mark - Delegate Handlers -
 
+#pragma mark UITableViewDelegate
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    id object = [self objectAtIndexPath:indexPath];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(recentEventController:didSelectObject:)]) {
+        [self.delegate recentEventController:self didSelectObject:object];
+    }
+}
+
 #pragma mark NSFetchedResultsControllerDelegate
 
 -(void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath

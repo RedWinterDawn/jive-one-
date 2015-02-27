@@ -7,9 +7,9 @@
 //
 
 #import "JCApplicationSwitcherViewController.h"
-#import "JCRecentLineEventsTableViewController.h"
+#import "JCRecentEventsTableViewController.h"
 
-@interface JCApplicationSwitcherViewController () <UITableViewDataSource, UITableViewDelegate, JCRecentLineEventsTableViewControllerDelegate>
+@interface JCApplicationSwitcherViewController () <UITableViewDataSource, UITableViewDelegate, JCRecentEventsTableViewControllerDelegate>
 {
     NSArray *_viewControllers;                          // Array of available tab view controllers
     UIViewController *_selectedViewController;
@@ -88,8 +88,8 @@
     
     if ([_activityViewController isKindOfClass:[UINavigationController class]]) {
         UIViewController *controller = ((UINavigationController *)_activityViewController).topViewController;
-        if ([controller isKindOfClass:[JCRecentLineEventsTableViewController class]]) {
-            ((JCRecentLineEventsTableViewController *)controller).delegate = self;
+        if ([controller isKindOfClass:[JCRecentEventsTableViewController class]]) {
+            ((JCRecentEventsTableViewController *)controller).delegate = self;
         }
     }
     self.view = view;
@@ -418,10 +418,10 @@
 
 #pragma mark JCRecentLineEventsTableViewControllerDelegate
 
--(void)recentLineEventController:(JCRecentLineEventsTableViewController *)controller didSelectRecentLineEvent:(RecentLineEvent *)recentLineEvent
+-(void)recentEventController:(JCRecentLineEventsTableViewController *)controller didSelectObject:(id)object
 {
     if (self.delegate && [self.delegate respondsToSelector:@selector(applicationSwitcher:shouldNavigateToRecentEvent:)]) {
-        [self.delegate applicationSwitcher:self shouldNavigateToRecentEvent:recentLineEvent];
+        [self.delegate applicationSwitcher:self shouldNavigateToRecentEvent:object];
         [self hideMenuAnimated:YES];
     }
 }

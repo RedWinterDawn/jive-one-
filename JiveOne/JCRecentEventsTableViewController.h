@@ -8,6 +8,17 @@
 
 #import "JCRecentLineEventsTableViewController.h"
 
+@class JCRecentEventsTableViewController;
+
+@protocol JCRecentEventsTableViewControllerDelegate <NSObject>
+
+-(void)recentEventController:(JCRecentLineEventsTableViewController *)controller didSelectObject:(id)object;
+
+@end
+
+
 @interface JCRecentEventsTableViewController : JCRecentLineEventsTableViewController
+
+@property (nonatomic, weak) id <JCRecentEventsTableViewControllerDelegate> delegate;
 
 @end
