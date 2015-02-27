@@ -88,6 +88,8 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
         message.read = [direction isEqualToString:kSMSMessageResponseObjectDirectionInboundValue] ? false : true;
         message.unixTimestamp = [data integerValueForKey:kSMSMessageResponseObjectArrivalTimeKey];
         message.did = did;
+    } else {
+         message.unixTimestamp = [data integerValueForKey:kSMSMessageResponseObjectArrivalTimeKey];
     }
 }
 
