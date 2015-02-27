@@ -33,6 +33,9 @@ NSString *const kJCPhoneManagerErrorDomain = @"PhoneManagerDomain";
         // Registration
         case JS_PHONE_WIFI_DISABLED:
             return @"Phone is set to be Wifi Only";
+        
+        case JC_PHONE_MANAGER_NO_NETWORK:
+            return @"No Network Connection. Please Check your network connection and try again.";
             
         case JS_PHONE_ALREADY_CONNECTING:
             return @"Phone is already attempting to connect";

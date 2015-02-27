@@ -18,6 +18,7 @@
 @interface JCConversationGroupsResultsController ()
 {
     NSMutableArray *_fetchedObjects;
+    BOOL _loaded;
 }
 
 @end
@@ -56,6 +57,7 @@
     // This is a first request, so we just populate the results, for them to be drawn.
     if (!_fetchedObjects) {
         _fetchedObjects = fetchedObjects.mutableCopy;
+        _loaded = TRUE;
     }
     
     // This is an updated request, so we notify the delegate that we are making an update to the
@@ -70,7 +72,7 @@
         // Loop through the results, and see if they are insertions or updates.
         for (int row = 0; row < fetchedObjects.count; row++) {
             
-            JCConversationGroup *conversation = [_fetchedObjects objectAtIndex:row];
+            JCConversationGroup *conversation = [fetchedObjects objectAtIndex:row];
             
             // Check to see if this conversation is an insertion. it is an insertion if there in not
             // a conversation with the same conversation id (determined by isEqual: through contains
@@ -135,8 +137,9 @@
         }
     }
     
-    //TODO: integrate the addressbook to drive updates to the objects.
-    [self fetchAddressBookNamesForConversationsGroups:fetchedObjects];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self fetchAddressBookNamesForConversationsGroups:fetchedObjects];
+    });
     
     if (!error) {
         return TRUE;

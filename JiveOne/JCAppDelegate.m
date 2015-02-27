@@ -9,6 +9,7 @@
 #import "JCAppDelegate.h"
 #import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
 #import <NewRelicAgent/NewRelic.h>
+#import <Parse/Parse.h>
 #import "AFNetworkActivityIndicatorManager.h"
 #import "JCLoginViewController.h"
 #import "Common.h"
@@ -31,6 +32,7 @@
 
 #import "Contact+V5Client.h"
 #import "Voicemail+V5Client.h"
+#import "SMSMessage+SMSClient.h"
 
 #import  "JCAppSettings.h"
 
@@ -313,6 +315,7 @@
     // rather the recovery when we reconnect.
     if (status == AFNetworkReachabilityStatusNotReachable) {
         NSLog(@"No Network Connection");
+        [JCPhoneManager disconnect];
     }
     
     // Transition from Cellular data to wifi. If we have an active call, we should not reconnect at
@@ -429,6 +432,19 @@
      */
     [NewRelicAgent startWithApplicationToken:@"AA6303a3125152af3660d1e3371797aefedfb29761"];
     
+    [Parse setApplicationId:@"fQ6zZ2VZuO8UjhWC98vVfbKFCH0vRkrHzyFTZhxb"
+                  clientKey:@"B0bqCk4Jplo1ynEQe83IeQ4ghmkwub4skoQCJsOX"];
+    
+    
+    // Register for Push Notitications
+    UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
+                                                    UIUserNotificationTypeBadge |
+                                                    UIUserNotificationTypeSound);
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
+                                                                             categories:nil];
+    [application registerUserNotificationSettings:settings];
+    [application registerForRemoteNotifications];
+    
     //Register for background fetches
     [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     
@@ -496,6 +512,10 @@
 {
     LOG_Info();
     
+    // Store the deviceToken in the current installation and save it to Parse.
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation setDeviceTokenFromData:deviceToken];
+    [currentInstallation saveInBackground];
     
     [JCAuthenticationManager sharedInstance].deviceToken = [deviceToken description];
     
@@ -514,6 +534,17 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
+//    [PFPush handlePush:userInfo];
+    
+    NSString *didId = [userInfo stringValueForKey:@"didId"];
+    
+    NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
+    DID *did = [DID MR_findFirstByAttribute:@"didId" withValue:didId inContext:context];
+    if (did) {
+        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+            [SMSMessage  createSmsMessageWithMessageData:userInfo did:(DID *)[localContext objectWithID:did.objectID]];
+        }];
+    }
     completionHandler([self backgroundPerformFetchWithCompletionHandler]);
 }
 
