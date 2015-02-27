@@ -317,6 +317,7 @@
     // rather the recovery when we reconnect.
     if (status == AFNetworkReachabilityStatusNotReachable) {
         NSLog(@"No Network Connection");
+        [JCPhoneManager disconnect];
     }
     
     // Transition from Cellular data to wifi. If we have an active call, we should not reconnect at
