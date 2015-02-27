@@ -24,6 +24,8 @@
 NSString *const kJCBadgeManagerBatchVoicemailsKey    = @"voicemails";
 NSString *const kJCBadgeManagerBatchMissedCallsKey   = @"missedCalls";
 NSString *const kJCBadgeManagerBatchConversationsKey = @"conversations";
+NSString *const kJCBadgeManagerBatchSMSMessagesKey   = @"smsMessages";
+
 
 @interface JCBadgeManagerBatchOperation ()
 {
@@ -49,7 +51,7 @@ NSString *const kJCBadgeManagerBatchConversationsKey = @"conversations";
 -(void)main {
     _badges = [JCBadgeManager sharedManager].badges;
     
-    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
+    NSManagedObjectContext *context = [NSManagedObjectContext MR_rootSavingContext];
     [self processUpdateDictionaryForInfoKey:NSInsertedObjectsKey context:context];
     [self processUpdateDictionaryForInfoKey:NSUpdatedObjectsKey context:context];
     [self processUpdateDictionaryForInfoKey:NSDeletedObjectsKey context:context];
@@ -177,6 +179,9 @@ NSString *const kJCBadgeManagerBatchConversationsKey = @"conversations";
     }
     else if ([recentEvent isKindOfClass:[Voicemail class]]) {
         return kJCBadgeManagerBatchVoicemailsKey;
+    }
+    else if ([recentEvent isKindOfClass:[SMSMessage class]]) {
+        return kJCBadgeManagerBatchSMSMessagesKey;
     }
     return nil;
 }
