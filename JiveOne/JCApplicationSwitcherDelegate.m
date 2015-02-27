@@ -23,6 +23,7 @@
 NSString *const kApplicationSwitcherLastSelectedViewControllerIdentifierKey = @"applicationSwitcherLastSelected";
 
 NSString *const kApplicationSwitcherPhoneRestorationIdentifier      = @"PhoneTabBarController";
+NSString *const kApplicationSwitcherMessagesRestorationIdentifier      = @"MessagesNavigationController";
 NSString *const kApplicationSwitcherContactsRestorationIdentifier   = @"ContactsNavigationController";
 NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"SettingsNavigationController";
 
@@ -170,7 +171,14 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
         cell.imageView.image = tabBarItem.image;
         return cell;
     }
-    
+    else if ([identifier isEqualToString:kApplicationSwitcherMessagesRestorationIdentifier]) {
+        static NSString *messagesResueIdentifier = @"MessageCell";
+        UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:messagesResueIdentifier];
+        cell.textLabel.text = tabBarItem.title;
+        cell.imageView.image = tabBarItem.image;
+        return cell;
+    }
+ 
     static NSString *resueIdentifier = @"MenuCell";
     UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:resueIdentifier];
     cell.textLabel.text = tabBarItem.title;
