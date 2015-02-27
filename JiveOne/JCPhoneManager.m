@@ -10,6 +10,7 @@
 @import CoreTelephony;
 
 #define MAX_LINES 2
+#define DEFAULT_PHONE_MANAGER_STORYBOARD_NAME @"PhoneManager"
 
 #import "JCPhoneManager.h"
 #import "JCPhoneManagerError.h"
@@ -52,6 +53,8 @@ NSString *const kJCPhoneManager611String = @"611";
 @property (nonatomic, readwrite, getter=isConnecting) BOOL connecting;
 @property (nonatomic, readwrite) JCPhoneManagerOutputType outputType;
 
+@property (nonatomic, strong) UIStoryboard *storyboard;
+
 @end
 
 @implementation JCPhoneManager
@@ -61,6 +64,8 @@ NSString *const kJCPhoneManager611String = @"611";
     self = [super init];
     if (self)
     {
+        _storyboardName = DEFAULT_PHONE_MANAGER_STORYBOARD_NAME;
+        
         // Open bluetooth manager to turn on audio support for bluetooth before we get started.
         _bluetoothManager = [[JCBluetoothManager alloc] init];
         
@@ -540,9 +545,9 @@ NSString *const kJCPhoneManager611String = @"611";
         [self dismissCallViewControllerAnimated:NO];
     }
     
-    UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-    _callViewController = [rootViewController.storyboard instantiateViewControllerWithIdentifier:@"CallerViewController"];
+    _callViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"CallerViewController"];
     _callViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
     [rootViewController presentViewController:_callViewController animated:YES completion:NULL];
 }
 
@@ -555,10 +560,10 @@ NSString *const kJCPhoneManager611String = @"611";
 
 -(void)presentTransferSuccessWithSession:(JCLineSession *)lineSession receivingSession:(JCLineSession *)receivingSession
 {
-    UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-    _transferConfirmationViewController = [rootViewController.storyboard instantiateViewControllerWithIdentifier:@"TransferConfirmationViewController"];
+    _transferConfirmationViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"TransferConfirmationViewController"];
     _transferConfirmationViewController.transferLineSession = lineSession;
     _transferConfirmationViewController.receivingLineSession = receivingSession;
+    UIViewController *rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
     [rootViewController presentViewController:_transferConfirmationViewController animated:YES completion:NULL];
     [self performSelector:@selector(dismissTransferConfirmationViewController) withObject:nil afterDelay:3];
 }
@@ -808,6 +813,14 @@ NSString *const kJCPhoneManager611String = @"611";
 -(BOOL)isConferenceCall
 {
     return _sipHandler.isConferenceCall;
+}
+
+-(UIStoryboard *)storyboard
+{
+    if (!_storyboard) {
+        _storyboard = [UIStoryboard storyboardWithName:_storyboardName bundle:[NSBundle mainBundle]];
+    }
+    return _storyboard;
 }
 
 #pragma mark - General Private Methods -

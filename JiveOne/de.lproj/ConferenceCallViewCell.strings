@@ -1,24 +1,6 @@
 
-/* Class = "IBUIView"; accessibilityHint = "callStateView"; ObjectID = "3tE-5t-IUF"; */
-"3tE-5t-IUF.accessibilityHint" = "callStateView";
-
-/* Class = "IBUIView"; accessibilityLabel = "callStateView"; ObjectID = "3tE-5t-IUF"; */
-"3tE-5t-IUF.accessibilityLabel" = "callStateView";
-
-/* Class = "IBUILabel"; accessibilityLabel = "Callers Number"; ObjectID = "5Ts-vU-ZOh"; */
-"5Ts-vU-ZOh.accessibilityLabel" = "Callers Number";
-
-/* Class = "IBUILabel"; text = "Callers Number"; ObjectID = "5Ts-vU-ZOh"; */
-"5Ts-vU-ZOh.text" = "Callers Number";
-
 /* Class = "IBUILabel"; text = "ON HOLD"; ObjectID = "DyB-N9-NeR"; */
 "DyB-N9-NeR.text" = "ON HOLD";
-
-/* Class = "IBUILabel"; text = "CANCELED"; ObjectID = "Trt-IP-BJb"; */
-"Trt-IP-BJb.text" = "ABGESAGT";
-
-/* Class = "IBUILabel"; text = "1:03"; ObjectID = "cuQ-l6-1Vo"; */
-"cuQ-l6-1Vo.text" = "1:03";
 
 /* Class = "IBUILabel"; text = "Conference"; ObjectID = "qfp-g2-efF"; */
 "qfp-g2-efF.text" = "Konferenz";

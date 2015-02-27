@@ -41,6 +41,7 @@ typedef enum : NSInteger {
 @interface JCPhoneManager : JCManager
 
 @property (nonatomic, strong) NSMutableArray *calls;
+@property (nonatomic, strong) NSString *storyboardName;
 
 @property (nonatomic, strong) NSTimer *regTimer;
 @property (nonatomic) NSInteger *timeToWait;
