@@ -46,6 +46,9 @@
 
 @implementation JCAppDelegate
 
+NSString *const kPAPInstallationChannelsKey = @"channels";
+NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciveRemoteNotification";
+
 /**
  * Loads all the singletons nessary when the application is loaded.
  */
@@ -72,6 +75,8 @@
     [center addObserver:self selector:@selector(userDataReady:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:authenticationManager];
     [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:authenticationManager];
     [authenticationManager checkAuthenticationStatus];
+    [center addObserver:self selector:@selector(Remotemessage) name:kApplicationDidReceiveRemoteNotification object:nil];
+    
 }
 
 /**
@@ -436,19 +441,39 @@
                   clientKey:@"B0bqCk4Jplo1ynEQe83IeQ4ghmkwub4skoQCJsOX"];
     
     
-    // Register for Push Notitications
-    UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
-                                                    UIUserNotificationTypeBadge |
-                                                    UIUserNotificationTypeSound);
-    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
-                                                                             categories:nil];
-    [application registerUserNotificationSettings:settings];
-    [application registerForRemoteNotifications];
-    
-    //Register for background fetches
-    [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
-    
+//    // Register for Push Notitications
+//    UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
+//                                                    UIUserNotificationTypeBadge |
+//                                                    UIUserNotificationTypeSound);
+//    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
+//                                                                             categories:nil];
+//    [application registerUserNotificationSettings:settings];
+//    [application registerForRemoteNotifications];
+//    
+//    //Register for background fetches
+//    [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+//    
+// [self handlePush:launchOptions];
+//    [self initialializeApplication];
+//    return YES;
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
+    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+        UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
+                                                        UIUserNotificationTypeBadge |
+                                                        UIUserNotificationTypeSound);
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
+                                                                                 categories:nil];
+        [application registerUserNotificationSettings:settings];
+        [application registerForRemoteNotifications];
+    } else
+#endif
+    {
+        [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                         UIRemoteNotificationTypeAlert |
+                                                         UIRemoteNotificationTypeSound)];
+    }
     [self initialializeApplication];
+    [self handlePush:launchOptions];
     return YES;
 }
 
@@ -512,13 +537,25 @@
 {
     LOG_Info();
     
-    // Store the deviceToken in the current installation and save it to Parse.
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     [currentInstallation setDeviceTokenFromData:deviceToken];
-    [currentInstallation saveInBackground];
+    [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (!error) {
+            NSLog(@"Saved Current installation");
+        } else {
+            NSLog(@"error in currentInstilation %@", error);
+        }
+    }];
+    
+    [PFPush subscribeToChannelInBackground:@"" block:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            NSLog(@"Jive_One successfully subscribed to push notifications on the broadcast channel.");
+        } else {
+            NSLog(@"Jive_One failed to subscribe to push notifications on the broadcast channel.");
+        }
+    }];
     
     [JCAuthenticationManager sharedInstance].deviceToken = [deviceToken description];
-    
     
     LogMessage(@"socket", 4, @"Will Call requestSession");
     [JCSocket start];
@@ -526,6 +563,10 @@
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
+    if ([error code] != 3010) { // 3010 is for the iPhone Simulator
+        NSLog(@"Application failed to register for push notifications: %@", error);
+    }
+    
     LOG_Info();
     LogMessage(@"socket", 4, @"Will Call requestSession");
     [JCSocket start];
@@ -534,9 +575,36 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
+    
+    
 //    [PFPush handlePush:userInfo];
+    NSString *from = [userInfo objectForKey:@"number"];
+    NSString *messageBody = [userInfo objectForKey:@"body"];
+//    TODO:  This is where we need to get the whole message to show the user we have a new message for them.
+    
+    if ([UIApplication sharedApplication].applicationState ==  UIApplicationStateBackground) {
+        UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+        if (localNotif){
+            localNotif.alertBody =[NSString  stringWithFormat:@"New Message from %@ \n%@", from, messageBody ];
+            localNotif.soundName = UILocalNotificationDefaultSoundName;
+            localNotif.applicationIconBadgeNumber = 1;
+            [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
+        }
+    }
+
     [SMSMessage createSmsMessageWithMessageData:userInfo];
     completionHandler([self backgroundPerformFetchWithCompletionHandler]);
+}
+
+-(void)handlePush:(NSDictionary *)launchOptions {
+    NSDictionary *remoteNotificationPayload = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    if(remoteNotificationPayload){
+        [[NSNotificationCenter defaultCenter] postNotificationName:kApplicationDidReceiveRemoteNotification object:nil userInfo:remoteNotificationPayload];
+        [SMSMessage createSmsMessageWithMessageData:launchOptions];
+    NSString *fromEntity = [remoteNotificationPayload objectForKey:@"number"];
+    NSString *messageBody = [remoteNotificationPayload objectForKey:@"body"];
+        NSLog(@"New Message from %@ , \n %@", fromEntity, messageBody);
+    }
 }
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
