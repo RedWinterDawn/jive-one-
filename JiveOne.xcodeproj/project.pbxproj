@@ -60,7 +60,7 @@
 		279A4E0E19DA873200E8AB7B /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279A4E0D19DA873200E8AB7B /* OpenGLES.framework */; };
 		279A4E1019DA876500E8AB7B /* PortSIPLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 279A4E0F19DA876500E8AB7B /* PortSIPLib.framework */; };
 		279A4E1219DA87DA00E8AB7B /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 279A4E1119DA87DA00E8AB7B /* libstdc++.dylib */; };
-		279A4E2C19DA91E100E8AB7B /* SipHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 279A4E2B19DA91E100E8AB7B /* SipHandler.m */; };
+		279A4E2C19DA91E100E8AB7B /* JCSipManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 279A4E2B19DA91E100E8AB7B /* JCSipManager.m */; };
 		279CB9D41A1F21ED0037601F /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 279CB9D21A1F21ED0037601F /* Default@2x.png */; };
 		279CB9D51A1F21ED0037601F /* Detault-568@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 279CB9D31A1F21ED0037601F /* Detault-568@2x.png */; };
 		279CB9D71A1F30490037601F /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 279CB9D61A1F30490037601F /* Default-568h@2x.png */; };
@@ -310,8 +310,8 @@
 		279A4E0D19DA873200E8AB7B /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		279A4E0F19DA876500E8AB7B /* PortSIPLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PortSIPLib.framework; sourceTree = "<group>"; };
 		279A4E1119DA87DA00E8AB7B /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
-		279A4E2A19DA91E100E8AB7B /* SipHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SipHandler.h; sourceTree = "<group>"; };
-		279A4E2B19DA91E100E8AB7B /* SipHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SipHandler.m; sourceTree = "<group>"; };
+		279A4E2A19DA91E100E8AB7B /* JCSipManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSipManager.h; sourceTree = "<group>"; };
+		279A4E2B19DA91E100E8AB7B /* JCSipManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSipManager.m; sourceTree = "<group>"; };
 		279CB9D21A1F21ED0037601F /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		279CB9D31A1F21ED0037601F /* Detault-568@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Detault-568@2x.png"; sourceTree = "<group>"; };
 		279CB9D61A1F30490037601F /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -1160,8 +1160,8 @@
 				5DBBDCC519DD9A4100A4DB96 /* JCPhoneManager.m */,
 				5D9A5E201A24E30A00E8274C /* JCBluetoothManager.h */,
 				5D9A5E211A24E30A00E8274C /* JCBluetoothManager.m */,
-				279A4E2A19DA91E100E8AB7B /* SipHandler.h */,
-				279A4E2B19DA91E100E8AB7B /* SipHandler.m */,
+				279A4E2A19DA91E100E8AB7B /* JCSipManager.h */,
+				279A4E2B19DA91E100E8AB7B /* JCSipManager.m */,
 				F8C51B8C1A70162400BC96D8 /* JCAudioAlertManager.h */,
 				F8C51B8D1A70162400BC96D8 /* JCAudioAlertManager.m */,
 			);
@@ -1741,7 +1741,7 @@
 				5D97A7FF1A828B4700A4434D /* JCIntercomTableViewController.m in Sources */,
 				27EB18BF19DE045900C1503B /* JCV5ApiClient.m in Sources */,
 				5D6AE3671A094A9C002BDAAF /* NSDictionary+Validations.m in Sources */,
-				279A4E2C19DA91E100E8AB7B /* SipHandler.m in Sources */,
+				279A4E2C19DA91E100E8AB7B /* JCSipManager.m in Sources */,
 				5D2087141A44F00F00C0C394 /* JCBadgeManagerBatchOperation.m in Sources */,
 				5D241FC81A36339D008B498A /* JCAppSettings.m in Sources */,
 				27B6F23D19DDC676007E80DA /* JCDialerViewController.m in Sources */,

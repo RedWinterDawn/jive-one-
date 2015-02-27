@@ -8,7 +8,7 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "SipHandler.h"
+#import "JCSipManager.h"
 #import "Common.h"
 #import "JCAppSettings.h"
 #import "JCSipHandlerError.h"
@@ -64,7 +64,7 @@ NSString *const kSipHandlerLineErrorMessage = @"Unable to fetch the line configu
 NSString *const kSipHandlerFetchPBXErrorMessage = @"Unable to fetch the line configuration";
 NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
-@interface SipHandler() <PortSIPEventDelegate>
+@interface JCSipManager() <PortSIPEventDelegate>
 {
     PortSIPSDK *_mPortSIPSDK;
     CompletionHandler _transferCompletionHandler;
@@ -79,7 +79,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 @end
 
-@implementation SipHandler
+@implementation JCSipManager
 
 -(instancetype)initWithNumberOfLines:(NSInteger)lines delegate:(id<SipHandlerDelegate>)delegate error:(NSError *__autoreleasing *)error;
 {

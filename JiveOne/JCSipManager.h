@@ -11,37 +11,37 @@
 #import "Line.h"
 #import "JCLineSession.h"
 
-@class SipHandler;
+@class JCSipManager;
 
 @protocol SipHandlerDelegate <NSObject>
 
 // Registration
--(void)sipHandlerDidRegister:(SipHandler *)sipHandler;
--(void)sipHandlerDidUnregister:(SipHandler *)sipHandler;
--(void)sipHandler:(SipHandler *)sipHandler didFailToRegisterWithError:(NSError *)error;
+-(void)sipHandlerDidRegister:(JCSipManager *)sipHandler;
+-(void)sipHandlerDidUnregister:(JCSipManager *)sipHandler;
+-(void)sipHandler:(JCSipManager *)sipHandler didFailToRegisterWithError:(NSError *)error;
 
 // Intercom line session for Auto Answer feature.
--(void)sipHandler:(SipHandler *)sipHandler receivedIntercomLineSession:(JCLineSession *)lineSession;
+-(void)sipHandler:(JCSipManager *)sipHandler receivedIntercomLineSession:(JCLineSession *)lineSession;
 
 // Call Creation Events
--(void)sipHandler:(SipHandler *)sipHandler didAddLineSession:(JCLineSession *)lineSession;
--(void)sipHandler:(SipHandler *)sipHandler didAnswerLineSession:(JCLineSession *)lineSession;
--(void)sipHandler:(SipHandler *)sipHandler willRemoveLineSession:(JCLineSession *)lineSession;
+-(void)sipHandler:(JCSipManager *)sipHandler didAddLineSession:(JCLineSession *)lineSession;
+-(void)sipHandler:(JCSipManager *)sipHandler didAnswerLineSession:(JCLineSession *)lineSession;
+-(void)sipHandler:(JCSipManager *)sipHandler willRemoveLineSession:(JCLineSession *)lineSession;
 
 // Conference Calls
--(void)sipHandler:(SipHandler *)sipHandler didCreateConferenceCallWithLineSessions:(NSSet *)lineSessions;
--(void)sipHandler:(SipHandler *)sipHandler didEndConferenceCallForLineSessions:(NSSet *)lineSessions;
+-(void)sipHandler:(JCSipManager *)sipHandler didCreateConferenceCallWithLineSessions:(NSSet *)lineSessions;
+-(void)sipHandler:(JCSipManager *)sipHandler didEndConferenceCallForLineSessions:(NSSet *)lineSessions;
 
 // Line Session Status
--(void)sipHandler:(SipHandler *)sipHandler didUpdateStatusForLineSessions:(NSSet *)lineSessions;
+-(void)sipHandler:(JCSipManager *)sipHandler didUpdateStatusForLineSessions:(NSSet *)lineSessions;
 
 // Transfer Call
--(void)sipHandler:(SipHandler *)sipHandler didTransferCalls:(NSSet *)lineSessions;
--(void)sipHandler:(SipHandler *)sipHandler didFailTransferWithError:(NSError *)error;
+-(void)sipHandler:(JCSipManager *)sipHandler didTransferCalls:(NSSet *)lineSessions;
+-(void)sipHandler:(JCSipManager *)sipHandler didFailTransferWithError:(NSError *)error;
 
 @end
 
-@interface SipHandler : NSObject
+@interface JCSipManager : NSObject
 
 @property (nonatomic, weak) id <SipHandlerDelegate> delegate;
 

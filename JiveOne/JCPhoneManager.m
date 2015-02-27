@@ -17,7 +17,7 @@
 
 // Managers
 #import "JCBluetoothManager.h"
-#import "SipHandler.h"
+#import "JCSipManager.h"
 #import "LineConfiguration+V4Client.h"
 #import "JCAppSettings.h"
 
@@ -37,7 +37,7 @@ NSString *const kJCPhoneManager611String = @"611";
 @interface JCPhoneManager ()<SipHandlerDelegate, JCCallCardDelegate>
 {
     JCBluetoothManager *_bluetoothManager;
-    SipHandler *_sipHandler;
+    JCSipManager *_sipHandler;
     JCCallerViewController *_callViewController;
     JCTransferConfirmationViewController *_transferConfirmationViewController;
     BOOL _reconnectWhenCallFinishes;
@@ -74,7 +74,7 @@ NSString *const kJCPhoneManager611String = @"611";
         
         // Initialize the Sip Handler.
         __autoreleasing NSError *error;
-        _sipHandler = [[SipHandler alloc] initWithNumberOfLines:MAX_LINES delegate:self error:&error];
+        _sipHandler = [[JCSipManager alloc] initWithNumberOfLines:MAX_LINES delegate:self error:&error];
         if (!error) {
             _initialized = TRUE;
         } else {
@@ -220,7 +220,7 @@ NSString *const kJCPhoneManager611String = @"611";
 
 #pragma mark SipHandlerDelegate
 
--(void)sipHandlerDidRegister:(SipHandler *)sipHandler
+-(void)sipHandlerDidRegister:(JCSipManager *)sipHandler
 {
     // TODO: invalidate timer and dispose.
     [_regTimer invalidate];
@@ -231,7 +231,7 @@ NSString *const kJCPhoneManager611String = @"611";
     [self notifyCompletionBlock:YES error:nil];
 }
 
--(void)sipHandlerDidUnregister:(SipHandler *)sipHandler
+-(void)sipHandlerDidUnregister:(JCSipManager *)sipHandler
 {
     // TODO: invalidate timer and dispose.
     [_regTimer invalidate];
@@ -241,7 +241,7 @@ NSString *const kJCPhoneManager611String = @"611";
     self.connected = sipHandler.registered;
 }
 
--(void)sipHandler:(SipHandler *)sipHandler didFailToRegisterWithError:(NSError *)error
+-(void)sipHandler:(JCSipManager *)sipHandler didFailToRegisterWithError:(NSError *)error
 {
     // TODO: invalidate timer and dispose.
     [_regTimer invalidate];
@@ -583,7 +583,7 @@ NSString *const kJCPhoneManager611String = @"611";
 
 #pragma mark SipHandlerDelegate
 
--(void)sipHandler:(SipHandler *)sipHandler receivedIntercomLineSession:(JCLineSession *)session
+-(void)sipHandler:(JCSipManager *)sipHandler receivedIntercomLineSession:(JCLineSession *)session
 {
     if(![JCAppSettings sharedSettings].isIntercomEnabled) {
         return;
@@ -617,7 +617,7 @@ NSString *const kJCPhoneManager611String = @"611";
     }];
 }
 
--(void)sipHandler:(SipHandler *)sipHandler didAddLineSession:(JCLineSession *)lineSession
+-(void)sipHandler:(JCSipManager *)sipHandler didAddLineSession:(JCLineSession *)lineSession
 {
     // If we are backgrounded, push out a local notification
     if ([UIApplication sharedApplication].applicationState ==  UIApplicationStateBackground) {
@@ -649,7 +649,7 @@ NSString *const kJCPhoneManager611String = @"611";
     }
 }
 
--(void)sipHandler:(SipHandler *)sipHandler didAnswerLineSession:(JCLineSession *)lineSession
+-(void)sipHandler:(JCSipManager *)sipHandler didAnswerLineSession:(JCLineSession *)lineSession
 {
     JCCallCard *callCard = [self callCardForLineSession:lineSession];
     callCard.started = [NSDate date];
@@ -658,7 +658,7 @@ NSString *const kJCPhoneManager611String = @"611";
     }
 }
 
--(void)sipHandler:(SipHandler *)sipHandler willRemoveLineSession:(JCLineSession *)session
+-(void)sipHandler:(JCSipManager *)sipHandler willRemoveLineSession:(JCLineSession *)session
 {
     // Check to see if the line session happens to be a conference call. if it is, we need to end
     // the conference call. This will end the conference call, and it will be removed because it
@@ -698,7 +698,7 @@ NSString *const kJCPhoneManager611String = @"611";
     }
 }
 
--(void)sipHandler:(SipHandler *)sipHandler didCreateConferenceCallWithLineSessions:(NSSet *)lineSessions
+-(void)sipHandler:(JCSipManager *)sipHandler didCreateConferenceCallWithLineSessions:(NSSet *)lineSessions
 {
     // Add the conference call Card
     JCConferenceCallCard *conferenceCallCard = [[JCConferenceCallCard alloc] initWithLineSessions:lineSessions];
@@ -713,7 +713,7 @@ NSString *const kJCPhoneManager611String = @"611";
     }
 }
 
--(void)sipHandler:(SipHandler *)sipHandler didEndConferenceCallForLineSessions:(NSSet *)lineSessions
+-(void)sipHandler:(JCSipManager *)sipHandler didEndConferenceCallForLineSessions:(NSSet *)lineSessions
 {
     // Blow away the call cards, we are going to make new ones
     _calls = [NSMutableArray arrayWithCapacity:lineSessions.count];
@@ -738,7 +738,7 @@ NSString *const kJCPhoneManager611String = @"611";
     }
 }
 
--(void)sipHandler:(SipHandler *)sipHandler didUpdateStatusForLineSessions:(NSSet *)lineSessions
+-(void)sipHandler:(JCSipManager *)sipHandler didUpdateStatusForLineSessions:(NSSet *)lineSessions
 {
     // Checks all active calls to see if they are updatable on status update.
     BOOL updatable = YES;
@@ -761,7 +761,7 @@ NSString *const kJCPhoneManager611String = @"611";
     }
 }
 
--(void)sipHandler:(SipHandler *)sipHandler didTransferCalls:(NSSet *)lineSessions
+-(void)sipHandler:(JCSipManager *)sipHandler didTransferCalls:(NSSet *)lineSessions
 {
     [_callViewController hideStatus];
     
@@ -782,7 +782,7 @@ NSString *const kJCPhoneManager611String = @"611";
     [self presentTransferSuccessWithSession:transferLine receivingSession:receivingLine];
 }
 
--(void)sipHandler:(SipHandler *)sipHandler didFailTransferWithError:(NSError *)error
+-(void)sipHandler:(JCSipManager *)sipHandler didFailTransferWithError:(NSError *)error
 {
     [_callViewController showError:error];
     [_callViewController reload];
