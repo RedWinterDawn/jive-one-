@@ -1051,8 +1051,6 @@
 		275F4A4518AD0FBC00D2F069 = {
 			isa = PBXGroup;
 			children = (
-				F8EFE15C1A96B7CA00B429FD /* Parse.framework */,
-				F8EFE15A1A96B7BF00B429FD /* Bolts.framework */,
 				275F4A5718AD0FBC00D2F069 /* JiveOne */,
 				5D3CC6211A4226D300DA374B /* JiveOne Localization Import Files */,
 				275F4A7C18AD0FBC00D2F069 /* JiveOneTests */,
@@ -1082,6 +1080,8 @@
 				279A4E0F19DA876500E8AB7B /* PortSIPLib.framework */,
 				279A4E0D19DA873200E8AB7B /* OpenGLES.framework */,
 				279A4E0B19DA870600E8AB7B /* libresolv.dylib */,
+				F8EFE15C1A96B7CA00B429FD /* Parse.framework */,
+				F8EFE15A1A96B7BF00B429FD /* Bolts.framework */,
 				279A4E0919DA86FC00E8AB7B /* CoreVideo.framework */,
 				279A4E0719DA86F600E8AB7B /* CoreAudio.framework */,
 				F266162418B42AA0000B770A /* AddressBook.framework */,
