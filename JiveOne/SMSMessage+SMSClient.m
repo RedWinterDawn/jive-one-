@@ -303,7 +303,9 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
             DID *localDid = (DID *)[localContext objectWithID:did.objectID];
             [self createSmsMessageWithMessageData:(NSDictionary *)object did:localDid];
         } completion:^(BOOL success, NSError *error) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
+            if (success) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
+            }
             if (completion) {
                 completion(success, error);
             }
@@ -343,7 +345,9 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
             }
         }
         completion:^(BOOL success, NSError *error) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
+            if (success) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
+            }
             if (completion) {
                 completion(success, error);
             }
@@ -379,7 +383,9 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
             }
         }
         completion:^(BOOL success, NSError *error) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
+            if (success) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
+            }
             if (completion) {
                 completion(success, error);
             }
