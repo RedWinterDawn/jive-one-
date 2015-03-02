@@ -97,6 +97,7 @@
 		5D0275101A3F81FF0077A37B /* NSData+AESAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D02750F1A3F81FF0077A37B /* NSData+AESAddition.m */; };
 		5D0275131A3F836A0077A37B /* JCStringEncryptionTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0275121A3F836A0077A37B /* JCStringEncryptionTransformer.m */; };
 		5D03649119DC5A450090CC21 /* JCTransferViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D03649019DC5A450090CC21 /* JCTransferViewController.m */; };
+		5D1036391AA51E6B00938BBC /* NSString+IsNumeric.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D15AF2A19DB271500E86116 /* NSString+IsNumeric.m */; };
 		5D112DDA1A4094340097223C /* JCAuthenticationKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D112DD91A4094340097223C /* JCAuthenticationKeychain.m */; };
 		5D112DDD1A4161220097223C /* JCDebugPbxsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D112DDC1A4161220097223C /* JCDebugPbxsTableViewController.m */; };
 		5D11566F1A6DB486006217D6 /* JCConferenceCallCardViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D11566E1A6DB486006217D6 /* JCConferenceCallCardViewCell.m */; };
@@ -1694,6 +1695,7 @@
 				F8C9A7E919EC5F4C0049A715 /* JCCallHistoryTableViewController.m in Sources */,
 				277F094218FED58C00EEF0E3 /* JCStatusViewController.m in Sources */,
 				5D62436F1A65B7DF001DF88E /* JCManager.m in Sources */,
+				5D1036391AA51E6B00938BBC /* NSString+IsNumeric.m in Sources */,
 				F85DAD0919EF07D30075AAA2 /* JCCallHistoryViewController.m in Sources */,
 				F8C9A7D719E884D30049A715 /* MissedCall.m in Sources */,
 				F8C9A7D419E884D20049A715 /* OutgoingCall.m in Sources */,

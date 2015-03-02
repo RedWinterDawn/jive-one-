@@ -54,7 +54,7 @@
 #define IS_SIMULATOR FALSE
 #endif
 
-#define DEFAULT_PHONE_REGISTRATION_TIMEOUT_INTERVAL 5
+#define DEFAULT_PHONE_REGISTRATION_TIMEOUT_INTERVAL 15
 
 NSString *const kSipHandlerAutoAnswerModeAutoHeader = @"Answer-Mode: auto";
 NSString *const kSipHandlerAutoAnswerInfoIntercomHeader = @"Alert-Info: Intercom";
@@ -292,7 +292,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     [_registrationTimeoutTimer invalidate];
     _registrationTimeoutTimer = nil;
     _registering = FALSE;
-    _registered = TRUE;
+    _registered = FALSE;
     [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:JC_SIP_REGISTRATION_TIMEOUT]];
 }
 

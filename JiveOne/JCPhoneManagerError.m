@@ -35,7 +35,7 @@ NSString *const kJCPhoneManagerErrorDomain = @"PhoneManagerDomain";
             return @"Phone is set to be Wifi Only";
         
         case JC_PHONE_MANAGER_NO_NETWORK:
-            return @"Unable to connect to the network. Please check your network connection and try again.";
+            return @"Unable to connect to the\n network at this time.";
             
         case JC_PHONE_LINE_CONFIGURATION_REQUEST_ERROR:
             return @"Unable to connect to this line at this time. Please Try again.";
