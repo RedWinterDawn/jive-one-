@@ -25,13 +25,19 @@
     [super viewDidLoad];
     
     _manager = [AFNetworkReachabilityManager sharedManager];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(networkConnectivityChanged:) name:AFNetworkingReachabilityDidChangeNotification object:nil];
+    _phoneManager = [JCPhoneManager sharedManager];
+    
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(updateStatus) name:AFNetworkingReachabilityDidChangeNotification object:nil];
+    [center addObserver:self selector:@selector(updateStatus) name:kJCPhoneManagerRegisteredNotification object:_phoneManager];
+    [center addObserver:self selector:@selector(updateStatus) name:kJCPhoneManagerUnregisteredNotification object:_phoneManager];
+    [center addObserver:self selector:@selector(updateStatus) name:kJCPhoneManagerRegisteringNotification object:_phoneManager];
+    [center addObserver:self selector:@selector(updateStatus) name:kJCPhoneManagerRegistrationFailureNotification object:_phoneManager];
+    
     _appSettings = [JCAppSettings sharedSettings];
     [_appSettings addObserver:self forKeyPath:NSStringFromSelector(@selector(isWifiOnly)) options:0 context:NULL];
     
-    _phoneManager = [JCPhoneManager sharedManager];
     [self updateStatus];
-    
 }
 
 -(void)dealloc
@@ -65,11 +71,6 @@
         case AFNetworkReachabilityStatusReachableViaWWAN:
             return @"Cellular";
     }
-}
-
--(void)networkConnectivityChanged:(NSNotification *)notification
-{
-    [self updateStatus];
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
