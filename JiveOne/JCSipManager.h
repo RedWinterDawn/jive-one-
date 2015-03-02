@@ -46,11 +46,13 @@
 @property (nonatomic, weak) id <SipHandlerDelegate> delegate;
 
 @property (nonatomic, readonly) Line *line;
-@property (nonatomic, readonly, getter=isRegistered) BOOL registered;
-@property (nonatomic, readonly, getter=isInitialized) BOOL initialized;
-@property (nonatomic, readonly, getter=isActive) BOOL active;
-@property (nonatomic, readonly, getter=isConferenceCall) BOOL conferenceCall;
-@property (nonatomic, readonly, getter=isMuted) BOOL mute;
+
+@property (nonatomic, readonly, getter=isInitialized) BOOL initialized;         // If PortSipSDK has been initialized.
+@property (nonatomic, readonly, getter=isRegistering) BOOL registering;         // True while we are registering.
+@property (nonatomic, readonly, getter=isRegistered) BOOL registered;           // True if we registered.
+@property (nonatomic, readonly, getter=isActive) BOOL active;                   // True if we have an active call.
+@property (nonatomic, readonly, getter=isConferenceCall) BOOL conferenceCall;   // True if active call is a conference call.
+@property (nonatomic, readonly, getter=isMuted) BOOL mute;                      // True if the audio session has been placed on mute.
 
 -(instancetype)initWithNumberOfLines:(NSInteger)lines delegate:(id<SipHandlerDelegate>)delegate error:(NSError *__autoreleasing *)error;
 

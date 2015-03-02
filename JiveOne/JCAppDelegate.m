@@ -249,8 +249,6 @@
 
 -(void)registerServicesToLine:(Line *)line deviceToken:(NSString *)deviceToken
 {
-    [JCPhoneManager disconnect];
-    
     __block NSManagedObjectID *lineId = line.objectID;
     dispatch_queue_t backgroundQueue = dispatch_queue_create("register_services_to_line", 0);
     dispatch_async(backgroundQueue, ^{
@@ -303,10 +301,9 @@
         return;
     }
     
-    JCPhoneManagerNetworkType currentNetworkType = [JCPhoneManager networkType];
-    
     // Check to see if we have a previous network state that was different from our current network
     // state. If they are the same, we have no reason to change the state change, so we exit out.
+    JCPhoneManagerNetworkType currentNetworkType = [JCPhoneManager networkType];
     if (currentNetworkType == status) {
         return;
     }
@@ -317,28 +314,24 @@
     // rather the recovery when we reconnect.
     if (status == AFNetworkReachabilityStatusNotReachable) {
         NSLog(@"No Network Connection");
-        [JCPhoneManager disconnect];
     }
     
-    // Transition from Cellular data to wifi. If we have an active call, we should not reconnect at
-    // this time. We schedule it to be reconnected when the current call(s) finishes.
-    else if (currentNetworkType == AFNetworkReachabilityStatusReachableViaWWAN && status == AFNetworkReachabilityStatusReachableViaWiFi) {
+    // Transition from Cellular data to wifi.
+    else if (currentNetworkType ==  JCPhoneManagerCellularNetwork && status == AFNetworkReachabilityStatusReachableViaWiFi) {
         NSLog(@"Transitioning to Wifi from Cellular Data Connection");
         [JCPhoneManager connectToLine:line];
     }
     
-    // Transition from wifi to cellular data. Since the active connection will likely drop, we reconnect.
-    else if (currentNetworkType == AFNetworkReachabilityStatusReachableViaWiFi && status == AFNetworkReachabilityStatusReachableViaWWAN) {
+    // Transition from wifi to cellular data.
+    else if (currentNetworkType == JCPhoneManagerWifiNetwork && status == AFNetworkReachabilityStatusReachableViaWWAN) {
         NSLog(@"Transitioning to Cellular Data from Wifi Connection");
         [JCPhoneManager connectToLine:line];
     }
     
-    // Transition from no connection to having a connection
-    else if(currentNetworkType == AFNetworkReachabilityStatusNotReachable && status != AFNetworkReachabilityStatusNotReachable) {
+    // Transition from no connection to having a connection.
+    else if(currentNetworkType == JCPhoneManagerNoNetwork && status != AFNetworkReachabilityStatusNotReachable) {
         NSLog(@"Transitioning from no network connectivity to connected.");
-        if (![JCPhoneManager sharedManager].isConnected && ![JCPhoneManager sharedManager].isConnecting) {
-            [JCPhoneManager connectToLine:line];
-        }
+        [JCPhoneManager connectToLine:line];
     }
     
     // Handle socket to reconnect. Since we reuse the socket, we do not need to subscribe, but just

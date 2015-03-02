@@ -379,6 +379,14 @@ NSString *const kJCSipHandlerErrorDomain = @"SipErrorDomain";
         // Device
         case EDeviceGetDeviceNameFailure:
             return @"Get Device Name Failure";
+         
+        // Manager Errors
+        case JC_SIP_ALREADY_REGISTERING:
+            return @"Phone is already attempting to register";
+            
+        case JC_SIP_REGISTRATION_TIMEOUT:
+            return @"Phone registration timed-out, if this problem persists, please restart the app.";
+            
             
         default:
             return @"Unknown Error Has Occured";
