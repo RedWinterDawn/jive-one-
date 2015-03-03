@@ -33,6 +33,7 @@
 #import "Contact+V5Client.h"
 #import "Voicemail+V5Client.h"
 #import "SMSMessage+SMSClient.h"
+#import "JCUnknownNumber.h"
 
 #import  "JCAppSettings.h"
 
@@ -578,21 +579,41 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
     
     
 //    [PFPush handlePush:userInfo];
-    NSString *from = [userInfo objectForKey:@"number"];
-    NSString *messageBody = [userInfo objectForKey:@"body"];
+    
 //    TODO:  This is where we need to get the whole message to show the user we have a new message for them.
     
-    if ([UIApplication sharedApplication].applicationState ==  UIApplicationStateBackground) {
-        UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-        if (localNotif){
-            localNotif.alertBody =[NSString  stringWithFormat:@"New Message from %@ \n%@", from, messageBody ];
-            localNotif.soundName = UILocalNotificationDefaultSoundName;
-            localNotif.applicationIconBadgeNumber = 1;
-            [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
-        }
+    
+    NSLog(@"User info : %@", userInfo);
+    NSString *fromNumber = [userInfo objectForKey:@"fromNumber"];
+    NSString *didId = [userInfo objectForKey:@"didId"];
+    NSString *uid = [userInfo objectForKey:@"uid"];
+    NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
+    DID *did = [DID MR_findFirstByAttribute:NSStringFromSelector(@selector(didId)) withValue:didId inContext:context];
+    if (did) {
+        
+        JCUnknownNumber *unknownNumber = [JCUnknownNumber new];
+        unknownNumber.number = fromNumber;
+        [SMSMessage downloadMessagesForDID:did toPerson:unknownNumber completion:^(BOOL success, NSError *error) {
+            if (success) {
+                if ([UIApplication sharedApplication].applicationState ==  UIApplicationStateBackground) {
+                    SMSMessage *message = [SMSMessage MR_findFirstByAttribute:NSStringFromSelector(@selector(eventId)) withValue:uid inContext:context];
+                    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+                    if (localNotif){
+                        localNotif.alertBody =[NSString  stringWithFormat:@"New Message from %@ \n%@", fromNumber.numericStringValue, message.text ];
+                        localNotif.soundName = UILocalNotificationDefaultSoundName;
+                        localNotif.applicationIconBadgeNumber = 1;
+                        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
+                    }
+                } else {
+                    // TODO: Sound an meesage received event.
+                }
+            }
+        }];
     }
-
-    [SMSMessage createSmsMessageWithMessageData:userInfo];
+    
+    
+    
+    
     completionHandler([self backgroundPerformFetchWithCompletionHandler]);
 }
 
@@ -601,8 +622,8 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
     if(remoteNotificationPayload){
         [[NSNotificationCenter defaultCenter] postNotificationName:kApplicationDidReceiveRemoteNotification object:nil userInfo:remoteNotificationPayload];
         [SMSMessage createSmsMessageWithMessageData:launchOptions];
-    NSString *fromEntity = [remoteNotificationPayload objectForKey:@"number"];
-    NSString *messageBody = [remoteNotificationPayload objectForKey:@"body"];
+    NSString *fromEntity = [remoteNotificationPayload objectForKey:@"fromNumber"];
+    NSString *messageBody = [remoteNotificationPayload objectForKey:@"alert"];
         NSLog(@"New Message from %@ , \n %@", fromEntity, messageBody);
     }
 }
