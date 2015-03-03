@@ -15,7 +15,7 @@
 #import "JCPhoneManagerError.h"
 
 // Managers
-#import "JCBluetoothManager.h"
+#import "JCPhoneAudioManager.h"
 #import "SipHandler.h"
 #import "LineConfiguration+V4Client.h"
 #import "JCAppSettings.h"
@@ -33,9 +33,9 @@
 NSString *const kJCPhoneManager911String = @"911";
 NSString *const kJCPhoneManager611String = @"611";
 
-@interface JCPhoneManager ()<SipHandlerDelegate, JCCallCardDelegate>
+@interface JCPhoneManager ()<SipHandlerDelegate, JCCallCardDelegate, JCPhoneAudioManagerDelegate>
 {
-    JCBluetoothManager *_bluetoothManager;
+    JCPhoneAudioManager *_audioManager;
     SipHandler *_sipHandler;
     JCCallerViewController *_callViewController;
     JCTransferConfirmationViewController *_transferConfirmationViewController;
@@ -50,7 +50,7 @@ NSString *const kJCPhoneManager611String = @"611";
 
 @property (nonatomic, readwrite, getter=isConnected) BOOL connected;
 @property (nonatomic, readwrite, getter=isConnecting) BOOL connecting;
-@property (nonatomic, readwrite) JCPhoneManagerOutputType outputType;
+
 
 @end
 
@@ -62,10 +62,7 @@ NSString *const kJCPhoneManager611String = @"611";
     if (self)
     {
         // Open bluetooth manager to turn on audio support for bluetooth before we get started.
-        _bluetoothManager = [[JCBluetoothManager alloc] init];
-        
-        // Register for Audio Route Changes
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(audioSessionRouteChangeSelector:) name:AVAudioSessionRouteChangeNotification object:nil];
+        _audioManager = [JCPhoneAudioManager new];
         
         // Initialize the Sip Handler.
         __autoreleasing NSError *error;
@@ -187,11 +184,7 @@ NSString *const kJCPhoneManager611String = @"611";
     if (!self.isActiveCall) {
         Line *line = _sipHandler.line;
         [_sipHandler unregister];
-        [_bluetoothManager enableBluetoothAudio];
         [_sipHandler registerToLine:line];
-    }
-    else if(self.calls.count == 1 && ((JCCallCard *)self.calls.lastObject).lineSession.isIncoming){
-        [_bluetoothManager enableBluetoothAudio];
     }
 }
 
@@ -568,11 +561,8 @@ NSString *const kJCPhoneManager611String = @"611";
             // are not on Bluetooth, or Airplay, etc., and are on the internal built in speaker, so we can,
             // and should enable speaker mode.
             BOOL shouldTurnOnSpeaker = FALSE;
-            NSArray *currentOutputs = [AVAudioSession sharedInstance].currentRoute.outputs;
-            for( AVAudioSessionPortDescription *port in currentOutputs ){
-                if ([port.portType isEqualToString:AVAudioSessionPortBuiltInReceiver]) {
-                    shouldTurnOnSpeaker = TRUE;
-                }
+            if(self.audioManager.outputType == JCPhoneAudioManagerOutputReceiver) {
+                shouldTurnOnSpeaker = TRUE;
             }
             sipHandler.loudSpeakerEnabled = shouldTurnOnSpeaker;
             BOOL mute = [JCAppSettings sharedSettings].isIntercomMicrophoneMuteEnabled;
@@ -823,52 +813,19 @@ NSString *const kJCPhoneManager611String = @"611";
     }
 }
 
+
+
 #pragma mark AVAudioSession
 
--(void)audioSessionRouteChangeSelector:(NSNotification *)notification
+-(void)phoneAudioManager:(JCPhoneAudioManager *)manager didChangeAudioRouteInputType:(JCPhoneAudioManagerOutputType)inputType
 {
-    if (![NSThread isMainThread]) {
-        [self performSelectorOnMainThread:@selector(audioSessionRouteChangeSelector:) withObject:notification waitUntilDone:NO];
-        return;
-    }
     
-    AVAudioSession *audioSession = notification.object;
-    NSArray *outputs = audioSession.currentRoute.outputs;
-    AVAudioSessionPortDescription *port = [outputs lastObject];
-    _outputType = [self outputTypeFromString:port.portType];
-    if (_callViewController) {
-        _callViewController.speakerBtn.selected = (_outputType == JCPhoneManagerOutputSpeaker);
-    }
 }
 
--(JCPhoneManagerOutputType)outputTypeFromString:(NSString *)type
+-(void)phoneAudioManager:(JCPhoneAudioManager *)manager didChangeAudioRouteOutputType:(JCPhoneAudioManagerOutputType)outputType
 {
-    if ([type isEqualToString:AVAudioSessionPortLineOut]) {
-        return JCPhoneManagerOutputLineOut;
-        
-    } else if ([type isEqualToString:AVAudioSessionPortHeadphones]) {
-        return JCPhoneManagerOutputHeadphones;
-        
-    } else if ([type isEqualToString:AVAudioSessionPortHeadphones]) {
-        return JCPhoneManagerOutputHeadphones;
-        
-    } else if ([type isEqualToString:AVAudioSessionPortBluetoothA2DP] ||
-               [type isEqualToString:AVAudioSessionPortBluetoothLE]) {
-        return JCPhoneManagerOutputBluetooth;
-        
-    } else if ([type isEqualToString:AVAudioSessionPortBuiltInReceiver]) {
-        return JCPhoneManagerOutputReceiver;
-        
-    } else if ([type isEqualToString:AVAudioSessionPortBuiltInSpeaker]) {
-        return JCPhoneManagerOutputSpeaker;
-        
-    } else if ([type isEqualToString:AVAudioSessionPortHDMI]) {
-        return JCPhoneManagerOutputHDMI;
-        
-    } else if ([type isEqualToString:AVAudioSessionPortAirPlay]) {
-        return JCPhoneManagerOutputAirPlay;
-    } else {
-        return JCPhoneManagerOutputUnknown;
+    if (_callViewController) {
+        _callViewController.speakerBtn.selected = (outputType == JCPhoneAudioManagerOutputSpeaker);
     }
 }
 

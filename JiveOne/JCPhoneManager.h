@@ -13,23 +13,13 @@
 #import "JCCallCard.h"
 #import "Line.h"
 #import "JCManager.h"
+#import "JCPhoneAudioManager.h"
 
 typedef enum : NSUInteger {
     JCPhoneManagerSingleDial = 0,
     JCPhoneManagerBlindTransfer,
     JCPhoneManagerWarmTransfer,
 } JCPhoneManagerDialType;
-
-typedef enum : NSUInteger {
-    JCPhoneManagerOutputUnknown = 0,
-    JCPhoneManagerOutputLineOut,
-    JCPhoneManagerOutputHeadphones,
-    JCPhoneManagerOutputBluetooth,
-    JCPhoneManagerOutputReceiver,
-    JCPhoneManagerOutputSpeaker,
-    JCPhoneManagerOutputHDMI,
-    JCPhoneManagerOutputAirPlay
-} JCPhoneManagerOutputType;
 
 typedef enum : NSInteger {
     JCPhoneManagerUnknownNetwork    = AFNetworkReachabilityStatusUnknown,
@@ -42,8 +32,8 @@ typedef enum : NSInteger {
 
 @property (nonatomic, strong) NSMutableArray *calls;
 
+@property (nonatomic, readonly) JCPhoneAudioManager *audioManager;
 @property (nonatomic, readonly) Line *line;
-@property (nonatomic, readonly) JCPhoneManagerOutputType outputType;
 @property (nonatomic, readonly) JCPhoneManagerNetworkType networkType;
 
 @property (nonatomic, readonly, getter=isInitialized) BOOL initialized;
