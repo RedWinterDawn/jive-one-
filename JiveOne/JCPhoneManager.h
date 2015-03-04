@@ -41,7 +41,6 @@ typedef enum : NSInteger {
 @property (nonatomic, readonly) Line *line;
 @property (nonatomic, readonly) JCPhoneManagerNetworkType networkType;
 
-@property (nonatomic, readonly) Line *line;
 @property (nonatomic, readonly, getter=isInitialized) BOOL initialized;
 @property (nonatomic, readonly, getter=isRegistering) BOOL registering;
 @property (nonatomic, readonly, getter=isRegistered) BOOL registered;
