@@ -158,10 +158,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     NSLog(@"Stopping Keep Alive");
     [self.sipManager stopKeepAwake];
     if (!self.isActiveCall) {
-        Line *line = self.sipManager.line;
-        [self.sipManager unregister];
         [_bluetoothManager enableBluetoothAudio];
-        [self.sipManager registerToLine:line];
     }
     else if(self.calls.count == 1 && ((JCCallCard *)self.calls.lastObject).lineSession.isIncoming){
         [_bluetoothManager enableBluetoothAudio];

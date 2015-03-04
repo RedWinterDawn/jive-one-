@@ -328,6 +328,10 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     if (_mPortSIPSDK) {
         [_mPortSIPSDK stopKeepAwake];
     }
+    
+    if (!self.isActive && !_registered && _line) {
+        [self registerToLine:_line];
+    }
 }
 
 #pragma mark - Line Session Public Methods -
