@@ -151,11 +151,6 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
 {
     NSLog(@"Stopping Keep Alive");
     [self.sipManager stopKeepAwake];
-    if (!self.isActiveCall) {
-        Line *line = self.sipManager.line;
-        [self.sipManager unregister];
-        [self.sipManager registerToLine:line];
-    }
 }
 
 #pragma mark SipHandlerDelegate
