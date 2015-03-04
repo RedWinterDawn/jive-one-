@@ -27,25 +27,18 @@ NSString *const kJCPhoneManagerErrorDomain = @"PhoneManagerDomain";
     switch (code) {            
         
         // Initialization
-        case JS_PHONE_SIP_NOT_INITIALIZED:
+        case JC_PHONE_SIP_NOT_INITIALIZED:
             return @"Phone could not be initialized";
          
         // Registration
-        case JS_PHONE_WIFI_DISABLED:
+        case JC_PHONE_WIFI_DISABLED:
             return @"Phone is set to be Wifi Only";
         
         case JC_PHONE_MANAGER_NO_NETWORK:
-            return @"No Network Connection. Please Check your network connection and try again.";
-            
-        case JS_PHONE_ALREADY_CONNECTING:
-            return @"Phone is already attempting to connect";
-            
-        case JS_PHONE_LINE_IS_NULL:
-            return @"Line is empty";
+            return @"Unable to connect to the\n network at this time.";
             
         case JC_PHONE_LINE_CONFIGURATION_REQUEST_ERROR:
             return @"Unable to connect to this line at this time. Please Try again.";
-            
             
          // Conference Calls
         case JC_PHONE_CONFERENCE_CALL_ALREADY_EXISTS:
@@ -59,6 +52,9 @@ NSString *const kJCPhoneManagerErrorDomain = @"PhoneManagerDomain";
             
         case JC_PHONE_FAILED_ENDING_CONFERENCE_CALL:
             return @"Failed ending conference call";
+            
+        default:
+            return @"An unknown error has occured. If this problem persists, please contact support.";
             
     }
     return nil;

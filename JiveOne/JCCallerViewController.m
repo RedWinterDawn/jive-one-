@@ -364,15 +364,7 @@ CGFloat *_callOptionsWidth;
 -(void)showTransferSuccess
 {
     [self performSegueWithIdentifier:kJCCallerViewControllerBlindTransferCompleteSegueIdentifier sender:self];
-    //[self performSelector:@selector(dismissModalViewController) withObject:nil afterDelay:3];
 }
-
-//-(void)dismissModalViewController
-//{
-////    [self dismissViewControllerAnimated:NO completion:^{
-////        //[self closeCallerViewController];
-////    }];
-//}
 
 -(void)presentKeyboardViewController:(UIViewController *)viewController
 {
@@ -467,6 +459,7 @@ CGFloat *_callOptionsWidth;
 -(void)transferViewController:(JCTransferViewController *)controller shouldDialNumber:(NSString *)dialString
 {
     [JCPhoneManager dialNumber:dialString
+                     usingLine:[JCAuthenticationManager sharedInstance].line
                          type:controller.transferCallType
                    completion:^(BOOL success, NSError *error) {
                        [self dismissTransferViewControllerAnimated:YES];

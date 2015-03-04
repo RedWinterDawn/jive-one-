@@ -175,7 +175,29 @@ static const NSMutableArray *alerts;
 
 + (JCAlertView *)alertWithError:(NSError *)error
 {
-    return [JCAlertView alertWithTitle:nil error:error];
+    return [JCAlertView alertWithTitle:@"Warning" error:error];
+}
+
++ (JCAlertView *)alertWithError:(NSError *)error dismissed:(JCAlertViewDismissBlock)dismissBlock cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ...
+{
+    NSString *message = [error localizedDescription];
+    if (!message) {
+        message = [error localizedFailureReason];
+    }
+    NSInteger underlyingErrorCode = [self underlyingErrorCodeForError:error];
+    message = [NSString stringWithFormat:@"%@\n(%li)", NSLocalizedString(message, nil), (long)underlyingErrorCode];
+    
+    JCAlertView *alertView = [[JCAlertView alloc] initWithTitle:@"Warning" message:message dismissed:dismissBlock cancelButtonTitle:cancelButtonTitle otherButtonTitles:nil];
+    if (alertView)
+    {
+        va_list argumentList;
+        va_start(argumentList, otherButtonTitles);
+        for (NSString *title = otherButtonTitles; title != nil; title = va_arg(argumentList, NSString*))
+            [alertView addButtonWithTitle:title];
+        va_end(argumentList);
+    }
+    [alertView show];
+    return alertView;
 }
 
 +(JCAlertView *)alertWithTitle:(NSString *)title error:(NSError *)error
