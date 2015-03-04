@@ -15,7 +15,6 @@
 #import "JCAuthenticationManagerError.h"
 #import "User+Custom.h"
 #import "PBX+V5Client.h"
-#import "UIViewController+HUD.h"
 
 // Notifications
 NSString *const kJCAuthenticationManagerUserLoggedOutNotification               = @"userLoggedOut";
@@ -107,7 +106,7 @@ static int MAX_LOGIN_ATTEMPTS = 2;
         if (line) {
             [self postNotificationEvent:kJCAuthenticationManagerUserLoadedMinimumDataNotification];
         } else {
-            [UIApplication showSimpleAlert:@"Warning" message:@"Unable to select line. Please Login again."];
+            [JCAlertView alertWithTitle:@"Warning" message:@"Unable to select line. Please Login again."];
             [self logout];
         }
     }

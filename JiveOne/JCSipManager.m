@@ -8,12 +8,11 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "SipHandler.h"
+#import "JCSipManager.h"
 #import "Common.h"
 #import "JCAppSettings.h"
 #import "JCSipHandlerError.h"
 #import "JCSipNetworkQualityRequestOperation.h"
-#import "UIViewController+HUD.h"
 
 #ifdef __APPLE__
 #include "TargetConditionals.h"
@@ -55,6 +54,8 @@
 #define IS_SIMULATOR FALSE
 #endif
 
+#define DEFAULT_PHONE_REGISTRATION_TIMEOUT_INTERVAL 15
+
 NSString *const kSipHandlerAutoAnswerModeAutoHeader = @"Answer-Mode: auto";
 NSString *const kSipHandlerAutoAnswerInfoIntercomHeader = @"Alert-Info: Intercom";
 NSString *const kSipHandlerAutoAnswerAfterIntervalHeader = @"answer-after=0";
@@ -64,13 +65,17 @@ NSString *const kSipHandlerLineErrorMessage = @"Unable to fetch the line configu
 NSString *const kSipHandlerFetchPBXErrorMessage = @"Unable to fetch the line configuration";
 NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
-@interface SipHandler() <PortSIPEventDelegate>
+@interface JCSipManager() <PortSIPEventDelegate>
 {
     PortSIPSDK *_mPortSIPSDK;
     CompletionHandler _transferCompletionHandler;
 	VideoViewController *_videoController;
     NSOperationQueue *_operationQueue;
 	bool autoAnswer;
+    
+    NSTimer *_registrationTimeoutTimer;
+    NSTimeInterval _registrationTimeoutInterval;
+    BOOL _reregisterAfterActiveCallEnds;
 }
 
 @property (nonatomic) NSMutableSet *lineSessions;
@@ -79,7 +84,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 @end
 
-@implementation SipHandler
+@implementation JCSipManager
 
 -(instancetype)initWithNumberOfLines:(NSInteger)lines delegate:(id<SipHandlerDelegate>)delegate error:(NSError *__autoreleasing *)error;
 {
@@ -93,6 +98,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         
         _operationQueue = [[NSOperationQueue alloc] init];
         _operationQueue.name = @"SipHandler Operation Queue";
+        
+        _registrationTimeoutInterval = DEFAULT_PHONE_REGISTRATION_TIMEOUT_INTERVAL;
         
         // Initialize the port sip sdk.
         _mPortSIPSDK = [PortSIPSDK new];
@@ -162,6 +169,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         [_mPortSIPSDK setRtpKeepAlive:true keepAlivePayloadType:126 deltaTransmitTimeMS:30000];
         
         _videoController = [VideoViewController new];
+        
+        _initialized = TRUE;
     }
     return self;
 }
@@ -176,8 +185,22 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 -(void)registerToLine:(Line *)line
 {
+    // Check if we are already registering.
+    if (_registering) {
+        [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:JC_SIP_ALREADY_REGISTERING reason:@"Already Registering"]];
+        return;
+    }
+    
+    // Check to see if we are on a current call. If we are, we need to exit out, and wait until the
+    // call has completed before we do anything. We do not want to end the call.
+    _reregisterAfterActiveCallEnds = FALSE;
+    if (self.isActive) {
+        _reregisterAfterActiveCallEnds = TRUE;
+        return;
+    }
+    
     // If we are registered to a line, we need to unregister from that line, and reconnect.
-    if (_registered) {
+    if (_registered || _line != line) {
         [self unregister];
     }
     
@@ -239,6 +262,13 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:errorCode reason:@"Error starting Registration"]];
         return;
     }
+    
+    _registrationTimeoutTimer = [NSTimer scheduledTimerWithTimeInterval:_registrationTimeoutInterval
+                                                                 target:self
+                                                               selector:@selector(registrationTimedOut:)
+                                                               userInfo:nil
+                                                                repeats:NO];
+    _registering = TRUE;
 }
 
 -(void)unregister
@@ -250,21 +280,36 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             [self hangUpSession:lineSession error:&error];
         }
         [_mPortSIPSDK unRegisterServer];
-        _registered = NO;
+        _registered = FALSE;
         [_delegate sipHandlerDidUnregister:self];
     }
 }
 
 #pragma mark Registration PortSIP SDK Delegate Events
 
+-(void)registrationTimedOut:(NSTimer *)timer
+{
+    [_registrationTimeoutTimer invalidate];
+    _registrationTimeoutTimer = nil;
+    _registering = FALSE;
+    _registered = FALSE;
+    [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:JC_SIP_REGISTRATION_TIMEOUT]];
+}
+
 - (void)onRegisterSuccess:(char*) statusText statusCode:(int)statusCode
 {
+    [_registrationTimeoutTimer invalidate];
+    _registrationTimeoutTimer = nil;
+    _registering = FALSE;
     _registered = TRUE;
     [_delegate sipHandlerDidRegister:self];
 }
 
 - (void)onRegisterFailure:(char*) statusText statusCode:(int)statusCode
 {
+    [_registrationTimeoutTimer invalidate];
+    _registrationTimeoutTimer = nil;
+    _registering = FALSE;
     _registered = FALSE;
     [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:statusCode reason:@"Registration failed"]];
 }
@@ -999,6 +1044,14 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             
             NSLog(@"%@", [self.lineSessions description]);
             [lineSession reset];  // clear up this line session for reuse.
+            
+            // Reregister is we have no active lines, and we were flagged to reregister.
+            if (_reregisterAfterActiveCallEnds && !self.isActive) {
+                _reregisterAfterActiveCallEnds = false;
+                [self unregister];
+                [self registerToLine:_line];
+            }
+            
             break;
         }
         
