@@ -9,6 +9,7 @@
 @import AVFoundation;
 
 #import "JCPhoneAudioManager.h"
+#import "JCAppSettings.h"
 
 @interface JCPhoneAudioManager ()
 {
@@ -23,15 +24,17 @@
 -(instancetype)init
 {
     self = [super init];
-    if (self) {
+    if (self)
+    {
+        // Register for Audio Session Notifications
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         [center addObserver:self selector:@selector(audioSessionInterruptionSelector:) name:AVAudioSessionInterruptionNotification object:nil];
         [center addObserver:self selector:@selector(audioSessionRouteChangeSelector:) name:AVAudioSessionRouteChangeNotification object:nil];
         [center addObserver:self selector:@selector(audioSessionMediaServicesWereLostSelector:) name:AVAudioSessionMediaServicesWereLostNotification object:nil];
         [center addObserver:self selector:@selector(audioSessionMediaServicesWereResetSelector:) name:AVAudioSessionMediaServicesWereResetNotification object:nil];
-        
-        
-//        [center addObserver:self selector:@selector(audioSessionSilenceSecondaryAudioHintSelector:) name:AVAudioSessionSilenceSecondaryAudioHintNotification object:nil];
+        if (&AVAudioSessionSilenceSecondaryAudioHintNotification) {  // iOS 8 only
+            [center addObserver:self selector:@selector(audioSessionSilenceSecondaryAudioHintSelector:) name:AVAudioSessionSilenceSecondaryAudioHintNotification object:nil];
+        }
     }
     return self;
 }
@@ -40,61 +43,37 @@
 
 /* Access the Audio Session singlton and modify the AVAudioSessionPlayAndRecord property to allow Bluetooth.
  */
--(BOOL)enableBluetoothAudio:(NSError *__autoreleasing *)error
+-(void)engageAudioSession
 {
-    // deactivate session
     AVAudioSession *session = [AVAudioSession sharedInstance];
-    if (![session setActive:NO error:error]) {
-        return FALSE;
+    if (![session setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil]) {
+        
     }
     
-    if (![session setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth error:error]) {
-        return FALSE;
+    if (![session setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionAllowBluetooth error:nil]) {
+        
     }
     
-    if (![session setMode:AVAudioSessionModeVoiceChat error:error]) {
-        return FALSE;
-    }
-    
-    if (![session overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:error]) {
-        return FALSE;
+    if (![session setMode:AVAudioSessionModeVoiceChat error:nil]) {
+        
     }
     
     // activate audio session
-    if (![session setActive:YES error:nil]) {
-        return FALSE;
+    if (![session setActive:YES withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil]) {
+        
     }
-    
-    return TRUE;
 }
 
--(BOOL)disableBluetoothAudio:(NSError *__autoreleasing *)error
+-(void)disengageAudioSession
 {
     // deactivate session
     AVAudioSession *session = [AVAudioSession sharedInstance];
-    if (![session setActive:NO error: nil]) {
-        return FALSE;
+    if (![session setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error: nil]) {
+        NSLog(@"Error Disabling Audio Session");
     }
-    
-    if (![session setCategory:AVAudioSessionCategoryAmbient error:error]) {
-        return FALSE;
-    }
-    
-    if (![session setMode:AVAudioSessionModeVoiceChat error:error]) {
-        return FALSE;
-    }
-    
-    if (![session overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:error]) {
-        return FALSE;
-    }
-    
-    // activate audio session
-    if (![session setActive:YES error:nil]) {
-        return FALSE;
-    }
-    
-    return TRUE;
 }
+
+#pragma mark - Getters -
 
 -(JCPhoneAudioManagerInputType)inputType
 {
@@ -129,39 +108,38 @@
  indicate whether audio playback should resume.
  */
 - (void)audioSessionInterruptionSelector:(NSNotification *)notification {
+    NSDictionary *userInfo = notification.userInfo;
+    AVAudioSessionInterruptionType type = ((NSNumber *)[userInfo valueForKey:AVAudioSessionInterruptionTypeKey]).unsignedIntegerValue;
+    if (type == AVAudioSessionInterruptionTypeBegan) {
+        NSLog(@"Audio Session Interuption will begin");
+    } else {
+        NSLog(@"Audio Session Interuption did end");
+    }
     
-//    NSLog(@"Audio Session Interuption %@", [notification.userInfo description]);
+    AVAudioSessionInterruptionOptions options = ((NSNumber *)[userInfo valueForKey:AVAudioSessionInterruptionOptionKey]).unsignedIntegerValue;
+    if (options == AVAudioSessionInterruptionOptionShouldResume) {
+        
+    }
     
-    AVAudioSessionRouteDescription *currentRoute = [[AVAudioSession sharedInstance] currentRoute];
-    NSArray *inputsForRoute = currentRoute.inputs;
-    NSArray *outputsForRoute = currentRoute.outputs;
-    AVAudioSessionPortDescription *outPortDesc = [outputsForRoute objectAtIndex:0];
-    NSLog(@"current outport type %@", outPortDesc.portType);
-    AVAudioSessionPortDescription *inPortDesc = [inputsForRoute objectAtIndex:0];
-    NSLog(@"current inPort type %@", inPortDesc.portType);
+    NSLog(@"Audio Session Interuption %@", [notification.userInfo description]);
 }
 
 /* Registered listeners will be notified when a route change has occurred.  Check the notification's userInfo dictionary for the
  route change reason and for a description of the previous audio route.
  */
 - (void)audioSessionRouteChangeSelector:(NSNotification *)notification {
-    
-    if (![NSThread isMainThread]) {
-        [self performSelectorOnMainThread:@selector(audioSessionRouteChangeSelector:) withObject:notification waitUntilDone:NO];
-        return;
-    }
-    
     AVAudioSession *audioSession = notification.object;
-    NSArray *outputs = audioSession.currentRoute.outputs;
-    AVAudioSessionPortDescription *port = [outputs lastObject];
-    _outputType = [self outputTypeFromString:port.portType];
-    [_delegate phoneAudioManager:self didChangeAudioRouteOutputType:_outputType];
-    
     NSArray *inputs = audioSession.currentRoute.inputs;
-    port = [inputs lastObject];
+    AVAudioSessionPortDescription *port = [inputs lastObject];
     _inputType = [self inputTypeFromString:port.portType];
     [_delegate phoneAudioManager:self didChangeAudioRouteInputType:_inputType];
     
+    NSArray *outputs = audioSession.currentRoute.outputs;
+    port = [outputs lastObject];
+    _outputType = [self outputTypeFromString:port.portType];
+    [_delegate phoneAudioManager:self didChangeAudioRouteOutputType:_outputType];
+    
+    NSLog(@"Audio Session Route Changed: Input = %@, Output = %@", [self stringFromInputType:_inputType], [self stringfromOutputType:_outputType]);
 }
 
 /* Registered listeners will be notified if the media server is killed.  In the event that the server is killed,
@@ -188,7 +166,13 @@
  */
 -(void)audioSessionSilenceSecondaryAudioHintSelector:(NSNotification *)notification
 {
-    NSLog(@"Audio Session Silence Secondary Audio %@", [notification.userInfo description]);
+    NSDictionary *userInfo = notification.userInfo;
+    AVAudioSessionSilenceSecondaryAudioHintType type = (AVAudioSessionSilenceSecondaryAudioHintType)[userInfo valueForKey:AVAudioSessionSilenceSecondaryAudioHintTypeKey];
+    if (type == AVAudioSessionSilenceSecondaryAudioHintTypeBegin) {
+        NSLog(@"Audio Session Silence Secondary Audio will begin");
+    } else if(type == AVAudioSessionSilenceSecondaryAudioHintTypeEnd) {
+        NSLog(@"Audio Session Silence Secondary Audio did end.");
+    }
 }
 
 #pragma mark - Private -
@@ -311,11 +295,14 @@
         case JCPhoneAudioManagerOutputAirPlay:
             return AVAudioSessionPortAirPlay;
             
-            //        case JCPhoneAudioManagerOutputLineOut:
-            //            return AVAudioSessionPortLineOut;
-            //
-            //        case JCPhoneAudioManagerOutputLineOut:
-            //            return AVAudioSessionPortLineOut;
+        case JCPhoneAudioManagerOutputBluetoothHFP:
+            return AVAudioSessionPortBluetoothHFP;
+            
+        case JCPhoneAudioManagerOutputUSB:
+            return AVAudioSessionPortUSBAudio;
+            
+        case JCPhoneAudioManagerOutputCarAudio:
+            return AVAudioSessionPortCarAudio;
             
         default:
             return @"Unknown Ouput Type";
@@ -323,5 +310,126 @@
 }
 
 
+
+@end
+
+#pragma mark - Alerts -
+
+#define DEFAULT_TIME_INTERVAL 1
+
+static AVAudioPlayer *ringbackAudioPlayer;
+static SystemSoundID ringtoneID;
+static BOOL active;
+
+@implementation JCPhoneAudioManager (Alerts)
+
+- (void)vibrate
+{
+    [self startRepeatingVibration:NO];
+}
+
+- (void)startRepeatingVibration:(BOOL)repeating
+{
+    active = repeating;
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    AudioServicesAddSystemSoundCompletion(kSystemSoundID_Vibrate, NULL, NULL, vibration, NULL);
+}
+
+- (void)stop
+{
+    active = false;
+    
+    if (ringtoneID) {
+        AudioServicesRemoveSystemSoundCompletion (ringtoneID);
+        AudioServicesDisposeSystemSoundID(ringtoneID);
+        ringtoneID = false;
+    }
+    
+    __autoreleasing NSError *error;
+    if (![[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:&error]) {
+        NSLog(@"%@", error);
+    }
+    
+    if (ringbackAudioPlayer) {
+        [ringbackAudioPlayer stop];
+        ringbackAudioPlayer = nil;
+    }
+}
+
+- (void)ring
+{
+    [self startRepeatingRingtone:NO];
+}
+
+- (void)startRepeatingRingtone:(BOOL)repeating
+{
+    active = repeating;
+    @try {
+        NSURL *url = [NSURL fileURLWithPath:@"/System/Library/Audio/UISounds/vc~ringing.caf"];
+        AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+        if (self.outputType == JCPhoneAudioManagerOutputReceiver) {
+            __autoreleasing NSError *error;
+            if (![audioSession overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error]) {
+                NSLog(@"%@", error);
+            }
+        }
+        
+        AudioServicesCreateSystemSoundID((__bridge_retained CFURLRef)url, &ringtoneID);
+        AudioServicesPlaySystemSound(ringtoneID);
+        CFBridgingRelease((__bridge CFURLRef)url);
+        AudioServicesAddSystemSoundCompletion(ringtoneID, NULL, NULL, ringtone, NULL);
+        
+        if ([JCAppSettings sharedSettings].isVibrateOnRing)
+            [self startRepeatingVibration:repeating];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"%@", exception.description);
+    }
+}
+
+- (void)startRingback
+{
+    if (!ringbackAudioPlayer) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"calling" ofType:@"mp3"];
+        NSURL *url = [NSURL fileURLWithPath:path];
+        __autoreleasing NSError *error;
+        ringbackAudioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
+        [ringbackAudioPlayer prepareToPlay];
+    }
+    
+    if (!ringbackAudioPlayer.isPlaying) {
+        [ringbackAudioPlayer play];
+    }
+}
+
+#pragma mark - Private -
+
+void vibration (SystemSoundID ssID, void *clientData)
+{
+    if (!active)
+        return;
+    
+    double delayInSeconds = DEFAULT_TIME_INTERVAL;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        if (!active)
+            return;
+        AudioServicesPlaySystemSound(ssID);
+    });
+}
+
+void ringtone (SystemSoundID ssID, void *clientData)
+{
+    if (!active)
+        return;
+    
+    double delayInSeconds = DEFAULT_TIME_INTERVAL;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        if (!active)
+            return;
+        AudioServicesPlaySystemSound(ssID);
+    });
+}
 
 @end

@@ -81,11 +81,6 @@ NSString *const kJCPhoneManager611String = @"611";
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
--(BOOL)isMuted
-{
-    return _sipHandler.isMuted;
-}
-
 #pragma mark - Connection -
 
 /**
@@ -561,7 +556,7 @@ NSString *const kJCPhoneManager611String = @"611";
             // are not on Bluetooth, or Airplay, etc., and are on the internal built in speaker, so we can,
             // and should enable speaker mode.
             BOOL shouldTurnOnSpeaker = FALSE;
-            if(self.audioManager.outputType == JCPhoneAudioManagerOutputReceiver) {
+            if(self.outputType == JCPhoneAudioManagerOutputReceiver) {
                 shouldTurnOnSpeaker = TRUE;
             }
             sipHandler.loudSpeakerEnabled = shouldTurnOnSpeaker;
@@ -577,6 +572,11 @@ NSString *const kJCPhoneManager611String = @"611";
 
 -(void)sipHandler:(SipHandler *)sipHandler didAddLineSession:(JCLineSession *)lineSession
 {
+    
+//    __autoreleasing NSError *error;
+//    [self.audioManager engagePhoneAudio:&error];
+    
+    
     // If we are backgrounded, push out a local notification
     if ([UIApplication sharedApplication].applicationState ==  UIApplicationStateBackground) {
         UILocalNotification *localNotif = [[UILocalNotification alloc] init];
@@ -773,6 +773,21 @@ NSString *const kJCPhoneManager611String = @"611";
     return _sipHandler.isConferenceCall;
 }
 
+-(BOOL)isMuted
+{
+    return _sipHandler.isMuted;
+}
+
+-(JCPhoneAudioManagerInputType)inputType
+{
+    return _sipHandler.audioManager.inputType;
+}
+
+-(JCPhoneAudioManagerOutputType)outputType
+{
+    return _sipHandler.audioManager.outputType;
+}
+
 #pragma mark - General Private Methods -
 
 -(JCCallCard *)findInactiveCallCard
@@ -817,7 +832,7 @@ NSString *const kJCPhoneManager611String = @"611";
 
 #pragma mark AVAudioSession
 
--(void)phoneAudioManager:(JCPhoneAudioManager *)manager didChangeAudioRouteInputType:(JCPhoneAudioManagerOutputType)inputType
+-(void)phoneAudioManager:(JCPhoneAudioManager *)manager didChangeAudioRouteInputType:(JCPhoneAudioManagerInputType)inputType
 {
     
 }

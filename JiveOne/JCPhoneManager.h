@@ -32,7 +32,6 @@ typedef enum : NSInteger {
 
 @property (nonatomic, strong) NSMutableArray *calls;
 
-@property (nonatomic, readonly) JCPhoneAudioManager *audioManager;
 @property (nonatomic, readonly) Line *line;
 @property (nonatomic, readonly) JCPhoneManagerNetworkType networkType;
 
@@ -40,7 +39,10 @@ typedef enum : NSInteger {
 @property (nonatomic, readonly, getter=isConnected) BOOL connected;
 @property (nonatomic, readonly, getter=isConnecting) BOOL connecting;
 @property (nonatomic, readonly, getter=isConferenceCall) BOOL conferenceCall;
-@property (nonatomic, readonly) BOOL isMuted;
+@property (nonatomic, readonly, getter=isMuted) BOOL muted;
+
+@property (nonatomic, readonly) JCPhoneAudioManagerInputType inputType;
+@property (nonatomic, readonly) JCPhoneAudioManagerOutputType outputType;
 
 @end
 

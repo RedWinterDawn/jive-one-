@@ -24,8 +24,8 @@
 #import <AVFoundation/AVFoundation.h>
 
 // Managers
-#import "JCBadgeManager.h"   // Sip directly reports voicemail count for v4 clients to badge manager
-#import "JCAudioAlertManager.h"
+#import "JCBadgeManager.h"          // Sip directly reports voicemail count for v4 clients to badge manager
+#import "JCPhoneAudioManager.h"     // Sip directly interacts with the audio session.
 
 // Managed Objects
 #import "IncomingCall.h"
@@ -64,7 +64,7 @@ NSString *const kSipHandlerLineErrorMessage = @"Unable to fetch the line configu
 NSString *const kSipHandlerFetchPBXErrorMessage = @"Unable to fetch the line configuration";
 NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
-@interface SipHandler() <PortSIPEventDelegate>
+@interface SipHandler() <PortSIPEventDelegate, JCPhoneAudioManagerDelegate>
 {
     PortSIPSDK *_mPortSIPSDK;
     CompletionHandler _transferCompletionHandler;
@@ -93,6 +93,9 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         
         _operationQueue = [[NSOperationQueue alloc] init];
         _operationQueue.name = @"SipHandler Operation Queue";
+        
+        _audioManager = [JCPhoneAudioManager new];
+        _audioManager.delegate = self;
         
         // Initialize the port sip sdk.
         _mPortSIPSDK = [PortSIPSDK new];
@@ -985,20 +988,20 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             lineSession.updatable = FALSE;
             lineSession.sessionState = state;
             
-            [JCAudioAlertManager stop];
+            [_audioManager stop];
             
             // Notify
             if (lineSession.isIncoming){
-                
-                // Stop Ringing
-                [JCAudioAlertManager stop];
-                
                 [MissedCall addMissedCallWithLineSession:lineSession line:_line];
             }
             [_delegate sipHandler:self willRemoveLineSession:lineSession];
             
             NSLog(@"%@", [self.lineSessions description]);
             [lineSession reset];  // clear up this line session for reuse.
+            
+            if (!self.isActive) {
+                [_audioManager disengageAudioSession];
+            }
             break;
         }
         
@@ -1009,6 +1012,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             lineSession.active = TRUE;
             lineSession.contact = [Contact contactForExtension:lineSession.callDetail pbx:_line.pbx];
             lineSession.sessionState = state;
+            [_audioManager engageAudioSession];
             
             // Notify
             [OutgoingCall addOutgoingCallWithLineSession:lineSession line:_line];
@@ -1024,8 +1028,8 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             lineSession.contact = [Contact contactForExtension:lineSession.callDetail pbx:_line.pbx];
             lineSession.sessionState = state;
             
-            // Start ringing
-            [JCAudioAlertManager startRepeatingRingtone:YES];
+            [_audioManager engageAudioSession];
+            [_audioManager startRepeatingRingtone:YES];
 
             // Notify
             [_delegate sipHandler:self didAddLineSession:lineSession];     // Notify the delegate to add a line.
@@ -1042,7 +1046,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             lineSession.sessionState = state;
             
             // Stop Ringing
-            [JCAudioAlertManager stop];
+            [_audioManager stop];
             
             // Notify
             [IncomingCall addIncommingCallWithLineSession:lineSession line:_line];
@@ -1108,10 +1112,24 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     [self setSessionState:state forSession:[self findSession:sessionId] event:event error:error];
 }
 
-#pragma mark - PortSIP SDK Delegate Handlers -
+#pragma mark - Delegate Handlers -
+
+#pragma mark JCPhoneAudioManagerDelegate -
+
+-(void)phoneAudioManager:(JCPhoneAudioManager *)manager didChangeAudioRouteInputType:(JCPhoneAudioManagerInputType)inputType
+{
+    // We have a chance to respond if we need to.
+    [_delegate phoneAudioManager:manager didChangeAudioRouteInputType:inputType];
+}
+
+-(void)phoneAudioManager:(JCPhoneAudioManager *)manager didChangeAudioRouteOutputType:(JCPhoneAudioManagerOutputType)outputType
+{
+    // We have a chance to respond if we need to.
+    [_delegate phoneAudioManager:manager didChangeAudioRouteOutputType:outputType];
+}
 
 
-
+#pragma mark PortSIP SDK Delegate Handlers -
 #pragma mark Incoming Call Events
 
 /**
@@ -1206,7 +1224,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 {
     JCLineSession *selectedLine = [self findSession:sessionId];
 	if (selectedLine && !selectedLine.mExistEarlyMedia) {
-        [JCAudioAlertManager startRingback];
+        [_audioManager startRingback];
 	}
     [self setSessionState:JCCallRinging forSession:selectedLine event:@"onInviteRinging" error:nil];
 }

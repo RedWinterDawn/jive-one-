@@ -8,6 +8,7 @@
 
 @import Foundation;
 @import CoreBluetooth;
+@import AudioToolbox;
 
 typedef enum : NSUInteger {
     JCPhoneAudioManagerOutputUnknown = 0,
@@ -51,7 +52,18 @@ typedef enum : NSUInteger {
 @property (nonatomic, readonly) JCPhoneAudioManagerInputType inputType;
 @property (nonatomic, readonly) JCPhoneAudioManagerOutputType outputType;
 
--(BOOL)enableBluetoothAudio:(NSError *__autoreleasing *)error;
--(BOOL)disableBluetoothAudio:(NSError *__autoreleasing *)error;
+- (void)engageAudioSession;
+- (void)disengageAudioSession;
+
+@end
+
+@interface JCPhoneAudioManager (Alerts)
+
+- (void)vibrate;                                    // Single vibrate.
+- (void)startRepeatingVibration:(BOOL)repeating;    // Repeating Vibration
+- (void)ring;                                       // Single ring.
+- (void)startRepeatingRingtone:(BOOL)repeating;     // Repeating Ring.
+- (void)stop;                                       // Stops repeating events.
+- (void)startRingback;                              // Starts Ringback.
 
 @end
