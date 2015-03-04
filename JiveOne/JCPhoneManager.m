@@ -61,9 +61,6 @@ NSString *const kJCPhoneManager611String = @"611";
     self = [super init];
     if (self)
     {
-        // Open bluetooth manager to turn on audio support for bluetooth before we get started.
-        _audioManager = [JCPhoneAudioManager new];
-        
         // Initialize the Sip Handler.
         __autoreleasing NSError *error;
         _sipHandler = [[SipHandler alloc] initWithNumberOfLines:MAX_LINES delegate:self error:&error];

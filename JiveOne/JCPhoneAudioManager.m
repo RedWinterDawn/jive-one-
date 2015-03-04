@@ -30,7 +30,6 @@
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         [center addObserver:self selector:@selector(audioSessionInterruptionSelector:) name:AVAudioSessionInterruptionNotification object:nil];
         [center addObserver:self selector:@selector(audioSessionRouteChangeSelector:) name:AVAudioSessionRouteChangeNotification object:nil];
-        [center addObserver:self selector:@selector(audioSessionMediaServicesWereLostSelector:) name:AVAudioSessionMediaServicesWereLostNotification object:nil];
         [center addObserver:self selector:@selector(audioSessionMediaServicesWereResetSelector:) name:AVAudioSessionMediaServicesWereResetNotification object:nil];
         if (&AVAudioSessionSilenceSecondaryAudioHintNotification) {  // iOS 8 only
             [center addObserver:self selector:@selector(audioSessionSilenceSecondaryAudioHintSelector:) name:AVAudioSessionSilenceSecondaryAudioHintNotification object:nil];
@@ -62,6 +61,8 @@
     if (![session setActive:YES withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil]) {
         
     }
+    
+    _engaged = true;
 }
 
 -(void)disengageAudioSession
@@ -71,6 +72,8 @@
     if (![session setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error: nil]) {
         NSLog(@"Error Disabling Audio Session");
     }
+    
+    _engaged = false;
 }
 
 #pragma mark - Getters -
@@ -107,47 +110,49 @@
  In the case of an end interruption notification, check the userInfo dictionary for AVAudioSessionInterruptionOptions that
  indicate whether audio playback should resume.
  */
-- (void)audioSessionInterruptionSelector:(NSNotification *)notification {
+- (void)audioSessionInterruptionSelector:(NSNotification *)notification
+{
     NSDictionary *userInfo = notification.userInfo;
     AVAudioSessionInterruptionType type = ((NSNumber *)[userInfo valueForKey:AVAudioSessionInterruptionTypeKey]).unsignedIntegerValue;
     if (type == AVAudioSessionInterruptionTypeBegan) {
-        NSLog(@"Audio Session Interuption will begin");
+        _interupted = true;
+        [_delegate audioSessionInteruptionDidBegin:self];
+        NSLog(@"Audio Session Interuption begin");
     } else {
-        NSLog(@"Audio Session Interuption did end");
+        _interupted = false;
+        [_delegate audioSessionInteruptionDidEnd:self];
+        NSLog(@"Audio Session Interuption end");
     }
     
     AVAudioSessionInterruptionOptions options = ((NSNumber *)[userInfo valueForKey:AVAudioSessionInterruptionOptionKey]).unsignedIntegerValue;
     if (options == AVAudioSessionInterruptionOptionShouldResume) {
-        
+        NSLog(@"Audio Session Should Resume");
     }
-    
-    NSLog(@"Audio Session Interuption %@", [notification.userInfo description]);
 }
 
 /* Registered listeners will be notified when a route change has occurred.  Check the notification's userInfo dictionary for the
  route change reason and for a description of the previous audio route.
  */
-- (void)audioSessionRouteChangeSelector:(NSNotification *)notification {
+- (void)audioSessionRouteChangeSelector:(NSNotification *)notification
+{
     AVAudioSession *audioSession = notification.object;
     NSArray *inputs = audioSession.currentRoute.inputs;
     AVAudioSessionPortDescription *port = [inputs lastObject];
-    _inputType = [self inputTypeFromString:port.portType];
-    [_delegate phoneAudioManager:self didChangeAudioRouteInputType:_inputType];
+    JCPhoneAudioManagerInputType inputType = [self inputTypeFromString:port.portType];
+    if (_inputType != inputType) {
+        _inputType = inputType;
+        [_delegate phoneAudioManager:self didChangeAudioRouteInputType:_inputType];
+    }
     
     NSArray *outputs = audioSession.currentRoute.outputs;
     port = [outputs lastObject];
-    _outputType = [self outputTypeFromString:port.portType];
-    [_delegate phoneAudioManager:self didChangeAudioRouteOutputType:_outputType];
+    JCPhoneAudioManagerOutputType outputType = [self outputTypeFromString:port.portType];
+    if (_outputType != outputType) {
+        _outputType = outputType;
+        [_delegate phoneAudioManager:self didChangeAudioRouteOutputType:_outputType];
+    }
     
     NSLog(@"Audio Session Route Changed: Input = %@, Output = %@", [self stringFromInputType:_inputType], [self stringfromOutputType:_outputType]);
-}
-
-/* Registered listeners will be notified if the media server is killed.  In the event that the server is killed,
- take appropriate steps to handle requests that come in before the server resets.  See Technical Q&A QA1749.
- */
--(void)audioSessionMediaServicesWereLostSelector:(NSNotification *)notification
-{
-    NSLog(@"Audio Session Media Services Were Lost %@", [notification.userInfo description]);
 }
 
 /* Registered listeners will be notified when the media server restarts.  In the event that the server restarts,
@@ -155,6 +160,13 @@
  */
 -(void)audioSessionMediaServicesWereResetSelector:(NSNotification *)notification
 {
+    if (_engaged) {
+        [self engageAudioSession];
+    }
+    else {
+        [self disengageAudioSession];
+    }
+    
     NSLog(@"Audio Session Media Services Were Reset %@", [notification.userInfo description]);
 }
 

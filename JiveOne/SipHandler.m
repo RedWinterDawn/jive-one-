@@ -1116,6 +1116,33 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 #pragma mark JCPhoneAudioManagerDelegate -
 
+-(void)audioSessionInteruptionDidBegin:(JCPhoneAudioManager *)manager
+{
+    
+    // When we get a call that is being interuped, we place it on hold.
+    JCLineSession *lineSession = [self findActiveLine];
+    [_mPortSIPSDK enableAudioStreamCallback:lineSession.sessionId enable:FALSE callbackMode:AUDIOSTREAM_LOCAL_PER_CHANNEL];
+    
+    __autoreleasing NSError *error;
+    [self holdLineSession:lineSession error:&error];
+}
+
+-(void)audioSessionInteruptionDidEnd:(JCPhoneAudioManager *)manager
+{
+    [_audioManager engageAudioSession];
+    
+    
+    NSSet *activeLines = [self findAllActiveLines];
+    for (JCLineSession *lineSession in activeLines) {
+        [_mPortSIPSDK updateCall:lineSession.sessionId enableAudio:lineSession.audio enableVideo:lineSession.video];
+        [_mPortSIPSDK muteSession:lineSession.sessionId muteIncomingAudio:FALSE muteOutgoingAudio:false muteIncomingVideo:false muteOutgoingVideo:false];
+        [_mPortSIPSDK enableAudioStreamCallback:lineSession.sessionId enable:TRUE callbackMode:AUDIOSTREAM_LOCAL_PER_CHANNEL];
+    }
+    
+    [_mPortSIPSDK muteMicrophone:FALSE];
+    [_mPortSIPSDK muteSpeaker:FALSE];
+}
+
 -(void)phoneAudioManager:(JCPhoneAudioManager *)manager didChangeAudioRouteInputType:(JCPhoneAudioManagerInputType)inputType
 {
     // We have a chance to respond if we need to.
