@@ -50,9 +50,9 @@
 #endif
 
 #if TARGET_IPHONE_SIMULATOR
-#define IS_SIMULATOR TRUE
+#define IS_SIMULATOR 1
 #elif TARGET_OS_IPHONE
-#define IS_SIMULATOR FALSE
+#define IS_SIMULATOR 0
 #endif
 
 NSString *const kSipHandlerAutoAnswerModeAutoHeader = @"Answer-Mode: auto";
@@ -101,12 +101,12 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         _mPortSIPSDK = [PortSIPSDK new];
         _mPortSIPSDK.delegate = self;
         int errorCode = [_mPortSIPSDK initialize:TRANSPORT_UDP
-                                  loglevel:LOG_LEVEL
-                                   logPath:NULL
-                                   maxLine:(int)lines
-                                     agent:kSipHandlerServerAgentname
-                        virtualAudioDevice:IS_SIMULATOR
-                        virtualVideoDevice:IS_SIMULATOR];
+                                        loglevel:LOG_LEVEL
+                                         logPath:nil
+                                         maxLine:(int)lines
+                                           agent:kSipHandlerServerAgentname
+                                audioDeviceLayer:IS_SIMULATOR
+                                videoDeviceLayer:IS_SIMULATOR];
         
         if(errorCode) {
             _mPortSIPSDK = nil;

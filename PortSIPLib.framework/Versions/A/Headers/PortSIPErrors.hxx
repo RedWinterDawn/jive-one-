@@ -85,6 +85,7 @@
 #define ECoreTrialVersionLicenseKey			-60087
 #define ECoreOutgoingAudioMuted				-60088
 #define ECoreOutgoingVideoMuted				-60089
+#define ECoreFailedCreateSdp				-60090
 
 // IVR
 #define ECoreIVRObjectNull					-61001

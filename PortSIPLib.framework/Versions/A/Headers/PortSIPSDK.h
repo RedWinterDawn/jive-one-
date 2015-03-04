@@ -1,21 +1,17 @@
-/*!
- * @author Copyright (c) 2006-2014 PortSIP Solutions,Inc. All rights reserved.
- * @version 11.2
- * @see http://www.PortSIP.com
- * @class PortSIPSDK
- * @brief PortSIP SDK functions class.
- 
- PortSIP SDK functions class description.
- */
-
 #import <Foundation/Foundation.h>
 #import "PortSIPEventDelegate.h"
 #import "PortSIPTypes.hxx"
 #import "PortSIPErrors.hxx"
 
 /*!
- *  PortSIPSDK
- */
+* @author Copyright (c) 2006-2014 PortSIP Solutions,Inc. All rights reserved.
+* @version 11.2
+* @see http://www.PortSIP.com
+* @class PortSIPSDK
+* @brief PortSIP VoIP SDK functions class.
+ 
+PortSIP SDK functions class description.
+*/
 @interface PortSIPSDK : NSObject
 
 @property (nonatomic, weak) id<PortSIPEventDelegate> delegate;
@@ -37,8 +33,14 @@
  * @param logFilePath   The log file path, the path(folder) MUST is exists.
  * @param maxCallLines  In theory support unlimited lines just depends on the device capability, for SIP client recommend less than 1 - 100;
  * @param sipAgent     The User-Agent header to insert in SIP messages.
- * @param useVirtualAudioDevice Set to true to use the virtual audio device if the no sound device installed.
- * @param useVirtualVideoDevice Set to true to use the virtual video device if no camera installed.
+ * @param audioDeviceLayer
+ *            Specifies which audio device layer should be using:<br>
+ *            0 = Use the OS default device.<br>
+ *            1 = Virtual device    - Virtual device, usually use this for the device which no sound device installed.<br>
+ * @param videoDeviceLayer
+ *            Specifies which video device layer should be using:<br>
+ *            0 = Use the OS default device.<br>
+ *            1 = Use Virtual device, usually use this for the device which no camera installed.
  * @return If the function succeeds, the return value is 0. If the function fails, the return value is a specific error code
  */
 - (int) initialize:(TRANSPORT_TYPE)transport
@@ -46,8 +48,8 @@
            logPath:(NSString*)logFilePath
            maxLine:(int)maxCallLines
              agent:(NSString*)sipAgent
-virtualAudioDevice:(BOOL)useVirtualAudioDevice
-virtualVideoDevice:(BOOL)useVirtualVideoDevice;
+  audioDeviceLayer:(int)audioDeviceLayer
+  videoDeviceLayer:(int)videoDeviceLayer;
 
 /*!
  *  @brief Un-initialize the SDK and release resources.
@@ -209,31 +211,29 @@ outboundServerPort:(int)outboundServerPort;
 
 /*!
  *  @brief Set the codec parameter for audio codec.
- @discussion
- Example:<br>
- [myVoIPsdk setAudioCodecParameter:AUDIOCODEC_AMR paramter:"mode-set=0; octet-align=1; robust-sorting=0"];
  *
  *  @param codecType Audio codec type, defined in the PortSIPTypes file.
  *  @param parameter The parameter in string format.
  *
  *  @return If the function succeeds, the return value is 0. If the function fails, the return value is a specific error code.
+ @remark Example:
+ @code [myVoIPsdk setAudioCodecParameter:AUDIOCODEC_AMR parameter:"mode-set=0; octet-align=1; robust-sorting=0"]; @endcode
  */
 - (int)setAudioCodecParameter:(AUDIOCODEC_TYPE)codecType
-                     paramter:(NSString*)parameter;
+                     parameter:(NSString*)parameter;
 
 /*!
  *  @brief Set the codec parameter for video codec.
- @discussion
- Example:<br>
- [myVoIPsdk setVideoCodecParameter:VIDEOCODEC_H264 paramter:"profile-level-id=420033; packetization-mode=0"];
  *
  *  @param codecType Video codec type, defined in the PortSIPTypes file.
  *  @param parameter The parameter in string format.
  *
  *  @return If the function succeeds, the return value is 0. If the function fails, the return value is a specific error code.
+ @remark Example:
+ @code [myVoIPsdk setVideoCodecParameter:VIDEOCODEC_H264 parameter:"profile-level-id=420033; packetization-mode=0"]; @endcode
  */
 - (int)setVideoCodecParameter:(VIDEOCODEC_TYPE) codecType
-                     paramter:(NSString*)parameter;
+                     parameter:(NSString*)parameter;
 
 /** @} */ // end of group3
 
@@ -296,8 +296,6 @@ outboundServerPort:(int)outboundServerPort;
 
 /*!
  *  @brief Set the RTP ports range for audio and video streaming.
- @discussion
- *  The port range((max - min) % maxCallLines) should more than 4.
  *
  *  @param minimumRtpAudioPort The minimum RTP port for audio stream.
  *  @param maximumRtpAudioPort The maximum RTP port for audio stream.
@@ -305,6 +303,8 @@ outboundServerPort:(int)outboundServerPort;
  *  @param maximumRtpVideoPort The maximum RTP port for video stream.
  *
  *  @return If the function succeeds, the return value is 0. If the function fails, the return value is a specific error code.
+ *  @remark
+ *  The port range((max - min) % maxCallLines) should more than 4.
  */
 - (int)setRtpPortRange:(int) minimumRtpAudioPort
    maximumRtpAudioPort:(int) maximumRtpAudioPort
@@ -313,8 +313,6 @@ outboundServerPort:(int)outboundServerPort;
 
 /*!
  *  @brief Set the RTCP ports range for audio and video streaming.
- @discussion
- The port range((max - min) % maxCallLines) should more than 4.
  *
  *  @param minimumRtcpAudioPort The minimum RTCP port for audio stream.
  *  @param maximumRtcpAudioPort The maximum RTCP port for audio stream.
@@ -322,6 +320,8 @@ outboundServerPort:(int)outboundServerPort;
  *  @param maximumRtcpVideoPort The maximum RTCP port for video stream.
  *
  *  @return If the function succeeds, the return value is 0. If the function fails, the return value is a specific error code.
+ *  @remark
+ *  The port range((max - min) % maxCallLines) should more than 4.
  */
 - (int)setRtcpPortRange:(int) minimumRtcpAudioPort
    maximumRtcpAudioPort:(int) maximumRtcpAudioPort
@@ -347,13 +347,15 @@ outboundServerPort:(int)outboundServerPort;
 
 /*!
  *  @brief Allows to periodically refresh Session Initiation Protocol (SIP) sessions by sending repeated INVITE requests.
- @discussion
- The repeated INVITE requests, or re-INVITEs, are sent during an active call leg to allow user agents (UA) or proxies to determine the status of a SIP session. Without this keepalive mechanism, proxies that remember incoming and outgoing requests (stateful proxies) may continue to retain call state needlessly. If a UA fails to send a BYE message at the end of a session or if the BYE message is lost because of network problems, a stateful proxy does not know that the session has ended. The re-INVITES ensure that active sessions stay active and completed sessions are terminated.
  *
  *  @param timerSeconds The value of the refresh interval in seconds. Minimum requires 90 seconds.
  *  @param refreshMode  Allow set the session refresh by UAC or UAS: SESSION_REFERESH_UAC or SESSION_REFERESH_UAS;
  *
  *  @return If the function succeeds, the return value is 0. If the function fails, the return value is a specific error code.
+ *  @remark The repeated INVITE requests, or re-INVITEs, are sent during an active call leg to allow user agents (UA) or proxies to determine the status of a SIP session.
+ *  Without this keepalive mechanism, proxies that remember incoming and outgoing requests (stateful proxies) may continue to retain call state needlessly.
+ *  If a UA fails to send a BYE message at the end of a session or if the BYE message is lost because of network problems, a stateful proxy does not know that the session has ended.
+ *  The re-INVITES ensure that active sessions stay active and completed sessions are terminated.
  */
 - (int)enableSessionTimer:(int) timerSeconds refreshMode:(SESSION_REFRESH_MODE)refreshMode;
 
@@ -410,13 +412,12 @@ outboundServerPort:(int)outboundServerPort;
 - (int)setKeepAliveTime:(int) keepAliveTime;
 /*!
  *  @brief Set the audio capture sample.
- @discussion
- which will be appears in the SDP of INVITE and 200 OK message as "ptime and "maxptime" attribute.
  *
  *  @param ptime    It's should be a multiple of 10, and between 10 - 60(included 10 and 60).
  *  @param maxPtime For the "maxptime" attribute, should be a multiple of 10, and between 10 - 60(included 10 and 60). Can't less than "ptime".
  *
  *  @return If the function succeeds, the return value is 0. If the function fails, the return value is a specific error code.
+ *  @remark which will be appears in the SDP of INVITE and 200 OK message as "ptime and "maxptime" attribute.
  */
 - (int)setAudioSamples:(int) ptime
               maxPtime:(int) maxPtime;
@@ -429,7 +430,28 @@ outboundServerPort:(int)outboundServerPort;
  *  @param subMimeType The sub mime type of SIP message.
  *
  *  @return If the function succeeds, the return value is 0. If the function fails, the return value is a specific error code.
- * @see http://www.portsip.com/manuals/voip/m2.html#addtional_settings
+ *@Remarks
+ * Default, the PortSIP VoIP SDK support these media types(mime types) that in the below incoming SIP messages:
+ * @code
+ "message/sipfrag" in NOTIFY message.
+ "application/simple-message-summary" in NOTIFY message.
+ "text/plain" in MESSAGE message.
+ "application/dtmf-relay" in INFO message.
+ "application/media_control+xml" in INFO message.
+ * @endcode
+ * The SDK allows received SIP message that included above mime types. Now if remote side send a INFO
+ * SIP message, this message "Content-Type" header value is "text/plain", the SDK will reject this INFO message,
+ * because "text/plain" of INFO message does not included in the default support list.
+ * Then how to let the SDK receive the SIP INFO message that included "text/plain" mime type? We should use
+ * addSupportedMimyType to do it:
+ * @code
+[myVoIPSdk addSupportedMimeType:@"INFO" mimeType:@"text" subMimeType:@"plain"];
+ * @endcode
+ * If want to receive the NOTIFY message with "application/media_control+xml", then:
+ *@code
+ [myVoIPSdk addSupportedMimeType:@"NOTIFY" mimeType:@"application" subMimeType:@"media_control+xml"];
+ * @endcode
+ * About the mime type details, please visit this website: http://www.iana.org/assignments/media-types/
  */
 - (int)addSupportedMimeType:(NSString*) methodName
                    mimeType:(NSString*) mimeType
@@ -443,25 +465,20 @@ outboundServerPort:(int)outboundServerPort;
 
 /*!
  *  @brief Access the SIP header of SIP message.
- @discussion
- @code
- When got a SIP message in the onReceivedSignaling callback event, and want to get SIP message header value, use getExtensionHeaderValue to do it:
  
- NSString* HeaderValue;
- getExtensionHeaderValue(sipMessage, @"CSeq", HeaderValue, 512)
- @endcode
  *
  *  @param sipMessage        The SIP message.
  *  @param headerName        Which header want to access of the SIP message.
- *  @param headerValue       The buffer to receive header value.
- *  @param headerValueLength The headerValue buffer size. Usually we recommended set it more than 512 bytes.
  *
- *  @return If the function succeeds, the return value is 0. If the function fails, the return value is a specific error code.
+ *  @return If the function succeeds, the return value is headerValue. If the function fails, the return value is nil.
+ * @remark
+ * When got a SIP message in the onReceivedSignaling callback event, and want to get SIP message header value, use getExtensionHeaderValue to do it:
+ * @code
+ NSString* headerValue = [myVoIPSdk getExtensionHeaderValue:message headerName:name];
+ * @endcode
  */
-- (int)getExtensionHeaderValue:(NSString*) sipMessage
-                    headerName:(NSString*) headerName
-                   headerValue:(NSString*) headerValue
-             headerValueLength:(int)headerValueLength;
+-(NSString*)getExtensionHeaderValue:(NSString*)sipMessage
+                    headerName:(NSString*) headerName;
 
 /*!
  *  @brief Add the extension header(custom header) into every outgoing SIP message.
@@ -476,15 +493,15 @@ outboundServerPort:(int)outboundServerPort;
 
 /*!
  *  @brief Clear the added extension headers(custom headers)
- @discussion
+ *
+ *  @return If the function succeeds, the return value is 0. If the function fails, the return value is a specific error code.
+ @remark
  @code
  Example, we have added two custom headers into every outgoing SIP message and want remove them.
  [myVoIPSdk addExtensionHeader:@"Blling" headerValue:@"usd100.00"];
  [myVoIPSdk addExtensionHeader:@"ServiceId" headerValue:@"8873456"];
  [myVoIPSdk clearAddextensionHeaders];
  @endcode
- *
- *  @return If the function succeeds, the return value is 0. If the function fails, the return value is a specific error code.
  */
 - (int)clearAddExtensionHeaders;
 
@@ -500,16 +517,15 @@ outboundServerPort:(int)outboundServerPort;
              headerValue:(NSString*) headerValue;
 /*!
  *  @brief Clear the modify headers value, no longer modify every outgoing SIP message header values.
- @discussion
+ *
+ *  @return If the function succeeds, the return value is 0. If the function fails, the return value is a specific error code.
+ @remark  Example, modified two headers value for every outging SIP message and then clear it:
  @code
- Example, modified two headers value for every outging SIP message and then clear it:
  
  [myVoIPSdk modifyHeaderValue:@"Expires" headerValue:@"1000");
  [myVoIPSdk modifyHeaderValue:@"User-Agent", headerValue:@"MyTest Softphone 1.0");
  [myVoIPSdk cleaModifyHeaders];
  @endcode
- *
- *  @return If the function succeeds, the return value is 0. If the function fails, the return value is a specific error code.
  */
 - (int)clearModifyHeaders;
 
@@ -538,6 +554,19 @@ outboundServerPort:(int)outboundServerPort;
 - (int)setVideoResolution:(VIDEO_RESOLUTION)resolution;
 
 /*!
+ *  @brief Set the audio bit rate.
+ *
+ *  @param sessionId The session ID of the call.
+ *  @param codecType Audio codec type.
+ *  @param bitrateKbps The video bit rate in KBPS.
+ *
+ *  @return If the function succeeds, the return value is 0. If the function fails, the return value is a specific error code.
+ */
+- (int)setAudioBitrate:(long) sessionId
+             codecType:(AUDIOCODEC_TYPE)codecType
+           bitrateKbps:(int)bitrateKbps;
+
+/*!
  *  @brief Set the video bit rate.
  *
  *  @param bitrateKbps The video bit rate in KBPS.
@@ -548,11 +577,11 @@ outboundServerPort:(int)outboundServerPort;
 
 /*!
  *  @brief Set the video frame rate. 
-    @discussion Usually you do not need to call this function set the frame rate, the SDK using default frame rate.
  *
  *  @param frameRate The frame rate value, minimum is 5, maximum is 30. The bigger value will give you better video quality but require more bandwidth.
  *
  *  @return If the function succeeds, the return value is 0. If the function fails, the return value is a specific error code.
+ *  @remark Usually you do not need to call this function set the frame rate, the SDK using default frame rate.
  */
 - (int)setVideoFrameRate:(int) frameRate;
 
@@ -629,21 +658,21 @@ outboundServerPort:(int)outboundServerPort;
 
 /*!
  *  @brief Set the audio device that will use for audio call. 
-    @discussion Just allow switch between earphone and Loudspeaker.
  *
  *  @param enable Set to true the SDK use loudspeaker for audio call, this just available for mobile platform only.
  *
  *  @return If the function succeeds, the return value is 0. If the function fails, the return value is a specific error code.
+ *  @remark Just allow switch between earphone and Loudspeaker.
  */
 - (int)setLoudspeakerStatus:(BOOL)enable;
 
 
 /*!
  *  @brief Obtain the dynamic microphone volume level from current call. 
-    @discussion Usually set a timer to call this function to refresh the volume level indicator.
  *
  *  @param speakerVolume    Return the dynamic speaker volume by this parameter, the range is 0 - 9.
  *  @param microphoneVolume Return the dynamic microphone volume by this parameter, the range is 0 - 9.
+ *  @remark Usually set a timer to call this function to refresh the volume level indicator.
  */
 - (void)getDynamicVolumeLevel:(int *) speakerVolume
              microphoneVolume:(int *) microphoneVolume;//(0-10)
@@ -698,25 +727,25 @@ outboundServerPort:(int)outboundServerPort;
 
 /*!
  *  @brief Use the re-INVITE to update the established call.
- @discussion
- Example usage:<br>
- @code
- Example 1: A called B with the audio only, B answered A, there has an audio conversation between A, B. Now A want to see B video,
- A use these functions to do it.
- 
- [myVoIPSdk clearVideoCodec];
- [myVoIPSdk addVideoCodec:VIDEOCODEC_H264];
- [myVoIPSdk updateCall:sessionId enableAudio:true enableVideo:true];
- 
- Example 2: Remove video stream from currently conversation.
- 
- [myVoIPSdk updateCall:sessionId enableAudio:true enableVideo:false];
- @endcode
  *  @param sessionId   The session ID of call.
  *  @param enableAudio Set to true to allow the audio in update call, false for disable audio in update call.
  *  @param enableVideo Set to true to allow the video in update call, false for disable video in update call.
  *
  *  @return If the function succeeds, the return value is 0. If the function fails, the return value is a specific error code.
+ @remark
+ Example usage:<br>
+
+ Example 1: A called B with the audio only, B answered A, there has an audio conversation between A, B. Now A want to see B video,
+ A use these functions to do it.
+ @code
+ [myVoIPSdk clearVideoCodec];
+ [myVoIPSdk addVideoCodec:VIDEOCODEC_H264];
+ [myVoIPSdk updateCall:sessionId enableAudio:true enableVideo:true];
+ @endcode
+ Example 2: Remove video stream from currently conversation.
+ @code
+ [myVoIPSdk updateCall:sessionId enableAudio:true enableVideo:false];
+ @endcode
  */
 - (int)updateCall:(long)sessionId
       enableAudio:(BOOL)enableAudio
@@ -773,6 +802,15 @@ outboundServerPort:(int)outboundServerPort;
  *  @param sessionId    The session ID of the call.
  *  @param dtmfMethod   Support send DTMF tone with two methods: DTMF_RFC2833 and DTMF_INFO. The DTMF_RFC2833 is recommend.
  *  @param code         The DTMF tone(0-16).
+ * <p><table>
+ * <tr><th>code</th><th>Description</th></tr>
+ * <tr><td>0</td><td>The DTMF tone 0.</td></tr><tr><td>1</td><td>The DTMF tone 1.</td></tr><tr><td>2</td><td>The DTMF tone 2.</td></tr>
+ * <tr><td>3</td><td>The DTMF tone 3.</td></tr><tr><td>4</td><td>The DTMF tone 4.</td></tr><tr><td>5</td><td>The DTMF tone 5.</td></tr>
+ * <tr><td>6</td><td>The DTMF tone 6.</td></tr><tr><td>7</td><td>The DTMF tone 7.</td></tr><tr><td>8</td><td>The DTMF tone 8.</td></tr>
+ * <tr><td>9</td><td>The DTMF tone 9.</td></tr><tr><td>10</td><td>The DTMF tone *.</td></tr><tr><td>11</td><td>The DTMF tone #.</td></tr>
+ * <tr><td>12</td><td>The DTMF tone A.</td></tr><tr><td>13</td><td>The DTMF tone B.</td></tr><tr><td>14</td><td>The DTMF tone C.</td></tr>
+ * <tr><td>15</td><td>The DTMF tone D.</td></tr><tr><td>16</td><td>The DTMF tone FLASH.</td></tr>
+ * </table></p>
  *  @param dtmfDuration The DTMF tone samples, recommend 160.
  *  @param playDtmfTone Set to true the SDK play local DTMF tone sound during send DTMF.
  *
@@ -792,31 +830,31 @@ outboundServerPort:(int)outboundServerPort;
 
 /*!
  *  @brief Refer the currently call to another one.<br>
-    @discussion
+ *  @param sessionId The session ID of the call.
+ *  @param referTo   Target of the refer, it can be "sip:number@sipserver.com" or "number" only.
+ *
+ *  @return If the function succeeds, the return value is 0. If the function fails, the return value is a specific error code.
+ *  @remark
  @code
   	[myVoIPSdk refer:sessionId  referTo:@"sip:testuser12@sip.portsip.com"];
  @endcode
  You can download the demo AVI at:
  "http://www.portsip.com/downloads/video/blindtransfer.rar", use the Windows Media
  Player to play the AVI file after extracted, it will shows how to do the transfer.
- *  @param sessionId The session ID of the call.
- *  @param referTo   Target of the refer, it can be "sip:number@sipserver.com" or "number" only.
- *
- *  @return If the function succeeds, the return value is 0. If the function fails, the return value is a specific error code.
  */
 - (int)refer:(long)sessionId referTo:(NSString*)referTo;
 
 /*!
  *  @brief  Make an attended refer.
-    @discussion
- Please read the sample project source code to got more details. Or download the demo AVI at:"http://www.portsip.com/downloads/video/blindtransfer.rar"<br>
-   use the Windows Media Player to play the AVI file after extracted, it will shows how to do the transfer.
  *
  *  @param sessionId        The session ID of the call.
  *  @param replaceSessionId Session ID of the replace call.
  *  @param referTo          Target of the refer, it can be "sip:number@sipserver.com" or "number" only.
  *
  *  @return If the function succeeds, the return value is 0. If the function fails, the return value is a specific error code.
+ *  @remark
+ Please read the sample project source code to got more details. Or download the demo AVI at:"http://www.portsip.com/downloads/video/blindtransfer.rar"<br>
+ use the Windows Media Player to play the AVI file after extracted, it will shows how to do the transfer.
  */
 - (int)attendedRefer:(long)sessionId
     replaceSessionId:(long)replaceSessionId
@@ -849,13 +887,13 @@ outboundServerPort:(int)outboundServerPort;
 
 /*!
  *  @brief Enable the SDK send PCM stream data to remote side from another source to instread of microphone.
- @discussion MUST called this function first if want to send the PCM stream data to another side.
  *
  *  @param sessionId           The session ID of call.
  *  @param state               Set to true to enable the send stream, false to disable.
  *  @param streamSamplesPerSec The PCM stream data sample in seconds, for example: 8000 or 16000.
  *
  *  @return If the function succeeds, the return value is 0. If the function fails, the return value is a specific error code.
+ *  @remark MUST called this function first if want to send the PCM stream data to another side.
  */
 - (int)enableSendPcmStreamToRemote:(long)sessionId state:(BOOL)state streamSamplesPerSec:(int)streamSamplesPerSec;
 
@@ -866,12 +904,16 @@ outboundServerPort:(int)outboundServerPort;
  *  @param data      The PCM audio stream data, must is 16bit, mono.
  *
  *  @return If the function succeeds, the return value is 0. If the function fails, the return value is a specific error code.
- *  @see http://www.portsip.com/manuals/voip/m3.html#audio_video_stream
+ *  @remark Usually we should use it like below:
+ *  @code
+ [myVoIPSdk enableSendPcmStreamToRemote:sessionId state:YES streamSamplesPerSec:16000];
+ [myVoIPSdk sendPcmStreamToRemote:sessionId data:data];
+ *  @endcode
  */
 - (int)sendPcmStreamToRemote:(long)sessionId data:(NSData*) data;
 
 /*!
- *  @brief Enable the SDK send video stream data to remote side from another source to instread of camera.
+ *  @brief Enable the SDK send video stream data to remote side from another source to instead of camera.
  *
  *  @param sessionId The session ID of call.
  *  @param state     Set to true to enable the send stream, false to disable.
@@ -882,8 +924,6 @@ outboundServerPort:(int)outboundServerPort;
 
 /*!
  *  @brief Send the video stream to remote
- @discussion  Send the video stream in i420 from another source to instead of video device capture(camera).<br>
- Before called this funtion,you MUST call the enableSendVideoStreamToRemote function.
  *
  *  @param sessionId Session ID of the call conversation.
  *  @param data      The video video stream data, must is i420 format.
@@ -891,6 +931,13 @@ outboundServerPort:(int)outboundServerPort;
  *  @param height    The video image height.
  *
  *  @return If the function succeeds, the return value is 0. If the function fails, the return value is a specific error code.
+ *  @remark  Send the video stream in i420 from another source to instead of video device capture(camera).<br>
+ Before called this function,you MUST call the enableSendVideoStreamToRemote function.<br>
+ Usually we should use it like below:
+ @code
+ [myVoIPSdk enableSendVideoStreamToRemote:sessionId state:YES];
+ [myVoIPSdk sendVideoStreamToRemote:sessionId data:data width:352 height:288];
+ @endcode
  */
 - (int)sendVideoStreamToRemote:(long)sessionId data:(NSData*) data width:(int)width height:(int)height;
 
@@ -911,24 +958,38 @@ outboundServerPort:(int)outboundServerPort;
 
 /*!
  *  @brief Enable/disable the audio stream callback
- @discussion the onAudioRawCallback event will be triggered if the callback is enabled.
  *
  *  @param sessionId    The session ID of call.
  *  @param enable       Set to true to enable audio stream callback, false to stop the callback.
  *  @param callbackMode The audio stream callback mode
+ * <p><table>
+ * <tr><th>Type</th><th>Description</th></tr>
+ * <tr><td>AUDIOSTREAM_LOCAL_MIX</td><td>Callback the audio stream from microphone for all channels.  </td></tr>
+ * <tr><td>AUDIOSTREAM_LOCAL_PER_CHANNEL</td><td>Callback the audio stream from microphone for one channel base on the given sessionId. </td></tr>
+ * <tr><td>AUDIOSTREAM_REMOTE_MIX</td><td>Callback the received audio stream that mixed including all channels. </td></tr>
+ * <tr><td>AUDIOSTREAM_REMOTE_PER_CHANNEL</td><td>Callback the received audio stream for one channel base on the given sessionId.</td></tr>
+ * </table></p>
  *
  *  @return If the function succeeds, the return value is 0. If the function fails, the return value is a specific error code.
+ *  @remark the onAudioRawCallback event will be triggered if the callback is enabled.
  */
 - (int)enableAudioStreamCallback:(long) sessionId  enable:(BOOL)enable callbackMode:(AUDIOSTREAM_CALLBACK_MODE)callbackMode;
 
 /*!
  *  @brief Enable/disable the video stream callback.
- @discussion the onVideoRawCallback event will be triggered if the callback is enabled.
  *
  *  @param sessionId    The session ID of call.
  *  @param callbackMode The video stream callback mode.
+ * <p><table>
+ * <tr><th>Mode</th><th>Description</th></tr>
+ * <tr><td>VIDEOSTREAM_NONE</td><td>Disable video stream callback. </td></tr>
+ * <tr><td>VIDEOSTREAM_LOCAL</td><td>Local video stream callback. </td></tr>
+ * <tr><td>VIDEOSTREAM_REMOTE</td><td>Remote video stream callback. </td></tr>
+ * <tr><td>VIDEOSTREAM_BOTH</td><td>Both of local and remote video stream callback. </td></tr>
+ * </table></p>
  *
  *  @return If the function succeeds, the return value is 0. If the function fails, the return value is a specific error code.
+ *  @remark the onVideoRawCallback event will be triggered if the callback is enabled.
  */
 - (int)enableVideoStreamCallback:(long) sessionId callbackMode:(VIDEOSTREAM_CALLBACK_MODE) callbackMode;
 
@@ -981,7 +1042,7 @@ outboundServerPort:(int)outboundServerPort;
  *  @brief Play an AVI file to remote party.
  *
  *  @param sessionId Session ID of the call.
- *  @param aviFile   The file full path name, such as "/mnt/sdcard/test.avi".
+ *  @param aviFile   The file full path name, such as "/test.avi".
  *  @param loop      Set to false to stop play video file when it is end. Set to true to play it as repeat.
  *  @param playAudio If set to true then play audio and video together, set to false just play video only.
  *
@@ -1002,7 +1063,7 @@ outboundServerPort:(int)outboundServerPort;
  *  @brief Play an wave file to remote party.
  *
  *  @param sessionId         Session ID of the call.
- *  @param filename          The file full path name, such as "/mnt/sdcard/test.wav".
+ *  @param filename          The file full path name, such as "/test.wav".
  *  @param fileSamplesPerSec The wave file sample in seconds, should be 8000 or 16000 or 32000.
  *  @param loop              Set to false to stop play audio file when it is end. Set to true to play it as repeat.
  *
@@ -1026,7 +1087,7 @@ outboundServerPort:(int)outboundServerPort;
  *  @brief Play an wave file to remote party as conversation background sound.
  *
  *  @param sessionId         Session ID of the call.
- *  @param filename          The file full path name, such as "/mnt/sdcard/test.wav".
+ *  @param filename          The file full path name, such as "/test.wav".
  *  @param fileSamplesPerSec The wave file sample in seconds, should be 8000 or 16000 or 32000.
  *
  *  @return If the function succeeds, the return value is 0. If the function fails, the return value is a specific error code.
@@ -1160,13 +1221,13 @@ outboundServerPort:(int)outboundServerPort;
  *  @brief Get the "in-call" statistics. The statistics are reset after the query.
  *
  *  @param sessionId             The session ID of call conversation.
- *  @param currentBufferSize     Preferred (optimal) buffer size in ms.
- *  @param preferredBufferSize   Preferred (optimal) buffer size in ms.
+ *  @param currentBufferSize     Current jitter buffer size in ms.
+ *  @param preferredBufferSize   Preferred buffer size in ms.
  *  @param currentPacketLossRate Loss rate (network + late) in percent.
- *  @param currentDiscardRate    Fraction of synthesized speech inserted through pre-emptive expansion .
- *  @param currentExpandRate     Fraction of synthesized speech inserted through pre-emptive expansion .
+ *  @param currentDiscardRate    Late loss rate in percent.
+ *  @param currentExpandRate     Fraction (of original stream) of synthesized speech inserted through expansion.
  *  @param currentPreemptiveRate Fraction of synthesized speech inserted through pre-emptive expansion.
- *  @param currentAccelerateRate Fraction of data removed through acceleration .
+ *  @param currentAccelerateRate fraction of data removed through acceleration through acceleration.
  *
  *  @return If the function succeeds, the return value is 0. If the function fails, the return value is a specific error code.
  */
@@ -1197,11 +1258,15 @@ outboundServerPort:(int)outboundServerPort;
 /*!
  *  @brief Obtain the RTCP statisics of audio channel.
  *
- *  @param sessionId       The session ID of call conversation.
- *  @param bytesSent       The number of sent bytes.
- *  @param packetsSent     The number of sent packets.
- *  @param bytesReceived   The number of received bytes.
- *  @param packetsReceived The number of received packets.
+ *  @param sessionId          The session ID of call conversation.
+ *  @param bytesSent          The number of sent bytes.
+ *  @param packetsSent        The number of sent packets.
+ *  @param bytesReceived      The number of received bytes.
+ *  @param packetsReceived    The number of received packets.
+ *  @param sendFractionLost   Fraction of sent lost in percent.
+ *  @param sendCumulativeLost The number of sent cumulative lost packet.
+ *  @param recvFractionLost   Fraction of received lost in percent.
+ *  @param recvCumulativeLost The number of received cumulative lost packets.
  *
  *  @return If the function succeeds, the return value is 0. If the function fails, the return value is a specific error code.
  */
@@ -1209,7 +1274,11 @@ outboundServerPort:(int)outboundServerPort;
                     bytesSent:(int*)bytesSent
                   packetsSent:(int*)packetsSent
                 bytesReceived:(int*)bytesReceived
-              packetsReceived:(int*)packetsReceived;
+              packetsReceived:(int*)packetsReceived
+             sendFractionLost:(int*)sendFractionLost
+           sendCumulativeLost:(int*)sendCumulativeLost
+             recvFractionLost:(int*)recvFractionLost
+           recvCumulativeLost:(int*)recvCumulativeLost;
 
 /*!
  *  @brief Obtain the RTP statisics of video.
@@ -1302,16 +1371,9 @@ outboundServerPort:(int)outboundServerPort;
 
 /*!
  *  @brief Send a MESSAGE message to remote side in dialog.
-    @discussion
- @code
- Example 1: send a plain text message. Note: to send other languages text, please use the UTF8 to encode the message before send.
  
- sendMessage(sessionId, "text", "plain", "hello",6);
  
- Example 2: send a binary message.
  
- sendMessage(sessionId, "application", "vnd.3gpp.sms", binData, binDataSize);
- @endcode
  *
  *  @param sessionId     The session ID of the call.
  *  @param mimeType      The mime type of MESSAGE message.
@@ -1320,6 +1382,15 @@ outboundServerPort:(int)outboundServerPort;
  *  @param messageLength The message size.
  *
  *  @return If the function succeeds, the return value is a message ID allows track the message send state in onSendMessageSuccess and onSendMessageFailure. If the function fails, the return value is a specific error code less than 0.
+ *  @remark
+ *  Example 1: send a plain text message. Note: to send other languages text, please use the UTF8 to encode the message before send.
+ *  @code
+	[myVoIPsdk sendMessage:sessionId mimeType:@"text" subMimeType:@"plain" message:data messageLength:dataLen];
+ *  @endcode
+ *  Example 2: send a binary message.
+ *  @code
+	[myVoIPsdk sendMessage:sessionId mimeType:@"application" subMimeType:@"vnd.3gpp.sms" message:data messageLength:dataLen];
+ *  @endcode
  */
 - (long)sendMessage:(long)sessionId
            mimeType:(NSString*) mimeType
@@ -1329,16 +1400,9 @@ outboundServerPort:(int)outboundServerPort;
 
 /*!
  *  @brief Send a out of dialog MESSAGE message to remote side.
-    @discussion
- @code
- Example 1: send a plain text message. Note: to send other languages text, please use the UTF8 to encode the message before send.
  
- sendOutOfDialogMessage("sip:user1@sip.portsip.com", "text", "plain", "hello", 6);
  
- Example 2: send a binary message.
  
- sendOutOfDialogMessage("sip:user1@sip.portsip.com",  "vnd.3gpp.sms", binData, binDataSize);
- @endcode
  *
  *  @param to            The message receiver. Likes sip:receiver@portsip.com
  *  @param mimeType      The mime type of MESSAGE message.
@@ -1347,6 +1411,15 @@ outboundServerPort:(int)outboundServerPort;
  *  @param messageLength The message size.
  *
  *  @return If the function succeeds, the return value is a message ID allows track the message send state in onSendOutOfMessageSuccess and onSendOutOfMessageFailure.  If the function fails, the return value is a specific error code less than 0.
+ * @remark
+ * Example 1: send a plain text message. Note: to send other languages text, please use the UTF8 to encode the message before send.
+ * @code
+		[myVoIPsdk sendOutOfDialogMessage:@"sip:user1@sip.portsip.com" mimeType:@"text" subMimeType:@"plain" message:data messageLength:dataLen];
+ * @endcode
+ * Example 2: send a binary message.
+ * @code
+		[myVoIPsdk sendOutOfDialogMessage:@"sip:user1@sip.portsip.com" mimeType:@"application" subMimeType:@"vnd.3gpp.sms" message:data messageLength:dataLen];
+ * @endcode
  */
 - (long)sendOutOfDialogMessage:(NSString*) to
                       mimeType:(NSString*) mimeType
