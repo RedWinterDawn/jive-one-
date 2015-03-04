@@ -10,6 +10,6 @@
 
 @interface NSString (IsNumeric)
 
-@property (nonatomic, readonly) bool isNumeric;
+@property (nonatomic, readonly) BOOL isNumeric;
 
 @end

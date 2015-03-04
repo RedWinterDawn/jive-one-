@@ -12,47 +12,49 @@
 #import "JCLineSession.h"
 #import "JCPhoneAudioManager.h"
 
-@class SipHandler;
+@class JCSipManager;
 
 @protocol SipHandlerDelegate <JCPhoneAudioManagerDelegate>
 
 // Registration
--(void)sipHandlerDidRegister:(SipHandler *)sipHandler;
--(void)sipHandlerDidUnregister:(SipHandler *)sipHandler;
--(void)sipHandler:(SipHandler *)sipHandler didFailToRegisterWithError:(NSError *)error;
+-(void)sipHandlerDidRegister:(JCSipManager *)sipHandler;
+-(void)sipHandlerDidUnregister:(JCSipManager *)sipHandler;
+-(void)sipHandler:(JCSipManager *)sipHandler didFailToRegisterWithError:(NSError *)error;
 
 // Intercom line session for Auto Answer feature.
--(void)sipHandler:(SipHandler *)sipHandler receivedIntercomLineSession:(JCLineSession *)lineSession;
+-(void)sipHandler:(JCSipManager *)sipHandler receivedIntercomLineSession:(JCLineSession *)lineSession;
 
 // Call Creation Events
--(void)sipHandler:(SipHandler *)sipHandler didAddLineSession:(JCLineSession *)lineSession;
--(void)sipHandler:(SipHandler *)sipHandler didAnswerLineSession:(JCLineSession *)lineSession;
--(void)sipHandler:(SipHandler *)sipHandler willRemoveLineSession:(JCLineSession *)lineSession;
+-(void)sipHandler:(JCSipManager *)sipHandler didAddLineSession:(JCLineSession *)lineSession;
+-(void)sipHandler:(JCSipManager *)sipHandler didAnswerLineSession:(JCLineSession *)lineSession;
+-(void)sipHandler:(JCSipManager *)sipHandler willRemoveLineSession:(JCLineSession *)lineSession;
 
 // Conference Calls
--(void)sipHandler:(SipHandler *)sipHandler didCreateConferenceCallWithLineSessions:(NSSet *)lineSessions;
--(void)sipHandler:(SipHandler *)sipHandler didEndConferenceCallForLineSessions:(NSSet *)lineSessions;
+-(void)sipHandler:(JCSipManager *)sipHandler didCreateConferenceCallWithLineSessions:(NSSet *)lineSessions;
+-(void)sipHandler:(JCSipManager *)sipHandler didEndConferenceCallForLineSessions:(NSSet *)lineSessions;
 
 // Line Session Status
--(void)sipHandler:(SipHandler *)sipHandler didUpdateStatusForLineSessions:(NSSet *)lineSessions;
+-(void)sipHandler:(JCSipManager *)sipHandler didUpdateStatusForLineSessions:(NSSet *)lineSessions;
 
 // Transfer Call
--(void)sipHandler:(SipHandler *)sipHandler didTransferCalls:(NSSet *)lineSessions;
--(void)sipHandler:(SipHandler *)sipHandler didFailTransferWithError:(NSError *)error;
+-(void)sipHandler:(JCSipManager *)sipHandler didTransferCalls:(NSSet *)lineSessions;
+-(void)sipHandler:(JCSipManager *)sipHandler didFailTransferWithError:(NSError *)error;
 
 @end
 
-@interface SipHandler : NSObject
+@interface JCSipManager : NSObject
 
 @property (nonatomic, weak) id <SipHandlerDelegate> delegate;
 
 @property (nonatomic, readonly) JCPhoneAudioManager *audioManager;
 @property (nonatomic, readonly) Line *line;
-@property (nonatomic, readonly, getter=isRegistered) BOOL registered;
-@property (nonatomic, readonly, getter=isInitialized) BOOL initialized;
-@property (nonatomic, readonly, getter=isActive) BOOL active;
-@property (nonatomic, readonly, getter=isConferenceCall) BOOL conferenceCall;
-@property (nonatomic, readonly, getter=isMuted) BOOL mute;
+
+@property (nonatomic, readonly, getter=isInitialized) BOOL initialized;         // If PortSipSDK has been initialized.
+@property (nonatomic, readonly, getter=isRegistering) BOOL registering;         // True while we are registering.
+@property (nonatomic, readonly, getter=isRegistered) BOOL registered;           // True if we registered.
+@property (nonatomic, readonly, getter=isActive) BOOL active;                   // True if we have an active call.
+@property (nonatomic, readonly, getter=isConferenceCall) BOOL conferenceCall;   // True if active call is a conference call.
+@property (nonatomic, readonly, getter=isMuted) BOOL mute;                      // True if the audio session has been placed on mute.
 
 -(instancetype)initWithNumberOfLines:(NSInteger)lines delegate:(id<SipHandlerDelegate>)delegate error:(NSError *__autoreleasing *)error;
 

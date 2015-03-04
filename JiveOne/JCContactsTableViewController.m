@@ -191,11 +191,11 @@
     }    
 	else if ([object isKindOfClass:[Contact class]]) {
         Contact *contact = (Contact *)object;
-        [self dialNumber:contact.extension sender:tableView];
+        [self dialNumber:contact.extension usingLine:[JCAuthenticationManager sharedInstance].line sender:tableView];
     }
     else if ([object isKindOfClass:[Line class]] && object != [JCAuthenticationManager sharedInstance].line) {
         Line *line = (Line *)object;
-        [self dialNumber:line.extension sender:tableView];
+        [self dialNumber:line.extension usingLine:[JCAuthenticationManager sharedInstance].line sender:tableView];
     }
 }
 

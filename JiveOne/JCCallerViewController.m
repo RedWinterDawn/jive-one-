@@ -25,7 +25,6 @@
 #import "JCCallCardCollectionViewController.h"
 
 #import "JCLineSession.h"
-#import "UIViewController+HUD.h"
 
 #define CALL_OPTIONS_ANIMATION_DURATION 0.6
 #define TRANSFER_ANIMATION_DURATION 0.3
@@ -260,7 +259,7 @@ CGFloat *_callOptionsWidth;
         button.enabled = NO;
         [JCPhoneManager finishWarmTransfer:^(BOOL success, NSError *error) {
             if (!success) {
-                [self showSimpleAlert:@"" error:error];
+                [JCAlertView alertWithError:error];
             }
             button.enabled = YES;
         }];
@@ -365,15 +364,7 @@ CGFloat *_callOptionsWidth;
 -(void)showTransferSuccess
 {
     [self performSegueWithIdentifier:kJCCallerViewControllerBlindTransferCompleteSegueIdentifier sender:self];
-    //[self performSelector:@selector(dismissModalViewController) withObject:nil afterDelay:3];
 }
-
-//-(void)dismissModalViewController
-//{
-////    [self dismissViewControllerAnimated:NO completion:^{
-////        //[self closeCallerViewController];
-////    }];
-//}
 
 -(void)presentKeyboardViewController:(UIViewController *)viewController
 {
@@ -468,6 +459,7 @@ CGFloat *_callOptionsWidth;
 -(void)transferViewController:(JCTransferViewController *)controller shouldDialNumber:(NSString *)dialString
 {
     [JCPhoneManager dialNumber:dialString
+                     usingLine:[JCAuthenticationManager sharedInstance].line
                          type:controller.transferCallType
                    completion:^(BOOL success, NSError *error) {
                        [self dismissTransferViewControllerAnimated:YES];

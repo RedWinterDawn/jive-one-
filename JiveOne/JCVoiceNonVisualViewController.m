@@ -13,7 +13,9 @@
 
 -(IBAction)callVoicemail:(id)sender
 {
-    [self dialNumber:@"*99" sender:sender];
+    [self dialNumber:@"*99"
+           usingLine:[JCAuthenticationManager sharedInstance].line
+              sender:sender];
 }
 
 @end
