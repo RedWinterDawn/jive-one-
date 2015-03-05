@@ -280,6 +280,9 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
         	}
     	}];
         
+        // Download all SMS Messages.
+        [SMSMessage downloadMessagesForDIDs:line.pbx.dids completion:NULL];
+        
         // Register the Phone.
         dispatch_async(dispatch_get_main_queue(), ^{
             [JCPhoneManager connectToLine:line];

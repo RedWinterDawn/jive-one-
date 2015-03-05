@@ -40,14 +40,23 @@ extern NSString *const kSMSMessagesDidUpdateNotification;
 
 #pragma mark - Receive -
 
+#pragma mark Digest
+
 // Downloads all messages for all DIDs in Parallel. Calls downloadMessagesForDID:completion:;
-+(void)downloadMessagesForDIDs:(NSSet *)dids completion:(CompletionHandler)completion;
++(void)downloadMessagesDigestForDIDs:(NSSet *)dids completion:(CompletionHandler)completion;
 
 // Downloads all messages for a DID.
++(void)downloadMessagesDigestForDID:(DID *)did completion:(CompletionHandler)completion;
+
+#pragma mark Bulk
+
++(void)downloadMessagesForDIDs:(NSSet *)dids completion:(CompletionHandler)completion;
+
 +(void)downloadMessagesForDID:(DID *)did completion:(CompletionHandler)completion;
+
+#pragma mark Conversation
 
 // Downloads all messages for a conversation thread between a DID and a number.
 +(void)downloadMessagesForDID:(DID *)did toPerson:(id<JCPersonDataSource>)person completion:(CompletionHandler)completion;
-
 
 @end

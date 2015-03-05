@@ -121,6 +121,47 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
 
 #pragma mark - Receive -
 
+#pragma mark Digest
+
++(void)downloadMessagesDigestForDIDs:(NSSet *)dids completion:(CompletionHandler)completion
+{
+    __block NSError *batchError;
+    __block NSMutableSet *pendingDids = [NSMutableSet setWithSet:dids];
+    for (id object in dids) {
+        if ([object isKindOfClass:[DID class]]) {
+            __block DID *did = (DID *)object;
+            [self downloadMessagesDigestForDID:did completion:^(BOOL success, NSError *error) {
+                if (error && !batchError) {
+                    batchError = error;
+                }
+                
+                [pendingDids removeObject:did];
+                if (pendingDids.count == 0) {
+                    if (completion) {
+                        completion((error == nil), batchError );
+                    }
+                }
+            }];
+        }
+    }
+}
+
++(void)downloadMessagesDigestForDID:(DID *)did completion:(CompletionHandler)completion
+{
+    [self downloadDigestMessagesForDID:did
+                               retries:CONVERSATIONS_DOWNLOAD_NUMBER_OF_RETRIES
+                               success:^(id responseObject) {
+                                   [self processSMSDownloadConversationsDigestResponseObject:responseObject did:did completion:completion];
+                               }
+                               failure:^(NSError *error) {
+                                   if (completion) {
+                                       completion(NO, [JCClientError errorWithCode:JCClientRequestErrorCode userInfo:error.userInfo]);
+                                   }
+                               }];
+}
+
+#pragma mark Bulk
+
 +(void)downloadMessagesForDIDs:(NSSet *)dids completion:(CompletionHandler)completion
 {
     __block NSError *batchError;
@@ -147,7 +188,7 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
 +(void)downloadMessagesForDID:(DID *)did completion:(CompletionHandler)completion
 {
     [self downloadMessagesForDID:did
-                         retries:CONVERSATIONS_DOWNLOAD_NUMBER_OF_RETRIES
+                         retries:MESSAGES_DOWNLOAD_NUMBER_OF_RETRIES
                          success:^(id responseObject) {
                              [self processSMSDownloadConversationsResponseObject:responseObject did:did completion:completion];
                          }
@@ -157,6 +198,8 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
                              }
                          }];
 }
+
+#pragma mark Conversation
 
 +(void)downloadMessagesForDID:(DID *)did toPerson:(id<JCPersonDataSource>)person completion:(CompletionHandler)completion
 {
@@ -211,10 +254,10 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
     }
 }
 
-+ (void)downloadMessagesForDID:(DID *)did
-                       retries:(NSInteger)retryCount
-                       success:(void (^)(id responseObject))success
-                       failure:(void (^)(NSError *error))failure
++ (void)downloadDigestMessagesForDID:(DID *)did
+                             retries:(NSInteger)retryCount
+                             success:(void (^)(id responseObject))success
+                             failure:(void (^)(NSError *error))failure
 {
     if (retryCount <= 0) {
         if (failure) {
@@ -232,6 +275,35 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                         if (error.code == NSURLErrorTimedOut) {
                             NSLog(@"Retry conversations download: %lu for did: %@", (long)retryCount, did.didId);
+                            [self downloadDigestMessagesForDID:did retries:(retryCount - 1) success:success failure:failure];
+                        } else{
+                            failure(error);
+                        }
+                    }];
+    }
+}
+
++ (void)downloadMessagesForDID:(DID *)did
+                       retries:(NSInteger)retryCount
+                       success:(void (^)(id responseObject))success
+                       failure:(void (^)(NSError *error))failure
+{
+    if (retryCount <= 0) {
+        if (failure) {
+            NSError *error = [JCClientError errorWithCode:JCClientRequestErrorCode reason:@"Request Timeout"];
+            failure(error);
+        }
+    } else {
+        NSString *path = [NSString stringWithFormat:kSMSMessageRequestConversationsURLPath, did.number];
+        JCSMSClient *client = [[JCSMSClient alloc] init];
+        [client.manager GET:path
+                 parameters:nil
+                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                        success(responseObject);
+                    }
+                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                        if (error.code == NSURLErrorTimedOut) {
+                            NSLog(@"Retry conversations download: %lu for did: %@", (long)retryCount, did.didId);
                             [self downloadMessagesForDID:did retries:(retryCount - 1) success:success failure:failure];
                         } else{
                             failure(error);
@@ -239,6 +311,7 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
                     }];
     }
 }
+
 
 + (void)downloadMessagesForDID:(DID *)did
                         person:(id<JCPersonDataSource>)person
@@ -322,7 +395,7 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
     }
 }
 
-+ (void)processSMSDownloadConversationsResponseObject:(id)responseObject did:(DID *)did completion:(CompletionHandler)completion
++ (void)processSMSDownloadConversationsDigestResponseObject:(id)responseObject did:(DID *)did completion:(CompletionHandler)completion
 {
     @try {
         
@@ -352,6 +425,45 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
                 completion(success, error);
             }
         }];
+    }
+    @catch (NSException *exception) {
+        NSInteger code;
+        if (completion) {
+            if ([exception.name isEqualToString:kSMSMessageInvalidSendResponseException]) {
+                code = SMS_RESPONSE_INVALID;
+            }
+            completion(NO, [JCSMSClientError errorWithCode:code]);
+        }
+    }
+}
+
++ (void)processSMSDownloadConversationsResponseObject:(id)responseObject did:(DID *)did completion:(CompletionHandler)completion
+{
+    @try {
+        
+        // Is Array? We should have an array of messages.
+        if (![responseObject isKindOfClass:[NSArray class]]) {
+            [NSException raise:kSMSMessageInvalidSendResponseException format:@"Array is null"];
+        }
+        
+        NSArray *messages = (NSArray *)responseObject;
+        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+            DID *localDid = (DID *)[localContext objectWithID:did.objectID];
+            for (id object in messages) {
+                if ([object isKindOfClass:[NSDictionary class]]) {
+                    [self createSmsMessageWithMessageData:(NSDictionary *)object did:localDid];
+                }
+            }
+        }
+        completion:^(BOOL success, NSError *error) {
+            if (success) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
+            }
+            if (completion) {
+                completion(success, error);
+            }
+        }];
+        
     }
     @catch (NSException *exception) {
         NSInteger code;
