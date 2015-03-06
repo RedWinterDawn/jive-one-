@@ -58,4 +58,11 @@
     return [Common formattedModifiedShortDate:self.date];
 }
 
+-(NSString *)description
+{
+    NSMutableString *output = [NSMutableString stringWithString:self.conversationGroupId];
+    [output appendFormat:@" %@", self.date];
+    return output;
+}
+
 @end

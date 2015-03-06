@@ -50,3 +50,10 @@ typedef NS_ENUM(NSUInteger, JCConversationGroupsResultsChangeType) {
 - (void)conversationGroupResultsControllerDidChangeContent:(JCConversationGroupsResultsController *)controller;
 
 @end
+
+@interface JCFetchedResultsUpdate : NSObject
+
+@property (nonatomic, strong) id object;
+@property (nonatomic) NSUInteger row;
+
+@end

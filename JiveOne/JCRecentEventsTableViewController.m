@@ -215,7 +215,7 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
     {
         case NSFetchedResultsChangeInsert:
         {
-            [_tableData insertObject:anObject atIndex:newIndexPath.row];
+            [_tableData addObject:anObject];
             [_tableData sortUsingDescriptors:self.fetchedResultsController.fetchRequest.sortDescriptors];
             NSUInteger row = [_tableData indexOfObject:anObject];
             newIndexPath = [NSIndexPath indexPathForRow:row inSection:newIndexPath.section];
@@ -241,6 +241,7 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
         }
         case NSFetchedResultsChangeMove:
         {
+            
             // In this case the anObject is a different object, but since the isEqual: compares
             // against the conversationGroupId, we are able to get the index of the object and
             // remove the old object because it is found in removeObject, which compares using the
@@ -250,11 +251,10 @@ NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationC
             [_tableData removeObject:anObject];
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             
-            [_tableData insertObject:anObject atIndex:newIndexPath.row];
+            [_tableData addObject:anObject];
             [_tableData sortUsingDescriptors:self.fetchedResultsController.fetchRequest.sortDescriptors];
             NSUInteger newRow = [_tableData indexOfObject:anObject];
             newIndexPath = [NSIndexPath indexPathForRow:newRow inSection:newIndexPath.section];
-            
             [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
         }
