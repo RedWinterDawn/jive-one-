@@ -28,11 +28,12 @@
 {
     [super viewDidDisappear:animated];
     
-    NSArray *missedCalls = [MissedCall MR_findByAttribute:@"read" withValue:@NO inContext:self.managedObjectContext];
-    for (MissedCall *missedCall in missedCalls) {
-        missedCall.read = YES;
-    }
-    [self.managedObjectContext MR_saveOnlySelfAndWait];
+    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+        NSArray *missedCalls = [MissedCall MR_findByAttribute:@"read" withValue:@NO inContext:localContext];
+        for (MissedCall *missedCall in missedCalls) {
+            missedCall.read = YES;
+        }
+    }];
 }
 
 -(void)viewDidAppear:(BOOL)animated
