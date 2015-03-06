@@ -25,5 +25,6 @@
 
 + (void)setVoicemails:(NSUInteger)voicemails;
 + (void)setSelectedLine:(NSString *)line;
++ (void)setSelectedPBX:(NSString *)pbx;
 
 @end

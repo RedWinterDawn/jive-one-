@@ -14,10 +14,7 @@ static const UIUserNotificationType USER_NOTIFICATION_TYPES_REQUIRED = UIRemoteN
 static const UIRemoteNotificationType REMOTE_NOTIFICATION_TYPES_REQUIRED = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
 
 NSString *const kJCBadgeManagerBadgesKey        = @"badges";
-NSString *const kJCBadgeManagerVoicemailsKey    = @"voicemails";
 NSString *const kJCBadgeManagerV4VoicemailKey   = @"v4_voicemails";
-NSString *const kJCBadgeManagerMissedCallsKey   = @"missedCalls";
-NSString *const kJCBadgeManagerSMSMessagesKey   = @"smsMessages";
 
 @interface JCBadgeManager () <NSFetchedResultsControllerDelegate>
 {
@@ -31,6 +28,7 @@ NSString *const kJCBadgeManagerSMSMessagesKey   = @"smsMessages";
 @property (nonatomic, readwrite) JCBadges *badges;
 @property (nonatomic, readwrite) NSUInteger v4_voicemails;
 @property (nonatomic, readwrite) NSString *selectedLine;
+@property (nonatomic, readwrite) NSString *selectedPbx;
 
 @end
 
@@ -92,7 +90,7 @@ NSString *const kJCBadgeManagerSMSMessagesKey   = @"smsMessages";
  */
 - (NSUInteger)missedCalls
 {
-    return [self.badges countForEventType:kJCBadgeManagerMissedCallsKey key:_selectedLine];
+    return [self.badges countForEventType:kJCBadgesMissedCallsEventTypeKey key:_selectedLine];
 }
 
 /**
@@ -101,7 +99,7 @@ NSString *const kJCBadgeManagerSMSMessagesKey   = @"smsMessages";
 - (NSUInteger)voicemails
 {
     NSUInteger total = [self v4_voicemails];
-    total += [self.badges countForEventType:kJCBadgeManagerVoicemailsKey key:_selectedLine];
+    total += [self.badges countForEventType:kJCBadgesVoicemailsEventTypeKey key:_selectedLine];
     return total;
 }
 
@@ -110,9 +108,7 @@ NSString *const kJCBadgeManagerSMSMessagesKey   = @"smsMessages";
  */
 - (NSUInteger)smsMessages
 {
-	//TODO: get PBX pbxid.    
-	return [self.badges countForEventType:kJCBadgeManagerSMSMessagesKey key:nil];
-
+    return [self.badges countForEventType:kJCBadgesSMSMessagesEventTypeKey key:_selectedPbx];;
 }
 
 #pragma mark NSFetchedResultsControllerDelegate
@@ -135,9 +131,11 @@ NSString *const kJCBadgeManagerSMSMessagesKey   = @"smsMessages";
         
         case NSFetchedResultsChangeUpdate:
             [_batchBadges processRecentEvent:anObject];
+            break;
             
         case NSFetchedResultsChangeDelete:
             [_batchBadges removeRecentEvent:anObject];
+            break;
             
         default:
             break;
@@ -235,6 +233,13 @@ NSString *const kJCBadgeManagerSMSMessagesKey   = @"smsMessages";
     [self didChangeContent];
 }
 
+- (void)setSelectedPbx:(NSString *)selectedPbx
+{
+    [self willChangeContent];
+    _selectedPbx = selectedPbx;
+    [self didChangeContent];
+}
+
 #pragma mark Methods
 
 // Checks the permissions to see if we can sent notifications, including badging.
@@ -250,14 +255,16 @@ NSString *const kJCBadgeManagerSMSMessagesKey   = @"smsMessages";
 
 -(void)willChangeContent
 {
-    [self willChangeValueForKey:kJCBadgeManagerMissedCallsKey];
-    [self willChangeValueForKey:kJCBadgeManagerVoicemailsKey];
+    [self willChangeValueForKey:kJCBadgesMissedCallsEventTypeKey];
+    [self willChangeValueForKey:kJCBadgesVoicemailsEventTypeKey];
+    [self willChangeValueForKey:kJCBadgesSMSMessagesEventTypeKey];
 }
 
 -(void)didChangeContent
 {
-    [self didChangeValueForKey:kJCBadgeManagerMissedCallsKey];
-    [self didChangeValueForKey:kJCBadgeManagerVoicemailsKey];
+    [self didChangeValueForKey:kJCBadgesMissedCallsEventTypeKey];
+    [self didChangeValueForKey:kJCBadgesVoicemailsEventTypeKey];
+    [self didChangeValueForKey:kJCBadgesSMSMessagesEventTypeKey];
     [self update];
 }
 
@@ -324,6 +331,12 @@ NSString *const kJCBadgeManagerSMSMessagesKey   = @"smsMessages";
 {
     JCBadgeManager *badgeManager = [JCBadgeManager sharedManager];
     badgeManager.selectedLine = line;
+}
+
++ (void)setSelectedPBX:(NSString *)pbx
+{
+    JCBadgeManager *badgeManager = [JCBadgeManager sharedManager];
+    badgeManager.selectedPbx = pbx;
 }
 
 @end

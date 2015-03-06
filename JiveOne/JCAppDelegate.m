@@ -254,6 +254,7 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
 -(void)registerServicesToLine:(Line *)line deviceToken:(NSString *)deviceToken
 {
     [JCBadgeManager setSelectedLine:line.jrn];
+    [JCBadgeManager setSelectedPBX:line.pbx.pbxId];
     
     __block NSManagedObjectID *lineId = line.objectID;
     dispatch_queue_t backgroundQueue = dispatch_queue_create("register_services_to_line", 0);
