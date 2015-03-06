@@ -108,7 +108,6 @@
 		5D1FAC6219DDFF5300899915 /* JCCallCardCollectionLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FAC6119DDFF5300899915 /* JCCallCardCollectionLayout.m */; };
 		5D1FAC6519DF376B00899915 /* JCKeypadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FAC6419DF376B00899915 /* JCKeypadViewController.m */; };
 		5D1FD5C41A48B05E007EF8B6 /* JCKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1FD5C31A48B05E007EF8B6 /* JCKeychain.m */; };
-		5D2087141A44F00F00C0C394 /* JCBadgeManagerBatchOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2087131A44F00F00C0C394 /* JCBadgeManagerBatchOperation.m */; };
 		5D241FC81A36339D008B498A /* JCAppSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FC71A36339D008B498A /* JCAppSettings.m */; };
 		5D241FCB1A36AE12008B498A /* JCLinePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FCA1A36AE12008B498A /* JCLinePickerViewController.m */; };
 		5D241FCE1A36AF2C008B498A /* JCPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D241FCD1A36AF2C008B498A /* JCPickerViewController.m */; };
@@ -395,8 +394,6 @@
 		5D1FAC6419DF376B00899915 /* JCKeypadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCKeypadViewController.m; sourceTree = "<group>"; };
 		5D1FD5C21A48B05E007EF8B6 /* JCKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCKeychain.h; sourceTree = "<group>"; };
 		5D1FD5C31A48B05E007EF8B6 /* JCKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCKeychain.m; sourceTree = "<group>"; };
-		5D2087121A44F00F00C0C394 /* JCBadgeManagerBatchOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCBadgeManagerBatchOperation.h; sourceTree = "<group>"; };
-		5D2087131A44F00F00C0C394 /* JCBadgeManagerBatchOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCBadgeManagerBatchOperation.m; sourceTree = "<group>"; };
 		5D241FC61A36339D008B498A /* JCAppSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAppSettings.h; sourceTree = "<group>"; };
 		5D241FC71A36339D008B498A /* JCAppSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAppSettings.m; sourceTree = "<group>"; };
 		5D241FC91A36AE12008B498A /* JCLinePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCLinePickerViewController.h; sourceTree = "<group>"; };
@@ -1238,8 +1235,6 @@
 			children = (
 				5D7339A81A03FF9700339DC6 /* JCBadgeManager.h */,
 				5D7339A91A03FF9700339DC6 /* JCBadgeManager.m */,
-				5D2087121A44F00F00C0C394 /* JCBadgeManagerBatchOperation.h */,
-				5D2087131A44F00F00C0C394 /* JCBadgeManagerBatchOperation.m */,
 				5D87FCCA1AA9656F00AE1CA5 /* JCBadges.h */,
 				5D87FCCB1AA9656F00AE1CA5 /* JCBadges.m */,
 			);
@@ -1753,7 +1748,6 @@
 				27EB18BF19DE045900C1503B /* JCV5ApiClient.m in Sources */,
 				5D6AE3671A094A9C002BDAAF /* NSDictionary+Validations.m in Sources */,
 				279A4E2C19DA91E100E8AB7B /* JCSipManager.m in Sources */,
-				5D2087141A44F00F00C0C394 /* JCBadgeManagerBatchOperation.m in Sources */,
 				5D241FC81A36339D008B498A /* JCAppSettings.m in Sources */,
 				27B6F23D19DDC676007E80DA /* JCDialerViewController.m in Sources */,
 				5D490E731A93A85F004B62C0 /* JCAlertView.m in Sources */,
