@@ -178,7 +178,6 @@
 		5D7DD3691A7B004B00B9FF4D /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D6243681A644D4B001DF88E /* Conversation.m */; };
 		5D7DD36A1A7B004B00B9FF4D /* JCCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5523691A7811E500CA8A6D /* JCCustomCell.m */; };
 		5D87FCCC1AA9656F00AE1CA5 /* JCBadges.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FCCB1AA9656F00AE1CA5 /* JCBadges.m */; };
-		5D87FCCE1AAA52D200AE1CA5 /* JCBadgeManagerBatchOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FCCD1AAA52D200AE1CA5 /* JCBadgeManagerBatchOperation.m */; };
 		5D87FF341A7FF576001B8BB2 /* JCMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FF331A7FF576001B8BB2 /* JCMessagesViewController.m */; };
 		5D87FF3A1A7FF738001B8BB2 /* JCMessagesComposerTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FF391A7FF738001B8BB2 /* JCMessagesComposerTextView.m */; };
 		5D87FF4C1A80029B001B8BB2 /* JCMessagesInputToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FF4B1A80029B001B8BB2 /* JCMessagesInputToolbar.m */; };
@@ -566,7 +565,6 @@
 		5D7339CA1A0826CC00339DC6 /* JCPhoneTabBarControllerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneTabBarControllerDelegate.m; sourceTree = "<group>"; };
 		5D87FCCA1AA9656F00AE1CA5 /* JCBadges.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCBadges.h; sourceTree = "<group>"; };
 		5D87FCCB1AA9656F00AE1CA5 /* JCBadges.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCBadges.m; sourceTree = "<group>"; };
-		5D87FCCD1AAA52D200AE1CA5 /* JCBadgeManagerBatchOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCBadgeManagerBatchOperation.m; sourceTree = "<group>"; };
 		5D87FF321A7FF576001B8BB2 /* JCMessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMessagesViewController.h; sourceTree = "<group>"; };
 		5D87FF331A7FF576001B8BB2 /* JCMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMessagesViewController.m; sourceTree = "<group>"; };
 		5D87FF381A7FF738001B8BB2 /* JCMessagesComposerTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMessagesComposerTextView.h; sourceTree = "<group>"; };
@@ -1380,7 +1378,6 @@
 		5D2A3FA01A53776400974B8A /* Badging */ = {
 			isa = PBXGroup;
 			children = (
-				5D87FCCD1AAA52D200AE1CA5 /* JCBadgeManagerBatchOperation.m */,
 				5D7339A81A03FF9700339DC6 /* JCBadgeManager.h */,
 				5D7339A91A03FF9700339DC6 /* JCBadgeManager.m */,
 				5D87FCCA1AA9656F00AE1CA5 /* JCBadges.h */,
@@ -1995,7 +1992,6 @@
 				F82B938F1A819BE500660AAA /* JCIncomingMessageView.m in Sources */,
 				5DBABCD41A283DA500B09783 /* NSString+Additions.m in Sources */,
 				F8BC82C319E44A2E00340BA1 /* JCKeypadOverlayView.m in Sources */,
-				5D87FCCE1AAA52D200AE1CA5 /* JCBadgeManagerBatchOperation.m in Sources */,
 				275F4A6218AD0FBC00D2F069 /* JCAppDelegate.m in Sources */,
 				5D03649119DC5A450090CC21 /* JCTransferViewController.m in Sources */,
 				5D490E461A89774C004B62C0 /* JCMessageParticipantTableViewController.m in Sources */,
