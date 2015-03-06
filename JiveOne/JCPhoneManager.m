@@ -141,7 +141,6 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
 {
     NSLog(@"Phone Disconnect Requested");
     [self.sipManager unregister];
-    _sipManager = nil;
     self.calls = nil;
 }
 
