@@ -7,45 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
-// Getting 'Use of '@import' when modules are disabled' when it's obviously enabled.
-
-extern NSString *const kJCBadgeManagerInsertedIdentifierNotification;
-extern NSString *const kJCBadgeManagerDeletedIdentifierNotification;
-extern NSString *const kJCBadgeManagerIdentifierKey;
 
 @interface JCBadgeManager : NSObject
 
-@property (nonatomic, strong) NSMutableDictionary *badges;
-
-// Total of all recent events badges.
-@property (nonatomic, readonly) NSUInteger recentEvents;
-@property (nonatomic, readonly) NSManagedObjectContext *managedObjectContext;
-
-// Individual recent event types.
-@property (nonatomic) NSUInteger voicemails;
-@property (nonatomic, readonly) NSUInteger missedCalls;
-@property (nonatomic, readonly) NSUInteger conversations;
-
-@property (nonatomic, readonly) BOOL canSendNotifications;
-
--(void)initialize;
--(void)update;
--(void)reset;
-
-// Manually tring an update from a background refresh.
--(void)startBackgroundUpdates;
--(NSUInteger)endBackgroundUpdates;
-
-
+@property (nonatomic, readonly) NSUInteger recentEvents;    // Total Recent Events.
+@property (nonatomic, readonly) NSUInteger voicemails;      // Total Unread Voicemails.
+@property (nonatomic, readonly) NSUInteger missedCalls;     // Total Unread Missed Calls.
 
 @end
-
 
 @interface JCBadgeManager (Singleton)
 
 + (JCBadgeManager *)sharedManager;
-
-+ (void)update;
++ (void)updateBadgesFromContext:(NSManagedObjectContext *)context;
 + (void)reset;
+
++ (void)setVoicemails:(NSUInteger)voicemails;
++ (void)setSelectedLine:(NSString *)line;
 
 @end
