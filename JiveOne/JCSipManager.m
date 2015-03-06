@@ -1408,7 +1408,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 			  oldMessageCount:(int)oldMessageCount
 {
     if (!_line.pbx.isV5) {
-        [JCBadgeManager sharedManager].voicemails = newMessageCount;
+        [JCBadgeManager setVoicemails:newMessageCount];
     }    
 }
 
