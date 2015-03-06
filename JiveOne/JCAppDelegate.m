@@ -67,7 +67,7 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:kCoreDataDatabase];
     
     // Badging
-    [[JCBadgeManager sharedManager] initialize];
+    [JCBadgeManager updateBadgesFromContext:[NSManagedObjectContext MR_defaultContext]];
     
     // Authentication
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
@@ -253,6 +253,8 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
 
 -(void)registerServicesToLine:(Line *)line deviceToken:(NSString *)deviceToken
 {
+    [JCBadgeManager setSelectedLine:line.jrn];
+    
     __block NSManagedObjectID *lineId = line.objectID;
     dispatch_queue_t backgroundQueue = dispatch_queue_create("register_services_to_line", 0);
     dispatch_async(backgroundQueue, ^{
