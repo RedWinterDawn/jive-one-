@@ -95,6 +95,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     if ([AFNetworkReachabilityManager sharedManager].isReachableViaWWAN && [JCAppSettings sharedSettings].isWifiOnly) {
         _networkType = JCPhoneManagerNoNetwork;
         [self notifyCompletionBlock:false error:[JCPhoneManagerError errorWithCode:JC_PHONE_WIFI_DISABLED]];
+        [self disconnect];
         return;
     }
     
