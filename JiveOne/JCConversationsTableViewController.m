@@ -82,16 +82,17 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
         if (!name) {
             name = group.conversationGroupId.formattedPhoneNumber;
         }
-        cell.senderNameLabel.text   = name;
-        cell.lastMessageLabel.text  = group.lastMessage;
-        cell.dateLabel.text         = group.formattedModifiedShortDate;
+        cell.name.text   = name;
+        cell.detail.text = group.lastMessage;
+        cell.date.text   = group.formattedModifiedShortDate;
+        cell.read = group.isRead;
     }
 }
 
 - (IBAction)refreshTable:(id)sender {
     if ([sender isKindOfClass:[UIRefreshControl class]]) {
         PBX *pbx = [JCAuthenticationManager sharedInstance].pbx;
-        [SMSMessage downloadMessagesForDIDs:pbx.dids completion:^(BOOL success, NSError *error) {
+        [SMSMessage downloadMessagesDigestForDIDs:pbx.dids completion:^(BOOL success, NSError *error) {
             [((UIRefreshControl *)sender) endRefreshing];
             if (!success) {
                 [self showError:error];

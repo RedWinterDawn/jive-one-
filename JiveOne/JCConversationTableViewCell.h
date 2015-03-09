@@ -10,8 +10,10 @@
 
 @interface JCConversationTableViewCell : JCTableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *senderNameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *lastMessageLabel;
-@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *name;
+@property (weak, nonatomic) IBOutlet UILabel *detail;
+@property (weak, nonatomic) IBOutlet UILabel *date;
+
+@property (nonatomic, getter=isRead) BOOL read;
 
 @end

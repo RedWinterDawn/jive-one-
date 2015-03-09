@@ -1,12 +1,3 @@
 
-/* Class = "IBUILabel"; accessibilityLabel = "Callers Number"; ObjectID = "5rL-pd-NyF"; */
-"5rL-pd-NyF.accessibilityLabel" = "Callers Number";
-
-/* Class = "IBUILabel"; text = "Callers Number"; ObjectID = "5rL-pd-NyF"; */
-"5rL-pd-NyF.text" = "Callers Number";
-
-/* Class = "IBUILabel"; text = "Callers Nagme"; ObjectID = "FT8-wZ-Uc2"; */
-"FT8-wZ-Uc2.text" = "Callers Nagme";
-
 /* Class = "IBUILabel"; text = "INCOMING CALL"; ObjectID = "xbc-N2-nOI"; */
 "xbc-N2-nOI.text" = "INCOMING CALL";

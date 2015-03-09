@@ -74,6 +74,9 @@ extern NSString *const kJCAlertViewCancel;
 
 // Display an alert view from an error
 + (JCAlertView *)alertWithError:(NSError *)error;
++ (JCAlertView *)alertWithError:(NSError *)error dismissed:(JCAlertViewDismissBlock)dismissBlock cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ...;
+
+
 + (JCAlertView *)alertWithTitle:(NSString *)title error:(NSError *)error;
 
 // Simple OK alert

@@ -24,21 +24,15 @@
         Message *message = [Message MR_findFirstWithPredicate:predicate sortedBy:NSStringFromSelector(@selector(date)) ascending:NO inContext:context];
         if (message) {
             _lastMessage = message.text;
-            _lastMessageReceived = message.date;
+            _date = message.date;
             _lastMessageId = message.eventId;
-            NSString *name = _name;
-            if (name) {
-                _name = name;
-            }
-            else {
-                
-                if ([message isKindOfClass:[SMSMessage class]]) {
-                    SMSMessage *smsMessage = (SMSMessage *)message;
-                    _sms = TRUE;
-                    //_name = smsMessage.localContact.number.formattedPhoneNumber;
-                } else {
-                    
-                }
+            _read = message.isRead;
+            if ([message isKindOfClass:[SMSMessage class]]) {
+                SMSMessage *smsMessage = (SMSMessage *)message;
+                _sms = TRUE;
+                _name = smsMessage.localContact.name;
+            } else {
+                //TODO: Chat functionality.
             }
         }
         [context refreshObject:message mergeChanges:NO];
@@ -61,7 +55,14 @@
 
 -(NSString *)formattedModifiedShortDate
 {
-    return [Common formattedModifiedShortDate:self.lastMessageReceived];
+    return [Common formattedModifiedShortDate:self.date];
+}
+
+-(NSString *)description
+{
+    NSMutableString *output = [NSMutableString stringWithString:self.conversationGroupId];
+    [output appendFormat:@" %@", self.date];
+    return output;
 }
 
 @end

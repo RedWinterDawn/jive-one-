@@ -45,8 +45,6 @@ NSString *const kLineConfigurationInvalidServerRequestException  = @"invalidServ
 NSString *const kLineConfigurationServerErrorException           = @"serverError";
 NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServerResponse";
 
-
-
 @implementation LineConfiguration (Custom)
 
 + (void)downloadLineConfigurationForLine:(Line *)line completion:(CompletionHandler)completion
@@ -98,55 +96,49 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
 
 + (void)processLineConfigurationResponseObject:(id)responseObject line:(Line *)line completion:(CompletionHandler)completion
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        @try {
-            // Check our response status. If we failed, notify and exit.
-            NSDictionary *status = [responseObject valueForKeyPath:kLineConfigurationResponseStatusPath];
-            NSString *success = [status stringValueForKey:kLineConfigurationResponseStatusSuccessKey];
-            if ([success isEqualToString:kLineConfigurationResponseStatusFailureValue]) {
-                [NSException raise:kLineConfigurationServerErrorException format:@"%@", [status stringValueForKey:kLineConfigurationResponseStatusErrorKey]];
-            }
-            
-            // Fetch data from response. If we have no line configuration, fail.
-            NSArray *array = [responseObject valueForKeyPath:kLineContigurationResponseDataPath];
-            if (!array || array.count == 0) {
-                [NSException raise:kLineConfigurationInvalidServerResponseException format:@"No Line Configuration present"];
-            }
-            
-            // Process line configuration data response and store into core data, linking to our line.
-            [MagicalRecord saveUsingCurrentThreadContextWithBlock:^(NSManagedObjectContext *localContext) {
-                [self processLineConfigurationDataArray:array line:(Line *)[localContext objectWithID:line.objectID]];
-            }
-            completion:^(BOOL success, NSError *error) {
-                 if (completion) {
-                    if (error) {
-                        completion(NO, error);
-                    } else {
-                        completion(YES, nil);
-                    }
-                 }
-            }];
+    @try {
+        // Check our response status. If we failed, notify and exit.
+        NSDictionary *status = [responseObject valueForKeyPath:kLineConfigurationResponseStatusPath];
+        NSString *success = [status stringValueForKey:kLineConfigurationResponseStatusSuccessKey];
+        if ([success isEqualToString:kLineConfigurationResponseStatusFailureValue]) {
+            [NSException raise:kLineConfigurationServerErrorException format:@"%@", [status stringValueForKey:kLineConfigurationResponseStatusErrorKey]];
         }
-        @catch (NSException *exception) {
+        
+        // Fetch data from response. If we have no line configuration, fail.
+        NSArray *array = [responseObject valueForKeyPath:kLineContigurationResponseDataPath];
+        if (!array || array.count == 0) {
+            [NSException raise:kLineConfigurationInvalidServerResponseException format:@"No Line Configuration present"];
+        }
+        
+        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+            [self processLineConfigurationDataArray:array line:(Line *)[localContext objectWithID:line.objectID]];
+        } completion:^(BOOL success, NSError *error) {
             if (completion) {
-                JCClientErrorCode code;
-                NSString *name = exception.name;
-                if ([name isEqualToString:kLineConfigurationInvalidServerRequestException]) {
-                    code = JCClientInvalidRequestParameterErrorCode;
-                } else if ([name isEqualToString:kLineConfigurationServerErrorException]) {
-                    code = JCClientResponseErrorCode;
-                } else if ([name isEqualToString:kLineConfigurationInvalidServerResponseException]) {
-                    code = JCClientUnexpectedResponseErrorCode;
+                if (error) {
+                    completion(NO, error);
                 } else {
-                    code = JCClientUnknownErrorCode;
+                    completion(YES, nil);
                 }
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    completion(NO, [JCClientError errorWithCode:code reason:exception.reason]);
-                });
             }
+        }];
+
+    }
+    @catch (NSException *exception) {
+        if (completion) {
+            JCClientErrorCode code;
+            NSString *name = exception.name;
+            if ([name isEqualToString:kLineConfigurationInvalidServerRequestException]) {
+                code = JCClientInvalidRequestParameterErrorCode;
+            } else if ([name isEqualToString:kLineConfigurationServerErrorException]) {
+                code = JCClientResponseErrorCode;
+            } else if ([name isEqualToString:kLineConfigurationInvalidServerResponseException]) {
+                code = JCClientUnexpectedResponseErrorCode;
+            } else {
+                code = JCClientUnknownErrorCode;
+            }
+            completion(NO, [JCClientError errorWithCode:code reason:exception.reason]);
         }
-    });
+    }
 }
 
 + (void)processLineConfigurationDataArray:(NSArray *)array line:(Line *)line

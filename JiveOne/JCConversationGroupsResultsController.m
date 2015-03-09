@@ -18,6 +18,8 @@
 @interface JCConversationGroupsResultsController ()
 {
     NSMutableArray *_fetchedObjects;
+    BOOL _loaded;
+    BOOL _doingBatchUpdate;
 }
 
 @end
@@ -37,7 +39,7 @@
         
         _manageObjectContext = context;
         
-        // Observe for notification changes.
+        // Observe for notification changes for SMS updates.
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(reload)
                                                      name:kSMSMessagesDidUpdateNotification
@@ -48,100 +50,26 @@
 
 -(BOOL)performFetch:(NSError *__autoreleasing *)error
 {
-    // Fetch the Core Data Results for the conversations in the fetched results view controller, and
-    // build them into an array of conversation group objects.
-    NSArray *results = [_manageObjectContext executeFetchRequest:_fetchRequest error:error];
-    NSArray *fetchedObjects = [self conversationGroupsForConversationIds:results];
-    
-    // This is a first request, so we just populate the results, for them to be drawn.
-    if (!_fetchedObjects) {
-        _fetchedObjects = fetchedObjects.mutableCopy;
+    if (!_fetchRequest) {
+        return FALSE;
     }
     
-    // This is an updated request, so we notify the delegate that we are making an update to the
-    // results and loop through the results and try to calculate the new indexes of the inserted
-    // conversation groups
-    else {
+    @autoreleasepool {
+        // Fetch a list of conversation group ids.
+        NSArray *conversationGroupIds = [_manageObjectContext executeFetchRequest:_fetchRequest error:error];
         
-        if (_delegate && [_delegate respondsToSelector:@selector(conversationGroupResultsControllerWillChangeContent:)]) {
-            [_delegate conversationGroupResultsControllerWillChangeContent:self];
-        }
+        // Fetch the Core Data Results for the conversations in the fetched results view controller,
+        // and build them into an array of conversation group objects.
+        NSArray *conversationGroups = [self conversationGroupsForConversationIds:conversationGroupIds];
         
-        // Loop through the results, and see if they are insertions or updates.
-        for (int row = 0; row < fetchedObjects.count; row++) {
-            
-            JCConversationGroup *conversation = [_fetchedObjects objectAtIndex:row];
-            
-            // Check to see if this conversation is an insertion. it is an insertion if there in not
-            // a conversation with the same conversation id (determined by isEqual: through contains
-            // object). If it is an insertion, add to our fetched objects array and provide the
-            // insertion indexPath. The insertion indexPath and newIndexPath are the same.
-            if (![_fetchedObjects containsObject:conversation]) {
-            
-                [_fetchedObjects addObject:conversation];
-                if (_delegate && [_delegate respondsToSelector:@selector(conversationGroupResultsController:didChangeObject:atIndexPath:forChangeType:newIndexPath:)]) {
-                    
-                    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
-                    [_delegate conversationGroupResultsController:self
-                                                  didChangeObject:conversation
-                                                      atIndexPath:indexPath
-                                                    forChangeType:JCConversationGroupsResultsChangeInsert
-                                                     newIndexPath:indexPath]; // Index
-                }
-            }
-            
-            // We are updating this conversation group, it is not an insertion. It can be a update
-            // or a change move event. Change move event would be when a new message comes in for an
-            // older conversation, which would move it to the top because its sorted by date.
-            else {
-                
-                // We get the index path of the object in the old fetched object (determined using
-                // isEqual: through the indexOfObject: method) if the old row matches the new row,
-                // then we are just updating the conversation id with likely a new last message.
-                NSUInteger oldRow = [_fetchedObjects indexOfObject:conversation];
-                if (oldRow == row) {
-                    // we are just updating the data, and NOT changing rows.
-                    [_fetchedObjects replaceObjectAtIndex:row withObject:conversation];
-                    if (_delegate && [_delegate respondsToSelector:@selector(conversationGroupResultsController:didChangeObject:atIndexPath:forChangeType:newIndexPath:)]) {
-                        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
-                        [_delegate conversationGroupResultsController:self
-                                                      didChangeObject:conversation
-                                                          atIndexPath:indexPath
-                                                        forChangeType:JCConversationGroupsResultsChangeUpdate
-                                                         newIndexPath:indexPath];
-                    }
-                }
-                else {
-                    // we are updating the data, and changing rows.
-                    [_fetchedObjects removeObjectAtIndex:oldRow];
-                    [_fetchedObjects insertObject:conversation atIndex:row];
-                    
-                    if (_delegate && [_delegate respondsToSelector:@selector(conversationGroupResultsController:didChangeObject:atIndexPath:forChangeType:newIndexPath:)]) {
-                        
-                        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:oldRow inSection:0];
-                        NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:row inSection:0];
-                        [_delegate conversationGroupResultsController:self
-                                                      didChangeObject:conversation
-                                                          atIndexPath:indexPath
-                                                        forChangeType:JCConversationGroupsResultsChangeMove
-                                                         newIndexPath:newIndexPath];
-                    }
-                }
-            }
-        }
-        
-        if (_delegate && [_delegate respondsToSelector:@selector(conversationGroupResultsControllerDidChangeContent:)]) {
-            [_delegate conversationGroupResultsControllerDidChangeContent:self];
-        }
+        // Match address book contacts with conversation groups. If we have permission to the
+        // address book, this method will be synchrounous. If we do not it will be asynchronous, and
+        // treated as a table update.
+        [self fetchAddressBookNamesForConversationsGroups:conversationGroups];
+        _fetchedObjects = [conversationGroups sortedArrayUsingDescriptors:_fetchRequest.sortDescriptors].mutableCopy;
     }
     
-    //TODO: integrate the addressbook to drive updates to the objects.
-    [self fetchAddressBookNamesForConversationsGroups:fetchedObjects];
-    
-    if (!error) {
-        return TRUE;
-    }
-    return FALSE;
+    return (_fetchedObjects != nil);
 }
 
 -(id)objectAtIndexPath:(NSIndexPath *)indexPath
@@ -164,17 +92,144 @@
 
 -(void)reload
 {
-    [self performFetch:nil];
+    if (!_fetchRequest) {
+        return;
+    }
+    
+    @autoreleasepool {
+        __autoreleasing NSError *error;
+        NSArray *conversationGroupIds = [_manageObjectContext executeFetchRequest:_fetchRequest error:&error];
+        if (!conversationGroupIds) {
+            NSLog(@"%@", error);
+            return;
+        }
+        
+        NSArray *conversationGroups = [self conversationGroupsForConversationIds:conversationGroupIds];
+        NSMutableArray *inserted = [NSMutableArray array];
+        NSMutableArray *moved = [NSMutableArray array];
+        
+        // Loop through the results, and see if they are insertions or updates.
+        for (int index = 0; index < conversationGroups.count; index++)
+        {
+            JCConversationGroup *conversationGroup = [conversationGroups objectAtIndex:index];
+            NSUInteger objectIndex = [_fetchedObjects indexOfObject:conversationGroup];
+            BOOL containsObject = (objectIndex != NSNotFound);
+            
+            // Check to see if this conversation is an insertion. It is an insertion if there in not
+            // a conversation group with the same conversation id (determined by isEqual: through
+            // contains object). If it is an insertion, add to our internal fetched objects array
+            // and to an update array.
+            if (!containsObject)
+            {
+                [_fetchedObjects addObject:conversationGroup];
+                [inserted addObject:conversationGroup];
+            }
+            
+            // We are updating this conversation group, it is not an insertion. It can be a update
+            // or a change move event. Change move event would be when a new message comes in for an
+            // older conversation, which would move it to the top because its sorted by date. Since
+            // the conversation group object itself is a new object but maps to the same content
+            // grouping id, rather than updating the conversation group, we replace it with the new
+            // conversation group. We do transfer the name, since otherwise we ould have
+            else
+            {
+                JCConversationGroup *oldConversationGroup = [_fetchedObjects objectAtIndex:objectIndex];
+                conversationGroup.name = oldConversationGroup.name;
+                [_fetchedObjects replaceObjectAtIndex:objectIndex withObject:conversationGroup];
+                
+                // We get the index path of the object in the old fetched object (determined using
+                // isEqual: through the indexOfObject: method) if the old row matches the new row,
+                // then we are just updating the conversation id with likely a new last message. If
+                // they are different rows, due to sorting, then we need to move it.
+                
+                if (objectIndex != index) {
+                    JCFetchedResultsUpdate *move = [JCFetchedResultsUpdate new];
+                    move.object = conversationGroup;
+                    move.row = objectIndex;
+                    [moved addObject:move];
+                }
+                else
+                {
+                    [self didChangeObject:conversationGroup
+                                  atIndex:objectIndex
+                            forChangeType:JCConversationGroupsResultsChangeUpdate
+                                 newIndex:objectIndex];
+                }
+            }
+        }
+        
+        for (JCFetchedResultsUpdate *movedObject in moved) {
+            NSUInteger row = [_fetchedObjects indexOfObject:movedObject.object];
+            [self didChangeObject:movedObject.object
+                          atIndex:movedObject.row
+                    forChangeType:JCConversationGroupsResultsChangeMove
+                         newIndex:row];
+        }
+        
+        [_fetchedObjects sortUsingDescriptors:_fetchRequest.sortDescriptors];
+        [_fetchedObjects enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            if ([inserted containsObject:obj]) {
+                [self didChangeObject:obj
+                              atIndex:NSNotFound
+                        forChangeType:JCConversationGroupsResultsChangeInsert
+                             newIndex:idx];
+            }
+        }];
+        
+        // If we did any changes, notify of content change.
+        [self didChangeContent];
+        
+        // Attach address book contact info for inserted conversation groups.
+        [self fetchAddressBookNamesForConversationsGroups:_fetchedObjects];
+    }
+}
+
+- (void)willChangeContent
+{
+    if (_delegate && [_delegate respondsToSelector:@selector(conversationGroupResultsControllerWillChangeContent:)]) {
+        [_delegate conversationGroupResultsControllerWillChangeContent:self];
+    }
+}
+
+- (void)didChangeObject:(id)anObject
+            atIndex:(NSUInteger)index
+          forChangeType:(JCConversationGroupsResultsChangeType)type
+           newIndex:(NSUInteger)newIndex
+{
+    if (!_doingBatchUpdate) {
+        [self willChangeContent];
+        _doingBatchUpdate = TRUE;
+    }
+    
+    if (_delegate && [_delegate respondsToSelector:@selector(conversationGroupResultsController:didChangeObject:atIndexPath:forChangeType:newIndexPath:)]) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+        NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:newIndex inSection:0];
+        [_delegate conversationGroupResultsController:self didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:newIndexPath];
+    }
+}
+
+- (void)didChangeContent
+{
+    if (!_doingBatchUpdate) {
+        return;
+    }
+    
+    if (_delegate && [_delegate respondsToSelector:@selector(conversationGroupResultsControllerDidChangeContent:)]) {
+        [_delegate conversationGroupResultsControllerDidChangeContent:self];
+    }
+    _doingBatchUpdate = FALSE;
 }
 
 -(NSArray *)conversationGroupsForConversationIds:(NSArray *)conversationIds
 {
     NSMutableArray *conversationGroups = [NSMutableArray arrayWithCapacity:conversationIds.count];
-    for (id object in conversationIds) {
-        if ([object isKindOfClass:[NSDictionary class]]) {
-            NSString *conversationGroupId = [((NSDictionary *)object) stringValueForKey:NSStringFromSelector(@selector(messageGroupId))];
-            JCConversationGroup *conversationGroup = [[JCConversationGroup alloc] initWithConversationGroupId:conversationGroupId context:_manageObjectContext];
-            [conversationGroups addObject:conversationGroup];
+    @autoreleasepool {
+        for (id object in conversationIds) {
+            if ([object isKindOfClass:[NSDictionary class]]) {
+                NSString *conversationGroupId = [((NSDictionary *)object) stringValueForKey:NSStringFromSelector(@selector(messageGroupId))];
+                JCConversationGroup *conversationGroup = [[JCConversationGroup alloc] initWithConversationGroupId:conversationGroupId context:_manageObjectContext];
+                [conversationGroups addObject:conversationGroup];
+            }
         }
     }
     return conversationGroups;
@@ -199,32 +254,32 @@
     // get names for numbers.
     [JCAddressBook formattedNamesForNumbers:numbers
                                       begin:^{
-                                          if (_delegate && [_delegate respondsToSelector:@selector(conversationGroupResultsControllerWillChangeContent:)]) {
-                                              [_delegate conversationGroupResultsControllerWillChangeContent:self];
-                                          }
+                                          
                                       }
                                      number:^(NSString *name, NSString *number) {
-                                         JCConversationGroup *conversationGroup = [self conversationGroupForConversationGroupId:number];
-                                         conversationGroup.name = name;
-                                         NSIndexPath *indexPath = [self indexPathForObject:conversationGroup];
-                                         if (_delegate && [_delegate respondsToSelector:@selector(conversationGroupResultsController:didChangeObject:atIndexPath:forChangeType:newIndexPath:)]) {
-                                             [_delegate conversationGroupResultsController:self
-                                                                           didChangeObject:conversationGroup
-                                                                               atIndexPath:indexPath
-                                                                             forChangeType:JCConversationGroupsResultsChangeUpdate
-                                                                              newIndexPath:indexPath];
+                                         if (_fetchedObjects) {
+                                             JCConversationGroup *conversationGroup = [JCConversationGroupsResultsController conversationGroupForConversationGroupId:number conversationGroups:_fetchedObjects];
+                                             conversationGroup.name = name;
+                                             NSUInteger index = [_fetchedObjects indexOfObject:conversationGroup];
+                                             [self didChangeObject:conversationGroup
+                                                           atIndex:index
+                                                     forChangeType:JCConversationGroupsResultsChangeUpdate
+                                                          newIndex:index];
+                                         } else {
+                                             JCConversationGroup *conversationGroup = [JCConversationGroupsResultsController conversationGroupForConversationGroupId:number conversationGroups:conversationsGroups];
+                                             conversationGroup.name = name;
                                          }
                                      }
                                  completion:^(BOOL success, NSError *error) {
-                                     if (_delegate && [_delegate respondsToSelector:@selector(conversationGroupResultsControllerDidChangeContent:)]) {
-                                         [_delegate conversationGroupResultsControllerDidChangeContent:self];
+                                     if (success && _fetchedObjects) {
+                                         [self didChangeContent];
                                      }
                                  }];
 }
 
--(JCConversationGroup *)conversationGroupForConversationGroupId:(NSString *)conversationGroupId
++(JCConversationGroup *)conversationGroupForConversationGroupId:(NSString *)conversationGroupId conversationGroups:(NSArray *)conversationGroups
 {
-    for (JCConversationGroup *conversationGroup in _fetchedObjects) {
+    for (JCConversationGroup *conversationGroup in conversationGroups) {
         if ([conversationGroup.conversationGroupId isEqualToString:conversationGroupId]) {
             return conversationGroup;
         }
@@ -233,3 +288,10 @@
 }
 
 @end
+
+@implementation JCFetchedResultsUpdate
+
+
+@end
+                     
+                     

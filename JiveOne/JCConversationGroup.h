@@ -13,11 +13,12 @@
 -(instancetype)initWithConversationGroupId:(NSString *)conversationGroupId context:(NSManagedObjectContext *)context;
 
 @property (nonatomic, readonly, getter=isSMS) BOOL sms;
+@property (nonatomic, readonly, getter=isRead) BOOL read;
 
 @property (nonatomic, readonly) NSString *conversationGroupId;
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *lastMessage;
-@property (strong, nonatomic) NSDate *lastMessageReceived;
+@property (strong, nonatomic) NSDate *date;
 @property (strong, nonatomic) NSString *lastMessageId;
 
 @property (nonatomic, readonly) NSString *formattedModifiedShortDate;

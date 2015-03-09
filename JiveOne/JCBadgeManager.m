@@ -7,162 +7,240 @@
 //
 
 #import "JCBadgeManager.h"
-#import "LoggerClient.h"
-
 #import "RecentEvent.h"
-#import "MissedCall.h"
-#import "Voicemail.h"
-
-#import "JCBadgeManagerBatchOperation.h"
+#import "JCBadges.h"
 
 static const UIUserNotificationType USER_NOTIFICATION_TYPES_REQUIRED = UIRemoteNotificationTypeBadge | UIUserNotificationTypeAlert | UIUserNotificationTypeSound;
 static const UIRemoteNotificationType REMOTE_NOTIFICATION_TYPES_REQUIRED = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
 
 NSString *const kJCBadgeManagerBadgesKey        = @"badges";
-NSString *const kJCBadgeManagerRecentEventsKey  = @"recentEvents";
-NSString *const kJCBadgeManagerVoicemailsKey    = @"voicemails";
 NSString *const kJCBadgeManagerV4VoicemailKey   = @"v4_voicemails";
-NSString *const kJCBadgeManagerMissedCallsKey   = @"missedCalls";
-NSString *const kJCBadgeManagerConversationsKey = @"conversations";
 
-NSString *const kJCBadgeManagerInsertedIdentifierNotification = @"insertedIdentifier";
-NSString *const kJCBadgeManagerDeletedIdentifierNotification = @"deletedIdentifier";
-NSString *const kJCBadgeManagerIdentifierKey = @"identifierKey";
-NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
-
-@interface JCBadgeManager ()
+@interface JCBadgeManager () <NSFetchedResultsControllerDelegate>
 {
-    NSMutableDictionary *_batchBadges;
-    NSOperationQueue *_operationQueue;
+    JCBadges *_badges;
+    JCBadges *_batchBadges;      // Used as a temp badges array during batch processing.
 }
 
-@property (nonatomic, readonly) NSString *currentLineIdentifier;
+// Internal Properties
+@property (nonatomic, readwrite) NSManagedObjectContext *context;
+@property (nonatomic, readwrite) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, readwrite) JCBadges *badges;
+@property (nonatomic, readwrite) NSUInteger v4_voicemails;
+@property (nonatomic, readwrite) NSString *selectedLine;
+@property (nonatomic, readwrite) NSString *selectedPbx;
 
 @end
 
 @implementation JCBadgeManager
 
--(instancetype)initWithManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
+-(instancetype)init
 {
     self = [super init];
     if (self) {
-        _managedObjectContext = managedObjectContext;
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(managedObjectContextUpdated:) name:NSManagedObjectContextDidSaveNotification object:_managedObjectContext];
-        [self addObserver:self forKeyPath:kJCBadgeManagerBadgesKey options:NSKeyValueObservingOptionNew context:nil];
+        UIApplication *application = [UIApplication sharedApplication];
+        if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+            if (![self canSendNotifications]) {
+                UIUserNotificationSettings* requestedSettings = [UIUserNotificationSettings settingsForTypes:USER_NOTIFICATION_TYPES_REQUIRED categories:nil];
+                [application registerUserNotificationSettings:requestedSettings];
+            }
+        }else {
+            [application registerForRemoteNotificationTypes:REMOTE_NOTIFICATION_TYPES_REQUIRED];
+        }
         
-        _operationQueue = [[NSOperationQueue alloc] init];
-        _operationQueue.maxConcurrentOperationCount = 1;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveMemoryNotification:) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
     }
     return self;
 }
 
--(void)initialize
+-(void)didReceiveMemoryNotification:(NSNotification *)notification
 {
-    UIApplication *application = [UIApplication sharedApplication];
-    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)])
-    {
-        if (![self canSendNotifications])
-        {
-            UIUserNotificationSettings* requestedSettings = [UIUserNotificationSettings settingsForTypes:USER_NOTIFICATION_TYPES_REQUIRED categories:nil];
-            [application registerUserNotificationSettings:requestedSettings];
+    _batchBadges = nil;
+    self.badges = _badges;
+    _badges = nil;
+}
+
+#pragma mark - Public -
+
+/**
+ *  Returns the full all the recent events. Used for badging the app.
+ */
+- (NSUInteger)recentEvents
+{
+    NSString *line = self.selectedLine;
+    NSDictionary *eventTypes = [self.badges eventTypesForKey:line];
+    NSArray *keys = eventTypes.allKeys;
+    int total = 0;
+    for (NSString *key in keys){
+        if ([key isEqualToString:kJCBadgeManagerV4VoicemailKey]){
+            id object = [eventTypes objectForKey:key];
+            if ([object isKindOfClass:[NSNumber class]]) {
+                total += ((NSNumber *)object).integerValue;
+            }
         }
-    }else {
-        [application registerForRemoteNotificationTypes:REMOTE_NOTIFICATION_TYPES_REQUIRED];
-    }
-    [self update];
-}
-
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    if ([keyPath isEqualToString:kJCBadgeManagerBadgesKey]) {
-        [self update];
-    }
-}
-
--(void)update
-{
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        NSUInteger recentEvents = self.recentEvents;
-        if (self.canSendNotifications && recentEvents != [UIApplication sharedApplication].applicationIconBadgeNumber)
-        {
-            [UIApplication sharedApplication].applicationIconBadgeNumber = recentEvents;
+        else {
+            total += [self.badges countForEventType:key key:line];
         }
-    });
+    }
+    return total;
 }
 
--(void)startBackgroundUpdates
+/**
+ * Returns count of unread missed calls.
+ */
+- (NSUInteger)missedCalls
 {
-//    NSString *lineIdentifier = self.currentLineIdentifier;
-//    NSMutableDictionary *lineIdentifiers = [self identifiersForLine:lineIdentifier];
-//    NSArray *keys = [lineIdentifiers allKeys];
-//    for (NSString *key in keys)
-//    {
-//        NSMutableDictionary *identifiers = [self identifiersForKey:key line:lineIdentifier];
-//        NSArray *identifierKeys = [identifiers allKeys];
-//        for (NSString *identifier in identifierKeys)
-//        {
-//            [self setIdentifier:identifier forKey:key line:lineIdentifier displayed:YES];
-//        }
-//    }
+    return [self.badges countForEventType:kJCBadgesMissedCallsEventTypeKey key:_selectedLine];
 }
 
--(NSUInteger)endBackgroundUpdates
+/**
+ * Returns count of unread voicemails.
+ */
+- (NSUInteger)voicemails
 {
-    return 0;
+    NSUInteger total = [self v4_voicemails];
+    total += [self.badges countForEventType:kJCBadgesVoicemailsEventTypeKey key:_selectedLine];
+    return total;
 }
 
-// Clears out the badges in the badges array.
-
--(void)reset
+/**
+ * Returns count for unread SMS Messages.
+ */
+- (NSUInteger)smsMessages
 {
-    [_operationQueue cancelAllOperations];
-    
-    [self willChangeValueForKey:kJCBadgeManagerMissedCallsKey];
-    [self willChangeValueForKey:kJCBadgeManagerVoicemailsKey];
-    [self willChangeValueForKey:kJCBadgeManagerConversationsKey];
-    
-    self.badges = nil;
-    
-    [self didChangeValueForKey:kJCBadgeManagerMissedCallsKey];
-    [self didChangeValueForKey:kJCBadgeManagerVoicemailsKey];
-    [self didChangeValueForKey:kJCBadgeManagerConversationsKey];
+    return [self.badges countForEventType:kJCBadgesSMSMessagesEventTypeKey key:_selectedPbx];;
 }
 
-#pragma mark - Setters -
+#pragma mark NSFetchedResultsControllerDelegate
 
--(void)setBadges:(NSMutableDictionary *)badges
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
-    [self willChangeValueForKey:kJCBadgeManagerMissedCallsKey];
-    [self willChangeValueForKey:kJCBadgeManagerVoicemailsKey];
-    [self willChangeValueForKey:kJCBadgeManagerConversationsKey];
-    [self willChangeValueForKey:kJCBadgeManagerBadgesKey];
-    
+    _batchBadges = self.badges.copy;
+}
+
+- (void)controller:(NSFetchedResultsController *)controller
+   didChangeObject:(id)anObject
+       atIndexPath:(NSIndexPath *)indexPath
+     forChangeType:(NSFetchedResultsChangeType)type
+      newIndexPath:(NSIndexPath *)newIndexPath
+{
+    switch (type) {
+        case NSFetchedResultsChangeInsert:
+            [_batchBadges addRecentEvent:anObject];
+            break;
+        
+        case NSFetchedResultsChangeUpdate:
+            [_batchBadges processRecentEvent:anObject];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [_batchBadges removeRecentEvent:anObject];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    self.badges = _batchBadges;
+    _batchBadges = nil;
+}
+
+#pragma mark - Private -
+
+#pragma mark Internal Properties
+
+-(void)setBadges:(JCBadges *)badges
+{
+    [self willChangeContent];
+    _badges = badges;
+    NSDictionary *badgeData;
+    if (badges) {
+        badgeData = badges.badgeData;
+    }
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:badges forKey:kJCBadgeManagerBadgesKey];
+    [userDefaults setObject:badgeData forKey:kJCBadgeManagerBadgesKey];
     [userDefaults synchronize];
-    [self didChangeValueForKey:kJCBadgeManagerBadgesKey];
-    
-    [self didChangeValueForKey:kJCBadgeManagerMissedCallsKey];
-    [self didChangeValueForKey:kJCBadgeManagerVoicemailsKey];
-    [self didChangeValueForKey:kJCBadgeManagerConversationsKey];
+    [self didChangeContent];
 }
 
--(void)setVoicemails:(NSUInteger)voicemails
+- (JCBadges *)badges
 {
-    [self willChangeValueForKey:kJCBadgeManagerVoicemailsKey];
-    NSString *line = [JCAuthenticationManager sharedInstance].line.jrn;
-    NSMutableDictionary *eventTypes = [self eventTypesForLine:line];
-    [eventTypes setObject:[NSNumber numberWithInteger:voicemails] forKey:kJCBadgeManagerV4VoicemailKey];
-    [self setEventTypes:eventTypes line:line];
-    [self didChangeValueForKey:kJCBadgeManagerVoicemailsKey];
+    if (!_badges) {
+        NSDictionary *badgeData = [[NSUserDefaults standardUserDefaults] objectForKey:kJCBadgeManagerBadgesKey];
+        JCBadges *badges = [[JCBadges alloc] initWithBadgeData:badgeData];
+        NSFetchedResultsController *resultsController = self.fetchedResultsController;
+        if (resultsController) {
+            __autoreleasing NSError *error;
+            if([resultsController performFetch:&error]) {
+                [badges processRecentEvents:resultsController.fetchedObjects];
+            }
+            self.badges = badges;
+        } else {
+            _badges = badges;
+        }
+    }
+    return _badges;
 }
 
-#pragma mark - Getters -
-
--(NSMutableDictionary *)badges
+- (NSFetchedResultsController *)fetchedResultsController
 {
-    return [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:kJCBadgeManagerBadgesKey]];
+    if (!_fetchedResultsController) {
+        
+        if (!_context) {
+            return nil;
+        }
+        
+        NSFetchRequest *fetchRequest = [RecentEvent MR_requestAllSortedBy:NSStringFromSelector(@selector(date))
+                                                                ascending:NO
+                                                                inContext:_context];
+        
+        _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+                                                                        managedObjectContext:_context
+                                                                          sectionNameKeyPath:nil
+                                                                                   cacheName:nil];
+        _fetchedResultsController.delegate = self;
+    }
+    return _fetchedResultsController;
 }
+
+
+-(void)setV4_voicemails:(NSUInteger)v4_voicemails
+{
+    NSMutableDictionary *eventTypes = [self.badges eventTypesForKey:_selectedLine];
+    [eventTypes setObject:[NSNumber numberWithInteger:v4_voicemails] forKey:kJCBadgeManagerV4VoicemailKey];
+    [self.badges setEventTypes:eventTypes key:_selectedLine];
+    [self saveBadges];
+}
+
+- (NSUInteger)v4_voicemails
+{
+    NSUInteger total = 0;
+    NSDictionary *eventTypes = [self.badges eventTypesForKey:_selectedLine];
+    id object = [eventTypes objectForKey:kJCBadgeManagerV4VoicemailKey];
+    if (object && [object isKindOfClass:[NSNumber class]]) {
+        total += ((NSNumber *)object).integerValue;
+    }
+    return total;
+}
+
+- (void)setSelectedLine:(NSString *)selectedLine
+{
+    [self willChangeContent];
+    _selectedLine = selectedLine;
+    [self didChangeContent];
+}
+
+- (void)setSelectedPbx:(NSString *)selectedPbx
+{
+    [self willChangeContent];
+    _selectedPbx = selectedPbx;
+    [self didChangeContent];
+}
+
+#pragma mark Methods
 
 // Checks the permissions to see if we can sent notifications, including badging.
 - (BOOL)canSendNotifications;
@@ -175,201 +253,42 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
     return (notificationSettings.types == USER_NOTIFICATION_TYPES_REQUIRED);
 }
 
-- (NSUInteger)recentEvents
+-(void)willChangeContent
 {
-    NSString *line = [JCAuthenticationManager sharedInstance].line.jrn;
-    NSDictionary *eventTypes = [self eventTypesForLine:line];
-    NSArray *keys = eventTypes.allKeys;
-    int total = 0;
-    for (NSString *key in keys){
-        if ([key isEqualToString:kJCBadgeManagerV4VoicemailKey]){
-            id object = [eventTypes objectForKey:key];
-            if ([object isKindOfClass:[NSNumber class]]) {
-                total += ((NSNumber *)object).integerValue;
-            }
-        }
-        else {
-            total += [self countForEventType:key];
-        }
-    }
-    return total;
+    [self willChangeValueForKey:kJCBadgesMissedCallsEventTypeKey];
+    [self willChangeValueForKey:kJCBadgesVoicemailsEventTypeKey];
+    [self willChangeValueForKey:kJCBadgesSMSMessagesEventTypeKey];
 }
 
-- (NSUInteger)voicemails
+-(void)didChangeContent
 {
-    NSString *line = [JCAuthenticationManager sharedInstance].line.jrn;
-    NSUInteger total = 0;
-    NSDictionary *eventTypes = [self eventTypesForLine:line];
-    id object = [eventTypes objectForKey:kJCBadgeManagerV4VoicemailKey];
-    if (object && [object isKindOfClass:[NSNumber class]]) {
-        total += ((NSNumber *)object).integerValue;
-    }
-    
-    total += [self countForEventType:kJCBadgeManagerVoicemailsKey];
-    return total;
+    [self didChangeValueForKey:kJCBadgesMissedCallsEventTypeKey];
+    [self didChangeValueForKey:kJCBadgesVoicemailsEventTypeKey];
+    [self didChangeValueForKey:kJCBadgesSMSMessagesEventTypeKey];
+    [self update];
 }
 
-- (NSUInteger)missedCalls
+-(void)reset
 {
-    return [self countForEventType:kJCBadgeManagerMissedCallsKey];
+    self.badges = nil;
 }
 
-- (NSUInteger)conversations
+-(void)update
 {
-    return [self countForEventType:kJCBadgeManagerConversationsKey];
-}
-
-#pragma mark - Notification Handlers -
-
--(void)managedObjectContextUpdated:(NSNotification *)notification
-{
-    // Differ the processing of the notification to the main thread. Since the saves to managed
-    // object contexts can happen on different threads, we want to create the processing response
-    // on the main thread, adding it to an operation queue to be processed not on the main thread.
-    if (![NSThread isMainThread]) {
-        [self performSelectorOnMainThread:@selector(managedObjectContextUpdated:) withObject:notification waitUntilDone:NO];
-        return;
-    }
-    
-    NSDictionary *userInfo = notification.userInfo;
-    if (userInfo && _operationQueue) {
-        [_operationQueue addOperation:[[JCBadgeManagerBatchOperation alloc] initWithDictionaryUpdate:userInfo]];
+    NSUInteger recentEvents = self.recentEvents;
+    if ([self canSendNotifications] && recentEvents != [UIApplication sharedApplication].applicationIconBadgeNumber) {
+        [UIApplication sharedApplication].applicationIconBadgeNumber = recentEvents;
     }
 }
 
-#pragma mark - Private -
-
-/**
- * Gets the badge count of a badge category key.
- */
--(NSUInteger)countForEventType:(NSString *)eventType
+-(void)saveBadges
 {
-    NSString *line = [JCAuthenticationManager sharedInstance].line.jrn;
-    NSDictionary *events = [self eventsForEventType:eventType line:line];
-    return events.allKeys.count;
-}
-
-/**
- * Returns a dictionary of badge identifiers for a given key from the badges dictionary in the user default. If non have
- * been set, it should return nil, otherwise, it should return a dictionary of identifiers, where the identifier is the
- * key, and a bool is the value.
- */
--(NSMutableDictionary *)eventsForEventType:(NSString *)type line:(NSString *)line
-{
-    NSMutableDictionary *eventTypes = [self eventTypesForLine:line];
-    id object = [eventTypes objectForKey:type];
-    if ([object isKindOfClass:[NSDictionary class]]) {
-        return [NSMutableDictionary dictionaryWithDictionary:(NSDictionary *)object];
+    if (_badges) {
+        self.badges = _badges;
     }
-    return [NSMutableDictionary dictionary];
 }
-
--(NSMutableDictionary *)eventTypesForLine:(NSString *)line
-{
-    id object = [self.badges objectForKey:line];
-    if ([object isKindOfClass:[NSDictionary class]]) {
-        return [NSMutableDictionary dictionaryWithDictionary:(NSDictionary *)object];
-    }
-    return [NSMutableDictionary dictionary];
-}
-
--(void)setEventTypes:(NSDictionary *)eventTypes line:(NSString *)line
-{
-    NSMutableDictionary *badges = self.badges;
-    [badges setObject:eventTypes forKey:line];
-    self.badges = badges;
-}
-
-
-/**
- * Sets the the badge identifiers for a given key.
- *
- * This method does not merge current identifers, but rather replaces them. If you are updating, You should get the 
- * identifiers, add them, the set them.
- */
-//-(void)setIdentifiers:(NSDictionary *)identifiers forKey:(NSString *)key line:(NSString *)line
-//{
-//    [self willChangeValueForKey:key];
-//    NSMutableDictionary *lineIdentifiers = [self identifiersForLine:line];
-//    [lineIdentifiers setObject:identifiers forKey:key];
-//    [self setIdentifiers:lineIdentifiers line:line];
-//    [self didChangeValueForKey:key];
-//}
-//
-
-
-/*
-- (void)setNotification:(NSInteger)voicemailCount conversation:(NSInteger)conversationCount {
-    LOG_Info();
-    
-    //if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive)  {
-    
-    NSMutableDictionary *_badges = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"badges"]];
-    
-    
-    [_badges enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-        NSRange rangeConversation = [key rangeOfString:@"conversations"];
-        NSRange rangeRooms = [key rangeOfString:@"permanentrooms"];
-        if (rangeConversation.location != NSNotFound || rangeRooms.location != NSNotFound) {
-            NSMutableDictionary *convCopy = nil;
-            if ([_badges[key] isKindOfClass:[NSDictionary class]]) {
-                NSMutableDictionary *conversations = [_badges[key] mutableCopy];
-                if (conversations) {
-                    convCopy = [[conversations copy] mutableCopy];
-                    for (NSString *entry in conversations) {
-                        NSNumber *shown = conversations[entry];
-                        if (![shown boolValue]) {
-                            
-                            ConversationEntry *lastEntry = [ConversationEntry MR_findFirstByAttribute:@"entryId" withValue:entry];
-                            PersonEntities *person = [PersonEntities MR_findFirstByAttribute:@"entityId" withValue:lastEntry.entityId];
-                            NSString *alertMessage = [NSString stringWithFormat:@"%@: \"%@\"", person.firstName, lastEntry.message[@"raw"]];
-                            
-                            [self showLocalNotificationWithType:@"conversation" alertMessage:alertMessage];
-                            [convCopy setObject:[NSNumber numberWithBool:YES] forKey:entry];
-                            
-                            
-                        }
-                    }
-                    [_badges setObject:convCopy forKey:key];
-                }
-            }
-            
-        }
-        
-        NSRange rangeVoicemail = [key rangeOfString:@"jrn"];
-        if (rangeVoicemail.location != NSNotFound ) {
-            NSNumber *notified = _badges[key];
-            if (![notified boolValue]) {
-                notified = [NSNumber numberWithBool:YES];
-                Voicemail *lastEntry = [Voicemail MR_findFirstByAttribute:@"jrn" withValue:key];
-                if (lastEntry) {
-                    NSString *alertMessage = lastEntry.name ? [NSString stringWithFormat:@"New voicemail from %@", lastEntry.number]  : @"Unknown";
-                    [self showLocalNotificationWithType:@"voicemail" alertMessage:alertMessage];
-                }
-            }
-            _badges[key] = notified;
-            //[[NSUserDefaults standardUserDefaults] setObject:[_badges copy] forKey:@"badges"];
-            //[[NSUserDefaults standardUserDefaults] synchronize];
-        }
-        
-    }];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:[_badges copy] forKey:@"badges"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-}*/
-
-/*- (void)showLocalNotificationWithType:(NSString *)alertType alertMessage:(NSString *)alertMessage
-{
-    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-    localNotification.alertBody = alertMessage;
-    localNotification.soundName = UILocalNotificationDefaultSoundName;
-    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
-}*/
 
 @end
-
-
 
 @implementation JCBadgeManager (Singleton)
 
@@ -379,7 +298,7 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
     static JCBadgeManager *badgeManager = nil;
     static dispatch_once_t pred;        // Lock
     dispatch_once(&pred, ^{             // This code is called at most once per app
-        badgeManager = [[JCBadgeManager alloc] initWithManagedObjectContext:[NSManagedObjectContext MR_rootSavingContext]];
+        badgeManager = [JCBadgeManager new];
     });
     
     return badgeManager;
@@ -390,14 +309,34 @@ NSString *const kJCBadgeManagerBadgeKey = @"badgeKey";
     return self;
 }
 
-+ (void)update
++ (void)updateBadgesFromContext:(NSManagedObjectContext *)context
 {
-    [[JCBadgeManager sharedManager] update];
+    JCBadgeManager *badgeManager = [JCBadgeManager sharedManager];
+    badgeManager.context = context;
+    badgeManager->_badges = nil;
+    [badgeManager update];
 }
 
 + (void)reset
 {
     [[JCBadgeManager sharedManager] reset];
+}
+
++ (void)setVoicemails:(NSUInteger)voicemails
+{
+    [JCBadgeManager sharedManager].v4_voicemails = voicemails;
+}
+
++ (void)setSelectedLine:(NSString *)line
+{
+    JCBadgeManager *badgeManager = [JCBadgeManager sharedManager];
+    badgeManager.selectedLine = line;
+}
+
++ (void)setSelectedPBX:(NSString *)pbx
+{
+    JCBadgeManager *badgeManager = [JCBadgeManager sharedManager];
+    badgeManager.selectedPbx = pbx;
 }
 
 @end

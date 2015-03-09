@@ -15,4 +15,7 @@
 
 @property (nonatomic) BOOL showTopCellSeperator;
 
+- (id<NSObject>)objectAtIndexPath:(NSIndexPath *)indexPath;
+- (NSIndexPath *)indexPathOfObject:(id<NSObject>)object;
+
 @end
