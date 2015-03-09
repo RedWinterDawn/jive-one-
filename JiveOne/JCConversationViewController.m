@@ -17,6 +17,7 @@
 #import "LocalContact.h"
 #import "SMSMessage+SMSClient.h"
 #import "JCAddressBook.h"
+#import "JCAddressBookNumber.h"
 
 // Views
 #import "JCMessagesCollectionViewCell.h"
@@ -113,18 +114,20 @@ static NSString *OutgoingCellIdentifier = @"outgoingText";
     // New SMS from a unknown number;
     if ([person isKindOfClass:[JCUnknownNumber class]]) {
         self.messageGroupId = ((JCUnknownNumber *)person).number;
+    } else if([person isKindOfClass:[JCAddressBookNumber class]]) {
+        self.messageGroupId = ((JCAddressBookNumber *)person).number.numericStringValue;
     }
 }
 
 -(void)setMessageGroupId:(NSString *)messageGroupId
 {
-    _messageGroupId = messageGroupId;
-    
     // Trigger a load of all the message data for that message group if there are messages for that
     // message group, and trigger a sync.
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId = %@", messageGroupId];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId CONTAINS[cd] %@", messageGroupId];
     Message *message = [Message MR_findFirstWithPredicate:predicate sortedBy:@"date" ascending:NO];
     if (message) {
+        
+        _messageGroupId = message.messageGroupId;
         
         // We are a SMS messages group, so we set the participant and request messages from the sms
         // client service.
