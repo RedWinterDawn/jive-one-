@@ -26,18 +26,10 @@
 #import "JCMessageParticipantTableViewController.h"
 #import "JCNavigationController.h"
 
-#define MESSAGES_BACKGROUND_COLOR [UIColor colorWithRed:239/255.0f green:239/255.0f blue:239/255.0f alpha:1.0f]
-#define MESSAGES_AVATAR_SIZE CGSizeMake(40, 40)
-#define MESSAGES_TEXT_INSETS UIEdgeInsetsMake(7.0f, 14.0f, 0.0f, 14.0f)
-
 #define MESSAGES_PARTICIPANT_VIEW_CONTROLLER @"MessageParticipantsViewController"
-
-static NSString *IncomingCellIdentifier = @"incomingText";
-static NSString *OutgoingCellIdentifier = @"outgoingText";
 
 @interface JCConversationViewController () <NSFetchedResultsControllerDelegate>
 {
-    // Support arrays for the NSFetchedResultController delegate methods.
     NSMutableArray *_sectionChanges;
     NSMutableArray *_itemChanges;
 }
@@ -54,20 +46,29 @@ static NSString *OutgoingCellIdentifier = @"outgoingText";
 {
     [super viewDidLoad];
     
-    self.incomingCellIdentifier = IncomingCellIdentifier;
-    self.outgoingCellIdentifier = OutgoingCellIdentifier;
-    
-    self.collectionView.collectionViewLayout.outgoingAvatarViewSize = MESSAGES_AVATAR_SIZE;
-    self.collectionView.collectionViewLayout.incomingAvatarViewSize = MESSAGES_AVATAR_SIZE;
-    self.collectionView.collectionViewLayout.messageBubbleTextViewTextContainerInsets = MESSAGES_TEXT_INSETS;
-    
     self.inputToolbar.contentView.textView.placeHolder = NSLocalizedString(@"Send SMS", nil);
-    [self jc_checkParticipants];
+    
+    [self checkParticipants];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+        NSArray *messages = [Message MR_findAllWithPredicate:self.fetchedResultsController.fetchRequest.predicate inContext:localContext];
+        for (Message *message in messages) {
+            message.read = YES;
+        }
+    } completion:^(BOOL success, NSError *error) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kSMSMessagesDidUpdateNotification object:nil];
+    }];
 }
 
 -(void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+    
     _fetchedResultsController = nil;    // This can be rebuilt if we are in a low memory situation.
 }
 
@@ -206,7 +207,7 @@ static NSString *OutgoingCellIdentifier = @"outgoingText";
 
 #pragma mark - Private -
 
-- (void)jc_checkParticipants
+- (void)checkParticipants
 {
     // If we have a message id
     if (!_participants) {
@@ -230,7 +231,7 @@ static NSString *OutgoingCellIdentifier = @"outgoingText";
     return self.fetchedResultsController.fetchedObjects.count;
 }
 
-- (Message *)objectAtIndexPath:(NSIndexPath *)indexPath
+- (id <JSQMessageData>)objectAtIndexPath:(NSIndexPath *)indexPath
 {
     return [self.fetchedResultsController objectAtIndexPath:indexPath];
 }
@@ -240,36 +241,12 @@ static NSString *OutgoingCellIdentifier = @"outgoingText";
     return [self.fetchedResultsController indexPathForObject:object];
 }
 
-#pragma mark - Delegate Handlers -
-
-// This section is a set of methods from the JSQMessagesViewController superclass that help us
-// define and control the display of the message. Thes are specific to the implementation.
-
-- (id<JSQMessageData>)collectionView:(JCMessagesCollectionView *)collectionView
-       messageDataForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return [self objectAtIndexPath:indexPath];
-}
-
--(CGFloat)collectionView:(JCMessagesCollectionView *)collectionView
-                  layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath {
-    return 23;
-}
-
-#pragma mark UICollectionViewDataSource
-
-//  This section defines the bechavior of the collection view controller, defining to the Layout
-//  controller how many sections we have, the number of items in each section and which cell should
-//  be shown for each item. It leveraged the fetched results controller to get the sections, section
-//  info and the object for each cell for the given section and index path.
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+-(NSUInteger)numberOfSections
 {
     return self.fetchedResultsController.sections.count;
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView
-     numberOfItemsInSection:(NSInteger)section
+-(NSUInteger)numberOfItemsInSection:(NSUInteger)section
 {
     id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController.sections objectAtIndex:section];
     if (sectionInfo)
@@ -277,25 +254,14 @@ static NSString *OutgoingCellIdentifier = @"outgoingText";
     return 0;
 }
 
-- (UICollectionViewCell *)collectionView:(JCMessagesCollectionView *)collectionView
-                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
+#pragma mark - Delegate Handlers -
+
+-(BOOL)isIncomingMessageData:(id<JSQMessageData>)messageData collectionView:(JCMessagesCollectionView *)collectionView
 {
-    Message *message = [collectionView.dataSource collectionView:collectionView messageDataForItemAtIndexPath:indexPath];
-    BOOL isOutgoingMessage = ([message isKindOfClass:[SMSMessage class]]) ? !((SMSMessage *)message).isInbound : [message.senderId isEqualToString:self.senderId];
-    NSString *cellIdentifier = isOutgoingMessage ? self.outgoingCellIdentifier : self.incomingCellIdentifier;
-    JCMessagesCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-    cell.delegate = collectionView;
-    cell.incoming = !isOutgoingMessage;
-    cell.textView.text = message.text;
-    cell.detailLabel.text = message.detailText;
-    
-    cell.backgroundColor            = [UIColor clearColor];
-    cell.layer.rasterizationScale   = [UIScreen mainScreen].scale;
-    cell.layer.shouldRasterize      = YES;
-    cell.textView.textColor         = [UIColor blackColor];
-    cell.textView.dataDetectorTypes = UIDataDetectorTypeAll;
-    
-    return cell;
+    if ([messageData isKindOfClass:[SMSMessage class]]) {
+        return ((SMSMessage *)messageData).isInbound;
+    }
+    return [super isIncomingMessageData:messageData collectionView:collectionView];
 }
 
 #pragma mark NSFetchedResultsControllerDelegate
