@@ -40,11 +40,14 @@ typedef enum : NSUInteger {
 
 @protocol JCPhoneAudioManagerDelegate <NSObject>
 
+-(void)phoneAudioManager:(JCPhoneAudioManager *)manager didChangeAudioRouteOutputType:(JCPhoneAudioManagerOutputType)outputType;
+-(void)phoneAudioManager:(JCPhoneAudioManager *)manager didChangeAudioRouteInputType:(JCPhoneAudioManagerInputType)inputType;
+
+@optional;
+
 -(void)audioSessionInteruptionDidBegin:(JCPhoneAudioManager *)manager;
 -(void)audioSessionInteruptionDidEnd:(JCPhoneAudioManager *)manager;
 
--(void)phoneAudioManager:(JCPhoneAudioManager *)manager didChangeAudioRouteOutputType:(JCPhoneAudioManagerOutputType)outputType;
--(void)phoneAudioManager:(JCPhoneAudioManager *)manager didChangeAudioRouteInputType:(JCPhoneAudioManagerInputType)inputType;
 
 @end
 
