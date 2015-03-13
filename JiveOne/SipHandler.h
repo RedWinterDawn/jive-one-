@@ -50,6 +50,7 @@
 @property (nonatomic, readonly, getter=isInitialized) BOOL initialized;
 @property (nonatomic, readonly, getter=isActive) BOOL active;
 @property (nonatomic, readonly, getter=isConferenceCall) BOOL conferenceCall;
+@property (nonatomic, readonly, getter=isMuted) BOOL mute;
 
 -(instancetype)initWithNumberOfLines:(NSInteger)lines delegate:(id<SipHandlerDelegate>)delegate error:(NSError *__autoreleasing *)error;
 

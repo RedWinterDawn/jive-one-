@@ -152,8 +152,9 @@ CGFloat *_callOptionsWidth;
     if ([sender isKindOfClass:[UIButton class]])
     {
         UIButton *button = (UIButton *)sender;
-        button.selected = !button.selected;
-        [JCPhoneManager muteCall:button.selected];
+        JCPhoneManager *phoneManager = [JCPhoneManager sharedManager];
+        [JCPhoneManager muteCall:!phoneManager.isMuted];
+        button.selected = phoneManager.isMuted;
     }
 }
 

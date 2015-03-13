@@ -84,6 +84,11 @@ NSString *const kJCPhoneManager611String = @"611";
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+-(BOOL)isMuted
+{
+    return _sipHandler.isMuted;
+}
+
 #pragma mark - Connection -
 
 /**
@@ -570,6 +575,12 @@ NSString *const kJCPhoneManager611String = @"611";
                 }
             }
             sipHandler.loudSpeakerEnabled = shouldTurnOnSpeaker;
+            BOOL mute = [JCAppSettings sharedSettings].isIntercomMicrophoneMuteEnabled;
+            [sipHandler muteCall:mute];
+            
+            if (_callViewController) {
+                _callViewController.muteBtn.selected = sipHandler.isMuted;
+            }
         }
     }];
 }

@@ -50,6 +50,7 @@ typedef enum : NSInteger {
 @property (nonatomic, readonly, getter=isConnected) BOOL connected;
 @property (nonatomic, readonly, getter=isConnecting) BOOL connecting;
 @property (nonatomic, readonly, getter=isConferenceCall) BOOL conferenceCall;
+@property (nonatomic, readonly) BOOL isMuted;
 
 @end
 

@@ -9,6 +9,7 @@
 #import "JCAppSettings.h"
 
 NSString *const kJCAppSettingsIntercomEnabledAttribute = @"intercomEnabled";
+NSString *const kJCAppSettingsIntercomMicrophoneMuteEnabledAttribute = @"intercomMicrophoneMuteEnabled";
 NSString *const kJCAppSettingsWifiOnlyAttribute = @"wifiOnly";
 NSString *const kJCAppSettingsPresenceAttribute = @"presenceEnabled";
 NSString *const kJCAppSettingsVibrateOnRingAttribute = @"vibrateOnRing";
@@ -20,6 +21,11 @@ NSString *const kJCAppSettingsVibrateOnRingAttribute = @"vibrateOnRing";
 -(void)setIntercomEnabled:(BOOL)intercomEnabled
 {
     [self setSettingBoolValue:intercomEnabled forKey:kJCAppSettingsIntercomEnabledAttribute];
+}
+
+-(void)setIntercomMicrophoneMuteEnabled:(BOOL)intercomMicrophoneMuteEnabled
+{
+    [self setSettingBoolValue:intercomMicrophoneMuteEnabled forKey:kJCAppSettingsIntercomMicrophoneMuteEnabledAttribute];
 }
 
 -(void)setWifiOnly:(BOOL)callsOverCellEnabled
@@ -42,6 +48,10 @@ NSString *const kJCAppSettingsVibrateOnRingAttribute = @"vibrateOnRing";
 -(BOOL)isIntercomEnabled
 {
     return [[NSUserDefaults standardUserDefaults] boolForKey:kJCAppSettingsIntercomEnabledAttribute];
+}
+-(BOOL)isIntercomMicrophoneMuteEnabled
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kJCAppSettingsIntercomMicrophoneMuteEnabledAttribute];
 }
 -(BOOL)isWifiOnly
 {
