@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="cs1-Q4-pfo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
@@ -10,7 +10,8 @@
         <!--Application Switcher View Controller-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
-                <tabBarController storyboardIdentifier="AppSwitcherViewController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="49e-Tb-3d3" customClass="JCApplicationSwitcherViewController" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="AppSwitcherViewController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="49e-Tb-3d3" customClass="JCApplicationSwitcherViewController" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
@@ -964,11 +965,12 @@
         <!--Conversation View Controller-->
         <scene sceneID="bEB-38-Hex">
             <objects>
-                <viewController extendedLayoutIncludesOpaqueBars="YES" definesPresentationContext="YES" hidesBottomBarWhenPushed="YES" id="foX-Z7-9EW" customClass="JCConversationViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" definesPresentationContext="YES" id="foX-Z7-9EW" customClass="JCConversationViewController" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="w8d-wI-w7j">
                         <nil key="title"/>
                         <barButtonItem key="backBarButtonItem" title="back" id="qhs-l8-Uxl"/>
                     </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9LZ-Po-63u" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1087,7 +1089,7 @@
         <!--Messages-->
         <scene sceneID="anK-fg-DgQ">
             <objects>
-                <navigationController storyboardIdentifier="MessagesNavigationController" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cs1-Q4-pfo" customClass="JCNavigationController" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MessagesNavigationController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cs1-Q4-pfo" customClass="JCNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Messages" image="black-bubble" id="1NY-Mi-445"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="GyZ-sd-sl6">
