@@ -13,6 +13,7 @@
 #import "JCCallCard.h"
 #import "Line.h"
 #import "JCManager.h"
+#import "JCPhoneAudioManager.h"
 
 extern NSString *const kJCPhoneManagerRegisteringNotification;
 extern NSString *const kJCPhoneManagerRegisteredNotification;
@@ -24,17 +25,6 @@ typedef enum : NSUInteger {
     JCPhoneManagerBlindTransfer,
     JCPhoneManagerWarmTransfer,
 } JCPhoneManagerDialType;
-
-typedef enum : NSUInteger {
-    JCPhoneManagerOutputUnknown = 0,
-    JCPhoneManagerOutputLineOut,
-    JCPhoneManagerOutputHeadphones,
-    JCPhoneManagerOutputBluetooth,
-    JCPhoneManagerOutputReceiver,
-    JCPhoneManagerOutputSpeaker,
-    JCPhoneManagerOutputHDMI,
-    JCPhoneManagerOutputAirPlay
-} JCPhoneManagerOutputType;
 
 typedef enum : NSInteger {
     JCPhoneManagerUnknownNetwork    = AFNetworkReachabilityStatusUnknown,
@@ -48,16 +38,18 @@ typedef enum : NSInteger {
 @property (nonatomic, strong) NSMutableArray *calls;
 @property (nonatomic, strong) NSString *storyboardName;
 
-@property (nonatomic, readonly) JCPhoneManagerOutputType outputType;
+@property (nonatomic, readonly) Line *line;
 @property (nonatomic, readonly) JCPhoneManagerNetworkType networkType;
 
-@property (nonatomic, readonly) Line *line;
 @property (nonatomic, readonly, getter=isInitialized) BOOL initialized;
 @property (nonatomic, readonly, getter=isRegistering) BOOL registering;
 @property (nonatomic, readonly, getter=isRegistered) BOOL registered;
 @property (nonatomic, readonly, getter=isActiveCall) BOOL activeCall;
 @property (nonatomic, readonly, getter=isConferenceCall) BOOL conferenceCall;
 @property (nonatomic, readonly, getter=isMuted) BOOL muted;
+
+@property (nonatomic, readonly) JCPhoneAudioManagerInputType inputType;
+@property (nonatomic, readonly) JCPhoneAudioManagerOutputType outputType;
 
 @end
 
