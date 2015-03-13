@@ -196,10 +196,7 @@
     }
     
     
-    NSIndexPath *removed = nil;
-    
     if (self.selectedIndexPaths.count == 2) {
-        removed = [self.selectedIndexPaths objectAtIndex:0];
         [self.selectedIndexPaths removeObjectAtIndex:0];
     }
     [self.tableView reloadData];
