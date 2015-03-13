@@ -8,11 +8,7 @@
 
 #import "JCSMSClient.h"
 
-#ifndef DEBUG
 NSString *const kJCSMSClientBaseUrl = @"https://api.jive.com/sms";
-#else
-NSString *const kJCSMSClientBaseUrl = @"https://api.jive.com/sms-temp";
-#endif
 
 @implementation JCSMSClient
 
