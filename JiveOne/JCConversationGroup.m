@@ -26,7 +26,7 @@
             _lastMessage = message.text;
             _date = message.date;
             _lastMessageId = message.eventId;
-            _read = message.isRead;
+            _read = [self readStateForConversationGroupId:conversationGroupId context:context];
             if ([message isKindOfClass:[SMSMessage class]]) {
                 SMSMessage *smsMessage = (SMSMessage *)message;
                 _sms = TRUE;
@@ -38,6 +38,18 @@
         [context refreshObject:message mergeChanges:NO];
     }
     return self;
+}
+
+-(BOOL)readStateForConversationGroupId:(NSString *)conversationGroupId context:(NSManagedObjectContext *)context
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"messageGroupId = %@", conversationGroupId];
+    NSArray *messages = [Message MR_findAllWithPredicate:predicate inContext:context];
+    for (Message *message in messages) {
+        if (!message.isRead) {
+            return FALSE;
+        }
+    }
+    return TRUE;
 }
 
 -(BOOL)isEqual:(id)object

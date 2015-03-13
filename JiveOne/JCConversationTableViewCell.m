@@ -33,7 +33,6 @@
     _detailFont = self.detail.font;
     _boldDetailFont = [UIFont fontWithDescriptor:[[_detailFont fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold] size:_detailFont.pointSize];
     
-    
     _dateFont = self.date.font;
     _boldDateFont = [UIFont fontWithDescriptor:[[_dateFont fontDescriptor] fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold] size:_dateFont.pointSize];
 }
@@ -59,6 +58,7 @@
 {
     _read = read;
     [self setNeedsLayout];
+    [self layoutIfNeeded];
 }
 
 @end
