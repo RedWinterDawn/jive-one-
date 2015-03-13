@@ -176,7 +176,7 @@ CGFloat *_callOptionsWidth;
 
 -(IBAction)speaker:(id)sender
 {
-    [JCPhoneManager setLoudSpeakerEnabled:([JCPhoneManager sharedManager].outputType != JCPhoneManagerOutputSpeaker)];
+    [JCPhoneManager setLoudSpeakerEnabled:([JCPhoneManager sharedManager].outputType != JCPhoneAudioManagerOutputSpeaker)];
 }
 
 -(IBAction)blindTransfer:(id)sender

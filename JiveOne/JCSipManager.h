@@ -10,10 +10,11 @@
 
 #import "Line.h"
 #import "JCLineSession.h"
+#import "JCPhoneAudioManager.h"
 
 @class JCSipManager;
 
-@protocol SipHandlerDelegate <NSObject>
+@protocol SipHandlerDelegate <JCPhoneAudioManagerDelegate>
 
 // Registration
 -(void)sipHandlerDidRegister:(JCSipManager *)sipHandler;
@@ -45,6 +46,7 @@
 
 @property (nonatomic, weak) id <SipHandlerDelegate> delegate;
 
+@property (nonatomic, readonly) JCPhoneAudioManager *audioManager;
 @property (nonatomic, readonly) Line *line;
 
 @property (nonatomic, readonly, getter=isInitialized) BOOL initialized;         // If PortSipSDK has been initialized.
