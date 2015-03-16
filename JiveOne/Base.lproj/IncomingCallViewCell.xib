@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -14,6 +15,14 @@
                 <rect key="frame" x="0.0" y="0.0" width="300" height="417"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.25" contentMode="scaleToFill" misplaced="YES" image="white-person" translatesAutoresizingMaskIntoConstraints="NO" id="PqB-we-9MP">
+                        <rect key="frame" x="39" y="100" width="222" height="267"/>
+                        <constraints>
+                            <constraint firstAttribute="height" priority="250" constant="221" id="P9z-TM-RP5"/>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="250" id="dzM-4K-C3g"/>
+                            <constraint firstAttribute="width" secondItem="PqB-we-9MP" secondAttribute="height" multiplier="220:263" id="fka-HT-ZJZ"/>
+                        </constraints>
+                    </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wpr-n7-w9W" userLabel="CallInfo">
                         <rect key="frame" x="0.0" y="0.0" width="300" height="86"/>
                         <subviews>
@@ -105,9 +114,14 @@
             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="RgF-K8-zw2" secondAttribute="trailing" id="24z-sl-mrd"/>
+                <constraint firstAttribute="bottom" relation="lessThanOrEqual" secondItem="PqB-we-9MP" secondAttribute="bottom" constant="50" id="2ig-EN-ko4"/>
                 <constraint firstAttribute="bottom" secondItem="RgF-K8-zw2" secondAttribute="bottom" id="5ye-bs-ztL"/>
                 <constraint firstItem="wpr-n7-w9W" firstAttribute="leading" secondItem="QsI-zY-aNm" secondAttribute="leading" id="6jV-ZK-sU8"/>
+                <constraint firstAttribute="centerX" secondItem="PqB-we-9MP" secondAttribute="centerX" id="7qF-6E-4wu"/>
+                <constraint firstItem="PqB-we-9MP" firstAttribute="top" relation="greaterThanOrEqual" secondItem="QsI-zY-aNm" secondAttribute="top" id="IUC-dr-WGW"/>
+                <constraint firstItem="PqB-we-9MP" firstAttribute="top" relation="lessThanOrEqual" secondItem="QsI-zY-aNm" secondAttribute="top" constant="100" id="L83-yB-eak"/>
                 <constraint firstItem="RgF-K8-zw2" firstAttribute="leading" secondItem="QsI-zY-aNm" secondAttribute="leading" id="Yuy-2p-WdM"/>
+                <constraint firstItem="RgF-K8-zw2" firstAttribute="top" relation="greaterThanOrEqual" secondItem="PqB-we-9MP" secondAttribute="bottom" id="dZo-sU-pmU"/>
                 <constraint firstItem="wpr-n7-w9W" firstAttribute="top" secondItem="QsI-zY-aNm" secondAttribute="top" id="gvE-aM-css"/>
                 <constraint firstAttribute="trailing" secondItem="wpr-n7-w9W" secondAttribute="trailing" id="vQa-pd-tWQ"/>
             </constraints>
@@ -125,6 +139,7 @@
         <image name="grayed-phone" width="37" height="12"/>
         <image name="green-phone" width="30" height="30"/>
         <image name="red-phone" width="37" height="30"/>
+        <image name="white-person" width="184" height="221"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

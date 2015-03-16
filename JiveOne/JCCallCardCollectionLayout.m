@@ -69,8 +69,6 @@ static NSString * const JSCallCardLayoutCellKind = @"CallCardCell";
     NSMutableDictionary *cellLayoutInfo = [NSMutableDictionary dictionary];
     
     NSInteger sectionCount = [self.collectionView numberOfSections];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
-    
     for (NSInteger section = 0; section < sectionCount; section++)
     {
         NSInteger itemCount = [self.collectionView numberOfItemsInSection:section];
@@ -81,7 +79,7 @@ static NSString * const JSCallCardLayoutCellKind = @"CallCardCell";
             CGFloat x = _itemInsets.left;
             for (NSInteger item = 0; item < itemCount; item++)
             {
-                indexPath = [NSIndexPath indexPathForItem:item inSection:section];
+                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:item inSection:section];
                 UICollectionViewLayoutAttributes *itemAttributes =
                 [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
                 CGFloat y = floor((height + _interItemSpacingY) * indexPath.row);

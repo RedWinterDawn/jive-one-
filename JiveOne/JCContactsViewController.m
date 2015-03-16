@@ -11,9 +11,12 @@
 
 #import "JCContactsViewController.h"
 #import "JCContactsTableViewController.h"
-#import "JCCallerViewController.h"
+#import "JCPhoneManager.h"
+#import "ContactGroup.h"
 
-@interface JCContactsViewController () <ABPeoplePickerNavigationControllerDelegate>
+NSString *const kJCContactsViewControllerContactGroupSegueIdentifier = @"ContactGroupViewController";
+
+@interface JCContactsViewController () <ABPeoplePickerNavigationControllerDelegate, JCContactsTableViewControllerDelegate>
 {
     JCContactsTableViewController *_contactsTableViewController;
     NSString *_dialString;
@@ -26,15 +29,22 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    
     self.tabBar.selectedItem = [self.tabBar.items objectAtIndex:0];
+    
+    ContactGroup *contactGroup = self.contactGroup;
+    if (contactGroup) {
+        self.title = contactGroup.name;
+    }
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     if (_dialString) {
-        [self performSegueWithIdentifier:@"LocalContactsClickToCall" sender:self];
+        [self dialNumber:_dialString usingLine:[JCAuthenticationManager sharedInstance].line sender:nil completion:^(BOOL success, NSError *error) {
+            _dialString = nil;
+        }];
     }
 }
 
@@ -43,14 +53,19 @@
     UIViewController *viewController = segue.destinationViewController;
     if ([viewController isKindOfClass:[JCContactsTableViewController class]]) {
         _contactsTableViewController = (JCContactsTableViewController *)viewController;
+        _contactsTableViewController.contactGroup = self.contactGroup;
+        _contactsTableViewController.delegate = self;
         _contactsTableViewController.filterType = JCContactFilterAll;
         self.searchBar.delegate = _contactsTableViewController;
     }
-    else if ([viewController isKindOfClass:[JCCallerViewController class]])
+	else if ([viewController isKindOfClass:[JCContactsViewController class]])
     {
-        JCCallerViewController *caller = (JCCallerViewController *)viewController;
-        caller.dialString = _dialString;
-        _dialString = nil;
+        JCContactsViewController *contacts = (JCContactsViewController *)viewController;
+        NSIndexPath *indexPath = [_contactsTableViewController.tableView indexPathForSelectedRow];
+        id object = [_contactsTableViewController objectAtIndexPath:indexPath];
+        if ([object isKindOfClass:[ContactGroup class]]) {
+            contacts.contactGroup = (ContactGroup *)object;
+        }
     }
 }
 
@@ -112,7 +127,12 @@
         case 1:
             _contactsTableViewController.filterType = JCContactFilterFavorites;
             break;
+            
         case 2:
+            _contactsTableViewController.filterType = JCContactFilterGrouped;
+            break;
+            
+        case 3:
             [self showPeoplePickerController];
             tabBar.selectedItem = nil;
             break;
@@ -145,6 +165,13 @@
 - (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker;
 {
     [peoplePicker dismissViewControllerAnimated:YES completion:NULL];
+}
+
+#pragma mark JCContactsTableViewControllerDelegate
+
+-(void)contactsTableViewController:(JCContactsTableViewController *)contactsViewController didSelectContactGroup:(ContactGroup *)contactGroup
+{
+    [self performSegueWithIdentifier:kJCContactsViewControllerContactGroupSegueIdentifier sender:self];
 }
 
 @end

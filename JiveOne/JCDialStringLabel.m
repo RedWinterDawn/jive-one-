@@ -130,7 +130,7 @@
         return string;
     
     // Number with extension
-    NBPhoneNumberUtil *phoneNumberUtil = [NBPhoneNumberUtil sharedInstance];
+    NBPhoneNumberUtil *phoneNumberUtil = [NBPhoneNumberUtil new];
     NBPhoneNumber *phoneNumber = nil;
     
         

@@ -7,7 +7,6 @@
 //
 
 #import "JCContactsTableViewController.h"
-#import "JCCallerViewController.h"
 
 #import "JCContactCell.h"
 #import "JCLineCell.h"
@@ -16,8 +15,11 @@
 #import "Line.h"
 #import "PBX.h"
 #import "User.h"
+#import "ContactGroup.h"
 
-@interface JCContactsTableViewController()  <JCCallerViewControllerDelegate>
+#import "JCPhoneManager.h"
+
+@interface JCContactsTableViewController()
 {
     NSString *_searchText;
     NSMutableDictionary *lineSubcription;
@@ -38,21 +40,6 @@
     [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:[JCAuthenticationManager sharedInstance]];
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    UIViewController *viewController = segue.destinationViewController;
-    if ([viewController isKindOfClass:[JCCallerViewController class]]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        id object = [self objectAtIndexPath:indexPath];
-        if ([object isKindOfClass:[Contact class]]) {
-            Contact *contact = (Contact *)object;
-            JCCallerViewController *callerViewController = (JCCallerViewController *)viewController;
-            callerViewController.delegate = self;
-            callerViewController.dialString = contact.extension;
-        }
-    }
-}
-
 - (void)configureCell:(UITableViewCell *)cell withObject:(id<NSObject>)object
 {
     if ([object isKindOfClass:[Contact class]] && [cell isKindOfClass:[JCContactCell class]]) {
@@ -60,6 +47,9 @@
     }
     else if ([object isKindOfClass:[Line class]] && [cell isKindOfClass:[JCLineCell class]]) {
         ((JCLineCell *)cell).line = (Line *)object;
+    }
+    else if ([object isKindOfClass:[ContactGroup class]]) {
+        cell.textLabel.text = ((ContactGroup *)object).name;
     }
 }
 
@@ -72,6 +62,12 @@
     }
     else if ([object isKindOfClass:[Line class]]) {
         JCLineCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LineCell"];
+        [self configureCell:cell withObject:object];
+        return cell;
+    }
+    else if ([object isKindOfClass:[ContactGroup class]])
+    {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactGroupCell"];
         [self configureCell:cell withObject:object];
         return cell;
     }
@@ -92,7 +88,11 @@
 {
     if (!_fetchedResultsController)
     {
-        super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:self.fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"firstLetter" cacheName:nil];
+        NSString *sectionKeyPath = @"firstLetter";
+        if (_filterType == JCContactFilterGrouped) {
+            sectionKeyPath = nil;
+        }
+        super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:self.fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:sectionKeyPath cacheName:nil];
     }
     return _fetchedResultsController;
 }
@@ -117,9 +117,24 @@
             }
             _fetchRequest = [Contact MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
         }
+        else if (_filterType == JCContactFilterGrouped) {
+            NSPredicate *predicate =[NSPredicate predicateWithFormat:@"contacts.pbx.pbxId CONTAINS[cd] %@", [JCAuthenticationManager sharedInstance].line.pbx.pbxId];
+            if (_searchText && ![_searchText isEqualToString:@""]) {
+                NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"name contains[cd] %@", _searchText];
+                predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, searchPredicate]];
+            }
+            _fetchRequest = [ContactGroup MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
+        }
         else {
-            _fetchRequest = [Person MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
-            _fetchRequest.includesSubentities = TRUE;
+            ContactGroup *contactGroup = self.contactGroup;
+            if (contactGroup) {
+                NSPredicate *contactGroupPredicate =[NSPredicate predicateWithFormat:@"groups CONTAINS[cd] %@", contactGroup];
+                predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, contactGroupPredicate]];
+                _fetchRequest = [Contact MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
+            } else {
+                _fetchRequest = [Person MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
+                _fetchRequest.includesSubentities = TRUE;
+            }
         }
         _fetchRequest.resultType = NSManagedObjectResultType;
         _fetchRequest.fetchBatchSize = 10;
@@ -127,6 +142,8 @@
     }
     return _fetchRequest;
 }
+
+
 
 #pragma mark - Private -
 
@@ -146,23 +163,40 @@
     [self reloadTable];
 }
 
-#pragma mark - Delegate handlers -
-
--(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController
-{
-    [self dismissViewControllerAnimated:NO completion:NULL];
-}
-
 #pragma mark - Table view data source
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
+    if (_filterType == JCContactFilterGrouped) {
+        return nil;
+    }
     return [self.fetchedResultsController sectionIndexTitles];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
+    if (_filterType == JCContactFilterGrouped) {
+        return nil;
+    }
     return [self.fetchedResultsController sectionIndexTitles][section];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    id object = [self objectAtIndexPath:indexPath];
+	if ([object isKindOfClass:[ContactGroup class]]) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(contactsTableViewController:didSelectContactGroup:)]) {
+            [self.delegate contactsTableViewController:self didSelectContactGroup:(ContactGroup *)object];
+        }
+    }    
+	else if ([object isKindOfClass:[Contact class]]) {
+        Contact *contact = (Contact *)object;
+        [self dialNumber:contact.extension usingLine:[JCAuthenticationManager sharedInstance].line sender:tableView];
+    }
+    else if ([object isKindOfClass:[Line class]] && object != [JCAuthenticationManager sharedInstance].line) {
+        Line *line = (Line *)object;
+        [self dialNumber:line.extension usingLine:[JCAuthenticationManager sharedInstance].line sender:tableView];
+    }
 }
 
 #pragma mark - Search Bar Delegate
@@ -195,8 +229,7 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     [searchBar resignFirstResponder];
-    if (searchBar.text == nil)
-    {
+    if (searchBar.text == nil) {
         [self reloadTable];
     }
 }

@@ -79,10 +79,8 @@ NSString *const kJCApiClientErrorDomain = @"JCClientError";
 {
     JCAuthenticationJSONRequestSerializer *serializer = [self new];
     [serializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    
     serializer.cachePolicy = NSURLRequestReloadIgnoringLocalAndRemoteCacheData;
     serializer.HTTPShouldHandleCookies = FALSE;
-    
     return serializer;
 }
 
@@ -113,7 +111,6 @@ NSString *const kJCApiClientErrorDomain = @"JCClientError";
 +(instancetype)serializer
 {
     JCAuthenticationXmlRequestSerializer *serializer = [self new];
-    
     serializer.cachePolicy = NSURLRequestReloadIgnoringLocalAndRemoteCacheData;
     serializer.HTTPShouldHandleCookies = FALSE;
     [serializer setValue:@"application/xml" forHTTPHeaderField:@"Content-Type"];
@@ -123,7 +120,9 @@ NSString *const kJCApiClientErrorDomain = @"JCClientError";
 - (NSURLRequest *)requestBySerializingRequest:(NSURLRequest *)request withParameters:(id)object error:(NSError *__autoreleasing *)error
 {
     if (![object isKindOfClass:[NSData class]]) {
-        *error = [JCApiClientError errorWithCode:JCApiClientInvalidArgumentErrorCode reason:@"object is not the class type NSData"];
+        if (error != NULL) {
+            *error = [JCApiClientError errorWithCode:JCApiClientInvalidArgumentErrorCode reason:@"object is not the class type NSData"];
+        }
         return nil;
     }
     
@@ -131,7 +130,6 @@ NSString *const kJCApiClientErrorDomain = @"JCClientError";
     NSMutableURLRequest *mutableRequest = [request mutableCopy];
     [mutableRequest setValue:[NSString stringWithFormat:@"%lu", (unsigned long)data.length] forHTTPHeaderField:@"Content-Length"];
     [mutableRequest setHTTPBody:data];
-    
     return mutableRequest;
 }
 
@@ -178,7 +176,9 @@ NSString *const kJCApiClientErrorDomain = @"JCClientError";
     // Process Response Data
     NSDictionary *responseObject = [NSDictionary dictionaryWithXMLData:data];
     if (!response) {
-        *error = [JCApiClientError errorWithCode:JCApiClientResponseParserErrorCode reason:@"Response Empty"];
+        if (error != NULL) {
+            *error = [JCApiClientError errorWithCode:JCApiClientResponseParserErrorCode reason:@"Response Empty"];
+        }
     }
     
     return responseObject;

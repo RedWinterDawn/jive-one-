@@ -9,20 +9,21 @@
 #import <Foundation/Foundation.h>
 #import "JCLineSession.h"
 
-extern NSString *const kJCCallCardStatusChangeKey;
-
 @class JCCallCard;
 
 @protocol JCCallCardDelegate <NSObject>
 
 // Notify delegate to answer an Incoming call card.
--(void)answerCall:(JCCallCard *)callCard;
+-(void)answerCall:(JCCallCard *)callCard completion:(CompletionHandler)completion;
 
 // Notify delegate to hangs up a specific call card.
--(void)hangUpCall:(JCCallCard *)callCard;
+-(void)hangUpCall:(JCCallCard *)callCard completion:(CompletionHandler)completion;
 
-// Notify the delegate to sets the specified call state for the given call card.
--(void)setCallHold:(bool)hold forCall:(JCCallCard *)callCard;
+// Notify delegate to place a specific call on hold.
+-(void)holdCall:(JCCallCard *)callCard completion:(CompletionHandler)completion;
+
+// Notify delegate to take a specific call off hold.
+-(void)unholdCall:(JCCallCard *)callCard completion:(CompletionHandler)completion;
 
 @end
 
@@ -31,18 +32,16 @@ extern NSString *const kJCCallCardStatusChangeKey;
 @property (nonatomic, weak) id <JCCallCardDelegate> delegate;
 @property (nonatomic, strong) NSDate *started;
 @property (nonatomic, strong) NSDate *holdStarted;
-@property (nonatomic, getter=isHolding) bool hold;
 
 @property (nonatomic, readonly) JCLineSession *lineSession;
-@property (nonatomic, readonly) NSString *identifer;
 @property (nonatomic, readonly) NSString *callerId;
 @property (nonatomic, readonly) NSString *dialNumber;
-@property (nonatomic, readonly) JCLineSessionState callState;
-@property (nonatomic, readonly) bool isIncoming;
 
 -(instancetype)initWithLineSession:(JCLineSession *)lineSession;
 
--(void)answerCall;
--(void)endCall;
+-(void)answerCall:(CompletionHandler)completion;
+-(void)endCall:(CompletionHandler)completion;
+-(void)holdCall:(CompletionHandler)completion;
+-(void)unholdCall:(CompletionHandler)completion;
 
 @end

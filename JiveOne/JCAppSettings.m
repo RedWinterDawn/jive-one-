@@ -9,8 +9,10 @@
 #import "JCAppSettings.h"
 
 NSString *const kJCAppSettingsIntercomEnabledAttribute = @"intercomEnabled";
+NSString *const kJCAppSettingsIntercomMicrophoneMuteEnabledAttribute = @"intercomMicrophoneMuteEnabled";
 NSString *const kJCAppSettingsWifiOnlyAttribute = @"wifiOnly";
 NSString *const kJCAppSettingsPresenceAttribute = @"presenceEnabled";
+NSString *const kJCAppSettingsVibrateOnRingAttribute = @"vibrateOnRing";
 
 @implementation JCAppSettings
 
@@ -19,6 +21,11 @@ NSString *const kJCAppSettingsPresenceAttribute = @"presenceEnabled";
 -(void)setIntercomEnabled:(BOOL)intercomEnabled
 {
     [self setSettingBoolValue:intercomEnabled forKey:kJCAppSettingsIntercomEnabledAttribute];
+}
+
+-(void)setIntercomMicrophoneMuteEnabled:(BOOL)intercomMicrophoneMuteEnabled
+{
+    [self setSettingBoolValue:intercomMicrophoneMuteEnabled forKey:kJCAppSettingsIntercomMicrophoneMuteEnabledAttribute];
 }
 
 -(void)setWifiOnly:(BOOL)callsOverCellEnabled
@@ -31,11 +38,20 @@ NSString *const kJCAppSettingsPresenceAttribute = @"presenceEnabled";
     [self setSettingBoolValue:presenceEnabled forKey:kJCAppSettingsPresenceAttribute];
 }
 
+-(void)setVibrateOnRing:(BOOL)vibrateOnRing
+{
+    [self setSettingBoolValue:vibrateOnRing forKey:kJCAppSettingsVibrateOnRingAttribute];
+}
+
 #pragma mark - Getters -
 
 -(BOOL)isIntercomEnabled
 {
     return [[NSUserDefaults standardUserDefaults] boolForKey:kJCAppSettingsIntercomEnabledAttribute];
+}
+-(BOOL)isIntercomMicrophoneMuteEnabled
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kJCAppSettingsIntercomMicrophoneMuteEnabledAttribute];
 }
 -(BOOL)isWifiOnly
 {
@@ -46,6 +62,12 @@ NSString *const kJCAppSettingsPresenceAttribute = @"presenceEnabled";
 {
     return [[NSUserDefaults standardUserDefaults] boolForKey:kJCAppSettingsPresenceAttribute];
 }
+
+-(BOOL)isVibrateOnRing
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kJCAppSettingsVibrateOnRingAttribute];
+}
+
 #pragma mark - Private -
 
 -(void)setSettingBoolValue:(BOOL)value forKey:(NSString *)key

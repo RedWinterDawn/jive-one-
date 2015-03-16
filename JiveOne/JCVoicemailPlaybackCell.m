@@ -21,9 +21,11 @@
     [self.voicemail addObserver:self forKeyPath:kVoicemailDataAttributeKey options:NSKeyValueObservingOptionNew context:NULL];
     if (self.voicemail.data.length > 0) {
         [self.spinningWheel stopAnimating];
+        self.playPauseButton.enabled = true;
     }
     else {
         [self.spinningWheel startAnimating];
+        self.playPauseButton.enabled = false;
     }
 }
 

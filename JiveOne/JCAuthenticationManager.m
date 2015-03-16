@@ -102,7 +102,13 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     NSString *jiveUserId = _authenticationKeychain.jiveUserId;
     _user = [User MR_findFirstByAttribute:NSStringFromSelector(@selector(jiveUserId)) withValue:jiveUserId];
     if (_user && _user.pbxs.count > 0) {
-        [self postNotificationEvent:kJCAuthenticationManagerUserLoadedMinimumDataNotification];
+        Line *line = self.line;
+        if (line) {
+            [self postNotificationEvent:kJCAuthenticationManagerUserLoadedMinimumDataNotification];
+        } else {
+            [JCAlertView alertWithTitle:@"Warning" message:@"Unable to select line. Please Login again."];
+            [self logout];
+        }
     }
     else {
         [self logout]; // Nuke it, we need to relogin.

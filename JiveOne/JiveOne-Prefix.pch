@@ -19,7 +19,8 @@
     #import <Foundation/Foundation.h>
     #import <MagicalRecord/CoreData+MagicalRecord.h>
     #import <MobileCoreServices/MobileCoreServices.h>
-    #import "Flurry.h"
+    #import <AFNetworking/AFNetworking.h>
+    #import <NewRelicAgent/NewRelic.h>
 
     // Singletons
     #import "Constants.h"
@@ -29,6 +30,9 @@
     #import "NSString+Additions.h"
     #import "UIDevice+Additions.h"
     #import "NSDictionary+Validations.h"
+    #import "JCAlertView.h"
+    #import "JCProgressHUD.h"
+
 #endif
 
 #if !defined(__OPTIMIZE__) || defined(DEBUG)

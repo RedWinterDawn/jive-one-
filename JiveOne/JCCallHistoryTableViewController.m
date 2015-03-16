@@ -8,6 +8,10 @@
 
 #import "JCCallHistoryTableViewController.h"
 
+// Managers
+#import "JCPhoneManager.h"
+
+// Managed objects
 #import "Call.h"
 #import "MissedCall.h"
 
@@ -24,11 +28,18 @@
 {
     [super viewDidDisappear:animated];
     
-    NSArray *missedCalls = [MissedCall MR_findByAttribute:@"read" withValue:@NO inContext:self.managedObjectContext];
-    for (MissedCall *missedCall in missedCalls) {
-        missedCall.read = YES;
-    }
-    [self.managedObjectContext MR_saveOnlySelfAndWait];
+    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+        NSArray *missedCalls = [MissedCall MR_findByAttribute:@"read" withValue:@NO inContext:localContext];
+        for (MissedCall *missedCall in missedCalls) {
+            missedCall.read = YES;
+        }
+    }];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 }
 
 #pragma mark - Setters - 
@@ -62,6 +73,14 @@
         _fetchRequest.sortDescriptors = @[sortDescriptor];
     }
     return _fetchRequest;
+}
+
+#pragma mark - Delegate Handlers
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    Call *call = (Call *)[self objectAtIndexPath:indexPath];
+    [self dialNumber:call.number usingLine:[JCAuthenticationManager sharedInstance].line sender:tableView];
 }
 
 @end

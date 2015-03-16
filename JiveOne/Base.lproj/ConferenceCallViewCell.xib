@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" contentMode="center" reuseIdentifier="ConferenceCallCardCell" id="Qvt-6N-iCf" customClass="JCCurrentCallCardViewCell">
+        <collectionViewCell opaque="NO" contentMode="center" reuseIdentifier="ConferenceCallCardCell" id="Qvt-6N-iCf" customClass="JCConferenceCallCardViewCell">
             <rect key="frame" x="0.0" y="0.0" width="300" height="305"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="300" height="305"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="znt-7F-MYF" userLabel="Call Card View">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="znt-7F-MYF" userLabel="Call Card View" propertyAccessControl="localizable">
                         <rect key="frame" x="0.0" y="0.0" width="300" height="255"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3tE-5t-IUF" userLabel="Hold Bar">
@@ -27,7 +27,7 @@
                                             <constraint firstAttribute="width" constant="13" id="uWN-qx-5Ww"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ON HOLD" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DyB-N9-NeR">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ON HOLD" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DyB-N9-NeR" propertyAccessControl="localizable">
                                         <rect key="frame" x="27" y="9" width="88" height="14"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="88" id="86a-a0-jFJ"/>
@@ -36,7 +36,7 @@
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="12"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1:03" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cuQ-l6-1Vo">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1:03" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cuQ-l6-1Vo" propertyAccessControl="localizable">
                                         <rect key="frame" x="248" y="8" width="42" height="15"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="15" id="8Lt-pC-Jhq"/>
@@ -47,7 +47,7 @@
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <accessibility key="accessibilityConfiguration" hint="callStateView" label="callStateView"/>
+                                <accessibility key="accessibilityConfiguration" hint="callStateView" label=""/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="28" id="0RQ-h2-siv"/>
                                     <constraint firstItem="gKq-Qa-9fG" firstAttribute="top" secondItem="3tE-5t-IUF" secondAttribute="top" constant="10" id="FhX-Y9-fpU"/>
@@ -58,11 +58,11 @@
                                     <constraint firstItem="DyB-N9-NeR" firstAttribute="top" secondItem="3tE-5t-IUF" secondAttribute="top" constant="9" id="qv2-Fw-QSI"/>
                                 </constraints>
                             </view>
-                            <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="stb-hv-2O0" userLabel="Info">
+                            <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="stb-hv-2O0" userLabel="Info" propertyAccessControl="localizable">
                                 <rect key="frame" x="0.0" y="27" width="300" height="56"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Conference" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qfp-g2-efF">
-                                        <rect key="frame" x="8" y="0.0" width="143" height="36"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Conference" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qfp-g2-efF" propertyAccessControl="localizable">
+                                        <rect key="frame" x="8" y="6" width="143" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="36" id="Dc3-rX-8rG"/>
                                             <constraint firstAttribute="width" constant="143" id="aKE-hW-duh"/>
@@ -70,17 +70,17 @@
                                         <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="26.5"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Callers Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Ts-vU-ZOh" customClass="JCDialStringLabel">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Callers Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Ts-vU-ZOh" customClass="JCDialStringLabel" propertyAccessControl="localizable">
                                         <rect key="frame" x="13" y="35" width="277" height="21"/>
-                                        <accessibility key="accessibilityConfiguration" hint="" label="Callers Number"/>
+                                        <accessibility key="accessibilityConfiguration" hint="" label=""/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="xiD-FB-Afq"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="12"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CANCELED" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="none" adjustsLetterSpacingToFitWidth="YES" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Trt-IP-BJb">
-                                        <rect key="frame" x="224" y="0.0" width="66" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="none" adjustsLetterSpacingToFitWidth="YES" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Trt-IP-BJb" propertyAccessControl="localizable">
+                                        <rect key="frame" x="224" y="6" width="66" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="66" id="2br-Ri-w2e"/>
                                             <constraint firstAttribute="height" constant="21" id="fTD-1J-GRD"/>
@@ -92,8 +92,8 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="Trt-IP-BJb" secondAttribute="trailing" constant="10" id="4zp-KE-9Yo"/>
-                                    <constraint firstItem="qfp-g2-efF" firstAttribute="top" secondItem="stb-hv-2O0" secondAttribute="top" id="Eyk-zo-K1J"/>
-                                    <constraint firstItem="Trt-IP-BJb" firstAttribute="top" secondItem="stb-hv-2O0" secondAttribute="top" id="HKC-HE-rRj"/>
+                                    <constraint firstItem="qfp-g2-efF" firstAttribute="top" secondItem="stb-hv-2O0" secondAttribute="top" constant="6" id="Eyk-zo-K1J"/>
+                                    <constraint firstItem="Trt-IP-BJb" firstAttribute="top" secondItem="stb-hv-2O0" secondAttribute="top" constant="6" id="HKC-HE-rRj"/>
                                     <constraint firstItem="5Ts-vU-ZOh" firstAttribute="top" secondItem="stb-hv-2O0" secondAttribute="top" constant="35" id="NZc-Mc-JTf"/>
                                     <constraint firstItem="5Ts-vU-ZOh" firstAttribute="leading" secondItem="stb-hv-2O0" secondAttribute="leading" constant="13" id="Pc8-dl-JT0"/>
                                     <constraint firstAttribute="height" constant="56" id="Q3c-Z3-caH"/>
@@ -112,7 +112,7 @@
                             <constraint firstAttribute="trailing" secondItem="stb-hv-2O0" secondAttribute="trailing" id="nGc-3r-Wbj"/>
                         </constraints>
                     </view>
-                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" image="conference-avatar-white" translatesAutoresizingMaskIntoConstraints="NO" id="8c3-rV-6S6">
+                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="conference-avatar-white" translatesAutoresizingMaskIntoConstraints="NO" id="8c3-rV-6S6">
                         <rect key="frame" x="92" y="91" width="116" height="123"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="116" id="Emk-Ri-dVC"/>
@@ -122,7 +122,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fVM-Ov-3LX" userLabel="Action View">
                         <rect key="frame" x="0.0" y="255" width="300" height="50"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yCA-oV-pxj" userLabel="Hold">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yCA-oV-pxj" userLabel="Hold" propertyAccessControl="localizable">
                                 <rect key="frame" x="150" y="0.0" width="150" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -136,7 +136,7 @@
                                     <action selector="toggleHold:" destination="Qvt-6N-iCf" eventType="touchUpInside" id="NGq-1I-Wjd"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Bi-dC-Ajg" userLabel="HangUp">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Bi-dC-Ajg" userLabel="HangUp" propertyAccessControl="localizable">
                                 <rect key="frame" x="0.0" y="0.0" width="150" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>

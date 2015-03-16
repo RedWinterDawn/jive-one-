@@ -7,29 +7,15 @@
 //
 
 #import "JCVoiceNonVisualViewController.h"
-#import "JCCallerViewController.h"
-
-@interface JCVoiceNonVisualViewController () <JCCallerViewControllerDelegate>
-
-@end
+#import "JCPhoneManager.h"
 
 @implementation JCVoiceNonVisualViewController
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+-(IBAction)callVoicemail:(id)sender
 {
-    UIViewController *viewController = segue.destinationViewController;
-    if ([viewController isKindOfClass:[JCCallerViewController class]]) {
-        JCCallerViewController *callerViewController = (JCCallerViewController *)viewController;
-        callerViewController.delegate = self;
-        callerViewController.dialString = @"*99";
-    }
-}
-
--(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController
-{
-    [self dismissViewControllerAnimated:NO completion:^{
-        
-    }];
+    [self dialNumber:@"*99"
+           usingLine:[JCAuthenticationManager sharedInstance].line
+              sender:sender];
 }
 
 @end

@@ -7,7 +7,6 @@
 //
 
 #import "JCRecentActivityTableViewController.h"
-#import "JCCallerViewController.h"
 
 // Views
 #import "JCCallHistoryCell.h"
@@ -17,14 +16,11 @@
 #import "Call.h"
 #import "Voicemail.h"
 
+// Managers
 #import "JCPresenceManager.h"
 
 NSString *const kJCHistoryCellReuseIdentifier = @"HistoryCell";
 NSString *const kJCVoicemailCellReuseIdentifier = @"VoicemailCell";
-
-@interface JCRecentActivityTableViewController () <JCCallerViewControllerDelegate>
-
-@end
 
 @implementation JCRecentActivityTableViewController
 
@@ -37,20 +33,11 @@ NSString *const kJCVoicemailCellReuseIdentifier = @"VoicemailCell";
     return self;
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+-(void)viewDidAppear:(BOOL)animated
 {
-    UIViewController *viewController = segue.destinationViewController;
+    [super viewDidAppear:animated];
     
-    if ([viewController isKindOfClass:[JCCallerViewController class]]) {
-        JCCallerViewController *callerViewController = (JCCallerViewController *)viewController;
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        id<NSObject> object = [self objectAtIndexPath:indexPath];
-        if ([object isKindOfClass:[Call class]]) {
-            Call *call = (Call *)object;
-            callerViewController.dialString = call.number;
-        }
-        callerViewController.delegate = self;
-    }
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 }
 
 -(NSFetchedResultsController *)fetchedResultsController
@@ -113,7 +100,7 @@ NSString *const kJCVoicemailCellReuseIdentifier = @"VoicemailCell";
 
 #pragma mark - Delegate Handlers -
          
-#pragma mark Caller View Controller Delegate
+#pragma mark UITableViewDelegate
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -123,11 +110,5 @@ NSString *const kJCVoicemailCellReuseIdentifier = @"VoicemailCell";
     }
 }
 
--(void)shouldDismissCallerViewController:(JCCallerViewController *)viewController
-{
-    [self dismissViewControllerAnimated:NO completion:^{
-        
-    }];
-}
 
 @end

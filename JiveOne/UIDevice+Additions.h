@@ -36,3 +36,10 @@
 -(NSString *)userUniqueIdentiferForUser:(NSString *)username;
 
 @end
+
+@interface UIDevice (Platform)
+
+@property (nonatomic, readonly) NSString *platform;
+@property (nonatomic, readonly) NSString *platformType;
+
+@end

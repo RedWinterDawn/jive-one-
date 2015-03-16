@@ -10,7 +10,7 @@
 
 @implementation NSString (IsNumeric)
 
--(bool)isNumeric
+-(BOOL)isNumeric
 {
     NSCharacterSet *alphaNums = [NSCharacterSet decimalDigitCharacterSet];
     NSCharacterSet *inStringSet = [NSCharacterSet characterSetWithCharactersInString:self];

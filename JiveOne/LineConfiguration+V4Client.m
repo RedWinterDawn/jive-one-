@@ -8,7 +8,6 @@
 
 #import "LineConfiguration+V4Client.h"
 #import "PBX.h"
-#import "JCV4ApiClient.h"
 
 #import "NSDictionary+Validations.h"
 
@@ -44,8 +43,6 @@ NSString *const kLineConfigurationResponseSipAccountNameKey         = @"accountN
 NSString *const kLineConfigurationInvalidServerRequestException  = @"invalidServerRequest";
 NSString *const kLineConfigurationServerErrorException           = @"serverError";
 NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServerResponse";
-
-
 
 @implementation LineConfiguration (Custom)
 
@@ -99,55 +96,49 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
 
 + (void)processLineConfigurationResponseObject:(id)responseObject line:(Line *)line completion:(CompletionHandler)completion
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        @try {
-            // Check our response status. If we failed, notify and exit.
-            NSDictionary *status = [responseObject valueForKeyPath:kLineConfigurationResponseStatusPath];
-            NSString *success = [status stringValueForKey:kLineConfigurationResponseStatusSuccessKey];
-            if ([success isEqualToString:kLineConfigurationResponseStatusFailureValue]) {
-                [NSException raise:kLineConfigurationServerErrorException format:@"%@", [status stringValueForKey:kLineConfigurationResponseStatusErrorKey]];
-            }
-            
-            // Fetch data from response. If we have no line configuration, fail.
-            NSArray *array = [responseObject valueForKeyPath:kLineContigurationResponseDataPath];
-            if (!array || array.count == 0) {
-                [NSException raise:kLineConfigurationInvalidServerResponseException format:@"No Line Configuration present"];
-            }
-            
-            // Process line configuration data response and store into core data, linking to our line.
-            [MagicalRecord saveUsingCurrentThreadContextWithBlock:^(NSManagedObjectContext *localContext) {
-                [self processLineConfigurationDataArray:array line:(Line *)[localContext objectWithID:line.objectID]];
-            }
-            completion:^(BOOL success, NSError *error) {
-                 if (completion) {
-                    if (error) {
-                        completion(NO, error);
-                    } else {
-                        completion(YES, nil);
-                    }
-                 }
-            }];
+    @try {
+        // Check our response status. If we failed, notify and exit.
+        NSDictionary *status = [responseObject valueForKeyPath:kLineConfigurationResponseStatusPath];
+        NSString *success = [status stringValueForKey:kLineConfigurationResponseStatusSuccessKey];
+        if ([success isEqualToString:kLineConfigurationResponseStatusFailureValue]) {
+            [NSException raise:kLineConfigurationServerErrorException format:@"%@", [status stringValueForKey:kLineConfigurationResponseStatusErrorKey]];
         }
-        @catch (NSException *exception) {
+        
+        // Fetch data from response. If we have no line configuration, fail.
+        NSArray *array = [responseObject valueForKeyPath:kLineContigurationResponseDataPath];
+        if (!array || array.count == 0) {
+            [NSException raise:kLineConfigurationInvalidServerResponseException format:@"No Line Configuration present"];
+        }
+        
+        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+            [self processLineConfigurationDataArray:array line:(Line *)[localContext objectWithID:line.objectID]];
+        } completion:^(BOOL success, NSError *error) {
             if (completion) {
-                JCApiClientErrorCode code;
-                NSString *name = exception.name;
-                if ([name isEqualToString:kLineConfigurationInvalidServerRequestException]) {
-                    code = JCApiClientInvalidRequestParameterErrorCode;
-                } else if ([name isEqualToString:kLineConfigurationServerErrorException]) {
-                    code = JCApiClientResponseErrorCode;
-                } else if ([name isEqualToString:kLineConfigurationInvalidServerResponseException]) {
-                    code = JCApiClientUnexpectedResponseErrorCode;
+                if (error) {
+                    completion(NO, error);
                 } else {
-                    code = JCApiClientUnknownErrorCode;
+                    completion(YES, nil);
                 }
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    completion(NO, [JCApiClientError errorWithCode:code reason:exception.reason]);
-                });
             }
+        }];
+
+    }
+    @catch (NSException *exception) {
+        if (completion) {
+            JCApiClientErrorCode code;
+            NSString *name = exception.name;
+            if ([name isEqualToString:kLineConfigurationInvalidServerRequestException]) {
+                code = JCApiClientInvalidRequestParameterErrorCode;
+            } else if ([name isEqualToString:kLineConfigurationServerErrorException]) {
+                code = JCApiClientResponseErrorCode;
+            } else if ([name isEqualToString:kLineConfigurationInvalidServerResponseException]) {
+                code = JCApiClientUnexpectedResponseErrorCode;
+            } else {
+                code = JCApiClientUnknownErrorCode;
+            }
+            completion(NO, [JCApiClientError errorWithCode:code reason:exception.reason]);
         }
-    });
+    }
 }
 
 + (void)processLineConfigurationDataArray:(NSArray *)array line:(Line *)line
@@ -238,26 +229,34 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
 - (NSURLRequest *)requestBySerializingRequest:(NSURLRequest *)request withParameters:(id)object error:(NSError *__autoreleasing *)error
 {
     if (![object isKindOfClass:[NSDictionary class]]) {
-        *error = [JCApiClientError errorWithCode:JCApiClientInvalidRequestParameterErrorCode reason:@"Unvalid Parameters dictionary"];
+        if (error != NULL) {
+            *error = [JCApiClientError errorWithCode:JCApiClientInvalidRequestParameterErrorCode reason:@"Unvalid Parameters dictionary"];
+        }
         return nil;
     }
     
     NSDictionary *parameters = (NSDictionary *)object;
     NSString *username = [parameters stringValueForKey:kJCLineConfigurationRequestUsernameKey];
     if (!username) {
-        *error = [JCApiClientError errorWithCode:JCApiClientInvalidRequestParameterErrorCode reason:@"Username is NULL"];
+        if (error != NULL) {
+            *error = [JCApiClientError errorWithCode:JCApiClientInvalidRequestParameterErrorCode reason:@"Username is NULL"];
+        }
         return nil;
     }
     
     NSString *pbxId = [parameters stringValueForKey:kJCLineConfigurationRequestPbxIdKey];
     if (!pbxId) {
-        *error = [JCApiClientError errorWithCode:JCApiClientInvalidRequestParameterErrorCode reason:@"PBX id is NULL"];
+        if (error != NULL) {
+            *error = [JCApiClientError errorWithCode:JCApiClientInvalidRequestParameterErrorCode reason:@"PBX id is NULL"];
+        }
         return nil;
     }
         
     NSString *extension = [parameters stringValueForKey:kJCLineConfigurationRequestExtensionKey];
     if (!extension) {
-        *error = [JCApiClientError errorWithCode:JCApiClientInvalidRequestParameterErrorCode reason:@"Extension is NULL"];
+        if (error != NULL) {
+            *error = [JCApiClientError errorWithCode:JCApiClientInvalidRequestParameterErrorCode reason:@"Extension is NULL"];
+        }
         return nil;
     }
     
@@ -277,9 +276,7 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
     
     _xml = [NSString stringWithFormat:kLineConfigurationRequestXMLString, username, token, pbxId, extension, model, os, locale, language, uuid, appBuildString, type];
     NSData *data = [_xml dataUsingEncoding:NSUTF8StringEncoding];
-    
     NSMutableURLRequest *mutableRequest = [[super requestBySerializingRequest:request withParameters:data error:error] mutableCopy];
-    
     return mutableRequest;
 }
 @end
