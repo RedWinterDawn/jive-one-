@@ -19,6 +19,7 @@
 
 #import "JCPhoneManager.h"
 #import "JCPresenceManager.h"
+#import "JCVoicemailManager.h"
 
 #import "JCBadgeManager.h"
 #import "JCApplicationSwitcherDelegate.h"
@@ -266,9 +267,7 @@
             	// Open socket to subscribe to presence and voicemail events.
             	[JCSocket connectWithDeviceToken:deviceToken completion:^(BOOL success, NSError *error) {
                     [JCPresenceManager subscribeToPbx:line.pbx];
-                   
-                
-                	// TODO: Subscribe to voicemail socket events.
+                    [JCVoicemailManager subscribeToLine:line];
             	}];
         	}
         	else {
