@@ -15,7 +15,6 @@ NSString *const kJCPresenceManagerLinesChangedNotification = @"linesChanged";
 @interface JCPresenceManager ()
 {
     NSMutableArray *_lines;
-    JCSocket *_socket;
     PBX *_pbx;
 }
 
@@ -31,13 +30,9 @@ NSString *const kJCPresenceManagerLinesChangedNotification = @"linesChanged";
 {
     self = [super init];
     if (self) {
-        _socket = [JCSocket sharedSocket];
-        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-        [center addObserver:self selector:@selector(socketDidReceiveMessageSelector:) name:kJCSocketReceivedDataNotification object:_socket];
         [ [JCAppSettings sharedSettings] addObserver:self forKeyPath:kJCAppSettingsPresenceAttribute options:0 context:NULL];
     }
     return self;
-    
 }
 
 /**
@@ -119,6 +114,8 @@ NSString *const kJCPresenceManagerIdentifierKey = @"subId";
 
 -(void)socketDidReceiveMessageSelector:(NSNotification *)notification
 {
+    [super socketDidReceiveMessageSelector:notification];
+    
     NSDictionary *userInfo = notification.userInfo;
     NSDictionary *results = [userInfo objectForKey:kJCSocketNotificationResultKey];
     if (!results) {
@@ -160,28 +157,12 @@ NSString *const kJCPresenceManagerIdentifierKey = @"subId";
     }
 }
 
-@end
-
-
-@implementation JCPresenceManager (Singleton)
-
-+(instancetype)sharedManager
-{
-    static JCPresenceManager *presenceManagerSingleton = nil;
-    static dispatch_once_t presenceManagerLoaded;
-    dispatch_once(&presenceManagerLoaded, ^{
-        presenceManagerSingleton = [[JCPresenceManager alloc] init];
-    });
-    return presenceManagerSingleton;
-}
-
-+ (id)copyWithZone:(NSZone *)zone
-{
-    return self;
-}
-
 + (void)subscribeToPbx:(PBX *)pbx
 {
+    if (!pbx.v5) {
+        return;
+    }
+    
     [[JCPresenceManager sharedManager] subscribeToPbx:pbx];
 }
 
