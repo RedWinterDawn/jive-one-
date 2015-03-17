@@ -257,22 +257,19 @@
     	// to link contacts to thier voicemail if in the pbx. Only fetch voicmails, and open sockets for
     	// v5 pbxs. If we are on v4, we disconnect, and do not fetch voicemails.
     	[Contact downloadContactsForLine:localLine complete:^(BOOL success, NSError *error) {
-        	if (line.pbx.isV5) {
-            
-            	// Fetch Voicemails
-                [Voicemail downloadVoicemailsForLine:line completion:^(BOOL success, NSError *error) {
-                    [Voicemail deleteAllMarkedVoicemailsForLine:line completion:NULL];
-                }];
-            
-            	// Open socket to subscribe to presence and voicemail events.
-            	[JCSocket connectWithDeviceToken:deviceToken completion:^(BOOL success, NSError *error) {
+        	
+            // Open socket to subscribe to presence and voicemail events.
+            [JCSocket connectWithDeviceToken:deviceToken completion:^(BOOL success, NSError *error) {
+                if (success) {
                     [JCPresenceManager subscribeToPbx:line.pbx];
-                    [JCVoicemailManager subscribeToLine:line];
-            	}];
-        	}
-        	else {
-            	[JCSocket disconnect]; // If we are on v4, which does not use the jasmine socket
-        	}
+					[JCVoicemailManager subscribeToLine:line];
+                }
+            }];
+            
+            // Fetch Voicemails (feature flagged only for v5 clients). Since we try to link the
+            // voicemails to thier contacts, we try to download/update the contacts list first, then
+            // request voicemails.
+            [Voicemail downloadVoicemailsForLine:line complete:NULL];
     	}];
         
         // Register the Phone.
@@ -453,7 +450,7 @@
 -(void)applicationDidEnterBackground:(UIApplication *)application
 {
     LOG_Info();
-    [JCSocket stop];
+    //[JCSocket stop];
     [JCPhoneManager startKeepAlive];
 }
 
@@ -465,7 +462,7 @@
 {
     LOG_Info();
   
-    [JCSocket start];
+    //[JCSocket start];
     [JCPhoneManager stopKeepAlive];
 }
 

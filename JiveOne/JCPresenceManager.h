@@ -8,22 +8,18 @@
 
 @import Foundation;
 
+#import "JCSocketManager.h"
 #import "JCLinePresence.h"
 #import "PBX.h"
 #import "Contact.h"
 
 extern NSString *const kJCPresenceManagerLinesChangedNotification;
 
-@interface JCPresenceManager : NSObject
+@interface JCPresenceManager : JCSocketManager
 
 -(JCLinePresence *)linePresenceForContact:(Contact *)contact;
 -(JCLinePresence *)linePresenceForIdentifier:(NSString *)identifier;
 
-@end
-
-@interface JCPresenceManager (Singleton)
-
-+(instancetype)sharedManager;
 +(void)subscribeToPbx:(PBX *)pbx;
 +(void)unsubscribeFromPbx:(PBX *)pbx;
 

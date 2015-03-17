@@ -305,6 +305,7 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
             }
             else
             {
+                NSLog(@"Clearing old Socket Session, and restarting");
                 [JCKeychain deleteValueForKey:kJCSocketSessionKeychainKey]; // delete stored keychain credentials. They are no longer valid
                 [JCSocket requestSocketSessionRequestUrlsWithDeviceIdentifier:deviceToken completion:completion];
             }
@@ -312,8 +313,7 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
     }
     
     // If we do not have a session url, we create a new session by requesting one.
-    else
-    {
+    else {
         [JCSocket requestSocketSessionRequestUrlsWithDeviceIdentifier:deviceToken completion:completion];
     }
 }
