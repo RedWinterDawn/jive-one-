@@ -38,9 +38,6 @@ NSString *const kJCSocketManagerTypeKeepAlive = @"keepalive";
     
     // Get the event message type.
     NSString *type = [results stringValueForKey:kJCSocketManagerTypeKey];
-    if ([type isEqualToString:kJCSocketManagerTypeKeepAlive]) {
-        return;
-    }
     
     // Get the event message data.
     NSDictionary *data = nil;
