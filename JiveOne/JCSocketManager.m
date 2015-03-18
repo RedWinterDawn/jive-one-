@@ -54,22 +54,3 @@ NSString *const kJCSocketManagerTypeKeepAlive = @"keepalive";
 }
 
 @end
-
-@implementation JCSocketManager (Singleton)
-
-+(instancetype)sharedManager
-{
-    static id singleton = nil;
-    static dispatch_once_t loaded;
-    dispatch_once(&loaded, ^{
-        singleton = [[self class] new];
-    });
-    return singleton;
-}
-
-+ (id)copyWithZone:(NSZone *)zone
-{
-    return self;
-}
-
-@end

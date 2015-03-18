@@ -7,8 +7,9 @@
 //
 
 #import "JCSocket.h"
+#import "JCManager.h"
 
-@interface JCSocketManager : NSObject {
+@interface JCSocketManager : JCManager {
     JCSocket *_socket;
 }
 

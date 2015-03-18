@@ -144,14 +144,14 @@ NSString *const kJCPresenceManagerIdentifierKey     = @"subId";
         [JCSocket subscribeToSocketEventsWithIdentifer:contact.jrn entity:contact.jrn type:@"dialog"];
     }
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCPresenceManagerLinesChangedNotification object:self userInfo:nil];
+    [self postNotificationNamed:kJCPresenceManagerLinesChangedNotification];
 }
 
 -(void)unsubscribeFromPbx:(PBX *)pbx
 {
     [JCSocket unsubscribeToSocketEvents:NULL];
     _lines = nil;
-    [[NSNotificationCenter defaultCenter] postNotificationName:kJCPresenceManagerLinesChangedNotification object:self userInfo:nil];
+    [self postNotificationNamed:kJCPresenceManagerLinesChangedNotification];
 }
 
 @end
