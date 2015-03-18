@@ -51,12 +51,6 @@ typedef enum : NSInteger {
 @property (nonatomic, readonly) JCPhoneAudioManagerInputType inputType;
 @property (nonatomic, readonly) JCPhoneAudioManagerOutputType outputType;
 
-@end
-
-@interface JCPhoneManager (Singleton)
-
-+ (JCPhoneManager *)sharedManager;
-
 + (void)connectToLine:(Line *)line;
 + (void)disconnect;
 

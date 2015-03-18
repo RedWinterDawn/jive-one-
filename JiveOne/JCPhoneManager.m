@@ -827,24 +827,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     }
 }
 
-@end
-
-@implementation JCPhoneManager (Singleton)
-
-+(JCPhoneManager *)sharedManager
-{
-    static JCPhoneManager *phoneManagerSingleton = nil;
-    static dispatch_once_t phoneManagerLoaded;
-    dispatch_once(&phoneManagerLoaded, ^{
-        phoneManagerSingleton = [JCPhoneManager new];
-    });
-    return phoneManagerSingleton;
-}
-
-+ (id)copyWithZone:(NSZone *)zone
-{
-    return self;
-}
+#pragma mark - Static Methods -
 
 + (void)connectToLine:(Line *)line
 {
