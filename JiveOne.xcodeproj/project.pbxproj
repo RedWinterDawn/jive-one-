@@ -216,6 +216,7 @@
 		91DDB1991935008A00550F10 /* JCSpeakerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DDB1981935008A00550F10 /* JCSpeakerButton.m */; };
 		91DDB19D193500B500550F10 /* JCDeleteButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DDB19C193500B500550F10 /* JCDeleteButton.m */; };
 		B75899761A9FEA320025D5AD /* JCMessagesMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B75899751A9FEA320025D5AD /* JCMessagesMenuCell.m */; };
+		B7AEDD581ABA08670063033E /* JCActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AEDD571ABA08670063033E /* JCActionSheet.m */; };
 		DD3BD9F418DCB1740080318E /* Voicemail+V5Client.m in Sources */ = {isa = PBXBuildFile; fileRef = DD3BD9F318DCB1740080318E /* Voicemail+V5Client.m */; };
 		DD577D531940DC6C008DAB46 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD577D521940DC6C008DAB46 /* icomoon.ttf */; };
 		DDCADB6D197D75D800483D98 /* UTDirectoryVCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DDCADB6C197D75D800483D98 /* UTDirectoryVCTests.m */; };
@@ -639,6 +640,8 @@
 		91F6DFB4192A7080001C54FB /* Enterprise.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Enterprise.xcconfig; sourceTree = "<group>"; };
 		B75899741A9FEA320025D5AD /* JCMessagesMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMessagesMenuCell.h; sourceTree = "<group>"; };
 		B75899751A9FEA320025D5AD /* JCMessagesMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMessagesMenuCell.m; sourceTree = "<group>"; };
+		B7AEDD561ABA08670063033E /* JCActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCActionSheet.h; sourceTree = "<group>"; };
+		B7AEDD571ABA08670063033E /* JCActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCActionSheet.m; sourceTree = "<group>"; };
 		C87156C53B57B04D9871E012 /* Pods-JiveOneTests.enterprise.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JiveOneTests.enterprise.xcconfig"; path = "Pods/Target Support Files/Pods-JiveOneTests/Pods-JiveOneTests.enterprise.xcconfig"; sourceTree = "<group>"; };
 		DD3BD9F218DCB1740080318E /* Voicemail+V5Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Voicemail+V5Client.h"; sourceTree = "<group>"; };
 		DD3BD9F318DCB1740080318E /* Voicemail+V5Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Voicemail+V5Client.m"; sourceTree = "<group>"; };
@@ -937,6 +940,8 @@
 				5D2B2C071A30D8AE00938D76 /* FXBlurView.m */,
 				27B8152418D93F1A00516BF6 /* NotificationView.h */,
 				27B8152518D93F1A00516BF6 /* NotificationView.m */,
+				B7AEDD561ABA08670063033E /* JCActionSheet.h */,
+				B7AEDD571ABA08670063033E /* JCActionSheet.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1278,12 +1283,10 @@
 			children = (
 				5DBBDCC419DD9A4100A4DB96 /* JCPhoneManager.h */,
 				5DBBDCC519DD9A4100A4DB96 /* JCPhoneManager.m */,
-				5D9A5E201A24E30A00E8274C /* JCBluetoothManager.h */,
-				5D9A5E211A24E30A00E8274C /* JCBluetoothManager.m */,
+				5D9A5E201A24E30A00E8274C /* JCPhoneAudioManager.h */,
+				5D9A5E211A24E30A00E8274C /* JCPhoneAudioManager.m */,
 				279A4E2A19DA91E100E8AB7B /* JCSipManager.h */,
 				279A4E2B19DA91E100E8AB7B /* JCSipManager.m */,
-				F8C51B8C1A70162400BC96D8 /* JCAudioAlertManager.h */,
-				F8C51B8D1A70162400BC96D8 /* JCAudioAlertManager.m */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -1873,6 +1876,7 @@
 				F8C9A7E519EC36340049A715 /* RecentEvent.m in Sources */,
 				5D895EAF1A0AB7270015368D /* JCPhoneMenuCell.m in Sources */,
 				5D6243721A65C58F001DF88E /* JCDebugPhoneManagerTableViewController.m in Sources */,
+				B7AEDD581ABA08670063033E /* JCActionSheet.m in Sources */,
 				F8C9A7DA19E884D30049A715 /* IncomingCall.m in Sources */,
 				5D11566F1A6DB486006217D6 /* JCConferenceCallCardViewCell.m in Sources */,
 				F8B62E5B19DB091500AF98D3 /* JCRoundedButton.m in Sources */,
@@ -1981,7 +1985,6 @@
 				5D11758D1AA0321B00D2B03A /* JCPushNoAnimationSegue.m in Sources */,
 				5DB0BFCD1A00BAB3006737D7 /* JCVoicemailCell.m in Sources */,
 				F81EA8AB1A925CEE00081C81 /* JCSMSClient.m in Sources */,
-				F8C51B8E1A70162400BC96D8 /* JCAudioAlertManager.m in Sources */,
 				5D241FD11A37F511008B498A /* User.m in Sources */,
 				5D2EDB811A3BA8250031F7AD /* JCDebugContactGroupsTableViewController.m in Sources */,
 				5D490E6D1A8D7624004B62C0 /* JCConversationsTableViewController.m in Sources */,

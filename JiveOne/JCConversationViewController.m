@@ -21,6 +21,7 @@
 
 // Views
 #import "JCMessagesCollectionViewCell.h"
+#import "JCActionSheet.h"
 
 // Controllers
 #import "JCMessageParticipantTableViewController.h"
@@ -78,15 +79,35 @@
         senderDisplayName:(NSString *)senderDisplayName
                      date:(NSDate *)date
 {
-    id<JCPersonDataSource> person = _participants.lastObject;
-    [SMSMessage sendMessage:text toPerson:person fromDid:self.did completion:^(BOOL success, NSError *error) {
-     if (success) {
-//         [JSQSystemSoundPlayer jsq_playMessageSentSound];
-         [self finishSendingMessageAnimated:YES];
-     }else {
-         [self showError:error];
-     }
- }];
+    //show Action sheet here
+    //initilise an action sheet
+    if (self.count == 0) {
+        
+        JCActionSheet *didOptions = [[JCActionSheet alloc]initWithTitle:@"Which number would you like to send from" dismissed:^(NSInteger buttonIndex) {
+            NSLog(@"Ya Action from the action sheet");
+            id<JCPersonDataSource> person = _participants.lastObject;
+            [SMSMessage sendMessage:text toPerson:person fromDid:self.did completion:^(BOOL success, NSError *error) {
+                if (success) {
+                    //         [JSQSystemSoundPlayer jsq_playMessageSentSound];
+                    [self finishSendingMessageAnimated:YES];
+                }else {
+                    [self showError:error];
+                }
+            }];
+        } cancelButtonTitle:@"Cancel"  otherButtonTitles:@"8290947020", @"OtherNumber928", self.did.number, nil];
+        
+        UIView * currentView = self.view;
+        [didOptions show:currentView];
+    }
+    
+    
+    
+    
+    
+}
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    NSLog(@"you selected the : %ld button", (long)buttonIndex);
+
 }
 
 #pragma mark - Setters -
