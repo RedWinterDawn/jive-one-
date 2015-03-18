@@ -10,14 +10,26 @@
 
 @implementation JCManager
 
++(NSMutableDictionary *)singletons
+{
+    static NSMutableDictionary *singletons;
+    static dispatch_once_t instantiated;
+    dispatch_once(&instantiated, ^{
+        singletons = [NSMutableDictionary dictionary];
+    });
+    return singletons;
+}
+
 +(instancetype)sharedManager
 {
-    static id singleton = nil;
-    static dispatch_once_t loaded;
-    dispatch_once(&loaded, ^{
-        singleton = [[self class] new];
-    });
-    return singleton;
+    NSMutableDictionary *singletons = [self singletons];
+    Class class = [self class];
+    id object = [[self singletons] objectForKey:NSStringFromClass(class)];
+    if (!object) {
+        object = [class new];
+        [singletons setObject:object forKey:NSStringFromClass(class)];
+    }
+    return object;
 }
 
 + (id)copyWithZone:(NSZone *)zone
