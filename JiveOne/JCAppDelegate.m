@@ -438,8 +438,8 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
      */
     [NewRelicAgent startWithApplicationToken:@"AA6303a3125152af3660d1e3371797aefedfb29761"];
     
-    [Parse setApplicationId:@"fQ6zZ2VZuO8UjhWC98vVfbKFCH0vRkrHzyFTZhxb"
-                  clientKey:@"B0bqCk4Jplo1ynEQe83IeQ4ghmkwub4skoQCJsOX"];
+    [Parse setApplicationId:@"bQTDjU0QtxWVpNQp2yJp7d9ycntVZdCXF5QrVH8q"
+                  clientKey:@"ec135dl8Xfu4VAUXz0ub6vt3QqYnQEur2VcMH1Yf"];
     
     
 //    // Register for Push Notitications
