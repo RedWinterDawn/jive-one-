@@ -12,6 +12,12 @@
 
 NSString *const kJCPresenceManagerLinesChangedNotification = @"linesChanged";
 
+NSString *const kJCPresenceManagerTypeWithdraw      = @"withdraw";
+NSString *const kJCPresenceManagerStateConfirmed    = @"confirmed";
+NSString *const kJCPresenceManagerStateKey          = @"state";
+NSString *const kJCPresenceManagerIdentifierKey     = @"subId";
+
+
 @interface JCPresenceManager ()
 {
     NSMutableArray *_lines;
@@ -34,6 +40,84 @@ NSString *const kJCPresenceManagerLinesChangedNotification = @"linesChanged";
     }
     return self;
 }
+
+
+-(JCLinePresence *)linePresenceForContact:(Contact *)contact
+{
+    return [self linePresenceForIdentifier:contact.jrn];
+}
+
+-(JCLinePresence *)linePresenceForIdentifier:(NSString *)identifier
+{
+    if (!_lines) {
+        return nil;
+    }
+    
+    for (JCLinePresence *linePresence in _lines) {
+        if ([linePresence.identfier isEqualToString:identifier]) {
+            return linePresence;
+        }
+    }
+    return nil;
+}
+
++ (void)subscribeToPbx:(PBX *)pbx
+{
+    if (!pbx.v5) {
+        return;
+    }
+    
+    [[JCPresenceManager sharedManager] subscribeToPbx:pbx];
+}
+
++(void)unsubscribeFromPbx:(PBX *)pbx
+{
+    [[JCPresenceManager sharedManager] unsubscribeFromPbx:pbx];
+}
+
+#pragma mark - Public Overides -
+
+-(void)receivedResult:(NSDictionary *)result type:(NSString *)type data:(NSDictionary *)data {
+    
+    NSString *state = [data stringValueForKey:kJCPresenceManagerStateKey];
+    if (![type isEqualToString:kJCPresenceManagerTypeWithdraw] && !(state && [state isEqualToString:kJCPresenceManagerStateConfirmed])) {
+        return;
+    }
+    
+    // Get identifer.
+    NSString *identifier = [result stringValueForKey:kJCPresenceManagerIdentifierKey];
+    if (!identifier || identifier.length < 1) {
+        return;
+    }
+    
+    JCLinePresence *linePresence = [self linePresenceForIdentifier:identifier];
+    if (!linePresence) {
+        return;
+    }
+    
+    if ([type isEqualToString:kJCPresenceManagerTypeWithdraw]) {
+        linePresence.state = JCLinePresenceTypeAvailable;
+    }
+    else if ([state isEqualToString:kJCPresenceManagerStateConfirmed]) {
+        linePresence.state = JCLinePresenceTypeDoNotDisturb;
+    }
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:kJCAppSettingsPresenceAttribute]) {
+        JCAppSettings *settings = (JCAppSettings *)object;
+        if([JCSocket sharedSocket].isReady) {
+            if (settings.isPresenceEnabled) {
+                [self subscribeToPbx:_pbx];
+            } else {
+                [self unsubscribeFromPbx:_pbx];
+            }
+        }
+    }
+}
+
+#pragma mark - Private
 
 /**
  * Loops through the PBX's contacts and subscribe to presence events for each of them. Creates a 
@@ -63,112 +147,11 @@ NSString *const kJCPresenceManagerLinesChangedNotification = @"linesChanged";
     [[NSNotificationCenter defaultCenter] postNotificationName:kJCPresenceManagerLinesChangedNotification object:self userInfo:nil];
 }
 
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    if ([keyPath isEqualToString:kJCAppSettingsPresenceAttribute]) {
-        JCAppSettings *settings = (JCAppSettings *)object;
-        if([JCSocket sharedSocket].isReady) {
-            if (settings.isPresenceEnabled) {
-                [self subscribeToPbx:_pbx];
-            } else {
-                [self unsubscribeFromPbx:_pbx];
-            }
-        }
-    }
-}
-
 -(void)unsubscribeFromPbx:(PBX *)pbx
 {
     [JCSocket unsubscribeToSocketEvents:NULL];
     _lines = nil;
     [[NSNotificationCenter defaultCenter] postNotificationName:kJCPresenceManagerLinesChangedNotification object:self userInfo:nil];
-}
-
--(JCLinePresence *)linePresenceForContact:(Contact *)contact
-{
-    return [self linePresenceForIdentifier:contact.jrn];
-}
-
--(JCLinePresence *)linePresenceForIdentifier:(NSString *)identifier
-{
-    if (!_lines) {
-        return nil;
-    }
-    
-    for (JCLinePresence *linePresence in _lines) {
-        if ([linePresence.identfier isEqualToString:identifier]) {
-            return linePresence;
-        }
-    }
-    return nil;
-}
-
-#pragma mark - Notification Handlers -
-
-NSString *const kJCPresenceManagerTypeKey       = @"type";
-NSString *const kJCPresenceManagerTypeWithdraw  = @"withdraw";
-NSString *const kJCPresenceManagerTypeConfirmed = @"confirmed";
-NSString *const kJCPresenceManagerDataKey       = @"data";
-NSString *const kJCPresenceManagerStateKey      = @"state";
-NSString *const kJCPresenceManagerIdentifierKey = @"subId";
-
--(void)socketDidReceiveMessageSelector:(NSNotification *)notification
-{
-    [super socketDidReceiveMessageSelector:notification];
-    
-    NSDictionary *userInfo = notification.userInfo;
-    NSDictionary *results = [userInfo objectForKey:kJCSocketNotificationResultKey];
-    if (!results) {
-        NSError *error = [userInfo objectForKey:kJCSocketNotificationErrorKey];
-        NSLog(@"%@", [error description]);
-        return;
-    }
-    
-    // Right now we only care about withdraws and confirms
-    NSString *type = [results stringValueForKey:kJCPresenceManagerTypeKey];
-
-    NSString *state = nil;
-    id object = [results objectForKey:kJCPresenceManagerDataKey];
-    if (object && [object isKindOfClass:[NSDictionary class]]) {
-        NSDictionary *data = (NSDictionary *)object;
-        state = [data stringValueForKey:kJCPresenceManagerStateKey];
-    }
-    
-    if (![type isEqualToString:kJCPresenceManagerTypeWithdraw] && !(state && [state isEqualToString:kJCPresenceManagerTypeConfirmed])) {
-        return;
-    }
-    
-    // Get identifer.
-    NSString *identifier = [results stringValueForKey:kJCPresenceManagerIdentifierKey];
-    if (!identifier || identifier.length < 1) {
-        return;
-    }
-    
-    JCLinePresence *linePresence = [self linePresenceForIdentifier:identifier];
-    if (!linePresence) {
-        return;
-    }
-    
-    if ([type isEqualToString:kJCPresenceManagerTypeWithdraw]) {
-        linePresence.state = JCLinePresenceTypeAvailable;
-    }
-    else if ([state isEqualToString:kJCPresenceManagerTypeConfirmed]) {
-        linePresence.state = JCLinePresenceTypeDoNotDisturb;
-    }
-}
-
-+ (void)subscribeToPbx:(PBX *)pbx
-{
-    if (!pbx.v5) {
-        return;
-    }
-    
-    [[JCPresenceManager sharedManager] subscribeToPbx:pbx];
-}
-
-+(void)unsubscribeFromPbx:(PBX *)pbx
-{
-    [[JCPresenceManager sharedManager] unsubscribeFromPbx:pbx];
 }
 
 @end

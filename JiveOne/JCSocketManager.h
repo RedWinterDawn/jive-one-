@@ -14,7 +14,7 @@
 
 @property (nonatomic, readonly) JCSocket *socket;
 
--(void)socketDidReceiveMessageSelector:(NSNotification *)notification;
+-(void)receivedResult:(NSDictionary *)result type:(NSString *)type data:(NSDictionary *)data;
 
 @end
 
