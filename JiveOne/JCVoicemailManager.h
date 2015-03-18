@@ -8,13 +8,10 @@
 
 @import Foundation;
 
-@interface JCVoicemailManager : NSObject
+#import "JCSocketManager.h"
 
-@end
+@interface JCVoicemailManager : JCSocketManager
 
-@interface JCVoicemailManager (Singleton)
-
-+(instancetype)sharedManager;
 +(void)subscribeToLine:(Line *)line;
 
 @end

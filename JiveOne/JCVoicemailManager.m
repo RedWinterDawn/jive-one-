@@ -7,41 +7,29 @@
 //
 
 #import "JCVoicemailManager.h"
-#import "JCSocket.h"
-
-@interface JCVoicemailManager ()
-{
-    JCSocket *_socket;
-}
-
-@end
-
-@implementation JCVoicemailManager
-
-/**
- * Override class init to grab pointer to socket singleton, and to register for Notification Center
- * events from the socket for recieved data.
- */
--(instancetype)init
-{
-    self = [super init];
-    if (self) {
-        _socket = [JCSocket sharedSocket];
-        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-        [center addObserver:self selector:@selector(socketDidReceiveMessageSelector:) name:kJCSocketReceivedDataNotification object:_socket];
-    }
-    return self;
-}
-
--(void)subscribeToLine:(Line *)line
-{
-    [JCSocket subscribeToSocketEventsWithIdentifer:line.mailboxJrn entity:line.mailboxJrn type:kJCVoicemailManagerTypeMailbox];
-}
+#import "PBX.h"
 
 NSString *const kJCVoicemailManagerTypeKey       = @"type";
 NSString *const kJCVoicemailManagerTypeAnnounce  = @"announce";
 NSString *const kJCVoicemailManagerTypeMailbox   = @"mailbox";
 
+@implementation JCVoicemailManager
+
++ (void)subscribeToLine:(Line *)line
+{
+    if (!line.pbx.v5) {
+        return;
+    }
+    
+    [[JCVoicemailManager sharedManager] subscribeToLine:line];
+}
+
+#pragma mark - Private -
+
+-(void)subscribeToLine:(Line *)line
+{
+    [JCSocket subscribeToSocketEventsWithIdentifer:line.mailboxJrn entity:line.mailboxJrn type:kJCVoicemailManagerTypeMailbox];
+}
 
 -(void)socketDidReceiveMessageSelector:(NSNotification *)notification
 {
@@ -56,16 +44,13 @@ NSString *const kJCVoicemailManagerTypeMailbox   = @"mailbox";
     // Right now we only care about withdraws and confirms
     NSString *type = [results stringValueForKey:kJCVoicemailManagerTypeKey];
     NSLog(@"%@ %@", type, results);
-    
-    
-    
-    
-    NSString *state = nil;
-    id object = [results objectForKey:kJCPresenceManagerDataKey];
-    if (object && [object isKindOfClass:[NSDictionary class]]) {
-        NSDictionary *data = (NSDictionary *)object;
-        state = [data stringValueForKey:kJCPresenceManagerStateKey];
-    }
+
+//    NSString *state = nil;
+//    id object = [results objectForKey:kJCPresenceManagerDataKey];
+//    if (object && [object isKindOfClass:[NSDictionary class]]) {
+//        NSDictionary *data = (NSDictionary *)object;
+//        state = [data stringValueForKey:kJCPresenceManagerStateKey];
+//    }
 //
 //    if (![type isEqualToString:kJCPresenceManagerTypeWithdraw] && !(state && [state isEqualToString:kJCPresenceManagerTypeConfirmed])) {
 //        return;
@@ -88,31 +73,6 @@ NSString *const kJCVoicemailManagerTypeMailbox   = @"mailbox";
 //    else if ([state isEqualToString:kJCPresenceManagerTypeConfirmed]) {
 //        linePresence.state = JCLinePresenceTypeDoNotDisturb;
 //    }
-}
-
-@end
-
-
-@implementation JCVoicemailManager (Singleton)
-
-+(instancetype)sharedManager
-{
-    static JCVoicemailManager *voicemailManagerSingleton = nil;
-    static dispatch_once_t voicemailManagerLoaded;
-    dispatch_once(&voicemailManagerLoaded, ^{
-        voicemailManagerSingleton = [JCVoicemailManager new];
-    });
-    return voicemailManagerSingleton;
-}
-
-+ (id)copyWithZone:(NSZone *)zone
-{
-    return self;
-}
-
-+ (void)subscribeToLine:(Line *)line
-{
-    [[JCVoicemailManager sharedManager] subscribeToLine:line];
 }
 
 @end
