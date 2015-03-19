@@ -142,7 +142,11 @@
         if (error)
             NSLog(@"%@", [error description]);
         
-        return [NSString stringWithFormat:@"%@%@", [phoneNumberUtil format:phoneNumber numberFormat:NBEPhoneNumberFormatNATIONAL error:&error], extension];
+        if ([string containsString:@"+"]) {
+            return [NSString stringWithFormat:@"%@%@", [phoneNumberUtil format:phoneNumber numberFormat:NBEPhoneNumberFormatINTERNATIONAL error:&error], extension];
+        } else {
+            return [NSString stringWithFormat:@"%@%@", [phoneNumberUtil format:phoneNumber numberFormat:NBEPhoneNumberFormatNATIONAL error:&error], extension];
+        }
     }
     
     NBAsYouTypeFormatter *formatter = [[NBAsYouTypeFormatter alloc] initWithRegionCode:@"US"];
