@@ -11,6 +11,7 @@
 #import <SocketRocket/SRWebSocket.h>
 #import "JCV5ApiClient.h"
 #import "JCKeychain.h"
+#import "JCSocketLogger.h"
 
 NSString *const kJCSocketConnectedNotification      = @"socketDidOpen";
 NSString *const kJCSocketConnectFailedNotification  = @"socketDidFail";
@@ -32,16 +33,13 @@ NSString *const kJCV5ClientSocketSessionDeviceTokenKey                  = @"devi
 NSString *const kJCSocketSessionIdKey           = @"sessionId";
 NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
 
-
-
 #define SOCKET_MAX_RETRIES 3
 
 @interface JCSocket () <SRWebSocketDelegate>
 {
     SRWebSocket *_socket;
     CompletionHandler _completion;
-    
-    BOOL _closedSocketOnPurpose;
+    BOOL _closeSocketOnPurpose;
     NSInteger _reconnectRetries;
 }
 
@@ -57,28 +55,29 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
 
 - (void)openSession:(NSURL *)sessionUrl completion:(CompletionHandler)completion
 {
-    // if we have a socket, we have likely already connected.
-    if (_socket) {
+    if (_socket && ![_socket.url isEqual:sessionUrl]) {
         [self disconnect];
     }
+    
+    if (self.isReady || self.isConnecting) {
+        return;
+    }
+    
     
     _completion = completion;
     _socket = [[SRWebSocket alloc] initWithURL:sessionUrl];
     _socket.delegate = self;
-    
-    // Initiate Open Socket
     if (_socket.readyState == SR_CONNECTING) {
+        [JCSocketLogger logSocketEvent:[NSString stringWithFormat:@"Opening Session: %@", sessionUrl.absoluteString]];
         [_socket open];
     }
 }
 
 -(void)disconnect
 {
-    // TODO: Unsubscribe to all socket events.
-    [JCSocket unsubscribeToSocketEvents:NULL];
-    
-    [self closeSocketWithReason:@"Disconnecting"];
-    _socket = nil;
+    if (self.isReady) {
+        [self closeSocketWithReason:@"Disconnecting"];
+    }
 }
 
 - (void)start
@@ -93,11 +92,27 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
     [self closeSocketWithReason:@"Entering background"];
 }
 
+- (void)restartSocket
+{
+    [JCSocketLogger logSocketEvent:@"Restarting Socket"];
+    if (_socket && _socket.readyState == SR_CONNECTING) {
+        [_socket open];
+    }
+    else {
+        [self openSession:self.sessionUrl completion:_completion];
+    }
+}
+
 #pragma mark - Getters -
 
 -(BOOL)isReady
 {
     return (_socket && _socket.readyState == SR_OPEN);
+}
+
+-(BOOL)isConnecting
+{
+    return (_socket && _socket.readyState == SR_CONNECTING);
 }
 
 -(NSString *)sessionDeviceToken
@@ -147,30 +162,22 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
 
 #pragma mark - Private -
 
-- (void)restartSocket
-{
-    if (_socket && _socket.readyState == SR_CONNECTING) {
-        [_socket open];
-    }
-    else {
-        [self openSession:self.sessionUrl completion:NULL];
-    }
-}
-
 - (void)closeSocketWithReason:(NSString *)reason
 {
+    _closeSocketOnPurpose = YES;
     if (_socket) {
+        [JCSocketLogger logSocketEvent:[NSString stringWithFormat:@"Closing Socket Session: %@", reason]];
         [_socket closeWithCode:1001 reason:reason];
-        _closedSocketOnPurpose = YES;
         _socket = nil;
     }
 }
 
 - (void)closeSocket
 {
+    _closeSocketOnPurpose = YES;
     if (_socket) {
+        [JCSocketLogger logSocketEvent:[NSString stringWithFormat:@"Closing Socket Session"]];
         [_socket closeWithCode:0 reason:nil];
-        _closedSocketOnPurpose = NO;
         _socket = nil;
     }
 }
@@ -187,6 +194,7 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
 
 - (void)webSocketDidOpen:(SRWebSocket *)webSocket
 {
+    [JCSocketLogger logSocketEvent:@"Socket connected"];
     [[NSNotificationCenter defaultCenter] postNotificationName:kJCSocketConnectedNotification object:self];
     
     if (_completion) {
@@ -197,6 +205,8 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
 
 - (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error
 {
+    [JCSocketLogger logSocketEvent:[NSString stringWithFormat:@"Socket failed to connect:"]];
+    
     // If we fail to handshake, retry up to the max retries.
     if (_reconnectRetries < SOCKET_MAX_RETRIES) {
         _reconnectRetries++;
@@ -240,8 +250,7 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean {
-    NSLog(@"The websocket closed with code: %@, reason: %@, wasClean: %@", @(code), reason, (wasClean) ? @"YES" : @"NO");
-    
+    [JCSocketLogger logSocketEvent:[NSString stringWithFormat:@"The websocket closed with code: %@, reason: %@, wasClean: %@", @(code), reason, (wasClean) ? @"YES" : @"NO"]];
     
     /*
      * If we have a completion block, it means
@@ -252,17 +261,14 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
     if (_completion) {
         _completion(YES, nil);
         _completion = NULL;
-        _closedSocketOnPurpose = YES;
     }
     
     /*
      * If this was not closed on purpose, try to connect again
      */
-    if (!_closedSocketOnPurpose) {
+    if (!_closeSocketOnPurpose) {
         [self restartSocket];
     }
-    
-    _closedSocketOnPurpose = NO;
 }
 
 @end
@@ -288,55 +294,36 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
 {
     // If we have a socket session url, try to reuse it.
     JCSocket *socket = [JCSocket sharedSocket];
-    if (socket.sessionUrl) {
-        
-        // Premtively unsubscribe from all events on the socket. If we get an error unsubscribing,
-        // we likely have a bad session url, which would occur if the server was restarted, or the
-        // sessions were terminated on the server, so they are now invalid and should not be
-        // connected to. We delete the keychain store. If we are successful at unsubscribing, we
-        // then attempt to open the socket.
-        [JCSocket unsubscribeToSocketEvents:^(BOOL success, NSError *error) {
-            if (success) {
-                NSString *sessionDeviceToken = socket.sessionDeviceToken;
-                if (!deviceToken || [sessionDeviceToken isEqualToString:deviceToken]) {
-                    [socket openSession:socket.sessionUrl completion:completion];
-                    return;
-                }
-            }
-            else
-            {
-                NSLog(@"Clearing old Socket Session, and restarting");
-                [JCKeychain deleteValueForKey:kJCSocketSessionKeychainKey]; // delete stored keychain credentials. They are no longer valid
-                [JCSocket requestSocketSessionRequestUrlsWithDeviceIdentifier:deviceToken completion:completion];
-            }
-        }];
+    
+    // If the device token is different from the device token that we have stored for the session
+    // url, nuke it. This will delete the session url and will create a new session.
+    if (![socket.sessionDeviceToken isEqualToString:deviceToken]) {
+        [JCKeychain deleteValueForKey:kJCSocketSessionKeychainKey]; // delete stored keychain credentials.
+        [socket disconnect];
     }
     
-    // If we do not have a session url, we create a new session by requesting one.
-    else {
+    // If this is the first time we are connecting, or we have reset the session keychain, request it.
+    if (!socket.sessionUrl) {
         [JCSocket requestSocketSessionRequestUrlsWithDeviceIdentifier:deviceToken completion:completion];
+        return;
     }
+    
+    // If we are still here, open session. We have all the data we need.
+    [socket openSession:socket.sessionUrl completion:completion];
+}
+
++ (void)restart {
+    JCSocket *socket = [JCSocket sharedSocket];
+    if (socket.isReady) {
+        return;
+    }
+    
+    [socket start];
 }
 
 + (void)disconnect
 {
     [[JCSocket sharedSocket] disconnect];
-}
-
-+ (void)start
-{
-    [[JCSocket sharedSocket] start];
-}
-
-+ (void)stop
-{
-    [[JCSocket sharedSocket] stop];
-}
-
-+ (void)reset
-{
-    [JCSocket disconnect];
-    [JCKeychain deleteValueForKey:kJCSocketSessionKeychainKey]; // delete stored keychain credentials.
 }
 
 @end
@@ -345,8 +332,7 @@ NSString *const kJCSocketSessionDeviceTokenKey  = @"deviceToken";
 
 + (void)requestSocketSessionRequestUrlsWithDeviceIdentifier:(NSString *)deviceToken completion:(CompletionHandler)completion
 {
-    JCV5ApiClient *client = [JCV5ApiClient sharedClient];
-    [client setRequestAuthHeader:NO];
+    JCV5ApiClient *client = [JCV5ApiClient new];
     [client.manager POST:kJCV5ClientSocketSessionRequestURL
               parameters:((deviceToken && deviceToken.length > 0) ? @{kJCV5ClientSocketSessionDeviceTokenKey : deviceToken} : nil)
                  success:^(AFHTTPRequestOperation *operation, id responseObject) {

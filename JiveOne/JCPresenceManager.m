@@ -72,6 +72,10 @@ NSString *const kJCPresenceManagerIdentifierKey     = @"subId";
 
 +(void)unsubscribeFromPbx:(PBX *)pbx
 {
+    if (!pbx.v5) {
+        return;
+    }
+    
     [[JCPresenceManager sharedManager] unsubscribeFromPbx:pbx];
 }
 
@@ -136,6 +140,12 @@ NSString *const kJCPresenceManagerIdentifierKey     = @"subId";
         return;
     }
 
+    NSSet *lines = pbx.lines;
+    for (Line *line in lines) {
+        [_lines addObject:[[JCLinePresence alloc] initWithLineIdentifer:line.jrn]];
+        [JCSocket subscribeToSocketEventsWithIdentifer:line.jrn entity:line.jrn type:@"dialog"];
+    }
+    
     // Create a line presence object to represent the contact.
     NSSet *contacts = pbx.contacts;
     _lines = [NSMutableArray arrayWithCapacity:contacts.count];
@@ -149,9 +159,12 @@ NSString *const kJCPresenceManagerIdentifierKey     = @"subId";
 
 -(void)unsubscribeFromPbx:(PBX *)pbx
 {
-    [JCSocket unsubscribeToSocketEvents:NULL];
-    _lines = nil;
-    [self postNotificationNamed:kJCPresenceManagerLinesChangedNotification];
+    [JCSocket unsubscribeToSocketEvents:^(BOOL success, NSError *error) {
+        if (success) {
+            _lines = nil;
+            [self postNotificationNamed:kJCPresenceManagerLinesChangedNotification];
+        }
+    }];
 }
 
 @end

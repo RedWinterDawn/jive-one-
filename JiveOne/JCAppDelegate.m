@@ -24,6 +24,8 @@
 #import "JCApplicationSwitcherDelegate.h"
 #import "JCV5ApiClient.h"
 #import "JCSocket.h"
+#import "JCSocketLogger.h"
+#import "UIDevice+Additions.h"
 
 #import "PBX.h"
 #import "Line.h"
@@ -45,34 +47,6 @@
 @implementation JCAppDelegate
 
 /**
- * Loads all the singletons nessary when the application is loaded.
- */
--(void)initialializeApplication
-{
-    _appSwitcherViewController = self.window.rootViewController;
-    
-    [self configureNetworking];
-    [self loadUserDefaults];
-    
-    // Load Core Data. Currently we are not concerned aobut persisting data long term, so if there
-    // is any core data conflict, we would rather delete the whole .sqlite file and rebuild it, than
-    // to merge.
-    [MagicalRecord setShouldDeleteStoreOnModelMismatch:YES];
-    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:kCoreDataDatabase];
-    
-    // Badging
-    [JCBadgeManager updateBadgesFromContext:[NSManagedObjectContext MR_defaultContext]];
-    
-    // Authentication
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
-    [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];
-    [center addObserver:self selector:@selector(userDataReady:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:authenticationManager];
-    [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:authenticationManager];
-    [authenticationManager checkAuthenticationStatus];
-}
-
-/**
  *  We predominately use the AFNetworking Networking stack to handle data request between the App and Jive Servers for
  *  data requests. Here we configure caching, logging and monitoring indication for AFNetoworking.
  */
@@ -91,6 +65,7 @@
 #if DEBUG
     //[[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
     [[AFNetworkActivityLogger sharedLogger] startLogging];
+    [JCSocketLogger start];
 #else
     [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelOff];
 #endif
@@ -246,38 +221,66 @@
 -(void)registerServicesToLine:(Line *)line deviceToken:(NSString *)deviceToken
 {
     [JCBadgeManager setSelectedLine:line.jrn];
-    
-    __block NSManagedObjectID *lineId = line.objectID;
-    dispatch_queue_t backgroundQueue = dispatch_queue_create("register_services_to_line", 0);
-    dispatch_async(backgroundQueue, ^{
-        Line *localLine = (Line *)[[NSManagedObjectContext MR_contextForCurrentThread] objectWithID:lineId];
         
-        // Get Contacts. Once we have contacts, we subscribe to their presence, fetch voicemails trying
-    	// to link contacts to thier voicemail if in the pbx. Only fetch voicmails, and open sockets for
-    	// v5 pbxs. If we are on v4, we disconnect, and do not fetch voicemails.
-    	[Contact downloadContactsForLine:localLine complete:^(BOOL success, NSError *error) {
-        	
-            // Open socket to subscribe to presence and voicemail events.
+    // Get Contacts. Once we have contacts, we subscribe to their presence, fetch voicemails trying
+    // to link contacts to thier voicemail if in the pbx. Only fetch voicmails, and open sockets for
+    // v5 pbxs. If we are on v4, we disconnect, and do not fetch voicemails.
+    [Contact downloadContactsForLine:line complete:^(BOOL success, NSError *error) {
+        
+        // Fetch Voicemails (feature flagged only for v5 clients). Since we try to link the
+        // voicemails to thier contacts, we try to download/update the contacts list first, then
+        // request voicemails.
+        [Voicemail downloadVoicemailsForLine:line complete:NULL];
+        
+        // If the socket is open already, clear and register for jasmine events for our current line
+        if ([JCSocket sharedSocket].isReady) {
+            [self resubscribeToLineEvents:line];
+        }
+    }];
+    
+    // Register the Phone.
+    [JCPhoneManager connectToLine:line];
+}
+
+-(void)resubscribeToLineEvents:(Line *)line
+{
+    JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
+    NSString *deviceToken = authenticationManager.deviceToken;
+    if (!deviceToken) {
+        return;
+    }
+    
+    [JCSocket unsubscribeToSocketEvents:^(BOOL success, NSError *error) {
+        if (!success) {
             [JCSocket connectWithDeviceToken:deviceToken completion:^(BOOL success, NSError *error) {
                 if (success) {
-                    [JCPresenceManager subscribeToPbx:line.pbx];
+                    [self subscribeToLineEvents:line];
                 }
             }];
-            
-            // Fetch Voicemails (feature flagged only for v5 clients). Since we try to link the
-            // voicemails to thier contacts, we try to download/update the contacts list first, then
-            // request voicemails.
-            [Voicemail downloadVoicemailsForLine:line complete:NULL];
-    	}];
-        
-        // Register the Phone.
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [JCPhoneManager connectToLine:line];
-        });
-    });
+        } else {
+            [self subscribeToLineEvents:line];
+        }
+    }];
+}
+
+-(void)subscribeToLineEvents:(Line *)line
+{
+    [JCPresenceManager subscribeToPbx:line.pbx];
 }
 
 #pragma mark - Notification Handlers -
+
+#pragma mark JCSocket
+
+-(void)socketConnectedSelector:(NSNotification *)notification
+{
+    [self resubscribeToLineEvents:[JCAuthenticationManager sharedInstance].line];
+}
+
+-(void)socketFailedConnectionSelector:(NSNotification *)notification
+{
+    [self resubscribeToLineEvents:[JCAuthenticationManager sharedInstance].line];
+}
 
 #pragma mark AFNetworkReachability
 
@@ -329,15 +332,10 @@
     }
     
     // Handle socket to reconnect. Since we reuse the socket, we do not need to subscribe, but just
-    // activate the socket to reopen it.
-    if (networkManager.isReachable && ![JCSocket sharedSocket].isReady) {
-        if (line.pbx.isV5) {
-            NSLog(@"Restarting socket");
-            [JCSocket connectWithDeviceToken:[JCAuthenticationManager sharedInstance].deviceToken completion:NULL];
-        }
-        else {
-            [JCSocket disconnect];
-        }
+    // activate the socket to reopen it. We only want to try to connect if we do not have a device token.
+    NSString *deviceToken = [JCAuthenticationManager sharedInstance].deviceToken;
+    if (deviceToken && networkManager.isReachable && ![JCSocket sharedSocket].isReady) {
+        [JCSocket connectWithDeviceToken:deviceToken completion:NULL];
     }
 }
 
@@ -393,10 +391,7 @@
  */
 -(void)userDidLogout:(NSNotification *)notification
 {
-    LOG_Info();
-    
-    
-    [JCSocket reset];                                   // Disconnect the socket and purge socket session.
+    [JCSocket unsubscribeToSocketEvents:NULL];          // Disconnect the socket and purge socket session.
     [JCPhoneManager disconnect];                        // Disconnect the phone manager
     [JCClient cancelAllOperations];                     // Kill any pending client network operations.
     [JCBadgeManager reset];                             // Resets the Badge Manager.
@@ -423,8 +418,46 @@
     
     //Register for background fetches
     [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+
+#if TARGET_IPHONE_SIMULATOR
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self application:application didFailToRegisterForRemoteNotificationsWithError:nil];
+    });
+#elif TARGET_OS_IPHONE
+    [application registerForRemoteNotifications];
+#endif
     
-    [self initialializeApplication];
+#if DEBUG
+    [JCSocketLogger start];
+#endif
+    
+    _appSwitcherViewController = self.window.rootViewController;
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    
+    [self configureNetworking];
+    [self loadUserDefaults];
+    
+    // Load Core Data. Currently we are not concerned aobut persisting data long term, so if there
+    // is any core data conflict, we would rather delete the whole .sqlite file and rebuild it, than
+    // to merge.
+    [MagicalRecord setShouldDeleteStoreOnModelMismatch:YES];
+    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:kCoreDataDatabase];
+    
+    // Badging
+    [JCBadgeManager updateBadgesFromContext:[NSManagedObjectContext MR_defaultContext]];
+    
+    // Jasmine
+    JCSocket *socket = [JCSocket sharedSocket];
+    [center addObserver:self selector:@selector(socketConnectedSelector:) name:kJCSocketConnectedNotification object:socket];
+    [center addObserver:self selector:@selector(socketFailedConnectionSelector:) name:kJCSocketConnectFailedNotification object:socket];
+    
+    // Authentication
+    JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
+    [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];
+    [center addObserver:self selector:@selector(userDataReady:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:authenticationManager];
+    [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:authenticationManager];
+    [authenticationManager checkAuthenticationStatus];
+    
     return YES;
 }
 
@@ -437,7 +470,6 @@
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     LOG_Info();
-    
 }
 
 /**
@@ -448,7 +480,7 @@
 -(void)applicationDidEnterBackground:(UIApplication *)application
 {
     LOG_Info();
-    //[JCSocket stop];
+    [JCSocket restart];                 // in case the socket stopped, we restart it.
     [JCPhoneManager startKeepAlive];
 }
 
@@ -459,8 +491,7 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     LOG_Info();
-  
-    //[JCSocket start];
+    [JCSocket restart]; // In case the socket stopped, we restart it.
     [JCPhoneManager stopKeepAlive];
 }
 
@@ -484,24 +515,35 @@
 
 #pragma mark Notifications Handling
 
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
+    
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceTokenData
 {
-    LOG_Info();
+    JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
+    NSString *oldDeviceToken = authenticationManager.deviceToken;
+    NSString *deviceToken = [[deviceTokenData.description stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"<>"]] stringByReplacingOccurrencesOfString:@" " withString:@""];
+    if (![oldDeviceToken isEqualToString:deviceToken]) {
+        authenticationManager.deviceToken = deviceToken;
+    }
     
-    
-    [JCAuthenticationManager sharedInstance].deviceToken = [deviceToken description];
-    
-    
-    LogMessage(@"socket", 4, @"Will Call requestSession");
-    [JCSocket start];
+    [JCSocket connectWithDeviceToken:deviceToken completion:^(BOOL success, NSError *error) {
+        if (success) {
+            [self subscribeToLineEvents:authenticationManager.line];
+        }
+    }];
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
-    LOG_Info();
-    LogMessage(@"socket", 4, @"Will Call requestSession");
-    [JCSocket start];
-	NSLog(@"APPDELEGATE - Failed to get token, error: %@", error);
+    if (error) {
+        NSLog(@"%@", error);
+    }
+    
+    // Still start a socket connection no matter what, so we have our socket open.
+    NSData *deviceToken = [[UIDevice currentDevice].installationIdentifier dataUsingEncoding:NSUTF8StringEncoding];
+    [self application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler

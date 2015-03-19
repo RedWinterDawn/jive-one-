@@ -53,36 +53,30 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
 
 + (void)processContactResponse:(id)responseObject line:(Line *)line completion:(CompletionHandler)completion
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        @try {
-            if (![responseObject isKindOfClass:[NSArray class]]){
-                [NSException raise:@"v5clientException" format:@"UnexpectedResponse returned"];
-            }
-    
-            [MagicalRecord saveUsingCurrentThreadContextWithBlock:^(NSManagedObjectContext *localContext) {
-                Line *localLine = (Line *)[localContext objectWithID:line.objectID];
-                [self processContactsData:(NSArray *)responseObject pbx:localLine.pbx];
-            }
-            completion:^(BOOL success, NSError *error) {
-                if (completion) {
-                    if (error) {
-                        completion(NO, error);
-                    }
-                    else {
-                        completion(YES, nil);
-                    }
-                }
-            }];
+    @try {
+        if (![responseObject isKindOfClass:[NSArray class]]){
+            [NSException raise:@"v5clientException" format:@"UnexpectedResponse returned"];
         }
-        @catch (NSException *exception) {
+
+        [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+            Line *localLine = (Line *)[localContext objectWithID:line.objectID];
+            [self processContactsData:(NSArray *)responseObject pbx:localLine.pbx];
+        } completion:^(BOOL success, NSError *error) {
             if (completion) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    completion(NO, [JCV5ApiClientError errorWithCode:JCV5ApiClientResponseParseErrorCode reason:exception.reason]);
-                });
+                if (error) {
+                    completion(NO, error);
+                }
+                else {
+                    completion(YES, nil);
+                }
             }
+        }];
+    }
+    @catch (NSException *exception) {
+        if (completion) {
+            completion(NO, [JCV5ApiClientError errorWithCode:JCV5ApiClientResponseParseErrorCode reason:exception.reason]);
         }
-    });
+    }
 }
 
 + (void)processContactsData:(NSArray *)contactsData pbx:(PBX *)pbx
