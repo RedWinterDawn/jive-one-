@@ -99,7 +99,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     if ([sender isKindOfClass:[UILongPressGestureRecognizer class]]) {
         UILongPressGestureRecognizer *gestureRecognizer = (UILongPressGestureRecognizer *)sender;
         UIView *view = gestureRecognizer.view;
-        if ([view isKindOfClass:[UIButton class]]) {
+        if (gestureRecognizer.state == UIGestureRecognizerStateEnded && [view isKindOfClass:[UIButton class]]) {
             UIButton *button = (UIButton *)view;
             NSInteger tag = button.tag;
             switch (tag) {
