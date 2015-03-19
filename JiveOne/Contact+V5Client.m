@@ -31,7 +31,7 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
 {
     if (!line) {
         if (completion) {
-            completion(false, [JCV5ApiClientError errorWithCode:JCV5ApiClientInvalidArgumentErrorCode reason:@"Line Is Null"]);
+            completion(false, [JCApiClientError errorWithCode:JCApiClientInvalidArgumentErrorCode reason:@"Line Is Null"]);
         }
         return;
     }
@@ -74,7 +74,7 @@ NSString *const kContactRequestPath = @"/contacts/2014-07/%@/line/id/%@";
     }
     @catch (NSException *exception) {
         if (completion) {
-            completion(NO, [JCV5ApiClientError errorWithCode:JCV5ApiClientResponseParseErrorCode reason:exception.reason]);
+            completion(NO, [JCApiClientError errorWithCode:JCApiClientResponseParserErrorCode reason:exception.reason]);
         }
     }
 }

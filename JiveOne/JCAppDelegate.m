@@ -231,7 +231,7 @@
         // Fetch Voicemails (feature flagged only for v5 clients). Since we try to link the
         // voicemails to thier contacts, we try to download/update the contacts list first, then
         // request voicemails.
-        [Voicemail downloadVoicemailsForLine:line complete:NULL];
+        [Voicemail downloadVoicemailsForLine:line completion:NULL];
         
         // If the socket is open already, clear and register for jasmine events for our current line
         if ([JCSocket sharedSocket].isReady) {
