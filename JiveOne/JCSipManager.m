@@ -1170,7 +1170,6 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 -(void)startNetworkQualityIndicatorForLineSession:(JCLineSession *)lineSession
 {
     JCSipNetworkQualityRequestOperation *operation = [[JCSipNetworkQualityRequestOperation alloc] initWithSessionId:lineSession.sessionId portSipSdk:_mPortSIPSDK];
-    operation.name = [NSString stringWithFormat:@"%lu", (long)lineSession.sessionId];
     __weak JCSipNetworkQualityRequestOperation *weakOperation = operation;
     operation.completionBlock = ^{
         
