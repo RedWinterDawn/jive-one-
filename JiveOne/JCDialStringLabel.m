@@ -142,10 +142,18 @@
         if (error)
             NSLog(@"%@", [error description]);
         
-        if ([string containsString:@"+"]) {
-            return [NSString stringWithFormat:@"%@%@", [phoneNumberUtil format:phoneNumber numberFormat:NBEPhoneNumberFormatINTERNATIONAL error:&error], extension];
-        } else {
-            return [NSString stringWithFormat:@"%@%@", [phoneNumberUtil format:phoneNumber numberFormat:NBEPhoneNumberFormatNATIONAL error:&error], extension];
+        if ([string respondsToSelector:@selector(containsString:)]) {
+            if ([string containsString:@"+"]) {
+                return [NSString stringWithFormat:@"%@%@", [phoneNumberUtil format:phoneNumber numberFormat:NBEPhoneNumberFormatINTERNATIONAL error:&error], extension];
+            } else {
+                return [NSString stringWithFormat:@"%@%@", [phoneNumberUtil format:phoneNumber numberFormat:NBEPhoneNumberFormatNATIONAL error:&error], extension];
+            }
+        }  else {
+            if ([string rangeOfString:@"+"].location != NSNotFound) {
+                return [NSString stringWithFormat:@"%@%@", [phoneNumberUtil format:phoneNumber numberFormat:NBEPhoneNumberFormatINTERNATIONAL error:&error], extension];
+            } else {
+                return [NSString stringWithFormat:@"%@%@", [phoneNumberUtil format:phoneNumber numberFormat:NBEPhoneNumberFormatNATIONAL error:&error], extension];
+            }
         }
     }
     
