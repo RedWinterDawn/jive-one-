@@ -54,6 +54,31 @@ NSString *const kJCBadgeManagerMissedCallsKey   = @"missedCalls";
     return self;
 }
 
++ (void)updateBadgesFromContext:(NSManagedObjectContext *)context
+{
+    JCBadgeManager *badgeManager = [JCBadgeManager sharedManager];
+    badgeManager.context = context;
+    badgeManager->_badges = nil;
+    [badgeManager update];
+}
+
++ (void)reset
+{
+    [[JCBadgeManager sharedManager] reset];
+}
+
++ (void)setVoicemails:(NSUInteger)voicemails
+{
+    [JCBadgeManager sharedManager].v4_voicemails = voicemails;
+}
+
++ (void)setSelectedLine:(NSString *)line
+{
+    JCBadgeManager *badgeManager = [JCBadgeManager sharedManager];
+    badgeManager.selectedLine = line;
+}
+
+
 -(void)didReceiveMemoryNotification:(NSNotification *)notification
 {
     _batchBadges = nil;
@@ -61,7 +86,7 @@ NSString *const kJCBadgeManagerMissedCallsKey   = @"missedCalls";
     _badges = nil;
 }
 
-#pragma mark - Public -
+#pragma mark - Getters -
 
 /**
  *  Returns the full all the recent events. Used for badging the app.
@@ -103,6 +128,8 @@ NSString *const kJCBadgeManagerMissedCallsKey   = @"missedCalls";
     total += [self.badges countForEventType:kJCBadgeManagerVoicemailsKey key:_selectedLine];
     return total;
 }
+
+#pragma mark - Delegate Handlers -
 
 #pragma mark NSFetchedResultsControllerDelegate
 
@@ -268,51 +295,6 @@ NSString *const kJCBadgeManagerMissedCallsKey   = @"missedCalls";
     if (_badges) {
         self.badges = _badges;
     }
-}
-
-@end
-
-@implementation JCBadgeManager (Singleton)
-
-+(JCBadgeManager *)sharedManager
-{
-    // Makes the startup of this singleton thread safe.
-    static JCBadgeManager *badgeManager = nil;
-    static dispatch_once_t pred;        // Lock
-    dispatch_once(&pred, ^{             // This code is called at most once per app
-        badgeManager = [JCBadgeManager new];
-    });
-    
-    return badgeManager;
-}
-
-+ (id)copyWithZone:(NSZone *)zone
-{
-    return self;
-}
-
-+ (void)updateBadgesFromContext:(NSManagedObjectContext *)context
-{
-    JCBadgeManager *badgeManager = [JCBadgeManager sharedManager];
-    badgeManager.context = context;
-    badgeManager->_badges = nil;
-    [badgeManager update];
-}
-
-+ (void)reset
-{
-    [[JCBadgeManager sharedManager] reset];
-}
-
-+ (void)setVoicemails:(NSUInteger)voicemails
-{
-    [JCBadgeManager sharedManager].v4_voicemails = voicemails;
-}
-
-+ (void)setSelectedLine:(NSString *)line
-{
-    JCBadgeManager *badgeManager = [JCBadgeManager sharedManager];
-    badgeManager.selectedLine = line;
 }
 
 @end

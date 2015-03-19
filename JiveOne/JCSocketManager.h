@@ -7,14 +7,15 @@
 //
 
 #import "JCSocket.h"
+#import "JCManager.h"
 
-@interface JCSocketManager : NSObject {
+@interface JCSocketManager : JCManager {
     JCSocket *_socket;
 }
 
 @property (nonatomic, readonly) JCSocket *socket;
 
--(void)socketDidReceiveMessageSelector:(NSNotification *)notification;
+-(void)receivedResult:(NSDictionary *)result type:(NSString *)type data:(NSDictionary *)data;
 
 @end
 
