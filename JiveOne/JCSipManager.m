@@ -1153,7 +1153,10 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             lineSession.active = TRUE;
             lineSession.contact = [Contact contactForExtension:lineSession.callDetail pbx:_line.pbx];
             lineSession.sessionState = state;
-            [_audioManager engageAudioSession];
+            
+            if (!self.isActive) {
+                [_audioManager engageAudioSession];
+            }
             
             // Notify
             [OutgoingCall addOutgoingCallWithLineSession:lineSession line:_line];
@@ -1169,7 +1172,11 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             lineSession.contact = [Contact contactForExtension:lineSession.callDetail pbx:_line.pbx];
             lineSession.sessionState = state;
             
-            [_audioManager engageAudioSession];
+            if (!self.isActive) {
+                [_audioManager engageAudioSession];
+            }
+            
+            // Notify of incoming call by starting the ringing for the incoming call.
             [_audioManager startRepeatingRingtone:YES];
 
             // Notify
