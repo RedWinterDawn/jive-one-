@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "RecentEvent.h"
+#import "RecentLineEvent.h"
 #import "JCLineSession.h"
 
 extern NSString *const kCallEntityName;
@@ -18,11 +18,7 @@ extern NSString *const kCallEntityName;
 
 @end
 
-@interface Call : RecentEvent <Call>
-
-@property (nonatomic, retain) NSString *number;
-@property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain) NSString *extension;
+@interface Call : RecentLineEvent <Call>
 
 @end
 

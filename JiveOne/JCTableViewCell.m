@@ -9,7 +9,18 @@
 #import "JCTableViewCell.h"
 #import "JCDrawing.h"
 
+#define DEFAULT_SEPERATOR_COLOR [UIColor colorWithRed:200/255.0 green:199/255.0 blue:204/255.0 alpha:1.0]
+
 @implementation JCTableViewCell
+
+-(instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        _seperatorColor = DEFAULT_SEPERATOR_COLOR;
+    }
+    return self;
+}
 
 -(void)awakeFromNib
 {
@@ -47,7 +58,7 @@
 -(void)drawRect:(CGRect)rect
 {
     CGContextRef context = UIGraphicsGetCurrentContext();
-    JCDrawingLine drawingLine = JCDrawingLineMake(0.5, self.seperatorColor.CGColor);
+    JCDrawingLine drawingLine = JCDrawingLineMake(0.5, _seperatorColor.CGColor);
     JCDrawingContextDrawLineAtPosition(context, drawingLine, rect, kJCDrawingLinePositionBottom);
     if (_top)
         JCDrawingContextDrawLineAtPosition(context, drawingLine, rect, kJCDrawingLinePositionTop);

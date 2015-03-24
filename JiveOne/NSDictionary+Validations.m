@@ -97,6 +97,29 @@ NSString *const kNSStringEmptyString = @"";
     return 0;
 }
 
+static NSDateFormatter *datetimeFormatter = nil;
+
+// http://www.unicode.org/reports/tr35/tr35-19.html#Date_Format_Patterns
+
+-(NSDate *)datetimeValueForKey:(NSString *)key
+{
+    NSString *string = [self stringValueForKey:key];
+    if (string)
+    {
+        // If the date formatters aren't already set up, create them and cache them for reuse.
+        if (datetimeFormatter == nil)
+        {
+            datetimeFormatter = [[NSDateFormatter alloc] init];
+            [datetimeFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss.SSSS"];
+            [datetimeFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
+        }
+        
+        NSDate *date = [datetimeFormatter dateFromString:string];
+        return date;
+    }
+    return nil;
+}
+
 static NSDateFormatter *dateFormatter = nil;
 
 -(NSDate *)dateValueForKey:(NSString *)key

@@ -10,6 +10,9 @@
 
 @interface NSManagedObject (JCCoreDataAdditions)
 
+-(void)setPrimitiveValueFromStringValue:(NSString *)string forKey:(NSString *)key;
+-(NSString *)stringValueFromPrimitiveValueForKey:(NSString *)key;
+
 // Booleans
 -(void)setPrimitiveValueFromBoolValue:(BOOL)boolean forKey:(NSString *)key;
 -(BOOL)boolValueFromPrimitiveValueForKey:(NSString *)key;

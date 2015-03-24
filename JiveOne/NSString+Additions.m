@@ -47,3 +47,44 @@
 }
 
 @end
+
+@implementation NSString (IsNumeric)
+
+-(bool)isNumeric
+{
+    NSCharacterSet *alphaNums = [NSCharacterSet decimalDigitCharacterSet];
+    NSCharacterSet *inStringSet = [NSCharacterSet characterSetWithCharactersInString:self];
+    return [alphaNums isSupersetOfSet:inStringSet];
+}
+
+-(NSString *)numericStringValue {
+    return [[self componentsSeparatedByCharactersInSet: [[NSCharacterSet decimalDigitCharacterSet] invertedSet]] componentsJoinedByString:@""];
+}
+
+@end
+
+#import <libPhoneNumber-iOS/NBPhoneNumberUtil.h>
+#import <libPhoneNumber-iOS/NBAsYouTypeFormatter.h>
+
+@implementation NSString (PhoneNumbers)
+
+-(NSString *)formattedPhoneNumber
+{
+    if (self.length < 5)
+        return self;
+    
+    __autoreleasing NSError *error;
+    
+    static NBPhoneNumberUtil *phoneNumberUtil;
+    static dispatch_once_t pred;
+    dispatch_once(&pred, ^{
+        phoneNumberUtil = [NBPhoneNumberUtil new];
+    });
+    
+    NBPhoneNumber *phoneNumber = [phoneNumberUtil parse:self defaultRegion:@"US" error:&error];
+    if (error)
+        NSLog(@"%@", [error description]);
+    return [phoneNumberUtil format:phoneNumber numberFormat:NBEPhoneNumberFormatNATIONAL error:&error];
+}
+
+@end

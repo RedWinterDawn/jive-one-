@@ -16,6 +16,7 @@
 #import "PBX.h"
 #import "User.h"
 #import "ContactGroup.h"
+#import "JiveContact.h"
 
 #import "JCPhoneManager.h"
 
@@ -88,7 +89,7 @@
 {
     if (!_fetchedResultsController)
     {
-        NSString *sectionKeyPath = @"firstLetter";
+        NSString *sectionKeyPath = @"firstInitial";
         if (_filterType == JCContactFilterGrouped) {
             sectionKeyPath = nil;
         }
@@ -132,7 +133,7 @@
                 predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, contactGroupPredicate]];
                 _fetchRequest = [Contact MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
             } else {
-                _fetchRequest = [Person MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
+                _fetchRequest = [JiveContact MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
                 _fetchRequest.includesSubentities = TRUE;
             }
         }

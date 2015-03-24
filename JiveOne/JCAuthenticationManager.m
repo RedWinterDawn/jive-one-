@@ -39,7 +39,7 @@ NSString *const kJCAuthenticationManagerJavascriptString    = @"document.getElem
 // OAuth
 NSString *const kJCAuthenticationManagerAccessTokenUrl      = @"https://auth.jive.com/oauth2/v2/grant?client_id=%@&response_type=token&scope=%@&redirect_uri=%@";
 NSString *const kJCAuthenticationManagerRefreshTokenUrl     = @"https://auth.jive.com/oauth2/v2/token";
-NSString *const kJCAuthenticationManagerScopeProfile        = @"contacts.v1.profile.read";
+NSString *const kJCAuthenticationManagerScopeProfile        = @"contacts.v1.profile.read%20sms.v1.send";
 NSString *const kJCAuthenticationManagerRefreshTokenData    = @"refresh_token=%@&client_id=%@&redirect_uri=%@&grant_type=refresh_token";
 NSString *const kJCAuthenticationManagerClientId            = @"f62d7f80-3749-11e3-9b37-542696d7c505";
 NSString *const kJCAuthenticationManagerClientSecret        = @"enXabnU5KuVm4XRSWGkU";
@@ -258,6 +258,16 @@ static int MAX_LOGIN_ATTEMPTS = 2;
     predicate = [NSPredicate predicateWithFormat:@"pbx.user = %@", _user];
     _line = [Line MR_findFirstWithPredicate:predicate sortedBy:@"extension" ascending:YES];
     return _line;
+}
+
+-(PBX *)pbx
+{
+    return self.line.pbx;
+}
+
+-(DID *)did
+{
+    return self.pbx.dids.allObjects.firstObject;
 }
 
 #pragma mark - Private -

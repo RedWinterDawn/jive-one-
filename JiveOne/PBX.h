@@ -12,6 +12,7 @@
 @class Contact;
 @class User;
 @class Line;
+@class DID;
 
 @interface PBX : NSManagedObject
 
@@ -27,6 +28,7 @@
 @property (nonatomic, retain) NSSet * contacts;
 @property (nonatomic, retain) User * user;
 @property (nonatomic, retain) NSSet * lines;
+@property (nonatomic, retain) NSSet * dids;
 
 @end
 
@@ -41,5 +43,10 @@
 - (void)removeLinesObject:(Line *)value;
 - (void)addLines:(NSSet *)values;
 - (void)removeLines:(NSSet *)values;
+
+- (void)addDidsObject:(DID *)value;
+- (void)removeDidsObject:(DID *)value;
+- (void)addDids:(NSSet *)values;
+- (void)removeDids:(NSSet *)values;
 
 @end

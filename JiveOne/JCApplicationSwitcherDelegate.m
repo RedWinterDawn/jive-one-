@@ -13,16 +13,20 @@
 #import "JCApplicationSwitcherViewController.h"
 #import "JCCallHistoryViewController.h"
 #import "JCVoicemailViewController.h"
+#import "JCConversationsTableViewController.h"
 
 #import "JCPhoneTabBarControllerDelegate.h"
 
 #import "Voicemail.h"
 #import "Call.h"
+#import "JCConversationGroup.h"
+
 #import "JCAuthenticationManager.h"
 
 NSString *const kApplicationSwitcherLastSelectedViewControllerIdentifierKey = @"applicationSwitcherLastSelected";
 
 NSString *const kApplicationSwitcherPhoneRestorationIdentifier      = @"PhoneTabBarController";
+NSString *const kApplicationSwitcherMessagesRestorationIdentifier      = @"MessagesNavigationController";
 NSString *const kApplicationSwitcherContactsRestorationIdentifier   = @"ContactsNavigationController";
 NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"SettingsNavigationController";
 
@@ -78,11 +82,15 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
 
 #pragma mark - Privete -
 
--(NSString *)applicationSwitcherRestorationIdentifierForRecentEvent:(RecentEvent *)recentEvent
+-(NSString *)applicationSwitcherRestorationIdentifierForRecentEvent:(id)recentEvent
 {
     if ([recentEvent isKindOfClass:[Voicemail class]] || [recentEvent isKindOfClass:[Call class]]) {
         return kApplicationSwitcherPhoneRestorationIdentifier;
     }
+    else if ([recentEvent isKindOfClass:[JCConversationGroup class]]) {
+        return kApplicationSwitcherMessagesRestorationIdentifier;
+    }
+    
     return nil;
 }
 
@@ -170,7 +178,14 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
         cell.imageView.image = tabBarItem.image;
         return cell;
     }
-    
+    else if ([identifier isEqualToString:kApplicationSwitcherMessagesRestorationIdentifier]) {
+        static NSString *messagesResueIdentifier = @"MessageCell";
+        UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:messagesResueIdentifier];
+        cell.textLabel.text = tabBarItem.title;
+        cell.imageView.image = tabBarItem.image;
+        return cell;
+    }
+ 
     static NSString *resueIdentifier = @"MenuCell";
     UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:resueIdentifier];
     cell.textLabel.text = tabBarItem.title;
@@ -227,7 +242,7 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
  *  Delegate method notifying us that the application switcher should respond to a recent event
  *  selection.
  */
--(void)applicationSwitcher:(JCApplicationSwitcherViewController *)controller shouldNavigateToRecentEvent:(RecentEvent *)recentEvent
+-(void)applicationSwitcher:(JCApplicationSwitcherViewController *)controller shouldNavigateToRecentEvent:(id)recentEvent
 {
     NSString *restorationIdentifier = [self applicationSwitcherRestorationIdentifierForRecentEvent:recentEvent];
     if (restorationIdentifier) {
@@ -238,6 +253,14 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
                 // Logic for Phone Recent Events.
                 if ([restorationIdentifier isEqualToString:kApplicationSwitcherPhoneRestorationIdentifier] && [viewController isKindOfClass:[UITabBarController class]]){
                     [self navigatePhoneViewController:(UITabBarController *)viewController forRecentEvent:recentEvent];
+                }
+                else if ([restorationIdentifier isEqualToString:kApplicationSwitcherMessagesRestorationIdentifier] && [viewController isKindOfClass:[UINavigationController class]] && [recentEvent isKindOfClass:[JCConversationGroup class]]) {
+                    UINavigationController *navigationController = (UINavigationController *)viewController;
+                    [navigationController popToRootViewControllerAnimated:NO];
+                    JCConversationsTableViewController *conversationViewController = (JCConversationsTableViewController *)navigationController.topViewController;
+                    NSIndexPath *indexPath = [conversationViewController indexPathOfObject:recentEvent];
+                    UITableViewCell *cell = [conversationViewController.tableView cellForRowAtIndexPath:indexPath];
+                    [conversationViewController performSegueWithIdentifier:@"AppSwitcherLoadMessageGroup" sender:cell];
                 }
                 break;
             }

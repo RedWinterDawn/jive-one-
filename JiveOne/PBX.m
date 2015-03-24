@@ -19,6 +19,7 @@ NSString *const kPBXV5AttributeKey = @"v5";
 @dynamic user;
 @dynamic lines;
 @dynamic contacts;
+@dynamic dids;
 
 #pragma mark - Setters -
 

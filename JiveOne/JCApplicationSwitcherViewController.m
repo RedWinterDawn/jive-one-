@@ -7,9 +7,9 @@
 //
 
 #import "JCApplicationSwitcherViewController.h"
-#import "JCRecentActivityTableViewController.h"
+#import "JCRecentEventsTableViewController.h"
 
-@interface JCApplicationSwitcherViewController () <UITableViewDataSource, UITableViewDelegate, JCRecentActivityTableViewControllerDelegate>
+@interface JCApplicationSwitcherViewController () <UITableViewDataSource, UITableViewDelegate, JCRecentEventsTableViewControllerDelegate>
 {
     NSArray *_viewControllers;                          // Array of available tab view controllers
     UIViewController *_selectedViewController;
@@ -88,8 +88,8 @@
     
     if ([_activityViewController isKindOfClass:[UINavigationController class]]) {
         UIViewController *controller = ((UINavigationController *)_activityViewController).topViewController;
-        if ([controller isKindOfClass:[JCRecentActivityTableViewController class]]) {
-            ((JCRecentActivityTableViewController *)controller).delegate = self;
+        if ([controller isKindOfClass:[JCRecentEventsTableViewController class]]) {
+            ((JCRecentEventsTableViewController *)controller).delegate = self;
         }
     }
     self.view = view;
@@ -317,7 +317,7 @@
     [_selectedViewController viewWillAppear:animated];
     
     CGRect activityFrame = _activityViewController.view.frame;
-    activityFrame.origin.y = 2 * (menuFrame.origin.y + menuFrame.size.height + activityFrame.size.height);
+    activityFrame.origin.y = self.view.bounds.size.height;
     [UIView animateWithDuration:(animated ? 0.3 : 0)
                           delay:0
                         options:UIViewAnimationOptionCurveEaseInOut
@@ -423,12 +423,12 @@
     [self hideMenuAnimated:YES];
 }
 
-#pragma mark JCRecentActivityTableViewControllerDelegate
+#pragma mark JCRecentLineEventsTableViewControllerDelegate
 
--(void)recentActivityDidSelectRecentEvent:(RecentEvent *)recentEvent
+-(void)recentEventController:(JCRecentLineEventsTableViewController *)controller didSelectObject:(id)object
 {
     if (self.delegate && [self.delegate respondsToSelector:@selector(applicationSwitcher:shouldNavigateToRecentEvent:)]) {
-        [self.delegate applicationSwitcher:self shouldNavigateToRecentEvent:recentEvent];
+        [self.delegate applicationSwitcher:self shouldNavigateToRecentEvent:object];
         [self hideMenuAnimated:YES];
     }
 }

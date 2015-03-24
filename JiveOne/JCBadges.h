@@ -20,6 +20,10 @@
 
 @class RecentEvent;
 
+extern NSString *const kJCBadgesVoicemailsEventTypeKey;
+extern NSString *const kJCBadgesMissedCallsEventTypeKey;
+extern NSString *const kJCBadgesSMSMessagesEventTypeKey;
+
 @interface JCBadges : NSObject <NSCopying>
 
 @property (nonatomic, readonly) NSDictionary *badgeData;
