@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6254" systemVersion="14B25" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6751" systemVersion="14C1510" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Call" representedClassName="Call" isAbstract="YES" parentEntity="RecentEvent" syncable="YES">
         <attribute name="extension" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
@@ -37,8 +37,7 @@
     <entity name="PBX" representedClassName="PBX" syncable="YES">
         <attribute name="jrn" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="pbxId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="selfUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pbxId" optional="YES" transient="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="v5" optional="YES" attributeType="Boolean" syncable="YES"/>
         <relationship name="contacts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Contact" inverseName="pbx" inverseEntity="Contact" syncable="YES"/>
         <relationship name="lines" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Line" inverseName="pbx" inverseEntity="Line" syncable="YES"/>
@@ -77,12 +76,12 @@
         <element name="Call" positionX="241" positionY="-346" width="128" height="58"/>
         <element name="Contact" positionX="-81" positionY="-334" width="128" height="118"/>
         <element name="ContactGroup" positionX="-279" positionY="-369" width="128" height="88"/>
-        <element name="IncomingCall" positionX="448" positionY="-405" width="128" height="45"/>
+        <element name="IncomingCall" positionX="448" positionY="-405" width="128" height="43"/>
         <element name="Line" positionX="-83" positionY="-63" width="128" height="133"/>
         <element name="LineConfiguration" positionX="162" positionY="-45" width="128" height="133"/>
-        <element name="MissedCall" positionX="448" positionY="-277" width="128" height="45"/>
-        <element name="OutgoingCall" positionX="448" positionY="-340" width="128" height="45"/>
-        <element name="PBX" positionX="-288" positionY="-162" width="128" height="163"/>
+        <element name="MissedCall" positionX="448" positionY="-277" width="128" height="43"/>
+        <element name="OutgoingCall" positionX="448" positionY="-340" width="128" height="43"/>
+        <element name="PBX" positionX="-288" positionY="-162" width="128" height="148"/>
         <element name="Person" positionX="-83" positionY="-189" width="128" height="103"/>
         <element name="RecentEvent" positionX="160" positionY="-241" width="128" height="133"/>
         <element name="User" positionX="-497" positionY="-198" width="128" height="73"/>

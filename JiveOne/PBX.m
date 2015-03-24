@@ -16,7 +16,6 @@ NSString *const kPBXV5AttributeKey = @"v5";
 @dynamic jrn;
 @dynamic name;
 @dynamic pbxId;
-@dynamic selfUrl;
 @dynamic user;
 @dynamic lines;
 @dynamic contacts;
@@ -38,6 +37,19 @@ NSString *const kPBXV5AttributeKey = @"v5";
 -(NSString *)displayName
 {
     return [NSString stringWithFormat:@"%@ PBX on %@", self.name, self.isV5 ? @"V5" : @"V4"];
+}
+
+-(NSString *)pbxId
+{
+    NSString *jrn = self.jrn;
+    
+    // "jrn:pbx::jive:01471162-f384-24f5-9351-000100420005:pbx~default";
+    NSString *pbxId = nil;
+    NSArray *components = [jrn componentsSeparatedByString:@":"];
+    if (components.count == 6) {
+        pbxId = [components objectAtIndex:4];
+    }
+    return pbxId;
 }
 
 @end

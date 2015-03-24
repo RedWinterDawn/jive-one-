@@ -18,11 +18,10 @@
 // Attributes
 @property (nonatomic, retain) NSString * jrn;
 @property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSString * pbxId;
-@property (nonatomic, retain) NSString * selfUrl;
 @property (nonatomic, getter=isV5) BOOL v5;
 
 @property (nonatomic, readonly) NSString * displayName;
+@property (nonatomic, readonly) NSString * pbxId;
 
 // Relationships
 @property (nonatomic, retain) NSSet * contacts;
