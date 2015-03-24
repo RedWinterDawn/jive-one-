@@ -43,8 +43,6 @@
 		275F4A7718AD0FBC00D2F069 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275F4A7618AD0FBC00D2F069 /* XCTest.framework */; };
 		275F4A7818AD0FBC00D2F069 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275F4A5118AD0FBC00D2F069 /* Foundation.framework */; };
 		275F4A7918AD0FBC00D2F069 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 275F4A5518AD0FBC00D2F069 /* UIKit.framework */; };
-		275F4A8118AD0FBC00D2F069 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 275F4A7F18AD0FBC00D2F069 /* InfoPlist.strings */; };
-		275F4A8318AD0FBC00D2F069 /* UTJiveOneTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 275F4A8218AD0FBC00D2F069 /* UTJiveOneTests.m */; };
 		2762151E1912AA2500CFBCC8 /* NSDictionary+QueryString.m in Sources */ = {isa = PBXBuildFile; fileRef = 2762151D1912AA2500CFBCC8 /* NSDictionary+QueryString.m */; };
 		276215211912AA7400CFBCC8 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 276215201912AA7400CFBCC8 /* NSString+URLEncoding.m */; };
 		276E067A1A0293BC00CD2827 /* JCContactsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 276E06791A0293BC00CD2827 /* JCContactsTableViewController.m */; };
@@ -66,10 +64,6 @@
 		279CB9D71A1F30490037601F /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 279CB9D61A1F30490037601F /* Default-568h@2x.png */; };
 		279E4C6D19226FA3002A556C /* people-search-nofocus.png in Resources */ = {isa = PBXBuildFile; fileRef = 279E4C6C19226FA3002A556C /* people-search-nofocus.png */; };
 		279E4C7019226FAC002A556C /* people-search.png in Resources */ = {isa = PBXBuildFile; fileRef = 279E4C6F19226FAC002A556C /* people-search.png */; };
-		27A0160C192EEA830073C824 /* conversation.json in Resources */ = {isa = PBXBuildFile; fileRef = 27A0160B192EEA830073C824 /* conversation.json */; };
-		27A0160E192EEF6F0073C824 /* entities.json in Resources */ = {isa = PBXBuildFile; fileRef = 27A0160D192EEF6F0073C824 /* entities.json */; };
-		27A01610192EF11C0073C824 /* voicemails.json in Resources */ = {isa = PBXBuildFile; fileRef = 27A0160F192EF11C0073C824 /* voicemails.json */; };
-		27A01612192EF1E80073C824 /* companies.json in Resources */ = {isa = PBXBuildFile; fileRef = 27A01611192EF1E80073C824 /* companies.json */; };
 		27B6F23D19DDC676007E80DA /* JCDialerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8B62E4319D9F1E400AF98D3 /* JCDialerViewController.m */; };
 		27B8152618D93F1A00516BF6 /* NotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B8152518D93F1A00516BF6 /* NotificationView.m */; };
 		27B8153618D94E9C00516BF6 /* close_notification.png in Resources */ = {isa = PBXBuildFile; fileRef = 27B8153418D94E9C00516BF6 /* close_notification.png */; };
@@ -162,6 +156,8 @@
 		5D895EB51A0B230F0015368D /* JCPresenceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D895EB41A0B230F0015368D /* JCPresenceCell.m */; };
 		5D97A7FF1A828B4700A4434D /* JCIntercomTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D97A7FE1A828B4700A4434D /* JCIntercomTableViewController.m */; };
 		5D9A5E221A24E30A00E8274C /* JCPhoneAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9A5E211A24E30A00E8274C /* JCPhoneAudioManager.m */; };
+		5D9F72101AC34F8000B9D0F8 /* JCAuthClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9F720D1AC34F8000B9D0F8 /* JCAuthClient.m */; };
+		5D9F72111AC34F8000B9D0F8 /* JCAuthClientError.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9F720F1AC34F8000B9D0F8 /* JCAuthClientError.m */; };
 		5DA566441A1D454D00286BA5 /* JCSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA566431A1D454D00286BA5 /* JCSettingsTableViewController.m */; };
 		5DA566491A20543500286BA5 /* JCAuthenticationManagerError.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA566481A20543500286BA5 /* JCAuthenticationManagerError.m */; };
 		5DA5A1AF19DAF91400968F7D /* JCCallerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA5A1AE19DAF91400968F7D /* JCCallerViewController.m */; };
@@ -199,7 +195,6 @@
 		B7DFAA371AC0CDA50033ACFB /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7DFAA361AC0CDA50033ACFB /* CoreMedia.framework */; };
 		DD3BD9F418DCB1740080318E /* Voicemail+V5Client.m in Sources */ = {isa = PBXBuildFile; fileRef = DD3BD9F318DCB1740080318E /* Voicemail+V5Client.m */; };
 		DD577D531940DC6C008DAB46 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD577D521940DC6C008DAB46 /* icomoon.ttf */; };
-		DDCADB6D197D75D800483D98 /* UTDirectoryVCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DDCADB6C197D75D800483D98 /* UTDirectoryVCTests.m */; };
 		DDCE1E8718F3561D003A6615 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E8618F3561D003A6615 /* AudioToolbox.framework */; };
 		DDCE1E8918F35623003A6615 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E8818F35623003A6615 /* CFNetwork.framework */; };
 		DDCE1E8B18F3562D003A6615 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E8A18F3562D003A6615 /* CoreLocation.framework */; };
@@ -208,7 +203,6 @@
 		DDCE1E9118F35647003A6615 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E9018F35647003A6615 /* QuartzCore.framework */; };
 		DDCE1E9318F3564D003A6615 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E9218F3564D003A6615 /* Security.framework */; };
 		DDCE1E9718F3565F003A6615 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E9618F3565F003A6615 /* SystemConfiguration.framework */; };
-		DDFFB60118D2284E00372019 /* UTVoicemailVCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DDFFB60018D2284E00372019 /* UTVoicemailVCTests.m */; };
 		F202433D18B2CF4A006DB2EF /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = F202433C18B2CF4A006DB2EF /* README.md */; };
 		F266162618B42AA0000B770A /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266162418B42AA0000B770A /* AddressBook.framework */; };
 		F266162718B42AA0000B770A /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F266162518B42AA0000B770A /* AddressBookUI.framework */; };
@@ -286,9 +280,6 @@
 		275F4A6F18AD0FBC00D2F069 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		275F4A7518AD0FBC00D2F069 /* JiveOneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JiveOneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		275F4A7618AD0FBC00D2F069 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		275F4A7E18AD0FBC00D2F069 /* JiveOneTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "JiveOneTests-Info.plist"; sourceTree = "<group>"; };
-		275F4A8018AD0FBC00D2F069 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		275F4A8218AD0FBC00D2F069 /* UTJiveOneTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UTJiveOneTests.m; sourceTree = "<group>"; };
 		2762151C1912AA2500CFBCC8 /* NSDictionary+QueryString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+QueryString.h"; sourceTree = "<group>"; };
 		2762151D1912AA2500CFBCC8 /* NSDictionary+QueryString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+QueryString.m"; sourceTree = "<group>"; };
 		2762151F1912AA7400CFBCC8 /* NSString+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncoding.h"; sourceTree = "<group>"; };
@@ -318,10 +309,6 @@
 		279CB9D61A1F30490037601F /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
 		279E4C6C19226FA3002A556C /* people-search-nofocus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "people-search-nofocus.png"; sourceTree = "<group>"; };
 		279E4C6F19226FAC002A556C /* people-search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "people-search.png"; sourceTree = "<group>"; };
-		27A0160B192EEA830073C824 /* conversation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = conversation.json; sourceTree = "<group>"; };
-		27A0160D192EEF6F0073C824 /* entities.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = entities.json; sourceTree = "<group>"; };
-		27A0160F192EF11C0073C824 /* voicemails.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = voicemails.json; sourceTree = "<group>"; };
-		27A01611192EF1E80073C824 /* companies.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = companies.json; sourceTree = "<group>"; };
 		27B8152418D93F1A00516BF6 /* NotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationView.h; sourceTree = "<group>"; };
 		27B8152518D93F1A00516BF6 /* NotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationView.m; sourceTree = "<group>"; };
 		27B8153418D94E9C00516BF6 /* close_notification.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close_notification.png; sourceTree = "<group>"; };
@@ -492,6 +479,10 @@
 		5D97A7FE1A828B4700A4434D /* JCIntercomTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCIntercomTableViewController.m; sourceTree = "<group>"; };
 		5D9A5E201A24E30A00E8274C /* JCPhoneAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPhoneAudioManager.h; sourceTree = "<group>"; };
 		5D9A5E211A24E30A00E8274C /* JCPhoneAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneAudioManager.m; sourceTree = "<group>"; };
+		5D9F720C1AC34F8000B9D0F8 /* JCAuthClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAuthClient.h; sourceTree = "<group>"; };
+		5D9F720D1AC34F8000B9D0F8 /* JCAuthClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthClient.m; sourceTree = "<group>"; };
+		5D9F720E1AC34F8000B9D0F8 /* JCAuthClientError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAuthClientError.h; sourceTree = "<group>"; };
+		5D9F720F1AC34F8000B9D0F8 /* JCAuthClientError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthClientError.m; sourceTree = "<group>"; };
 		5DA566421A1D454D00286BA5 /* JCSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSettingsTableViewController.h; sourceTree = "<group>"; };
 		5DA566431A1D454D00286BA5 /* JCSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSettingsTableViewController.m; sourceTree = "<group>"; };
 		5DA566461A1EEEFF00286BA5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
@@ -574,7 +565,6 @@
 		DD3BD9F218DCB1740080318E /* Voicemail+V5Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Voicemail+V5Client.h"; sourceTree = "<group>"; };
 		DD3BD9F318DCB1740080318E /* Voicemail+V5Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Voicemail+V5Client.m"; sourceTree = "<group>"; };
 		DD577D521940DC6C008DAB46 /* icomoon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = icomoon.ttf; path = ../icomoon.ttf; sourceTree = "<group>"; };
-		DDCADB6C197D75D800483D98 /* UTDirectoryVCTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UTDirectoryVCTests.m; sourceTree = "<group>"; };
 		DDCE1E8418F355FE003A6615 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		DDCE1E8618F3561D003A6615 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		DDCE1E8818F35623003A6615 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -585,7 +575,6 @@
 		DDCE1E9218F3564D003A6615 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		DDCE1E9618F3565F003A6615 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		DDCE1E9818F35749003A6615 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
-		DDFFB60018D2284E00372019 /* UTVoicemailVCTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UTVoicemailVCTests.m; sourceTree = "<group>"; };
 		F202433C18B2CF4A006DB2EF /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		F266162418B42AA0000B770A /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		F266162518B42AA0000B770A /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
@@ -596,14 +585,12 @@
 		F817802E1A1BCCA2009A5F40 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/CurrentCallViewCell.strings"; sourceTree = "<group>"; };
 		F817802F1A1BCCA2009A5F40 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/IncomingCallViewCell.strings"; sourceTree = "<group>"; };
 		F81780301A1BCCA2009A5F40 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/ConferenceCallViewCell.strings"; sourceTree = "<group>"; };
-		F81780311A1BCCA2009A5F40 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		F81780391A1BCF0F009A5F40 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/Main_iPhone.strings"; sourceTree = "<group>"; };
 		F817803A1A1BCF0F009A5F40 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/Main_iPad.strings"; sourceTree = "<group>"; };
 		F817803B1A1BCF0F009A5F40 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/CurrentCallViewCell.strings"; sourceTree = "<group>"; };
 		F817803C1A1BCF0F009A5F40 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/IncomingCallViewCell.strings"; sourceTree = "<group>"; };
 		F817803D1A1BCF0F009A5F40 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/ConferenceCallViewCell.strings"; sourceTree = "<group>"; };
 		F817803E1A1BCF0F009A5F40 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		F817803F1A1BCF0F009A5F40 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		F82A283F19DDC55E00C3620D /* JCV4Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCV4Client.h; sourceTree = "<group>"; };
 		F82A284019DDC55E00C3620D /* JCV4Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCV4Client.m; sourceTree = "<group>"; };
 		F84A087719DF38C8003476E6 /* JCTransferConfirmationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTransferConfirmationViewController.h; sourceTree = "<group>"; };
@@ -614,35 +601,30 @@
 		F84FAF7A1A1BEC61003BC143 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/CurrentCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF7B1A1BEC61003BC143 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/IncomingCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF7C1A1BEC61003BC143 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/ConferenceCallViewCell.strings; sourceTree = "<group>"; };
-		F84FAF7D1A1BEC61003BC143 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F84FAF7E1A1BF064003BC143 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
 		F84FAF7F1A1BF064003BC143 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main_iPad.strings; sourceTree = "<group>"; };
 		F84FAF801A1BF064003BC143 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/CurrentCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF811A1BF064003BC143 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/IncomingCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF821A1BF064003BC143 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ConferenceCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF831A1BF064003BC143 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		F84FAF841A1BF064003BC143 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F84FAF851A1BF0ED003BC143 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
 		F84FAF861A1BF0ED003BC143 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Main_iPad.strings; sourceTree = "<group>"; };
 		F84FAF871A1BF0ED003BC143 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/CurrentCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF881A1BF0ED003BC143 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/IncomingCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF891A1BF0ED003BC143 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/ConferenceCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF8A1A1BF0ED003BC143 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		F84FAF8B1A1BF0ED003BC143 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F84FAF8C1A1BF1A2003BC143 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
 		F84FAF8D1A1BF1A2003BC143 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main_iPad.strings; sourceTree = "<group>"; };
 		F84FAF8E1A1BF1A2003BC143 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/CurrentCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF8F1A1BF1A2003BC143 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/IncomingCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF901A1BF1A2003BC143 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/ConferenceCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF911A1BF1A2003BC143 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		F84FAF921A1BF1A2003BC143 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F84FAF9A1A1BF36F003BC143 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
 		F84FAF9B1A1BF36F003BC143 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Main_iPad.strings; sourceTree = "<group>"; };
 		F84FAF9C1A1BF36F003BC143 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/CurrentCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF9D1A1BF36F003BC143 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/IncomingCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF9E1A1BF36F003BC143 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/ConferenceCallViewCell.strings; sourceTree = "<group>"; };
 		F84FAF9F1A1BF36F003BC143 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		F84FAFA01A1BF36F003BC143 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F85DAD0719EF07D30075AAA2 /* JCCallHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCallHistoryViewController.h; sourceTree = "<group>"; };
 		F85DAD0819EF07D30075AAA2 /* JCCallHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCallHistoryViewController.m; sourceTree = "<group>"; };
 		F8910FCF1A71EC590040B8C7 /* LoggerClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoggerClient.h; sourceTree = "<group>"; };
@@ -896,6 +878,7 @@
 				F8910FD11A71EC590040B8C7 /* LoggerCommon.h */,
 				5DF4680E1A5B9BF600E5826A /* JCClient.h */,
 				5DF4680F1A5B9BF600E5826A /* JCClient.m */,
+				5D9F720B1AC34F6A00B9D0F8 /* Authentication */,
 				5DF4680D1A5B594100E5826A /* V4Provisioning */,
 				5DF4680C1A5B4D2400E5826A /* V5Client */,
 				9145E31D191D842500840D66 /* JCVersion.h */,
@@ -1012,23 +995,8 @@
 		275F4A7C18AD0FBC00D2F069 /* JiveOneTests */ = {
 			isa = PBXGroup;
 			children = (
-				DDED87DE1958857C0011DB55 /* UnitTests */,
-				275F4A7D18AD0FBC00D2F069 /* Supporting Files */,
 			);
 			path = JiveOneTests;
-			sourceTree = "<group>";
-		};
-		275F4A7D18AD0FBC00D2F069 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				275F4A7E18AD0FBC00D2F069 /* JiveOneTests-Info.plist */,
-				275F4A7F18AD0FBC00D2F069 /* InfoPlist.strings */,
-				27A0160B192EEA830073C824 /* conversation.json */,
-				27A0160D192EEF6F0073C824 /* entities.json */,
-				27A0160F192EF11C0073C824 /* voicemails.json */,
-				27A01611192EF1E80073C824 /* companies.json */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		2764BDB918C83A80007320B0 /* Vendors */ = {
@@ -1263,6 +1231,17 @@
 			path = JiveOne;
 			sourceTree = "<group>";
 		};
+		5D9F720B1AC34F6A00B9D0F8 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				5D9F720C1AC34F8000B9D0F8 /* JCAuthClient.h */,
+				5D9F720D1AC34F8000B9D0F8 /* JCAuthClient.m */,
+				5D9F720E1AC34F8000B9D0F8 /* JCAuthClientError.h */,
+				5D9F720F1AC34F8000B9D0F8 /* JCAuthClientError.m */,
+			);
+			name = Authentication;
+			sourceTree = "<group>";
+		};
 		5DDDA5421A4A827600E31AA3 /* Presence */ = {
 			isa = PBXGroup;
 			children = (
@@ -1413,16 +1392,6 @@
 				865FB851301D1534E4CC63E7 /* Pods-JiveOneTests.release.xcconfig */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		DDED87DE1958857C0011DB55 /* UnitTests */ = {
-			isa = PBXGroup;
-			children = (
-				275F4A8218AD0FBC00D2F069 /* UTJiveOneTests.m */,
-				DDFFB60018D2284E00372019 /* UTVoicemailVCTests.m */,
-				DDCADB6C197D75D800483D98 /* UTDirectoryVCTests.m */,
-			);
-			name = UnitTests;
 			sourceTree = "<group>";
 		};
 		F8B62E4119D9F1C300AF98D3 /* Dialer */ = {
@@ -1596,11 +1565,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				27A0160C192EEA830073C824 /* conversation.json in Resources */,
-				27A0160E192EEF6F0073C824 /* entities.json in Resources */,
-				27A01612192EF1E80073C824 /* companies.json in Resources */,
-				275F4A8118AD0FBC00D2F069 /* InfoPlist.strings in Resources */,
-				27A01610192EF11C0073C824 /* voicemails.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1725,6 +1689,7 @@
 				5D112DDA1A4094340097223C /* JCAuthenticationKeychain.m in Sources */,
 				5D1FAC5F19DDD68000899915 /* JCCallCardViewCell.m in Sources */,
 				275F4A5E18AD0FBC00D2F069 /* main.m in Sources */,
+				5D9F72101AC34F8000B9D0F8 /* JCAuthClient.m in Sources */,
 				5D241FDE1A383837008B498A /* JCDebugLineTableViewController.m in Sources */,
 				27F64D6219772D6A00F772AA /* Voicemail.m in Sources */,
 				274493CE18D13538002744CB /* Common.m in Sources */,
@@ -1812,6 +1777,7 @@
 				5D241FD11A37F511008B498A /* User.m in Sources */,
 				5D2EDB811A3BA8250031F7AD /* JCDebugContactGroupsTableViewController.m in Sources */,
 				5D2B2C091A30D8AE00938D76 /* FXBlurView.m in Sources */,
+				5D9F72111AC34F8000B9D0F8 /* JCAuthClientError.m in Sources */,
 				5DDDA5451A4A856800E31AA3 /* JCPresenceManager.m in Sources */,
 				DD3BD9F418DCB1740080318E /* Voicemail+V5Client.m in Sources */,
 				27B8152618D93F1A00516BF6 /* NotificationView.m in Sources */,
@@ -1830,10 +1796,7 @@
 				2751591818AD300B00FD8D3F /* OsgiData.xcdatamodel in Sources */,
 				272B61DE18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */,
 				5D7339C51A056B5400339DC6 /* JCBadgeManager.m in Sources */,
-				275F4A8318AD0FBC00D2F069 /* UTJiveOneTests.m in Sources */,
 				278E858719EC6B6E0087649D /* VideoViewController.mm in Sources */,
-				DDCADB6D197D75D800483D98 /* UTDirectoryVCTests.m in Sources */,
-				DDFFB60118D2284E00372019 /* UTVoicemailVCTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1877,21 +1840,6 @@
 				F84FAF9B1A1BF36F003BC143 /* it */,
 			);
 			name = Main_iPad.storyboard;
-			sourceTree = "<group>";
-		};
-		275F4A7F18AD0FBC00D2F069 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				275F4A8018AD0FBC00D2F069 /* en */,
-				F81780311A1BCCA2009A5F40 /* en-GB */,
-				F817803F1A1BCF0F009A5F40 /* es-MX */,
-				F84FAF7D1A1BEC61003BC143 /* fr */,
-				F84FAF841A1BF064003BC143 /* de */,
-				F84FAF8B1A1BF0ED003BC143 /* pt */,
-				F84FAF921A1BF1A2003BC143 /* es */,
-				F84FAFA01A1BF36F003BC143 /* it */,
-			);
-			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		5D0199BA1A1BBBAC00F4CF13 /* Main_iPhone.storyboard */ = {
