@@ -48,4 +48,15 @@ NSString *const kPBXV5AttributeKey = @"v5";
     return [[self class] identifierFromJrn:self.jrn index:PBX_INDEX_OF_PBX_ID_IN_JRN];
 }
 
+-(BOOL)smsEnabled
+{
+    NSSet *dids = self.dids;
+    for (DID *did in dids) {
+        if (did.canSendSMS || did.canReceiveSMS) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 @end

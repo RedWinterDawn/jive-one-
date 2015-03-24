@@ -30,6 +30,9 @@
 @property (nonatomic, retain) NSSet * lines;
 @property (nonatomic, retain) NSSet * dids;
 
+// Transient
+@property (nonatomic, readonly) BOOL smsEnabled;
+
 @end
 
 @interface PBX (CoreDataGeneratedAccessors)
