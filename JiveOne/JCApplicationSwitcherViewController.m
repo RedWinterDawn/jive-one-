@@ -78,7 +78,6 @@
 {
     [super viewDidLoad];
     
-    [self addMenuBarButtonItemToViewController:self.menuNavigationController];
     for (UIViewController *viewController in _viewControllers)
         [self addMenuBarButtonItemToViewController:viewController];
 }
@@ -229,6 +228,7 @@
         UIViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:self.menuViewControllerStoryboardIdentifier];
         if ([viewController isKindOfClass:[UINavigationController class]]) {
             _menuNavigationController = (UINavigationController *)viewController;
+            [self addMenuBarButtonItemToViewController:_menuNavigationController];
             viewController = _menuNavigationController.topViewController;
             if ([viewController isKindOfClass:[UITableViewController class]]) {
                 UITableViewController *menuTableViewController = (UITableViewController *)viewController;
