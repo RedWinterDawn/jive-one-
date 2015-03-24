@@ -3262,6 +3262,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b2R-GS-nch">
                                         <rect key="frame" x="88" y="251" width="84" height="83"/>
+                                        <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="b2R-GS-nch" secondAttribute="height" multiplier="1:1" id="IOa-Wj-Ujn"/>
                                         </constraints>
@@ -3293,6 +3294,7 @@
                                         </state>
                                         <connections>
                                             <action selector="numPadPressed:" destination="3A8-R9-IcP" eventType="touchUpInside" id="q0D-HQ-a7j"/>
+                                            <outletCollection property="gestureRecognizers" destination="Dcv-p6-x34" appends="YES" id="XRo-vY-abz"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uSH-QK-bW1">
@@ -3502,7 +3504,7 @@
                     <navigationItem key="navigationItem" id="32D-gV-RmW">
                         <nil key="title"/>
                         <view key="titleView" contentMode="scaleToFill" id="hvF-R3-hJB" userLabel="t">
-                            <rect key="frame" x="96" y="6" width="128" height="33"/>
+                            <rect key="frame" x="96" y="5.5" width="128" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IFW-et-Pls">
@@ -3537,9 +3539,14 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uaJ-EJ-ICh" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="9YZ-qe-5Z7">
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="9YZ-qe-5Z7" userLabel="Clear Long Press Gesture Recognizer">
                     <connections>
                         <action selector="clear:" destination="3A8-R9-IcP" id="sAm-Yj-9yl"/>
+                    </connections>
+                </pongPressGestureRecognizer>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="Dcv-p6-x34" userLabel="Plus Long Press Gesture Recognizer">
+                    <connections>
+                        <action selector="numPadLogPress:" destination="3A8-R9-IcP" id="0in-p7-R78"/>
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>

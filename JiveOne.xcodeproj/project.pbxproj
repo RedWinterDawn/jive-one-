@@ -1278,12 +1278,10 @@
 			children = (
 				5DBBDCC419DD9A4100A4DB96 /* JCPhoneManager.h */,
 				5DBBDCC519DD9A4100A4DB96 /* JCPhoneManager.m */,
-				5D9A5E201A24E30A00E8274C /* JCBluetoothManager.h */,
-				5D9A5E211A24E30A00E8274C /* JCBluetoothManager.m */,
+				5D9A5E201A24E30A00E8274C /* JCPhoneAudioManager.h */,
+				5D9A5E211A24E30A00E8274C /* JCPhoneAudioManager.m */,
 				279A4E2A19DA91E100E8AB7B /* JCSipManager.h */,
 				279A4E2B19DA91E100E8AB7B /* JCSipManager.m */,
-				F8C51B8C1A70162400BC96D8 /* JCAudioAlertManager.h */,
-				F8C51B8D1A70162400BC96D8 /* JCAudioAlertManager.m */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -1643,7 +1641,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = JC;
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0620;
 				ORGANIZATIONNAME = "Jive Communications, Inc";
 				TargetAttributes = {
 					275F4A4D18AD0FBC00D2F069 = {
@@ -2246,7 +2244,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "";
 				PROVISIONING_PROFILE = "db17f7d7-83ff-47cb-8cad-331ef83f5d8a";
 				SDKROOT = iphoneos;
@@ -2327,7 +2325,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2420,8 +2418,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "db17f7d7-83ff-47cb-8cad-331ef83f5d8a";
+				ONLY_ACTIVE_ARCH = NO;
+				PROVISIONING_PROFILE = "5D91116E-2070-4EF3-880B-C4A07E2656B7";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -2458,7 +2456,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MOMC_NO_INVERSE_RELATIONSHIP_WARNINGS = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
