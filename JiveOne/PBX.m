@@ -7,7 +7,10 @@
 //
 
 #import "PBX.h"
-#import "NSManagedObject+JCCoreDataAdditions.h"
+#import "NSManagedObject+Additions.h"
+
+#define PBX_INDEX_OF_PBX_ID_IN_JRN 4
+// "jrn:pbx::jive:01471162-f384-24f5-9351-000100420005:pbx~default";
 
 NSString *const kPBXV5AttributeKey = @"v5";
 
@@ -42,15 +45,7 @@ NSString *const kPBXV5AttributeKey = @"v5";
 
 -(NSString *)pbxId
 {
-    NSString *jrn = self.jrn;
-    
-    // "jrn:pbx::jive:01471162-f384-24f5-9351-000100420005:pbx~default";
-    NSString *pbxId = nil;
-    NSArray *components = [jrn componentsSeparatedByString:@":"];
-    if (components.count == 6) {
-        pbxId = [components objectAtIndex:4];
-    }
-    return pbxId;
+    return [[self class] identifierFromJrn:self.jrn index:PBX_INDEX_OF_PBX_ID_IN_JRN];
 }
 
 @end

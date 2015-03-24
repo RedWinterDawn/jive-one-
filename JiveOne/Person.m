@@ -8,7 +8,7 @@
 
 #import "Person.h"
 
-#import "NSManagedObject+JCCoreDataAdditions.h"
+#import "NSManagedObject+Additions.h"
 
 NSString *const kPersonFirstNameAttributeKey = @"firstName";
 NSString *const kPersonLastNameAttributeKey = @"lastName";

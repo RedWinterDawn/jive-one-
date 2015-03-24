@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "NSManagedObject+JCCoreDataAdditions.h"
+#import "NSManagedObject+Additions.h"
 
-@implementation NSManagedObject (JCCoreDataAdditions)
+@implementation NSManagedObject (Primitives)
 
 #pragma mark - Setters -
 
@@ -144,3 +144,21 @@
 }
 
 @end
+
+@implementation NSManagedObject (JRNIdentifiers)
+
++(NSString *)identifierFromJrn:(NSString *)jrn index:(NSUInteger)index
+{
+    NSString *identifier = nil;
+    @autoreleasepool {
+        static NSString *seperator = @":";
+        NSArray *components = [jrn componentsSeparatedByString:seperator];
+        if (components.count > index) {
+            identifier = [components objectAtIndex:index];
+        }
+    }
+    return identifier;
+}
+
+@end
+

@@ -13,8 +13,18 @@
 
 @interface DID : NSManagedObject
 
+// Attributes
+@property (nonatomic, retain) NSString * jrn;
 @property (nonatomic, retain) NSString * number;
-@property (nonatomic, retain) NSString * didId;
+@property (nonatomic, getter=canMakeCall) BOOL makeCall;
+@property (nonatomic, getter=canReceiveCall) BOOL receiveCall;
+@property (nonatomic, getter=canSendSMS) BOOL sendSMS;
+@property (nonatomic, getter=canReceiveSMS) BOOL receiveSMS;
+
+// Transient
+@property (nonatomic, readonly) NSString * didId;
+
+// Relationships
 @property (nonatomic, retain) PBX *pbx;
 @property (nonatomic, retain) NSSet *smsMessages;
 @end

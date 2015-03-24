@@ -165,7 +165,7 @@
 		5D629BB019D9CE4500F5744E /* JCVoiceNonVisualViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D629BAF19D9CE4500F5744E /* JCVoiceNonVisualViewController.m */; };
 		5D6742A11A2D19AA00E1A60D /* UIDevice+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D6742A01A2D19AA00E1A60D /* UIDevice+Additions.m */; };
 		5D6AE3671A094A9C002BDAAF /* NSDictionary+Validations.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D6AE3661A094A9C002BDAAF /* NSDictionary+Validations.m */; };
-		5D7339A71A03F2E700339DC6 /* NSManagedObject+JCCoreDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7339A61A03F2E700339DC6 /* NSManagedObject+JCCoreDataAdditions.m */; };
+		5D7339A71A03F2E700339DC6 /* NSManagedObject+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7339A61A03F2E700339DC6 /* NSManagedObject+Additions.m */; };
 		5D7339AA1A03FF9700339DC6 /* JCBadgeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7339A91A03FF9700339DC6 /* JCBadgeManager.m */; };
 		5D7339C51A056B5400339DC6 /* JCBadgeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7339A91A03FF9700339DC6 /* JCBadgeManager.m */; };
 		5D7339CB1A0826CD00339DC6 /* JCPhoneTabBarControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7339CA1A0826CC00339DC6 /* JCPhoneTabBarControllerDelegate.m */; };
@@ -540,8 +540,8 @@
 		5D6742A01A2D19AA00E1A60D /* UIDevice+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+Additions.m"; sourceTree = "<group>"; };
 		5D6AE3651A094A9C002BDAAF /* NSDictionary+Validations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Validations.h"; sourceTree = "<group>"; };
 		5D6AE3661A094A9C002BDAAF /* NSDictionary+Validations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Validations.m"; sourceTree = "<group>"; };
-		5D7339A51A03F2E700339DC6 /* NSManagedObject+JCCoreDataAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+JCCoreDataAdditions.h"; sourceTree = "<group>"; };
-		5D7339A61A03F2E700339DC6 /* NSManagedObject+JCCoreDataAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+JCCoreDataAdditions.m"; sourceTree = "<group>"; };
+		5D7339A51A03F2E700339DC6 /* NSManagedObject+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+Additions.h"; sourceTree = "<group>"; };
+		5D7339A61A03F2E700339DC6 /* NSManagedObject+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+Additions.m"; sourceTree = "<group>"; };
 		5D7339A81A03FF9700339DC6 /* JCBadgeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCBadgeManager.h; sourceTree = "<group>"; };
 		5D7339A91A03FF9700339DC6 /* JCBadgeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCBadgeManager.m; sourceTree = "<group>"; };
 		5D7339C91A0826CC00339DC6 /* JCPhoneTabBarControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPhoneTabBarControllerDelegate.h; sourceTree = "<group>"; };
@@ -1228,8 +1228,8 @@
 				2762151D1912AA2500CFBCC8 /* NSDictionary+QueryString.m */,
 				2762151F1912AA7400CFBCC8 /* NSString+URLEncoding.h */,
 				276215201912AA7400CFBCC8 /* NSString+URLEncoding.m */,
-				5D7339A51A03F2E700339DC6 /* NSManagedObject+JCCoreDataAdditions.h */,
-				5D7339A61A03F2E700339DC6 /* NSManagedObject+JCCoreDataAdditions.m */,
+				5D7339A51A03F2E700339DC6 /* NSManagedObject+Additions.h */,
+				5D7339A61A03F2E700339DC6 /* NSManagedObject+Additions.m */,
 				5D6AE3651A094A9C002BDAAF /* NSDictionary+Validations.h */,
 				5D6AE3661A094A9C002BDAAF /* NSDictionary+Validations.m */,
 				5D67429F1A2D19AA00E1A60D /* UIDevice+Additions.h */,
@@ -1916,7 +1916,7 @@
 				5DDDA5411A49C16000E31AA3 /* JCStyleKit.m in Sources */,
 				5D6243751A678B1D001DF88E /* JCSipHandlerError.m in Sources */,
 				5D2EDB8A1A3CEC060031F7AD /* JCDebugUserTableViewController.m in Sources */,
-				5D7339A71A03F2E700339DC6 /* NSManagedObject+JCCoreDataAdditions.m in Sources */,
+				5D7339A71A03F2E700339DC6 /* NSManagedObject+Additions.m in Sources */,
 				27D2C1F7196F030C005285FF /* JCLineSelectorTableViewController.m in Sources */,
 				5D1FD5C41A48B05E007EF8B6 /* JCKeychain.m in Sources */,
 				5D241FCE1A36AF2C008B498A /* JCPickerViewController.m in Sources */,
@@ -1979,7 +1979,6 @@
 				5D11758D1AA0321B00D2B03A /* JCPushNoAnimationSegue.m in Sources */,
 				5DB0BFCD1A00BAB3006737D7 /* JCVoicemailCell.m in Sources */,
 				F81EA8AB1A925CEE00081C81 /* JCSMSClient.m in Sources */,
-				F8C51B8E1A70162400BC96D8 /* JCAudioAlertManager.m in Sources */,
 				5D241FD11A37F511008B498A /* User.m in Sources */,
 				5D2EDB811A3BA8250031F7AD /* JCDebugContactGroupsTableViewController.m in Sources */,
 				5D490E6D1A8D7624004B62C0 /* JCConversationsTableViewController.m in Sources */,

@@ -8,7 +8,7 @@
 
 #import <CoreData/CoreData.h>
 
-@interface NSManagedObject (JCCoreDataAdditions)
+@interface NSManagedObject (Primitives)
 
 -(void)setPrimitiveValueFromStringValue:(NSString *)string forKey:(NSString *)key;
 -(NSString *)stringValueFromPrimitiveValueForKey:(NSString *)key;
@@ -39,5 +39,11 @@
 
 -(void)setPrimitiveValueFromURL:(NSURL *)url forKey:(NSString *)key;
 -(NSURL *)urlFromPrimitiveValueForKey:(NSString *)key;
+
+@end
+
+@interface NSManagedObject (JRNIdentifiers)
+
++(NSString *)identifierFromJrn:(NSString *)jrn index:(NSUInteger)index;
 
 @end
