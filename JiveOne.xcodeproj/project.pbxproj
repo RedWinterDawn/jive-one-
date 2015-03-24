@@ -173,6 +173,7 @@
 		5D7DD3681A7B004B00B9FF4D /* SMSMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D62436B1A644D4C001DF88E /* SMSMessage.m */; };
 		5D7DD3691A7B004B00B9FF4D /* Conversation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D6243681A644D4B001DF88E /* Conversation.m */; };
 		5D7DD36A1A7B004B00B9FF4D /* JCCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5523691A7811E500CA8A6D /* JCCustomCell.m */; };
+		5D8198ED1AC1D7520057FDDA /* Debug.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D8198EC1AC1D7520057FDDA /* Debug.storyboard */; };
 		5D87FCCC1AA9656F00AE1CA5 /* JCBadges.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FCCB1AA9656F00AE1CA5 /* JCBadges.m */; };
 		5D87FCD31AB2822700AE1CA5 /* JCConversationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D87FCD21AB2822700AE1CA5 /* JCConversationViewController.xib */; };
 		5D87FF341A7FF576001B8BB2 /* JCConversationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FF331A7FF576001B8BB2 /* JCConversationViewController.m */; };
@@ -546,6 +547,7 @@
 		5D7339A91A03FF9700339DC6 /* JCBadgeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCBadgeManager.m; sourceTree = "<group>"; };
 		5D7339C91A0826CC00339DC6 /* JCPhoneTabBarControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPhoneTabBarControllerDelegate.h; sourceTree = "<group>"; };
 		5D7339CA1A0826CC00339DC6 /* JCPhoneTabBarControllerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneTabBarControllerDelegate.m; sourceTree = "<group>"; };
+		5D8198EC1AC1D7520057FDDA /* Debug.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Debug.storyboard; sourceTree = "<group>"; };
 		5D87FCCA1AA9656F00AE1CA5 /* JCBadges.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCBadges.h; sourceTree = "<group>"; };
 		5D87FCCB1AA9656F00AE1CA5 /* JCBadges.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCBadges.m; sourceTree = "<group>"; };
 		5D87FCD21AB2822700AE1CA5 /* JCConversationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JCConversationViewController.xib; sourceTree = "<group>"; };
@@ -1302,6 +1304,7 @@
 		5D241FD51A38313F008B498A /* Debug */ = {
 			isa = PBXGroup;
 			children = (
+				5D8198EC1AC1D7520057FDDA /* Debug.storyboard */,
 				5D241FD61A38315F008B498A /* JCDebugTableViewController.h */,
 				5D241FD71A38315F008B498A /* JCDebugTableViewController.m */,
 				5D241FD91A38346A008B498A /* JCDebugLinesTableViewController.h */,
@@ -1710,6 +1713,7 @@
 				270098C818F5EA9300B6BC2F /* avatar.png in Resources */,
 				5D0199B81A1BBBAC00F4CF13 /* Main_iPhone.storyboard in Resources */,
 				270098C318F5EA9300B6BC2F /* nav-conv.png in Resources */,
+				5D8198ED1AC1D7520057FDDA /* Debug.storyboard in Resources */,
 				5D3CC62A1A4226D300DA374B /* de.xliff in Resources */,
 				275F4A6818AD0FBC00D2F069 /* Main_iPad.storyboard in Resources */,
 				272580F0192120500027887C /* people-start-conv.png in Resources */,

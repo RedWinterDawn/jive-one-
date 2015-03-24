@@ -22,5 +22,6 @@
 -(IBAction)logout:(id)sender;
 -(IBAction)toggleWifiOnly:(id)sender;
 -(IBAction)togglePresenceEnabled:(id)sender;
+-(IBAction)showDebug:(id)sender;
 
 @end
