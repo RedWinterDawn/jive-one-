@@ -35,13 +35,13 @@ NSString *const kPBXInfoResponseExtensionNumberKey                  = @"number";
 NSString *const kPBXInfoResponseExtensionMailboxKey                 = @"mailbox";
 NSString *const kPBXInfoResponseExtensionMailboxIdentiferKey            = @"id";
 NSString *const kPBXInfoResponseExtensionMailboxUrlKey                  = @"self";
-NSString *const kPBXInfoResponseNumbersKey                  = @"numbers";
-NSString *const kPBXInfoResponseNumberIdentifierKey             = @"id";
-NSString *const kPBXInfoResponseNumberDialStringKey             = @"dialstring";
-NSString *const kPBXInfoResponseNumberMakeCallsKey              = @"makeCalls";
-NSString *const kPBXInfoResponseNumberReceiveCallsKey           = @"receiveCalls";
-NSString *const kPBXInfoResponseNumberSendSMSKey                = @"sendSMS";
-NSString *const kPBXInfoResponseNumberReceiveSMSKey             = @"receiveSMS";
+NSString *const kPBXInfoResponseNumbersKey                      = @"phoneNumbers";
+NSString *const kPBXInfoResponseNumberIdentifierKey                 = @"id";
+NSString *const kPBXInfoResponseNumberDialStringKey                 = @"dialstring";
+NSString *const kPBXInfoResponseNumberMakeCallsKey                  = @"makeCalls";
+NSString *const kPBXInfoResponseNumberReceiveCallsKey               = @"receiveCalls";
+NSString *const kPBXInfoResponseNumberSendSMSKey                    = @"sendSMS";
+NSString *const kPBXInfoResponseNumberReceiveSMSKey                 = @"receiveSMS";
 
 NSString *const kPBXResponseException           = @"pbxResponseException";
 
@@ -150,27 +150,21 @@ NSString *const kPBXResponseException           = @"pbxResponseException";
         return nil;
     }
     
+    // Fetch/update PBX. If does not exit it is created.
     PBX *pbx = [PBX pbxForJrn:jrn user:user];
     pbx.name = [data stringValueForKey:kPBXInfoResponseNameKey];
     pbx.v5   = [data boolValueForKey:kPBXInfoResponseV5Key];
     
+    // Process Line Extensions
     NSArray *lines = [data arrayForKey:kPBXInfoResponseExtensionsKey];
     if (lines.count > 0) {
         [self processLines:lines pbx:pbx];
     }
     
-    // TODO: get actual dids from the server response when it becomes available, and it will be an
-    // array which we loop through to make a list of DIDs. Temp solution unti we are able to so from
-    // the server response.
-    NSString *number = @"18013163336";
-    NSString *didId = @"0142349c-fff3-719c-cb63-000100420002";
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx = %@ and didId = %@", pbx, didId];
-    DID *did = [DID MR_findFirstWithPredicate:predicate inContext:user.managedObjectContext];
-    if (!did) {
-        did = [DID MR_createInContext:user.managedObjectContext];
-        did.didId = didId;
-        did.number = number;
-        did.pbx = pbx;
+    // Process Did Numbers;
+    NSArray *numbers = [data arrayForKey:kPBXInfoResponseNumbersKey];
+    if (numbers.count > 0) {
+        [self processNumbers:numbers pbx:pbx];
     }
     return pbx;
 }
@@ -241,6 +235,56 @@ NSString *const kPBXResponseException           = @"pbxResponseException";
         line.pbxId = pbx.pbxId;
     }
     return line;
+}
+
+#pragma mark - Number Info -
+
++ (void)processNumbers:(NSArray *)numbersData pbx:(PBX *)pbx
+{
+    NSMutableSet *dids = pbx.dids.mutableCopy;
+    
+    for (id object in numbersData) {
+        if ([object isKindOfClass:[NSDictionary class]]) {
+            DID *did = [self processNumber:(NSDictionary *)object pbx:pbx];
+            if ([dids containsObject:did]) {
+                [dids removeObject:did];
+            }
+        }
+    }
+    
+    if (dids.count > 0) {
+        for (DID *did in dids) {
+            [pbx.managedObjectContext deleteObject:did];
+        }
+    }
+}
+
++(DID *)processNumber:(NSDictionary *)data pbx:(PBX *)pbx
+{
+    NSString *jrn = [data stringValueForKey:kPBXInfoResponseNumberIdentifierKey];
+    if (!jrn) {
+        return nil;
+    }
+    
+    DID *did = [self didForJrn:jrn pbx:pbx];
+    did.number      = [data stringValueForKey:kPBXInfoResponseNumberDialStringKey];
+    did.makeCall    = [data boolValueForKey:kPBXInfoResponseNumberMakeCallsKey];
+    did.receiveCall = [data boolValueForKey:kPBXInfoResponseNumberReceiveCallsKey];
+    did.sendSMS     = [data boolValueForKey:kPBXInfoResponseNumberSendSMSKey];
+    did.receiveSMS  = [data boolValueForKey:kPBXInfoResponseNumberReceiveSMSKey];
+    return did;
+}
+
++ (DID *)didForJrn:(NSString *)jrn pbx:(PBX *)pbx
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx = %@ and jrn = %@", pbx, jrn];
+    DID *did = [DID MR_findFirstWithPredicate:predicate inContext:pbx.managedObjectContext];
+    if (!did) {
+        did = [DID MR_createInContext:pbx.managedObjectContext];
+        did.jrn = jrn;
+        did.pbx = pbx;
+    }
+    return did;
 }
 
 @end
