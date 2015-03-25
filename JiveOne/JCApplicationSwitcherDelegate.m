@@ -49,7 +49,7 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
         [center addObserver:self selector:@selector(reset:) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];
-        [center addObserver:self selector:@selector(reload:) name:kJCAuthenticationManagerUserAuthenticatedNotification object:authenticationManager];
+        [center addObserver:self selector:@selector(reload:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:authenticationManager];
         [center addObserver:self selector:@selector(reload:) name:kJCAuthenticationManagerLineChangedNotification object:authenticationManager];
     }
     return self;
