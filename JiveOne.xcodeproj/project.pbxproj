@@ -149,8 +149,7 @@
 		5D9F72101AC34F8000B9D0F8 /* JCAuthClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9F720D1AC34F8000B9D0F8 /* JCAuthClient.m */; };
 		5D9F72111AC34F8000B9D0F8 /* JCAuthClientError.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9F720F1AC34F8000B9D0F8 /* JCAuthClientError.m */; };
 		5D9F721B1AC3519F00B9D0F8 /* JiveOne_Unit_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9F721A1AC3519F00B9D0F8 /* JiveOne_Unit_Tests.m */; };
-		5D9F72231AC3523500B9D0F8 /* JCAuthenticationIntegrationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9F72211AC3523500B9D0F8 /* JCAuthenticationIntegrationTests.m */; };
-		5D9F72241AC3523500B9D0F8 /* JCAuthTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9F72221AC3523500B9D0F8 /* JCAuthTests.m */; };
+		5D9F72241AC3523500B9D0F8 /* JCAuthClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9F72221AC3523500B9D0F8 /* JCAuthClientTests.m */; };
 		5DA566441A1D454D00286BA5 /* JCSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA566431A1D454D00286BA5 /* JCSettingsTableViewController.m */; };
 		5DA566491A20543500286BA5 /* JCAuthenticationManagerError.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA566481A20543500286BA5 /* JCAuthenticationManagerError.m */; };
 		5DA5A1AF19DAF91400968F7D /* JCCallerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA5A1AE19DAF91400968F7D /* JCCallerViewController.m */; };
@@ -468,8 +467,7 @@
 		5D9F72161AC3519F00B9D0F8 /* JiveOne Unit Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "JiveOne Unit Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D9F72191AC3519F00B9D0F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D9F721A1AC3519F00B9D0F8 /* JiveOne_Unit_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JiveOne_Unit_Tests.m; sourceTree = "<group>"; };
-		5D9F72211AC3523500B9D0F8 /* JCAuthenticationIntegrationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthenticationIntegrationTests.m; sourceTree = "<group>"; };
-		5D9F72221AC3523500B9D0F8 /* JCAuthTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthTests.m; sourceTree = "<group>"; };
+		5D9F72221AC3523500B9D0F8 /* JCAuthClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthClientTests.m; sourceTree = "<group>"; };
 		5DA566421A1D454D00286BA5 /* JCSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSettingsTableViewController.h; sourceTree = "<group>"; };
 		5DA566431A1D454D00286BA5 /* JCSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSettingsTableViewController.m; sourceTree = "<group>"; };
 		5DA566461A1EEEFF00286BA5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
@@ -1247,8 +1245,7 @@
 		5D9F72201AC351C000B9D0F8 /* Integration Tests */ = {
 			isa = PBXGroup;
 			children = (
-				5D9F72211AC3523500B9D0F8 /* JCAuthenticationIntegrationTests.m */,
-				5D9F72221AC3523500B9D0F8 /* JCAuthTests.m */,
+				5D9F72221AC3523500B9D0F8 /* JCAuthClientTests.m */,
 			);
 			name = "Integration Tests";
 			sourceTree = "<group>";
@@ -1770,8 +1767,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D9F721B1AC3519F00B9D0F8 /* JiveOne_Unit_Tests.m in Sources */,
-				5D9F72231AC3523500B9D0F8 /* JCAuthenticationIntegrationTests.m in Sources */,
-				5D9F72241AC3523500B9D0F8 /* JCAuthTests.m in Sources */,
+				5D9F72241AC3523500B9D0F8 /* JCAuthClientTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
