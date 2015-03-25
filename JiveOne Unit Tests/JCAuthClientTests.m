@@ -41,6 +41,11 @@
     
     // When
     [[JCAuthClient new] loginWithUsername:user password:password completion:^(BOOL success, NSDictionary *authToken, NSError *error) {
+        
+        XCTAssert(success, @"Failure");
+        XCTAssertNotNil(authToken, @"Auth token is nil");
+        XCTAssertNil(error, @"Error is not null");
+        
         [login fulfill];
     }];
     
