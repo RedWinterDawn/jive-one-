@@ -24,6 +24,7 @@
 #import "JCApplicationSwitcherDelegate.h"
 #import "JCV5ApiClient.h"
 #import "JCSocket.h"
+#import <Appsee/Appsee.h>
 
 #import "PBX.h"
 #import "Line.h"
@@ -425,6 +426,8 @@
      * New Relic
      */
     [NewRelicAgent startWithApplicationToken:@"AA6303a3125152af3660d1e3371797aefedfb29761"];
+    
+    [Appsee start:@"a57e92aea6e541529dc5227171341113"];
     
     //Register for background fetches
     [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
