@@ -81,10 +81,15 @@
             UIViewController *lastSelectedViewController = [self.delegate applicationSwitcherLastSelectedViewController:self];
             if (lastSelectedViewController != nil) {
                 self.selectedViewController = lastSelectedViewController;
-                [self hideMenuAnimated:NO];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self hideMenuAnimated:NO];
+                });
             }
             else {
-                [self showMenuAnimated:NO];
+                self.selectedViewController = [_viewControllers firstObject];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self showMenuAnimated:NO];
+                });
             }
         }
     }
