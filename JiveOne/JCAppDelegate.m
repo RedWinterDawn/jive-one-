@@ -420,8 +420,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    LOG_Info();
-    NSLog(LOGGER_TARGET);
+//    LOG_Info();
+//    NSLog(LOGGER_TARGET);
     /*
      * New Relic
      */

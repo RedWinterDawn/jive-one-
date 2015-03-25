@@ -22,12 +22,10 @@ NSString *const kJCAuthErrorDomain = @"AuthErrorDomain";
     return [self errorWithDomain:kJCAuthErrorDomain code:code reason:reason underlyingError:error];
 }
 
-
-
 +(NSString *)failureReasonFromCode:(NSInteger)code
 {
     switch (code) {
-        case AUTH_CLIENT_INVALID_PARAP:
+        case AUTH_CLIENT_INVALID_PARAM:
             return @"Server returned an invalid server response.";
             
         case AUTH_CLIENT_AUTHENTICATION_ERROR:
@@ -47,6 +45,5 @@ NSString *const kJCAuthErrorDomain = @"AuthErrorDomain";
     }
     return nil;
 }
-
 
 @end
