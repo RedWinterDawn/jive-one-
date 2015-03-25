@@ -31,48 +31,31 @@ NSString *const kJCVoicemailManagerTypeMailbox   = @"mailbox";
     [JCSocket subscribeToSocketEventsWithIdentifer:line.mailboxJrn entity:line.mailboxJrn type:kJCVoicemailManagerTypeMailbox];
 }
 
--(void)socketDidReceiveMessageSelector:(NSNotification *)notification
-{
-    NSDictionary *userInfo = notification.userInfo;
-    NSDictionary *results = [userInfo objectForKey:kJCSocketNotificationResultKey];
-    if (!results) {
-        NSError *error = [userInfo objectForKey:kJCSocketNotificationErrorKey];
-        NSLog(@"%@", [error description]);
-        return;
-    }
-    
-    // Right now we only care about withdraws and confirms
-    NSString *type = [results stringValueForKey:kJCVoicemailManagerTypeKey];
-    NSLog(@"%@ %@", type, results);
-
-//    NSString *state = nil;
-//    id object = [results objectForKey:kJCPresenceManagerDataKey];
-//    if (object && [object isKindOfClass:[NSDictionary class]]) {
-//        NSDictionary *data = (NSDictionary *)object;
-//        state = [data stringValueForKey:kJCPresenceManagerStateKey];
-//    }
-//
-//    if (![type isEqualToString:kJCPresenceManagerTypeWithdraw] && !(state && [state isEqualToString:kJCPresenceManagerTypeConfirmed])) {
-//        return;
-//    }
-//    
-//    // Get identifer.
-//    NSString *identifier = [results stringValueForKey:kJCPresenceManagerIdentifierKey];
-//    if (!identifier || identifier.length < 1) {
-//        return;
-//    }
-//    
-//    JCLinePresence *linePresence = [self linePresenceForIdentifier:identifier];
-//    if (!linePresence) {
-//        return;
-//    }
-//    
-//    if ([type isEqualToString:kJCPresenceManagerTypeWithdraw]) {
-//        linePresence.state = JCLinePresenceTypeAvailable;
-//    }
-//    else if ([state isEqualToString:kJCPresenceManagerTypeConfirmed]) {
-//        linePresence.state = JCLinePresenceTypeDoNotDisturb;
-//    }
+-(void)receivedResult:(NSDictionary *)result type:(NSString *)type data:(NSDictionary *)data {
+   
+    NSLog(@"***   ***   ***   ***   ***   ***   ***   ***   ***   ***   ***   ***   ***   ***Here is your type and result :%@ %@", type, result);
+//        announce {
+//    data =     {
+//        action =         {
+//            action = NEW;
+//        };
+//        alert =         {
+//            alert = "New voicemail from George's Desk <6667>";
+//        };
+//        entityType =         {
+//            entityType = mailbox;
+//        };
+//        mailboxJrn = "jrn:voicemail::jive:01471162-f384-24f5-9351-000100420005:vmbox/014b17d6-0d5a-3d74-1cb7-000100620005";
+//        self = "https://api.jive.com/voicemail/v1/mailbox/id/014b17d6-0d5a-3d74-1cb7-000100620005";
+//        voicemailCount =         {
+//            INBOX = 1;
+//            total = 1;
+//        };
+//    };
+//    entityId = 1;
+//    subId = "jrn:voicemail::jive:01471162-f384-24f5-9351-000100420005:vmbox/014b17d6-0d5a-3d74-1cb7-000100620005";
+//    type = announce;
+//}
 }
 
 @end
