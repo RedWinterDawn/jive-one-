@@ -94,6 +94,27 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     }
 }
 
+-(IBAction)numPadLogPress:(id)sender
+{
+    if ([sender isKindOfClass:[UILongPressGestureRecognizer class]]) {
+        UILongPressGestureRecognizer *gestureRecognizer = (UILongPressGestureRecognizer *)sender;
+        UIView *view = gestureRecognizer.view;
+        if (gestureRecognizer.state == UIGestureRecognizerStateEnded && [view isKindOfClass:[UIButton class]]) {
+            UIButton *button = (UIButton *)view;
+            NSInteger tag = button.tag;
+            switch (tag) {
+                case 0:
+                    [self.dialStringLabel append:@"+"];
+                    break;
+                    
+                default:
+                    break;
+            }
+        }
+    }
+}
+
+
 -(IBAction)initiateCall:(id)sender
 {
     NSString *string = self.dialStringLabel.dialString;

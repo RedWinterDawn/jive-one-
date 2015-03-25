@@ -13,4 +13,5 @@ pod 'libPhoneNumber-iOS', '~> 0.7'
 #target :JiveOneTests, :exclusive => true do
 pod 'XMLDictionary', '~> 1.4'
 pod 'SVProgressHUD'
+pod 'Appsee'
 pod 'StaticDataTableViewController'
