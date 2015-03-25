@@ -1,5 +1,5 @@
 //
-//  JCAuthenticationTests.m
+//  JCAuthTests.m
 //  JiveOne
 //
 //  Created by P Leonard on 3/24/15.
@@ -8,14 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
+#import "JCAuthClient.h"
 
-#import "JCAuthenticationClient.h"
-
-@interface JCAuthenticationIntegrationTests : XCTestCase
+@interface JCAuthIntegrationTests : XCTestCase
 
 @end
 
-@implementation JCAuthenticationIntegrationTests
+@implementation JCAuthIntegrationTests
 
 - (void)setUp {
     [super setUp];
@@ -27,34 +26,27 @@
     [super tearDown];
 }
 
-- (void)testExample {
+- (void)testAuth {
     // This is an example of a functional test case.
-    XCTAssert(YES, @"Pass");
     
-    // Setup
+    // IF
     // Define give set of inputs
-    NSString *user = @"bob";
-    NSString *password = @"1234";
+    NSString *user = @"jivetesting10";
+    NSString *password = @"testing12";
     
-    // Action
+    // When
     // Do the action being tested
    id result = [self loginWithUserName:user password:password];
     
-    // Verify
+    // Then
     // Was expected result received.
-//    XCTAssertNotNil(result, @"No result recevied.");
+    XCTAssertNotNil(result, @"No result recevied.");
 }
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
-}
 
 -(id)loginWithUserName:(NSString *)userName password:(NSString *)password
 {
-    JCAuthenticationClient *client = [JCAuthenticationClient new];
+    JCAuthClient *client = [JCAuthClient new];
     
     return client;
 }

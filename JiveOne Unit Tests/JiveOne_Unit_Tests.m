@@ -1,19 +1,19 @@
 //
-//  JiveOneUnitTests.m
-//  JiveOneUnitTests
+//  JiveOne_Unit_Tests.m
+//  JiveOne Unit Tests
 //
-//  Created by P Leonard on 3/24/15.
+//  Created by Robert Barclay on 3/25/15.
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
-@interface JiveOneUnitTests : XCTestCase
+@interface JiveOne_Unit_Tests : XCTestCase
 
 @end
 
-@implementation JiveOneUnitTests
+@implementation JiveOne_Unit_Tests
 
 - (void)setUp {
     [super setUp];
