@@ -9,7 +9,7 @@
 #import "RecentEvent.h"
 #import "Common.h"
 
-#import "NSManagedObject+JCCoreDataAdditions.h"
+#import "NSManagedObject+Additions.h"
 
 NSString *const kRecentEventReadKey = @"read";
 

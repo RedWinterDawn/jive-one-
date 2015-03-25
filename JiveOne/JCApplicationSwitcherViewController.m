@@ -13,15 +13,15 @@
 {
     NSArray *_viewControllers;                          // Array of available tab view controllers
     UIViewController *_selectedViewController;
-    UIViewController *_transitionViewController;
-    
-    UINavigationController *_menuNavigationController;
-    UITableViewController *_menuTableViewController;
-    
-    UIViewController *_activityViewController;
+    UINavigationBar *_menuNavigationBar;
+    UIView *_statusBarView;
     
     BOOL _showingMenu;
 }
+
+@property (nonatomic, strong) UIView *transitionView;
+@property (nonatomic, strong) UIViewController *activityViewController;
+@property (nonatomic, strong) UINavigationController *menuNavigationController;
 
 @end
 
@@ -37,61 +37,24 @@
     // implemented, give it a chance to the data source to re-order the pages, or add and remove any before they get
     // fully read and populated as child view controllers.
     NSArray *viewControllers = super.viewControllers;
+    for (UIViewController *viewController in viewControllers)
+        [self addMenuBarButtonItemToViewController:viewController];
+    
     if (self.delegate && [self.delegate respondsToSelector:@selector(applicationSwitcherController:willLoadViewControllers:)])
         viewControllers = [self.delegate applicationSwitcherController:self willLoadViewControllers:viewControllers];
     
     _viewControllers = viewControllers;
-    
-    // Since we are taking chanrge of these view controllers, and storing in the array, we remove them as child view
-    // controllers from thier parent, which happens to be us. We will manually control them, adding the as child view
-    // controllers as we navigate between them.
-    for (UIViewController *viewController in _viewControllers)
-        [viewController removeFromParentViewController];
 }
 
 /**
- * Override to provide custom view hierarchy. We provide an new clean base view, create instances of the top table view 
- * controller and activity controller, linking them to us.
- *
- * The left drawer view controller acts as the tab bar "menu" controller and the
- * center view controller acts as the transistion view whos size and movement is
- * controlled by the draw controller. When a tab is selected from the menu, when
- * handle the addition and removeal of that tab controller to the center view
- * controller.
+ * Override to provide custom view hierarchy. We provide an new clean base view.
  */
 -(void)loadView
 {
-    UIView *view = [[UIView alloc] initWithFrame:[UIApplication sharedApplication].keyWindow.bounds];
+    CGRect frame = [UIApplication sharedApplication].keyWindow.frame;
+    UIView *view = [[UIView alloc] initWithFrame:frame];
     view.autoresizesSubviews = true;
     view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    
-    // Create the transition view. This will hold our child view controllers. We want it towards the
-    // very back of the view subview stack.
-    _transitionViewController = [[UIViewController alloc] initWithNibName:nil bundle:[NSBundle mainBundle]];
-    [super addChildViewController:_transitionViewController];
-    [view addSubview:_transitionViewController.view];
-    
-    // Instance the menu view controller.
-    UIViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:self.menuViewControllerStoryboardIdentifier];
-    if ([viewController isKindOfClass:[UINavigationController class]]) {
-        _menuNavigationController = (UINavigationController *)viewController;
-        viewController = _menuNavigationController.topViewController;
-        if ([viewController isKindOfClass:[UITableViewController class]]) {
-            _menuTableViewController = (UITableViewController *)viewController;
-            _menuTableViewController.tableView.dataSource = self;
-            _menuTableViewController.tableView.delegate = self;
-        }
-    }
-    
-    // Instance the activity view controller
-    _activityViewController = [self.storyboard instantiateViewControllerWithIdentifier:self.activityViewControllerStoryboardIdentifier];
-    
-    if ([_activityViewController isKindOfClass:[UINavigationController class]]) {
-        UIViewController *controller = ((UINavigationController *)_activityViewController).topViewController;
-        if ([controller isKindOfClass:[JCRecentEventsTableViewController class]]) {
-            ((JCRecentEventsTableViewController *)controller).delegate = self;
-        }
-    }
     self.view = view;
 }
 
@@ -102,10 +65,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [self addMenuBarButtonItemToViewController:_menuNavigationController];
-    for (UIViewController *viewController in _viewControllers)
-        [self addMenuBarButtonItemToViewController:viewController];
+    [self.view setTranslatesAutoresizingMaskIntoConstraints:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -121,7 +81,15 @@
             UIViewController *lastSelectedViewController = [self.delegate applicationSwitcherLastSelectedViewController:self];
             if (lastSelectedViewController != nil) {
                 self.selectedViewController = lastSelectedViewController;
-                [self hideMenuAnimated:NO];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self hideMenuAnimated:NO];
+                });
+            }
+            else {
+                self.selectedViewController = [_viewControllers firstObject];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self showMenuAnimated:NO];
+                });
             }
         }
     }
@@ -142,36 +110,11 @@
 {
     [super viewWillLayoutSubviews];
     
-    // Size the menu view controller.
-    if(_menuNavigationController.view.superview == nil) {
-        [super addChildViewController:_menuNavigationController];
-        [self.view addSubview:_menuNavigationController.view];
-        [_menuNavigationController.view layoutIfNeeded];
-        CGRect navBarFrame = _menuNavigationController.navigationBar.frame;
-        CGFloat tableHeight = [UIApplication sharedApplication].statusBarFrame.size.height + navBarFrame.origin.y + navBarFrame.size.height + [_menuTableViewController.tableView contentSize].height;
-        
-        // @!^$#$ Apple! Seriously!
-        if (![UIDevice iOS8]) {
-            CGSize textViewSize = [_menuTableViewController.tableView sizeThatFits:CGSizeMake(_menuTableViewController.tableView.frame.size.width, FLT_MAX)];
-            tableHeight = [UIApplication sharedApplication].statusBarFrame.size.height + navBarFrame.origin.y + navBarFrame.size.height + textViewSize.height;
-        }
-        
-        CGRect frame = self.view.bounds;
-        frame.size.height = tableHeight;
-        _menuNavigationController.view.frame = frame;
-        _menuNavigationController.view.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
-        _showingMenu = TRUE;
-    }
-    
-    // Size the Activity View controller.
-    if (_activityViewController.view.superview == nil) {
-        [super addChildViewController:_activityViewController];
-        CGRect menuFrame = _menuNavigationController.view.frame;
-        CGRect frame = self.view.bounds;
-        frame.size.height = frame.size.height - menuFrame.size.height;
-        frame.origin.y = menuFrame.origin.y + menuFrame.size.height;
-        _activityViewController.view.frame = frame;
-        [self.view addSubview:_activityViewController.view];
+    UIView *transitionView = self.transitionView;
+    transitionView.frame = self.view.bounds;
+    if (transitionView.superview == nil) {
+        [self.view addSubview:transitionView];
+        [self.view sendSubviewToBack:transitionView];
     }
 }
 
@@ -223,6 +166,16 @@
     self.selectedViewController = viewControllerToSelect;
 }
 
+-(void)setViewControllers:(NSArray *)viewControllers
+{
+    _viewControllers = viewControllers;
+}
+
+-(void)setViewControllers:(NSArray *)viewControllers animated:(BOOL)animated
+{
+    _viewControllers = viewControllers;
+}
+
 #pragma mark - Getters -
 
 -(NSArray *)viewControllers
@@ -239,7 +192,54 @@
 
 -(NSUInteger)selectedIndex
 {
-    return [self.viewControllers indexOfObject:self.selectedViewController];
+    return [_viewControllers indexOfObject:_selectedViewController];
+}
+
+-(UIView *)transitionView
+{
+    if (!_transitionView) {
+        _transitionView = [[UIView alloc] initWithFrame:CGRectZero];
+        _transitionView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        _transitionView.autoresizesSubviews = TRUE;
+        [_transitionView setTranslatesAutoresizingMaskIntoConstraints:YES];
+    }
+    return _transitionView;
+}
+
+-(UINavigationController *)menuNavigationController
+{
+    if (!_menuNavigationController) {
+        UIViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:self.menuViewControllerStoryboardIdentifier];
+        if ([viewController isKindOfClass:[UINavigationController class]]) {
+            _menuNavigationController = (UINavigationController *)viewController;
+            _menuNavigationController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+            [_menuNavigationController.view setTranslatesAutoresizingMaskIntoConstraints:YES];
+            [self addMenuBarButtonItemToViewController:_menuNavigationController];
+            viewController = _menuNavigationController.topViewController;
+            if ([viewController isKindOfClass:[UITableViewController class]]) {
+                UITableViewController *menuTableViewController = (UITableViewController *)viewController;
+                menuTableViewController.tableView.dataSource = self;
+                menuTableViewController.tableView.delegate = self;
+                menuTableViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+                [menuTableViewController.view setTranslatesAutoresizingMaskIntoConstraints:YES];
+            }
+        }
+    }
+    return _menuNavigationController;
+}
+
+-(UIViewController *)activityViewController
+{
+    if (!_activityViewController) {
+        _activityViewController = [self.storyboard instantiateViewControllerWithIdentifier:self.activityViewControllerStoryboardIdentifier];
+        if ([_activityViewController isKindOfClass:[UINavigationController class]]) {
+            UIViewController *controller = ((UINavigationController *)_activityViewController).topViewController;
+            if ([controller isKindOfClass:[JCRecentEventsTableViewController class]]) {
+                ((JCRecentEventsTableViewController *)controller).delegate = self;
+            }
+        }
+    }
+    return _activityViewController;
 }
 
 #pragma mark - Private -
@@ -276,59 +276,131 @@
 
 -(void)showMenuAnimated:(bool)animated
 {
-    // Determine the origin of the frame. In iOS 8, we do not need to take into account the status
-    // bar height, where on iOS 7 we do need to.
-    [self.view layoutIfNeeded];
-    CGRect menuFrame = _menuNavigationController.view.frame;
+    // Set the initial State
+    UINavigationController *menuNavigationController = self.menuNavigationController;
+    UITableView *tableView = ((UITableViewController *)menuNavigationController.topViewController).tableView;
+    menuNavigationController.view.alpha = 0;
+    menuNavigationController.view.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
+    [menuNavigationController.view setTranslatesAutoresizingMaskIntoConstraints:YES];
+    [self.view addSubview:menuNavigationController.view];
+    [self addChildViewController:menuNavigationController];
+    [menuNavigationController.view layoutIfNeeded];
+    
+    CGFloat standardStatusBarHeight = 20;
+    CGFloat statusBarHeight = standardStatusBarHeight;
+    CGRect statusBarFrame = [UIApplication sharedApplication].statusBarFrame;
+    if (statusBarFrame.size.height > standardStatusBarHeight) {
+        statusBarHeight = statusBarFrame.size.height - standardStatusBarHeight;
+    }
+    
+    _menuNavigationBar = [[UINavigationBar alloc] initWithFrame:menuNavigationController.navigationBar.frame];
+    _menuNavigationBar.translucent = menuNavigationController.navigationBar.translucent;
+    _menuNavigationBar.tintColor = menuNavigationController.navigationBar.tintColor;
+    _menuNavigationBar.backgroundColor = menuNavigationController.navigationBar.backgroundColor;
+    _menuNavigationBar.barTintColor = menuNavigationController.navigationBar.barTintColor;
+    [_menuNavigationBar setItems:@[menuNavigationController.topViewController.navigationItem]];
+    _menuNavigationBar.frame = CGRectMake(0, statusBarHeight, _menuNavigationBar.bounds.size.width, _menuNavigationBar.bounds.size.height);
+    [self.view addSubview:_menuNavigationBar];
+    
+    _statusBarView = [[UIView alloc] initWithFrame:[UIApplication sharedApplication].statusBarFrame];
+    _statusBarView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    [_statusBarView setTranslatesAutoresizingMaskIntoConstraints:YES];
+    _statusBarView.backgroundColor = menuNavigationController.navigationBar.barTintColor;
+    
+    CGFloat h = standardStatusBarHeight;
+    if (statusBarFrame.size.height > standardStatusBarHeight) {
+        h = 0;
+    }
+    _statusBarView.frame = CGRectMake(0, 0, statusBarFrame.size.width, h);
+    [self.view addSubview:_statusBarView];
+    
+    CGRect menuFrame = menuNavigationController.view.frame;
+    CGRect navBarFrame = menuNavigationController.navigationBar.frame;
+    CGFloat height = 0;
     if (![UIDevice iOS8]){
-        menuFrame.origin.y = [UIApplication sharedApplication].statusBarFrame.size.height;
+        height = statusBarHeight + navBarFrame.origin.y + navBarFrame.size.height + [tableView sizeThatFits:CGSizeMake(tableView.frame.size.width, FLT_MAX)].height;
+    }
+    else {
+        height = navBarFrame.origin.y + navBarFrame.size.height + [tableView contentSize].height;
+        if (statusBarFrame.size.height > standardStatusBarHeight) {
+            height += standardStatusBarHeight;
+        }
+    }
+    menuFrame.size.height = height;
+    menuFrame.origin.y = self.view.frame.origin.y - menuFrame.size.height;
+    menuNavigationController.view.frame = menuFrame;
+    menuNavigationController.view.alpha = 1;
+    
+    // Calculate end state.
+    
+    if (![UIDevice iOS8]){
+        menuFrame.origin.y = statusBarHeight;
     }
     else {
         menuFrame.origin.y = 0;
     }
     
-    CGRect activityFrame = _activityViewController.view.frame;
+    UIViewController *activityViewController = self.activityViewController;
+    CGRect activityFrame = activityViewController.view.frame;
+    activityFrame.size.height = self.view.bounds.size.height - menuFrame.size.height;
+    activityFrame.origin.y = self.view.bounds.size.height;
+    activityViewController.view.frame = activityFrame;
+    [self addChildViewController:activityViewController];
+    [self.view addSubview:activityViewController.view];
+    
     activityFrame.origin.y = menuFrame.origin.y + menuFrame.size.height;
     
-    [_selectedViewController viewWillDisappear:animated];
     
+    // Animate.
+    [_selectedViewController viewWillDisappear:animated];
     [UIView animateWithDuration:(animated ? 0.3 : 0)
                           delay:0
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
-                         _menuNavigationController.view.frame = menuFrame;
-                         _activityViewController.view.frame = activityFrame;
+                         menuNavigationController.view.frame = menuFrame;
+                         activityViewController.view.frame = activityFrame;
                          if ([UIDevice iOS8])
-                             _transitionViewController.view.alpha = 0.2;
+                             self.transitionView.alpha = 0.2;
                      }
                      completion:^(BOOL finished) {
                          _showingMenu = true;
-                         
+                         [super addChildViewController:menuNavigationController];
                          [_selectedViewController viewDidDisappear:animated];
                      }];
 }
 
 -(void)hideMenuAnimated:(bool)animated
 {
-    [self.view layoutIfNeeded];
-    CGRect menuFrame = _menuNavigationController.view.frame;
+    UINavigationController *menuNavigationController = self.menuNavigationController;
+    UIViewController *activityViewController = self.activityViewController;
+    CGRect menuFrame = menuNavigationController.view.frame;
     menuFrame.origin.y = -menuFrame.size.height - [UIApplication sharedApplication].statusBarFrame.size.height;
     
     [_selectedViewController viewWillAppear:animated];
     
-    CGRect activityFrame = _activityViewController.view.frame;
+    CGRect activityFrame = activityViewController.view.frame;
     activityFrame.origin.y = self.view.bounds.size.height;
     [UIView animateWithDuration:(animated ? 0.3 : 0)
                           delay:0
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
-                         _menuNavigationController.view.frame = menuFrame;
-                         _activityViewController.view.frame = activityFrame;
-                         _transitionViewController.view.alpha = 1;
+                         menuNavigationController.view.frame = menuFrame;
+                         activityViewController.view.frame = activityFrame;
+                         self.transitionView.alpha = 1;
                      }
                      completion:^(BOOL finished) {
                          _showingMenu = false;
                          [_selectedViewController viewDidAppear:animated];
+                         
+                         [menuNavigationController removeFromParentViewController];
+                         [menuNavigationController.view removeFromSuperview];
+                         self.menuNavigationController = nil;
+                         
+                         [_menuNavigationBar removeFromSuperview];
+                         _menuNavigationBar = nil;
+                         
+                         [_statusBarView removeFromSuperview];
+                         _statusBarView = nil;
                      }];
 }
 
@@ -346,25 +418,22 @@
     if (!toViewController)
         return;
     
-    UIViewController *controller = _transitionViewController;
+    UIView *transitionView = self.transitionView;
     [UIView animateWithDuration:duration
                           delay:0
                         options:options
                      animations:^{
                          [fromViewController.view removeFromSuperview];
-                         [controller.view addSubview:toViewController.view];
+                         toViewController.view.frame = transitionView.bounds;
+                         [transitionView addSubview:toViewController.view];
+                         
                          if (animations) {
                              animations();
                          }
                      }
                      completion:^(BOOL finished) {
-                         if (finished)
-                         {
-                             [fromViewController removeFromParentViewController];
-                             [controller addChildViewController:toViewController];
-                             if (completion) {
-                                 completion(finished);
-                             }
+                         if (finished && completion) {
+                             completion(finished);
                          }
                      }];
 }

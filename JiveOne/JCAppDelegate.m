@@ -25,6 +25,7 @@
 #import "JCApplicationSwitcherDelegate.h"
 #import "JCV5ApiClient.h"
 #import "JCSocket.h"
+#import <Appsee/Appsee.h>
 
 #import "PBX.h"
 #import "Line.h"
@@ -324,7 +325,7 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
     // rather the recovery when we reconnect.
     if (status == AFNetworkReachabilityStatusNotReachable) {
         NSLog(@"No Network Connection");
-        [JCPhoneManager disconnect];
+        [JCPhoneManager connectToLine:line];
     }
     
     // Transition from Cellular data to wifi.
@@ -440,6 +441,11 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
     
     [Parse setApplicationId:@"bQTDjU0QtxWVpNQp2yJp7d9ycntVZdCXF5QrVH8q"
                   clientKey:@"ec135dl8Xfu4VAUXz0ub6vt3QqYnQEur2VcMH1Yf"];
+
+    [Appsee start:@"a57e92aea6e541529dc5227171341113"];
+    
+    //Register for background fetches
+    [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     
     
 //    // Register for Push Notitications

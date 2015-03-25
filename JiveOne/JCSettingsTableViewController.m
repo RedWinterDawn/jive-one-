@@ -29,7 +29,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
     
     NSBundle *bundle = [NSBundle mainBundle];
     self.appLabel.text = [bundle objectForInfoDictionaryKey:@"CFBundleDisplayName"];
-    self.buildLabel.text = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
+    self.buildLabel.text = [NSString stringWithFormat:@"%@ (%@)", [bundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [bundle objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey]];
     
     JCAppSettings *settings = [JCAppSettings sharedSettings];
     self.wifiOnly.on = settings.wifiOnly;
@@ -90,10 +90,11 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
         
         //get device specs
         JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
+        NSBundle *bundle            = [NSBundle mainBundle];
         UIDevice *currentDevice     = [UIDevice currentDevice];
         NSString *model             = [currentDevice platformType];
         NSString *systemVersion     = [currentDevice systemVersion];
-        NSString *appVersion        = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
+        NSString *appVersion        = [NSString stringWithFormat:@"%@ (%@)", [bundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [bundle objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey]];
         NSString *country           = [[NSLocale currentLocale] localeIdentifier];
         NSString *uuid              = [currentDevice userUniqueIdentiferForUser:authenticationManager.jiveUserId];
         NSString * pbx              = authenticationManager.line.pbx.displayName;
@@ -101,7 +102,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
         NSString *line              = authenticationManager.line.extension;
         
         NSString *bodyTemplate = [NSString stringWithFormat:kJCSettingsTableViewControllerFeebackMessage, model, systemVersion, appVersion, country, uuid, pbx, user, line];
-        [mailViewController setMessageBody:bodyTemplate isHTML:YES];
+        [mailViewController setMessageBody:bodyTemplate isHTML:YES]; 
         [self presentViewController:mailViewController animated:YES completion:nil];
     }
 }
@@ -129,6 +130,12 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
         settings.presenceEnabled = !settings.isPresenceEnabled;
         switchBtn.on = settings.isPresenceEnabled;
     }
+}
+
+-(IBAction)showDebug:(id)sender{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Debug" bundle:[NSBundle mainBundle]];
+    UIViewController *rootViewController = [storyboard instantiateInitialViewController];
+    [self.navigationController pushViewController:rootViewController animated:YES];
 }
 
 #pragma mark - Delegate Handlers -

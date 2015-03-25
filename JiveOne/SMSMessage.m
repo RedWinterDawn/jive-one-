@@ -11,7 +11,7 @@
 #import "DID.h"
 #import "LocalContact.h"
 
-#import "NSManagedObject+JCCoreDataAdditions.h"
+#import "NSManagedObject+Additions.h"
 
 NSString *const kSMSMessageInboundAttributeKey = @"inbound";
 

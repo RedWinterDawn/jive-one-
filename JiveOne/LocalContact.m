@@ -7,14 +7,12 @@
 //
 
 #import "LocalContact.h"
-#import "SMSMessage.h"
-#import "NSManagedObject+JCCoreDataAdditions.h"
+#import "NSManagedObject+Additions.h"
 
 static NSString *LocalContactNumberAttributeKey = @"number";
-static NSString *LocalContactNameAttributeKey = @"name";
+static NSString *LocalContactNameAttributeKey   = @"name";
 
 @implementation LocalContact
-
 
 -(void)setNumber:(NSString *)number
 {

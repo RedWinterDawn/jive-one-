@@ -8,7 +8,7 @@
 
 #import "Contact.h"
 #import "PBX.h"
-#import "NSManagedObject+JCCoreDataAdditions.h"
+#import "NSManagedObject+Additions.h"
 
 NSString *kContacktFavoriteAttribute = @"favorite";
 

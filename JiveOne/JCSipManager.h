@@ -56,7 +56,7 @@
 @property (nonatomic, readonly, getter=isConferenceCall) BOOL conferenceCall;   // True if active call is a conference call.
 @property (nonatomic, readonly, getter=isMuted) BOOL mute;                      // True if the audio session has been placed on mute.
 
--(instancetype)initWithNumberOfLines:(NSInteger)lines delegate:(id<SipHandlerDelegate>)delegate error:(NSError *__autoreleasing *)error;
+-(instancetype)initWithNumberOfLines:(NSUInteger)lines delegate:(id<SipHandlerDelegate>)delegate error:(NSError *__autoreleasing *)error;
 
 // Methods to handle registration.
 - (void)registerToLine:(Line *)line;
