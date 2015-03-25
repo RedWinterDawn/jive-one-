@@ -26,6 +26,7 @@
 #import "JCSocket.h"
 #import "JCSocketLogger.h"
 #import "UIDevice+Additions.h"
+#import <Appsee/Appsee.h>
 
 #import "PBX.h"
 #import "Line.h"
@@ -311,6 +312,7 @@
     // rather the recovery when we reconnect.
     if (status == AFNetworkReachabilityStatusNotReachable) {
         NSLog(@"No Network Connection");
+        [JCPhoneManager connectToLine:line];
     }
     
     // Transition from Cellular data to wifi.
@@ -415,6 +417,8 @@
      * New Relic
      */
     [NewRelicAgent startWithApplicationToken:@"AA6303a3125152af3660d1e3371797aefedfb29761"];
+    
+    [Appsee start:@"a57e92aea6e541529dc5227171341113"];
     
     //Register for background fetches
     [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];

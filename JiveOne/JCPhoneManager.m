@@ -103,8 +103,11 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     // network, we are not on a network and cannot register, so we notify with error.
     _networkType = (JCPhoneManagerNetworkType)[AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
     if (_networkType == JCPhoneManagerNoNetwork) {
-        [self notifyCompletionBlock:false error:[JCPhoneManagerError errorWithCode:JC_PHONE_MANAGER_NO_NETWORK]];
-        return;
+        if (!self.sipManager.isActive) {
+            [self notifyCompletionBlock:false error:[JCPhoneManagerError errorWithCode:JC_PHONE_MANAGER_NO_NETWORK]];
+            [self disconnect];
+            return;
+        }
     }
     
     // If we have a line configuration for the line, try to register it.
@@ -847,7 +850,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
             }
             
             // If we get a no network error, show an alert.
-            else if (error.code == JC_PHONE_MANAGER_NO_NETWORK || error.code == JC_PHONE_WIFI_DISABLED) {
+            else if (error.code == JC_PHONE_WIFI_DISABLED) {
                 [JCAlertView alertWithError:error];
             }
             
