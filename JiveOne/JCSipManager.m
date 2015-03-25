@@ -76,6 +76,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     NSTimer *_registrationTimeoutTimer;
     NSTimeInterval _registrationTimeoutInterval;
     BOOL _reregisterAfterActiveCallEnds;
+    NSUInteger _numberOfLines;
 }
 
 @property (nonatomic) NSMutableSet *lineSessions;
@@ -86,7 +87,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 @implementation JCSipManager
 
--(instancetype)initWithNumberOfLines:(NSInteger)lines delegate:(id<SipHandlerDelegate>)delegate error:(NSError *__autoreleasing *)error;
+-(instancetype)initWithNumberOfLines:(NSUInteger)lines delegate:(id<SipHandlerDelegate>)delegate error:(NSError *__autoreleasing *)error;
 {
     self = [super init];
     if (self) {
@@ -103,77 +104,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         _audioManager.delegate = self;
         
         _registrationTimeoutInterval = DEFAULT_PHONE_REGISTRATION_TIMEOUT_INTERVAL;
-        
-        // Initialize the port sip sdk.
-        _mPortSIPSDK = [PortSIPSDK new];
-        _mPortSIPSDK.delegate = self;
-        int errorCode = [_mPortSIPSDK initialize:TRANSPORT_UDP
-                                        loglevel:LOG_LEVEL
-                                         logPath:nil
-                                         maxLine:(int)lines
-                                           agent:kSipHandlerServerAgentname
-                                audioDeviceLayer:IS_SIMULATOR
-                                videoDeviceLayer:IS_SIMULATOR];
-        
-        if(errorCode) {
-            _mPortSIPSDK = nil;
-            _lineSessions = nil;
-            if (error != NULL) {
-                *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error initializing port sip sdk"];
-            }
-            return self;
-        }
-        
-        // Check License Key
-        errorCode = [_mPortSIPSDK setLicenseKey:kPortSIPKey];
-        if(errorCode) {
-            [_mPortSIPSDK unInitialize];
-            _mPortSIPSDK = nil;
-            _lineSessions = nil;
-            if(error != NULL) {
-                *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Port Sip License Key Failure"];
-            }
-            return self;
-        }
-        
-        // Configure codecs. These return error codes, but are not critical if they fail.
-        
-        // Used Audio Codecs
-        [_mPortSIPSDK addAudioCodec:AUDIOCODEC_PCMU];
-        [_mPortSIPSDK addAudioCodec:AUDIOCODEC_G729];
-        [_mPortSIPSDK addAudioCodec:AUDIOCODEC_G722];
-        
-        // Not used Audio Codecs
-        //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_SPEEX];
-        //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_PCMA];
-        //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_GSM];
-        //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_ILBC];
-        //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_AMR];
-        //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_SPEEXWB];
-        
-        // Used Video Codecs
-        [_mPortSIPSDK addVideoCodec:VIDEO_CODEC_H264];
-        
-        // Not Used Video Codecs
-        //[_mPortSIPSDK addVideoCodec:VIDEO_CODEC_H263];
-        //[_mPortSIPSDK addVideoCodec:VIDEO_CODEC_H263_1998];
-        
-        [_mPortSIPSDK setVideoBitrate:100];             //video send bitrate,100kbps
-        [_mPortSIPSDK setVideoFrameRate:10];
-        [_mPortSIPSDK setVideoResolution:VIDEO_CIF];
-        [_mPortSIPSDK setAudioSamples:20 maxPtime:60];  //ptime 20
-        [_mPortSIPSDK setVideoDeviceId:1];              //1 - FrontCamra 0 - BackCamra
-        //[_mPortSIPSDK setVideoOrientation:180];
-        
-        //Enable SRTP
-        [_mPortSIPSDK setSrtpPolicy:SRTP_POLICY_NONE];
-        
-        //set RTC keep alives
-        [_mPortSIPSDK setRtpKeepAlive:true keepAlivePayloadType:126 deltaTransmitTimeMS:30000];
-        
-        _videoController = [VideoViewController new];
-        
-        _initialized = TRUE;
+        _numberOfLines = lines;
     }
     return self;
 }
@@ -181,17 +112,127 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 -(void)dealloc
 {
     [self unregister];
-    [_mPortSIPSDK unInitialize];
 }
 
 #pragma mark - Registration -
 
 -(void)registerToLine:(Line *)line
 {
+    __autoreleasing NSError *error;
+    BOOL registered = [self registerToLine:line error:&error];
+    if (!registered) {
+        [_delegate sipHandler:self didFailToRegisterWithError:error];
+    }
+}
+
+-(void)unregister
+{
+    if(_registered)
+    {
+        __autoreleasing NSError *error;
+        for (JCLineSession *lineSession in _lineSessions) {
+            [self hangUpSession:lineSession error:&error];
+        }
+        [_mPortSIPSDK unRegisterServer];
+        [_mPortSIPSDK unInitialize];
+        _registered = FALSE;
+        [_delegate sipHandlerDidUnregister:self];
+    }
+}
+
+#pragma mark Private
+
+/**
+ * Initializes the PortSIPSDK, setting the number of lines, licence and audio and video settings. 
+ * Should be called before the line is registered.
+ */
+-(BOOL)initialize:(NSError *__autoreleasing *)error;
+{
+    if (_mPortSIPSDK) {
+        [_mPortSIPSDK unRegisterServer];
+        [_mPortSIPSDK unInitialize];
+    }
+    
+    // Initialize the port sip sdk.
+    _mPortSIPSDK = [PortSIPSDK new];
+    _mPortSIPSDK.delegate = self;
+    int errorCode = [_mPortSIPSDK initialize:TRANSPORT_UDP
+                                    loglevel:LOG_LEVEL
+                                     logPath:nil
+                                     maxLine:_numberOfLines
+                                       agent:kSipHandlerServerAgentname
+                            audioDeviceLayer:IS_SIMULATOR
+                            videoDeviceLayer:IS_SIMULATOR];
+    
+    if(errorCode) {
+        _mPortSIPSDK = nil;
+        _lineSessions = nil;
+        if (error != NULL) {
+            *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error initializing port sip sdk"];
+        }
+        return FALSE;
+    }
+    
+    // Check License Key
+    errorCode = [_mPortSIPSDK setLicenseKey:kPortSIPKey];
+    if(errorCode) {
+        [_mPortSIPSDK unInitialize];
+        _mPortSIPSDK = nil;
+        _lineSessions = nil;
+        if(error != NULL) {
+            *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Port Sip License Key Failure"];
+        }
+        return FALSE;
+    }
+    
+    // Configure codecs. These return error codes, but are not critical if they fail.
+    
+    // Used Audio Codecs
+    [_mPortSIPSDK addAudioCodec:AUDIOCODEC_PCMU];
+    [_mPortSIPSDK addAudioCodec:AUDIOCODEC_G729];
+    [_mPortSIPSDK addAudioCodec:AUDIOCODEC_G722];
+    
+    // Not used Audio Codecs
+    //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_SPEEX];
+    //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_PCMA];
+    //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_GSM];
+    //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_ILBC];
+    //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_AMR];
+    //[_mPortSIPSDK addAudioCodec:AUDIOCODEC_SPEEXWB];
+    
+    // Used Video Codecs
+    [_mPortSIPSDK addVideoCodec:VIDEO_CODEC_H264];
+    
+    // Not Used Video Codecs
+    //[_mPortSIPSDK addVideoCodec:VIDEO_CODEC_H263];
+    //[_mPortSIPSDK addVideoCodec:VIDEO_CODEC_H263_1998];
+    
+    [_mPortSIPSDK setVideoBitrate:100];             //video send bitrate,100kbps
+    [_mPortSIPSDK setVideoFrameRate:10];
+    [_mPortSIPSDK setVideoResolution:VIDEO_CIF];
+    [_mPortSIPSDK setAudioSamples:20 maxPtime:60];  //ptime 20
+    [_mPortSIPSDK setVideoDeviceId:1];              //1 - FrontCamra 0 - BackCamra
+    //[_mPortSIPSDK setVideoOrientation:180];
+    
+    //Enable SRTP
+    [_mPortSIPSDK setSrtpPolicy:SRTP_POLICY_NONE];
+    
+    //set RTC keep alives
+    [_mPortSIPSDK setRtpKeepAlive:true keepAlivePayloadType:126 deltaTransmitTimeMS:30000];
+    
+    _videoController = [VideoViewController new];
+    _initialized = TRUE;
+    return TRUE;
+}
+
+-(BOOL)registerToLine:(Line *)line error:(NSError *__autoreleasing *)error;
+{
     // Check if we are already registering.
     if (_registering) {
-        [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:JC_SIP_ALREADY_REGISTERING reason:@"Already Registering"]];
-        return;
+        if (error) {
+            *error = [JCSipHandlerError errorWithCode:JC_SIP_ALREADY_REGISTERING reason:@"Already Registering"];
+        }
+        return FALSE;
     }
     
     // Check to see if we are on a current call. If we are, we need to exit out, and wait until the
@@ -199,7 +240,10 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
     _reregisterAfterActiveCallEnds = FALSE;
     if (self.isActive) {
         _reregisterAfterActiveCallEnds = TRUE;
-        return;
+        if (error) {
+            *error = [JCSipHandlerError errorWithCode:JC_SIP_ALREADY_REGISTERING reason:@"Already Registering"];
+        }
+        return FALSE;
     }
     
     // If we are registered to a line, we need to unregister from that line, and reconnect.
@@ -207,37 +251,54 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
         [self unregister];
     }
     
+    BOOL initialized = [self initialize:error];
+    if (!initialized) {
+        return FALSE;
+    }
+    
     if (!line) {
-        [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:JC_SIP_REGISTER_LINE_IS_EMPTY reason:@"Line is empty"]];
-        return;
+        if (error) {
+            *error = [JCSipHandlerError errorWithCode:JC_SIP_REGISTER_LINE_IS_EMPTY reason:@"Line is empty"];
+        }
+        return FALSE;
     }
     
     if (!line.lineConfiguration) {
-        [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:JC_SIP_REGISTER_LINE_CONFIGURATION_IS_EMPTY reason:@"Line Configuration is empty"]];
-        return;
+        if (error) {
+            *error = [JCSipHandlerError errorWithCode:JC_SIP_REGISTER_LINE_CONFIGURATION_IS_EMPTY reason:@"Line Configuration is empty"];
+        }
+        return FALSE;
     }
     
     if (!line.pbx) {
-        [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:JC_SIP_REGISTER_LINE_PBX_IS_EMPTY reason:@"Line PBX is empty"]];
-        return;
+        if (error) {
+            *error = [JCSipHandlerError errorWithCode:JC_SIP_REGISTER_LINE_PBX_IS_EMPTY reason:@"Line PBX is empty"];
+        }
+        return FALSE;
     }
     
     NSString *userName = line.lineConfiguration.sipUsername;
     if (!userName) {
-        [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:JC_SIP_REGISTER_USER_IS_EMPTY reason:@"User is empty"]];
-        return;
+        if (error) {
+            *error = [JCSipHandlerError errorWithCode:JC_SIP_REGISTER_USER_IS_EMPTY reason:@"User is empty"];
+        }
+        return FALSE;
     }
     
     NSString *server = line.pbx.isV5 ? line.lineConfiguration.outboundProxy : line.lineConfiguration.registrationHost;
     if (!server) {
-        [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:JC_SIP_REGISTER_SERVER_IS_EMPTY reason:@"Server is empty"]];
-        return;
+        if (error) {
+            *error = [JCSipHandlerError errorWithCode:JC_SIP_REGISTER_SERVER_IS_EMPTY reason:@"Server is empty"];
+        }
+        return FALSE;
     }
     
     NSString *password = line.lineConfiguration.sipPassword;
     if (!password) {
-        [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:JC_SIP_REGISTER_PASSWORD_IS_EMPTY reason:@"Password is empty"]];
-        return;
+        if (error) {
+            *error = [JCSipHandlerError errorWithCode:JC_SIP_REGISTER_PASSWORD_IS_EMPTY reason:@"Password is empty"];
+        }
+        return FALSE;
     }
     
     int errorCode = [_mPortSIPSDK setUser:userName
@@ -255,15 +316,19 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
                        outboundServerPort:OUTBOUND_SIP_SERVER_PORT];
     
     if(errorCode) {
-        [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:errorCode reason:@"Error Setting the User"]];
-        return;
+        if (error) {
+            *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error Setting the User"];
+        }
+        return FALSE;
     }
     
     _line = line;
     errorCode = [_mPortSIPSDK registerServer:3600 retryTimes:9];
     if(errorCode) {
-        [_delegate sipHandler:self didFailToRegisterWithError:[JCSipHandlerError errorWithCode:errorCode reason:@"Error starting Registration"]];
-        return;
+        if (error) {
+            *error = [JCSipHandlerError errorWithCode:errorCode reason:@"Error starting Registration"];
+        }
+        return FALSE;
     }
     
     _registrationTimeoutTimer = [NSTimer scheduledTimerWithTimeInterval:_registrationTimeoutInterval
@@ -272,20 +337,7 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
                                                                userInfo:nil
                                                                 repeats:NO];
     _registering = TRUE;
-}
-
--(void)unregister
-{
-    if(_registered)
-    {
-        __autoreleasing NSError *error;
-        for (JCLineSession *lineSession in _lineSessions) {
-            [self hangUpSession:lineSession error:&error];
-        }
-        [_mPortSIPSDK unRegisterServer];
-        _registered = FALSE;
-        [_delegate sipHandlerDidUnregister:self];
-    }
+    return TRUE;
 }
 
 #pragma mark Registration PortSIP SDK Delegate Events
@@ -1101,7 +1153,10 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             lineSession.active = TRUE;
             lineSession.contact = [Contact contactForExtension:lineSession.callDetail pbx:_line.pbx];
             lineSession.sessionState = state;
-            [_audioManager engageAudioSession];
+            
+            if (!self.isActive) {
+                [_audioManager engageAudioSession];
+            }
             
             // Notify
             [OutgoingCall addOutgoingCallWithLineSession:lineSession line:_line];
@@ -1117,7 +1172,11 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
             lineSession.contact = [Contact contactForExtension:lineSession.callDetail pbx:_line.pbx];
             lineSession.sessionState = state;
             
-            [_audioManager engageAudioSession];
+            if (!self.isActive) {
+                [_audioManager engageAudioSession];
+            }
+            
+            // Notify of incoming call by starting the ringing for the incoming call.
             [_audioManager startRepeatingRingtone:YES];
 
             // Notify
@@ -1217,18 +1276,17 @@ NSString *const kSipHandlerRegisteredSelectorKey = @"registered";
 
 -(void)audioSessionInteruptionDidEnd:(JCPhoneAudioManager *)manager
 {
-    [_audioManager engageAudioSession];
-    
-    
-    NSSet *activeLines = [self findAllActiveLines];
-    for (JCLineSession *lineSession in activeLines) {
-        [_mPortSIPSDK updateCall:lineSession.sessionId enableAudio:lineSession.audio enableVideo:lineSession.video];
-        [_mPortSIPSDK muteSession:lineSession.sessionId muteIncomingAudio:FALSE muteOutgoingAudio:false muteIncomingVideo:false muteOutgoingVideo:false];
-        [_mPortSIPSDK enableAudioStreamCallback:lineSession.sessionId enable:TRUE callbackMode:AUDIOSTREAM_LOCAL_PER_CHANNEL];
-    }
-    
-    [_mPortSIPSDK muteMicrophone:FALSE];
-    [_mPortSIPSDK muteSpeaker:FALSE];
+//    [_audioManager engageAudioSession];
+//    
+//    NSSet *activeLines = [self findAllActiveLines];
+//    for (JCLineSession *lineSession in activeLines) {
+//        [_mPortSIPSDK updateCall:lineSession.sessionId enableAudio:lineSession.audio enableVideo:lineSession.video];
+//        [_mPortSIPSDK muteSession:lineSession.sessionId muteIncomingAudio:FALSE muteOutgoingAudio:false muteIncomingVideo:false muteOutgoingVideo:false];
+//        [_mPortSIPSDK enableAudioStreamCallback:lineSession.sessionId enable:TRUE callbackMode:AUDIOSTREAM_LOCAL_PER_CHANNEL];
+//    }
+//    
+//    [_mPortSIPSDK muteMicrophone:FALSE];
+//    [_mPortSIPSDK muteSpeaker:FALSE];
 }
 
 -(void)phoneAudioManager:(JCPhoneAudioManager *)manager didChangeAudioRouteInputType:(JCPhoneAudioManagerInputType)inputType

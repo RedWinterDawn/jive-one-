@@ -44,6 +44,7 @@
  */
 -(void)engageAudioSession
 {
+    NSLog(@"engage audio session");
     AVAudioSession *session = [AVAudioSession sharedInstance];
     if (![session setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:nil]) {
         
@@ -67,6 +68,7 @@
 
 -(void)disengageAudioSession
 {
+    NSLog(@"disengage audio session");
     // deactivate session
     AVAudioSession *session = [AVAudioSession sharedInstance];
     if (![session setActive:NO withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error: nil]) {
