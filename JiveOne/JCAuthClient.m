@@ -54,9 +54,9 @@ NSString *const kJCAuthClientURLSchemeCallback  = @"jiveclient://token";
 
 #pragma mark - Class methods
 
-- (void)loginWithUsername:(NSString *)username password:(NSString *)password completed:(JCAuthClientLoginCompletionBlock)completed
+- (void)loginWithUsername:(NSString *)username password:(NSString *)password completion:(JCAuthClientLoginCompletionBlock)completion
 {
-    _completionBlock = completed;
+    _completionBlock = completion;
     _loginAttempts = 0;
     
     // Validation
