@@ -342,7 +342,14 @@
     
     UIViewController *activityViewController = self.activityViewController;
     CGRect activityFrame = activityViewController.view.frame;
+    activityFrame.size.height = self.view.bounds.size.height - menuFrame.size.height;
+    activityFrame.origin.y = self.view.bounds.size.height;
+    activityViewController.view.frame = activityFrame;
+    [self addChildViewController:activityViewController];
+    [self.view addSubview:activityViewController.view];
+    
     activityFrame.origin.y = menuFrame.origin.y + menuFrame.size.height;
+    
     
     // Animate.
     [_selectedViewController viewWillDisappear:animated];
