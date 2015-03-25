@@ -37,16 +37,13 @@
     // implemented, give it a chance to the data source to re-order the pages, or add and remove any before they get
     // fully read and populated as child view controllers.
     NSArray *viewControllers = super.viewControllers;
+    for (UIViewController *viewController in viewControllers)
+        [self addMenuBarButtonItemToViewController:viewController];
+    
     if (self.delegate && [self.delegate respondsToSelector:@selector(applicationSwitcherController:willLoadViewControllers:)])
         viewControllers = [self.delegate applicationSwitcherController:self willLoadViewControllers:viewControllers];
     
     _viewControllers = viewControllers;
-    
-    // Since we are taking chanrge of these view controllers, and storing in the array, we remove them as child view
-    // controllers from thier parent, which happens to be us. We will manually control them, adding the as child view
-    // controllers as we navigate between them.
-    for (UIViewController *viewController in _viewControllers)
-        [viewController removeFromParentViewController];
 }
 
 /**
@@ -68,11 +65,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     [self.view setTranslatesAutoresizingMaskIntoConstraints:YES];
-    
-    for (UIViewController *viewController in _viewControllers)
-        [self addMenuBarButtonItemToViewController:viewController];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -89,6 +82,9 @@
             if (lastSelectedViewController != nil) {
                 self.selectedViewController = lastSelectedViewController;
                 [self hideMenuAnimated:NO];
+            }
+            else {
+                [self showMenuAnimated:NO];
             }
         }
     }
@@ -113,6 +109,7 @@
     transitionView.frame = self.view.bounds;
     if (transitionView.superview == nil) {
         [self.view addSubview:transitionView];
+        [self.view sendSubviewToBack:transitionView];
     }
 }
 
@@ -164,6 +161,16 @@
     self.selectedViewController = viewControllerToSelect;
 }
 
+-(void)setViewControllers:(NSArray *)viewControllers
+{
+    _viewControllers = viewControllers;
+}
+
+-(void)setViewControllers:(NSArray *)viewControllers animated:(BOOL)animated
+{
+    _viewControllers = viewControllers;
+}
+
 #pragma mark - Getters -
 
 -(NSArray *)viewControllers
@@ -180,7 +187,7 @@
 
 -(NSUInteger)selectedIndex
 {
-    return [self.viewControllers indexOfObject:self.selectedViewController];
+    return [_viewControllers indexOfObject:_selectedViewController];
 }
 
 -(UIView *)transitionView

@@ -33,6 +33,7 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
 @interface JCApplicationSwitcherDelegate ()
 {
     JCApplicationSwitcherViewController *_applicationSwitcher;
+    NSArray *_viewControllers;
 }
 
 @property (nonatomic, strong) NSString *lastSelectedViewControllerIdentifier;
@@ -46,7 +47,10 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
     self = [super init];
     if (self) {
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-        [center addObserver:self selector:@selector(reset:) name:kJCAuthenticationManagerUserLoggedOutNotification object:[JCAuthenticationManager sharedInstance]];
+        JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
+        [center addObserver:self selector:@selector(reset:) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];
+        [center addObserver:self selector:@selector(reload:) name:kJCAuthenticationManagerUserAuthenticatedNotification object:authenticationManager];
+        [center addObserver:self selector:@selector(reload:) name:kJCAuthenticationManagerLineChangedNotification object:authenticationManager];
     }
     return self;
 }
@@ -63,6 +67,33 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
         _applicationSwitcher.selectedViewController = nil;
     }
 }
+
+-(void)reload:(NSNotification *)notification
+{
+    _applicationSwitcher.viewControllers = [self determineControllersAccess:_viewControllers.mutableCopy];
+}
+
+-(NSMutableArray *)determineControllersAccess:(NSMutableArray *)viewControllers
+{
+    JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
+    PBX *pbx = authenticationManager.line.pbx;
+    if (!pbx) {
+        return viewControllers;
+    }
+    
+    for (UIViewController *viewController in _viewControllers) {
+        NSString *identifier = viewController.restorationIdentifier;
+        
+        // Feature Flag SMS. If pbx's DIDs are not SMS enabled, remove from view controllers.
+        if ([identifier isEqualToString:kApplicationSwitcherMessagesRestorationIdentifier]) {
+            if (!pbx.smsEnabled) {
+                [viewControllers removeObject:viewController];
+            }
+        }
+    }
+    return viewControllers;
+}
+
 
 #pragma mark - Setters -
 
@@ -157,7 +188,8 @@ NSString *const kApplicationSwitcherSettingsRestorationIdentifier   = @"Settings
                   willLoadViewControllers:(NSArray *)viewControllers
 {
     _applicationSwitcher = controller;
-    return viewControllers;
+    _viewControllers = [viewControllers copy];
+    return [self determineControllersAccess:viewControllers.mutableCopy];
 }
 
 -(UIBarButtonItem *)applicationSwitcherController:(JCApplicationSwitcherViewController *)controller
