@@ -51,6 +51,11 @@
     return self;
 }
 
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 -(BOOL)performFetch:(NSError *__autoreleasing *)error
 {
     if (!_fetchRequest) {
