@@ -59,7 +59,7 @@
 - (void)test_null_user_login {
     
     // IF
-    NSString *user = @"jivetesting11@gmail.com";
+    NSString *user = nil;
     NSString *password = @"testing12";
     XCTestExpectation *login = [self expectationWithDescription:@"login"];
     
@@ -67,9 +67,9 @@
     JCAuthClient *authClient = [JCAuthClient new];
     [authClient loginWithUsername:user password:password completion:^(BOOL success, NSDictionary *authToken, NSError *error) {
         
-        XCTAssert(success, @"Failure");
-        XCTAssertNotNil(authToken, @"Auth token is nil");
-        XCTAssertNil(error, @"Error is not null");
+        XCTAssertFalse(success, @"Failure");
+        XCTAssertNil(authToken, @"Auth token is nil");
+        XCTAssertNotNil(error, @"There Should be an error because you have nothing in the username feild");
         
         [login fulfill];
     }];
@@ -81,18 +81,19 @@
 }
 
 - (void)test_null_password_login {
+   
     // IF
     NSString *user = @"jivetesting11@gmail.com";
-    NSString *password = @"testing12";
+    NSString *password = nil;
     XCTestExpectation *login = [self expectationWithDescription:@"login"];
     
     // When
     JCAuthClient *authClient = [JCAuthClient new];
     [authClient loginWithUsername:user password:password completion:^(BOOL success, NSDictionary *authToken, NSError *error) {
         
-        XCTAssert(success, @"Failure");
-        XCTAssertNotNil(authToken, @"Auth token is nil");
-        XCTAssertNil(error, @"Error is not null");
+        XCTAssertFalse(success, @"Failure");
+        XCTAssertNil(authToken, @"Auth token is nil");
+        XCTAssertNotNil(error, @"There Should be an error because you have nothing in the password feild");
         
         [login fulfill];
     }];
@@ -105,7 +106,7 @@
 
 - (void)test_invalid_user_login {
     // IF
-    NSString *user = @"jivetesting11@gmail.com";
+    NSString *user = @"jivetesting10@gmail.com";
     NSString *password = @"testing12";
     XCTestExpectation *login = [self expectationWithDescription:@"login"];
     
@@ -113,9 +114,9 @@
     JCAuthClient *authClient = [JCAuthClient new];
     [authClient loginWithUsername:user password:password completion:^(BOOL success, NSDictionary *authToken, NSError *error) {
         
-        XCTAssert(success, @"Failure");
-        XCTAssertNotNil(authToken, @"Auth token is nil");
-        XCTAssertNil(error, @"Error is not null");
+        XCTAssertFalse(success, @"Failure");
+        XCTAssertNil(authToken, @"Auth token is nil");
+        XCTAssertNotNil(error, @"You should have an error becasue you have an invalid username");
         
         [login fulfill];
     }];
@@ -129,17 +130,23 @@
 - (void)test_invalid_password_login {
     // IF
     NSString *user = @"jivetesting10";
-    NSString *password = nil;
+    NSString *password = @"asdfjl";
     XCTestExpectation *login = [self expectationWithDescription:@"login"];
     
     // When
-    [[JCAuthClient new] loginWithUsername:user password:password completion:^(BOOL success, NSDictionary *authToken, NSError *error) {
+    JCAuthClient *authClient = [JCAuthClient new];
+    [authClient loginWithUsername:user password:password completion:^(BOOL success, NSDictionary *authToken, NSError *error) {
+        
+        XCTAssertFalse(success, @"Failure");
+        XCTAssertNil(authToken, @"Auth token is nil");
+        XCTAssertNotNil(error, @"You should have a falilure becasue you have the wrong password");
+        
         [login fulfill];
     }];
     
     // Then
     [self waitForExpectationsWithTimeout:10 handler:^(NSError *error) {
-//        XCTAssertNotNil(crap, @"No result recevied.");
+        XCTAssertNil(error);
     }];
 }
 
