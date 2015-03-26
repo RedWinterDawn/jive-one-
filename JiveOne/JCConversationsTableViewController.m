@@ -33,17 +33,20 @@ NSString *const kJCConversationsTableViewController = @"ConversationCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
-    NSFetchRequest *fetchRequest = [Message MR_requestAllInContext:context];
-    fetchRequest.includesSubentities = YES;
-    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(date)) ascending:NO]];
-    _conversationGroupsResultsController = [[JCConversationGroupsResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context];
-    _conversationGroupsResultsController.delegate = self;
-    
-    __autoreleasing NSError *error = nil;
-    if (![_conversationGroupsResultsController performFetch:&error]) {
-        [self.tableView reloadData];
-    };
+    PBX *pbx = [JCAuthenticationManager sharedInstance].pbx;
+    if (pbx && [pbx smsEnabled]) {
+        NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
+        NSFetchRequest *fetchRequest = [Message MR_requestAllInContext:context];
+        fetchRequest.includesSubentities = YES;
+        fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(date)) ascending:NO]];
+        _conversationGroupsResultsController = [[JCConversationGroupsResultsController alloc] initWithFetchRequest:fetchRequest pbx:pbx managedObjectContext:context];
+        _conversationGroupsResultsController.delegate = self;
+        
+        __autoreleasing NSError *error = nil;
+        if (![_conversationGroupsResultsController performFetch:&error]) {
+            [self.tableView reloadData];
+        };
+    }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForObject:(id<NSObject>)object atIndexPath:(NSIndexPath *)indexPath {

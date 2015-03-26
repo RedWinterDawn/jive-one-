@@ -18,6 +18,7 @@
 @interface JCConversationGroupsResultsController ()
 {
     NSMutableArray *_fetchedObjects;
+    PBX *_pbx;
     BOOL _loaded;
     BOOL _doingBatchUpdate;
 }
@@ -26,7 +27,7 @@
 
 @implementation JCConversationGroupsResultsController
 
--(instancetype)initWithFetchRequest:(NSFetchRequest *)fetchRequest managedObjectContext:(NSManagedObjectContext *)context
+-(instancetype)initWithFetchRequest:(NSFetchRequest *)fetchRequest pbx:(PBX *)pbx managedObjectContext:(NSManagedObjectContext *)context
 {
     self = [super init];
     if (self) {
@@ -36,6 +37,8 @@
         fetchRequest.resultType             = NSDictionaryResultType;
         fetchRequest.propertiesToGroupBy    = @[NSStringFromSelector(@selector(messageGroupId))];
         fetchRequest.propertiesToFetch      = @[NSStringFromSelector(@selector(messageGroupId))];
+        
+        _pbx = pbx;
         
         _manageObjectContext = context;
         
@@ -228,7 +231,9 @@
             if ([object isKindOfClass:[NSDictionary class]]) {
                 NSString *conversationGroupId = [((NSDictionary *)object) stringValueForKey:NSStringFromSelector(@selector(messageGroupId))];
                 JCConversationGroup *conversationGroup = [[JCConversationGroup alloc] initWithConversationGroupId:conversationGroupId context:_manageObjectContext];
-                [conversationGroups addObject:conversationGroup];
+                if (conversationGroup.pbx == _pbx) {
+                    [conversationGroups addObject:conversationGroup];
+                }
             }
         }
     }

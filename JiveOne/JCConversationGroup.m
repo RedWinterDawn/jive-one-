@@ -31,6 +31,7 @@
                 SMSMessage *smsMessage = (SMSMessage *)message;
                 _sms = TRUE;
                 _name = smsMessage.localContact.name;
+                _pbx = smsMessage.did.pbx;
             } else {
                 //TODO: Chat functionality.
             }

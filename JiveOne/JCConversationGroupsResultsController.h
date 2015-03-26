@@ -15,7 +15,7 @@
 
 @interface JCConversationGroupsResultsController : NSObject
 
-- (id)initWithFetchRequest:(NSFetchRequest *)fetchRequest managedObjectContext: (NSManagedObjectContext *)context;
+- (id)initWithFetchRequest:(NSFetchRequest *)fetchRequest pbx:(PBX *)pbx managedObjectContext: (NSManagedObjectContext *)context;
 - (BOOL)performFetch:(NSError **)error;
 
 @property (nonatomic, readonly) NSFetchRequest *fetchRequest;

@@ -16,6 +16,8 @@
 @property (nonatomic, readonly, getter=isRead) BOOL read;
 
 @property (nonatomic, readonly) NSString *conversationGroupId;
+@property (nonatomic, readonly) PBX *pbx;
+
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *lastMessage;
 @property (strong, nonatomic) NSDate *date;
