@@ -101,7 +101,7 @@ NSString *const kJCAuthClientURLSchemeCallback  = @"jiveclient://token";
     }
 }
 
--(NSDictionary *)tokenDataFromURL:(NSURL *)url
++(NSDictionary *)tokenDataFromURL:(NSURL *)url
 {
     NSString *stringURL = [url description];
     NSArray *topLevel =  [stringURL componentsSeparatedByString:@"#"];
@@ -139,7 +139,7 @@ NSString *const kJCAuthClientURLSchemeCallback  = @"jiveclient://token";
 - (BOOL)webView:(UIWebView*)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     if ([request.URL.scheme isEqualToString:@"jiveclient"]) {
-        [self notifyCompletionBlock:YES authToken:[self tokenDataFromURL:request.URL] error:nil];
+        [self notifyCompletionBlock:YES authToken:[[self class] tokenDataFromURL:request.URL] error:nil];
         return NO;
     }
     return YES;

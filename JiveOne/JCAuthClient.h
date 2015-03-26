@@ -16,4 +16,6 @@ typedef void (^JCAuthClientLoginCompletionBlock) (BOOL success, NSDictionary *au
 
 - (void)loginWithUsername:(NSString *)username password:(NSString*)password completion:(JCAuthClientLoginCompletionBlock)completion;
 
++ (NSDictionary *)tokenDataFromURL:(NSURL *)url;
+
 @end
