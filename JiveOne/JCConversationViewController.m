@@ -47,6 +47,7 @@
     [super viewDidLoad];
     
     self.inputToolbar.contentView.textView.placeHolder = NSLocalizedString(@"Send SMS", nil);
+    self.inputToolbar.contentView.leftBarButtonItem = nil;
 }
 
 -(void)viewDidAppear:(BOOL)animated
