@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "JCManager.h"
 
 #import "User.h"
 #import "Line.h"
@@ -18,7 +18,7 @@ extern NSString *const kJCAuthenticationManagerLineChangedNotification;
 
 typedef void (^CompletionBlock) (BOOL success, NSError *error);
 
-@interface JCAuthenticationManager : NSObject 
+@interface JCAuthenticationManager : JCManager
 
 - (void)checkAuthenticationStatus;
 - (void)loginWithUsername:(NSString *)username password:(NSString*)password completed:(CompletionBlock)completed;
