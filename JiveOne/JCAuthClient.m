@@ -132,7 +132,7 @@ NSString *const kJCAuthClientURLSchemeCallback  = @"jiveclient://token";
     }
     else {
         [webView stopLoading];
-        [self reportError:[JCAuthClientError errorWithCode:AUTH_CLIENT_INVALID_PARAM ]];
+        [self reportError:[JCAuthClientError errorWithCode:AUTH_CLIENT_INVALID_PARAM]];
     }
 }
 

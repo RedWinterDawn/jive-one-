@@ -8,6 +8,7 @@
 
 #import "JCAuthenticationManager.h"
 #import "JCAuthenticationKeychain.h"
+#import <objc/runtime.h>
 
 #import "Common.h"
 
@@ -36,6 +37,7 @@ NSString *const kJCAuthenticationManagerRememberMeKey   = @"remberMe";
 @interface JCAuthenticationManager () <UIWebViewDelegate>
 {
     JCAuthenticationKeychain *_authenticationKeychain;
+    JCAuthClient *_authClient;
     Line *_line;
 }
 
@@ -98,8 +100,8 @@ NSString *const kJCAuthenticationManagerRememberMeKey   = @"remberMe";
     _line = nil;
     
     // Login using the auth client.
-    JCAuthClient *authClient = [JCAuthClient new];
-    [authClient loginWithUsername:username password:password completion:^(BOOL success, NSDictionary *authToken, NSError *error) {
+    _authClient = [[JCAuthClient alloc] init];
+    [_authClient loginWithUsername:username password:password completion:^(BOOL success, NSDictionary *authToken, NSError *error) {
         if (success) {
             [self receivedAccessTokenData:authToken username:username completion:completion];
         }
@@ -108,6 +110,7 @@ NSString *const kJCAuthenticationManagerRememberMeKey   = @"remberMe";
                 completion(NO, [JCAuthenticationManagerError errorWithCode:AUTH_MANAGER_CLIENT_ERROR underlyingError:error]);
             }
         }
+        _authClient = nil;
     }];
 }
 

@@ -88,7 +88,7 @@
                                     completed:^(BOOL success, NSError *error) {
                                         [self hideStatus];
                                         if (error) {
-                                            [JCAlertView alertWithTitle:error.localizedFailureReason message:error.localizedDescription];
+                                            [JCAlertView alertWithError:error];
                                         }
                                     }];
 }
