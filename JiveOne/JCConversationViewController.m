@@ -84,17 +84,14 @@
                  senderId:(NSString *)senderId
         senderDisplayName:(NSString *)senderDisplayName
                      date:(NSDate *)date
-{
-    //show Action sheet here
-    //initilise an action sheet
-    if (self.count == 0) {
+    {
+        if (self.count == 0) {
         
         JCActionSheet *didOptions = [[JCActionSheet alloc]initWithTitle:@"Which number would you like to send from" dismissed:^(NSInteger buttonIndex) {
             NSLog(@"Ya Action from the action sheet");
             id<JCPersonDataSource> person = _participants.lastObject;
             [SMSMessage sendMessage:text toPerson:person fromDid:self.did completion:^(BOOL success, NSError *error) {
                 if (success) {
-                    //         [JSQSystemSoundPlayer jsq_playMessageSentSound];
                     [self finishSendingMessageAnimated:YES];
                 }else {
                     [self showError:error];
@@ -104,13 +101,30 @@
         
         UIView * currentView = self.view;
         [didOptions show:currentView];
+    } else {
+        id<JCPersonDataSource> person = _participants.lastObject;
+        [SMSMessage sendMessage:text toPerson:person fromDid:self.did completion:^(BOOL success, NSError *error) {
+            if (success) {
+                [self finishSendingMessageAnimated:YES];
+            }else {
+                [self showError:error];
+            }
+        }];
     }
     
-    
-    
-    
-    
 }
+
+//-(void)sendTextWithDID:(NSString *)text DID:(id *)fromDid {
+//    id<JCPersonDataSource> person = _participants.lastObject;
+//    [SMSMessage sendMessage:text toPerson:person fromDid:self.did completion:^(BOOL success, NSError *error) {
+//        if (success) {
+//            [self finishSendingMessageAnimated:YES];
+//        }else {
+//            [self showError:error];
+//        }
+//    }];
+//}
+
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     NSLog(@"you selected the : %ld button", (long)buttonIndex);
 
