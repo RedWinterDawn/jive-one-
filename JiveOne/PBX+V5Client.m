@@ -16,9 +16,9 @@
 #import "User.h"
 #import "DID.h"
 
-NSString *const kPBXInfoRequestPath             = @"/jif/v3/user/jiveId/%@";
-
 NSString *const kPBXInfoResponseDataKey             = @"data";
+
+
 NSString *const kPBXInfoResponseUserKey                 = @"user";
 NSString *const kPBXInfoResponseUserJiveIdKey               = @"externalId";
 NSString *const kPBXInfoResponseUserPbxsIdKey               = @"namesByPbx";
@@ -43,30 +43,23 @@ NSString *const kPBXInfoResponseNumberReceiveCallsKey               = @"receiveC
 NSString *const kPBXInfoResponseNumberSendSMSKey                    = @"sendSMS";
 NSString *const kPBXInfoResponseNumberReceiveSMSKey                 = @"receiveSMS";
 
-NSString *const kPBXResponseException           = @"pbxResponseException";
+NSString *const kPBXResponseException                       = @"pbxResponseException";
 
 @implementation PBX (V5Client)
 
-+ (void)downloadPbxInfoForUser:(User *)user completed:(void(^)(BOOL success, NSError *error))completion
++ (void)downloadPbxInfoForUser:(User *)user completed:(CompletionHandler)completion
 {
-    if (!user) {
-        if (completion) {
-            completion(false, [JCApiClientError errorWithCode:JCApiClientInvalidArgumentErrorCode reason:@"User Is Null"]);
+    [JCV5ApiClient requestPBXInforForUser:user competion:^(BOOL success, id responseObject, NSError *error) {
+        if (success) {
+            [self processRequestResponse:responseObject user:user competion:completion];
         }
-        return;
-    }
-    
-    JCV5ApiClient *client = [JCV5ApiClient sharedClient];
-    [client.manager GET:[NSString stringWithFormat:kPBXInfoRequestPath, user.jiveUserId]
-             parameters:nil
-                success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                    [self processRequestResponse:responseObject user:user competion:completion];
-                }
-                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                    if (completion) {
-                        completion(NO, [JCApiClientError errorWithCode:JCApiClientRequestErrorCode reason:error.localizedDescription]);
-                    }
-                }];
+        else
+        {
+            if (completion) {
+                completion(NO, error);
+            }
+        }
+    }];
 }
 
 +(void)processRequestResponse:(id)responseObject user:(User *)user competion:(CompletionHandler)completion
@@ -110,7 +103,7 @@ NSString *const kPBXResponseException           = @"pbxResponseException";
     }
     @catch (NSException *exception) {
         if (completion) {
-            completion(NO, [JCApiClientError errorWithCode:JCApiClientRequestErrorCode reason:exception.reason]);
+            completion(NO, [JCApiClientError errorWithCode:API_CLIENT_RESPONSE_ERROR reason:exception.reason]);
         }
     }
 }

@@ -106,7 +106,7 @@ NSString *const kVoicemailResponseSelfMailboxKey        = @"self_mailbox";
     // Check for required data.
     if (!line.mailboxUrl || line.mailboxUrl.isEmpty || !line.pbx) {
         if (completion != NULL) {
-            completion(false, [JCApiClientError errorWithCode:JCApiClientInvalidArgumentErrorCode reason:@"Line has no mailbox url."]);
+            completion(false, [JCApiClientError errorWithCode:API_CLIENT_INVALID_ARGUMENTS reason:@"Line has no mailbox url."]);
         }
         return;
     }
@@ -119,7 +119,7 @@ NSString *const kVoicemailResponseSelfMailboxKey        = @"self_mailbox";
                 }
                 failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                     if (completion) {
-                        completion(NO, [JCApiClientError errorWithCode:JCApiClientRequestErrorCode reason:error.localizedDescription]);
+                        completion(NO, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR reason:error.localizedDescription]);
                     }
                 }];
 }
@@ -129,7 +129,7 @@ NSString *const kVoicemailResponseSelfMailboxKey        = @"self_mailbox";
     
     if (!voicemail || !voicemail.url_download || voicemail.url_download.isEmpty) {
         if (completion != NULL) {
-            completion(false, nil, [JCApiClientError errorWithCode:JCApiClientInvalidArgumentErrorCode reason:@"Line has no mailbox download url."]);
+            completion(false, nil, [JCApiClientError errorWithCode:API_CLIENT_INVALID_ARGUMENTS reason:@"Line has no mailbox download url."]);
         }
         return;
     }
@@ -296,7 +296,7 @@ NSString *const kVoicemailResponseSelfMailboxKey        = @"self_mailbox";
     }
     @catch (NSException *exception) {
         if (completion) {
-            completion(NO, [JCApiClientError errorWithCode:JCApiClientUnexpectedResponseErrorCode reason:exception.reason]);
+            completion(NO, [JCApiClientError errorWithCode:API_CLIENT_UNEXPECTED_RESPONSE_ERROR reason:exception.reason]);
         }
     }
 }

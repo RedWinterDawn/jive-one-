@@ -111,7 +111,7 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
                          failure:^(NSError *error) {
                              [UIApplication hideStatus];
                              if (completion) {
-                                 completion(NO, [JCApiClientError errorWithCode:JCApiClientRequestErrorCode userInfo:error.userInfo]);
+                                 completion(NO, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR underlyingError:error]);
                              }
                          }];
     PFInstallation *currentInstilation = [PFInstallation currentInstallation];
@@ -155,7 +155,7 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
                                }
                                failure:^(NSError *error) {
                                    if (completion) {
-                                       completion(NO, [JCApiClientError errorWithCode:JCApiClientRequestErrorCode userInfo:error.userInfo]);
+                                       completion(NO, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR underlyingError:error]);
                                    }
                                }];
 }
@@ -194,7 +194,7 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
                          }
                          failure:^(NSError *error) {
                              if (completion) {
-                                 completion(NO, [JCApiClientError errorWithCode:JCApiClientRequestErrorCode userInfo:error.userInfo]);
+                                 completion(NO, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR underlyingError:error]);
                              }
                          }];
 }
@@ -211,7 +211,7 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
                          }
                          failure:^(NSError *error) {
                              if (completion) {
-                                 completion(NO, [JCApiClientError errorWithCode:JCApiClientRequestErrorCode userInfo:error.userInfo]);
+                                 completion(NO, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR underlyingError:error]);
                              }
                          }];
 }
@@ -233,7 +233,7 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
 {
     if (retryCount <= 0) {
         if (failure) {
-            NSError *error = [JCApiClientError errorWithCode:JCApiClientRequestErrorCode reason:@"Request Timeout"];
+            NSError *error = [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR reason:@"Request Timeout"];
             failure(error);
         }
     } else {
@@ -261,7 +261,7 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
 {
     if (retryCount <= 0) {
         if (failure) {
-            NSError *error = [JCApiClientError errorWithCode:JCApiClientRequestErrorCode reason:@"Request Timeout"];
+            NSError *error = [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR reason:@"Request Timeout"];
             failure(error);
         }
     } else {
@@ -290,7 +290,7 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
 {
     if (retryCount <= 0) {
         if (failure) {
-            NSError *error = [JCApiClientError errorWithCode:JCApiClientRequestErrorCode reason:@"Request Timeout"];
+            NSError *error = [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR reason:@"Request Timeout"];
             failure(error);
         }
     } else {
@@ -321,7 +321,7 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
 {
     if (retryCount <= 0) {
         if (failure) {
-            NSError *error = [JCApiClientError errorWithCode:JCApiClientRequestErrorCode reason:@"Request Timeout"];
+            NSError *error = [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR reason:@"Request Timeout"];
             failure(error);
         }
     } else {

@@ -14,6 +14,6 @@
 
 @interface PBX (V5Client)
 
-+ (void)downloadPbxInfoForUser:(User *)user completed:(void(^)(BOOL success, NSError *error))completion;
++ (void)downloadPbxInfoForUser:(User *)user completed:(CompletionHandler)completion;
 
 @end

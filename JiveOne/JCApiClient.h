@@ -23,25 +23,7 @@
 
 @end
 
-#pragma mark Error Handling
 
-typedef enum : NSUInteger {
-    JCApiClientUnknownErrorCode = 0,
-    JCApiClientInvalidArgumentErrorCode,
-    JCApiClientInvalidRequestParameterErrorCode,
-    JCApiClientRequestErrorCode,
-    JCApiClientResponseErrorCode,
-    JCApiClientResponseParserErrorCode,
-    JCApiClientUnexpectedResponseErrorCode,
-    JCApiClientCoreDataErrorCode
-} JCApiClientErrorCode;
-
-@interface JCApiClientError : NSError
-
-+(instancetype)errorWithCode:(JCApiClientErrorCode)code reason:(NSString *)reason;
-+(instancetype)errorWithCode:(JCApiClientErrorCode)code userInfo:(NSDictionary *)userInfo;
-
-@end
 
 #pragma mark Serialization
 
@@ -61,8 +43,29 @@ typedef enum : NSUInteger {
 
 @end
 
-
 @interface JCXMLParserResponseSerializer : AFHTTPResponseSerializer
+
+@end
+
+#import "JCError.h"
+
+#pragma mark Error Handling
+
+#define API_CLIENT_UNKNOWN_ERROR                1000
+#define API_CLIENT_INVALID_ARGUMENTS            1001
+#define API_CLIENT_INVALID_REQUEST_PARAMETERS   1002
+#define API_CLIENT_REQUEST_ERROR                1003
+#define API_CLIENT_RESPONSE_ERROR               1004
+#define API_CLIENT_RESPONSE_PARSER_ERROR        1005
+#define API_CLIENT_UNEXPECTED_RESPONSE_ERROR    1006
+#define API_CLIENT_CORE_DATE_ERROR              1007
+
+#define API_CLIENT_AUTHENTICATION_ERROR         1008
+#define API_CLIENT_NETWORK_ERROR                1009
+#define API_CLIENT_TIMEOUT_ERROR                1010
+#define API_CLIENT_NO_PBX_ERROR                 1011
+
+@interface JCApiClientError : JCError
 
 @end
 

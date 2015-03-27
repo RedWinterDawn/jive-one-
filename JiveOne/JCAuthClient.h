@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JCApiClient.h"
 
 typedef void (^JCAuthClientLoginCompletionBlock) (BOOL success, NSDictionary *authToken, NSError *error);
 
@@ -17,5 +18,9 @@ typedef void (^JCAuthClientLoginCompletionBlock) (BOOL success, NSDictionary *au
 - (void)loginWithUsername:(NSString *)username password:(NSString*)password completion:(JCAuthClientLoginCompletionBlock)completion;
 
 + (NSDictionary *)tokenDataFromURL:(NSURL *)url;
+
+@end
+
+@interface JCAuthClientError : JCApiClientError
 
 @end

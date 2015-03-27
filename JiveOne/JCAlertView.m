@@ -1,3 +1,4 @@
+
 //
 //  JCAlertView.m
 //  JiveOne
@@ -264,6 +265,11 @@ static const NSMutableArray *alerts;
     NSError *underlyingError = [error.userInfo objectForKey:NSUnderlyingErrorKey];
     if (underlyingError) {
         return [self underlyingErrorCodeForError:underlyingError];
+    }
+    
+    if ([error.domain isEqualToString:AFURLResponseSerializationErrorDomain]) {
+        NSHTTPURLResponse *urlResponse = [error.userInfo valueForKey:AFNetworkingOperationFailingURLResponseErrorKey];
+        return urlResponse.statusCode;
     }
     return error.code;
 }

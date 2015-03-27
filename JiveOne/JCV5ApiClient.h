@@ -8,10 +8,14 @@
 
 #import "JCApiClient.h"
 
+typedef void(^JCV5ApiClientCompletionHandler)(BOOL success, id response, NSError *error);
+
 @interface JCV5ApiClient : JCApiClient
 
 + (instancetype)sharedClient;
 
 - (BOOL)isOperationRunning:(NSString *)operationName;
+
++ (void)requestPBXInforForUser:(User *)user competion:(JCV5ApiClientCompletionHandler)completion;
 
 @end

@@ -13,6 +13,8 @@
 
 NSString *const kJCV5ApiClientBaseUrl = @"https://api.jive.com/";
 
+NSString *const kJCV5ApiPBXInfoRequestPath = @"/jif/v3/user/jiveId/%@";
+
 @implementation JCV5ApiClient
 
 #pragma mark - class methods
@@ -49,6 +51,31 @@ NSString *const kJCV5ApiClientBaseUrl = @"https://api.jive.com/";
 		}
 	}
 	return NO;
+}
+
++ (void)requestPBXInforForUser:(User *)user competion:(JCV5ApiClientCompletionHandler)completion
+{
+    if (!user) {
+        if (completion) {
+            completion(NO, nil, [JCApiClientError errorWithCode:API_CLIENT_INVALID_ARGUMENTS reason:@"User Is Null"]);
+        }
+        return;
+    }
+    
+    JCV5ApiClient *client = [JCV5ApiClient sharedClient];
+    NSString *urlString = [NSString stringWithFormat:kJCV5ApiPBXInfoRequestPath, user.jiveUserId];
+    [client.manager GET:urlString
+             parameters:nil
+                success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                    if (completion) {
+                        completion(YES, responseObject, nil);
+                    }
+                }
+                failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                    if (completion) {
+                        completion(NO, nil, error);
+                    }
+                }];
 }
 
 @end

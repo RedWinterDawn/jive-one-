@@ -177,11 +177,9 @@
 		5D97A7FF1A828B4700A4434D /* JCIntercomTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D97A7FE1A828B4700A4434D /* JCIntercomTableViewController.m */; };
 		5D9A5E221A24E30A00E8274C /* JCPhoneAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9A5E211A24E30A00E8274C /* JCPhoneAudioManager.m */; };
 		5D9F72101AC34F8000B9D0F8 /* JCAuthClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9F720D1AC34F8000B9D0F8 /* JCAuthClient.m */; };
-		5D9F72111AC34F8000B9D0F8 /* JCAuthClientError.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9F720F1AC34F8000B9D0F8 /* JCAuthClientError.m */; };
 		5D9F721B1AC3519F00B9D0F8 /* JiveOne_Unit_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9F721A1AC3519F00B9D0F8 /* JiveOne_Unit_Tests.m */; };
 		5D9F72241AC3523500B9D0F8 /* JCAuthClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9F72221AC3523500B9D0F8 /* JCAuthClientTests.m */; };
 		5D9F72251AC35C3A00B9D0F8 /* JCAuthClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9F720D1AC34F8000B9D0F8 /* JCAuthClient.m */; };
-		5D9F72261AC35C3F00B9D0F8 /* JCAuthClientError.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D9F720F1AC34F8000B9D0F8 /* JCAuthClientError.m */; };
 		5D9F72271AC35C5000B9D0F8 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		5D9F722A1AC35E4B00B9D0F8 /* JCAuthenticationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2751591018AD174F00FD8D3F /* JCAuthenticationManager.m */; };
 		5D9F722B1AC35E5800B9D0F8 /* JCAuthenticationManagerError.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DA566481A20543500286BA5 /* JCAuthenticationManagerError.m */; };
@@ -662,8 +660,6 @@
 		5D9A5E211A24E30A00E8274C /* JCPhoneAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneAudioManager.m; sourceTree = "<group>"; };
 		5D9F720C1AC34F8000B9D0F8 /* JCAuthClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAuthClient.h; sourceTree = "<group>"; };
 		5D9F720D1AC34F8000B9D0F8 /* JCAuthClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthClient.m; sourceTree = "<group>"; };
-		5D9F720E1AC34F8000B9D0F8 /* JCAuthClientError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAuthClientError.h; sourceTree = "<group>"; };
-		5D9F720F1AC34F8000B9D0F8 /* JCAuthClientError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthClientError.m; sourceTree = "<group>"; };
 		5D9F72161AC3519F00B9D0F8 /* JiveOne Unit Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "JiveOne Unit Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D9F72191AC3519F00B9D0F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D9F721A1AC3519F00B9D0F8 /* JiveOne_Unit_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JiveOne_Unit_Tests.m; sourceTree = "<group>"; };
@@ -1547,8 +1543,6 @@
 			children = (
 				5D9F720C1AC34F8000B9D0F8 /* JCAuthClient.h */,
 				5D9F720D1AC34F8000B9D0F8 /* JCAuthClient.m */,
-				5D9F720E1AC34F8000B9D0F8 /* JCAuthClientError.h */,
-				5D9F720F1AC34F8000B9D0F8 /* JCAuthClientError.m */,
 			);
 			name = Authentication;
 			sourceTree = "<group>";
@@ -2137,7 +2131,6 @@
 				5D2EDB811A3BA8250031F7AD /* JCDebugContactGroupsTableViewController.m in Sources */,
 				5D490E6D1A8D7624004B62C0 /* JCConversationsTableViewController.m in Sources */,
 				5D2B2C091A30D8AE00938D76 /* FXBlurView.m in Sources */,
-				5D9F72111AC34F8000B9D0F8 /* JCAuthClientError.m in Sources */,
 				5DDDA5451A4A856800E31AA3 /* JCPresenceManager.m in Sources */,
 				5D490E571A8AD0A1004B62C0 /* JCUnknownNumber.m in Sources */,
 				5D1175871A9BEFD500D2B03A /* JCConversationGroup.m in Sources */,
@@ -2183,7 +2176,6 @@
 				5D9F72421AC35F0B00B9D0F8 /* NSString+DialString.m in Sources */,
 				5D9F725E1AC35F4000B9D0F8 /* Person.m in Sources */,
 				5D9F72591AC35F3A00B9D0F8 /* User+Custom.m in Sources */,
-				5D9F72261AC35C3F00B9D0F8 /* JCAuthClientError.m in Sources */,
 				5D9F72641AC35F4000B9D0F8 /* IncomingCall.m in Sources */,
 				5D9F72361AC35EEF00B9D0F8 /* JCBadgeManager.m in Sources */,
 				5D9F725F1AC35F4000B9D0F8 /* Contact.m in Sources */,

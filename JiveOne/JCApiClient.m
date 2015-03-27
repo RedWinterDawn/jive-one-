@@ -59,19 +59,7 @@ NSString *const kJCApiClientErrorDomain = @"JCClientError";
 
 @end
 
-@implementation JCApiClientError
 
-+(instancetype)errorWithCode:(JCApiClientErrorCode)code reason:(NSString *)reason
-{
-    return [self errorWithDomain:kJCApiClientErrorDomain code:code userInfo:@{NSLocalizedDescriptionKey: reason}];
-}
-
-+(instancetype)errorWithCode:(JCApiClientErrorCode)code userInfo:(NSDictionary *)userInfo
-{
-    return [self errorWithDomain:kJCApiClientErrorDomain code:code userInfo:userInfo];
-}
-
-@end
 
 @implementation JCAuthenticationJSONRequestSerializer
 
@@ -121,7 +109,7 @@ NSString *const kJCApiClientErrorDomain = @"JCClientError";
 {
     if (![object isKindOfClass:[NSData class]]) {
         if (error != NULL) {
-            *error = [JCApiClientError errorWithCode:JCApiClientInvalidArgumentErrorCode reason:@"object is not the class type NSData"];
+            *error = [JCApiClientError errorWithCode:API_CLIENT_INVALID_ARGUMENTS reason:@"Object is not the class type NSData"];
         }
         return nil;
     }
@@ -177,7 +165,7 @@ NSString *const kJCApiClientErrorDomain = @"JCClientError";
     NSDictionary *responseObject = [NSDictionary dictionaryWithXMLData:data];
     if (!response) {
         if (error != NULL) {
-            *error = [JCApiClientError errorWithCode:JCApiClientResponseParserErrorCode reason:@"Response Empty"];
+            *error = [JCApiClientError errorWithCode:API_CLIENT_RESPONSE_PARSER_ERROR reason:@"Response Empty"];
         }
     }
     
@@ -192,6 +180,55 @@ static BOOL JCErrorOrUnderlyingErrorHasCode(NSError *error, NSInteger code) {
         return JCErrorOrUnderlyingErrorHasCode(error.userInfo[NSUnderlyingErrorKey], code);
     }
     return NO;
+}
+
+@end
+
+@implementation JCApiClientError
+
++(instancetype)errorWithCode:(NSInteger)code userInfo:(NSDictionary *)userInfo
+{
+    return [self errorWithDomain:[self domain] code:code userInfo:userInfo];
+}
+
++(instancetype)errorWithCode:(NSInteger)code reason:(NSString *)reason underlyingError:(NSError *)error
+{
+    return [self errorWithDomain:[self domain] code:code reason:reason underlyingError:error];
+}
+
++(NSString *)domain
+{
+    return [NSString stringWithFormat:@"%@Domain", NSStringFromClass([self class])];
+}
+
++(NSString *)failureReasonFromCode:(NSInteger)code
+{
+    switch (code) {
+        case API_CLIENT_INVALID_ARGUMENTS:
+            return @"Invalid Arguments";
+            
+        case API_CLIENT_RESPONSE_PARSER_ERROR:
+            return @"Response Empty";
+            
+        case API_CLIENT_NETWORK_ERROR:
+            return @"Network error please check your connection.";
+            
+        case API_CLIENT_TIMEOUT_ERROR:
+            return @"It took to long to get an answer try again.";
+            
+        case API_CLIENT_RESPONSE_ERROR:
+            return @"Server returned an invalid server response.";
+            
+        case API_CLIENT_AUTHENTICATION_ERROR:
+            return @"Authentication was invalid please check Username and Password";
+            
+        case API_CLIENT_NO_PBX_ERROR:
+            return @" No Pbx was found.";
+            
+        default:
+            return @"Unknown Error Has Occured.";
+    }
+    return nil;
 }
 
 @end

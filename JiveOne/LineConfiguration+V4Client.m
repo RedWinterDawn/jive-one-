@@ -60,7 +60,7 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
                                    }
                                    failure:^(NSError *error) {
                                        if (completion) {
-                                           completion(NO, [JCApiClientError errorWithCode:JCApiClientRequestErrorCode userInfo:error.userInfo]);
+                                           completion(NO, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR underlyingError:error]);
                                        }
                                    }];
 }
@@ -69,7 +69,7 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
 {
     if (retryCount <= 0) {
         if (failure) {
-            NSError *error = [JCApiClientError errorWithCode:JCApiClientRequestErrorCode reason:@"Request Timeout"];
+            NSError *error = [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR reason:@"Request Timeout"];
             failure(error);
         }
     } else {
@@ -125,16 +125,16 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
     }
     @catch (NSException *exception) {
         if (completion) {
-            JCApiClientErrorCode code;
+            NSUInteger code;
             NSString *name = exception.name;
             if ([name isEqualToString:kLineConfigurationInvalidServerRequestException]) {
-                code = JCApiClientInvalidRequestParameterErrorCode;
+                code = API_CLIENT_INVALID_REQUEST_PARAMETERS;
             } else if ([name isEqualToString:kLineConfigurationServerErrorException]) {
-                code = JCApiClientResponseErrorCode;
+                code = API_CLIENT_RESPONSE_ERROR;
             } else if ([name isEqualToString:kLineConfigurationInvalidServerResponseException]) {
-                code = JCApiClientUnexpectedResponseErrorCode;
+                code = API_CLIENT_UNEXPECTED_RESPONSE_ERROR;
             } else {
-                code = JCApiClientUnknownErrorCode;
+                code = API_CLIENT_UNKNOWN_ERROR;
             }
             completion(NO, [JCApiClientError errorWithCode:code reason:exception.reason]);
         }
@@ -230,7 +230,7 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
 {
     if (![object isKindOfClass:[NSDictionary class]]) {
         if (error != NULL) {
-            *error = [JCApiClientError errorWithCode:JCApiClientInvalidRequestParameterErrorCode reason:@"Unvalid Parameters dictionary"];
+            *error = [JCApiClientError errorWithCode:API_CLIENT_INVALID_REQUEST_PARAMETERS reason:@"Unvalid Parameters dictionary"];
         }
         return nil;
     }
@@ -239,7 +239,7 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
     NSString *username = [parameters stringValueForKey:kJCLineConfigurationRequestUsernameKey];
     if (!username) {
         if (error != NULL) {
-            *error = [JCApiClientError errorWithCode:JCApiClientInvalidRequestParameterErrorCode reason:@"Username is NULL"];
+            *error = [JCApiClientError errorWithCode:API_CLIENT_INVALID_REQUEST_PARAMETERS reason:@"Username is NULL"];
         }
         return nil;
     }
@@ -247,7 +247,7 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
     NSString *pbxId = [parameters stringValueForKey:kJCLineConfigurationRequestPbxIdKey];
     if (!pbxId) {
         if (error != NULL) {
-            *error = [JCApiClientError errorWithCode:JCApiClientInvalidRequestParameterErrorCode reason:@"PBX id is NULL"];
+            *error = [JCApiClientError errorWithCode:API_CLIENT_INVALID_REQUEST_PARAMETERS reason:@"PBX id is NULL"];
         }
         return nil;
     }
@@ -255,7 +255,7 @@ NSString *const kLineConfigurationInvalidServerResponseException = @"invalidServ
     NSString *extension = [parameters stringValueForKey:kJCLineConfigurationRequestExtensionKey];
     if (!extension) {
         if (error != NULL) {
-            *error = [JCApiClientError errorWithCode:JCApiClientInvalidRequestParameterErrorCode reason:@"Extension is NULL"];
+            *error = [JCApiClientError errorWithCode:API_CLIENT_INVALID_REQUEST_PARAMETERS reason:@"Extension is NULL"];
         }
         return nil;
     }

@@ -7,7 +7,6 @@
 //
 
 #import "JCAuthClient.h"
-#import "JCAuthClientError.h"
 #import <UIKit/UIKit.h>
 
 // Javascript
@@ -63,7 +62,7 @@ NSString *const kJCAuthClientURLSchemeCallback  = @"jiveclient://token";
     username = [username stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     password = [password stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     if(username.length == 0 || password.length == 0){
-        [self reportError:[JCAuthClientError errorWithCode:AUTH_CLIENT_INVALID_PARAM]];
+        [self reportError:[JCAuthClientError errorWithCode:API_CLIENT_INVALID_REQUEST_PARAMETERS]];
         return;
     }
     
@@ -132,7 +131,7 @@ NSString *const kJCAuthClientURLSchemeCallback  = @"jiveclient://token";
     }
     else {
         [webView stopLoading];
-        [self reportError:[JCAuthClientError errorWithCode:AUTH_CLIENT_INVALID_PARAM]];
+        [self reportError:[JCAuthClientError errorWithCode:API_CLIENT_INVALID_REQUEST_PARAMETERS]];
     }
 }
 
@@ -150,8 +149,13 @@ NSString *const kJCAuthClientURLSchemeCallback  = @"jiveclient://token";
     if (!_completionBlock) {
         return;
     }
-    [self reportError:[JCAuthClientError errorWithCode:AUTH_CLIENT_NETWORK_ERROR underlyingError:error]];
+    [self reportError:[JCAuthClientError errorWithCode:API_CLIENT_NETWORK_ERROR underlyingError:error]];
 }
+
+@end
+
+
+@implementation JCAuthClientError
 
 @end
 
