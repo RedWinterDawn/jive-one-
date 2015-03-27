@@ -125,8 +125,8 @@ NSString *const kJCSipHandlerErrorDomain = @"SipErrorDomain";
             return @"Session Timer Value is to small";
         
         case ECoreAudioHandleNull:
-            return @"Audio Handle is NULL"
-            ;
+            return @"Audio Handle is NULL";
+            
         case ECoreVideoHandleNull:
             return @"Video Handle is NULL";
             

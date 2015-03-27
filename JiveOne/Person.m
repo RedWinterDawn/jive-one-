@@ -8,22 +8,105 @@
 
 #import "Person.h"
 
+#import "NSManagedObject+Additions.h"
+
+NSString *const kPersonFirstNameAttributeKey = @"firstName";
+NSString *const kPersonLastNameAttributeKey = @"lastName";
+
 @implementation Person
 
-@dynamic jrn;
 @dynamic name;
-@dynamic extension;
-@dynamic pbxId;
+@dynamic firstName;
+@dynamic lastName;
 
-- (NSString *)firstLetter
+-(NSString *)middleName
 {
-    NSString *result = [self.name substringToIndex:1];
-    return [result uppercaseString];
+    return nil;
 }
 
 -(NSString *)detailText
 {
-   return self.extension;
+    return nil;
+}
+
+-(NSString *)number
+{
+    return nil;
+}
+
+-(NSString *)firstName
+{
+    NSString *firstName = [self primitiveValueForKey:kPersonFirstNameAttributeKey];
+    if (firstName) {
+        return firstName;
+    }
+    
+    NSString *name = self.name;
+    NSArray *components = [name componentsSeparatedByString:@" "];
+    if (components.count > 1) {
+        return components.firstObject;
+    }
+    return nil;
+}
+
+-(NSString *)lastName
+{
+    NSString *lastName = [self primitiveValueForKey:kPersonLastNameAttributeKey];
+    if (lastName) {
+        return lastName;
+    }
+    
+    NSString *name = self.name;
+    NSArray *components = [name componentsSeparatedByString:@" "];
+    if (components.count > 1) {
+        return components.lastObject;
+    }
+    return name;
+}
+
+-(NSString *)firstInitial
+{
+    NSString *firstName = self.firstName;
+    if (firstName.length > 0) {
+        return [firstName substringToIndex:1].uppercaseString;
+    }
+    
+    NSString *lastName = self.lastName;
+    if (lastName.length > 0) {
+        return [lastName substringToIndex:1].uppercaseString;
+    }
+    return nil;
+}
+
+-(NSString *)middleInitial
+{
+    NSString *middleName = self.middleName;
+    if (middleName.length > 0) {
+        return [middleName substringToIndex:1].uppercaseString;
+    }
+    return nil;
+}
+
+-(NSString *)lastInitial
+{
+    NSString *lastName = self.lastName;
+    if (lastName.length > 0) {
+        return [lastName substringToIndex:1].uppercaseString;
+    }
+    return nil;
+}
+
+-(NSString *)initials
+{
+    NSString *middleInitial = self.middleInitial;
+    NSString *firstInitial = self.firstInitial;
+    NSString *lastInitial = self.lastInitial;
+    if (firstInitial && middleInitial && lastInitial) {
+        return [NSString stringWithFormat:@"%@%@%@", firstInitial, middleInitial, lastInitial];
+    } else if (firstInitial && lastInitial) {
+        return [NSString stringWithFormat:@"%@%@", firstInitial, lastInitial];
+    }
+    return lastInitial;
 }
 
 @end

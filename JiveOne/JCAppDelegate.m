@@ -9,6 +9,7 @@
 #import "JCAppDelegate.h"
 #import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
 #import <NewRelicAgent/NewRelic.h>
+#import <Parse/Parse.h>
 #import "AFNetworkActivityIndicatorManager.h"
 #import "JCLoginViewController.h"
 #import "Common.h"
@@ -32,8 +33,13 @@
 
 #import "Contact+V5Client.h"
 #import "Voicemail+V5Client.h"
+#import "SMSMessage+SMSClient.h"
+#import "JCUnknownNumber.h"
 
 #import  "JCAppSettings.h"
+
+#define SHARED_CACHE_CAPACITY 2 * 1024 * 1024
+#define DISK_CACHE_CAPACITY 100 * 1024 * 1024
 
 @interface JCAppDelegate () <JCPickerViewControllerDelegate>
 {
@@ -45,74 +51,8 @@
 
 @implementation JCAppDelegate
 
-/**
- * Loads all the singletons nessary when the application is loaded.
- */
--(void)initialializeApplication
-{
-    _appSwitcherViewController = self.window.rootViewController;
-    
-    [self configureNetworking];
-    [self loadUserDefaults];
-    
-    // Load Core Data. Currently we are not concerned aobut persisting data long term, so if there
-    // is any core data conflict, we would rather delete the whole .sqlite file and rebuild it, than
-    // to merge.
-    [MagicalRecord setShouldDeleteStoreOnModelMismatch:YES];
-    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:kCoreDataDatabase];
-    
-    // Badging
-    [JCBadgeManager updateBadgesFromContext:[NSManagedObjectContext MR_defaultContext]];
-    
-    // Authentication
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
-    [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];
-    [center addObserver:self selector:@selector(userDataReady:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:authenticationManager];
-    [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:authenticationManager];
-    [authenticationManager checkAuthenticationStatus];
-}
-
-/**
- *  We predominately use the AFNetworking Networking stack to handle data request between the App and Jive Servers for
- *  data requests. Here we configure caching, logging and monitoring indication for AFNetoworking.
- */
--(void)configureNetworking
-{
-    //Create a sharedCache for AFNetworking
-    NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:2 * 1024 * 1024
-                                                            diskCapacity:100 * 1024 * 1024
-                                                                diskPath:nil];
-    [NSURLCache setSharedURLCache:sharedCache];
-    
-    /*
-     * AFNETWORKING
-     */
-    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
-#if DEBUG
-    //[[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
-    [[AFNetworkActivityLogger sharedLogger] startLogging];
-#else
-    [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelOff];
-#endif
-    
-    //Start monitor for Reachability
-    AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(networkConnectivityChanged:) name:AFNetworkingReachabilityDidChangeNotification object:nil];
-    [manager startMonitoring];
-}
-
-/**
- * Loads a default set of defaults into NSUserDefaults to be used on first load. If a default is not set by code, it is 
- * read from the default set. If the default then becomes set, it overrides the default.
- */
--(void)loadUserDefaults
-{
-    //set UserDefaults
-    NSString *defaultPrefsFile = [[NSBundle mainBundle] pathForResource:@"UserDefaults" ofType:@"plist"];
-    NSDictionary *defaultPreferences = [NSDictionary dictionaryWithContentsOfFile:defaultPrefsFile];
-    [[NSUserDefaults standardUserDefaults] registerDefaults:defaultPreferences];
-}
+NSString *const kPAPInstallationChannelsKey = @"channels";
+NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciveRemoteNotification";
 
 #pragma mark Login Workflow
 
@@ -247,39 +187,36 @@
 -(void)registerServicesToLine:(Line *)line deviceToken:(NSString *)deviceToken
 {
     [JCBadgeManager setSelectedLine:line.jrn];
+    [JCBadgeManager setSelectedPBX:line.pbx.pbxId];
+        
+    // Get Contacts. Once we have contacts, we subscribe to their presence, fetch voicemails trying
+    // to link contacts to thier voicemail if in the pbx. Only fetch voicmails, and open sockets for
+    // v5 pbxs. If we are on v4, we disconnect, and do not fetch voicemails.
+    [Contact downloadContactsForLine:line complete:^(BOOL success, NSError *error) {
+        if (line.pbx.isV5) {
+        
+            // Fetch Voicemails
+            [Voicemail downloadVoicemailsForLine:line complete:NULL];
+        
+            // Open socket to subscribe to presence and voicemail events.
+            [JCSocket connectWithDeviceToken:deviceToken completion:^(BOOL success, NSError *error) {
+                [JCPresenceManager subscribeToPbx:line.pbx];
+               
+            
+                // TODO: Subscribe to voicemail socket events.
+            }];
+        }
+        else {
+            [JCSocket disconnect]; // If we are on v4, which does not use the jasmine socket
+        }
+    }];
+        
+    // Download all SMS Messages is sms is enabled for the pbx.
+    if ([line.pbx smsEnabled]) {
+        [SMSMessage downloadMessagesForDIDs:line.pbx.dids completion:NULL];
+    }
     
-    __block NSManagedObjectID *lineId = line.objectID;
-    dispatch_queue_t backgroundQueue = dispatch_queue_create("register_services_to_line", 0);
-    dispatch_async(backgroundQueue, ^{
-        Line *localLine = (Line *)[[NSManagedObjectContext MR_contextForCurrentThread] objectWithID:lineId];
-        
-        // Get Contacts. Once we have contacts, we subscribe to their presence, fetch voicemails trying
-    	// to link contacts to thier voicemail if in the pbx. Only fetch voicmails, and open sockets for
-    	// v5 pbxs. If we are on v4, we disconnect, and do not fetch voicemails.
-    	[Contact downloadContactsForLine:localLine complete:^(BOOL success, NSError *error) {
-        	if (line.pbx.isV5) {
-            
-            	// Fetch Voicemails
-            	[Voicemail downloadVoicemailsForLine:line complete:NULL];
-            
-            	// Open socket to subscribe to presence and voicemail events.
-            	[JCSocket connectWithDeviceToken:deviceToken completion:^(BOOL success, NSError *error) {
-                    [JCPresenceManager subscribeToPbx:line.pbx];
-                   
-                
-                	// TODO: Subscribe to voicemail socket events.
-            	}];
-        	}
-        	else {
-            	[JCSocket disconnect]; // If we are on v4, which does not use the jasmine socket
-        	}
-    	}];
-        
-        // Register the Phone.
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [JCPhoneManager connectToLine:line];
-        });
-    });
+    [JCPhoneManager connectToLine:line];
 }
 
 #pragma mark - Notification Handlers -
@@ -401,7 +338,6 @@
 {
     LOG_Info();
     
-    
     [JCSocket reset];                                   // Disconnect the socket and purge socket session.
     [JCPhoneManager disconnect];                        // Disconnect the phone manager
     [JCClient cancelAllOperations];                     // Kill any pending client network operations.
@@ -427,12 +363,96 @@
      */
     [NewRelicAgent startWithApplicationToken:@"AA6303a3125152af3660d1e3371797aefedfb29761"];
     
+    [Parse setApplicationId:@"bQTDjU0QtxWVpNQp2yJp7d9ycntVZdCXF5QrVH8q"
+                  clientKey:@"ec135dl8Xfu4VAUXz0ub6vt3QqYnQEur2VcMH1Yf"];
+
     [Appsee start:@"a57e92aea6e541529dc5227171341113"];
     
     //Register for background fetches
     [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     
-    [self initialializeApplication];
+    
+//    // Register for Push Notitications
+//    UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
+//                                                    UIUserNotificationTypeBadge |
+//                                                    UIUserNotificationTypeSound);
+//    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
+//                                                                             categories:nil];
+//    [application registerUserNotificationSettings:settings];
+//    [application registerForRemoteNotifications];
+//    
+//    //Register for background fetches
+//    [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+//    
+// [self handlePush:launchOptions];
+//    [self initialializeApplication];
+//    return YES;
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
+    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+        UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
+                                                        UIUserNotificationTypeBadge |
+                                                        UIUserNotificationTypeSound);
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
+                                                                                 categories:nil];
+        [application registerUserNotificationSettings:settings];
+        [application registerForRemoteNotifications];
+    } else
+#endif
+    {
+        [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                         UIRemoteNotificationTypeAlert |
+                                                         UIRemoteNotificationTypeSound)];
+    }
+    _appSwitcherViewController = self.window.rootViewController;
+    
+    //Create a sharedCache for AFNetworking
+    NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:SHARED_CACHE_CAPACITY diskCapacity:DISK_CACHE_CAPACITY diskPath:nil];
+    [NSURLCache setSharedURLCache:sharedCache];
+    
+    // We predominately use the AFNetworking Networking stack to handle data request between the
+    // App and Jive Servers for data requests. Here we configure caching, logging and monitoring
+    // indication for AFNetoworking.
+    
+    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
+#if DEBUG
+    [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelDebug];
+    [[AFNetworkActivityLogger sharedLogger] startLogging];
+#else
+    [[AFNetworkActivityLogger sharedLogger] setLevel:AFLoggerLevelOff];
+#endif
+    
+    // Start monitor for Reachability. We use the reachability manager to notify to network changes
+    // and to take appropriate actions with our network changes.
+    AFNetworkReachabilityManager *manager = [AFNetworkReachabilityManager sharedManager];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(networkConnectivityChanged:) name:AFNetworkingReachabilityDidChangeNotification object:nil];
+    [manager startMonitoring];
+    
+    // Loads a default set of defaults into NSUserDefaults to be used on first load. If a default is
+    // not set by code, it is read from the default set. If the default then becomes set, it
+    // overrides the default.
+    
+    NSString *defaultPrefsFile = [[NSBundle mainBundle] pathForResource:@"UserDefaults" ofType:@"plist"];
+    NSDictionary *defaultPreferences = [NSDictionary dictionaryWithContentsOfFile:defaultPrefsFile];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:defaultPreferences];
+    
+    // Load Core Data. Currently we are not concerned aobut persisting data long term, so if there
+    // is any core data conflict, we would rather delete the whole .sqlite file and rebuild it, than
+    // to merge.
+    [MagicalRecord setShouldDeleteStoreOnModelMismatch:YES];
+    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:kCoreDataDatabase];
+    
+    // Badging
+    [JCBadgeManager updateBadgesFromContext:[NSManagedObjectContext MR_defaultContext]];
+    
+    // Authentication
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
+    [center addObserver:self selector:@selector(userDidLogout:) name:kJCAuthenticationManagerUserLoggedOutNotification object:authenticationManager];
+    [center addObserver:self selector:@selector(userDataReady:) name:kJCAuthenticationManagerUserLoadedMinimumDataNotification object:authenticationManager];
+    [center addObserver:self selector:@selector(lineChanged:) name:kJCAuthenticationManagerLineChangedNotification object:authenticationManager];
+    [authenticationManager checkAuthenticationStatus];
+    
+    [self handlePush:launchOptions];
     return YES;
 }
 
@@ -496,9 +516,25 @@
 {
     LOG_Info();
     
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation setDeviceTokenFromData:deviceToken];
+    [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (!error) {
+            NSLog(@"Saved Current installation");
+        } else {
+            NSLog(@"error in currentInstilation %@", error);
+        }
+    }];
+    
+    [PFPush subscribeToChannelInBackground:@"" block:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            NSLog(@"Jive_One successfully subscribed to push notifications on the broadcast channel.");
+        } else {
+            NSLog(@"Jive_One failed to subscribe to push notifications on the broadcast channel.");
+        }
+    }];
     
     [JCAuthenticationManager sharedInstance].deviceToken = [deviceToken description];
-    
     
     LogMessage(@"socket", 4, @"Will Call requestSession");
     [JCSocket start];
@@ -506,6 +542,10 @@
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
+    if ([error code] != 3010) { // 3010 is for the iPhone Simulator
+        NSLog(@"Application failed to register for push notifications: %@", error);
+    }
+    
     LOG_Info();
     LogMessage(@"socket", 4, @"Will Call requestSession");
     [JCSocket start];
@@ -514,7 +554,56 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
+    
+    
+//    [PFPush handlePush:userInfo];
+    
+//    TODO:  This is where we need to get the whole message to show the user we have a new message for them.
+    
+    
+    NSLog(@"User info : %@", userInfo);
+    NSString *fromNumber = [userInfo objectForKey:@"fromNumber"];
+    NSString *didId = [userInfo objectForKey:@"didId"];
+    NSString *uid = [userInfo objectForKey:@"uid"];
+    NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
+    DID *did = [DID MR_findFirstByAttribute:NSStringFromSelector(@selector(didId)) withValue:didId inContext:context];
+    if (did) {
+        
+        JCUnknownNumber *unknownNumber = [JCUnknownNumber new];
+        unknownNumber.number = fromNumber;
+        [SMSMessage downloadMessagesForDID:did toPerson:unknownNumber completion:^(BOOL success, NSError *error) {
+            if (success) {
+                if ([UIApplication sharedApplication].applicationState ==  UIApplicationStateBackground) {
+                    SMSMessage *message = [SMSMessage MR_findFirstByAttribute:NSStringFromSelector(@selector(eventId)) withValue:uid inContext:context];
+                    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+                    if (localNotif){
+                        localNotif.alertBody =[NSString  stringWithFormat:@"New Message from %@ \n%@", fromNumber.numericStringValue, message.text ];
+                        localNotif.soundName = UILocalNotificationDefaultSoundName;
+                        localNotif.applicationIconBadgeNumber = 1;
+                        [[UIApplication sharedApplication] presentLocalNotificationNow:localNotif];
+                    }
+                } else {
+                    // TODO: Sound an meesage received event.
+                }
+            }
+        }];
+    }
+    
+    
+    
+    
     completionHandler([self backgroundPerformFetchWithCompletionHandler]);
+}
+
+-(void)handlePush:(NSDictionary *)launchOptions {
+    NSDictionary *remoteNotificationPayload = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    if(remoteNotificationPayload){
+        [[NSNotificationCenter defaultCenter] postNotificationName:kApplicationDidReceiveRemoteNotification object:nil userInfo:remoteNotificationPayload];
+        [SMSMessage createSmsMessageWithMessageData:launchOptions];
+    NSString *fromEntity = [remoteNotificationPayload objectForKey:@"fromNumber"];
+    NSString *messageBody = [remoteNotificationPayload objectForKey:@"alert"];
+        NSLog(@"New Message from %@ , \n %@", fromEntity, messageBody);
+    }
 }
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler

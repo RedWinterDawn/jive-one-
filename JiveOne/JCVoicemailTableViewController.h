@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCRecentActivityTableViewController.h"
+#import "JCRecentLineEventsTableViewController.h"
 #import "JCVoicemailPlaybackCell.h"
 
-@interface JCVoicemailTableViewController : JCRecentActivityTableViewController
+@interface JCVoicemailTableViewController : JCRecentLineEventsTableViewController
 
 @property (nonatomic) JCVoicemailPlaybackCell *selectedCell; //exposed for testing
 

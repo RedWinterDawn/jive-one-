@@ -6,22 +6,22 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
-#import "Person.h"
+#import "JiveContact.h"
 
 @class PBX;
 @class ContactGroup;
-@class RecentEvent;
+@class RecentLineEvent;
+@class Conversation;
 
-@interface Contact : Person
+@interface Contact : JiveContact
 
 // Attributes
 @property (nonatomic, retain) NSString *jiveUserId;
 @property (nonatomic, getter=isFavorite) BOOL favorite;
 
 // Relationships
-@property (nonatomic, strong) NSSet *events;
+@property (nonatomic, strong) NSSet *lineEvents;
+@property (nonatomic, strong) NSSet *conversations;
 @property (nonatomic, retain) NSSet *groups;
 @property (nonatomic, retain) PBX *pbx;
 
@@ -29,15 +29,20 @@
 
 @interface Contact (CoreDataGeneratedAccessors)
 
+- (void)addLineEventsObject:(RecentLineEvent *)value;
+- (void)removeLineEventsObject:(RecentLineEvent *)value;
+- (void)addLineEvents:(NSSet *)values;
+- (void)removeLineEvents:(NSSet *)values;
+
+- (void)addConversationsObject:(Conversation *)value;
+- (void)removeConversationsObject:(Conversation *)value;
+- (void)addConversations:(NSSet *)values;
+- (void)removeConversations:(NSSet *)values;
+
 - (void)addGroupsObject:(ContactGroup *)value;
 - (void)removeGroupsObject:(ContactGroup *)value;
 - (void)addGroups:(NSSet *)values;
 - (void)removeGroups:(NSSet *)values;
-
-- (void)addEventsObject:(RecentEvent *)value;
-- (void)removeEventsObject:(RecentEvent *)value;
-- (void)addEvents:(NSSet *)values;
-- (void)removeEvents:(NSSet *)values;
 
 @end
 

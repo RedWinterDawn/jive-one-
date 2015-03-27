@@ -13,6 +13,7 @@
 @property (nonatomic, readonly) NSUInteger recentEvents;    // Total Recent Events.
 @property (nonatomic, readonly) NSUInteger voicemails;      // Total Unread Voicemails.
 @property (nonatomic, readonly) NSUInteger missedCalls;     // Total Unread Missed Calls.
+@property (nonatomic, readonly) NSUInteger smsMessages;		// Total Unread SMS Messages.
 
 @end
 
@@ -24,5 +25,6 @@
 
 + (void)setVoicemails:(NSUInteger)voicemails;
 + (void)setSelectedLine:(NSString *)line;
++ (void)setSelectedPBX:(NSString *)pbx;
 
 @end

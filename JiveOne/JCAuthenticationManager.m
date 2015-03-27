@@ -226,6 +226,16 @@ NSString *const kJCAuthenticationManagerRememberMeKey   = @"remberMe";
     return _line;
 }
 
+-(PBX *)pbx
+{
+    return self.line.pbx;
+}
+
+-(DID *)did
+{
+    return self.pbx.dids.allObjects.firstObject;
+}
+
 #pragma mark - Private -
 
 -(void)receivedAccessTokenData:(NSDictionary *)tokenData username:(NSString *)username completion:(CompletionBlock)completion

@@ -10,6 +10,8 @@
 
 #import "User.h"
 #import "Line.h"
+#import "DID.h"
+#import "PBX.h"
 
 extern NSString *const kJCAuthenticationManagerUserLoggedOutNotification;
 extern NSString *const kJCAuthenticationManagerUserAuthenticatedNotification;
@@ -26,7 +28,8 @@ typedef void (^CompletionBlock) (BOOL success, NSError *error);
 
 @property (nonatomic, strong) Line *line;
 @property (nonatomic, readonly) User *user;
-
+@property (nonatomic, readonly) DID *did;
+@property (nonatomic, readonly) PBX *pbx;
 
 @property (nonatomic, readonly) NSString *authToken;
 @property (nonatomic, readonly) NSString *jiveUserId;

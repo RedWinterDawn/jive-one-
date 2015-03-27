@@ -21,10 +21,6 @@
 
 @implementation JCPhoneMenuCell
 
-// Since overwritting build in properties, need to synthsize
-@synthesize textLabel;
-@synthesize imageView;
-
 -(void)awakeFromNib
 {
     JCBadgeManager *badgeManager = [JCBadgeManager sharedManager];
@@ -40,7 +36,6 @@
     _voicemailDisabledStyle = [_missedCallDisabledStyle copy];
     _voicemailDisabledStyle.badgeInsetColor = _missedCallDisabledStyle.badgeInsetColor;
 }
-
 
 -(void)dealloc
 {

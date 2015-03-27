@@ -10,6 +10,7 @@
 
 #import "User.h"
 #import "Line.h"
+#import "DID.h"
 #import "LineConfiguration.h"
 #import "RecentEvent.h"
 #import "MissedCall.h"
@@ -35,16 +36,18 @@
     self.installationIdentifer.text = device.installationIdentifier;
     self.uuid.text = [device userUniqueIdentiferForUser:authenticationManager.jiveUserId];
     
-    self.users.text = [NSString stringWithFormat:@"%lu", (unsigned long)[User MR_countOfEntities]];
-    self.pbxs.text = [NSString stringWithFormat:@"%lu", (unsigned long)[PBX MR_countOfEntities]];
-    self.lines.text = [NSString stringWithFormat:@"%lu", (unsigned long)[Line MR_countOfEntities]];
-    self.lineConfigurations.text = [NSString stringWithFormat:@"%lu", (unsigned long)[LineConfiguration MR_countOfEntities]];
-    self.events.text = [NSString stringWithFormat:@"%lu", (unsigned long)[RecentEvent MR_countOfEntities]];
-    self.missed.text = [NSString stringWithFormat:@"%lu", (unsigned long)[MissedCall MR_countOfEntities]];
-    self.voicemails.text = [NSString stringWithFormat:@"%lu", (unsigned long)[Voicemail MR_countOfEntities]];
+    self.users.text                 = [NSString stringWithFormat:@"%lu", (unsigned long)[User MR_countOfEntities]];
+    self.pbxs.text                  = [NSString stringWithFormat:@"%lu", (unsigned long)[PBX MR_countOfEntities]];
+    self.lines.text                 = [NSString stringWithFormat:@"%lu", (unsigned long)[Line MR_countOfEntities]];
+    self.dids.text                  = [NSString stringWithFormat:@"%lu", (unsigned long)[DID MR_countOfEntities]];
     
-    self.contacts.text = [NSString stringWithFormat:@"%lu", (unsigned long)[Contact MR_countOfEntities]];
-    self.contactGroups.text = [NSString stringWithFormat:@"%lu", (unsigned long)[ContactGroup MR_countOfEntities]];
+    self.lineConfigurations.text    = [NSString stringWithFormat:@"%lu", (unsigned long)[LineConfiguration MR_countOfEntities]];
+    self.events.text                = [NSString stringWithFormat:@"%lu", (unsigned long)[RecentEvent MR_countOfEntities]];
+    self.missed.text                = [NSString stringWithFormat:@"%lu", (unsigned long)[MissedCall MR_countOfEntities]];
+    self.voicemails.text            = [NSString stringWithFormat:@"%lu", (unsigned long)[Voicemail MR_countOfEntities]];
+    
+    self.contacts.text              = [NSString stringWithFormat:@"%lu", (unsigned long)[Contact MR_countOfEntities]];
+    self.contactGroups.text         = [NSString stringWithFormat:@"%lu", (unsigned long)[ContactGroup MR_countOfEntities]];
 }
 
 @end

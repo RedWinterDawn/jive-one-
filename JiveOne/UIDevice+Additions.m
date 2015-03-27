@@ -43,6 +43,20 @@
     return carrier.allowsVOIP;
 }
 
+-(NSString *)defaultCarrier
+{
+    CTTelephonyNetworkInfo *networkInfo = [[CTTelephonyNetworkInfo alloc] init];
+    CTCarrier *carrier = [networkInfo subscriberCellularProvider];
+    return carrier.carrierName;
+}
+
+-(NSString *)carrierIsoCountryCode
+{
+    CTTelephonyNetworkInfo *networkInfo = [[CTTelephonyNetworkInfo alloc] init];
+    CTCarrier *carrier = [networkInfo subscriberCellularProvider];
+    return carrier.isoCountryCode;
+}
+
 
 -(BOOL)canMakeCall
 {

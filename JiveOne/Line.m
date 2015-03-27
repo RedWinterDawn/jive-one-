@@ -7,8 +7,11 @@
 //
 
 #import "Line.h"
-#import "NSManagedObject+JCCoreDataAdditions.h"
+#import "NSManagedObject+Additions.h"
 #import "PBX.h"
+
+#define LINE_INDEX_OF_LINE_IN_JRN 5
+// "jrn:line::jive:0144096e-bb05-ff06-702e-000100420002:0146db6f-52c9-9895-f67d-000100620002",
 
 NSString *const kLineActiveAttribute = @"active";
 
@@ -16,15 +19,18 @@ NSString *const kLineActiveAttribute = @"active";
 
 @dynamic mailboxJrn;
 @dynamic mailboxUrl;
-
 @dynamic events;
 @dynamic lineConfiguration;
 @dynamic pbx;
+
+#pragma mark - Setters -
 
 -(void)setActive:(BOOL)active
 {
     [self setPrimitiveValueFromBoolValue:active forKey:kLineActiveAttribute];
 }
+
+#pragma mark - Getters -
 
 -(BOOL)isActive
 {
@@ -48,8 +54,7 @@ NSString *const kLineActiveAttribute = @"active";
 
 -(NSString *)lineId
 {
-    NSArray *elements = [self.jrn componentsSeparatedByString:@":"];
-    return elements.lastObject;
+    return [[self class] identifierFromJrn:self.jrn index:LINE_INDEX_OF_LINE_IN_JRN];
 }
 
 @end
