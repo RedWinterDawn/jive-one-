@@ -364,7 +364,6 @@
                      }
                      completion:^(BOOL finished) {
                          _showingMenu = true;
-                         [super addChildViewController:menuNavigationController];
                          [_selectedViewController viewDidDisappear:animated];
                      }];
 }
@@ -398,6 +397,10 @@
                          
                          [_menuNavigationBar removeFromSuperview];
                          _menuNavigationBar = nil;
+                         
+                         [activityViewController removeFromParentViewController];
+                         [activityViewController.view removeFromSuperview];
+                         self.activityViewController = nil;
                          
                          [_statusBarView removeFromSuperview];
                          _statusBarView = nil;

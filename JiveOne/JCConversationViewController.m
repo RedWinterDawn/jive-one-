@@ -48,6 +48,12 @@
     [super viewDidLoad];
     
     self.inputToolbar.contentView.textView.placeHolder = NSLocalizedString(@"Send SMS", nil);
+    self.inputToolbar.contentView.leftBarButtonItem = nil;
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
     
     [self checkParticipants];
 }
@@ -236,7 +242,8 @@
         viewController.view.frame = self.view.bounds;
         viewController.delegate = self;
         UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(cancelMessageParticipantSelection:)];
-        [self presentDropdownViewController:viewController leftBarButtonItem:nil rightBarButtonItem:doneButton maxHeight:self.view.bounds.size.height animated:NO];
+        [self presentDropdownViewController:viewController leftBarButtonItem:nil rightBarButtonItem:doneButton maxHeight:self.view.bounds.size.height animated:YES];
+        [viewController.searchBar becomeFirstResponder];
     }
 }
                                        

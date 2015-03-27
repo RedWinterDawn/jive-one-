@@ -216,8 +216,8 @@ NSString *const kNameFormattingThreePlusPeople = @"%@,...+%li";
     CFErrorRef err;
     ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, &err);
     if (err) {
-        completion(NO, NULL, (__bridge NSError *)err);
-        CFRelease(err);
+        completion(NO, NULL, nil);
+        //CFRelease(err);
         return;
     }
     
