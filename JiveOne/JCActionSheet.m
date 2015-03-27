@@ -58,6 +58,38 @@ static const NSMutableArray *DIDNumbers;
     return self;
 }
 
+-(instancetype)initWithTitle:(NSString *)title
+         dismissed:(JCActionSheetDismissBlock)dismissBlock
+ cancelButtonTitle:(NSString *)cancelButtonTitle
+ otherButtons:(NSArray *)otherButtonTitles
+{
+    // Make the array that will keep alerts alive once and for all. in practice
+    // there will only ever be one item in this array and we never have to worry
+    // about releasing it.
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        DIDNumbers = [NSMutableArray new];
+    });
+    
+    if ((self = [super init]))
+    {
+        // save the dismiss block, if any. ARC will magically do a block copy here.
+        _dismissBlock = dismissBlock;
+        
+        // make an alert view, wiring ourselves up as the delegate
+        _actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(title, nil)
+                                                   delegate:self
+                                          cancelButtonTitle:nil
+                                     destructiveButtonTitle:nil
+                                          otherButtonTitles:nil];
+        for (NSString *title in otherButtonTitles) {
+            [_actionSheet addButtonWithTitle:title];
+        }
+        _actionSheet.cancelButtonIndex = [_actionSheet addButtonWithTitle:cancelButtonTitle];
+    }
+    return self;
+}
+
 /**
  * keep track of the alert in our private array, so it stays around, and show the alert
  */
@@ -154,7 +186,7 @@ static const NSMutableArray *DIDNumbers;
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (_dismissBlock)
-        _dismissBlock (buttonIndex);
+        _dismissBlock (actionSheet, buttonIndex);
     [DIDNumbers removeObject:self];
 }
 

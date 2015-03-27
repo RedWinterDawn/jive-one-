@@ -10,7 +10,9 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void (^JCActionSheetDismissBlock)(NSInteger buttonIndex);
+@class JCActionSheet;
+
+typedef void (^JCActionSheetDismissBlock)(UIActionSheet *actionSheet, NSInteger buttonIndex);
 
 extern NSString *const kJCActionSheetCancel;
 
@@ -18,6 +20,11 @@ extern NSString *const kJCActionSheetCancel;
 
 //Class Constructor
 - (id)initWithTitle:(NSString *)title dismissed:(JCActionSheetDismissBlock)dismissBlock cancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ...;
+
+-(id)initWithTitle:(NSString *)title
+         dismissed:(JCActionSheetDismissBlock)dismissBlock
+ cancelButtonTitle:(NSString *)cancelButtonTitle
+      otherButtons:(NSArray *)otherButtonTitles;
 
 @property(nonatomic, copy) NSString *title;
 

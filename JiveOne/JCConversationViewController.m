@@ -19,6 +19,7 @@
 #import "JCAddressBook.h"
 #import "JCAddressBookNumber.h"
 
+
 // Views
 #import "JCMessagesCollectionViewCell.h"
 #import "JCActionSheet.h"
@@ -85,45 +86,45 @@
         senderDisplayName:(NSString *)senderDisplayName
                      date:(NSDate *)date
     {
-        if (self.count == 0) {
-        
-        JCActionSheet *didOptions = [[JCActionSheet alloc]initWithTitle:@"Which number would you like to send from" dismissed:^(NSInteger buttonIndex) {
-            NSLog(@"Ya Action from the action sheet");
-            id<JCPersonDataSource> person = _participants.lastObject;
-            [SMSMessage sendMessage:text toPerson:person fromDid:self.did completion:^(BOOL success, NSError *error) {
-                if (success) {
-                    [self finishSendingMessageAnimated:YES];
-                }else {
-                    [self showError:error];
-                }
-            }];
-        } cancelButtonTitle:@"Cancel"  otherButtonTitles:@"8290947020", @"OtherNumber928", self.did.number, nil];
-        
-        UIView * currentView = self.view;
-        [didOptions show:currentView];
-    } else {
         id<JCPersonDataSource> person = _participants.lastObject;
-        [SMSMessage sendMessage:text toPerson:person fromDid:self.did completion:^(BOOL success, NSError *error) {
-            if (success) {
-                [self finishSendingMessageAnimated:YES];
-            }else {
-                [self showError:error];
+        if (self.count == 0) {
+            
+            NSMutableArray *dids= [JCAuthenticationManager sharedInstance].pbx.dids.allObjects.mutableCopy;
+            NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"number" ascending:YES];
+             [dids sortUsingDescriptors:@[sortDescriptor]];
+            NSMutableArray *titles = [NSMutableArray array];
+            for (DID *did in dids) {
+                [titles addObject:did.number.formattedPhoneNumber];
             }
-        }];
+            
+            JCActionSheet *didOptions = [[JCActionSheet alloc] initWithTitle:@"Which number would you like to send from"
+                                                                   dismissed:^(UIActionSheet *actionSheet, NSInteger buttonIndex) {
+                                                                       if (buttonIndex != actionSheet.cancelButtonIndex) {
+                                                                            DID *did = [dids objectAtIndex:buttonIndex];
+                                                                           [self sendMessageWithSelectedDID:text toPerson:person fromDid:did];
+                                                                       }
+                                                                   }
+                                                           cancelButtonTitle:@"Cancel"
+                                                           otherButtons:titles];
+            [didOptions show:self.view];
+            
+    } else {
+        [self sendMessageWithSelectedDID:text toPerson:person fromDid:[JCAuthenticationManager sharedInstance].did];
     }
-    
 }
 
-//-(void)sendTextWithDID:(NSString *)text DID:(id *)fromDid {
-//    id<JCPersonDataSource> person = _participants.lastObject;
-//    [SMSMessage sendMessage:text toPerson:person fromDid:self.did completion:^(BOOL success, NSError *error) {
-//        if (success) {
-//            [self finishSendingMessageAnimated:YES];
-//        }else {
-//            [self showError:error];
-//        }
-//    }];
-//}
+-(void)sendMessageWithSelectedDID:(NSString *)text toPerson:(id<JCPersonDataSource>)person fromDid:(DID *)did {
+    NSLog(@"Sending Stuff : %@",did);
+    
+    [SMSMessage sendMessage:text toPerson:person fromDid:did completion:^(BOOL success, NSError *error) {
+        if (success) {
+            [self finishSendingMessageAnimated:YES];
+        }else {
+            [self showError:error];
+        }
+    }];
+    
+}
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     NSLog(@"you selected the : %ld button", (long)buttonIndex);
