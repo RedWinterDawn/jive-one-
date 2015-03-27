@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCClient.h"
+#import "JCApiClient.h"
 #import "JCSMSClientError.h"
 
-@interface JCSMSClient : JCClient
+@interface JCSMSClient : JCApiClient
 
 @end

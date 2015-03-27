@@ -110,7 +110,7 @@ NSString *const kPBXResponseException           = @"pbxResponseException";
     }
     @catch (NSException *exception) {
         if (completion) {
-            completion(NO, [JCV5ApiClientError errorWithCode:JCV5ApiClientResponseParseErrorCode reason:exception.reason]);
+            completion(NO, [JCApiClientError errorWithCode:JCApiClientRequestErrorCode reason:exception.reason]);
         }
     }
 }
