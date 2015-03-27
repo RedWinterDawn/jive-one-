@@ -22,9 +22,9 @@
 
 @property (nonatomic, readonly) BOOL canMakeCall;
 @property (nonatomic, readonly) BOOL carrierAllowsVOIP;
+@property (nonatomic, readonly) BOOL defaultCarrier;
+@property (nonatomic, readonly) BOOL carrierIsoCountryCode;
 
--(BOOL)carrierAllowsVOIP;
--(BOOL)canMakeCall;
 
 @end
 

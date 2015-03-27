@@ -18,6 +18,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *users;
 @property (weak, nonatomic) IBOutlet UILabel *pbxs;
 @property (weak, nonatomic) IBOutlet UILabel *lines;
+@property (weak, nonatomic) IBOutlet UILabel *dids;
+
 @property (weak, nonatomic) IBOutlet UILabel *lineConfigurations;
 @property (weak, nonatomic) IBOutlet UILabel *events;
 @property (weak, nonatomic) IBOutlet UILabel *missed;

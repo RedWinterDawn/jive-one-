@@ -132,6 +132,12 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
     }
 }
 
+-(IBAction)showDebug:(id)sender{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Debug" bundle:[NSBundle mainBundle]];
+    UIViewController *rootViewController = [storyboard instantiateInitialViewController];
+    [self.navigationController pushViewController:rootViewController animated:YES];
+}
+
 #pragma mark - Delegate Handlers -
 
 #pragma mark MFMailComposeViewControllerDelegate

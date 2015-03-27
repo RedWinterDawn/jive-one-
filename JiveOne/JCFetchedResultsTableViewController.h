@@ -7,6 +7,7 @@
 //
 
 @import UIKit;
+@import CoreData;
 
 @interface JCFetchedResultsTableViewController : UITableViewController <NSFetchedResultsControllerDelegate>
 {

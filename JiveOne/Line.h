@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "Person.h"
+#import "JiveContact.h"
 
 @class RecentEvent;
 @class LineConfiguration;
 @class PBX;
 
-@interface Line : Person
+@interface Line : JiveContact
 
 // Attributes
 @property (nonatomic, retain) NSString * mailboxJrn;

@@ -53,26 +53,20 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Line *line = [self objectAtIndexPath:indexPath];
-    
-    // Mark line config as active, and all others inactive.
-    NSArray *lines = self.fetchedResultsController.fetchedObjects;
-    for (Line *item in lines) {
-        if (line == item){
-            item.active = TRUE;
+    Line *line = (Line *)[self objectAtIndexPath:indexPath];
+    [JCAuthenticationManager sharedInstance].line = line;
+    [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
+        Line *localLine = (Line *)[localContext objectWithID:line.objectID];
+        NSArray *lines = [Line MR_findAllWithPredicate:self.fetchedResultsController.fetchRequest.predicate inContext:localContext];
+        for (Line *item in lines) {
+            if (localLine == item){
+                item.active = TRUE;
+            }
+            else{
+                item.active = FALSE;
+            }
         }
-        else{
-            item.active = FALSE;
-        }
-    }
-    
-    // If we have changes, save them.
-    if (line.managedObjectContext.hasChanges) {
-        [JCAuthenticationManager sharedInstance].line = line;
-        __autoreleasing NSError *error;
-        if(![line.managedObjectContext save:&error])
-            NSLog(@"%@", [error description]);
-    }
+    }];
 }
 
 @end

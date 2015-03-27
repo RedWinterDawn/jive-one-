@@ -6,11 +6,11 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import "RecentEvent.h"
+#import "RecentLineEvent.h"
 
 extern NSString *const kVoicemailDataAttributeKey;
 
-@interface Voicemail : RecentEvent
+@interface Voicemail : RecentLineEvent
 
 // Primary Key
 @property (nonatomic, strong) NSString * jrn;

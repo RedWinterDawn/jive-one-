@@ -13,10 +13,6 @@ NSString *const kCallEntityName = @"Call";
 
 @implementation Call
 
-@dynamic name;
-@dynamic number;
-@dynamic extension;
-
 @end
 
 @implementation Call (MagicalRecord)

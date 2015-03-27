@@ -19,3 +19,19 @@
 - (NSString *)MD5Hash;
 
 @end
+
+@interface NSString (IsNumeric)
+
+@property (nonatomic, readonly) bool isNumeric;
+@property (nonatomic, readonly) NSString *numericStringValue;
+
+@end
+
+
+@interface NSString (PhoneNumbers)
+
+- (NSString *)formattedPhoneNumber;
+
+//- (NSString *)formattedPhoneNumberForLocal:()
+
+@end

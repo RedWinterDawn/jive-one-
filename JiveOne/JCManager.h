@@ -10,7 +10,9 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-@import Foundation;
+#import <Foundation/Foundation.h>
+
+typedef void(^CompletionHandler)(BOOL success, NSError *error);
 
 @interface JCManager : NSObject
 

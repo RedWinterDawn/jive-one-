@@ -6,10 +6,12 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "JCManager.h"
 
 #import "User.h"
 #import "Line.h"
+#import "DID.h"
+#import "PBX.h"
 
 extern NSString *const kJCAuthenticationManagerUserLoggedOutNotification;
 extern NSString *const kJCAuthenticationManagerUserAuthenticatedNotification;
@@ -18,7 +20,7 @@ extern NSString *const kJCAuthenticationManagerLineChangedNotification;
 
 typedef void (^CompletionBlock) (BOOL success, NSError *error);
 
-@interface JCAuthenticationManager : NSObject 
+@interface JCAuthenticationManager : JCManager
 
 - (void)checkAuthenticationStatus;
 - (void)loginWithUsername:(NSString *)username password:(NSString*)password completed:(CompletionBlock)completed;
@@ -26,7 +28,8 @@ typedef void (^CompletionBlock) (BOOL success, NSError *error);
 
 @property (nonatomic, strong) Line *line;
 @property (nonatomic, readonly) User *user;
-
+@property (nonatomic, readonly) DID *did;
+@property (nonatomic, readonly) PBX *pbx;
 
 @property (nonatomic, readonly) NSString *authToken;
 @property (nonatomic, readonly) NSString *jiveUserId;
