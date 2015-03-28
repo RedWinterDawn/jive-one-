@@ -16,6 +16,25 @@ typedef void(^JCV5ApiClientCompletionHandler)(BOOL success, id response, NSError
 
 - (BOOL)isOperationRunning:(NSString *)operationName;
 
-+ (void)requestPBXInforForUser:(User *)user competion:(JCV5ApiClientCompletionHandler)completion;
+#pragma mark - PBX INFO -
+
++ (void)requestPBXInforForUser:(User *)user
+                     competion:(JCV5ApiClientCompletionHandler)completion;
+
+
+#pragma mark - SMS Messaging -
+
++ (void)sendSMSMessageWithParameters:(NSDictionary *)parameters
+                          completion:(JCV5ApiClientCompletionHandler)completion;
+
++ (void)downloadMessagesDigestForDID:(DID *)did
+                         completion:(JCV5ApiClientCompletionHandler)completion;
+
++ (void)downloadMessagesForDID:(DID *)did
+                    completion:(JCV5ApiClientCompletionHandler)completion;
+
++ (void)downloadMessagesForDID:(DID *)did
+                      toPerson:(id<JCPersonDataSource>)person
+                    completion:(JCV5ApiClientCompletionHandler)completion;
 
 @end

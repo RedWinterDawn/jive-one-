@@ -12,7 +12,7 @@
 
 extern NSString *const kSMSMessagesDidUpdateNotification;
 
-@interface SMSMessage (SMSClient)
+@interface SMSMessage (V5Client)
 
 // Creates a SMS message from dictionary data. This is meant to be used for processing from a
 // network or or socket event that has requested data, and delivered this response. Any messages

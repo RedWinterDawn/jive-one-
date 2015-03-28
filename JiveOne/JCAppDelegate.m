@@ -36,7 +36,7 @@
 
 #import "Contact+V5Client.h"
 #import "Voicemail+V5Client.h"
-#import "SMSMessage+SMSClient.h"
+#import "SMSMessage+V5Client.h"
 #import "JCUnknownNumber.h"
 
 #import  "JCAppSettings.h"

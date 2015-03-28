@@ -13,7 +13,7 @@
 #import "LocalContact.h"
 
 #import "JCConversationGroup.h"
-#import "SMSMessage+SMSClient.h"
+#import "SMSMessage+V5Client.h"
 
 @interface JCConversationGroupsResultsController ()
 {

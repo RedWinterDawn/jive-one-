@@ -225,6 +225,27 @@ static BOOL JCErrorOrUnderlyingErrorHasCode(NSError *error, NSInteger code) {
         case API_CLIENT_NO_PBX_ERROR:
             return @" No Pbx was found.";
             
+        case API_CLIENT_SMS_RESPONSE_INVALID:
+            return @"Server returned an invalid server response.";
+            
+        case API_CLIENT_SMS_FAILED_CODE_OAUTH:
+            return @"OAuth validation failed.";
+            
+        case API_CLIENT_SMS_FAILED_CODE_NO_DID:
+            return @"No matching DIDs for 'from' number where found.";
+            
+        case API_CLIENT_SMS_FAILED_CODE_PBX_DISABLED:
+            return @"SMS PBX flag is disabled.";
+            
+        case API_CLIENT_SMS_FAILED_CODE_PEER_DISABLED:
+            return @" SMS Peer flag is disabled.";
+            
+        case API_CLIENT_SMS_MESSAGE_CAP_REACHED:
+            return @"Hourly, daily or montly cap has been reached.";
+            
+        case API_CLIENT_SMS_MESSAGE_CAP_UNDEFINED:
+            return @"Hourly, daily and montly caps have not been defined.";
+            
         default:
             return @"Unknown Error Has Occured.";
     }

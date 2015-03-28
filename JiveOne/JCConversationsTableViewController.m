@@ -13,7 +13,7 @@
 #import "Message.h"
 #import "JCNavigationController.h"
 #import "JCConversationTableViewCell.h"
-#import "SMSMessage+SMSClient.h"
+#import "SMSMessage+V5Client.h"
 #import "LocalContact.h"
 #import "JCAddressBook.h"
 

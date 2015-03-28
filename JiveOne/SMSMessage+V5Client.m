@@ -6,26 +6,9 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "SMSMessage+SMSClient.h"
-#import "JCSMSClient.h"
+#import "SMSMessage+V5Client.h"
+#import "JCV5ApiClient.h"
 #import <Parse/Parse.h>
-
-#ifndef MESSAGES_SEND_NUMBER_OF_RETRIES
-#define MESSAGES_SEND_NUMBER_OF_RETRIES 1
-#endif
-
-#ifndef CONVERSATIONS_DOWNLOAD_NUMBER_OF_RETRIES
-#define CONVERSATIONS_DOWNLOAD_NUMBER_OF_RETRIES 1
-#endif
-
-#ifndef MESSAGES_DOWNLOAD_NUMBER_OF_RETRIES
-#define MESSAGES_DOWNLOAD_NUMBER_OF_RETRIES 1
-#endif
-
-NSString *const kSMSMessageSendRequestUrlPath                   = @"send";
-NSString *const kSMSMessageRequestConversationsDigestURLPath    = @"digest/did/%@/";
-NSString *const kSMSMessageRequestConversationsURLPath          = @"messages/did/%@";
-NSString *const kSMSMessageRequestConversationURLPath           = @"messages/did/%@/number/%@";
 
 NSString *const kSMSMessageSendRequestToKey                 = @"to";
 NSString *const kSMSMessageSendRequestFromKey               = @"from";
@@ -45,13 +28,9 @@ NSString *const kSMSMessageResponseObjectDirectionKey          = @"direction";
 NSString *const kSMSMessageResponseObjectDirectionInboundValue     = @"inbound";
 NSString *const kSMSMessageResponseObjectArrivalTimeKey        = @"epochTime";
 
-NSString *const kSMSMessageInvalidSendResponseException = @"invalidSendResponse";
-
-NSString *const kSMSMessageHashCreateString = @"%@-%@-%@-%@-%@";
-
 NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
 
-@implementation SMSMessage (SMSClient)
+@implementation SMSMessage (V5Client)
 
 + (void)createSmsMessageWithMessageData:(NSDictionary *)data {
     
@@ -89,7 +68,7 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
         message.unixTimestamp = [data integerValueForKey:kSMSMessageResponseObjectArrivalTimeKey];
         message.did = did;
     } else {
-         message.unixTimestamp = [data integerValueForKey:kSMSMessageResponseObjectArrivalTimeKey];
+        message.unixTimestamp = [data integerValueForKey:kSMSMessageResponseObjectArrivalTimeKey];
     }
 }
 
@@ -102,18 +81,18 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
                                  kSMSMessageSendRequestBodyKey: message};
     
     [UIApplication showStatus:@"Sending"];
-    [self sendMessageWithRetries:MESSAGES_SEND_NUMBER_OF_RETRIES
-                      parameters:parameters
-                         success:^(id responseObject) {
-                             [self processSMSSendResponseObject:responseObject did:did completion:completion];
-                             [UIApplication hideStatus];
-                         }
-                         failure:^(NSError *error) {
-                             [UIApplication hideStatus];
-                             if (completion) {
-                                 completion(NO, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR underlyingError:error]);
-                             }
-                         }];
+    [JCV5ApiClient sendSMSMessageWithParameters:parameters completion:^(BOOL success, id response, NSError *error) {
+        if (success) {
+            [self processSMSSendResponseObject:response did:did completion:completion];
+            [UIApplication hideStatus];
+        } else {
+            if (completion) {
+                completion(NO, error);
+            }
+        }
+    }];
+    
+    
     PFInstallation *currentInstilation = [PFInstallation currentInstallation];
     [currentInstilation addUniqueObject:did.description forKey:@"channels"];
     [currentInstilation saveInBackground];
@@ -148,16 +127,15 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
 
 +(void)downloadMessagesDigestForDID:(DID *)did completion:(CompletionHandler)completion
 {
-    [self downloadDigestMessagesForDID:did
-                               retries:CONVERSATIONS_DOWNLOAD_NUMBER_OF_RETRIES
-                               success:^(id responseObject) {
-                                   [self processSMSDownloadConversationsDigestResponseObject:responseObject did:did completion:completion];
-                               }
-                               failure:^(NSError *error) {
-                                   if (completion) {
-                                       completion(NO, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR underlyingError:error]);
-                                   }
-                               }];
+    [JCV5ApiClient downloadMessagesDigestForDID:did completion:^(BOOL success, id response, NSError *error) {
+        if (success) {
+            [self processSMSDownloadConversationsDigestResponseObject:response did:did completion:completion];
+        } else {
+            if (completion) {
+                completion(NO, error);
+            }
+        }
+    }];
 }
 
 #pragma mark Bulk
@@ -187,161 +165,38 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
 
 +(void)downloadMessagesForDID:(DID *)did completion:(CompletionHandler)completion
 {
-    [self downloadMessagesForDID:did
-                         retries:MESSAGES_DOWNLOAD_NUMBER_OF_RETRIES
-                         success:^(id responseObject) {
-                             [self processSMSDownloadConversationsResponseObject:responseObject did:did completion:completion];
-                         }
-                         failure:^(NSError *error) {
-                             if (completion) {
-                                 completion(NO, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR underlyingError:error]);
-                             }
-                         }];
+    [JCV5ApiClient downloadMessagesForDID:did completion:^(BOOL success, id response, NSError *error) {
+        if (success) {
+            [self processSMSDownloadConversationsResponseObject:response did:did completion:completion];
+        }
+        else
+        {
+            if (completion) {
+                completion(NO, error);
+            }
+        }
+    }];
 }
 
 #pragma mark Conversation
 
 +(void)downloadMessagesForDID:(DID *)did toPerson:(id<JCPersonDataSource>)person completion:(CompletionHandler)completion
 {
-    [self downloadMessagesForDID:did
-                          person:person
-                         retries:MESSAGES_DOWNLOAD_NUMBER_OF_RETRIES
-                         success:^(id responseObject) {
-                             [self processSMSDownloadConversationResponseObject:responseObject did:did completion:completion];
-                         }
-                         failure:^(NSError *error) {
-                             if (completion) {
-                                 completion(NO, [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR underlyingError:error]);
-                             }
-                         }];
+    [JCV5ApiClient downloadMessagesForDID:did toPerson:person completion:^(BOOL success, id response, NSError *error) {
+        if(success) {
+            [self processSMSDownloadConversationResponseObject:response did:did completion:completion];
+        }
+        else {
+            if (completion) {
+                completion(NO, error);
+            }
+        }
+    }];
 }
 
 #pragma mark - Private -
 
 #pragma mark Retries
-
-// These private methods implement a model suggested by AFNetworking for how to implement retry
-// behavior whilst using thier library to perform network requests. While AFNetworking does not have
-// specific logic for retrys, it is left to the developer to implement. Each request has a specific
-// configuable number of retires. It will retry unti the retry count equals 0, and then call
-// completion with failure error code.
-
-+ (void)sendMessageWithRetries:(NSInteger)retryCount
-                    parameters:(NSDictionary *)parameters
-                       success:(void (^)(id responseObject))success
-                       failure:(void (^)(NSError *error))failure
-{
-    if (retryCount <= 0) {
-        if (failure) {
-            NSError *error = [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR reason:@"Request Timeout"];
-            failure(error);
-        }
-    } else {
-        JCSMSClient *client = [[JCSMSClient alloc] init];
-        [client.manager POST:kSMSMessageSendRequestUrlPath
-                  parameters:parameters
-                     success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                         success(responseObject);
-                     }
-                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                         if (error.code == NSURLErrorTimedOut) {
-                             NSLog(@"Retry Message send: %lu", (long)retryCount);
-                             [self sendMessageWithRetries:(retryCount - 1) parameters:parameters success:success failure:failure];
-                         } else{
-                             failure(error);
-                         }
-                     }];
-    }
-}
-
-+ (void)downloadDigestMessagesForDID:(DID *)did
-                             retries:(NSInteger)retryCount
-                             success:(void (^)(id responseObject))success
-                             failure:(void (^)(NSError *error))failure
-{
-    if (retryCount <= 0) {
-        if (failure) {
-            NSError *error = [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR reason:@"Request Timeout"];
-            failure(error);
-        }
-    } else {
-        NSString *path = [NSString stringWithFormat:kSMSMessageRequestConversationsDigestURLPath, did.number];
-        JCSMSClient *client = [[JCSMSClient alloc] init];
-        [client.manager GET:path
-                 parameters:nil
-                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                        success(responseObject);
-                    }
-                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                        if (error.code == NSURLErrorTimedOut) {
-                            NSLog(@"Retry conversations download: %lu for did: %@", (long)retryCount, did.didId);
-                            [self downloadDigestMessagesForDID:did retries:(retryCount - 1) success:success failure:failure];
-                        } else{
-                            failure(error);
-                        }
-                    }];
-    }
-}
-
-+ (void)downloadMessagesForDID:(DID *)did
-                       retries:(NSInteger)retryCount
-                       success:(void (^)(id responseObject))success
-                       failure:(void (^)(NSError *error))failure
-{
-    if (retryCount <= 0) {
-        if (failure) {
-            NSError *error = [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR reason:@"Request Timeout"];
-            failure(error);
-        }
-    } else {
-        NSString *path = [NSString stringWithFormat:kSMSMessageRequestConversationsURLPath, did.number];
-        JCSMSClient *client = [[JCSMSClient alloc] init];
-        [client.manager GET:path
-                 parameters:nil
-                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                        success(responseObject);
-                    }
-                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                        if (error.code == NSURLErrorTimedOut) {
-                            NSLog(@"Retry conversations download: %lu for did: %@", (long)retryCount, did.didId);
-                            [self downloadMessagesForDID:did retries:(retryCount - 1) success:success failure:failure];
-                        } else{
-                            failure(error);
-                        }
-                    }];
-    }
-}
-
-
-+ (void)downloadMessagesForDID:(DID *)did
-                        person:(id<JCPersonDataSource>)person
-                       retries:(NSInteger)retryCount
-                       success:(void (^)(id responseObject))success
-                       failure:(void (^)(NSError *error))failure
-{
-    if (retryCount <= 0) {
-        if (failure) {
-            NSError *error = [JCApiClientError errorWithCode:API_CLIENT_REQUEST_ERROR reason:@"Request Timeout"];
-            failure(error);
-        }
-    } else {
-        NSString *path = [NSString stringWithFormat:kSMSMessageRequestConversationURLPath, did.number, person.number];
-        JCSMSClient *client = [[JCSMSClient alloc] init];
-        [client.manager GET:path
-                 parameters:nil
-                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                        success(responseObject);
-                    }
-                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                        if (error.code == NSURLErrorTimedOut) {
-                            NSLog(@"Retry Message send: %lu", (long)retryCount);
-                            [self downloadMessagesForDID:did person:person retries:(retryCount - 1) success:success failure:failure];
-                        } else{
-                            failure(error);
-                        }
-                    }];
-    }
-}
 
 #pragma Response Processing
 
@@ -353,7 +208,7 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
     @try {
         // Is dictionary?
         if (![responseObject isKindOfClass:[NSDictionary class]]) {
-            [NSException raise:kSMSMessageInvalidSendResponseException format:@"Dictionary is null"];
+            [NSException raise:NSInvalidArgumentException format:@"Dictionary is null"];
         }
         
         // Is Success?
@@ -361,7 +216,7 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
         NSInteger errorCode = [response integerValueForKey:kSMSMessageResponseErrorCodeKey];
         if (errorCode != 0) {
             if (completion) {
-                completion(false, [JCSMSClientError errorWithCode:errorCode]);
+                completion(false, [JCApiClientError errorWithCode:errorCode]);
             }
             return;
         }
@@ -369,7 +224,7 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
         // Do we have a response object?
         id object = [response objectForKey:kSMSMessageResponseObjectKey];
         if(!object || ![object isKindOfClass:[NSDictionary class]]) {
-            [NSException raise:kSMSMessageInvalidSendResponseException format:@"Response object is null or invalid"];
+            [NSException raise:NSInvalidArgumentException format:@"Response object is null or invalid"];
         }
         
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
@@ -387,10 +242,10 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
     @catch (NSException *exception) {
         NSInteger code;
         if (completion) {
-            if ([exception.name isEqualToString:kSMSMessageInvalidSendResponseException]) {
-                code = SMS_RESPONSE_INVALID;
+            if ([exception.name isEqualToString:NSInvalidArgumentException]) {
+                code = API_CLIENT_SMS_RESPONSE_INVALID;
             }
-            completion(NO, [JCSMSClientError errorWithCode:code]);
+            completion(NO, [JCApiClientError errorWithCode:code]);
         }
     }
 }
@@ -401,7 +256,7 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
         
         // Is Array? We should have an array of messages.
         if (![responseObject isKindOfClass:[NSArray class]]) {
-            [NSException raise:kSMSMessageInvalidSendResponseException format:@"Array is null"];
+            [NSException raise:NSInvalidArgumentException format:@"Array is null"];
         }
         
         NSArray *digestMessages = (NSArray *)responseObject;
@@ -429,10 +284,10 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
     @catch (NSException *exception) {
         NSInteger code;
         if (completion) {
-            if ([exception.name isEqualToString:kSMSMessageInvalidSendResponseException]) {
-                code = SMS_RESPONSE_INVALID;
+            if ([exception.name isEqualToString:NSInvalidArgumentException]) {
+                code = API_CLIENT_SMS_RESPONSE_INVALID;
             }
-            completion(NO, [JCSMSClientError errorWithCode:code]);
+            completion(NO, [JCApiClientError errorWithCode:code]);
         }
     }
 }
@@ -443,7 +298,7 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
         
         // Is Array? We should have an array of messages.
         if (![responseObject isKindOfClass:[NSArray class]]) {
-            [NSException raise:kSMSMessageInvalidSendResponseException format:@"Array is null"];
+            [NSException raise:NSInvalidArgumentException format:@"Array is null"];
         }
         
         NSArray *messages = (NSArray *)responseObject;
@@ -468,10 +323,10 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
     @catch (NSException *exception) {
         NSInteger code;
         if (completion) {
-            if ([exception.name isEqualToString:kSMSMessageInvalidSendResponseException]) {
-                code = SMS_RESPONSE_INVALID;
+            if ([exception.name isEqualToString:NSInvalidArgumentException]) {
+                code = API_CLIENT_SMS_RESPONSE_INVALID;
             }
-            completion(NO, [JCSMSClientError errorWithCode:code]);
+            completion(NO, [JCApiClientError errorWithCode:code]);
         }
     }
 }
@@ -482,7 +337,7 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
         
         // Is Array? We should have an array of messages.
         if (![responseObject isKindOfClass:[NSArray class]]) {
-            [NSException raise:kSMSMessageInvalidSendResponseException format:@"Array is null"];
+            [NSException raise:NSInvalidArgumentException format:@"Array is null"];
         }
         
         NSArray *messages = (NSArray *)responseObject;
@@ -506,10 +361,10 @@ NSString *const kSMSMessagesDidUpdateNotification = @"smsMessagesDidUpdate";
     @catch (NSException *exception) {
         NSInteger code;
         if (completion) {
-            if ([exception.name isEqualToString:kSMSMessageInvalidSendResponseException]) {
-                code = SMS_RESPONSE_INVALID;
+            if ([exception.name isEqualToString:NSInvalidArgumentException]) {
+                code = API_CLIENT_SMS_RESPONSE_INVALID;
             }
-            completion(NO, [JCSMSClientError errorWithCode:code]);
+            completion(NO, [JCApiClientError errorWithCode:code]);
         }
     }
 }

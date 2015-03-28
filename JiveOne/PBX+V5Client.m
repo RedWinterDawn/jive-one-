@@ -16,14 +16,12 @@
 #import "User.h"
 #import "DID.h"
 
-NSString *const kPBXInfoResponseDataKey             = @"data";
-
-
-NSString *const kPBXInfoResponseUserKey                 = @"user";
-NSString *const kPBXInfoResponseUserJiveIdKey               = @"externalId";
-NSString *const kPBXInfoResponseUserPbxsIdKey               = @"namesByPbx";
-NSString *const kPBXInfoResponseUserFirstNameKey                = @"first";
-NSString *const kPBXInfoResponseUserLastNameKey                 = @"last";
+NSString *const kPBXInfoResponseDataKey                 = @"data";
+NSString *const kPBXInfoResponseUserKey                     = @"user";
+NSString *const kPBXInfoResponseUserJiveIdKey                   = @"externalId";
+NSString *const kPBXInfoResponseUserPbxsIdKey                   = @"namesByPbx";
+NSString *const kPBXInfoResponseUserFirstNameKey                    = @"first";
+NSString *const kPBXInfoResponseUserLastNameKey                     = @"last";
 NSString *const KPBXInfoResponseKey                         = @"pbxes";
 NSString *const kPBXInfoResponseIdentifierKey                   = @"id";
 NSString *const kPBXInfoResponseNameKey                         = @"name";
@@ -42,8 +40,6 @@ NSString *const kPBXInfoResponseNumberMakeCallsKey                  = @"makeCall
 NSString *const kPBXInfoResponseNumberReceiveCallsKey               = @"receiveCalls";
 NSString *const kPBXInfoResponseNumberSendSMSKey                    = @"sendSMS";
 NSString *const kPBXInfoResponseNumberReceiveSMSKey                 = @"receiveSMS";
-
-NSString *const kPBXResponseException                       = @"pbxResponseException";
 
 @implementation PBX (V5Client)
 
@@ -66,27 +62,27 @@ NSString *const kPBXResponseException                       = @"pbxResponseExcep
 {
     @try {
         if (![responseObject isKindOfClass:[NSDictionary class]]) {
-            [NSException raise:kPBXResponseException format:@"Invalid pbxs response object."];
+            [NSException raise:NSInvalidArgumentException format:@"Invalid pbxs response object."];
         }
         
         NSDictionary *data = [(NSDictionary *)responseObject dictionaryForKey:kPBXInfoResponseDataKey];
         if (!data) {
-            [NSException raise:kPBXResponseException format:@"Invalid pbx response data object."];
+            [NSException raise:NSInvalidArgumentException format:@"Invalid pbx response data object."];
         }
         
         NSDictionary *userData = [data dictionaryForKey:kPBXInfoResponseUserKey];
         if (!userData) {
-            [NSException raise:kPBXResponseException format:@"Invalid pbx user response data object."];
+            [NSException raise:NSInvalidArgumentException format:@"Invalid pbx user response data object."];
         }
         
         NSString *jiveId = [userData stringValueForKey:kPBXInfoResponseUserJiveIdKey];
         if (![user.jiveUserId isEqualToString:jiveId]) {
-            [NSException raise:kPBXResponseException format:@"Pbx user does not match requested user id."];
+            [NSException raise:NSInvalidArgumentException format:@"Pbx user does not match requested user id."];
         }
         
         NSArray *pbxsData = [data arrayForKey:KPBXInfoResponseKey];
         if (!pbxsData) {
-            [NSException raise:kPBXResponseException format:@"Invalid pbx response array."];
+            [NSException raise:NSInvalidArgumentException format:@"Invalid pbx response array."];
         }
         
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
