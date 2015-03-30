@@ -79,7 +79,7 @@ NSString *const kJCAuthClientURLSchemeCallback  = @"jiveclient://token";
         _webview = [[UIWebView alloc] init];
     }
     _webview.delegate = self;
-    [_webview loadRequest:[NSURLRequest requestWithURL:url]];
+    [_webview loadRequest:[NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:10]];
 }
 
 -(void)reportError:(JCAuthClientError *)error
