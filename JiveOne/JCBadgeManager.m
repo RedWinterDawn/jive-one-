@@ -79,6 +79,11 @@ NSString *const kJCBadgeManagerMissedCallsKey   = @"missedCalls";
     badgeManager.selectedLine = line;
 }
 
++ (void)setSelectedPBX:(NSString *)pbx
+{
+    JCBadgeManager *badgeManager = [JCBadgeManager sharedManager];
+    badgeManager.selectedPbx = pbx;
+}
 
 -(void)didReceiveMemoryNotification:(NSNotification *)notification
 {
