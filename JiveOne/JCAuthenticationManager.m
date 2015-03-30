@@ -282,13 +282,17 @@ NSString *const kJCAuthenticationManagerRememberMeKey   = @"remberMe";
                           completed:^(BOOL success, NSError *error) {
                               if (success) {
                                   [self postNotificationNamed:kJCAuthenticationManagerUserLoadedMinimumDataNotification];
+                                  if (completion) {
+                                      completion(YES, nil);
+                                  }
                               } else {
                                   [_authenticationKeychain logout];
                                   [self postNotificationNamed:kJCAuthenticationManagerAuthenticationFailedNotification];
+                                  if (completion) {
+                                      completion(NO, [JCAuthenticationManagerError errorWithCode:AUTH_MANAGER_PBX_INFO_ERROR underlyingError:error]);
+                                  }
                               }
-                              if (completion) {
-                                  completion((error == nil), [JCAuthenticationManagerError errorWithCode:AUTH_MANAGER_PBX_INFO_ERROR underlyingError:error]);
-                              }
+                              
                           }];
     }
     @catch (NSException *exception) {
