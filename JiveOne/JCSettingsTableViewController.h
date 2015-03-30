@@ -17,11 +17,14 @@
 @property (weak, nonatomic) IBOutlet UISwitch *wifiOnly;
 @property (weak, nonatomic) IBOutlet UISwitch *presenceEnabled;
 @property (weak, nonatomic) IBOutlet UITableViewCell *enablePreasenceCell;
+@property (weak, nonatomic) IBOutlet UILabel *smsDefaultNumberLabel;
+
 
 -(IBAction)leaveFeedback:(id)sender;
 -(IBAction)logout:(id)sender;
 -(IBAction)toggleWifiOnly:(id)sender;
 -(IBAction)togglePresenceEnabled:(id)sender;
 -(IBAction)showDebug:(id)sender;
+- (IBAction)clearBtn:(id)sender;
 
 @end

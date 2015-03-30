@@ -80,6 +80,9 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
 
 #pragma mark - IBActions -
 
+- (IBAction)clearBtn:(id)sender {
+}
+
 -(IBAction)leaveFeedback:(id)sender
 {
     if ([MFMailComposeViewController canSendMail]) {
