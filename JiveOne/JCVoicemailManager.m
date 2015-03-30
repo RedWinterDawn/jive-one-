@@ -8,10 +8,15 @@
 
 #import "JCVoicemailManager.h"
 #import "PBX.h"
+#import "Voicemail+V5Client.h"
 
-NSString *const kJCVoicemailManagerTypeKey       = @"type";
-NSString *const kJCVoicemailManagerTypeAnnounce  = @"announce";
-NSString *const kJCVoicemailManagerTypeMailbox   = @"mailbox";
+NSString *const kJCVoicemailManagerTypeKey              = @"type";
+NSString *const kJCVoicemailManagerTypeAnnounceValue    = @"announce";
+NSString *const kJCVoicemailManagerTypeMailboxKey       = @"mailbox";
+NSString *const kJCVoicemailManagerEntityTypeKey        = @"entityType";
+NSString *const kJCVoicemailManagerMailboxJrnKey        = @"mailboxJrn";
+NSString *const kJCVoicemailManagerActionKey            = @"action";
+NSString *const kJCVoicemailManagerActionValue          = @"NEW";
 
 @implementation JCVoicemailManager
 
@@ -28,12 +33,39 @@ NSString *const kJCVoicemailManagerTypeMailbox   = @"mailbox";
 
 -(void)subscribeToLine:(Line *)line
 {
-    [JCSocket subscribeToSocketEventsWithIdentifer:line.mailboxJrn entity:line.mailboxJrn type:kJCVoicemailManagerTypeMailbox];
+    [JCSocket subscribeToSocketEventsWithIdentifer:line.mailboxJrn entity:line.mailboxJrn type:kJCVoicemailManagerTypeMailboxKey];
 }
 
 -(void)receivedResult:(NSDictionary *)result type:(NSString *)type data:(NSDictionary *)data {
-   
-//    NSLog(@"***   ***   ***   ***   ***   ***   ***   ***   ***   ***   ***   ***   ***   ***Here is your type and result :%@ %@", type, result);
+ 
+    // We are only looking for voicemail anounce events.
+    if (![type isEqualToString:kJCVoicemailManagerTypeAnnounceValue]) {
+        return;
+    }
+    
+    // We require the data to be set.
+    if (!data) {
+        return;
+    }
+    
+    // We only care about voicemail entity types. (What we registered for).
+    NSDictionary *entityTypeData = [data dictionaryForKey:kJCVoicemailManagerEntityTypeKey];
+    NSString *entityType = [entityTypeData valueForKey:kJCVoicemailManagerEntityTypeKey];
+    if (![entityType isEqualToString:kJCVoicemailManagerTypeMailboxKey]) {
+        return;
+    }
+    
+    NSDictionary *actionData = [data dictionaryForKey:kJCVoicemailManagerActionKey];
+    NSString *action = [actionData stringValueForKey:kJCVoicemailManagerActionKey];
+    if ([action isEqualToString:kJCVoicemailManagerActionValue]) {
+        return;
+    }
+    
+    NSString *mailboxJrn = [data stringValueForKey:kJCVoicemailManagerMailboxJrnKey];
+    Line *line = [Line MR_findFirstByAttribute:NSStringFromSelector(@selector(mailboxJrn)) withValue:mailboxJrn];
+    [Voicemail downloadVoicemailsForLine:line completion:NULL];
+    
+//    Expected Response
 //        announce {
 //    data =     {
 //        action =         {
