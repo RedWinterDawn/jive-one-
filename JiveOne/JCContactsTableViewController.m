@@ -119,7 +119,7 @@
             _fetchRequest = [Contact MR_requestAllWithPredicate:predicate inContext:self.managedObjectContext];
         }
         else if (_filterType == JCContactFilterGrouped) {
-            NSPredicate *predicate =[NSPredicate predicateWithFormat:@"contacts.pbx.pbxId CONTAINS[cd] %@", [JCAuthenticationManager sharedInstance].line.pbx.pbxId];
+            NSPredicate *predicate =[NSPredicate predicateWithFormat:@"contacts.pbx.jrn CONTAINS[cd] %@", [JCAuthenticationManager sharedInstance].line.pbx.jrn];
             if (_searchText && ![_searchText isEqualToString:@""]) {
                 NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"name contains[cd] %@", _searchText];
                 predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicate, searchPredicate]];
