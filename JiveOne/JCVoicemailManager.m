@@ -33,7 +33,7 @@ NSString *const kJCVoicemailManagerTypeMailbox   = @"mailbox";
 
 -(void)receivedResult:(NSDictionary *)result type:(NSString *)type data:(NSDictionary *)data {
    
-    NSLog(@"***   ***   ***   ***   ***   ***   ***   ***   ***   ***   ***   ***   ***   ***Here is your type and result :%@ %@", type, result);
+//    NSLog(@"***   ***   ***   ***   ***   ***   ***   ***   ***   ***   ***   ***   ***   ***Here is your type and result :%@ %@", type, result);
 //        announce {
 //    data =     {
 //        action =         {
