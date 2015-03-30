@@ -149,6 +149,7 @@
 		5D55236C1A7AB7B400CA8A6D /* calling.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5D55236B1A7AB7B400CA8A6D /* calling.mp3 */; };
 		5D55236F1A7ACC5100CA8A6D /* JCSipNetworkQualityRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D55236E1A7ACC5100CA8A6D /* JCSipNetworkQualityRequestOperation.m */; };
 		5D5525BC1AC5CB5C0037F703 /* JCV5ClientTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5525BB1AC5CB5C0037F703 /* JCV5ClientTest.m */; };
+		5D5525C21AC63CE90037F703 /* JCCoreDataBaseTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5525C11AC63CE90037F703 /* JCCoreDataBaseTestCase.m */; };
 		5D62436F1A65B7DF001DF88E /* JCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D62436E1A65B7DF001DF88E /* JCManager.m */; };
 		5D6243721A65C58F001DF88E /* JCDebugPhoneManagerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D6243711A65C58F001DF88E /* JCDebugPhoneManagerTableViewController.m */; };
 		5D6243751A678B1D001DF88E /* JCSipHandlerError.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D6243741A678B1D001DF88E /* JCSipHandlerError.m */; };
@@ -697,6 +698,8 @@
 		5D55236D1A7ACC5100CA8A6D /* JCSipNetworkQualityRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSipNetworkQualityRequestOperation.h; sourceTree = "<group>"; };
 		5D55236E1A7ACC5100CA8A6D /* JCSipNetworkQualityRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSipNetworkQualityRequestOperation.m; sourceTree = "<group>"; };
 		5D5525BB1AC5CB5C0037F703 /* JCV5ClientTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCV5ClientTest.m; sourceTree = "<group>"; };
+		5D5525C11AC63CE90037F703 /* JCCoreDataBaseTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCoreDataBaseTestCase.m; sourceTree = "<group>"; };
+		5D5525C31AC63D2F0037F703 /* JCCoreDataBaseTestCase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JCCoreDataBaseTestCase.h; sourceTree = "<group>"; };
 		5D6243641A644D17001DF88E /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
 		5D6243651A644D17001DF88E /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
 		5D6243671A644D4B001DF88E /* Conversation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Conversation.h; sourceTree = "<group>"; };
@@ -1639,6 +1642,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		5D5525C01AC63BF30037F703 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				5D5525C31AC63D2F0037F703 /* JCCoreDataBaseTestCase.h */,
+				5D5525C11AC63CE90037F703 /* JCCoreDataBaseTestCase.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
 		5D6526891A76B4210038B14A /* Messages */ = {
 			isa = PBXGroup;
 			children = (
@@ -1676,6 +1688,7 @@
 			isa = PBXGroup;
 			children = (
 				5D62FACA1ACA6A9500C6DE05 /* Unit Tests */,
+				5D5525C01AC63BF30037F703 /* Classes */,
 				5D9F72201AC351C000B9D0F8 /* Integration Tests */,
 				5D9F721A1AC3519F00B9D0F8 /* JiveOne_Unit_Tests.m */,
 				5D9F72181AC3519F00B9D0F8 /* Supporting Files */,
@@ -2478,6 +2491,7 @@
 				5DE724451ACB459200BB313B /* JCPhoneManagerTests.m in Sources */,
 				5D9F72411AC35F0400B9D0F8 /* JCLineSession.m in Sources */,
 				5D62FBB71ACAFF0F00C6DE05 /* JCRecentEventCell.m in Sources */,
+				5D5525C21AC63CE90037F703 /* JCCoreDataBaseTestCase.m in Sources */,
 				5D9F729D1AC5BD5400B9D0F8 /* JiveContact.m in Sources */,
 				5D9F72681AC35F6E00B9D0F8 /* JCProgressHUD.m in Sources */,
 				5D9F724F1AC35F1300B9D0F8 /* JCKeychain.m in Sources */,
