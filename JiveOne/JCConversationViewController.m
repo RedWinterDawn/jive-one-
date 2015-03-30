@@ -64,7 +64,7 @@
     [super viewDidDisappear:animated];
     
     [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-        NSArray *messages = [Message MR_findAllWithPredicate:self.fetchedResultsController.fetchRequest.predicate inContext:localContext];
+        NSArray *messages = [SMSMessage MR_findAllWithPredicate:self.fetchedResultsController.fetchRequest.predicate inContext:localContext];
         for (Message *message in messages) {
             message.read = YES;
         }
@@ -208,7 +208,9 @@
         }
         
         NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
-        NSFetchRequest *fetchRequest = [Message MR_requestAllWhere:NSStringFromSelector(@selector(messageGroupId)) isEqualTo:_messageGroupId inContext:context];
+        PBX *pbx = [JCAuthenticationManager sharedInstance].pbx;
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"did.pbx = %@ AND messageGroupId = %@", pbx, _messageGroupId];
+        NSFetchRequest *fetchRequest = [SMSMessage MR_requestAllWithPredicate:predicate inContext:context];
         fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]];
         fetchRequest.includesSubentities = YES;
         
