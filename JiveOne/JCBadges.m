@@ -98,6 +98,10 @@ NSString *const kJCBadgesSMSMessagesEventTypeKey   = @"smsMessages";
     
     NSString *objectId = recentEvent.objectID.URIRepresentation.absoluteString;
     NSString *key = [self keyForRecentEvent:recentEvent];
+    if (!key) {
+        return;
+    }
+    
     NSMutableDictionary *events = [self eventsForEventType:eventType key:key];
     if ([events objectForKey:objectId]) {
         [events removeObjectForKey:objectId];
