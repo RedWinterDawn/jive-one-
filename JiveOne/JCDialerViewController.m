@@ -269,7 +269,23 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     return cell;
 }
                                   
-
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    id <JCPersonDataSource> personNumber = [self objectAtIndexPath:indexPath];
+    self.dialStringLabel.dialString = personNumber.number.numericStringValue;
+    
+    NSString *string = self.dialStringLabel.dialString;
+    [self dialNumber:string
+           usingLine:[JCAuthenticationManager sharedInstance].line
+              sender:collectionView
+          completion:^(BOOL success, NSError *error) {
+              if (success){
+                  self.dialStringLabel.dialString = nil;
+                  _contacts = nil;
+                  [self.collectionView reloadData];
+              }
+          }];
+}
 
 @end
 
