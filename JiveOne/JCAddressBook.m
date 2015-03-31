@@ -52,7 +52,19 @@
             NSArray *phones = person.phoneNumbers;
             if (phones) {
                 for (JCAddressBookNumber *phoneNumber in phones) {
-                    [numbers addObject:phoneNumber];
+                    if (keyword.isNumeric) {
+                        NSString *string = phoneNumber.number.numericStringValue;
+                        if ([string respondsToSelector:@selector(containsString:)]) {
+                            if ([string containsString:keyword]) {
+                                [numbers addObject:phoneNumber];
+                            }
+                        }
+                        else if ([string rangeOfString:keyword].location != NSNotFound) {
+                            [numbers addObject:phoneNumber];
+                        }
+                    } else {
+                        [numbers addObject:phoneNumber];
+                    }
                 }
             }
         }
@@ -105,7 +117,13 @@
         ABMultiValueRef phoneNumbers = ABRecordCopyValue( person, kABPersonPhoneProperty);
         for (CFIndex i = 0; i < ABMultiValueGetCount(phoneNumbers); i++) {
             NSString *phoneNumber = ((__bridge_transfer NSString*) ABMultiValueCopyValueAtIndex(phoneNumbers, i)).numericStringValue;
-            if ([phoneNumber containsString:string]) {
+            if ([phoneNumber respondsToSelector:@selector(containsString:)]) {
+                if ([phoneNumber containsString:keyword]) {
+                    result = YES;
+                    break;
+                }
+            }
+            else if ([phoneNumber rangeOfString:keyword].location != NSNotFound) {
                 result = YES;
                 break;
             }
@@ -147,7 +165,13 @@
             ABMultiValueRef phoneNumbers = ABRecordCopyValue( person, kABPersonPhoneProperty);
             for (CFIndex i = 0; i < ABMultiValueGetCount(phoneNumbers); i++) {
                 NSString *phoneNumber = ((__bridge_transfer NSString*) ABMultiValueCopyValueAtIndex(phoneNumbers, i)).numericStringValue;
-                if ([phoneNumber containsString:string] || [string containsString:phoneNumber]) {
+                if ([phoneNumber respondsToSelector:@selector(containsString:)]) {
+                    if ([phoneNumber containsString:string] || [string containsString:phoneNumber]) {
+                        result = YES;
+                        break;
+                    }
+                }
+                else if ([phoneNumber rangeOfString:string].location != NSNotFound || [string rangeOfString:phoneNumber].location != NSNotFound) {
                     result = YES;
                     break;
                 }
