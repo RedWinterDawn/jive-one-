@@ -395,19 +395,20 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
     
     [Parse setApplicationId:@"bQTDjU0QtxWVpNQp2yJp7d9ycntVZdCXF5QrVH8q"
                   clientKey:@"ec135dl8Xfu4VAUXz0ub6vt3QqYnQEur2VcMH1Yf"];
+    
 
     [Appsee start:@"a57e92aea6e541529dc5227171341113"];
     
     //Register for background fetches
     [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
 
-#if TARGET_IPHONE_SIMULATOR
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self application:application didFailToRegisterForRemoteNotificationsWithError:nil];
-    });
-#elif TARGET_OS_IPHONE
-    [application registerForRemoteNotifications];
-#endif
+//#if TARGET_IPHONE_SIMULATOR
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [self application:application didFailToRegisterForRemoteNotificationsWithError:nil];
+//    });
+//#elif TARGET_OS_IPHONE
+//    [application registerForRemoteNotifications];
+//#endif
     
     
 //    // Register for Push Notitications
@@ -423,8 +424,11 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
 //    [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
 //    
 // [self handlePush:launchOptions];
-//    [self initialializeApplication];
+////    [self initialializeApplication];
 //    return YES;
+
+
+    
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
     if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
         UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
@@ -499,6 +503,7 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
     [authenticationManager checkAuthenticationStatus];
     
     [self handlePush:launchOptions];
+    
     return YES;
 }
 
@@ -575,7 +580,7 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
         }
     }];
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-    [currentInstallation setDeviceTokenFromData:deviceToken];
+    [currentInstallation setDeviceTokenFromData:deviceTokenData];
     [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
             NSLog(@"Saved Current installation");
