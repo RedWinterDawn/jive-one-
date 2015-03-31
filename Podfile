@@ -15,12 +15,4 @@ pod 'XMLDictionary', '~> 1.4'
 pod 'SVProgressHUD'
 pod 'Appsee'
 pod 'StaticDataTableViewController'
-
-
-target :JiveOneTests, :exclusive => true do
-    pod 'OCMock'
-end
-
-target :JiveOneUnitTests, :exclusive => true do
-    pod 'OCMock'
-end
+pod 'OCMock'

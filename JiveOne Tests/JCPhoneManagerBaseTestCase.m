@@ -13,13 +13,17 @@
 - (void)setUp {
     [super setUp];
     
-    JCPhoneManager *phoneManager = [[JCPhoneManager alloc] init];
+    // Mock the sip handler
+    id mockSipHandler = OCMClassMock([JCSipManager class]);
+    
+    // instance and verify that sip handler is the mock sip handler.
+    JCPhoneManager *phoneManager = [[JCPhoneManager alloc] initWithSipManager:mockSipHandler];
+    XCTAssertEqual(mockSipHandler = phoneManager.sipManager, @"Sip Handler is not mock sip handler");
+    
+    // verify storyboarding of phone manger is in place and corrent
     XCTAssertNotNil(phoneManager.storyboardName, @"Phone Manager Storyboard name should not be nil");
     XCTAssertNotNil(phoneManager.storyboard, @"Storyboard should not be nil");
     self.phoneManager = phoneManager;
-    
-    id mockSipHandler = OCMClassMock([JCSipManager class]);
-    phoneManager.sipManager = mockSipHandler;
 }
 
 - (void)tearDown {

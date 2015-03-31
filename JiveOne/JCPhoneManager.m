@@ -55,7 +55,8 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
 
 @property (nonatomic, strong) JCSipManager *sipManager;
 @property (nonatomic, strong) UIStoryboard *storyboard;
-
+@property (nonatomic, strong) JCAppSettings *appSettings;
+@property (nonatomic, strong) AFNetworkReachabilityManager *networkReachabilityManager;
 
 @end
 
@@ -63,13 +64,22 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
 
 -(id)init
 {
-    self = [super init];
-    if (self)
-    {
-        _storyboardName = DEFAULT_PHONE_MANAGER_STORYBOARD_NAME;
+    __autoreleasing NSError *error;
+    JCSipManager *sipManager = [[JCSipManager alloc] initWithNumberOfLines:MAX_LINES delegate:self error:&error];
+    
+    return [self initWithSipManager:sipManager
+                        appSettings:[JCAppSettings sharedSettings]
+                reachabilityManager:[AFNetworkReachabilityManager sharedManager]];
+}
 
-        __autoreleasing NSError *error;
-        _sipManager = [[JCSipManager alloc] initWithNumberOfLines:MAX_LINES delegate:self error:&error];
+-(instancetype)initWithSipManager:(JCSipManager *)sipManager appSettings:(JCAppSettings *)appSettings reachabilityManager:(AFNetworkReachabilityManager *)reachabilityManager
+{
+    self = [super init];
+    if (self) {
+        _storyboardName = DEFAULT_PHONE_MANAGER_STORYBOARD_NAME;
+        _sipManager = sipManager;
+        _appSettings = appSettings;
+        _networkReachabilityManager = reachabilityManager;
     }
     return self;
 }
@@ -93,7 +103,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     
     // Retrive the current network status. Check if the status is Cellular data, and do not connect
     // if we are configured to be wifi only.
-    if ([AFNetworkReachabilityManager sharedManager].isReachableViaWWAN && [JCAppSettings sharedSettings].isWifiOnly) {
+    if (self.networkReachabilityManager.isReachableViaWWAN && self.appSettings.isWifiOnly) {
         _networkType = JCPhoneManagerNoNetwork;
         [self notifyCompletionBlock:false error:[JCPhoneManagerError errorWithCode:JC_PHONE_WIFI_DISABLED]];
         [self disconnect];
@@ -119,7 +129,6 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
    
     // If we made it here, we do not have a line configuration, we need to request it. If the
     // request was successfull, we try to register.
-    [UIApplication showStatus:@"Selecting Line..."];
     [LineConfiguration downloadLineConfigurationForLine:line completion:^(BOOL success, NSError *error) {
         if (success) {
             [self registerWithLine:line];
@@ -852,6 +861,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
 
 + (void)connectToLine:(Line *)line
 {
+    [UIApplication showStatus:@"Selecting Line..."];
     [[JCPhoneManager sharedManager] connectToLine:line completion:^(BOOL success, NSError *error) {
         if (error){
             

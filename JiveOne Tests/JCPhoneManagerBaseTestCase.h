@@ -10,9 +10,8 @@
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
 #import "JCPhoneManager.h"
-#import "JCSipManager.h"
 
-@interface JCPhoneManager ()
+@interface JCPhoneManager (Private)
 
 @property (nonatomic, strong) JCSipManager *sipManager;
 @property (nonatomic, strong) UIStoryboard *storyboard;

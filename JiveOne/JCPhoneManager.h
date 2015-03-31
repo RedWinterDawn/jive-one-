@@ -11,8 +11,11 @@
 @import Foundation;
 
 #import <AFNetworking/AFNetworkReachabilityManager.h>
-#import "JCPhoneAudioManager.h"
+
 #import "JCManager.h"
+#import "JCSipManager.h"
+#import "JCAppSettings.h"
+#import "JCPhoneAudioManager.h"
 
 @class Line;
 

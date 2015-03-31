@@ -158,7 +158,6 @@
 		5D629BB019D9CE4500F5744E /* JCVoiceNonVisualViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D629BAF19D9CE4500F5744E /* JCVoiceNonVisualViewController.m */; };
 		5D62FAC91AC9EA5500C6DE05 /* JCContactCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D62FAC81AC9EA5500C6DE05 /* JCContactCollectionViewCell.m */; };
 		5D62FACC1ACA6B1200C6DE05 /* JCAddressBookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D62FACB1ACA6B1200C6DE05 /* JCAddressBookTests.m */; };
-		5D62FACE1ACAF17400C6DE05 /* JCDialerViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D62FACD1ACAF17400C6DE05 /* JCDialerViewControllerTests.m */; };
 		5D62FB781ACAFF0F00C6DE05 /* JCApplicationSwitcherDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D35479719FF4B85009E3CB4 /* JCApplicationSwitcherDelegate.m */; };
 		5D62FB791ACAFF0F00C6DE05 /* JCPhoneTabBarControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7339CA1A0826CC00339DC6 /* JCPhoneTabBarControllerDelegate.m */; };
 		5D62FB7A1ACAFF0F00C6DE05 /* JCMergeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1BBE5A19EDC9EF006526B2 /* JCMergeButton.m */; };
@@ -388,6 +387,9 @@
 		5DE7243A1ACB199700BB313B /* JCMainStoryboardBaseTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE724371ACB181400BB313B /* JCMainStoryboardBaseTestCase.m */; };
 		5DE7243E1ACB23D200BB313B /* JCPhoneManagerBaseTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE7243B1ACB236A00BB313B /* JCPhoneManagerBaseTestCase.m */; };
 		5DE724431ACB26B700BB313B /* JCTransferViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE724411ACB24BA00BB313B /* JCTransferViewControllerTests.m */; };
+		5DE724451ACB459200BB313B /* JCPhoneManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE724441ACB459200BB313B /* JCPhoneManagerTests.m */; };
+		5DE724481ACB4FEB00BB313B /* PhoneManager.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D1175921AA0D82600D2B03A /* PhoneManager.storyboard */; };
+		5DE724491ACB4FEC00BB313B /* PhoneManager.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D1175921AA0D82600D2B03A /* PhoneManager.storyboard */; };
 		5DF468101A5B9BF600E5826A /* JCClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF4680F1A5B9BF600E5826A /* JCClient.m */; };
 		9135DE0418BC01550052E998 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9135DE0318BC01550052E998 /* AVFoundation.framework */; };
 		9136FF231925D48D0040B367 /* slider_maximum@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9136FF211925D48D0040B367 /* slider_maximum@2x.png */; };
@@ -718,8 +720,7 @@
 		5D62FAC71AC9EA5500C6DE05 /* JCContactCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCContactCollectionViewCell.h; sourceTree = "<group>"; };
 		5D62FAC81AC9EA5500C6DE05 /* JCContactCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCContactCollectionViewCell.m; sourceTree = "<group>"; };
 		5D62FACB1ACA6B1200C6DE05 /* JCAddressBookTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAddressBookTests.m; sourceTree = "<group>"; };
-		5D62FACD1ACAF17400C6DE05 /* JCDialerViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDialerViewControllerTests.m; sourceTree = "<group>"; };
-		5D62FBF61ACB095200C6DE05 /* JiveOne Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "JiveOne Tests.xctest"; path = JiveOneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D62FBF61ACB095200C6DE05 /* JiveOneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JiveOneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D62FBF91ACB095200C6DE05 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D62FC021ACB09AC00C6DE05 /* JCDialerViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDialerViewControllerTests.m; sourceTree = "<group>"; };
 		5D65268C1A76B4C30038B14A /* JiveOne-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JiveOne-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -813,10 +814,9 @@
 		5DE7243B1ACB236A00BB313B /* JCPhoneManagerBaseTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneManagerBaseTestCase.m; sourceTree = "<group>"; };
 		5DE7243D1ACB239E00BB313B /* JCPhoneManagerBaseTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPhoneManagerBaseTestCase.h; sourceTree = "<group>"; };
 		5DE724411ACB24BA00BB313B /* JCTransferViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTransferViewControllerTests.m; sourceTree = "<group>"; };
+		5DE724441ACB459200BB313B /* JCPhoneManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneManagerTests.m; sourceTree = "<group>"; };
 		5DF4680E1A5B9BF600E5826A /* JCClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCClient.h; sourceTree = "<group>"; };
 		5DF4680F1A5B9BF600E5826A /* JCClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCClient.m; sourceTree = "<group>"; };
-		6594302CE0A00068957DC0D5 /* Pods-JiveOneTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JiveOneTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JiveOneTests/Pods-JiveOneTests.debug.xcconfig"; sourceTree = "<group>"; };
-		865FB851301D1534E4CC63E7 /* Pods-JiveOneTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JiveOneTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-JiveOneTests/Pods-JiveOneTests.release.xcconfig"; sourceTree = "<group>"; };
 		86ED89B2764949AC9BCC0C7B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B9E1C5EE3BB77C6F9C5D869 /* libPods-JiveOneUnitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JiveOneUnitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9135DE0318BC01550052E998 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -850,7 +850,6 @@
 		B7AEDD571ABA08670063033E /* JCActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCActionSheet.m; sourceTree = "<group>"; };
 		B7DFAA361AC0CDA50033ACFB /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		BF86F37AAB6C27FB9A684791 /* libPods-JiveOneTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JiveOneTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C87156C53B57B04D9871E012 /* Pods-JiveOneTests.enterprise.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JiveOneTests.enterprise.xcconfig"; path = "Pods/Target Support Files/Pods-JiveOneTests/Pods-JiveOneTests.enterprise.xcconfig"; sourceTree = "<group>"; };
 		DD3BD9F218DCB1740080318E /* Voicemail+V5Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Voicemail+V5Client.h"; sourceTree = "<group>"; };
 		DD3BD9F318DCB1740080318E /* Voicemail+V5Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Voicemail+V5Client.m"; sourceTree = "<group>"; };
 		DD577D521940DC6C008DAB46 /* icomoon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = icomoon.ttf; path = ../icomoon.ttf; sourceTree = "<group>"; };
@@ -1296,7 +1295,7 @@
 			children = (
 				275F4A4E18AD0FBC00D2F069 /* JiveOne.app */,
 				5D9F72161AC3519F00B9D0F8 /* JiveOneUnitTests.xctest */,
-				5D62FBF61ACB095200C6DE05 /* JiveOne Tests.xctest */,
+				5D62FBF61ACB095200C6DE05 /* JiveOneTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1617,18 +1616,10 @@
 		5D62FACA1ACA6A9500C6DE05 /* Unit Tests */ = {
 			isa = PBXGroup;
 			children = (
+				5DE724441ACB459200BB313B /* JCPhoneManagerTests.m */,
 				5D62FACB1ACA6B1200C6DE05 /* JCAddressBookTests.m */,
-				5D62FACF1ACAF17D00C6DE05 /* Controllers */,
 			);
 			name = "Unit Tests";
-			sourceTree = "<group>";
-		};
-		5D62FACF1ACAF17D00C6DE05 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				5D62FACD1ACAF17400C6DE05 /* JCDialerViewControllerTests.m */,
-			);
-			name = Controllers;
 			sourceTree = "<group>";
 		};
 		5D62FBF71ACB095200C6DE05 /* JiveOne Tests */ = {
@@ -1879,9 +1870,6 @@
 				1B209FFD8576BB760529B3CA /* Pods.debug.xcconfig */,
 				27364B6C977955C61C47BA59 /* Pods.enterprise.xcconfig */,
 				43C81F9C015A20BD2322B787 /* Pods.release.xcconfig */,
-				6594302CE0A00068957DC0D5 /* Pods-JiveOneTests.debug.xcconfig */,
-				C87156C53B57B04D9871E012 /* Pods-JiveOneTests.enterprise.xcconfig */,
-				865FB851301D1534E4CC63E7 /* Pods-JiveOneTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -1954,7 +1942,7 @@
 			);
 			name = JiveOneTests;
 			productName = "JiveOne Tests";
-			productReference = 5D62FBF61ACB095200C6DE05 /* JiveOne Tests.xctest */;
+			productReference = 5D62FBF61ACB095200C6DE05 /* JiveOneTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		5D9F72151AC3519F00B9D0F8 /* JiveOneUnitTests */ = {
@@ -2094,6 +2082,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5DE724491ACB4FEC00BB313B /* PhoneManager.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2101,6 +2090,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5DE724481ACB4FEB00BB313B /* PhoneManager.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2134,7 +2124,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JiveOneUnitTests/Pods-JiveOneUnitTests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		2D6CC6088E10467383A549A4 /* Check Pods Manifest.lock */ = {
@@ -2478,7 +2468,6 @@
 				5D9F72A21AC5BD5400B9D0F8 /* DID.m in Sources */,
 				5D62FB911ACAFF0F00C6DE05 /* JCConversationTableViewCell.m in Sources */,
 				5D9F72521AC35F2200B9D0F8 /* JCV4Client.m in Sources */,
-				5D62FACE1ACAF17400C6DE05 /* JCDialerViewControllerTests.m in Sources */,
 				5D62FB7A1ACAFF0F00C6DE05 /* JCMergeButton.m in Sources */,
 				5D62FBB11ACAFF0F00C6DE05 /* JCMenuBarButtonItem.m in Sources */,
 				5D9F729A1AC5BD0800B9D0F8 /* JCSMSClient.m in Sources */,
@@ -2486,6 +2475,7 @@
 				5D62FB891ACAFF0F00C6DE05 /* JCNavigationController.m in Sources */,
 				5D62FB8C1ACAFF0F00C6DE05 /* JCFetchedResultsTableViewController.m in Sources */,
 				5D9F72661AC35F4000B9D0F8 /* OutgoingCall.m in Sources */,
+				5DE724451ACB459200BB313B /* JCPhoneManagerTests.m in Sources */,
 				5D9F72411AC35F0400B9D0F8 /* JCLineSession.m in Sources */,
 				5D62FBB71ACAFF0F00C6DE05 /* JCRecentEventCell.m in Sources */,
 				5D9F729D1AC5BD5400B9D0F8 /* JiveContact.m in Sources */,
@@ -2866,7 +2856,7 @@
 		};
 		5D62FBFF1ACB095200C6DE05 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6594302CE0A00068957DC0D5 /* Pods-JiveOneTests.debug.xcconfig */;
+			baseConfigurationReference = 1B209FFD8576BB760529B3CA /* Pods.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -2892,7 +2882,7 @@
 		};
 		5D62FC001ACB095200C6DE05 /* Enterprise */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C87156C53B57B04D9871E012 /* Pods-JiveOneTests.enterprise.xcconfig */;
+			baseConfigurationReference = 27364B6C977955C61C47BA59 /* Pods.enterprise.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -2915,7 +2905,7 @@
 		};
 		5D62FC011ACB095200C6DE05 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 865FB851301D1534E4CC63E7 /* Pods-JiveOneTests.release.xcconfig */;
+			baseConfigurationReference = 43C81F9C015A20BD2322B787 /* Pods.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -2938,7 +2928,7 @@
 		};
 		5D9F721D1AC3519F00B9D0F8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6594302CE0A00068957DC0D5 /* Pods-JiveOneTests.debug.xcconfig */;
+			baseConfigurationReference = 1B209FFD8576BB760529B3CA /* Pods.debug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -2969,7 +2959,7 @@
 		};
 		5D9F721E1AC3519F00B9D0F8 /* Enterprise */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C87156C53B57B04D9871E012 /* Pods-JiveOneTests.enterprise.xcconfig */;
+			baseConfigurationReference = 27364B6C977955C61C47BA59 /* Pods.enterprise.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -2997,7 +2987,7 @@
 		};
 		5D9F721F1AC3519F00B9D0F8 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 865FB851301D1534E4CC63E7 /* Pods-JiveOneTests.release.xcconfig */;
+			baseConfigurationReference = 43C81F9C015A20BD2322B787 /* Pods.release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_WARN_UNREACHABLE_CODE = YES;
@@ -3116,7 +3106,7 @@
 				91F6DFB7192A7B35001C54FB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Enterprise;
+			defaultConfigurationName = Release;
 		};
 		275F4A8618AD0FBC00D2F069 /* Build configuration list for PBXNativeTarget "JiveOne" */ = {
 			isa = XCConfigurationList;
@@ -3126,7 +3116,7 @@
 				91F6DFB8192A7B35001C54FB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Enterprise;
+			defaultConfigurationName = Release;
 		};
 		5D62FBFE1ACB095200C6DE05 /* Build configuration list for PBXNativeTarget "JiveOneTests" */ = {
 			isa = XCConfigurationList;
@@ -3136,7 +3126,7 @@
 				5D62FC011ACB095200C6DE05 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Enterprise;
+			defaultConfigurationName = Release;
 		};
 		5D9F721C1AC3519F00B9D0F8 /* Build configuration list for PBXNativeTarget "JiveOneUnitTests" */ = {
 			isa = XCConfigurationList;
@@ -3146,7 +3136,7 @@
 				5D9F721F1AC3519F00B9D0F8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Enterprise;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
