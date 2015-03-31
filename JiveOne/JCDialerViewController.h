@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "JCDialStringLabel.h"
 
-@interface JCDialerViewController : UIViewController <JCDialStringLabelDelegate>
+@interface JCDialerViewController : UIViewController <JCDialStringLabelDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
-@property (nonatomic, weak) IBOutlet UIButton *callBtn;
-@property (nonatomic, weak) IBOutlet JCDialStringLabel *dialStringLabel;
-@property (nonatomic, weak) IBOutlet UIButton *backspaceBtn;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UIButton *callBtn;
+@property (weak, nonatomic) IBOutlet JCDialStringLabel *dialStringLabel;
+@property (weak, nonatomic) IBOutlet UIButton *backspaceBtn;
 @property (weak, nonatomic) IBOutlet UILabel *regestrationStatus;
 @property (weak, nonatomic) IBOutlet UIButton *callButton;
 
