@@ -20,7 +20,7 @@
 - (void)setUp {
     [super setUp];
     
-    self.vc = [self.storyboard instantiateViewControllerWithIdentifier:@"warmTransferModal"];
+    self.vc = [self.phoneManager.storyboard instantiateViewControllerWithIdentifier:@"warmTransferModal"];
     [self.vc performSelectorOnMainThread:@selector(loadView) withObject:nil waitUntilDone:YES];
 }
 
@@ -29,7 +29,7 @@
     [super tearDown];
 }
 
-- (void)testExample {
+- (void)test_JCTransferViewController_storyboard_initialization {
     XCTAssertNotNil(self.vc, @"View not initiated properly");
     XCTAssertTrue([self.vc isKindOfClass:[JCTransferViewController class]], @"View controller should be kind of class: %@", [JCTransferViewController class]);
     XCTAssertNotNil(self.vc.view, @"View should not be nil");

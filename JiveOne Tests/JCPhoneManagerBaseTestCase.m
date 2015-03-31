@@ -12,17 +12,24 @@
 
 - (void)setUp {
     [super setUp];
-    self.storyboard = [UIStoryboard storyboardWithName:@"PhoneManager" bundle:[NSBundle mainBundle]];
+    
+    JCPhoneManager *phoneManager = [[JCPhoneManager alloc] init];
+    XCTAssertNotNil(phoneManager.storyboardName, @"Phone Manager Storyboard name should not be nil");
+    XCTAssertNotNil(phoneManager.storyboard, @"Storyboard should not be nil");
+    self.phoneManager = phoneManager;
+    
+    id mockSipHandler = OCMClassMock([JCSipManager class]);
+    phoneManager.sipManager = mockSipHandler;
 }
 
 - (void)tearDown {
-    self.storyboard = nil;
+    self.phoneManager = nil;
     [super tearDown];
 }
 
 - (void)test_phone_manager_storyboard
 {
-    XCTAssertNotNil(self.storyboard, @"Storyboard should not be nil");
+    
 }
 
 @end
