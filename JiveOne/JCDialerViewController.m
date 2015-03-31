@@ -11,6 +11,10 @@
 #import "OutgoingCall.h"
 #import "JCAppSettings.h"
 #import "JCPhoneManagerError.h"
+#import "JCPersonDataSource.h"
+#import "JCAddressBook.h"
+#import "JCAddressBookNumber.h"
+#import "JCContactCollectionViewCell.h"
 
 NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCall";
 
@@ -18,6 +22,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 {
     JCPhoneManager *_phoneManager;
     BOOL _initiatingCall;
+    NSMutableArray *_contacts;
 }
 
 @end
@@ -89,7 +94,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     if ([sender isKindOfClass:[UIButton class]])
     {
         UIButton *button = (UIButton *)sender;
-        [self.dialStringLabel append:[self characterFromNumPadTag:(int)button.tag]];
+        [self appendString:[self characterFromNumPadTag:(int)button.tag]];
         [JCPhoneManager numberPadPressedWithInteger:button.tag];
     }
 }
@@ -104,7 +109,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
             NSInteger tag = button.tag;
             switch (tag) {
                 case 0:
-                    [self.dialStringLabel append:@"+"];
+                    [self appendString:@"+"];
                     break;
                     
                 default:
@@ -139,15 +144,43 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 
 -(IBAction)backspace:(id)sender
 {
-    [self.dialStringLabel backspace];
+    [self appendString:nil];
+    
 }
 
 -(IBAction)clear:(id)sender
 {
     [self.dialStringLabel clear];
+    _contacts = nil;
+    [self.collectionView reloadData];
 }
 
 #pragma mark - Private -
+
+-(void)appendString:(NSString *)string
+{
+    if (string == nil) {
+        [self.dialStringLabel backspace];
+    } else {
+        [self.dialStringLabel append:string];
+    }
+    
+    _contacts = nil;
+    [JCAddressBook fetchNumbersWithKeyword:self.dialStringLabel.dialString completion:^(NSArray *numbers, NSError *error) {
+        if (!error) {
+            _contacts = numbers.mutableCopy;
+        }
+        
+        
+        if (!_contacts) {
+            _contacts = [NSMutableArray array];
+        }
+        
+        // TODO: Add in local contacts with a core data search here.
+        //_contacts addObjectsFromArray:nil];
+        [self.collectionView reloadData];
+    }];
+}
 
 -(void)updateRegistrationStatus
 {
@@ -202,6 +235,41 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
                          }];
     }
 }
+
+-(id <JCPersonDataSource>)objectAtIndexPath:(NSIndexPath *)indexPath{
+    return [_contacts objectAtIndex:indexPath.row];
+}
+
+#pragma mark - Delegate Handlers -
+
+-(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;
+}
+
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return _contacts.count;
+}
+
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    id <JCPersonDataSource> personNumber = [self objectAtIndexPath:indexPath];
+    JCContactCollectionViewCell *cell = (JCContactCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
+    
+    cell.name.text  = personNumber.name;
+    
+    if ([personNumber isKindOfClass:[JCAddressBookNumber class]]) {
+        JCAddressBookNumber *addressBookNumber = (JCAddressBookNumber *)personNumber;
+        cell.number.attributedText = [addressBookNumber detailTextWithKeyword:self.dialStringLabel.dialString
+                                                                         font:cell.number.font
+                                                                        color:cell.number.textColor];
+    }
+    
+    return cell;
+}
+                                  
+
 
 @end
 
