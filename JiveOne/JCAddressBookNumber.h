@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "JCPersonDataSource.h"
+#import <UIKit/UIKit.h>
 
 @interface JCAddressBookNumber : NSObject <JCPersonDataSource>
 

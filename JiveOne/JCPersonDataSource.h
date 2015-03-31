@@ -15,6 +15,8 @@
 @property (nonatomic, readonly) NSString *detailText;
 @property (nonatomic, readonly) NSString *number;
 
+-(NSAttributedString *)detailTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color;
+
 @optional
 @property (nonatomic, readonly) NSString *firstNameFirstName;
 @property (nonatomic, readonly) NSString *lastNameFirstName;
