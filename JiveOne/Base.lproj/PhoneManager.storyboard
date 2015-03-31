@@ -450,7 +450,7 @@
                                             <outletCollection property="gestureRecognizers" destination="M3D-T7-3ts" appends="YES" id="Qbj-Ln-4ZV"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BJe-Xl-eVA" customClass="JCDialStringLabel">
+                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="headTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BJe-Xl-eVA" customClass="JCFormattedPhoneNumberLabel">
                                         <rect key="frame" x="40" y="10" width="220" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="D7N-LT-snJ"/>
@@ -983,9 +983,9 @@
                     <navigationItem key="navigationItem" id="jp8-sT-cJU"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
-                        <outlet property="backspaceBtn" destination="8Qy-HN-JPr" id="yoh-Du-3Cv"/>
-                        <outlet property="callBtn" destination="pIM-o5-OTi" id="O0t-LA-Jms"/>
-                        <outlet property="dialStringLabel" destination="BJe-Xl-eVA" id="ZgS-DV-Bo6"/>
+                        <outlet property="backspaceButton" destination="8Qy-HN-JPr" id="qxE-Eb-ec8"/>
+                        <outlet property="callButton" destination="pIM-o5-OTi" id="i5Q-gJ-y4J"/>
+                        <outlet property="formattedPhoneNumberLabel" destination="BJe-Xl-eVA" id="ncE-OP-cuW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jQI-pI-nFX" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1544,7 +1544,7 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Callers Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mpL-vU-197" customClass="JCDialStringLabel">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Callers Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mpL-vU-197" customClass="JCFormattedPhoneNumberLabel">
                                         <rect key="frame" x="13" y="58" width="275" height="21"/>
                                         <accessibility key="accessibilityConfiguration" hint="" label="Callers Number"/>
                                         <constraints>
@@ -1588,7 +1588,7 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Callers Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="juX-eR-Hiv" customClass="JCDialStringLabel">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Callers Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="juX-eR-Hiv" customClass="JCFormattedPhoneNumberLabel">
                                         <rect key="frame" x="13" y="58" width="275" height="21"/>
                                         <accessibility key="accessibilityConfiguration" hint="" label=""/>
                                         <constraints>

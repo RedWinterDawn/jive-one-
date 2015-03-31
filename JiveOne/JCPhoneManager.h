@@ -10,10 +10,11 @@
 
 @import Foundation;
 
-#import "JCCallCard.h"
-#import "Line.h"
-#import "JCManager.h"
+#import <AFNetworking/AFNetworkReachabilityManager.h>
 #import "JCPhoneAudioManager.h"
+#import "JCManager.h"
+
+@class Line;
 
 extern NSString *const kJCPhoneManagerRegisteringNotification;
 extern NSString *const kJCPhoneManagerRegisteredNotification;

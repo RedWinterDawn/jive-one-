@@ -17,14 +17,15 @@
 #import "JCSipHandlerError.h"
 
 // Managers
-#import "JCPhoneAudioManager.h"
 #import "JCSipManager.h"
 #import "LineConfiguration+V4Client.h"
 #import "JCAppSettings.h"
 
 // Objects
+#import "JCCallCard.h"
 #import "JCLineSession.h"
 #import "JCConferenceCallCard.h"
+#import "Line.h"
 #import "Contact.h"
 
 // View Controllers

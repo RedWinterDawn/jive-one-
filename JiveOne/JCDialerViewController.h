@@ -7,16 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JCDialStringLabel.h"
+#import "JCFormattedPhoneNumberLabel.h"
 
-@interface JCDialerViewController : UIViewController <JCDialStringLabelDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
+@interface JCDialerViewController : UIViewController <JCFormattedPhoneNumberLabelDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-@property (weak, nonatomic) IBOutlet UIButton *callBtn;
-@property (weak, nonatomic) IBOutlet JCDialStringLabel *dialStringLabel;
-@property (weak, nonatomic) IBOutlet UIButton *backspaceBtn;
-@property (weak, nonatomic) IBOutlet UILabel *regestrationStatus;
+@property (weak, nonatomic) IBOutlet JCFormattedPhoneNumberLabel *formattedPhoneNumberLabel;
+@property (weak, nonatomic) IBOutlet UILabel *registrationStatusLabel;
 @property (weak, nonatomic) IBOutlet UIButton *callButton;
+@property (weak, nonatomic) IBOutlet UIButton *backspaceButton;
 
 -(IBAction)numPadPressed:(id)sender;
 -(IBAction)initiateCall:(id)sender;

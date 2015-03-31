@@ -45,7 +45,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     [center addObserver:self selector:@selector(updateRegistrationStatus) name:kJCPhoneManagerRegistrationFailureNotification object:_phoneManager];
     [self updateRegistrationStatus];
     
-    self.backspaceBtn.alpha = 0;
+    self.backspaceButton.alpha = 0;
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -122,13 +122,13 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 
 -(IBAction)initiateCall:(id)sender
 {
-    NSString *string = self.dialStringLabel.dialString;
+    NSString *string = self.formattedPhoneNumberLabel.dialString;
     
     // If the string is empty, we populate the dial string with the most recent item in call history.
     if (!string || [string isEqualToString:@""]) {
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"line = %@", _phoneManager.line];
         OutgoingCall *call = [OutgoingCall MR_findFirstWithPredicate:predicate sortedBy:@"date" ascending:false];
-        self.dialStringLabel.dialString = call.number;
+        self.formattedPhoneNumberLabel.dialString = call.number;
         return;
     }
     
@@ -137,7 +137,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
               sender:sender
           completion:^(BOOL success, NSError *error) {
               if (success){
-                  self.dialStringLabel.dialString = nil;
+                  self.formattedPhoneNumberLabel.dialString = nil;
               }
           }];
 }
@@ -150,7 +150,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 
 -(IBAction)clear:(id)sender
 {
-    [self.dialStringLabel clear];
+    [self.formattedPhoneNumberLabel clear];
     _contacts = nil;
     [self.collectionView reloadData];
 }
@@ -160,13 +160,13 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 -(void)appendString:(NSString *)string
 {
     if (string == nil) {
-        [self.dialStringLabel backspace];
+        [self.formattedPhoneNumberLabel backspace];
     } else {
-        [self.dialStringLabel append:string];
+        [self.formattedPhoneNumberLabel append:string];
     }
     
     _contacts = nil;
-    [JCAddressBook fetchNumbersWithKeyword:self.dialStringLabel.dialString completion:^(NSArray *numbers, NSError *error) {
+    [JCAddressBook fetchNumbersWithKeyword:self.formattedPhoneNumberLabel.dialString completion:^(NSArray *numbers, NSError *error) {
         if (!error) {
             _contacts = numbers.mutableCopy;
         }
@@ -186,7 +186,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 {
     NSString *prompt = NSLocalizedString(@"Unregistered", nil);
     if (_phoneManager.isRegistered) {
-        _callBtn.selected = false;
+        _callButton.selected = false;
         prompt = _phoneManager.line.extension;
     }
     else if ([JCAppSettings sharedSettings].wifiOnly && [AFNetworkReachabilityManager sharedManager].isReachableViaWWAN){
@@ -196,10 +196,10 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
         prompt = NSLocalizedString(@"Connecting", nil);
     }
     else {
-        _callBtn.selected = true;
+        _callButton.selected = true;
     }
     
-    self.regestrationStatus.text = prompt;
+    self.registrationStatusLabel.text = prompt;
 }
 
 -(NSString *)characterFromNumPadTag:(int)tag
@@ -220,7 +220,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     if (dialString.length == 0) {
         [UIView animateWithDuration:0.3
                          animations:^{
-                             weakSelf.backspaceBtn.alpha = 0;
+                             weakSelf.backspaceButton.alpha = 0;
                          }
                          completion:^(BOOL finished) {
      
@@ -228,7 +228,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     } else {
         [UIView animateWithDuration:0.3
                          animations:^{
-                             weakSelf.backspaceBtn.alpha = 1;
+                             weakSelf.backspaceButton.alpha = 1;
                          }
                          completion:^(BOOL finished) {
      
@@ -261,7 +261,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     
     if ([personNumber isKindOfClass:[JCAddressBookNumber class]]) {
         JCAddressBookNumber *addressBookNumber = (JCAddressBookNumber *)personNumber;
-        cell.number.attributedText = [addressBookNumber detailTextWithKeyword:self.dialStringLabel.dialString
+        cell.number.attributedText = [addressBookNumber detailTextWithKeyword:self.formattedPhoneNumberLabel.dialString
                                                                          font:cell.number.font
                                                                         color:cell.number.textColor];
     }
@@ -272,15 +272,15 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     id <JCPersonDataSource> personNumber = [self objectAtIndexPath:indexPath];
-    self.dialStringLabel.dialString = personNumber.number.numericStringValue;
+    self.formattedPhoneNumberLabel.dialString = personNumber.number.numericStringValue;
     
-    NSString *string = self.dialStringLabel.dialString;
+    NSString *string = self.formattedPhoneNumberLabel.dialString;
     [self dialNumber:string
            usingLine:[JCAuthenticationManager sharedInstance].line
               sender:collectionView
           completion:^(BOOL success, NSError *error) {
               if (success){
-                  self.dialStringLabel.dialString = nil;
+                  self.formattedPhoneNumberLabel.dialString = nil;
                   _contacts = nil;
                   [self.collectionView reloadData];
               }
