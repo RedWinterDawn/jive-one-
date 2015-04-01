@@ -112,7 +112,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     
     // Check to see if we are on an actual network when we try to connect, if we are getting no
     // network, we are not on a network and cannot register, so we notify with error.
-    _networkType = (JCPhoneManagerNetworkType)[AFNetworkReachabilityManager sharedManager].networkReachabilityStatus;
+    _networkType = (JCPhoneManagerNetworkType)self.networkReachabilityManager.networkReachabilityStatus;
     if (_networkType == JCPhoneManagerNoNetwork) {
         if (!self.sipManager.isActive) {
             [self notifyCompletionBlock:false error:[JCPhoneManagerError errorWithCode:JC_PHONE_MANAGER_NO_NETWORK]];

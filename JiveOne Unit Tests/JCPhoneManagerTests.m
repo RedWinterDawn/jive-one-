@@ -6,13 +6,15 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <XCTest/XCTest.h>
+#import "JCCoreDataBaseTestCase.h"
+#import <AFNetworking/AFNetworkReachabilityManager.h>
+
 #import <OCMock/OCMock.h>
 #import "JCPhoneManager.h"
 #import "JCSipManager.h"
 #import "JCAppSettings.h"
-#import <AFNetworking/AFNetworkReachabilityManager.h>
+#import "Line.h"
+#import "LineConfiguration.h"
 
 @interface JCPhoneManager (Private)
 
@@ -24,9 +26,13 @@
                       appSettings:(JCAppSettings *)appSettings
               reachabilityManager:(AFNetworkReachabilityManager *)reachabilityManager;
 
+-(void)connectToLine:(Line *)line completion:(CompletionHandler)completion;
+
+-(void)dialNumber:(NSString *)dialString usingLine:(Line *)line type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion;
+
 @end
 
-@interface JCPhoneManagerTests : XCTestCase
+@interface JCPhoneManagerTests : JCCoreDataBaseTestCase
 
 @property (nonatomic, strong) id sipHandlerMock;
 @property (nonatomic, strong) JCPhoneManager *phoneManager;
@@ -37,7 +43,8 @@
 
 @implementation JCPhoneManagerTests
 
-- (void)setUp {
+- (void)setUp
+{
     [super setUp];
     
     // Mock the sip handler
@@ -51,18 +58,28 @@
                                                reachabilityManager:self.reachabilityManagerMock];
     
     XCTAssertNotNil(self.phoneManager, @"Phone Manager should not be nil");
+    
     XCTAssertNotNil(self.phoneManager.sipManager, @"Sip Handler should not be nil");
     XCTAssertEqual(self.sipHandlerMock, self.phoneManager.sipManager, @"Sip Handler is not mock sip handler");
+    
+    XCTAssertNotNil(self.phoneManager.appSettings, @"Sip Handler should not be nil");
+    XCTAssertEqual(self.appSettingsMock, self.phoneManager.appSettings, @"App Settings is not mock app settings");
+    
+    XCTAssertNotNil(self.phoneManager.networkReachabilityManager, @"Sip Handler should not be nil");
+    XCTAssertEqual(self.reachabilityManagerMock, self.phoneManager.networkReachabilityManager, @"Reachability Manager is not mock reachanbility manager");
 }
 
-- (void)tearDown {
+- (void)tearDown
+{
     self.sipHandlerMock = nil;
+    self.appSettingsMock = nil;
+    self.reachabilityManagerMock = nil;
     self.phoneManager = nil;
     [super tearDown];
 }
 
-- (void)test_JCPhoneManager_initialization {
-    
+- (void)test_JCPhoneManager_initialization
+{
     JCPhoneManager *phoneManager = self.phoneManager;
     
     // verify storyboarding of phone manger is in place and corrent
@@ -78,12 +95,49 @@
     XCTAssertTrue(phoneManager.networkType == JCPhoneManagerNoNetwork, @"Phone Manager should have an unknown network");
 }
 
-- (void)test_JCPhoneManager_connect_to_line_null
+#pragma mark - Connetion Tests -
+
+- (void)test_JCPhoneManager_connectToLine_connectedWifi_notWifiOnly
 {
-    // TODO
+    // Given
+    NSManagedObjectContext *context = self.context;
+    Line *line = [Line MR_createInContext:context];
+    line.lineConfiguration = [LineConfiguration MR_createInContext:context];
+    AFNetworkReachabilityManager *reachabilityManagerMock = self.reachabilityManagerMock;
+    
+    OCMStub([self.appSettingsMock isWifiOnly]).andReturn(false);
+    OCMStub([reachabilityManagerMock isReachable]).andReturn(true);
+    OCMStub([reachabilityManagerMock isReachableViaWWAN]).andReturn(false);
+    OCMStub([reachabilityManagerMock networkReachabilityStatus]).andReturn(JCPhoneManagerWifiNetwork);
+    
+    // When
+    [self.phoneManager connectToLine:line completion:NULL];
+    
+    // Then
+    OCMVerify([self.sipHandlerMock registerToLine:line]);
 }
 
+// TODO Write test cases for the rest of the connect to line scenarios.
 
+#pragma mark - Dialing -
+
+- (void)test_JCPhoneManager_dialPhoneNumber
+{
+    // Given
+    Line *line = [Line MR_createInContext:self.context];
+    NSString *number = @"5555555555";
+    JCPhoneManagerDialType type = JCPhoneManagerSingleDial;
+    JCSipManager *sipManagerMock = self.sipHandlerMock;
+    
+    OCMStub([sipManagerMock line]).andReturn(line);
+    OCMStub([sipManagerMock isRegistered]).andReturn(true);
+    
+    [self.phoneManager dialNumber:number usingLine:line type:type completion:NULL];
+    
+    OCMVerify([sipManagerMock makeCall:number videoCall:NO error:[OCMArg anyObjectRef]]);
+}
+
+// TODO Write test cases for the rest of the dial string scenarios.
 
 
 @end
