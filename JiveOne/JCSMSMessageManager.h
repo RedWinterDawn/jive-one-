@@ -8,8 +8,8 @@
 
 #import "JCSocketManager.h"
 
-@interface JCMessageManager : JCSocketManager
+@interface JCSMSMessageManager : JCSocketManager
 
-+(void)subscribeToLine(Line *)line;
++(void)subscribeToPbx:(PBX *)pbx;
 
 @end

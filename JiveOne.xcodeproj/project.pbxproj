@@ -322,7 +322,7 @@
 		91DDB19D193500B500550F10 /* JCDeleteButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DDB19C193500B500550F10 /* JCDeleteButton.m */; };
 		B75899761A9FEA320025D5AD /* JCMessagesMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B75899751A9FEA320025D5AD /* JCMessagesMenuCell.m */; };
 		B7AEDD581ABA08670063033E /* JCActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AEDD571ABA08670063033E /* JCActionSheet.m */; };
-		B7C516211ACC6064008731AF /* JCMessageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C516201ACC6064008731AF /* JCMessageManager.m */; };
+		B7C516211ACC6064008731AF /* JCSMSMessageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C516201ACC6064008731AF /* JCSMSMessageManager.m */; };
 		B7DFAA371AC0CDA50033ACFB /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7DFAA361AC0CDA50033ACFB /* CoreMedia.framework */; };
 		DD3BD9F418DCB1740080318E /* Voicemail+V5Client.m in Sources */ = {isa = PBXBuildFile; fileRef = DD3BD9F318DCB1740080318E /* Voicemail+V5Client.m */; };
 		DD577D531940DC6C008DAB46 /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD577D521940DC6C008DAB46 /* icomoon.ttf */; };
@@ -749,8 +749,8 @@
 		B75899751A9FEA320025D5AD /* JCMessagesMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMessagesMenuCell.m; sourceTree = "<group>"; };
 		B7AEDD561ABA08670063033E /* JCActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCActionSheet.h; sourceTree = "<group>"; };
 		B7AEDD571ABA08670063033E /* JCActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCActionSheet.m; sourceTree = "<group>"; };
-		B7C5161F1ACC6064008731AF /* JCMessageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCMessageManager.h; sourceTree = "<group>"; };
-		B7C516201ACC6064008731AF /* JCMessageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCMessageManager.m; sourceTree = "<group>"; };
+		B7C5161F1ACC6064008731AF /* JCSMSMessageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSMSMessageManager.h; sourceTree = "<group>"; };
+		B7C516201ACC6064008731AF /* JCSMSMessageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSMSMessageManager.m; sourceTree = "<group>"; };
 		B7DFAA361AC0CDA50033ACFB /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		C87156C53B57B04D9871E012 /* Pods-JiveOneTests.enterprise.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JiveOneTests.enterprise.xcconfig"; path = "Pods/Target Support Files/Pods-JiveOneTests/Pods-JiveOneTests.enterprise.xcconfig"; sourceTree = "<group>"; };
 		DD3BD9F218DCB1740080318E /* Voicemail+V5Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Voicemail+V5Client.h"; sourceTree = "<group>"; };
@@ -1744,8 +1744,8 @@
 		B7C5161B1ACC5FF3008731AF /* Messageing */ = {
 			isa = PBXGroup;
 			children = (
-				B7C5161F1ACC6064008731AF /* JCMessageManager.h */,
-				B7C516201ACC6064008731AF /* JCMessageManager.m */,
+				B7C5161F1ACC6064008731AF /* JCSMSMessageManager.h */,
+				B7C516201ACC6064008731AF /* JCSMSMessageManager.m */,
 			);
 			name = Messageing;
 			sourceTree = "<group>";
@@ -2066,7 +2066,7 @@
 				5D6243781A678B6F001DF88E /* JCError.m in Sources */,
 				27EA1DFD1900A83D0075CAEE /* JCVoicemailTableViewController.m in Sources */,
 				27F64D5C19772CCF00F772AA /* Line.m in Sources */,
-				B7C516211ACC6064008731AF /* JCMessageManager.m in Sources */,
+				B7C516211ACC6064008731AF /* JCSMSMessageManager.m in Sources */,
 				5DB0BFC119FFF3FE006737D7 /* JCTableViewCell.m in Sources */,
 				5D490E5E1A8AF364004B62C0 /* JCAddressBookPerson.m in Sources */,
 				5D8198F01AC1F0FC0057FDDA /* JCDebugDIDsTableViewController.m in Sources */,
