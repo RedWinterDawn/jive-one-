@@ -20,10 +20,13 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 
 @interface JCDialerViewController ()
 {
-    JCPhoneManager *_phoneManager;
     BOOL _initiatingCall;
     NSMutableArray *_contacts;
 }
+
+@property (nonatomic, strong) JCAuthenticationManager *authenticationManager;
+@property (nonatomic, strong) AFNetworkReachabilityManager *networkingReachabilityManager;
+@property (nonatomic, strong) NSManagedObjectContext *context;
 
 @end
 
@@ -37,12 +40,12 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 {
     [super viewDidLoad];
     
-    _phoneManager = [JCPhoneManager sharedManager];
+    JCPhoneManager *phoneManager = self.phoneManager;
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(updateRegistrationStatus) name:kJCPhoneManagerRegisteredNotification object:_phoneManager];
-    [center addObserver:self selector:@selector(updateRegistrationStatus) name:kJCPhoneManagerUnregisteredNotification object:_phoneManager];
-    [center addObserver:self selector:@selector(updateRegistrationStatus) name:kJCPhoneManagerRegisteringNotification object:_phoneManager];
-    [center addObserver:self selector:@selector(updateRegistrationStatus) name:kJCPhoneManagerRegistrationFailureNotification object:_phoneManager];
+    [center addObserver:self selector:@selector(updateRegistrationStatus) name:kJCPhoneManagerRegisteredNotification object:phoneManager];
+    [center addObserver:self selector:@selector(updateRegistrationStatus) name:kJCPhoneManagerUnregisteredNotification object:phoneManager];
+    [center addObserver:self selector:@selector(updateRegistrationStatus) name:kJCPhoneManagerRegisteringNotification object:phoneManager];
+    [center addObserver:self selector:@selector(updateRegistrationStatus) name:kJCPhoneManagerRegistrationFailureNotification object:phoneManager];
     [self updateRegistrationStatus];
     
     self.backspaceButton.alpha = 0;
@@ -73,8 +76,9 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 {
     [super viewWillAppear:animated];
     
-    if (_phoneManager.line && !_phoneManager.isRegistered && !_phoneManager.isRegistering) {
-        [JCPhoneManager connectToLine:_phoneManager.line];
+    JCPhoneManager *phoneManager = self.phoneManager;
+    if (phoneManager.line && !phoneManager.isRegistered && !phoneManager.isRegistering) {
+        [JCPhoneManager connectToLine:phoneManager.line];
     }
 }
 
@@ -123,17 +127,18 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 -(IBAction)initiateCall:(id)sender
 {
     NSString *string = self.formattedPhoneNumberLabel.dialString;
+    JCAuthenticationManager *authenticationManager = self.authenticationManager;
     
     // If the string is empty, we populate the dial string with the most recent item in call history.
     if (!string || [string isEqualToString:@""]) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"line = %@", _phoneManager.line];
-        OutgoingCall *call = [OutgoingCall MR_findFirstWithPredicate:predicate sortedBy:@"date" ascending:false];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"line = %@", authenticationManager.line];
+        OutgoingCall *call = [OutgoingCall MR_findFirstWithPredicate:predicate sortedBy:@"date" ascending:false inContext:self.context];
         self.formattedPhoneNumberLabel.dialString = call.number;
         return;
     }
     
     [self dialNumber:string
-           usingLine:[JCAuthenticationManager sharedInstance].line
+           usingLine:authenticationManager.line
               sender:sender
           completion:^(BOOL success, NSError *error) {
               if (success){
@@ -145,7 +150,6 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 -(IBAction)backspace:(id)sender
 {
     [self appendString:nil];
-    
 }
 
 -(IBAction)clear:(id)sender
@@ -153,6 +157,32 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     [self.formattedPhoneNumberLabel clear];
     _contacts = nil;
     [self.collectionView reloadData];
+}
+
+#pragma mark - Getters -
+
+-(JCAuthenticationManager *)authenticationManager
+{
+    if (!_authenticationManager) {
+        _authenticationManager = [JCAuthenticationManager sharedInstance];
+    }
+    return _authenticationManager;
+}
+
+-(NSManagedObjectContext *)context
+{
+    if (!_context) {
+        _context = [NSManagedObjectContext MR_defaultContext];
+    }
+    return _context;
+}
+
+-(AFNetworkReachabilityManager *)networkingReacabilityManager
+{
+    if (!_networkingReachabilityManager) {
+        _networkingReachabilityManager = [AFNetworkReachabilityManager sharedManager];
+    }
+    return _networkingReachabilityManager;
 }
 
 #pragma mark - Private -
@@ -185,18 +215,19 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
 -(void)updateRegistrationStatus
 {
     NSString *prompt = NSLocalizedString(@"Unregistered", nil);
-    if (_phoneManager.isRegistered) {
-        _callButton.selected = false;
-        prompt = _phoneManager.line.extension;
+    JCPhoneManager *phoneManager = self.phoneManager;
+    if (phoneManager.isRegistered) {
+        self.callButton.selected = false;
+        prompt = phoneManager.line.extension;
     }
-    else if ([JCAppSettings sharedSettings].wifiOnly && [AFNetworkReachabilityManager sharedManager].isReachableViaWWAN){
+    else if (self.appSettings.wifiOnly && self.networkingReachabilityManager.isReachableViaWWAN){
         prompt = NSLocalizedString(@"Disabled", nil);
     }
-    else if (_phoneManager.isRegistering) {
+    else if (phoneManager.isRegistering) {
         prompt = NSLocalizedString(@"Connecting", nil);
     }
     else {
-        _callButton.selected = true;
+        self.callButton.selected = true;
     }
     
     self.registrationStatusLabel.text = prompt;
@@ -276,7 +307,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     
     NSString *string = self.formattedPhoneNumberLabel.dialString;
     [self dialNumber:string
-           usingLine:[JCAuthenticationManager sharedInstance].line
+           usingLine:self.authenticationManager.line
               sender:collectionView
           completion:^(BOOL success, NSError *error) {
               if (success){
