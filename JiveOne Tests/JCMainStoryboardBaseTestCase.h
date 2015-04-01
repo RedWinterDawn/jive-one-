@@ -6,11 +6,9 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <XCTest/XCTest.h>
-#import <OCMock/OCMock.h>
+#import "JCBaseUITestCase.h"
 
-@interface JCMainStoryboardBaseTestCase : XCTestCase
+@interface JCMainStoryboardBaseTestCase : JCBaseUITestCase
 
 @property (nonatomic, strong) UIStoryboard *storyboard;
 

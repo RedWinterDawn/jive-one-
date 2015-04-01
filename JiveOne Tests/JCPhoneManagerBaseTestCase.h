@@ -11,14 +11,17 @@
 #import <OCMock/OCMock.h>
 #import "JCPhoneManager.h"
 
+#import "JCBaseUITestCase.h"
+
 @interface JCPhoneManager (Private)
 
-@property (nonatomic, strong) JCSipManager *sipManager;
 @property (nonatomic, strong) UIStoryboard *storyboard;
+
+-(void)dialNumber:(NSString *)dialString usingLine:(Line *)line type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion;
 
 @end
 
-@interface JCPhoneManagerBaseTestCase : XCTestCase
+@interface JCPhoneManagerBaseTestCase : JCBaseUITestCase
 
 @property (nonatomic, strong) JCPhoneManager *phoneManager;
 

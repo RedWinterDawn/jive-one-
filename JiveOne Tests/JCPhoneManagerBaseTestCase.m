@@ -8,19 +8,24 @@
 
 #import "JCPhoneManagerBaseTestCase.h"
 
+@interface JCPhoneManager ()
+
+-(instancetype)initWithSipManager:(JCSipManager *)sipManager
+                      appSettings:(JCAppSettings *)appSettings
+              reachabilityManager:(AFNetworkReachabilityManager *)reachabilityManager;
+
+@end
+
+
 @implementation JCPhoneManagerBaseTestCase
 
 - (void)setUp {
     [super setUp];
     
-    // Mock the sip handler
-    id mockSipHandler = OCMClassMock([JCSipManager class]);
-    
     // instance and verify that sip handler is the mock sip handler.
-    JCPhoneManager *phoneManager = [[JCPhoneManager alloc] initWithSipManager:mockSipHandler];
-    XCTAssertEqual(mockSipHandler = phoneManager.sipManager, @"Sip Handler is not mock sip handler");
+    JCPhoneManager *phoneManager = [[JCPhoneManager alloc] initWithSipManager:nil appSettings:nil reachabilityManager:nil];
     
-    // verify storyboarding of phone manger is in place and corrent
+    // verify storyboarding of phone manger is in place and correct
     XCTAssertNotNil(phoneManager.storyboardName, @"Phone Manager Storyboard name should not be nil");
     XCTAssertNotNil(phoneManager.storyboard, @"Storyboard should not be nil");
     self.phoneManager = phoneManager;
