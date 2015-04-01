@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
+#import <objc/runtime.h>
+
 @import AVFoundation;
 @import CoreTelephony;
 
@@ -985,6 +987,21 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
 
 @implementation UIViewController (PhoneManager)
 
+- (void)setPhoneManager:(JCPhoneManager *)phoneManager {
+    objc_setAssociatedObject(self, @selector(phoneManager), phoneManager, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+-(JCPhoneManager *)phoneManager
+{
+    JCPhoneManager *phoneManager = objc_getAssociatedObject(self, @selector(phoneManager));
+    if (!phoneManager)
+    {
+        phoneManager = [JCPhoneManager sharedManager];
+        objc_setAssociatedObject(self, @selector(phoneManager), phoneManager, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    return phoneManager;
+}
+
 - (void)dialNumber:(NSString *)phoneNumber usingLine:(Line *)line sender:(id)sender
 {
     [self dialNumber:phoneNumber usingLine:line sender:sender completion:NULL];
@@ -998,7 +1015,7 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
         ((UITableView *)sender).userInteractionEnabled = FALSE;
     }
         
-    [JCPhoneManager dialNumber:phoneNumber
+    [self.phoneManager dialNumber:phoneNumber
                      usingLine:line
                           type:JCPhoneManagerSingleDial
                     completion:^(BOOL success, NSError *error) {
