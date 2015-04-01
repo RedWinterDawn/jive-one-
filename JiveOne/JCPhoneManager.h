@@ -92,7 +92,7 @@ typedef enum : NSInteger {
 
 @interface UIViewController (PhoneManager)
 
-@property JCPhoneManager *phoneManager;
+@property(nonatomic, strong) JCPhoneManager *phoneManager;
 
 // Dials a number. The sender is enabled and disabled while call is being initiated.
 - (void)dialNumber:(NSString *)phoneNumber
