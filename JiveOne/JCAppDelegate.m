@@ -402,49 +402,6 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
     //Register for background fetches
     [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
 
-//#if TARGET_IPHONE_SIMULATOR
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        [self application:application didFailToRegisterForRemoteNotificationsWithError:nil];
-//    });
-//#elif TARGET_OS_IPHONE
-//    [application registerForRemoteNotifications];
-//#endif
-    
-    
-//    // Register for Push Notitications
-//    UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
-//                                                    UIUserNotificationTypeBadge |
-//                                                    UIUserNotificationTypeSound);
-//    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
-//                                                                             categories:nil];
-//    [application registerUserNotificationSettings:settings];
-//    [application registerForRemoteNotifications];
-//    
-//    //Register for background fetches
-//    [application setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
-//    
-// [self handlePush:launchOptions];
-////    [self initialializeApplication];
-//    return YES;
-
-
-    
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
-    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
-        UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
-                                                        UIUserNotificationTypeBadge |
-                                                        UIUserNotificationTypeSound);
-        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
-                                                                                 categories:nil];
-        [application registerUserNotificationSettings:settings];
-        [application registerForRemoteNotifications];
-    } else
-#endif
-    {
-        [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
-                                                         UIRemoteNotificationTypeAlert |
-                                                         UIRemoteNotificationTypeSound)];
-    }
     _appSwitcherViewController = self.window.rootViewController;
 	NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     
@@ -567,6 +524,29 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceTokenData
 {
+    if (deviceTokenData)
+    {
+        PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+        [currentInstallation setDeviceTokenFromData:deviceTokenData];
+        [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (!error) {
+                NSLog(@"Saved Current installation");
+            } else {
+                NSLog(@"error in currentInstilation %@", error);
+            }
+        }];
+        
+        [PFPush subscribeToChannelInBackground:@"" block:^(BOOL succeeded, NSError *error) {
+            if (succeeded) {
+                NSLog(@"Jive_One successfully subscribed to push notifications on the broadcast channel.");
+            } else {
+                NSLog(@"Jive_One failed to subscribe to push notifications on the broadcast channel.");
+            }
+        }];
+    } else {
+        deviceTokenData = [[UIDevice currentDevice].installationIdentifier dataUsingEncoding:NSUTF8StringEncoding];
+    }
+    
     JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
     NSString *oldDeviceToken = authenticationManager.deviceToken;
     NSString *deviceToken = [[deviceTokenData.description stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"<>"]] stringByReplacingOccurrencesOfString:@" " withString:@""];
@@ -579,23 +559,6 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
             [self subscribeToLineEvents:authenticationManager.line];
         }
     }];
-    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
-    [currentInstallation setDeviceTokenFromData:deviceTokenData];
-    [currentInstallation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (!error) {
-            NSLog(@"Saved Current installation");
-        } else {
-            NSLog(@"error in currentInstilation %@", error);
-        }
-    }];
-    
-    [PFPush subscribeToChannelInBackground:@"" block:^(BOOL succeeded, NSError *error) {
-        if (succeeded) {
-            NSLog(@"Jive_One successfully subscribed to push notifications on the broadcast channel.");
-        } else {
-            NSLog(@"Jive_One failed to subscribe to push notifications on the broadcast channel.");
-        }
-    }];
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
@@ -604,17 +567,13 @@ NSString *const kApplicationDidReceiveRemoteNotification = @"ApplicationDidReciv
         NSLog(@"%@", error);
     }
     
-    // Still start a socket connection no matter what, so we have our socket open.
-    NSData *deviceToken = [[UIDevice currentDevice].installationIdentifier dataUsingEncoding:NSUTF8StringEncoding];
-    [self application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+    [self application:application didRegisterForRemoteNotificationsWithDeviceToken:nil];
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     
-    
 //    [PFPush handlePush:userInfo];
-    
 //    TODO:  This is where we need to get the whole message to show the user we have a new message for them.
     
     
