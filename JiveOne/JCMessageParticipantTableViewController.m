@@ -138,7 +138,7 @@
         [results addObject:[JCUnknownNumber unknownNumberWithNumber:searchText]];
     }
     
-    [JCAddressBook fetchNumbersWithKeyword:searchText completion:^(NSArray *people, NSError *error) {
+    [self.sharedAddressBook fetchNumbersWithKeyword:searchText completion:^(NSArray *people, NSError *error) {
         if (people) {
             [results addObjectsFromArray:people];
         }

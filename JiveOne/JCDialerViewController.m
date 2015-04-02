@@ -196,7 +196,8 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     }
     
     _contacts = nil;
-    [JCAddressBook fetchNumbersWithKeyword:self.formattedPhoneNumberLabel.dialString completion:^(NSArray *numbers, NSError *error) {
+    
+    [self.sharedAddressBook fetchNumbersWithKeyword:self.formattedPhoneNumberLabel.dialString completion:^(NSArray *numbers, NSError *error) {
         if (!error) {
             _contacts = numbers.mutableCopy;
         }

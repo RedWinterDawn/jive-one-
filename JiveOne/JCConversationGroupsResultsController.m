@@ -262,7 +262,7 @@
     }
     
     // get names for numbers.
-    [JCAddressBook formattedNamesForNumbers:numbers
+    [[JCAddressBook sharedAddressBook] formattedNamesForNumbers:numbers
                                       begin:^{
                                           
                                       }

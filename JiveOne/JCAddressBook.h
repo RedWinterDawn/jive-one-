@@ -12,50 +12,62 @@
 
 @interface JCAddressBook : NSObject
 
-+(void)personForPersonId:(NSString *)personId
+- (void)personForPersonId:(NSString *)personId
               personHash:(NSString *)hash
               completion:(void (^)(JCAddressBookPerson *person, NSError *error))completion;
 
-+(void)personForRecordId:(ABRecordID)recordId
+- (void)personForRecordId:(ABRecordID)recordId
               personHash:(NSString *)hash
               completion:(void (^)(JCAddressBookPerson *person, NSError *error))completion;
 
-+(void)fetchAllPeople:(void (^)(NSArray *people, NSError *error))completion;
+- (void)fetchAllPeople:(void (^)(NSArray *people, NSError *error))completion;
 
-+(void)fetchAllPeopleWithSortDescriptors:(NSArray *)sortDescriptors
-                              completion:(void (^)(NSArray *people, NSError *error))completion;
+- (void)fetchAllPeopleWithSortDescriptors:(NSArray *)sortDescriptors
+                               completion:(void (^)(NSArray *people, NSError *error))completion;
 
-+(void)fetchNumbersWithKeyword:(NSString *)keyword
-                    completion:(void (^)(NSArray *numbers, NSError *error))completion;
+- (void)fetchNumbersWithKeyword:(NSString *)keyword
+                     completion:(void (^)(NSArray *numbers, NSError *error))completion;
 
-+(void)fetchWithKeyword:(NSString *)keyword
-             completion:(void (^)(NSArray *people, NSError *error))completion;
+- (void)fetchWithKeyword:(NSString *)keyword
+              completion:(void (^)(NSArray *people, NSError *error))completion;
 
-+(void)fetchWithKeyword:(NSString *)keyword
-        sortDescriptors:(NSArray *)sortDescriptors
-             completion:(void (^)(NSArray *people, NSError *error))completion;
+- (void)fetchWithKeyword:(NSString *)keyword
+         sortDescriptors:(NSArray *)sortDescriptors
+              completion:(void (^)(NSArray *people, NSError *error))completion;
 
-+(void)fetchWithPredicate:(NSPredicate *)predicate
-          sortDescriptors:(NSArray *)sortDescriptors
-               completion:(void (^)(NSArray *people, NSError *error))completion;
+- (void)fetchWithPredicate:(NSPredicate *)predicate
+           sortDescriptors:(NSArray *)sortDescriptors
+                completion:(void (^)(NSArray *people, NSError *error))completion;
 
-+(void)fetchPeopleWithNumber:(NSString *)number
-                  completion:(void (^)(NSArray *people, NSError *error))completion;
-
-+(void)fetchPeopleWithNumbers:(NSSet *)numbers
+- (void)fetchPeopleWithNumber:(NSString *)number
                    completion:(void (^)(NSArray *people, NSError *error))completion;
+
+- (void)fetchPeopleWithNumbers:(NSSet *)numbers
+                    completion:(void (^)(NSArray *people, NSError *error))completion;
+
+@end
+
+@interface JCAddressBook (Singleton)
+
++(instancetype)sharedAddressBook;
 
 @end
 
 
 @interface JCAddressBook (FormattedNames)
 
-+(void)formattedNamesForNumbers:(NSSet *)numbers
-                          begin:(void (^)())begin
-                         number:(void (^)(NSString *name, NSString *number))number
-                     completion:(CompletionHandler)completion;
+- (void)formattedNamesForNumbers:(NSSet *)numbers
+                           begin:(void (^)())begin
+                          number:(void (^)(NSString *name, NSString *number))number
+                      completion:(CompletionHandler)completion;
 
-+(void)formattedNameForNumber:(NSString *)number
-                   completion:(void (^)(NSString *name, NSError *error))completion;
+- (void)formattedNameForNumber:(NSString *)number
+                    completion:(void (^)(NSString *name, NSError *error))completion;
+
+@end
+
+@interface UIViewController (JCAddressBook)
+
+@property(nonatomic, strong) JCAddressBook *sharedAddressBook;
 
 @end
