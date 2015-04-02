@@ -394,6 +394,7 @@
 		5DE7244B1ACB662B00BB313B /* OsgiData.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 2751591618AD300B00FD8D3F /* OsgiData.xcdatamodel */; };
 		5DE7244C1ACB662C00BB313B /* OsgiData.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 2751591618AD300B00FD8D3F /* OsgiData.xcdatamodel */; };
 		5DE724711ACC808F00BB313B /* JCBaseUITestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE724701ACC808F00BB313B /* JCBaseUITestCase.m */; };
+		5DE724731ACDA0F700BB313B /* NSString+AdditionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE724721ACDA0F700BB313B /* NSString+AdditionsTests.m */; };
 		5DF468101A5B9BF600E5826A /* JCClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF4680F1A5B9BF600E5826A /* JCClient.m */; };
 		9135DE0418BC01550052E998 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9135DE0318BC01550052E998 /* AVFoundation.framework */; };
 		9136FF231925D48D0040B367 /* slider_maximum@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9136FF211925D48D0040B367 /* slider_maximum@2x.png */; };
@@ -823,6 +824,7 @@
 		5DE724441ACB459200BB313B /* JCPhoneManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPhoneManagerTests.m; sourceTree = "<group>"; };
 		5DE7246F1ACC808F00BB313B /* JCBaseUITestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCBaseUITestCase.h; sourceTree = "<group>"; };
 		5DE724701ACC808F00BB313B /* JCBaseUITestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCBaseUITestCase.m; sourceTree = "<group>"; };
+		5DE724721ACDA0F700BB313B /* NSString+AdditionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+AdditionsTests.m"; sourceTree = "<group>"; };
 		5DF4680E1A5B9BF600E5826A /* JCClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCClient.h; sourceTree = "<group>"; };
 		5DF4680F1A5B9BF600E5826A /* JCClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCClient.m; sourceTree = "<group>"; };
 		86ED89B2764949AC9BCC0C7B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1635,6 +1637,7 @@
 			children = (
 				5DE724441ACB459200BB313B /* JCPhoneManagerTests.m */,
 				5D62FACB1ACA6B1200C6DE05 /* JCAddressBookTests.m */,
+				5DE724721ACDA0F700BB313B /* NSString+AdditionsTests.m */,
 			);
 			name = "Unit Tests";
 			sourceTree = "<group>";
@@ -2440,6 +2443,7 @@
 				5D9F729E1AC5BD5400B9D0F8 /* RecentLineEvent.m in Sources */,
 				5D62FB801ACAFF0F00C6DE05 /* JCCallCardCollectionViewController.m in Sources */,
 				5D62FB8B1ACAFF0F00C6DE05 /* JCRecentEventsTableViewController.m in Sources */,
+				5DE724731ACDA0F700BB313B /* NSString+AdditionsTests.m in Sources */,
 				5D62FBB01ACAFF0F00C6DE05 /* JCRecentLineEventsTableViewController.m in Sources */,
 				5D9F72A11AC5BD5400B9D0F8 /* Conversation.m in Sources */,
 				5D9F72251AC35C3A00B9D0F8 /* JCAuthClient.m in Sources */,
