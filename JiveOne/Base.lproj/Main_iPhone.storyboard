@@ -2734,6 +2734,7 @@
                         <outlet property="callButton" destination="3FV-p4-tnZ" id="KfT-xC-VTh"/>
                         <outlet property="collectionView" destination="ZSZ-bd-OsD" id="KpN-Tz-h9J"/>
                         <outlet property="formattedPhoneNumberLabel" destination="0XG-qH-giP" id="gpR-fP-b4g"/>
+                        <outlet property="plusLongPressGestureRecognizer" destination="Dcv-p6-x34" id="y1X-Zc-Qaw"/>
                         <outlet property="registrationStatusLabel" destination="IFW-et-Pls" id="OJa-ib-BN1"/>
                     </connections>
                 </viewController>

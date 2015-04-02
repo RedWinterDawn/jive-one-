@@ -11,10 +11,13 @@
 #import "JCPhoneManager.h"
 #import "JCFormattedPhoneNumberLabel.h"
 #import "JCAuthenticationManager.h"
+#import "JCAddressBook.h"
 #import "Line.h"
 #import "OutgoingCall.h"
 #import <MagicalRecord/NSManagedObject+MagicalRecord.h>
 #import <MagicalRecord+Actions.h>
+
+#import <UIKit/UIGestureRecognizerSubclass.h>
 
 @interface JCPhoneManager ()
 
@@ -25,6 +28,7 @@
 @interface JCDialerViewController (Private)
 
 @property (nonatomic, strong) JCAuthenticationManager *authenticationManager;
+@property (nonatomic, strong) AFNetworkReachabilityManager *networkingReachabilityManager;
 @property (nonatomic, strong) NSManagedObjectContext *context;
 
 @end
@@ -47,6 +51,18 @@
     vc.phoneManager = phoneManager;
     XCTAssertEqual(phoneManager, vc.phoneManager, @"Phone Manager is not the mock phone manger");
     
+    id appSettings = OCMClassMock([JCAppSettings class]);
+    vc.appSettings = appSettings;
+    XCTAssertEqual(appSettings, vc.appSettings, @"App Settings is not the mock app settings");
+    
+    id addressBook = OCMClassMock([JCAddressBook class]);
+    vc.sharedAddressBook = addressBook;
+    XCTAssertEqual(addressBook, vc.sharedAddressBook, @"Address Book is not the mock address book");
+    
+    id networkReachabilityManager = OCMClassMock([AFNetworkReachabilityManager class]);
+    vc.networkingReachabilityManager = networkReachabilityManager;
+    XCTAssertEqual(networkReachabilityManager, vc.networkingReachabilityManager, @"Reachability Manager is not the mock reachability Manager");
+    
     id authenticationManager = OCMClassMock([JCAuthenticationManager class]);
     vc.authenticationManager = authenticationManager;
     XCTAssertEqual(authenticationManager, vc.authenticationManager, @"Authentication Manager is not the mock authentication manger");
@@ -60,7 +76,7 @@
     [super tearDown];
 }
 
--(void)test_JCDialerViewController_storyboard_initialization
+-(void)test_storyboard_initialization
 {
     XCTAssertNotNil(self.vc, @"View not initiated properly");
     XCTAssertTrue([self.vc isKindOfClass:[JCDialerViewController class]], @"View controller should be kind of class: %@", [JCDialerViewController class]);
@@ -70,9 +86,73 @@
     XCTAssertNotNil(self.vc.registrationStatusLabel, @"Registration Status Label should not be nil");
     XCTAssertNotNil(self.vc.callButton, @"Call Button should not be nil");
     XCTAssertNotNil(self.vc.backspaceButton, @"Backspace Button should not be nil");
+    XCTAssertNotNil(self.vc.plusLongPressGestureRecognizer, @"Plus Long Press Gesture Recongizer should not be nil");
+    XCTAssertNotNil(self.vc.clearLongPressGestureRecognizer, @"Clear Long Press Gesture Recongizer should not be nil");
 }
 
--(void)test_JCDialerViewController_dial_withPhoneNumber
+#pragma mark - Registration Status Tests -
+
+-(void)test_registrationStatus_connected
+{
+    //TODO
+}
+
+-(void)test_registrationStatus_connecting
+{
+    //TODO
+}
+
+-(void)test_registrationStatus_wifiOnly_cellularData
+{
+    //TODO
+}
+
+-(void)test_registrationStatus_wifiOnly_disconnected
+{
+    //TODO
+}
+
+#pragma mark - Number Pad Tests -
+
+-(void)test_numPad_keyPress
+{
+    // Given
+    self.vc.formattedPhoneNumberLabel.dialString = nil;
+    UIButton *button = [[UIButton alloc] init];
+    button.tag = 5;
+    
+    // When
+    [self.vc numPadPressed:button];
+    
+    // Then
+    NSString *dialString = self.vc.formattedPhoneNumberLabel.dialString;
+    XCTAssertTrue([dialString isEqualToString:@"5"]);
+}
+
+-(void)test_numPad_longKeyPress
+{
+    // Given
+    self.vc.formattedPhoneNumberLabel.dialString = nil;
+    
+    // When -> Simulate a long press
+    UILongPressGestureRecognizer *r= self.vc.plusLongPressGestureRecognizer;
+    r.state = UIGestureRecognizerStateBegan;
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.01]];
+    r.state = UIGestureRecognizerStateChanged;
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.01]];
+    r.state = UIGestureRecognizerStateEnded;
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.01]];
+    [r reset];
+    
+    // Then
+    NSString *dialString = self.vc.formattedPhoneNumberLabel.dialString;
+    XCTAssertTrue([dialString isEqualToString:@"+"]);
+}
+
+#pragma mark - Initiate Call Tests -
+
+
+-(void)test_dial_withPhoneNumber
 {
     // Given
     Line *line = [Line MR_createInContext:self.context];
@@ -87,7 +167,7 @@
     OCMVerify([self.vc.phoneManager dialNumber:dialString usingLine:line type:JCPhoneManagerSingleDial completion:OCMOCK_ANY]);
 }
 
--(void)test_JCDialerViewController_dial_withoutPhoneNumber
+-(void)test_dial_withoutPhoneNumber
 {
     // Given
     Line *line = [Line MR_createInContext:self.context];
@@ -113,6 +193,18 @@
     // Verify
     NSString *dialString = self.vc.formattedPhoneNumberLabel.dialString;
     XCTAssertTrue([outgoingCall.number isEqualToString:dialString], @"dial string do not match");
+}
+
+#pragma mark - Backspace Tests -
+
+-(void)test_backspace_press
+{
+    
+}
+
+-(void)test_clear_press
+{
+    
 }
 
 @end

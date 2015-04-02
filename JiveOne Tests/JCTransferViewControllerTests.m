@@ -37,6 +37,8 @@
     XCTAssertNotNil(self.vc.formattedPhoneNumberLabel, @"Formatted Phone Number Label should not be nil");
     XCTAssertNotNil(self.vc.callButton, @"Call Button should not be nil");
     XCTAssertNotNil(self.vc.backspaceButton, @"Backspace Button should not be nil");
+    XCTAssertNotNil(self.vc.plusLongPressGestureRecognizer, @"Plus Long Press Gesture Recongizer should not be nil");
+    XCTAssertNotNil(self.vc.clearLongPressGestureRecognizer, @"Clear Long Press Gesture Recongizer should not be nil");
 }
 
 @end
