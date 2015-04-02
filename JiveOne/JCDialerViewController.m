@@ -241,7 +241,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     self.registrationStatusLabel.text = prompt;
 }
 
--(NSString *)characterFromNumPadTag:(int)tag
+-(NSString *)characterFromNumPadTag:(NSInteger)tag
 {
     switch (tag) {
         case 10:
@@ -249,7 +249,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
         case 11:
             return @"#";
         default:
-            return [NSString stringWithFormat:@"%i", tag];
+            return [NSString stringWithFormat:@"%i", (int)tag];
     }
 }
 
