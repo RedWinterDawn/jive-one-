@@ -30,7 +30,8 @@
 
 @interface NSString (PhoneNumbers)
 
-- (NSString *)formattedPhoneNumber;
+@property (nonatomic, readonly) NSString *dialableString;
+@property (nonatomic, readonly) NSString *formattedPhoneNumber;
 
 - (NSMutableAttributedString *)formattedPhoneNumberWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color;
 
