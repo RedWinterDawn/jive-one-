@@ -142,7 +142,7 @@
     NSString *expectedType = @"Mobile";
     NSString *expectedNumber = @"(512) 111-1111";
     
-    NSArray *numbers = [self.addressBook fetchNumbersWithKeyword:keyword sortedByKey:@"name" ascending:YES];
+    NSArray *numbers = [self.addressBook fetchNumbersWithKeyword:keyword sortedByKey:@"number" ascending:YES];
     XCTAssertTrue(numbers.count == 2, @"not enough objects returned, should be 2");
     
     JCAddressBookNumber *number = numbers.firstObject;
