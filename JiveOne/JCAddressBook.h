@@ -7,6 +7,7 @@
 //
 
 @import Foundation;
+@import CoreData;
 
 #import "JCAddressBookPerson.h"
 #import "JCAddressBookNumber.h"
@@ -85,10 +86,10 @@ extern NSString *const kJCAddressBookFailedToLoadNotification;
 - (void)formattedNamesForNumbers:(NSSet *)numbers
                            begin:(void (^)())begin
                           number:(void (^)(NSString *name, NSString *number))number
-                      completion:(CompletionHandler)completion;
+                      completion:(void(^)(BOOL success, NSError *error))completion __deprecated;
 
 - (void)formattedNameForNumber:(NSString *)number
-                    completion:(void (^)(NSString *name, NSError *error))completion;
+                    completion:(void (^)(NSString *name, NSError *error))completion __deprecated;
 
 @end
 

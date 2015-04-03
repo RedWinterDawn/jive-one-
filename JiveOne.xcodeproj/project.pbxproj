@@ -396,6 +396,8 @@
 		5DE724711ACC808F00BB313B /* JCBaseUITestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE724701ACC808F00BB313B /* JCBaseUITestCase.m */; };
 		5DE724761ACDB13800BB313B /* TestExternalContactListContents.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5DE724741ACDB13800BB313B /* TestExternalContactListContents.plist */; };
 		5DE7247A1ACDB20B00BB313B /* JCAddressBookTestDataFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE724791ACDB20B00BB313B /* JCAddressBookTestDataFactory.m */; };
+		5DE724861ACE3CB500BB313B /* JCAddressBookTestDataFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DE724791ACDB20B00BB313B /* JCAddressBookTestDataFactory.m */; };
+		5DE724871ACE40BA00BB313B /* TestExternalContactListContents.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5DE724741ACDB13800BB313B /* TestExternalContactListContents.plist */; };
 		5DF468101A5B9BF600E5826A /* JCClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF4680F1A5B9BF600E5826A /* JCClient.m */; };
 		9135DE0418BC01550052E998 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9135DE0318BC01550052E998 /* AVFoundation.framework */; };
 		9136FF231925D48D0040B367 /* slider_maximum@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9136FF211925D48D0040B367 /* slider_maximum@2x.png */; };
@@ -458,6 +460,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 275F4A4D18AD0FBC00D2F069;
 			remoteInfo = JiveOne;
+		};
+		5DE724881ACE443C00BB313B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 275F4A4618AD0FBC00D2F069 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5D9F72151AC3519F00B9D0F8;
+			remoteInfo = JiveOneUnitTests;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -1947,6 +1956,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				5DE724891ACE443C00BB313B /* PBXTargetDependency */,
 			);
 			name = JiveOne;
 			productName = JiveOne;
@@ -2110,6 +2120,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5DE724871ACE40BA00BB313B /* TestExternalContactListContents.plist in Resources */,
 				5DE724491ACB4FEC00BB313B /* PhoneManager.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2407,6 +2418,7 @@
 			files = (
 				5DE7243E1ACB23D200BB313B /* JCPhoneManagerBaseTestCase.m in Sources */,
 				5DE724711ACC808F00BB313B /* JCBaseUITestCase.m in Sources */,
+				5DE724861ACE3CB500BB313B /* JCAddressBookTestDataFactory.m in Sources */,
 				5DE724431ACB26B700BB313B /* JCTransferViewControllerTests.m in Sources */,
 				5DE7244C1ACB662C00BB313B /* OsgiData.xcdatamodel in Sources */,
 				5D62FC031ACB09AC00C6DE05 /* JCDialerViewControllerTests.m in Sources */,
@@ -2586,6 +2598,11 @@
 			isa = PBXTargetDependency;
 			target = 275F4A4D18AD0FBC00D2F069 /* JiveOne */;
 			targetProxy = 5D62FBFC1ACB095200C6DE05 /* PBXContainerItemProxy */;
+		};
+		5DE724891ACE443C00BB313B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5D9F72151AC3519F00B9D0F8 /* JiveOneUnitTests */;
+			targetProxy = 5DE724881ACE443C00BB313B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
