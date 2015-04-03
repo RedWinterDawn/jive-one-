@@ -7,17 +7,27 @@
 //
 
 #import "JCMainStoryboardBaseTestCase.h"
+
+// Libraries
+#import <MagicalRecord/NSManagedObject+MagicalRecord.h>
+#import <UIKit/UIGestureRecognizerSubclass.h>
+
+// Controllers
 #import "JCDialerViewController.h"
+
+// Managers
 #import "JCPhoneManager.h"
-#import "JCFormattedPhoneNumberLabel.h"
 #import "JCAuthenticationManager.h"
+
+// Views
+#import "JCFormattedPhoneNumberLabel.h"
+
+// Objects
 #import "JCAddressBook.h"
 #import "Line.h"
 #import "OutgoingCall.h"
-#import <MagicalRecord/NSManagedObject+MagicalRecord.h>
-#import <MagicalRecord+Actions.h>
 #import "JCAddressBookTestDataFactory.h"
-#import <UIKit/UIGestureRecognizerSubclass.h>
+
 
 @interface JCPhoneManager ()
 
