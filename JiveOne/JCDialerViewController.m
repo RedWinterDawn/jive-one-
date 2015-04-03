@@ -50,6 +50,9 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     [center addObserver:self selector:@selector(updateRegistrationStatus) name:kJCPhoneManagerRegistrationFailureNotification object:phoneManager];
     [self updateRegistrationStatus];
     
+    JCAddressBook *addressBook = self.sharedAddressBook;
+    [center addObserver:self selector:@selector(updateCollectionView) name:kJCAddressBookLoadedNotification object:addressBook];
+    
     self.backspaceButton.alpha = 0;
 }
 
@@ -58,7 +61,6 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     [super viewDidAppear:animated];
     [self updateRegistrationStatus];    
 }
-
 
 -(void)awakeFromNib
 {
@@ -197,27 +199,26 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
         [self.formattedPhoneNumberLabel append:string];
     }
     
-    _contacts = nil;
-    
-    
+    [self updateCollectionView];
+}
+
+-(void)updateCollectionView
+{
     NSString *keyword = self.formattedPhoneNumberLabel.dialString;
-    [self.sharedAddressBook fetchNumbersWithKeyword:keyword completion:^(NSArray *numbers, NSError *error) {
-        if (!error) {
-            _contacts = numbers.mutableCopy;
-        }
-        
-        
-        if (!_contacts) {
-            _contacts = [NSMutableArray array];
-        }
-        
-        Line *line = self.authenticationManager.line;
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbxId = %@ AND jrn != %@ AND extension CONTAINS %@", line.pbx.pbxId, line.jrn, keyword];
-        NSArray *contacts = [JiveContact MR_findAllWithPredicate:predicate inContext:self.context];
-        [_contacts addObjectsFromArray:contacts];
-        
-        [self.collectionView reloadData];
-    }];
+    if (!keyword) {
+        return;
+    }
+    
+    _contacts = [self.sharedAddressBook fetchNumbersWithKeyword:keyword sortedByKey:NSStringFromSelector(@selector(name)) ascending:YES].mutableCopy;
+    if (!_contacts) {
+        _contacts = [NSMutableArray array];
+    }
+    
+    Line *line = self.authenticationManager.line;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbxId = %@ AND jrn != %@ AND extension CONTAINS %@", line.pbx.pbxId, line.jrn, keyword];
+    NSArray *contacts = [JiveContact MR_findAllWithPredicate:predicate inContext:self.context];
+    [_contacts addObjectsFromArray:contacts];
+    [self.collectionView reloadData];
 }
 
 -(void)updateRegistrationStatus
