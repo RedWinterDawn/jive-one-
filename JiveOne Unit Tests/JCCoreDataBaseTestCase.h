@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
+#import <CoreData/CoreData.h>
 #import <MagicalRecord/MagicalRecord.h>
+#import <MagicalRecord/MagicalRecord+Setup.h>
+#import <MagicalRecord/NSManagedObjectContext+MagicalRecord.h>
 
 @interface JCCoreDataBaseTestCase : XCTestCase
 

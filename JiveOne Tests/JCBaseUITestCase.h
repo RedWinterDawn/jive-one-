@@ -11,7 +11,9 @@
 #import <OCMock/OCMock.h>
 #import <CoreData/CoreData.h>
 
-@interface JCBaseUITestCase : XCTestCase
+#import "JCCoreDataBaseTestCase.h"
+
+@interface JCBaseUITestCase : JCCoreDataBaseTestCase
 
 @property (nonatomic, readonly) NSManagedObjectContext *context;
 

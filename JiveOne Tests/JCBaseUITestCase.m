@@ -7,22 +7,14 @@
 //
 
 #import "JCBaseUITestCase.h"
-#import <MagicalRecord/MagicalRecord+Setup.h>
-#import <MagicalRecord/NSManagedObjectContext+MagicalRecord.h>
 
 @implementation JCBaseUITestCase
 
 - (void)setUp {
     [super setUp];
-    
-    [MagicalRecord setDefaultModelFromClass:[self class]];
-    [MagicalRecord setupCoreDataStackWithInMemoryStore];
-    _context = [NSManagedObjectContext MR_defaultContext];
 }
 
 - (void)tearDown {
-    
-    [MagicalRecord cleanUp];
     
     [super tearDown];
 }

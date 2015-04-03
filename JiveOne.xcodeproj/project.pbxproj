@@ -380,6 +380,9 @@
 		5DBBDCC619DD9A4100A4DB96 /* JCPhoneManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBBDCC519DD9A4100A4DB96 /* JCPhoneManager.m */; };
 		5DBBDCC919DDA0A300A4DB96 /* JCCallCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBBDCC819DDA0A300A4DB96 /* JCCallCard.m */; };
 		5DBCB93919FE9300001C7157 /* JCConferenceCallCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBCB93819FE9300001C7157 /* JCConferenceCallCard.m */; };
+		5DDB5ADF1ACF29E90075DEE3 /* TestCoreDataContents.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5DDB5ADE1ACF29E90075DEE3 /* TestCoreDataContents.plist */; };
+		5DDB5AE01ACF29E90075DEE3 /* TestCoreDataContents.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5DDB5ADE1ACF29E90075DEE3 /* TestCoreDataContents.plist */; };
+		5DDB5AE11ACF3CFF0075DEE3 /* JCCoreDataBaseTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5525C11AC63CE90037F703 /* JCCoreDataBaseTestCase.m */; };
 		5DDDA5411A49C16000E31AA3 /* JCStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DDDA5401A49C16000E31AA3 /* JCStyleKit.m */; };
 		5DDDA5451A4A856800E31AA3 /* JCPresenceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DDDA5441A4A856800E31AA3 /* JCPresenceManager.m */; };
 		5DDDA5481A4B08AD00E31AA3 /* JCSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DDDA5471A4B08AD00E31AA3 /* JCSocket.m */; };
@@ -817,6 +820,7 @@
 		5DBD9F1F1A1D00A300F967B6 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5DBD9F201A1D00A400F967B6 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5DBD9F211A1D00A500F967B6 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5DDB5ADE1ACF29E90075DEE3 /* TestCoreDataContents.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TestCoreDataContents.plist; sourceTree = "<group>"; };
 		5DDDA53F1A49C16000E31AA3 /* JCStyleKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JCStyleKit.h; path = StyleKitAssets/JCStyleKit.h; sourceTree = "<group>"; };
 		5DDDA5401A49C16000E31AA3 /* JCStyleKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JCStyleKit.m; path = StyleKitAssets/JCStyleKit.m; sourceTree = "<group>"; };
 		5DDDA5431A4A856800E31AA3 /* JCPresenceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPresenceManager.h; sourceTree = "<group>"; };
@@ -1727,6 +1731,7 @@
 			children = (
 				5D9F72191AC3519F00B9D0F8 /* Info.plist */,
 				5DE724741ACDB13800BB313B /* TestExternalContactListContents.plist */,
+				5DDB5ADE1ACF29E90075DEE3 /* TestCoreDataContents.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -2123,6 +2128,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5DDB5AE01ACF29E90075DEE3 /* TestCoreDataContents.plist in Resources */,
 				5DE724871ACE40BA00BB313B /* TestExternalContactListContents.plist in Resources */,
 				5DE724491ACB4FEC00BB313B /* PhoneManager.storyboard in Resources */,
 			);
@@ -2132,6 +2138,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5DDB5ADF1ACF29E90075DEE3 /* TestCoreDataContents.plist in Resources */,
 				5DE724481ACB4FEB00BB313B /* PhoneManager.storyboard in Resources */,
 				5DE724761ACDB13800BB313B /* TestExternalContactListContents.plist in Resources */,
 			);
@@ -2421,6 +2428,7 @@
 			files = (
 				5DE7243E1ACB23D200BB313B /* JCPhoneManagerBaseTestCase.m in Sources */,
 				5DE724711ACC808F00BB313B /* JCBaseUITestCase.m in Sources */,
+				5DDB5AE11ACF3CFF0075DEE3 /* JCCoreDataBaseTestCase.m in Sources */,
 				5DE724861ACE3CB500BB313B /* JCAddressBookTestDataFactory.m in Sources */,
 				5DE724431ACB26B700BB313B /* JCTransferViewControllerTests.m in Sources */,
 				5DE7244C1ACB662C00BB313B /* OsgiData.xcdatamodel in Sources */,
