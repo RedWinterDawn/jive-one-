@@ -6,19 +6,161 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
+@import AddressBook;
+
+#import <objc/runtime.h>
+
 #import "JCAddressBook.h"
 #import "JCAddressBookNumber.h"
 
+NSString *const kJCAddressBookPeople    = @"JCAddressBookPeople";
+NSString *const kJCAddressBookNumbers   = @"JCAddressBookNumbers";
+
+NSString *const kJCAddressBookLoadedNotification = @"AddressBookLoadedNotification";
+NSString *const kJCAddressBookFailedToLoadNotification = @"AddressBookFailedToLoadNotification";
+
 @implementation JCAddressBook
 
-+(void)personForPersonId:(NSString *)personId personHash:(NSString *)hash completion:(void (^)(JCAddressBookPerson *person, NSError *error))completion
+- (instancetype)initWithPeople:(NSSet *)people numbers:(NSSet *)numbers
+{
+    self = [super init];
+    if (self) {
+        _people   = people.mutableCopy;
+        _numbers  = numbers.mutableCopy;
+    }
+    return self;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self getPermission:^(BOOL success, ABAddressBookRef addressBookRef, NSError *error) {
+            if (success) {
+                NSDictionary *results = [self processAddressBook:addressBookRef];
+                self.people = [results objectForKey:kJCAddressBookPeople];
+                self.numbers = [results objectForKey:kJCAddressBookNumbers];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kJCAddressBookLoadedNotification
+                                                                    object:self
+                                                                  userInfo:nil];
+            } else {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kJCAddressBookFailedToLoadNotification
+                                                                    object:self
+                                                                  userInfo:error.userInfo];
+            }
+        }];
+    }
+    return self;
+}
+
+- (void)dealloc
+{
+    _people = nil;
+    _numbers = nil;
+}
+
+#pragma mark - Public -
+
+- (NSArray *)fetchAllNumbersAscending:(BOOL)ascending
+{
+    return [self fetchAllNumbersSortedByKey:NSStringFromSelector(@selector(number)) ascending:ascending];
+}
+
+- (NSArray *)fetchAllNumbersSortedByKey:(NSString *)sortedByKey ascending:(BOOL)ascending
+{
+    return [self fetchNumbersWithKeyword:nil sortedByKey:sortedByKey ascending:ascending];
+}
+
+- (NSArray *)fetchNumbersWithKeyword:(NSString *)keyword sortedByKey:(NSString *)sortedByKey ascending:(BOOL)ascending
+{
+    NSPredicate *predicate = nil;
+    if (keyword) {
+        predicate = [NSPredicate predicateWithBlock: ^(JCAddressBookNumber *entity, NSDictionary *bindings) {
+            return [entity containsKeyword:keyword];
+        }];
+    }
+    return [self fetchNumbersWithPredicate:predicate sortedByKey:sortedByKey ascending:ascending];
+}
+
+- (NSArray *)fetchNumbersWithPredicate:(NSPredicate *)predicate sortedByKey:(NSString *)sortedByKey ascending:(BOOL)ascending
+{
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:kJCAddressBookNumbers];
+    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:sortedByKey ascending:ascending]];
+    if (sortedByKey) {
+        fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:sortedByKey ascending:ascending]];
+    }
+    if (predicate) {
+        fetchRequest.predicate = predicate;
+    }
+    return [self fetchWithFetchRequest:fetchRequest];
+}
+
+-(NSArray *)fetchWithFetchRequest:(NSFetchRequest *)request
+{
+    NSMutableSet *entities = [self entitiesForKey:request.entityName];
+    if (request.predicate) {
+        [entities filterUsingPredicate:request.predicate];
+    }
+    if (request.sortDescriptors) {
+        return [entities sortedArrayUsingDescriptors:request.sortDescriptors];
+    }
+    return entities.allObjects;
+}
+
+#pragma mark - Private -
+
+-(NSMutableSet *)entitiesForKey:(NSString *)key {
+    if ([key isEqualToString:kJCAddressBookNumbers]) {
+        return self.numbers.mutableCopy;
+    } else  {
+        return self.people.mutableCopy;
+    }
+}
+
+
+/**
+ * Parses an ABAddressBookRef into arrays of JCAddressBookPerson, JCAddressBookNumbers for search 
+ * retrival.
+ */
+- (NSDictionary *)processAddressBook:(ABAddressBookRef)addressBookRef
+{
+    NSMutableSet *people = [NSMutableSet new];
+    NSMutableSet *numbers = [NSMutableSet new];
+    
+    @autoreleasepool {
+        NSArray *allSources = (__bridge NSArray *)ABAddressBookCopyArrayOfAllSources(addressBookRef);
+        for (int i = 0; i < allSources.count; i++) {
+            ABRecordRef source = (__bridge ABRecordRef)([allSources objectAtIndex:i]);
+            NSArray *sourcePeople = (__bridge NSArray *)ABAddressBookCopyArrayOfAllPeopleInSource(addressBookRef, source);
+            for (int i=0; i < sourcePeople.count; i++) {
+                ABRecordRef record = (__bridge ABRecordRef)([sourcePeople objectAtIndex:i]);
+                if (!record) {
+                    continue;
+                }
+                
+                JCAddressBookPerson *person = [[JCAddressBookPerson alloc] initWithABRecordRef:record];
+                [people addObject:person];
+                [numbers addObjectsFromArray:person.phoneNumbers];
+            }
+        }
+    }
+    return @{kJCAddressBookPeople: people, kJCAddressBookNumbers: numbers};
+}
+
+#pragma mark - Legacy -
+
+- (void)personForPersonId:(NSString *)personId
+               personHash:(NSString *)hash
+               completion:(void (^)(JCAddressBookPerson *person, NSError *error))completion
 {
     [self personForRecordId:personId.intValue personHash:hash completion:completion];
 }
 
-+(void)personForRecordId:(ABRecordID)recordId personHash:(NSString *)hash completion:(void (^)(JCAddressBookPerson *person, NSError *error))completion
+- (void)personForRecordId:(ABRecordID)recordId
+               personHash:(NSString *)hash
+               completion:(void (^)(JCAddressBookPerson *person, NSError *error))completion
 {
-    [JCAddressBook getPermission:^(BOOL success, ABAddressBookRef addressBook, NSError *error) {
+    [self getPermission:^(BOOL success, ABAddressBookRef addressBook, NSError *error) {
         if (success) {
             ABRecordRef person = ABAddressBookGetPersonWithRecordID(addressBook,recordId);
             if (completion) {
@@ -33,18 +175,18 @@
     }];
 }
 
-+(void)fetchAllPeople:(void (^)(NSArray *contacts, NSError *error))completion {
+- (void)fetchAllPeople:(void (^)(NSArray *contacts, NSError *error))completion {
     [self fetchAllPeopleWithSortDescriptors:nil completion:completion];
 }
 
-+(void)fetchAllPeopleWithSortDescriptors:(NSArray *)sortDescriptors
-                              completion:(void (^)(NSArray *contacts, NSError *error))completion
+- (void)fetchAllPeopleWithSortDescriptors:(NSArray *)sortDescriptors
+                               completion:(void (^)(NSArray *contacts, NSError *error))completion
 {
     [self fetchWithPredicate:nil sortDescriptors:nil completion:completion];
 }
 
-+(void)fetchNumbersWithKeyword:(NSString *)keyword
-                    completion:(void (^)(NSArray *numbers, NSError *error))completion
+- (void)fetchNumbersWithKeyword:(NSString *)keyword
+                     completion:(void (^)(NSArray *numbers, NSError *error))completion
 {
     [self fetchWithKeyword:keyword completion:^(NSArray *people, NSError *error) {
         NSMutableArray *numbers = [NSMutableArray array];
@@ -52,7 +194,19 @@
             NSArray *phones = person.phoneNumbers;
             if (phones) {
                 for (JCAddressBookNumber *phoneNumber in phones) {
-                    [numbers addObject:phoneNumber];
+                    if (keyword.isNumeric) {
+                        NSString *string = phoneNumber.number.numericStringValue;
+                        if ([string respondsToSelector:@selector(containsString:)]) {
+                            if ([string containsString:keyword]) {
+                                [numbers addObject:phoneNumber];
+                            }
+                        }
+                        else if ([string rangeOfString:keyword].location != NSNotFound) {
+                            [numbers addObject:phoneNumber];
+                        }
+                    } else {
+                        [numbers addObject:phoneNumber];
+                    }
                 }
             }
         }
@@ -62,12 +216,12 @@
     }];
 }
 
-+(void)fetchWithKeyword:(NSString *)keyword
+- (void)fetchWithKeyword:(NSString *)keyword
              completion:(void (^)(NSArray *people, NSError *error))completion {
     [self fetchWithKeyword:keyword sortDescriptors:nil completion:completion];
 }
 
-+(void)fetchWithKeyword:(NSString *)keyword
+- (void)fetchWithKeyword:(NSString *)keyword
         sortDescriptors:(NSArray *)sortDescriptors
              completion:(void (^)(NSArray *contacts, NSError *error))completion
 {
@@ -105,7 +259,13 @@
         ABMultiValueRef phoneNumbers = ABRecordCopyValue( person, kABPersonPhoneProperty);
         for (CFIndex i = 0; i < ABMultiValueGetCount(phoneNumbers); i++) {
             NSString *phoneNumber = ((__bridge_transfer NSString*) ABMultiValueCopyValueAtIndex(phoneNumbers, i)).numericStringValue;
-            if ([phoneNumber containsString:string]) {
+            if ([phoneNumber respondsToSelector:@selector(containsString:)]) {
+                if ([phoneNumber containsString:keyword]) {
+                    result = YES;
+                    break;
+                }
+            }
+            else if ([phoneNumber rangeOfString:keyword].location != NSNotFound) {
                 result = YES;
                 break;
             }
@@ -118,7 +278,7 @@
     [self fetchWithPredicate:predicate sortDescriptors:sortDescriptors completion:completion];
 }
 
-+(void)fetchWithPredicate:(NSPredicate *)predicate
+- (void)fetchWithPredicate:(NSPredicate *)predicate
           sortDescriptors:(NSArray *)sortDescriptors
                completion:(void (^)(NSArray *contacts, NSError *error))completion
 {
@@ -134,7 +294,7 @@
     }];
 }
 
-+(void)fetchPeopleWithNumbers:(NSSet *)numbers
+- (void)fetchPeopleWithNumbers:(NSSet *)numbers
                    completion:(void (^)(NSArray *, NSError *))completion
 {
     NSMutableArray *predicates = [NSMutableArray new];
@@ -147,7 +307,13 @@
             ABMultiValueRef phoneNumbers = ABRecordCopyValue( person, kABPersonPhoneProperty);
             for (CFIndex i = 0; i < ABMultiValueGetCount(phoneNumbers); i++) {
                 NSString *phoneNumber = ((__bridge_transfer NSString*) ABMultiValueCopyValueAtIndex(phoneNumbers, i)).numericStringValue;
-                if ([phoneNumber containsString:string] || [string containsString:phoneNumber]) {
+                if ([phoneNumber respondsToSelector:@selector(containsString:)]) {
+                    if ([phoneNumber containsString:string] || [string containsString:phoneNumber]) {
+                        result = YES;
+                        break;
+                    }
+                }
+                else if ([phoneNumber rangeOfString:string].location != NSNotFound || [string rangeOfString:phoneNumber].location != NSNotFound) {
                     result = YES;
                     break;
                 }
@@ -164,7 +330,7 @@
     [self fetchWithPredicate:predicate sortDescriptors:nil completion:completion];
 }
 
-+(void)fetchPeopleWithNumber:(NSString *)number
+- (void)fetchPeopleWithNumber:(NSString *)number
                   completion:(void (^)(NSArray *people, NSError *error))completion
 {
     NSPredicate *predicate = [NSPredicate predicateWithBlock: ^(id record, NSDictionary *bindings) {
@@ -190,7 +356,7 @@
 NSString *const kNameFormattingTwoPeople = @"%@, %@";
 NSString *const kNameFormattingThreePlusPeople = @"%@,...+%li";
 
-+(NSString *)nameForPeople:(NSArray *)people {
+- (NSString *)nameForPeople:(NSArray *)people {
     NSString *name;
     if (people && people.count > 0) {
         id<JCPersonDataSource> person = people.firstObject;
@@ -211,7 +377,7 @@ NSString *const kNameFormattingThreePlusPeople = @"%@,...+%li";
 
 #pragma mark - Private -
 
-+(void)getPermission:(void (^)(BOOL success, ABAddressBookRef addressBook, NSError *error))completion
+- (void)getPermission:(void (^)(BOOL success, ABAddressBookRef addressBook, NSError *error))completion
 {
     CFErrorRef err;
     ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, &err);
@@ -244,7 +410,7 @@ NSString *const kNameFormattingThreePlusPeople = @"%@,...+%li";
     }
 }
 
-+ (void)readAddressBook:(ABAddressBookRef)addressBook
+- (void)readAddressBook:(ABAddressBookRef)addressBook
               predicate:(NSPredicate *)predicate
         sortDescriptors:(NSArray *)sortDescriptors
              completion:(void (^)(NSArray *contacts, NSError *error))completion
@@ -266,7 +432,7 @@ NSString *const kNameFormattingThreePlusPeople = @"%@,...+%li";
     }
 }
 
-+ (NSArray *)addressBookPeopleForRecordArray:(NSArray *)arrayOfPeople
+- (NSArray *)addressBookPeopleForRecordArray:(NSArray *)arrayOfPeople
                              sortDescriptors:(NSArray *)sortDesciptors
 {
     NSMutableArray *addressBook = [NSMutableArray arrayWithCapacity:arrayOfPeople.count];
@@ -280,9 +446,29 @@ NSString *const kNameFormattingThreePlusPeople = @"%@,...+%li";
 
 @end
 
+@implementation JCAddressBook (Singleton)
+
++ (instancetype)sharedAddressBook
+{
+    static JCAddressBook *singleton = nil;
+    static dispatch_once_t pred;        // Lock
+    dispatch_once(&pred, ^{             // This code is called at most once per app
+        singleton = [[JCAddressBook alloc] init];
+    });
+    
+    return singleton;
+}
+
++ (id)copyWithZone:(NSZone *)zone
+{
+    return self;
+}
+
+@end
+
 @implementation JCAddressBook (FormattedNames)
 
-+(void)formattedNamesForNumbers:(NSSet *)numbers
+- (void)formattedNamesForNumbers:(NSSet *)numbers
                           begin:(void (^)())begin
                 number:(void (^)(NSString *name, NSString *number))number
                      completion:(void (^)(BOOL success, NSError *error))completion
@@ -311,12 +497,10 @@ NSString *const kNameFormattingThreePlusPeople = @"%@,...+%li";
             completion((error == nil), error);
         }
     }];
-    
-    
 }
 
-+(void)formattedNameForNumber:(NSString *)number
-                   completion:(void (^)(NSString *name, NSError *error))completion
+- (void)formattedNameForNumber:(NSString *)number
+                    completion:(void (^)(NSString *name, NSError *error))completion
 {
     [self fetchPeopleWithNumber:number completion:^(NSArray *people, NSError *error) {
         NSString *name = [self nameForPeople:people];
@@ -330,6 +514,23 @@ NSString *const kNameFormattingThreePlusPeople = @"%@,...+%li";
     }];
 }
 
-
 @end
 
+@implementation UIViewController (JCAddressBook)
+
+- (void)setSharedAddressBook:(JCAddressBook *)sharedAddressBook {
+    objc_setAssociatedObject(self, @selector(sharedAddressBook), sharedAddressBook, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+-(JCAddressBook *)sharedAddressBook
+{
+    JCAddressBook *sharedAddressBook = objc_getAssociatedObject(self, @selector(sharedAddressBook));
+    if (!sharedAddressBook)
+    {
+        sharedAddressBook = [JCAddressBook sharedAddressBook];
+        objc_setAssociatedObject(self, @selector(sharedAddressBook), sharedAddressBook, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    return sharedAddressBook;
+}
+
+@end

@@ -25,6 +25,7 @@
 #import "JCCallCardCollectionViewController.h"
 
 #import "JCLineSession.h"
+#import "JCCallCard.h"
 
 #define CALL_OPTIONS_ANIMATION_DURATION 0.6
 #define TRANSFER_ANIMATION_DURATION 0.3

@@ -7,6 +7,7 @@
 //
 
 #import "JCAppSettings.h"
+#import <objc/runtime.h>
 
 NSString *const kJCAppSettingsIntercomEnabledAttribute = @"intercomEnabled";
 NSString *const kJCAppSettingsIntercomMicrophoneMuteEnabledAttribute = @"intercomMicrophoneMuteEnabled";
@@ -100,5 +101,23 @@ NSString *const kJCAppSettingsVibrateOnRingAttribute = @"vibrateOnRing";
     return self;
 }
 
+@end
+
+@implementation UIViewController (AppSettings)
+
+- (void)setAppSettings:(JCAppSettings *)appSettings {
+    objc_setAssociatedObject(self, @selector(appSettings), appSettings, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+-(JCAppSettings *)appSettings
+{
+    JCAppSettings *appSettings = objc_getAssociatedObject(self, @selector(appSettings));
+    if (!appSettings)
+    {
+        appSettings = [JCAppSettings sharedSettings];
+        objc_setAssociatedObject(self, @selector(appSettings), appSettings, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    return appSettings;
+}
 
 @end

@@ -32,6 +32,13 @@
 
 - (NSString *)formattedPhoneNumber;
 
-//- (NSString *)formattedPhoneNumberForLocal:()
+- (NSMutableAttributedString *)formattedPhoneNumberWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color;
+
+@end
+
+
+@interface UIFont (Bold)
+
++(UIFont *)boldFontForFont:(UIFont *)font;
 
 @end

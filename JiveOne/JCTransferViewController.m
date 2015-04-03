@@ -21,7 +21,7 @@
 -(IBAction)initiateCall:(id)sender
 {
     if (_delegate && [_delegate respondsToSelector:@selector(transferViewController:shouldDialNumber:)])
-        [_delegate transferViewController:self shouldDialNumber:self.dialStringLabel.dialString];
+        [_delegate transferViewController:self shouldDialNumber:self.formattedPhoneNumberLabel.dialString];
 }
 
 @end

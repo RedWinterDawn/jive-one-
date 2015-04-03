@@ -7,55 +7,94 @@
 //
 
 @import Foundation;
+@import CoreData;
 
 #import "JCAddressBookPerson.h"
+#import "JCAddressBookNumber.h"
+
+extern NSString *const kJCAddressBookPeople;
+extern NSString *const kJCAddressBookNumbers;
+
+extern NSString *const kJCAddressBookLoadedNotification;
+extern NSString *const kJCAddressBookFailedToLoadNotification;
 
 @interface JCAddressBook : NSObject
 
-+(void)personForPersonId:(NSString *)personId
+@property (retain, nonatomic) NSMutableSet *people;
+@property (retain, nonatomic) NSMutableSet *numbers;
+
+// Number Requests
+- (NSArray *)fetchAllNumbersAscending:(BOOL)ascending;
+- (NSArray *)fetchAllNumbersSortedByKey:(NSString *)sortedByKey ascending:(BOOL)ascending;
+- (NSArray *)fetchNumbersWithKeyword:(NSString *)keyword sortedByKey:(NSString *)sortedByKey ascending:(BOOL)ascending;
+- (NSArray *)fetchNumbersWithPredicate:(NSPredicate *)predicate sortedByKey:(NSString *)sortedByKey ascending:(BOOL)ascending;
+
+// People Requests
+
+
+
+// General requests
+- (NSArray *)fetchWithFetchRequest:(NSFetchRequest *)request;
+
+#pragma mark - Legacy -
+
+
+- (void)personForPersonId:(NSString *)personId
               personHash:(NSString *)hash
-              completion:(void (^)(JCAddressBookPerson *person, NSError *error))completion;
+               completion:(void (^)(JCAddressBookPerson *person, NSError *error))completion __deprecated;
 
-+(void)personForRecordId:(ABRecordID)recordId
+- (void)personForRecordId:(ABRecordID)recordId
               personHash:(NSString *)hash
-              completion:(void (^)(JCAddressBookPerson *person, NSError *error))completion;
+              completion:(void (^)(JCAddressBookPerson *person, NSError *error))completion __deprecated;
 
-+(void)fetchAllPeople:(void (^)(NSArray *people, NSError *error))completion;
+- (void)fetchAllPeople:(void (^)(NSArray *people, NSError *error))completion __deprecated;
 
-+(void)fetchAllPeopleWithSortDescriptors:(NSArray *)sortDescriptors
-                              completion:(void (^)(NSArray *people, NSError *error))completion;
+- (void)fetchAllPeopleWithSortDescriptors:(NSArray *)sortDescriptors
+                               completion:(void (^)(NSArray *people, NSError *error))completion __deprecated;
 
-+(void)fetchNumbersWithKeyword:(NSString *)keyword
-                    completion:(void (^)(NSArray *numbers, NSError *error))completion;
+- (void)fetchNumbersWithKeyword:(NSString *)keyword
+                     completion:(void (^)(NSArray *numbers, NSError *error))completion __deprecated;
 
-+(void)fetchWithKeyword:(NSString *)keyword
-             completion:(void (^)(NSArray *people, NSError *error))completion;
+- (void)fetchWithKeyword:(NSString *)keyword
+              completion:(void (^)(NSArray *people, NSError *error))completion __deprecated;
 
-+(void)fetchWithKeyword:(NSString *)keyword
-        sortDescriptors:(NSArray *)sortDescriptors
-             completion:(void (^)(NSArray *people, NSError *error))completion;
+- (void)fetchWithKeyword:(NSString *)keyword
+         sortDescriptors:(NSArray *)sortDescriptors
+              completion:(void (^)(NSArray *people, NSError *error))completion __deprecated;
 
-+(void)fetchWithPredicate:(NSPredicate *)predicate
-          sortDescriptors:(NSArray *)sortDescriptors
-               completion:(void (^)(NSArray *people, NSError *error))completion;
+- (void)fetchWithPredicate:(NSPredicate *)predicate
+           sortDescriptors:(NSArray *)sortDescriptors
+                completion:(void (^)(NSArray *people, NSError *error))completion __deprecated;
 
-+(void)fetchPeopleWithNumber:(NSString *)number
-                  completion:(void (^)(NSArray *people, NSError *error))completion;
+- (void)fetchPeopleWithNumber:(NSString *)number
+                   completion:(void (^)(NSArray *people, NSError *error))completion __deprecated;
 
-+(void)fetchPeopleWithNumbers:(NSSet *)numbers
-                   completion:(void (^)(NSArray *people, NSError *error))completion;
+- (void)fetchPeopleWithNumbers:(NSSet *)numbers
+                    completion:(void (^)(NSArray *people, NSError *error))completion __deprecated;
+
+@end
+
+@interface JCAddressBook (Singleton)
+
++(instancetype)sharedAddressBook;
 
 @end
 
 
 @interface JCAddressBook (FormattedNames)
 
-+(void)formattedNamesForNumbers:(NSSet *)numbers
-                          begin:(void (^)())begin
-                         number:(void (^)(NSString *name, NSString *number))number
-                     completion:(CompletionHandler)completion;
+- (void)formattedNamesForNumbers:(NSSet *)numbers
+                           begin:(void (^)())begin
+                          number:(void (^)(NSString *name, NSString *number))number
+                      completion:(void(^)(BOOL success, NSError *error))completion __deprecated;
 
-+(void)formattedNameForNumber:(NSString *)number
-                   completion:(void (^)(NSString *name, NSError *error))completion;
+- (void)formattedNameForNumber:(NSString *)number
+                    completion:(void (^)(NSString *name, NSError *error))completion __deprecated;
+
+@end
+
+@interface UIViewController (JCAddressBook)
+
+@property(nonatomic, strong) JCAddressBook *sharedAddressBook;
 
 @end
