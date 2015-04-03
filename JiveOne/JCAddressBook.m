@@ -21,7 +21,7 @@ NSString *const kJCAddressBookFailedToLoadNotification = @"AddressBookFailedToLo
 
 @implementation JCAddressBook
 
-- (instancetype)initWithPeople:(NSArray *)people numbers:(NSArray *)numbers
+- (instancetype)initWithPeople:(NSSet *)people numbers:(NSSet *)numbers
 {
     self = [super init];
     if (self) {
@@ -124,8 +124,8 @@ NSString *const kJCAddressBookFailedToLoadNotification = @"AddressBookFailedToLo
  */
 - (NSDictionary *)processAddressBook:(ABAddressBookRef)addressBookRef
 {
-    NSMutableArray *people = [NSMutableArray new];
-    NSMutableArray *numbers = [NSMutableArray new];
+    NSMutableSet *people = [NSMutableSet new];
+    NSMutableSet *numbers = [NSMutableSet new];
     
     @autoreleasepool {
         NSArray *allSources = (__bridge NSArray *)ABAddressBookCopyArrayOfAllSources(addressBookRef);

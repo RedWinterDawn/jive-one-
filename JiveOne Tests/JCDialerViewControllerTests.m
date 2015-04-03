@@ -16,12 +16,18 @@
 #import "OutgoingCall.h"
 #import <MagicalRecord/NSManagedObject+MagicalRecord.h>
 #import <MagicalRecord+Actions.h>
-
+#import "JCAddressBookTestDataFactory.h"
 #import <UIKit/UIGestureRecognizerSubclass.h>
 
 @interface JCPhoneManager ()
 
 -(void)dialNumber:(NSString *)dialString usingLine:(Line *)line type:(JCPhoneManagerDialType)dialType completion:(CompletionHandler)completion;
+
+@end
+
+@interface JCAddressBook ()
+
+- (instancetype)initWithPeople:(NSSet *)people numbers:(NSSet *)numbers;
 
 @end
 
@@ -55,7 +61,11 @@
     vc.appSettings = appSettings;
     XCTAssertEqual(appSettings, vc.appSettings, @"App Settings is not the mock app settings");
     
-    id addressBook = OCMClassMock([JCAddressBook class]);
+    // Load Test Address Book Data
+    NSDictionary *addressBookData = [JCAddressBookTestDataFactory loadTestAddessBookData];
+    NSMutableSet *people  = [addressBookData objectForKey:kJCAddressBookPeople];
+    NSMutableSet *numbers = [addressBookData objectForKey:kJCAddressBookNumbers];
+    JCAddressBook *addressBook = [[JCAddressBook alloc] initWithPeople:people numbers:numbers];
     vc.sharedAddressBook = addressBook;
     XCTAssertEqual(addressBook, vc.sharedAddressBook, @"Address Book is not the mock address book");
     
@@ -127,6 +137,9 @@
     // Then
     NSString *dialString = self.vc.formattedPhoneNumberLabel.dialString;
     XCTAssertTrue([dialString isEqualToString:@"5"]);
+    
+    NSInteger count = [self.vc collectionView:self.vc.collectionView numberOfItemsInSection:1];
+    XCTAssertTrue(count == 14, @"incorrect count of the number of objects to be shown");
 }
 
 -(void)test_numPad_longKeyPress

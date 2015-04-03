@@ -24,8 +24,8 @@
     NSAssert(contactList != nil, @"Should not be null");
     NSAssert([contactList count] > 1, @"Should have at least on contact in the list");
     
-    NSMutableArray *people  = [NSMutableArray new];
-    NSMutableArray *numbers = [NSMutableArray new];
+    NSMutableSet *people  = [NSMutableSet new];
+    NSMutableSet *numbers = [NSMutableSet new];
     for (NSDictionary *entry in contactList)
     {
         ABRecordRef record = [self recordForEntry:entry];
@@ -49,8 +49,8 @@
     ABMutableMultiValueRef phoneNumberMultiValue = ABMultiValueCreateMutable(kABMultiStringPropertyType);
     NSArray *phones = [entry objectForKey:@"phones"];
     for (NSDictionary *phone in phones) {
-        NSString *type = [phone stringValueForKey:@"type"];
-        NSString *number = [phone stringValueForKey:@"number"];
+        NSString *type = [phone valueForKey:@"type"];
+        NSString *number = [phone valueForKey:@"number"];
         ABMultiValueAddValueAndLabel(phoneNumberMultiValue, (__bridge CFTypeRef)(number), (__bridge CFStringRef)(type), NULL);
     }
     ABRecordSetValue(person, kABPersonPhoneProperty, phoneNumberMultiValue, nil);
