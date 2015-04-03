@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1CF8283F61D18EA132D6D40A /* libPods-JiveOneUnitTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B9E1C5EE3BB77C6F9C5D869 /* libPods-JiveOneUnitTests.a */; };
 		270098C118F5EA9300B6BC2F /* conv-compose.png in Resources */ = {isa = PBXBuildFile; fileRef = 270098B618F5EA9300B6BC2F /* conv-compose.png */; };
 		270098C218F5EA9300B6BC2F /* nav-conv@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 270098B718F5EA9300B6BC2F /* nav-conv@2x.png */; };
 		270098C318F5EA9300B6BC2F /* nav-conv.png in Resources */ = {isa = PBXBuildFile; fileRef = 270098B818F5EA9300B6BC2F /* nav-conv.png */; };
@@ -25,7 +24,6 @@
 		2736698218BD441D0069B4B3 /* JCPersonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2736698118BD441D0069B4B3 /* JCPersonCell.m */; };
 		273CC25E1900B23B005A2857 /* JCVoicemailPlaybackCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 273CC25D1900B23B005A2857 /* JCVoicemailPlaybackCell.m */; };
 		2741EB8118FC4C0200F2FE64 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2741EB8018FC4C0200F2FE64 /* CoreTelephony.framework */; };
-		2743528671ECCA97F0B320BA /* libPods-JiveOneTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF86F37AAB6C27FB9A684791 /* libPods-JiveOneTests.a */; };
 		274493CE18D13538002744CB /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 274493CD18D13538002744CB /* Common.m */; };
 		2747F1661A07E0F300E3FE73 /* JCContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2747F1651A07E0F300E3FE73 /* JCContactsViewController.m */; };
 		275158FC18AD10BB00FD8D3F /* main-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 275158F718AD10BA00FD8D3F /* main-logo.png */; };
@@ -464,13 +462,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 275F4A4D18AD0FBC00D2F069;
 			remoteInfo = JiveOne;
-		};
-		5DE724881ACE443C00BB313B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 275F4A4618AD0FBC00D2F069 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5D9F72151AC3519F00B9D0F8;
-			remoteInfo = JiveOneUnitTests;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -1024,7 +1015,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2743528671ECCA97F0B320BA /* libPods-JiveOneTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1064,7 +1054,6 @@
 				275F4A7918AD0FBC00D2F069 /* UIKit.framework in Frameworks */,
 				275F4A7818AD0FBC00D2F069 /* Foundation.framework in Frameworks */,
 				5D9F72A61AC5BD9700B9D0F8 /* Bolts.framework in Frameworks */,
-				1CF8283F61D18EA132D6D40A /* libPods-JiveOneUnitTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1964,7 +1953,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				5DE724891ACE443C00BB313B /* PBXTargetDependency */,
 			);
 			name = JiveOne;
 			productName = JiveOne;
@@ -2037,6 +2025,7 @@
 					};
 					5D9F72151AC3519F00B9D0F8 = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = 5NE3JJD5L3;
 					};
 				};
 			};
@@ -2611,11 +2600,6 @@
 			target = 275F4A4D18AD0FBC00D2F069 /* JiveOne */;
 			targetProxy = 5D62FBFC1ACB095200C6DE05 /* PBXContainerItemProxy */;
 		};
-		5DE724891ACE443C00BB313B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5D9F72151AC3519F00B9D0F8 /* JiveOneUnitTests */;
-			targetProxy = 5DE724881ACE443C00BB313B /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -2995,6 +2979,8 @@
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -3017,6 +3003,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -3026,6 +3013,8 @@
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3045,6 +3034,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Enterprise;
 		};
@@ -3054,6 +3044,8 @@
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3073,6 +3065,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -3126,8 +3119,8 @@
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PROJECT_DIR)",
 					"$(inherited)",

@@ -38,6 +38,16 @@
                ReferencedContainer = "container:JiveOne.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5D62FBF51ACB095200C6DE05"
+               BuildableName = "JiveOneTests.xctest"
+               BlueprintName = "JiveOneTests"
+               ReferencedContainer = "container:JiveOne.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
