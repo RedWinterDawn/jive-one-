@@ -145,6 +145,12 @@
     return self.name;
 }
 
+-(NSString *)number
+{
+    JCAddressBookNumber *firstNumber = self.phoneNumbers.firstObject;
+    return firstNumber.number;
+}
+
 -(NSArray *)phoneNumbers {
     NSMutableArray *phoneNumbers = [NSMutableArray array];
     ABMultiValueRef phones = ABRecordCopyValue(_person, kABPersonPhoneProperty);
@@ -180,6 +186,13 @@
     }
     return NO;
 }
+
+-(NSAttributedString *)detailTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color
+{
+    return nil;
+}
+
+#pragma mark - ABAddressBook Convience Methods -
 
 + (NSString *)copyRecordValueAsString:(ABRecordRef)ref propertyId:(ABPropertyID)propertyId
 {
@@ -222,5 +235,7 @@
     CFRelease(value);
     return string;
 }
+
+
 
 @end
