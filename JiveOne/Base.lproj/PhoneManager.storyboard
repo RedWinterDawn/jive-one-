@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -1593,8 +1594,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" misplaced="YES" image="incall-background" translatesAutoresizingMaskIntoConstraints="NO" id="bSI-PA-Hdx">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" image="incall-background" translatesAutoresizingMaskIntoConstraints="NO" id="bSI-PA-Hdx">
+                                <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CUP-Js-RMg">
                                 <rect key="frame" x="130" y="480" width="60" height="60"/>
@@ -1692,7 +1693,6 @@
                             <constraint firstAttribute="trailing" secondItem="X2r-4X-bhX" secondAttribute="trailing" id="EWO-dP-fCo"/>
                             <constraint firstAttribute="centerY" secondItem="X2r-4X-bhX" secondAttribute="centerY" constant="62" id="FCS-ur-I76"/>
                             <constraint firstItem="8a3-dt-Abe" firstAttribute="width" secondItem="DZj-9E-HiD" secondAttribute="width" id="L4v-sR-80j"/>
-                            <constraint firstItem="bSI-PA-Hdx" firstAttribute="top" secondItem="QQe-cQ-lZF" secondAttribute="top" id="MjW-8u-PY0"/>
                             <constraint firstAttribute="bottom" secondItem="bSI-PA-Hdx" secondAttribute="bottom" id="NiA-1Y-srp"/>
                             <constraint firstAttribute="trailing" secondItem="bSI-PA-Hdx" secondAttribute="trailing" id="P8d-KG-dHV"/>
                             <constraint firstItem="CUP-Js-RMg" firstAttribute="centerX" secondItem="bSI-PA-Hdx" secondAttribute="centerX" id="QlQ-Rr-xIj"/>
@@ -1702,7 +1702,6 @@
                             <constraint firstItem="8a3-dt-Abe" firstAttribute="height" secondItem="DZj-9E-HiD" secondAttribute="height" id="bbo-Dq-fME"/>
                             <constraint firstItem="bSI-PA-Hdx" firstAttribute="leading" secondItem="QQe-cQ-lZF" secondAttribute="leading" id="fre-Uw-8O9"/>
                             <constraint firstAttribute="trailing" secondItem="bSI-PA-Hdx" secondAttribute="trailing" id="jVn-8h-67X"/>
-                            <constraint firstItem="bSI-PA-Hdx" firstAttribute="top" secondItem="QQe-cQ-lZF" secondAttribute="top" id="kVt-5a-DH5"/>
                             <constraint firstItem="8a3-dt-Abe" firstAttribute="top" secondItem="X2r-4X-bhX" secondAttribute="bottom" id="lRT-H7-x3q"/>
                             <constraint firstItem="8a3-dt-Abe" firstAttribute="leading" secondItem="QQe-cQ-lZF" secondAttribute="leadingMargin" constant="-8" id="lvX-pZ-Jnt"/>
                             <constraint firstAttribute="centerX" secondItem="X2r-4X-bhX" secondAttribute="centerX" id="sLd-0Q-ELC"/>
