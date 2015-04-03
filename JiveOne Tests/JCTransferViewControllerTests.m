@@ -97,6 +97,10 @@
     XCTAssertNotNil(self.vc.view, @"View should not be nil");
     XCTAssertNotNil(self.vc.collectionView, @"Collection view should not be nil");
     XCTAssertNotNil(self.vc.formattedPhoneNumberLabel, @"Formatted Phone Number Label should not be nil");
+    XCTAssertNotNil(self.vc.collectionView.dataSource, @"Collection view should have a dataSource");
+    XCTAssertEqual(self.vc.collectionView.dataSource, self.vc, @"The Collection view dataSorce should equal the view");
+    XCTAssertNotNil(self.vc.collectionView.delegate, @"Collection view should have a delegate");
+    XCTAssertEqual(self.vc.collectionView.delegate, self.vc, @"The Collection view delegate should equal the view");
     XCTAssertNotNil(self.vc.callButton, @"Call Button should not be nil");
     XCTAssertNotNil(self.vc.backspaceButton, @"Backspace Button should not be nil");
     XCTAssertNotNil(self.vc.plusLongPressGestureRecognizer, @"Plus Long Press Gesture Recongizer should not be nil");
