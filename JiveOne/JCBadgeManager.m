@@ -10,8 +10,13 @@
 #import "RecentEvent.h"
 #import "JCBadges.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-variable"
+
 static const UIUserNotificationType USER_NOTIFICATION_TYPES_REQUIRED = UIRemoteNotificationTypeBadge | UIUserNotificationTypeAlert | UIUserNotificationTypeSound;
 static const UIRemoteNotificationType REMOTE_NOTIFICATION_TYPES_REQUIRED = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
+
+#pragma clang diagnostic pop
 
 NSString *const kJCBadgeManagerBadgesKey        = @"badges";
 NSString *const kJCBadgeManagerVoicemailsKey    = @"voicemails";
@@ -41,14 +46,25 @@ NSString *const kJCBadgeManagerMissedCallsKey   = @"missedCalls";
     self = [super init];
     if (self) {
         UIApplication *application = [UIApplication sharedApplication];
+        #if TARGET_IPHONE_SIMULATOR
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [application.delegate application:application didFailToRegisterForRemoteNotificationsWithError:nil];
+        });
+        
+        #elif TARGET_OS_IPHONE
+        
         if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
             if (![self canSendNotifications]) {
                 UIUserNotificationSettings* requestedSettings = [UIUserNotificationSettings settingsForTypes:USER_NOTIFICATION_TYPES_REQUIRED categories:nil];
                 [application registerUserNotificationSettings:requestedSettings];
+                [application registerForRemoteNotifications];
             }
         }else {
             [application registerForRemoteNotificationTypes:REMOTE_NOTIFICATION_TYPES_REQUIRED];
         }
+        
+        #endif
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveMemoryNotification:) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
     }

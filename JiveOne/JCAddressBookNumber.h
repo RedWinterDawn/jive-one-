@@ -8,11 +8,18 @@
 
 #import <Foundation/Foundation.h>
 #import "JCPersonDataSource.h"
+#import "JCAddressBookPerson.h"
+#import <UIKit/UIKit.h>
 
 @interface JCAddressBookNumber : NSObject <JCPersonDataSource>
 
-@property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *number;
 @property (nonatomic, strong) NSString *type;
+
+@property (nonatomic, weak) JCAddressBookPerson *person;
+
+
+
+-(BOOL)containsKeyword:(NSString *)keyword;
 
 @end

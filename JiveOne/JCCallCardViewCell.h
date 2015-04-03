@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "JCCallCard.h"
-#import "JCDialStringLabel.h"
+#import "JCFormattedPhoneNumberLabel.h"
 
 #define CALL_CARD_BORDER_WIDTH 0.5f
 #define CALL_CARD_BORDER_COLOR [UIColor colorWithWhite:1 alpha:0.6]
@@ -23,7 +23,7 @@
 
 // Subviews
 @property (nonatomic, weak) IBOutlet UILabel *callerIdLabel;
-@property (nonatomic, weak) IBOutlet JCDialStringLabel *dialedNumberLabel;
+@property (nonatomic, weak) IBOutlet JCFormattedPhoneNumberLabel *dialedNumberLabel;
 @property (nonatomic, weak) IBOutlet UIButton *endCallButton;
 @property (nonatomic, weak) IBOutlet UIButton *answerCallButton;
 
