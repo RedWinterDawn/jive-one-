@@ -38,7 +38,7 @@
     _did.number = @"";
     
     _person = [JCUnknownNumber new];
-    _person.name = @"Test Name";
+    //_person.name = @"Test Name";
     _person.number = @"12345";
 }
 

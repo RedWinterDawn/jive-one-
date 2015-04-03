@@ -146,7 +146,7 @@
         if (name) {
             self.title = name;
         } else {
-            [JCAddressBook formattedNameForNumber:person.number completion:^(NSString *name, NSError *error) {
+            [self.sharedAddressBook formattedNameForNumber:person.number completion:^(NSString *name, NSError *error) {
                 self.title = name;
             }];
         }

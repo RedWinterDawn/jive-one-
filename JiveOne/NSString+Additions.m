@@ -87,4 +87,64 @@
     return [phoneNumberUtil format:phoneNumber numberFormat:NBEPhoneNumberFormatNATIONAL error:&error];
 }
 
+-(NSMutableAttributedString *)formattedPhoneNumberWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color{
+    
+    NSString *number = self.numericStringValue;
+    NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
+                           font, NSFontAttributeName,
+                           color, NSForegroundColorAttributeName, nil];
+    
+    NSMutableAttributedString *attributedNumberText = [[NSMutableAttributedString alloc] initWithString:number attributes:attrs];
+    
+    UIFont *boldFont = [UIFont boldFontForFont:font];
+    NSDictionary *boldAttrs = [NSDictionary dictionaryWithObjectsAndKeys:
+                               boldFont, NSFontAttributeName,
+                               color, NSForegroundColorAttributeName, nil];
+    
+    NSRange range = [number rangeOfString:keyword];
+    [attributedNumberText setAttributes:boldAttrs range:range];
+    
+    NSString *formattedNumber = self.formattedPhoneNumber;
+    NSUInteger len = formattedNumber.length;
+    unichar buffer[len+1];
+    [formattedNumber getCharacters:buffer range:NSMakeRange(0, len)];
+    for (int i=0; i<len; i++) {
+        NSString *charater = [NSString stringWithFormat:@"%C", buffer[i]];
+        if (!charater.isNumeric) {
+            NSAttributedString *attributedCharacter = [[NSAttributedString alloc] initWithString:charater attributes:attrs];
+            [attributedNumberText insertAttributedString:attributedCharacter atIndex:i];
+        }
+    }
+    
+    return attributedNumberText;
+}
+
+@end
+
+@implementation UIFont (Bold)
+
++(UIFont *)boldFontForFont:(UIFont *)font
+{
+    NSString *fontName = [font.fontName stringByAppendingString:@"-Bold"];
+    UIFont *boldFont = [UIFont fontWithName:fontName size:font.pointSize];
+    if (boldFont) {
+        return boldFont;
+    }
+    
+    fontName = [font.fontName stringByAppendingString:@"-BoldMT"];
+    boldFont = [UIFont fontWithName:fontName size:font.pointSize];
+    if (boldFont) {
+        return boldFont;
+    }
+    
+    if ([fontName isEqualToString:@"Arial"]) {
+        fontName = @"Arial-BoldMT";
+        boldFont = [UIFont fontWithName:fontName size:font.pointSize];
+        if (boldFont) {
+            return boldFont;
+        }
+    }
+    return [UIFont boldSystemFontOfSize:font.pointSize];
+}
+
 @end
