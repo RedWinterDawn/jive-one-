@@ -48,6 +48,9 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     [center addObserver:self selector:@selector(updateRegistrationStatus) name:kJCPhoneManagerRegistrationFailureNotification object:phoneManager];
     [self updateRegistrationStatus];
     
+    JCAddressBook *addressBook = self.sharedAddressBook;
+    [center addObserver:self selector:@selector(updateCollectionView) name:kJCAddressBookLoadedNotification object:addressBook];
+    
     self.backspaceButton.alpha = 0;
 }
 
@@ -56,7 +59,6 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     [super viewDidAppear:animated];
     [self updateRegistrationStatus];    
 }
-
 
 -(void)awakeFromNib
 {
@@ -195,22 +197,24 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
         [self.formattedPhoneNumberLabel append:string];
     }
     
-    _contacts = nil;
+    [self updateCollectionView];
+}
+
+-(void)updateCollectionView
+{
+    NSString *keyword = self.formattedPhoneNumberLabel.dialString;
+    if (!keyword) {
+        return;
+    }
     
-    [self.sharedAddressBook fetchNumbersWithKeyword:self.formattedPhoneNumberLabel.dialString completion:^(NSArray *numbers, NSError *error) {
-        if (!error) {
-            _contacts = numbers.mutableCopy;
-        }
-        
-        
-        if (!_contacts) {
-            _contacts = [NSMutableArray array];
-        }
-        
-        // TODO: Add in local contacts with a core data search here.
-        //_contacts addObjectsFromArray:nil];
-        [self.collectionView reloadData];
-    }];
+    _contacts = [self.sharedAddressBook fetchNumbersWithKeyword:keyword sortedByKey:NSStringFromSelector(@selector(name)) ascending:YES].mutableCopy;
+    if (!_contacts) {
+        _contacts = [NSMutableArray array];
+    }
+    
+    // TODO: Add in local contacts with a core data search here.
+    //_contacts addObjectsFromArray:nil];
+    [self.collectionView reloadData];
 }
 
 -(void)updateRegistrationStatus
@@ -234,7 +238,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     self.registrationStatusLabel.text = prompt;
 }
 
--(NSString *)characterFromNumPadTag:(int)tag
+-(NSString *)characterFromNumPadTag:(NSInteger)tag
 {
     switch (tag) {
         case 10:
@@ -242,7 +246,7 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
         case 11:
             return @"#";
         default:
-            return [NSString stringWithFormat:@"%i", tag];
+            return [NSString stringWithFormat:@"%i", (int)tag];
     }
 }
 
