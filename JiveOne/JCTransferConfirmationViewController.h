@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JCDialStringLabel.h"
+#import "JCFormattedPhoneNumberLabel.h"
 #import "JCLineSession.h"
 
 @interface JCTransferConfirmationViewController : UIViewController
@@ -16,8 +16,8 @@
 @property (nonatomic, copy) JCLineSession *receivingLineSession;
 
 @property (weak, nonatomic) IBOutlet UILabel *currentCallersName;
-@property (weak, nonatomic) IBOutlet JCDialStringLabel *currentCallersNumber;
+@property (weak, nonatomic) IBOutlet JCFormattedPhoneNumberLabel *currentCallersNumber;
 @property (weak, nonatomic) IBOutlet UILabel *transferToCallersName;
-@property (weak, nonatomic) IBOutlet JCDialStringLabel *transferToCallersNumber;
+@property (weak, nonatomic) IBOutlet JCFormattedPhoneNumberLabel *transferToCallersNumber;
 
 @end

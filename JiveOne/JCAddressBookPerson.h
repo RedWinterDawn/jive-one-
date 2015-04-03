@@ -24,4 +24,6 @@
 
 -(BOOL)hasNumber:(NSString *)string;
 
+-(BOOL)containsKeyword:(NSString *)keyword;
+
 @end

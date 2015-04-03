@@ -10,10 +10,14 @@
 
 @import Foundation;
 
-#import "JCCallCard.h"
-#import "Line.h"
+#import <AFNetworking/AFNetworkReachabilityManager.h>
+
 #import "JCManager.h"
+#import "JCSipManager.h"
+#import "JCAppSettings.h"
 #import "JCPhoneAudioManager.h"
+
+@class Line;
 
 extern NSString *const kJCPhoneManagerRegisteringNotification;
 extern NSString *const kJCPhoneManagerRegisteredNotification;
@@ -87,6 +91,8 @@ typedef enum : NSInteger {
 @end
 
 @interface UIViewController (PhoneManager)
+
+@property(nonatomic, strong) JCPhoneManager *phoneManager;
 
 // Dials a number. The sender is enabled and disabled while call is being initiated.
 - (void)dialNumber:(NSString *)phoneNumber

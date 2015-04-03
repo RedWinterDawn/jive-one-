@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5D9F72151AC3519F00B9D0F8"
-               BuildableName = "JiveOne Unit Tests.xctest"
-               BlueprintName = "JiveOne Unit Tests"
+               BuildableName = "JiveOneUnitTests.xctest"
+               BlueprintName = "JiveOneUnitTests"
                ReferencedContainer = "container:JiveOne.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -33,8 +33,18 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5D9F72151AC3519F00B9D0F8"
-               BuildableName = "JiveOne Unit Tests.xctest"
-               BlueprintName = "JiveOne Unit Tests"
+               BuildableName = "JiveOneUnitTests.xctest"
+               BlueprintName = "JiveOneUnitTests"
+               ReferencedContainer = "container:JiveOne.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5D62FBF51ACB095200C6DE05"
+               BuildableName = "JiveOneTests.xctest"
+               BlueprintName = "JiveOneTests"
                ReferencedContainer = "container:JiveOne.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -43,8 +53,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5D9F72151AC3519F00B9D0F8"
-            BuildableName = "JiveOne Unit Tests.xctest"
-            BlueprintName = "JiveOne Unit Tests"
+            BuildableName = "JiveOneUnitTests.xctest"
+            BlueprintName = "JiveOneUnitTests"
             ReferencedContainer = "container:JiveOne.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -62,8 +72,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5D9F72151AC3519F00B9D0F8"
-            BuildableName = "JiveOne Unit Tests.xctest"
-            BlueprintName = "JiveOne Unit Tests"
+            BuildableName = "JiveOneUnitTests.xctest"
+            BlueprintName = "JiveOneUnitTests"
             ReferencedContainer = "container:JiveOne.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -80,8 +90,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5D9F72151AC3519F00B9D0F8"
-            BuildableName = "JiveOne Unit Tests.xctest"
-            BlueprintName = "JiveOne Unit Tests"
+            BuildableName = "JiveOneUnitTests.xctest"
+            BlueprintName = "JiveOneUnitTests"
             ReferencedContainer = "container:JiveOne.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

@@ -10,16 +10,16 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol JCDialStringLabelDelegate <NSObject>
+@protocol JCFormattedPhoneNumberLabelDelegate <NSObject>
 
 @optional
 -(void)didUpdateDialString:(NSString *)dialString;
 
 @end
 
-@interface JCDialStringLabel : UILabel
+@interface JCFormattedPhoneNumberLabel : UILabel
 
-@property (nonatomic, weak) IBOutlet id <JCDialStringLabelDelegate> delegate;
+@property (nonatomic, weak) IBOutlet id <JCFormattedPhoneNumberLabelDelegate> delegate;
 @property (nonatomic) NSString *dialString;
 
 // Appends a string to the internal dial string at the end of the string.

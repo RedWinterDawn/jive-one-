@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @protocol JCPersonDataSource <NSObject>
 
@@ -14,6 +15,8 @@
 @property (nonatomic, readonly) NSString *name;
 @property (nonatomic, readonly) NSString *detailText;
 @property (nonatomic, readonly) NSString *number;
+
+-(NSAttributedString *)detailTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color;
 
 @optional
 @property (nonatomic, readonly) NSString *firstNameFirstName;

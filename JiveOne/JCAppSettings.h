@@ -25,3 +25,9 @@ extern NSString *const kJCAppSettingsPresenceAttribute;
 +(instancetype)sharedSettings;
 
 @end
+
+@interface UIViewController (AppSettings)
+
+@property(nonatomic, strong) JCAppSettings *appSettings;
+
+@end

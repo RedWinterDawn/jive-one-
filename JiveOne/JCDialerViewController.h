@@ -7,20 +7,26 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JCDialStringLabel.h"
+#import "JCFormattedPhoneNumberLabel.h"
 
-@interface JCDialerViewController : UIViewController <JCDialStringLabelDelegate>
+@interface JCDialerViewController : UIViewController <JCFormattedPhoneNumberLabelDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
-@property (nonatomic, weak) IBOutlet UIButton *callBtn;
-@property (nonatomic, weak) IBOutlet JCDialStringLabel *dialStringLabel;
-@property (nonatomic, weak) IBOutlet UIButton *backspaceBtn;
-@property (weak, nonatomic) IBOutlet UILabel *regestrationStatus;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet JCFormattedPhoneNumberLabel *formattedPhoneNumberLabel;
+@property (weak, nonatomic) IBOutlet UILabel *registrationStatusLabel;
 @property (weak, nonatomic) IBOutlet UIButton *callButton;
+@property (weak, nonatomic) IBOutlet UIButton *backspaceButton;
+@property (weak, nonatomic) IBOutlet UILongPressGestureRecognizer *plusLongPressGestureRecognizer;
+@property (weak, nonatomic) IBOutlet UILongPressGestureRecognizer *clearLongPressGestureRecognizer;
 
 -(IBAction)numPadPressed:(id)sender;
--(IBAction)initiateCall:(id)sender;
--(IBAction)backspace:(id)sender;
+-(IBAction)numPadLogPress:(id)sender;
 
--(NSString *)characterFromNumPadTag:(int)tag;
+-(IBAction)initiateCall:(id)sender;
+
+-(IBAction)backspace:(id)sender;
+-(IBAction)clear:(id)sender;
+
+-(NSString *)characterFromNumPadTag:(NSInteger)tag;
 
 @end

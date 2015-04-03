@@ -33,6 +33,20 @@
     CFRelease(_person);
 }
 
+-(BOOL)containsKeyword:(NSString *)keyword
+{
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    return NO;
+}
+
 #pragma mark - Getters -
 
 -(NSInteger)recordId
@@ -131,6 +145,12 @@
     return self.name;
 }
 
+-(NSString *)number
+{
+    JCAddressBookNumber *firstNumber = self.phoneNumbers.firstObject;
+    return firstNumber.number;
+}
+
 -(NSArray *)phoneNumbers {
     NSMutableArray *phoneNumbers = [NSMutableArray array];
     ABMultiValueRef phones = ABRecordCopyValue(_person, kABPersonPhoneProperty);
@@ -139,7 +159,7 @@
         CFStringRef locLabel = ABMultiValueCopyLabelAtIndex(phones, i);
         
         JCAddressBookNumber *number = [JCAddressBookNumber new];
-        number.name = self.name;
+        number.person = self;
         if (phoneNumberRef) {
             number.number = (__bridge NSString *)phoneNumberRef;
             CFRelease(phoneNumberRef);
@@ -166,5 +186,56 @@
     }
     return NO;
 }
+
+-(NSAttributedString *)detailTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color
+{
+    return nil;
+}
+
+#pragma mark - ABAddressBook Convience Methods -
+
++ (NSString *)copyRecordValueAsString:(ABRecordRef)ref propertyId:(ABPropertyID)propertyId
+{
+    CFStringRef value = ABRecordCopyValue(ref, propertyId);
+    NSString *string = [NSString stringWithString:(__bridge NSString *)(value)];
+    CFRelease(value);
+    return string;
+}
+
++ (NSNumber *)copyRecordValueAsNumber:(ABRecordRef)ref propertyId:(ABPropertyID)propertyId
+{
+    CFNumberRef value = ABRecordCopyValue(ref, propertyId);
+    NSNumber *number = ((__bridge NSNumber *)value).copy;
+    CFRelease(value);
+    return number;
+}
+
++ (NSInteger)recordGetRecordID:(ABRecordRef)source
+{
+    return ABRecordGetRecordID(source);
+}
+
++ (NSInteger)multiValueGetCount:(ABMultiValueRef)phones
+{
+    return ABMultiValueGetCount(phones);
+}
+
++ (NSString *) copyMultiValueLabelAtIndex:(ABMultiValueRef)phones index:(CFIndex)index
+{
+    CFStringRef value = ABMultiValueCopyLabelAtIndex(phones, index);
+    NSString *string = [NSString stringWithString:(__bridge NSString *)(value)];
+    CFRelease(value);
+    return string;
+}
+
++ (NSString *) copyMultiValueValueAtIndex:(ABMultiValueRef)phones index:(CFIndex)index
+{
+    CFStringRef value = ABMultiValueCopyValueAtIndex(phones, index);
+    NSString *string = [NSString stringWithString:(__bridge NSString *)(value)];
+    CFRelease(value);
+    return string;
+}
+
+
 
 @end
