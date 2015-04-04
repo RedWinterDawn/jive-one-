@@ -11,7 +11,7 @@
 #import <OCMock/OCMock.h>
 #import "JCPhoneManager.h"
 
-#import "JCBaseUITestCase.h"
+#import "JCBaseTestCase.h"
 
 @interface JCPhoneManager (Private)
 
@@ -21,7 +21,7 @@
 
 @end
 
-@interface JCPhoneManagerBaseTestCase : JCBaseUITestCase
+@interface JCPhoneManagerBaseTestCase : JCBaseTestCase
 
 @property (nonatomic, strong) JCPhoneManager *phoneManager;
 

@@ -9,6 +9,7 @@
 #import "JCRecentEventCell.h"
 #import "Contact.h"
 #import "PBX.h"
+#import "Line.h"
 
 #import "RecentLineEvent.h"
 

@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCCoreDataBaseTestCase.h"
+#import "JCBaseTestCase.h"
 
-@implementation JCCoreDataBaseTestCase
+@implementation JCBaseTestCase
 
 - (void)setUp {
     [super setUp];

@@ -53,6 +53,20 @@
                ReferencedContainer = "container:JiveOne.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5D2D74111ACFA84700B98BDF"
+               BuildableName = "UnitTests.xctest"
+               BlueprintName = "UnitTests"
+               ReferencedContainer = "container:JiveOne.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -117,6 +131,16 @@
                BlueprintIdentifier = "5D9F72151AC3519F00B9D0F8"
                BuildableName = "JiveOneUnitTests.xctest"
                BlueprintName = "JiveOneUnitTests"
+               ReferencedContainer = "container:JiveOne.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5D2D74111ACFA84700B98BDF"
+               BuildableName = "UnitTests.xctest"
+               BlueprintName = "UnitTests"
                ReferencedContainer = "container:JiveOne.xcodeproj">
             </BuildableReference>
          </TestableReference>

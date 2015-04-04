@@ -11,6 +11,8 @@
 #import "Voicemail.h"
 #import "User.h"
 
+#import "JCAuthenticationManager.h"
+
 NSString *const kV5BaseUrl = @"https://api.jive.com/";
 
 @implementation JCV5ApiClient
@@ -96,16 +98,11 @@ NSString *const kV5BaseUrl = @"https://api.jive.com/";
 {
 	[self setRequestAuthHeader:NO];
 	
-	NSString *deviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:UDdeviceToken];
-	NSDictionary *params = nil;
-	if (deviceToken) {
-		params = [NSDictionary dictionaryWithObject:deviceToken forKey:UDdeviceToken];
-	}
-	
+    NSString *deviceToken = [JCAuthenticationManager sharedInstance].deviceToken;
 	NSString *sessionURL = @"https://realtime.jive.com/session";
 	
 	[_manager POST:sessionURL
-        parameters:params
+        parameters:@{@"deviceToken": deviceToken}
            success:^(AFHTTPRequestOperation *operation, id responseObject) {
                completed(YES, responseObject, operation, nil);
            }

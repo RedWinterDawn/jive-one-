@@ -18,7 +18,8 @@
 #import "SMSMessage+SMSClient.h"
 #import "JCAddressBook.h"
 #import "JCAddressBookNumber.h"
-
+#import "PBX.h"
+#import "Line.h"
 
 // Views
 #import "JCMessagesCollectionViewCell.h"

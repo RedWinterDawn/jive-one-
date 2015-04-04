@@ -17,6 +17,9 @@
 #import "LocalContact.h"
 #import "JCAddressBook.h"
 
+#import "Line.h"
+#import "PBX.h"
+
 #import "JCConversationGroupsResultsController.h"
 #import "JCConversationGroup.h"
 

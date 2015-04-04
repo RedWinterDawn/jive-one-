@@ -6,10 +6,9 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCCoreDataBaseTestCase.h"
+#import "JCBaseTestCase.h"
 #import <AFNetworking/AFNetworkReachabilityManager.h>
 
-#import <OCMock/OCMock.h>
 #import "JCPhoneManager.h"
 #import "JCSipManager.h"
 #import "JCAppSettings.h"
@@ -32,7 +31,7 @@
 
 @end
 
-@interface JCPhoneManagerTests : JCCoreDataBaseTestCase
+@interface JCPhoneManagerTests : JCBaseTestCase
 
 @property (nonatomic, strong) id sipHandlerMock;
 @property (nonatomic, strong) JCPhoneManager *phoneManager;

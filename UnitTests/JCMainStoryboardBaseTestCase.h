@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import "JCBaseUITestCase.h"
+#import "JCBaseTestCase.h"
 
-@interface JCMainStoryboardBaseTestCase : JCBaseUITestCase
+@interface JCMainStoryboardBaseTestCase : JCBaseTestCase
 
 @property (nonatomic, strong) UIStoryboard *storyboard;
 

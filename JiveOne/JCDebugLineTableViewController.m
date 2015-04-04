@@ -8,6 +8,7 @@
 
 #import "JCDebugLineTableViewController.h"
 #import "PBX.h"
+#import "Line.h"
 
 @interface JCDebugLineTableViewController ()
 

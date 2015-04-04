@@ -6,11 +6,15 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <XCTest/XCTest.h>
-#import <MagicalRecord/MagicalRecord.h>
+@import Foundation;
+@import UIKit;
+@import XCTest;
+@import CoreData;
 
-@interface JCCoreDataBaseTestCase : XCTestCase
+#import <OCMock/OCMock.h>
+#import <MagicalRecord/CoreData+MagicalRecord.h>
+
+@interface JCBaseTestCase : XCTestCase
 
 @property (nonatomic, readonly) NSManagedObjectContext *context;
 
