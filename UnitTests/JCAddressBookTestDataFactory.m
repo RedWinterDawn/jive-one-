@@ -11,18 +11,20 @@
 #import "JCAddressBookNumber.h"
 #import "JCAddressBook.h"
 
+NSString *const kJCAddressBookTestDataFactoryDataFile = @"TestExternalContactListContents.plist";
+
 @implementation JCAddressBookTestDataFactory
 
 + (NSDictionary *)loadTestAddessBookData
 {
     NSArray *pathParts = [@"TestExternalContactListContents.plist" componentsSeparatedByString:@"."];
-    NSString *filePath = [[NSBundle bundleForClass:[JCAddressBookTestDataFactory class]]
+    NSString *filePath = [[NSBundle bundleForClass:[self class]]
                           pathForResource:[pathParts objectAtIndex:0]
                           ofType:[pathParts objectAtIndex:1]];
 
     NSArray *contactList = [[NSArray alloc] initWithContentsOfFile:filePath];
     NSAssert(contactList != nil, @"Should not be null");
-    NSAssert([contactList count] > 1, @"Should have at least on contact in the list");
+    NSAssert(contactList.count > 1, @"Should have at least on contact in the list");
     
     NSMutableSet *people  = [NSMutableSet new];
     NSMutableSet *numbers = [NSMutableSet new];

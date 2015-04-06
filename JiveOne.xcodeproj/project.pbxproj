@@ -208,6 +208,8 @@
 		5DBBDCC919DDA0A300A4DB96 /* JCCallCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBBDCC819DDA0A300A4DB96 /* JCCallCard.m */; };
 		5DBCB93919FE9300001C7157 /* JCConferenceCallCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBCB93819FE9300001C7157 /* JCConferenceCallCard.m */; };
 		5DC518171AD2E688007CEA71 /* TestCoreDataContents.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5DC518161AD2E688007CEA71 /* TestCoreDataContents.plist */; };
+		5DC5181A1AD2E746007CEA71 /* JCCoreDataTestDataFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC518191AD2E746007CEA71 /* JCCoreDataTestDataFactory.m */; };
+		5DC5181C1AD2F9F5007CEA71 /* JCCoreDataFactoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC5181B1AD2F9F5007CEA71 /* JCCoreDataFactoryTests.m */; };
 		5DDDA5451A4A856800E31AA3 /* JCPresenceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DDDA5441A4A856800E31AA3 /* JCPresenceManager.m */; };
 		5DDDA5481A4B08AD00E31AA3 /* JCSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DDDA5471A4B08AD00E31AA3 /* JCSocket.m */; };
 		5DDDA54B1A4B238300E31AA3 /* JCLinePresence.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DDDA54A1A4B238300E31AA3 /* JCLinePresence.m */; };
@@ -606,6 +608,9 @@
 		5DBD9F201A1D00A400F967B6 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5DBD9F211A1D00A500F967B6 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5DC518161AD2E688007CEA71 /* TestCoreDataContents.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TestCoreDataContents.plist; sourceTree = "<group>"; };
+		5DC518181AD2E746007CEA71 /* JCCoreDataTestDataFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCoreDataTestDataFactory.h; sourceTree = "<group>"; };
+		5DC518191AD2E746007CEA71 /* JCCoreDataTestDataFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCoreDataTestDataFactory.m; sourceTree = "<group>"; };
+		5DC5181B1AD2F9F5007CEA71 /* JCCoreDataFactoryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCoreDataFactoryTests.m; sourceTree = "<group>"; };
 		5DDDA5431A4A856800E31AA3 /* JCPresenceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPresenceManager.h; sourceTree = "<group>"; };
 		5DDDA5441A4A856800E31AA3 /* JCPresenceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPresenceManager.m; sourceTree = "<group>"; };
 		5DDDA5461A4B08AD00E31AA3 /* JCSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSocket.h; sourceTree = "<group>"; };
@@ -1350,6 +1355,8 @@
 			children = (
 				5D2D741E1ACFB48500B98BDF /* JCAddressBookTestDataFactory.h */,
 				5D2D741F1ACFB48500B98BDF /* JCAddressBookTestDataFactory.m */,
+				5DC518181AD2E746007CEA71 /* JCCoreDataTestDataFactory.h */,
+				5DC518191AD2E746007CEA71 /* JCCoreDataTestDataFactory.m */,
 			);
 			name = Factories;
 			sourceTree = "<group>";
@@ -1377,6 +1384,7 @@
 			isa = PBXGroup;
 			children = (
 				5D2D74201ACFB48500B98BDF /* JCAddressBookTests.m */,
+				5DC5181B1AD2F9F5007CEA71 /* JCCoreDataFactoryTests.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -2032,10 +2040,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5DC5181C1AD2F9F5007CEA71 /* JCCoreDataFactoryTests.m in Sources */,
 				5D2D74351ACFB48500B98BDF /* JCDialerViewControllerTests.m in Sources */,
 				5D2D75511AD08DBA00B98BDF /* OsgiData.xcdatamodel in Sources */,
 				5D2D74341ACFB48500B98BDF /* JCBaseTestCase.m in Sources */,
 				5D2D74371ACFB48500B98BDF /* JCPhoneManagerBaseTestCase.m in Sources */,
+				5DC5181A1AD2E746007CEA71 /* JCCoreDataTestDataFactory.m in Sources */,
 				5D2D74311ACFB48500B98BDF /* JCAddressBookTests.m in Sources */,
 				5D2D74361ACFB48500B98BDF /* JCMainStoryboardBaseTestCase.m in Sources */,
 				5D2D74381ACFB48500B98BDF /* JCPhoneManagerTests.m in Sources */,
