@@ -19,6 +19,7 @@
 // Attributes
 @property (nonatomic, retain) NSString * jrn;
 @property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSString * domain;
 @property (nonatomic, getter=isV5) BOOL v5;
 
 // Relationships
