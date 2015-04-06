@@ -14,6 +14,8 @@
 // Models
 #import "ContactGroup.h"
 #import "PBX.h"
+#import "Line.h"
+#import "User.h"
 
 NSString *const kContactResponseIdentifierKey   = @"id";
 NSString *const kContactResponseNameKey         = @"displayName";

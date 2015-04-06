@@ -9,6 +9,7 @@
 #import "JCIntercomTableViewController.h"
 #import "JCAppSettings.h"
 #import "JCAuthenticationManager.h"
+#import "Line.h"
 
 @implementation JCIntercomTableViewController
 

@@ -10,13 +10,24 @@
 #import "JCAuthenticationKeychain.h"
 #import <objc/runtime.h>
 
+#import <MagicalRecord/CoreData+MagicalRecord.h>
+
 #import "Common.h"
+
+#import "User.h"
+#import "Line.h"
+#import "DID.h"
+#import "PBX.h"
 
 #import "JCV5ApiClient.h"
 #import "JCAuthenticationManagerError.h"
 #import "User+Custom.h"
 #import "PBX+V5Client.h"
 #import "JCAuthClient.h"
+
+#import "JCAlertView.h"
+
+#import "UIDevice+Additions.h"
 
 // Notifications
 NSString *const kJCAuthenticationManagerUserLoggedOutNotification               = @"userLoggedOut";
@@ -33,6 +44,9 @@ NSString *const kJCAuthenticationManagerAccessTokenKey  = @"access_token";
 NSString *const kJCAuthenticationManagerRefreshTokenKey = @"refresh_token";
 NSString *const kJCAuthenticationManagerUsernameKey     = @"username";
 NSString *const kJCAuthenticationManagerRememberMeKey   = @"remberMe";
+
+NSString *const kJCAuthneticationManagerDeviceTokenKey = @"deviceToken";
+
 
 @interface JCAuthenticationManager () <UIWebViewDelegate>
 {
@@ -165,7 +179,7 @@ NSString *const kJCAuthenticationManagerRememberMeKey   = @"remberMe";
     newToken = [newToken stringByReplacingOccurrencesOfString:@" " withString:@""];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setValue:newToken forKey:UDdeviceToken];
+    [defaults setValue:newToken forKey:kJCAuthneticationManagerDeviceTokenKey];
     [defaults synchronize];
 }
 
@@ -193,7 +207,7 @@ NSString *const kJCAuthenticationManagerRememberMeKey   = @"remberMe";
 
 -(NSString *)deviceToken
 {
-    return [[NSUserDefaults standardUserDefaults] valueForKey:UDdeviceToken];
+    return [[NSUserDefaults standardUserDefaults] valueForKey:kJCAuthneticationManagerDeviceTokenKey];
 }
 
 - (BOOL)rememberMe

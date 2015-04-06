@@ -6,12 +6,14 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 #import "JCManager.h"
 
-#import "User.h"
-#import "Line.h"
-#import "DID.h"
-#import "PBX.h"
+@class User;
+@class Line;
+@class DID;
+@class PBX;
 
 extern NSString *const kJCAuthenticationManagerUserLoggedOutNotification;
 extern NSString *const kJCAuthenticationManagerUserAuthenticatedNotification;
