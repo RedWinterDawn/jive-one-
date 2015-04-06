@@ -29,8 +29,8 @@ typedef void (^CompletionBlock) (BOOL success, NSError *error);
 - (void)logout;
 
 @property (nonatomic, strong) Line *line;
+@property (nonatomic, strong) DID *did;
 @property (nonatomic, readonly) User *user;
-@property (nonatomic, readonly) DID *did;
 @property (nonatomic, readonly) PBX *pbx;
 
 @property (nonatomic, readonly) NSString *authToken;
@@ -49,5 +49,11 @@ typedef void (^CompletionBlock) (BOOL success, NSError *error);
 @interface JCAuthenticationManager (Singleton)
 
 + (JCAuthenticationManager*)sharedInstance;
+
+@end
+
+@interface UIViewController (AuthenticationManager)
+
+@property (nonatomic, strong) JCAuthenticationManager *authenticationManager;
 
 @end

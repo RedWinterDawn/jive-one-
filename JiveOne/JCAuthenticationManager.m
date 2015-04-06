@@ -63,9 +63,16 @@ NSString *const kJCAuthneticationManagerDeviceTokenKey = @"deviceToken";
 
 -(instancetype)init
 {
+    JCAuthenticationKeychain *keyChain = [JCAuthenticationKeychain new];
+    
+    return [self initWithKeychain:keyChain];
+}
+
+-(instancetype)initWithKeychain:(JCAuthenticationKeychain *)keychain
+{
     self = [super init];
-    if (self) {
-        _authenticationKeychain = [JCAuthenticationKeychain new];
+    if(self) {
+        _authenticationKeychain = keychain;
     }
     return self;
 }
@@ -328,6 +335,25 @@ static dispatch_once_t authenticationManagerOnceToken;
     dispatch_once(&authenticationManagerOnceToken, ^{
         authenticationManager = [[JCAuthenticationManager alloc] init];
     });
+    return authenticationManager;
+}
+
+@end
+
+@implementation UIViewController (AuthenticationManager)
+
+- (void)setAuthenticationManager:(JCAuthenticationManager *)authenticationManager {
+    objc_setAssociatedObject(self, @selector(authenticationManager), authenticationManager, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+-(JCAuthenticationManager *)authenticationManager
+{
+    JCAuthenticationManager *authenticationManager = objc_getAssociatedObject(self, @selector(authenticationManager));
+    if (!authenticationManager)
+    {
+        authenticationManager = [JCAuthenticationManager sharedInstance];
+        objc_setAssociatedObject(self, @selector(authenticationManager), authenticationManager, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
     return authenticationManager;
 }
 
