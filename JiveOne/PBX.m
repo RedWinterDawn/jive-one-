@@ -20,24 +20,24 @@ NSString *const kPBXV5AttributeKey = @"v5";
 @dynamic jrn;
 @dynamic name;
 @dynamic pbxId;
-@dynamic user;
-@dynamic lines;
-@dynamic contacts;
-@dynamic dids;
-
-#pragma mark - Setters -
 
 -(void)setV5:(BOOL)v5
 {
     [self setPrimitiveValueFromBoolValue:v5 forKey:kPBXV5AttributeKey];
 }
-
-#pragma mark - Getters -
-
 -(BOOL)isV5
 {
     return [self boolValueFromPrimitiveValueForKey:kPBXV5AttributeKey];
 }
+
+#pragma mark - Relationships -
+
+@dynamic user;
+@dynamic lines;
+@dynamic contacts;
+@dynamic dids;
+
+#pragma mark - Transient -
 
 -(NSString *)displayName
 {

@@ -50,8 +50,7 @@
 
 @implementation NSString (IsNumeric)
 
--(bool)isNumeric
-{
+-(bool)isNumeric {
     NSCharacterSet *alphaNums = [NSCharacterSet decimalDigitCharacterSet];
     NSCharacterSet *inStringSet = [NSCharacterSet characterSetWithCharactersInString:self];
     return [alphaNums isSupersetOfSet:inStringSet];
@@ -68,12 +67,16 @@
 
 @implementation NSString (PhoneNumbers)
 
+-(NSString *)dialableString
+{
+    NSCharacterSet *allowedCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@"*+#0123456789"];
+    return [[self componentsSeparatedByCharactersInSet:[allowedCharacterSet invertedSet]] componentsJoinedByString:@""];
+}
+
 -(NSString *)formattedPhoneNumber
 {
     if (self.length < 5)
-        return self;
-    
-    __autoreleasing NSError *error;
+        return self.dialableString;
     
     static NBPhoneNumberUtil *phoneNumberUtil;
     static dispatch_once_t pred;
@@ -81,6 +84,7 @@
         phoneNumberUtil = [NBPhoneNumberUtil new];
     });
     
+    __autoreleasing NSError *error;
     NBPhoneNumber *phoneNumber = [phoneNumberUtil parse:self defaultRegion:@"US" error:&error];
     if (error)
         NSLog(@"%@", [error description]);
