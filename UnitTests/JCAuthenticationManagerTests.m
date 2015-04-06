@@ -58,7 +58,7 @@
 -(void)test_did_pbxHasDids_noDefault
 {
     // Given
-    NSString *jrn = @"";
+    NSString *jrn = @"jrn:pbx::jive:01471162-f384-24f5-9351-000100420001:did:014885d6-1526-8b77-a111-000100420001";
     PBX *pbx = [PBX MR_findFirstByAttribute:NSStringFromSelector(@selector(jrn)) withValue:jrn];
     id authenticationManagerMock = OCMPartialMock(self.authenticationManager);
     OCMStub([authenticationManagerMock pbx]).andReturn(pbx);

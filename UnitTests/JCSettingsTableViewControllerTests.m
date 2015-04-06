@@ -48,7 +48,7 @@
 - (void)test_smsDefaultLineDisplay
 {
     // Given
-    NSString *jrn = @"";
+    NSString *jrn = @"jrn:pbx::jive:01471162-f384-24f5-9351-000100420001:did:014885d6-1526-8b77-a111-000100420001";
     DID *did = [DID MR_findFirstByAttribute:NSStringFromSelector(@selector(jrn)) withValue:jrn];
     OCMStub([self.vc.authenticationManager did]).andReturn(did);
     NSString *expectedResponse = did.number.formattedPhoneNumber;
@@ -59,7 +59,7 @@
     
     // Then
     NSString *string = self.vc.smsUserDefaultNumber.text;
-    XCTAssertTrue([string isEqualToString:expectedResponse], @"DId not get expected phone number");
+    XCTAssertTrue([string isEqualToString:expectedResponse], @"DId not get expected phone number %@ %@",string, expectedResponse);
 }
 
 
