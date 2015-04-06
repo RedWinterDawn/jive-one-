@@ -53,6 +53,20 @@
                ReferencedContainer = "container:JiveOne.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5D2D74111ACFA84700B98BDF"
+               BuildableName = "UnitTests.xctest"
+               BlueprintName = "UnitTests"
+               ReferencedContainer = "container:JiveOne.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -119,6 +133,33 @@
                BlueprintName = "JiveOneUnitTests"
                ReferencedContainer = "container:JiveOne.xcodeproj">
             </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5D2D74111ACFA84700B98BDF"
+               BuildableName = "UnitTests.xctest"
+               BlueprintName = "UnitTests"
+               ReferencedContainer = "container:JiveOne.xcodeproj">
+            </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "JCBaseTestCase">
+               </Test>
+               <Test
+                  Identifier = "JCDialerViewControllerTests/test_numPad_longKeyPress">
+               </Test>
+               <Test
+                  Identifier = "JCMainStoryboardBaseTestCase">
+               </Test>
+               <Test
+                  Identifier = "JCPhoneManagerBaseTestCase">
+               </Test>
+               <Test
+                  Identifier = "JCTransferViewControllerTests/test_numPad_longKeyPress">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
       <MacroExpansion>

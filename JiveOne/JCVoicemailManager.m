@@ -8,6 +8,7 @@
 
 #import "JCVoicemailManager.h"
 #import "PBX.h"
+#import "Line.h"
 #import "Voicemail+V5Client.h"
 
 NSString *const kJCVoicemailManagerTypeKey              = @"type";

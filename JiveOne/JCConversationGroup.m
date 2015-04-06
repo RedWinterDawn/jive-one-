@@ -12,6 +12,7 @@
 #import "SMSMessage.h"
 #import "LocalContact.h"
 #import "Common.h"
+#import "DID.h"
 
 @implementation JCConversationGroup
 

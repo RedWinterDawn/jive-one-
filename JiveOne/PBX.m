@@ -7,6 +7,7 @@
 //
 
 #import "PBX.h"
+#import "DID.h"
 #import "NSManagedObject+Additions.h"
 
 #define PBX_INDEX_OF_PBX_ID_IN_JRN 4

@@ -14,6 +14,8 @@
 #import "Voicemail.h"
 #import "SMSMessage.h"
 #import "PBX.h"
+#import "Line.h"
+#import "DID.h"
 
 NSString *const kJCBadgesVoicemailsEventTypeKey    = @"voicemails";
 NSString *const kJCBadgesMissedCallsEventTypeKey   = @"missedCalls";
