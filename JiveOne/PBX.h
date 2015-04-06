@@ -21,17 +21,16 @@
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, getter=isV5) BOOL v5;
 
-@property (nonatomic, readonly) NSString * displayName;
-@property (nonatomic, readonly) NSString * pbxId;
-
 // Relationships
 @property (nonatomic, retain) NSSet * contacts;
 @property (nonatomic, retain) User * user;
 @property (nonatomic, retain) NSSet * lines;
 @property (nonatomic, retain) NSSet * dids;
 
-// Transient
+// Transient (Readonly)
 @property (nonatomic, readonly) BOOL smsEnabled;
+@property (nonatomic, readonly) NSString * displayName;
+@property (nonatomic, readonly) NSString * pbxId;
 
 @end
 
