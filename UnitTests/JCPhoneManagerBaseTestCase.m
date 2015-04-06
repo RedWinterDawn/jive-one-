@@ -36,9 +36,4 @@
     [super tearDown];
 }
 
-- (void)test_phone_manager_storyboard
-{
-    
-}
-
 @end

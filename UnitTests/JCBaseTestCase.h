@@ -13,6 +13,8 @@
 
 #import <OCMock/OCMock.h>
 #import <MagicalRecord/CoreData+MagicalRecord.h>
+#import <AFNetworking/AFNetworkReachabilityManager.h>
+#import <UIKit/UIGestureRecognizerSubclass.h>
 
 @interface JCBaseTestCase : XCTestCase
 

@@ -8,10 +8,6 @@
 
 #import "JCMainStoryboardBaseTestCase.h"
 
-// Libraries
-#import <MagicalRecord/NSManagedObject+MagicalRecord.h>
-#import <UIKit/UIGestureRecognizerSubclass.h>
-
 // Controllers
 #import "JCDialerViewController.h"
 

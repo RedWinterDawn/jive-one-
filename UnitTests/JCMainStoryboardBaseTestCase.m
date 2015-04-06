@@ -13,16 +13,12 @@
 - (void)setUp {
     [super setUp];
     self.storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:[NSBundle mainBundle]];
+    XCTAssertNotNil(self.storyboard, @"Storyboard should not be nil");
 }
 
 - (void)tearDown {
     self.storyboard = nil;
     [super tearDown];
-}
-
-- (void)test_main_storyboard
-{
-    XCTAssertNotNil(self.storyboard, @"Storyboard should not be nil");
 }
 
 @end

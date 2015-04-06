@@ -8,9 +8,6 @@
 
 #import "JCPhoneManagerBaseTestCase.h"
 
-// Libraries
-#import <UIKit/UIGestureRecognizerSubclass.h>
-
 // Controllers
 #import "JCTransferViewController.h"
 
