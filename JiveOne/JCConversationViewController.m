@@ -90,7 +90,7 @@
                      date:(NSDate *)date
     {
         id<JCPersonDataSource> person = _participants.lastObject;
-        if (self.count == 0) { 
+        if (self.count == 0) {
             
             NSMutableArray *dids= [JCAuthenticationManager sharedInstance].pbx.dids.allObjects.mutableCopy;
             NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"number" ascending:YES];
