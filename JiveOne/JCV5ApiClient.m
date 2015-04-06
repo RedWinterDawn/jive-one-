@@ -74,6 +74,7 @@ NSString *const kJCV5ApiPBXInfoRequestPath = @"/jif/v3/user/jiveId/%@";
     NSString *path = [NSString stringWithFormat:kJCV5ApiPBXInfoRequestPath, user.jiveUserId];
     [JCV5ApiClient getWithPath:path
                     parameters:nil
+             requestSerializer:[JCBearerAuthenticationJSONRequestSerializer new]
                        retries:PBX_INFO_SEND_NUMBER_OF_TRIES
                     completion:completion];
 }
@@ -117,6 +118,7 @@ NSString *const kJCV5ApiSMSMessageRequestConversationURLPath           = @"sms/m
     NSString *path = [NSString stringWithFormat:kJCV5ApiSMSMessageRequestConversationsDigestURLPath, did.number];
     [JCV5ApiClient getWithPath:path
                     parameters:nil
+             requestSerializer:nil
                        retries:CONVERSATIONS_DOWNLOAD_NUMBER_OF_TRIES
                     completion:completion];
 }
@@ -134,6 +136,7 @@ NSString *const kJCV5ApiSMSMessageRequestConversationURLPath           = @"sms/m
     NSString *path = [NSString stringWithFormat:kJCV5ApiSMSMessageRequestConversationsURLPath, did.number];
     [JCV5ApiClient getWithPath:path
                     parameters:nil
+             requestSerializer:nil
                        retries:MESSAGES_DOWNLOAD_NUMBER_OF_TRIES
                     completion:completion];
 }
@@ -158,6 +161,7 @@ NSString *const kJCV5ApiSMSMessageRequestConversationURLPath           = @"sms/m
     NSString *path = [NSString stringWithFormat:kJCV5ApiSMSMessageRequestConversationURLPath, did.number, person.number];
     [JCV5ApiClient getWithPath:path
                     parameters:nil
+             requestSerializer:nil
                        retries:MESSAGES_DOWNLOAD_NUMBER_OF_TRIES
                     completion:completion];
 }
@@ -168,11 +172,13 @@ NSString *const kJCV5ApiSMSMessageRequestConversationURLPath           = @"sms/m
 
 +(void)getWithPath:(NSString *)path
         parameters:(NSDictionary *)parameters
+ requestSerializer:(AFJSONRequestSerializer *)requestSerializer
            retries:(NSUInteger)retries
         completion:(JCV5ApiClientCompletionHandler)completion
 {
     [JCV5ApiClient getWithPath:path
                     parameters:parameters
+             requestSerializer:requestSerializer
                        retries:retries
                        success:^(id responseObject) {
                            if (completion) {
@@ -188,6 +194,7 @@ NSString *const kJCV5ApiSMSMessageRequestConversationURLPath           = @"sms/m
 
 +(void)getWithPath:(NSString *)path
         parameters:(NSDictionary *)parameters
+ requestSerializer:(AFJSONRequestSerializer *)requestSerializer
            retries:(NSUInteger)retryCount
            success:(void (^)(id responseObject))success
            failure:(void (^)(NSError *error))failure
@@ -198,7 +205,11 @@ NSString *const kJCV5ApiSMSMessageRequestConversationURLPath           = @"sms/m
             failure(error);
         }
     } else {
-        JCV5ApiClient *client = [JCV5ApiClient sharedClient];
+        JCV5ApiClient *client = [JCV5ApiClient new];
+        if (requestSerializer) {
+            client.manager.requestSerializer = requestSerializer;
+        }
+        
         [client.manager GET:path
                  parameters:parameters
                     success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -207,7 +218,12 @@ NSString *const kJCV5ApiSMSMessageRequestConversationURLPath           = @"sms/m
                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                         if (error.code == NSURLErrorTimedOut) {
                             NSLog(@"Retry %lu for post to path %@", (long)retryCount, path);
-                            [self getWithPath:path parameters:parameters retries:(retryCount - 1) success:success failure:failure];
+                            [self getWithPath:path
+                                   parameters:parameters
+                            requestSerializer:requestSerializer
+                                      retries:(retryCount - 1)
+                                      success:success
+                                      failure:failure];
                         } else{
                             failure(error);
                         }
@@ -258,7 +274,7 @@ NSString *const kJCV5ApiSMSMessageRequestConversationURLPath           = @"sms/m
                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                          if (error.code == NSURLErrorTimedOut) {
                              NSLog(@"Retry %lu for post to path %@", (long)retryCount, path);
-                             [self getWithPath:path parameters:parameters retries:(retryCount - 1) success:success failure:failure];
+                             [self postWithPath:path parameters:parameters retries:(retryCount - 1) success:success failure:failure];
                          } else{
                              failure(error);
                          }
