@@ -22,6 +22,8 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
 
 @interface JCSettingsTableViewController () <MFMailComposeViewControllerDelegate>
 
+@property (nonatomic, strong)  JCAuthenticationManager *authenticationManager;
+
 @end
 
 @implementation JCSettingsTableViewController
@@ -33,10 +35,10 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
     self.appLabel.text = [bundle objectForInfoDictionaryKey:@"CFBundleDisplayName"];
     self.buildLabel.text = [NSString stringWithFormat:@"%@ (%@)", [bundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"], [bundle objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey]];
     
-    JCAppSettings *settings = [JCAppSettings sharedSettings];
+    JCAppSettings *settings = self.appSettings;
     self.wifiOnly.on = settings.wifiOnly;
     self.presenceEnabled.on = settings.presenceEnabled;
-    [self cell:self.enablePreasenceCell setHidden:![JCAuthenticationManager sharedInstance].line.pbx.isV5];
+    [self cell:self.enablePreasenceCell setHidden:!self.authenticationManager.line.pbx.isV5];
     [self reloadDataAnimated:NO];
 }
 
@@ -54,7 +56,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
     [super viewWillAppear:animated];
     [self.view setNeedsLayout];
     
-    [self cell:self.enablePreasenceCell setHidden:![JCAuthenticationManager sharedInstance].line.pbx.isV5];
+    [self cell:self.enablePreasenceCell setHidden:!self.authenticationManager.line.pbx.isV5];
     [self reloadDataAnimated:NO];
 }
 
@@ -67,7 +69,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
 {
     [super viewWillLayoutSubviews];
     
-    JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
+    JCAuthenticationManager *authenticationManager = self.authenticationManager;
     self.userNameLabel.text     = authenticationManager.line.pbx.user.jiveUserId;
     self.extensionLabel.text    = authenticationManager.line.extension;
     self.smsUserDefaultNumber.text = authenticationManager.did.number.formattedPhoneNumber;
@@ -91,7 +93,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
         [mailViewController setSubject:@"Feedback"];
         
         //get device specs
-        JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
+        JCAuthenticationManager *authenticationManager = self.authenticationManager;
         NSBundle *bundle            = [NSBundle mainBundle];
         UIDevice *currentDevice     = [UIDevice currentDevice];
         NSString *model             = [currentDevice platformType];
@@ -111,26 +113,25 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
 
 -(IBAction)logout:(id)sender
 {
-    [[JCAuthenticationManager sharedInstance] logout];
+    [self.authenticationManager logout];
 }
 
 -(IBAction)toggleWifiOnly:(id)sender
 {
     if ([sender isKindOfClass:[UISwitch class]]) {
         UISwitch *switchBtn = (UISwitch *)sender;
-        JCAppSettings *settings = [JCAppSettings sharedSettings];
+        JCAppSettings *settings = self.appSettings;
         settings.wifiOnly = !settings.isWifiOnly;
         switchBtn.on = settings.isWifiOnly;
-        [JCPhoneManager connectToLine:[JCAuthenticationManager sharedInstance].line];
+        [JCPhoneManager connectToLine:self.authenticationManager.line];
     }
 }
 
 - (IBAction)togglePresenceEnabled:(id)sender {
     if ([sender isKindOfClass:[UISwitch class]]) {
         UISwitch *switchBtn = (UISwitch *)sender;
-        JCAppSettings *settings = [JCAppSettings sharedSettings];
-        settings.presenceEnabled = !settings.isPresenceEnabled;
-        switchBtn.on = settings.isPresenceEnabled;
+        self.appSettings.presenceEnabled = !self.appSettings.isPresenceEnabled;
+        switchBtn.on = self.appSettings.isPresenceEnabled;
     }
 }
 
@@ -138,6 +139,14 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Debug" bundle:[NSBundle mainBundle]];
     UIViewController *rootViewController = [storyboard instantiateInitialViewController];
     [self.navigationController pushViewController:rootViewController animated:YES];
+}
+
+-(JCAuthenticationManager *)authenticationManager
+{
+    if (!_authenticationManager) {
+        _authenticationManager = [JCAuthenticationManager sharedInstance];
+    }
+    return _authenticationManager;
 }
 
 #pragma mark - Delegate Handlers -

@@ -337,16 +337,36 @@ NSString *const kJCAuthneticationManagerDeviceTokenKey = @"deviceToken";
 @end
 
 static JCAuthenticationManager *authenticationManager = nil;
-static dispatch_once_t authenticationManagerOnceToken;
 
 @implementation JCAuthenticationManager (Singleton)
 
 + (instancetype)sharedInstance
 {
-    dispatch_once(&authenticationManagerOnceToken, ^{
-        authenticationManager = [[JCAuthenticationManager alloc] init];
+    static JCAuthenticationManager *singleton = nil;
+    static dispatch_once_t pred;
+    dispatch_once(&pred, ^{
+        singleton = [[JCAuthenticationManager alloc] init];
     });
-    return authenticationManager;
+    return singleton;
+}
+
+@end
+
+@implementation UIViewController (AuthenticationManager)
+
+- (void)setSharedAuthenticationManager:(JCAuthenticationManager *)sharedAuthenticationManager {
+    objc_setAssociatedObject(self, @selector(sharedAuthenticationManager), sharedAuthenticationManager, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+-(JCAuthenticationManager *)sharedAuthenticationManager
+{
+    JCAuthenticationManager *sharedAuthenticationManager = objc_getAssociatedObject(self, @selector(sharedAuthenticationManager));
+    if (!sharedAuthenticationManager)
+    {
+        sharedAuthenticationManager = [JCAuthenticationManager sharedInstance];
+        objc_setAssociatedObject(self, @selector(sharedAuthenticationManager), sharedAuthenticationManager, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    return sharedAuthenticationManager;
 }
 
 @end

@@ -51,3 +51,7 @@ typedef void (^CompletionBlock) (BOOL success, NSError *error);
 + (JCAuthenticationManager*)sharedInstance;
 
 @end
+
+@interface UIViewController (AuthenticationManager)
+
+@end
