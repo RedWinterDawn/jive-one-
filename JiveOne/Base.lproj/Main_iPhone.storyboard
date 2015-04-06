@@ -790,24 +790,12 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="SMS" id="Unq-Lf-mp0" userLabel="SMS">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" restorationIdentifier="SMSDefaultNumberCell" selectionStyle="none" indentationWidth="10" id="EVV-ga-5fF" userLabel="SMSDefaultNumberCell">
+                                    <tableViewCell contentMode="scaleToFill" restorationIdentifier="SMSDefaultNumberCell" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" id="EVV-ga-5fF" userLabel="SMSDefaultNumberCell">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="WIfi Only" tableViewCell="EVV-ga-5fF" id="STu-k4-0FD">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="Default DID Cell" tableViewCell="EVV-ga-5fF" id="STu-k4-0FD">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Qk-84-i7b">
-                                                    <rect key="frame" x="262" y="7" width="50" height="29"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="50" id="PFm-v1-Par"/>
-                                                    </constraints>
-                                                    <state key="normal" title="Clear">
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="clearBtn:" destination="BBd-7J-jmI" eventType="touchUpInside" id="0Pz-Wb-lu2"/>
-                                                    </connections>
-                                                </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Default number for sending SMS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CdB-Th-Zk6">
                                                     <rect key="frame" x="8" y="8" width="254" height="16"/>
                                                     <constraints>
@@ -828,17 +816,16 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="6Qk-84-i7b" secondAttribute="trailing" constant="8" id="6kD-SA-ZTq"/>
-                                                <constraint firstItem="6Qk-84-i7b" firstAttribute="top" secondItem="STu-k4-0FD" secondAttribute="top" constant="7" id="Nnp-jW-I4Y"/>
                                                 <constraint firstItem="xEM-g7-bpN" firstAttribute="top" secondItem="CdB-Th-Zk6" secondAttribute="bottom" constant="-2" id="TSI-PQ-3wN"/>
                                                 <constraint firstItem="CdB-Th-Zk6" firstAttribute="top" secondItem="STu-k4-0FD" secondAttribute="top" constant="8" id="URD-fb-cK0"/>
                                                 <constraint firstItem="CdB-Th-Zk6" firstAttribute="leading" secondItem="STu-k4-0FD" secondAttribute="leadingMargin" id="ZKa-lX-nMy"/>
-                                                <constraint firstItem="6Qk-84-i7b" firstAttribute="leading" secondItem="CdB-Th-Zk6" secondAttribute="trailing" id="ZnQ-4l-bY2"/>
                                                 <constraint firstAttribute="bottom" secondItem="xEM-g7-bpN" secondAttribute="bottom" constant="6" id="ft6-IS-3W0"/>
                                                 <constraint firstItem="xEM-g7-bpN" firstAttribute="leading" secondItem="STu-k4-0FD" secondAttribute="leading" constant="8" id="mb4-OP-EDV"/>
-                                                <constraint firstAttribute="bottom" secondItem="6Qk-84-i7b" secondAttribute="bottom" constant="7" id="tAt-4B-IpB"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="lMa-gl-P4s" kind="push" id="RgC-9U-m8K"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -906,7 +893,6 @@
                         <outlet property="extensionLabel" destination="SCG-SS-mwf" id="ote-dI-OWx"/>
                         <outlet property="presenceEnabled" destination="sG2-aY-SNJ" id="ZrR-bE-fbJ"/>
                         <outlet property="smsDefaultNumberLabel" destination="xEM-g7-bpN" id="cw7-Pv-AHs"/>
-                        <outlet property="smsTableSection" destination="Unq-Lf-mp0" id="JhI-fT-6KI"/>
                         <outlet property="userNameLabel" destination="Ha4-sQ-nx4" id="T5D-Dz-uVO"/>
                         <outlet property="wifiOnly" destination="MGe-0z-lyW" id="jbZ-I2-fC7"/>
                     </connections>
@@ -1212,7 +1198,44 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7CT-HS-qG7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1476" y="2032"/>
+            <point key="canvasLocation" x="1467" y="1586"/>
+        </scene>
+        <!--Default DID-->
+        <scene sceneID="cnu-bI-ToW">
+            <objects>
+                <tableViewController id="lMa-gl-P4s" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="QNf-Nm-rl2">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="67W-YT-IHq">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="67W-YT-IHq" id="Ote-Zl-w0L">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7vG-pG-jjO">
+                                            <rect key="frame" x="8" y="12" width="304" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="lMa-gl-P4s" id="rFF-vv-pzH"/>
+                            <outlet property="delegate" destination="lMa-gl-P4s" id="IEe-KW-NHM"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Default DID" id="RaO-p9-fJI">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="ZKc-4d-xKF"/>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="12v-c5-ZxC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1467" y="2205"/>
         </scene>
         <!--Contacts Table View Controller-->
         <scene sceneID="842-84-rzD">
