@@ -227,6 +227,7 @@
 		B75899761A9FEA320025D5AD /* JCMessagesMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B75899751A9FEA320025D5AD /* JCMessagesMenuCell.m */; };
 		B7AEDD581ABA08670063033E /* JCActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = B7AEDD571ABA08670063033E /* JCActionSheet.m */; };
 		B7DFAA371AC0CDA50033ACFB /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7DFAA361AC0CDA50033ACFB /* CoreMedia.framework */; };
+		B7FCA5AA1AD2E74E0034C5EC /* JCDIDSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7FCA5A91AD2E74E0034C5EC /* JCDIDSelectorViewController.m */; };
 		DD3BD9F418DCB1740080318E /* Voicemail+V5Client.m in Sources */ = {isa = PBXBuildFile; fileRef = DD3BD9F318DCB1740080318E /* Voicemail+V5Client.m */; };
 		DDCE1E8718F3561D003A6615 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E8618F3561D003A6615 /* AudioToolbox.framework */; };
 		DDCE1E8918F35623003A6615 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCE1E8818F35623003A6615 /* CFNetwork.framework */; };
@@ -654,6 +655,9 @@
 		B7AEDD561ABA08670063033E /* JCActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCActionSheet.h; sourceTree = "<group>"; };
 		B7AEDD571ABA08670063033E /* JCActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCActionSheet.m; sourceTree = "<group>"; };
 		B7DFAA361AC0CDA50033ACFB /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		B7FCA5A81AD2E74E0034C5EC /* JCDIDSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDIDSelectorViewController.h; sourceTree = "<group>"; };
+		B7FCA5A91AD2E74E0034C5EC /* JCDIDSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCDIDSelectorViewController.m; sourceTree = "<group>"; };
+		BF86F37AAB6C27FB9A684791 /* libPods-JiveOneTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JiveOneTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD3BD9F218DCB1740080318E /* Voicemail+V5Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Voicemail+V5Client.h"; sourceTree = "<group>"; };
 		DD3BD9F318DCB1740080318E /* Voicemail+V5Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Voicemail+V5Client.m"; sourceTree = "<group>"; };
 		DDCE1E8618F3561D003A6615 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -1139,6 +1143,8 @@
 				27D2C1F6196F030C005285FF /* JCLineSelectorTableViewController.m */,
 				5D97A7FD1A828B4700A4434D /* JCIntercomTableViewController.h */,
 				5D97A7FE1A828B4700A4434D /* JCIntercomTableViewController.m */,
+				B7FCA5A81AD2E74E0034C5EC /* JCDIDSelectorViewController.h */,
+				B7FCA5A91AD2E74E0034C5EC /* JCDIDSelectorViewController.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -1933,6 +1939,7 @@
 				5D0275131A3F836A0077A37B /* JCStringEncryptionTransformer.m in Sources */,
 				5D241FE11A38B4EB008B498A /* Person.m in Sources */,
 				5D1FAC6219DDFF5300899915 /* JCCallCardCollectionLayout.m in Sources */,
+				B7FCA5AA1AD2E74E0034C5EC /* JCDIDSelectorViewController.m in Sources */,
 				919DD29D1922E2C90039205E /* JCPopoverSlider.m in Sources */,
 				5DBBDCC619DD9A4100A4DB96 /* JCPhoneManager.m in Sources */,
 				272B61DD18B2A4DD00EB8ED5 /* TRVSMonitor.m in Sources */,

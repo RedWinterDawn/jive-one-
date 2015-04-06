@@ -26,6 +26,7 @@
         <attribute name="receiveCall" optional="YES" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
         <attribute name="receiveSMS" optional="YES" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
         <attribute name="sendSMS" optional="YES" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
+        <attribute name="userDefault" optional="YES" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
         <relationship name="pbx" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PBX" inverseName="dids" inverseEntity="PBX" syncable="YES"/>
         <relationship name="smsMessages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="SMSMessage" inverseName="did" inverseEntity="SMSMessage" syncable="YES"/>
     </entity>
@@ -115,7 +116,7 @@
         <element name="Contact" positionX="-198" positionY="-81" width="128" height="135"/>
         <element name="ContactGroup" positionX="-9" positionY="72" width="128" height="90"/>
         <element name="Conversation" positionX="351" positionY="243" width="128" height="73"/>
-        <element name="DID" positionX="43" positionY="486" width="128" height="178"/>
+        <element name="DID" positionX="43" positionY="486" width="128" height="195"/>
         <element name="IncomingCall" positionX="700" positionY="-288" width="128" height="45"/>
         <element name="JiveContact" positionX="-405" positionY="72" width="128" height="90"/>
         <element name="Line" positionX="-317" positionY="-360" width="128" height="135"/>

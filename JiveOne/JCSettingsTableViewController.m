@@ -15,8 +15,7 @@
 #import "JCAppSettings.h"
 
 #import "PBX.h"
-#import "User.h"
-#import "Line.h"
+#import "DID.h"
 
 NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please describe any issues you are experiencing :</strong><br><br><br><br><br><br><br><br><br><br><br><br><br><hr><strong>Device Specs</strong><br>Model: %@ <br> On iOS Version: %@ <br> App Version: %@ <br> Country: %@ <br> UUID : %@  <br> PBX : %@  <br> User : %@  <br> Line : %@  <br> ";
 
@@ -36,7 +35,6 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
     JCAppSettings *settings = [JCAppSettings sharedSettings];
     self.wifiOnly.on = settings.wifiOnly;
     self.presenceEnabled.on = settings.presenceEnabled;
-    
     [self cell:self.enablePreasenceCell setHidden:![JCAuthenticationManager sharedInstance].line.pbx.isV5];
     [self reloadDataAnimated:NO];
 }
@@ -71,6 +69,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
     JCAuthenticationManager *authenticationManager = [JCAuthenticationManager sharedInstance];
     self.userNameLabel.text     = authenticationManager.line.pbx.user.jiveUserId;
     self.extensionLabel.text    = authenticationManager.line.extension;
+    self.smsUserDefaultNumber.text = authenticationManager.did.number.formattedPhoneNumber;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -81,9 +80,6 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
 }
 
 #pragma mark - IBActions -
-
-- (IBAction)clearBtn:(id)sender {
-}
 
 -(IBAction)leaveFeedback:(id)sender
 {
