@@ -15,6 +15,9 @@
 #import "JCAddressBook.h"
 #import "JCAddressBookNumber.h"
 #import "JCContactCollectionViewCell.h"
+#import "JiveContact.h"
+#import "NSString+Additions.h"
+#import "PBX.h"
 
 NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCall";
 
@@ -212,8 +215,10 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
         _contacts = [NSMutableArray array];
     }
     
-    // TODO: Add in local contacts with a core data search here.
-    //_contacts addObjectsFromArray:nil];
+    Line *line = self.authenticationManager.line;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbxId = %@ AND jrn != %@ AND extension CONTAINS %@", line.pbx.pbxId, line.jrn, keyword];
+    NSArray *contacts = [JiveContact MR_findAllWithPredicate:predicate inContext:self.context];
+    [_contacts addObjectsFromArray:contacts];
     [self.collectionView reloadData];
 }
 
@@ -293,25 +298,19 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     id <JCPersonDataSource> personNumber = [self objectAtIndexPath:indexPath];
     JCContactCollectionViewCell *cell = (JCContactCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
     
-    cell.name.text  = personNumber.name;
-    
-    if ([personNumber isKindOfClass:[JCAddressBookNumber class]]) {
-        JCAddressBookNumber *addressBookNumber = (JCAddressBookNumber *)personNumber;
-        cell.number.attributedText = [addressBookNumber detailTextWithKeyword:self.formattedPhoneNumberLabel.dialString
-                                                                         font:cell.number.font
-                                                                        color:cell.number.textColor];
-    }
-    
+    cell.name.text = personNumber.name;
+    cell.number.attributedText = [personNumber detailTextWithKeyword:self.formattedPhoneNumberLabel.dialString
+                                                                font:cell.number.font
+                                                               color:cell.number.textColor];
     return cell;
 }
                                   
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     id <JCPersonDataSource> personNumber = [self objectAtIndexPath:indexPath];
-    self.formattedPhoneNumberLabel.dialString = personNumber.number.numericStringValue;
-    
-    NSString *string = self.formattedPhoneNumberLabel.dialString;
-    [self dialNumber:string
+    NSString *number = personNumber.number;
+    self.formattedPhoneNumberLabel.dialString = number;
+    [self dialNumber:number.dialableString
            usingLine:self.authenticationManager.line
               sender:collectionView
           completion:^(BOOL success, NSError *error) {
