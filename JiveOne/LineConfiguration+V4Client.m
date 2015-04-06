@@ -8,6 +8,9 @@
 
 #import "LineConfiguration+V4Client.h"
 #import "PBX.h"
+#import "Line.h"
+#import "User.h"
+#import "JCV4ApiClient.h"
 
 #import "NSDictionary+Validations.h"
 

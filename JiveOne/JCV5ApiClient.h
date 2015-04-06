@@ -7,6 +7,7 @@
 //
 
 #import "JCApiClient.h"
+#import "JCPersonDataSource.h"
 
 typedef void(^JCV5ApiClientCompletionHandler)(BOOL success, id response, NSError *error);
 

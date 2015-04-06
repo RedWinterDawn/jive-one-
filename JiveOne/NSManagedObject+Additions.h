@@ -6,7 +6,8 @@
 //  Copyright (c) 2014 Jive Communications, Inc. All rights reserved.
 //
 
-#import <CoreData/CoreData.h>
+@import UIKit;
+@import CoreData;
 
 @interface NSManagedObject (Primitives)
 

@@ -11,6 +11,7 @@
 #import "Voicemail.h"
 #import "User.h"
 #import "DID.h"
+#import "JCAuthenticationManager.h"
 
 NSString *const kJCV5ApiClientBaseUrl = @"https://api.jive.com/";
 

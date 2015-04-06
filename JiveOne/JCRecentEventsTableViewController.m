@@ -12,6 +12,7 @@
 #import "JCConversationGroup.h"
 #import "JCConversationTableViewCell.h"
 #import "Message.h"
+#import "PBX.h"
 
 NSString *const kJCRecentEventConversationCellResuseIdentifier = @"ConversationCell";
 
