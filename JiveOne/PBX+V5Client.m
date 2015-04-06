@@ -21,10 +21,9 @@ NSString *const kPBXInfoRequestPath             = @"/jif/v3/user/jiveId/%@";
 NSString *const kPBXInfoResponseDataKey             = @"data";
 NSString *const kPBXInfoResponseUserKey                 = @"user";
 NSString *const kPBXInfoResponseUserJiveIdKey               = @"externalId";
-NSString *const kPBXInfoResponseUserPbxsIdKey               = @"namesByPbx";
-NSString *const kPBXInfoResponseUserFirstNameKey                = @"first";
-NSString *const kPBXInfoResponseUserLastNameKey                 = @"last";
-NSString *const KPBXInfoResponseKey                         = @"pbxes";
+NSString *const kPBXInfoResponseTenantsKey              = @"tenants";
+NSString *const kPBXInfoResponseKey                         = @"pbxes";
+NSString *const kPBXInfoResponseDomainKey                       = @"domain";
 NSString *const kPBXInfoResponseIdentifierKey                   = @"id";
 NSString *const kPBXInfoResponseNameKey                         = @"name";
 NSString *const kPBXInfoResponseV5Key                           = @"v5";
@@ -35,6 +34,10 @@ NSString *const kPBXInfoResponseExtensionNumberKey                  = @"number";
 NSString *const kPBXInfoResponseExtensionMailboxKey                 = @"mailbox";
 NSString *const kPBXInfoResponseExtensionMailboxIdentiferKey            = @"id";
 NSString *const kPBXInfoResponseExtensionMailboxUrlKey                  = @"self";
+NSString *const kPBXInfoResponseUserInfoKey                     = @"userInfo";
+NSString *const kPBXInfoResponseUserFirstNameKey                    = @"first";
+NSString *const kPBXInfoResponseUserLastNameKey                     = @"last";
+NSString *const kPBXInfoResponseUserNameKey                         = @"fullName";
 NSString *const kPBXInfoResponseNumbersKey                      = @"phoneNumbers";
 NSString *const kPBXInfoResponseNumberIdentifierKey                 = @"id";
 NSString *const kPBXInfoResponseNumberDialStringKey                 = @"dialstring";
@@ -84,7 +87,7 @@ NSString *const kPBXResponseException           = @"pbxResponseException";
         
         NSDictionary *userData = [data dictionaryForKey:kPBXInfoResponseUserKey];
         if (!userData) {
-            [NSException raise:kPBXResponseException format:@"Invalid pbx user response data object."];
+            [NSException raise:kPBXResponseException format:@"Invalid pbx response user data object."];
         }
         
         NSString *jiveId = [userData stringValueForKey:kPBXInfoResponseUserJiveIdKey];
@@ -92,13 +95,18 @@ NSString *const kPBXResponseException           = @"pbxResponseException";
             [NSException raise:kPBXResponseException format:@"Pbx user does not match requested user id."];
         }
         
-        NSArray *pbxsData = [data arrayForKey:KPBXInfoResponseKey];
-        if (!pbxsData) {
-            [NSException raise:kPBXResponseException format:@"Invalid pbx response array."];
+        NSDictionary *tenantsData = [data dictionaryForKey:kPBXInfoResponseTenantsKey];
+        if (!tenantsData) {
+            [NSException raise:kPBXResponseException format:@"Invalid pbx response tenants object."];
+        }
+        
+        NSArray *pbxesData = [tenantsData arrayForKey:kPBXInfoResponseKey];
+        if (!pbxesData) {
+            [NSException raise:kPBXResponseException format:@"Invalid pbx response pbx array."];
         }
         
         [MagicalRecord saveWithBlock:^(NSManagedObjectContext *localContext) {
-            [self processPbxArrayData:pbxsData userData:userData user:(User *)[localContext objectWithID:user.objectID]];
+            [self processPbxArrayData:pbxesData user:(User *)[localContext objectWithID:user.objectID]];
         } completion:^(BOOL success, NSError *error) {
             if (completion) {
                 if (error) {
@@ -120,14 +128,14 @@ NSString *const kPBXResponseException           = @"pbxResponseException";
  * Recieves an array of PBXs and iterates over them, saving them to core data. Exiting pbx that are 
  * not in the update array, are removed.
  */
-+ (void)processPbxArrayData:(NSArray *)pbxsData userData:(NSDictionary *)userData user:(User *)user
++ (void)processPbxArrayData:(NSArray *)pbxsData user:(User *)user
 {
     // Grab the Users pbxs before we start adding new ones or updating exiting ones.
     NSMutableSet *pbxs = user.pbxs.mutableCopy;
     
     for (NSDictionary *pbxData in pbxsData) {
         if ([pbxData isKindOfClass:[NSDictionary class]]) {
-            PBX *pbx = [self processPbxData:pbxData userData:userData forUser:user];
+            PBX *pbx = [self processPbxData:pbxData forUser:user];
             if ([pbxs containsObject:pbx]) {
                 [pbxs removeObject:pbx];
             }
@@ -143,7 +151,7 @@ NSString *const kPBXResponseException           = @"pbxResponseException";
     }
 }
 
-+ (PBX *)processPbxData:(NSDictionary *)data userData:(NSDictionary *)userData forUser:(User *)user
++ (PBX *)processPbxData:(NSDictionary *)data forUser:(User *)user
 {
     NSString *jrn = [data stringValueForKey:kPBXInfoResponseIdentifierKey];
     if (!jrn) {
@@ -152,8 +160,9 @@ NSString *const kPBXResponseException           = @"pbxResponseException";
     
     // Fetch/update PBX. If does not exit it is created.
     PBX *pbx = [PBX pbxForJrn:jrn user:user];
-    pbx.name = [data stringValueForKey:kPBXInfoResponseNameKey];
-    pbx.v5   = [data boolValueForKey:kPBXInfoResponseV5Key];
+    pbx.name   = [data stringValueForKey:kPBXInfoResponseNameKey];
+    pbx.v5     = [data boolValueForKey:kPBXInfoResponseV5Key];
+    pbx.domain = [data stringValueForKey:kPBXInfoResponseDomainKey];
     
     // Process Line Extensions
     NSArray *lines = [data arrayForKey:kPBXInfoResponseExtensionsKey];
