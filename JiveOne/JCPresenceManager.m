@@ -9,6 +9,7 @@
 #import "JCPresenceManager.h"
 #import "JCSocket.h"
 #import "JCAppSettings.h"
+#import "Line.h"
 
 NSString *const kJCPresenceManagerLinesChangedNotification = @"linesChanged";
 

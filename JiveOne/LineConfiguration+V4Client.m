@@ -10,7 +10,7 @@
 #import "PBX.h"
 #import "Line.h"
 #import "User.h"
-#import "JCV4Client.h"
+#import "JCV4ApiClient.h"
 
 #import "NSDictionary+Validations.h"
 
