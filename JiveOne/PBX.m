@@ -17,6 +17,7 @@ NSString *const kPBXV5AttributeKey = @"v5";
 
 @implementation PBX
 
+@dynamic domain;
 @dynamic jrn;
 @dynamic name;
 @dynamic pbxId;
