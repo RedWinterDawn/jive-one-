@@ -210,6 +210,9 @@
 		5DC518171AD2E688007CEA71 /* TestCoreDataContents.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5DC518161AD2E688007CEA71 /* TestCoreDataContents.plist */; };
 		5DC5181A1AD2E746007CEA71 /* JCCoreDataTestDataFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC518191AD2E746007CEA71 /* JCCoreDataTestDataFactory.m */; };
 		5DC5181C1AD2F9F5007CEA71 /* JCCoreDataFactoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC5181B1AD2F9F5007CEA71 /* JCCoreDataFactoryTests.m */; };
+		5DC5181E1AD3094E007CEA71 /* JCPbxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC5181D1AD3094E007CEA71 /* JCPbxTests.m */; };
+		5DC518201AD3096F007CEA71 /* JCLineTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC5181F1AD3096F007CEA71 /* JCLineTests.m */; };
+		5DC518221AD30993007CEA71 /* JCContactsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC518211AD30993007CEA71 /* JCContactsTests.m */; };
 		5DDDA5451A4A856800E31AA3 /* JCPresenceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DDDA5441A4A856800E31AA3 /* JCPresenceManager.m */; };
 		5DDDA5481A4B08AD00E31AA3 /* JCSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DDDA5471A4B08AD00E31AA3 /* JCSocket.m */; };
 		5DDDA54B1A4B238300E31AA3 /* JCLinePresence.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DDDA54A1A4B238300E31AA3 /* JCLinePresence.m */; };
@@ -611,6 +614,9 @@
 		5DC518181AD2E746007CEA71 /* JCCoreDataTestDataFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCoreDataTestDataFactory.h; sourceTree = "<group>"; };
 		5DC518191AD2E746007CEA71 /* JCCoreDataTestDataFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCoreDataTestDataFactory.m; sourceTree = "<group>"; };
 		5DC5181B1AD2F9F5007CEA71 /* JCCoreDataFactoryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCoreDataFactoryTests.m; sourceTree = "<group>"; };
+		5DC5181D1AD3094E007CEA71 /* JCPbxTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPbxTests.m; sourceTree = "<group>"; };
+		5DC5181F1AD3096F007CEA71 /* JCLineTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCLineTests.m; sourceTree = "<group>"; };
+		5DC518211AD30993007CEA71 /* JCContactsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCContactsTests.m; sourceTree = "<group>"; };
 		5DDDA5431A4A856800E31AA3 /* JCPresenceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPresenceManager.h; sourceTree = "<group>"; };
 		5DDDA5441A4A856800E31AA3 /* JCPresenceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPresenceManager.m; sourceTree = "<group>"; };
 		5DDDA5461A4B08AD00E31AA3 /* JCSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSocket.h; sourceTree = "<group>"; };
@@ -1385,6 +1391,9 @@
 			children = (
 				5D2D74201ACFB48500B98BDF /* JCAddressBookTests.m */,
 				5DC5181B1AD2F9F5007CEA71 /* JCCoreDataFactoryTests.m */,
+				5DC5181D1AD3094E007CEA71 /* JCPbxTests.m */,
+				5DC5181F1AD3096F007CEA71 /* JCLineTests.m */,
+				5DC518211AD30993007CEA71 /* JCContactsTests.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -2047,8 +2056,11 @@
 				5D2D74371ACFB48500B98BDF /* JCPhoneManagerBaseTestCase.m in Sources */,
 				5DC5181A1AD2E746007CEA71 /* JCCoreDataTestDataFactory.m in Sources */,
 				5D2D74311ACFB48500B98BDF /* JCAddressBookTests.m in Sources */,
+				5DC518221AD30993007CEA71 /* JCContactsTests.m in Sources */,
 				5D2D74361ACFB48500B98BDF /* JCMainStoryboardBaseTestCase.m in Sources */,
+				5DC518201AD3096F007CEA71 /* JCLineTests.m in Sources */,
 				5D2D74381ACFB48500B98BDF /* JCPhoneManagerTests.m in Sources */,
+				5DC5181E1AD3094E007CEA71 /* JCPbxTests.m in Sources */,
 				5D2D74301ACFB48500B98BDF /* JCAddressBookTestDataFactory.m in Sources */,
 				5D2D74391ACFB48500B98BDF /* JCTransferViewControllerTests.m in Sources */,
 			);
