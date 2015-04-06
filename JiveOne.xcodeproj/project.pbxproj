@@ -207,8 +207,7 @@
 		5DBBDCC619DD9A4100A4DB96 /* JCPhoneManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBBDCC519DD9A4100A4DB96 /* JCPhoneManager.m */; };
 		5DBBDCC919DDA0A300A4DB96 /* JCCallCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBBDCC819DDA0A300A4DB96 /* JCCallCard.m */; };
 		5DBCB93919FE9300001C7157 /* JCConferenceCallCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DBCB93819FE9300001C7157 /* JCConferenceCallCard.m */; };
-		5DDB5ADF1ACF29E90075DEE3 /* TestCoreDataContents.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5DDB5ADE1ACF29E90075DEE3 /* TestCoreDataContents.plist */; };
-		5DDB5AE01ACF29E90075DEE3 /* TestCoreDataContents.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5DDB5ADE1ACF29E90075DEE3 /* TestCoreDataContents.plist */; };
+		5DC518171AD2E688007CEA71 /* TestCoreDataContents.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5DC518161AD2E688007CEA71 /* TestCoreDataContents.plist */; };
 		5DDDA5451A4A856800E31AA3 /* JCPresenceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DDDA5441A4A856800E31AA3 /* JCPresenceManager.m */; };
 		5DDDA5481A4B08AD00E31AA3 /* JCSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DDDA5471A4B08AD00E31AA3 /* JCSocket.m */; };
 		5DDDA54B1A4B238300E31AA3 /* JCLinePresence.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DDDA54A1A4B238300E31AA3 /* JCLinePresence.m */; };
@@ -437,7 +436,6 @@
 		5D2D73CA1ACF97AE00B98BDF /* it.xliff */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = it.xliff; sourceTree = "<group>"; };
 		5D2D73CB1ACF97AE00B98BDF /* pt.xliff */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = pt.xliff; sourceTree = "<group>"; };
 		5D2D74121ACFA84700B98BDF /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5D2D74151ACFA84700B98BDF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D2D741E1ACFB48500B98BDF /* JCAddressBookTestDataFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAddressBookTestDataFactory.h; sourceTree = "<group>"; };
 		5D2D741F1ACFB48500B98BDF /* JCAddressBookTestDataFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAddressBookTestDataFactory.m; sourceTree = "<group>"; };
 		5D2D74201ACFB48500B98BDF /* JCAddressBookTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAddressBookTests.m; sourceTree = "<group>"; };
@@ -607,7 +605,7 @@
 		5DBD9F1F1A1D00A300F967B6 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5DBD9F201A1D00A400F967B6 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5DBD9F211A1D00A500F967B6 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		5DDB5ADE1ACF29E90075DEE3 /* TestCoreDataContents.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TestCoreDataContents.plist; sourceTree = "<group>"; };
+		5DC518161AD2E688007CEA71 /* TestCoreDataContents.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TestCoreDataContents.plist; sourceTree = "<group>"; };
 		5DDDA5431A4A856800E31AA3 /* JCPresenceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPresenceManager.h; sourceTree = "<group>"; };
 		5DDDA5441A4A856800E31AA3 /* JCPresenceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPresenceManager.m; sourceTree = "<group>"; };
 		5DDDA5461A4B08AD00E31AA3 /* JCSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSocket.h; sourceTree = "<group>"; };
@@ -1341,9 +1339,7 @@
 		5D2D74141ACFA84700B98BDF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				5DE724441ACB459200BB313B /* JCPhoneManagerTests.m */,
-				5D62FACB1ACA6B1200C6DE05 /* JCAddressBookTests.m */,
-				5DE724721ACDA0F700BB313B /* NSString+AdditionsTests.m */,
+				5DC518161AD2E688007CEA71 /* TestCoreDataContents.plist */,
 				5D2D742F1ACFB48500B98BDF /* TestExternalContactListContents.plist */,
 			);
 			name = "Supporting Files";
@@ -1773,6 +1769,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D2D743C1ACFB48500B98BDF /* TestExternalContactListContents.plist in Resources */,
+				5DC518171AD2E688007CEA71 /* TestCoreDataContents.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

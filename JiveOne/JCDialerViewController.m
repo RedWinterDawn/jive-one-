@@ -17,6 +17,7 @@
 #import "JCContactCollectionViewCell.h"
 #import "JiveContact.h"
 #import "NSString+Additions.h"
+#import "PBX.h"
 
 NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCall";
 
