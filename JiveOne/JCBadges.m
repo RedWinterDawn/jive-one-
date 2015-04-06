@@ -57,8 +57,6 @@ NSString *const kJCBadgesSMSMessagesEventTypeKey   = @"smsMessages";
     for (RecentEvent *recentEvent in recentEvents) {
         [self processRecentEvent:recentEvent];
     }
-    
-    NSLog(@"%@", _badgeData);
 }
 
 -(void)processRecentEvent:(RecentEvent *)recentEvent
@@ -88,7 +86,6 @@ NSString *const kJCBadgesSMSMessagesEventTypeKey   = @"smsMessages";
     NSMutableDictionary *events = [self eventsForEventType:eventType key:key];
     [events setObject:@NO forKey:objectId];
     [self setEvents:events forEventType:eventType key:key];
-    NSLog(@"%@", _badgeData);
 }
 
 -(void)removeRecentEvent:(RecentEvent *)recentEvent
@@ -105,7 +102,6 @@ NSString *const kJCBadgesSMSMessagesEventTypeKey   = @"smsMessages";
         [events removeObjectForKey:objectId];
     }
     [self setEvents:events forEventType:eventType key:key];
-    NSLog(@"%@", _badgeData);
 }
 
 -(NSString *)keyForRecentEvent:(RecentEvent *)recentEvent
