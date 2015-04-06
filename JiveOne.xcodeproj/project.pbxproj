@@ -210,6 +210,12 @@
 		5DC1D8811AB8D7D000326AF3 /* JCApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC1D8801AB8D7D000326AF3 /* JCApiClient.m */; };
 		5DC1D8841ABB0CDB00326AF3 /* JCSocketLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC1D8831ABB0CDB00326AF3 /* JCSocketLogger.m */; };
 		5DC518151AD2E24B007CEA71 /* JCStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D85A9711ACF847A00991A97 /* JCStyleKit.m */; };
+		5DC518171AD2E688007CEA71 /* TestCoreDataContents.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5DC518161AD2E688007CEA71 /* TestCoreDataContents.plist */; };
+		5DC5181A1AD2E746007CEA71 /* JCCoreDataTestDataFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC518191AD2E746007CEA71 /* JCCoreDataTestDataFactory.m */; };
+		5DC5181C1AD2F9F5007CEA71 /* JCCoreDataFactoryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC5181B1AD2F9F5007CEA71 /* JCCoreDataFactoryTests.m */; };
+		5DC5181E1AD3094E007CEA71 /* JCPbxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC5181D1AD3094E007CEA71 /* JCPbxTests.m */; };
+		5DC518201AD3096F007CEA71 /* JCLineTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC5181F1AD3096F007CEA71 /* JCLineTests.m */; };
+		5DC518221AD30993007CEA71 /* JCContactsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DC518211AD30993007CEA71 /* JCContactsTests.m */; };
 		5DDDA5451A4A856800E31AA3 /* JCPresenceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DDDA5441A4A856800E31AA3 /* JCPresenceManager.m */; };
 		5DDDA5481A4B08AD00E31AA3 /* JCSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DDDA5471A4B08AD00E31AA3 /* JCSocket.m */; };
 		5DDDA54B1A4B238300E31AA3 /* JCLinePresence.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DDDA54A1A4B238300E31AA3 /* JCLinePresence.m */; };
@@ -437,7 +443,6 @@
 		5D2D73CA1ACF97AE00B98BDF /* it.xliff */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = it.xliff; sourceTree = "<group>"; };
 		5D2D73CB1ACF97AE00B98BDF /* pt.xliff */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = pt.xliff; sourceTree = "<group>"; };
 		5D2D74121ACFA84700B98BDF /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5D2D74151ACFA84700B98BDF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D2D741E1ACFB48500B98BDF /* JCAddressBookTestDataFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAddressBookTestDataFactory.h; sourceTree = "<group>"; };
 		5D2D741F1ACFB48500B98BDF /* JCAddressBookTestDataFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAddressBookTestDataFactory.m; sourceTree = "<group>"; };
 		5D2D74201ACFB48500B98BDF /* JCAddressBookTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAddressBookTests.m; sourceTree = "<group>"; };
@@ -614,6 +619,13 @@
 		5DC1D8801AB8D7D000326AF3 /* JCApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCApiClient.m; sourceTree = "<group>"; };
 		5DC1D8821ABB0CDB00326AF3 /* JCSocketLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSocketLogger.h; sourceTree = "<group>"; };
 		5DC1D8831ABB0CDB00326AF3 /* JCSocketLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSocketLogger.m; sourceTree = "<group>"; };
+		5DC518161AD2E688007CEA71 /* TestCoreDataContents.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TestCoreDataContents.plist; sourceTree = "<group>"; };
+		5DC518181AD2E746007CEA71 /* JCCoreDataTestDataFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCCoreDataTestDataFactory.h; sourceTree = "<group>"; };
+		5DC518191AD2E746007CEA71 /* JCCoreDataTestDataFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCoreDataTestDataFactory.m; sourceTree = "<group>"; };
+		5DC5181B1AD2F9F5007CEA71 /* JCCoreDataFactoryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCCoreDataFactoryTests.m; sourceTree = "<group>"; };
+		5DC5181D1AD3094E007CEA71 /* JCPbxTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPbxTests.m; sourceTree = "<group>"; };
+		5DC5181F1AD3096F007CEA71 /* JCLineTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCLineTests.m; sourceTree = "<group>"; };
+		5DC518211AD30993007CEA71 /* JCContactsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCContactsTests.m; sourceTree = "<group>"; };
 		5DDDA5431A4A856800E31AA3 /* JCPresenceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPresenceManager.h; sourceTree = "<group>"; };
 		5DDDA5441A4A856800E31AA3 /* JCPresenceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPresenceManager.m; sourceTree = "<group>"; };
 		5DDDA5461A4B08AD00E31AA3 /* JCSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSocket.h; sourceTree = "<group>"; };
@@ -1344,7 +1356,7 @@
 		5D2D74141ACFA84700B98BDF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				5D2D74151ACFA84700B98BDF /* Info.plist */,
+				5DC518161AD2E688007CEA71 /* TestCoreDataContents.plist */,
 				5D2D742F1ACFB48500B98BDF /* TestExternalContactListContents.plist */,
 			);
 			name = "Supporting Files";
@@ -1355,6 +1367,8 @@
 			children = (
 				5D2D741E1ACFB48500B98BDF /* JCAddressBookTestDataFactory.h */,
 				5D2D741F1ACFB48500B98BDF /* JCAddressBookTestDataFactory.m */,
+				5DC518181AD2E746007CEA71 /* JCCoreDataTestDataFactory.h */,
+				5DC518191AD2E746007CEA71 /* JCCoreDataTestDataFactory.m */,
 			);
 			name = Factories;
 			sourceTree = "<group>";
@@ -1382,6 +1396,10 @@
 			isa = PBXGroup;
 			children = (
 				5D2D74201ACFB48500B98BDF /* JCAddressBookTests.m */,
+				5DC5181B1AD2F9F5007CEA71 /* JCCoreDataFactoryTests.m */,
+				5DC5181D1AD3094E007CEA71 /* JCPbxTests.m */,
+				5DC5181F1AD3096F007CEA71 /* JCLineTests.m */,
+				5DC518211AD30993007CEA71 /* JCContactsTests.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1792,6 +1810,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D2D743C1ACFB48500B98BDF /* TestExternalContactListContents.plist in Resources */,
+				5DC518171AD2E688007CEA71 /* TestCoreDataContents.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2056,13 +2075,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5DC5181C1AD2F9F5007CEA71 /* JCCoreDataFactoryTests.m in Sources */,
 				5D2D74351ACFB48500B98BDF /* JCDialerViewControllerTests.m in Sources */,
 				5D2D75511AD08DBA00B98BDF /* OsgiData.xcdatamodel in Sources */,
 				5D2D74341ACFB48500B98BDF /* JCBaseTestCase.m in Sources */,
 				5D2D74371ACFB48500B98BDF /* JCPhoneManagerBaseTestCase.m in Sources */,
+				5DC5181A1AD2E746007CEA71 /* JCCoreDataTestDataFactory.m in Sources */,
 				5D2D74311ACFB48500B98BDF /* JCAddressBookTests.m in Sources */,
+				5DC518221AD30993007CEA71 /* JCContactsTests.m in Sources */,
 				5D2D74361ACFB48500B98BDF /* JCMainStoryboardBaseTestCase.m in Sources */,
+				5DC518201AD3096F007CEA71 /* JCLineTests.m in Sources */,
 				5D2D74381ACFB48500B98BDF /* JCPhoneManagerTests.m in Sources */,
+				5DC5181E1AD3094E007CEA71 /* JCPbxTests.m in Sources */,
 				5D2D74301ACFB48500B98BDF /* JCAddressBookTestDataFactory.m in Sources */,
 				5D2D74391ACFB48500B98BDF /* JCTransferViewControllerTests.m in Sources */,
 			);
