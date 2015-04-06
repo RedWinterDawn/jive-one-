@@ -7,6 +7,7 @@
 //
 
 #import "JCDebugDIDTableViewController.h"
+#import "PBX.h"
 
 @implementation JCDebugDIDTableViewController
 

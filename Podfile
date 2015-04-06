@@ -15,4 +15,7 @@ pod 'XMLDictionary', '~> 1.4'
 pod 'SVProgressHUD'
 pod 'Appsee'
 pod 'StaticDataTableViewController'
-pod 'OCMock'
+
+target 'UnitTests', :exclusive => true do
+    pod 'OCMock'
+end

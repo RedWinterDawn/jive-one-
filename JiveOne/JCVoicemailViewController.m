@@ -15,6 +15,7 @@
 
 #import "JCVoicemailTableViewController.h"
 #import "PBX.h"
+#import "Line.h"
 
 NSString *const kJCVoiceNonVisualViewControllerIdentifier = @"VoiceNonVisualViewController";
 

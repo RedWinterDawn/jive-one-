@@ -9,6 +9,7 @@
 #import "Line.h"
 #import "NSManagedObject+Additions.h"
 #import "PBX.h"
+#import "NSString+Additions.h"
 
 #define LINE_INDEX_OF_LINE_IN_JRN 5
 // "jrn:line::jive:0144096e-bb05-ff06-702e-000100420002:0146db6f-52c9-9895-f67d-000100620002",

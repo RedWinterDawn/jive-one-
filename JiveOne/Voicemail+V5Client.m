@@ -15,6 +15,7 @@
 // Models
 #import "PBX.h"
 #import "Contact.h"
+#import "Line.h"
 
 NSString *const kVoicemailResponseIdentifierKey         = @"jrn";
 NSString *const kVoicemailResponseDurationKey           = @"duration";

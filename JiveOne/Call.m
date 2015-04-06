@@ -8,6 +8,7 @@
 
 #import "Call.h"
 #import "Contact.h"
+#import "Line.h"
 
 NSString *const kCallEntityName = @"Call";
 

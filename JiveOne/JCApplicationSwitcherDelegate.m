@@ -20,6 +20,8 @@
 #import "Voicemail.h"
 #import "Call.h"
 #import "JCConversationGroup.h"
+#import "Line.h"
+#import "PBX.h"
 
 #import "JCAuthenticationManager.h"
 
