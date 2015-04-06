@@ -54,4 +54,6 @@ typedef void (^CompletionBlock) (BOOL success, NSError *error);
 
 @interface UIViewController (AuthenticationManager)
 
+@property (nonatomic, strong) JCAuthenticationManager *authenticationManager;
+
 @end

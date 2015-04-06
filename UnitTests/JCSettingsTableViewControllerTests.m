@@ -9,6 +9,12 @@
 #import "JCMainStoryboardBaseTestCase.h"
 #import "JCSettingsTableViewController.h"
 
+#import "JCAppSettings.h"
+#import "JCAuthenticationManager.h"
+
+#import "DID.h"
+#import "NSString+Additions.h"
+
 @interface JCSettingsTableViewControllerTests : JCMainStoryboardBaseTestCase
 
 @property (nonatomic, strong) JCSettingsTableViewController *vc;
@@ -22,14 +28,39 @@
     
     JCSettingsTableViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"JCSettingsTableViewController"];
     
+    id appSettings = OCMClassMock([JCAppSettings class]);
+    vc.appSettings = appSettings;
+    XCTAssertEqual(appSettings, vc.appSettings, @"App Settings is not the mock app settings");
     
+    id authenticationManager = OCMClassMock([JCAuthenticationManager class]);
+    vc.authenticationManager = authenticationManager;
+    XCTAssertEqual(authenticationManager, vc.authenticationManager, @"Authentication Manager is not the mock authentication manger");
+    self.vc = vc;
     
-    
+     [vc performSelectorOnMainThread:@selector(loadView) withObject:nil waitUntilDone:YES];
 }
 
 - (void)tearDown {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
 }
+
+- (void)test_smsDefaultLineDisplay
+{
+    // Given
+    NSString *jrn = @"";
+    DID *did = [DID MR_findFirstByAttribute:NSStringFromSelector(@selector(jrn)) withValue:jrn];
+    OCMStub([self.vc.authenticationManager did]).andReturn(did);
+    NSString *expectedResponse = did.number.formattedPhoneNumber;
+    
+    // When
+    [self.vc.view setNeedsLayout];
+    [self.vc.view layoutIfNeeded];
+    
+    // Then
+    NSString *string = self.vc.smsUserDefaultNumber.text;
+    XCTAssertTrue([string isEqualToString:expectedResponse], @"DId not get expected phone number");
+}
+
 
 @end

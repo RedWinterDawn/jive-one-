@@ -22,8 +22,6 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
 
 @interface JCSettingsTableViewController () <MFMailComposeViewControllerDelegate>
 
-@property (nonatomic, strong)  JCAuthenticationManager *authenticationManager;
-
 @end
 
 @implementation JCSettingsTableViewController
@@ -39,6 +37,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
     self.wifiOnly.on = settings.wifiOnly;
     self.presenceEnabled.on = settings.presenceEnabled;
     [self cell:self.enablePreasenceCell setHidden:!self.authenticationManager.line.pbx.isV5];
+    
     [self reloadDataAnimated:NO];
 }
 
@@ -139,14 +138,6 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Debug" bundle:[NSBundle mainBundle]];
     UIViewController *rootViewController = [storyboard instantiateInitialViewController];
     [self.navigationController pushViewController:rootViewController animated:YES];
-}
-
--(JCAuthenticationManager *)authenticationManager
-{
-    if (!_authenticationManager) {
-        _authenticationManager = [JCAuthenticationManager sharedInstance];
-    }
-    return _authenticationManager;
 }
 
 #pragma mark - Delegate Handlers -

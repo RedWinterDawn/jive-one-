@@ -63,9 +63,16 @@ NSString *const kJCAuthneticationManagerDeviceTokenKey = @"deviceToken";
 
 -(instancetype)init
 {
+    JCAuthenticationKeychain *keyChain = [JCAuthenticationKeychain new];
+    
+    return [self initWithKeychain:keyChain];
+}
+
+-(instancetype)initWithKeychain:(JCAuthenticationKeychain *)keychain
+{
     self = [super init];
-    if (self) {
-        _authenticationKeychain = [JCAuthenticationKeychain new];
+    if(self) {
+        _authenticationKeychain = keychain;
     }
     return self;
 }
@@ -354,19 +361,19 @@ static JCAuthenticationManager *authenticationManager = nil;
 
 @implementation UIViewController (AuthenticationManager)
 
-- (void)setSharedAuthenticationManager:(JCAuthenticationManager *)sharedAuthenticationManager {
-    objc_setAssociatedObject(self, @selector(sharedAuthenticationManager), sharedAuthenticationManager, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setAuthenticationManager:(JCAuthenticationManager *)authenticationManager {
+    objc_setAssociatedObject(self, @selector(authenticationManager), authenticationManager, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
--(JCAuthenticationManager *)sharedAuthenticationManager
+-(JCAuthenticationManager *)authenticationManager
 {
-    JCAuthenticationManager *sharedAuthenticationManager = objc_getAssociatedObject(self, @selector(sharedAuthenticationManager));
-    if (!sharedAuthenticationManager)
+    JCAuthenticationManager *authenticationManager = objc_getAssociatedObject(self, @selector(authenticationManager));
+    if (!authenticationManager)
     {
-        sharedAuthenticationManager = [JCAuthenticationManager sharedInstance];
-        objc_setAssociatedObject(self, @selector(sharedAuthenticationManager), sharedAuthenticationManager, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        authenticationManager = [JCAuthenticationManager sharedInstance];
+        objc_setAssociatedObject(self, @selector(authenticationManager), authenticationManager, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
-    return sharedAuthenticationManager;
+    return authenticationManager;
 }
 
 @end

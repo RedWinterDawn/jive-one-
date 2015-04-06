@@ -64,6 +64,11 @@ NSString *const kJCCoreDataTestDataFactoryDataFile = @"TestCoreDataContents.plis
     for (NSDictionary *contactData in contactsData) {
         [self processLineData:contactData forPbx:pbx];
     }
+    
+    NSArray *didsData = [pbxData arrayForKey:@"dids"];
+    for (NSDictionary *didData in didsData) {
+        [self processDidData:didData forPbx:pbx];
+    }
 }
 
 + (void)processLineData:(NSDictionary *)lineData forPbx:(PBX *)pbx
@@ -99,6 +104,15 @@ NSString *const kJCCoreDataTestDataFactoryDataFile = @"TestCoreDataContents.plis
     contact.extension  = [contactData stringValueForKey:@"extension"];
     contact.favorite   = [contactData boolValueForKey:@"favorite"];
     contact.jiveUserId = [contactData stringValueForKey:@"jiveUserId"];
+}
+
++ (void)processDidData:(NSDictionary *)didData forPbx:(PBX *)pbx
+{
+    DID *did = [DID MR_createInContext:pbx.managedObjectContext];
+    did.pbx = pbx;
+    
+    // TODO: Read in all the properties from didData
+    
 }
 
 @end
