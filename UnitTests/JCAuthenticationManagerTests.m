@@ -40,38 +40,4 @@
     [super tearDown];
 }
 
--(void)test_did_noPbx
-{
-    
-}
-
--(void)test_did_noDIDsForPBX
-{
-    
-}
-
--(void)test_did_pbxHasDids_hasDefault
-{
-    
-}
-
--(void)test_did_pbxHasDids_noDefault
-{
-    // Given
-    NSString *jrn = @"";
-    PBX *pbx = [PBX MR_findFirstByAttribute:NSStringFromSelector(@selector(jrn)) withValue:jrn];
-    id authenticationManagerMock = OCMPartialMock(self.authenticationManager);
-    OCMStub([authenticationManagerMock pbx]).andReturn(pbx);
-    
-    // TODO: figure out which should be the first object did.
-    
-    // When
-    DID *did = ((JCAuthenticationManager *)authenticationManagerMock).did;
-    
-    // Then
-    OCMVerify([authenticationManagerMock pbx]);
-               
-    // TODO: write more asserts around did.
-}
-
 @end

@@ -35,13 +35,14 @@
     id authenticationManager = OCMClassMock([JCAuthenticationManager class]);
     vc.authenticationManager = authenticationManager;
     XCTAssertEqual(authenticationManager, vc.authenticationManager, @"Authentication Manager is not the mock authentication manger");
-    self.vc = vc;
     
     [vc performSelectorOnMainThread:@selector(loadView) withObject:nil waitUntilDone:YES];
+    self.vc = vc;
 }
 
 - (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    self.vc = nil;
     [super tearDown];
 }
 
