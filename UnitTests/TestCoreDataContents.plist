@@ -64,7 +64,7 @@
 						<key>jrn</key>
 						<string>jrn:line::jive:01471162-f384-24f5-9351-000100420001:014a5955-b837-e8d0-ab9a-000100620003</string>
 						<key>extension</key>
-						<string>1001</string>
+						<string>1002</string>
 						<key>favorite</key>
 						<false/>
 						<key>jiveUserId</key>
@@ -76,15 +76,30 @@
 						<key>jrn</key>
 						<string>jrn:line::jive:01471162-f384-24f5-9351-000100420001:014a5955-b837-e8d0-ab9a-000100620004</string>
 						<key>extension</key>
-						<string>1001</string>
+						<string>1003</string>
 						<key>favorite</key>
 						<false/>
 						<key>jiveUserId</key>
-						<string>jsmith</string>
+						<string>tgalloway</string>
 					</dict>
 				</array>
 				<key>dids</key>
-				<array/>
+				<array>
+					<dict>
+						<key>jrn</key>
+						<string></string>
+						<key>number</key>
+						<string></string>
+						<key>makeCall</key>
+						<false/>
+						<key>receiveCall</key>
+						<false/>
+						<key>sendSMS</key>
+						<true/>
+						<key>receiveSMS</key>
+						<true/>
+					</dict>
+				</array>
 			</dict>
 		</array>
 	</dict>
