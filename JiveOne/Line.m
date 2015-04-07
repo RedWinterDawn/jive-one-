@@ -20,23 +20,24 @@ NSString *const kLineActiveAttribute = @"active";
 
 @dynamic mailboxJrn;
 @dynamic mailboxUrl;
-@dynamic events;
-@dynamic lineConfiguration;
-@dynamic pbx;
-
-#pragma mark - Setters -
 
 -(void)setActive:(BOOL)active
 {
     [self setPrimitiveValueFromBoolValue:active forKey:kLineActiveAttribute];
 }
 
-#pragma mark - Getters -
-
 -(BOOL)isActive
 {
     return [self boolValueFromPrimitiveValueForKey:kLineActiveAttribute];
 }
+
+#pragma mark - Relationships -
+
+@dynamic events;
+@dynamic lineConfiguration;
+@dynamic pbx;
+
+#pragma mark - Transient Properties -
 
 -(NSString *)detailText
 {
@@ -60,7 +61,8 @@ NSString *const kLineActiveAttribute = @"active";
 
 -(NSString *)pbxId
 {
-    return self.pbx.pbxId;
+    PBX *pbx = self.pbx;
+    return pbx.pbxId;
 }
 
 @end

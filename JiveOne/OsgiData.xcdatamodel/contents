@@ -33,7 +33,7 @@
     <entity name="JiveContact" representedClassName="JiveContact" isAbstract="YES" parentEntity="Person" syncable="YES">
         <attribute name="extension" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="jrn" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="pbxId" optional="YES" transient="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="pbxId" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
     </entity>
     <entity name="Line" representedClassName="Line" parentEntity="JiveContact" syncable="YES">
         <attribute name="active" optional="YES" attributeType="Boolean" indexed="YES" syncable="YES"/>

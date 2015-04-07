@@ -12,6 +12,8 @@
 
 @property (nonatomic, retain) NSString * extension;
 @property (nonatomic, retain) NSString * jrn;
+
+// Transient
 @property (nonatomic, retain) NSString * pbxId;
 
 @end
