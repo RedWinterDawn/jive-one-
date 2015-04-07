@@ -55,6 +55,8 @@ NSString *const kJCCoreDataTestDataFactoryDataFile = @"TestCoreDataContents.plis
     pbx.jrn  = [pbxData stringValueForKey:@"jrn"];
     pbx.v5   = [pbxData boolValueForKey:@"v5"];
     
+    
+    
     NSArray *linesData = [pbxData arrayForKey:@"lines"];
     for (NSDictionary *lineData in linesData) {
         [self processLineData:lineData forPbx:pbx];

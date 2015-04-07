@@ -247,5 +247,43 @@
 			</dict>
 		</array>
 	</dict>
+	<dict>
+		<key>jiveId</key>
+		<string>testUser4</string>
+		<key>pbxs</key>
+		<array>
+			<dict>
+				<key>name</key>
+				<string>Test User4 PBX</string>
+				<key>jrn</key>
+				<string>jrn:pbx::jive:01471162-f384-24f5-9351-000100420005:pbx~default</string>
+				<key>v5</key>
+				<true/>
+				<key>lines</key>
+				<array/>
+				<key>contacts</key>
+				<array/>
+				<key>dids</key>
+				<array>
+					<dict>
+						<key>jrn</key>
+						<string>jrn:pbx::jive:01471162-f384-24f5-9351-000100420005:did:014885d6-1526-8b77-a111-000100420051</string>
+						<key>number</key>
+						<string>+18012223333</string>
+						<key>makeCall</key>
+						<false/>
+						<key>reciveCall</key>
+						<false/>
+						<key>sendSMS</key>
+						<false/>
+						<key>reciveSMS</key>
+						<false/>
+						<key>userDefault</key>
+						<true/>
+					</dict>
+				</array>
+			</dict>
+		</array>
+	</dict>
 </array>
 </plist>
