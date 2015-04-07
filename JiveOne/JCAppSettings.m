@@ -15,7 +15,27 @@ NSString *const kJCAppSettingsWifiOnlyAttribute = @"wifiOnly";
 NSString *const kJCAppSettingsPresenceAttribute = @"presenceEnabled";
 NSString *const kJCAppSettingsVibrateOnRingAttribute = @"vibrateOnRing";
 
+@interface JCAppSettings ()
+
+@property (nonatomic, strong) NSUserDefaults *userDefaults;
+
+@end
+
 @implementation JCAppSettings
+
+-(instancetype)initWithDefaults:(NSUserDefaults *)userDefaults
+{
+    self = [super init];
+    if (self) {
+        _userDefaults = userDefaults;
+    }
+    return self;
+}
+
+-(instancetype)init
+{
+    return [self initWithDefaults:[NSUserDefaults standardUserDefaults]];
+}
 
 #pragma mark - Setters -
 
@@ -48,25 +68,25 @@ NSString *const kJCAppSettingsVibrateOnRingAttribute = @"vibrateOnRing";
 
 -(BOOL)isIntercomEnabled
 {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:kJCAppSettingsIntercomEnabledAttribute];
+    return [self.userDefaults boolForKey:kJCAppSettingsIntercomEnabledAttribute];
 }
 -(BOOL)isIntercomMicrophoneMuteEnabled
 {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:kJCAppSettingsIntercomMicrophoneMuteEnabledAttribute];
+    return [self.userDefaults boolForKey:kJCAppSettingsIntercomMicrophoneMuteEnabledAttribute];
 }
 -(BOOL)isWifiOnly
 {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:kJCAppSettingsWifiOnlyAttribute];
+    return [self.userDefaults boolForKey:kJCAppSettingsWifiOnlyAttribute];
 }
 
 -(BOOL)isPresenceEnabled
 {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:kJCAppSettingsPresenceAttribute];
+    return [self.userDefaults boolForKey:kJCAppSettingsPresenceAttribute];
 }
 
 -(BOOL)isVibrateOnRing
 {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:kJCAppSettingsVibrateOnRingAttribute];
+    return [self.userDefaults boolForKey:kJCAppSettingsVibrateOnRingAttribute];
 }
 
 #pragma mark - Private -
@@ -74,7 +94,7 @@ NSString *const kJCAppSettingsVibrateOnRingAttribute = @"vibrateOnRing";
 -(void)setSettingBoolValue:(BOOL)value forKey:(NSString *)key
 {
     [self willChangeValueForKey:key];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults *defaults = self.userDefaults;
     [defaults setBool:value forKey:key];
     [defaults synchronize];
     [self didChangeValueForKey:key];
@@ -92,7 +112,6 @@ NSString *const kJCAppSettingsVibrateOnRingAttribute = @"vibrateOnRing";
     dispatch_once(&pred, ^{             // This code is called at most once per app
         singleton = [[JCAppSettings alloc] init];
     });
-    
     return singleton;
 }
 
