@@ -117,7 +117,7 @@ NSString *const kJCCoreDataTestDataFactoryDataFile = @"TestCoreDataContents.plis
     did.receiveCall = [didData boolValueForKey:@"reciveCall"];
     did.sendSMS = [didData boolValueForKey:@"sendSMS"];
     did.receiveSMS = [didData boolValueForKey:@"reciveSMS"];
-    
+    did.userDefault = [didData boolValueForKey:@"userDefault"];
 }
 
 @end
