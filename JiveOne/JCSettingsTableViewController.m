@@ -56,6 +56,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
     [self.view setNeedsLayout];
     
     [self cell:self.enablePreasenceCell setHidden:!self.authenticationManager.line.pbx.isV5];
+    [self cell:self.defaultDIDCell setHidden:self.authenticationManager.pbx.smsEnabled];
     [self reloadDataAnimated:NO];
 }
 

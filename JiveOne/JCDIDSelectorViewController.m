@@ -41,15 +41,19 @@
     if ([object isKindOfClass:[DID class]])
     {
         DID *did = (DID *)object;
+        if (did.sendSMS || did.receiveSMS) {
+            
         cell.textLabel.text = [NSString stringWithFormat:@"%@", did.number].formattedPhoneNumber;
         if ([did isEqual:[JCAuthenticationManager sharedInstance].did]) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
         }
         else {
             cell.accessoryType = UITableViewCellAccessoryNone;
+            }
         }
     }
 }
+
 
 #pragma mark Caller View Controller Delegate
 

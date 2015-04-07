@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UISwitch *presenceEnabled;
 @property (weak, nonatomic) IBOutlet UITableViewCell *enablePreasenceCell;
 @property (weak, nonatomic) IBOutlet UILabel *smsUserDefaultNumber;
+@property (weak, nonatomic) IBOutlet UITableViewCell *defaultDIDCell;
 
 
 -(IBAction)leaveFeedback:(id)sender;
