@@ -89,10 +89,6 @@
     XCTAssertTrue([did.jrn isEqualToString:expectedDIDjrn], @"The jrn of the 'DID' did not equil what we exspected %@",did.jrn);
     XCTAssertEqual(did.pbx, pbx, @"The DID did not match the PBX DID ");
     XCTAssertTrue(did.isUserDefault, @"The UserDefault was not set to true on this DID");
-    
-    
-    
-
 }
 
 -(void)test_did_pbxHasDids_noDefault
@@ -113,7 +109,6 @@
     XCTAssertNotNil(pbx, @"PBX was nil");
     XCTAssertNotNil(did, @"DID was nil");
     XCTAssertFalse(did.isUserDefault, @"The UserDefault was not set to true on this DID");
-    // TODO: write more asserts around did.
 }
 
 @end

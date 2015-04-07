@@ -61,6 +61,13 @@
 		5D0275101A3F81FF0077A37B /* NSData+AESAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D02750F1A3F81FF0077A37B /* NSData+AESAddition.m */; };
 		5D0275131A3F836A0077A37B /* JCStringEncryptionTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0275121A3F836A0077A37B /* JCStringEncryptionTransformer.m */; };
 		5D03649119DC5A450090CC21 /* JCTransferViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D03649019DC5A450090CC21 /* JCTransferViewController.m */; };
+		5D0BACA41AD438F800EFEF86 /* NSDictionary+AdditionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0BACA31AD438F800EFEF86 /* NSDictionary+AdditionsTests.m */; };
+		5D0BACA61AD4393F00EFEF86 /* NSData+AdditionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0BACA51AD4393F00EFEF86 /* NSData+AdditionsTests.m */; };
+		5D0BACA81AD439B100EFEF86 /* JCBadgeManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0BACA71AD439B100EFEF86 /* JCBadgeManagerTests.m */; };
+		5D0BACAA1AD43B0F00EFEF86 /* JCPresenceManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0BACA91AD43B0F00EFEF86 /* JCPresenceManagerTests.m */; };
+		5D0BACAC1AD43B6500EFEF86 /* JCVoicemailManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0BACAB1AD43B6500EFEF86 /* JCVoicemailManagerTests.m */; };
+		5D0BACAE1AD43E9B00EFEF86 /* JCSettingsTableViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0BACAD1AD43E9B00EFEF86 /* JCSettingsTableViewControllerTests.m */; };
+		5D0BACB01AD4406300EFEF86 /* JCAppSettingsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D0BACAF1AD4406300EFEF86 /* JCAppSettingsTests.m */; };
 		5D112DDA1A4094340097223C /* JCAuthenticationKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D112DD91A4094340097223C /* JCAuthenticationKeychain.m */; };
 		5D112DDD1A4161220097223C /* JCDebugPbxsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D112DDC1A4161220097223C /* JCDebugPbxsTableViewController.m */; };
 		5D11566F1A6DB486006217D6 /* JCConferenceCallCardViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D11566E1A6DB486006217D6 /* JCConferenceCallCardViewCell.m */; };
@@ -376,6 +383,13 @@
 		5D0275121A3F836A0077A37B /* JCStringEncryptionTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCStringEncryptionTransformer.m; sourceTree = "<group>"; };
 		5D03648F19DC5A450090CC21 /* JCTransferViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTransferViewController.h; sourceTree = "<group>"; };
 		5D03649019DC5A450090CC21 /* JCTransferViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTransferViewController.m; sourceTree = "<group>"; };
+		5D0BACA31AD438F800EFEF86 /* NSDictionary+AdditionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+AdditionsTests.m"; sourceTree = "<group>"; };
+		5D0BACA51AD4393F00EFEF86 /* NSData+AdditionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+AdditionsTests.m"; sourceTree = "<group>"; };
+		5D0BACA71AD439B100EFEF86 /* JCBadgeManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCBadgeManagerTests.m; sourceTree = "<group>"; };
+		5D0BACA91AD43B0F00EFEF86 /* JCPresenceManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPresenceManagerTests.m; sourceTree = "<group>"; };
+		5D0BACAB1AD43B6500EFEF86 /* JCVoicemailManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVoicemailManagerTests.m; sourceTree = "<group>"; };
+		5D0BACAD1AD43E9B00EFEF86 /* JCSettingsTableViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCSettingsTableViewControllerTests.m; sourceTree = "<group>"; };
+		5D0BACAF1AD4406300EFEF86 /* JCAppSettingsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAppSettingsTests.m; sourceTree = "<group>"; };
 		5D112DD81A4094340097223C /* JCAuthenticationKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAuthenticationKeychain.h; sourceTree = "<group>"; };
 		5D112DD91A4094340097223C /* JCAuthenticationKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAuthenticationKeychain.m; sourceTree = "<group>"; };
 		5D112DDB1A4161220097223C /* JCDebugPbxsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCDebugPbxsTableViewController.h; sourceTree = "<group>"; };
@@ -1206,6 +1220,15 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
+		5D0BACA21AD4383D00EFEF86 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				5D0BACA31AD438F800EFEF86 /* NSDictionary+AdditionsTests.m */,
+				5D0BACA51AD4393F00EFEF86 /* NSData+AdditionsTests.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 		5D1175A41AA0D99800D2B03A /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1351,6 +1374,7 @@
 				5D2D74241ACFB48500B98BDF /* JCBaseTestCase.h */,
 				5D2D74251ACFB48500B98BDF /* JCBaseTestCase.m */,
 				5D2D743E1ACFBC4400B98BDF /* Factories */,
+				5D0BACA21AD4383D00EFEF86 /* Categories */,
 				5D2D74411ACFBD4C00B98BDF /* Models */,
 				5D2D74401ACFBCA700B98BDF /* Managers */,
 				5D2D743F1ACFBC5F00B98BDF /* Controllers */,
@@ -1386,7 +1410,7 @@
 				5D2D74271ACFB48500B98BDF /* JCMainStoryboardBaseTestCase.h */,
 				5D2D74281ACFB48500B98BDF /* JCMainStoryboardBaseTestCase.m */,
 				5D2D74261ACFB48500B98BDF /* JCDialerViewControllerTests.m */,
-				B70EAB3A1AD3197600305F43 /* JCSettingsTableViewControllerTests.m */,
+				5D0BACAD1AD43E9B00EFEF86 /* JCSettingsTableViewControllerTests.m */,
 				5D2D746B1AD02F5800B98BDF /* PhoneManager */,
 			);
 			name = Controllers;
@@ -1396,6 +1420,9 @@
 			isa = PBXGroup;
 			children = (
 				5D2D742B1ACFB48500B98BDF /* JCPhoneManagerTests.m */,
+				5D0BACA71AD439B100EFEF86 /* JCBadgeManagerTests.m */,
+				5D0BACA91AD43B0F00EFEF86 /* JCPresenceManagerTests.m */,
+				5D0BACAB1AD43B6500EFEF86 /* JCVoicemailManagerTests.m */,
 				B70EAB3E1AD3302000305F43 /* JCAuthenticationManagerTests.m */,
 			);
 			name = Managers;
@@ -1410,6 +1437,7 @@
 				5DC5181F1AD3096F007CEA71 /* JCLineTests.m */,
 				5DC518211AD30993007CEA71 /* JCContactsTests.m */,
 				B70EAB3C1AD32B1E00305F43 /* JCDidTests.m */,
+				5D0BACAF1AD4406300EFEF86 /* JCAppSettingsTests.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -2077,17 +2105,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				5DC5181C1AD2F9F5007CEA71 /* JCCoreDataFactoryTests.m in Sources */,
+				5D0BACAC1AD43B6500EFEF86 /* JCVoicemailManagerTests.m in Sources */,
 				5D2D74351ACFB48500B98BDF /* JCDialerViewControllerTests.m in Sources */,
+				5D0BACA41AD438F800EFEF86 /* NSDictionary+AdditionsTests.m in Sources */,
 				5D2D75511AD08DBA00B98BDF /* OsgiData.xcdatamodel in Sources */,
 				5D2D74341ACFB48500B98BDF /* JCBaseTestCase.m in Sources */,
 				5D2D74371ACFB48500B98BDF /* JCPhoneManagerBaseTestCase.m in Sources */,
 				5DC5181A1AD2E746007CEA71 /* JCCoreDataTestDataFactory.m in Sources */,
 				5D2D74311ACFB48500B98BDF /* JCAddressBookTests.m in Sources */,
-				B70EAB3B1AD3197600305F43 /* JCSettingsTableViewControllerTests.m in Sources */,
 				B70EAB3D1AD32B1E00305F43 /* JCDidTests.m in Sources */,
 				5DC518221AD30993007CEA71 /* JCContactsTests.m in Sources */,
 				5D2D74361ACFB48500B98BDF /* JCMainStoryboardBaseTestCase.m in Sources */,
+				5D0BACB01AD4406300EFEF86 /* JCAppSettingsTests.m in Sources */,
+				5D0BACA61AD4393F00EFEF86 /* NSData+AdditionsTests.m in Sources */,
 				5DC518201AD3096F007CEA71 /* JCLineTests.m in Sources */,
+				5D0BACA81AD439B100EFEF86 /* JCBadgeManagerTests.m in Sources */,
+				5D0BACAE1AD43E9B00EFEF86 /* JCSettingsTableViewControllerTests.m in Sources */,
+				5D0BACAA1AD43B0F00EFEF86 /* JCPresenceManagerTests.m in Sources */,
 				5D2D74381ACFB48500B98BDF /* JCPhoneManagerTests.m in Sources */,
 				5DC5181E1AD3094E007CEA71 /* JCPbxTests.m in Sources */,
 				5D2D74301ACFB48500B98BDF /* JCAddressBookTestDataFactory.m in Sources */,

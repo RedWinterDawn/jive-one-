@@ -29,8 +29,8 @@ typedef void (^CompletionBlock) (BOOL success, NSError *error);
 - (void)logout;
 
 @property (nonatomic, strong) Line *line;
-@property (nonatomic, readonly) User *user;
 @property (nonatomic, strong) DID *did;
+@property (nonatomic, readonly) User *user;
 @property (nonatomic, readonly) PBX *pbx;
 
 @property (nonatomic, readonly) NSString *authToken;

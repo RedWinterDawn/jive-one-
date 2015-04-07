@@ -18,4 +18,6 @@ pod 'StaticDataTableViewController'
 
 target 'UnitTests', :exclusive => true do
     pod 'OCMock'
+    pod 'OCMockito'
+    #pod 'Kiwi', '~> 2.3'
 end

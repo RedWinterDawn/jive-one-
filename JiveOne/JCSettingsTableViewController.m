@@ -17,6 +17,7 @@
 #import "PBX.h"
 #import "DID.h"
 #import "User.h"
+#import "Line.h"
 
 NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please describe any issues you are experiencing :</strong><br><br><br><br><br><br><br><br><br><br><br><br><br><hr><strong>Device Specs</strong><br>Model: %@ <br> On iOS Version: %@ <br> App Version: %@ <br> Country: %@ <br> UUID : %@  <br> PBX : %@  <br> User : %@  <br> Line : %@  <br> ";
 
