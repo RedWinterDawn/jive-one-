@@ -7,6 +7,13 @@
 //
 
 #import "JiveContact.h"
+#import "PBX.h"
+
+@interface JiveContact()
+
+@property (nonatomic, readonly) PBX *pbx;
+
+@end
 
 @implementation JiveContact
 
@@ -34,6 +41,16 @@
 -(NSString *)number
 {
     return self.extension;
+}
+
+-(NSString *)pbxId
+{
+    return self.pbx.pbxId;
+}
+
+-(PBX *)pbx
+{
+    return nil;
 }
 
 @end

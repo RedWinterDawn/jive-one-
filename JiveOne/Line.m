@@ -58,4 +58,9 @@ NSString *const kLineActiveAttribute = @"active";
     return [[self class] identifierFromJrn:self.jrn index:LINE_INDEX_OF_LINE_IN_JRN];
 }
 
+-(NSString *)pbxId
+{
+    return self.pbx.pbxId;
+}
+
 @end

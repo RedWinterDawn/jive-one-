@@ -14,5 +14,14 @@
 
 @implementation JCLineTests
 
+-(void)test_detailed_text
+{
+    
+}
+
+-(void)test_line_id
+{
+    
+}
 
 @end
