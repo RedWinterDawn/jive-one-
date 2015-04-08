@@ -720,7 +720,9 @@ NSString *const kJCPhoneManagerRegistrationFailureNotification      = @"phoneMan
     }
     
     [self dismissCallViewControllerAnimated:NO];
-    [self presentTransferSuccessWithSession:transferLine receivingSession:receivingLine];
+    if (transferLine.callTitle && receivingLine.callTitle) {
+        [self presentTransferSuccessWithSession:transferLine receivingSession:receivingLine];
+    }
 }
 
 -(void)sipHandler:(JCSipManager *)sipHandler didFailTransferWithError:(NSError *)error
