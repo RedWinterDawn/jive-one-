@@ -53,26 +53,42 @@
 
 -(void)test_receiveSMSMessages {
     
+    //Given this pbx
     NSString *jrn = @"jrn:pbx::jive:01471162-f384-24f5-9351-000100420001:pbx~default";
-    NSString *jrnNoPermissions = @"jrn:pbx::jive:01471162-f384-24f5-9351-000100420005:pbx~default";
-    //when
+    
+    //when you have SMS permissions set to true
     PBX *pbx = [PBX MR_findFirstByAttribute:NSStringFromSelector(@selector(jrn)) withValue:jrn];
     
-    
-    //Then
+    //Then the pbx should be there and the recive sms flag should be true as long as it is v5
     XCTAssertNotNil(pbx,@"The pbx was nil");
-    XCTAssertTrue(pbx.receiveSMSMessages, @"This pbx is not able to recive SMS Messages");
+    XCTAssertTrue(pbx.receiveSMSMessages, @"This pbx is not able to receive SMS Messages");
+    
+    //GIven a pbx
+   NSString *jrnNoPermissionsToReciveSMS = @"jrn:pbx::jive:01471162-f384-24f5-9351-000100420005:pbx~default";
+   
+    //When the PBX does not have permissions
+   PBX *pbxNoPermissions = [PBX MR_findFirstByAttribute:NSStringFromSelector(@selector(jrn)) withValue:jrnNoPermissionsToReciveSMS];
+    
+    //Then the pbx should exsist but the flags should be set to false
+    XCTAssertNotNil(pbxNoPermissions, @"The pbx with no permissions was nil");
+    XCTAssertFalse(pbxNoPermissions.receiveSMSMessages, @"This pbx is not able to receive SMS Messages");
 }
 
 -(void)test_sendSMSMessages {
     
     NSString *jrn = @"jrn:pbx::jive:01471162-f384-24f5-9351-000100420001:pbx~default";
+    
+    NSString *jrnNoPermissions = @"jrn:pbx::jive:01471162-f384-24f5-9351-000100420005:pbx~default";
     //when
     PBX *pbx = [PBX MR_findFirstByAttribute:NSStringFromSelector(@selector(jrn)) withValue:jrn];
+    PBX *pbxNoPermissions = [PBX MR_findFirstByAttribute:NSStringFromSelector(@selector(jrn)) withValue:jrnNoPermissions];
     
     //Then
     XCTAssertNotNil(pbx,@"The pbx was nil");
-    XCTAssertTrue(pbx.smsEnabled, @"This pbx is not able to send SMS Messages");
+    XCTAssertTrue(pbx.sendSMSMessages, @"This pbx is not able to send SMS Messages");
+    
+    XCTAssertNotNil(pbxNoPermissions,@"The pbx with no permissions was nil");
+    XCTAssertFalse(pbxNoPermissions.sendSMSMessages, @"This pbx with no permission is able to send SMS Messages and shouldn't");
 }
 
 @end

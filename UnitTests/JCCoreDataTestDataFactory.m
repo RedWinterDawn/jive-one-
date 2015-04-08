@@ -57,6 +57,8 @@ NSString *const kJCCoreDataTestDataFactoryDataFile = @"TestCoreDataContents.plis
     
     
     
+    
+    
     NSArray *linesData = [pbxData arrayForKey:@"lines"];
     for (NSDictionary *lineData in linesData) {
         [self processLineData:lineData forPbx:pbx];
@@ -116,9 +118,9 @@ NSString *const kJCCoreDataTestDataFactoryDataFile = @"TestCoreDataContents.plis
     did.jrn = [didData stringValueForKey:@"jrn"];
     did.number = [didData stringValueForKey:@"number"];
     did.makeCall = [didData boolValueForKey:@"makeCall"];
-    did.receiveCall = [didData boolValueForKey:@"reciveCall"];
+    did.receiveCall = [didData boolValueForKey:@"receiveCall"];
     did.sendSMS = [didData boolValueForKey:@"sendSMS"];
-    did.receiveSMS = [didData boolValueForKey:@"reciveSMS"];
+    did.receiveSMS = [didData boolValueForKey:@"receiveSMS"];
     did.userDefault = [didData boolValueForKey:@"userDefault"];
 }
 
