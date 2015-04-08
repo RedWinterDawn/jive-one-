@@ -25,7 +25,7 @@
         if (pbx)
         {
             NSManagedObjectContext *context = self.managedObjectContext;
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx = %@ AND ( # )", pbx, @YES];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pbx = %@ AND receiveSMS = %@", pbx, @YES];
             NSFetchRequest *fetchRequest = [DID MR_requestAllSortedBy:@"number" ascending:YES withPredicate:predicate inContext:context];
             super.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                                  managedObjectContext:context

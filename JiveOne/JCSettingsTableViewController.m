@@ -38,7 +38,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
     self.wifiOnly.on = settings.wifiOnly;
     self.presenceEnabled.on = settings.presenceEnabled;
     [self cell:self.enablePreasenceCell setHidden:!self.authenticationManager.line.pbx.isV5];
-//    [self cell:self.defaultDIDCell setHidden:self.authenticationManager.pbx.smsEnabled];
+    [self cell:self.defaultDIDCell setHidden:!self.authenticationManager.pbx.smsEnabled];
     [self reloadDataAnimated:NO];
 }
 
@@ -57,8 +57,8 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
     [self.view setNeedsLayout];
     
     [self cell:self.enablePreasenceCell setHidden:!self.authenticationManager.line.pbx.isV5];
-//    [self cell:self.defaultDIDCell setHidden:self.authenticationManager.pbx.smsEnabled];
-//    NSLog(@"here is the state of your sms cell %@", self.defaultDIDCell.hidden);
+    [self cell:self.defaultDIDCell setHidden:!self.authenticationManager.pbx.smsEnabled];
+
     [self reloadDataAnimated:NO];
 }
 
