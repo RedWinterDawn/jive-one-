@@ -24,4 +24,13 @@
         [_delegate transferViewController:self shouldDialNumber:self.formattedPhoneNumberLabel.dialString];
 }
 
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    id <JCPersonDataSource> personNumber = [self objectAtIndexPath:indexPath];
+    NSString *number = personNumber.number.dialableString;
+    self.formattedPhoneNumberLabel.dialString = number;
+    if (_delegate && [_delegate respondsToSelector:@selector(transferViewController:shouldDialNumber:)])
+        [_delegate transferViewController:self shouldDialNumber:number];
+}
+
 @end
