@@ -6,13 +6,11 @@
 //  Copyright (c) 2015 Jive Communications, Inc. All rights reserved.
 //
 
-@import Foundation;
-
-#import "JCPersonDataSource.h"
+#import "JCAddressBookEntity.h"
 
 @class JCAddressBookPerson;
 
-@interface JCAddressBookNumber : NSObject <JCPersonDataSource>
+@interface JCAddressBookNumber : JCAddressBookEntity
 
 // raw string as per the value stored in the ABAddressBook.
 @property (nonatomic, strong) NSString *number;
@@ -22,8 +20,5 @@
 
 // pointer to parent person. We are a one-to-many child of a person.
 @property (nonatomic, weak) JCAddressBookPerson *person;
-
--(BOOL)containsKeyword:(NSString *)keyword;
--(BOOL)containsT9Keyword:(NSString *)keyword;
 
 @end
