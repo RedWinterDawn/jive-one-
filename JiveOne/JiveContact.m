@@ -16,21 +16,20 @@
 
 #pragma mark - Transient Properties -
 
--(NSAttributedString *)titleTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color
-{
-    NSMutableAttributedString *attributedText = [self.name formattedStringWithT9Keyword:keyword font:font color:color];
-    
-    return attributedText;
-}
-
--(NSString *)detailText
+-(NSString *)number
 {
     return self.extension;
 }
 
 -(NSAttributedString *)detailTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color
 {
-    NSMutableAttributedString *attributedNumberText = [self.extension formattedPhoneNumberWithKeyword:keyword font:font color:color];
+    NSAttributedString *attributedString = [super detailTextWithKeyword:keyword font:font color:color];
+    if (!attributedString) {
+        return nil;
+    }
+    
+    // Add the type to the front of the string, since all jive contacts have extensions
+    NSMutableAttributedString *attributedNumberText = [[NSMutableAttributedString alloc] initWithAttributedString:attributedString];
     NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
                            font, NSFontAttributeName,
                            color, NSForegroundColorAttributeName, nil];
@@ -38,11 +37,6 @@
     NSAttributedString *typeString = [[NSAttributedString alloc] initWithString:@"ext: " attributes:attrs];
     [attributedNumberText insertAttributedString:typeString atIndex:0];
     return attributedNumberText;
-}
-
--(NSString *)number
-{
-    return self.extension;
 }
 
 @end

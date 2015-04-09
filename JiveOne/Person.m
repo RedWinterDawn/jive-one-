@@ -15,24 +15,13 @@ NSString *const kPersonLastNameAttributeKey = @"lastName";
 
 @implementation Person
 
+#pragma mark - Attributes -
+
 @dynamic name;
 @dynamic firstName;
 @dynamic lastName;
 
--(NSString *)middleName
-{
-    return nil;
-}
-
--(NSString *)detailText
-{
-    return nil;
-}
-
--(NSString *)number
-{
-    return nil;
-}
+#pragma mark - Transient Protocol Methods -
 
 -(NSString *)firstName
 {
@@ -47,6 +36,11 @@ NSString *const kPersonLastNameAttributeKey = @"lastName";
         return components.firstObject;
     }
     return nil;
+}
+
+-(NSString *)middleName
+{
+    return nil;  // We do not store
 }
 
 -(NSString *)lastName
@@ -108,5 +102,56 @@ NSString *const kPersonLastNameAttributeKey = @"lastName";
     }
     return lastInitial;
 }
+
+-(NSString *)number
+{
+    return nil;
+}
+
+#pragma mark - Public Methods -
+
+-(NSAttributedString *)titleTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color
+{
+    // if no name, return nil.
+    NSString *name = self.name;
+    if(!name) {
+        return nil;
+    }
+    
+    // T9 keyword formating
+    if (keyword.isNumeric) {
+        return [self.name formattedStringWithT9Keyword:keyword font:font color:color];
+    }
+    
+    // Return formatted string with no alterations.
+    NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
+                           font, NSFontAttributeName,
+                           color, NSForegroundColorAttributeName, nil];
+    
+    return [[NSAttributedString alloc] initWithString:name attributes:attrs];
+}
+
+-(NSString *)detailText
+{
+    NSString *number = self.number;
+    if (!number) {
+        return nil;
+    }
+    return number.formattedPhoneNumber;
+}
+
+-(NSAttributedString *)detailTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color
+{
+    NSString *number = self.number;
+    if (!number) {
+        return nil;
+    }
+    
+    return [number formattedPhoneNumberWithKeyword:keyword font:font color:color];
+}
+
+
+
+
 
 @end
