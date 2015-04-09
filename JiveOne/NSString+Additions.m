@@ -50,10 +50,14 @@
 
 @implementation NSString (IsNumeric)
 
--(bool)isNumeric {
-    NSCharacterSet *alphaNums = [NSCharacterSet decimalDigitCharacterSet];
-    NSCharacterSet *inStringSet = [NSCharacterSet characterSetWithCharactersInString:self];
-    return [alphaNums isSupersetOfSet:inStringSet];
+-(BOOL)isNumeric {
+    NSCharacterSet *numericSet = [NSCharacterSet decimalDigitCharacterSet];
+    return [numericSet isSupersetOfSet:[NSCharacterSet characterSetWithCharactersInString:self]];
+}
+
+-(BOOL)isAlphanumeric {
+    NSCharacterSet *alphaNumericSet = [NSCharacterSet alphanumericCharacterSet];
+    return [alphaNumericSet isSupersetOfSet:[NSCharacterSet characterSetWithCharactersInString:self]];
 }
 
 -(NSString *)numericStringValue {
@@ -110,22 +114,17 @@
     return [phoneNumberUtil format:phoneNumber numberFormat:NBEPhoneNumberFormatNATIONAL error:&error];
 }
 
--(NSMutableAttributedString *)formattedPhoneNumberWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color{
+-(NSMutableAttributedString *)formattedPhoneNumberWithNumericKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color{
     
     NSString *number = self.numericStringValue;
-    NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
-                           font, NSFontAttributeName,
-                           color, NSForegroundColorAttributeName, nil];
+    NSDictionary *attrs = @{ NSFontAttributeName: font, NSForegroundColorAttributeName: color };
+    if (!keyword || !keyword.isNumeric) {
+        return [[NSMutableAttributedString alloc] initWithString:number.formattedPhoneNumber attributes:attrs];
+    }
     
-    NSMutableAttributedString *attributedNumberText = [[NSMutableAttributedString alloc] initWithString:number attributes:attrs];
-    
-    UIFont *boldFont = [UIFont boldFontForFont:font];
-    NSDictionary *boldAttrs = [NSDictionary dictionaryWithObjectsAndKeys:
-                               boldFont, NSFontAttributeName,
-                               color, NSForegroundColorAttributeName, nil];
-    
-    NSRange range = [number rangeOfString:keyword];
-    [attributedNumberText setAttributes:boldAttrs range:range];
+    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:number attributes:attrs];
+    NSDictionary *boldAttrs = @{ NSFontAttributeName: [UIFont boldFontForFont:font], NSForegroundColorAttributeName: color };
+    [attributedText setAttributes:boldAttrs range:[number rangeOfString:keyword]];
     
     NSString *formattedNumber = self.formattedPhoneNumber;
     NSUInteger len = formattedNumber.length;
@@ -135,57 +134,60 @@
         NSString *charater = [NSString stringWithFormat:@"%C", buffer[i]];
         if (!charater.isNumeric) {
             NSAttributedString *attributedCharacter = [[NSAttributedString alloc] initWithString:charater attributes:attrs];
-            [attributedNumberText insertAttributedString:attributedCharacter atIndex:i];
+            [attributedText insertAttributedString:attributedCharacter atIndex:i];
         }
     }
     
-    return attributedNumberText;
+    return attributedText;
 }
 
 -(NSMutableAttributedString *)formattedStringWithT9Keyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color
 {
-    keyword = keyword.t9;   // make sure we are T9, just in case. no non numeric strings.
-    NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
-                           font, NSFontAttributeName,
-                           color, NSForegroundColorAttributeName, nil];
-    
+    NSDictionary *attrs = @{ NSFontAttributeName: font, NSForegroundColorAttributeName: color };
     NSMutableAttributedString *attributedStringText = [[NSMutableAttributedString alloc] initWithString:self attributes:attrs];
     if (!keyword || !keyword.isNumeric) {
         return attributedStringText;
     }
     
-    UIFont *boldFont = [UIFont boldFontForFont:font];
-    NSDictionary *boldAttrs = [NSDictionary dictionaryWithObjectsAndKeys:
-                               boldFont, NSFontAttributeName,
-                               color, NSForegroundColorAttributeName, nil];
+    NSDictionary *boldAttrs = @{ NSFontAttributeName: [UIFont boldFontForFont:font], NSForegroundColorAttributeName: color };
     
+    // Get buffer array of all characters in the string from self.
     NSUInteger len = self.length;
     unichar buffer[len +1];
     [self getCharacters:buffer range:NSMakeRange(0, len)];
     
+    // Get buffer array of all characters in the keyword string.
     NSUInteger keywordLen = keyword.length;
     unichar keywordBuffer[keywordLen + 1];
     [keyword getCharacters:keywordBuffer range:NSMakeRange(0, keywordLen)];
     
-    [attributedStringText beginEditing];
-    
     //NSUInteger end = 0;
     NSUInteger keywordIndex = 0;
+    [attributedStringText beginEditing];
     for (int i=0; i< len; i++)
     {
-        
         NSString *character = [NSString stringWithFormat:@"%C", buffer[i]];
+        
+        // We do not care about formatting special characters, if they are part of the name, in any
+        // place, we just skip it
+        if (!character.isAlphanumeric) {
+            continue;
+        }
+        
+        // if our keyword index has advance to be at or beyond the length of the keyword, we are
+        // finished, and exit before we have an index out of bounds.
+        if (keywordIndex >= keywordLen) {
+            break;
+        }
+        
+        // Get the t9 representation of the character and the keyword character at the current index.
         NSString *characterT9 = [self getNumericCharFromAlphabeticString:character];
-        if (keywordIndex <= keywordLen) {
-            NSString *keywordChar = [NSString stringWithFormat:@"%C", keywordBuffer[keywordIndex]];
-            NSLog(@"%@ %@->%@ %@ %lu / %lu", keyword, character, characterT9, keywordChar, (long)keywordIndex, (long)keywordLen);
-            if ([keywordChar isEqualToString:characterT9]) {
-                if (keywordIndex == 0 && i > 0) {
-                    break;
-                }
-                keywordIndex++;
-                [attributedStringText setAttributes:boldAttrs range:NSMakeRange(i, 1)];
-            }
+        NSString *keywordChar = [NSString stringWithFormat:@"%C", keywordBuffer[keywordIndex]];
+        if ([characterT9 isEqualToString:keywordChar]) {
+            keywordIndex++;
+            [attributedStringText setAttributes:boldAttrs range:NSMakeRange(i, 1)];
+        } else {
+            break;
         }
     }
     
@@ -194,18 +196,6 @@
 }
 
 #pragma mark - Private -
-
--(NSLocale *)locale
-{
-    // Makes the startup of this singleton thread safe.
-    static NSLocale *locale = nil;
-    static dispatch_once_t pred;        // Lock
-    dispatch_once(&pred, ^{             // This code is called at most once per app
-        NSString *localization = [NSBundle mainBundle].preferredLocalizations.firstObject;
-        locale = [[NSLocale alloc] initWithLocaleIdentifier:localization];
-    });
-    return locale;
-}
 
 NSString *const kT9StarKey = @"*";
 NSString *const kT9PoundKey = @"#";
@@ -276,6 +266,22 @@ NSString *const kT99 = @"9";
         return kT99;
     }
     return nil;
+}
+
+@end
+
+@implementation NSString (Localization)
+
+-(NSLocale *)locale
+{
+    // Makes the startup of this singleton thread safe.
+    static NSLocale *locale = nil;
+    static dispatch_once_t pred;        // Lock
+    dispatch_once(&pred, ^{             // This code is called at most once per app
+        NSString *localization = [NSBundle mainBundle].preferredLocalizations.firstObject;
+        locale = [[NSLocale alloc] initWithLocaleIdentifier:localization];
+    });
+    return locale;
 }
 
 @end

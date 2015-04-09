@@ -31,6 +31,21 @@
     XCTAssertFalse(testString.isNumeric);
 }
 
+-(void)test_isAlphaNumeric
+{
+    NSString *testString = @"12345";
+    XCTAssertTrue(testString.isAlphanumeric);
+    
+    testString = @"abcd";
+    XCTAssertTrue(testString.isAlphanumeric);
+    
+    testString = @"a1b2c3d4";
+    XCTAssertTrue(testString.isAlphanumeric);
+    
+    testString = @"!a1b2c3d4";
+    XCTAssertFalse(testString.isAlphanumeric);
+}
+
 -(void)test_numericStringValue
 {
     // Given
@@ -70,37 +85,67 @@
     XCTAssertTrue([result isEqualToString:expectedResult], @"t9 did not match expected result");
 }
 
--(void)test_attributedFormattedPhoneNumberString
+-(void)test_attributedFormattedPhoneNumberString_nonNumericKeyword
 {
     // Given
-    NSString *string = @"(555) 525-5355";
+    NSString *string = @"555-525-5355";
+    NSString *keyword = @"Hi";
     UIFont *font = [UIFont systemFontOfSize:12];
     UIColor *color = [UIColor blackColor];
     
-    NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
-                           font, NSFontAttributeName,
-                           color, NSForegroundColorAttributeName, nil];
+    // When
+    NSMutableAttributedString *result = [string formattedPhoneNumberWithNumericKeyword:keyword font:font color:color];
     
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:string attributes:attrs];
+    // Then
+    NSString *expectedString = @"(555) 525-5355";
+    NSDictionary *attrs = @{ NSFontAttributeName: font, NSForegroundColorAttributeName: color };
+    NSMutableAttributedString *expectedAttributedString = [[NSMutableAttributedString alloc] initWithString:expectedString attributes:attrs];
     
-    UIFont *boldFont = [UIFont boldFontForFont:font];
-    NSDictionary *boldAttrs = [NSDictionary dictionaryWithObjectsAndKeys:
-                               boldFont, NSFontAttributeName,
-                               color, NSForegroundColorAttributeName, nil];
-    
-    [attributedString beginEditing];
-    [attributedString setAttributes:boldAttrs range:NSMakeRange(1, 3)];
-    [attributedString setAttributes:boldAttrs range:NSMakeRange(6, 1)];
-    [attributedString endEditing];
-    
+    XCTAssertTrue([expectedAttributedString isEqualToAttributedString:result], @"Strings should be equal");
+}
+
+-(void)test_attributedFormattedPhoneNumberString_numericKeyword
+{
+    // Given
+    NSString *string = @"555-525-5355";
+    UIFont *font = [UIFont systemFontOfSize:12];
+    UIColor *color = [UIColor blackColor];
     NSString *keyword = @"5555";
     
     // When
-    NSMutableAttributedString *result = [string formattedPhoneNumberWithKeyword:keyword font:font color:color];
+    NSMutableAttributedString *result = [string formattedPhoneNumberWithNumericKeyword:keyword font:font color:color];
     
     // Then
-    XCTAssertTrue([attributedString isEqualToAttributedString:result], @"Strings should be equal");
+    NSString *expectedString = @"(555) 525-5355";
+    NSDictionary *attrs = @{ NSFontAttributeName: font, NSForegroundColorAttributeName: color };
+    NSDictionary *boldAttrs = @{ NSFontAttributeName: [UIFont boldFontForFont:font], NSForegroundColorAttributeName: color };
+    NSMutableAttributedString *expectedAttributedString = [[NSMutableAttributedString alloc] initWithString:expectedString attributes:attrs];
+    [expectedAttributedString beginEditing];
+    [expectedAttributedString setAttributes:boldAttrs range:NSMakeRange(1, 3)];
+    [expectedAttributedString setAttributes:boldAttrs range:NSMakeRange(6, 1)];
+    [expectedAttributedString endEditing];
+    
+    XCTAssertTrue([expectedAttributedString isEqualToAttributedString:result], @"Strings should be equal");
 }
+
+-(void)test_attributedStringFromT9_keywordNonNumeric
+{
+    // Given
+    NSString *string = @"Robert Barclay";
+    UIFont *font = [UIFont systemFontOfSize:12];
+    UIColor *color = [UIColor blackColor];
+    NSString *keyword = @"Hi"; // non numeric string
+    
+    // When
+    NSMutableAttributedString *result = [string formattedStringWithT9Keyword:keyword font:font color:color];
+    
+    // Then
+    NSDictionary *attrs = @{NSFontAttributeName: font, NSForegroundColorAttributeName: color};
+    NSMutableAttributedString *expectedAttributedString = [[NSMutableAttributedString alloc] initWithString:string attributes:attrs];
+    
+    XCTAssertTrue([expectedAttributedString isEqualToAttributedString:result], @"Strings should be equal");
+}
+
 
 -(void)test_attributedStringFromT9_keywordBeginningOfWord
 {
@@ -108,29 +153,20 @@
     NSString *string = @"Robert Barclay";
     UIFont *font = [UIFont systemFontOfSize:12];
     UIColor *color = [UIColor blackColor];
-    
-    NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
-                           font, NSFontAttributeName,
-                           color, NSForegroundColorAttributeName, nil];
-    
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:string attributes:attrs];
-    
-    UIFont *boldFont = [UIFont boldFontForFont:font];
-    NSDictionary *boldAttrs = [NSDictionary dictionaryWithObjectsAndKeys:
-                               boldFont, NSFontAttributeName,
-                               color, NSForegroundColorAttributeName, nil];
-    
-    [attributedString beginEditing];
-    [attributedString setAttributes:boldAttrs range:NSMakeRange(0, 3)];
-    [attributedString endEditing];
-    
-    NSString *keyword = @"763"; // T9 for rob
+    NSString *keyword = @"762"; // T9 for rob
     
     // When
-    NSMutableAttributedString *result = [string formattedPhoneNumberWithKeyword:keyword font:font color:color];
+    NSMutableAttributedString *result = [string formattedStringWithT9Keyword:keyword font:font color:color];
 
     // Then
-    XCTAssertTrue([attributedString isEqualToAttributedString:result], @"Strings should be equal");
+    NSDictionary *attrs = @{ NSFontAttributeName: font, NSForegroundColorAttributeName:color };
+    NSDictionary *boldAttrs = @{ NSFontAttributeName: [UIFont boldFontForFont:font], NSForegroundColorAttributeName: color };
+    NSMutableAttributedString *expectedAttributedString = [[NSMutableAttributedString alloc] initWithString:string attributes:attrs];
+    [expectedAttributedString beginEditing];
+    [expectedAttributedString setAttributes:boldAttrs range:NSMakeRange(0, 3)];
+    [expectedAttributedString endEditing];
+    
+    XCTAssertTrue([expectedAttributedString isEqualToAttributedString:result], @"Strings should be equal");
 }
 
 -(void)test_attributedStringFromT9_keywordMiddleOfWord
@@ -139,19 +175,15 @@
     NSString *string = @"Barclay Robert";
     UIFont *font = [UIFont systemFontOfSize:12];
     UIColor *color = [UIColor blackColor];
-    
-    NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
-                           font, NSFontAttributeName,
-                           color, NSForegroundColorAttributeName, nil];
-    
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:string attributes:attrs];
-    
-    NSString *keyword = @"763"; // T9 for rob
+    NSString *keyword = @"762"; // T9 for rob
     
     // When
-    NSMutableAttributedString *result = [string formattedPhoneNumberWithKeyword:keyword font:font color:color];
+    NSMutableAttributedString *result = [string formattedStringWithT9Keyword:keyword font:font color:color];
     
     // Then
+    NSDictionary *attrs = @{ NSFontAttributeName: font, NSForegroundColorAttributeName:color };
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:string attributes:attrs];
+    
     XCTAssertTrue([attributedString isEqualToAttributedString:result], @"Strings should be equal");
 }
 
