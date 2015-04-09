@@ -24,6 +24,29 @@ NSString *const kPersonT9AttributeKey = @"t9";
 @dynamic lastName;
 @dynamic t9;
 
+-(void)willSave
+{
+    if (![self isDeleted])
+    {
+        NSString *name = self.name;
+        if(name) {
+            [self setPrimitiveValue:name.t9 forKey:kPersonT9AttributeKey];
+            NSArray *components = [name componentsSeparatedByString:@" "];
+            if (components.count > 1) {
+                NSString *firstName = [self primitiveValueForKey:kPersonFirstNameAttributeKey];
+                NSString *lastName = [self primitiveValueForKey:kPersonLastNameAttributeKey];
+                if (!firstName) {
+                    [self setPrimitiveValue:components.firstObject forKey:kPersonFirstNameAttributeKey];
+                }
+                if (!lastName) {
+                    [self setPrimitiveValue:components.lastObject forKey:kPersonLastNameAttributeKey];
+                }
+            }
+        }
+    }
+    [super willSave];
+}
+
 -(NSString *)titleText
 {
     return self.name;
@@ -36,66 +59,6 @@ NSString *const kPersonT9AttributeKey = @"t9";
         return nil;
     }
     return number.formattedPhoneNumber;
-}
-
--(NSString *)name
-{
-    NSString *name = [self primitiveValueForKey:kPersonNameAttributeKey];
-    if (name) {
-        return name;
-    }
-    
-    NSString *firstName = [self primitiveValueForKey:kPersonFirstNameAttributeKey];
-    NSString *lastName = [self primitiveValueForKey:kPersonLastNameAttributeKey];
-    if (firstName && lastName) {
-        return [NSString stringWithFormat:@"%@ %@", firstName, lastName];
-    }
-    else if (lastName) {
-        return lastName;
-    }
-    return nil;
-}
-
--(NSString *)firstName
-{
-    NSString *firstName = [self primitiveValueForKey:kPersonFirstNameAttributeKey];
-    if (firstName) {
-        return firstName;
-    }
-    
-    NSString *name = [self primitiveValueForKey:kPersonNameAttributeKey];
-    if (name) {
-        NSArray *components = [name componentsSeparatedByString:@" "];
-        if (components.count > 1) {
-            return components.firstObject;
-        }
-    }
-    return nil;
-}
-
--(NSString *)lastName
-{
-    NSString *lastName = [self primitiveValueForKey:kPersonLastNameAttributeKey];
-    if (lastName) {
-        return lastName;
-    }
-    
-    NSString *name = [self primitiveValueForKey:kPersonNameAttributeKey];
-    NSArray *components = [name componentsSeparatedByString:@" "];
-    if (components.count > 1) {
-        return components.lastObject;
-    }
-    return name;
-}
-
--(NSString *)t9
-{
-    NSString *t9 = [self primitiveValueForKey:kPersonT9AttributeKey];
-    if(t9) {
-        return t9;
-    }
-    
-    return self.name.t9;
 }
 
 #pragma mark - Transient Protocol Methods -
