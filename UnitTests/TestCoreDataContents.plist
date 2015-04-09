@@ -279,7 +279,7 @@
 						<key>receiveSMS</key>
 						<false/>
 						<key>userDefault</key>
-						<true/>
+						<false/>
 					</dict>
 				</array>
 			</dict>

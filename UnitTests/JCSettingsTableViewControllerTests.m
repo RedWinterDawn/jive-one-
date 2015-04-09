@@ -12,6 +12,7 @@
 #import "JCAppSettings.h"
 #import "JCAuthenticationManager.h"
 
+#import "PBX.h"
 #import "DID.h"
 #import "NSString+Additions.h"
 
@@ -62,19 +63,46 @@
     XCTAssertTrue([string isEqualToString:expectedResponse], @"DId not get expected phone number %@ %@",string, expectedResponse);
 }
 
-- (void)test_smsDefaultLineDisplay_visible
-{
-    // Given
-    NSString *jrn = @"jrn:pbx::jive:01471162-f384-24f5-9351-000100420005:did:014885d6-1526-8b77-a111-000100420051";
-    DID *did = [DID MR_findFirstByAttribute:NSStringFromSelector(@selector(jrn)) withValue:jrn];
-    OCMStub([self.vc.authenticationManager did]).andReturn(did);
-    
-    //When
-    [self.vc.view setNeedsLayout];
-    [self.vc.view layoutIfNeeded];
-    
-   
-    
-}
+//- (void)test_smsDefaultLineDisplay_not_visible
+//{
+//    // Given
+//    NSString *jrn = @"jrn:pbx::jive:01471162-f384-24f5-9351-000100420005:pbx~default";
+//    PBX *pbx = [PBX MR_findFirstByAttribute:NSStringFromSelector(@selector(jrn)) withValue:jrn];
+//    OCMStub([self.vc.authenticationManager pbx]).andReturn(pbx);
+//    
+//    //When
+//    [self.vc viewWillAppear:NO];
+//        
+//   //Then
+//    XCTAssertNotNil(self.vc, @"Your viewcontroller is missing");
+//    XCTAssertNotNil(pbx, @"PBX is nil");
+//    XCTAssertFalse(pbx.smsEnabled,@"sms Enabled");
+//    
+//    
+//    BOOL hidden = [self.vc cellIsHidden:self.vc.defaultDIDCell];
+//    XCTAssertTrue(hidden, @"The DIDCell should be hidden");
+//    
+//}
+//
+//- (void)test_smsDefaultLineDisplay_visible
+//{
+//    // Given
+//    NSString *jrn = @"jrn:pbx::jive:01471162-f384-24f5-9351-000100420055:pbx~default";
+//    PBX *pbx = [PBX MR_findFirstByAttribute:NSStringFromSelector(@selector(jrn)) withValue:jrn];
+//    OCMStub([self.vc.authenticationManager pbx]).andReturn(pbx);
+//    
+//    //When
+//    [self.vc viewWillAppear:NO];
+//    
+//    //Then
+//    XCTAssertNotNil(self.vc, @"Your viewcontroller is missing");
+//    XCTAssertNotNil(pbx, @"PBX is nil");
+//    XCTAssertTrue(pbx.smsEnabled,@"sms Enabled");
+//    XCTAssertTrue(self.vc.defaultDIDCell.hidden, @"The DIDCell should be hidden");
+//    
+//}
+//
+
+
 
 @end

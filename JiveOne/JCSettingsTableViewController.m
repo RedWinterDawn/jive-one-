@@ -54,10 +54,12 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.view setNeedsLayout];
+   // [self.view setNeedsLayout];
     
-    [self cell:self.enablePreasenceCell setHidden:!self.authenticationManager.line.pbx.isV5];
-    [self cell:self.defaultDIDCell setHidden:!self.authenticationManager.pbx.smsEnabled];
+     JCAuthenticationManager *authenticationManager = self.authenticationManager;
+    [self cell:self.enablePreasenceCell setHidden:!authenticationManager.line.pbx.isV5];
+    BOOL sendSmsMessages = authenticationManager.pbx.sendSMSMessages;
+    [self cell:self.defaultDIDCell setHidden:!sendSmsMessages];
 
     [self reloadDataAnimated:NO];
 }
@@ -75,6 +77,7 @@ NSString *const kJCSettingsTableViewControllerFeebackMessage = @"<strong>Please 
     self.userNameLabel.text     = authenticationManager.line.pbx.user.jiveUserId;
     self.extensionLabel.text    = authenticationManager.line.extension;
     self.smsUserDefaultNumber.text = authenticationManager.did.number.formattedPhoneNumber;
+    
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
