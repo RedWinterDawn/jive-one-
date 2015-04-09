@@ -7,6 +7,7 @@
 //
 
 #import "JCAddressBookNumber.h"
+#import "JCAddressBookPerson.h"
 #import "NSString+Additions.h"
 
 @interface JCAddressBookNumber ()
@@ -24,16 +25,12 @@
     
     if (localizedKeyword.isNumeric) {
         NSString *string = self.number.numericStringValue;
-        if ([string respondsToSelector:@selector(containsString:)]) {
-            if ([string containsString:localizedKeyword]) {
-                return YES;
-            }
-        }
-        else if ([string rangeOfString:localizedKeyword].location != NSNotFound) {
+        if ([string rangeOfString:localizedKeyword].location != NSNotFound) {
             return YES;
         }
-        
-        //TODO : T9 Match with the name.
+        if ([self containsT9Keyword:keyword]) {
+            return YES;
+        }
     }
     
     NSString *fullName = [self.person.name lowercaseStringWithLocale:locale];
@@ -49,18 +46,25 @@
     return NO;
 }
 
+-(BOOL)containsT9Keyword:(NSString *)keyword
+{
+    NSString *t9 = self.t9;
+    if ([t9 hasPrefix:keyword]) {
+        return YES;
+    }
+    return NO;
+}
+
 @synthesize number = _number;
 
--(NSLocale *)locale
+#pragma mark - Protocol Getters -
+
+//  Since we maintain a pointer to the parent person, we just forward all properties relating to the
+//  person from the parent person.
+
+-(NSString *)t9
 {
-    // Makes the startup of this singleton thread safe.
-    static NSLocale *locale = nil;
-    static dispatch_once_t pred;        // Lock
-    dispatch_once(&pred, ^{             // This code is called at most once per app
-        NSString *localization = [NSBundle mainBundle].preferredLocalizations.firstObject;
-        locale = [[NSLocale alloc] initWithLocaleIdentifier:localization];
-    });
-    return locale;
+    return self.person.t9;
 }
 
 -(NSString *)name
@@ -97,6 +101,30 @@
 {
     return self.person.firstNameFirstName;
 }
+
+
+
+-(NSLocale *)locale
+{
+    // Makes the startup of this singleton thread safe.
+    static NSLocale *locale = nil;
+    static dispatch_once_t pred;        // Lock
+    dispatch_once(&pred, ^{             // This code is called at most once per app
+        NSString *localization = [NSBundle mainBundle].preferredLocalizations.firstObject;
+        locale = [[NSLocale alloc] initWithLocaleIdentifier:localization];
+    });
+    return locale;
+}
+
+
+
+-(NSAttributedString *)titleTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color
+{
+    NSMutableAttributedString *attributedText = [self.name formattedStringWithT9Keyword:keyword font:font color:color];
+    
+    return attributedText;
+}
+
 
 -(NSString *)detailText
 {

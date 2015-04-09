@@ -25,6 +25,8 @@
     if (self) {
         _person = recordRef;
         CFRetain(_person);
+        
+        _t9 = self.name.t9;
     }
     return self;
 }
@@ -63,6 +65,11 @@
 {
     return [self.firstNameFirstName MD5Hash];
 }
+
+//-(NSString *)t9
+//{
+//    return self.name.t9;
+//}
 
 #pragma mark Name Elements
 

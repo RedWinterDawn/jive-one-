@@ -16,6 +16,7 @@
 @property (nonatomic, readonly) NSString *detailText;
 @property (nonatomic, readonly) NSString *number;
 
+-(NSAttributedString *)titleTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color;
 -(NSAttributedString *)detailTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color;
 
 @optional

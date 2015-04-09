@@ -19,6 +19,7 @@
 @property (nonatomic, readonly) NSInteger recordId;
 @property (nonatomic, readonly) NSString *personId;
 @property (nonatomic, readonly) NSString *personHash;
+@property (nonatomic, readonly) NSString *t9;
 
 @property (nonatomic, readonly) NSArray *phoneNumbers;
 

@@ -31,13 +31,14 @@
 
 @interface NSString (PhoneNumbers)
 
+@property (nonatomic, readonly) NSString *t9;
 @property (nonatomic, readonly) NSString *dialableString;
 @property (nonatomic, readonly) NSString *formattedPhoneNumber;
 
 - (NSMutableAttributedString *)formattedPhoneNumberWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color;
+- (NSMutableAttributedString *)formattedStringWithT9Keyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color;
 
 @end
-
 
 @interface UIFont (Bold)
 

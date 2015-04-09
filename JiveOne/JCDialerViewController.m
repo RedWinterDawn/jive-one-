@@ -298,8 +298,12 @@ NSString *const kJCDialerViewControllerCallerStoryboardIdentifier = @"InitiateCa
     id <JCPersonDataSource> personNumber = [self objectAtIndexPath:indexPath];
     JCContactCollectionViewCell *cell = (JCContactCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
     
-    cell.name.text = personNumber.name;
-    cell.number.attributedText = [personNumber detailTextWithKeyword:self.formattedPhoneNumberLabel.dialString
+    NSString *keyword = self.formattedPhoneNumberLabel.dialString;
+    cell.name.attributedText = [personNumber titleTextWithKeyword:keyword
+                                                             font:cell.name.font
+                                                            color:cell.name.textColor];
+    
+    cell.number.attributedText = [personNumber detailTextWithKeyword:keyword
                                                                 font:cell.number.font
                                                                color:cell.number.textColor];
     return cell;

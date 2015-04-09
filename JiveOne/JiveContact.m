@@ -16,6 +16,13 @@
 
 #pragma mark - Transient Properties -
 
+-(NSAttributedString *)titleTextWithKeyword:(NSString *)keyword font:(UIFont *)font color:(UIColor *)color
+{
+    NSMutableAttributedString *attributedText = [self.name formattedStringWithT9Keyword:keyword font:font color:color];
+    
+    return attributedText;
+}
+
 -(NSString *)detailText
 {
     return self.extension;
